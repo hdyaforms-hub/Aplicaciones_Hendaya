@@ -1,0 +1,102 @@
+'use client'
+
+import { useState } from 'react'
+import { createRole } from '../actions'
+
+type PermissionDef = {
+    id: string
+    name: string
+    description: string
+}
+
+export default function RoleForm({ availablePermissions }: { availablePermissions: PermissionDef[] }) {
+    const [isOpen, setIsOpen] = useState(false)
+    const [error, setError] = useState('')
+    const [loading, setLoading] = useState(false)
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        setError('')
+        setLoading(true)
+
+        const formData = new FormData(e.currentTarget)
+        const result = await createRole(formData)
+
+        if (result?.error) {
+            setError(result.error)
+        } else if (result?.success) {
+            setIsOpen(false)
+        }
+        setLoading(false)
+    }
+
+    if (!isOpen) {
+        return (
+            <button
+                onClick={() => setIsOpen(true)}
+                className="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-xl shadow-md shadow-cyan-500/30 transition-all font-medium flex items-center gap-2"
+            >
+                <span>+</span> Nuevo Rol
+            </button>
+        )
+    }
+
+    return (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-3xl p-6 sm:p-8 w-full max-w-lg shadow-2xl relative animate-in fade-in zoom-in duration-200">
+                <button
+                    onClick={() => setIsOpen(false)}
+                    className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 transition-colors"
+                >
+                    ✕
+                </button>
+
+                <h3 className="text-xl font-bold text-gray-900 mb-6 tracking-tight">Crear Nuevo Perfil</h3>
+
+                <form onSubmit={handleSubmit} className="space-y-5">
+                    {error && <div className="p-3 bg-red-50 text-red-600 rounded-xl text-sm border border-red-100">{error}</div>}
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Nombre del Rol *</label>
+                        <input name="name" type="text" required className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-gray-900" placeholder="Ej: Vendedor" />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Descripción Breve</label>
+                        <input name="description" type="text" className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-gray-900" placeholder="A qué tipo de usuario aplica..." />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-3">Permisos de Acceso</label>
+                        <div className="space-y-2 border border-gray-200 rounded-xl max-h-48 overflow-y-auto bg-gray-50 p-3">
+                            {availablePermissions.map(p => (
+                                <label key={p.id} className="flex items-start gap-3 p-2 hover:bg-white rounded-lg cursor-pointer transition-colors border border-transparent hover:border-gray-200 hover:shadow-sm">
+                                    <div className="flex h-5 items-center">
+                                        <input name="permissions" value={p.id} type="checkbox" className="w-4 h-4 text-cyan-600 rounded border-gray-300 focus:ring-cyan-500 cursor-pointer" />
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <span className="text-sm font-semibold text-gray-800">{p.name}</span>
+                                        <span className="text-xs text-gray-500">{p.description}</span>
+                                    </div>
+                                </label>
+                            ))}
+
+                            {availablePermissions.length === 0 && (
+                                <p className="text-sm text-gray-500 p-2 text-center">No hay permisos definidos</p>
+                            )}
+                        </div>
+                    </div>
+
+                    <div className="pt-4 flex gap-3">
+                        <button type="button" onClick={() => setIsOpen(false)} className="px-5 py-2.5 w-full rounded-xl text-gray-600 bg-gray-100 hover:bg-gray-200 font-medium transition-colors">
+                            Cancelar
+                        </button>
+                        <button type="submit" disabled={loading} className="px-5 py-2.5 w-full rounded-xl text-white bg-gradient-to-r from-cyan-600 to-sky-600 hover:from-cyan-700 hover:to-sky-700 shadow-md shadow-cyan-500/20 font-medium transition-all disabled:opacity-70 disabled:pointer-events-none">
+                            {loading ? 'Guardando...' : 'Crear Perfil'}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    )
+}

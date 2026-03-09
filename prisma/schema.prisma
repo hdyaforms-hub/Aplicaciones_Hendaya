@@ -1,0 +1,184 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Role {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  permissions String   // JSON stringified array of permissions, e.g. '["users_read", "users_write", "roles_read"]'
+  users       User[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model User {
+  id           String     @id @default(uuid())
+  username     String     @unique
+  email        String?    @unique
+  passwordHash String
+  name         String?
+  roleId       String
+  role         Role       @relation(fields: [roleId], references: [id])
+  isActive     Boolean    @default(true)
+  sucursales   Sucursal[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+model PMPA {
+  id         String   @id @default(uuid())
+  sucursal   String   // max 50
+  ano        Int
+  mes        Int
+  rbd        Int
+  programa   String   // max 20
+  estrato    String   // max 20
+  raceq      Int
+  servicio   String   // max 10
+  uploadedBy String   // user who uploaded
+  createdAt  DateTime @default(now())
+}
+
+model Colegios {
+  id                       String   @id @default(uuid())
+  colut                    Int
+  colRBD                   Int
+  colRBDDV                 String
+  insid                    String
+  institucion              String
+  sucursal                 String
+  nombreEstablecimiento    String
+  direccionEstablecimiento String
+  comuna                   String
+  uploadedBy               String
+}
+
+model IngRacion {
+  id                    String   @id @default(uuid())
+  usuario               String   // char(50)
+  ubicacion             String   // char(50) Geolocalización
+  fechaSistema          DateTime @default(now())
+  fechaIngreso          DateTime
+  rbd                   Int
+  nombreEstablecimiento String   // char(200)
+  ano                   Int
+  mes                   Int
+  programa              String   // char(20)
+  estrato               String   // char(20)
+  desayunoIng           Int
+  almuerzoIng           Int
+  onceIng               Int
+  colacionIng           Int
+  cenaIng               Int
+  totalIng              Int
+  desayunoAsig          Int
+  almuerzoAsig          Int
+  onceAsig              Int
+  colacionAsig          Int
+  cenaAsig              Int
+  totalAsig             Int
+  tasaPreparacion       Float    // Numerico 4 decimales
+  observacion           String   // char(500)
+}
+
+model Productos {
+  id           String   @id @default(uuid())
+  nombre       String   // char(100) -> nombre del producto
+  codigo       String   // char(12) -> codigo del producto
+  unidad       String   // char(10) -> unidad de producto
+  tipoProducto Int      // tipo de producto, 1= retiro de saldo / 2 = Rebaja de stock
+}
+
+model EmailConfig {
+  id        String   @id @default("global")
+  email     String
+  password  String   // encrypted logic will be handled in actions
+  provider  String   @default("office365")
+  updatedBy String?
+  updatedAt DateTime @updatedAt
+}
+
+model ListaCorreo {
+  id             String                 @id @default(uuid())
+  nombre         String                 @unique
+  descripcion    String?
+  para           String                 // Guardado como JSON string ["correo1@ejemplo.com", "correo2@..."]
+  cc             String?                // Guardado como JSON string ["correo3@ejemplo.com"]
+  sucursalId     String?                // Relacion con sucursal
+  sucursal       Sucursal?              @relation(fields: [sucursalId], references: [id])
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+  notificaciones NotificacionPantalla[]
+}
+
+model NotificacionPantalla {
+  id              String      @id @default(uuid())
+  codigoPantalla  String      // Identificador único ej: "ingreso-raciones", "carga-pmpa"
+  listaCorreoId   String      // Relación con tu tabla de Listas
+  listaCorreo     ListaCorreo @relation(fields: [listaCorreoId], references: [id])
+  activa          Boolean     @default(true)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  // Evitamos que una misma lista se asigne dos veces a la misma pantalla
+  @@unique([codigoPantalla, listaCorreoId]) 
+}
+
+model PlantillaCorreo {
+  id             String   @id @default(uuid())
+  codigoPantalla String   @unique
+  asunto         String
+  cuerpo         String
+  updatedAt      DateTime @updatedAt
+}
+
+model Licitacion {
+  licId      Int      @id // Codigo de licitación
+  estado     Int      @default(1) // Estado vigente (1) / No vigente (0)
+  uts        UT[]
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Sucursal {
+  id           String        @id @default(uuid())
+  nombre       String        @unique // Nombre de la sucursal char(100)
+  uts          UT[]
+  users        User[]
+  listasCorreo ListaCorreo[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model SolicitudPan {
+  id                String   @id @default(uuid())
+  ut                Int
+  rbd               Int
+  nombreSolicitante String   // char(100)
+  fechaSolicitud    DateTime @default(now())
+  solicitud         String   // char(20)
+  cantidad          Int
+  fechaGestacion    DateTime
+  servicio          String   // char(20)
+  motivo            String   // char(500)
+}
+
+model UT {
+  codUT      Int        @id // Codigo de Unidad Territorial
+  licId      Int        // Codigo de licitación
+  licitacion Licitacion @relation(fields: [licId], references: [licId])
+  estado     Int        @default(1) // Estado vigente (1) / No vigente (0)
+  sucursalId String?    // Asociado a sucursal
+  sucursal   Sucursal?  @relation(fields: [sucursalId], references: [id])
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+}
