@@ -39,16 +39,28 @@ export default function Sidebar({ user }: { user: User }) {
 
     const menuItems = [
         { name: 'Inicio', href: '/dashboard', icon: '🏠', requiredPermission: null }, // Everyone sees this
-        { name: 'Tablero de Control', href: '/dashboard/tablero', icon: '📈', requiredPermission: 'view_tablero' },
+        {
+            name: 'Tableros y Avances',
+            icon: '📈',
+            requiredPermission: ['view_tablero', 'view_tablero_pan', 'view_tablero_gas', 'view_tablero_retiro'],
+            subItems: [
+                { name: 'Avance PMPA', href: '/dashboard/tablero', requiredPermission: 'view_tablero' },
+                { name: 'Solicitudes de Pan', href: '/dashboard/tablero/solicitudes-pan', requiredPermission: 'view_tablero_pan' },
+                { name: 'Solicitud de Gas', href: '/dashboard/tablero/solicitud-gas', requiredPermission: 'view_tablero_gas' },
+                { name: 'Retiro de Saldos', href: '/dashboard/tablero/retiro-saldos', requiredPermission: 'view_tablero_retiro' }
+            ]
+        },
         { name: 'Usuarios', href: '/dashboard/users', icon: '👥', requiredPermission: 'manage_users' },
         { name: 'Roles y Perfiles', href: '/dashboard/roles', icon: '🛡️', requiredPermission: 'manage_roles' },
         {
             name: 'Aplicaciones',
             icon: '📁',
-            requiredPermission: ['view_ingreso_raciones', 'view_solicitud_pan'],
+            requiredPermission: ['view_ingreso_raciones', 'view_solicitud_pan', 'view_solicitud_gas', 'view_retiro_saldos'],
             subItems: [
                 { name: 'Ingreso de Raciones', href: '/dashboard/ingreso-raciones', requiredPermission: 'view_ingreso_raciones' },
-                { name: 'Solicitud de Pan', href: '/dashboard/solicitud-pan', requiredPermission: 'view_solicitud_pan' }
+                { name: 'Solicitud de Pan', href: '/dashboard/solicitud-pan', requiredPermission: 'view_solicitud_pan' },
+                { name: 'Solicitud de Gas', href: '/dashboard/solicitud-gas', requiredPermission: 'view_solicitud_gas' },
+                { name: 'Retiro de Saldos', href: '/dashboard/retiro-saldos', requiredPermission: 'view_retiro_saldos' }
             ]
         },
         {
@@ -64,9 +76,12 @@ export default function Sidebar({ user }: { user: User }) {
         {
             name: 'Reportes',
             icon: '📊',
-            requiredPermission: 'view_reports',
+            requiredPermission: ['view_reports', 'view_solicitud_pan_report', 'view_solicitud_gas_report', 'view_retiro_report'],
             subItems: [
-                { name: 'Informe de Carga de Raciones', href: '/dashboard/reports/carga-raciones' }
+                { name: 'Informe de Carga de Raciones', href: '/dashboard/reports/carga-raciones' },
+                { name: 'Solicitud de Pan', href: '/dashboard/reports/solicitud-pan', requiredPermission: 'view_solicitud_pan_report' },
+                { name: 'Solicitud de Gas', href: '/dashboard/reports/solicit-gas', requiredPermission: 'view_solicitud_gas_report' },
+                { name: 'Retiro de Saldos', href: '/dashboard/reports/retiro-saldos', requiredPermission: 'view_retiro_report' }
             ]
         },
         {

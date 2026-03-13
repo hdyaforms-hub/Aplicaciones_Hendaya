@@ -66,13 +66,13 @@ export async function uploadColegiosData(data: ColegioData[], overwrite: boolean
         const dataToInsert = data.map(d => ({
             colut: Number(d.colut),
             colRBD: Number(d.colRBD),
-            colRBDDV: String(d.colRBDDV),
-            insid: String(d.insid),
-            institucion: String(d.institucion),
-            sucursal: String(d.sucursal),
-            nombreEstablecimiento: String(d.nombreEstablecimiento),
-            direccionEstablecimiento: String(d.direccionEstablecimiento),
-            comuna: String(d.comuna),
+            colRBDDV: String(d.colRBDDV).trim(),
+            insid: String(d.insid).trim(),
+            institucion: String(d.institucion).trim(),
+            sucursal: String(d.sucursal).trim(),
+            nombreEstablecimiento: String(d.nombreEstablecimiento).trim(),
+            direccionEstablecimiento: String(d.direccionEstablecimiento).trim(),
+            comuna: String(d.comuna).trim(),
             uploadedBy: username
         }))
 

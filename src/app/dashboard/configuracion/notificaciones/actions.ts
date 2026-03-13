@@ -97,3 +97,31 @@ export async function savePlantillaCorreo(codigoPantalla: string, asunto: string
         return { success: false, error: 'Error al grabar plantilla de correo.' }
     }
 }
+export async function getMockDataForPreview(codigoPantalla: string) {
+    const mockData: Record<string, any> = {
+        'retiro-saldos': {
+            Folio: '0000000088',
+            Tipo: 'Retiro de saldo',
+            RBD: '1234',
+            Establecimiento: 'COLEGIO DE PRUEBA HENDAYA',
+            UT: '5',
+            Sucursal: 'SANTIAGO SUR',
+            Supervisor: 'JUAN PÉREZ',
+            NombreAutoriza: 'MARÍA GONZÁLEZ',
+            RUTAutoriza: '12.345.678-9',
+            DetalleProductos: '- [001] PRODUCTO A: 10\n- [002] PRODUCTO B: 5'
+        },
+        'solicitud-pan': {
+            Folio: 'PAN-2024-0015',
+            RBD: '5678',
+            Establecimiento: 'ESCUELA DE TALCA',
+            Usuario: 'PEDRO RIVAS'
+        },
+        'ingreso-raciones': {
+            RBD: '9012',
+            Establecimiento: 'LICEO INDUSTRIAL',
+            Usuario: 'ANA LÓPEZ'
+        }
+    }
+    return mockData[codigoPantalla] || {}
+}

@@ -74,14 +74,14 @@ export async function uploadPMPAData(data: PMPAData[], overwrite: boolean) {
 
         // Mapear agregando el usuario que subió el registro
         const dataToInsert = data.map(d => ({
-            sucursal: String(d.sucursal),
+            sucursal: String(d.sucursal).trim(),
             ano: Number(d.ano),
             mes: Number(d.mes),
             rbd: Number(d.rbd),
-            programa: String(d.programa),
-            estrato: String(d.estrato),
+            programa: String(d.programa).trim(),
+            estrato: String(d.estrato).trim(),
             raceq: Number(d.raceq),
-            servicio: String(d.servicio),
+            servicio: String(d.servicio).trim(),
             uploadedBy: username
         }))
 

@@ -226,7 +226,7 @@ export default function IngresoRacionesClient() {
             <div className="bg-gray-50 border border-gray-200 rounded-2xl p-6 relative overflow-hidden">
                 <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none text-9xl">🏫</div>
 
-                <h3 className="text-sm font-semibold text-gray-800 mb-4 uppercase tracking-wider relative z-10">1. Establecimiento a Auditar</h3>
+                <h3 className="text-sm font-black text-black mb-4 uppercase tracking-widest relative z-10">1. Establecimiento a Auditar</h3>
 
                 {!selectedColegio ? (
                     <button
@@ -267,7 +267,7 @@ export default function IngresoRacionesClient() {
             {/* Fecha y Filtros PMPA */}
             {selectedColegio && (
                 <div className="bg-gray-50 border border-gray-200 rounded-2xl p-6 relative animate-in fade-in slide-in-from-top-4">
-                    <h3 className="text-sm font-semibold text-gray-800 mb-5 uppercase tracking-wider relative z-10">2. Datos de la Auditoría</h3>
+                    <h3 className="text-sm font-black text-black mb-5 uppercase tracking-widest relative z-10">2. Datos de la Auditoría</h3>
 
                     {ultimaFecha && (
                         <div className="mb-6 p-4 bg-cyan-50 border border-cyan-200 text-cyan-800 rounded-xl text-sm font-medium flex gap-3 animate-in fade-in">
@@ -281,7 +281,7 @@ export default function IngresoRacionesClient() {
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div>
-                            <label className="block text-sm font-bold text-gray-700 mb-2">Fecha a Trabajar</label>
+                            <label className="block text-sm font-black text-black mb-2 uppercase tracking-wide">Fecha a Trabajar</label>
                             <input
                                 type="date"
                                 value={fechaTraba}
@@ -307,7 +307,7 @@ export default function IngresoRacionesClient() {
                             {pmpaStatus === 'success' && (
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 animate-in fade-in">
                                     <div>
-                                        <label className="block text-sm font-bold text-gray-700 mb-2">Programa</label>
+                                        <label className="block text-sm font-black text-black mb-2 uppercase tracking-wide">Programa</label>
                                         <select
                                             value={selectedPrograma}
                                             onChange={(e) => setSelectedPrograma(e.target.value)}
@@ -319,7 +319,7 @@ export default function IngresoRacionesClient() {
                                         </select>
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-bold text-gray-700 mb-2">Estrato</label>
+                                        <label className="block text-sm font-bold text-gray-900 mb-2">Estrato</label>
                                         <select
                                             value={selectedEstrato}
                                             onChange={(e) => setSelectedEstrato(e.target.value)}
@@ -337,13 +337,13 @@ export default function IngresoRacionesClient() {
                             {pmpaStatus === 'idle' && fechaTraba === '' && (
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 opacity-50 pointer-events-none">
                                     <div>
-                                        <label className="block text-sm font-bold text-gray-700 mb-2">Programa</label>
+                                        <label className="block text-sm font-bold text-gray-900 mb-2">Programa</label>
                                         <select className="w-full px-4 py-3 bg-gray-100 rounded-xl border border-gray-200 text-gray-500 font-medium appearance-none">
                                             <option>Seleccione Fecha...</option>
                                         </select>
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-bold text-gray-700 mb-2">Estrato</label>
+                                        <label className="block text-sm font-black text-black mb-2 uppercase tracking-wide">Estrato</label>
                                         <select className="w-full px-4 py-3 bg-gray-100 rounded-xl border border-gray-200 text-gray-500 font-medium appearance-none">
                                             <option>Seleccione Fecha...</option>
                                         </select>
@@ -365,7 +365,7 @@ export default function IngresoRacionesClient() {
 
                     <div className="p-6 overflow-x-auto">
                         <table className="w-full text-left text-sm mb-6 relative">
-                            <thead className="text-gray-500 border-b border-gray-200 bg-gray-50/50">
+                            <thead className="text-gray-900 border-b border-gray-200 bg-gray-50/50">
                                 <tr>
                                     <th className="px-4 py-3 font-semibold w-1/3">Servicio</th>
                                     <th className="px-4 py-3 font-semibold text-center w-1/3">Ingresado (Consumo Real)</th>

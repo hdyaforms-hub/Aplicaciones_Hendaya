@@ -5,8 +5,45 @@ import { getSession } from '@/lib/session'
 import { revalidatePath } from 'next/cache'
 import crypto from 'crypto'
 
+import nodemailer from 'nodemailer'
+
 const ENCRYPTION_KEY = crypto.createHash('sha256').update(String(process.env.SESSION_SECRET || 'super-secret-key-change-me')).digest('base64').substring(0, 32)
 const IV_LENGTH = 16
+
+export async function testSmtpConnection(email: string, password?: string) {
+    const session = await getSession()
+    if (!session?.user?.role?.permissions.includes('manage_correo')) {
+        return { error: 'No tienes permisos para esta acción.' }
+    }
+
+    try {
+        let smtpPassword = password
+        if (!smtpPassword || smtpPassword.trim() === '') {
+            const config = await prisma.emailConfig.findUnique({ where: { id: 'global' } })
+            if (!config) return { error: 'No hay credenciales guardadas para probar.' }
+            smtpPassword = await decrypt(config.password)
+        }
+
+        const transporter = nodemailer.createTransport({
+            host: "smtp.office365.com",
+            port: 587,
+            secure: false, // TLS
+            auth: {
+                user: email,
+                pass: smtpPassword
+            }
+            // Removed SSLv3 to support modern TLS defaults
+        })
+
+        await transporter.verify()
+        return { success: true }
+    } catch (error: any) {
+        console.error('SMTP Test Error:', error)
+        let msg = error.message || 'Error desconocido al conectar.'
+        if (msg.includes('535 5.7.3')) msg = 'Autenticación fallida (535 5.7.3). Verifica el usuario, la contraseña o si SMTP AUTH está habilitado en Microsoft 365.'
+        return { error: msg }
+    }
+}
 
 export async function encrypt(text: string) {
     const iv = crypto.randomBytes(IV_LENGTH)

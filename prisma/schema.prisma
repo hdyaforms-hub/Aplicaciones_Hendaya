@@ -182,3 +182,45 @@ model UT {
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
 }
+
+model SolicitudGas {
+  id                String   @id @default(uuid())
+  ut                Int
+  rbd               Int
+  nombreSolicitante String   // char(100)
+  fechaSolicitud    DateTime @default(now())
+  distribuidor      String   // char(20)
+  tipoGas           String   // char(20)
+  cantidadLitro     Float    // Numerico(2 decimales)
+  cilindro          String?  // char(20) (e.g., 5 Kilos, 11 Kilos, etc.)
+  cantidad          Int?     // Cantidad de cilindros
+  observacion       String?  // char(500)
+  createdAt         DateTime @default(now())
+}
+
+model RetiroSaldoHeader {
+  id                    String              @id @default(uuid())
+  folio                 String              @unique // Formato: 0000000001
+  tipoOperacion         String              // "Retiro de saldo" o "Rebaja de Stock"
+  rbd                   Int
+  nombreEstablecimiento String
+  ut                    Int
+  sucursal              String
+  fecha                 DateTime            @default(now())
+  supervisor            String              // Usuario conectado
+  nombreAutoriza        String?             // Nombre de quien autoriza
+  rutAutoriza           String?             // RUT de quien autoriza
+  firmaBase64           String?             // Firma en formato Base64 (imagen/dibujo)
+  detalles              RetiroSaldoDetail[]
+  createdAt             DateTime            @default(now())
+}
+
+model RetiroSaldoDetail {
+  id             String            @id @default(uuid())
+  headerId       String
+  header         RetiroSaldoHeader @relation(fields: [headerId], references: [id])
+  codigoProducto String
+  nombreProducto String
+  cantidad       Int
+  createdAt      DateTime          @default(now())
+}

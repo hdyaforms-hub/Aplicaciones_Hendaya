@@ -24,7 +24,13 @@ export async function searchColegiosSolicitud(query: string) {
         })
         const userSucursales = dbUser?.sucursales?.map((s: any) => s.nombre) || []
 
-        const baseWhere = {
+        const uts = await prisma.uT.findMany({
+            where: { sucursal: { nombre: { in: userSucursales } } },
+            select: { codUT: true }
+        })
+        const allowedUTs = uts.map(ut => ut.codUT)
+
+        const baseWhere: any = {
             OR: [
                 ...(isNumeric ? [{ colRBD: Number(query) }] : []),
                 { nombreEstablecimiento: { contains: query } }
@@ -33,7 +39,7 @@ export async function searchColegiosSolicitud(query: string) {
 
         const finalWhere = isAdmin ? baseWhere : {
             ...baseWhere,
-            sucursal: { in: userSucursales }
+            colut: { in: allowedUTs }
         }
 
         const colegios = await prisma.colegios.findMany({
@@ -226,9 +232,6 @@ Sistema de solicitud de Pan.`;
                 auth: {
                     user: emailConfig.email,
                     pass: emailConfig.password
-                },
-                tls: {
-                    ciphers: "SSLv3",
                 }
             })
 

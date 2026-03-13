@@ -16,10 +16,26 @@ export async function searchColegios(query: string) {
     const isNumeric = !isNaN(Number(query))
 
     const isAdmin = session?.user?.role?.name === 'Administrador'
-    const userSucursales = session?.user?.sucursales || []
-
+    
     try {
-        const baseWhere = {
+        let allowedUTs: number[] = []
+        
+        if (!isAdmin) {
+            // Fetch authorized sucursales names from the DB to be sure
+            const dbUser = await (prisma.user as any).findUnique({
+                where: { id: session?.user?.id as string },
+                include: { sucursales: true }
+            })
+            const userSucursalNames = dbUser?.sucursales?.map((s: any) => s.nombre) || []
+
+            const uts = await prisma.uT.findMany({
+                where: { sucursal: { nombre: { in: userSucursalNames } } },
+                select: { codUT: true }
+            })
+            allowedUTs = uts.map(ut => ut.codUT)
+        }
+
+        const baseWhere: any = {
             OR: [
                 ...(isNumeric ? [{ colRBD: Number(query) }] : []),
                 { nombreEstablecimiento: { contains: query } }
@@ -28,7 +44,7 @@ export async function searchColegios(query: string) {
 
         const finalWhere = isAdmin ? baseWhere : {
             ...baseWhere,
-            sucursal: { in: userSucursales }
+            colut: { in: allowedUTs }
         }
 
         const colegios = await prisma.colegios.findMany({

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { saveEmailConfig } from './actions'
+import { saveEmailConfig, testSmtpConnection } from './actions'
 
 type ConfigData = {
     id: string;
@@ -17,6 +17,8 @@ export default function EmailConfigForm({ initialConfig }: { initialConfig: Conf
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
     const [success, setSuccess] = useState('')
+    const [testLoading, setTestLoading] = useState(false)
+    const [testResult, setTestResult] = useState<{ success?: boolean, error?: string } | null>(null)
 
     const [isEditing, setIsEditing] = useState(!initialConfig)
 
@@ -51,6 +53,21 @@ export default function EmailConfigForm({ initialConfig }: { initialConfig: Conf
             }, 2000)
             setLoading(false)
         }
+    }
+
+    const handleTest = async () => {
+        setTestLoading(true)
+        setTestResult(null)
+        setError('')
+        
+        const result = await testSmtpConnection(email, password)
+        
+        if (result.success) {
+            setTestResult({ success: true })
+        } else {
+            setTestResult({ error: result.error })
+        }
+        setTestLoading(false)
     }
 
     return (
@@ -179,6 +196,45 @@ export default function EmailConfigForm({ initialConfig }: { initialConfig: Conf
                         >
                             {loading ? 'Validando...' : '💾 Guardar Credenciales'}
                         </button>
+                    </div>
+
+                    <div className="mt-4 pt-4 border-t border-gray-100">
+                        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-200">
+                            <div className="flex-1">
+                                <h4 className="text-sm font-bold text-slate-800">Verificar Conexión SMTP</h4>
+                                <p className="text-xs text-slate-500">Prueba si el servidor de Hendaya (Office 365) acepta estas credenciales actualmente.</p>
+                            </div>
+                            <button
+                                type="button"
+                                onClick={handleTest}
+                                disabled={testLoading || !email}
+                                className={`px-5 py-2 rounded-xl font-bold transition-all flex items-center gap-2 shadow-sm ${
+                                    testLoading ? 'bg-slate-200 text-slate-400' : 'bg-white border border-indigo-200 text-indigo-600 hover:bg-indigo-50 active:scale-95'
+                                }`}
+                            >
+                                {testLoading ? '⏳ Probando...' : '👁️ Probar Conexión'}
+                            </button>
+                        </div>
+                        
+                        {testResult && (
+                            <div className={`mt-3 p-3 rounded-xl text-sm font-medium animate-in fade-in slide-in-from-top-1 ${
+                                testResult.success ? 'bg-green-100 text-green-700 border border-green-200' : 'bg-red-100 text-red-700 border border-red-200'
+                            }`}>
+                                {testResult.success ? (
+                                    <div className="flex items-center gap-2">
+                                        <span>✅</span> ¡Conexión Exitosa! El servidor SMTP ha validado las credenciales.
+                                    </div>
+                                ) : (
+                                    <div className="flex items-start gap-2">
+                                        <span className="mt-0.5">❌</span> 
+                                        <div>
+                                            <div className="font-bold">Error de Conexión:</div>
+                                            <div className="mt-1 text-xs opacity-90">{testResult.error}</div>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        )}
                     </div>
                 </form>
             )}

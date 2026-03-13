@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { saveScreenNotification, savePlantillaCorreo } from './actions'
+import { saveScreenNotification, savePlantillaCorreo, getMockDataForPreview } from './actions'
 
 type PantallaInfo = {
     id: string
@@ -19,6 +19,11 @@ const PANTALLAS: PantallaInfo[] = [
         id: 'solicitud-pan', 
         name: 'Solicitud de Pan', 
         description: 'Se envía un aviso al crear una solicitud de pan.' 
+    },
+    { 
+        id: 'retiro-saldos', 
+        name: 'Retiro de Saldos', 
+        description: 'Se envía un aviso al momento de registrar un retiro de saldo o rebaja de stock.' 
     }
 ]
 
@@ -32,7 +37,14 @@ export default function NotificacionesClient({
     plantillas: any[]
 }) {
     const [loading, setLoading] = useState<Record<string, boolean>>({})
-    const [templateModal, setTemplateModal] = useState<{ isOpen: boolean, pantallaId: string, asunto: string, cuerpo: string } | null>(null)
+    const [templateModal, setTemplateModal] = useState<{ 
+        isOpen: boolean, 
+        pantallaId: string, 
+        asunto: string, 
+        cuerpo: string,
+        showPreview: boolean,
+        mockData: any
+    } | null>(null)
 
     const handleSave = async (codigoPantalla: string, listas: string[], activa: boolean) => {
         setLoading(prev => ({ ...prev, [codigoPantalla]: true }))
@@ -51,13 +63,16 @@ export default function NotificacionesClient({
         }
     }
 
-    const openTemplateModal = (pantallaId: string) => {
+    const openTemplateModal = async (pantallaId: string) => {
         const pInfo = plantillas.find(p => p.codigoPantalla === pantallaId)
+        const mock = await getMockDataForPreview(pantallaId)
         setTemplateModal({
             isOpen: true,
             pantallaId,
             asunto: pInfo?.asunto || '',
-            cuerpo: pInfo?.cuerpo || ''
+            cuerpo: pInfo?.cuerpo || '',
+            showPreview: false,
+            mockData: mock
         })
     }
 
@@ -77,6 +92,16 @@ export default function NotificacionesClient({
         } finally {
             setLoading(prev => ({ ...prev, templateSave: false }))
         }
+    }
+
+    const renderPreview = (text: string) => {
+        if (!templateModal?.mockData) return text
+        let result = text
+        Object.entries(templateModal.mockData).forEach(([tag, value]) => {
+            const regex = new RegExp(`<${tag}.*?>`, 'gi')
+            result = result.replace(regex, String(value))
+        })
+        return result
     }
 
     return (
@@ -114,41 +139,78 @@ export default function NotificacionesClient({
 
             {templateModal && templateModal.isOpen && (
                 <div className="fixed inset-0 bg-black/50 z-[100] flex items-center justify-center p-4 backdrop-blur-sm animate-in fade-in duration-200">
-                    <div className="bg-white rounded-2xl shadow-xl w-full max-w-3xl overflow-hidden flex flex-col">
+                    <div className="bg-white rounded-2xl shadow-xl w-full max-w-3xl overflow-hidden flex flex-col max-h-[90vh]">
                         <div className="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
                             <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
-                                <span>📧</span> Formato de Correo
+                                <span>📧</span> {templateModal.showPreview ? 'Vista Previa del Correo' : 'Formato de Correo'}
                             </h3>
                             <button onClick={() => setTemplateModal(null)} className="text-gray-400 hover:text-gray-600">✕</button>
                         </div>
-                        <div className="p-6 overflow-y-auto max-h-[70vh] space-y-4">
-                            <p className="text-sm text-gray-500 mb-2">Aquí puedes personalizar qué dirá el Asunto y el Cuerpo del correo para este módulo. Puedes usar etiquetas como <code className="bg-gray-100 text-cyan-600 px-1 rounded">&lt;Usuario&gt;</code>, <code className="bg-gray-100 text-cyan-600 px-1 rounded">&lt;RBD&gt;</code> que reemplazaremos internamente al enviar.</p>
-                            <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-1">Asunto</label>
-                                <input 
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none bg-white text-gray-900 font-medium"
-                                    value={templateModal.asunto}
-                                    onChange={(e) => setTemplateModal({...templateModal, asunto: e.target.value})}
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-1">Cuerpo (Mensaje)</label>
-                                <textarea 
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none h-48 font-mono text-sm bg-white text-gray-900 font-medium"
-                                    value={templateModal.cuerpo}
-                                    onChange={(e) => setTemplateModal({...templateModal, cuerpo: e.target.value})}
-                                />
-                            </div>
+                        
+                        <div className="p-6 overflow-y-auto flex-1 space-y-4">
+                            {!templateModal.showPreview ? (
+                                <>
+                                    <p className="text-xs text-gray-500 mb-2">Aquí puedes personalizar qué dirá el Asunto y el Cuerpo del correo para este módulo. Puedes usar etiquetas como <code className="bg-gray-100 text-cyan-600 px-1 rounded">&lt;Usuario&gt;</code>, <code className="bg-gray-100 text-cyan-600 px-1 rounded">&lt;RBD&gt;</code> que reemplazaremos internamente al enviar.</p>
+                                    <div>
+                                        <label className="block text-sm font-semibold text-gray-700 mb-1">Asunto</label>
+                                        <input 
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none bg-white text-gray-900 font-medium"
+                                            value={templateModal.asunto}
+                                            onChange={(e) => setTemplateModal({...templateModal, asunto: e.target.value})}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-semibold text-gray-700 mb-1">Cuerpo (Mensaje)</label>
+                                        <textarea 
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none h-48 font-mono text-sm bg-white text-gray-900 font-medium"
+                                            value={templateModal.cuerpo}
+                                            onChange={(e) => setTemplateModal({...templateModal, cuerpo: e.target.value})}
+                                        />
+                                    </div>
+                                </>
+                            ) : (
+                                <div className="bg-slate-50 border border-slate-200 rounded-xl p-6 shadow-inner space-y-4">
+                                    <div>
+                                        <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Asunto:</span>
+                                        <div className="text-gray-900 font-semibold text-lg py-2 border-b border-slate-200">
+                                            {renderPreview(templateModal.asunto) || '(Sin asunto)'}
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Mensaje:</span>
+                                        <div className="text-gray-800 text-sm whitespace-pre-wrap leading-relaxed py-4 min-h-[200px]">
+                                            {renderPreview(templateModal.cuerpo) || '(Cuerpo vacío)'}
+                                        </div>
+                                    </div>
+                                    <div className="pt-4 border-t border-slate-200 italic text-[10px] text-slate-400 text-center">
+                                        * Esta es una representación visual del correo que recibirán los destinatarios.
+                                    </div>
+                                </div>
+                            )}
                         </div>
-                        <div className="p-4 border-t border-gray-100 flex justify-end gap-3 bg-gray-50 text-sm">
-                            <button onClick={() => setTemplateModal(null)} className="px-4 py-2 text-gray-500 hover:bg-gray-100 rounded-lg font-medium transition-colors">Cancelar</button>
+
+                        <div className="p-4 border-t border-gray-100 flex justify-between items-center bg-gray-50 text-sm">
                             <button 
-                                onClick={saveTemplate}
-                                disabled={loading['templateSave']}
-                                className="px-6 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-medium transition-colors disabled:opacity-50"
+                                onClick={() => setTemplateModal({...templateModal, showPreview: !templateModal.showPreview})}
+                                className={`px-4 py-2 rounded-lg font-bold transition-all flex items-center gap-2 ${
+                                    templateModal.showPreview 
+                                    ? 'bg-amber-100 text-amber-700 hover:bg-amber-200' 
+                                    : 'bg-indigo-100 text-indigo-700 hover:bg-indigo-200'
+                                }`}
                             >
-                                {loading['templateSave'] ? 'Guardando...' : 'Guardar Formato'}
+                                {templateModal.showPreview ? '⬅ Ver Editor' : '👁️ Vista Previa'}
                             </button>
+
+                            <div className="flex gap-3">
+                                <button onClick={() => setTemplateModal(null)} className="px-4 py-2 text-gray-500 hover:bg-gray-100 rounded-lg font-medium transition-colors">Cancelar</button>
+                                <button 
+                                    onClick={saveTemplate}
+                                    disabled={loading['templateSave']}
+                                    className="px-6 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-bold transition-colors disabled:opacity-50 shadow-md shadow-slate-900/20"
+                                >
+                                    {loading['templateSave'] ? 'Guardando...' : 'Guardar Formato'}
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

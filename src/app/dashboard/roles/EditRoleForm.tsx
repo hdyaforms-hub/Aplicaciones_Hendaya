@@ -7,6 +7,7 @@ type PermissionDef = {
     id: string
     name: string
     description: string
+    category: string
 }
 
 type RoleData = {
@@ -85,30 +86,58 @@ export default function EditRoleForm({ role, availablePermissions }: { role: Rol
 
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-3">Permisos de Acceso</label>
-                        <div className="space-y-2 border border-gray-200 rounded-xl max-h-48 overflow-y-auto bg-gray-50 p-3">
-                            {availablePermissions.map(p => (
-                                <label key={p.id} className="flex items-start gap-3 p-2 hover:bg-white rounded-lg cursor-pointer transition-colors border border-transparent hover:border-gray-200 hover:shadow-sm">
-                                    <div className="flex h-5 items-center">
-                                        <input
-                                            name="permissions"
-                                            value={p.id}
-                                            type="checkbox"
-                                            defaultChecked={initialPerms.includes(p.id)}
-                                            className="w-4 h-4 text-cyan-600 rounded border-gray-300 focus:ring-cyan-500 cursor-pointer"
-                                        />
+                        <div className="space-y-6 border border-gray-200 rounded-2xl max-h-72 overflow-y-auto bg-gray-50 p-4 custom-scrollbar">
+                            {Object.entries(
+                                availablePermissions.reduce((acc, p) => {
+                                    if (!acc[p.category]) acc[p.category] = []
+                                    acc[p.category].push(p)
+                                    return acc
+                                }, {} as Record<string, PermissionDef[]>)
+                            ).map(([category, perms]) => (
+                                <div key={category} className="space-y-3">
+                                    <h4 className="text-xs font-black text-indigo-600 uppercase tracking-widest border-b border-gray-200 pb-1 mb-2">
+                                        📁 {category}
+                                    </h4>
+                                    <div className="grid grid-cols-1 gap-2">
+                                        {perms.map(p => (
+                                            <label key={p.id} className="flex items-start gap-3 p-2.5 hover:bg-white rounded-xl cursor-pointer transition-all border border-transparent hover:border-gray-200 hover:shadow-sm group">
+                                                <div className="flex h-5 items-center">
+                                                    <input
+                                                        name="permissions"
+                                                        value={p.id}
+                                                        type="checkbox"
+                                                        defaultChecked={initialPerms.includes(p.id)}
+                                                        className="w-4 h-4 text-cyan-600 rounded border-gray-300 focus:ring-cyan-500 cursor-pointer"
+                                                    />
+                                                </div>
+                                                <div className="flex flex-col">
+                                                    <span className="text-sm font-bold text-gray-800 group-hover:text-cyan-700">{p.name}</span>
+                                                    <span className="text-[10px] text-gray-500 uppercase font-medium">{p.description}</span>
+                                                </div>
+                                            </label>
+                                        ))}
                                     </div>
-                                    <div className="flex flex-col">
-                                        <span className="text-sm font-semibold text-gray-800">{p.name}</span>
-                                        <span className="text-xs text-gray-500">{p.description}</span>
-                                    </div>
-                                </label>
+                                </div>
                             ))}
 
                             {availablePermissions.length === 0 && (
-                                <p className="text-sm text-gray-500 p-2 text-center">No hay permisos definidos</p>
+                                <p className="text-sm text-gray-500 p-2 text-center italic">No hay permisos definidos</p>
                             )}
                         </div>
                     </div>
+
+                    <style jsx>{`
+                        .custom-scrollbar::-webkit-scrollbar {
+                            width: 6px;
+                        }
+                        .custom-scrollbar::-webkit-scrollbar-track {
+                            background: transparent;
+                        }
+                        .custom-scrollbar::-webkit-scrollbar-thumb {
+                            background: #E2E8F0;
+                            border-radius: 10px;
+                        }
+                    `}</style>
 
                     <div className="pt-4 flex gap-3">
                         <button type="button" onClick={() => setIsOpen(false)} className="px-5 py-2.5 w-full rounded-xl text-gray-600 bg-gray-100 hover:bg-gray-200 font-medium transition-colors">

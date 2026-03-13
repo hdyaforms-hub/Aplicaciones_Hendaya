@@ -165,35 +165,35 @@ export default async function TableroPage({
             {/* Header Filtros */}
             <form className="bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-wrap gap-4 items-end">
                 <div className="flex-1 min-w-[140px]">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Año</label>
+                    <label className="block text-sm font-black text-black mb-1 uppercase tracking-tighter">Año</label>
                     <select name="ano" defaultValue={filters.ano?.toString() || ''} className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 bg-gray-50 appearance-none text-black font-medium">
                         <option value="">(Todos)</option>
                         {availableAnos.map(a => <option key={a} value={a}>{a}</option>)}
                     </select>
                 </div>
                 <div className="flex-1 min-w-[140px]">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Mes</label>
+                    <label className="block text-sm font-black text-black mb-1 uppercase tracking-tighter">Mes</label>
                     <select name="mes" defaultValue={filters.mes?.toString() || ''} className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 bg-gray-50 appearance-none text-black font-medium">
                         <option value="">(Todos)</option>
                         {availableMeses.map((m, i) => <option key={i} value={m}>{m}</option>)}
                     </select>
                 </div>
                 <div className="flex-1 min-w-[150px]">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Sucursal</label>
+                    <label className="block text-sm font-black text-black mb-1 uppercase tracking-tighter">Sucursal</label>
                     <select name="sucursal" defaultValue={filters.sucursal || ''} className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 bg-gray-50 appearance-none text-black font-medium auto-submit">
                         <option value="">(Todas)</option>
                         {availableSucursales.map((s: any) => <option key={s} value={s}>{s}</option>)}
                     </select>
                 </div>
                 <div className="flex-1 min-w-[120px]">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">UT</label>
+                    <label className="block text-sm font-black text-black mb-1 uppercase tracking-tighter">UT</label>
                     <select name="ut" defaultValue={filters.ut?.toString() || ''} className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 bg-gray-50 appearance-none text-black font-medium disabled:opacity-50 auto-submit" disabled={!filters.sucursal}>
                         <option value="">(Todas)</option>
                         {availableUTs.map(ut => <option key={ut} value={ut}>{ut}</option>)}
                     </select>
                 </div>
                 <div className="flex-[2] min-w-[200px]">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Establecimiento / RBD</label>
+                    <label className="block text-sm font-black text-black mb-1 uppercase tracking-tighter">Establecimiento / RBD</label>
                     <select name="rbd" defaultValue={filters.rbd?.toString() || ''} className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 bg-gray-50 appearance-none text-black font-medium disabled:opacity-50 auto-submit" disabled={!filters.ut}>
                         <option value="">(Todos)</option>
                         {availableRBDs.map(r => <option key={r.value} value={r.value}>{r.label}</option>)}
