@@ -55,30 +55,21 @@ export default function AbrirFormularioClient({ initialForms, canManage }: { ini
                             {/* Decorative background */}
                             <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-cyan-50/50 to-sky-50/50 rounded-bl-full -z-0 opacity-50 group-hover:scale-150 transition-transform duration-700" />
                             
-                            {/* Header Section */}
-                            <div className="flex justify-between items-start mb-8 relative z-20 pointer-events-none">
-                                <div className="flex items-center gap-4">
-                                    <div className="w-16 h-16 bg-cyan-500 rounded-2xl flex items-center justify-center text-3xl text-white shadow-lg shadow-cyan-200 group-hover:rotate-6 transition-transform">
-                                        📄
-                                    </div>
-                                    <div className="bg-amber-50 px-4 py-2 rounded-2xl border border-amber-100 shadow-sm flex items-center gap-2">
-                                        <span className="text-lg">📊</span>
-                                        <span className="text-xs font-black text-amber-700 uppercase tracking-widest">
-                                            {(form as any)._count?.submissions || 0} Respuestas
-                                        </span>
-                                    </div>
+                            {/* Header Section: Icon & Status */}
+                            <div className="flex justify-between items-start mb-6 relative z-20 pointer-events-none">
+                                <div className="w-16 h-16 bg-cyan-500 rounded-2xl flex items-center justify-center text-3xl text-white shadow-lg shadow-cyan-200 group-hover:rotate-6 transition-transform">
+                                    📄
                                 </div>
                                 <div className="flex flex-col items-end gap-1.5 pt-1">
-                                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{form.fields.length} Campos</span>
                                     <span className={`text-[9px] font-black px-3 py-1 rounded-full shadow-sm tracking-tighter ${form.isActive ? 'bg-green-100 text-green-700 border border-green-200' : 'bg-red-100 text-red-700 border border-red-200'}`}>
                                         {form.isActive ? 'ACTIVO' : 'INACTIVO'}
                                     </span>
                                 </div>
                             </div>
 
-                            {/* Title & Description */}
+                            {/* Title & Description Area */}
                             <div className="mb-6 relative z-20 pointer-events-none">
-                                <h3 className="text-2xl font-black text-slate-900 mb-2 leading-tight group-hover:text-cyan-600 transition-colors uppercase tracking-tight">
+                                <h3 className="text-3xl font-black text-slate-900 mb-2 leading-tight group-hover:text-cyan-600 transition-colors uppercase tracking-tight">
                                     {form.title}
                                 </h3>
                                 <p className="text-sm text-slate-500 line-clamp-2 italic font-medium leading-relaxed">
@@ -86,25 +77,46 @@ export default function AbrirFormularioClient({ initialForms, canManage }: { ini
                                 </p>
                             </div>
 
-                            {/* ESTATISTICAS POR UT (Mini Graphic) */}
+                            {/* Summary Badges Area (The decluttered stats) */}
+                            <div className="flex items-center gap-3 mb-8 relative z-20 pointer-events-none">
+                                <div className="bg-amber-50 px-4 py-2 rounded-2xl border border-amber-100 shadow-sm flex items-center gap-2">
+                                    <span className="text-xl">📊</span>
+                                    <div className="flex flex-col leading-none">
+                                        <span className="text-xs font-black text-amber-900 uppercase tracking-tighter">
+                                            {(form as any)._count?.submissions || 0}
+                                        </span>
+                                        <span className="text-[8px] font-bold text-amber-600 uppercase">Respuestas</span>
+                                    </div>
+                                </div>
+                                <div className="bg-slate-50 px-4 py-2 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-2">
+                                    <div className="flex flex-col leading-none">
+                                        <span className="text-xs font-black text-slate-900 uppercase tracking-tighter">
+                                            {form.fields.length}
+                                        </span>
+                                        <span className="text-[8px] font-bold text-slate-500 uppercase">Campos</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* ESTATISTICAS POR UT (The mini graphic stays but we make sure there is room) */}
                             {(form as any).utStats && (form as any).utStats.length > 0 && (
-                                <div className="mb-8 p-4 bg-slate-50 rounded-2xl border border-slate-100 relative z-20 pointer-events-none">
-                                    <div className="flex items-center justify-between mb-3">
+                                <div className="mb-8 p-5 bg-slate-50 rounded-3xl border border-slate-100 relative z-20 pointer-events-none">
+                                    <div className="flex items-center justify-between mb-4">
                                         <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
-                                            <span className="text-sm">📈</span> Distribución por UT
+                                            📈 Distribución por UT (Top 5)
                                         </span>
                                     </div>
-                                    <div className="space-y-2.5">
+                                    <div className="space-y-3">
                                         {(form as any).utStats.map((stat: any, idx: number) => {
                                             const total = (form as any).utStats.reduce((acc: number, curr: any) => acc + curr.count, 0)
                                             const percentage = total > 0 ? (stat.count / total) * 100 : 0
                                             return (
-                                                <div key={idx} className="space-y-1">
-                                                    <div className="flex justify-between items-center text-[10px] font-bold text-slate-600">
+                                                <div key={idx} className="space-y-1.5">
+                                                    <div className="flex justify-between items-center text-[10px] font-black text-slate-700 tracking-tighter uppercase">
                                                         <span>UT {stat.name}</span>
-                                                        <span className="text-slate-400">{stat.count}</span>
+                                                        <span className="text-slate-400 font-bold bg-white px-2 py-0.5 rounded-lg border border-slate-100">{stat.count}</span>
                                                     </div>
-                                                    <div className="h-1.5 w-full bg-slate-200 rounded-full overflow-hidden">
+                                                    <div className="h-2 w-full bg-slate-200 rounded-full overflow-hidden">
                                                         <div 
                                                             className="h-full bg-cyan-500 rounded-full transition-all duration-1000 shadow-[0_0_8px_rgba(6,182,212,0.4)]" 
                                                             style={{ width: `${percentage}%` }}
@@ -117,7 +129,7 @@ export default function AbrirFormularioClient({ initialForms, canManage }: { ini
                                 </div>
                             )}
 
-                            {/* ADMIN ACTIONS */}
+                            {/* ADMIN ACTIONS (They appear on hover) */}
                             {canManage && (
                                 <div className="grid grid-cols-3 gap-3 mb-6 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0 relative z-30">
                                     <Link 
@@ -144,8 +156,8 @@ export default function AbrirFormularioClient({ initialForms, canManage }: { ini
                                 </div>
                             )}
 
-                            {/* Footer Section */}
-                            <div className="pt-6 border-t border-slate-50 flex items-center justify-between mt-auto relative z-20 pointer-events-none">
+                            {/* Footer Section: Metadata */}
+                            <div className="pt-6 border-t border-slate-50 flex items-center justify-between mt-auto relative z-20 pointer-events-none mb-6">
                                 <div className="flex flex-col">
                                     <span className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-0.5">Creado por</span>
                                     <span className="text-xs font-bold text-slate-700">{form.createdBy}</span>
@@ -156,8 +168,8 @@ export default function AbrirFormularioClient({ initialForms, canManage }: { ini
                                 </div>
                             </div>
 
-                            {/* Action Button / Admin Indicator */}
-                            <div className="mt-6 relative z-30">
+                            {/* Action Button: Footer Bar */}
+                            <div className="relative z-30">
                                 {canManage ? (
                                     <Link 
                                         href={`/dashboard/formularios/abrir/${form.id}`}
@@ -168,7 +180,7 @@ export default function AbrirFormularioClient({ initialForms, canManage }: { ini
                                 ) : (
                                     <Link 
                                         href={`/dashboard/formularios/abrir/${form.id}`}
-                                        className="w-full py-4 bg-cyan-500 text-white text-center rounded-2xl text-xs font-black tracking-[0.2em] shadow-lg shadow-cyan-200 hover:bg-cyan-600 transition-all uppercase flex items-center justify-center gap-2"
+                                        className="w-full py-4 bg-cyan-500 text-white text-center rounded-2xl text-xs font-black tracking-[0.2em] shadow-lg shadow-cyan-200 hover:bg-cyan-600 transition-all uppercase flex items-center justify-center gap-2 font-black"
                                     >
                                         ABRIR FORMULARIO 📂
                                     </Link>
