@@ -12,15 +12,19 @@ export default function GasDashboardChart({
     resumeStats,
     distributorData,
     typeData,
-    topSchools = []
+    topSchools = [],
+    userRanking = [],
+    utList = []
 }: {
     chartData: any[]
     resumeStats: { totalLiters: number, totalSolicitudes: number, avgLiters: number, growth: number }
     distributorData: { name: string, value: number }[]
     typeData: { name: string, value: number }[]
     topSchools?: { name: string, total: number }[]
+    userRanking?: { name: string, total: number }[]
+    utList?: string[]
 }) {
-    const COLORS = ['#0EA5E9', '#8B5CF6', '#F59E0B', '#10B981', '#64748B']
+    const COLORS = ['#0EA5E9', '#8B5CF6', '#F59E0B', '#10B981', '#64748B', '#F43F5E', '#84CC16', '#06B6D4']
 
     return (
         <div className="space-y-6">
@@ -75,8 +79,22 @@ export default function GasDashboardChart({
                                 <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{fill: '#94A3B8', fontSize: 11}} />
                                 <YAxis axisLine={false} tickLine={false} tick={{fill: '#94A3B8', fontSize: 11}} />
                                 <Tooltip contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)' }} />
-                                <Bar dataKey="litros" fill="#0EA5E9" radius={[6, 6, 0, 0]} barSize={40} />
-                                <Line type="monotone" dataKey="solicitudes" stroke="#F59E0B" strokeWidth={3} dot={{ r: 4 }} />
+                                <Legend verticalAlign="top" align="right" iconType="circle" />
+                                {utList.length > 0 ? (
+                                    utList.map((ut, index) => (
+                                        <Bar 
+                                            key={ut} 
+                                            dataKey={ut} 
+                                            stackId="a" 
+                                            fill={COLORS[index % COLORS.length]} 
+                                            name={ut.replace('UT_', 'UT ')}
+                                            radius={index === utList.length - 1 ? [6, 6, 0, 0] : [0, 0, 0, 0]}
+                                        />
+                                    ))
+                                ) : (
+                                    <Bar dataKey="litros" fill="#0EA5E9" radius={[6, 6, 0, 0]} barSize={40} />
+                                )}
+                                <Line type="monotone" dataKey="solicitudes" stroke="#EF4444" strokeWidth={3} dot={{ r: 4 }} name="N° Solicitudes" />
                             </ComposedChart>
                         </ResponsiveContainer>
                     </div>
@@ -146,20 +164,40 @@ export default function GasDashboardChart({
                 </div>
             </div>
 
-            {/* Top Schools List */}
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                <h3 className="text-lg font-black text-gray-800 mb-4 flex items-center gap-2 uppercase tracking-tight">
-                    <span className="text-amber-500">🏆</span> Top 5 Establecimientos (Mayor Consumo)
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-                    {topSchools.map((s, i) => (
-                        <div key={i} className="p-4 bg-gray-50 rounded-2xl border border-gray-100 relative overflow-hidden group hover:bg-white hover:border-sky-200 transition-all">
-                            <span className="absolute -right-2 -bottom-2 text-4xl font-black text-gray-100 group-hover:text-sky-50 transition-colors">#{i+1}</span>
-                            <p className="text-[10px] font-black text-sky-600 uppercase mb-1">Ránking #{i+1}</p>
-                            <p className="font-bold text-gray-800 truncate mb-1">{s.name}</p>
-                            <p className="text-xl font-black text-gray-900">{s.total.toLocaleString()} <span className="text-xs font-bold text-gray-400">Lts</span></p>
-                        </div>
-                    ))}
+            {/* Rankings Lists */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <h3 className="text-lg font-black text-gray-800 mb-4 flex items-center gap-2 uppercase tracking-tight">
+                        <span className="text-amber-500">🏆</span> Top 5 Establecimientos
+                    </h3>
+                    <div className="space-y-3">
+                        {topSchools.map((s, i) => (
+                            <div key={i} className="flex items-center justify-between p-3 bg-gray-50 rounded-xl border border-gray-100 group hover:bg-white hover:border-sky-200 transition-all">
+                                <div className="flex items-center gap-3">
+                                    <span className="w-8 h-8 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center font-bold text-sm">#{i+1}</span>
+                                    <span className="font-bold text-gray-700 truncate max-w-[180px]">{s.name}</span>
+                                </div>
+                                <span className="font-black text-gray-900">{s.total.toLocaleString()} <span className="text-[10px] text-gray-400">Lts</span></span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <h3 className="text-lg font-black text-gray-800 mb-4 flex items-center gap-2 uppercase tracking-tight">
+                        <span className="text-indigo-500">👤</span> Ranking por Usuario
+                    </h3>
+                    <div className="space-y-3">
+                        {userRanking.map((u, i) => (
+                            <div key={i} className="flex items-center justify-between p-3 bg-gray-50 rounded-xl border border-gray-100 group hover:bg-white hover:border-indigo-200 transition-all">
+                                <div className="flex items-center gap-3">
+                                    <span className="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-sm">#{i+1}</span>
+                                    <span className="font-bold text-gray-700 truncate max-w-[180px]">{u.name}</span>
+                                </div>
+                                <span className="font-black text-gray-900">{u.total.toLocaleString()} <span className="text-[10px] text-gray-400">Lts</span></span>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>

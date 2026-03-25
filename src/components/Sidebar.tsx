@@ -64,13 +64,23 @@ export default function Sidebar({ user }: { user: User }) {
             ]
         },
         {
+            name: 'Formularios',
+            icon: '📝',
+            requiredPermission: ['view_formularios', 'create_formularios', 'fill_formularios'],
+            subItems: [
+                { name: 'Crear Formulario', href: '/dashboard/formularios/crear', requiredPermission: 'create_formularios' },
+                { name: 'Abrir Formulario', href: '/dashboard/formularios/abrir', requiredPermission: 'fill_formularios' }
+            ]
+        },
+        {
             name: 'Mantenedor',
             icon: '⚙️',
-            requiredPermission: ['view_colegios', 'view_productos', 'view_pmpa'],
+            requiredPermission: ['view_colegios', 'view_productos', 'view_pmpa', 'view_consumo_gas'],
             subItems: [
                 { name: 'PMPA', href: '/dashboard/pmpa', requiredPermission: 'view_pmpa' },
                 { name: 'Colegios', href: '/dashboard/colegios', requiredPermission: 'view_colegios' },
-                { name: 'Productos', href: '/dashboard/productos', requiredPermission: 'view_productos' }
+                { name: 'Productos', href: '/dashboard/productos', requiredPermission: 'view_productos' },
+                { name: 'Consumo de Gas por RBD', href: '/dashboard/consumo-gas', requiredPermission: 'view_consumo_gas' }
             ]
         },
         {
@@ -80,7 +90,7 @@ export default function Sidebar({ user }: { user: User }) {
             subItems: [
                 { name: 'Informe de Carga de Raciones', href: '/dashboard/reports/carga-raciones' },
                 { name: 'Solicitud de Pan', href: '/dashboard/reports/solicitud-pan', requiredPermission: 'view_solicitud_pan_report' },
-                { name: 'Solicitud de Gas', href: '/dashboard/reports/solicit-gas', requiredPermission: 'view_solicitud_gas_report' },
+                { name: 'Solicitud de Gas', href: '/dashboard/reports/solicitud-gas', requiredPermission: 'view_solicitud_gas_report' },
                 { name: 'Retiro de Saldos', href: '/dashboard/reports/retiro-saldos', requiredPermission: 'view_retiro_report' }
             ]
         },

@@ -9,6 +9,7 @@ export default async function SolicitudGasTablero({
 }: {
     searchParams: Promise<{
         ano?: string,
+        mes?: string,
         sucursal?: string,
         rbd?: string
     }>
@@ -22,6 +23,7 @@ export default async function SolicitudGasTablero({
     const resolved = await searchParams;
     const filters = {
         ano: resolved.ano ? parseInt(resolved.ano) : new Date().getFullYear(),
+        mes: resolved.mes ? parseInt(resolved.mes) : undefined,
         sucursal: resolved.sucursal || undefined,
         rbd: resolved.rbd ? parseInt(resolved.rbd) : undefined,
     };
@@ -33,8 +35,13 @@ export default async function SolicitudGasTablero({
     });
     const userSucursalNames = dbUser?.sucursales?.map((s: any) => s.nombre) || [];
 
+    // Filter UTs by authorized sucursales AND the selected sucursal filter
+    const sucursalFilter = filters.sucursal && userSucursalNames.includes(filters.sucursal)
+        ? filters.sucursal
+        : { in: userSucursalNames };
+
     const uts = await prisma.uT.findMany({
-        where: { sucursal: { nombre: { in: userSucursalNames } } },
+        where: { sucursal: { nombre: sucursalFilter } },
         select: { codUT: true }
     });
     const allowedUTs = uts.map(ut => ut.codUT);
@@ -45,9 +52,16 @@ export default async function SolicitudGasTablero({
     };
     if (filters.rbd) whereClause.rbd = filters.rbd;
 
-    const startDate = new Date(`${filters.ano}-01-01T00:00:00Z`);
-    const endDate = new Date(`${filters.ano}-12-31T23:59:59Z`);
-    whereClause.fechaSolicitud = { gte: startDate, lte: endDate };
+    
+    if (filters.mes) {
+        const startDate = new Date(filters.ano, filters.mes - 1, 1, 0, 0, 0);
+        const endDate = new Date(filters.ano, filters.mes, 0, 23, 59, 59);
+        whereClause.fechaSolicitud = { gte: startDate, lte: endDate };
+    } else {
+        const startDate = new Date(`${filters.ano}-01-01T00:00:00`);
+        const endDate = new Date(`${filters.ano}-12-31T23:59:59`);
+        whereClause.fechaSolicitud = { gte: startDate, lte: endDate };
+    }
 
     const solicitudes = await (prisma as any).solicitudGas.findMany({
         where: whereClause,
@@ -56,17 +70,24 @@ export default async function SolicitudGasTablero({
 
     // 3. Process for Chart and Stats
     const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-    const monthlyData = months.map((m) => ({ month: m, litros: 0, solicitudes: 0 }));
+    const monthlyData: any[] = months.map((m) => ({ month: m, litros: 0, solicitudes: 0 }));
 
     let totalLiters = 0;
     const distributors: Record<string, number> = {};
     const types: Record<string, number> = {};
+    const userMap: Record<string, number> = {};
+    const allUTsFound = new Set<string>();
 
     for (const s of solicitudes) {
         const date = new Date(s.fechaSolicitud);
         const monthIdx = date.getMonth();
+        const utKey = `UT_${s.ut || 'N/A'}`;
+        allUTsFound.add(utKey);
+
         monthlyData[monthIdx].litros += s.cantidadLitro || 0;
         monthlyData[monthIdx].solicitudes += 1;
+        monthlyData[monthIdx][utKey] = (monthlyData[monthIdx][utKey] || 0) + (s.cantidadLitro || 0);
+
         totalLiters += s.cantidadLitro || 0;
 
         const dist = s.distribuidor || 'Otro';
@@ -74,10 +95,19 @@ export default async function SolicitudGasTablero({
 
         const type = s.tipoGas || 'N/A';
         types[type] = (types[type] || 0) + 1;
+
+        const user = s.nombreSolicitante || 'Desconocido';
+        userMap[user] = (userMap[user] || 0) + (s.cantidadLitro || 0);
     }
 
     const distributorData = Object.entries(distributors).map(([name, value]) => ({ name, value }));
     const typeData = Object.entries(types).map(([name, value]) => ({ name, value }));
+    const userRanking = Object.entries(userMap)
+        .map(([name, total]) => ({ name, total }))
+        .sort((a, b) => b.total - a.total)
+        .slice(0, 5);
+
+    const utList = Array.from(allUTsFound);
 
     // Fetch school names for top list
     const topRBDEntries = Object.entries(solicitudes.reduce((acc: any, s: any) => {
@@ -134,6 +164,13 @@ export default async function SolicitudGasTablero({
                         </select>
                     </div>
                     <div>
+                        <label className="block text-[10px] font-black text-black uppercase mb-1 tracking-wider">Mes</label>
+                        <select name="mes" defaultValue={filters.mes || ''} className="px-3 py-2 rounded-xl border border-gray-200 bg-gray-50 text-sm font-bold text-black shadow-sm">
+                            <option value="">Todos</option>
+                            {months.map((m, i) => <option key={i} value={i + 1}>{m}</option>)}
+                        </select>
+                    </div>
+                    <div>
                         <label className="block text-[10px] font-black text-black uppercase mb-1 tracking-wider">Sucursal</label>
                         <select name="sucursal" defaultValue={filters.sucursal || ''} className="px-3 py-2 rounded-xl border border-gray-200 bg-gray-50 text-sm font-bold text-black min-w-[120px] shadow-sm">
                             <option value="">Todas</option>
@@ -165,6 +202,8 @@ export default async function SolicitudGasTablero({
                 distributorData={distributorData}
                 typeData={typeData}
                 topSchools={topSchools}
+                userRanking={userRanking}
+                utList={utList}
             />
         </div>
     );

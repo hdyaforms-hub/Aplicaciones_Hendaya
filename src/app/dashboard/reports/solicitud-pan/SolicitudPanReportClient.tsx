@@ -8,7 +8,8 @@ import autoTable from 'jspdf-autotable'
 import * as XLSX from 'xlsx'
 
 export default function SolicitudPanReportClient() {
-    const [fecha, setFecha] = useState(new Date().toISOString().split('T')[0])
+    const [fechaDesde, setFechaDesde] = useState(new Date().toISOString().split('T')[0])
+    const [fechaHasta, setFechaHasta] = useState(new Date().toISOString().split('T')[0])
     const [searchTerm, setSearchTerm] = useState('')
     const [selectedRbd, setSelectedRbd] = useState<number | null>(null)
     const [selectedSucursal, setSelectedSucursal] = useState('')
@@ -59,7 +60,8 @@ export default function SolicitudPanReportClient() {
         setLoading(true)
         setError('')
         const res = await getSolicitudesReport({
-            fecha: fecha || undefined,
+            fechaDesde: fechaDesde || undefined,
+            fechaHasta: fechaHasta || undefined,
             rbd: selectedRbd || undefined,
             sucursal: selectedSucursal || undefined
         })
@@ -107,7 +109,7 @@ export default function SolicitudPanReportClient() {
             headStyles: { fillColor: [14, 165, 233] } // sky-500
         })
 
-        doc.save(`Reporte_Solicitudes_Pan_${fecha || 'general'}.pdf`)
+        doc.save(`Reporte_Solicitudes_Pan_${fechaDesde || 'inicio'}_a_${fechaHasta || 'fin'}.pdf`)
     }
 
     const downloadExcel = () => {
@@ -129,7 +131,7 @@ export default function SolicitudPanReportClient() {
         const ws = XLSX.utils.aoa_to_sheet([headers, ...data])
         const wb = XLSX.utils.book_new()
         XLSX.utils.book_append_sheet(wb, ws, "Solicitudes")
-        XLSX.writeFile(wb, `Reporte_Solicitudes_Pan_${fecha || 'general'}.xlsx`)
+        XLSX.writeFile(wb, `Reporte_Solicitudes_Pan_${fechaDesde || 'inicio'}_a_${fechaHasta || 'fin'}.xlsx`)
     }
 
     const selectColegio = (col: any) => {
@@ -139,7 +141,9 @@ export default function SolicitudPanReportClient() {
     }
 
     const clearFilters = () => {
-        setFecha(new Date().toISOString().split('T')[0])
+        const today = new Date().toISOString().split('T')[0]
+        setFechaDesde(today)
+        setFechaHasta(today)
         setSearchTerm('')
         setSelectedRbd(null)
         setSelectedSucursal('')
@@ -176,18 +180,28 @@ export default function SolicitudPanReportClient() {
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
                     
                     {/* Fecha */}
-                    <div className="md:col-span-3">
-                        <label className="block text-xs font-black text-black mb-2 uppercase tracking-widest">Fecha Solicitud</label>
+                    <div className="md:col-span-2">
+                        <label className="block text-xs font-black text-black mb-2 uppercase tracking-widest">Desde</label>
                         <input
                             type="date"
-                            value={fecha}
-                            onChange={(e) => setFecha(e.target.value)}
+                            value={fechaDesde}
+                            onChange={(e) => setFechaDesde(e.target.value)}
+                            className="w-full px-4 py-2.5 bg-white rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-sky-500 font-bold text-gray-900 shadow-sm"
+                        />
+                    </div>
+
+                    <div className="md:col-span-2">
+                        <label className="block text-xs font-black text-black mb-2 uppercase tracking-widest">Hasta</label>
+                        <input
+                            type="date"
+                            value={fechaHasta}
+                            onChange={(e) => setFechaHasta(e.target.value)}
                             className="w-full px-4 py-2.5 bg-white rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-sky-500 font-bold text-gray-900 shadow-sm"
                         />
                     </div>
 
                     {/* Sucursal */}
-                    <div className="md:col-span-3">
+                    <div className="md:col-span-2">
                         <label className="block text-xs font-black text-black mb-2 uppercase tracking-widest">Sucursal</label>
                         <select
                             value={selectedSucursal}

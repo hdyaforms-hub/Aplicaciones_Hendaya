@@ -51,7 +51,8 @@ export async function searchColegiosRetiroReport(query: string) {
 }
 
 export async function getRetiroReport(filters: {
-    fecha?: string
+    fechaDesde?: string
+    fechaHasta?: string
     rbd?: number
     sucursal?: string
 }) {
@@ -70,11 +71,13 @@ export async function getRetiroReport(filters: {
 
         let where: any = {}
 
-        if (filters.fecha) {
-            const date = new Date(filters.fecha)
-            where.fecha = {
-                gte: new Date(date.setHours(0, 0, 0, 0)),
-                lte: new Date(date.setHours(23, 59, 59, 999))
+        if (filters.fechaDesde || filters.fechaHasta) {
+            where.fecha = {}
+            if (filters.fechaDesde) {
+                where.fecha.gte = new Date(new Date(filters.fechaDesde).setHours(0, 0, 0, 0));
+            }
+            if (filters.fechaHasta) {
+                where.fecha.lte = new Date(new Date(filters.fechaHasta).setHours(23, 59, 59, 999));
             }
         }
 

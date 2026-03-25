@@ -36,10 +36,14 @@ export default async function RolesPage() {
         { id: 'view_retiro_saldos', name: 'Retiro de Saldos', description: 'Acceso a la aplicación de Retiro de Saldos y Rebaja de Stock.', category: 'Aplicaciones' },
         { id: 'view_colegios', name: 'Mantenedor de Colegios', description: 'Acceso a mantenedor y carga masiva de Colegios.', category: 'Mantenedores' },
         { id: 'view_productos', name: 'Mantenedor de Productos', description: 'Acceso a mantenedor y carga masiva de Productos.', category: 'Mantenedores' },
+        { id: 'view_consumo_gas', name: 'Consumo de Gas por RBD', description: 'Administrar límites y consumos de gas por cada RBD.', category: 'Mantenedores' },
         { id: 'manage_correo', name: 'Configuración de Correo', description: 'Acciones sobre credenciales de correo (Office365).', category: 'Administración' },
         { id: 'manage_listas', name: 'Listas de Distribución', description: 'Gestión de destinatarios y listas de correos.', category: 'Administración' },
         { id: 'manage_notificaciones', name: 'Notificaciones por Pantalla', description: 'Asociar listas de distribución a notificaciones de la aplicación.', category: 'Administración' },
         { id: 'manage_sucursales', name: 'Mantenedor de Sucursales', description: 'Administración de Licitaciones, UTs y Sucursales.', category: 'Administración' },
+        { id: 'view_formularios', name: 'Ver Módulo Formularios', description: 'Acceso general al sistema de formularios.', category: 'Formularios' },
+        { id: 'create_formularios', name: 'Crear Formulario', description: 'Acceso al constructor de formularios dinámicos.', category: 'Formularios' },
+        { id: 'fill_formularios', name: 'Abrir Formulario', description: 'Acceso a completar y enviar respuestas a formularios creados.', category: 'Formularios' },
     ]
 
     return (

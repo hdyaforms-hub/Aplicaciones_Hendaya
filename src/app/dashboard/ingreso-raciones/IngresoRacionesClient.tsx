@@ -1,8 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import ColegioSearchModal from './ColegioSearchModal'
-import { checkPmpaDisponibilidad, getPmpaAssignmentsAndLastRecord, saveIngRacion } from './actions'
+import { useState, useEffect, useRef } from 'react'
+import { searchColegios, checkPmpaDisponibilidad, getPmpaAssignmentsAndLastRecord, saveIngRacion } from './actions'
 
 type ColegioResult = {
     id: string
@@ -51,6 +50,13 @@ export default function IngresoRacionesClient() {
     const [isSaving, setIsSaving] = useState(false)
     const [saveMessage, setSaveMessage] = useState({ type: '', text: '' })
 
+    // Search States
+    const [searchTerm, setSearchTerm] = useState('')
+    const [results, setResults] = useState<ColegioResult[]>([])
+    const [showDropdown, setShowDropdown] = useState(false)
+    const [isSearching, setIsSearching] = useState(false)
+    const searchRef = useRef<HTMLDivElement>(null)
+
     // Calculations
     const totalIng = (Number(desayunoIng) || 0) + (Number(almuerzoIng) || 0) + (Number(onceIng) || 0) + (Number(colacionIng) || 0) + (Number(cenaIng) || 0)
     const totalAsig = asignados.desayunoAsig + asignados.almuerzoAsig + asignados.onceAsig + asignados.colacionAsig + asignados.cenaAsig
@@ -77,10 +83,40 @@ export default function IngresoRacionesClient() {
         )
     }, [])
 
+    // Debounced Search Effect
+    useEffect(() => {
+        const delayDebounceFn = setTimeout(async () => {
+            if (searchTerm.length >= 2 && !selectedColegio) {
+                setIsSearching(true)
+                const res = await searchColegios(searchTerm)
+                if (res.colegios) {
+                    setResults(res.colegios)
+                    setShowDropdown(true)
+                }
+                setIsSearching(false)
+            } else {
+                setShowDropdown(false)
+            }
+        }, 300)
+        return () => clearTimeout(delayDebounceFn)
+    }, [searchTerm, selectedColegio])
+
+    // Click Outside Effect
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+                setShowDropdown(false)
+            }
+        }
+        document.addEventListener('mousedown', handleClickOutside)
+        return () => document.removeEventListener('mousedown', handleClickOutside)
+    }, [])
+
     // Handler al seleccionar colegio
     const handleSelectColegio = (col: ColegioResult) => {
         setSelectedColegio(col)
-        setIsSearchOpen(false)
+        setSearchTerm(`${col.colRBD} - ${col.nombreEstablecimiento}`)
+        setShowDropdown(false)
         resetPmpaState()
     }
 
@@ -222,47 +258,77 @@ export default function IngresoRacionesClient() {
                 </div>
             </div>
 
-            {/* Selector de Colegio */}
-            <div className="bg-gray-50 border border-gray-200 rounded-2xl p-6 relative overflow-hidden">
+            {/* Selector de Colegio (Inline Search) */}
+            <div className="bg-gray-50 border border-gray-200 rounded-2xl p-6 relative" ref={searchRef}>
                 <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none text-9xl">🏫</div>
 
-                <h3 className="text-sm font-black text-black mb-4 uppercase tracking-widest relative z-10">1. Establecimiento a Auditar</h3>
+                <h3 className="text-xs font-black text-black mb-4 uppercase tracking-widest relative z-10">1. Establecimiento a Auditar</h3>
 
-                {!selectedColegio ? (
-                    <button
-                        onClick={() => setIsSearchOpen(true)}
-                        className="w-full flex flex-col items-center justify-center p-8 border-2 border-dashed border-cyan-300 rounded-xl bg-cyan-50/50 hover:bg-cyan-50 cursor-pointer transition-colors z-10 relative"
-                    >
-                        <span className="text-3xl mb-2">🔍</span>
-                        <span className="font-bold text-cyan-800">Buscar Colegio</span>
-                        <span className="text-sm font-medium text-cyan-600 mt-1">Busca por nombre o RBD de la institución</span>
-                    </button>
-                ) : (
-                    <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between z-10 relative">
-                        <div className="bg-white px-6 py-4 rounded-xl border border-gray-200 shadow-sm flex-1 w-full">
-                            <div className="flex items-center justify-between">
-                                <div className="text-2xl font-black text-cyan-700">{selectedColegio.colRBD}-{selectedColegio.colRBDDV}</div>
-                                <span className="px-2.5 py-1 bg-slate-100 text-slate-600 rounded-lg text-xs font-bold uppercase tracking-wider">RBD Seleccionado</span>
-                            </div>
-                            <div className="font-bold text-gray-800 mt-2 text-lg leading-tight">{selectedColegio.nombreEstablecimiento}</div>
-                            <div className="text-sm font-medium text-gray-500 mt-1">Comuna: {selectedColegio.comuna}</div>
+                <div className="relative z-20">
+                    <input
+                        type="text"
+                        value={searchTerm}
+                        onChange={(e) => {
+                            setSearchTerm(e.target.value)
+                            if (selectedColegio) setSelectedColegio(null)
+                        }}
+                        placeholder="Escriba RBD o Nombre del Colegio..."
+                        className="w-full px-5 py-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-500 bg-white transition-all font-bold text-gray-800 placeholder:text-gray-400 placeholder:font-normal"
+                    />
+                    {isSearching && (
+                        <div className="absolute right-4 top-1/2 -translate-y-1/2">
+                            <span className="animate-spin h-5 w-5 border-2 border-cyan-500 border-t-transparent rounded-full block"></span>
                         </div>
+                    )}
 
-                        <button
-                            onClick={() => setIsSearchOpen(true)}
-                            className="px-5 py-3 w-full sm:w-auto bg-slate-800 text-white rounded-xl shadow-md font-medium hover:bg-slate-900 transition-colors shrink-0"
-                        >
-                            Cambiar Colegio
-                        </button>
+                    {showDropdown && results.length > 0 && (
+                        <div className="absolute z-50 w-full mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 max-h-60 overflow-y-auto overflow-x-hidden divide-y divide-gray-50">
+                            {results.map((r) => (
+                                <button
+                                    key={r.id}
+                                    type="button"
+                                    onClick={() => handleSelectColegio(r)}
+                                    className="w-full text-left px-5 py-4 hover:bg-cyan-50 transition-colors flex justify-between items-center group"
+                                >
+                                    <div className="flex flex-col">
+                                        <span className="font-bold text-gray-800 group-hover:text-cyan-700">{r.colRBD} - {r.nombreEstablecimiento}</span>
+                                        <span className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">{r.comuna}</span>
+                                    </div>
+                                    <span className="text-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity">➜</span>
+                                </button>
+                            ))}
+                        </div>
+                    )}
+                </div>
+
+                {selectedColegio && (
+                    <div className="mt-4 animate-in zoom-in-95 relative z-10">
+                        <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+                            <div>
+                                <div className="flex items-center gap-2">
+                                    <span className="text-2xl font-black text-cyan-700">{selectedColegio.colRBD}-{selectedColegio.colRBDDV}</span>
+                                    <span className="px-2 py-0.5 bg-green-50 text-green-700 rounded-md text-[10px] font-black uppercase tracking-wider border border-green-100 italic">Seleccionado</span>
+                                </div>
+                                <div className="font-bold text-gray-800 mt-1 text-lg leading-tight">{selectedColegio.nombreEstablecimiento}</div>
+                                <div className="text-xs font-bold text-gray-400 mt-1 uppercase tracking-widest flex items-center gap-1">
+                                    <span>📍</span> {selectedColegio.comuna} • UT {selectedColegio.colut}
+                                </div>
+                            </div>
+                            
+                            <button
+                                onClick={() => {
+                                    setSelectedColegio(null)
+                                    setSearchTerm('')
+                                    resetPmpaState()
+                                }}
+                                className="text-xs font-black text-rose-500 hover:text-rose-700 uppercase tracking-widest flex items-center gap-1 transition-colors"
+                            >
+                                ✕ Limpiar selección
+                            </button>
+                        </div>
                     </div>
                 )}
             </div>
-
-            <ColegioSearchModal
-                isOpen={isSearchOpen}
-                onClose={() => setIsSearchOpen(false)}
-                onSelect={handleSelectColegio}
-            />
 
             {/* Fecha y Filtros PMPA */}
             {selectedColegio && (

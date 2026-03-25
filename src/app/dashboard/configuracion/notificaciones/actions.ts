@@ -109,6 +109,7 @@ export async function getMockDataForPreview(codigoPantalla: string) {
             Supervisor: 'JUAN PÉREZ',
             NombreAutoriza: 'MARÍA GONZÁLEZ',
             RUTAutoriza: '12.345.678-9',
+            Usuario: 'JUAN PÉREZ (ADMIN)',
             DetalleProductos: '- [001] PRODUCTO A: 10\n- [002] PRODUCTO B: 5'
         },
         'solicitud-pan': {
@@ -121,6 +122,28 @@ export async function getMockDataForPreview(codigoPantalla: string) {
             RBD: '9012',
             Establecimiento: 'LICEO INDUSTRIAL',
             Usuario: 'ANA LÓPEZ'
+        },
+        'solicitud-gas': {
+            RBD: '8532',
+            Establecimiento: 'COLEGIO SAN JOSÉ',
+            Usuario: 'CARLOS RIVERA',
+            Sucursal: 'SANTIAGO NORTE',
+            TipoGas: 'Bombona',
+            CantidadLitros: '450.00',
+            Distribuidor: 'ABASTIBLE',
+            Observacion: 'Solicitud urgente para el casino.'
+        },
+        'solicitud-gas-exceso': {
+            RBD: '7654',
+            Establecimiento: 'ESCUELA RURAL EL SAUCE',
+            Usuario: 'RODRIGO PAZ',
+            Sucursal: 'SANTIAGO PONIENTE',
+            TipoGas: 'Cilindro',
+            CantidadLitros: '120.00',
+            LimiteMensual: '500 Lts',
+            AcumuladoActual: '420.00 Lts',
+            IntentoActual: '120.00 Lts',
+            MotivoBloqueo: 'El máximo de litros acumulados (500) sería superado con este pedido (540.00).'
         }
     }
     return mockData[codigoPantalla] || {}

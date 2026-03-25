@@ -45,6 +45,23 @@ export async function searchProductosRetiro(query: string, tipoOperacion: string
 }
 
 import nodemailer from 'nodemailer'
+import crypto from 'crypto'
+
+const ENCRYPTION_KEY = crypto.createHash('sha256').update(String(process.env.SESSION_SECRET || 'super-secret-key-change-me')).digest('base64').substring(0, 32)
+
+function decrypt(text: string) {
+    try {
+        const textParts = text.split(':')
+        const iv = Buffer.from(textParts.shift()!, 'hex')
+        const encryptedText = Buffer.from(textParts.join(':'), 'hex')
+        const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(ENCRYPTION_KEY, 'utf-8'), iv)
+        let decrypted = decipher.update(encryptedText)
+        decrypted = Buffer.concat([decrypted, decipher.final()])
+        return decrypted.toString()
+    } catch (e) {
+        return text
+    }
+}
 
 /**
  * Saves the header and its multiple details in a single transaction
@@ -110,22 +127,25 @@ export async function saveRetiroSaldo(data: {
 
         console.log('DEBUG: Transaction successful, folio:', result.folio)
 
-        // Process Email Notifications
+        // -- NOTIFICACIONES --
+        let emailWarning: string | undefined;
         try {
-            await processRetiroNotificaciones(result)
-        } catch (emailError) {
-            console.error('DEBUG: Email notification failed (non-blocking):', emailError)
+            const notif = await processRetiroNotificaciones(result, session?.user?.name || session?.user?.username || 'Usuario')
+            if (notif?.warning) emailWarning = notif.warning;
+        } catch (notifErr) {
+            console.error("Error al procesar notificaciones de retiro:", notifErr)
         }
+        // -- FIN NOTIFICACIONES --
         
         revalidatePath('/dashboard/retiro-saldos')
-        return { success: true, folio: result.folio }
+        return { success: true, folio: result.folio, emailWarning }
     } catch (error: any) {
         console.error('Error saving retiro saldo (full details):', error)
         return { error: `Error al procesar la solicitud: ${error?.message || 'Error desconocido'}` }
     }
 }
 
-async function processRetiroNotificaciones(retiro: any) {
+async function processRetiroNotificaciones(retiro: any, nombreUsuario: string) {
     try {
         // Consultar configuración para la pantalla 'retiro-saldos'
         const configs = await prisma.notificacionPantalla.findMany({
@@ -140,13 +160,13 @@ async function processRetiroNotificaciones(retiro: any) {
             }
         })
 
-        if (configs.length === 0) return
+        if (configs.length === 0) return { warning: 'No hay notificaciones activas configuradas en el sistema para esta acción.' }
 
         const destinos = configs
             .map(c => c.listaCorreo)
             .filter(lista => !lista.sucursalId || lista.sucursal?.nombre === retiro.sucursal)
 
-        if (destinos.length === 0) return
+        if (destinos.length === 0) return { warning: `No hay listas de correo asignadas para la sucursal "${retiro.sucursal || 'Global'}".` }
 
         const plantilla = await prisma.plantillaCorreo.findUnique({
             where: { codigoPantalla: 'retiro-saldos' }
@@ -197,6 +217,7 @@ Sistema de Inventario.`
                 .replace(/<Sucursal.*?>/gi, retiro.sucursal)
                 .replace(/<Supervisor.*?>/gi, retiro.supervisor)
                 .replace(/<NombreAutoriza.*?>/gi, retiro.nombreAutoriza || 'N/A')
+                .replace(/<Usuario.*?>/gi, nombreUsuario)
                 .replace(/<RUTAutoriza.*?>/gi, retiro.rutAutoriza || 'N/A')
                 .replace(/<DetalleProductos.*?>/gi, detalleStr)
         }
@@ -214,7 +235,7 @@ Sistema de Inventario.`
                 secure: false,
                 auth: {
                     user: emailConfig.email,
-                    pass: emailConfig.password
+                    pass: decrypt(emailConfig.password)
                 }
             })
 
@@ -225,6 +246,8 @@ Sistema de Inventario.`
                 subject: subject,
                 text: body
             })
+        } else {
+            return { warning: `Las listas de correo encontradas para la sucursal "${retiro.sucursal || 'Global'}" no tienen direcciones válidas configuradas.` }
         }
     } catch (e) {
         console.error("Error al procesar el envío de notificaciones retiro:", e)

@@ -5,7 +5,8 @@ import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 
 export async function getGasReport(filters: {
-    fecha?: string,
+    fechaDesde?: string,
+    fechaHasta?: string,
     rbd?: number,
     sucursal?: string
 }) {
@@ -32,12 +33,13 @@ export async function getGasReport(filters: {
             where.ut = { in: allowedUTs }
         }
 
-        if (filters.fecha) {
-            const startDate = new Date(`${filters.fecha}T00:00:00Z`);
-            const endDate = new Date(`${filters.fecha}T23:59:59Z`);
-            where.fechaSolicitud = {
-                gte: startDate,
-                lte: endDate
+        if (filters.fechaDesde || filters.fechaHasta) {
+            where.fechaSolicitud = {}
+            if (filters.fechaDesde) {
+                where.fechaSolicitud.gte = new Date(`${filters.fechaDesde}T00:00:00Z`);
+            }
+            if (filters.fechaHasta) {
+                where.fechaSolicitud.lte = new Date(`${filters.fechaHasta}T23:59:59Z`);
             }
         }
 

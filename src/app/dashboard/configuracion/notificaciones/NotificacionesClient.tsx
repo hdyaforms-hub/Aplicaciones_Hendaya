@@ -24,8 +24,52 @@ const PANTALLAS: PantallaInfo[] = [
         id: 'retiro-saldos', 
         name: 'Retiro de Saldos', 
         description: 'Se envía un aviso al momento de registrar un retiro de saldo o rebaja de stock.' 
+    },
+    { 
+        id: 'solicitud-gas', 
+        name: 'Solicitud de Gas', 
+        description: 'Se envía un aviso al momento de crear una nueva solicitud de gas.' 
+    },
+    { 
+        id: 'solicitud-gas-exceso', 
+        name: 'Alerta Exceso de Gas', 
+        description: 'Se envía una alerta cuando un usuario intenta pedir gas superando los límites permitidos.' 
     }
 ]
+
+const HELP_KEYWORDS: Record<string, { tag: string, desc: string }[]> = {
+    'Comunes': [
+        { tag: '<RBD>', desc: 'RBD (Rol Base de Datos) del establecimiento.' },
+        { tag: '<Usuario>', desc: 'Nombre del usuario que realiza la acción.' },
+        { tag: '<Sucursal>', desc: 'Nombre de la sucursal o bodega correspondiente.' },
+    ],
+    'Solicitud de Pan': [
+        { tag: '<FechaSistema>', desc: 'Fecha y hora en que se crea el registro.' },
+        { tag: '<Solicitud>', desc: 'Tipo de solicitud (Aumento o Disminución).' },
+        { tag: '<Cantidad>', desc: 'Cantidad de pan solicitada (Kg).' },
+        { tag: '<FechaGestacion>', desc: 'Fecha requerida para el consumo del pan.' },
+        { tag: '<Servicio>', desc: 'Nombre del servicio (Ej: Desayuno, Almuerzo).' },
+        { tag: '<Motivo>', desc: 'Motivo o justificación de la solicitud.' },
+    ],
+    'Retiro de Saldos': [
+        { tag: '<Folio>', desc: 'Número de folio único del retiro.' },
+        { tag: '<Tipo>', desc: 'Tipo de operación (Retiro de saldo / Rebaja de stock).' },
+        { tag: '<Supervisor>', desc: 'Nombre del supervisor que firma el retiro.' },
+        { tag: '<NombreAutoriza>', desc: 'Nombre de la persona que autorizó el movimiento.' },
+        { tag: '<DetalleProductos>', desc: 'Lista detallada de productos y cantidades.' },
+    ],
+    'Solicitud de Gas': [
+        { tag: '<TipoGas>', desc: 'Formato del gas (Cilindro / Bombona).' },
+        { tag: '<CantidadLitros>', desc: 'Cantidad total solicitada expresada en litros.' },
+        { tag: '<Distribuidor>', desc: 'Empresa distribuidora asignada.' },
+        { tag: '<Observacion>', desc: 'Comentarios adicionales del solicitante.' },
+    ],
+    'Alerta Exceso de Gas': [
+        { tag: '<MotivoBloqueo>', desc: 'Explicación del porqué se ha detenido el pedido.' },
+        { tag: '<LimiteMensual>', desc: 'Cupo máximo configurado para el establecimiento.' },
+        { tag: '<AcumuladoActual>', desc: 'Total consumido previo a este intento.' },
+    ]
+}
 
 export default function NotificacionesClient({ 
     configuraciones, 
@@ -45,6 +89,7 @@ export default function NotificacionesClient({
         showPreview: boolean,
         mockData: any
     } | null>(null)
+    const [showHelp, setShowHelp] = useState(false)
 
     const handleSave = async (codigoPantalla: string, listas: string[], activa: boolean) => {
         setLoading(prev => ({ ...prev, [codigoPantalla]: true }))
@@ -105,7 +150,21 @@ export default function NotificacionesClient({
     }
 
     return (
-        <div className="overflow-x-auto p-4">
+        <div className="overflow-x-auto p-4 space-y-4">
+            <div className="flex justify-between items-center bg-white p-4 rounded-2xl border border-gray-100 shadow-sm">
+                <div>
+                    <h2 className="text-xl font-bold text-gray-800">✉️ Configuración de Alertas</h2>
+                    <p className="text-xs text-gray-500">Administra qué listas de correo reciben avisos de cada proceso.</p>
+                </div>
+                <button 
+                    onClick={() => setShowHelp(true)}
+                    className="w-10 h-10 bg-cyan-50 text-cyan-600 rounded-full flex items-center justify-center font-black text-xl hover:bg-cyan-100 transition-all shadow-sm border border-cyan-100"
+                    title="Ver palabras reservadas"
+                >
+                    ?
+                </button>
+            </div>
+
             <table className="w-full text-left text-sm text-gray-700">
                 <thead className="bg-gray-100 text-gray-600 rounded-t-lg">
                     <tr>
@@ -211,6 +270,42 @@ export default function NotificacionesClient({
                                     {loading['templateSave'] ? 'Guardando...' : 'Guardar Formato'}
                                 </button>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {showHelp && (
+                <div className="fixed inset-0 bg-black/50 z-[110] flex items-center justify-center p-4 backdrop-blur-sm animate-in zoom-in duration-200">
+                    <div className="bg-white rounded-[2rem] shadow-2xl w-full max-w-4xl overflow-hidden flex flex-col max-h-[85vh] border border-gray-100">
+                        <div className="px-8 py-6 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+                            <div>
+                                <h3 className="text-xl font-black text-gray-900 uppercase tracking-tight">Guía de Palabras Reservadas</h3>
+                                <p className="text-xs text-gray-500 mt-1">Utiliza estas etiquetas en tus plantillas para insertar datos dinámicos automáticamente.</p>
+                            </div>
+                            <button onClick={() => setShowHelp(false)} className="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors">✕</button>
+                        </div>
+
+                        <div className="p-8 overflow-y-auto flex-1 custom-scrollbar">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                {Object.entries(HELP_KEYWORDS).map(([module, keywords]) => (
+                                    <div key={module} className="space-y-4">
+                                        <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-cyan-600 bg-cyan-50 w-fit px-3 py-1 rounded-full">{module}</h4>
+                                        <div className="space-y-2">
+                                            {keywords.map(kw => (
+                                                <div key={kw.tag} className="flex flex-col p-3 bg-gray-50 border border-gray-100 rounded-2xl group hover:bg-white hover:border-cyan-200 hover:shadow-md transition-all">
+                                                    <code className="text-sm font-bold text-cyan-700 group-hover:scale-105 transition-transform origin-left">{kw.tag}</code>
+                                                    <span className="text-xs text-gray-500 mt-1">{kw.desc}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="p-6 border-t border-gray-100 bg-gray-50 flex justify-center">
+                            <button onClick={() => setShowHelp(false)} className="px-8 py-3 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition-all shadow-lg shadow-slate-200">Entendido</button>
                         </div>
                     </div>
                 </div>

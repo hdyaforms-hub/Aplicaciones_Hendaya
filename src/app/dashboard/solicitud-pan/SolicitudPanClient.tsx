@@ -153,7 +153,11 @@ export default function SolicitudPanClient({ userName }: { userName: string }) {
             const result = await saveSolicitudPan(payload)
 
             if (result.success) {
-                alert(result.message)
+                if (result.emailWarning) {
+                    alert(`${result.message}\n\n⚠️ AVISO: ${result.emailWarning}`)
+                } else {
+                    alert(result.message)
+                }
                 
                 // Reiniciar formulario pero mantener colegio
                 setFormData({

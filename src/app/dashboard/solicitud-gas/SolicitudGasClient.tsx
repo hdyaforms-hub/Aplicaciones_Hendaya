@@ -2,7 +2,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { searchColegiosGas, saveSolicitudGas } from './actions'
+import { searchColegiosGas, saveSolicitudGas, getConsumoLimitForRBD } from './actions'
 import { useRouter } from 'next/navigation'
 
 export default function SolicitudGasClient({ userName }: { userName: string }) {
@@ -25,6 +25,14 @@ export default function SolicitudGasClient({ userName }: { userName: string }) {
     
     const [loading, setLoading] = useState(false)
     const [message, setMessage] = useState({ text: '', type: '' })
+    const [consumoStatus, setConsumoStatus] = useState<{
+        state: 'liberado' | 'controlado' | 'bloqueado' | 'loading' | null,
+        message?: string,
+        remaining?: number,
+        limit?: number,
+        litrosMax?: number,
+        consumedLiters?: number
+    }>({ state: null })
 
     const systemDate = new Date().toLocaleDateString()
 
@@ -55,10 +63,30 @@ export default function SolicitudGasClient({ userName }: { userName: string }) {
         return () => document.removeEventListener('mousedown', handleClickOutside)
     }, [])
 
-    const handleSelectColegio = (col: any) => {
+    const handleSelectColegio = async (col: any) => {
         setColegio(col)
         setSearchTerm(`${col.colRBD} - ${col.nombreEstablecimiento}`)
         setShowDropdown(false)
+        
+        // Fetch consumption limits
+        setConsumoStatus({ state: 'loading' })
+        const res = await getConsumoLimitForRBD(col.colRBD)
+        if (res.error) {
+            setConsumoStatus({ state: null })
+        } else {
+            setConsumoStatus({
+                state: res.state as any,
+                message: res.message,
+                remaining: res.remaining,
+                limit: res.limit,
+                litrosMax: res.litrosMax,
+                consumedLiters: res.consumedLiters
+            })
+            
+            if (res.state === 'bloqueado') {
+                setMessage({ text: res.message || 'Sin permiso para este mes', type: 'error' })
+            }
+        }
     }
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -84,7 +112,11 @@ export default function SolicitudGasClient({ userName }: { userName: string }) {
         })
 
         if (res.success) {
-            setMessage({ text: '✅ Solicitud guardada con éxito', type: 'success' })
+            if (res.emailWarning) {
+                setMessage({ text: `✅ Solicitud guardada con éxito. ⚠️ AVISO: ${res.emailWarning}`, type: 'success' })
+            } else {
+                setMessage({ text: '✅ Solicitud guardada con éxito', type: 'success' })
+            }
             // Reset form
             setColegio(null)
             setSearchTerm('')
@@ -151,9 +183,42 @@ export default function SolicitudGasClient({ userName }: { userName: string }) {
                         )}
                         
                         {colegio && (
-                            <div className="mt-3 flex items-center gap-2 px-4 py-2 bg-green-50 text-green-700 rounded-xl border border-green-100 animate-in zoom-in-95">
-                                <span className="text-sm font-bold">✓ Seleccionado:</span>
-                                <span className="text-sm font-medium">UT {colegio.colut}</span>
+                            <div className="mt-3 flex flex-col gap-2 animate-in zoom-in-95">
+                                <div className="flex items-center gap-2 px-4 py-2 bg-green-50 text-green-700 rounded-xl border border-green-100">
+                                    <span className="text-sm font-bold">✓ Seleccionado:</span>
+                                    <span className="text-sm font-medium">UT {colegio.colut}</span>
+                                </div>
+                                
+                                {consumoStatus.state === 'loading' && (
+                                    <div className="flex items-center gap-2 px-4 py-2 bg-gray-50 text-gray-400 rounded-xl border border-gray-100 italic text-xs">
+                                        <span className="animate-spin h-3 w-3 border border-gray-400 border-t-transparent rounded-full"></span>
+                                        Verificando límites de consumo...
+                                    </div>
+                                )}
+
+                                {consumoStatus.state === 'liberado' && (
+                                    <div className="flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-700 rounded-xl border border-blue-100 text-xs font-bold">
+                                        <span>ℹ️</span> CONSUMO LIBERADO (Sin restricciones para este RBD)
+                                    </div>
+                                )}
+
+                                {consumoStatus.state === 'controlado' && (
+                                    <div className="flex flex-col gap-1 px-4 py-3 bg-amber-50 text-amber-800 rounded-xl border border-amber-100">
+                                        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider">
+                                            <span>🛡️</span> CONSUMO CONTROLADO
+                                        </div>
+                                        <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1 text-[11px] font-medium">
+                                            <span>Solicitudes: <strong className="text-amber-900">{consumoStatus.limit! - consumoStatus.remaining!} / {consumoStatus.limit}</strong></span>
+                                            <span>Lts. Solicitados: <strong className="text-amber-900">{consumoStatus.consumedLiters?.toFixed(2)} / {consumoStatus.litrosMax} Lts</strong></span>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {consumoStatus.state === 'bloqueado' && (
+                                    <div className="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-700 rounded-xl border border-red-100 text-xs font-bold animate-pulse">
+                                        <span>🚫</span> BLOQUEADO: {consumoStatus.message}
+                                    </div>
+                                )}
                             </div>
                         )}
                     </div>

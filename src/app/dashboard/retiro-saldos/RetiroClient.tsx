@@ -217,7 +217,11 @@ export default function RetiroClient({ userName, userSucursales }: RetiroSaldosC
         })
 
         if (res.success) {
-            setMessage({ text: `✅ Folio ${res.folio} guardado y notificado con éxito`, type: 'success' })
+            if (res.emailWarning) {
+                setMessage({ text: `✅ Folio ${res.folio} guardado con éxito. ⚠️ AVISO: ${res.emailWarning}`, type: 'success' })
+            } else {
+                setMessage({ text: `✅ Folio ${res.folio} guardado y notificado con éxito`, type: 'success' })
+            }
             setIsApprovalModalOpen(false)
             // Reset state
             setProductos([])

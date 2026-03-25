@@ -8,7 +8,8 @@ import autoTable from 'jspdf-autotable'
 import * as XLSX from 'xlsx'
 
 export default function RetiroReportClient() {
-    const [fecha, setFecha] = useState('')
+    const [fechaDesde, setFechaDesde] = useState('')
+    const [fechaHasta, setFechaHasta] = useState('')
     const [searchTerm, setSearchTerm] = useState('')
     const [selectedRbd, setSelectedRbd] = useState<number | null>(null)
     const [selectedSucursal, setSelectedSucursal] = useState('')
@@ -58,7 +59,8 @@ export default function RetiroReportClient() {
         setLoading(true)
         setError('')
         const res = await getRetiroReport({
-            fecha: fecha || undefined,
+            fechaDesde: fechaDesde || undefined,
+            fechaHasta: fechaHasta || undefined,
             rbd: selectedRbd || undefined,
             sucursal: selectedSucursal || undefined
         })
@@ -110,7 +112,7 @@ export default function RetiroReportClient() {
             headStyles: { fillColor: [79, 70, 229] } // Indigo 600
         })
 
-        doc.save(`Reporte_Retiro_${new Date().toISOString().split('T')[0]}.pdf`)
+        doc.save(`Reporte_Retiro_${fechaDesde || 'inicio'}_a_${fechaHasta || 'fin'}.pdf`)
     }
 
     const downloadExcel = () => {
@@ -140,7 +142,7 @@ export default function RetiroReportClient() {
         const ws = XLSX.utils.aoa_to_sheet([headers, ...data])
         const wb = XLSX.utils.book_new()
         XLSX.utils.book_append_sheet(wb, ws, "RetiroSaldos")
-        XLSX.writeFile(wb, `Reporte_Retiro_${new Date().toISOString().split('T')[0]}.xlsx`)
+        XLSX.writeFile(wb, `Reporte_Retiro_${fechaDesde || 'inicio'}_a_${fechaHasta || 'fin'}.xlsx`)
     }
 
     const selectColegio = (col: any) => {
@@ -150,7 +152,8 @@ export default function RetiroReportClient() {
     }
 
     const clearFilters = () => {
-        setFecha('')
+        setFechaDesde('')
+        setFechaHasta('')
         setSearchTerm('')
         setSelectedRbd(null)
         setSelectedSucursal('')
@@ -186,17 +189,27 @@ export default function RetiroReportClient() {
             {/* Filter Panel */}
             <div className="bg-gray-50/50 border border-gray-100 rounded-[2rem] p-8">
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-end">
-                    <div className="md:col-span-3">
-                        <label className="block text-xs font-black text-black mb-2 uppercase tracking-widest">Fecha Específica</label>
+                    <div className="md:col-span-2">
+                        <label className="block text-xs font-black text-black mb-2 uppercase tracking-widest">Desde</label>
                         <input 
                             type="date" 
-                            value={fecha} 
-                            onChange={(e) => setFecha(e.target.value)} 
+                            value={fechaDesde} 
+                            onChange={(e) => setFechaDesde(e.target.value)} 
                             className="w-full px-5 py-3.5 bg-white rounded-2xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-600 font-bold text-black shadow-sm"
                         />
                     </div>
 
-                    <div className="md:col-span-3">
+                    <div className="md:col-span-2">
+                        <label className="block text-xs font-black text-black mb-2 uppercase tracking-widest">Hasta</label>
+                        <input 
+                            type="date" 
+                            value={fechaHasta} 
+                            onChange={(e) => setFechaHasta(e.target.value)} 
+                            className="w-full px-5 py-3.5 bg-white rounded-2xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-600 font-bold text-black shadow-sm"
+                        />
+                    </div>
+
+                    <div className="md:col-span-2">
                         <label className="block text-xs font-black text-black mb-2 uppercase tracking-widest">Sucursal</label>
                         <select 
                             value={selectedSucursal} 

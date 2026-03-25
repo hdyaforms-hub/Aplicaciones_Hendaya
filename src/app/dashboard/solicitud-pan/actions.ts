@@ -3,6 +3,23 @@
 import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import nodemailer from 'nodemailer'
+import crypto from 'crypto'
+
+const ENCRYPTION_KEY = crypto.createHash('sha256').update(String(process.env.SESSION_SECRET || 'super-secret-key-change-me')).digest('base64').substring(0, 32)
+
+function decrypt(text: string) {
+    try {
+        const textParts = text.split(':')
+        const iv = Buffer.from(textParts.shift()!, 'hex')
+        const encryptedText = Buffer.from(textParts.join(':'), 'hex')
+        const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(ENCRYPTION_KEY, 'utf-8'), iv)
+        let decrypted = decipher.update(encryptedText)
+        decrypted = Buffer.concat([decrypted, decipher.final()])
+        return decrypted.toString()
+    } catch (e) {
+        return text
+    }
+}
 
 export async function searchColegiosSolicitud(query: string) {
     const session = await getSession()
@@ -113,9 +130,10 @@ export async function saveSolicitudPan(data: FormDataSolicitud) {
         })
 
         // Validar e intentar el envío de notificación por pantalla
-        await processNotificaciones(nuevaSolicitud, colegio.sucursal);
+        const notif = await processNotificaciones(nuevaSolicitud, colegio.sucursal);
+        let emailWarning = notif?.warning;
 
-        return { success: true, message: 'Solicitud de pan creada correctamente.' }
+        return { success: true, message: 'Solicitud de pan creada correctamente.', emailWarning }
     } catch (error) {
         console.error("Error guardando SolicitudPan:", error)
         return { error: 'Ocurrió un error inesperado al intentar guardar la solicitud.' }
@@ -137,7 +155,7 @@ async function processNotificaciones(solicitud: any, nombreSucursalColegio: stri
             }
         })
 
-        if (configs.length === 0) return; // No hay notificaciones configuradas o están desactivadas
+        if (configs.length === 0) return { warning: 'No hay notificaciones activas configuradas en el sistema para esta acción.' }; // No hay notificaciones configuradas o están desactivadas
 
         /**
          * Lógica de filtrado:
@@ -149,7 +167,7 @@ async function processNotificaciones(solicitud: any, nombreSucursalColegio: stri
             .map(c => c.listaCorreo)
             .filter(lista => !lista.sucursalId || lista.sucursal?.nombre === nombreSucursalColegio)
 
-        if (destinos.length === 0) return; // No aplicaba ninguna lista a esta sucursal
+        if (destinos.length === 0) return { warning: `No hay listas de correo asignadas para la sucursal "${nombreSucursalColegio || 'Global'}".` }; // No aplicaba ninguna lista a esta sucursal
 
         // Obtener la plantilla configurada
         const plantilla = await prisma.plantillaCorreo.findUnique({
@@ -231,7 +249,7 @@ Sistema de solicitud de Pan.`;
                 secure: false, // TLS
                 auth: {
                     user: emailConfig.email,
-                    pass: emailConfig.password
+                    pass: decrypt(emailConfig.password)
                 }
             })
 
@@ -247,6 +265,8 @@ Sistema de solicitud de Pan.`;
             } catch (authError) {
                 console.error("[ERROR NODEMAILER]: Error de validación o envío con las credenciales dadas", authError)
             }
+        } else {
+            return { warning: `Las listas de correo encontradas para la sucursal "${nombreSucursalColegio || 'Global'}" no tienen direcciones válidas configuradas.` };
         }
     } catch (e) {
         console.error("Error al procesar el envío de notificaciones:", e)

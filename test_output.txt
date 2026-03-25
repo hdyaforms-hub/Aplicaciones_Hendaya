@@ -1,0 +1,8 @@
+[dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+[dotenv@17.3.1] injecting env (0) from .env.local -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+--- Testing SMTP Connection ---
+User: doctoshdya@ipal.cl
+Verifying connection...
+SMTP Connection: SUCCESS
+Sending test email...
+Test email messageId: <f1d280f3-46c2-d9f6-8c7f-067475cdb313@ipal.cl>

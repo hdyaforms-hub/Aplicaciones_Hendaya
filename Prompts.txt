@@ -1,0 +1,28 @@
+necesito que en la opción "Mantenedor" agregues la Opción de "Consumo de Gas por RBD", en esta ventana debe tener un botón de "Carga Masiva", criterio de selección o filtros para buscar por RBD o Colegio (Recuerda que este filtro debe solo mostrar los colegios que tiene asociado el usuario que se esta conectando, también recordar que esta nueva opción debe estar en la pantalla de "Roles y Perfiles" para poder selecciones cual o cuales usuarios podrán ver esta nueva opción). 
+Debes crear una tabla para que mantenga toda esta información la tabla llamala "Mat_ConsumoGas", y debe tener como mínimo estos 3 campos:
+RBD
+Litros (basarse a como esta creado en la tabla de gas)
+Cantidad (Numero de gas que puedo pedir en el periodo o campo Meses(que esta declarado a continuación).
+Meses ( este campo llevara el dato como ejemplo 1, 3,5 (meses, la idea es cuando uno solicite gas en la pantalla de "Solicitud de Gas" la pantalla despliegue la información de cuantas veces a solicitado gas y que contabilice desde la primera carga las veces que tiene permitido solicitar gas, me explico si en la pantalla de "Consumo de Gas por RBD" dice que el RBD 123 se carga mensual (1), este me muestre por pantalla en la "Solicitud de Gas" que ya solicite el máximo permitido pero si en la pantalla "Consumo de Gas por RBD" dice que el RBD 123 se carga mensual (2) y llevo solo 1 este no debería retornar mensaje.
+La tabla que que mostrara en la pantalla "Consumo de Gas por RBD" debe ser link el rbd para yo poder editar los campos, litros, cantidad y meses.
+
+
+/*************************************************************************************************/
+Necesito que crees una nueva unidad en el menú principal llamada "Formularios" y dentro de Formulario dete tener 2 submenús uno llamado "Crear Formulario" y Otra llamada "Abrir Formulario" (Recuerda que todas estas opciones tienen que pasar por el modulo de Roles y perfiles).
+El crear formulario la idea es crear formularios tipo "Microsoft Forms o Google Forms, que tenga las herramientas necesarias para poder crear formularios, cajas de texto (largo y corto), fechas, opciones de seleccion, seleccion multiples, entre otras, tambien debe tener una opcion de firma (si es necesario en la creacion de un formulario).
+La tabla de datos no se como crearla asi que la dejo a tu criterio. Lo otro si yo selecciono la opcion de lista desplegable el formulario debe preguntarme si quiero desplegar alguna informacion del sistema o yo agregar la informacion, si es del sistema yp podria decir que me cargue por ejemplo, UT, RBD, Sucursal, entre otras
+En la pantalla de abrir formulario, debe mostrarme un listado de todos los formularios que yo he ido creando en el tiempo para seleccionar el formulario a ocupar. estos formularios (ya creados para ser ocupados) deben contar en el boton guardar el envio de correo ( que se debe configurar en la lista de distribucion y en Notificacion por pantalla)
+
+/************************************************************************************************/
+
+Favor puedes modificar La lista de tipo de campo debe ser en color negro ya que no se aprecia la información. Además necesito que crees Secciones (como en google forms), Escala Lineal, Calificaciones, Cuadricula de opciones múltiple, cuadricula de casilla de verificación, hora, cargar archivo (solo 1 archivo de peso máximo 100 megas y que sea imagen o archivo PDF), también debe contar con la opción de campo obligatorio, validar el tipo de datos, si es texto, numero, correo, rut (formato rut chileno), el formulario también debe contar con una opción de estado ACTIVO e INACTIVO, para que el formulario no se pueda ocupar si esta inactivo y no se debe mostrar en la pantalla de "Abrir formulario", también el formulario puede ser editado por si se olvida algún campo (siempre y cuando no se haya ocupado para responder, si ya tiene respuestas asociadas no se puede editar)
+
+Adicionalmente crea una nueva pantalla dentro de FORMULARIOS, la cual tenga las opciones de privilegios, la idea es que me muestre todos los formularios fabricados y para poder asociárselos a los usuarios para que de esta forma no todos los usuarios vean los formularios de otras áreas.
+
+Tambien crea una pantalla dentro de FORMULARIO, que sea como tipo calendario para poder asociar la activacion del o los formularios dentro de un periodo, me explico la idea es que yo pueda tener activo un formulario x un dia lunes a las 10 AM y se desactive el dia martes a las 2:30 PM a lo largo del año, el formulario que no este configurado en esta nueva opción queda activo siempre pero los que estan calendarizados se activan y desactivan segun esta configuración
+
+/***************************************************************************************************/
+
+
+
+
