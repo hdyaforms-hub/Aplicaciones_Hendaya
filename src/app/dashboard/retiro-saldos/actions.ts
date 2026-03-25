@@ -98,6 +98,9 @@ export async function saveRetiroSaldo(data: {
 
         console.log('DEBUG: Saving with folio:', nextFolio)
 
+        // Obtener la licitación actual de la UT
+        const utInfo = await prisma.uT.findUnique({ where: { codUT: Number(data.ut) } })
+
         const result = await prisma.$transaction(async (tx) => {
             // Create header and details
             const header = await tx.retiroSaldoHeader.create({
@@ -107,6 +110,7 @@ export async function saveRetiroSaldo(data: {
                     rbd: Number(data.rbd),
                     nombreEstablecimiento: data.nombreEstablecimiento,
                     ut: Number(data.ut),
+                    licId: utInfo?.licId,
                     sucursal: data.sucursal,
                     supervisor: supervisor,
                     nombreAutoriza: data.nombreAutoriza,

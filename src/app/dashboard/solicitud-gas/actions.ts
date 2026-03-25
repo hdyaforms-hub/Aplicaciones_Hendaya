@@ -239,13 +239,13 @@ export async function saveSolicitudGas(data: {
         }
         // --- FIN VALIDACIÓN ---
 
-        if (data.observacion && data.observacion.length > 500) {
-            return { error: 'La observación no puede superar los 500 caracteres' }
-        }
+        // Obtener la licitación actual de la UT
+        const utInfo = await prisma.uT.findUnique({ where: { codUT: data.ut } })
 
         const nuevaSolicitud = await prisma.solicitudGas.create({
             data: {
                 ut: data.ut,
+                licId: utInfo?.licId,
                 rbd: data.rbd,
                 nombreSolicitante: session?.user?.name || session?.user?.username || 'Desconocido',
                 distribuidor: finalDistribuidor.substring(0, 20),

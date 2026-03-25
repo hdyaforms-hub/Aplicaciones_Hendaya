@@ -72,12 +72,33 @@ export async function uploadPMPAData(data: PMPAData[], overwrite: boolean) {
             }
         }
 
+        // --- PREPARACIÓN DE LICITACIÓN ---
+        // Obtener mapeo de RBD a licId para preservar el estado histórico
+        const uniqueRbds = [...new Set(data.map(d => d.rbd))]
+        const colegios = await prisma.colegios.findMany({
+            where: { colRBD: { in: uniqueRbds } },
+            select: { colRBD: true, colut: true }
+        })
+        const uniqueUts = [...new Set(colegios.map(c => c.colut))]
+        const utsMap = await prisma.uT.findMany({
+            where: { codUT: { in: uniqueUts } },
+            select: { codUT: true, licId: true }
+        })
+
+        const rbdToLicId: Record<number, number> = {}
+        colegios.forEach(c => {
+            const ut = utsMap.find(u => u.codUT === c.colut)
+            if (ut) rbdToLicId[c.colRBD] = ut.licId
+        })
+        // ---------------------------------
+
         // Mapear agregando el usuario que subió el registro
         const dataToInsert = data.map(d => ({
             sucursal: String(d.sucursal).trim(),
             ano: Number(d.ano),
             mes: Number(d.mes),
             rbd: Number(d.rbd),
+            licId: rbdToLicId[Number(d.rbd)] || null,
             programa: String(d.programa).trim(),
             estrato: String(d.estrato).trim(),
             raceq: Number(d.raceq),

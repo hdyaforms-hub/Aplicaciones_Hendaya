@@ -114,10 +114,16 @@ export async function saveSolicitudPan(data: FormDataSolicitud) {
             return { error: 'No tienes acceso a este establecimiento o no existe.' }
         }
 
+        // Obtener la licitación actual de la UT
+        const utInfo = await prisma.uT.findUnique({
+            where: { codUT: colegio.colut }
+        })
+
         // Crear la solicitud en la base de datos
         const nuevaSolicitud = await prisma.solicitudPan.create({
             data: {
                 ut: colegio.colut,
+                licId: utInfo?.licId,
                 rbd: data.rbd,
                 nombreSolicitante: session.user.name || session.user.username,
                 // fechaSolicitud se genera automáticamente con default(now())

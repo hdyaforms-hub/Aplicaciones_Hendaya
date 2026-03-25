@@ -228,6 +228,9 @@ export async function saveIngRacion(data: IngRacionFormData) {
             return { error: 'No tienes permisos para guardar en este establecimiento.' }
         }
 
+        // Obtener la licitación actual de la UT
+        const utInfo = await prisma.uT.findUnique({ where: { codUT: colegio.colut } })
+
         const utcFechaIngreso = new Date(`${data.fechaIngreso}T12:00:00Z`)
 
         // Duplicate Check
@@ -252,6 +255,7 @@ export async function saveIngRacion(data: IngRacionFormData) {
                 ubicacion: data.ubicacion,
                 fechaIngreso: utcFechaIngreso,
                 rbd: data.rbd,
+                licId: utInfo?.licId,
                 nombreEstablecimiento: data.nombreEstablecimiento,
                 ano: data.ano,
                 mes: data.mes,

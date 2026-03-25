@@ -41,6 +41,7 @@ model PMPA {
   ano        Int
   mes        Int
   rbd        Int
+  licId      Int?     // Preservación histórica de la licitación
   programa   String   // max 20
   estrato    String   // max 20
   raceq      Int
@@ -70,6 +71,7 @@ model IngRacion {
   fechaSistema          DateTime @default(now())
   fechaIngreso          DateTime
   rbd                   Int
+  licId                 Int?     // Preservación histórica de la licitación
   nombreEstablecimiento String   // char(200)
   ano                   Int
   mes                   Int
@@ -163,6 +165,7 @@ model Sucursal {
 model SolicitudPan {
   id                String   @id @default(uuid())
   ut                Int
+  licId             Int?     // Preservación histórica de la licitación
   rbd               Int
   nombreSolicitante String   // char(100)
   fechaSolicitud    DateTime @default(now())
@@ -187,6 +190,7 @@ model UT {
 model SolicitudGas {
   id                String   @id @default(uuid())
   ut                Int
+  licId             Int?     // Preservación histórica de la licitación
   rbd               Int
   nombreSolicitante String   // char(100)
   fechaSolicitud    DateTime @default(now())
@@ -206,6 +210,7 @@ model RetiroSaldoHeader {
   rbd                   Int
   nombreEstablecimiento String
   ut                    Int
+  licId                 Int?                // Preservación histórica de la licitación
   sucursal              String
   fecha                 DateTime            @default(now())
   supervisor            String              // Usuario conectado
