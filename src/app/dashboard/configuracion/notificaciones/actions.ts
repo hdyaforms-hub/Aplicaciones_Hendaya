@@ -144,6 +144,14 @@ export async function getMockDataForPreview(codigoPantalla: string) {
             AcumuladoActual: '420.00 Lts',
             IntentoActual: '120.00 Lts',
             MotivoBloqueo: 'El máximo de litros acumulados (500) sería superado con este pedido (540.00).'
+        },
+        'form-submission-pdf': {
+            Formulario: 'CONTROL DE TEMPERATURA CASINO',
+            Usuario: 'RICARDO LAGOS',
+            FechaSometido: '2024-03-25 12:45',
+            UT: '1303',
+            RBD: '8532',
+            Sucursal: 'METROPOLITANA'
         }
     }
     return mockData[codigoPantalla] || {}

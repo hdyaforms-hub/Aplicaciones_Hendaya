@@ -76,13 +76,23 @@ export async function saveConsumoGas(data: {
     litros: number
     cantidad: number
     meses: string
+    observacion: string
 }) {
     const session = await getSession()
     if (!session?.user?.role?.permissions.includes('view_consumo_gas')) {
         return { error: 'No tienes permisos para realizar esta acción' }
     }
 
+    if (!data.observacion || data.observacion.trim().length === 0) {
+        return { error: 'La observación es obligatoria para registrar el cambio' }
+    }
+
     try {
+        // Obtener valores actuales antes de actualizar para el historial
+        const currentConfig = await (prisma as any).mat_ConsumoGas.findUnique({
+            where: { rbd: data.rbd }
+        })
+
         await (prisma as any).mat_ConsumoGas.upsert({
             where: { rbd: data.rbd },
             update: {
@@ -98,11 +108,26 @@ export async function saveConsumoGas(data: {
             }
         })
 
+        // Guardar en el HISTORIAL con valores anteriores
+        await (prisma as any).mat_ConsumoGasHistory.create({
+            data: {
+                rbd: data.rbd,
+                litros: data.litros,
+                cantidad: data.cantidad,
+                meses: data.meses,
+                old_litros: currentConfig?.litros,
+                old_cantidad: currentConfig?.cantidad,
+                old_meses: currentConfig?.meses,
+                observacion: data.observacion,
+                user: session?.user?.username || 'Sistema',
+            }
+        })
+
         revalidatePath('/dashboard/consumo-gas')
         return { success: true }
     } catch (e) {
         console.error("Error saving consumo gas:", e)
-        return { error: 'Error al guardar el consumo por RBD' }
+        return { error: 'Error al guardar el consumo y registrar en el historial' }
     }
 }
 
@@ -115,6 +140,10 @@ export async function bulkUploadConsumoGas(data: { rbd: number, litros: number, 
     try {
         // Simple sequential upsert for now, can be optimized with transactions if needed
         for (const item of data) {
+            const current = await (prisma as any).mat_ConsumoGas.findUnique({
+                where: { rbd: Number(item.rbd) }
+            })
+
             await (prisma as any).mat_ConsumoGas.upsert({
                 where: { rbd: Number(item.rbd) },
                 update: {
@@ -127,6 +156,21 @@ export async function bulkUploadConsumoGas(data: { rbd: number, litros: number, 
                     litros: Number(item.litros),
                     cantidad: Number(item.cantidad),
                     meses: String(item.meses),
+                }
+            })
+
+            // Registro automático en historial por carga masiva con valores anteriores
+            await (prisma as any).mat_ConsumoGasHistory.create({
+                data: {
+                    rbd: Number(item.rbd),
+                    litros: Number(item.litros),
+                    cantidad: Number(item.cantidad),
+                    meses: String(item.meses),
+                    old_litros: current?.litros,
+                    old_cantidad: current?.cantidad,
+                    old_meses: current?.meses,
+                    observacion: 'Cambio realizado mediante Carga Masiva',
+                    user: session?.user?.username || 'Sistema',
                 }
             })
         }
@@ -232,5 +276,23 @@ export async function getColegiosForAutocomplete() {
     } catch (e: any) {
         console.error("Error fetching colleges for autocomplete:", e)
         return { error: 'Error al obtener lista de colegios' }
+    }
+}
+
+export async function getConsumoGasHistory(rbd: number) {
+    const session = await getSession()
+    if (!session?.user?.role?.permissions.includes('view_consumo_gas')) {
+        return { error: 'No tienes permisos' }
+    }
+
+    try {
+        const history = await (prisma as any).mat_ConsumoGasHistory.findMany({
+            where: { rbd },
+            orderBy: { createdAt: 'desc' }
+        })
+        return { data: history }
+    } catch (e) {
+        console.error("Error fetching gas history:", e)
+        return { error: 'Error al obtener el historial' }
     }
 }

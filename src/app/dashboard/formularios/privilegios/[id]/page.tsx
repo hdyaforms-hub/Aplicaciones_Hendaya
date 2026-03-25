@@ -3,13 +3,14 @@ import { redirect, notFound } from 'next/navigation'
 import { getFormWithRelations, getAllUsers } from '../../actions'
 import FormPrivilegesClient from '../FormPrivilegesClient'
 
-export default async function PrivilegiosPage({ params }: { params: { id: string } }) {
+export default async function PrivilegiosPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params
     const session = await getSession()
     if (!session?.user?.role?.permissions.includes('create_formularios')) {
         redirect('/dashboard')
     }
 
-    const form = await getFormWithRelations(params.id)
+    const form = await getFormWithRelations(id)
     if (!form) notFound()
 
     const allUsers = await getAllUsers()

@@ -24,3 +24,14 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Global High Contrast Input Styling */
+input, select, textarea {
+  color: #000000 !important;
+  font-weight: 700 !important; /* Bold as requested */
+}
+
+input::placeholder, textarea::placeholder {
+  color: #666666 !important;
+  font-weight: 400 !important;
+}

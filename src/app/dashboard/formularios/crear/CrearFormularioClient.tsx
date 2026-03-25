@@ -16,10 +16,13 @@ export default function CrearFormularioClient({ initialForm, isEditable = true, 
     const [description, setDescription] = useState(initialForm?.description || '')
     const [fields, setFields] = useState<FormField[]>(initialForm?.fields || [])
     const [isActive, setIsActive] = useState(initialForm ? initialForm.isActive : true)
+    const [formCode, setFormCode] = useState(initialForm?.formCode || '')
+    const [formVersion, setFormVersion] = useState(initialForm?.formVersion || '')
+    const [formDate, setFormDate] = useState(initialForm?.formDate || '')
     const [isSaving, setIsSaving] = useState(false)
     const [message, setMessage] = useState({ type: '', text: '' })
 
-    const addField = () => {
+    const addField = (afterIndex?: number) => {
         if (!isEditable) return
         const newField: FormField = {
             id: crypto.randomUUID(),
@@ -27,7 +30,13 @@ export default function CrearFormularioClient({ initialForm, isEditable = true, 
             label: 'Nuevo Campo',
             required: false
         }
-        setFields([...fields, newField])
+        if (typeof afterIndex === 'number') {
+            const newFields = [...fields]
+            newFields.splice(afterIndex + 1, 0, newField)
+            setFields(newFields)
+        } else {
+            setFields([...fields, newField])
+        }
     }
 
     const removeField = (id: string) => {
@@ -61,8 +70,10 @@ export default function CrearFormularioClient({ initialForm, isEditable = true, 
 
         setIsSaving(true)
         setMessage({ type: '', text: '' })
+        
+        const metadata = { formCode, formVersion, formDate }
 
-        const res = await saveFormDefinition(initialForm?.id || null, title, description, fields, isActive)
+        const res = await saveFormDefinition(initialForm?.id || null, title, description, fields, isActive, metadata)
         if (res.success) {
             setMessage({ type: 'success', text: 'Formulario guardado con éxito. Redirigiendo...' })
             setTimeout(() => router.push('/dashboard/formularios/abrir'), 1500)
@@ -76,6 +87,14 @@ export default function CrearFormularioClient({ initialForm, isEditable = true, 
         <div className="max-w-4xl mx-auto pb-20">
             <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden mb-8">
                 <div className="bg-slate-900 p-8">
+                    <div className="flex justify-between items-center mb-6">
+                        <button 
+                            onClick={() => router.back()} 
+                            className="text-slate-400 hover:text-white transition-colors text-xs font-black uppercase tracking-widest flex items-center gap-2 py-2 px-4 rounded-lg bg-slate-800/50 hover:bg-slate-800"
+                        >
+                            ← Volver al Listado
+                        </button>
+                    </div>
                     <div className="flex justify-between items-center">
                         <div>
                             <h2 className="text-3xl font-black text-white tracking-tight flex items-center gap-3">
@@ -117,8 +136,8 @@ export default function CrearFormularioClient({ initialForm, isEditable = true, 
                                 type="text"
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
-                                placeholder="Ej: Reporte de Incidencias, Control de Calidad..."
-                                className="w-full px-5 py-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-500 bg-gray-50 transition-all font-bold text-gray-800"
+                                placeholder="Nombre del Formulario (ej: Entrega de Materiales)"
+                                className="w-full px-5 py-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-500 bg-white text-gray-900 transition-all font-black text-xl uppercase tracking-tight"
                             />
                         </div>
                         <div>
@@ -127,9 +146,42 @@ export default function CrearFormularioClient({ initialForm, isEditable = true, 
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
                                 placeholder="Explica brevemente para qué sirve este formulario..."
-                                className="w-full px-5 py-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-500 bg-gray-50 transition-all font-medium text-gray-700 h-24 resize-none"
+                                className="w-full px-5 py-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-500 bg-white text-gray-700 transition-all font-medium h-24 resize-none"
                             />
                         </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                                    <div>
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 block">Código</label>
+                                        <input
+                                            type="text"
+                                            value={formCode}
+                                            onChange={(e) => setFormCode(e.target.value)}
+                                            placeholder="Ej: F-001"
+                                            className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white text-black focus:border-cyan-500 focus:outline-none text-sm font-black"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 block">Fecha</label>
+                                        <input
+                                            type="text"
+                                            value={formDate}
+                                            onChange={(e) => setFormDate(e.target.value)}
+                                            placeholder="Ej: 25/03/2026"
+                                            className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white text-black focus:border-cyan-500 focus:outline-none text-sm font-black"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 block">Versión</label>
+                                        <input
+                                            type="text"
+                                            value={formVersion}
+                                            onChange={(e) => setFormVersion(e.target.value)}
+                                            placeholder="Ej: v1.0"
+                                            className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white text-black focus:border-cyan-500 focus:outline-none text-sm font-black"
+                                        />
+                                    </div>
+                                </div>
                     </div>
                 </div>
             </div>
@@ -137,21 +189,13 @@ export default function CrearFormularioClient({ initialForm, isEditable = true, 
             <div className="space-y-6">
                 <div className="flex justify-between items-center mb-4">
                     <h3 className="text-xl font-black text-gray-800 uppercase tracking-tighter">Campos del Formulario</h3>
-                    {isEditable && (
-                        <button
-                            onClick={addField}
-                            className="px-6 py-2.5 bg-cyan-600 text-white rounded-xl font-bold shadow-lg hover:bg-cyan-700 transition-all flex items-center gap-2 text-sm"
-                        >
-                            <span>➕</span> Añadir Campo
-                        </button>
-                    )}
                 </div>
 
                 {fields.length === 0 ? (
                     <div className="bg-gray-50 border-2 border-dashed border-gray-200 rounded-3xl p-12 text-center">
                         <span className="text-6xl mb-4 block opacity-20">📝</span>
                         <p className="text-gray-400 font-bold uppercase tracking-widest">Aún no has añadido campos a este formulario</p>
-                        {isEditable && <button onClick={addField} className="mt-4 text-cyan-600 font-black text-sm hover:underline italic">Haz clic aquí para empezar</button>}
+                        {isEditable && <button onClick={() => addField()} className="mt-4 text-cyan-600 font-black text-sm hover:underline italic">Haz clic aquí para empezar</button>}
                     </div>
                 ) : (
                     <div className="space-y-4">
@@ -352,11 +396,23 @@ export default function CrearFormularioClient({ initialForm, isEditable = true, 
                                     <div className="flex flex-row md:flex-col gap-2 justify-center border-t md:border-t-0 md:border-l border-gray-100 pt-4 md:pt-0 md:pl-4">
                                         <button onClick={() => moveField(idx, 'up')} className="p-2 hover:bg-gray-100 rounded-lg text-gray-400 hover:text-cyan-600 transition-colors" title="Subir">↑</button>
                                         <button onClick={() => moveField(idx, 'down')} className="p-2 hover:bg-gray-100 rounded-lg text-gray-400 hover:text-cyan-600 transition-colors" title="Bajar">↓</button>
+                                        <button onClick={() => addField(idx)} className="p-2 hover:bg-green-50 rounded-lg text-gray-400 hover:text-green-600 transition-colors" title="Añadir campo debajo">➕</button>
                                         <button onClick={() => removeField(field.id)} className="p-2 hover:bg-red-50 rounded-lg text-gray-400 hover:text-red-500 transition-colors" title="Eliminar">🗑️</button>
                                     </div>
                                 </div>
                             </div>
                         ))}
+                        
+                        {isEditable && (
+                            <div className="flex justify-center pt-4">
+                                <button
+                                    onClick={() => addField()}
+                                    className="px-8 py-3 bg-cyan-600 text-white rounded-2xl font-black shadow-xl hover:bg-cyan-700 transition-all flex items-center gap-3 uppercase tracking-widest text-sm transform hover:scale-105"
+                                >
+                                    <span className="text-lg">➕</span> Añadir Nuevo Campo
+                                </button>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>

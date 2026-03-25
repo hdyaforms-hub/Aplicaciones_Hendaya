@@ -21,7 +21,14 @@ export type FormField = {
     gridCols?: string[]
 }
 
-export async function saveFormDefinition(id: string | null, title: string, description: string | null, fields: FormField[], isActive: boolean = true) {
+export async function saveFormDefinition(
+    id: string | null, 
+    title: string, 
+    description: string | null, 
+    fields: FormField[], 
+    isActive: boolean = true,
+    metadata?: { formCode?: string, formVersion?: string, formDate?: string }
+) {
     const session = await getSession()
     if (!session?.user?.role?.permissions.includes('create_formularios')) {
         return { error: 'No tienes permisos para realizar esta acción' }
@@ -47,7 +54,10 @@ export async function saveFormDefinition(id: string | null, title: string, descr
                     title,
                     description,
                     fields: JSON.stringify(fields),
-                    isActive
+                    isActive,
+                    formCode: metadata?.formCode,
+                    formVersion: metadata?.formVersion,
+                    formDate: metadata?.formDate
                 }
             })
             revalidatePath('/dashboard/formularios/abrir')
@@ -59,7 +69,10 @@ export async function saveFormDefinition(id: string | null, title: string, descr
                     description,
                     fields: JSON.stringify(fields),
                     isActive,
-                    createdBy: session.user.username as string
+                    createdBy: session.user.username as string,
+                    formCode: metadata?.formCode,
+                    formVersion: metadata?.formVersion,
+                    formDate: metadata?.formDate
                 }
             })
 
@@ -98,7 +111,10 @@ export async function getFormDefinitions(includeInactive: boolean = false) {
                 ]
             },
             include: {
-                schedules: true
+                schedules: true,
+                _count: {
+                    select: { submissions: true }
+                }
             },
             orderBy: { createdAt: 'desc' }
         })
@@ -245,6 +261,8 @@ export async function getFormById(id: string) {
     }
 }
 
+import { validateChileanRut } from '@/lib/validation'
+
 export async function uploadFile(formData: FormData) {
     const file = formData.get('file') as File
     if (!file) return { error: 'No se subió ningún archivo' }
@@ -277,34 +295,7 @@ export async function uploadFile(formData: FormData) {
     }
 }
 
-export function validateChileanRut(rut: string) {
-    // Limpiar puntos y guión
-    const cleanRut = rut.replace(/\./g, '').replace(/-/g, '').toUpperCase()
-    if (cleanRut.length < 2) return false
-
-    const body = cleanRut.slice(0, -1)
-    const dv = cleanRut.slice(-1)
-
-    if (!/^\d+$/.test(body)) return false
-
-    let sum = 0
-    let multiplier = 2
-
-    for (let i = body.length - 1; i >= 0; i--) {
-        const digit = parseInt(body[i])
-        if (isNaN(digit)) return false
-        sum += digit * multiplier
-        multiplier = multiplier === 7 ? 2 : multiplier + 1
-    }
-
-    const expectedDv = 11 - (sum % 11)
-    let finalDv: string
-    if (expectedDv === 11) finalDv = '0'
-    else if (expectedDv === 10) finalDv = 'K'
-    else finalDv = expectedDv.toString()
-
-    return finalDv === dv
-}
+// Se usa la función importada de @/lib/validation
 
 export async function saveFormSubmission(formId: string, data: any) {
     const session = await getSession()
@@ -333,29 +324,238 @@ export async function saveFormSubmission(formId: string, data: any) {
             console.error("Error al procesar notificaciones de formularios:", notifierr)
         }
         
-        return { success: true, emailWarning }
+        return { success: true, id: submission.id, emailWarning }
     } catch (e) {
         console.error('Error saving submission:', e)
         return { error: 'Error al guardar la respuesta' }
     }
 }
 
-export async function getSystemSourceData(source: 'UT' | 'RBD' | 'SUCURSAL') {
+export async function getSystemSourceData(source: 'UT' | 'RBD' | 'SUCURSAL', filters?: Record<string, any>) {
     try {
-        if (source === 'UT') {
-            const uts = await prisma.uT.findMany({ select: { codUT: true }, orderBy: { codUT: 'asc' } })
-            return uts.map(u => u.codUT.toString())
-        }
-        if (source === 'RBD') {
-            const colegios = await prisma.colegios.findMany({ select: { colRBD: true, nombreEstablecimiento: true }, take: 50, orderBy: { colRBD: 'asc' } })
-            return colegios.map(c => `${c.colRBD} - ${c.nombreEstablecimiento}`)
-        }
         if (source === 'SUCURSAL') {
             const sucs = await prisma.sucursal.findMany({ select: { nombre: true }, orderBy: { nombre: 'asc' } })
             return sucs.map(s => s.nombre)
         }
+        
+        if (source === 'UT') {
+            const where: any = { estado: 1 }
+            if (filters?.sucursal) {
+                where.sucursal = { nombre: filters.sucursal }
+            }
+            const uts = await prisma.uT.findMany({ 
+                where,
+                select: { codUT: true }, 
+                orderBy: { codUT: 'asc' } 
+            })
+            return uts.map(u => u.codUT.toString())
+        }
+        
+        if (source === 'RBD') {
+            const where: any = {}
+            if (filters?.ut) {
+                const utNum = parseInt(filters.ut)
+                if (!isNaN(utNum)) where.colut = utNum
+            }
+            if (filters?.sucursal) {
+                where.sucursal = { contains: filters.sucursal }
+            }
+            const colegios = await prisma.colegios.findMany({ 
+                where,
+                select: { colRBD: true, nombreEstablecimiento: true }, 
+                take: 200, 
+                orderBy: { colRBD: 'asc' } 
+            })
+            return colegios.map(c => `${c.colRBD} - ${c.nombreEstablecimiento}`)
+        }
         return []
     } catch (e) {
+        console.error('Error fetching system source data:', e)
         return []
+    }
+}
+export async function deleteForm(id: string) {
+    const session = await getSession()
+    if (!session?.user?.role?.permissions.includes('create_formularios')) {
+        return { error: 'No tienes permisos para eliminar formularios' }
+    }
+
+    try {
+        const submissionCount = await prisma.formSubmission.count({ where: { formId: id } })
+        if (submissionCount > 0) {
+            return { error: 'No se puede eliminar un formulario que ya tiene respuestas registradas' }
+        }
+
+        await prisma.$transaction([
+            prisma.formSchedule.deleteMany({ where: { formId: id } }),
+            prisma.formDefinition.delete({ where: { id } })
+        ])
+
+        revalidatePath('/dashboard/formularios/gestion')
+        revalidatePath('/dashboard/formularios/abrir')
+        return { success: true }
+    } catch (e) {
+        console.error('Error deleting form:', e)
+        return { error: 'Error al eliminar el formulario' }
+    }
+}
+
+export async function getFormSubmissionsExport(formId: string) {
+    const session = await getSession()
+    if (!session?.user?.role?.permissions.includes('create_formularios')) {
+        return { error: 'No tienes permisos para exportar respuestas' }
+    }
+
+    try {
+        const form = await prisma.formDefinition.findUnique({
+            where: { id: formId }
+        })
+        if (!form) return { error: 'Formulario no encontrado' }
+
+        const submissions = await prisma.formSubmission.findMany({
+            where: { formId },
+            orderBy: { submittedAt: 'desc' }
+        })
+
+        return {
+            success: true,
+            title: form.title,
+            fields: JSON.parse(form.fields) as any[],
+            submissions: submissions.map(s => ({
+                ...s,
+                data: JSON.parse(s.data)
+            }))
+        }
+    } catch (e) {
+        console.error('Error fetching submissions for export:', e)
+        return { error: 'Error al obtener las respuestas' }
+    }
+}
+
+export async function toggleFormStatus(id: string, active: boolean) {
+    const session = await getSession()
+    if (!session?.user?.role?.permissions.includes('create_formularios')) {
+        return { error: 'No tienes permisos para esta acción' }
+    }
+
+    try {
+        await prisma.formDefinition.update({
+            where: { id },
+            data: { isActive: active }
+        })
+        revalidatePath('/dashboard/formularios/gestion')
+        revalidatePath('/dashboard/formularios/abrir')
+        return { success: true }
+    } catch (e) {
+        console.error('Error toggling form status:', e)
+        return { error: 'Error al cambiar el estado del formulario' }
+    }
+}
+
+export async function getForms() {
+    try {
+        return await prisma.formDefinition.findMany({
+            where: { isActive: true },
+            select: { id: true, title: true }
+        })
+    } catch (error) {
+        return []
+    }
+}
+
+export async function getFormSubmissions(filters: { formId?: string, username?: string, page?: number }) {
+    const session = await getSession()
+    if (!session?.user?.role?.permissions.includes('view_respuestas')) {
+        return { error: 'No autorizado' }
+    }
+
+    const page = filters.page || 1
+    const limit = 15
+    const skip = (page - 1) * limit
+
+    const where: any = {}
+    if (filters.formId) where.formId = filters.formId
+    if (filters.username) where.submittedBy = { contains: filters.username }
+
+    try {
+        const [total, submissions] = await Promise.all([
+            prisma.formSubmission.count({ where }),
+            prisma.formSubmission.findMany({
+                where,
+                include: { form: true },
+                orderBy: { submittedAt: 'desc' },
+                skip,
+                take: limit
+            })
+        ])
+
+        return { 
+            submissions: submissions.map(s => ({
+                ...s,
+                data: JSON.parse(s.data)
+            })), 
+            total, 
+            totalPages: Math.ceil(total / limit),
+            currentPage: page
+        }
+    } catch (error) {
+        console.error('Error fetching submissions:', error)
+        return { error: 'Error al obtener respuestas' }
+    }
+}
+
+export async function sendSubmissionEmail(
+    submissionId: string, 
+    base64Pdf: string, 
+    targetEmail: string,
+    customSubject?: string,
+    customBody?: string
+) {
+    const session = await getSession()
+    if (!session) return { error: 'No autorizado' }
+
+    try {
+        const submission = await prisma.formSubmission.findUnique({
+            where: { id: submissionId },
+            include: { form: true }
+        })
+
+        if (!submission) return { error: 'Respuesta no encontrada' }
+
+        // Importar dinámicamente para evitar dependencias circulares
+        const { sendAttachmentEmail } = await import('@/lib/notifications')
+
+        const result = await sendAttachmentEmail({
+            to: targetEmail,
+            subject: customSubject || `Respuesta Formulario: ${submission.form.title}`,
+            body: customBody || `Se adjunta la respuesta enviada para el formulario ${submission.form.title}.`,
+            attachmentBase64: base64Pdf,
+            filename: `Formulario_${submission.form.title.replace(/\s+/g, '_')}.pdf`,
+            codigoPantalla: 'form-submission-pdf'
+        })
+
+        return result
+    } catch (error) {
+        console.error('Error sending submission email:', error)
+        return { error: 'Error al enviar el correo' }
+    }
+}
+
+export async function getSubmissionTemplate() {
+    try {
+        const plantilla = await prisma.plantillaCorreo.findUnique({
+            where: { codigoPantalla: 'form-submission-pdf' }
+        })
+        
+        // También ver si hay listas de correo asociadas (opcional, para feedback al usuario si quiere)
+        return {
+            asunto: plantilla?.asunto || 'Respuesta Formulario: <Formulario>',
+            cuerpo: plantilla?.cuerpo || 'Se adjunta la respuesta enviada para el formulario <Formulario>.'
+        }
+    } catch (error) {
+        return {
+            asunto: 'Respuesta Formulario: <Formulario>',
+            cuerpo: 'Se adjunta la respuesta enviada para el formulario <Formulario>.'
+        }
     }
 }

@@ -246,6 +246,9 @@ model FormDefinition {
   updatedAt       DateTime         @updatedAt
   submissions     FormSubmission[]
   isActive        Boolean          @default(true)
+  formCode        String?          // New field
+  formVersion     String?          // New field
+  formDate        String?          // New field (String to allow custom formatting)
   allowedUsers    User[]           @relation("UserForms")
   schedules       FormSchedule[]
 }
@@ -268,4 +271,18 @@ model FormSubmission {
   data            String         // JSON string: map of fieldId to value
   submittedBy     String         // username
   submittedAt     DateTime       @default(now())
+}
+
+model Mat_ConsumoGasHistory {
+  id              String   @id @default(uuid())
+  rbd             Int
+  litros          Float     // Nuevo valor
+  cantidad        Int       // Nuevo valor
+  meses           String    // Nuevo valor
+  old_litros      Float?    // Valor anterior
+  old_cantidad    Int?      // Valor anterior
+  old_meses       String?   // Valor anterior
+  observacion     String    // Motivo del cambio
+  user            String    // Usuario que realizó el cambio
+  createdAt       DateTime @default(now())
 }

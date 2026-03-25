@@ -34,6 +34,11 @@ const PANTALLAS: PantallaInfo[] = [
         id: 'solicitud-gas-exceso', 
         name: 'Alerta Exceso de Gas', 
         description: 'Se envía una alerta cuando un usuario intenta pedir gas superando los límites permitidos.' 
+    },
+    {
+        id: 'form-submission-pdf',
+        name: 'Envío Formulario PDF',
+        description: 'Configura el asunto y cuerpo del correo cuando se envía un formulario en formato PDF.'
     }
 ]
 
@@ -68,6 +73,12 @@ const HELP_KEYWORDS: Record<string, { tag: string, desc: string }[]> = {
         { tag: '<MotivoBloqueo>', desc: 'Explicación del porqué se ha detenido el pedido.' },
         { tag: '<LimiteMensual>', desc: 'Cupo máximo configurado para el establecimiento.' },
         { tag: '<AcumuladoActual>', desc: 'Total consumido previo a este intento.' },
+    ],
+    'Envío Formulario PDF': [
+        { tag: '<Formulario>', desc: 'Nombre del formulario completado.' },
+        { tag: '<FechaSometido>', desc: 'Fecha y hora en que se envió la respuesta.' },
+        { tag: '<UT>', desc: 'Unidad Territorial (si aplica).' },
+        { tag: '<RBD>', desc: 'RBD del establecimiento (si aplica).' },
     ]
 }
 
@@ -213,7 +224,7 @@ export default function NotificacionesClient({
                                     <div>
                                         <label className="block text-sm font-semibold text-gray-700 mb-1">Asunto</label>
                                         <input 
-                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none bg-white text-gray-900 font-medium"
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none bg-white text-black font-black"
                                             value={templateModal.asunto}
                                             onChange={(e) => setTemplateModal({...templateModal, asunto: e.target.value})}
                                         />
@@ -221,7 +232,7 @@ export default function NotificacionesClient({
                                     <div>
                                         <label className="block text-sm font-semibold text-gray-700 mb-1">Cuerpo (Mensaje)</label>
                                         <textarea 
-                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none h-48 font-mono text-sm bg-white text-gray-900 font-medium"
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none h-48 font-mono text-sm bg-white text-black font-black"
                                             value={templateModal.cuerpo}
                                             onChange={(e) => setTemplateModal({...templateModal, cuerpo: e.target.value})}
                                         />

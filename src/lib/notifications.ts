@@ -40,7 +40,9 @@ export async function sendFormNotification(form: any, data: any, username: strin
                 user: emailConfig.email,
                 pass: decrypt(emailConfig.password),
             },
-            tls: { ciphers: 'SSLv3' }
+            tls: { 
+                rejectUnauthorized: false
+            }
         })
 
         const fields = JSON.parse(form.fields)
@@ -75,5 +77,89 @@ export async function sendFormNotification(form: any, data: any, username: strin
     } catch (e) {
         console.error("Error sending form notification:", e)
         return { warning: 'Error al enviar correo.' }
+    }
+}
+
+export async function sendAttachmentEmail({ 
+    to, 
+    subject, 
+    body, 
+    attachmentBase64, 
+    filename,
+    codigoPantalla
+}: { 
+    to: string, 
+    subject: string, 
+    body: string, 
+    attachmentBase64: string, 
+    filename: string,
+    codigoPantalla?: string
+}) {
+    try {
+        const emailConfig = await prisma.emailConfig.findUnique({ where: { id: 'global' } })
+        if (!emailConfig) return { error: 'Configuración global no encontrada.' }
+
+        const transporter = nodemailer.createTransport({
+            host: "smtp.office365.com",
+            port: 587,
+            secure: false,
+            auth: {
+                user: emailConfig.email,
+                pass: decrypt(emailConfig.password),
+            },
+            tls: { 
+                rejectUnauthorized: false
+            }
+        })
+
+        // Obtener CC si hay una configuración de notificación para esta pantalla
+        let cc: string[] = []
+        if (codigoPantalla) {
+            const configs = await prisma.notificacionPantalla.findMany({
+                where: { codigoPantalla, activa: true },
+                include: { listaCorreo: true }
+            })
+            configs.forEach(c => {
+                if (c.listaCorreo.cc) {
+                    const ccList = JSON.parse(c.listaCorreo.cc)
+                    cc = [...new Set([...cc, ...ccList])]
+                }
+                // Si el usuario quiere que las listas de la configuración también reciban el "PARA" como CC
+                if (c.listaCorreo.para) {
+                    const paraList = JSON.parse(c.listaCorreo.para)
+                    cc = [...new Set([...cc, ...paraList])]
+                }
+            })
+        }
+
+        const base64Data = attachmentBase64.split(',')[1] || attachmentBase64
+
+        await transporter.sendMail({
+            from: `"Hendaya Forms" <${emailConfig.email}>`,
+            to,
+            cc: cc.length > 0 ? cc.join(',') : undefined,
+            subject,
+            text: body,
+            html: `
+                <div style="font-family: sans-serif; padding: 20px; border: 1px solid #eee; border-radius: 10px; max-width: 600px; margin: auto;">
+                    <h2 style="color: #0891b2;">Envío de Formulario</h2>
+                    <p style="white-space: pre-wrap;">${body}</p>
+                    <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;" />
+                    <p style="font-size: 11px; color: #999;">Sistema de Gestión de Formularios - Hendaya</p>
+                </div>
+            `,
+            attachments: [
+                {
+                    filename,
+                    content: base64Data,
+                    encoding: 'base64'
+                }
+            ]
+        })
+
+        return { success: true }
+    } catch (e) {
+        console.error("Error sending attachment email:", e)
+        return { error: 'Error al enviar correo con adjunto.' }
     }
 }

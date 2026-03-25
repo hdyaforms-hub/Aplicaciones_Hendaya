@@ -13,7 +13,10 @@ export default async function AbrirFormularioPage() {
     
     return (
         <div className="space-y-6">
-            <AbrirFormularioClient initialForms={res.forms || []} />
+            <AbrirFormularioClient 
+                initialForms={res.forms || []} 
+                canManage={session.user.role.permissions.includes('create_formularios')}
+            />
         </div>
     )
 }

@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 
-export default function AbrirFormularioClient({ initialForms }: { initialForms: any[] }) {
+export default function AbrirFormularioClient({ initialForms, canManage }: { initialForms: any[], canManage?: boolean }) {
     const [searchTerm, setSearchTerm] = useState('')
 
     const filteredForms = initialForms.filter(f => 
@@ -49,7 +49,14 @@ export default function AbrirFormularioClient({ initialForms }: { initialForms: 
                             <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-cyan-50 to-sky-50 rounded-bl-full -z-10 opacity-50 group-hover:scale-125 transition-transform" />
                             
                             <div className="flex justify-between items-start mb-4">
-                                <div className="w-12 h-12 bg-gray-50 rounded-2xl flex items-center justify-center text-2xl group-hover:bg-cyan-500 group-hover:text-white transition-colors">📄</div>
+                                <div className="flex items-center gap-4">
+                                    <div className="w-12 h-12 bg-gray-50 rounded-2xl flex items-center justify-center text-2xl group-hover:bg-cyan-500 group-hover:text-white transition-colors">📄</div>
+                                    <div className="bg-amber-50 px-3 py-1.5 rounded-xl border border-amber-100 shadow-sm">
+                                        <span className="text-[10px] font-black text-amber-600 uppercase tracking-widest flex items-center gap-1.5">
+                                            <span className="text-xs">📈</span> {form._count?.submissions || 0} Respuestas
+                                        </span>
+                                    </div>
+                                </div>
                                 <div className="flex flex-col items-end gap-1">
                                     <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{form.fields.length} Campos</span>
                                     <span className={`text-[9px] font-black px-2 py-0.5 rounded-full ${form.isActive ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
@@ -64,26 +71,28 @@ export default function AbrirFormularioClient({ initialForms }: { initialForms: 
                             </p>
 
                             {/* ADMIN ACTIONS */}
-                            <div className="flex gap-2 mb-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <Link 
-                                    href={`/dashboard/formularios/editar/${form.id}`}
-                                    className="flex-1 py-2 bg-indigo-50 text-indigo-700 rounded-xl text-[10px] font-black uppercase text-center hover:bg-indigo-100 transition-colors"
-                                >
-                                    Editar ✏️
-                                </Link>
-                                <Link 
-                                    href={`/dashboard/formularios/privilegios/${form.id}`}
-                                    className="flex-1 py-2 bg-purple-50 text-purple-700 rounded-xl text-[10px] font-black uppercase text-center hover:bg-purple-100 transition-colors"
-                                >
-                                    Permisos 🔐
-                                </Link>
-                                <Link 
-                                    href={`/dashboard/formularios/calendario/${form.id}`}
-                                    className="flex-1 py-2 bg-amber-50 text-amber-700 rounded-xl text-[10px] font-black uppercase text-center hover:bg-amber-100 transition-colors"
-                                >
-                                    Reloj ⏰
-                                </Link>
-                            </div>
+                            {canManage && (
+                                <div className="flex gap-2 mb-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <Link 
+                                        href={`/dashboard/formularios/editar/${form.id}`}
+                                        className="flex-1 py-2 bg-indigo-50 text-indigo-700 rounded-xl text-[10px] font-black uppercase text-center hover:bg-indigo-100 transition-colors"
+                                    >
+                                        Editar ✏️
+                                    </Link>
+                                    <Link 
+                                        href={`/dashboard/formularios/privilegios/${form.id}`}
+                                        className="flex-1 py-2 bg-purple-50 text-purple-700 rounded-xl text-[10px] font-black uppercase text-center hover:bg-purple-100 transition-colors"
+                                    >
+                                        Permisos 🔐
+                                    </Link>
+                                    <Link 
+                                        href={`/dashboard/formularios/calendario/${form.id}`}
+                                        className="flex-1 py-2 bg-amber-50 text-amber-700 rounded-xl text-[10px] font-black uppercase text-center hover:bg-amber-100 transition-colors"
+                                    >
+                                        Reloj ⏰
+                                    </Link>
+                                </div>
+                            )}
 
                             <div className="pt-4 border-t border-gray-50 flex items-center justify-between mt-auto">
                                 <div className="flex flex-col">
@@ -96,9 +105,11 @@ export default function AbrirFormularioClient({ initialForms }: { initialForms: 
                                 </div>
                             </div>
 
-                            <div className="mt-4 w-full py-2 bg-slate-900 text-white text-center rounded-xl text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity">
-                                ABRIR FORMULARIO ➔
-                            </div>
+                            {canManage && (
+                                <div className="mt-4 w-full py-2 bg-slate-900 text-white text-center rounded-xl text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity">
+                                    MODO ADMINISTRADOR
+                                </div>
+                            )}
                         </Link>
                     ))}
                 </div>

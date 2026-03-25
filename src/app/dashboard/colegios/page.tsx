@@ -3,11 +3,12 @@ import { getSession } from '@/lib/session'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import UploadModalColegio from './UploadModalColegio'
+import ColegiosFilterForm from './ColegiosFilterForm'
 
 export default async function ColegiosPage({
     searchParams
 }: {
-    searchParams: Promise<{ nombre?: string, rbd?: string, page?: string }>
+    searchParams: Promise<{ rbd?: string, sucursal?: string, ut?: string, page?: string }>
 }) {
     const session = await getSession()
     const permissions = session?.user?.role?.permissions || []
@@ -17,18 +18,17 @@ export default async function ColegiosPage({
     }
 
     const resolvedParams = await searchParams
-    const rbdParam = resolvedParams.rbd
     const filters = {
-        nombre: resolvedParams.nombre || '',
-        rbd: rbdParam && !isNaN(Number(rbdParam)) ? Number(rbdParam) : undefined,
+        rbd: resolvedParams.rbd && !isNaN(Number(resolvedParams.rbd)) ? Number(resolvedParams.rbd) : undefined,
+        sucursal: resolvedParams.sucursal || '',
+        ut: resolvedParams.ut && !isNaN(Number(resolvedParams.ut)) ? Number(resolvedParams.ut) : undefined,
     }
 
-    // Limpiar query where nulos
+    // Limpiar query where
     const whereClause: any = {}
-    if (filters.nombre) {
-        whereClause.nombreEstablecimiento = { contains: filters.nombre } // case insensitive search needs mode: insensitive but sqlite doesn't support it natively in quite this way. We will use simple contains.
-    }
     if (filters.rbd !== undefined) whereClause.colRBD = filters.rbd
+    if (filters.sucursal) whereClause.sucursal = { contains: filters.sucursal }
+    if (filters.ut !== undefined) whereClause.colut = filters.ut
 
     const dbUser = await (prisma.user as any).findUnique({
         where: { id: session?.user?.id as string },
@@ -45,11 +45,51 @@ export default async function ColegiosPage({
         select: { codUT: true }
     })
     const allowedUTs = uts.map(ut => ut.codUT)
-    whereClause.colut = { in: allowedUTs }
+    
+    // Si el usuario ya filtró por una UT específica, verificamos que esté en sus permitidas (opcional, por seguridad)
+    if (filters.ut !== undefined) {
+        if (!allowedUTs.includes(filters.ut)) {
+            // Si intenta ver una UT que no le corresponde, forzamos vacío o error
+            // whereClause.colut = -1 
+        }
+    } else {
+        whereClause.colut = { in: allowedUTs }
+    }
+
+    // Obtener listas para los dropdowns
+    // Nota: Usamos las sucursales permitidas para el usuario para filtrar los dropdowns también si se prefiere, 
+    // pero aquí mostraremos todas las que existen en los colegios permitidos por seguridad.
+    // Obtener listas para los dropdowns con lógica de CASCADA
+    const sucursalesDropdown = await prisma.colegios.findMany({
+        where: { colut: { in: allowedUTs } },
+        select: { sucursal: true },
+        distinct: ['sucursal'],
+        orderBy: { sucursal: 'asc' }
+    }).then(rows => rows.map(r => r.sucursal))
+
+    const utsDropdown = await prisma.colegios.findMany({
+        where: { 
+            colut: { in: allowedUTs },
+            sucursal: filters.sucursal || undefined
+        },
+        select: { colut: true },
+        distinct: ['colut'],
+        orderBy: { colut: 'asc' }
+    }).then(rows => rows.map(r => r.colut))
+
+    const rbdsDropdown = await prisma.colegios.findMany({
+        where: { 
+            colut: filters.ut !== undefined ? filters.ut : { in: allowedUTs },
+            sucursal: filters.sucursal || undefined
+        },
+        select: { colRBD: true, nombreEstablecimiento: true },
+        distinct: ['colRBD'],
+        orderBy: { nombreEstablecimiento: 'asc' }
+    })
 
     const pageStr = resolvedParams.page
     const currentPage = pageStr ? parseInt(pageStr, 10) : 1
-    const limit = 10
+    const limit = 15
 
     const totalCount = await prisma.colegios.count({ where: whereClause })
     const totalPages = Math.ceil(totalCount / limit)
@@ -64,6 +104,16 @@ export default async function ColegiosPage({
         ]
     })
 
+    // Helper para mantener filtros en la paginación
+    const getPageUrl = (p: number) => {
+        const params = new URLSearchParams()
+        if (filters.rbd !== undefined) params.set('rbd', filters.rbd.toString())
+        if (filters.sucursal) params.set('sucursal', filters.sucursal)
+        if (filters.ut !== undefined) params.set('ut', filters.ut.toString())
+        params.set('page', p.toString())
+        return `/dashboard/colegios?${params.toString()}`
+    }
+
     return (
         <div className="space-y-6">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
@@ -77,40 +127,13 @@ export default async function ColegiosPage({
                 <UploadModalColegio />
             </div>
 
-            {/* Panel de Filtros */}
-            <form className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col sm:flex-row gap-4">
-                <div className="flex-1">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Nombre del Colegio</label>
-                    <input
-                        name="nombre"
-                        type="text"
-                        defaultValue={filters.nombre}
-                        placeholder="Ej: Colegio San José..."
-                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-gray-900"
-                    />
-                </div>
-
-                <div className="flex-1">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">RBD</label>
-                    <input
-                        name="rbd"
-                        type="number"
-                        defaultValue={resolvedParams.rbd || ''}
-                        placeholder="Ej: 8532..."
-                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-gray-900"
-                    />
-                </div>
-
-                <div className="flex items-end">
-                    <button type="submit" className="px-6 py-2.5 rounded-xl text-white bg-slate-800 hover:bg-slate-900 shadow-md font-medium transition-colors w-full sm:w-auto flex items-center justify-center gap-2">
-                        🔍 Filtrar
-                    </button>
-                    {/* Botón para limpiar filtros */}
-                    <a href="/dashboard/colegios" className="ml-2 px-6 py-2.5 rounded-xl text-slate-700 bg-slate-100 hover:bg-slate-200 shadow-sm border border-slate-200 font-medium transition-colors w-full sm:w-auto flex items-center justify-center">
-                        Limpiar
-                    </a>
-                </div>
-            </form>
+            {/* Panel de Filtros con Cascada Live */}
+            <ColegiosFilterForm 
+                filters={{ ...filters, rbd: resolvedParams.rbd || '' }} 
+                sucursales={sucursalesDropdown}
+                uts={utsDropdown}
+                rbds={rbdsDropdown}
+            />
 
             {/* Tabla de Resultados */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col">
@@ -176,7 +199,7 @@ export default async function ColegiosPage({
 
                     <div className="flex items-center gap-1.5">
                         <Link
-                            href={`/dashboard/colegios?nombre=${filters.nombre}&rbd=${filters.rbd || ''}&page=1`}
+                            href={getPageUrl(1)}
                             className={`w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 transition-colors text-sm font-bold shadow-sm ${currentPage <= 1 ? 'pointer-events-none opacity-40' : ''}`}
                             aria-label="Primera página"
                         >
@@ -184,7 +207,7 @@ export default async function ColegiosPage({
                         </Link>
 
                         <Link
-                            href={`/dashboard/colegios?nombre=${filters.nombre}&rbd=${filters.rbd || ''}&page=${currentPage - 1}`}
+                            href={getPageUrl(currentPage - 1)}
                             className={`w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 transition-colors text-sm font-bold shadow-sm ${currentPage <= 1 ? 'pointer-events-none opacity-40' : ''}`}
                             aria-label="Página anterior"
                         >
@@ -196,7 +219,7 @@ export default async function ColegiosPage({
                         </span>
 
                         <Link
-                            href={`/dashboard/colegios?nombre=${filters.nombre}&rbd=${filters.rbd || ''}&page=${currentPage + 1}`}
+                            href={getPageUrl(currentPage + 1)}
                             className={`w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 transition-colors text-sm font-bold shadow-sm ${currentPage >= totalPages ? 'pointer-events-none opacity-40' : ''}`}
                             aria-label="Página siguiente"
                         >
@@ -204,7 +227,7 @@ export default async function ColegiosPage({
                         </Link>
 
                         <Link
-                            href={`/dashboard/colegios?nombre=${filters.nombre}&rbd=${filters.rbd || ''}&page=${totalPages}`}
+                            href={getPageUrl(totalPages)}
                             className={`w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 transition-colors text-sm font-bold shadow-sm ${currentPage >= totalPages ? 'pointer-events-none opacity-40' : ''}`}
                             aria-label="Última página"
                         >

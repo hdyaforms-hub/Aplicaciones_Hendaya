@@ -66,10 +66,12 @@ export default function Sidebar({ user }: { user: User }) {
         {
             name: 'Formularios',
             icon: '📝',
-            requiredPermission: ['view_formularios', 'create_formularios', 'fill_formularios'],
+            requiredPermission: ['view_formularios', 'create_formularios', 'fill_formularios', 'view_respuestas'],
             subItems: [
+                { name: 'Gestión de Formularios', href: '/dashboard/formularios/gestion', requiredPermission: 'view_formularios' },
                 { name: 'Crear Formulario', href: '/dashboard/formularios/crear', requiredPermission: 'create_formularios' },
-                { name: 'Abrir Formulario', href: '/dashboard/formularios/abrir', requiredPermission: 'fill_formularios' }
+                { name: 'Completar Formulario', href: '/dashboard/formularios/abrir', requiredPermission: 'fill_formularios' },
+                { name: 'Respuestas de Formularios', href: '/dashboard/formularios/respuestas', requiredPermission: 'view_respuestas' }
             ]
         },
         {

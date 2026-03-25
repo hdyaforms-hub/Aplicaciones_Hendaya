@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { updateFormPrivileges } from '../../actions'
+import { updateFormPrivileges } from '../actions'
 
 export default function FormPrivilegesClient({ form, allUsers }: { form: any, allUsers: any[] }) {
     const router = useRouter()
@@ -40,8 +40,13 @@ export default function FormPrivilegesClient({ form, allUsers }: { form: any, al
         <div className="max-w-4xl mx-auto pb-20">
             <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden mb-8">
                 <div className="bg-slate-900 p-8">
-                    <div className="flex justify-between items-center mb-4">
-                        <button onClick={() => router.back()} className="text-slate-400 hover:text-white transition-colors text-sm font-bold flex items-center gap-2">← Volver</button>
+                    <div className="flex justify-between items-center mb-6">
+                        <button 
+                            onClick={() => router.back()} 
+                            className="text-slate-400 hover:text-white transition-colors text-xs font-black uppercase tracking-widest flex items-center gap-2 py-2 px-4 rounded-lg bg-slate-800/50 hover:bg-slate-800"
+                        >
+                            ← Volver al Listado
+                        </button>
                     </div>
                     <h2 className="text-3xl font-black text-white tracking-tight flex items-center gap-3 lowercase first-letter:uppercase">
                         <span className="text-4xl">🔐</span> Privilegios: {form.title}

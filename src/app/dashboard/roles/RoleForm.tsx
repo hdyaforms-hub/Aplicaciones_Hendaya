@@ -59,12 +59,12 @@ export default function RoleForm({ availablePermissions }: { availablePermission
 
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Nombre del Rol *</label>
-                        <input name="name" type="text" required className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-gray-900" placeholder="Ej: Vendedor" />
+                        <input name="name" type="text" required className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-black font-black" placeholder="Ej: Vendedor" />
                     </div>
 
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Descripción Breve</label>
-                        <input name="description" type="text" className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-gray-900" placeholder="A qué tipo de usuario aplica..." />
+                        <input name="description" type="text" className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-black font-black" placeholder="A qué tipo de usuario aplica..." />
                     </div>
 
                     <div>
