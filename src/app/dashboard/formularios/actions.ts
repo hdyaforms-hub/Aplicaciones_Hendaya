@@ -143,8 +143,12 @@ export async function getFormDefinitions(includeInactive: boolean = false) {
         // Mapear campos y calcular estadísticas de UT
         const formsWithStats = await Promise.all(filteredForms.map(async (form) => {
             const fields = JSON.parse(form.fields) as FormField[]
-            // Intentar encontrar el campo que representa la UT (por systemSource o nombre)
-            const utField = fields.find(f => f.systemSource === 'UT' || f.label.toUpperCase().includes('UT'))
+            // Intentar encontrar el campo que representa la UT
+            const utField = fields.find(f => f.systemSource === 'UT') || 
+                            fields.find(f => {
+                                const l = f.label.toUpperCase()
+                                return l === 'UT' || l === 'UNIDAD TERRITORIAL' || (l.includes('UT') && !l.includes('RUT'))
+                            })
             
             let utStats: { name: string, count: number }[] = []
             

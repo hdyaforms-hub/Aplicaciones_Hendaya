@@ -45,11 +45,18 @@ export default function AbrirFormularioClient({ initialForms, canManage }: { ini
                             key={form.id} 
                             className="bg-white border border-gray-100 rounded-[2.5rem] p-8 shadow-sm hover:shadow-2xl hover:border-cyan-300 transition-all group flex flex-col h-full relative overflow-hidden"
                         >
+                            {/* Overlay Link - Makes the whole card clickable EXCEPT for buttons */}
+                            <Link 
+                                href={`/dashboard/formularios/abrir/${form.id}`}
+                                className="absolute inset-0 z-10"
+                                aria-label={`Abrir ${form.title}`}
+                            />
+
                             {/* Decorative background */}
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-cyan-50/50 to-sky-50/50 rounded-bl-full -z-10 opacity-50 group-hover:scale-150 transition-transform duration-700" />
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-cyan-50/50 to-sky-50/50 rounded-bl-full -z-0 opacity-50 group-hover:scale-150 transition-transform duration-700" />
                             
                             {/* Header Section */}
-                            <div className="flex justify-between items-start mb-8">
+                            <div className="flex justify-between items-start mb-8 relative z-20 pointer-events-none">
                                 <div className="flex items-center gap-4">
                                     <div className="w-16 h-16 bg-cyan-500 rounded-2xl flex items-center justify-center text-3xl text-white shadow-lg shadow-cyan-200 group-hover:rotate-6 transition-transform">
                                         📄
@@ -70,7 +77,7 @@ export default function AbrirFormularioClient({ initialForms, canManage }: { ini
                             </div>
 
                             {/* Title & Description */}
-                            <div className="mb-6">
+                            <div className="mb-6 relative z-20 pointer-events-none">
                                 <h3 className="text-2xl font-black text-slate-900 mb-2 leading-tight group-hover:text-cyan-600 transition-colors uppercase tracking-tight">
                                     {form.title}
                                 </h3>
@@ -81,7 +88,7 @@ export default function AbrirFormularioClient({ initialForms, canManage }: { ini
 
                             {/* ESTATISTICAS POR UT (Mini Graphic) */}
                             {(form as any).utStats && (form as any).utStats.length > 0 && (
-                                <div className="mb-8 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                                <div className="mb-8 p-4 bg-slate-50 rounded-2xl border border-slate-100 relative z-20 pointer-events-none">
                                     <div className="flex items-center justify-between mb-3">
                                         <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
                                             <span className="text-sm">📈</span> Distribución por UT
@@ -112,7 +119,7 @@ export default function AbrirFormularioClient({ initialForms, canManage }: { ini
 
                             {/* ADMIN ACTIONS */}
                             {canManage && (
-                                <div className="grid grid-cols-3 gap-3 mb-6 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
+                                <div className="grid grid-cols-3 gap-3 mb-6 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0 relative z-30">
                                     <Link 
                                         href={`/dashboard/formularios/editar/${form.id}`}
                                         className="py-3 bg-indigo-50 text-indigo-700 rounded-2xl text-[10px] font-black uppercase text-center hover:bg-indigo-600 hover:text-white transition-all border border-indigo-100/50 shadow-sm flex flex-col items-center gap-1"
@@ -138,7 +145,7 @@ export default function AbrirFormularioClient({ initialForms, canManage }: { ini
                             )}
 
                             {/* Footer Section */}
-                            <div className="pt-6 border-t border-slate-50 flex items-center justify-between mt-auto">
+                            <div className="pt-6 border-t border-slate-50 flex items-center justify-between mt-auto relative z-20 pointer-events-none">
                                 <div className="flex flex-col">
                                     <span className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-0.5">Creado por</span>
                                     <span className="text-xs font-bold text-slate-700">{form.createdBy}</span>
@@ -150,11 +157,14 @@ export default function AbrirFormularioClient({ initialForms, canManage }: { ini
                             </div>
 
                             {/* Action Button / Admin Indicator */}
-                            <div className="mt-6">
+                            <div className="mt-6 relative z-30">
                                 {canManage ? (
-                                    <div className="w-full py-3 bg-slate-900 text-white text-center rounded-2xl text-[11px] font-black tracking-[0.2em] shadow-xl shadow-slate-200 border border-slate-800 uppercase">
+                                    <Link 
+                                        href={`/dashboard/formularios/abrir/${form.id}`}
+                                        className="w-full py-3 bg-slate-900 text-white text-center rounded-2xl text-[11px] font-black tracking-[0.2em] shadow-xl shadow-slate-200 border border-slate-800 uppercase hover:bg-slate-800 transition-colors"
+                                    >
                                         MODO ADMINISTRADOR
-                                    </div>
+                                    </Link>
                                 ) : (
                                     <Link 
                                         href={`/dashboard/formularios/abrir/${form.id}`}
