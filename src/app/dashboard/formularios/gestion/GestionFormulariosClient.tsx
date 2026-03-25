@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import * as XLSX from 'xlsx'
 import { deleteForm, getFormSubmissionsExport, toggleFormStatus } from '../actions'
+import { generateBlankFormPDF } from '../pdf-util'
 
 export default function GestionFormulariosClient({ forms }: { forms: any[] }) {
     const [searchTerm, setSearchTerm] = useState('')
@@ -83,6 +84,11 @@ export default function GestionFormulariosClient({ forms }: { forms: any[] }) {
             alert(res.error)
             setIsDeleting(null)
         }
+    }
+
+    const handleDownloadOffline = (form: any) => {
+        const doc = generateBlankFormPDF(form)
+        doc.save(`Offline_${form.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.pdf`)
     }
 
     return (
@@ -179,6 +185,13 @@ export default function GestionFormulariosClient({ forms }: { forms: any[] }) {
                                                 >
                                                     <span className="text-sm font-black italic px-2">Reloj</span>
                                                 </Link>
+                                                <button 
+                                                    onClick={() => handleDownloadOffline(form)}
+                                                    className="p-2 bg-cyan-50 text-cyan-600 rounded-lg hover:bg-cyan-100 transition-colors"
+                                                    title="Descargar Versión para llenar a mano (Offline)"
+                                                >
+                                                    <span className="text-sm font-black italic px-2">Offline 📴</span>
+                                                </button>
                                                 <button 
                                                     onClick={() => handleExport(form.id)}
                                                     disabled={isExporting === form.id}

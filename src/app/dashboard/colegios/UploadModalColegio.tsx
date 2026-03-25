@@ -148,14 +148,32 @@ export default function UploadModalColegio() {
         setLoading(false)
     }
 
+    const handleDownloadTemplate = () => {
+        const worksheet = xlsx.utils.json_to_sheet([])
+        xlsx.utils.sheet_add_aoa(worksheet, [['colut', 'colrbd', 'colrbddv', 'insid', 'institución', 'sucursal', 'nombreestablecimiento', 'direccionestablecimiento', 'comuna']], { origin: 'A1' })
+        const workbook = xlsx.utils.book_new()
+        xlsx.utils.book_append_sheet(workbook, worksheet, 'Plantilla_Colegios')
+        xlsx.writeFile(workbook, 'Formato_Carga_Masiva_Colegios.xlsx')
+    }
+
     if (!isOpen) {
         return (
-            <button
-                onClick={() => setIsOpen(true)}
-                className="px-4 py-2 bg-gradient-to-r from-cyan-600 to-sky-600 hover:from-cyan-700 hover:to-sky-700 text-white rounded-xl shadow-md shadow-cyan-500/30 transition-all font-medium flex items-center gap-2"
-            >
-                <span>+</span> Carga Masiva Colegios
-            </button>
+            <div className="flex gap-2">
+                <button
+                    onClick={() => setIsOpen(true)}
+                    className="px-4 py-2 bg-gradient-to-r from-cyan-600 to-sky-600 hover:from-cyan-700 hover:to-sky-700 text-white rounded-xl shadow-md shadow-cyan-500/30 transition-all font-medium flex items-center gap-2"
+                >
+                    <span>+</span> Carga Masiva Colegios
+                </button>
+                <button
+                    onClick={handleDownloadTemplate}
+                    type="button"
+                    className="px-4 py-2 bg-white border-2 border-cyan-100 text-cyan-600 hover:bg-cyan-50 rounded-xl transition-all font-bold flex items-center gap-2 shadow-sm"
+                    title="Descargar plantilla Excel vacía"
+                >
+                    <span>📥</span> Formato Excel
+                </button>
+            </div>
         )
     }
 

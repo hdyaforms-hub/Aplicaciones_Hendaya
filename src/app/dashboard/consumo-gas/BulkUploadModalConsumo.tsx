@@ -102,14 +102,32 @@ export default function BulkUploadModalConsumo({ onUploadSuccess }: { onUploadSu
         setLoading(false)
     }
 
+    const handleDownloadTemplate = () => {
+        const worksheet = xlsx.utils.json_to_sheet([])
+        xlsx.utils.sheet_add_aoa(worksheet, [['rbd', 'litros', 'cantidad', 'meses']], { origin: 'A1' })
+        const workbook = xlsx.utils.book_new()
+        xlsx.utils.book_append_sheet(workbook, worksheet, 'Plantilla_Consumo')
+        xlsx.writeFile(workbook, 'Formato_Carga_Consumo_Gas.xlsx')
+    }
+
     if (!isOpen) {
         return (
-            <button
-                onClick={() => setIsOpen(true)}
-                className="px-4 py-2 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700 text-white rounded-xl shadow-md shadow-orange-500/30 transition-all font-medium flex items-center gap-2"
-            >
-                <span>📊</span> Carga Masiva Consumo
-            </button>
+            <div className="flex gap-2">
+                <button
+                    onClick={() => setIsOpen(true)}
+                    className="px-4 py-2 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700 text-white rounded-xl shadow-md shadow-orange-500/30 transition-all font-medium flex items-center gap-2"
+                >
+                    <span>📊</span> Carga Masiva Consumo
+                </button>
+                <button
+                    onClick={handleDownloadTemplate}
+                    type="button"
+                    className="px-4 py-2 bg-white border-2 border-orange-100 text-orange-600 hover:bg-orange-50 rounded-xl transition-all font-bold flex items-center gap-2 shadow-sm"
+                    title="Descargar plantilla Excel vacía"
+                >
+                    <span>📥</span> Formato Excel
+                </button>
+            </div>
         )
     }
 
