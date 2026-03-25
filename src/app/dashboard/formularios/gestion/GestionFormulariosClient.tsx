@@ -166,49 +166,55 @@ export default function GestionFormulariosClient({ forms }: { forms: any[] }) {
                                             <div className="flex justify-end gap-2">
                                                 <Link 
                                                     href={`/dashboard/formularios/editar/${form.id}`}
-                                                    className="p-2 bg-indigo-50 text-indigo-600 rounded-lg hover:bg-indigo-100 transition-colors"
+                                                    className="w-16 h-16 flex flex-col items-center justify-center bg-indigo-50 text-indigo-600 rounded-2xl hover:bg-indigo-100 transition-all shadow-sm border border-indigo-100/50"
                                                     title="Editar Estructura"
                                                 >
-                                                    <span className="text-sm font-black italic px-2">Editar</span>
+                                                    <span className="text-xl mb-1">📝</span>
+                                                    <span className="text-[10px] font-black uppercase tracking-tighter">Editar</span>
                                                 </Link>
                                                 <Link 
                                                     href={`/dashboard/formularios/privilegios/${form.id}`}
-                                                    className="p-2 bg-purple-50 text-purple-600 rounded-lg hover:bg-purple-100 transition-colors"
+                                                    className="w-16 h-16 flex flex-col items-center justify-center bg-purple-50 text-purple-600 rounded-2xl hover:bg-purple-100 transition-all shadow-sm border border-purple-100/50"
                                                     title="Gestionar Privilegios"
                                                 >
-                                                    <span className="text-sm font-black italic px-2">Privilegios</span>
+                                                    <span className="text-xl mb-1">🔐</span>
+                                                    <span className="text-[10px] font-black uppercase tracking-tighter">Privilegios</span>
                                                 </Link>
                                                 <Link 
                                                     href={`/dashboard/formularios/calendario/${form.id}`}
-                                                    className="p-2 bg-amber-50 text-amber-600 rounded-lg hover:bg-amber-100 transition-colors"
+                                                    className="w-16 h-16 flex flex-col items-center justify-center bg-amber-50 text-amber-600 rounded-2xl hover:bg-amber-100 transition-all shadow-sm border border-amber-100/50"
                                                     title="Programar Calendario"
                                                 >
-                                                    <span className="text-sm font-black italic px-2">Reloj</span>
+                                                    <span className="text-xl mb-1">⏰</span>
+                                                    <span className="text-[10px] font-black uppercase tracking-tighter">Reloj</span>
                                                 </Link>
                                                 <button 
                                                     onClick={() => handleDownloadOffline(form)}
-                                                    className="p-2 bg-cyan-50 text-cyan-600 rounded-lg hover:bg-cyan-100 transition-colors"
+                                                    className="w-16 h-16 flex flex-col items-center justify-center bg-cyan-50 text-cyan-600 rounded-2xl hover:bg-cyan-100 transition-all shadow-sm border border-cyan-100/50"
                                                     title="Descargar Versión para llenar a mano (Offline)"
                                                 >
-                                                    <span className="text-sm font-black italic px-2">Offline 📴</span>
+                                                    <span className="text-xl mb-1">📴</span>
+                                                    <span className="text-[10px] font-black uppercase tracking-tighter">Offline</span>
                                                 </button>
                                                 <button 
                                                     onClick={() => handleExport(form.id)}
                                                     disabled={isExporting === form.id}
-                                                    className="p-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition-colors disabled:opacity-50"
+                                                    className="w-16 h-16 flex flex-col items-center justify-center bg-green-50 text-green-600 rounded-2xl hover:bg-green-100 transition-all shadow-sm border border-green-100/50 disabled:opacity-50"
                                                     title="Exportar Respuestas a Excel"
                                                 >
-                                                    <span className="text-sm font-black italic px-2">
-                                                        {isExporting === form.id ? '...' : 'Excel 📊'}
+                                                    <span className="text-xl mb-1">📊</span>
+                                                    <span className="text-[10px] font-black uppercase tracking-tighter">
+                                                        {isExporting === form.id ? '...' : 'Excel'}
                                                     </span>
                                                 </button>
                                                 <button 
                                                     onClick={() => handleDelete(form.id, form.title)}
                                                     disabled={isDeleting === form.id}
-                                                    className="p-2 bg-rose-50 text-rose-600 rounded-lg hover:bg-rose-100 transition-colors disabled:opacity-50"
+                                                    className="w-16 h-16 flex flex-col items-center justify-center bg-rose-50 text-rose-600 rounded-2xl hover:bg-rose-100 transition-all shadow-sm border border-rose-100/50 disabled:opacity-50"
                                                     title="Eliminar Formulario"
                                                 >
-                                                    <span className="text-sm font-black italic px-2">
+                                                    <span className="text-xl mb-1">🗑️</span>
+                                                    <span className="text-[10px] font-black uppercase tracking-tighter">
                                                         {isDeleting === form.id ? '...' : 'Eliminar'}
                                                     </span>
                                                 </button>

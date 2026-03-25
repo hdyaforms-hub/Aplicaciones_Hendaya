@@ -92,61 +92,78 @@ export async function saveRetiroSaldo(data: {
 
     console.log('DEBUG: saveRetiroSaldo input data:', JSON.stringify(data, (k, v) => k === 'firmaBase64' ? v.substring(0, 50) + '...' : v))
 
-    try {
-        const nextFolio = await getNextRetiroFolio()
-        const supervisor = session.user.name || session.user.username || 'Sistema'
+    let attempts = 0
+    const maxAttempts = 3
+    let lastError: any = null
 
-        console.log('DEBUG: Saving with folio:', nextFolio)
-
-        // Obtener la licitación actual de la UT
-        const utInfo = await prisma.uT.findUnique({ where: { codUT: Number(data.ut) } })
-
-        const result = await prisma.$transaction(async (tx) => {
-            // Create header and details
-            const header = await tx.retiroSaldoHeader.create({
-                data: {
-                    folio: nextFolio,
-                    tipoOperacion: data.tipoOperacion,
-                    rbd: Number(data.rbd),
-                    nombreEstablecimiento: data.nombreEstablecimiento,
-                    ut: Number(data.ut),
-                    licId: utInfo?.licId,
-                    sucursal: data.sucursal,
-                    supervisor: supervisor,
-                    nombreAutoriza: data.nombreAutoriza,
-                    rutAutoriza: data.rutAutoriza,
-                    firmaBase64: data.firmaBase64,
-                    detalles: {
-                        create: data.productos.map(p => ({
-                            codigoProducto: p.codigo,
-                            nombreProducto: p.nombre,
-                            cantidad: Number(p.cantidad)
-                        }))
-                    }
-                },
-                include: { detalles: true }
-            })
-            return header
-        })
-
-        console.log('DEBUG: Transaction successful, folio:', result.folio)
-
-        // -- NOTIFICACIONES --
-        let emailWarning: string | undefined;
+    while (attempts < maxAttempts) {
         try {
-            const notif = await processRetiroNotificaciones(result, session?.user?.name || session?.user?.username || 'Usuario')
-            if (notif?.warning) emailWarning = notif.warning;
-        } catch (notifErr) {
-            console.error("Error al procesar notificaciones de retiro:", notifErr)
+            const nextFolio = await getNextRetiroFolio()
+            const supervisor = session.user.name || session.user.username || 'Sistema'
+
+            console.log(`DEBUG: Attempt ${attempts + 1} - Saving with folio:`, nextFolio)
+
+            // Obtener la licitación actual de la UT
+            const utInfo = await prisma.uT.findUnique({ where: { codUT: Number(data.ut) } })
+
+            const result = await prisma.$transaction(async (tx) => {
+                // Create header and details
+                const header = await tx.retiroSaldoHeader.create({
+                    data: {
+                        folio: nextFolio,
+                        tipoOperacion: data.tipoOperacion,
+                        rbd: Number(data.rbd),
+                        nombreEstablecimiento: data.nombreEstablecimiento,
+                        ut: Number(data.ut),
+                        licId: utInfo?.licId,
+                        sucursal: data.sucursal,
+                        supervisor: supervisor,
+                        nombreAutoriza: data.nombreAutoriza,
+                        rutAutoriza: data.rutAutoriza,
+                        firmaBase64: data.firmaBase64,
+                        detalles: {
+                            create: data.productos.map(p => ({
+                                codigoProducto: p.codigo,
+                                nombreProducto: p.nombre,
+                                cantidad: Number(p.cantidad)
+                            }))
+                        }
+                    },
+                    include: { detalles: true }
+                })
+                return header
+            })
+
+            console.log('DEBUG: Transaction successful, folio:', result.folio)
+
+            // -- NOTIFICACIONES --
+            let emailWarning: string | undefined;
+            try {
+                const notif = await processRetiroNotificaciones(result, session?.user?.name || session?.user?.username || 'Usuario')
+                if (notif?.warning) emailWarning = notif.warning;
+            } catch (notifErr) {
+                console.error("Error al procesar notificaciones de retiro:", notifErr)
+            }
+            // -- FIN NOTIFICACIONES --
+            
+            revalidatePath('/dashboard/retiro-saldos')
+            return { success: true, folio: result.folio, emailWarning }
+        } catch (error: any) {
+            // Prisma error P2002 is Unique Constraint Violation
+            if (error.code === 'P2002' && error.meta?.target?.includes('folio')) {
+                attempts++
+                lastError = error
+                console.warn(`Race condition on folio detected. Attempt ${attempts} of ${maxAttempts}. Retrying...`)
+                // wait a tiny bit to let the other transaction finish? (optional for SQLite)
+                await new Promise(resolve => setTimeout(resolve, 50 * attempts))
+                continue
+            }
+            console.error('Error saving retiro saldo (full details):', error)
+            return { error: `Error al procesar la solicitud: ${error?.message || 'Error desconocido'}` }
         }
-        // -- FIN NOTIFICACIONES --
-        
-        revalidatePath('/dashboard/retiro-saldos')
-        return { success: true, folio: result.folio, emailWarning }
-    } catch (error: any) {
-        console.error('Error saving retiro saldo (full details):', error)
-        return { error: `Error al procesar la solicitud: ${error?.message || 'Error desconocido'}` }
     }
+
+    return { error: `No se pudo encontrar un folio libre después de ${maxAttempts} intentos. Por favor, intente de nuevo en unos segundos.` }
 }
 
 async function processRetiroNotificaciones(retiro: any, nombreUsuario: string) {
