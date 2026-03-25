@@ -140,11 +140,49 @@ export async function getFormDefinitions(includeInactive: boolean = false) {
             })
         })
 
+        // Mapear campos y calcular estadísticas de UT
+        const formsWithStats = await Promise.all(filteredForms.map(async (form) => {
+            const fields = JSON.parse(form.fields) as FormField[]
+            // Intentar encontrar el campo que representa la UT (por systemSource o nombre)
+            const utField = fields.find(f => f.systemSource === 'UT' || f.label.toUpperCase().includes('UT'))
+            
+            let utStats: { name: string, count: number }[] = []
+            
+            if (utField) {
+                // Obtener las respuestas para este formulario (limitado para performance)
+                const submissions = await prisma.formSubmission.findMany({
+                    where: { formId: form.id },
+                    select: { data: true },
+                    orderBy: { submittedAt: 'desc' },
+                    take: 200 // Suficiente para un gráfico "pequeño"
+                })
+
+                const counts: Record<string, number> = {}
+                submissions.forEach(s => {
+                    try {
+                        const data = JSON.parse(s.data)
+                        const utValue = data[utField.id]
+                        if (utValue) {
+                            counts[utValue] = (counts[utValue] || 0) + 1
+                        }
+                    } catch (e) {}
+                })
+
+                utStats = Object.entries(counts)
+                    .map(([name, count]) => ({ name: String(name), count }))
+                    .sort((a, b) => b.count - a.count)
+                    .slice(0, 5) // Top 5 UTs
+            }
+
+            return {
+                ...form,
+                fields,
+                utStats
+            }
+        }))
+
         return {
-            forms: filteredForms.map(f => ({
-                ...f,
-                fields: JSON.parse(f.fields) as FormField[]
-            }))
+            forms: formsWithStats
         }
     } catch (e) {
         console.error('Error fetching forms:', e)

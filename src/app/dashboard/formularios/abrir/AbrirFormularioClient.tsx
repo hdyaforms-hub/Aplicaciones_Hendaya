@@ -41,76 +41,130 @@ export default function AbrirFormularioClient({ initialForms, canManage }: { ini
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {filteredForms.map((form) => (
-                        <Link 
+                        <div 
                             key={form.id} 
-                            href={`/dashboard/formularios/abrir/${form.id}`}
-                            className="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm hover:shadow-xl hover:border-cyan-300 transition-all group flex flex-col h-full relative overflow-hidden"
+                            className="bg-white border border-gray-100 rounded-[2.5rem] p-8 shadow-sm hover:shadow-2xl hover:border-cyan-300 transition-all group flex flex-col h-full relative overflow-hidden"
                         >
-                            <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-cyan-50 to-sky-50 rounded-bl-full -z-10 opacity-50 group-hover:scale-125 transition-transform" />
+                            {/* Decorative background */}
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-cyan-50/50 to-sky-50/50 rounded-bl-full -z-10 opacity-50 group-hover:scale-150 transition-transform duration-700" />
                             
-                            <div className="flex justify-between items-start mb-4">
+                            {/* Header Section */}
+                            <div className="flex justify-between items-start mb-8">
                                 <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 bg-gray-50 rounded-2xl flex items-center justify-center text-2xl group-hover:bg-cyan-500 group-hover:text-white transition-colors">📄</div>
-                                    <div className="bg-amber-50 px-3 py-1.5 rounded-xl border border-amber-100 shadow-sm">
-                                        <span className="text-[10px] font-black text-amber-600 uppercase tracking-widest flex items-center gap-1.5">
-                                            <span className="text-xs">📈</span> {form._count?.submissions || 0} Respuestas
+                                    <div className="w-16 h-16 bg-cyan-500 rounded-2xl flex items-center justify-center text-3xl text-white shadow-lg shadow-cyan-200 group-hover:rotate-6 transition-transform">
+                                        📄
+                                    </div>
+                                    <div className="bg-amber-50 px-4 py-2 rounded-2xl border border-amber-100 shadow-sm flex items-center gap-2">
+                                        <span className="text-lg">📊</span>
+                                        <span className="text-xs font-black text-amber-700 uppercase tracking-widest">
+                                            {(form as any)._count?.submissions || 0} Respuestas
                                         </span>
                                     </div>
                                 </div>
-                                <div className="flex flex-col items-end gap-1">
-                                    <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{form.fields.length} Campos</span>
-                                    <span className={`text-[9px] font-black px-2 py-0.5 rounded-full ${form.isActive ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                                <div className="flex flex-col items-end gap-1.5 pt-1">
+                                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{form.fields.length} Campos</span>
+                                    <span className={`text-[9px] font-black px-3 py-1 rounded-full shadow-sm tracking-tighter ${form.isActive ? 'bg-green-100 text-green-700 border border-green-200' : 'bg-red-100 text-red-700 border border-red-200'}`}>
                                         {form.isActive ? 'ACTIVO' : 'INACTIVO'}
                                     </span>
                                 </div>
                             </div>
 
-                            <h3 className="text-xl font-black text-gray-900 mb-2 truncate group-hover:text-cyan-600 transition-colors uppercase tracking-tight">{form.title}</h3>
-                            <p className="text-sm text-gray-500 mb-4 line-clamp-2 italic font-medium flex-1">
-                                {form.description || 'Sin descripción adicional disponible.'}
-                            </p>
+                            {/* Title & Description */}
+                            <div className="mb-6">
+                                <h3 className="text-2xl font-black text-slate-900 mb-2 leading-tight group-hover:text-cyan-600 transition-colors uppercase tracking-tight">
+                                    {form.title}
+                                </h3>
+                                <p className="text-sm text-slate-500 line-clamp-2 italic font-medium leading-relaxed">
+                                    {form.description || 'Sin descripción adicional disponible.'}
+                                </p>
+                            </div>
+
+                            {/* ESTATISTICAS POR UT (Mini Graphic) */}
+                            {(form as any).utStats && (form as any).utStats.length > 0 && (
+                                <div className="mb-8 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                                    <div className="flex items-center justify-between mb-3">
+                                        <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
+                                            <span className="text-sm">📈</span> Distribución por UT
+                                        </span>
+                                    </div>
+                                    <div className="space-y-2.5">
+                                        {(form as any).utStats.map((stat: any, idx: number) => {
+                                            const total = (form as any).utStats.reduce((acc: number, curr: any) => acc + curr.count, 0)
+                                            const percentage = total > 0 ? (stat.count / total) * 100 : 0
+                                            return (
+                                                <div key={idx} className="space-y-1">
+                                                    <div className="flex justify-between items-center text-[10px] font-bold text-slate-600">
+                                                        <span>UT {stat.name}</span>
+                                                        <span className="text-slate-400">{stat.count}</span>
+                                                    </div>
+                                                    <div className="h-1.5 w-full bg-slate-200 rounded-full overflow-hidden">
+                                                        <div 
+                                                            className="h-full bg-cyan-500 rounded-full transition-all duration-1000 shadow-[0_0_8px_rgba(6,182,212,0.4)]" 
+                                                            style={{ width: `${percentage}%` }}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            )
+                                        })}
+                                    </div>
+                                </div>
+                            )}
 
                             {/* ADMIN ACTIONS */}
                             {canManage && (
-                                <div className="flex gap-2 mb-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <div className="grid grid-cols-3 gap-3 mb-6 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
                                     <Link 
                                         href={`/dashboard/formularios/editar/${form.id}`}
-                                        className="flex-1 py-2 bg-indigo-50 text-indigo-700 rounded-xl text-[10px] font-black uppercase text-center hover:bg-indigo-100 transition-colors"
+                                        className="py-3 bg-indigo-50 text-indigo-700 rounded-2xl text-[10px] font-black uppercase text-center hover:bg-indigo-600 hover:text-white transition-all border border-indigo-100/50 shadow-sm flex flex-col items-center gap-1"
                                     >
-                                        Editar ✏️
+                                        <span>EDITAR</span>
+                                        <span className="text-xs">✏️</span>
                                     </Link>
                                     <Link 
                                         href={`/dashboard/formularios/privilegios/${form.id}`}
-                                        className="flex-1 py-2 bg-purple-50 text-purple-700 rounded-xl text-[10px] font-black uppercase text-center hover:bg-purple-100 transition-colors"
+                                        className="py-3 bg-purple-50 text-purple-700 rounded-2xl text-[10px] font-black uppercase text-center hover:bg-purple-600 hover:text-white transition-all border border-purple-100/50 shadow-sm flex flex-col items-center gap-1"
                                     >
-                                        Permisos 🔐
+                                        <span>PERMISOS</span>
+                                        <span className="text-xs">🔐</span>
                                     </Link>
                                     <Link 
                                         href={`/dashboard/formularios/calendario/${form.id}`}
-                                        className="flex-1 py-2 bg-amber-50 text-amber-700 rounded-xl text-[10px] font-black uppercase text-center hover:bg-amber-100 transition-colors"
+                                        className="py-3 bg-amber-50 text-amber-700 rounded-2xl text-[10px] font-black uppercase text-center hover:bg-amber-600 hover:text-white transition-all border border-amber-100/50 shadow-sm flex flex-col items-center gap-1"
                                     >
-                                        Reloj ⏰
+                                        <span>RELOJ</span>
+                                        <span className="text-xs">⏰</span>
                                     </Link>
                                 </div>
                             )}
 
-                            <div className="pt-4 border-t border-gray-50 flex items-center justify-between mt-auto">
+                            {/* Footer Section */}
+                            <div className="pt-6 border-t border-slate-50 flex items-center justify-between mt-auto">
                                 <div className="flex flex-col">
-                                    <span className="text-[10px] text-gray-400 font-black uppercase tracking-widest">Creado por</span>
-                                    <span className="text-xs font-bold text-gray-700">{form.createdBy}</span>
+                                    <span className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-0.5">Creado por</span>
+                                    <span className="text-xs font-bold text-slate-700">{form.createdBy}</span>
                                 </div>
                                 <div className="flex flex-col items-end">
-                                    <span className="text-[10px] text-gray-400 font-black uppercase tracking-widest italic">Fecha</span>
-                                    <span className="text-xs font-bold text-gray-500">{new Date(form.createdAt).toLocaleDateString('es-ES')}</span>
+                                    <span className="text-[10px] text-slate-400 font-black uppercase tracking-widest italic mb-0.5">Fecha</span>
+                                    <span className="text-xs font-bold text-slate-500">{new Date(form.createdAt).toLocaleDateString('es-ES')}</span>
                                 </div>
                             </div>
 
-                            {canManage && (
-                                <div className="mt-4 w-full py-2 bg-slate-900 text-white text-center rounded-xl text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity">
-                                    MODO ADMINISTRADOR
-                                </div>
-                            )}
-                        </Link>
+                            {/* Action Button / Admin Indicator */}
+                            <div className="mt-6">
+                                {canManage ? (
+                                    <div className="w-full py-3 bg-slate-900 text-white text-center rounded-2xl text-[11px] font-black tracking-[0.2em] shadow-xl shadow-slate-200 border border-slate-800 uppercase">
+                                        MODO ADMINISTRADOR
+                                    </div>
+                                ) : (
+                                    <Link 
+                                        href={`/dashboard/formularios/abrir/${form.id}`}
+                                        className="w-full py-4 bg-cyan-500 text-white text-center rounded-2xl text-xs font-black tracking-[0.2em] shadow-lg shadow-cyan-200 hover:bg-cyan-600 transition-all uppercase flex items-center justify-center gap-2"
+                                    >
+                                        ABRIR FORMULARIO 📂
+                                    </Link>
+                                )}
+                            </div>
+                        </div>
                     ))}
                 </div>
             )}
