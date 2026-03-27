@@ -8,9 +8,10 @@ interface Props {
     initialForm?: any
     isEditable?: boolean
     submissionCount?: number
+    areas?: { id: number, nombre: string }[]
 }
 
-export default function CrearFormularioClient({ initialForm, isEditable = true, submissionCount = 0 }: Props) {
+export default function CrearFormularioClient({ initialForm, isEditable = true, submissionCount = 0, areas = [] }: Props) {
     const router = useRouter()
     const [title, setTitle] = useState(initialForm?.title || '')
     const [description, setDescription] = useState(initialForm?.description || '')
@@ -19,6 +20,7 @@ export default function CrearFormularioClient({ initialForm, isEditable = true, 
     const [formCode, setFormCode] = useState(initialForm?.formCode || '')
     const [formVersion, setFormVersion] = useState(initialForm?.formVersion || '')
     const [formDate, setFormDate] = useState(initialForm?.formDate || '')
+    const [areaId, setAreaId] = useState<number | string>(initialForm?.areaId || '')
     const [isSaving, setIsSaving] = useState(false)
     const [message, setMessage] = useState({ type: '', text: '' })
 
@@ -73,7 +75,15 @@ export default function CrearFormularioClient({ initialForm, isEditable = true, 
         
         const metadata = { formCode, formVersion, formDate }
 
-        const res = await saveFormDefinition(initialForm?.id || null, title, description, fields, isActive, metadata)
+        const res = await saveFormDefinition(
+            initialForm?.id || null, 
+            title, 
+            description, 
+            fields, 
+            areaId ? Number(areaId) : null,
+            isActive, 
+            metadata
+        )
         if (res.success) {
             setMessage({ type: 'success', text: 'Formulario guardado con éxito. Redirigiendo...' })
             setTimeout(() => router.push('/dashboard/formularios/abrir'), 1500)
@@ -181,6 +191,23 @@ export default function CrearFormularioClient({ initialForm, isEditable = true, 
                                             className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white text-black focus:border-cyan-500 focus:outline-none text-sm font-black"
                                         />
                                     </div>
+                                </div>
+                                
+                                <div className="mt-4">
+                                    <label className="text-xs font-black text-gray-400 uppercase tracking-widest mb-2 block">Área de la Compañía</label>
+                                    <select
+                                        value={areaId}
+                                        onChange={(e) => setAreaId(e.target.value)}
+                                        className="w-full px-5 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-500 bg-white text-gray-900 transition-all font-bold text-lg"
+                                    >
+                                        <option value="">-- Sin Área Asignada --</option>
+                                        {areas.map(area => (
+                                            <option key={area.id} value={area.id}>
+                                                {area.nombre}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <p className="text-[10px] text-gray-400 mt-1 font-bold italic">Permite organizar visualmente los formularios por departamento o área específica.</p>
                                 </div>
                     </div>
                 </div>

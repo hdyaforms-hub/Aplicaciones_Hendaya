@@ -1,3 +1,4 @@
+import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { redirect, notFound } from 'next/navigation'
 import { getFormWithRelations, getFormEditability } from '../../actions'
@@ -10,14 +11,23 @@ export default async function EditarFormularioPage({ params }: { params: Promise
         redirect('/dashboard')
     }
 
-    const form = await getFormWithRelations(id)
+    const [form, areas] = await Promise.all([
+        getFormWithRelations(id),
+        prisma.area.findMany({ where: { isActive: true }, orderBy: { nombre: 'asc' } })
+    ])
+
     if (!form) notFound()
 
     const { isEditable, submissionCount } = await getFormEditability(id)
 
     return (
         <div className="space-y-6">
-            <CrearFormularioClient initialForm={form} isEditable={isEditable} submissionCount={submissionCount} />
+            <CrearFormularioClient 
+                initialForm={form} 
+                isEditable={isEditable} 
+                submissionCount={submissionCount} 
+                areas={areas}
+            />
         </div>
     )
 }

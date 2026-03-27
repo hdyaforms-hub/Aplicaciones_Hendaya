@@ -26,6 +26,7 @@ export async function saveFormDefinition(
     title: string, 
     description: string | null, 
     fields: FormField[], 
+    areaId: number | null = null,
     isActive: boolean = true,
     metadata?: { formCode?: string, formVersion?: string, formDate?: string }
 ) {
@@ -54,6 +55,7 @@ export async function saveFormDefinition(
                     title,
                     description,
                     fields: JSON.stringify(fields),
+                    areaId,
                     isActive,
                     formCode: metadata?.formCode,
                     formVersion: metadata?.formVersion,
@@ -68,6 +70,7 @@ export async function saveFormDefinition(
                     title,
                     description,
                     fields: JSON.stringify(fields),
+                    areaId,
                     isActive,
                     createdBy: session.user.username as string,
                     formCode: metadata?.formCode,
@@ -112,6 +115,7 @@ export async function getFormDefinitions(includeInactive: boolean = false) {
             },
             include: {
                 schedules: true,
+                area: true,
                 _count: {
                     select: { submissions: true }
                 }
@@ -265,7 +269,8 @@ export async function getFormWithRelations(id: string) {
             where: { id },
             include: {
                 allowedUsers: { select: { id: true } },
-                schedules: true
+                schedules: true,
+                area: true
             }
         })
         if (!form) return null

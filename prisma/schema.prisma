@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,44 +11,44 @@ model Role {
   id          String   @id @default(uuid())
   name        String   @unique
   description String?
-  permissions String   // JSON stringified array of permissions, e.g. '["users_read", "users_write", "roles_read"]'
-  users       User[]
+  permissions String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  users       User[]
 }
 
 model User {
-  id           String     @id @default(uuid())
-  username     String     @unique
-  email        String?    @unique
+  id           String           @id @default(uuid())
+  username     String           @unique
+  email        String?          @unique
   passwordHash String
   name         String?
   roleId       String
-  role         Role       @relation(fields: [roleId], references: [id])
-  isActive     Boolean    @default(true)
-  sucursales   Sucursal[]
+  isActive     Boolean          @default(true)
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  role         Role             @relation(fields: [roleId], references: [id])
+  sucursales   Sucursal[]       @relation("SucursalToUser")
   allowedForms FormDefinition[] @relation("UserForms")
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
 }
 
 model PMPA {
   id         String   @id @default(uuid())
-  sucursal   String   // max 50
+  sucursal   String
   ano        Int
   mes        Int
   rbd        Int
-  licId      Int?     // Preservación histórica de la licitación
-  programa   String   // max 20
-  estrato    String   // max 20
+  licId      Int?
+  programa   String
+  estrato    String
   raceq      Int
-  servicio   String   // max 10
-  uploadedBy String   // user who uploaded
+  servicio   String
+  uploadedBy String
   createdAt  DateTime @default(now())
 }
 
 model Colegios {
-  id                       String   @id @default(uuid())
+  id                       String @id @default(uuid())
   colut                    Int
   colRBD                   Int
   colRBDDV                 String
@@ -66,17 +63,17 @@ model Colegios {
 
 model IngRacion {
   id                    String   @id @default(uuid())
-  usuario               String   // char(50)
-  ubicacion             String   // char(50) Geolocalización
+  usuario               String
+  ubicacion             String
   fechaSistema          DateTime @default(now())
   fechaIngreso          DateTime
   rbd                   Int
-  licId                 Int?     // Preservación histórica de la licitación
-  nombreEstablecimiento String   // char(200)
+  licId                 Int?
+  nombreEstablecimiento String
   ano                   Int
   mes                   Int
-  programa              String   // char(20)
-  estrato               String   // char(20)
+  programa              String
+  estrato               String
   desayunoIng           Int
   almuerzoIng           Int
   onceIng               Int
@@ -89,22 +86,22 @@ model IngRacion {
   colacionAsig          Int
   cenaAsig              Int
   totalAsig             Int
-  tasaPreparacion       Float    // Numerico 4 decimales
-  observacion           String   // char(500)
+  tasaPreparacion       Float
+  observacion           String
 }
 
 model Productos {
-  id           String   @id @default(uuid())
-  nombre       String   // char(100) -> nombre del producto
-  codigo       String   // char(12) -> codigo del producto
-  unidad       String   // char(10) -> unidad de producto
-  tipoProducto Int      // tipo de producto, 1= retiro de saldo / 2 = Rebaja de stock
+  id           String @id @default(uuid())
+  nombre       String
+  codigo       String
+  unidad       String
+  tipoProducto Int
 }
 
 model EmailConfig {
   id        String   @id @default("global")
   email     String
-  password  String   // encrypted logic will be handled in actions
+  password  String
   provider  String   @default("office365")
   updatedBy String?
   updatedAt DateTime @updatedAt
@@ -114,26 +111,25 @@ model ListaCorreo {
   id             String                 @id @default(uuid())
   nombre         String                 @unique
   descripcion    String?
-  para           String                 // Guardado como JSON string ["correo1@ejemplo.com", "correo2@..."]
-  cc             String?                // Guardado como JSON string ["correo3@ejemplo.com"]
-  sucursalId     String?                // Relacion con sucursal
-  sucursal       Sucursal?              @relation(fields: [sucursalId], references: [id])
+  para           String
+  cc             String?
+  sucursalId     String?
   createdAt      DateTime               @default(now())
   updatedAt      DateTime               @updatedAt
+  sucursal       Sucursal?              @relation(fields: [sucursalId], references: [id])
   notificaciones NotificacionPantalla[]
 }
 
 model NotificacionPantalla {
-  id              String      @id @default(uuid())
-  codigoPantalla  String      // Identificador único ej: "ingreso-raciones", "carga-pmpa"
-  listaCorreoId   String      // Relación con tu tabla de Listas
-  listaCorreo     ListaCorreo @relation(fields: [listaCorreoId], references: [id])
-  activa          Boolean     @default(true)
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
+  id             String      @id @default(uuid())
+  codigoPantalla String
+  listaCorreoId  String
+  activa         Boolean     @default(true)
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  listaCorreo    ListaCorreo @relation(fields: [listaCorreoId], references: [id])
 
-  // Evitamos que una misma lista se asigne dos veces a la misma pantalla
-  @@unique([codigoPantalla, listaCorreoId]) 
+  @@unique([codigoPantalla, listaCorreoId])
 }
 
 model PlantillaCorreo {
@@ -145,149 +141,318 @@ model PlantillaCorreo {
 }
 
 model Licitacion {
-  licId      Int      @id // Codigo de licitación
-  estado     Int      @default(1) // Estado vigente (1) / No vigente (0)
-  uts        UT[]
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  licId     Int      @id @default(autoincrement())
+  estado    Int      @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  uts       UT[]
 }
 
 model Sucursal {
   id           String        @id @default(uuid())
-  nombre       String        @unique // Nombre de la sucursal char(100)
-  uts          UT[]
-  users        User[]
-  listasCorreo ListaCorreo[]
+  nombre       String        @unique
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
+  listasCorreo ListaCorreo[]
+  uts          UT[]
+  users        User[]        @relation("SucursalToUser")
 }
 
 model SolicitudPan {
   id                String   @id @default(uuid())
   ut                Int
-  licId             Int?     // Preservación histórica de la licitación
+  licId             Int?
   rbd               Int
-  nombreSolicitante String   // char(100)
+  nombreSolicitante String
   fechaSolicitud    DateTime @default(now())
-  solicitud         String   // char(20)
+  solicitud         String
   cantidad          Int
   fechaGestacion    DateTime
-  servicio          String   // char(20)
-  motivo            String   // char(500)
+  servicio          String
+  motivo            String
 }
 
 model UT {
-  codUT      Int        @id // Codigo de Unidad Territorial
-  licId      Int        // Codigo de licitación
-  licitacion Licitacion @relation(fields: [licId], references: [licId])
-  estado     Int        @default(1) // Estado vigente (1) / No vigente (0)
-  sucursalId String?    // Asociado a sucursal
-  sucursal   Sucursal?  @relation(fields: [sucursalId], references: [id])
+  codUT      Int        @id @default(autoincrement())
+  licId      Int
+  estado     Int        @default(1)
+  sucursalId String?
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
+  sucursal   Sucursal?  @relation(fields: [sucursalId], references: [id])
+  licitacion Licitacion @relation(fields: [licId], references: [licId])
 }
 
 model SolicitudGas {
   id                String   @id @default(uuid())
   ut                Int
-  licId             Int?     // Preservación histórica de la licitación
+  licId             Int?
   rbd               Int
-  nombreSolicitante String   // char(100)
+  nombreSolicitante String
   fechaSolicitud    DateTime @default(now())
-  distribuidor      String   // char(20)
-  tipoGas           String   // char(20)
-  cantidadLitro     Float    // Numerico(2 decimales)
-  cilindro          String?  // char(20) (e.g., 5 Kilos, 11 Kilos, etc.)
-  cantidad          Int?     // Cantidad de cilindros
-  observacion       String?  // char(500)
+  distribuidor      String
+  tipoGas           String
+  cantidadLitro     Float
+  cilindro          String?
+  cantidad          Int?
+  observacion       String?
   createdAt         DateTime @default(now())
 }
 
 model RetiroSaldoHeader {
   id                    String              @id @default(uuid())
-  folio                 String              @unique // Formato: 0000000001
-  tipoOperacion         String              // "Retiro de saldo" o "Rebaja de Stock"
+  folio                 String              @unique
+  tipoOperacion         String
   rbd                   Int
   nombreEstablecimiento String
   ut                    Int
-  licId                 Int?                // Preservación histórica de la licitación
+  licId                 Int?
   sucursal              String
   fecha                 DateTime            @default(now())
-  supervisor            String              // Usuario conectado
-  nombreAutoriza        String?             // Nombre de quien autoriza
-  rutAutoriza           String?             // RUT de quien autoriza
-  firmaBase64           String?             // Firma en formato Base64 (imagen/dibujo)
-  detalles              RetiroSaldoDetail[]
+  supervisor            String
+  nombreAutoriza        String?
+  rutAutoriza           String?
+  firmaBase64           String?
   createdAt             DateTime            @default(now())
+  detalles              RetiroSaldoDetail[]
 }
 
 model RetiroSaldoDetail {
   id             String            @id @default(uuid())
   headerId       String
-  header         RetiroSaldoHeader @relation(fields: [headerId], references: [id])
   codigoProducto String
   nombreProducto String
   cantidad       Int
   createdAt      DateTime          @default(now())
+  header         RetiroSaldoHeader @relation(fields: [headerId], references: [id])
 }
 
 model Mat_ConsumoGas {
   id        String   @id @default(uuid())
   rbd       Int      @unique
   litros    Float
-  cantidad  Int      // Max times gas can be requested in the period
-  meses     String   // Comma separated month numbers, e.g. "1,3,5"
+  cantidad  Int
+  meses     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model FormDefinition {
-  id              String           @id @default(uuid())
-  title           String
-  description     String?
-  fields          String           // JSON string: array of field objects {id, type, label, required, options[], systemSource?, validationType?, maxFileSize?, allowedFileTypes?}
-  createdBy       String           // username
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
-  submissions     FormSubmission[]
-  isActive        Boolean          @default(true)
-  formCode        String?          // New field
-  formVersion     String?          // New field
-  formDate        String?          // New field (String to allow custom formatting)
-  allowedUsers    User[]           @relation("UserForms")
-  schedules       FormSchedule[]
+  id           String           @id @default(uuid())
+  title        String
+  description  String?
+  fields       String
+  createdBy    String
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  isActive     Boolean          @default(true)
+  formCode     String?
+  formVersion  String?
+  formDate     String?
+  areaId       Int?
+  area         Area?            @relation(fields: [areaId], references: [id])
+  schedules    FormSchedule[]
+  submissions  FormSubmission[]
+  allowedUsers User[]           @relation("UserForms")
+}
+
+model Area {
+  id        Int              @id @default(autoincrement())
+  nombre    String
+  isActive  Boolean          @default(true)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  forms     FormDefinition[]
 }
 
 model FormSchedule {
-  id              String         @id @default(uuid())
-  formId          String
-  form            FormDefinition @relation(fields: [formId], references: [id], onDelete: Cascade)
-  startDay        Int            // 0 (Dom) - 6 (Sab)
-  startTime       String         // "HH:mm"
-  endDay          Int            // 0-6
-  endTime         String         // "HH:mm"
-  createdAt       DateTime       @default(now())
+  id        String         @id @default(uuid())
+  formId    String
+  startDay  Int
+  startTime String
+  endDay    Int
+  endTime   String
+  createdAt DateTime       @default(now())
+  form      FormDefinition @relation(fields: [formId], references: [id], onDelete: Cascade)
 }
 
 model FormSubmission {
-  id              String         @id @default(uuid())
-  formId          String
-  form            FormDefinition @relation(fields: [formId], references: [id])
-  data            String         // JSON string: map of fieldId to value
-  submittedBy     String         // username
-  submittedAt     DateTime       @default(now())
+  id          String         @id @default(uuid())
+  formId      String
+  data        String
+  submittedBy String
+  submittedAt DateTime       @default(now())
+  form        FormDefinition @relation(fields: [formId], references: [id])
 }
 
 model Mat_ConsumoGasHistory {
-  id              String   @id @default(uuid())
-  rbd             Int
-  litros          Float     // Nuevo valor
-  cantidad        Int       // Nuevo valor
-  meses           String    // Nuevo valor
-  old_litros      Float?    // Valor anterior
-  old_cantidad    Int?      // Valor anterior
-  old_meses       String?   // Valor anterior
-  observacion     String    // Motivo del cambio
-  user            String    // Usuario que realizó el cambio
-  createdAt       DateTime @default(now())
+  id           String   @id @default(uuid())
+  rbd          Int
+  litros       Float
+  cantidad     Int
+  meses        String
+  old_litros   Float?
+  old_cantidad Int?
+  old_meses    String?
+  observacion  String
+  user         String
+  createdAt    DateTime @default(now())
+}
+
+model Anexo {
+  id        String   @id @default(uuid())
+  sucursal  String
+  cargo     String
+  correo    String
+  telefono1 String
+  telefono2 String?
+  telefono3 String?
+  telefono4 String?
+  nombre    String
+  cumpleano String?
+  contacto  String?
+  nota      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model MatrizRiesgo2026 {
+  id                    Int      @id @default(autoincrement())
+  fecha                 DateTime @default(now())
+  usuario               String
+  ut                    Int
+  rbd                   Int
+  nombreEstablecimiento String
+  sucursal              String
+
+  // Sección: Patio o Entorno
+  patio_servicio        String
+  basurero_patio        String?
+  zonas_libres_residuos String?
+  vias_acceso_pavimentas String?
+  caseta_gas            String?
+  bombona_estado        String?
+  focos_insalubridad    String?
+  obs_patio             String? // Max 500 chars
+  adjuntos_patio        String? // JSON array of paths
+
+  // Sección: Bodega
+  bodega_mp               String?
+  ventilacion_bodega      String?
+  cielos_bodega           String?
+  puertas_bodega          String?
+  ventanas_bodega         String?
+  malla_bodega            String?
+  pisos_bodega            String?
+  paredes_bodega          String?
+  uniones_bodega          String?
+  iluminacion_estado_bodega String?
+  iluminacion_protegida_bodega String?
+  iluminacion_adecuada_bodega String?
+  botiquin                String?
+  extintores              String?
+  conexiones_electricas_bodega String?
+  equipos_frio_sin_visor  Int?
+  obs_bodega              String? // Max 500 chars
+  adjuntos_bodega         String? // JSON array of paths
+
+  // Sección: Cocina
+  tamano_cocina           String?
+  ventilacion_cocina      String?
+  puertas_cocina          String?
+  ventanas_cocina         String?
+  malla_cocina            String?
+  pisos_cocina            String?
+  paredes_cocina          String?
+  uniones_cocina          String?
+  drenajes                String?
+  inclinacion_pisos       String?
+  cielos_cocina           String?
+  lava_fondos             String?
+  lavamanos_manipulacion  String?
+  dispensador_jabon_papel String?
+  calefon                 String?
+  pre_wash                String?
+  extractor_campana       String?
+  carros_bandejas         String?
+  iluminacion_estado_cocina String?
+  iluminacion_protegida_cocina String?
+  iluminacion_adecuada_cocina String?
+  basureros_tapa_cocina   String?
+  llaves_sifon_cocina     String?
+  canerias_agua           String?
+  canerias_gas            String?
+  conexiones_electricas_cocina String?
+  trampas_residuos        String?
+  obs_cocina              String? // Max 500 chars
+  adjuntos_cocina         String? // JSON array of paths
+
+  // Sección: Baño
+  bano_exclusivo          String
+  sin_conexion_directa    String?
+  puertas_bano            String?
+  malla_bano              String?
+  pisos_bano              String?
+  paredes_bano            String?
+  lavamanos_caliente_fria String?
+  ducha                   String?
+  cortina                 String?
+  dispensadores_jabon_bano String?
+  estanque_tapa_wc        String?
+  espejo                  String?
+  basurero_tapa_bano      String?
+  llaves_sifon_bano       String?
+  dispensador_papel       String?
+  iluminaria_bano         String?
+  obs_bano                String? // Max 500 chars
+  adjuntos_bano           String? // JSON array of paths
+
+  // Generales
+  obs_generales           String? // Max 500 chars
+  adjunto_sostenedor      String? // Single path or JSON
+
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+}
+
+model ColegiosMatriz {
+  id                       String   @id @default(uuid())
+  colRBD                   Int      @unique
+  nombreEstablecimiento    String
+  institucion              String
+  sucursal                 String
+  colut                    Int
+  isActive                 Boolean  @default(true)
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+}
+
+model MatrizConfigPregunta {
+  id           String   @id @default(uuid())
+  preguntaId   String   @unique
+  seccion      String
+  gravedad     Int
+  probabilidad Int
+  nivelRiesgo  String
+  updatedAt    DateTime @updatedAt
+}
+
+model MatrizConfigSemestre {
+  id        String   @id @default(uuid())
+  anio      Int      @unique @default(2026)
+  fechaFin1 DateTime // Fecha de término del 1er semestre
+  updatedAt DateTime @updatedAt
+}
+
+model MatrizMitigacion {
+  id             String   @id @default(uuid())
+  matrizId       String   // ID de la MatrizRiesgo2026
+  preguntaId     String   // E.g., 'p1', 'b2'...
+  fechaSolucion  DateTime?
+  adjuntos       String?  // JSON array of paths
+  usuario        String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@unique([matrizId, preguntaId])
 }

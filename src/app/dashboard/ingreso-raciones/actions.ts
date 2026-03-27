@@ -2,6 +2,24 @@
 
 import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
+import nodemailer from 'nodemailer'
+import crypto from 'crypto'
+
+const ENCRYPTION_KEY = crypto.createHash('sha256').update(String(process.env.SESSION_SECRET || 'super-secret-key-change-me')).digest('base64').substring(0, 32)
+
+function decrypt(text: string) {
+    try {
+        const textParts = text.split(':')
+        const iv = Buffer.from(textParts.shift()!, 'hex')
+        const encryptedText = Buffer.from(textParts.join(':'), 'hex')
+        const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(ENCRYPTION_KEY, 'utf-8'), iv)
+        let decrypted = decipher.update(encryptedText)
+        decrypted = Buffer.concat([decrypted, decipher.final()])
+        return decrypted.toString()
+    } catch (e) {
+        return text
+    }
+}
 
 export async function searchColegios(query: string) {
     const session = await getSession()
@@ -229,7 +247,11 @@ export async function saveIngRacion(data: IngRacionFormData) {
         }
 
         // Obtener la licitación actual de la UT
-        const utInfo = await prisma.uT.findUnique({ where: { codUT: colegio.colut } })
+        const utInfo = await prisma.uT.findUnique({ 
+            where: { codUT: colegio.colut },
+            include: { sucursal: true }
+        })
+        const nombreSuc = utInfo?.sucursal?.nombre || 'Global'
 
         const utcFechaIngreso = new Date(`${data.fechaIngreso}T12:00:00Z`)
 
@@ -249,7 +271,7 @@ export async function saveIngRacion(data: IngRacionFormData) {
             return { error: 'Ya existe un registro guardado para este colegio con esta fecha, programa y estrato.' }
         }
 
-        await prisma.ingRacion.create({
+        const nuevaRacion = await prisma.ingRacion.create({
             data: {
                 usuario: session.user.username as string,
                 ubicacion: data.ubicacion,
@@ -278,9 +300,97 @@ export async function saveIngRacion(data: IngRacionFormData) {
             }
         })
 
+        // Validar e intentar el envío de notificación
+        await processNotificacionesRacion(nuevaRacion, nombreSuc)
+
         return { success: true }
     } catch (error) {
         console.error("Error guardando IngRacion:", error)
         return { error: 'Ocurrió un error insesperado al intentar guardar el registro.' }
+    }
+}
+
+async function processNotificacionesRacion(racion: any, nombreSucursalColegio: string) {
+    try {
+        const configs = await prisma.notificacionPantalla.findMany({
+            where: { codigoPantalla: 'ingreso-raciones', activa: true },
+            include: { listaCorreo: { include: { sucursal: true } } }
+        })
+        if (configs.length === 0) return { warning: 'No hay notificaciones activas.' }
+
+        const destinos = configs
+            .map(c => c.listaCorreo)
+            .filter(lista => !lista.sucursalId || lista.sucursal?.nombre === nombreSucursalColegio)
+
+        if (destinos.length === 0) return { warning: 'No hay listas para esta sucursal.' }
+
+        const plantilla = await prisma.plantillaCorreo.findUnique({
+            where: { codigoPantalla: 'ingreso-raciones' }
+        })
+
+        let correosTo: string[] = []
+        let correosCc: string[] = []
+
+        destinos.forEach(lista => {
+            try {
+                const para = JSON.parse(lista.para || '[]')
+                const cc = JSON.parse(lista.cc || '[]')
+                if (Array.isArray(para)) correosTo.push(...para)
+                if (Array.isArray(cc)) correosCc.push(...cc)
+            } catch (e) {}
+        })
+
+        correosTo = Array.from(new Set(correosTo))
+        correosCc = Array.from(new Set(correosCc))
+
+        let subject = plantilla?.asunto || "Ingreso de Ración RBD N° <RBD> - <Colegio> en Suc: <Sucursal>"
+        let body = plantilla?.cuerpo || `Se informa que se ha ingresado una nueva ración con la siguiente descripción:
+RBD: <RBD>
+Colegio: <Colegio>
+Programa: <Programa>
+Estrato: <Estrato>
+Fecha Ingreso: <FechaIngreso>
+Total Ingresado: <TotalIng>
+Observación: <Observacion>
+
+Atte.
+Sistema de Raciones.`
+
+        const replaceTags = (text: string) => {
+            return text
+                .replace(/<RBD.*?>/gi, String(racion.rbd))
+                .replace(/<Coleg.*?>/gi, racion.nombreEstablecimiento)
+                .replace(/<Sucur.*?>/gi, nombreSucursalColegio)
+                .replace(/<Fecha.*?In.*?>/gi, new Date(racion.fechaIngreso).toLocaleDateString('es-CL', { timeZone: 'UTC' }))
+                .replace(/<Progr.*?>/gi, racion.programa)
+                .replace(/<Estrat.*?>/gi, racion.estrato)
+                .replace(/<TotalIng.*?>/gi, String(racion.totalIng))
+                .replace(/<Observ.*?>/gi, racion.observacion || 'Ninguna');
+        }
+
+        subject = replaceTags(subject)
+        body = replaceTags(body)
+
+        if (correosTo.length > 0) {
+            const emailConfig = await prisma.emailConfig.findFirst({ where: { id: "global" } })
+            if (!emailConfig) return
+
+            const transport = nodemailer.createTransport({
+                host: "smtp.office365.com",
+                port: 587,
+                secure: false,
+                auth: { user: emailConfig.email, pass: decrypt(emailConfig.password) }
+            })
+
+            await transport.sendMail({
+                from: emailConfig.email,
+                to: correosTo,
+                cc: correosCc,
+                subject: subject,
+                text: body
+            })
+        }
+    } catch (e) {
+        console.error("Error al procesar notificaciones racion:", e)
     }
 }

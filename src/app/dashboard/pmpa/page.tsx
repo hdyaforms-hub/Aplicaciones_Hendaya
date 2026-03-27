@@ -3,6 +3,7 @@ import { getSession } from '@/lib/session'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import UploadModal from './UploadModal'
+import DeleteButtonPMPA from './DeleteButtonPMPA'
 
 export default async function PMPAPage({
     searchParams
@@ -30,16 +31,22 @@ export default async function PMPAPage({
         mes: resolvedParams.mes ? parseInt(resolvedParams.mes) : undefined,
     }
 
+    // Check if user is Administrador to potentially bypass sucursal filtering
+    const isAdmin = session?.user?.role?.name === 'Administrador'
+    const canSeeAll = isAdmin || permissions.includes('manage_sucursales')
+
     // Limpiar query where nulos
     const whereClause: any = {}
     if (filters.sucursal) {
-        if (!userSucursales.includes(filters.sucursal)) {
+        if (!canSeeAll && !userSucursales.includes(filters.sucursal)) {
             whereClause.sucursal = { in: [] }
         } else {
             whereClause.sucursal = filters.sucursal
         }
     } else {
-        whereClause.sucursal = { in: userSucursales }
+        if (!canSeeAll) {
+            whereClause.sucursal = { in: userSucursales }
+        }
     }
 
     if (filters.ano) whereClause.ano = filters.ano
@@ -67,7 +74,7 @@ export default async function PMPAPage({
     // Agrupar para los combos usando queries directas sobre valores únicos
     const combos = await prisma.pMPA.groupBy({
         by: ['sucursal', 'ano', 'mes'],
-        where: { sucursal: { in: userSucursales } },
+        where: canSeeAll ? {} : { sucursal: { in: userSucursales } },
         orderBy: [{ ano: 'desc' }, { mes: 'desc' }, { sucursal: 'asc' }]
     })
 
@@ -127,12 +134,19 @@ export default async function PMPAPage({
                     </select>
                 </div>
 
-                <div className="flex items-end">
+                <div className="flex items-end gap-2">
                     <button type="submit" className="px-6 py-2.5 rounded-xl text-white bg-slate-800 hover:bg-slate-900 shadow-md font-medium transition-colors w-full sm:w-auto flex items-center justify-center gap-2">
                         🔍 Filtrar
                     </button>
+                    
+                    <DeleteButtonPMPA 
+                        ano={filters.ano} 
+                        mes={filters.mes} 
+                        sucursal={filters.sucursal} 
+                    />
+
                     {/* Botón para limpiar filtros */}
-                    <a href="/dashboard/pmpa" className="ml-2 px-6 py-2.5 rounded-xl text-slate-700 bg-slate-100 hover:bg-slate-200 shadow-sm border border-slate-200 font-medium transition-colors w-full sm:w-auto flex items-center justify-center">
+                    <a href="/dashboard/pmpa" className="px-6 py-2.5 rounded-xl text-slate-700 bg-slate-100 hover:bg-slate-200 shadow-sm border border-slate-200 font-medium transition-colors w-full sm:w-auto flex items-center justify-center">
                         Limpiar
                     </a>
                 </div>

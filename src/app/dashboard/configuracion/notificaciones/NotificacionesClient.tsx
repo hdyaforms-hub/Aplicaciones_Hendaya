@@ -48,6 +48,14 @@ const HELP_KEYWORDS: Record<string, { tag: string, desc: string }[]> = {
         { tag: '<Usuario>', desc: 'Nombre del usuario que realiza la acción.' },
         { tag: '<Sucursal>', desc: 'Nombre de la sucursal o bodega correspondiente.' },
     ],
+    'Ingreso de Raciones': [
+        { tag: '<Colegio>', desc: 'Nombre del establecimiento educacional.' },
+        { tag: '<Programa>', desc: 'Nombre del programa (Ej: PAE).' },
+        { tag: '<Estrato>', desc: 'Estrato correspondiente de las raciones.' },
+        { tag: '<FechaIngreso>', desc: 'Fecha configurada para el ingreso de raciones.' },
+        { tag: '<TotalIng>', desc: 'Suma total de raciones ingresadas.' },
+        { tag: '<Observacion>', desc: 'Observaciones extra añadidas.' },
+    ],
     'Solicitud de Pan': [
         { tag: '<FechaSistema>', desc: 'Fecha y hora en que se crea el registro.' },
         { tag: '<Solicitud>', desc: 'Tipo de solicitud (Aumento o Disminución).' },

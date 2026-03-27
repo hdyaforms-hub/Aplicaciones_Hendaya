@@ -119,6 +119,7 @@ export default function GestionFormulariosClient({ forms }: { forms: any[] }) {
                         <thead>
                             <tr className="bg-gray-50/50 border-b border-gray-100">
                                 <th className="text-left px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest">Información del Formulario</th>
+                                <th className="text-left px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest">Área</th>
                                 <th className="text-left px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest">Estado</th>
                                 <th className="text-left px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest">Creado Por</th>
                                 <th className="text-left px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest">Fecha</th>
@@ -128,7 +129,7 @@ export default function GestionFormulariosClient({ forms }: { forms: any[] }) {
                         <tbody className="divide-y divide-gray-50">
                             {filteredForms.length === 0 ? (
                                 <tr>
-                                    <td colSpan={5} className="px-6 py-12 text-center text-gray-400 font-bold uppercase tracking-widest">No se encontraron formularios</td>
+                                    <td colSpan={6} className="px-6 py-12 text-center text-gray-400 font-bold uppercase tracking-widest">No se encontraron formularios</td>
                                 </tr>
                             ) : (
                                 filteredForms.map((form) => (
@@ -141,6 +142,15 @@ export default function GestionFormulariosClient({ forms }: { forms: any[] }) {
                                                     <div className="text-xs text-gray-500 italic line-clamp-1">{form.description || 'Sin descripción'}</div>
                                                 </div>
                                             </div>
+                                        </td>
+                                        <td className="px-6 py-5">
+                                            {form.area ? (
+                                                <span className="px-3 py-1 bg-slate-100 text-slate-700 rounded-lg text-[10px] font-black uppercase border border-slate-200">
+                                                    🏢 {form.area.nombre}
+                                                </span>
+                                            ) : (
+                                                <span className="text-[10px] text-gray-400 font-bold italic">Sin Área</span>
+                                            )}
                                         </td>
                                         <td className="px-6 py-5">
                                             <button 

@@ -35,10 +35,14 @@ export default async function SolicitudGasTablero({
     });
     const userSucursalNames = dbUser?.sucursales?.map((s: any) => s.nombre) || [];
 
-    // Filter UTs by authorized sucursales AND the selected sucursal filter
-    const sucursalFilter = filters.sucursal && userSucursalNames.includes(filters.sucursal)
-        ? filters.sucursal
-        : { in: userSucursalNames };
+    // Check if user is Administrador to potentially bypass sucursal filtering
+    const isAdmin = session?.user?.role?.name === 'Administrador'
+    const permissions = session?.user?.role?.permissions || []
+    const canSeeAll = isAdmin || permissions.includes('manage_sucursales')
+
+    const sucursalFilter = filters.sucursal 
+        ? filters.sucursal 
+        : (canSeeAll ? undefined : { in: userSucursalNames });
 
     const uts = await prisma.uT.findMany({
         where: { sucursal: { nombre: sucursalFilter } },
@@ -144,7 +148,13 @@ export default async function SolicitudGasTablero({
     }
 
     const availableAnos = [new Date().getFullYear(), new Date().getFullYear() - 1];
-    const availableSucursales = userSucursalNames;
+    
+    // Obtener todas las sucursales si es admin para el dropdown
+    let availableSucursales = userSucursalNames;
+    if (canSeeAll) {
+        const allSucs = await prisma.sucursal.findMany({ select: { nombre: true } });
+        availableSucursales = allSucs.map(s => s.nombre);
+    }
 
     return (
         <div className="space-y-6">

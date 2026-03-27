@@ -81,6 +81,24 @@ export async function uploadColegiosData(data: ColegioData[], overwrite: boolean
             data: dataToInsert
         })
 
+        // Sincronizar JUNAEB a ColegiosMatriz (solo los nuevos)
+        const junaebs = dataToInsert.filter(d => d.institucion === 'JUNAEB')
+        for (const j of junaebs) {
+            const exists = await prisma.colegiosMatriz.findUnique({ where: { colRBD: j.colRBD } })
+            if (!exists) {
+                await prisma.colegiosMatriz.create({
+                    data: {
+                        colRBD: j.colRBD,
+                        nombreEstablecimiento: j.nombreEstablecimiento,
+                        institucion: j.institucion,
+                        sucursal: j.sucursal,
+                        colut: j.colut,
+                        isActive: true
+                    }
+                })
+            }
+        }
+
         revalidatePath('/dashboard/colegios')
         return { success: true, count: dataToInsert.length }
     } catch (error: any) {
@@ -106,11 +124,90 @@ export async function updateColegio(id: string, data: Partial<ColegioData>) {
                 comuna: data.comuna,
             }
         })
+
+        // Sincronizar cambios a ColegiosMatriz si existe
+        const current = await prisma.colegios.findUnique({ where: { id } })
+        if (current) {
+            await prisma.colegiosMatriz.updateMany({
+                where: { colRBD: current.colRBD },
+                data: {
+                    nombreEstablecimiento: data.nombreEstablecimiento || current.nombreEstablecimiento,
+                    institucion: data.institucion || current.institucion,
+                    sucursal: data.sucursal || current.sucursal,
+                }
+            })
+        }
+
         revalidatePath('/dashboard/colegios')
         return { success: true }
     } catch (e) {
         console.error("Error updating colegio:", e)
         return { error: 'No se pudo actualizar el colegio.' }
+    }
+}
+
+export async function deleteColegioByRBD(rbd: number) {
+    const session = await getSession()
+    if (!session?.user?.role?.permissions.includes('view_colegios')) {
+        return { error: 'No tienes permisos para realizar esta acción' }
+    }
+
+    try {
+        // 1. Eliminar de Colegios
+        await prisma.colegios.deleteMany({
+            where: { colRBD: rbd }
+        })
+
+        // 2. Marcar como inactivo en ColegiosMatriz si existe
+        await prisma.colegiosMatriz.updateMany({
+            where: { colRBD: rbd },
+            data: { isActive: false }
+        })
+
+        revalidatePath('/dashboard/colegios')
+        return { success: true }
+    } catch (error) {
+        console.error('Error eliminando colegio por RBD:', error)
+        return { error: 'No se pudo eliminar el colegio.' }
+    }
+}
+
+export async function syncJUNAEBToMatriz() {
+    const session = await getSession()
+    if (!session?.user?.role?.permissions.includes('view_colegios')) {
+        return { error: 'No tienes permisos para realizar esta acción' }
+    }
+
+    try {
+        const junaebColegios = await prisma.colegios.findMany({
+            where: { institucion: 'JUNAEB' }
+        })
+
+        let count = 0
+        for (const col of junaebColegios) {
+            const existing = await prisma.colegiosMatriz.findUnique({
+                where: { colRBD: col.colRBD }
+            })
+
+            if (!existing) {
+                await prisma.colegiosMatriz.create({
+                    data: {
+                        colRBD: col.colRBD,
+                        nombreEstablecimiento: col.nombreEstablecimiento,
+                        institucion: col.institucion,
+                        sucursal: col.sucursal,
+                        colut: col.colut,
+                        isActive: true
+                    }
+                })
+                count++
+            }
+        }
+
+        return { success: true, count }
+    } catch (error) {
+        console.error('Error sincronizando colegios JUNAEB:', error)
+        return { error: 'Error al sincronizar con Matriz.' }
     }
 }
 

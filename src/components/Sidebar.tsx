@@ -38,7 +38,7 @@ export default function Sidebar({ user }: { user: User }) {
     const permissions = user.role.permissions
 
     const menuItems = [
-        { name: 'Inicio', href: '/dashboard', icon: '🏠', requiredPermission: null }, // Everyone sees this
+        { name: 'Inicio', href: '/dashboard', icon: '🏠', requiredPermission: null }, 
         {
             name: 'Tableros y Avances',
             icon: '📈',
@@ -50,8 +50,6 @@ export default function Sidebar({ user }: { user: User }) {
                 { name: 'Retiro de Saldos', href: '/dashboard/tablero/retiro-saldos', requiredPermission: 'view_tablero_retiro' }
             ]
         },
-        { name: 'Usuarios', href: '/dashboard/users', icon: '👥', requiredPermission: 'manage_users' },
-        { name: 'Roles y Perfiles', href: '/dashboard/roles', icon: '🛡️', requiredPermission: 'manage_roles' },
         {
             name: 'Aplicaciones',
             icon: '📁',
@@ -61,6 +59,24 @@ export default function Sidebar({ user }: { user: User }) {
                 { name: 'Solicitud de Pan', href: '/dashboard/solicitud-pan', requiredPermission: 'view_solicitud_pan' },
                 { name: 'Solicitud de Gas', href: '/dashboard/solicitud-gas', requiredPermission: 'view_solicitud_gas' },
                 { name: 'Retiro de Saldos', href: '/dashboard/retiro-saldos', requiredPermission: 'view_retiro_saldos' }
+            ]
+        },
+        {
+            name: 'Matriz de riesgo',
+            icon: '📋',
+            requiredPermission: ['view_matriz_riesgo', 'manage_matriz_2026', 'manage_colegios_matriz', 'manage_evaluacion_detallada', 'manage_mitigacion'],
+            subItems: [
+                { 
+                    name: 'Matriz 2026', 
+                    requiredPermission: ['manage_matriz_2026', 'manage_colegios_matriz', 'manage_evaluacion_detallada', 'manage_mitigacion', 'view_estado_avance'],
+                    subItems: [
+                        { name: 'Ingresar nueva Matriz', href: '/dashboard/matriz-riesgo/matriz-2026/ingresar', requiredPermission: 'manage_matriz_2026' },
+                        { name: 'Colegios Activos', href: '/dashboard/matriz-riesgo/matriz-2026/colegios-activos', requiredPermission: 'manage_colegios_matriz' },
+                        { name: 'Evaluación Detallada', href: '/dashboard/matriz-riesgo/matriz-2026/evaluacion-detallada', requiredPermission: 'manage_evaluacion_detallada' },
+                        { name: 'Mitigación', href: '/dashboard/matriz-riesgo/matriz-2026/mitigacion', requiredPermission: 'manage_mitigacion' },
+                        { name: 'Estado de Avance', href: '/dashboard/matriz-riesgo/matriz-2026/estado-avance', requiredPermission: 'view_estado_avance' }
+                    ]
+                }
             ]
         },
         {
@@ -75,17 +91,6 @@ export default function Sidebar({ user }: { user: User }) {
             ]
         },
         {
-            name: 'Mantenedor',
-            icon: '⚙️',
-            requiredPermission: ['view_colegios', 'view_productos', 'view_pmpa', 'view_consumo_gas'],
-            subItems: [
-                { name: 'PMPA', href: '/dashboard/pmpa', requiredPermission: 'view_pmpa' },
-                { name: 'Colegios', href: '/dashboard/colegios', requiredPermission: 'view_colegios' },
-                { name: 'Productos', href: '/dashboard/productos', requiredPermission: 'view_productos' },
-                { name: 'Consumo de Gas por RBD', href: '/dashboard/consumo-gas', requiredPermission: 'view_consumo_gas' }
-            ]
-        },
-        {
             name: 'Reportes',
             icon: '📊',
             requiredPermission: ['view_reports', 'view_solicitud_pan_report', 'view_solicitud_gas_report', 'view_retiro_report'],
@@ -97,36 +102,66 @@ export default function Sidebar({ user }: { user: User }) {
             ]
         },
         {
+            name: 'Mantenedor',
+            icon: '⚙️',
+            requiredPermission: ['view_colegios', 'view_productos', 'view_pmpa', 'view_consumo_gas'],
+            subItems: [
+                { name: 'PMPA', href: '/dashboard/pmpa', requiredPermission: 'view_pmpa' },
+                { name: 'Colegios', href: '/dashboard/colegios', requiredPermission: 'view_colegios' },
+                { name: 'Productos', href: '/dashboard/productos', requiredPermission: 'view_productos' },
+                { name: 'Consumo de Gas por RBD', href: '/dashboard/consumo-gas', requiredPermission: 'view_consumo_gas' }
+            ]
+        },
+        {
             name: 'Configuración',
             icon: '🔧',
-            requiredPermission: ['manage_correo', 'manage_listas', 'manage_notificaciones', 'manage_sucursales'],
+            requiredPermission: ['manage_correo', 'manage_listas', 'manage_notificaciones', 'manage_sucursales', 'manage_users', 'manage_roles'],
             subItems: [
+                { name: 'Gestión de Usuarios', href: '/dashboard/users', requiredPermission: 'manage_users' },
+                { name: 'Roles y Perfiles', href: '/dashboard/roles', requiredPermission: 'manage_roles' },
                 { name: 'Configuración de Correo', href: '/dashboard/configuracion/correo', requiredPermission: 'manage_correo' },
                 { name: 'Listas de Distribución', href: '/dashboard/configuracion/listas-correo', requiredPermission: 'manage_listas' },
                 { name: 'Notificaciones por Pantalla', href: '/dashboard/configuracion/notificaciones', requiredPermission: 'manage_notificaciones' },
-                { name: 'Mantenedor de Sucursales', href: '/dashboard/configuracion/sucursales', requiredPermission: 'manage_sucursales' }
+                { name: 'Mantenedor de Sucursales', href: '/dashboard/configuracion/sucursales', requiredPermission: 'manage_sucursales' },
+                { name: 'Mantenedor de Áreas', href: '/dashboard/configuracion/areas', requiredPermission: 'manage_areas' }
+            ]
+        },
+        {
+            name: 'Ayuda',
+            icon: '❓',
+            requiredPermission: ['manage_anexos', 'view_anexos'],
+            subItems: [
+                { name: 'Agregar Anexos', href: '/dashboard/ayuda/agregar', requiredPermission: 'manage_anexos' },
+                { name: 'Ver Anexos', href: '/dashboard/ayuda/ver', requiredPermission: 'view_anexos' }
             ]
         }
     ]
 
-    // Filter items based on user permissions
-    const visibleItems = menuItems.map(item => {
-        if (item.subItems) {
-            return {
-                ...item,
-                subItems: item.subItems.filter(sub => !(sub as any).requiredPermission || permissions.includes((sub as any).requiredPermission))
+    // Recursive search to filter items based on user permissions
+    const filterMenuItems = (items: any[]): any[] => {
+        return items.map(item => {
+            if (item.subItems) {
+                const visibleSubItems = filterMenuItems(item.subItems)
+                return { ...item, subItems: visibleSubItems }
             }
-        }
-        return item
-    }).filter(
-        (item) => {
-            if (!item.requiredPermission) return true
-            if (Array.isArray(item.requiredPermission)) {
-                return item.requiredPermission.some((p: string) => permissions.includes(p))
+            return item
+        }).filter(item => {
+            // Check if item itself has permission
+            const hasPermission = !item.requiredPermission || (
+                Array.isArray(item.requiredPermission) 
+                ? item.requiredPermission.some((p: string) => permissions.includes(p))
+                : permissions.includes(item.requiredPermission)
+            )
+
+            // If it has subitems, it's visible if it has permission AND at least one visible subitem
+            if (item.subItems) {
+                return hasPermission && item.subItems.length > 0
             }
-            return permissions.includes(item.requiredPermission)
-        }
-    )
+            return hasPermission
+        })
+    }
+
+    const visibleItems = filterMenuItems(menuItems)
 
     const [isMobileOpen, setIsMobileOpen] = useState(false)
 
@@ -201,20 +236,54 @@ export default function Sidebar({ user }: { user: User }) {
                                 {/* Rendereo de subItems si aplica */}
                                 {hasSubItems && isExpanded && (
                                     <div className="ml-9 mt-1 space-y-1 border-l border-slate-700 pl-3">
-                                        {item.subItems!.map(sub => {
-                                            const isSubActive = pathname === sub.href || pathname.startsWith(`${sub.href}/`)
+                                        {item.subItems!.map((sub: any) => {
+                                            const hasSubSubItems = sub.subItems && sub.subItems.length > 0
+                                            const isSubExpanded = expandedMenus[`${item.name}-${sub.name}`]
+                                            const isSubActive = sub.href ? (pathname === sub.href || pathname.startsWith(`${sub.href}/`)) : false
+
                                             return (
-                                                <Link
-                                                    key={sub.name}
-                                                    href={sub.href}
-                                                    className={`block px-3 py-2 rounded-lg text-sm transition-colors
-                                                    ${isSubActive
-                                                            ? 'bg-cyan-500/10 text-cyan-400 font-medium'
-                                                            : 'text-slate-400 hover:text-white hover:bg-slate-800'
-                                                        }`}
-                                                >
-                                                    {sub.name}
-                                                </Link>
+                                                <div key={sub.name}>
+                                                    {hasSubSubItems ? (
+                                                        <>
+                                                            <button
+                                                                onClick={(e) => toggleMenu(e, `${item.name}-${sub.name}`)}
+                                                                className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-colors ${isSubActive ? 'text-cyan-400' : 'text-slate-400 hover:text-white hover:bg-slate-800'}`}
+                                                            >
+                                                                <span>{sub.name}</span>
+                                                                <span className={`text-[10px] transition-transform duration-200 ${isSubExpanded ? 'rotate-180' : ''}`}>
+                                                                    ▼
+                                                                </span>
+                                                            </button>
+                                                            {isSubExpanded && (
+                                                                <div className="ml-4 mt-1 space-y-1 border-l border-slate-800 pl-3">
+                                                                    {sub.subItems.map((ssub: any) => {
+                                                                        const isSSubActive = pathname === ssub.href || pathname.startsWith(`${ssub.href}/`)
+                                                                        return (
+                                                                            <Link
+                                                                                key={ssub.name}
+                                                                                href={ssub.href}
+                                                                                className={`block px-3 py-1.5 rounded-lg text-xs transition-colors ${isSSubActive ? 'bg-cyan-500/10 text-cyan-400 font-medium' : 'text-slate-500 hover:text-white hover:bg-slate-800'}`}
+                                                                            >
+                                                                                {ssub.name}
+                                                                            </Link>
+                                                                        )
+                                                                    })}
+                                                                </div>
+                                                            )}
+                                                        </>
+                                                    ) : (
+                                                        <Link
+                                                            href={sub.href}
+                                                            className={`block px-3 py-2 rounded-lg text-sm transition-colors
+                                                            ${isSubActive
+                                                                    ? 'bg-cyan-500/10 text-cyan-400 font-medium'
+                                                                    : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                                                                }`}
+                                                        >
+                                                            {sub.name}
+                                                        </Link>
+                                                    )}
+                                                </div>
                                             )
                                         })}
                                     </div>

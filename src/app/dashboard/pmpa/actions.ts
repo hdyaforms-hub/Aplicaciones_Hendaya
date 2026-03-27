@@ -110,11 +110,30 @@ export async function uploadPMPAData(data: PMPAData[], overwrite: boolean) {
         await prisma.pMPA.createMany({
             data: dataToInsert
         })
-
         revalidatePath('/dashboard/pmpa')
         return { success: true, count: dataToInsert.length }
     } catch (error: any) {
         console.error('Error insertando datos PMPA:', error)
         return { error: 'Ocurrió un error al guardar los registros en la base de datos.' }
+    }
+}
+
+export async function deletePMPAPeriod(ano: number, mes: number, sucursal?: string) {
+    const session = await getSession()
+    if (!session?.user?.role?.permissions.includes('view_pmpa')) {
+        return { error: 'No tienes permisos para realizar esta acción' }
+    }
+
+    try {
+        const where: any = { ano, mes }
+        if (sucursal) where.sucursal = sucursal
+
+        const deleted = await prisma.pMPA.deleteMany({ where })
+        
+        revalidatePath('/dashboard/pmpa')
+        return { success: true, count: deleted.count }
+    } catch (error: any) {
+        console.error('Error eliminando periodo PMPA:', error)
+        return { error: 'Ocurrió un error al eliminar los registros.' }
     }
 }

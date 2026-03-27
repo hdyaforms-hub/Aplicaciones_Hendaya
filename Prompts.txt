@@ -24,5 +24,55 @@ Tambien crea una pantalla dentro de FORMULARIO, que sea como tipo calendario par
 /***************************************************************************************************/
 
 
+puedes crear una nueva opcion al menu llamado Ayuda y dentro de ayuda una opcion llamada "Agregar Anexos" (todas las pantallas deben pasar por roles / perfiles, y las cajas de textos (caracteres deben ser con fuentes oscuras))
+esta pantalla debe tener un mantenedor (Guardar, actualizar eliminar, carga masiva, exportar a Excel y pdf).
+los campos son:
+Sucursal	
+Cargo	
+Correo	
+Telefono 1	
+Telefono 2	
+Telefono 3	
+Teléfono 4	
+Nombre	
+Cumpleaño	
+Contacto	
+Nota
+una vez creado el mantenedor debes crear otra pantalla llamada "Ver Anexos", la idea de esta pantalla es que muestre un criterio de selección de buscar por sucursal y por nombre, y mostrar una lista de los anexos de las personas, y si se puede activar un botón para llamar (por defecto el teléfono 1) un botón de whatsapp (siempre y cuando cumplan el formato de numero de whatsapp en chile) y uno de mensaje, la idea es que esta aplicación funcione cuando la pagina este siendo usada en dispositivos moviles
+
+
+/****************************************************************************************************/
+
+Necesito que me crees una nueva opción en el menú principal llamado "Matriz de riesgo" y dentro de Matriz de riesgo una Opción llamada "Matriz 2026" y dentro de esta una Opción llamada "Ingresar nueva Matriz". las preguntas y tipos de datos están a continuación
+ID	:	Autoincremental
+Fecha	:	Fecha Sistema
+Nombre	:	Usuario conectado a la plataforma
+UT	:	UT (traer automaticamente cuandos e seleccione el RBD) --> recuerda que el usuario conectado tiene las sucursales asociadas por ende debe el primer filtro es ese
+RBD	:	Busqueda inteligente
+
+/****************************************************************************/
+
+Necesito que crees una nueva opción de menú en Matriz 2026 esta se debe llamar Mitigación (recuerda que esta nueva opción debe pasar por roles y perfiles).
+Aquí necesito de tu ayuda, ya que no se me ocurre la mejor forma de fabricar esta pantalla, ya que lo único que tengo en mente es que sea intuitiva y de fácil uso ya que hoy en día se trabaja en un Excel con formulas para llevar los registros (te adjunto fragmento de esta pantalla de Excel).
+Bueno la pantalla de mitigación debe contar con todas las preguntas que tiene la matriz de riesgo y con todas las respuestas que se le han ido cargando en el tiempo (el tiempo se separa por semestre esto se corta con una fecha que debes agregar a la pantalla de colegios activos para matriz, es la segunda imagen adjuntada, pinte una linea en amarillo que debe ser la fecha de termino del primer semestre, por ende esto se debe guardar en una tabla) la fecha significa que la matriz al revisar el primer semestre es todo lo que esta en el año 2026 hasta la fecha ingresada y el segundo semestre es todo lo del año 20226 después de la fecha ingresada.
+volviendo a la primera solicitud ( de la primera imagen adjunta) te explico como se trabaja hoy (para que me des una mejor manera de trabajarlo y ejecutar esta operación). hoy en dia es una planilla en Excel en la cual salen todos los RBD que tiene la UT y sucursal y que tiene asignado cada usuario que ve la planilla. cada pregunta se componen en 4 columnas en el Excel.
+* Una de ella es la gravedad que tiene y este valor lo rescata desde Evaluación detallada
+La formula en Excel = =SUPRESP(CONCATENAR(SI(db!K4="Malo requiere cambio o reparación / No Cumple";Calculo_Matriz!$C$7;" ");SI(db!K4="No hay y requiere instalar";Calculo_Matriz!$C$7;" ")))
+db = es el valor de la formula es la tabla en donde están las respuestas hechas por los usuarios que llenan la matriz
+Calculo_Matriz = es la tabla que contiene el resultado de la gravedad de cada respuesta esto es igual a la tabla de la pantalla Matriz de Configuración de Riesgos.
+* la segunda columna pone la fecha de tope que tiene el usuario para dar solución al problema y esta se calcula con la fecha que tiene la respuesta de la matriz sumando la cantidad de días que te dice el retorno de la "Matriz de Configuración de Riesgos" o sea si dice "Bajo riesgo: Resolver (eliminar o mitigar) en menos de 90 días, estos 90 días se suman a la fecha.
+adjunto formula que tiene el Excel: 
+=SI(E4<>"";SI(E4="Bajo riesgo: Resolver (eliminar o mitigar) en menos de 90 días";D4+90;SI(E4="Medio riesgo: Resolver (eliminar o mitigar) en menos de 60 días";D4+60;SI(E4="Alto riesgo: Resolver (eliminar o mitigar) en menos de 30 días";D4+30;"")));"")
+
+* la tercera columna es fecha de solución del problema( esta fecha debe colocarla el usuario cuando da termino a la solución de la pregunta
+*cuarta columna, es el adjuntar el o los documentos que dan solución al problema (máximo 4 documentos, deben ser imágenes o pdf y no deben pesar mas de 100 MG cada uno de ellos)
+
+asi se compone hoy en dia cada una de las preguntas. al final de cada linea tiene una columna que calcula la cantidad de preguntas con problemas otra columna la cantidad de soluciones hechas y una tercera columna con el % de avance por cada matriz (soluciones)
+
+Favor necesito que hagas una pantalla que sea mas amigable y de fácil uso
+
+
+/****************************************************************************/
+
 
 

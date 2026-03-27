@@ -41,10 +41,20 @@ export default async function RolesPage() {
         { id: 'manage_listas', name: 'Listas de Distribución', description: 'Gestión de destinatarios y listas de correos.', category: 'Administración' },
         { id: 'manage_notificaciones', name: 'Notificaciones por Pantalla', description: 'Asociar listas de distribución a notificaciones de la aplicación.', category: 'Administración' },
         { id: 'manage_sucursales', name: 'Mantenedor de Sucursales', description: 'Administración de Licitaciones, UTs y Sucursales.', category: 'Administración' },
+        { id: 'manage_areas', name: 'Mantenedor de Áreas', description: 'Creación y administración de áreas de la compañía.', category: 'Administración' },
         { id: 'view_formularios', name: 'Gestión de Formularios', description: 'Acceso a la activación, edición y configuración de calendarios/privilegios.', category: 'Formularios' },
         { id: 'create_formularios', name: 'Crear Formulario', description: 'Acceso al constructor para diseñar nuevos formularios dinámicos.', category: 'Formularios' },
         { id: 'fill_formularios', name: 'Completar Formulario', description: 'Acceso para el llenado y envío de respuestas (incluye modal PDF).', category: 'Formularios' },
         { id: 'view_respuestas', name: 'Respuestas de Formularios', description: 'Acceso a la visualización de respuestas históricas y descarga de PDFs.', category: 'Formularios' },
+        { id: 'view_anexos', name: 'Ver Anexos', description: 'Acceso al directorio telefónico de la empresa.', category: 'Ayuda' },
+        { id: 'manage_anexos', name: 'Gestionar Anexos', description: 'Acceso a crear, editar y subir de forma masiva los anexos.', category: 'Ayuda' },
+        { id: 'view_matriz_riesgo', name: 'Ver Matriz de Riesgo', description: 'Acceso al módulo de matrices de riesgo de la empresa.', category: 'Matriz de riesgo' },
+        { id: 'manage_matriz_2026', name: 'Ingresar nueva Matriz', description: 'Permite el ingreso de nuevas matrices de riesgo para el año 2026.', category: 'Matriz 2026' },
+        { id: 'manage_colegios_matriz', name: 'Colegios Activos', description: 'Gestionar colegios habilitados para la matriz de riesgo.', category: 'Matriz 2026' },
+        { id: 'manage_evaluacion_detallada', name: 'Evaluación Detallada', description: 'Realizar evaluación técnica detallada por puntos críticos.', category: 'Matriz 2026' },
+        { id: 'manage_mitigacion', name: 'Mitigación', description: 'Gestionar plazos y evidencias de solución para hallazgos de la matriz.', category: 'Matriz 2026' },
+        { id: 'view_estado_avance', name: 'Matriz 2026: Estado de Avance', description: 'Visualizar el estado de avance de la matriz de riesgo 2026.', category: 'Matriz 2026' },
+        { id: 'view_dashboard', name: 'Dashboard General', description: 'Acceso al dashboard general de la aplicación.', category: 'Tableros' },
     ]
 
     return (

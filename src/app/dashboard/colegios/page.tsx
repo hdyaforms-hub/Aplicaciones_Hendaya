@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import UploadModalColegio from './UploadModalColegio'
 import ColegiosFilterForm from './ColegiosFilterForm'
+import ColegiosActions from './ColegiosActions'
 
 export default async function ColegiosPage({
     searchParams
@@ -30,6 +31,10 @@ export default async function ColegiosPage({
     if (filters.sucursal) whereClause.sucursal = { contains: filters.sucursal }
     if (filters.ut !== undefined) whereClause.colut = filters.ut
 
+    // Check if user is Administrador to potentially bypass sucursal filtering
+    const isAdmin = session?.user?.role?.name === 'Administrador'
+    const canSeeAll = isAdmin || permissions.includes('manage_sucursales')
+
     const dbUser = await (prisma.user as any).findUnique({
         where: { id: session?.user?.id as string },
         include: { sucursales: true }
@@ -37,23 +42,27 @@ export default async function ColegiosPage({
     const userSucursales = dbUser?.sucursales?.map((s: any) => s.nombre) || []
 
     const uts = await prisma.uT.findMany({
-        where: {
+        where: (!canSeeAll) ? {
             sucursal: {
                 nombre: { in: userSucursales }
             }
-        },
+        } : {},
         select: { codUT: true }
     })
     const allowedUTs = uts.map(ut => ut.codUT)
     
     // Si el usuario ya filtró por una UT específica, verificamos que esté en sus permitidas (opcional, por seguridad)
     if (filters.ut !== undefined) {
-        if (!allowedUTs.includes(filters.ut)) {
+        if (!canSeeAll && !allowedUTs.includes(filters.ut)) {
             // Si intenta ver una UT que no le corresponde, forzamos vacío o error
-            // whereClause.colut = -1 
+            whereClause.colut = -1 
+        } else {
+            whereClause.colut = filters.ut
         }
     } else {
-        whereClause.colut = { in: allowedUTs }
+        if (!canSeeAll) {
+            whereClause.colut = { in: allowedUTs }
+        }
     }
 
     // Obtener listas para los dropdowns
@@ -61,7 +70,7 @@ export default async function ColegiosPage({
     // pero aquí mostraremos todas las que existen en los colegios permitidos por seguridad.
     // Obtener listas para los dropdowns con lógica de CASCADA
     const sucursalesDropdown = await prisma.colegios.findMany({
-        where: { colut: { in: allowedUTs } },
+        where: canSeeAll ? {} : { colut: { in: allowedUTs } },
         select: { sucursal: true },
         distinct: ['sucursal'],
         orderBy: { sucursal: 'asc' }
@@ -69,7 +78,7 @@ export default async function ColegiosPage({
 
     const utsDropdown = await prisma.colegios.findMany({
         where: { 
-            colut: { in: allowedUTs },
+            colut: canSeeAll ? undefined : { in: allowedUTs },
             sucursal: filters.sucursal || undefined
         },
         select: { colut: true },
@@ -79,7 +88,7 @@ export default async function ColegiosPage({
 
     const rbdsDropdown = await prisma.colegios.findMany({
         where: { 
-            colut: filters.ut !== undefined ? filters.ut : { in: allowedUTs },
+            colut: filters.ut !== undefined ? filters.ut : (canSeeAll ? undefined : { in: allowedUTs }),
             sucursal: filters.sucursal || undefined
         },
         select: { colRBD: true, nombreEstablecimiento: true },
@@ -124,7 +133,10 @@ export default async function ColegiosPage({
                     <p className="text-gray-500 mt-1">Gestión y listado de instituciones registradas</p>
                 </div>
 
-                <UploadModalColegio />
+                <div className="flex items-center gap-2">
+                    <ColegiosActions />
+                    <UploadModalColegio />
+                </div>
             </div>
 
             {/* Panel de Filtros con Cascada Live */}

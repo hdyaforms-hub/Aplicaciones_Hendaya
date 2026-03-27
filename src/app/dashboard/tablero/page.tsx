@@ -30,7 +30,11 @@ export default async function TableroPage({
         rbd: resolved.rbd ? parseInt(resolved.rbd) : undefined,
     };
 
-    // 1. Get authorized Suucursales for User
+    // Check if user is Administrador to potentially bypass sucursal filtering
+    const isAdmin = session?.user?.role?.name === 'Administrador'
+    const permissions = session?.user?.role?.permissions || []
+    const canSeeAll = isAdmin || permissions.includes('manage_sucursales')
+
     const dbUser = await (prisma.user as any).findUnique({
         where: { id: session.user.id },
         include: { sucursales: true }
@@ -38,14 +42,14 @@ export default async function TableroPage({
     const userSucursales = dbUser?.sucursales?.map((s: any) => s.nombre) || [];
 
     const uts = await prisma.uT.findMany({
-        where: { sucursal: { nombre: { in: userSucursales } } },
+        where: !canSeeAll ? { sucursal: { nombre: { in: userSucursales } } } : {},
         select: { codUT: true, sucursal: { select: { nombre: true } } }
     });
     const allowedUTs = uts.map(ut => ut.codUT);
 
     // 2. Fetch Base Colegios allowed for this user
     let baseColegios = await prisma.colegios.findMany({
-        where: { colut: { in: allowedUTs } },
+        where: !canSeeAll ? { colut: { in: allowedUTs } } : {},
         select: { colRBD: true, colut: true, sucursal: true, nombreEstablecimiento: true }
     });
 
