@@ -45,6 +45,13 @@ export async function getEstadoAvanceData() {
                     return sem === 1 ? (isBefore(d, cutoff) || d.getTime() === cutoff.getTime()) : isAfter(d, cutoff)
                 })
 
+                // Para Mitigación (Segundo Semestre abarca todo el año - YTD)
+                const matricesUT_Mitigacion = matrices.filter(m => {
+                    if (m.ut !== ut) return false
+                    const d = new Date(m.createdAt)
+                    return sem === 1 ? (isBefore(d, cutoff) || d.getTime() === cutoff.getTime()) : true
+                })
+
                 // Auditoría metrics
                 const auditadasUnique = Array.from(new Set(matricesUT.map(m => m.rbd)))
                 const cantAuditadas = auditadasUnique.length
@@ -61,7 +68,7 @@ export async function getEstadoAvanceData() {
                 let actasSinProblemas = 0 // Matrices donde ninguna pregunta fue "Problema"
                 let actasPorSolucionar = 0 // Matrices con hallazgos aún no resueltos
 
-                matricesUT.forEach(m => {
+                matricesUT_Mitigacion.forEach(m => {
                     let hasProblems = false
                     let unsolvedInThisActa = false
                     let hasAtLeastOneMitigation = false
@@ -88,7 +95,7 @@ export async function getEstadoAvanceData() {
                     }
                 })
 
-                const cumplimientoActa = (matricesUT.length - actasPorSolucionar) / matricesUT.length * 100
+                const cumplimientoActa = matricesUT_Mitigacion.length > 0 ? (matricesUT_Mitigacion.length - actasPorSolucionar) / matricesUT_Mitigacion.length * 100 : 0
                 const cumplimientoItems = totalItemsLevantados > 0 ? (totalItemsSolucionados / totalItemsLevantados) * 100 : 100
 
                 return {

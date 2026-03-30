@@ -18,3 +18,15 @@ Estas reglas deben ser seguidas estrictamente por cualquier asistente de intelig
 *   **CONTRASTE DE FUENTES EN FORMULARIOS Y INPUTS:**
     *   Si la caja de texto, lista desplegable (`select`) o formulario tiene un **fondo claro** (ej. páginas interiores del dashboard), el color de la fuente o texto debe ser obligatoriamente **oscuro (ej. negro o text-gray-900)** para asegurar una legibilidad perfecta.
     *   Si la caja de texto tiene un **fondo oscuro** (ej. la pantalla de conexión/login), el color de la fuente debe ser obligatoriamente **claro (ej. blanco o text-white)**.
+
+## 4. PRESERVACIÓN DE PREGUNTAS Y OPCIONES (MATRIZ DE RIESGO Y OTROS)
+
+*   **ESTRICTAMENTE PROHIBIDO MODIFICAR PREGUNTAS O RESPUESTAS:** No se debe alterar ni modificar la redacción, las etiquetas (labels) de los botones ni el contenido de las preguntas de la Matriz de Riesgo 2026 u otros formularios, a menos que el usuario lo solicite explícitamente y textualmente.
+*   **Opciones Estándar (Las 6 opciones):** Las etiquetas deben ser exacta y literalmente:
+    1. "Bueno / Cumple"
+    2. "Malo requiere cambio o reparación / No Cumple"
+    3. "No hay y requiere instalar"
+    4. "No hay y no requiere"
+    5. "No existe"
+    6. "No Aplica"
+*   **Excepción para "Patio de Servicio":** La pregunta "¿Existe Patio de servicio?" TIENE EXCLUSIVAMENTE dos opciones: "Existe" y "No existe". Esta es la única excepción a las 6 opciones estándar en la sección actual y NO debe perder sus botones exclusivos.

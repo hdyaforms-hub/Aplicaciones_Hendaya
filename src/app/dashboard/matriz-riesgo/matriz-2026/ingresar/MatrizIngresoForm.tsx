@@ -1,24 +1,31 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { searchColegiosMatriz, saveMatriz2026, uploadMatrizFile } from '../../actions'
+import { searchColegiosMatriz, saveMatriz2026, uploadMatrizFile, getMatrizExistence } from '../../actions'
 
+// DO NOT CHANGE THESE LABELS OR VALUES UNLESS EXPLICITLY INSTRUCTED BY THE USER.
 const OPTIONS_CONFIG = [
-    { label: "Cumple", value: "Bueno / Cumple", color: "bg-emerald-500 text-white", activeClass: "ring-4 ring-emerald-200 shadow-emerald-200" },
-    { label: "No Cumple", value: "Malo requiere cambio o reparación / No Cumple", color: "bg-red-500 text-white", activeClass: "ring-4 ring-red-200 shadow-red-200" },
-    { label: "Req. Inst.", value: "No hay y requiere instalar", color: "bg-orange-500 text-white", activeClass: "ring-4 ring-orange-200 shadow-orange-200" },
-    { label: "No Req.", value: "No hay y no requiere", color: "bg-gray-400 text-white", activeClass: "ring-4 ring-gray-100 shadow-gray-100" },
-    { label: "No Existe", value: "No existe", color: "bg-slate-700 text-white", activeClass: "ring-4 ring-slate-200 shadow-slate-200" },
-    { label: "N/A", value: "No aplica", color: "bg-slate-500 text-white", activeClass: "ring-4 ring-slate-100 shadow-slate-100" }
+    { label: "Bueno / Cumple", value: "Bueno / Cumple", color: "bg-emerald-500 text-white", activeClass: "ring-4 ring-emerald-200 shadow-emerald-200" },
+    { label: "Malo requiere cambio o reparación / No Cumple", value: "Malo requiere cambio o reparación / No Cumple", color: "bg-red-500 text-white", activeClass: "ring-4 ring-red-200 shadow-red-200" },
+    { label: "No hay y requiere instalar", value: "No hay y requiere instalar", color: "bg-orange-500 text-white", activeClass: "ring-4 ring-orange-200 shadow-orange-200" },
+    { label: "No hay y no requiere", value: "No hay y no requiere", color: "bg-gray-400 text-white", activeClass: "ring-4 ring-gray-100 shadow-gray-100" },
+    { label: "No existe", value: "No existe", color: "bg-slate-700 text-white", activeClass: "ring-4 ring-slate-200 shadow-slate-200" },
+    { label: "No Aplica", value: "No aplica", color: "bg-slate-500 text-white", activeClass: "ring-4 ring-slate-100 shadow-slate-100" }
 ]
 
-const QuickOptionButtons = ({ label, field, formData, handleInputChange, errors = [] }: { label: string, field: string, formData: any, handleInputChange: any, errors?: string[] }) => {
+// DO NOT CHANGE THESE LABELS OR VALUES UNLESS EXPLICITLY INSTRUCTED BY THE USER.
+const EXISTENCE_OPTIONS = [
+    { label: "Existe", value: "Existe", color: "bg-emerald-500 text-white", activeClass: "ring-4 ring-emerald-200 shadow-emerald-200" },
+    { label: "No existe", value: "No existe", color: "bg-slate-700 text-white", activeClass: "ring-4 ring-slate-200 shadow-slate-200" }
+]
+
+const QuickOptionButtons = ({ label, field, formData, handleInputChange, errors = [], options = OPTIONS_CONFIG }: { label: string, field: string, formData: any, handleInputChange: any, errors?: string[], options?: any[] }) => {
     const currentValue = formData[field]
     return (
         <div className="space-y-3 p-4 bg-gray-50/50 rounded-2xl border border-gray-100 transition-all hover:bg-white hover:shadow-sm">
             <label className="block text-xs font-black text-slate-700 uppercase tracking-tight">{label}</label>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                {OPTIONS_CONFIG.map(opt => (
+            <div className={`grid gap-2 ${options.length <= 2 ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-3'}`}>
+                {options.map(opt => (
                     <button
                         key={opt.value}
                         type="button"
@@ -52,7 +59,7 @@ const TextAreaField = ({ label, field, formData, handleInputChange }: { label: s
 const FileUploadField = ({ label, section, files, handleFileChange, removeFile }: { label: string, section: string, files: any, handleFileChange: (s: string, e: React.ChangeEvent<HTMLInputElement>) => void, removeFile: (s: string, i: number) => void }) => (
     <div className="mt-4 p-4 border-2 border-dashed border-gray-200 rounded-2xl bg-gray-50">
         <label className="block text-sm font-bold text-gray-700 mb-2">{label}</label>
-        <p className="text-[10px] text-gray-500 mb-2">Máximo 50 archivos (Imagen o PDF). Máx 100MB por archivo.</p>
+        <p className="text-[10px] text-gray-500 mb-2">Máximo 5 archivos (Imagen o PDF). Máx 100MB por archivo.</p>
         <input 
             type="file" 
             multiple 
@@ -86,7 +93,7 @@ const StepHeader = ({ step }: { step: number }) => (
 )
 
 export default function MatrizIngresoForm({ user }: { user: any }) {
-    const [step, setStep] = useState(1)
+    const [step, setStep] = useState<number>(1)
     const [loading, setLoading] = useState(false)
     const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null)
     const [errors, setErrors] = useState<string[]>([])
@@ -95,6 +102,7 @@ export default function MatrizIngresoForm({ user }: { user: any }) {
     const [colegioQuery, setColegioQuery] = useState('')
     const [colegioResults, setColegioResults] = useState<any[]>([])
     const [selectedColegio, setSelectedColegio] = useState<any>(null)
+    const [existingAuditDate, setExistingAuditDate] = useState<Date | null>(null)
 
     // Form State
     const [formData, setFormData] = useState<any>({
@@ -136,10 +144,19 @@ export default function MatrizIngresoForm({ user }: { user: any }) {
         return () => clearTimeout(timer)
     }, [colegioQuery, selectedColegio])
 
-    const handleSelectColegio = (col: any) => {
-        setSelectedColegio(col)
-        setColegioQuery(`${col.colRBD} - ${col.nombreEstablecimiento}`)
+    const handleSelectColegio = async (colegio: any) => {
+        setSelectedColegio(colegio)
         setColegioResults([])
+        setColegioQuery(colegio.nombreEstablecimiento)
+        setFormData((prev: any) => ({ ...prev, rbd: colegio.colRBD, ut: colegio.colut }))
+        
+        // Verificar existencia
+        const check = await getMatrizExistence(colegio.colRBD)
+        if (check?.exists) {
+            setExistingAuditDate(new Date(check.date))
+        } else {
+            setExistingAuditDate(null)
+        }
         setErrors(prev => prev.filter(e => !e.includes('RBD')))
     }
 
@@ -150,7 +167,15 @@ export default function MatrizIngresoForm({ user }: { user: any }) {
 
     const handleFileChange = (section: string, e: React.ChangeEvent<HTMLInputElement>) => {
         const newFiles = Array.from(e.target.files || [])
-        setFiles((prev: any) => ({ ...prev, [section]: [...(prev[section] || []), ...newFiles] }))
+        setFiles((prev: any) => {
+            const currentFiles = prev[section] || []
+            const combined = [...currentFiles, ...newFiles]
+            if (combined.length > 5) {
+                alert('Solo se permite un máximo de 5 archivos por sección.')
+                return { ...prev, [section]: combined.slice(0, 5) }
+            }
+            return { ...prev, [section]: combined }
+        })
     }
 
     const removeFile = (section: string, index: number) => {
@@ -294,49 +319,87 @@ export default function MatrizIngresoForm({ user }: { user: any }) {
 
                 {step === 1 && (
                     <div className="space-y-6">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 border-b border-gray-100">
-                            <div className="relative">
-                                <label className="block text-sm font-bold text-gray-800 mb-1">RBD / Establecimiento *</label>
-                                <input 
-                                    className={`w-full p-3 border border-gray-300 rounded-2xl outline-none focus:ring-2 focus:ring-cyan-500 bg-white text-black font-black`}
-                                    placeholder="Buscar por RBD o Nombre..."
-                                    value={colegioQuery}
-                                    onChange={(e) => {
-                                        setColegioQuery(e.target.value)
-                                        if (selectedColegio) setSelectedColegio(null)
-                                    }}
-                                />
-                                {colegioResults.length > 0 && (
-                                    <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-xl shadow-lg max-h-60 overflow-y-auto">
-                                        {colegioResults.map(col => (
-                                            <div 
-                                                key={col.id} 
-                                                onClick={() => handleSelectColegio(col)}
-                                                className="p-3 hover:bg-cyan-50 cursor-pointer border-b border-gray-50 flex flex-col"
-                                            >
-                                                <span className="font-bold text-gray-900">{col.colRBD}</span>
-                                                <span className="text-xs text-gray-500">{col.nombreEstablecimiento}</span>
-                                            </div>
-                                        ))}
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pb-8 border-b border-gray-100">
+                            {/* Selector de Colegio */}
+                            <div className="space-y-4">
+                                <label className="block text-sm font-bold text-slate-700">Seleccionar Establecimiento (RBD o Nombre) *</label>
+                                <div className="relative">
+                                    <input
+                                        type="text"
+                                        className="w-full p-4 pl-12 border-2 border-slate-100 rounded-[24px] focus:ring-4 focus:ring-cyan-500/20 focus:border-cyan-500 outline-none transition-all font-black text-slate-900 bg-white"
+                                        placeholder="Escriba RBD o Nombre..."
+                                        value={colegioQuery}
+                                        onChange={(e) => {
+                                            setColegioQuery(e.target.value)
+                                            setExistingAuditDate(null)
+                                        }}
+                                    />
+                                    <div className="absolute left-4 top-4.5 text-slate-400">🔍</div>
+                                    {colegioResults.length > 0 && (
+                                        <div className="absolute z-50 w-full mt-2 bg-white border border-gray-200 rounded-3xl shadow-2xl max-h-60 overflow-y-auto overflow-x-hidden">
+                                            {colegioResults.map(c => (
+                                                <button
+                                                    key={c.id}
+                                                    type="button"
+                                                    className="w-full p-4 text-left hover:bg-cyan-50 border-b border-gray-50 last:border-0 transition-colors flex justify-between items-center group"
+                                                    onClick={() => handleSelectColegio(c)}
+                                                >
+                                                    <span className="font-black text-slate-900 group-hover:text-cyan-700">{c.nombreEstablecimiento}</span>
+                                                    <span className="bg-slate-100 px-3 py-1 rounded-full text-xs font-bold text-slate-500">RBD: {c.colRBD}</span>
+                                                </button>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+
+                                {existingAuditDate && (
+                                    <div className="bg-amber-50 border border-amber-200 p-4 rounded-2xl flex items-center gap-3 animate-in fade-in slide-in-from-top-2 duration-300">
+                                        <span className="text-2xl">⚠️</span>
+                                        <div>
+                                            <p className="text-amber-900 font-bold text-[10px] uppercase tracking-tight">Atención: Colegio ya auditado</p>
+                                            <p className="text-amber-700 text-xs">Este establecimiento ya presenta una matriz registrada con fecha <b>{existingAuditDate.toLocaleDateString()}</b>.</p>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {selectedColegio && !existingAuditDate && (
+                                    <div className="bg-emerald-50 border border-emerald-100 p-4 rounded-2xl flex items-center gap-3">
+                                        <span className="text-xl">✅</span>
+                                        <div>
+                                            <p className="text-emerald-900 font-bold text-[10px] uppercase">Establecimiento Seleccionado</p>
+                                            <p className="text-emerald-700 text-xs font-medium">{selectedColegio.nombreEstablecimiento}</p>
+                                        </div>
                                     </div>
                                 )}
                             </div>
-                            <div className="grid grid-cols-2 gap-4">
+
+                            {/* Info Adicional */}
+                            <div className="grid grid-cols-2 gap-4 h-fit">
                                 <div>
-                                    <label className="block text-sm font-bold text-gray-500 mb-1">UT</label>
-                                    <div className="p-3 bg-gray-50 border border-gray-200 rounded-2xl font-black text-gray-700">{selectedColegio?.colut || '---'}</div>
+                                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 pl-1">Código UT</label>
+                                    <div className="p-4 bg-slate-50 border border-slate-100 rounded-2xl font-black text-slate-700 flex items-center gap-2">
+                                        <span className="w-2 h-2 bg-cyan-500 rounded-full"></span>
+                                        {selectedColegio?.colut || '---'}
+                                    </div>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-bold text-gray-500 mb-1">Usuario</label>
-                                    <div className="p-3 bg-gray-50 border border-gray-200 rounded-2xl font-black text-gray-700">{user.username}</div>
+                                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 pl-1">Auditor</label>
+                                    <div className="p-4 bg-slate-50 border border-slate-100 rounded-2xl font-black text-slate-700 flex items-center gap-2">
+                                        <span className="w-2 h-2 bg-slate-300 rounded-full"></span>
+                                        {user.username}
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="space-y-6">
-                            <h3 className="text-lg font-black text-cyan-700 uppercase">Sección: Patio o Entorno</h3>
+                        {/* Preguntas de la sección */}
+                        <div className="space-y-8 pt-4">
+                            <h3 className="text-xl font-black text-slate-900 uppercase tracking-tighter flex items-center gap-2">
+                                <span className="w-1.5 h-6 bg-cyan-600 rounded-full"></span>
+                                Sección: Patio o Entorno
+                            </h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <QuickOptionButtons label="¿Existe Patio de servicio? *" field="patio_servicio" {...commonProps} />
+                                <QuickOptionButtons label="¿Existe Patio de servicio? *" field="patio_servicio" options={EXISTENCE_OPTIONS} {...commonProps} />
                                 <QuickOptionButtons label={`a).-¿Cuenta con basurero (concesionario) en el patio de servicio o en el espacio asignado, en buen estado y de tamaño adecuado? ${formData.patio_servicio === "No existe" ? "" : "*"}`} field="basurero_patio" {...commonProps} />
                                 <QuickOptionButtons label={`b).-¿La zona que rodea estas áreas se mantienen libres de residuos (ejemplo: escombros, muebles, otros)? ${formData.patio_servicio === "No existe" ? "" : "*"}`} field="zonas_libres_residuos" {...commonProps} />
                                 <QuickOptionButtons label={`c).-¿Las vías de acceso y zonas de circulación se encuentran pavimentadas? ${formData.patio_servicio === "No existe" ? "" : "*"}`} field="vias_acceso_pavimentas" {...commonProps} />

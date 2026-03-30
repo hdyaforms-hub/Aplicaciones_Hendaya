@@ -53,28 +53,30 @@ export default function Sidebar({ user }: { user: User }) {
         {
             name: 'Aplicaciones',
             icon: '📁',
-            requiredPermission: ['view_ingreso_raciones', 'view_solicitud_pan', 'view_solicitud_gas', 'view_retiro_saldos'],
+            requiredPermission: ['view_ingreso_raciones', 'view_solicitud_pan', 'view_solicitud_gas', 'view_retiro_saldos', 'view_trabajos_preventivos'],
             subItems: [
                 { name: 'Ingreso de Raciones', href: '/dashboard/ingreso-raciones', requiredPermission: 'view_ingreso_raciones' },
                 { name: 'Solicitud de Pan', href: '/dashboard/solicitud-pan', requiredPermission: 'view_solicitud_pan' },
                 { name: 'Solicitud de Gas', href: '/dashboard/solicitud-gas', requiredPermission: 'view_solicitud_gas' },
-                { name: 'Retiro de Saldos', href: '/dashboard/retiro-saldos', requiredPermission: 'view_retiro_saldos' }
+                { name: 'Retiro de Saldos', href: '/dashboard/retiro-saldos', requiredPermission: 'view_retiro_saldos' },
+                { name: 'Trabajo Preventivos / Correctivos', href: '/dashboard/trabajos-preventivos', requiredPermission: 'view_trabajos_preventivos' }
             ]
         },
         {
             name: 'Matriz de riesgo',
             icon: '📋',
-            requiredPermission: ['view_matriz_riesgo', 'manage_matriz_2026', 'manage_colegios_matriz', 'manage_evaluacion_detallada', 'manage_mitigacion'],
+            requiredPermission: ['view_matriz_riesgo', 'manage_matriz_2026', 'manage_colegios_matriz', 'manage_evaluacion_detallada', 'manage_mitigacion', 'view_auditoria'],
             subItems: [
                 { 
                     name: 'Matriz 2026', 
-                    requiredPermission: ['manage_matriz_2026', 'manage_colegios_matriz', 'manage_evaluacion_detallada', 'manage_mitigacion', 'view_estado_avance'],
+                    requiredPermission: ['manage_matriz_2026', 'manage_colegios_matriz', 'manage_evaluacion_detallada', 'manage_mitigacion', 'view_estado_avance', 'view_auditoria'],
                     subItems: [
                         { name: 'Ingresar nueva Matriz', href: '/dashboard/matriz-riesgo/matriz-2026/ingresar', requiredPermission: 'manage_matriz_2026' },
                         { name: 'Colegios Activos', href: '/dashboard/matriz-riesgo/matriz-2026/colegios-activos', requiredPermission: 'manage_colegios_matriz' },
                         { name: 'Evaluación Detallada', href: '/dashboard/matriz-riesgo/matriz-2026/evaluacion-detallada', requiredPermission: 'manage_evaluacion_detallada' },
                         { name: 'Mitigación', href: '/dashboard/matriz-riesgo/matriz-2026/mitigacion', requiredPermission: 'manage_mitigacion' },
-                        { name: 'Estado de Avance', href: '/dashboard/matriz-riesgo/matriz-2026/estado-avance', requiredPermission: 'view_estado_avance' }
+                        { name: 'Estado de Avance', href: '/dashboard/matriz-riesgo/matriz-2026/estado-avance', requiredPermission: 'view_estado_avance' },
+                        { name: 'Auditoría', href: '/dashboard/matriz-riesgo/matriz-2026/auditoria', requiredPermission: 'view_auditoria' }
                     ]
                 }
             ]

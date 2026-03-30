@@ -147,3 +147,16 @@ export async function uploadMatrizFile(fileData: string, fileName: string, rbd: 
         return { error: 'Error al subir el archivo.' }
     }
 }
+
+export async function getMatrizExistence(rbd: number) {
+    try {
+        const lastMatrix = await prisma.matrizRiesgo2026.findFirst({
+            where: { rbd: rbd },
+            orderBy: { createdAt: 'desc' },
+            select: { createdAt: true }
+        })
+        return { exists: !!lastMatrix, date: lastMatrix?.createdAt }
+    } catch (e) {
+        return { error: 'Error checking existence' }
+    }
+}

@@ -24,6 +24,7 @@ export default function MitigacionClient({
     const [semestre, setSemestre] = useState<1 | 2>(1)
     const [selectedMatrizId, setSelectedMatrizId] = useState<string | null>(null)
     const [saving, setSaving] = useState<string | null>(null)
+    const [selectedImage, setSelectedImage] = useState<string | null>(null)
     const router = useRouter()
 
     const cutoff = new Date(cutoffDate)
@@ -52,12 +53,22 @@ export default function MitigacionClient({
 
                 const deadline = addDays(new Date(matriz.createdAt), days)
 
+                // Extraer fotos originales de la sección
+                let originalPhotos: string[] = []
+                try {
+                    const adjKey = `adjuntos_${p.seccion}`
+                    if (matriz[adjKey]) {
+                        originalPhotos = JSON.parse(matriz[adjKey])
+                    }
+                } catch(e) {}
+
                 problems.push({
                     ...p,
                     response: responseValue,
                     nivelRiesgo: config?.nivelRiesgo || 'No configurado',
                     deadline,
-                    mitigacion: mitigacion || null
+                    mitigacion: mitigacion || null,
+                    originalPhotos
                 })
             }
         })
@@ -86,7 +97,8 @@ export default function MitigacionClient({
     const problemList = selectedMatriz ? getProblems(selectedMatriz) : []
 
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
             {/* Sidebar de Evaluaciones */}
             <div className="lg:col-span-4 space-y-4">
                 <div className="bg-white p-4 rounded-3xl shadow-sm border border-gray-100">
@@ -187,6 +199,23 @@ export default function MitigacionClient({
                                                 Respuesta: <span className="font-bold text-slate-700">{p.response}</span>
                                             </div>
 
+                                            {p.originalPhotos?.length > 0 && (
+                                                <div className="mt-4">
+                                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-tighter mb-2">Evidencia Original de la Sección</p>
+                                                    <div className="flex flex-wrap gap-2">
+                                                        {p.originalPhotos.map((photo: string, i: number) => (
+                                                            <div 
+                                                                key={i} 
+                                                                onClick={() => setSelectedImage(photo)}
+                                                                className="w-16 h-16 rounded-xl bg-slate-100 overflow-hidden cursor-pointer hover:ring-4 hover:ring-cyan-500/30 transition-all shadow-sm border border-slate-200"
+                                                            >
+                                                                <img src={photo} alt="Evidencia" className="w-full h-full object-cover" />
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
+
                                             <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-slate-50">
                                                 {/* Plazos */}
                                                 <div>
@@ -252,5 +281,29 @@ export default function MitigacionClient({
                 )}
             </div>
         </div>
+            
+            {/* Modal para ver imagen */}
+            {selectedImage && (
+                <div 
+                    className="fixed inset-0 z-[100] bg-slate-900/90 flex items-center justify-center p-4 backdrop-blur-sm transition-opacity"
+                    onClick={() => setSelectedImage(null)}
+                >
+                    <div className="relative max-w-5xl max-h-[90vh] flex flex-col items-center animate-in fade-in zoom-in-95 duration-200">
+                        <button 
+                            className="absolute -top-12 right-0 w-10 h-10 bg-white/10 hover:bg-red-500 text-white rounded-full flex items-center justify-center text-2xl font-bold transition-colors"
+                            onClick={() => setSelectedImage(null)}
+                        >
+                            &times;
+                        </button>
+                        <img 
+                            src={selectedImage} 
+                            alt="Evidencia Ampliada" 
+                            className="max-w-full max-h-[85vh] object-contain rounded-2xl shadow-2xl ring-1 ring-white/10"
+                            onClick={(e) => e.stopPropagation()}
+                        />
+                    </div>
+                </div>
+            )}
+        </>
     )
 }

@@ -456,3 +456,23 @@ model MatrizMitigacion {
 
   @@unique([matrizId, preguntaId])
 }
+
+model TrabajoPreventivo {
+  id                 String   @id @default(uuid())
+  ut                 Int
+  sucursal           String
+  licitacion         String
+  rbd                Int
+  nombreEstablecimiento String
+  folioOT            String
+  tipoTrabajo        String   // Preventivo, Correctivo, Mixta
+  fechaTrabajo       DateTime
+  documentoAsociado  String   // Single file path
+  boletasFacturas    String?  // JSON array of paths (up to 5)
+  montoMateriales    Int?     // Opcional, Entero
+  montoManoObra      Int?     // Opcional, Entero
+  observacion        String?  // Max 500 chars
+  usuario            String
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}

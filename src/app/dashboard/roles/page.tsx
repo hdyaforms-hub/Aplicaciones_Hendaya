@@ -34,6 +34,7 @@ export default async function RolesPage() {
         { id: 'view_solicitud_pan', name: 'Solicitud de Pan', description: 'Acceso a la aplicación de Solicitud de Pan.', category: 'Aplicaciones' },
         { id: 'view_solicitud_gas', name: 'Solicitud de Gas', description: 'Acceso a la aplicación de Solicitud de Gas.', category: 'Aplicaciones' },
         { id: 'view_retiro_saldos', name: 'Retiro de Saldos', description: 'Acceso a la aplicación de Retiro de Saldos y Rebaja de Stock.', category: 'Aplicaciones' },
+        { id: 'view_trabajos_preventivos', name: 'Trabajos Preventivos / Correctivos', description: 'Registro y seguimiento de mantenimientos preventivos y correctivos.', category: 'Aplicaciones' },
         { id: 'view_colegios', name: 'Mantenedor de Colegios', description: 'Acceso a mantenedor y carga masiva de Colegios.', category: 'Mantenedores' },
         { id: 'view_productos', name: 'Mantenedor de Productos', description: 'Acceso a mantenedor y carga masiva de Productos.', category: 'Mantenedores' },
         { id: 'view_consumo_gas', name: 'Consumo de Gas por RBD', description: 'Administrar límites y consumos de gas por cada RBD.', category: 'Mantenedores' },
@@ -53,6 +54,7 @@ export default async function RolesPage() {
         { id: 'manage_colegios_matriz', name: 'Colegios Activos', description: 'Gestionar colegios habilitados para la matriz de riesgo.', category: 'Matriz 2026' },
         { id: 'manage_evaluacion_detallada', name: 'Evaluación Detallada', description: 'Realizar evaluación técnica detallada por puntos críticos.', category: 'Matriz 2026' },
         { id: 'manage_mitigacion', name: 'Mitigación', description: 'Gestionar plazos y evidencias de solución para hallazgos de la matriz.', category: 'Matriz 2026' },
+        { id: 'view_auditoria', name: 'Auditoría Externa', description: 'Vista global completa de hallazgos y evidencias para auditores.', category: 'Matriz 2026' },
         { id: 'view_estado_avance', name: 'Matriz 2026: Estado de Avance', description: 'Visualizar el estado de avance de la matriz de riesgo 2026.', category: 'Matriz 2026' },
         { id: 'view_dashboard', name: 'Dashboard General', description: 'Acceso al dashboard general de la aplicación.', category: 'Tableros' },
     ]
