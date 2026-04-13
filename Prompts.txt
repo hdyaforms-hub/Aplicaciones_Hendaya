@@ -74,5 +74,28 @@ Favor necesito que hagas una pantalla que sea mas amigable y de fácil uso
 
 /****************************************************************************/
 
+Necesito una nueva opción de Menu dentro de "Matriz 2026", debe llamarse auditoria, esta opción (la dejo a tu imaginación, la idea es que sea super simple de mostrar a los auditores externo", esta opción debe componerse de todas las preguntas de la matriz (aquí yo me imagino y te doy una idea para que la mejores) la idea que las preguntas que tengan problemas con mitigación muestre una barra de avance de mitigación y esta barra se podría hacer un click para que abra un Popup con la documentación que se les adjunto como solución. y las preguntas que se debian adjuntar imágenes también debes mostrarme las imágenes en pequeño para asi yo o el usuario pueda hacer click y poder ver la evidencia (Recuerda que esta nueva opción debe pasar por la ventana de  Roles y perfiles)
+
+/**************************************************************************/
+
+En la opción de aplicaciones agrega una nueva opción que se llame "Trabajo Preventivos / Correctivos", en esta nueva pantalla debe solicitar: 
+*RBD --> rescatado de la tabla colegios
+*debe solicitar un "Folio (OT)" --> (Campo obligatorio),
+*lista desplegable llamada "Tipo de trabajo" (Obligatorio) y debe tener los siguientes valores:
+	- Preventivo
+	- Correctivo
+	- Mixta
+*Fecha que se realizo el trabajo (Obligatorio)
+*Carga de documentos asociados al trabajo (Tipo de archivo imagen o PDF, solo 1 documento debe subir y no debe pesar mas de 100 MB) --> Campo obligatorio
+*Carga de Boletas y/o Facturas asociadas (Tipo de archivo imagen o PDF, maximo 5 documentos puede subir y no debe pesar mas de 100 MB)
+*Montos Materiales
++Monto Mano de Obra
+*Observación (Maximo 500 caracteres)
+Recuerda que esta nueva opción debe pasar por el modulo de roles y perfiles
+
+/**************************************************************************/
+
+necesito que dentro de la opción "Trabajos preventivos / Correctivo" hagas una nueva opción de menú que se llame presupuesto, en esta pantalla debe seleccionar el año, sucursal (sacado de la tabla de sucursal), y debe tener un campo de monto Anual, el cual debe ser digitado por el usuario. esto debe llevar la lógica de que debe el monto me lo divida en trimestre y esto debe mostrarlo por pantalla informando que x monto están asignado por trimestre una vez guardada la información 
+
 
 

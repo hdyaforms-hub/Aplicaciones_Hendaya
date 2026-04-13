@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "sqlserver"
   url      = env("DATABASE_URL")
 }
 
@@ -156,6 +156,20 @@ model Sucursal {
   listasCorreo ListaCorreo[]
   uts          UT[]
   users        User[]        @relation("SucursalToUser")
+  presupuestos Presupuesto[]
+}
+
+model Presupuesto {
+  id           String   @id @default(uuid())
+  ano          Int
+  sucursalId   String
+  montoAnual   Float
+  sucursal     Sucursal @relation(fields: [sucursalId], references: [id])
+  usuario      String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([ano, sucursalId])
 }
 
 model SolicitudPan {

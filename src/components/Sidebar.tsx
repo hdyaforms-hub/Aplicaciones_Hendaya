@@ -13,10 +13,19 @@ type User = {
     }
 }
 
+interface MenuItem {
+    name: string
+    href?: string
+    icon?: string
+    requiredPermission?: string | string[] | null
+    subItems?: MenuItem[]
+}
+
 export default function Sidebar({ user }: { user: User }) {
     const pathname = usePathname()
     const router = useRouter()
     const [isLoggingOut, setIsLoggingOut] = useState(false)
+    const [isMobileOpen, setIsMobileOpen] = useState(false)
 
     const handleLogout = async () => {
         setIsLoggingOut(true)
@@ -27,18 +36,20 @@ export default function Sidebar({ user }: { user: User }) {
     const [expandedMenus, setExpandedMenus] = useState<Record<string, boolean>>({
         'Aplicaciones': true,
         'Mantenedor': false,
-        'Reportes': false
+        'Reportes': false,
+        'Áreas': true // Default expanded for easier navigation
     })
 
     const toggleMenu = (e: MouseEvent, name: string) => {
         e.preventDefault()
+        e.stopPropagation()
         setExpandedMenus(prev => ({ ...prev, [name]: !prev[name] }))
     }
 
     const permissions = user.role.permissions
 
-    const menuItems = [
-        { name: 'Inicio', href: '/dashboard', icon: '🏠', requiredPermission: null }, 
+    const menuItems: MenuItem[] = [
+        { name: 'Inicio', href: '/dashboard', icon: '🏠', requiredPermission: null },
         {
             name: 'Tableros y Avances',
             icon: '📈',
@@ -53,13 +64,34 @@ export default function Sidebar({ user }: { user: User }) {
         {
             name: 'Aplicaciones',
             icon: '📁',
-            requiredPermission: ['view_ingreso_raciones', 'view_solicitud_pan', 'view_solicitud_gas', 'view_retiro_saldos', 'view_trabajos_preventivos'],
+            requiredPermission: ['view_ingreso_raciones', 'view_solicitud_pan', 'view_solicitud_gas', 'view_retiro_saldos'],
             subItems: [
                 { name: 'Ingreso de Raciones', href: '/dashboard/ingreso-raciones', requiredPermission: 'view_ingreso_raciones' },
                 { name: 'Solicitud de Pan', href: '/dashboard/solicitud-pan', requiredPermission: 'view_solicitud_pan' },
                 { name: 'Solicitud de Gas', href: '/dashboard/solicitud-gas', requiredPermission: 'view_solicitud_gas' },
-                { name: 'Retiro de Saldos', href: '/dashboard/retiro-saldos', requiredPermission: 'view_retiro_saldos' },
-                { name: 'Trabajo Preventivos / Correctivos', href: '/dashboard/trabajos-preventivos', requiredPermission: 'view_trabajos_preventivos' }
+                { name: 'Retiro de Saldos', href: '/dashboard/retiro-saldos', requiredPermission: 'view_retiro_saldos' }
+            ]
+        },
+        {
+            name: 'Áreas',
+            icon: '🏢',
+            requiredPermission: 'view_areas',
+            subItems: [
+                {
+                    name: 'Operaciones',
+                    requiredPermission: 'view_operaciones',
+                    subItems: [
+                        {
+                            name: 'Trabajos Preventivos / Correctivos',
+                            requiredPermission: 'view_trabajos_prev_corr_menu',
+                            subItems: [
+                                { name: 'Cargar OT', href: '/dashboard/trabajos-preventivos', requiredPermission: 'view_trabajos_preventivos' },
+                                { name: 'Presupuesto', href: '/dashboard/trabajos-preventivos/presupuesto', requiredPermission: 'manage_presupuesto' },
+                                { name: 'Estado de Avance', href: '/dashboard/trabajos-preventivos/avance', requiredPermission: 'view_estado_avance_tp' }
+                            ]
+                        }
+                    ]
+                }
             ]
         },
         {
@@ -67,8 +99,8 @@ export default function Sidebar({ user }: { user: User }) {
             icon: '📋',
             requiredPermission: ['view_matriz_riesgo', 'manage_matriz_2026', 'manage_colegios_matriz', 'manage_evaluacion_detallada', 'manage_mitigacion', 'view_auditoria'],
             subItems: [
-                { 
-                    name: 'Matriz 2026', 
+                {
+                    name: 'Matriz 2026',
                     requiredPermission: ['manage_matriz_2026', 'manage_colegios_matriz', 'manage_evaluacion_detallada', 'manage_mitigacion', 'view_estado_avance', 'view_auditoria'],
                     subItems: [
                         { name: 'Ingresar nueva Matriz', href: '/dashboard/matriz-riesgo/matriz-2026/ingresar', requiredPermission: 'manage_matriz_2026' },
@@ -140,7 +172,7 @@ export default function Sidebar({ user }: { user: User }) {
     ]
 
     // Recursive search to filter items based on user permissions
-    const filterMenuItems = (items: any[]): any[] => {
+    const filterMenuItems = (items: MenuItem[]): MenuItem[] => {
         return items.map(item => {
             if (item.subItems) {
                 const visibleSubItems = filterMenuItems(item.subItems)
@@ -148,14 +180,12 @@ export default function Sidebar({ user }: { user: User }) {
             }
             return item
         }).filter(item => {
-            // Check if item itself has permission
             const hasPermission = !item.requiredPermission || (
-                Array.isArray(item.requiredPermission) 
-                ? item.requiredPermission.some((p: string) => permissions.includes(p))
-                : permissions.includes(item.requiredPermission)
+                Array.isArray(item.requiredPermission)
+                    ? item.requiredPermission.some((p: string) => permissions.includes(p))
+                    : permissions.includes(item.requiredPermission)
             )
 
-            // If it has subitems, it's visible if it has permission AND at least one visible subitem
             if (item.subItems) {
                 return hasPermission && item.subItems.length > 0
             }
@@ -165,7 +195,76 @@ export default function Sidebar({ user }: { user: User }) {
 
     const visibleItems = filterMenuItems(menuItems)
 
-    const [isMobileOpen, setIsMobileOpen] = useState(false)
+    // Recursive Sidebar Item Component
+    const SidebarNavItem = ({ item, depth = 0, parentPath = '' }: { item: MenuItem, depth: number, parentPath: string }) => {
+        const itemKey = parentPath ? `${parentPath}-${item.name}` : item.name
+        const hasSubItems = item.subItems && item.subItems.length > 0
+        const isActive = item.href ? (pathname === item.href || pathname.startsWith(`${item.href}/`)) : false
+        const isExpanded = expandedMenus[itemKey]
+
+        const baseStyles = "w-full flex items-center justify-between transition-all duration-200 group"
+        
+        // Dynamic styling based on depth
+        const depthStyles = depth === 0 
+            ? "px-3 py-2.5 rounded-xl hover:bg-slate-800 hover:text-white"
+            : depth === 1
+                ? "px-3 py-2 rounded-lg text-sm text-slate-400 hover:text-white hover:bg-slate-800"
+                : depth === 2
+                    ? "px-3 py-2 rounded-lg text-sm text-slate-400 hover:text-white hover:bg-slate-800"
+                    : "px-3 py-1.5 rounded-lg text-xs text-slate-500 hover:text-white hover:bg-slate-800"
+
+        const activeStyles = depth === 0
+            ? "bg-cyan-500/10 text-cyan-400 font-medium"
+            : "text-cyan-400 font-medium"
+
+        if (hasSubItems) {
+            return (
+                <div key={item.name} className={depth > 0 ? "mt-1" : ""}>
+                    <button
+                        onClick={(e) => toggleMenu(e, itemKey)}
+                        className={`${baseStyles} ${depthStyles} ${isActive ? activeStyles : ''}`}
+                    >
+                        <div className="flex items-center gap-3">
+                            {item.icon && (
+                                <span className="text-xl transition-transform duration-200 group-hover:scale-110">
+                                    {item.icon}
+                                </span>
+                            )}
+                            <span className={depth === 0 ? "" : "truncate"}>{item.name}</span>
+                        </div>
+                        <span className={`transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} style={{ fontSize: depth === 0 ? '12px' : '10px' }}>
+                            ▼
+                        </span>
+                    </button>
+
+                    {isExpanded && (
+                        <div className={`mt-1 space-y-1 border-l border-slate-700/50 pl-3 ${depth === 0 ? "ml-9" : depth === 1 ? "ml-4" : "ml-4"}`}>
+                            {item.subItems!.map((sub) => (
+                                <SidebarNavItem key={sub.name} item={sub} depth={depth + 1} parentPath={itemKey} />
+                            ))}
+                        </div>
+                    )}
+                </div>
+            )
+        }
+
+        return (
+            <Link
+                key={item.name}
+                href={item.href!}
+                className={`${baseStyles} ${depthStyles} ${isActive ? activeStyles : ''}`}
+            >
+                <div className="flex items-center gap-3">
+                    {item.icon && (
+                        <span className={`text-xl transition-transform duration-200 ${isActive ? 'scale-110' : 'group-hover:scale-110'}`}>
+                            {item.icon}
+                        </span>
+                    )}
+                    <span className={depth === 0 ? "font-medium" : ""}>{item.name}</span>
+                </div>
+            </Link>
+        )
+    }
 
     return (
         <>
@@ -186,113 +285,20 @@ export default function Sidebar({ user }: { user: User }) {
             )}
 
             <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-slate-900 border-r border-slate-800 text-slate-300 flex flex-col h-screen shrink-0 transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-                <div className="h-16 flex items-center px-6 border-b border-slate-800 bg-slate-950">
+                <div className="h-16 flex items-center px-6 border-b border-slate-800 bg-slate-950/50">
                     <div className="flex items-center gap-2">
                         <span className="text-2xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-sky-400 drop-shadow-[0_0_10px_rgba(6,182,212,0.2)]">HENDAYA</span>
                     </div>
                 </div>
 
                 {/* Navigation */}
-                <nav className="flex-1 overflow-y-auto py-6 px-3 space-y-1">
+                <nav className="flex-1 overflow-y-auto py-6 px-3 space-y-1 scrollbar-hide">
                     <p className="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
                         Menú Principal
                     </p>
-                    {visibleItems.map((item) => {
-                        const hasSubItems = item.subItems && item.subItems.length > 0
-                        const isActive = item.href ? (pathname === item.href || pathname.startsWith(`${item.href}/`)) : false
-                        const isExpanded = expandedMenus[item.name]
-
-                        return (
-                            <div key={item.name}>
-                                {hasSubItems ? (
-                                    <button
-                                        onClick={(e) => toggleMenu(e, item.name)}
-                                        className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-all duration-200 group hover:bg-slate-800 hover:text-white`}
-                                    >
-                                        <div className="flex items-center gap-3">
-                                            <span className="text-xl transition-transform duration-200 group-hover:scale-110">
-                                                {item.icon}
-                                            </span>
-                                            <span>{item.name}</span>
-                                        </div>
-                                        <span className={`text-xs transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}>
-                                            ▼
-                                        </span>
-                                    </button>
-                                ) : (
-                                    <Link
-                                        href={item.href!}
-                                        className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group
-                                        ${isActive
-                                                ? 'bg-cyan-500/10 text-cyan-400 font-medium'
-                                                : 'hover:bg-slate-800 hover:text-white'
-                                            }`}
-                                    >
-                                        <span className={`text-xl transition-transform duration-200 ${isActive ? 'scale-110' : 'group-hover:scale-110'}`}>
-                                            {item.icon}
-                                        </span>
-                                        <span>{item.name}</span>
-                                    </Link>
-                                )}
-
-                                {/* Rendereo de subItems si aplica */}
-                                {hasSubItems && isExpanded && (
-                                    <div className="ml-9 mt-1 space-y-1 border-l border-slate-700 pl-3">
-                                        {item.subItems!.map((sub: any) => {
-                                            const hasSubSubItems = sub.subItems && sub.subItems.length > 0
-                                            const isSubExpanded = expandedMenus[`${item.name}-${sub.name}`]
-                                            const isSubActive = sub.href ? (pathname === sub.href || pathname.startsWith(`${sub.href}/`)) : false
-
-                                            return (
-                                                <div key={sub.name}>
-                                                    {hasSubSubItems ? (
-                                                        <>
-                                                            <button
-                                                                onClick={(e) => toggleMenu(e, `${item.name}-${sub.name}`)}
-                                                                className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-colors ${isSubActive ? 'text-cyan-400' : 'text-slate-400 hover:text-white hover:bg-slate-800'}`}
-                                                            >
-                                                                <span>{sub.name}</span>
-                                                                <span className={`text-[10px] transition-transform duration-200 ${isSubExpanded ? 'rotate-180' : ''}`}>
-                                                                    ▼
-                                                                </span>
-                                                            </button>
-                                                            {isSubExpanded && (
-                                                                <div className="ml-4 mt-1 space-y-1 border-l border-slate-800 pl-3">
-                                                                    {sub.subItems.map((ssub: any) => {
-                                                                        const isSSubActive = pathname === ssub.href || pathname.startsWith(`${ssub.href}/`)
-                                                                        return (
-                                                                            <Link
-                                                                                key={ssub.name}
-                                                                                href={ssub.href}
-                                                                                className={`block px-3 py-1.5 rounded-lg text-xs transition-colors ${isSSubActive ? 'bg-cyan-500/10 text-cyan-400 font-medium' : 'text-slate-500 hover:text-white hover:bg-slate-800'}`}
-                                                                            >
-                                                                                {ssub.name}
-                                                                            </Link>
-                                                                        )
-                                                                    })}
-                                                                </div>
-                                                            )}
-                                                        </>
-                                                    ) : (
-                                                        <Link
-                                                            href={sub.href}
-                                                            className={`block px-3 py-2 rounded-lg text-sm transition-colors
-                                                            ${isSubActive
-                                                                    ? 'bg-cyan-500/10 text-cyan-400 font-medium'
-                                                                    : 'text-slate-400 hover:text-white hover:bg-slate-800'
-                                                                }`}
-                                                        >
-                                                            {sub.name}
-                                                        </Link>
-                                                    )}
-                                                </div>
-                                            )
-                                        })}
-                                    </div>
-                                )}
-                            </div>
-                        )
-                    })}
+                    {visibleItems.map((item) => (
+                        <SidebarNavItem key={item.name} item={item} depth={0} parentPath="" />
+                    ))}
                 </nav>
 
                 {/* Bottom User Area */}
@@ -305,6 +311,12 @@ export default function Sidebar({ user }: { user: User }) {
                         <span className="text-xl group-hover:-translate-x-1 transition-transform">🚪</span>
                         <span className="font-medium">{isLoggingOut ? 'Saliendo...' : 'Cerrar Sesión'}</span>
                     </button>
+                    {user.name && (
+                        <div className="mt-2 px-3 py-2 rounded-lg bg-slate-900/50 border border-slate-800/50">
+                            <p className="text-xs text-slate-500 truncate">Usuario</p>
+                            <p className="text-sm font-bold text-slate-300 truncate">{user.name}</p>
+                        </div>
+                    )}
                 </div>
             </aside>
         </>
