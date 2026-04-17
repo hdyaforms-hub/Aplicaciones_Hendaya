@@ -13,6 +13,8 @@ type Area = {
     nombre: string
 }
 
+type SucursalVar = { id: string, nombre: string }
+
 export default function UserForm({ roles, sucursales, areas }: { roles: Role[], sucursales: SucursalVar[], areas: Area[] }) {
     const [isOpen, setIsOpen] = useState(false)
     const [error, setError] = useState('')
