@@ -8,12 +8,12 @@ type Role = {
     name: string
 }
 
-type SucursalVar = {
-    id: string
+type Area = {
+    id: number
     nombre: string
 }
 
-export default function UserForm({ roles, sucursales }: { roles: Role[], sucursales: SucursalVar[] }) {
+export default function UserForm({ roles, sucursales, areas }: { roles: Role[], sucursales: SucursalVar[], areas: Area[] }) {
     const [isOpen, setIsOpen] = useState(false)
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
@@ -101,6 +101,21 @@ export default function UserForm({ roles, sucursales }: { roles: Role[], sucursa
                                 <input type="radio" name="isActive" value="false" className="w-4 h-4 text-cyan-600 focus:ring-cyan-500 border-gray-300" />
                                 <span className="text-sm text-gray-700">No Vigente</span>
                             </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Áreas Asignadas (Menú Áreas)</label>
+                        <div className="max-h-40 overflow-y-auto w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 flex flex-col gap-2">
+                            {areas.map(a => (
+                                <label key={a.id} className="flex items-center gap-2 cursor-pointer select-none">
+                                    <input type="checkbox" name="areas" value={a.id} className="w-4 h-4 text-sky-600 rounded border-gray-300 focus:ring-sky-500" />
+                                    <span className="text-sm text-gray-700">{a.nombre}</span>
+                                </label>
+                            ))}
+                            {areas.length === 0 && (
+                                <span className="text-sm text-gray-500 italic">No hay áreas configuradas.</span>
+                            )}
                         </div>
                     </div>
 

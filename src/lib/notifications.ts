@@ -163,3 +163,94 @@ export async function sendAttachmentEmail({
         return { error: 'Error al enviar correo con adjunto.' }
     }
 }
+
+export async function sendGenericaNotification({
+    codigoPantalla,
+    subject: defaultSubject,
+    bodyHtml: defaultBodyHtml,
+    tags = {}
+}: {
+    codigoPantalla: string,
+    subject: string,
+    bodyHtml: string,
+    tags?: Record<string, string>
+}) {
+    try {
+        const configs = await prisma.notificacionPantalla.findMany({
+            where: { codigoPantalla, activa: true },
+            include: { listaCorreo: true }
+        })
+
+        if (configs.length === 0) return { warning: 'No hay listas configuradas para esta pantalla.' }
+
+        // Buscar si existe una plantilla personalizada
+        const plantilla = await prisma.plantillaCorreo.findUnique({
+            where: { codigoPantalla }
+        })
+
+        let finalSubject = defaultSubject
+        let finalBody = defaultBodyHtml
+
+        if (plantilla) {
+            finalSubject = plantilla.asunto
+            finalBody = plantilla.cuerpo
+
+            // Reemplazar tags en la plantilla personalizada
+            Object.entries(tags).forEach(([key, value]) => {
+                const regex = new RegExp(`<${key}>`, 'gi')
+                finalSubject = finalSubject.replace(regex, value)
+                // Para el cuerpo, si el valor tiene saltos de línea, los convertimos a BR
+                const valueWithBr = value.replace(/\n/g, '<br/>')
+                finalBody = finalBody.replace(regex, valueWithBr)
+            })
+            
+            // Convertir saltos de línea del cuerpo de la plantilla a <br/>
+            finalBody = finalBody.replace(/\n/g, '<br/>')
+
+            // Si es plantilla personalizada, convertimos el cuerpo a un mini-HTML si no tiene etiquetas envolventes
+            if (!finalBody.includes('<div') && !finalBody.includes('<p')) {
+                finalBody = `
+                    <div style="font-family: sans-serif; padding: 20px; border: 1px solid #eee; border-radius: 10px; max-width: 600px; margin: auto;">
+                        <h2 style="color: #0891b2;">Notificación de Sistema</h2>
+                        <div style="font-size: 14px; line-height: 1.6; color: #334155;">${finalBody}</div>
+                        <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;" />
+                        <p style="font-size: 11px; color: #94a3b8;">Mensaje automático enviado por Aplicaciones Hendaya</p>
+                    </div>
+                `
+            }
+        }
+
+        const emailConfig = await prisma.emailConfig.findUnique({ where: { id: 'global' } })
+        if (!emailConfig) return { warning: 'Configuración global no encontrada.' }
+
+        const transporter = nodemailer.createTransport({
+            host: "smtp.office365.com",
+            port: 587,
+            secure: false,
+            auth: {
+                user: emailConfig.email,
+                pass: decrypt(emailConfig.password),
+            },
+            tls: { 
+                rejectUnauthorized: false
+            }
+        })
+
+        for (const config of configs) {
+            const para = JSON.parse(config.listaCorreo.para)
+            const cc = config.listaCorreo.cc ? JSON.parse(config.listaCorreo.cc) : []
+
+            await transporter.sendMail({
+                from: `"Hendaya Alertas" <${emailConfig.email}>`,
+                to: para.join(','),
+                cc: cc.join(','),
+                subject: finalSubject,
+                html: finalBody
+            })
+        }
+        return { success: true }
+    } catch (e) {
+        console.error("Error sending generic notification:", e)
+        return { warning: 'Error al enviar correo.' }
+    }
+}

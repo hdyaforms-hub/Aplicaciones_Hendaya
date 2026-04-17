@@ -1,0 +1,538 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/client"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model Role {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  permissions String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  users       User[]
+}
+
+model User {
+  id           String           @id @default(uuid())
+  username     String           @unique
+  email        String?          @unique
+  passwordHash String
+  name         String?
+  roleId       String
+  isActive     Boolean          @default(true)
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  role         Role             @relation(fields: [roleId], references: [id])
+  sucursales   Sucursal[]       @relation("SucursalToUser")
+  allowedForms FormDefinition[] @relation("UserForms")
+  areas        Area[]           @relation("UserAreas")
+}
+
+model PMPA {
+  id         String   @id @default(uuid())
+  sucursal   String
+  ano        Int
+  mes        Int
+  rbd        Int
+  licId      Int?
+  programa   String
+  estrato    String
+  raceq      Int
+  servicio   String
+  uploadedBy String
+  createdAt  DateTime @default(now())
+}
+
+model Colegios {
+  id                       String @id @default(uuid())
+  colut                    Int
+  colRBD                   Int
+  colRBDDV                 String
+  insid                    String
+  institucion              String
+  sucursal                 String
+  nombreEstablecimiento    String
+  direccionEstablecimiento String
+  comuna                   String
+  uploadedBy               String
+}
+
+model IngRacion {
+  id                    String   @id @default(uuid())
+  usuario               String
+  ubicacion             String
+  fechaSistema          DateTime @default(now())
+  fechaIngreso          DateTime
+  rbd                   Int
+  licId                 Int?
+  nombreEstablecimiento String
+  ano                   Int
+  mes                   Int
+  programa              String
+  estrato               String
+  desayunoIng           Int
+  almuerzoIng           Int
+  onceIng               Int
+  colacionIng           Int
+  cenaIng               Int
+  totalIng              Int
+  desayunoAsig          Int
+  almuerzoAsig          Int
+  onceAsig              Int
+  colacionAsig          Int
+  cenaAsig              Int
+  totalAsig             Int
+  tasaPreparacion       Float
+  observacion           String
+}
+
+model Productos {
+  id           String @id @default(uuid())
+  nombre       String
+  codigo       String
+  unidad       String
+  tipoProducto Int
+}
+
+model EmailConfig {
+  id        String   @id @default("global")
+  email     String
+  password  String
+  provider  String   @default("office365")
+  updatedBy String?
+  updatedAt DateTime @updatedAt
+}
+
+model ListaCorreo {
+  id             String                 @id @default(uuid())
+  nombre         String                 @unique
+  descripcion    String?
+  para           String
+  cc             String?
+  sucursalId     String?
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+  sucursal       Sucursal?              @relation(fields: [sucursalId], references: [id])
+  notificaciones NotificacionPantalla[]
+}
+
+model NotificacionPantalla {
+  id             String      @id @default(uuid())
+  codigoPantalla String
+  listaCorreoId  String
+  activa         Boolean     @default(true)
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  listaCorreo    ListaCorreo @relation(fields: [listaCorreoId], references: [id])
+
+  @@unique([codigoPantalla, listaCorreoId])
+}
+
+model PlantillaCorreo {
+  id             String   @id @default(uuid())
+  codigoPantalla String   @unique
+  asunto         String
+  cuerpo         String
+  updatedAt      DateTime @updatedAt
+}
+
+model Licitacion {
+  licId     Int      @id @default(autoincrement())
+  estado    Int      @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  uts       UT[]
+}
+
+model Sucursal {
+  id                             String                           @id @default(uuid())
+  nombre                         String                           @unique
+  createdAt                      DateTime                         @default(now())
+  updatedAt                      DateTime                         @updatedAt
+  listasCorreo                   ListaCorreo[]
+  presupuestos                   Presupuesto[]
+  RetornoProductosMovimiento     RetornoProductosMovimiento[]
+  RetornoProductosSucursalEstado RetornoProductosSucursalEstado[]
+  uts                            UT[]
+  users                          User[]                           @relation("SucursalToUser")
+}
+
+model Presupuesto {
+  id         String   @id @default(uuid())
+  ano        Int
+  sucursalId String
+  montoAnual Float
+  usuario    String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  sucursal   Sucursal @relation(fields: [sucursalId], references: [id])
+
+  @@unique([ano, sucursalId])
+}
+
+model SolicitudPan {
+  id                String   @id @default(uuid())
+  ut                Int
+  licId             Int?
+  rbd               Int
+  nombreSolicitante String
+  fechaSolicitud    DateTime @default(now())
+  solicitud         String
+  cantidad          Int
+  fechaGestacion    DateTime
+  servicio          String
+  motivo            String
+}
+
+model UT {
+  codUT      Int        @id @default(autoincrement())
+  licId      Int
+  estado     Int        @default(1)
+  sucursalId String?
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  licitacion Licitacion @relation(fields: [licId], references: [licId])
+  sucursal   Sucursal?  @relation(fields: [sucursalId], references: [id])
+}
+
+model SolicitudGas {
+  id                String   @id @default(uuid())
+  ut                Int
+  licId             Int?
+  rbd               Int
+  nombreSolicitante String
+  fechaSolicitud    DateTime @default(now())
+  distribuidor      String
+  tipoGas           String
+  cantidadLitro     Float
+  cilindro          String?
+  cantidad          Int?
+  observacion       String?
+  createdAt         DateTime @default(now())
+}
+
+model RetiroSaldoHeader {
+  id                    String              @id @default(uuid())
+  folio                 String              @unique
+  tipoOperacion         String
+  rbd                   Int
+  nombreEstablecimiento String
+  ut                    Int
+  licId                 Int?
+  sucursal              String
+  fecha                 DateTime            @default(now())
+  supervisor            String
+  nombreAutoriza        String?
+  rutAutoriza           String?
+  firmaBase64           String?
+  createdAt             DateTime            @default(now())
+  detalles              RetiroSaldoDetail[]
+}
+
+model RetiroSaldoDetail {
+  id             String            @id @default(uuid())
+  headerId       String
+  codigoProducto String
+  nombreProducto String
+  cantidad       Int
+  createdAt      DateTime          @default(now())
+  header         RetiroSaldoHeader @relation(fields: [headerId], references: [id])
+}
+
+model Mat_ConsumoGas {
+  id        String   @id @default(uuid())
+  rbd       Int      @unique
+  litros    Float
+  cantidad  Int
+  meses     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FormDefinition {
+  id           String           @id @default(uuid())
+  title        String
+  description  String?
+  fields       String
+  createdBy    String
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  isActive     Boolean          @default(true)
+  formCode     String?
+  formVersion  String?
+  formDate     String?
+  areaId       Int?
+  area         Area?            @relation(fields: [areaId], references: [id])
+  schedules    FormSchedule[]
+  submissions  FormSubmission[]
+  allowedUsers User[]           @relation("UserForms")
+}
+
+model Area {
+  id        Int              @id @default(autoincrement())
+  nombre    String           @unique
+  isActive  Boolean          @default(true)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  forms     FormDefinition[]
+  users     User[]           @relation("UserAreas")
+}
+
+model FormSchedule {
+  id        String         @id @default(uuid())
+  formId    String
+  startDay  Int
+  startTime String
+  endDay    Int
+  endTime   String
+  createdAt DateTime       @default(now())
+  form      FormDefinition @relation(fields: [formId], references: [id], onDelete: Cascade)
+}
+
+model FormSubmission {
+  id          String         @id @default(uuid())
+  formId      String
+  data        String
+  submittedBy String
+  submittedAt DateTime       @default(now())
+  form        FormDefinition @relation(fields: [formId], references: [id])
+}
+
+model Mat_ConsumoGasHistory {
+  id           String   @id @default(uuid())
+  rbd          Int
+  litros       Float
+  cantidad     Int
+  meses        String
+  old_litros   Float?
+  old_cantidad Int?
+  old_meses    String?
+  observacion  String
+  user         String
+  createdAt    DateTime @default(now())
+}
+
+model Anexo {
+  id        String   @id @default(uuid())
+  sucursal  String
+  cargo     String
+  correo    String
+  telefono1 String
+  telefono2 String?
+  telefono3 String?
+  telefono4 String?
+  nombre    String
+  cumpleano String?
+  contacto  String?
+  nota      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model MatrizRiesgo2026 {
+  id                           Int      @id @default(autoincrement())
+  fecha                        DateTime @default(now())
+  usuario                      String
+  ut                           Int
+  rbd                          Int
+  nombreEstablecimiento        String
+  sucursal                     String
+  patio_servicio               String
+  basurero_patio               String?
+  zonas_libres_residuos        String?
+  vias_acceso_pavimentas       String?
+  caseta_gas                   String?
+  bombona_estado               String?
+  focos_insalubridad           String?
+  obs_patio                    String?
+  adjuntos_patio               String?
+  bodega_mp                    String?
+  ventilacion_bodega           String?
+  cielos_bodega                String?
+  puertas_bodega               String?
+  ventanas_bodega              String?
+  malla_bodega                 String?
+  pisos_bodega                 String?
+  paredes_bodega               String?
+  uniones_bodega               String?
+  iluminacion_estado_bodega    String?
+  iluminacion_protegida_bodega String?
+  iluminacion_adecuada_bodega  String?
+  botiquin                     String?
+  extintores                   String?
+  conexiones_electricas_bodega String?
+  equipos_frio_sin_visor       Int?
+  obs_bodega                   String?
+  adjuntos_bodega              String?
+  tamano_cocina                String?
+  ventilacion_cocina           String?
+  puertas_cocina               String?
+  ventanas_cocina              String?
+  malla_cocina                 String?
+  pisos_cocina                 String?
+  paredes_cocina               String?
+  uniones_cocina               String?
+  drenajes                     String?
+  inclinacion_pisos            String?
+  cielos_cocina                String?
+  lava_fondos                  String?
+  lavamanos_manipulacion       String?
+  dispensador_jabon_papel      String?
+  calefon                      String?
+  pre_wash                     String?
+  extractor_campana            String?
+  carros_bandejas              String?
+  iluminacion_estado_cocina    String?
+  iluminacion_protegida_cocina String?
+  iluminacion_adecuada_cocina  String?
+  basureros_tapa_cocina        String?
+  llaves_sifon_cocina          String?
+  canerias_agua                String?
+  canerias_gas                 String?
+  conexiones_electricas_cocina String?
+  trampas_residuos             String?
+  obs_cocina                   String?
+  adjuntos_cocina              String?
+  bano_exclusivo               String
+  sin_conexion_directa         String?
+  puertas_bano                 String?
+  malla_bano                   String?
+  pisos_bano                   String?
+  paredes_bano                 String?
+  lavamanos_caliente_fria      String?
+  ducha                        String?
+  cortina                      String?
+  dispensadores_jabon_bano     String?
+  estanque_tapa_wc             String?
+  espejo                       String?
+  basurero_tapa_bano           String?
+  llaves_sifon_bano            String?
+  dispensador_papel            String?
+  iluminaria_bano              String?
+  obs_bano                     String?
+  adjuntos_bano                String?
+  obs_generales                String?
+  adjunto_sostenedor           String?
+  createdAt                    DateTime @default(now())
+  updatedAt                    DateTime @updatedAt
+}
+
+model ColegiosMatriz {
+  id                    String   @id @default(uuid())
+  colRBD                Int      @unique
+  nombreEstablecimiento String
+  institucion           String
+  sucursal              String
+  colut                 Int
+  isActive              Boolean  @default(true)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
+model MatrizConfigPregunta {
+  id           String   @id @default(uuid())
+  preguntaId   String   @unique
+  seccion      String
+  gravedad     Int
+  probabilidad Int
+  nivelRiesgo  String
+  updatedAt    DateTime @updatedAt
+}
+
+model MatrizConfigSemestre {
+  id        String   @id @default(uuid())
+  anio      Int      @unique @default(2026)
+  fechaFin1 DateTime
+  updatedAt DateTime @updatedAt
+}
+
+model MatrizMitigacion {
+  id            String    @id @default(uuid())
+  matrizId      String
+  preguntaId    String
+  fechaSolucion DateTime?
+  adjuntos      String?
+  usuario       String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@unique([matrizId, preguntaId])
+}
+
+model TrabajoPreventivo {
+  id                    String   @id @default(uuid())
+  ut                    Int
+  sucursal              String
+  licitacion            String
+  rbd                   Int
+  nombreEstablecimiento String
+  folioOT               String
+  tipoTrabajo           String
+  fechaTrabajo          DateTime
+  documentoAsociado     String
+  boletasFacturas       String?
+  montoMateriales       Int?
+  montoManoObra         Int?
+  observacion           String?
+  usuario               String
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
+model RetornoProductosAlerta {
+  id               String                           @id @default(uuid())
+  titulo           String
+  observacion      String                           @db.NVarChar(1500)
+  horas            Int
+  estado           String                           @default("ABIERTA")
+  color            String?                          @default("yellow")
+  archivos         String?
+  usuarioCreacion  String
+  fechaCreacion    DateTime                         @default(now())
+  usuarioCierre    String?
+  fechaCierre      DateTime?
+  conclusionFinal  String?                          @db.NVarChar(Max)
+  movimientos      RetornoProductosMovimiento[]
+  sucursalesEstado RetornoProductosSucursalEstado[]
+}
+
+model RetornoProductosSucursalEstado {
+  id            String                 @id @default(uuid())
+  alertaId      String
+  sucursalId    String
+  estado        String                 @default("PENDIENTE")
+  usuarioCierre String?
+  fechaCierre   DateTime?
+  alerta        RetornoProductosAlerta @relation(fields: [alertaId], references: [id], onDelete: Cascade)
+  sucursal      Sucursal               @relation(fields: [sucursalId], references: [id])
+
+  @@unique([alertaId, sucursalId])
+}
+
+model RetornoProductosMovimiento {
+  id              String                 @id @default(uuid())
+  alertaId        String
+  sucursalId      String
+  usuarioRegistro String
+  comentario      String                 @db.NVarChar(Max)
+  archivos        String?
+  fechaRegistro   DateTime               @default(now())
+  alerta          RetornoProductosAlerta @relation(fields: [alertaId], references: [id], onDelete: Cascade)
+  sucursal        Sucursal               @relation(fields: [sucursalId], references: [id])
+}
+
+model RetornoProductosAlertaHistorialEliminado {
+  id                String   @id @default(uuid())
+  alertaIdOriginal  String
+  tituloAlerta      String
+  observacionAlerta String   @db.NVarChar(Max)
+  motivoEliminacion String   @db.NVarChar(Max)
+  usuarioEliminador String
+  fechaEliminacion  DateTime @default(now())
+}

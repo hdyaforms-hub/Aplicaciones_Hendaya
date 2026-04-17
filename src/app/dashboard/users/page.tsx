@@ -14,7 +14,7 @@ export default async function UsersPage() {
     }
 
     const users = await prisma.user.findMany({
-        include: { role: true, sucursales: true },
+        include: { role: true, sucursales: true, areas: true },
         orderBy: { createdAt: 'desc' }
     })
 
@@ -23,6 +23,11 @@ export default async function UsersPage() {
     })
 
     const sucursales = await prisma.sucursal.findMany({
+        orderBy: { nombre: 'asc' }
+    })
+
+    const areas = await prisma.area.findMany({
+        where: { isActive: true },
         orderBy: { nombre: 'asc' }
     })
 
@@ -36,7 +41,7 @@ export default async function UsersPage() {
                     <p className="text-gray-500 mt-1">Administra las cuentas y accesos al sistema</p>
                 </div>
 
-                <UserForm roles={roles} sucursales={sucursales} />
+                <UserForm roles={roles} sucursales={sucursales} areas={areas} />
             </div>
 
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
@@ -86,7 +91,7 @@ export default async function UsersPage() {
                                         {new Date(u.createdAt).toLocaleDateString()}
                                     </td>
                                     <td className="px-6 py-4 text-right">
-                                        <EditUserForm user={u as any} roles={roles} sucursales={sucursales} />
+                                        <EditUserForm user={u as any} roles={roles} sucursales={sucursales} areas={areas} />
                                     </td>
                                 </tr>
                             ))}

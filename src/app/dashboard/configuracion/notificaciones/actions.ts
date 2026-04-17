@@ -152,6 +152,14 @@ export async function getMockDataForPreview(codigoPantalla: string) {
             UT: '1303',
             RBD: '8532',
             Sucursal: 'METROPOLITANA'
+        },
+        'RETORNO_PRODUCTOS': {
+            Titulo: 'BÚSQUEDA LOTE HARINA VENCIDA',
+            Observacion: 'Se solicita retirar el lote #456 de harina marca X por posible contaminación.',
+            Horas: '24',
+            Usuario: 'ELISA CASTILLO',
+            Sucursal: 'COPIAPÓ',
+            Comentario: 'Se revisó la bodega y no se encontró el producto solicitado.'
         }
     }
     return mockData[codigoPantalla] || {}

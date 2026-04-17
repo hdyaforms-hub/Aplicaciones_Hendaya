@@ -62,6 +62,9 @@ export default async function RolesPage() {
         { id: 'view_auditoria', name: 'Auditoría Externa', description: 'Vista global completa de hallazgos y evidencias para auditores.', category: 'Matriz 2026' },
         { id: 'view_estado_avance', name: 'Matriz 2026: Estado de Avance', description: 'Visualizar el estado de avance de la matriz de riesgo 2026.', category: 'Matriz 2026' },
         { id: 'view_dashboard', name: 'Dashboard General', description: 'Acceso al dashboard general de la aplicación.', category: 'Tableros' },
+        { id: 'view_calidad', name: 'Menú Calidad', description: 'Acceso al menú de Calidad en el Sidebar.', category: 'Calidad' },
+        { id: 'view_retorno_productos', name: 'Retorno de Productos', description: 'Acceso al dashboard de Retorno de Productos.', category: 'Calidad' },
+        { id: 'manage_retorno_productos', name: 'Crear Alerta de Calidad', description: 'Permite crear nuevas alertas de retorno de productos.', category: 'Calidad' },
     ]
 
     return (
@@ -102,16 +105,43 @@ export default async function RolesPage() {
                                 <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">Permisos Habilitados</p>
 
                                 {rolePerms.length > 0 ? (
-                                    <div className="flex flex-wrap gap-2">
-                                        {rolePerms.map(p => {
-                                            const permInfo = availablePermissions.find(ap => ap.id === p)
-                                            return (
-                                                <span key={p} className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-700 border border-gray-200">
-                                                    <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
-                                                    {permInfo?.name || p}
-                                                </span>
-                                            )
-                                        })}
+                                    <div className="space-y-4">
+                                        {Object.entries(
+                                            availablePermissions.reduce((acc, p) => {
+                                                if (rolePerms.includes(p.id)) {
+                                                    if (!acc[p.category]) acc[p.category] = []
+                                                    acc[p.category].push(p)
+                                                }
+                                                return acc
+                                            }, {} as Record<string, typeof availablePermissions>)
+                                        ).map(([category, perms]) => (
+                                            <div key={category} className="space-y-2">
+                                                <p className="text-[10px] font-black text-indigo-500 uppercase tracking-widest">{category}</p>
+                                                <div className="flex flex-wrap gap-2">
+                                                    {perms.map(p => (
+                                                        <span key={p.id} className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-gray-50 text-gray-700 border border-gray-100 shadow-sm">
+                                                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                                            {p.name}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        ))}
+                                        
+                                        {/* Permisos no mapeados en la UI actual (si existen) */}
+                                        {rolePerms.filter(rp => !availablePermissions.find(ap => ap.id === rp)).length > 0 && (
+                                            <div className="space-y-2">
+                                                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Otros / Sistema</p>
+                                                <div className="flex flex-wrap gap-2">
+                                                    {rolePerms.filter(rp => !availablePermissions.find(ap => ap.id === rp)).map(p => (
+                                                        <span key={p} className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-gray-50 text-gray-500 border border-gray-100 border-dashed">
+                                                            <span className="w-1.5 h-1.5 rounded-full bg-gray-300"></span>
+                                                            {p}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
                                 ) : (
                                     <p className="text-sm text-gray-400 italic">No tiene permisos operativos asignados.</p>

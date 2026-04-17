@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  output   = "../src/generated/client"
 }
 
 datasource db {
@@ -30,6 +31,7 @@ model User {
   role         Role             @relation(fields: [roleId], references: [id])
   sucursales   Sucursal[]       @relation("SucursalToUser")
   allowedForms FormDefinition[] @relation("UserForms")
+  areas        Area[]           @relation("UserAreas")
 }
 
 model PMPA {
@@ -149,25 +151,27 @@ model Licitacion {
 }
 
 model Sucursal {
-  id           String        @id @default(uuid())
-  nombre       String        @unique
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  listasCorreo ListaCorreo[]
-  uts          UT[]
-  users        User[]        @relation("SucursalToUser")
-  presupuestos Presupuesto[]
+  id                             String                           @id @default(uuid())
+  nombre                         String                           @unique
+  createdAt                      DateTime                         @default(now())
+  updatedAt                      DateTime                         @updatedAt
+  listasCorreo                   ListaCorreo[]
+  presupuestos                   Presupuesto[]
+  RetornoProductosMovimiento     RetornoProductosMovimiento[]
+  RetornoProductosSucursalEstado RetornoProductosSucursalEstado[]
+  uts                            UT[]
+  users                          User[]                           @relation("SucursalToUser")
 }
 
 model Presupuesto {
-  id           String   @id @default(uuid())
-  ano          Int
-  sucursalId   String
-  montoAnual   Float
-  sucursal     Sucursal @relation(fields: [sucursalId], references: [id])
-  usuario      String
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id         String   @id @default(uuid())
+  ano        Int
+  sucursalId String
+  montoAnual Float
+  usuario    String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  sucursal   Sucursal @relation(fields: [sucursalId], references: [id])
 
   @@unique([ano, sucursalId])
 }
@@ -193,8 +197,8 @@ model UT {
   sucursalId String?
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
-  sucursal   Sucursal?  @relation(fields: [sucursalId], references: [id])
   licitacion Licitacion @relation(fields: [licId], references: [licId])
+  sucursal   Sucursal?  @relation(fields: [sucursalId], references: [id])
 }
 
 model SolicitudGas {
@@ -272,11 +276,12 @@ model FormDefinition {
 
 model Area {
   id        Int              @id @default(autoincrement())
-  nombre    String
+  nombre    String           @unique
   isActive  Boolean          @default(true)
   createdAt DateTime         @default(now())
   updatedAt DateTime         @updatedAt
   forms     FormDefinition[]
+  users     User[]           @relation("UserAreas")
 }
 
 model FormSchedule {
@@ -331,114 +336,103 @@ model Anexo {
 }
 
 model MatrizRiesgo2026 {
-  id                    Int      @id @default(autoincrement())
-  fecha                 DateTime @default(now())
-  usuario               String
-  ut                    Int
-  rbd                   Int
-  nombreEstablecimiento String
-  sucursal              String
-
-  // Sección: Patio o Entorno
-  patio_servicio        String
-  basurero_patio        String?
-  zonas_libres_residuos String?
-  vias_acceso_pavimentas String?
-  caseta_gas            String?
-  bombona_estado        String?
-  focos_insalubridad    String?
-  obs_patio             String? // Max 500 chars
-  adjuntos_patio        String? // JSON array of paths
-
-  // Sección: Bodega
-  bodega_mp               String?
-  ventilacion_bodega      String?
-  cielos_bodega           String?
-  puertas_bodega          String?
-  ventanas_bodega         String?
-  malla_bodega            String?
-  pisos_bodega            String?
-  paredes_bodega          String?
-  uniones_bodega          String?
-  iluminacion_estado_bodega String?
+  id                           Int      @id @default(autoincrement())
+  fecha                        DateTime @default(now())
+  usuario                      String
+  ut                           Int
+  rbd                          Int
+  nombreEstablecimiento        String
+  sucursal                     String
+  patio_servicio               String
+  basurero_patio               String?
+  zonas_libres_residuos        String?
+  vias_acceso_pavimentas       String?
+  caseta_gas                   String?
+  bombona_estado               String?
+  focos_insalubridad           String?
+  obs_patio                    String?
+  adjuntos_patio               String?
+  bodega_mp                    String?
+  ventilacion_bodega           String?
+  cielos_bodega                String?
+  puertas_bodega               String?
+  ventanas_bodega              String?
+  malla_bodega                 String?
+  pisos_bodega                 String?
+  paredes_bodega               String?
+  uniones_bodega               String?
+  iluminacion_estado_bodega    String?
   iluminacion_protegida_bodega String?
-  iluminacion_adecuada_bodega String?
-  botiquin                String?
-  extintores              String?
+  iluminacion_adecuada_bodega  String?
+  botiquin                     String?
+  extintores                   String?
   conexiones_electricas_bodega String?
-  equipos_frio_sin_visor  Int?
-  obs_bodega              String? // Max 500 chars
-  adjuntos_bodega         String? // JSON array of paths
-
-  // Sección: Cocina
-  tamano_cocina           String?
-  ventilacion_cocina      String?
-  puertas_cocina          String?
-  ventanas_cocina         String?
-  malla_cocina            String?
-  pisos_cocina            String?
-  paredes_cocina          String?
-  uniones_cocina          String?
-  drenajes                String?
-  inclinacion_pisos       String?
-  cielos_cocina           String?
-  lava_fondos             String?
-  lavamanos_manipulacion  String?
-  dispensador_jabon_papel String?
-  calefon                 String?
-  pre_wash                String?
-  extractor_campana       String?
-  carros_bandejas         String?
-  iluminacion_estado_cocina String?
+  equipos_frio_sin_visor       Int?
+  obs_bodega                   String?
+  adjuntos_bodega              String?
+  tamano_cocina                String?
+  ventilacion_cocina           String?
+  puertas_cocina               String?
+  ventanas_cocina              String?
+  malla_cocina                 String?
+  pisos_cocina                 String?
+  paredes_cocina               String?
+  uniones_cocina               String?
+  drenajes                     String?
+  inclinacion_pisos            String?
+  cielos_cocina                String?
+  lava_fondos                  String?
+  lavamanos_manipulacion       String?
+  dispensador_jabon_papel      String?
+  calefon                      String?
+  pre_wash                     String?
+  extractor_campana            String?
+  carros_bandejas              String?
+  iluminacion_estado_cocina    String?
   iluminacion_protegida_cocina String?
-  iluminacion_adecuada_cocina String?
-  basureros_tapa_cocina   String?
-  llaves_sifon_cocina     String?
-  canerias_agua           String?
-  canerias_gas            String?
+  iluminacion_adecuada_cocina  String?
+  basureros_tapa_cocina        String?
+  llaves_sifon_cocina          String?
+  canerias_agua                String?
+  canerias_gas                 String?
   conexiones_electricas_cocina String?
-  trampas_residuos        String?
-  obs_cocina              String? // Max 500 chars
-  adjuntos_cocina         String? // JSON array of paths
-
-  // Sección: Baño
-  bano_exclusivo          String
-  sin_conexion_directa    String?
-  puertas_bano            String?
-  malla_bano              String?
-  pisos_bano              String?
-  paredes_bano            String?
-  lavamanos_caliente_fria String?
-  ducha                   String?
-  cortina                 String?
-  dispensadores_jabon_bano String?
-  estanque_tapa_wc        String?
-  espejo                  String?
-  basurero_tapa_bano      String?
-  llaves_sifon_bano       String?
-  dispensador_papel       String?
-  iluminaria_bano         String?
-  obs_bano                String? // Max 500 chars
-  adjuntos_bano           String? // JSON array of paths
-
-  // Generales
-  obs_generales           String? // Max 500 chars
-  adjunto_sostenedor      String? // Single path or JSON
-
-  createdAt               DateTime @default(now())
-  updatedAt               DateTime @updatedAt
+  trampas_residuos             String?
+  obs_cocina                   String?
+  adjuntos_cocina              String?
+  bano_exclusivo               String
+  sin_conexion_directa         String?
+  puertas_bano                 String?
+  malla_bano                   String?
+  pisos_bano                   String?
+  paredes_bano                 String?
+  lavamanos_caliente_fria      String?
+  ducha                        String?
+  cortina                      String?
+  dispensadores_jabon_bano     String?
+  estanque_tapa_wc             String?
+  espejo                       String?
+  basurero_tapa_bano           String?
+  llaves_sifon_bano            String?
+  dispensador_papel            String?
+  iluminaria_bano              String?
+  obs_bano                     String?
+  adjuntos_bano                String?
+  obs_generales                String?
+  adjunto_sostenedor           String?
+  createdAt                    DateTime @default(now())
+  updatedAt                    DateTime @updatedAt
 }
 
 model ColegiosMatriz {
-  id                       String   @id @default(uuid())
-  colRBD                   Int      @unique
-  nombreEstablecimiento    String
-  institucion              String
-  sucursal                 String
-  colut                    Int
-  isActive                 Boolean  @default(true)
-  createdAt                DateTime @default(now())
-  updatedAt                DateTime @updatedAt
+  id                    String   @id @default(uuid())
+  colRBD                Int      @unique
+  nombreEstablecimiento String
+  institucion           String
+  sucursal              String
+  colut                 Int
+  isActive              Boolean  @default(true)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
 }
 
 model MatrizConfigPregunta {
@@ -454,39 +448,91 @@ model MatrizConfigPregunta {
 model MatrizConfigSemestre {
   id        String   @id @default(uuid())
   anio      Int      @unique @default(2026)
-  fechaFin1 DateTime // Fecha de término del 1er semestre
+  fechaFin1 DateTime
   updatedAt DateTime @updatedAt
 }
 
 model MatrizMitigacion {
-  id             String   @id @default(uuid())
-  matrizId       String   // ID de la MatrizRiesgo2026
-  preguntaId     String   // E.g., 'p1', 'b2'...
-  fechaSolucion  DateTime?
-  adjuntos       String?  // JSON array of paths
-  usuario        String
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id            String    @id @default(uuid())
+  matrizId      String
+  preguntaId    String
+  fechaSolucion DateTime?
+  adjuntos      String?
+  usuario       String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   @@unique([matrizId, preguntaId])
 }
 
 model TrabajoPreventivo {
-  id                 String   @id @default(uuid())
-  ut                 Int
-  sucursal           String
-  licitacion         String
-  rbd                Int
+  id                    String   @id @default(uuid())
+  ut                    Int
+  sucursal              String
+  licitacion            String
+  rbd                   Int
   nombreEstablecimiento String
-  folioOT            String
-  tipoTrabajo        String   // Preventivo, Correctivo, Mixta
-  fechaTrabajo       DateTime
-  documentoAsociado  String   // Single file path
-  boletasFacturas    String?  // JSON array of paths (up to 5)
-  montoMateriales    Int?     // Opcional, Entero
-  montoManoObra      Int?     // Opcional, Entero
-  observacion        String?  // Max 500 chars
-  usuario            String
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  folioOT               String
+  tipoTrabajo           String
+  fechaTrabajo          DateTime
+  documentoAsociado     String
+  boletasFacturas       String?
+  montoMateriales       Int?
+  montoManoObra         Int?
+  observacion           String?
+  usuario               String
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
+model RetornoProductosAlerta {
+  id               String                           @id @default(uuid())
+  titulo           String
+  observacion      String                           @db.NVarChar(1500)
+  horas            Int
+  estado           String                           @default("ABIERTA")
+  color            String?                          @default("yellow")
+  archivos         String?
+  usuarioCreacion  String
+  fechaCreacion    DateTime                         @default(now())
+  usuarioCierre    String?
+  fechaCierre      DateTime?
+  conclusionFinal  String?                          @db.NVarChar(Max)
+  movimientos      RetornoProductosMovimiento[]
+  sucursalesEstado RetornoProductosSucursalEstado[]
+}
+
+model RetornoProductosSucursalEstado {
+  id            String                 @id @default(uuid())
+  alertaId      String
+  sucursalId    String
+  estado        String                 @default("PENDIENTE")
+  usuarioCierre String?
+  fechaCierre   DateTime?
+  alerta        RetornoProductosAlerta @relation(fields: [alertaId], references: [id], onDelete: Cascade)
+  sucursal      Sucursal               @relation(fields: [sucursalId], references: [id])
+
+  @@unique([alertaId, sucursalId])
+}
+
+model RetornoProductosMovimiento {
+  id              String                 @id @default(uuid())
+  alertaId        String
+  sucursalId      String
+  usuarioRegistro String
+  comentario      String                 @db.NVarChar(Max)
+  archivos        String?
+  fechaRegistro   DateTime               @default(now())
+  alerta          RetornoProductosAlerta @relation(fields: [alertaId], references: [id], onDelete: Cascade)
+  sucursal        Sucursal               @relation(fields: [sucursalId], references: [id])
+}
+
+model RetornoProductosAlertaHistorialEliminado {
+  id                String   @id @default(uuid())
+  alertaIdOriginal  String
+  tituloAlerta      String
+  observacionAlerta String   @db.NVarChar(Max)
+  motivoEliminacion String   @db.NVarChar(Max)
+  usuarioEliminador String
+  fechaEliminacion  DateTime @default(now())
 }

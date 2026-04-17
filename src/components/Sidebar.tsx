@@ -11,6 +11,7 @@ type User = {
         name: string
         permissions: string[]
     }
+    areas?: { id: number, nombre: string }[]
 }
 
 interface MenuItem {
@@ -18,6 +19,7 @@ interface MenuItem {
     href?: string
     icon?: string
     requiredPermission?: string | string[] | null
+    requiredArea?: string | null
     subItems?: MenuItem[]
 }
 
@@ -80,6 +82,7 @@ export default function Sidebar({ user }: { user: User }) {
                 {
                     name: 'Operaciones',
                     requiredPermission: 'view_operaciones',
+                    requiredArea: 'Operaciones',
                     subItems: [
                         {
                             name: 'Trabajos Preventivos / Correctivos',
@@ -90,6 +93,14 @@ export default function Sidebar({ user }: { user: User }) {
                                 { name: 'Estado de Avance', href: '/dashboard/trabajos-preventivos/avance', requiredPermission: 'view_estado_avance_tp' }
                             ]
                         }
+                    ]
+                },
+                {
+                    name: 'Calidad',
+                    requiredPermission: 'view_calidad',
+                    requiredArea: 'Calidad',
+                    subItems: [
+                        { name: 'Retorno de Productos', href: '/dashboard/areas/calidad/retorno-productos', requiredPermission: 'view_retorno_productos' }
                     ]
                 }
             ]
@@ -180,16 +191,22 @@ export default function Sidebar({ user }: { user: User }) {
             }
             return item
         }).filter(item => {
+            const isAdmin = user.role.name === 'admin'
+            
             const hasPermission = !item.requiredPermission || (
                 Array.isArray(item.requiredPermission)
                     ? item.requiredPermission.some((p: string) => permissions.includes(p))
                     : permissions.includes(item.requiredPermission)
             )
 
+            const hasArea = !item.requiredArea || isAdmin || (
+                user.areas?.some(a => a.nombre.toLowerCase().includes(item.requiredArea!.toLowerCase()))
+            )
+
             if (item.subItems) {
-                return hasPermission && item.subItems.length > 0
+                return hasPermission && hasArea && item.subItems.length > 0
             }
-            return hasPermission
+            return hasPermission && hasArea
         })
     }
 

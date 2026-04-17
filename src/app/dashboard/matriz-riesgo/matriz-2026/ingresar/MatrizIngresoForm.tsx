@@ -152,7 +152,7 @@ export default function MatrizIngresoForm({ user }: { user: any }) {
         
         // Verificar existencia
         const check = await getMatrizExistence(colegio.colRBD)
-        if (check?.exists) {
+        if (check?.exists && check.date) {
             setExistingAuditDate(new Date(check.date))
         } else {
             setExistingAuditDate(null)

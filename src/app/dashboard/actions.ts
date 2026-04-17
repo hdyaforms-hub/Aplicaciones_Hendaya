@@ -20,6 +20,7 @@ export async function createUser(formData: FormData) {
     const roleId = formData.get('roleId') as string
     const isActive = formData.get('isActive') !== 'false'
     const sucursales = formData.getAll('sucursales') as string[]
+    const areas = formData.getAll('areas') as string[]
 
     if (!username || !password || !roleId) {
         return { error: 'Faltan campos obligatorios' }
@@ -46,6 +47,9 @@ export async function createUser(formData: FormData) {
                 isActive,
                 sucursales: {
                     connect: sucursales.map(id => ({ id }))
+                },
+                areas: {
+                    connect: areas.map(id => ({ id: parseInt(id, 10) }))
                 }
             }
         })
@@ -72,6 +76,7 @@ export async function updateUser(formData: FormData) {
     const roleId = formData.get('roleId') as string
     const isActive = formData.get('isActive') !== 'false'
     const sucursales = formData.getAll('sucursales') as string[]
+    const areas = formData.getAll('areas') as string[]
 
     if (!id) return { error: 'ID de usuario no proporcionado' }
 
@@ -91,6 +96,10 @@ export async function updateUser(formData: FormData) {
             sucursales: {
                 set: [], // Clear existing
                 connect: sucursales.map(sId => ({ id: sId }))
+            },
+            areas: {
+                set: [],
+                connect: areas.map(aId => ({ id: parseInt(aId, 10) }))
             }
         }
 

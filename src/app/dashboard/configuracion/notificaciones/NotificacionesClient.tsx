@@ -39,6 +39,11 @@ const PANTALLAS: PantallaInfo[] = [
         id: 'form-submission-pdf',
         name: 'Envío Formulario PDF',
         description: 'Configura el asunto y cuerpo del correo cuando se envía un formulario en formato PDF.'
+    },
+    {
+        id: 'RETORNO_PRODUCTOS',
+        name: 'Retorno de productos',
+        description: 'Se envía un aviso al crear una alerta de calidad o registrar un movimiento de sucursal.'
     }
 ]
 
@@ -83,10 +88,15 @@ const HELP_KEYWORDS: Record<string, { tag: string, desc: string }[]> = {
         { tag: '<AcumuladoActual>', desc: 'Total consumido previo a este intento.' },
     ],
     'Envío Formulario PDF': [
-        { tag: '<Formulario>', desc: 'Nombre del formulario completado.' },
-        { tag: '<FechaSometido>', desc: 'Fecha y hora en que se envió la respuesta.' },
         { tag: '<UT>', desc: 'Unidad Territorial (si aplica).' },
         { tag: '<RBD>', desc: 'RBD del establecimiento (si aplica).' },
+    ],
+    'Retorno de productos': [
+        { tag: '<Titulo>', desc: 'Título de la alerta de calidad.' },
+        { tag: '<Observacion>', desc: 'Descripción detallada del producto o incidencia.' },
+        { tag: '<Horas>', desc: 'Plazo de tiempo otorgado para la gestión.' },
+        { tag: '<Sucursal>', desc: 'Nombre de la bodega/sucursal que reporta.' },
+        { tag: '<Comentario>', desc: 'Texto del movimiento o novedad recién registrada.' },
     ]
 }
 

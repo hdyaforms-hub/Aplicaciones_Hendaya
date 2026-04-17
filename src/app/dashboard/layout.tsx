@@ -1,4 +1,5 @@
 import { getSession } from '@/lib/session'
+import { prisma } from '@/lib/prisma'
 import Sidebar from '@/components/Sidebar'
 import { redirect } from 'next/navigation'
 
@@ -13,11 +14,17 @@ export default async function DashboardLayout({
         redirect('/login')
     }
 
-    const user = session.user as {
-        username: string
-        name: string | null
-        role: { name: string; permissions: string[] }
-    }
+    const userData = await prisma.user.findUnique({
+        where: { id: session.user.id },
+        include: { 
+            role: true,
+            areas: true
+        }
+    })
+
+    if (!userData) redirect('/login')
+
+    const user = userData as any
 
     return (
         <div className="min-h-screen bg-gray-50 flex">
