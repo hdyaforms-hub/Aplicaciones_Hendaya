@@ -12,6 +12,7 @@ type User = {
         permissions: string[]
     }
     areas?: { id: number, nombre: string }[]
+    sucursales?: { id: string, nombre: string }[]
 }
 
 interface MenuItem {
@@ -20,6 +21,7 @@ interface MenuItem {
     icon?: string
     requiredPermission?: string | string[] | null
     requiredArea?: string | null
+    showCondition?: (user: User) => boolean
     subItems?: MenuItem[]
 }
 
@@ -97,10 +99,28 @@ export default function Sidebar({ user }: { user: User }) {
                 },
                 {
                     name: 'Calidad',
-                    requiredPermission: 'view_calidad',
-                    requiredArea: 'Calidad',
+                    requiredPermission: null,
+                    requiredArea: null,
+                    showCondition: (user: User) => {
+                        const isAdmin = user.role.name === 'Administrador' || user.role.name === 'admin';
+                        const hasCalidad = user.areas?.some(a => a.nombre.toLowerCase().includes('calidad'));
+                        const hasSucursal = user.sucursales && user.sucursales.length > 0;
+                        const hasPerm = user.role.permissions.includes('view_calidad') || user.role.permissions.includes('view_retorno_productos');
+                        return !!(isAdmin || hasCalidad || hasSucursal || hasPerm);
+                    },
                     subItems: [
-                        { name: 'Retorno de Productos', href: '/dashboard/areas/calidad/retorno-productos', requiredPermission: 'view_retorno_productos' }
+                        { 
+                            name: 'Retorno de Productos', 
+                            href: '/dashboard/areas/calidad/retorno-productos', 
+                            requiredPermission: null,
+                            showCondition: (user: User) => {
+                                const isAdmin = user.role.name === 'Administrador' || user.role.name === 'admin';
+                                const hasCalidad = user.areas?.some(a => a.nombre.toLowerCase().includes('calidad'));
+                                const hasSucursal = user.sucursales && user.sucursales.length > 0;
+                                const hasPerm = user.role.permissions.includes('view_retorno_productos');
+                                return !!(isAdmin || hasCalidad || hasSucursal || hasPerm);
+                            }
+                        }
                     ]
                 }
             ]
@@ -191,7 +211,7 @@ export default function Sidebar({ user }: { user: User }) {
             }
             return item
         }).filter(item => {
-            const isAdmin = user.role.name === 'admin'
+            const isAdmin = user.role.name === 'admin' || user.role.name === 'Administrador'
             
             const hasPermission = !item.requiredPermission || (
                 Array.isArray(item.requiredPermission)
@@ -203,10 +223,12 @@ export default function Sidebar({ user }: { user: User }) {
                 user.areas?.some(a => a.nombre.toLowerCase().includes(item.requiredArea!.toLowerCase()))
             )
 
+            const customCondition = item.showCondition ? item.showCondition(user) : true
+
             if (item.subItems) {
-                return hasPermission && hasArea && item.subItems.length > 0
+                return customCondition && hasPermission && hasArea && item.subItems.length > 0
             }
-            return hasPermission && hasArea
+            return customCondition && hasPermission && hasArea
         })
     }
 

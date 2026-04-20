@@ -18,7 +18,8 @@ export default async function DashboardLayout({
         where: { id: session.user.id },
         include: { 
             role: true,
-            areas: true
+            areas: true,
+            sucursales: true
         }
     })
 

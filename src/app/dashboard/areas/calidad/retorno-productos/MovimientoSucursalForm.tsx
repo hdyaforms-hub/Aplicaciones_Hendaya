@@ -33,15 +33,13 @@ export default function MovimientoSucursalForm({ alerta, onClose, user }: { aler
         return () => clearInterval(interval)
     }, [alerta])
 
-    // Permisos y visibilidad
-    const isAdmin = user.role.name === 'admin' || user.role.permissions.includes('manage_retorno_productos')
     const userAreas = user.areas || []
-    const isCalidad = isAdmin || userAreas.some((a: any) => a.nombre.toLowerCase().includes('calidad'))
+    const isCalidad = userAreas.some((a: any) => a.nombre.toUpperCase() === 'CALIDAD')
     const userSucursalesNames = (user.sucursales || []).map((s: any) => s.nombre)
     
-    // Filtro de estados por sucursal del usuario
+    // Filtro de estados por sucursal del usuario (solo sus sucursales asignadas)
     const misEstados = alerta.sucursalesEstado.filter((se: any) => 
-        isAdmin || userSucursalesNames.includes(se.sucursal.nombre)
+        userSucursalesNames.includes(se.sucursal.nombre)
     )
     
     const [selectedSucursalId, setSelectedSucursalId] = useState<string>(

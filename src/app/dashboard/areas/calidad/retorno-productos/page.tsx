@@ -7,11 +7,6 @@ import { getAlertas } from './actions'
 export default async function RetornoProductosPage() {
     const session = await getSession()
     
-    // Validar permiso de visualización general
-    if (!session?.user?.role?.permissions.includes('view_retorno_productos')) {
-        redirect('/dashboard')
-    }
-
     // Obtener usuario completo con sus áreas asignadas
     const dbUser = await prisma.user.findUnique({
         where: { id: session.user.id },
@@ -23,6 +18,19 @@ export default async function RetornoProductosPage() {
     })
 
     if (!dbUser) redirect('/dashboard')
+
+    const roleName = dbUser.role?.name || ''
+    const isAdmin = roleName === 'Administrador' || roleName === 'admin'
+    const hasCalidad = dbUser.areas.some(a => a.nombre.toLowerCase().includes('calidad'))
+    const hasSucursal = dbUser.sucursales.length > 0
+    const hasPerm = dbUser.role?.permissions.includes('view_retorno_productos')
+
+    // Validar permiso de visualización general
+    if (!(isAdmin || hasCalidad || hasSucursal || hasPerm)) {
+        redirect('/dashboard')
+    }
+
+
 
     const alertas = await getAlertas()
 

@@ -15,7 +15,9 @@ export default function RetornoClient({ alertas, user }: { alertas: any[], user:
     const [isDeleting, setIsDeleting] = useState(false)
     const router = useRouter()
 
-    const canCreate = user.role.permissions.includes('create_retorno_productos') || user.role.permissions.includes('manage_retorno_productos') || user.role.name === 'Administrador'
+    const userAreas = user.areas || []
+    const isCalidad = userAreas.some((a: any) => a.nombre.toUpperCase() === 'CALIDAD')
+    const canCreate = isCalidad
 
     // Sort: Newest to oldest
     const sortedAlertas = [...alertas].sort((a, b) => new Date(b.fechaCreacion).getTime() - new Date(a.fechaCreacion).getTime())
