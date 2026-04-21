@@ -63,8 +63,8 @@ export default async function RolesPage() {
         { id: 'view_estado_avance', name: 'Matriz 2026: Estado de Avance', description: 'Visualizar el estado de avance de la matriz de riesgo 2026.', category: 'Matriz 2026' },
         { id: 'view_dashboard', name: 'Dashboard General', description: 'Acceso al dashboard general de la aplicación.', category: 'Tableros' },
         { id: 'view_calidad', name: 'Menú Calidad', description: 'Acceso al menú de Calidad en el Sidebar.', category: 'Calidad' },
-        { id: 'view_retorno_productos', name: 'Retorno de Productos', description: 'Acceso al dashboard de Retorno de Productos.', category: 'Calidad' },
-        { id: 'manage_retorno_productos', name: 'Crear Alerta de Calidad', description: 'Permite crear nuevas alertas de retorno de productos.', category: 'Calidad' },
+        { id: 'view_retorno_productos', name: 'Retirada de productos', description: 'Acceso al dashboard de Retirada de productos.', category: 'Calidad' },
+        { id: 'manage_retorno_productos', name: 'Crear Alerta de Calidad', description: 'Permite crear nuevas alertas de retirada de productos.', category: 'Calidad' },
     ]
 
     return (

@@ -110,7 +110,7 @@ export default function Sidebar({ user }: { user: User }) {
                     },
                     subItems: [
                         { 
-                            name: 'Retorno de Productos', 
+                            name: 'Retirada de Productos', 
                             href: '/dashboard/areas/calidad/retorno-productos', 
                             requiredPermission: null,
                             showCondition: (user: User) => {

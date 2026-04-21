@@ -2,7 +2,7 @@
 echo ===== ACTUALIZANDO GITHUB =====
 cd /d "d:\Programas\AplicacionWebSql"
 git add .
-git commit -m "Añadido: Módulo completo de Retorno de Productos (Calidad) con notificaciones, validaciones, historial de eliminación y configuraciones dinámicas."
+git commit -m "Cambio: Renombrado Retorno de Productos a Retirada de productos en toda la aplicación."
 git push origin main
 
 echo ===== COPIANDO ARCHIVOS A PRODUCCIÓN =====

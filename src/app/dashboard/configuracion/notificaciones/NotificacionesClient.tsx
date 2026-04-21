@@ -42,7 +42,7 @@ const PANTALLAS: PantallaInfo[] = [
     },
     {
         id: 'RETORNO_PRODUCTOS',
-        name: 'Retorno de productos',
+        name: 'Retirada de productos',
         description: 'Se envía un aviso al crear una alerta de calidad o registrar un movimiento de sucursal.'
     }
 ]
@@ -91,7 +91,7 @@ const HELP_KEYWORDS: Record<string, { tag: string, desc: string }[]> = {
         { tag: '<UT>', desc: 'Unidad Territorial (si aplica).' },
         { tag: '<RBD>', desc: 'RBD del establecimiento (si aplica).' },
     ],
-    'Retorno de productos': [
+    'Retirada de productos': [
         { tag: '<Titulo>', desc: 'Título de la alerta de calidad.' },
         { tag: '<Observacion>', desc: 'Descripción detallada del producto o incidencia.' },
         { tag: '<Horas>', desc: 'Plazo de tiempo otorgado para la gestión.' },
