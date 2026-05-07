@@ -4,7 +4,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlserver"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -488,7 +488,7 @@ model TrabajoPreventivo {
 model RetornoProductosAlerta {
   id               String                           @id @default(uuid())
   titulo           String
-  observacion      String                           @db.NVarChar(1500)
+  observacion      String                           
   horas            Int
   estado           String                           @default("ABIERTA")
   color            String?                          @default("yellow")
@@ -497,7 +497,7 @@ model RetornoProductosAlerta {
   fechaCreacion    DateTime                         @default(now())
   usuarioCierre    String?
   fechaCierre      DateTime?
-  conclusionFinal  String?                          @db.NVarChar(Max)
+  conclusionFinal  String?                          
   movimientos      RetornoProductosMovimiento[]
   sucursalesEstado RetornoProductosSucursalEstado[]
 }
@@ -520,7 +520,7 @@ model RetornoProductosMovimiento {
   alertaId        String
   sucursalId      String
   usuarioRegistro String
-  comentario      String                 @db.NVarChar(Max)
+  comentario      String                 
   archivos        String?
   fechaRegistro   DateTime               @default(now())
   alerta          RetornoProductosAlerta @relation(fields: [alertaId], references: [id], onDelete: Cascade)
@@ -531,8 +531,8 @@ model RetornoProductosAlertaHistorialEliminado {
   id                String   @id @default(uuid())
   alertaIdOriginal  String
   tituloAlerta      String
-  observacionAlerta String   @db.NVarChar(Max)
-  motivoEliminacion String   @db.NVarChar(Max)
+  observacionAlerta String   
+  motivoEliminacion String   
   usuarioEliminador String
   fechaEliminacion  DateTime @default(now())
 }

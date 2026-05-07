@@ -1,12 +1,12 @@
 @echo off
 echo ===== ACTUALIZANDO GITHUB =====
-cd /d "d:\Programas\AplicacionWebSql"
+cd /d "d:\Programas\AplicacionWeb"
 git add .
-git commit -m "Cambio: Renombrado Retorno de Productos a Retirada de productos en toda la aplicación."
+git commit -m "Migración a PostgreSQL"
 git push origin main
 
 echo ===== COPIANDO ARCHIVOS A PRODUCCIÓN =====
-robocopy "d:\Programas\AplicacionWebSql" "d:\Sitios\Hendaya" /MIR /XD .git node_modules .next /XF Iniciar_Sitio.bat create_shortcut.ps1 *.tmp*
+robocopy "d:\Programas\AplicacionWeb" "d:\Sitios\Hendaya" /MIR /XD .git node_modules .next /XF Iniciar_Sitio.bat create_shortcut.ps1 *.tmp*
 
 echo ===== COMPILANDO SITIO DE PRODUCCIÓN =====
 cd /d "d:\Sitios\Hendaya"
