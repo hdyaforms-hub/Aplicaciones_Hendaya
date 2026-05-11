@@ -188,6 +188,16 @@ export type RetornoProductosMovimiento = $Result.DefaultSelection<Prisma.$Retorn
  * 
  */
 export type RetornoProductosAlertaHistorialEliminado = $Result.DefaultSelection<Prisma.$RetornoProductosAlertaHistorialEliminadoPayload>
+/**
+ * Model Preparaciones
+ * 
+ */
+export type Preparaciones = $Result.DefaultSelection<Prisma.$PreparacionesPayload>
+/**
+ * Model Minutas
+ * 
+ */
+export type Minutas = $Result.DefaultSelection<Prisma.$MinutasPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -661,6 +671,26 @@ export class PrismaClient<
     * ```
     */
   get retornoProductosAlertaHistorialEliminado(): Prisma.RetornoProductosAlertaHistorialEliminadoDelegate<ExtArgs>;
+
+  /**
+   * `prisma.preparaciones`: Exposes CRUD operations for the **Preparaciones** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Preparaciones
+    * const preparaciones = await prisma.preparaciones.findMany()
+    * ```
+    */
+  get preparaciones(): Prisma.PreparacionesDelegate<ExtArgs>;
+
+  /**
+   * `prisma.minutas`: Exposes CRUD operations for the **Minutas** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Minutas
+    * const minutas = await prisma.minutas.findMany()
+    * ```
+    */
+  get minutas(): Prisma.MinutasDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -1136,7 +1166,9 @@ export namespace Prisma {
     RetornoProductosAlerta: 'RetornoProductosAlerta',
     RetornoProductosSucursalEstado: 'RetornoProductosSucursalEstado',
     RetornoProductosMovimiento: 'RetornoProductosMovimiento',
-    RetornoProductosAlertaHistorialEliminado: 'RetornoProductosAlertaHistorialEliminado'
+    RetornoProductosAlertaHistorialEliminado: 'RetornoProductosAlertaHistorialEliminado',
+    Preparaciones: 'Preparaciones',
+    Minutas: 'Minutas'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1152,7 +1184,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "licitacion" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado"
+      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "licitacion" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3603,6 +3635,146 @@ export namespace Prisma {
           count: {
             args: Prisma.RetornoProductosAlertaHistorialEliminadoCountArgs<ExtArgs>
             result: $Utils.Optional<RetornoProductosAlertaHistorialEliminadoCountAggregateOutputType> | number
+          }
+        }
+      }
+      Preparaciones: {
+        payload: Prisma.$PreparacionesPayload<ExtArgs>
+        fields: Prisma.PreparacionesFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PreparacionesFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PreparacionesPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PreparacionesFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PreparacionesPayload>
+          }
+          findFirst: {
+            args: Prisma.PreparacionesFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PreparacionesPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PreparacionesFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PreparacionesPayload>
+          }
+          findMany: {
+            args: Prisma.PreparacionesFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PreparacionesPayload>[]
+          }
+          create: {
+            args: Prisma.PreparacionesCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PreparacionesPayload>
+          }
+          createMany: {
+            args: Prisma.PreparacionesCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PreparacionesCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PreparacionesPayload>[]
+          }
+          delete: {
+            args: Prisma.PreparacionesDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PreparacionesPayload>
+          }
+          update: {
+            args: Prisma.PreparacionesUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PreparacionesPayload>
+          }
+          deleteMany: {
+            args: Prisma.PreparacionesDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PreparacionesUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.PreparacionesUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PreparacionesPayload>
+          }
+          aggregate: {
+            args: Prisma.PreparacionesAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePreparaciones>
+          }
+          groupBy: {
+            args: Prisma.PreparacionesGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PreparacionesGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PreparacionesCountArgs<ExtArgs>
+            result: $Utils.Optional<PreparacionesCountAggregateOutputType> | number
+          }
+        }
+      }
+      Minutas: {
+        payload: Prisma.$MinutasPayload<ExtArgs>
+        fields: Prisma.MinutasFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MinutasFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MinutasPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MinutasFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MinutasPayload>
+          }
+          findFirst: {
+            args: Prisma.MinutasFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MinutasPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MinutasFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MinutasPayload>
+          }
+          findMany: {
+            args: Prisma.MinutasFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MinutasPayload>[]
+          }
+          create: {
+            args: Prisma.MinutasCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MinutasPayload>
+          }
+          createMany: {
+            args: Prisma.MinutasCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MinutasCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MinutasPayload>[]
+          }
+          delete: {
+            args: Prisma.MinutasDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MinutasPayload>
+          }
+          update: {
+            args: Prisma.MinutasUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MinutasPayload>
+          }
+          deleteMany: {
+            args: Prisma.MinutasDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MinutasUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.MinutasUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MinutasPayload>
+          }
+          aggregate: {
+            args: Prisma.MinutasAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMinutas>
+          }
+          groupBy: {
+            args: Prisma.MinutasGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MinutasGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MinutasCountArgs<ExtArgs>
+            result: $Utils.Optional<MinutasCountAggregateOutputType> | number
           }
         }
       }
@@ -39733,6 +39905,2150 @@ export namespace Prisma {
 
 
   /**
+   * Model Preparaciones
+   */
+
+  export type AggregatePreparaciones = {
+    _count: PreparacionesCountAggregateOutputType | null
+    _avg: PreparacionesAvgAggregateOutputType | null
+    _sum: PreparacionesSumAggregateOutputType | null
+    _min: PreparacionesMinAggregateOutputType | null
+    _max: PreparacionesMaxAggregateOutputType | null
+  }
+
+  export type PreparacionesAvgAggregateOutputType = {
+    numeroPreparacion: number | null
+    numeroCocina: number | null
+    cantPreparacion: Decimal | null
+    porcentajePerdida: number | null
+  }
+
+  export type PreparacionesSumAggregateOutputType = {
+    numeroPreparacion: number | null
+    numeroCocina: number | null
+    cantPreparacion: Decimal | null
+    porcentajePerdida: number | null
+  }
+
+  export type PreparacionesMinAggregateOutputType = {
+    id: string | null
+    licitacion: string | null
+    numeroPreparacion: number | null
+    nombrePreparacion: string | null
+    numeroPrograma: string | null
+    programa: string | null
+    numeroCocina: number | null
+    cocina: string | null
+    codigoProducto: string | null
+    nombreProducto: string | null
+    codigoSubServicio: string | null
+    nombreSubServicio: string | null
+    cantPreparacion: Decimal | null
+    porcentajePerdida: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PreparacionesMaxAggregateOutputType = {
+    id: string | null
+    licitacion: string | null
+    numeroPreparacion: number | null
+    nombrePreparacion: string | null
+    numeroPrograma: string | null
+    programa: string | null
+    numeroCocina: number | null
+    cocina: string | null
+    codigoProducto: string | null
+    nombreProducto: string | null
+    codigoSubServicio: string | null
+    nombreSubServicio: string | null
+    cantPreparacion: Decimal | null
+    porcentajePerdida: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PreparacionesCountAggregateOutputType = {
+    id: number
+    licitacion: number
+    numeroPreparacion: number
+    nombrePreparacion: number
+    numeroPrograma: number
+    programa: number
+    numeroCocina: number
+    cocina: number
+    codigoProducto: number
+    nombreProducto: number
+    codigoSubServicio: number
+    nombreSubServicio: number
+    cantPreparacion: number
+    porcentajePerdida: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type PreparacionesAvgAggregateInputType = {
+    numeroPreparacion?: true
+    numeroCocina?: true
+    cantPreparacion?: true
+    porcentajePerdida?: true
+  }
+
+  export type PreparacionesSumAggregateInputType = {
+    numeroPreparacion?: true
+    numeroCocina?: true
+    cantPreparacion?: true
+    porcentajePerdida?: true
+  }
+
+  export type PreparacionesMinAggregateInputType = {
+    id?: true
+    licitacion?: true
+    numeroPreparacion?: true
+    nombrePreparacion?: true
+    numeroPrograma?: true
+    programa?: true
+    numeroCocina?: true
+    cocina?: true
+    codigoProducto?: true
+    nombreProducto?: true
+    codigoSubServicio?: true
+    nombreSubServicio?: true
+    cantPreparacion?: true
+    porcentajePerdida?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PreparacionesMaxAggregateInputType = {
+    id?: true
+    licitacion?: true
+    numeroPreparacion?: true
+    nombrePreparacion?: true
+    numeroPrograma?: true
+    programa?: true
+    numeroCocina?: true
+    cocina?: true
+    codigoProducto?: true
+    nombreProducto?: true
+    codigoSubServicio?: true
+    nombreSubServicio?: true
+    cantPreparacion?: true
+    porcentajePerdida?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PreparacionesCountAggregateInputType = {
+    id?: true
+    licitacion?: true
+    numeroPreparacion?: true
+    nombrePreparacion?: true
+    numeroPrograma?: true
+    programa?: true
+    numeroCocina?: true
+    cocina?: true
+    codigoProducto?: true
+    nombreProducto?: true
+    codigoSubServicio?: true
+    nombreSubServicio?: true
+    cantPreparacion?: true
+    porcentajePerdida?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type PreparacionesAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Preparaciones to aggregate.
+     */
+    where?: PreparacionesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Preparaciones to fetch.
+     */
+    orderBy?: PreparacionesOrderByWithRelationInput | PreparacionesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PreparacionesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Preparaciones from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Preparaciones.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Preparaciones
+    **/
+    _count?: true | PreparacionesCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PreparacionesAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PreparacionesSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PreparacionesMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PreparacionesMaxAggregateInputType
+  }
+
+  export type GetPreparacionesAggregateType<T extends PreparacionesAggregateArgs> = {
+        [P in keyof T & keyof AggregatePreparaciones]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePreparaciones[P]>
+      : GetScalarType<T[P], AggregatePreparaciones[P]>
+  }
+
+
+
+
+  export type PreparacionesGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PreparacionesWhereInput
+    orderBy?: PreparacionesOrderByWithAggregationInput | PreparacionesOrderByWithAggregationInput[]
+    by: PreparacionesScalarFieldEnum[] | PreparacionesScalarFieldEnum
+    having?: PreparacionesScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PreparacionesCountAggregateInputType | true
+    _avg?: PreparacionesAvgAggregateInputType
+    _sum?: PreparacionesSumAggregateInputType
+    _min?: PreparacionesMinAggregateInputType
+    _max?: PreparacionesMaxAggregateInputType
+  }
+
+  export type PreparacionesGroupByOutputType = {
+    id: string
+    licitacion: string
+    numeroPreparacion: number
+    nombrePreparacion: string
+    numeroPrograma: string
+    programa: string
+    numeroCocina: number
+    cocina: string
+    codigoProducto: string
+    nombreProducto: string
+    codigoSubServicio: string
+    nombreSubServicio: string
+    cantPreparacion: Decimal
+    porcentajePerdida: number
+    createdAt: Date
+    updatedAt: Date
+    _count: PreparacionesCountAggregateOutputType | null
+    _avg: PreparacionesAvgAggregateOutputType | null
+    _sum: PreparacionesSumAggregateOutputType | null
+    _min: PreparacionesMinAggregateOutputType | null
+    _max: PreparacionesMaxAggregateOutputType | null
+  }
+
+  type GetPreparacionesGroupByPayload<T extends PreparacionesGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PreparacionesGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PreparacionesGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PreparacionesGroupByOutputType[P]>
+            : GetScalarType<T[P], PreparacionesGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PreparacionesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    licitacion?: boolean
+    numeroPreparacion?: boolean
+    nombrePreparacion?: boolean
+    numeroPrograma?: boolean
+    programa?: boolean
+    numeroCocina?: boolean
+    cocina?: boolean
+    codigoProducto?: boolean
+    nombreProducto?: boolean
+    codigoSubServicio?: boolean
+    nombreSubServicio?: boolean
+    cantPreparacion?: boolean
+    porcentajePerdida?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["preparaciones"]>
+
+  export type PreparacionesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    licitacion?: boolean
+    numeroPreparacion?: boolean
+    nombrePreparacion?: boolean
+    numeroPrograma?: boolean
+    programa?: boolean
+    numeroCocina?: boolean
+    cocina?: boolean
+    codigoProducto?: boolean
+    nombreProducto?: boolean
+    codigoSubServicio?: boolean
+    nombreSubServicio?: boolean
+    cantPreparacion?: boolean
+    porcentajePerdida?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["preparaciones"]>
+
+  export type PreparacionesSelectScalar = {
+    id?: boolean
+    licitacion?: boolean
+    numeroPreparacion?: boolean
+    nombrePreparacion?: boolean
+    numeroPrograma?: boolean
+    programa?: boolean
+    numeroCocina?: boolean
+    cocina?: boolean
+    codigoProducto?: boolean
+    nombreProducto?: boolean
+    codigoSubServicio?: boolean
+    nombreSubServicio?: boolean
+    cantPreparacion?: boolean
+    porcentajePerdida?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type $PreparacionesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Preparaciones"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      licitacion: string
+      numeroPreparacion: number
+      nombrePreparacion: string
+      numeroPrograma: string
+      programa: string
+      numeroCocina: number
+      cocina: string
+      codigoProducto: string
+      nombreProducto: string
+      codigoSubServicio: string
+      nombreSubServicio: string
+      cantPreparacion: Prisma.Decimal
+      porcentajePerdida: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["preparaciones"]>
+    composites: {}
+  }
+
+  type PreparacionesGetPayload<S extends boolean | null | undefined | PreparacionesDefaultArgs> = $Result.GetResult<Prisma.$PreparacionesPayload, S>
+
+  type PreparacionesCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<PreparacionesFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: PreparacionesCountAggregateInputType | true
+    }
+
+  export interface PreparacionesDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Preparaciones'], meta: { name: 'Preparaciones' } }
+    /**
+     * Find zero or one Preparaciones that matches the filter.
+     * @param {PreparacionesFindUniqueArgs} args - Arguments to find a Preparaciones
+     * @example
+     * // Get one Preparaciones
+     * const preparaciones = await prisma.preparaciones.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PreparacionesFindUniqueArgs>(args: SelectSubset<T, PreparacionesFindUniqueArgs<ExtArgs>>): Prisma__PreparacionesClient<$Result.GetResult<Prisma.$PreparacionesPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Preparaciones that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {PreparacionesFindUniqueOrThrowArgs} args - Arguments to find a Preparaciones
+     * @example
+     * // Get one Preparaciones
+     * const preparaciones = await prisma.preparaciones.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PreparacionesFindUniqueOrThrowArgs>(args: SelectSubset<T, PreparacionesFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PreparacionesClient<$Result.GetResult<Prisma.$PreparacionesPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Preparaciones that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PreparacionesFindFirstArgs} args - Arguments to find a Preparaciones
+     * @example
+     * // Get one Preparaciones
+     * const preparaciones = await prisma.preparaciones.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PreparacionesFindFirstArgs>(args?: SelectSubset<T, PreparacionesFindFirstArgs<ExtArgs>>): Prisma__PreparacionesClient<$Result.GetResult<Prisma.$PreparacionesPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Preparaciones that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PreparacionesFindFirstOrThrowArgs} args - Arguments to find a Preparaciones
+     * @example
+     * // Get one Preparaciones
+     * const preparaciones = await prisma.preparaciones.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PreparacionesFindFirstOrThrowArgs>(args?: SelectSubset<T, PreparacionesFindFirstOrThrowArgs<ExtArgs>>): Prisma__PreparacionesClient<$Result.GetResult<Prisma.$PreparacionesPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Preparaciones that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PreparacionesFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Preparaciones
+     * const preparaciones = await prisma.preparaciones.findMany()
+     * 
+     * // Get first 10 Preparaciones
+     * const preparaciones = await prisma.preparaciones.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const preparacionesWithIdOnly = await prisma.preparaciones.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PreparacionesFindManyArgs>(args?: SelectSubset<T, PreparacionesFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PreparacionesPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Preparaciones.
+     * @param {PreparacionesCreateArgs} args - Arguments to create a Preparaciones.
+     * @example
+     * // Create one Preparaciones
+     * const Preparaciones = await prisma.preparaciones.create({
+     *   data: {
+     *     // ... data to create a Preparaciones
+     *   }
+     * })
+     * 
+     */
+    create<T extends PreparacionesCreateArgs>(args: SelectSubset<T, PreparacionesCreateArgs<ExtArgs>>): Prisma__PreparacionesClient<$Result.GetResult<Prisma.$PreparacionesPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Preparaciones.
+     * @param {PreparacionesCreateManyArgs} args - Arguments to create many Preparaciones.
+     * @example
+     * // Create many Preparaciones
+     * const preparaciones = await prisma.preparaciones.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PreparacionesCreateManyArgs>(args?: SelectSubset<T, PreparacionesCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Preparaciones and returns the data saved in the database.
+     * @param {PreparacionesCreateManyAndReturnArgs} args - Arguments to create many Preparaciones.
+     * @example
+     * // Create many Preparaciones
+     * const preparaciones = await prisma.preparaciones.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Preparaciones and only return the `id`
+     * const preparacionesWithIdOnly = await prisma.preparaciones.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PreparacionesCreateManyAndReturnArgs>(args?: SelectSubset<T, PreparacionesCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PreparacionesPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Preparaciones.
+     * @param {PreparacionesDeleteArgs} args - Arguments to delete one Preparaciones.
+     * @example
+     * // Delete one Preparaciones
+     * const Preparaciones = await prisma.preparaciones.delete({
+     *   where: {
+     *     // ... filter to delete one Preparaciones
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PreparacionesDeleteArgs>(args: SelectSubset<T, PreparacionesDeleteArgs<ExtArgs>>): Prisma__PreparacionesClient<$Result.GetResult<Prisma.$PreparacionesPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Preparaciones.
+     * @param {PreparacionesUpdateArgs} args - Arguments to update one Preparaciones.
+     * @example
+     * // Update one Preparaciones
+     * const preparaciones = await prisma.preparaciones.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PreparacionesUpdateArgs>(args: SelectSubset<T, PreparacionesUpdateArgs<ExtArgs>>): Prisma__PreparacionesClient<$Result.GetResult<Prisma.$PreparacionesPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Preparaciones.
+     * @param {PreparacionesDeleteManyArgs} args - Arguments to filter Preparaciones to delete.
+     * @example
+     * // Delete a few Preparaciones
+     * const { count } = await prisma.preparaciones.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PreparacionesDeleteManyArgs>(args?: SelectSubset<T, PreparacionesDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Preparaciones.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PreparacionesUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Preparaciones
+     * const preparaciones = await prisma.preparaciones.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PreparacionesUpdateManyArgs>(args: SelectSubset<T, PreparacionesUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Preparaciones.
+     * @param {PreparacionesUpsertArgs} args - Arguments to update or create a Preparaciones.
+     * @example
+     * // Update or create a Preparaciones
+     * const preparaciones = await prisma.preparaciones.upsert({
+     *   create: {
+     *     // ... data to create a Preparaciones
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Preparaciones we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PreparacionesUpsertArgs>(args: SelectSubset<T, PreparacionesUpsertArgs<ExtArgs>>): Prisma__PreparacionesClient<$Result.GetResult<Prisma.$PreparacionesPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Preparaciones.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PreparacionesCountArgs} args - Arguments to filter Preparaciones to count.
+     * @example
+     * // Count the number of Preparaciones
+     * const count = await prisma.preparaciones.count({
+     *   where: {
+     *     // ... the filter for the Preparaciones we want to count
+     *   }
+     * })
+    **/
+    count<T extends PreparacionesCountArgs>(
+      args?: Subset<T, PreparacionesCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PreparacionesCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Preparaciones.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PreparacionesAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PreparacionesAggregateArgs>(args: Subset<T, PreparacionesAggregateArgs>): Prisma.PrismaPromise<GetPreparacionesAggregateType<T>>
+
+    /**
+     * Group by Preparaciones.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PreparacionesGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PreparacionesGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PreparacionesGroupByArgs['orderBy'] }
+        : { orderBy?: PreparacionesGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PreparacionesGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPreparacionesGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Preparaciones model
+   */
+  readonly fields: PreparacionesFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Preparaciones.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PreparacionesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Preparaciones model
+   */ 
+  interface PreparacionesFieldRefs {
+    readonly id: FieldRef<"Preparaciones", 'String'>
+    readonly licitacion: FieldRef<"Preparaciones", 'String'>
+    readonly numeroPreparacion: FieldRef<"Preparaciones", 'Int'>
+    readonly nombrePreparacion: FieldRef<"Preparaciones", 'String'>
+    readonly numeroPrograma: FieldRef<"Preparaciones", 'String'>
+    readonly programa: FieldRef<"Preparaciones", 'String'>
+    readonly numeroCocina: FieldRef<"Preparaciones", 'Int'>
+    readonly cocina: FieldRef<"Preparaciones", 'String'>
+    readonly codigoProducto: FieldRef<"Preparaciones", 'String'>
+    readonly nombreProducto: FieldRef<"Preparaciones", 'String'>
+    readonly codigoSubServicio: FieldRef<"Preparaciones", 'String'>
+    readonly nombreSubServicio: FieldRef<"Preparaciones", 'String'>
+    readonly cantPreparacion: FieldRef<"Preparaciones", 'Decimal'>
+    readonly porcentajePerdida: FieldRef<"Preparaciones", 'Int'>
+    readonly createdAt: FieldRef<"Preparaciones", 'DateTime'>
+    readonly updatedAt: FieldRef<"Preparaciones", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Preparaciones findUnique
+   */
+  export type PreparacionesFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Preparaciones
+     */
+    select?: PreparacionesSelect<ExtArgs> | null
+    /**
+     * Filter, which Preparaciones to fetch.
+     */
+    where: PreparacionesWhereUniqueInput
+  }
+
+  /**
+   * Preparaciones findUniqueOrThrow
+   */
+  export type PreparacionesFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Preparaciones
+     */
+    select?: PreparacionesSelect<ExtArgs> | null
+    /**
+     * Filter, which Preparaciones to fetch.
+     */
+    where: PreparacionesWhereUniqueInput
+  }
+
+  /**
+   * Preparaciones findFirst
+   */
+  export type PreparacionesFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Preparaciones
+     */
+    select?: PreparacionesSelect<ExtArgs> | null
+    /**
+     * Filter, which Preparaciones to fetch.
+     */
+    where?: PreparacionesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Preparaciones to fetch.
+     */
+    orderBy?: PreparacionesOrderByWithRelationInput | PreparacionesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Preparaciones.
+     */
+    cursor?: PreparacionesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Preparaciones from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Preparaciones.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Preparaciones.
+     */
+    distinct?: PreparacionesScalarFieldEnum | PreparacionesScalarFieldEnum[]
+  }
+
+  /**
+   * Preparaciones findFirstOrThrow
+   */
+  export type PreparacionesFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Preparaciones
+     */
+    select?: PreparacionesSelect<ExtArgs> | null
+    /**
+     * Filter, which Preparaciones to fetch.
+     */
+    where?: PreparacionesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Preparaciones to fetch.
+     */
+    orderBy?: PreparacionesOrderByWithRelationInput | PreparacionesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Preparaciones.
+     */
+    cursor?: PreparacionesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Preparaciones from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Preparaciones.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Preparaciones.
+     */
+    distinct?: PreparacionesScalarFieldEnum | PreparacionesScalarFieldEnum[]
+  }
+
+  /**
+   * Preparaciones findMany
+   */
+  export type PreparacionesFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Preparaciones
+     */
+    select?: PreparacionesSelect<ExtArgs> | null
+    /**
+     * Filter, which Preparaciones to fetch.
+     */
+    where?: PreparacionesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Preparaciones to fetch.
+     */
+    orderBy?: PreparacionesOrderByWithRelationInput | PreparacionesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Preparaciones.
+     */
+    cursor?: PreparacionesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Preparaciones from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Preparaciones.
+     */
+    skip?: number
+    distinct?: PreparacionesScalarFieldEnum | PreparacionesScalarFieldEnum[]
+  }
+
+  /**
+   * Preparaciones create
+   */
+  export type PreparacionesCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Preparaciones
+     */
+    select?: PreparacionesSelect<ExtArgs> | null
+    /**
+     * The data needed to create a Preparaciones.
+     */
+    data: XOR<PreparacionesCreateInput, PreparacionesUncheckedCreateInput>
+  }
+
+  /**
+   * Preparaciones createMany
+   */
+  export type PreparacionesCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Preparaciones.
+     */
+    data: PreparacionesCreateManyInput | PreparacionesCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Preparaciones createManyAndReturn
+   */
+  export type PreparacionesCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Preparaciones
+     */
+    select?: PreparacionesSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Preparaciones.
+     */
+    data: PreparacionesCreateManyInput | PreparacionesCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Preparaciones update
+   */
+  export type PreparacionesUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Preparaciones
+     */
+    select?: PreparacionesSelect<ExtArgs> | null
+    /**
+     * The data needed to update a Preparaciones.
+     */
+    data: XOR<PreparacionesUpdateInput, PreparacionesUncheckedUpdateInput>
+    /**
+     * Choose, which Preparaciones to update.
+     */
+    where: PreparacionesWhereUniqueInput
+  }
+
+  /**
+   * Preparaciones updateMany
+   */
+  export type PreparacionesUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Preparaciones.
+     */
+    data: XOR<PreparacionesUpdateManyMutationInput, PreparacionesUncheckedUpdateManyInput>
+    /**
+     * Filter which Preparaciones to update
+     */
+    where?: PreparacionesWhereInput
+  }
+
+  /**
+   * Preparaciones upsert
+   */
+  export type PreparacionesUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Preparaciones
+     */
+    select?: PreparacionesSelect<ExtArgs> | null
+    /**
+     * The filter to search for the Preparaciones to update in case it exists.
+     */
+    where: PreparacionesWhereUniqueInput
+    /**
+     * In case the Preparaciones found by the `where` argument doesn't exist, create a new Preparaciones with this data.
+     */
+    create: XOR<PreparacionesCreateInput, PreparacionesUncheckedCreateInput>
+    /**
+     * In case the Preparaciones was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PreparacionesUpdateInput, PreparacionesUncheckedUpdateInput>
+  }
+
+  /**
+   * Preparaciones delete
+   */
+  export type PreparacionesDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Preparaciones
+     */
+    select?: PreparacionesSelect<ExtArgs> | null
+    /**
+     * Filter which Preparaciones to delete.
+     */
+    where: PreparacionesWhereUniqueInput
+  }
+
+  /**
+   * Preparaciones deleteMany
+   */
+  export type PreparacionesDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Preparaciones to delete
+     */
+    where?: PreparacionesWhereInput
+  }
+
+  /**
+   * Preparaciones without action
+   */
+  export type PreparacionesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Preparaciones
+     */
+    select?: PreparacionesSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Minutas
+   */
+
+  export type AggregateMinutas = {
+    _count: MinutasCountAggregateOutputType | null
+    _avg: MinutasAvgAggregateOutputType | null
+    _sum: MinutasSumAggregateOutputType | null
+    _min: MinutasMinAggregateOutputType | null
+    _max: MinutasMaxAggregateOutputType | null
+  }
+
+  export type MinutasAvgAggregateOutputType = {
+    numeroCocina: number | null
+    dia: number | null
+    mes: number | null
+    anio: number | null
+    numeroPreparacion: number | null
+    codigoEnlace: number | null
+  }
+
+  export type MinutasSumAggregateOutputType = {
+    numeroCocina: number | null
+    dia: number | null
+    mes: number | null
+    anio: number | null
+    numeroPreparacion: bigint | null
+    codigoEnlace: number | null
+  }
+
+  export type MinutasMinAggregateOutputType = {
+    id: string | null
+    numeroMinuta: string | null
+    licitacion: string | null
+    numeroPrograma: string | null
+    programa: string | null
+    numeroCocina: number | null
+    cocina: string | null
+    dia: number | null
+    mes: number | null
+    anio: number | null
+    numeroPreparacion: bigint | null
+    sucid: string | null
+    codigoServicio: string | null
+    nombreServicio: string | null
+    codigoEnlace: number | null
+    nombreEnlace: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MinutasMaxAggregateOutputType = {
+    id: string | null
+    numeroMinuta: string | null
+    licitacion: string | null
+    numeroPrograma: string | null
+    programa: string | null
+    numeroCocina: number | null
+    cocina: string | null
+    dia: number | null
+    mes: number | null
+    anio: number | null
+    numeroPreparacion: bigint | null
+    sucid: string | null
+    codigoServicio: string | null
+    nombreServicio: string | null
+    codigoEnlace: number | null
+    nombreEnlace: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MinutasCountAggregateOutputType = {
+    id: number
+    numeroMinuta: number
+    licitacion: number
+    numeroPrograma: number
+    programa: number
+    numeroCocina: number
+    cocina: number
+    dia: number
+    mes: number
+    anio: number
+    numeroPreparacion: number
+    sucid: number
+    codigoServicio: number
+    nombreServicio: number
+    codigoEnlace: number
+    nombreEnlace: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type MinutasAvgAggregateInputType = {
+    numeroCocina?: true
+    dia?: true
+    mes?: true
+    anio?: true
+    numeroPreparacion?: true
+    codigoEnlace?: true
+  }
+
+  export type MinutasSumAggregateInputType = {
+    numeroCocina?: true
+    dia?: true
+    mes?: true
+    anio?: true
+    numeroPreparacion?: true
+    codigoEnlace?: true
+  }
+
+  export type MinutasMinAggregateInputType = {
+    id?: true
+    numeroMinuta?: true
+    licitacion?: true
+    numeroPrograma?: true
+    programa?: true
+    numeroCocina?: true
+    cocina?: true
+    dia?: true
+    mes?: true
+    anio?: true
+    numeroPreparacion?: true
+    sucid?: true
+    codigoServicio?: true
+    nombreServicio?: true
+    codigoEnlace?: true
+    nombreEnlace?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MinutasMaxAggregateInputType = {
+    id?: true
+    numeroMinuta?: true
+    licitacion?: true
+    numeroPrograma?: true
+    programa?: true
+    numeroCocina?: true
+    cocina?: true
+    dia?: true
+    mes?: true
+    anio?: true
+    numeroPreparacion?: true
+    sucid?: true
+    codigoServicio?: true
+    nombreServicio?: true
+    codigoEnlace?: true
+    nombreEnlace?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MinutasCountAggregateInputType = {
+    id?: true
+    numeroMinuta?: true
+    licitacion?: true
+    numeroPrograma?: true
+    programa?: true
+    numeroCocina?: true
+    cocina?: true
+    dia?: true
+    mes?: true
+    anio?: true
+    numeroPreparacion?: true
+    sucid?: true
+    codigoServicio?: true
+    nombreServicio?: true
+    codigoEnlace?: true
+    nombreEnlace?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type MinutasAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Minutas to aggregate.
+     */
+    where?: MinutasWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Minutas to fetch.
+     */
+    orderBy?: MinutasOrderByWithRelationInput | MinutasOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MinutasWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Minutas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Minutas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Minutas
+    **/
+    _count?: true | MinutasCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MinutasAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MinutasSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MinutasMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MinutasMaxAggregateInputType
+  }
+
+  export type GetMinutasAggregateType<T extends MinutasAggregateArgs> = {
+        [P in keyof T & keyof AggregateMinutas]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMinutas[P]>
+      : GetScalarType<T[P], AggregateMinutas[P]>
+  }
+
+
+
+
+  export type MinutasGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MinutasWhereInput
+    orderBy?: MinutasOrderByWithAggregationInput | MinutasOrderByWithAggregationInput[]
+    by: MinutasScalarFieldEnum[] | MinutasScalarFieldEnum
+    having?: MinutasScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MinutasCountAggregateInputType | true
+    _avg?: MinutasAvgAggregateInputType
+    _sum?: MinutasSumAggregateInputType
+    _min?: MinutasMinAggregateInputType
+    _max?: MinutasMaxAggregateInputType
+  }
+
+  export type MinutasGroupByOutputType = {
+    id: string
+    numeroMinuta: string
+    licitacion: string
+    numeroPrograma: string
+    programa: string
+    numeroCocina: number
+    cocina: string
+    dia: number
+    mes: number
+    anio: number
+    numeroPreparacion: bigint
+    sucid: string
+    codigoServicio: string
+    nombreServicio: string
+    codigoEnlace: number
+    nombreEnlace: string
+    createdAt: Date
+    updatedAt: Date
+    _count: MinutasCountAggregateOutputType | null
+    _avg: MinutasAvgAggregateOutputType | null
+    _sum: MinutasSumAggregateOutputType | null
+    _min: MinutasMinAggregateOutputType | null
+    _max: MinutasMaxAggregateOutputType | null
+  }
+
+  type GetMinutasGroupByPayload<T extends MinutasGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MinutasGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MinutasGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MinutasGroupByOutputType[P]>
+            : GetScalarType<T[P], MinutasGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MinutasSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    numeroMinuta?: boolean
+    licitacion?: boolean
+    numeroPrograma?: boolean
+    programa?: boolean
+    numeroCocina?: boolean
+    cocina?: boolean
+    dia?: boolean
+    mes?: boolean
+    anio?: boolean
+    numeroPreparacion?: boolean
+    sucid?: boolean
+    codigoServicio?: boolean
+    nombreServicio?: boolean
+    codigoEnlace?: boolean
+    nombreEnlace?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["minutas"]>
+
+  export type MinutasSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    numeroMinuta?: boolean
+    licitacion?: boolean
+    numeroPrograma?: boolean
+    programa?: boolean
+    numeroCocina?: boolean
+    cocina?: boolean
+    dia?: boolean
+    mes?: boolean
+    anio?: boolean
+    numeroPreparacion?: boolean
+    sucid?: boolean
+    codigoServicio?: boolean
+    nombreServicio?: boolean
+    codigoEnlace?: boolean
+    nombreEnlace?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["minutas"]>
+
+  export type MinutasSelectScalar = {
+    id?: boolean
+    numeroMinuta?: boolean
+    licitacion?: boolean
+    numeroPrograma?: boolean
+    programa?: boolean
+    numeroCocina?: boolean
+    cocina?: boolean
+    dia?: boolean
+    mes?: boolean
+    anio?: boolean
+    numeroPreparacion?: boolean
+    sucid?: boolean
+    codigoServicio?: boolean
+    nombreServicio?: boolean
+    codigoEnlace?: boolean
+    nombreEnlace?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type $MinutasPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Minutas"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      numeroMinuta: string
+      licitacion: string
+      numeroPrograma: string
+      programa: string
+      numeroCocina: number
+      cocina: string
+      dia: number
+      mes: number
+      anio: number
+      numeroPreparacion: bigint
+      sucid: string
+      codigoServicio: string
+      nombreServicio: string
+      codigoEnlace: number
+      nombreEnlace: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["minutas"]>
+    composites: {}
+  }
+
+  type MinutasGetPayload<S extends boolean | null | undefined | MinutasDefaultArgs> = $Result.GetResult<Prisma.$MinutasPayload, S>
+
+  type MinutasCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<MinutasFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: MinutasCountAggregateInputType | true
+    }
+
+  export interface MinutasDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Minutas'], meta: { name: 'Minutas' } }
+    /**
+     * Find zero or one Minutas that matches the filter.
+     * @param {MinutasFindUniqueArgs} args - Arguments to find a Minutas
+     * @example
+     * // Get one Minutas
+     * const minutas = await prisma.minutas.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MinutasFindUniqueArgs>(args: SelectSubset<T, MinutasFindUniqueArgs<ExtArgs>>): Prisma__MinutasClient<$Result.GetResult<Prisma.$MinutasPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Minutas that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {MinutasFindUniqueOrThrowArgs} args - Arguments to find a Minutas
+     * @example
+     * // Get one Minutas
+     * const minutas = await prisma.minutas.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MinutasFindUniqueOrThrowArgs>(args: SelectSubset<T, MinutasFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MinutasClient<$Result.GetResult<Prisma.$MinutasPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Minutas that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MinutasFindFirstArgs} args - Arguments to find a Minutas
+     * @example
+     * // Get one Minutas
+     * const minutas = await prisma.minutas.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MinutasFindFirstArgs>(args?: SelectSubset<T, MinutasFindFirstArgs<ExtArgs>>): Prisma__MinutasClient<$Result.GetResult<Prisma.$MinutasPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Minutas that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MinutasFindFirstOrThrowArgs} args - Arguments to find a Minutas
+     * @example
+     * // Get one Minutas
+     * const minutas = await prisma.minutas.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MinutasFindFirstOrThrowArgs>(args?: SelectSubset<T, MinutasFindFirstOrThrowArgs<ExtArgs>>): Prisma__MinutasClient<$Result.GetResult<Prisma.$MinutasPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Minutas that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MinutasFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Minutas
+     * const minutas = await prisma.minutas.findMany()
+     * 
+     * // Get first 10 Minutas
+     * const minutas = await prisma.minutas.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const minutasWithIdOnly = await prisma.minutas.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MinutasFindManyArgs>(args?: SelectSubset<T, MinutasFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MinutasPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Minutas.
+     * @param {MinutasCreateArgs} args - Arguments to create a Minutas.
+     * @example
+     * // Create one Minutas
+     * const Minutas = await prisma.minutas.create({
+     *   data: {
+     *     // ... data to create a Minutas
+     *   }
+     * })
+     * 
+     */
+    create<T extends MinutasCreateArgs>(args: SelectSubset<T, MinutasCreateArgs<ExtArgs>>): Prisma__MinutasClient<$Result.GetResult<Prisma.$MinutasPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Minutas.
+     * @param {MinutasCreateManyArgs} args - Arguments to create many Minutas.
+     * @example
+     * // Create many Minutas
+     * const minutas = await prisma.minutas.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MinutasCreateManyArgs>(args?: SelectSubset<T, MinutasCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Minutas and returns the data saved in the database.
+     * @param {MinutasCreateManyAndReturnArgs} args - Arguments to create many Minutas.
+     * @example
+     * // Create many Minutas
+     * const minutas = await prisma.minutas.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Minutas and only return the `id`
+     * const minutasWithIdOnly = await prisma.minutas.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MinutasCreateManyAndReturnArgs>(args?: SelectSubset<T, MinutasCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MinutasPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Minutas.
+     * @param {MinutasDeleteArgs} args - Arguments to delete one Minutas.
+     * @example
+     * // Delete one Minutas
+     * const Minutas = await prisma.minutas.delete({
+     *   where: {
+     *     // ... filter to delete one Minutas
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MinutasDeleteArgs>(args: SelectSubset<T, MinutasDeleteArgs<ExtArgs>>): Prisma__MinutasClient<$Result.GetResult<Prisma.$MinutasPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Minutas.
+     * @param {MinutasUpdateArgs} args - Arguments to update one Minutas.
+     * @example
+     * // Update one Minutas
+     * const minutas = await prisma.minutas.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MinutasUpdateArgs>(args: SelectSubset<T, MinutasUpdateArgs<ExtArgs>>): Prisma__MinutasClient<$Result.GetResult<Prisma.$MinutasPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Minutas.
+     * @param {MinutasDeleteManyArgs} args - Arguments to filter Minutas to delete.
+     * @example
+     * // Delete a few Minutas
+     * const { count } = await prisma.minutas.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MinutasDeleteManyArgs>(args?: SelectSubset<T, MinutasDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Minutas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MinutasUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Minutas
+     * const minutas = await prisma.minutas.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MinutasUpdateManyArgs>(args: SelectSubset<T, MinutasUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Minutas.
+     * @param {MinutasUpsertArgs} args - Arguments to update or create a Minutas.
+     * @example
+     * // Update or create a Minutas
+     * const minutas = await prisma.minutas.upsert({
+     *   create: {
+     *     // ... data to create a Minutas
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Minutas we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MinutasUpsertArgs>(args: SelectSubset<T, MinutasUpsertArgs<ExtArgs>>): Prisma__MinutasClient<$Result.GetResult<Prisma.$MinutasPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Minutas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MinutasCountArgs} args - Arguments to filter Minutas to count.
+     * @example
+     * // Count the number of Minutas
+     * const count = await prisma.minutas.count({
+     *   where: {
+     *     // ... the filter for the Minutas we want to count
+     *   }
+     * })
+    **/
+    count<T extends MinutasCountArgs>(
+      args?: Subset<T, MinutasCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MinutasCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Minutas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MinutasAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MinutasAggregateArgs>(args: Subset<T, MinutasAggregateArgs>): Prisma.PrismaPromise<GetMinutasAggregateType<T>>
+
+    /**
+     * Group by Minutas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MinutasGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MinutasGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MinutasGroupByArgs['orderBy'] }
+        : { orderBy?: MinutasGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MinutasGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMinutasGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Minutas model
+   */
+  readonly fields: MinutasFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Minutas.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MinutasClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Minutas model
+   */ 
+  interface MinutasFieldRefs {
+    readonly id: FieldRef<"Minutas", 'String'>
+    readonly numeroMinuta: FieldRef<"Minutas", 'String'>
+    readonly licitacion: FieldRef<"Minutas", 'String'>
+    readonly numeroPrograma: FieldRef<"Minutas", 'String'>
+    readonly programa: FieldRef<"Minutas", 'String'>
+    readonly numeroCocina: FieldRef<"Minutas", 'Int'>
+    readonly cocina: FieldRef<"Minutas", 'String'>
+    readonly dia: FieldRef<"Minutas", 'Int'>
+    readonly mes: FieldRef<"Minutas", 'Int'>
+    readonly anio: FieldRef<"Minutas", 'Int'>
+    readonly numeroPreparacion: FieldRef<"Minutas", 'BigInt'>
+    readonly sucid: FieldRef<"Minutas", 'String'>
+    readonly codigoServicio: FieldRef<"Minutas", 'String'>
+    readonly nombreServicio: FieldRef<"Minutas", 'String'>
+    readonly codigoEnlace: FieldRef<"Minutas", 'Int'>
+    readonly nombreEnlace: FieldRef<"Minutas", 'String'>
+    readonly createdAt: FieldRef<"Minutas", 'DateTime'>
+    readonly updatedAt: FieldRef<"Minutas", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Minutas findUnique
+   */
+  export type MinutasFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Minutas
+     */
+    select?: MinutasSelect<ExtArgs> | null
+    /**
+     * Filter, which Minutas to fetch.
+     */
+    where: MinutasWhereUniqueInput
+  }
+
+  /**
+   * Minutas findUniqueOrThrow
+   */
+  export type MinutasFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Minutas
+     */
+    select?: MinutasSelect<ExtArgs> | null
+    /**
+     * Filter, which Minutas to fetch.
+     */
+    where: MinutasWhereUniqueInput
+  }
+
+  /**
+   * Minutas findFirst
+   */
+  export type MinutasFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Minutas
+     */
+    select?: MinutasSelect<ExtArgs> | null
+    /**
+     * Filter, which Minutas to fetch.
+     */
+    where?: MinutasWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Minutas to fetch.
+     */
+    orderBy?: MinutasOrderByWithRelationInput | MinutasOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Minutas.
+     */
+    cursor?: MinutasWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Minutas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Minutas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Minutas.
+     */
+    distinct?: MinutasScalarFieldEnum | MinutasScalarFieldEnum[]
+  }
+
+  /**
+   * Minutas findFirstOrThrow
+   */
+  export type MinutasFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Minutas
+     */
+    select?: MinutasSelect<ExtArgs> | null
+    /**
+     * Filter, which Minutas to fetch.
+     */
+    where?: MinutasWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Minutas to fetch.
+     */
+    orderBy?: MinutasOrderByWithRelationInput | MinutasOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Minutas.
+     */
+    cursor?: MinutasWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Minutas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Minutas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Minutas.
+     */
+    distinct?: MinutasScalarFieldEnum | MinutasScalarFieldEnum[]
+  }
+
+  /**
+   * Minutas findMany
+   */
+  export type MinutasFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Minutas
+     */
+    select?: MinutasSelect<ExtArgs> | null
+    /**
+     * Filter, which Minutas to fetch.
+     */
+    where?: MinutasWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Minutas to fetch.
+     */
+    orderBy?: MinutasOrderByWithRelationInput | MinutasOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Minutas.
+     */
+    cursor?: MinutasWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Minutas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Minutas.
+     */
+    skip?: number
+    distinct?: MinutasScalarFieldEnum | MinutasScalarFieldEnum[]
+  }
+
+  /**
+   * Minutas create
+   */
+  export type MinutasCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Minutas
+     */
+    select?: MinutasSelect<ExtArgs> | null
+    /**
+     * The data needed to create a Minutas.
+     */
+    data: XOR<MinutasCreateInput, MinutasUncheckedCreateInput>
+  }
+
+  /**
+   * Minutas createMany
+   */
+  export type MinutasCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Minutas.
+     */
+    data: MinutasCreateManyInput | MinutasCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Minutas createManyAndReturn
+   */
+  export type MinutasCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Minutas
+     */
+    select?: MinutasSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Minutas.
+     */
+    data: MinutasCreateManyInput | MinutasCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Minutas update
+   */
+  export type MinutasUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Minutas
+     */
+    select?: MinutasSelect<ExtArgs> | null
+    /**
+     * The data needed to update a Minutas.
+     */
+    data: XOR<MinutasUpdateInput, MinutasUncheckedUpdateInput>
+    /**
+     * Choose, which Minutas to update.
+     */
+    where: MinutasWhereUniqueInput
+  }
+
+  /**
+   * Minutas updateMany
+   */
+  export type MinutasUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Minutas.
+     */
+    data: XOR<MinutasUpdateManyMutationInput, MinutasUncheckedUpdateManyInput>
+    /**
+     * Filter which Minutas to update
+     */
+    where?: MinutasWhereInput
+  }
+
+  /**
+   * Minutas upsert
+   */
+  export type MinutasUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Minutas
+     */
+    select?: MinutasSelect<ExtArgs> | null
+    /**
+     * The filter to search for the Minutas to update in case it exists.
+     */
+    where: MinutasWhereUniqueInput
+    /**
+     * In case the Minutas found by the `where` argument doesn't exist, create a new Minutas with this data.
+     */
+    create: XOR<MinutasCreateInput, MinutasUncheckedCreateInput>
+    /**
+     * In case the Minutas was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MinutasUpdateInput, MinutasUncheckedUpdateInput>
+  }
+
+  /**
+   * Minutas delete
+   */
+  export type MinutasDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Minutas
+     */
+    select?: MinutasSelect<ExtArgs> | null
+    /**
+     * Filter which Minutas to delete.
+     */
+    where: MinutasWhereUniqueInput
+  }
+
+  /**
+   * Minutas deleteMany
+   */
+  export type MinutasDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Minutas to delete
+     */
+    where?: MinutasWhereInput
+  }
+
+  /**
+   * Minutas without action
+   */
+  export type MinutasDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Minutas
+     */
+    select?: MinutasSelect<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -40338,6 +42654,52 @@ export namespace Prisma {
   export type RetornoProductosAlertaHistorialEliminadoScalarFieldEnum = (typeof RetornoProductosAlertaHistorialEliminadoScalarFieldEnum)[keyof typeof RetornoProductosAlertaHistorialEliminadoScalarFieldEnum]
 
 
+  export const PreparacionesScalarFieldEnum: {
+    id: 'id',
+    licitacion: 'licitacion',
+    numeroPreparacion: 'numeroPreparacion',
+    nombrePreparacion: 'nombrePreparacion',
+    numeroPrograma: 'numeroPrograma',
+    programa: 'programa',
+    numeroCocina: 'numeroCocina',
+    cocina: 'cocina',
+    codigoProducto: 'codigoProducto',
+    nombreProducto: 'nombreProducto',
+    codigoSubServicio: 'codigoSubServicio',
+    nombreSubServicio: 'nombreSubServicio',
+    cantPreparacion: 'cantPreparacion',
+    porcentajePerdida: 'porcentajePerdida',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type PreparacionesScalarFieldEnum = (typeof PreparacionesScalarFieldEnum)[keyof typeof PreparacionesScalarFieldEnum]
+
+
+  export const MinutasScalarFieldEnum: {
+    id: 'id',
+    numeroMinuta: 'numeroMinuta',
+    licitacion: 'licitacion',
+    numeroPrograma: 'numeroPrograma',
+    programa: 'programa',
+    numeroCocina: 'numeroCocina',
+    cocina: 'cocina',
+    dia: 'dia',
+    mes: 'mes',
+    anio: 'anio',
+    numeroPreparacion: 'numeroPreparacion',
+    sucid: 'sucid',
+    codigoServicio: 'codigoServicio',
+    nombreServicio: 'nombreServicio',
+    codigoEnlace: 'codigoEnlace',
+    nombreEnlace: 'nombreEnlace',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type MinutasScalarFieldEnum = (typeof MinutasScalarFieldEnum)[keyof typeof MinutasScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -40427,6 +42789,34 @@ export namespace Prisma {
    * Reference to a field of type 'Float[]'
    */
   export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Decimal'
+   */
+  export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+  /**
+   * Reference to a field of type 'Decimal[]'
+   */
+  export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'BigInt'
+   */
+  export type BigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt'>
+    
+
+
+  /**
+   * Reference to a field of type 'BigInt[]'
+   */
+  export type ListBigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt[]'>
     
   /**
    * Deep Input Types
@@ -43436,6 +45826,234 @@ export namespace Prisma {
     motivoEliminacion?: StringWithAggregatesFilter<"RetornoProductosAlertaHistorialEliminado"> | string
     usuarioEliminador?: StringWithAggregatesFilter<"RetornoProductosAlertaHistorialEliminado"> | string
     fechaEliminacion?: DateTimeWithAggregatesFilter<"RetornoProductosAlertaHistorialEliminado"> | Date | string
+  }
+
+  export type PreparacionesWhereInput = {
+    AND?: PreparacionesWhereInput | PreparacionesWhereInput[]
+    OR?: PreparacionesWhereInput[]
+    NOT?: PreparacionesWhereInput | PreparacionesWhereInput[]
+    id?: StringFilter<"Preparaciones"> | string
+    licitacion?: StringFilter<"Preparaciones"> | string
+    numeroPreparacion?: IntFilter<"Preparaciones"> | number
+    nombrePreparacion?: StringFilter<"Preparaciones"> | string
+    numeroPrograma?: StringFilter<"Preparaciones"> | string
+    programa?: StringFilter<"Preparaciones"> | string
+    numeroCocina?: IntFilter<"Preparaciones"> | number
+    cocina?: StringFilter<"Preparaciones"> | string
+    codigoProducto?: StringFilter<"Preparaciones"> | string
+    nombreProducto?: StringFilter<"Preparaciones"> | string
+    codigoSubServicio?: StringFilter<"Preparaciones"> | string
+    nombreSubServicio?: StringFilter<"Preparaciones"> | string
+    cantPreparacion?: DecimalFilter<"Preparaciones"> | Decimal | DecimalJsLike | number | string
+    porcentajePerdida?: IntFilter<"Preparaciones"> | number
+    createdAt?: DateTimeFilter<"Preparaciones"> | Date | string
+    updatedAt?: DateTimeFilter<"Preparaciones"> | Date | string
+  }
+
+  export type PreparacionesOrderByWithRelationInput = {
+    id?: SortOrder
+    licitacion?: SortOrder
+    numeroPreparacion?: SortOrder
+    nombrePreparacion?: SortOrder
+    numeroPrograma?: SortOrder
+    programa?: SortOrder
+    numeroCocina?: SortOrder
+    cocina?: SortOrder
+    codigoProducto?: SortOrder
+    nombreProducto?: SortOrder
+    codigoSubServicio?: SortOrder
+    nombreSubServicio?: SortOrder
+    cantPreparacion?: SortOrder
+    porcentajePerdida?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PreparacionesWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: PreparacionesWhereInput | PreparacionesWhereInput[]
+    OR?: PreparacionesWhereInput[]
+    NOT?: PreparacionesWhereInput | PreparacionesWhereInput[]
+    licitacion?: StringFilter<"Preparaciones"> | string
+    numeroPreparacion?: IntFilter<"Preparaciones"> | number
+    nombrePreparacion?: StringFilter<"Preparaciones"> | string
+    numeroPrograma?: StringFilter<"Preparaciones"> | string
+    programa?: StringFilter<"Preparaciones"> | string
+    numeroCocina?: IntFilter<"Preparaciones"> | number
+    cocina?: StringFilter<"Preparaciones"> | string
+    codigoProducto?: StringFilter<"Preparaciones"> | string
+    nombreProducto?: StringFilter<"Preparaciones"> | string
+    codigoSubServicio?: StringFilter<"Preparaciones"> | string
+    nombreSubServicio?: StringFilter<"Preparaciones"> | string
+    cantPreparacion?: DecimalFilter<"Preparaciones"> | Decimal | DecimalJsLike | number | string
+    porcentajePerdida?: IntFilter<"Preparaciones"> | number
+    createdAt?: DateTimeFilter<"Preparaciones"> | Date | string
+    updatedAt?: DateTimeFilter<"Preparaciones"> | Date | string
+  }, "id">
+
+  export type PreparacionesOrderByWithAggregationInput = {
+    id?: SortOrder
+    licitacion?: SortOrder
+    numeroPreparacion?: SortOrder
+    nombrePreparacion?: SortOrder
+    numeroPrograma?: SortOrder
+    programa?: SortOrder
+    numeroCocina?: SortOrder
+    cocina?: SortOrder
+    codigoProducto?: SortOrder
+    nombreProducto?: SortOrder
+    codigoSubServicio?: SortOrder
+    nombreSubServicio?: SortOrder
+    cantPreparacion?: SortOrder
+    porcentajePerdida?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: PreparacionesCountOrderByAggregateInput
+    _avg?: PreparacionesAvgOrderByAggregateInput
+    _max?: PreparacionesMaxOrderByAggregateInput
+    _min?: PreparacionesMinOrderByAggregateInput
+    _sum?: PreparacionesSumOrderByAggregateInput
+  }
+
+  export type PreparacionesScalarWhereWithAggregatesInput = {
+    AND?: PreparacionesScalarWhereWithAggregatesInput | PreparacionesScalarWhereWithAggregatesInput[]
+    OR?: PreparacionesScalarWhereWithAggregatesInput[]
+    NOT?: PreparacionesScalarWhereWithAggregatesInput | PreparacionesScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Preparaciones"> | string
+    licitacion?: StringWithAggregatesFilter<"Preparaciones"> | string
+    numeroPreparacion?: IntWithAggregatesFilter<"Preparaciones"> | number
+    nombrePreparacion?: StringWithAggregatesFilter<"Preparaciones"> | string
+    numeroPrograma?: StringWithAggregatesFilter<"Preparaciones"> | string
+    programa?: StringWithAggregatesFilter<"Preparaciones"> | string
+    numeroCocina?: IntWithAggregatesFilter<"Preparaciones"> | number
+    cocina?: StringWithAggregatesFilter<"Preparaciones"> | string
+    codigoProducto?: StringWithAggregatesFilter<"Preparaciones"> | string
+    nombreProducto?: StringWithAggregatesFilter<"Preparaciones"> | string
+    codigoSubServicio?: StringWithAggregatesFilter<"Preparaciones"> | string
+    nombreSubServicio?: StringWithAggregatesFilter<"Preparaciones"> | string
+    cantPreparacion?: DecimalWithAggregatesFilter<"Preparaciones"> | Decimal | DecimalJsLike | number | string
+    porcentajePerdida?: IntWithAggregatesFilter<"Preparaciones"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"Preparaciones"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Preparaciones"> | Date | string
+  }
+
+  export type MinutasWhereInput = {
+    AND?: MinutasWhereInput | MinutasWhereInput[]
+    OR?: MinutasWhereInput[]
+    NOT?: MinutasWhereInput | MinutasWhereInput[]
+    id?: StringFilter<"Minutas"> | string
+    numeroMinuta?: StringFilter<"Minutas"> | string
+    licitacion?: StringFilter<"Minutas"> | string
+    numeroPrograma?: StringFilter<"Minutas"> | string
+    programa?: StringFilter<"Minutas"> | string
+    numeroCocina?: IntFilter<"Minutas"> | number
+    cocina?: StringFilter<"Minutas"> | string
+    dia?: IntFilter<"Minutas"> | number
+    mes?: IntFilter<"Minutas"> | number
+    anio?: IntFilter<"Minutas"> | number
+    numeroPreparacion?: BigIntFilter<"Minutas"> | bigint | number
+    sucid?: StringFilter<"Minutas"> | string
+    codigoServicio?: StringFilter<"Minutas"> | string
+    nombreServicio?: StringFilter<"Minutas"> | string
+    codigoEnlace?: IntFilter<"Minutas"> | number
+    nombreEnlace?: StringFilter<"Minutas"> | string
+    createdAt?: DateTimeFilter<"Minutas"> | Date | string
+    updatedAt?: DateTimeFilter<"Minutas"> | Date | string
+  }
+
+  export type MinutasOrderByWithRelationInput = {
+    id?: SortOrder
+    numeroMinuta?: SortOrder
+    licitacion?: SortOrder
+    numeroPrograma?: SortOrder
+    programa?: SortOrder
+    numeroCocina?: SortOrder
+    cocina?: SortOrder
+    dia?: SortOrder
+    mes?: SortOrder
+    anio?: SortOrder
+    numeroPreparacion?: SortOrder
+    sucid?: SortOrder
+    codigoServicio?: SortOrder
+    nombreServicio?: SortOrder
+    codigoEnlace?: SortOrder
+    nombreEnlace?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MinutasWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: MinutasWhereInput | MinutasWhereInput[]
+    OR?: MinutasWhereInput[]
+    NOT?: MinutasWhereInput | MinutasWhereInput[]
+    numeroMinuta?: StringFilter<"Minutas"> | string
+    licitacion?: StringFilter<"Minutas"> | string
+    numeroPrograma?: StringFilter<"Minutas"> | string
+    programa?: StringFilter<"Minutas"> | string
+    numeroCocina?: IntFilter<"Minutas"> | number
+    cocina?: StringFilter<"Minutas"> | string
+    dia?: IntFilter<"Minutas"> | number
+    mes?: IntFilter<"Minutas"> | number
+    anio?: IntFilter<"Minutas"> | number
+    numeroPreparacion?: BigIntFilter<"Minutas"> | bigint | number
+    sucid?: StringFilter<"Minutas"> | string
+    codigoServicio?: StringFilter<"Minutas"> | string
+    nombreServicio?: StringFilter<"Minutas"> | string
+    codigoEnlace?: IntFilter<"Minutas"> | number
+    nombreEnlace?: StringFilter<"Minutas"> | string
+    createdAt?: DateTimeFilter<"Minutas"> | Date | string
+    updatedAt?: DateTimeFilter<"Minutas"> | Date | string
+  }, "id">
+
+  export type MinutasOrderByWithAggregationInput = {
+    id?: SortOrder
+    numeroMinuta?: SortOrder
+    licitacion?: SortOrder
+    numeroPrograma?: SortOrder
+    programa?: SortOrder
+    numeroCocina?: SortOrder
+    cocina?: SortOrder
+    dia?: SortOrder
+    mes?: SortOrder
+    anio?: SortOrder
+    numeroPreparacion?: SortOrder
+    sucid?: SortOrder
+    codigoServicio?: SortOrder
+    nombreServicio?: SortOrder
+    codigoEnlace?: SortOrder
+    nombreEnlace?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: MinutasCountOrderByAggregateInput
+    _avg?: MinutasAvgOrderByAggregateInput
+    _max?: MinutasMaxOrderByAggregateInput
+    _min?: MinutasMinOrderByAggregateInput
+    _sum?: MinutasSumOrderByAggregateInput
+  }
+
+  export type MinutasScalarWhereWithAggregatesInput = {
+    AND?: MinutasScalarWhereWithAggregatesInput | MinutasScalarWhereWithAggregatesInput[]
+    OR?: MinutasScalarWhereWithAggregatesInput[]
+    NOT?: MinutasScalarWhereWithAggregatesInput | MinutasScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Minutas"> | string
+    numeroMinuta?: StringWithAggregatesFilter<"Minutas"> | string
+    licitacion?: StringWithAggregatesFilter<"Minutas"> | string
+    numeroPrograma?: StringWithAggregatesFilter<"Minutas"> | string
+    programa?: StringWithAggregatesFilter<"Minutas"> | string
+    numeroCocina?: IntWithAggregatesFilter<"Minutas"> | number
+    cocina?: StringWithAggregatesFilter<"Minutas"> | string
+    dia?: IntWithAggregatesFilter<"Minutas"> | number
+    mes?: IntWithAggregatesFilter<"Minutas"> | number
+    anio?: IntWithAggregatesFilter<"Minutas"> | number
+    numeroPreparacion?: BigIntWithAggregatesFilter<"Minutas"> | bigint | number
+    sucid?: StringWithAggregatesFilter<"Minutas"> | string
+    codigoServicio?: StringWithAggregatesFilter<"Minutas"> | string
+    nombreServicio?: StringWithAggregatesFilter<"Minutas"> | string
+    codigoEnlace?: IntWithAggregatesFilter<"Minutas"> | number
+    nombreEnlace?: StringWithAggregatesFilter<"Minutas"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Minutas"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Minutas"> | Date | string
   }
 
   export type RoleCreateInput = {
@@ -46901,6 +49519,286 @@ export namespace Prisma {
     fechaEliminacion?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type PreparacionesCreateInput = {
+    id?: string
+    licitacion: string
+    numeroPreparacion: number
+    nombrePreparacion: string
+    numeroPrograma: string
+    programa: string
+    numeroCocina: number
+    cocina: string
+    codigoProducto: string
+    nombreProducto: string
+    codigoSubServicio: string
+    nombreSubServicio: string
+    cantPreparacion: Decimal | DecimalJsLike | number | string
+    porcentajePerdida: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PreparacionesUncheckedCreateInput = {
+    id?: string
+    licitacion: string
+    numeroPreparacion: number
+    nombrePreparacion: string
+    numeroPrograma: string
+    programa: string
+    numeroCocina: number
+    cocina: string
+    codigoProducto: string
+    nombreProducto: string
+    codigoSubServicio: string
+    nombreSubServicio: string
+    cantPreparacion: Decimal | DecimalJsLike | number | string
+    porcentajePerdida: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PreparacionesUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licitacion?: StringFieldUpdateOperationsInput | string
+    numeroPreparacion?: IntFieldUpdateOperationsInput | number
+    nombrePreparacion?: StringFieldUpdateOperationsInput | string
+    numeroPrograma?: StringFieldUpdateOperationsInput | string
+    programa?: StringFieldUpdateOperationsInput | string
+    numeroCocina?: IntFieldUpdateOperationsInput | number
+    cocina?: StringFieldUpdateOperationsInput | string
+    codigoProducto?: StringFieldUpdateOperationsInput | string
+    nombreProducto?: StringFieldUpdateOperationsInput | string
+    codigoSubServicio?: StringFieldUpdateOperationsInput | string
+    nombreSubServicio?: StringFieldUpdateOperationsInput | string
+    cantPreparacion?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    porcentajePerdida?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PreparacionesUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licitacion?: StringFieldUpdateOperationsInput | string
+    numeroPreparacion?: IntFieldUpdateOperationsInput | number
+    nombrePreparacion?: StringFieldUpdateOperationsInput | string
+    numeroPrograma?: StringFieldUpdateOperationsInput | string
+    programa?: StringFieldUpdateOperationsInput | string
+    numeroCocina?: IntFieldUpdateOperationsInput | number
+    cocina?: StringFieldUpdateOperationsInput | string
+    codigoProducto?: StringFieldUpdateOperationsInput | string
+    nombreProducto?: StringFieldUpdateOperationsInput | string
+    codigoSubServicio?: StringFieldUpdateOperationsInput | string
+    nombreSubServicio?: StringFieldUpdateOperationsInput | string
+    cantPreparacion?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    porcentajePerdida?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PreparacionesCreateManyInput = {
+    id?: string
+    licitacion: string
+    numeroPreparacion: number
+    nombrePreparacion: string
+    numeroPrograma: string
+    programa: string
+    numeroCocina: number
+    cocina: string
+    codigoProducto: string
+    nombreProducto: string
+    codigoSubServicio: string
+    nombreSubServicio: string
+    cantPreparacion: Decimal | DecimalJsLike | number | string
+    porcentajePerdida: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PreparacionesUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licitacion?: StringFieldUpdateOperationsInput | string
+    numeroPreparacion?: IntFieldUpdateOperationsInput | number
+    nombrePreparacion?: StringFieldUpdateOperationsInput | string
+    numeroPrograma?: StringFieldUpdateOperationsInput | string
+    programa?: StringFieldUpdateOperationsInput | string
+    numeroCocina?: IntFieldUpdateOperationsInput | number
+    cocina?: StringFieldUpdateOperationsInput | string
+    codigoProducto?: StringFieldUpdateOperationsInput | string
+    nombreProducto?: StringFieldUpdateOperationsInput | string
+    codigoSubServicio?: StringFieldUpdateOperationsInput | string
+    nombreSubServicio?: StringFieldUpdateOperationsInput | string
+    cantPreparacion?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    porcentajePerdida?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PreparacionesUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licitacion?: StringFieldUpdateOperationsInput | string
+    numeroPreparacion?: IntFieldUpdateOperationsInput | number
+    nombrePreparacion?: StringFieldUpdateOperationsInput | string
+    numeroPrograma?: StringFieldUpdateOperationsInput | string
+    programa?: StringFieldUpdateOperationsInput | string
+    numeroCocina?: IntFieldUpdateOperationsInput | number
+    cocina?: StringFieldUpdateOperationsInput | string
+    codigoProducto?: StringFieldUpdateOperationsInput | string
+    nombreProducto?: StringFieldUpdateOperationsInput | string
+    codigoSubServicio?: StringFieldUpdateOperationsInput | string
+    nombreSubServicio?: StringFieldUpdateOperationsInput | string
+    cantPreparacion?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    porcentajePerdida?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MinutasCreateInput = {
+    id?: string
+    numeroMinuta: string
+    licitacion: string
+    numeroPrograma: string
+    programa: string
+    numeroCocina: number
+    cocina: string
+    dia: number
+    mes: number
+    anio: number
+    numeroPreparacion: bigint | number
+    sucid: string
+    codigoServicio: string
+    nombreServicio: string
+    codigoEnlace: number
+    nombreEnlace: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MinutasUncheckedCreateInput = {
+    id?: string
+    numeroMinuta: string
+    licitacion: string
+    numeroPrograma: string
+    programa: string
+    numeroCocina: number
+    cocina: string
+    dia: number
+    mes: number
+    anio: number
+    numeroPreparacion: bigint | number
+    sucid: string
+    codigoServicio: string
+    nombreServicio: string
+    codigoEnlace: number
+    nombreEnlace: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MinutasUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroMinuta?: StringFieldUpdateOperationsInput | string
+    licitacion?: StringFieldUpdateOperationsInput | string
+    numeroPrograma?: StringFieldUpdateOperationsInput | string
+    programa?: StringFieldUpdateOperationsInput | string
+    numeroCocina?: IntFieldUpdateOperationsInput | number
+    cocina?: StringFieldUpdateOperationsInput | string
+    dia?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    anio?: IntFieldUpdateOperationsInput | number
+    numeroPreparacion?: BigIntFieldUpdateOperationsInput | bigint | number
+    sucid?: StringFieldUpdateOperationsInput | string
+    codigoServicio?: StringFieldUpdateOperationsInput | string
+    nombreServicio?: StringFieldUpdateOperationsInput | string
+    codigoEnlace?: IntFieldUpdateOperationsInput | number
+    nombreEnlace?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MinutasUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroMinuta?: StringFieldUpdateOperationsInput | string
+    licitacion?: StringFieldUpdateOperationsInput | string
+    numeroPrograma?: StringFieldUpdateOperationsInput | string
+    programa?: StringFieldUpdateOperationsInput | string
+    numeroCocina?: IntFieldUpdateOperationsInput | number
+    cocina?: StringFieldUpdateOperationsInput | string
+    dia?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    anio?: IntFieldUpdateOperationsInput | number
+    numeroPreparacion?: BigIntFieldUpdateOperationsInput | bigint | number
+    sucid?: StringFieldUpdateOperationsInput | string
+    codigoServicio?: StringFieldUpdateOperationsInput | string
+    nombreServicio?: StringFieldUpdateOperationsInput | string
+    codigoEnlace?: IntFieldUpdateOperationsInput | number
+    nombreEnlace?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MinutasCreateManyInput = {
+    id?: string
+    numeroMinuta: string
+    licitacion: string
+    numeroPrograma: string
+    programa: string
+    numeroCocina: number
+    cocina: string
+    dia: number
+    mes: number
+    anio: number
+    numeroPreparacion: bigint | number
+    sucid: string
+    codigoServicio: string
+    nombreServicio: string
+    codigoEnlace: number
+    nombreEnlace: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MinutasUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroMinuta?: StringFieldUpdateOperationsInput | string
+    licitacion?: StringFieldUpdateOperationsInput | string
+    numeroPrograma?: StringFieldUpdateOperationsInput | string
+    programa?: StringFieldUpdateOperationsInput | string
+    numeroCocina?: IntFieldUpdateOperationsInput | number
+    cocina?: StringFieldUpdateOperationsInput | string
+    dia?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    anio?: IntFieldUpdateOperationsInput | number
+    numeroPreparacion?: BigIntFieldUpdateOperationsInput | bigint | number
+    sucid?: StringFieldUpdateOperationsInput | string
+    codigoServicio?: StringFieldUpdateOperationsInput | string
+    nombreServicio?: StringFieldUpdateOperationsInput | string
+    codigoEnlace?: IntFieldUpdateOperationsInput | number
+    nombreEnlace?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MinutasUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroMinuta?: StringFieldUpdateOperationsInput | string
+    licitacion?: StringFieldUpdateOperationsInput | string
+    numeroPrograma?: StringFieldUpdateOperationsInput | string
+    programa?: StringFieldUpdateOperationsInput | string
+    numeroCocina?: IntFieldUpdateOperationsInput | number
+    cocina?: StringFieldUpdateOperationsInput | string
+    dia?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    anio?: IntFieldUpdateOperationsInput | number
+    numeroPreparacion?: BigIntFieldUpdateOperationsInput | bigint | number
+    sucid?: StringFieldUpdateOperationsInput | string
+    codigoServicio?: StringFieldUpdateOperationsInput | string
+    nombreServicio?: StringFieldUpdateOperationsInput | string
+    codigoEnlace?: IntFieldUpdateOperationsInput | number
+    nombreEnlace?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -49073,6 +51971,212 @@ export namespace Prisma {
     fechaEliminacion?: SortOrder
   }
 
+  export type DecimalFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+  }
+
+  export type PreparacionesCountOrderByAggregateInput = {
+    id?: SortOrder
+    licitacion?: SortOrder
+    numeroPreparacion?: SortOrder
+    nombrePreparacion?: SortOrder
+    numeroPrograma?: SortOrder
+    programa?: SortOrder
+    numeroCocina?: SortOrder
+    cocina?: SortOrder
+    codigoProducto?: SortOrder
+    nombreProducto?: SortOrder
+    codigoSubServicio?: SortOrder
+    nombreSubServicio?: SortOrder
+    cantPreparacion?: SortOrder
+    porcentajePerdida?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PreparacionesAvgOrderByAggregateInput = {
+    numeroPreparacion?: SortOrder
+    numeroCocina?: SortOrder
+    cantPreparacion?: SortOrder
+    porcentajePerdida?: SortOrder
+  }
+
+  export type PreparacionesMaxOrderByAggregateInput = {
+    id?: SortOrder
+    licitacion?: SortOrder
+    numeroPreparacion?: SortOrder
+    nombrePreparacion?: SortOrder
+    numeroPrograma?: SortOrder
+    programa?: SortOrder
+    numeroCocina?: SortOrder
+    cocina?: SortOrder
+    codigoProducto?: SortOrder
+    nombreProducto?: SortOrder
+    codigoSubServicio?: SortOrder
+    nombreSubServicio?: SortOrder
+    cantPreparacion?: SortOrder
+    porcentajePerdida?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PreparacionesMinOrderByAggregateInput = {
+    id?: SortOrder
+    licitacion?: SortOrder
+    numeroPreparacion?: SortOrder
+    nombrePreparacion?: SortOrder
+    numeroPrograma?: SortOrder
+    programa?: SortOrder
+    numeroCocina?: SortOrder
+    cocina?: SortOrder
+    codigoProducto?: SortOrder
+    nombreProducto?: SortOrder
+    codigoSubServicio?: SortOrder
+    nombreSubServicio?: SortOrder
+    cantPreparacion?: SortOrder
+    porcentajePerdida?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PreparacionesSumOrderByAggregateInput = {
+    numeroPreparacion?: SortOrder
+    numeroCocina?: SortOrder
+    cantPreparacion?: SortOrder
+    porcentajePerdida?: SortOrder
+  }
+
+  export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedDecimalFilter<$PrismaModel>
+    _sum?: NestedDecimalFilter<$PrismaModel>
+    _min?: NestedDecimalFilter<$PrismaModel>
+    _max?: NestedDecimalFilter<$PrismaModel>
+  }
+
+  export type BigIntFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntFilter<$PrismaModel> | bigint | number
+  }
+
+  export type MinutasCountOrderByAggregateInput = {
+    id?: SortOrder
+    numeroMinuta?: SortOrder
+    licitacion?: SortOrder
+    numeroPrograma?: SortOrder
+    programa?: SortOrder
+    numeroCocina?: SortOrder
+    cocina?: SortOrder
+    dia?: SortOrder
+    mes?: SortOrder
+    anio?: SortOrder
+    numeroPreparacion?: SortOrder
+    sucid?: SortOrder
+    codigoServicio?: SortOrder
+    nombreServicio?: SortOrder
+    codigoEnlace?: SortOrder
+    nombreEnlace?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MinutasAvgOrderByAggregateInput = {
+    numeroCocina?: SortOrder
+    dia?: SortOrder
+    mes?: SortOrder
+    anio?: SortOrder
+    numeroPreparacion?: SortOrder
+    codigoEnlace?: SortOrder
+  }
+
+  export type MinutasMaxOrderByAggregateInput = {
+    id?: SortOrder
+    numeroMinuta?: SortOrder
+    licitacion?: SortOrder
+    numeroPrograma?: SortOrder
+    programa?: SortOrder
+    numeroCocina?: SortOrder
+    cocina?: SortOrder
+    dia?: SortOrder
+    mes?: SortOrder
+    anio?: SortOrder
+    numeroPreparacion?: SortOrder
+    sucid?: SortOrder
+    codigoServicio?: SortOrder
+    nombreServicio?: SortOrder
+    codigoEnlace?: SortOrder
+    nombreEnlace?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MinutasMinOrderByAggregateInput = {
+    id?: SortOrder
+    numeroMinuta?: SortOrder
+    licitacion?: SortOrder
+    numeroPrograma?: SortOrder
+    programa?: SortOrder
+    numeroCocina?: SortOrder
+    cocina?: SortOrder
+    dia?: SortOrder
+    mes?: SortOrder
+    anio?: SortOrder
+    numeroPreparacion?: SortOrder
+    sucid?: SortOrder
+    codigoServicio?: SortOrder
+    nombreServicio?: SortOrder
+    codigoEnlace?: SortOrder
+    nombreEnlace?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MinutasSumOrderByAggregateInput = {
+    numeroCocina?: SortOrder
+    dia?: SortOrder
+    mes?: SortOrder
+    anio?: SortOrder
+    numeroPreparacion?: SortOrder
+    codigoEnlace?: SortOrder
+  }
+
+  export type BigIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntWithAggregatesFilter<$PrismaModel> | bigint | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedBigIntFilter<$PrismaModel>
+    _min?: NestedBigIntFilter<$PrismaModel>
+    _max?: NestedBigIntFilter<$PrismaModel>
+  }
+
   export type UserCreateNestedManyWithoutRoleInput = {
     create?: XOR<UserCreateWithoutRoleInput, UserUncheckedCreateWithoutRoleInput> | UserCreateWithoutRoleInput[] | UserUncheckedCreateWithoutRoleInput[]
     connectOrCreate?: UserCreateOrConnectWithoutRoleInput | UserCreateOrConnectWithoutRoleInput[]
@@ -50143,6 +53247,22 @@ export namespace Prisma {
     update?: XOR<XOR<SucursalUpdateToOneWithWhereWithoutRetornoProductosMovimientoInput, SucursalUpdateWithoutRetornoProductosMovimientoInput>, SucursalUncheckedUpdateWithoutRetornoProductosMovimientoInput>
   }
 
+  export type DecimalFieldUpdateOperationsInput = {
+    set?: Decimal | DecimalJsLike | number | string
+    increment?: Decimal | DecimalJsLike | number | string
+    decrement?: Decimal | DecimalJsLike | number | string
+    multiply?: Decimal | DecimalJsLike | number | string
+    divide?: Decimal | DecimalJsLike | number | string
+  }
+
+  export type BigIntFieldUpdateOperationsInput = {
+    set?: bigint | number
+    increment?: bigint | number
+    decrement?: bigint | number
+    multiply?: bigint | number
+    divide?: bigint | number
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -50374,6 +53494,60 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedDecimalFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+  }
+
+  export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedDecimalFilter<$PrismaModel>
+    _sum?: NestedDecimalFilter<$PrismaModel>
+    _min?: NestedDecimalFilter<$PrismaModel>
+    _max?: NestedDecimalFilter<$PrismaModel>
+  }
+
+  export type NestedBigIntFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntFilter<$PrismaModel> | bigint | number
+  }
+
+  export type NestedBigIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntWithAggregatesFilter<$PrismaModel> | bigint | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedBigIntFilter<$PrismaModel>
+    _min?: NestedBigIntFilter<$PrismaModel>
+    _max?: NestedBigIntFilter<$PrismaModel>
   }
 
   export type UserCreateWithoutRoleInput = {
@@ -53313,6 +56487,14 @@ export namespace Prisma {
      * @deprecated Use RetornoProductosAlertaHistorialEliminadoDefaultArgs instead
      */
     export type RetornoProductosAlertaHistorialEliminadoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = RetornoProductosAlertaHistorialEliminadoDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use PreparacionesDefaultArgs instead
+     */
+    export type PreparacionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PreparacionesDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use MinutasDefaultArgs instead
+     */
+    export type MinutasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = MinutasDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

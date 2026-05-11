@@ -98,4 +98,127 @@ Recuerda que esta nueva opción debe pasar por el modulo de roles y perfiles
 necesito que dentro de la opción "Trabajos preventivos / Correctivo" hagas una nueva opción de menú que se llame presupuesto, en esta pantalla debe seleccionar el año, sucursal (sacado de la tabla de sucursal), y debe tener un campo de monto Anual, el cual debe ser digitado por el usuario. esto debe llevar la lógica de que debe el monto me lo divida en trimestre y esto debe mostrarlo por pantalla informando que x monto están asignado por trimestre una vez guardada la información 
 
 
+/******************************************************************************/
+Necesito que modifiques la conexión de base de datos en todos los modulos, quiero que sea en SQL SERVER, por ende adjunto los datos para que te conectes a la nueva base de datos
+Conexión de base de datos sql server
+NTB-ECASTILLOF\SQLEXPRESS01
+Base de datos: AplicacionWeb
+Usuario: UserConection
+Contraseña: P455w0rd.26$
+
+Adicionalmente necesito que migres todo el modelo de datos desde la base origen a la destino (SQL SERVER), Tablas, datos entre otros.
+Una vez migrado todo, debes limpiar el código y sacar todo lo que era referente a la antigua base de datos para tener el código limpio, luego de esto realiza pruebas de conectividad y usabilidad de la aplicación web
+
+/******************************************************************************/
+
+Necesito que dentro de la opción de menú "Areas" crees un nuevo menú llamado "Calidad" y dentro de calidad una opción llamada "Retorno de productos"
+Necesito que utilices toda tu creatividad para desarrollar esta ventana ya que debe ser llamativa y debe mostrar alertas, se me ocurre como una pantalla como con post-it o algo asi.
+Explicación de lo que debe tener y hacer esta pantalla:
+	en esta pantalla se debe ingresar un titulo, una observación (no supere los 1500 caracteres), un campo de Horas (la cual debe informar la cantidad de hora que tenemos para gatillar el retiro del o los productos informados) y debe tener una opción de adjuntar archivos (Imágenes o PDF) no mas de 5 archivos.
+	Una vez ingresada esta información esta debe enviar un correo a todas las personas que están configuradas en una lista de distribución. 
+	Cuando el usuario se de por enterado de que le llego un correo debe ir a esta opción (los usuarios son por sucursal) debe escribir una caja de texto explicando si tiene o no tiene los productos que se mencionan en el titulo y descripción inicial (debe guardar fecha y hora de este registro) y debe mostrarle la cantidad de horas y minutos que le quedan desde la creación del registro inicial.
+	el usuario puede escribir 1 o N archivos según sea necesario en el proceso.
+Ejemplo: Registro inicial (Alerta) 
+		* usuario suc copiapo ingresa, estoy en bodega buscando el producto ( esto seria el primer registro
+		* usuario suc copiapo ingresa 2do registro, estamos buscando  en los colegios el producto
+		* usuario suc copiapo ingresa 3do registro, tenemos todos los productos en bodega para su eliminación
+
+		* usuario suc vallenar ingresa, estoy en bodega buscando el producto ( esto seria el primer registro
+		* usuario suc vallenar ingresa 2do registro, tenemos todos los productos en bodega para su eliminación
+
+y esto debe pasar por todos los usuarios de las distintas bodegas que están en el sistema, cada uno de estos ingresos debe enviar correos informando lo que se hizo a todas las personas que están configuradas en la lista de distribución.
+el usuario de cada sucursal debe marcar un check que ya se finalizo su función en la bodega para asi alertar a la persona que creo la alerta, para que de esta forma vaya cerrando los casos por sucursal y una vez que tenga cerrado todos los casos o sucursales este deje como estado cerrado la alerta inicial.
+si después se quiere ver todos los movimientos que dio esta alerta será llamativo la idea del post-it para asi ver todos los pasos que se hicieron en todas las sucursales (Historial), ver los estados de cada una de estas tareas, y ver como se finalizo y asi poder controlar cuanto tiempo se tomo desde su creacion y su finalizacion 
+
+
+/******************************************************************************/
+
+Permisos de Cierre: ¿El cierre manual debe estar restringido únicamente a usuarios asignados al área de "Calidad", o quieres que un "Administrador" general también pueda cerrarlo aunque no tenga esa área asignada?
+Si asi debe ser
+
+Notificación Final: Cuando se cierre un caso con la conclusión final, ¿debe dispararse un último correo automático a la lista de distribución informando el cierre y la conclusión?
+Si para dar como cierre la aperta, en el correo debe decir el ultimo comentario
+
+Lógica del Menú: Si un usuario no tiene ninguna área asignada, ¿quieres que el menú "Áreas" desaparezca por completo para él, o que vea una lista vacía?
+Si, si no tiene area o areas no debe mostrarla, aunque esto lo hace el menu re roles y perfiles pero si se puede llevar en ambos lados mejor aun asi tengo doble validacion para estas opciones de menu
+el plan me parece bien, solo agrega mis comentarios y ejecutalo
+
+/******************************************************************************/
+
+https://ipalproalsa-my.sharepoint.com/personal/asistente_op_ipal_cl/Documents/Documentos/LORENA%20AVIL%C3%89S/MULTAS/Licitacion%2085-53-LR23
+
+
+
+
+/******************************************************************************/
+
+Licitacion	
+NumeroPreparacion
+NombrePreparacion
+NumeroPrograma
+Programa	
+NumeroCocina	
+Cocina	
+CodigoProducto	
+NombreProducto	
+CodigoSubServicio	
+NombreSubServicio	
+CantPreparacion	
+Porcentaje_Perdida
+
+
+modelo de datos
+Nombre de la tabla PREPARACIONES
+Licitación 	  varchar(10)	
+NumeroPreparacion int	
+NombrePreparacion varchar(100)	
+NumeroPrograma	  char(7)
+Programa	  varchar(150)
+NumeroCocina	  int
+Cocina	          varchar(150)
+CodigoProducto	  char(20)
+NombreProducto	  varchar(101)
+CodigoSubServicio varchar(10)	
+NombreSubServicio varchar(100)	
+CantPreparacion	  decimal(18,2)
+Porcentaje_Perdida int
+
+/*********************************************************************************************/
+Columnas Excel
+NumeroMinuta	
+Licitacion	
+NumeroPrograma	
+Programa	
+NumeroCocina	
+Cocina	
+Dia	
+Mes	
+Año	
+NumeroPreparacion	
+sucid	
+CodigoServicio	
+NombreServicio	
+CodigoEnlace	
+NombreEnlace
+
+
+Modelo de datos
+Tabla MINUTAS
+	NumeroMinuta varchar(50) 
+	Licitacion varchar(10) 
+	NumeroPrograma char(7) 
+	Programa varchar(150)
+	NumeroCocina int 
+	Cocina varchar(150)	
+	Dia int 
+	Mes int 
+	Año int 
+	NumeroPreparacion bigint 
+	sucid char(15) 
+	CodigoServicio varchar(10) 
+	NombreServicio varchar(100) 
+	CodigoEnlace int 
+	NombreEnlace varchar(150) 
+
+/*********************************************************************************************/
 

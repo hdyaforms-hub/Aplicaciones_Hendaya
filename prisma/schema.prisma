@@ -536,3 +536,46 @@ model RetornoProductosAlertaHistorialEliminado {
   usuarioEliminador String
   fechaEliminacion  DateTime @default(now())
 }
+
+model Preparaciones {
+  id                String   @id @default(uuid())
+  licitacion        String   // varchar(10)
+  numeroPreparacion Int      // int
+  nombrePreparacion String   // varchar(100)
+  numeroPrograma    String   // char(7)
+  programa          String   // varchar(150)
+  numeroCocina      Int      // int
+  cocina            String   // varchar(150)
+  codigoProducto    String   // char(20)
+  nombreProducto    String   // varchar(101)
+  codigoSubServicio String   // varchar(10)
+  nombreSubServicio String   // varchar(100)
+  cantPreparacion   Decimal  @db.Decimal(18, 2)
+  porcentajePerdida Int      // int
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Minutas {
+  id                String   @id @default(uuid())
+  numeroMinuta      String   @db.VarChar(50)
+  licitacion        String   @db.VarChar(10)
+  numeroPrograma    String   @db.Char(7)
+  programa          String   @db.VarChar(150)
+  numeroCocina      Int
+  cocina            String   @db.VarChar(150)
+  dia               Int
+  mes               Int
+  anio              Int
+  numeroPreparacion BigInt
+  sucid             String   @db.Char(15)
+  codigoServicio    String   @db.VarChar(10)
+  nombreServicio    String   @db.VarChar(100)
+  codigoEnlace      Int
+  nombreEnlace      String   @db.VarChar(150)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([licitacion])
+  @@index([numeroMinuta])
+}

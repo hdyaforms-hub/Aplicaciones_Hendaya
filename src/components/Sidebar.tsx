@@ -169,12 +169,20 @@ export default function Sidebar({ user }: { user: User }) {
         {
             name: 'Mantenedor',
             icon: '⚙️',
-            requiredPermission: ['view_colegios', 'view_productos', 'view_pmpa', 'view_consumo_gas'],
+            requiredPermission: ['view_colegios', 'view_productos', 'view_pmpa', 'view_consumo_gas', 'view_preparaciones'],
             subItems: [
                 { name: 'PMPA', href: '/dashboard/pmpa', requiredPermission: 'view_pmpa' },
                 { name: 'Colegios', href: '/dashboard/colegios', requiredPermission: 'view_colegios' },
                 { name: 'Productos', href: '/dashboard/productos', requiredPermission: 'view_productos' },
-                { name: 'Consumo de Gas por RBD', href: '/dashboard/consumo-gas', requiredPermission: 'view_consumo_gas' }
+                { name: 'Consumo de Gas por RBD', href: '/dashboard/consumo-gas', requiredPermission: 'view_consumo_gas' },
+                {
+                    name: 'Calculadora',
+                    requiredPermission: ['view_preparaciones', 'view_minutas'],
+                    subItems: [
+                        { name: 'Preparaciones', href: '/dashboard/calculadora/preparaciones', requiredPermission: 'view_preparaciones' },
+                        { name: 'Minutas', href: '/dashboard/calculadora/minutas', requiredPermission: 'view_minutas' }
+                    ]
+                }
             ]
         },
         {

@@ -609,6 +609,46 @@ exports.Prisma.RetornoProductosAlertaHistorialEliminadoScalarFieldEnum = {
   fechaEliminacion: 'fechaEliminacion'
 };
 
+exports.Prisma.PreparacionesScalarFieldEnum = {
+  id: 'id',
+  licitacion: 'licitacion',
+  numeroPreparacion: 'numeroPreparacion',
+  nombrePreparacion: 'nombrePreparacion',
+  numeroPrograma: 'numeroPrograma',
+  programa: 'programa',
+  numeroCocina: 'numeroCocina',
+  cocina: 'cocina',
+  codigoProducto: 'codigoProducto',
+  nombreProducto: 'nombreProducto',
+  codigoSubServicio: 'codigoSubServicio',
+  nombreSubServicio: 'nombreSubServicio',
+  cantPreparacion: 'cantPreparacion',
+  porcentajePerdida: 'porcentajePerdida',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.MinutasScalarFieldEnum = {
+  id: 'id',
+  numeroMinuta: 'numeroMinuta',
+  licitacion: 'licitacion',
+  numeroPrograma: 'numeroPrograma',
+  programa: 'programa',
+  numeroCocina: 'numeroCocina',
+  cocina: 'cocina',
+  dia: 'dia',
+  mes: 'mes',
+  anio: 'anio',
+  numeroPreparacion: 'numeroPreparacion',
+  sucid: 'sucid',
+  codigoServicio: 'codigoServicio',
+  nombreServicio: 'nombreServicio',
+  codigoEnlace: 'codigoEnlace',
+  nombreEnlace: 'nombreEnlace',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -660,7 +700,9 @@ exports.Prisma.ModelName = {
   RetornoProductosAlerta: 'RetornoProductosAlerta',
   RetornoProductosSucursalEstado: 'RetornoProductosSucursalEstado',
   RetornoProductosMovimiento: 'RetornoProductosMovimiento',
-  RetornoProductosAlertaHistorialEliminado: 'RetornoProductosAlertaHistorialEliminado'
+  RetornoProductosAlertaHistorialEliminado: 'RetornoProductosAlertaHistorialEliminado',
+  Preparaciones: 'Preparaciones',
+  Minutas: 'Minutas'
 };
 
 /**

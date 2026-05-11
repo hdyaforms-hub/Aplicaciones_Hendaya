@@ -42,6 +42,8 @@ export default async function RolesPage() {
         { id: 'view_estado_avance_tp', name: 'Estado de Avance (Trabajos Preventivos)', description: 'Visualizar el progreso semestral de trabajos preventivos.', category: 'Áreas' },
         { id: 'view_colegios', name: 'Mantenedor de Colegios', description: 'Acceso a mantenedor y carga masiva de Colegios.', category: 'Mantenedores' },
         { id: 'view_productos', name: 'Mantenedor de Productos', description: 'Acceso a mantenedor y carga masiva de Productos.', category: 'Mantenedores' },
+        { id: 'view_preparaciones', name: 'Mantenedor de Preparaciones', description: 'Acceso a mantenedor y carga masiva de Preparaciones.', category: 'Mantenedores' },
+        { id: 'view_minutas', name: 'Mantenedor de Minutas', description: 'Acceso a mantenedor y carga masiva de Minutas.', category: 'Mantenedores' },
         { id: 'view_consumo_gas', name: 'Consumo de Gas por RBD', description: 'Administrar límites y consumos de gas por cada RBD.', category: 'Mantenedores' },
         { id: 'manage_correo', name: 'Configuración de Correo', description: 'Acciones sobre credenciales de correo (Office365).', category: 'Administración' },
         { id: 'manage_listas', name: 'Listas de Distribución', description: 'Gestión de destinatarios y listas de correos.', category: 'Administración' },
