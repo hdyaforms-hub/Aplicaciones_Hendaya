@@ -11,6 +11,7 @@ export default function UploadModalMinutas() {
     const [error, setError] = useState<string | null>(null)
     const [success, setSuccess] = useState<string | null>(null)
     const [showOverwritePrompt, setShowOverwritePrompt] = useState(false)
+    const [existenceMessage, setExistenceMessage] = useState<string | null>(null)
     const [pendingData, setPendingData] = useState<any[] | null>(null)
     const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -62,6 +63,7 @@ export default function UploadModalMinutas() {
             if (!overwrite) {
                 const check = await checkMinutasExists(jsonData as any[])
                 if (check.exists) {
+                    setExistenceMessage(check.message || 'Ya existen registros en la base de datos.')
                     setPendingData(jsonData)
                     setShowOverwritePrompt(true)
                     setLoading(false)
@@ -154,9 +156,11 @@ export default function UploadModalMinutas() {
                 <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-[60] p-4">
                     <div className="bg-white rounded-3xl p-8 w-full max-w-sm shadow-2xl border border-orange-100">
                         <div className="text-orange-500 text-4xl mb-4">⚠️</div>
-                        <h3 className="text-xl font-black text-slate-800 mb-2">¿Sobrescribir datos?</h3>
-                        <p className="text-slate-500 text-sm mb-6 font-medium">
-                            Ya existen registros para esta minuta y licitación en la base de datos. ¿Deseas reemplazarlos?
+                        <h3 className="text-xl font-black text-slate-800 mb-2">Datos Existentes</h3>
+                        <p className="text-slate-500 text-sm mb-6 font-medium leading-relaxed">
+                            {existenceMessage || 'Ya existen registros para esta minuta y licitación.'}
+                            <br /><br />
+                            ¿Deseas reemplazarlos con la nueva información?
                         </p>
                         <div className="flex gap-3">
                             <button

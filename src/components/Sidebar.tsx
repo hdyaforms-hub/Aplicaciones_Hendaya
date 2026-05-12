@@ -94,6 +94,11 @@ export default function Sidebar({ user }: { user: User }) {
                                 { name: 'Presupuesto', href: '/dashboard/trabajos-preventivos/presupuesto', requiredPermission: 'manage_presupuesto' },
                                 { name: 'Estado de Avance', href: '/dashboard/trabajos-preventivos/avance', requiredPermission: 'view_estado_avance_tp' }
                             ]
+                        },
+                        {
+                            name: 'Captura de Certificación',
+                            href: '/dashboard/areas/operaciones/captura-certificacion',
+                            requiredPermission: 'view_captura_certificacion'
                         }
                     ]
                 },
@@ -169,7 +174,7 @@ export default function Sidebar({ user }: { user: User }) {
         {
             name: 'Mantenedor',
             icon: '⚙️',
-            requiredPermission: ['view_colegios', 'view_productos', 'view_pmpa', 'view_consumo_gas', 'view_preparaciones'],
+            requiredPermission: ['view_colegios', 'view_productos', 'view_pmpa', 'view_consumo_gas', 'view_preparaciones', 'view_minutas', 'view_raciones'],
             subItems: [
                 { name: 'PMPA', href: '/dashboard/pmpa', requiredPermission: 'view_pmpa' },
                 { name: 'Colegios', href: '/dashboard/colegios', requiredPermission: 'view_colegios' },
@@ -177,10 +182,11 @@ export default function Sidebar({ user }: { user: User }) {
                 { name: 'Consumo de Gas por RBD', href: '/dashboard/consumo-gas', requiredPermission: 'view_consumo_gas' },
                 {
                     name: 'Calculadora',
-                    requiredPermission: ['view_preparaciones', 'view_minutas'],
+                    requiredPermission: ['view_preparaciones', 'view_minutas', 'view_raciones'],
                     subItems: [
                         { name: 'Preparaciones', href: '/dashboard/calculadora/preparaciones', requiredPermission: 'view_preparaciones' },
-                        { name: 'Minutas', href: '/dashboard/calculadora/minutas', requiredPermission: 'view_minutas' }
+                        { name: 'Minutas', href: '/dashboard/calculadora/minutas', requiredPermission: 'view_minutas' },
+                        { name: 'Raciones', href: '/dashboard/calculadora/raciones', requiredPermission: 'view_raciones' }
                     ]
                 }
             ]

@@ -12,6 +12,8 @@ export type PreparacionData = {
     programa: string
     numeroCocina: number
     cocina: string
+    numeroArea: string
+    area: string
     codigoProducto: string
     nombreProducto: string
     codigoSubServicio: string
@@ -31,17 +33,19 @@ export async function checkPreparacionesExists(data: PreparacionData[]) {
     }
 
     // Buscamos si existe al menos un registro en la BD que coincida con NumeroPreparacion y Licitacion
-    const firstRow = data[0]
-
-    const existing = await prisma.preparaciones.findFirst({
-        where: {
-            numeroPreparacion: firstRow.numeroPreparacion,
-            licitacion: firstRow.licitacion
+    const uniqueKeys = Array.from(new Set(data.map(d => `${d.licitacion}-${d.numeroPreparacion}`)))
+    
+    for (const key of uniqueKeys) {
+        const [licitacion, numeroPreparacion] = key.split('-')
+        const existing = await prisma.preparaciones.findFirst({
+            where: {
+                numeroPreparacion: Number(numeroPreparacion),
+                licitacion: String(licitacion)
+            }
+        })
+        if (existing) {
+            return { exists: true, message: `Ya existen registros para la preparación ${numeroPreparacion} en la licitación ${licitacion}.` }
         }
-    })
-
-    if (existing) {
-        return { exists: true }
     }
 
     return { exists: false }
@@ -56,7 +60,6 @@ export async function uploadPreparacionesData(data: PreparacionData[], overwrite
     try {
         if (overwrite) {
             // Eliminar registros previos con las mismas licitaciones y numeros de preparacion presentes en el excel
-            // Para ser más seguros, eliminamos por combinación de licitacion y numeroPreparacion
             const uniqueKeys = data.reduce((acc, curr) => {
                 const key = `${curr.licitacion}-${curr.numeroPreparacion}`
                 if (!acc.find(k => k.key === key)) {
@@ -73,6 +76,12 @@ export async function uploadPreparacionesData(data: PreparacionData[], overwrite
                     }
                 })
             }
+        } else {
+            // Validar que no existan datos
+            const check = await checkPreparacionesExists(data)
+            if (check.exists) {
+                return { error: check.message || 'Algunos registros ya existen en la base de datos.' }
+            }
         }
 
         const dataToInsert = data.map(d => ({
@@ -83,6 +92,8 @@ export async function uploadPreparacionesData(data: PreparacionData[], overwrite
             programa: String(d.programa),
             numeroCocina: Number(d.numeroCocina),
             cocina: String(d.cocina),
+            numeroArea: String(d.numeroArea),
+            area: String(d.area),
             codigoProducto: String(d.codigoProducto),
             nombreProducto: String(d.nombreProducto),
             codigoSubServicio: String(d.codigoSubServicio),
@@ -100,6 +111,7 @@ export async function uploadPreparacionesData(data: PreparacionData[], overwrite
         return { success: true, count: dataToInsert.length }
     } catch (error: any) {
         console.error('Error insertando datos Preparaciones:', error)
+        if (error.code === 'P2002') return { error: 'Error de duplicidad en los datos (Restricción de BD).' }
         return { error: 'Ocurrió un error al guardar los registros en la base de datos.' }
     }
 }
@@ -139,6 +151,20 @@ export async function createPreparacionProduct(data: any) {
     }
 
     try {
+        // Validar si ya existe el producto en esa preparación
+        const existing = await prisma.preparaciones.findFirst({
+            where: {
+                licitacion: data.licitacion,
+                numeroPreparacion: Number(data.numeroPreparacion),
+                codigoProducto: data.codigoProducto,
+                numeroPrograma: data.numeroPrograma
+            }
+        })
+
+        if (existing) {
+            return { error: 'Este producto ya está registrado para esta preparación.' }
+        }
+
         await prisma.preparaciones.create({
             data: {
                 licitacion: data.licitacion,
@@ -148,6 +174,8 @@ export async function createPreparacionProduct(data: any) {
                 programa: data.programa,
                 numeroCocina: data.numeroCocina,
                 cocina: data.cocina,
+                numeroArea: data.numeroArea,
+                area: data.area,
                 codigoProducto: data.codigoProducto,
                 nombreProducto: data.nombreProducto,
                 codigoSubServicio: data.codigoSubServicio,
@@ -164,6 +192,7 @@ export async function createPreparacionProduct(data: any) {
         return { error: 'Error al crear el producto.' }
     }
 }
+
 
 export async function deletePreparacionProduct(id: string) {
     const session = await getSession()

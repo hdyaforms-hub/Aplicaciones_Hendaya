@@ -2,10 +2,10 @@
 
 import { useState, useRef } from 'react'
 import * as xlsx from 'xlsx'
-import { uploadPreparacionesData, checkPreparacionesExists, PreparacionData } from './actions'
+import { uploadRacionesData, checkRacionesExists, RacionData } from './actions'
 import { useRouter } from 'next/navigation'
 
-export default function UploadModalPreparaciones() {
+export default function UploadModalRaciones() {
     const [isOpen, setIsOpen] = useState(false)
     const [file, setFile] = useState<File | null>(null)
     const [loading, setLoading] = useState(false)
@@ -13,27 +13,31 @@ export default function UploadModalPreparaciones() {
     const [success, setSuccess] = useState('')
     const [confirmOverwrite, setConfirmOverwrite] = useState(false)
     const [existenceMessage, setExistenceMessage] = useState('')
-    const [parsedData, setParsedData] = useState<PreparacionData[]>([])
+    const [parsedData, setParsedData] = useState<RacionData[]>([])
     const router = useRouter()
 
     const fileInputRef = useRef<HTMLInputElement>(null)
 
     const expectedColumns = [
         'licitacion', 
-        'numeropreparacion', 
-        'nombrepreparacion', 
+        'numeroservicio', 
+        'servicio', 
+        'numerococina', 
+        'numeroarea', 
+        'numeroenlace', 
+        'numerolocacion', 
+        'locacion', 
         'numeroprograma', 
         'programa', 
-        'numerococina', 
-        'cocina', 
-        'numeroarea',
-        'area',
-        'codigoproducto', 
-        'nombreproducto', 
-        'codigosubservicio', 
-        'nombresubservicio', 
-        'cantpreparacion', 
-        'porcentaje_perdida'
+        'mes', 
+        'año', 
+        'fecha', 
+        'estadoracion', 
+        'numerobeneficiario', 
+        'beneficiario', 
+        'cantidad', 
+        'rbd', 
+        'ut'
     ]
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,6 +56,10 @@ export default function UploadModalPreparaciones() {
                 setFile(null)
             }
         }
+    }
+
+    const excelDateToJSDate = (excelDate: number) => {
+        return new Date((excelDate - (25567 + 2)) * 86400 * 1000).toISOString()
     }
 
     const validateAndParseExcel = async () => {
@@ -77,14 +85,19 @@ export default function UploadModalPreparaciones() {
             const normalizedData = rawObjects.map(row => {
                 const newRow: Record<string, any> = {}
                 for (const key in row) {
-                    // Normalizar: minúsculas, trim y quitar acentos para mejor coincidencia
                     const normalizedKey = key.toString()
                         .toLowerCase()
                         .trim()
                         .normalize("NFD")
-                        .replace(/[\u0300-\u036f]/g, "")
+                        .replace(/[\u0300-\u036f]/g, "") // remove accents except ñ? wait, AÑO became ano if normalized?
+                        
+                    // Manually map año to año if normalized removed it, actually normalize("NFD") makes ñ -> n + ~ and then replace removes ~. So 'año' becomes 'ano'.
+                    // Wait, expectedColumns has 'año' (año). If normalize converts 'año' to 'ano', we should check for 'ano' or 'año'.
+                    // Let's use expectedColumns with 'ano'.
                     
-                    newRow[normalizedKey] = row[key]
+                    const safeKey = normalizedKey === 'ano' ? 'año' : normalizedKey;
+                    
+                    newRow[safeKey] = row[key]
                 }
                 return newRow
             })
@@ -98,37 +111,50 @@ export default function UploadModalPreparaciones() {
                 return
             }
 
-            const formattedData: PreparacionData[] = normalizedData.map(row => {
+            const formattedData: RacionData[] = normalizedData.map(row => {
+                let fechaIso = new Date().toISOString();
+                if (row['fecha']) {
+                    if (typeof row['fecha'] === 'number') {
+                        fechaIso = excelDateToJSDate(row['fecha'])
+                    } else {
+                        fechaIso = new Date(row['fecha']).toISOString()
+                    }
+                }
+
                 return {
                     licitacion: String(row['licitacion'] || '').substring(0, 10),
-                    numeroPreparacion: Number(row['numeropreparacion']) || 0,
-                    nombrePreparacion: String(row['nombrepreparacion'] || '').substring(0, 100),
+                    numeroServicio: String(row['numeroservicio'] || '').substring(0, 10),
+                    servicio: String(row['servicio'] || '').substring(0, 100),
+                    numeroCocina: Number(row['numerococina']) || 0,
+                    numeroArea: String(row['numeroarea'] || '').substring(0, 5),
+                    numeroEnlace: Number(row['numeroenlace']) || 0,
+                    numeroLocacion: String(row['numerolocacion'] || '').substring(0, 5),
+                    locacion: String(row['locacion'] || '').substring(0, 150),
                     numeroPrograma: String(row['numeroprograma'] || '').substring(0, 7),
                     programa: String(row['programa'] || '').substring(0, 150),
-                    numeroCocina: Number(row['numerococina']) || 0,
-                    cocina: String(row['cocina'] || '').substring(0, 150),
-                    numeroArea: String(row['numeroarea'] || '').substring(0, 5),
-                    area: String(row['area'] || '').substring(0, 150),
-                    codigoProducto: String(row['codigoproducto'] || '').substring(0, 20),
-                    nombreProducto: String(row['nombreproducto'] || '').substring(0, 101),
-                    codigoSubServicio: String(row['codigosubservicio'] || '').substring(0, 10),
-                    nombreSubServicio: String(row['nombresubservicio'] || '').substring(0, 100),
-                    cantPreparacion: Number(row['cantpreparacion']) || 0,
-                    porcentajePerdida: Number(row['porcentaje_perdida']) || 0,
+                    mes: Number(row['mes']) || 0,
+                    anio: Number(row['año']) || 0,
+                    fecha: fechaIso,
+                    estadoRacion: Number(row['estadoracion']) || 0,
+                    numeroBeneficiario: Number(row['numerobeneficiario']) || 0,
+                    beneficiario: String(row['beneficiario'] || '').substring(0, 50),
+                    cantidad: Number(row['cantidad']) || 0,
+                    rbd: Number(row['rbd']) || 0,
+                    ut: Number(row['ut']) || 0,
                 }
             })
 
-            const cleanData = formattedData.filter(d => d.licitacion && d.numeroPreparacion > 0 && d.codigoProducto)
+            const cleanData = formattedData.filter(d => d.licitacion && d.numeroServicio)
 
             if (cleanData.length === 0) {
-                setError('El archivo no contiene preparaciones válidas.')
+                setError('El archivo no contiene raciones válidas.')
                 setLoading(false)
                 return
             }
 
             setParsedData(cleanData)
 
-            const validation = await checkPreparacionesExists(cleanData)
+            const validation = await checkRacionesExists(cleanData)
 
             if (validation.error) {
                 setError(validation.error)
@@ -146,14 +172,14 @@ export default function UploadModalPreparaciones() {
         setLoading(false)
     }
 
-    const executeUpload = async (data: PreparacionData[], overwrite: boolean) => {
+    const executeUpload = async (data: RacionData[], overwrite: boolean) => {
         setLoading(true)
         setError('')
-        const result = await uploadPreparacionesData(data, overwrite)
+        const result = await uploadRacionesData(data, overwrite)
         if (result.error) {
             setError(result.error)
         } else {
-            setSuccess(`Se cargaron ${result.count} registros de preparaciones exitosamente.`)
+            setSuccess(`Se cargaron ${result.count} registros de raciones exitosamente.`)
             setFile(null)
             if (fileInputRef.current) fileInputRef.current.value = ''
             router.refresh()
@@ -168,11 +194,11 @@ export default function UploadModalPreparaciones() {
     const handleDownloadTemplate = () => {
         const worksheet = xlsx.utils.json_to_sheet([])
         xlsx.utils.sheet_add_aoa(worksheet, [
-            ['Licitacion', 'NumeroPreparacion', 'NombrePreparacion', 'NumeroPrograma', 'Programa', 'NumeroCocina', 'Cocina', 'NumeroArea', 'Area', 'CodigoProducto', 'NombreProducto', 'CodigoSubServicio', 'NombreSubServicio', 'CantPreparacion', 'Porcentaje_Perdida']
+            ['Licitacion', 'NumeroServicio', 'Servicio', 'NumeroCocina', 'NumeroArea', 'NumeroEnlace', 'NumeroLocacion', 'Locacion', 'NumeroPrograma', 'Programa', 'MES', 'AÑO', 'Fecha', 'EstadoRacion', 'NumeroBeneficiario', 'Beneficiario', 'Cantidad', 'RBD', 'UT']
         ], { origin: 'A1' })
         const workbook = xlsx.utils.book_new()
-        xlsx.utils.book_append_sheet(workbook, worksheet, 'Plantilla_Preparaciones')
-        xlsx.writeFile(workbook, 'Formato_Carga_Masiva_Preparaciones.xlsx')
+        xlsx.utils.book_append_sheet(workbook, worksheet, 'Plantilla_Raciones')
+        xlsx.writeFile(workbook, 'Formato_Carga_Masiva_Raciones.xlsx')
     }
 
     if (!isOpen) {
@@ -180,14 +206,14 @@ export default function UploadModalPreparaciones() {
             <div className="flex gap-2">
                 <button
                     onClick={() => setIsOpen(true)}
-                    className="px-4 py-2 bg-gradient-to-r from-cyan-600 to-sky-600 hover:from-cyan-700 hover:to-sky-700 text-white rounded-xl shadow-md shadow-cyan-500/30 transition-all font-medium flex items-center gap-2"
+                    className="px-4 py-2 bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 text-white rounded-xl shadow-md shadow-teal-500/30 transition-all font-medium flex items-center gap-2"
                 >
-                    <span>+</span> Carga Masiva Preparaciones
+                    <span>+</span> Carga Masiva Raciones
                 </button>
                 <button
                     onClick={handleDownloadTemplate}
                     type="button"
-                    className="px-4 py-2 bg-white border-2 border-cyan-100 text-cyan-600 hover:bg-cyan-50 rounded-xl transition-all font-bold flex items-center gap-2 shadow-sm"
+                    className="px-4 py-2 bg-white border-2 border-teal-100 text-teal-600 hover:bg-teal-50 rounded-xl transition-all font-bold flex items-center gap-2 shadow-sm"
                     title="Descargar plantilla Excel vacía"
                 >
                     <span>📥</span> Formato Excel
@@ -207,7 +233,7 @@ export default function UploadModalPreparaciones() {
                 </button>
 
                 <h3 className="text-xl font-bold text-gray-900 mb-6 tracking-tight flex items-center gap-2">
-                    🍳 Carga Masiva Preparaciones
+                    🍽️ Carga Masiva Raciones
                 </h3>
 
                 <div className="space-y-5">
@@ -216,7 +242,7 @@ export default function UploadModalPreparaciones() {
 
                     {!confirmOverwrite ? (
                         <>
-                            <div className="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-cyan-500 transition-colors bg-gray-50">
+                            <div className="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-teal-500 transition-colors bg-gray-50">
                                 <label className="cursor-pointer block">
                                     <span className="text-3xl mb-2 block">📊</span>
                                     <span className="block text-sm font-medium text-gray-700 mb-1">
@@ -237,7 +263,7 @@ export default function UploadModalPreparaciones() {
                                     </span>
                                 </label>
                                 {file && (
-                                    <div className="mt-4 p-2 bg-cyan-50 text-cyan-800 rounded-lg text-sm font-medium break-all border border-cyan-100">
+                                    <div className="mt-4 p-2 bg-teal-50 text-teal-800 rounded-lg text-sm font-medium break-all border border-teal-100">
                                         Archivo seleccionado:<br /> {file.name}
                                     </div>
                                 )}
@@ -247,7 +273,7 @@ export default function UploadModalPreparaciones() {
                                 <button type="button" onClick={() => setIsOpen(false)} className="px-5 py-2.5 w-full rounded-xl text-gray-600 bg-gray-100 hover:bg-gray-200 font-medium transition-colors">
                                     Cancelar
                                 </button>
-                                <button type="button" onClick={validateAndParseExcel} disabled={loading || !file} className="px-5 py-2.5 w-full rounded-xl text-white bg-gradient-to-r from-cyan-600 to-sky-600 hover:from-cyan-700 hover:to-sky-700 shadow-md shadow-cyan-500/20 font-medium transition-all disabled:opacity-70 disabled:pointer-events-none">
+                                <button type="button" onClick={validateAndParseExcel} disabled={loading || !file} className="px-5 py-2.5 w-full rounded-xl text-white bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 shadow-md shadow-teal-500/20 font-medium transition-all disabled:opacity-70 disabled:pointer-events-none">
                                     {loading ? 'Procesando...' : 'Cargar y Validar'}
                                 </button>
                             </div>
@@ -255,10 +281,10 @@ export default function UploadModalPreparaciones() {
                     ) : (
                         <div className="bg-yellow-50 border border-yellow-200 p-6 rounded-2xl animate-in slide-in-from-bottom-4">
                             <h4 className="text-lg font-bold text-yellow-800 flex items-center gap-2 mb-2">
-                                ⚠️ Preparaciones Existentes
+                                ⚠️ Raciones Existentes
                             </h4>
                             <p className="text-sm text-yellow-700 mb-6 leading-relaxed">
-                                {existenceMessage || 'Hemos detectado que ya existen preparaciones registradas para esta licitación y número en sistema.'}
+                                {existenceMessage || 'Hemos detectado que ya existen raciones registradas para esta licitación en el sistema.'}
                                 <br /><br />
                                 <strong>¿Desea actualizar y sobrescribir dichos registros con la información del Excel?</strong>
                             </p>
@@ -280,7 +306,7 @@ export default function UploadModalPreparaciones() {
                                     disabled={loading}
                                     className="px-4 py-2.5 w-full rounded-xl text-white bg-yellow-600 hover:bg-yellow-700 font-medium transition-colors text-sm disabled:opacity-70 disabled:pointer-events-none flex justify-center items-center"
                                 >
-                                    {loading ? 'Sobrescribiendo...' : 'Sí, actualizar preparaciones'}
+                                    {loading ? 'Sobrescribiendo...' : 'Sí, actualizar raciones'}
                                 </button>
                             </div>
                         </div>

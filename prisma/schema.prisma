@@ -546,6 +546,8 @@ model Preparaciones {
   programa          String   // varchar(150)
   numeroCocina      Int      // int
   cocina            String   // varchar(150)
+  numeroArea        String   @db.Char(5)
+  area              String   @db.VarChar(150)
   codigoProducto    String   // char(20)
   nombreProducto    String   // varchar(101)
   codigoSubServicio String   // varchar(10)
@@ -578,4 +580,54 @@ model Minutas {
 
   @@index([licitacion])
   @@index([numeroMinuta])
+}
+
+model Raciones {
+  id                 String   @id @default(uuid())
+  licitacion         String   @db.VarChar(10)
+  numeroServicio     String   @db.VarChar(10)
+  servicio           String   @db.VarChar(100)
+  numeroCocina       Int
+  numeroArea         String   @db.Char(5)
+  numeroEnlace       Int
+  numeroLocacion     String   @db.Char(5)
+  locacion           String   @db.VarChar(150)
+  numeroPrograma     String   @db.Char(7)
+  programa           String   @db.VarChar(150)
+  mes                Int
+  anio               Int      @map("año")
+  fecha              DateTime
+  estadoRacion       Int
+  numeroBeneficiario Int
+  beneficiario       String   @db.VarChar(50)
+  cantidad           Int
+  rbd                Int
+  ut                 Int
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model CapCertificacionHeader {
+  id               String                   @id @default(uuid())
+  rbd              Int
+  fecha            DateTime
+  servicio         String
+  programa         String
+  area             String?
+  racionesPreparar Int
+  createdAt        DateTime                 @default(now())
+  updatedAt        DateTime                 @updatedAt
+  usuario          String?
+  detalles         CapCertificacionDetail[]
+}
+
+model CapCertificacionDetail {
+  id                String                 @id @default(uuid())
+  headerId          String
+  numeroMinuta      String
+  nombrePreparacion String
+  nombreProducto    String
+  grsRac            Decimal                @db.Decimal(18, 2)
+  grsTotal          Decimal                @db.Decimal(18, 2)
+  header            CapCertificacionHeader @relation(fields: [headerId], references: [id], onDelete: Cascade)
 }

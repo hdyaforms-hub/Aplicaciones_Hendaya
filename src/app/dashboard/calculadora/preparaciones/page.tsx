@@ -47,7 +47,7 @@ export default async function PreparacionesPage({
     const totalPages = Math.ceil(totalCount / limit)
 
     const preparacionesGrouped = await prisma.preparaciones.groupBy({
-        by: ['licitacion', 'numeroPreparacion', 'nombrePreparacion', 'numeroPrograma', 'programa', 'numeroCocina', 'cocina'],
+        by: ['licitacion', 'numeroPreparacion', 'nombrePreparacion', 'numeroPrograma', 'programa', 'numeroCocina', 'cocina', 'numeroArea', 'area'],
         where: whereClause,
         orderBy: [
             { numeroPreparacion: 'desc' }
@@ -86,6 +86,7 @@ export default async function PreparacionesPage({
                                 <th className="px-6 py-4 font-black uppercase tracking-widest text-[10px]">Nombre Preparación</th>
                                 <th className="px-6 py-4 font-black uppercase tracking-widest text-[10px]">Programa</th>
                                 <th className="px-6 py-4 font-black uppercase tracking-widest text-[10px]">Cocina</th>
+                                <th className="px-6 py-4 font-black uppercase tracking-widest text-[10px]">Área</th>
                                 <th className="px-6 py-4 font-black uppercase tracking-widest text-[10px] text-center">Acciones</th>
                             </tr>
                         </thead>
@@ -112,6 +113,12 @@ export default async function PreparacionesPage({
                                         <div className="flex flex-col">
                                             <span className="font-black text-emerald-700 text-[10px] uppercase tracking-tighter">Cocina: {p.numeroCocina}</span>
                                             <span className="text-xs font-bold text-gray-500 truncate max-w-[180px]">{p.cocina}</span>
+                                        </div>
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        <div className="flex flex-col">
+                                            <span className="font-black text-amber-700 text-[10px] uppercase tracking-tighter">Área: {p.numeroArea}</span>
+                                            <span className="text-xs font-bold text-gray-500 truncate max-w-[180px]">{p.area}</span>
                                         </div>
                                     </td>
                                     <td className="px-6 py-4 text-center">

@@ -32,17 +32,20 @@ export async function checkMinutasExists(data: MinutaData[]) {
         return { error: 'El archivo está vacío o tiene formato incorrecto' }
     }
 
-    const firstRow: any = data[0]
- 
-    const existing = await prisma.minutas.findFirst({
-        where: {
-            numeroMinuta: String(firstRow.NumeroMinuta || ''),
-            licitacion: String(firstRow.Licitacion || '')
+    // Obtener todas las combinaciones únicas de licitación y numeroMinuta del archivo
+    const uniqueKeys = Array.from(new Set(data.map(d => `${d.licitacion || (d as any).Licitacion}-${d.numeroMinuta || (d as any).NumeroMinuta}`)))
+    
+    for (const key of uniqueKeys) {
+        const [licitacion, numeroMinuta] = key.split('-')
+        const existing = await prisma.minutas.findFirst({
+            where: {
+                numeroMinuta: String(numeroMinuta || ''),
+                licitacion: String(licitacion || '')
+            }
+        })
+        if (existing) {
+            return { exists: true, message: `Ya existen registros para la minuta ${numeroMinuta} en la licitación ${licitacion}.` }
         }
-    })
-
-    if (existing) {
-        return { exists: true }
     }
 
     return { exists: false }
@@ -58,14 +61,16 @@ export async function uploadMinutasData(data: MinutaData[], overwrite: boolean) 
         if (overwrite) {
             // Obtener combinaciones únicas de licitacion y numeroMinuta para borrar
             const uniqueKeys = data.reduce((acc, curr: any) => {
-                const key = `${curr.Licitacion}-${curr.NumeroMinuta}`
+                const lic = curr.Licitacion || curr.licitacion
+                const num = curr.NumeroMinuta || curr.numeroMinuta
+                const key = `${lic}-${num}`
                 if (!acc.find(k => k.key === key)) {
-                    acc.push({ key, licitacion: curr.Licitacion, numeroMinuta: curr.NumeroMinuta })
+                    acc.push({ key, licitacion: String(lic), numeroMinuta: String(num) })
                 }
                 return acc
             }, [] as { key: string, licitacion: string, numeroMinuta: string }[])
 
-            // Borrar en lotes si hay muchos
+            // Borrar en lotes
             for (const item of uniqueKeys) {
                 await prisma.minutas.deleteMany({
                     where: { 
@@ -74,27 +79,33 @@ export async function uploadMinutasData(data: MinutaData[], overwrite: boolean) 
                     }
                 })
             }
+        } else {
+            // Si no se permite sobrescribir, validamos que NINGUNO exista
+            const check = await checkMinutasExists(data)
+            if (check.exists) {
+                return { error: check.message || 'Algunos registros ya existen en la base de datos.' }
+            }
         }
 
         const dataToInsert = data.map((d: any) => ({
-            numeroMinuta: String(d.NumeroMinuta || ''),
-            licitacion: String(d.Licitacion || ''),
-            numeroPrograma: String(d.NumeroPrograma || ''),
-            programa: String(d.Programa || ''),
-            numeroCocina: Number(d.NumeroCocina) || 0,
-            cocina: String(d.Cocina || ''),
-            dia: Number(d.Dia) || 0,
-            mes: Number(d.Mes) || 0,
-            anio: Number(d.Año) || 0,
-            numeroPreparacion: d.NumeroPreparacion ? BigInt(d.NumeroPreparacion) : BigInt(0),
-            sucid: String(d.sucid || ''),
-            codigoServicio: String(d.CodigoServicio || ''),
-            nombreServicio: String(d.NombreServicio || ''),
-            codigoEnlace: Number(d.CodigoEnlace) || 0,
-            nombreEnlace: String(d.NombreEnlace || ''),
+            numeroMinuta: String(d.NumeroMinuta || d.numeroMinuta || ''),
+            licitacion: String(d.Licitacion || d.licitacion || ''),
+            numeroPrograma: String(d.NumeroPrograma || d.numeroPrograma || ''),
+            programa: String(d.Programa || d.programa || ''),
+            numeroCocina: Number(d.NumeroCocina || d.numeroCocina) || 0,
+            cocina: String(d.Cocina || d.cocina || ''),
+            dia: Number(d.Dia || d.dia) || 0,
+            mes: Number(d.Mes || d.mes) || 0,
+            anio: Number(d.Año || d.anio) || 0,
+            numeroPreparacion: (d.NumeroPreparacion || d.numeroPreparacion) ? BigInt(d.NumeroPreparacion || d.numeroPreparacion) : BigInt(0),
+            sucid: String(d.sucid || d.sucid || ''),
+            codigoServicio: String(d.CodigoServicio || d.codigoServicio || ''),
+            nombreServicio: String(d.NombreServicio || d.nombreServicio || ''),
+            codigoEnlace: Number(d.CodigoEnlace || d.codigoEnlace) || 0,
+            nombreEnlace: String(d.NombreEnlace || d.nombreEnlace || ''),
         }))
 
-        // Insertar en trozos de 1000 para no saturar la conexión
+        // Insertar en trozos de 1000
         const chunkSize = 1000
         for (let i = 0; i < dataToInsert.length; i += chunkSize) {
             const chunk = dataToInsert.slice(i, i + chunkSize)
@@ -107,9 +118,7 @@ export async function uploadMinutasData(data: MinutaData[], overwrite: boolean) 
         return { success: true, count: dataToInsert.length }
     } catch (error: any) {
         console.error('Error detallado insertando datos Minutas:', error)
-        // Intentar devolver un mensaje más específico si es posible
-        if (error.code === 'P2002') return { error: 'Error de duplicidad en los datos.' }
-        if (error.message?.includes('BigInt')) return { error: 'Error en el formato de NumeroPreparacion (debe ser numérico).' }
+        if (error.code === 'P2002') return { error: 'Error de duplicidad en los datos (Restricción de BD).' }
         return { error: `Error DB: ${error.message || 'Ocurrió un error al guardar los registros.'}` }
     }
 }
@@ -147,6 +156,24 @@ export async function createMinutaEntry(data: any) {
     }
 
     try {
+        // Validar si ya existe el registro exacto
+        const existing = await prisma.minutas.findFirst({
+            where: {
+                licitacion: data.licitacion,
+                numeroMinuta: data.numeroMinuta,
+                dia: Number(data.dia),
+                mes: Number(data.mes),
+                anio: Number(data.anio),
+                numeroPreparacion: BigInt(data.numeroPreparacion),
+                sucid: data.sucid,
+                codigoServicio: data.codigoServicio
+            }
+        })
+
+        if (existing) {
+            return { error: 'Esta combinación de minuta, día, preparación y servicio ya existe para este establecimiento.' }
+        }
+
         await prisma.minutas.create({
             data: {
                 ...data,
@@ -166,6 +193,7 @@ export async function createMinutaEntry(data: any) {
         return { error: 'Error al crear el registro.' }
     }
 }
+
 
 export async function deleteMinutaEntry(id: string) {
     const session = await getSession()

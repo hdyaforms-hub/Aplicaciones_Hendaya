@@ -618,6 +618,8 @@ exports.Prisma.PreparacionesScalarFieldEnum = {
   programa: 'programa',
   numeroCocina: 'numeroCocina',
   cocina: 'cocina',
+  numeroArea: 'numeroArea',
+  area: 'area',
   codigoProducto: 'codigoProducto',
   nombreProducto: 'nombreProducto',
   codigoSubServicio: 'codigoSubServicio',
@@ -647,6 +649,54 @@ exports.Prisma.MinutasScalarFieldEnum = {
   nombreEnlace: 'nombreEnlace',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.RacionesScalarFieldEnum = {
+  id: 'id',
+  licitacion: 'licitacion',
+  numeroServicio: 'numeroServicio',
+  servicio: 'servicio',
+  numeroCocina: 'numeroCocina',
+  numeroArea: 'numeroArea',
+  numeroEnlace: 'numeroEnlace',
+  numeroLocacion: 'numeroLocacion',
+  locacion: 'locacion',
+  numeroPrograma: 'numeroPrograma',
+  programa: 'programa',
+  mes: 'mes',
+  anio: 'anio',
+  fecha: 'fecha',
+  estadoRacion: 'estadoRacion',
+  numeroBeneficiario: 'numeroBeneficiario',
+  beneficiario: 'beneficiario',
+  cantidad: 'cantidad',
+  rbd: 'rbd',
+  ut: 'ut',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CapCertificacionHeaderScalarFieldEnum = {
+  id: 'id',
+  rbd: 'rbd',
+  fecha: 'fecha',
+  servicio: 'servicio',
+  programa: 'programa',
+  area: 'area',
+  racionesPreparar: 'racionesPreparar',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  usuario: 'usuario'
+};
+
+exports.Prisma.CapCertificacionDetailScalarFieldEnum = {
+  id: 'id',
+  headerId: 'headerId',
+  numeroMinuta: 'numeroMinuta',
+  nombrePreparacion: 'nombrePreparacion',
+  nombreProducto: 'nombreProducto',
+  grsRac: 'grsRac',
+  grsTotal: 'grsTotal'
 };
 
 exports.Prisma.SortOrder = {
@@ -702,7 +752,10 @@ exports.Prisma.ModelName = {
   RetornoProductosMovimiento: 'RetornoProductosMovimiento',
   RetornoProductosAlertaHistorialEliminado: 'RetornoProductosAlertaHistorialEliminado',
   Preparaciones: 'Preparaciones',
-  Minutas: 'Minutas'
+  Minutas: 'Minutas',
+  Raciones: 'Raciones',
+  CapCertificacionHeader: 'CapCertificacionHeader',
+  CapCertificacionDetail: 'CapCertificacionDetail'
 };
 
 /**

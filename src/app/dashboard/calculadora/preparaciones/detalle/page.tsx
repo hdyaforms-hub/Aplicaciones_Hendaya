@@ -66,6 +66,8 @@ export default async function PreparacionDetallePage({
                     programa: first.programa,
                     numeroCocina: first.numeroCocina,
                     cocina: first.cocina,
+                    numeroArea: first.numeroArea,
+                    area: first.area,
                     codigoSubServicio: first.codigoSubServicio,
                     nombreSubServicio: first.nombreSubServicio
                 }}

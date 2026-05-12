@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { useDebounce } from '@/hooks/use-debounce'
 
@@ -22,7 +22,7 @@ export default function PreparacionesSearch({
     const debouncedLicitacion = useDebounce(licitacion, 400)
 
     const createQueryString = useCallback(
-        (params: Record<string, string | null>) => {
+        (params: Record<string, string | null>, resetPage: boolean = false) => {
             const newSearchParams = new URLSearchParams(searchParams.toString())
             
             for (const [key, value] of Object.entries(params)) {
@@ -33,19 +33,28 @@ export default function PreparacionesSearch({
                 }
             }
             
-            // Reset page when filtering
-            newSearchParams.set('page', '1')
+            if (resetPage) {
+                newSearchParams.set('page', '1')
+            }
             
             return newSearchParams.toString()
         },
         [searchParams]
     )
 
+    const prevSearchRef = useRef({ debouncedNombre, debouncedLicitacion })
+
     useEffect(() => {
+        const searchChanged = 
+            prevSearchRef.current.debouncedNombre !== debouncedNombre ||
+            prevSearchRef.current.debouncedLicitacion !== debouncedLicitacion
+
         const query = createQueryString({
             nombre: debouncedNombre,
             codigo: debouncedLicitacion
-        })
+        }, searchChanged)
+
+        prevSearchRef.current = { debouncedNombre, debouncedLicitacion }
         router.push(`${pathname}?${query}`, { scroll: false })
     }, [debouncedNombre, debouncedLicitacion, pathname, router, createQueryString])
 

@@ -21,6 +21,8 @@ interface EditPreparacionFormProps {
         programa: string
         numeroCocina: number
         cocina: string
+        numeroArea: string
+        area: string
         codigoSubServicio: string
         nombreSubServicio: string
     }
@@ -134,6 +136,7 @@ export default function EditPreparacionForm({
                         <p className="text-xs text-gray-500 font-bold uppercase tracking-wider">Licitación: <span className="text-gray-900">{licitacion}</span></p>
                         <p className="text-xs text-gray-500 font-bold uppercase tracking-wider">Programa: <span className="text-gray-900">{metaData.programa}</span></p>
                         <p className="text-xs text-gray-500 font-bold uppercase tracking-wider">Cocina: <span className="text-gray-900">{metaData.cocina}</span></p>
+                        <p className="text-xs text-gray-500 font-bold uppercase tracking-wider">Área: <span className="text-gray-900">{metaData.area}</span></p>
                     </div>
                 </div>
 

@@ -198,6 +198,21 @@ export type Preparaciones = $Result.DefaultSelection<Prisma.$PreparacionesPayloa
  * 
  */
 export type Minutas = $Result.DefaultSelection<Prisma.$MinutasPayload>
+/**
+ * Model Raciones
+ * 
+ */
+export type Raciones = $Result.DefaultSelection<Prisma.$RacionesPayload>
+/**
+ * Model CapCertificacionHeader
+ * 
+ */
+export type CapCertificacionHeader = $Result.DefaultSelection<Prisma.$CapCertificacionHeaderPayload>
+/**
+ * Model CapCertificacionDetail
+ * 
+ */
+export type CapCertificacionDetail = $Result.DefaultSelection<Prisma.$CapCertificacionDetailPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -691,6 +706,36 @@ export class PrismaClient<
     * ```
     */
   get minutas(): Prisma.MinutasDelegate<ExtArgs>;
+
+  /**
+   * `prisma.raciones`: Exposes CRUD operations for the **Raciones** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Raciones
+    * const raciones = await prisma.raciones.findMany()
+    * ```
+    */
+  get raciones(): Prisma.RacionesDelegate<ExtArgs>;
+
+  /**
+   * `prisma.capCertificacionHeader`: Exposes CRUD operations for the **CapCertificacionHeader** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CapCertificacionHeaders
+    * const capCertificacionHeaders = await prisma.capCertificacionHeader.findMany()
+    * ```
+    */
+  get capCertificacionHeader(): Prisma.CapCertificacionHeaderDelegate<ExtArgs>;
+
+  /**
+   * `prisma.capCertificacionDetail`: Exposes CRUD operations for the **CapCertificacionDetail** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CapCertificacionDetails
+    * const capCertificacionDetails = await prisma.capCertificacionDetail.findMany()
+    * ```
+    */
+  get capCertificacionDetail(): Prisma.CapCertificacionDetailDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -1168,7 +1213,10 @@ export namespace Prisma {
     RetornoProductosMovimiento: 'RetornoProductosMovimiento',
     RetornoProductosAlertaHistorialEliminado: 'RetornoProductosAlertaHistorialEliminado',
     Preparaciones: 'Preparaciones',
-    Minutas: 'Minutas'
+    Minutas: 'Minutas',
+    Raciones: 'Raciones',
+    CapCertificacionHeader: 'CapCertificacionHeader',
+    CapCertificacionDetail: 'CapCertificacionDetail'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1184,7 +1232,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "licitacion" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas"
+      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "licitacion" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3778,6 +3826,216 @@ export namespace Prisma {
           }
         }
       }
+      Raciones: {
+        payload: Prisma.$RacionesPayload<ExtArgs>
+        fields: Prisma.RacionesFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.RacionesFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RacionesPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.RacionesFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RacionesPayload>
+          }
+          findFirst: {
+            args: Prisma.RacionesFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RacionesPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.RacionesFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RacionesPayload>
+          }
+          findMany: {
+            args: Prisma.RacionesFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RacionesPayload>[]
+          }
+          create: {
+            args: Prisma.RacionesCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RacionesPayload>
+          }
+          createMany: {
+            args: Prisma.RacionesCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.RacionesCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RacionesPayload>[]
+          }
+          delete: {
+            args: Prisma.RacionesDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RacionesPayload>
+          }
+          update: {
+            args: Prisma.RacionesUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RacionesPayload>
+          }
+          deleteMany: {
+            args: Prisma.RacionesDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.RacionesUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.RacionesUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RacionesPayload>
+          }
+          aggregate: {
+            args: Prisma.RacionesAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateRaciones>
+          }
+          groupBy: {
+            args: Prisma.RacionesGroupByArgs<ExtArgs>
+            result: $Utils.Optional<RacionesGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.RacionesCountArgs<ExtArgs>
+            result: $Utils.Optional<RacionesCountAggregateOutputType> | number
+          }
+        }
+      }
+      CapCertificacionHeader: {
+        payload: Prisma.$CapCertificacionHeaderPayload<ExtArgs>
+        fields: Prisma.CapCertificacionHeaderFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CapCertificacionHeaderFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CapCertificacionHeaderPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CapCertificacionHeaderFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CapCertificacionHeaderPayload>
+          }
+          findFirst: {
+            args: Prisma.CapCertificacionHeaderFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CapCertificacionHeaderPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CapCertificacionHeaderFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CapCertificacionHeaderPayload>
+          }
+          findMany: {
+            args: Prisma.CapCertificacionHeaderFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CapCertificacionHeaderPayload>[]
+          }
+          create: {
+            args: Prisma.CapCertificacionHeaderCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CapCertificacionHeaderPayload>
+          }
+          createMany: {
+            args: Prisma.CapCertificacionHeaderCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CapCertificacionHeaderCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CapCertificacionHeaderPayload>[]
+          }
+          delete: {
+            args: Prisma.CapCertificacionHeaderDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CapCertificacionHeaderPayload>
+          }
+          update: {
+            args: Prisma.CapCertificacionHeaderUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CapCertificacionHeaderPayload>
+          }
+          deleteMany: {
+            args: Prisma.CapCertificacionHeaderDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CapCertificacionHeaderUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.CapCertificacionHeaderUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CapCertificacionHeaderPayload>
+          }
+          aggregate: {
+            args: Prisma.CapCertificacionHeaderAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCapCertificacionHeader>
+          }
+          groupBy: {
+            args: Prisma.CapCertificacionHeaderGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CapCertificacionHeaderGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CapCertificacionHeaderCountArgs<ExtArgs>
+            result: $Utils.Optional<CapCertificacionHeaderCountAggregateOutputType> | number
+          }
+        }
+      }
+      CapCertificacionDetail: {
+        payload: Prisma.$CapCertificacionDetailPayload<ExtArgs>
+        fields: Prisma.CapCertificacionDetailFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CapCertificacionDetailFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CapCertificacionDetailPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CapCertificacionDetailFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CapCertificacionDetailPayload>
+          }
+          findFirst: {
+            args: Prisma.CapCertificacionDetailFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CapCertificacionDetailPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CapCertificacionDetailFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CapCertificacionDetailPayload>
+          }
+          findMany: {
+            args: Prisma.CapCertificacionDetailFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CapCertificacionDetailPayload>[]
+          }
+          create: {
+            args: Prisma.CapCertificacionDetailCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CapCertificacionDetailPayload>
+          }
+          createMany: {
+            args: Prisma.CapCertificacionDetailCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CapCertificacionDetailCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CapCertificacionDetailPayload>[]
+          }
+          delete: {
+            args: Prisma.CapCertificacionDetailDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CapCertificacionDetailPayload>
+          }
+          update: {
+            args: Prisma.CapCertificacionDetailUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CapCertificacionDetailPayload>
+          }
+          deleteMany: {
+            args: Prisma.CapCertificacionDetailDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CapCertificacionDetailUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.CapCertificacionDetailUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CapCertificacionDetailPayload>
+          }
+          aggregate: {
+            args: Prisma.CapCertificacionDetailAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCapCertificacionDetail>
+          }
+          groupBy: {
+            args: Prisma.CapCertificacionDetailGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CapCertificacionDetailGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CapCertificacionDetailCountArgs<ExtArgs>
+            result: $Utils.Optional<CapCertificacionDetailCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -4309,6 +4567,37 @@ export namespace Prisma {
    */
   export type RetornoProductosAlertaCountOutputTypeCountSucursalesEstadoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: RetornoProductosSucursalEstadoWhereInput
+  }
+
+
+  /**
+   * Count Type CapCertificacionHeaderCountOutputType
+   */
+
+  export type CapCertificacionHeaderCountOutputType = {
+    detalles: number
+  }
+
+  export type CapCertificacionHeaderCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    detalles?: boolean | CapCertificacionHeaderCountOutputTypeCountDetallesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * CapCertificacionHeaderCountOutputType without action
+   */
+  export type CapCertificacionHeaderCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CapCertificacionHeaderCountOutputType
+     */
+    select?: CapCertificacionHeaderCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * CapCertificacionHeaderCountOutputType without action
+   */
+  export type CapCertificacionHeaderCountOutputTypeCountDetallesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CapCertificacionDetailWhereInput
   }
 
 
@@ -39939,6 +40228,8 @@ export namespace Prisma {
     programa: string | null
     numeroCocina: number | null
     cocina: string | null
+    numeroArea: string | null
+    area: string | null
     codigoProducto: string | null
     nombreProducto: string | null
     codigoSubServicio: string | null
@@ -39958,6 +40249,8 @@ export namespace Prisma {
     programa: string | null
     numeroCocina: number | null
     cocina: string | null
+    numeroArea: string | null
+    area: string | null
     codigoProducto: string | null
     nombreProducto: string | null
     codigoSubServicio: string | null
@@ -39977,6 +40270,8 @@ export namespace Prisma {
     programa: number
     numeroCocina: number
     cocina: number
+    numeroArea: number
+    area: number
     codigoProducto: number
     nombreProducto: number
     codigoSubServicio: number
@@ -40012,6 +40307,8 @@ export namespace Prisma {
     programa?: true
     numeroCocina?: true
     cocina?: true
+    numeroArea?: true
+    area?: true
     codigoProducto?: true
     nombreProducto?: true
     codigoSubServicio?: true
@@ -40031,6 +40328,8 @@ export namespace Prisma {
     programa?: true
     numeroCocina?: true
     cocina?: true
+    numeroArea?: true
+    area?: true
     codigoProducto?: true
     nombreProducto?: true
     codigoSubServicio?: true
@@ -40050,6 +40349,8 @@ export namespace Prisma {
     programa?: true
     numeroCocina?: true
     cocina?: true
+    numeroArea?: true
+    area?: true
     codigoProducto?: true
     nombreProducto?: true
     codigoSubServicio?: true
@@ -40156,6 +40457,8 @@ export namespace Prisma {
     programa: string
     numeroCocina: number
     cocina: string
+    numeroArea: string
+    area: string
     codigoProducto: string
     nombreProducto: string
     codigoSubServicio: string
@@ -40194,6 +40497,8 @@ export namespace Prisma {
     programa?: boolean
     numeroCocina?: boolean
     cocina?: boolean
+    numeroArea?: boolean
+    area?: boolean
     codigoProducto?: boolean
     nombreProducto?: boolean
     codigoSubServicio?: boolean
@@ -40213,6 +40518,8 @@ export namespace Prisma {
     programa?: boolean
     numeroCocina?: boolean
     cocina?: boolean
+    numeroArea?: boolean
+    area?: boolean
     codigoProducto?: boolean
     nombreProducto?: boolean
     codigoSubServicio?: boolean
@@ -40232,6 +40539,8 @@ export namespace Prisma {
     programa?: boolean
     numeroCocina?: boolean
     cocina?: boolean
+    numeroArea?: boolean
+    area?: boolean
     codigoProducto?: boolean
     nombreProducto?: boolean
     codigoSubServicio?: boolean
@@ -40255,6 +40564,8 @@ export namespace Prisma {
       programa: string
       numeroCocina: number
       cocina: string
+      numeroArea: string
+      area: string
       codigoProducto: string
       nombreProducto: string
       codigoSubServicio: string
@@ -40664,6 +40975,8 @@ export namespace Prisma {
     readonly programa: FieldRef<"Preparaciones", 'String'>
     readonly numeroCocina: FieldRef<"Preparaciones", 'Int'>
     readonly cocina: FieldRef<"Preparaciones", 'String'>
+    readonly numeroArea: FieldRef<"Preparaciones", 'String'>
+    readonly area: FieldRef<"Preparaciones", 'String'>
     readonly codigoProducto: FieldRef<"Preparaciones", 'String'>
     readonly nombreProducto: FieldRef<"Preparaciones", 'String'>
     readonly codigoSubServicio: FieldRef<"Preparaciones", 'String'>
@@ -42049,6 +42362,3195 @@ export namespace Prisma {
 
 
   /**
+   * Model Raciones
+   */
+
+  export type AggregateRaciones = {
+    _count: RacionesCountAggregateOutputType | null
+    _avg: RacionesAvgAggregateOutputType | null
+    _sum: RacionesSumAggregateOutputType | null
+    _min: RacionesMinAggregateOutputType | null
+    _max: RacionesMaxAggregateOutputType | null
+  }
+
+  export type RacionesAvgAggregateOutputType = {
+    numeroCocina: number | null
+    numeroEnlace: number | null
+    mes: number | null
+    anio: number | null
+    estadoRacion: number | null
+    numeroBeneficiario: number | null
+    cantidad: number | null
+    rbd: number | null
+    ut: number | null
+  }
+
+  export type RacionesSumAggregateOutputType = {
+    numeroCocina: number | null
+    numeroEnlace: number | null
+    mes: number | null
+    anio: number | null
+    estadoRacion: number | null
+    numeroBeneficiario: number | null
+    cantidad: number | null
+    rbd: number | null
+    ut: number | null
+  }
+
+  export type RacionesMinAggregateOutputType = {
+    id: string | null
+    licitacion: string | null
+    numeroServicio: string | null
+    servicio: string | null
+    numeroCocina: number | null
+    numeroArea: string | null
+    numeroEnlace: number | null
+    numeroLocacion: string | null
+    locacion: string | null
+    numeroPrograma: string | null
+    programa: string | null
+    mes: number | null
+    anio: number | null
+    fecha: Date | null
+    estadoRacion: number | null
+    numeroBeneficiario: number | null
+    beneficiario: string | null
+    cantidad: number | null
+    rbd: number | null
+    ut: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type RacionesMaxAggregateOutputType = {
+    id: string | null
+    licitacion: string | null
+    numeroServicio: string | null
+    servicio: string | null
+    numeroCocina: number | null
+    numeroArea: string | null
+    numeroEnlace: number | null
+    numeroLocacion: string | null
+    locacion: string | null
+    numeroPrograma: string | null
+    programa: string | null
+    mes: number | null
+    anio: number | null
+    fecha: Date | null
+    estadoRacion: number | null
+    numeroBeneficiario: number | null
+    beneficiario: string | null
+    cantidad: number | null
+    rbd: number | null
+    ut: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type RacionesCountAggregateOutputType = {
+    id: number
+    licitacion: number
+    numeroServicio: number
+    servicio: number
+    numeroCocina: number
+    numeroArea: number
+    numeroEnlace: number
+    numeroLocacion: number
+    locacion: number
+    numeroPrograma: number
+    programa: number
+    mes: number
+    anio: number
+    fecha: number
+    estadoRacion: number
+    numeroBeneficiario: number
+    beneficiario: number
+    cantidad: number
+    rbd: number
+    ut: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type RacionesAvgAggregateInputType = {
+    numeroCocina?: true
+    numeroEnlace?: true
+    mes?: true
+    anio?: true
+    estadoRacion?: true
+    numeroBeneficiario?: true
+    cantidad?: true
+    rbd?: true
+    ut?: true
+  }
+
+  export type RacionesSumAggregateInputType = {
+    numeroCocina?: true
+    numeroEnlace?: true
+    mes?: true
+    anio?: true
+    estadoRacion?: true
+    numeroBeneficiario?: true
+    cantidad?: true
+    rbd?: true
+    ut?: true
+  }
+
+  export type RacionesMinAggregateInputType = {
+    id?: true
+    licitacion?: true
+    numeroServicio?: true
+    servicio?: true
+    numeroCocina?: true
+    numeroArea?: true
+    numeroEnlace?: true
+    numeroLocacion?: true
+    locacion?: true
+    numeroPrograma?: true
+    programa?: true
+    mes?: true
+    anio?: true
+    fecha?: true
+    estadoRacion?: true
+    numeroBeneficiario?: true
+    beneficiario?: true
+    cantidad?: true
+    rbd?: true
+    ut?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type RacionesMaxAggregateInputType = {
+    id?: true
+    licitacion?: true
+    numeroServicio?: true
+    servicio?: true
+    numeroCocina?: true
+    numeroArea?: true
+    numeroEnlace?: true
+    numeroLocacion?: true
+    locacion?: true
+    numeroPrograma?: true
+    programa?: true
+    mes?: true
+    anio?: true
+    fecha?: true
+    estadoRacion?: true
+    numeroBeneficiario?: true
+    beneficiario?: true
+    cantidad?: true
+    rbd?: true
+    ut?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type RacionesCountAggregateInputType = {
+    id?: true
+    licitacion?: true
+    numeroServicio?: true
+    servicio?: true
+    numeroCocina?: true
+    numeroArea?: true
+    numeroEnlace?: true
+    numeroLocacion?: true
+    locacion?: true
+    numeroPrograma?: true
+    programa?: true
+    mes?: true
+    anio?: true
+    fecha?: true
+    estadoRacion?: true
+    numeroBeneficiario?: true
+    beneficiario?: true
+    cantidad?: true
+    rbd?: true
+    ut?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type RacionesAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Raciones to aggregate.
+     */
+    where?: RacionesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Raciones to fetch.
+     */
+    orderBy?: RacionesOrderByWithRelationInput | RacionesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: RacionesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Raciones from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Raciones.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Raciones
+    **/
+    _count?: true | RacionesCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: RacionesAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: RacionesSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: RacionesMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: RacionesMaxAggregateInputType
+  }
+
+  export type GetRacionesAggregateType<T extends RacionesAggregateArgs> = {
+        [P in keyof T & keyof AggregateRaciones]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateRaciones[P]>
+      : GetScalarType<T[P], AggregateRaciones[P]>
+  }
+
+
+
+
+  export type RacionesGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RacionesWhereInput
+    orderBy?: RacionesOrderByWithAggregationInput | RacionesOrderByWithAggregationInput[]
+    by: RacionesScalarFieldEnum[] | RacionesScalarFieldEnum
+    having?: RacionesScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: RacionesCountAggregateInputType | true
+    _avg?: RacionesAvgAggregateInputType
+    _sum?: RacionesSumAggregateInputType
+    _min?: RacionesMinAggregateInputType
+    _max?: RacionesMaxAggregateInputType
+  }
+
+  export type RacionesGroupByOutputType = {
+    id: string
+    licitacion: string
+    numeroServicio: string
+    servicio: string
+    numeroCocina: number
+    numeroArea: string
+    numeroEnlace: number
+    numeroLocacion: string
+    locacion: string
+    numeroPrograma: string
+    programa: string
+    mes: number
+    anio: number
+    fecha: Date
+    estadoRacion: number
+    numeroBeneficiario: number
+    beneficiario: string
+    cantidad: number
+    rbd: number
+    ut: number
+    createdAt: Date
+    updatedAt: Date
+    _count: RacionesCountAggregateOutputType | null
+    _avg: RacionesAvgAggregateOutputType | null
+    _sum: RacionesSumAggregateOutputType | null
+    _min: RacionesMinAggregateOutputType | null
+    _max: RacionesMaxAggregateOutputType | null
+  }
+
+  type GetRacionesGroupByPayload<T extends RacionesGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<RacionesGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof RacionesGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], RacionesGroupByOutputType[P]>
+            : GetScalarType<T[P], RacionesGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type RacionesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    licitacion?: boolean
+    numeroServicio?: boolean
+    servicio?: boolean
+    numeroCocina?: boolean
+    numeroArea?: boolean
+    numeroEnlace?: boolean
+    numeroLocacion?: boolean
+    locacion?: boolean
+    numeroPrograma?: boolean
+    programa?: boolean
+    mes?: boolean
+    anio?: boolean
+    fecha?: boolean
+    estadoRacion?: boolean
+    numeroBeneficiario?: boolean
+    beneficiario?: boolean
+    cantidad?: boolean
+    rbd?: boolean
+    ut?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["raciones"]>
+
+  export type RacionesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    licitacion?: boolean
+    numeroServicio?: boolean
+    servicio?: boolean
+    numeroCocina?: boolean
+    numeroArea?: boolean
+    numeroEnlace?: boolean
+    numeroLocacion?: boolean
+    locacion?: boolean
+    numeroPrograma?: boolean
+    programa?: boolean
+    mes?: boolean
+    anio?: boolean
+    fecha?: boolean
+    estadoRacion?: boolean
+    numeroBeneficiario?: boolean
+    beneficiario?: boolean
+    cantidad?: boolean
+    rbd?: boolean
+    ut?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["raciones"]>
+
+  export type RacionesSelectScalar = {
+    id?: boolean
+    licitacion?: boolean
+    numeroServicio?: boolean
+    servicio?: boolean
+    numeroCocina?: boolean
+    numeroArea?: boolean
+    numeroEnlace?: boolean
+    numeroLocacion?: boolean
+    locacion?: boolean
+    numeroPrograma?: boolean
+    programa?: boolean
+    mes?: boolean
+    anio?: boolean
+    fecha?: boolean
+    estadoRacion?: boolean
+    numeroBeneficiario?: boolean
+    beneficiario?: boolean
+    cantidad?: boolean
+    rbd?: boolean
+    ut?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type $RacionesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Raciones"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      licitacion: string
+      numeroServicio: string
+      servicio: string
+      numeroCocina: number
+      numeroArea: string
+      numeroEnlace: number
+      numeroLocacion: string
+      locacion: string
+      numeroPrograma: string
+      programa: string
+      mes: number
+      anio: number
+      fecha: Date
+      estadoRacion: number
+      numeroBeneficiario: number
+      beneficiario: string
+      cantidad: number
+      rbd: number
+      ut: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["raciones"]>
+    composites: {}
+  }
+
+  type RacionesGetPayload<S extends boolean | null | undefined | RacionesDefaultArgs> = $Result.GetResult<Prisma.$RacionesPayload, S>
+
+  type RacionesCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<RacionesFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: RacionesCountAggregateInputType | true
+    }
+
+  export interface RacionesDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Raciones'], meta: { name: 'Raciones' } }
+    /**
+     * Find zero or one Raciones that matches the filter.
+     * @param {RacionesFindUniqueArgs} args - Arguments to find a Raciones
+     * @example
+     * // Get one Raciones
+     * const raciones = await prisma.raciones.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends RacionesFindUniqueArgs>(args: SelectSubset<T, RacionesFindUniqueArgs<ExtArgs>>): Prisma__RacionesClient<$Result.GetResult<Prisma.$RacionesPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Raciones that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {RacionesFindUniqueOrThrowArgs} args - Arguments to find a Raciones
+     * @example
+     * // Get one Raciones
+     * const raciones = await prisma.raciones.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends RacionesFindUniqueOrThrowArgs>(args: SelectSubset<T, RacionesFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RacionesClient<$Result.GetResult<Prisma.$RacionesPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Raciones that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RacionesFindFirstArgs} args - Arguments to find a Raciones
+     * @example
+     * // Get one Raciones
+     * const raciones = await prisma.raciones.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends RacionesFindFirstArgs>(args?: SelectSubset<T, RacionesFindFirstArgs<ExtArgs>>): Prisma__RacionesClient<$Result.GetResult<Prisma.$RacionesPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Raciones that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RacionesFindFirstOrThrowArgs} args - Arguments to find a Raciones
+     * @example
+     * // Get one Raciones
+     * const raciones = await prisma.raciones.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends RacionesFindFirstOrThrowArgs>(args?: SelectSubset<T, RacionesFindFirstOrThrowArgs<ExtArgs>>): Prisma__RacionesClient<$Result.GetResult<Prisma.$RacionesPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Raciones that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RacionesFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Raciones
+     * const raciones = await prisma.raciones.findMany()
+     * 
+     * // Get first 10 Raciones
+     * const raciones = await prisma.raciones.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const racionesWithIdOnly = await prisma.raciones.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends RacionesFindManyArgs>(args?: SelectSubset<T, RacionesFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RacionesPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Raciones.
+     * @param {RacionesCreateArgs} args - Arguments to create a Raciones.
+     * @example
+     * // Create one Raciones
+     * const Raciones = await prisma.raciones.create({
+     *   data: {
+     *     // ... data to create a Raciones
+     *   }
+     * })
+     * 
+     */
+    create<T extends RacionesCreateArgs>(args: SelectSubset<T, RacionesCreateArgs<ExtArgs>>): Prisma__RacionesClient<$Result.GetResult<Prisma.$RacionesPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Raciones.
+     * @param {RacionesCreateManyArgs} args - Arguments to create many Raciones.
+     * @example
+     * // Create many Raciones
+     * const raciones = await prisma.raciones.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends RacionesCreateManyArgs>(args?: SelectSubset<T, RacionesCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Raciones and returns the data saved in the database.
+     * @param {RacionesCreateManyAndReturnArgs} args - Arguments to create many Raciones.
+     * @example
+     * // Create many Raciones
+     * const raciones = await prisma.raciones.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Raciones and only return the `id`
+     * const racionesWithIdOnly = await prisma.raciones.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends RacionesCreateManyAndReturnArgs>(args?: SelectSubset<T, RacionesCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RacionesPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Raciones.
+     * @param {RacionesDeleteArgs} args - Arguments to delete one Raciones.
+     * @example
+     * // Delete one Raciones
+     * const Raciones = await prisma.raciones.delete({
+     *   where: {
+     *     // ... filter to delete one Raciones
+     *   }
+     * })
+     * 
+     */
+    delete<T extends RacionesDeleteArgs>(args: SelectSubset<T, RacionesDeleteArgs<ExtArgs>>): Prisma__RacionesClient<$Result.GetResult<Prisma.$RacionesPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Raciones.
+     * @param {RacionesUpdateArgs} args - Arguments to update one Raciones.
+     * @example
+     * // Update one Raciones
+     * const raciones = await prisma.raciones.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends RacionesUpdateArgs>(args: SelectSubset<T, RacionesUpdateArgs<ExtArgs>>): Prisma__RacionesClient<$Result.GetResult<Prisma.$RacionesPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Raciones.
+     * @param {RacionesDeleteManyArgs} args - Arguments to filter Raciones to delete.
+     * @example
+     * // Delete a few Raciones
+     * const { count } = await prisma.raciones.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends RacionesDeleteManyArgs>(args?: SelectSubset<T, RacionesDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Raciones.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RacionesUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Raciones
+     * const raciones = await prisma.raciones.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends RacionesUpdateManyArgs>(args: SelectSubset<T, RacionesUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Raciones.
+     * @param {RacionesUpsertArgs} args - Arguments to update or create a Raciones.
+     * @example
+     * // Update or create a Raciones
+     * const raciones = await prisma.raciones.upsert({
+     *   create: {
+     *     // ... data to create a Raciones
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Raciones we want to update
+     *   }
+     * })
+     */
+    upsert<T extends RacionesUpsertArgs>(args: SelectSubset<T, RacionesUpsertArgs<ExtArgs>>): Prisma__RacionesClient<$Result.GetResult<Prisma.$RacionesPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Raciones.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RacionesCountArgs} args - Arguments to filter Raciones to count.
+     * @example
+     * // Count the number of Raciones
+     * const count = await prisma.raciones.count({
+     *   where: {
+     *     // ... the filter for the Raciones we want to count
+     *   }
+     * })
+    **/
+    count<T extends RacionesCountArgs>(
+      args?: Subset<T, RacionesCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], RacionesCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Raciones.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RacionesAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends RacionesAggregateArgs>(args: Subset<T, RacionesAggregateArgs>): Prisma.PrismaPromise<GetRacionesAggregateType<T>>
+
+    /**
+     * Group by Raciones.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RacionesGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends RacionesGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: RacionesGroupByArgs['orderBy'] }
+        : { orderBy?: RacionesGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, RacionesGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRacionesGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Raciones model
+   */
+  readonly fields: RacionesFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Raciones.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__RacionesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Raciones model
+   */ 
+  interface RacionesFieldRefs {
+    readonly id: FieldRef<"Raciones", 'String'>
+    readonly licitacion: FieldRef<"Raciones", 'String'>
+    readonly numeroServicio: FieldRef<"Raciones", 'String'>
+    readonly servicio: FieldRef<"Raciones", 'String'>
+    readonly numeroCocina: FieldRef<"Raciones", 'Int'>
+    readonly numeroArea: FieldRef<"Raciones", 'String'>
+    readonly numeroEnlace: FieldRef<"Raciones", 'Int'>
+    readonly numeroLocacion: FieldRef<"Raciones", 'String'>
+    readonly locacion: FieldRef<"Raciones", 'String'>
+    readonly numeroPrograma: FieldRef<"Raciones", 'String'>
+    readonly programa: FieldRef<"Raciones", 'String'>
+    readonly mes: FieldRef<"Raciones", 'Int'>
+    readonly anio: FieldRef<"Raciones", 'Int'>
+    readonly fecha: FieldRef<"Raciones", 'DateTime'>
+    readonly estadoRacion: FieldRef<"Raciones", 'Int'>
+    readonly numeroBeneficiario: FieldRef<"Raciones", 'Int'>
+    readonly beneficiario: FieldRef<"Raciones", 'String'>
+    readonly cantidad: FieldRef<"Raciones", 'Int'>
+    readonly rbd: FieldRef<"Raciones", 'Int'>
+    readonly ut: FieldRef<"Raciones", 'Int'>
+    readonly createdAt: FieldRef<"Raciones", 'DateTime'>
+    readonly updatedAt: FieldRef<"Raciones", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Raciones findUnique
+   */
+  export type RacionesFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Raciones
+     */
+    select?: RacionesSelect<ExtArgs> | null
+    /**
+     * Filter, which Raciones to fetch.
+     */
+    where: RacionesWhereUniqueInput
+  }
+
+  /**
+   * Raciones findUniqueOrThrow
+   */
+  export type RacionesFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Raciones
+     */
+    select?: RacionesSelect<ExtArgs> | null
+    /**
+     * Filter, which Raciones to fetch.
+     */
+    where: RacionesWhereUniqueInput
+  }
+
+  /**
+   * Raciones findFirst
+   */
+  export type RacionesFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Raciones
+     */
+    select?: RacionesSelect<ExtArgs> | null
+    /**
+     * Filter, which Raciones to fetch.
+     */
+    where?: RacionesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Raciones to fetch.
+     */
+    orderBy?: RacionesOrderByWithRelationInput | RacionesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Raciones.
+     */
+    cursor?: RacionesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Raciones from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Raciones.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Raciones.
+     */
+    distinct?: RacionesScalarFieldEnum | RacionesScalarFieldEnum[]
+  }
+
+  /**
+   * Raciones findFirstOrThrow
+   */
+  export type RacionesFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Raciones
+     */
+    select?: RacionesSelect<ExtArgs> | null
+    /**
+     * Filter, which Raciones to fetch.
+     */
+    where?: RacionesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Raciones to fetch.
+     */
+    orderBy?: RacionesOrderByWithRelationInput | RacionesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Raciones.
+     */
+    cursor?: RacionesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Raciones from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Raciones.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Raciones.
+     */
+    distinct?: RacionesScalarFieldEnum | RacionesScalarFieldEnum[]
+  }
+
+  /**
+   * Raciones findMany
+   */
+  export type RacionesFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Raciones
+     */
+    select?: RacionesSelect<ExtArgs> | null
+    /**
+     * Filter, which Raciones to fetch.
+     */
+    where?: RacionesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Raciones to fetch.
+     */
+    orderBy?: RacionesOrderByWithRelationInput | RacionesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Raciones.
+     */
+    cursor?: RacionesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Raciones from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Raciones.
+     */
+    skip?: number
+    distinct?: RacionesScalarFieldEnum | RacionesScalarFieldEnum[]
+  }
+
+  /**
+   * Raciones create
+   */
+  export type RacionesCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Raciones
+     */
+    select?: RacionesSelect<ExtArgs> | null
+    /**
+     * The data needed to create a Raciones.
+     */
+    data: XOR<RacionesCreateInput, RacionesUncheckedCreateInput>
+  }
+
+  /**
+   * Raciones createMany
+   */
+  export type RacionesCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Raciones.
+     */
+    data: RacionesCreateManyInput | RacionesCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Raciones createManyAndReturn
+   */
+  export type RacionesCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Raciones
+     */
+    select?: RacionesSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Raciones.
+     */
+    data: RacionesCreateManyInput | RacionesCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Raciones update
+   */
+  export type RacionesUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Raciones
+     */
+    select?: RacionesSelect<ExtArgs> | null
+    /**
+     * The data needed to update a Raciones.
+     */
+    data: XOR<RacionesUpdateInput, RacionesUncheckedUpdateInput>
+    /**
+     * Choose, which Raciones to update.
+     */
+    where: RacionesWhereUniqueInput
+  }
+
+  /**
+   * Raciones updateMany
+   */
+  export type RacionesUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Raciones.
+     */
+    data: XOR<RacionesUpdateManyMutationInput, RacionesUncheckedUpdateManyInput>
+    /**
+     * Filter which Raciones to update
+     */
+    where?: RacionesWhereInput
+  }
+
+  /**
+   * Raciones upsert
+   */
+  export type RacionesUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Raciones
+     */
+    select?: RacionesSelect<ExtArgs> | null
+    /**
+     * The filter to search for the Raciones to update in case it exists.
+     */
+    where: RacionesWhereUniqueInput
+    /**
+     * In case the Raciones found by the `where` argument doesn't exist, create a new Raciones with this data.
+     */
+    create: XOR<RacionesCreateInput, RacionesUncheckedCreateInput>
+    /**
+     * In case the Raciones was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<RacionesUpdateInput, RacionesUncheckedUpdateInput>
+  }
+
+  /**
+   * Raciones delete
+   */
+  export type RacionesDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Raciones
+     */
+    select?: RacionesSelect<ExtArgs> | null
+    /**
+     * Filter which Raciones to delete.
+     */
+    where: RacionesWhereUniqueInput
+  }
+
+  /**
+   * Raciones deleteMany
+   */
+  export type RacionesDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Raciones to delete
+     */
+    where?: RacionesWhereInput
+  }
+
+  /**
+   * Raciones without action
+   */
+  export type RacionesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Raciones
+     */
+    select?: RacionesSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * Model CapCertificacionHeader
+   */
+
+  export type AggregateCapCertificacionHeader = {
+    _count: CapCertificacionHeaderCountAggregateOutputType | null
+    _avg: CapCertificacionHeaderAvgAggregateOutputType | null
+    _sum: CapCertificacionHeaderSumAggregateOutputType | null
+    _min: CapCertificacionHeaderMinAggregateOutputType | null
+    _max: CapCertificacionHeaderMaxAggregateOutputType | null
+  }
+
+  export type CapCertificacionHeaderAvgAggregateOutputType = {
+    rbd: number | null
+    racionesPreparar: number | null
+  }
+
+  export type CapCertificacionHeaderSumAggregateOutputType = {
+    rbd: number | null
+    racionesPreparar: number | null
+  }
+
+  export type CapCertificacionHeaderMinAggregateOutputType = {
+    id: string | null
+    rbd: number | null
+    fecha: Date | null
+    servicio: string | null
+    programa: string | null
+    area: string | null
+    racionesPreparar: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    usuario: string | null
+  }
+
+  export type CapCertificacionHeaderMaxAggregateOutputType = {
+    id: string | null
+    rbd: number | null
+    fecha: Date | null
+    servicio: string | null
+    programa: string | null
+    area: string | null
+    racionesPreparar: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    usuario: string | null
+  }
+
+  export type CapCertificacionHeaderCountAggregateOutputType = {
+    id: number
+    rbd: number
+    fecha: number
+    servicio: number
+    programa: number
+    area: number
+    racionesPreparar: number
+    createdAt: number
+    updatedAt: number
+    usuario: number
+    _all: number
+  }
+
+
+  export type CapCertificacionHeaderAvgAggregateInputType = {
+    rbd?: true
+    racionesPreparar?: true
+  }
+
+  export type CapCertificacionHeaderSumAggregateInputType = {
+    rbd?: true
+    racionesPreparar?: true
+  }
+
+  export type CapCertificacionHeaderMinAggregateInputType = {
+    id?: true
+    rbd?: true
+    fecha?: true
+    servicio?: true
+    programa?: true
+    area?: true
+    racionesPreparar?: true
+    createdAt?: true
+    updatedAt?: true
+    usuario?: true
+  }
+
+  export type CapCertificacionHeaderMaxAggregateInputType = {
+    id?: true
+    rbd?: true
+    fecha?: true
+    servicio?: true
+    programa?: true
+    area?: true
+    racionesPreparar?: true
+    createdAt?: true
+    updatedAt?: true
+    usuario?: true
+  }
+
+  export type CapCertificacionHeaderCountAggregateInputType = {
+    id?: true
+    rbd?: true
+    fecha?: true
+    servicio?: true
+    programa?: true
+    area?: true
+    racionesPreparar?: true
+    createdAt?: true
+    updatedAt?: true
+    usuario?: true
+    _all?: true
+  }
+
+  export type CapCertificacionHeaderAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CapCertificacionHeader to aggregate.
+     */
+    where?: CapCertificacionHeaderWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CapCertificacionHeaders to fetch.
+     */
+    orderBy?: CapCertificacionHeaderOrderByWithRelationInput | CapCertificacionHeaderOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CapCertificacionHeaderWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CapCertificacionHeaders from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CapCertificacionHeaders.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CapCertificacionHeaders
+    **/
+    _count?: true | CapCertificacionHeaderCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CapCertificacionHeaderAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CapCertificacionHeaderSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CapCertificacionHeaderMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CapCertificacionHeaderMaxAggregateInputType
+  }
+
+  export type GetCapCertificacionHeaderAggregateType<T extends CapCertificacionHeaderAggregateArgs> = {
+        [P in keyof T & keyof AggregateCapCertificacionHeader]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCapCertificacionHeader[P]>
+      : GetScalarType<T[P], AggregateCapCertificacionHeader[P]>
+  }
+
+
+
+
+  export type CapCertificacionHeaderGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CapCertificacionHeaderWhereInput
+    orderBy?: CapCertificacionHeaderOrderByWithAggregationInput | CapCertificacionHeaderOrderByWithAggregationInput[]
+    by: CapCertificacionHeaderScalarFieldEnum[] | CapCertificacionHeaderScalarFieldEnum
+    having?: CapCertificacionHeaderScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CapCertificacionHeaderCountAggregateInputType | true
+    _avg?: CapCertificacionHeaderAvgAggregateInputType
+    _sum?: CapCertificacionHeaderSumAggregateInputType
+    _min?: CapCertificacionHeaderMinAggregateInputType
+    _max?: CapCertificacionHeaderMaxAggregateInputType
+  }
+
+  export type CapCertificacionHeaderGroupByOutputType = {
+    id: string
+    rbd: number
+    fecha: Date
+    servicio: string
+    programa: string
+    area: string | null
+    racionesPreparar: number
+    createdAt: Date
+    updatedAt: Date
+    usuario: string | null
+    _count: CapCertificacionHeaderCountAggregateOutputType | null
+    _avg: CapCertificacionHeaderAvgAggregateOutputType | null
+    _sum: CapCertificacionHeaderSumAggregateOutputType | null
+    _min: CapCertificacionHeaderMinAggregateOutputType | null
+    _max: CapCertificacionHeaderMaxAggregateOutputType | null
+  }
+
+  type GetCapCertificacionHeaderGroupByPayload<T extends CapCertificacionHeaderGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CapCertificacionHeaderGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CapCertificacionHeaderGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CapCertificacionHeaderGroupByOutputType[P]>
+            : GetScalarType<T[P], CapCertificacionHeaderGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CapCertificacionHeaderSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    rbd?: boolean
+    fecha?: boolean
+    servicio?: boolean
+    programa?: boolean
+    area?: boolean
+    racionesPreparar?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    usuario?: boolean
+    detalles?: boolean | CapCertificacionHeader$detallesArgs<ExtArgs>
+    _count?: boolean | CapCertificacionHeaderCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["capCertificacionHeader"]>
+
+  export type CapCertificacionHeaderSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    rbd?: boolean
+    fecha?: boolean
+    servicio?: boolean
+    programa?: boolean
+    area?: boolean
+    racionesPreparar?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    usuario?: boolean
+  }, ExtArgs["result"]["capCertificacionHeader"]>
+
+  export type CapCertificacionHeaderSelectScalar = {
+    id?: boolean
+    rbd?: boolean
+    fecha?: boolean
+    servicio?: boolean
+    programa?: boolean
+    area?: boolean
+    racionesPreparar?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    usuario?: boolean
+  }
+
+  export type CapCertificacionHeaderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    detalles?: boolean | CapCertificacionHeader$detallesArgs<ExtArgs>
+    _count?: boolean | CapCertificacionHeaderCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type CapCertificacionHeaderIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $CapCertificacionHeaderPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CapCertificacionHeader"
+    objects: {
+      detalles: Prisma.$CapCertificacionDetailPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      rbd: number
+      fecha: Date
+      servicio: string
+      programa: string
+      area: string | null
+      racionesPreparar: number
+      createdAt: Date
+      updatedAt: Date
+      usuario: string | null
+    }, ExtArgs["result"]["capCertificacionHeader"]>
+    composites: {}
+  }
+
+  type CapCertificacionHeaderGetPayload<S extends boolean | null | undefined | CapCertificacionHeaderDefaultArgs> = $Result.GetResult<Prisma.$CapCertificacionHeaderPayload, S>
+
+  type CapCertificacionHeaderCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<CapCertificacionHeaderFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: CapCertificacionHeaderCountAggregateInputType | true
+    }
+
+  export interface CapCertificacionHeaderDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CapCertificacionHeader'], meta: { name: 'CapCertificacionHeader' } }
+    /**
+     * Find zero or one CapCertificacionHeader that matches the filter.
+     * @param {CapCertificacionHeaderFindUniqueArgs} args - Arguments to find a CapCertificacionHeader
+     * @example
+     * // Get one CapCertificacionHeader
+     * const capCertificacionHeader = await prisma.capCertificacionHeader.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CapCertificacionHeaderFindUniqueArgs>(args: SelectSubset<T, CapCertificacionHeaderFindUniqueArgs<ExtArgs>>): Prisma__CapCertificacionHeaderClient<$Result.GetResult<Prisma.$CapCertificacionHeaderPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one CapCertificacionHeader that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {CapCertificacionHeaderFindUniqueOrThrowArgs} args - Arguments to find a CapCertificacionHeader
+     * @example
+     * // Get one CapCertificacionHeader
+     * const capCertificacionHeader = await prisma.capCertificacionHeader.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CapCertificacionHeaderFindUniqueOrThrowArgs>(args: SelectSubset<T, CapCertificacionHeaderFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CapCertificacionHeaderClient<$Result.GetResult<Prisma.$CapCertificacionHeaderPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first CapCertificacionHeader that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CapCertificacionHeaderFindFirstArgs} args - Arguments to find a CapCertificacionHeader
+     * @example
+     * // Get one CapCertificacionHeader
+     * const capCertificacionHeader = await prisma.capCertificacionHeader.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CapCertificacionHeaderFindFirstArgs>(args?: SelectSubset<T, CapCertificacionHeaderFindFirstArgs<ExtArgs>>): Prisma__CapCertificacionHeaderClient<$Result.GetResult<Prisma.$CapCertificacionHeaderPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first CapCertificacionHeader that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CapCertificacionHeaderFindFirstOrThrowArgs} args - Arguments to find a CapCertificacionHeader
+     * @example
+     * // Get one CapCertificacionHeader
+     * const capCertificacionHeader = await prisma.capCertificacionHeader.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CapCertificacionHeaderFindFirstOrThrowArgs>(args?: SelectSubset<T, CapCertificacionHeaderFindFirstOrThrowArgs<ExtArgs>>): Prisma__CapCertificacionHeaderClient<$Result.GetResult<Prisma.$CapCertificacionHeaderPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more CapCertificacionHeaders that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CapCertificacionHeaderFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CapCertificacionHeaders
+     * const capCertificacionHeaders = await prisma.capCertificacionHeader.findMany()
+     * 
+     * // Get first 10 CapCertificacionHeaders
+     * const capCertificacionHeaders = await prisma.capCertificacionHeader.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const capCertificacionHeaderWithIdOnly = await prisma.capCertificacionHeader.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CapCertificacionHeaderFindManyArgs>(args?: SelectSubset<T, CapCertificacionHeaderFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CapCertificacionHeaderPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a CapCertificacionHeader.
+     * @param {CapCertificacionHeaderCreateArgs} args - Arguments to create a CapCertificacionHeader.
+     * @example
+     * // Create one CapCertificacionHeader
+     * const CapCertificacionHeader = await prisma.capCertificacionHeader.create({
+     *   data: {
+     *     // ... data to create a CapCertificacionHeader
+     *   }
+     * })
+     * 
+     */
+    create<T extends CapCertificacionHeaderCreateArgs>(args: SelectSubset<T, CapCertificacionHeaderCreateArgs<ExtArgs>>): Prisma__CapCertificacionHeaderClient<$Result.GetResult<Prisma.$CapCertificacionHeaderPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many CapCertificacionHeaders.
+     * @param {CapCertificacionHeaderCreateManyArgs} args - Arguments to create many CapCertificacionHeaders.
+     * @example
+     * // Create many CapCertificacionHeaders
+     * const capCertificacionHeader = await prisma.capCertificacionHeader.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CapCertificacionHeaderCreateManyArgs>(args?: SelectSubset<T, CapCertificacionHeaderCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CapCertificacionHeaders and returns the data saved in the database.
+     * @param {CapCertificacionHeaderCreateManyAndReturnArgs} args - Arguments to create many CapCertificacionHeaders.
+     * @example
+     * // Create many CapCertificacionHeaders
+     * const capCertificacionHeader = await prisma.capCertificacionHeader.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CapCertificacionHeaders and only return the `id`
+     * const capCertificacionHeaderWithIdOnly = await prisma.capCertificacionHeader.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CapCertificacionHeaderCreateManyAndReturnArgs>(args?: SelectSubset<T, CapCertificacionHeaderCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CapCertificacionHeaderPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a CapCertificacionHeader.
+     * @param {CapCertificacionHeaderDeleteArgs} args - Arguments to delete one CapCertificacionHeader.
+     * @example
+     * // Delete one CapCertificacionHeader
+     * const CapCertificacionHeader = await prisma.capCertificacionHeader.delete({
+     *   where: {
+     *     // ... filter to delete one CapCertificacionHeader
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CapCertificacionHeaderDeleteArgs>(args: SelectSubset<T, CapCertificacionHeaderDeleteArgs<ExtArgs>>): Prisma__CapCertificacionHeaderClient<$Result.GetResult<Prisma.$CapCertificacionHeaderPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one CapCertificacionHeader.
+     * @param {CapCertificacionHeaderUpdateArgs} args - Arguments to update one CapCertificacionHeader.
+     * @example
+     * // Update one CapCertificacionHeader
+     * const capCertificacionHeader = await prisma.capCertificacionHeader.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CapCertificacionHeaderUpdateArgs>(args: SelectSubset<T, CapCertificacionHeaderUpdateArgs<ExtArgs>>): Prisma__CapCertificacionHeaderClient<$Result.GetResult<Prisma.$CapCertificacionHeaderPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more CapCertificacionHeaders.
+     * @param {CapCertificacionHeaderDeleteManyArgs} args - Arguments to filter CapCertificacionHeaders to delete.
+     * @example
+     * // Delete a few CapCertificacionHeaders
+     * const { count } = await prisma.capCertificacionHeader.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CapCertificacionHeaderDeleteManyArgs>(args?: SelectSubset<T, CapCertificacionHeaderDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CapCertificacionHeaders.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CapCertificacionHeaderUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CapCertificacionHeaders
+     * const capCertificacionHeader = await prisma.capCertificacionHeader.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CapCertificacionHeaderUpdateManyArgs>(args: SelectSubset<T, CapCertificacionHeaderUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one CapCertificacionHeader.
+     * @param {CapCertificacionHeaderUpsertArgs} args - Arguments to update or create a CapCertificacionHeader.
+     * @example
+     * // Update or create a CapCertificacionHeader
+     * const capCertificacionHeader = await prisma.capCertificacionHeader.upsert({
+     *   create: {
+     *     // ... data to create a CapCertificacionHeader
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CapCertificacionHeader we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CapCertificacionHeaderUpsertArgs>(args: SelectSubset<T, CapCertificacionHeaderUpsertArgs<ExtArgs>>): Prisma__CapCertificacionHeaderClient<$Result.GetResult<Prisma.$CapCertificacionHeaderPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of CapCertificacionHeaders.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CapCertificacionHeaderCountArgs} args - Arguments to filter CapCertificacionHeaders to count.
+     * @example
+     * // Count the number of CapCertificacionHeaders
+     * const count = await prisma.capCertificacionHeader.count({
+     *   where: {
+     *     // ... the filter for the CapCertificacionHeaders we want to count
+     *   }
+     * })
+    **/
+    count<T extends CapCertificacionHeaderCountArgs>(
+      args?: Subset<T, CapCertificacionHeaderCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CapCertificacionHeaderCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CapCertificacionHeader.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CapCertificacionHeaderAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CapCertificacionHeaderAggregateArgs>(args: Subset<T, CapCertificacionHeaderAggregateArgs>): Prisma.PrismaPromise<GetCapCertificacionHeaderAggregateType<T>>
+
+    /**
+     * Group by CapCertificacionHeader.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CapCertificacionHeaderGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CapCertificacionHeaderGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CapCertificacionHeaderGroupByArgs['orderBy'] }
+        : { orderBy?: CapCertificacionHeaderGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CapCertificacionHeaderGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCapCertificacionHeaderGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CapCertificacionHeader model
+   */
+  readonly fields: CapCertificacionHeaderFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CapCertificacionHeader.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CapCertificacionHeaderClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    detalles<T extends CapCertificacionHeader$detallesArgs<ExtArgs> = {}>(args?: Subset<T, CapCertificacionHeader$detallesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CapCertificacionDetailPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CapCertificacionHeader model
+   */ 
+  interface CapCertificacionHeaderFieldRefs {
+    readonly id: FieldRef<"CapCertificacionHeader", 'String'>
+    readonly rbd: FieldRef<"CapCertificacionHeader", 'Int'>
+    readonly fecha: FieldRef<"CapCertificacionHeader", 'DateTime'>
+    readonly servicio: FieldRef<"CapCertificacionHeader", 'String'>
+    readonly programa: FieldRef<"CapCertificacionHeader", 'String'>
+    readonly area: FieldRef<"CapCertificacionHeader", 'String'>
+    readonly racionesPreparar: FieldRef<"CapCertificacionHeader", 'Int'>
+    readonly createdAt: FieldRef<"CapCertificacionHeader", 'DateTime'>
+    readonly updatedAt: FieldRef<"CapCertificacionHeader", 'DateTime'>
+    readonly usuario: FieldRef<"CapCertificacionHeader", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CapCertificacionHeader findUnique
+   */
+  export type CapCertificacionHeaderFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CapCertificacionHeader
+     */
+    select?: CapCertificacionHeaderSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CapCertificacionHeaderInclude<ExtArgs> | null
+    /**
+     * Filter, which CapCertificacionHeader to fetch.
+     */
+    where: CapCertificacionHeaderWhereUniqueInput
+  }
+
+  /**
+   * CapCertificacionHeader findUniqueOrThrow
+   */
+  export type CapCertificacionHeaderFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CapCertificacionHeader
+     */
+    select?: CapCertificacionHeaderSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CapCertificacionHeaderInclude<ExtArgs> | null
+    /**
+     * Filter, which CapCertificacionHeader to fetch.
+     */
+    where: CapCertificacionHeaderWhereUniqueInput
+  }
+
+  /**
+   * CapCertificacionHeader findFirst
+   */
+  export type CapCertificacionHeaderFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CapCertificacionHeader
+     */
+    select?: CapCertificacionHeaderSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CapCertificacionHeaderInclude<ExtArgs> | null
+    /**
+     * Filter, which CapCertificacionHeader to fetch.
+     */
+    where?: CapCertificacionHeaderWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CapCertificacionHeaders to fetch.
+     */
+    orderBy?: CapCertificacionHeaderOrderByWithRelationInput | CapCertificacionHeaderOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CapCertificacionHeaders.
+     */
+    cursor?: CapCertificacionHeaderWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CapCertificacionHeaders from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CapCertificacionHeaders.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CapCertificacionHeaders.
+     */
+    distinct?: CapCertificacionHeaderScalarFieldEnum | CapCertificacionHeaderScalarFieldEnum[]
+  }
+
+  /**
+   * CapCertificacionHeader findFirstOrThrow
+   */
+  export type CapCertificacionHeaderFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CapCertificacionHeader
+     */
+    select?: CapCertificacionHeaderSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CapCertificacionHeaderInclude<ExtArgs> | null
+    /**
+     * Filter, which CapCertificacionHeader to fetch.
+     */
+    where?: CapCertificacionHeaderWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CapCertificacionHeaders to fetch.
+     */
+    orderBy?: CapCertificacionHeaderOrderByWithRelationInput | CapCertificacionHeaderOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CapCertificacionHeaders.
+     */
+    cursor?: CapCertificacionHeaderWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CapCertificacionHeaders from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CapCertificacionHeaders.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CapCertificacionHeaders.
+     */
+    distinct?: CapCertificacionHeaderScalarFieldEnum | CapCertificacionHeaderScalarFieldEnum[]
+  }
+
+  /**
+   * CapCertificacionHeader findMany
+   */
+  export type CapCertificacionHeaderFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CapCertificacionHeader
+     */
+    select?: CapCertificacionHeaderSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CapCertificacionHeaderInclude<ExtArgs> | null
+    /**
+     * Filter, which CapCertificacionHeaders to fetch.
+     */
+    where?: CapCertificacionHeaderWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CapCertificacionHeaders to fetch.
+     */
+    orderBy?: CapCertificacionHeaderOrderByWithRelationInput | CapCertificacionHeaderOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CapCertificacionHeaders.
+     */
+    cursor?: CapCertificacionHeaderWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CapCertificacionHeaders from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CapCertificacionHeaders.
+     */
+    skip?: number
+    distinct?: CapCertificacionHeaderScalarFieldEnum | CapCertificacionHeaderScalarFieldEnum[]
+  }
+
+  /**
+   * CapCertificacionHeader create
+   */
+  export type CapCertificacionHeaderCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CapCertificacionHeader
+     */
+    select?: CapCertificacionHeaderSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CapCertificacionHeaderInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CapCertificacionHeader.
+     */
+    data: XOR<CapCertificacionHeaderCreateInput, CapCertificacionHeaderUncheckedCreateInput>
+  }
+
+  /**
+   * CapCertificacionHeader createMany
+   */
+  export type CapCertificacionHeaderCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CapCertificacionHeaders.
+     */
+    data: CapCertificacionHeaderCreateManyInput | CapCertificacionHeaderCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CapCertificacionHeader createManyAndReturn
+   */
+  export type CapCertificacionHeaderCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CapCertificacionHeader
+     */
+    select?: CapCertificacionHeaderSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many CapCertificacionHeaders.
+     */
+    data: CapCertificacionHeaderCreateManyInput | CapCertificacionHeaderCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CapCertificacionHeader update
+   */
+  export type CapCertificacionHeaderUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CapCertificacionHeader
+     */
+    select?: CapCertificacionHeaderSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CapCertificacionHeaderInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CapCertificacionHeader.
+     */
+    data: XOR<CapCertificacionHeaderUpdateInput, CapCertificacionHeaderUncheckedUpdateInput>
+    /**
+     * Choose, which CapCertificacionHeader to update.
+     */
+    where: CapCertificacionHeaderWhereUniqueInput
+  }
+
+  /**
+   * CapCertificacionHeader updateMany
+   */
+  export type CapCertificacionHeaderUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CapCertificacionHeaders.
+     */
+    data: XOR<CapCertificacionHeaderUpdateManyMutationInput, CapCertificacionHeaderUncheckedUpdateManyInput>
+    /**
+     * Filter which CapCertificacionHeaders to update
+     */
+    where?: CapCertificacionHeaderWhereInput
+  }
+
+  /**
+   * CapCertificacionHeader upsert
+   */
+  export type CapCertificacionHeaderUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CapCertificacionHeader
+     */
+    select?: CapCertificacionHeaderSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CapCertificacionHeaderInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CapCertificacionHeader to update in case it exists.
+     */
+    where: CapCertificacionHeaderWhereUniqueInput
+    /**
+     * In case the CapCertificacionHeader found by the `where` argument doesn't exist, create a new CapCertificacionHeader with this data.
+     */
+    create: XOR<CapCertificacionHeaderCreateInput, CapCertificacionHeaderUncheckedCreateInput>
+    /**
+     * In case the CapCertificacionHeader was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CapCertificacionHeaderUpdateInput, CapCertificacionHeaderUncheckedUpdateInput>
+  }
+
+  /**
+   * CapCertificacionHeader delete
+   */
+  export type CapCertificacionHeaderDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CapCertificacionHeader
+     */
+    select?: CapCertificacionHeaderSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CapCertificacionHeaderInclude<ExtArgs> | null
+    /**
+     * Filter which CapCertificacionHeader to delete.
+     */
+    where: CapCertificacionHeaderWhereUniqueInput
+  }
+
+  /**
+   * CapCertificacionHeader deleteMany
+   */
+  export type CapCertificacionHeaderDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CapCertificacionHeaders to delete
+     */
+    where?: CapCertificacionHeaderWhereInput
+  }
+
+  /**
+   * CapCertificacionHeader.detalles
+   */
+  export type CapCertificacionHeader$detallesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CapCertificacionDetail
+     */
+    select?: CapCertificacionDetailSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CapCertificacionDetailInclude<ExtArgs> | null
+    where?: CapCertificacionDetailWhereInput
+    orderBy?: CapCertificacionDetailOrderByWithRelationInput | CapCertificacionDetailOrderByWithRelationInput[]
+    cursor?: CapCertificacionDetailWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CapCertificacionDetailScalarFieldEnum | CapCertificacionDetailScalarFieldEnum[]
+  }
+
+  /**
+   * CapCertificacionHeader without action
+   */
+  export type CapCertificacionHeaderDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CapCertificacionHeader
+     */
+    select?: CapCertificacionHeaderSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CapCertificacionHeaderInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model CapCertificacionDetail
+   */
+
+  export type AggregateCapCertificacionDetail = {
+    _count: CapCertificacionDetailCountAggregateOutputType | null
+    _avg: CapCertificacionDetailAvgAggregateOutputType | null
+    _sum: CapCertificacionDetailSumAggregateOutputType | null
+    _min: CapCertificacionDetailMinAggregateOutputType | null
+    _max: CapCertificacionDetailMaxAggregateOutputType | null
+  }
+
+  export type CapCertificacionDetailAvgAggregateOutputType = {
+    grsRac: Decimal | null
+    grsTotal: Decimal | null
+  }
+
+  export type CapCertificacionDetailSumAggregateOutputType = {
+    grsRac: Decimal | null
+    grsTotal: Decimal | null
+  }
+
+  export type CapCertificacionDetailMinAggregateOutputType = {
+    id: string | null
+    headerId: string | null
+    numeroMinuta: string | null
+    nombrePreparacion: string | null
+    nombreProducto: string | null
+    grsRac: Decimal | null
+    grsTotal: Decimal | null
+  }
+
+  export type CapCertificacionDetailMaxAggregateOutputType = {
+    id: string | null
+    headerId: string | null
+    numeroMinuta: string | null
+    nombrePreparacion: string | null
+    nombreProducto: string | null
+    grsRac: Decimal | null
+    grsTotal: Decimal | null
+  }
+
+  export type CapCertificacionDetailCountAggregateOutputType = {
+    id: number
+    headerId: number
+    numeroMinuta: number
+    nombrePreparacion: number
+    nombreProducto: number
+    grsRac: number
+    grsTotal: number
+    _all: number
+  }
+
+
+  export type CapCertificacionDetailAvgAggregateInputType = {
+    grsRac?: true
+    grsTotal?: true
+  }
+
+  export type CapCertificacionDetailSumAggregateInputType = {
+    grsRac?: true
+    grsTotal?: true
+  }
+
+  export type CapCertificacionDetailMinAggregateInputType = {
+    id?: true
+    headerId?: true
+    numeroMinuta?: true
+    nombrePreparacion?: true
+    nombreProducto?: true
+    grsRac?: true
+    grsTotal?: true
+  }
+
+  export type CapCertificacionDetailMaxAggregateInputType = {
+    id?: true
+    headerId?: true
+    numeroMinuta?: true
+    nombrePreparacion?: true
+    nombreProducto?: true
+    grsRac?: true
+    grsTotal?: true
+  }
+
+  export type CapCertificacionDetailCountAggregateInputType = {
+    id?: true
+    headerId?: true
+    numeroMinuta?: true
+    nombrePreparacion?: true
+    nombreProducto?: true
+    grsRac?: true
+    grsTotal?: true
+    _all?: true
+  }
+
+  export type CapCertificacionDetailAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CapCertificacionDetail to aggregate.
+     */
+    where?: CapCertificacionDetailWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CapCertificacionDetails to fetch.
+     */
+    orderBy?: CapCertificacionDetailOrderByWithRelationInput | CapCertificacionDetailOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CapCertificacionDetailWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CapCertificacionDetails from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CapCertificacionDetails.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CapCertificacionDetails
+    **/
+    _count?: true | CapCertificacionDetailCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CapCertificacionDetailAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CapCertificacionDetailSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CapCertificacionDetailMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CapCertificacionDetailMaxAggregateInputType
+  }
+
+  export type GetCapCertificacionDetailAggregateType<T extends CapCertificacionDetailAggregateArgs> = {
+        [P in keyof T & keyof AggregateCapCertificacionDetail]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCapCertificacionDetail[P]>
+      : GetScalarType<T[P], AggregateCapCertificacionDetail[P]>
+  }
+
+
+
+
+  export type CapCertificacionDetailGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CapCertificacionDetailWhereInput
+    orderBy?: CapCertificacionDetailOrderByWithAggregationInput | CapCertificacionDetailOrderByWithAggregationInput[]
+    by: CapCertificacionDetailScalarFieldEnum[] | CapCertificacionDetailScalarFieldEnum
+    having?: CapCertificacionDetailScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CapCertificacionDetailCountAggregateInputType | true
+    _avg?: CapCertificacionDetailAvgAggregateInputType
+    _sum?: CapCertificacionDetailSumAggregateInputType
+    _min?: CapCertificacionDetailMinAggregateInputType
+    _max?: CapCertificacionDetailMaxAggregateInputType
+  }
+
+  export type CapCertificacionDetailGroupByOutputType = {
+    id: string
+    headerId: string
+    numeroMinuta: string
+    nombrePreparacion: string
+    nombreProducto: string
+    grsRac: Decimal
+    grsTotal: Decimal
+    _count: CapCertificacionDetailCountAggregateOutputType | null
+    _avg: CapCertificacionDetailAvgAggregateOutputType | null
+    _sum: CapCertificacionDetailSumAggregateOutputType | null
+    _min: CapCertificacionDetailMinAggregateOutputType | null
+    _max: CapCertificacionDetailMaxAggregateOutputType | null
+  }
+
+  type GetCapCertificacionDetailGroupByPayload<T extends CapCertificacionDetailGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CapCertificacionDetailGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CapCertificacionDetailGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CapCertificacionDetailGroupByOutputType[P]>
+            : GetScalarType<T[P], CapCertificacionDetailGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CapCertificacionDetailSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    headerId?: boolean
+    numeroMinuta?: boolean
+    nombrePreparacion?: boolean
+    nombreProducto?: boolean
+    grsRac?: boolean
+    grsTotal?: boolean
+    header?: boolean | CapCertificacionHeaderDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["capCertificacionDetail"]>
+
+  export type CapCertificacionDetailSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    headerId?: boolean
+    numeroMinuta?: boolean
+    nombrePreparacion?: boolean
+    nombreProducto?: boolean
+    grsRac?: boolean
+    grsTotal?: boolean
+    header?: boolean | CapCertificacionHeaderDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["capCertificacionDetail"]>
+
+  export type CapCertificacionDetailSelectScalar = {
+    id?: boolean
+    headerId?: boolean
+    numeroMinuta?: boolean
+    nombrePreparacion?: boolean
+    nombreProducto?: boolean
+    grsRac?: boolean
+    grsTotal?: boolean
+  }
+
+  export type CapCertificacionDetailInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    header?: boolean | CapCertificacionHeaderDefaultArgs<ExtArgs>
+  }
+  export type CapCertificacionDetailIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    header?: boolean | CapCertificacionHeaderDefaultArgs<ExtArgs>
+  }
+
+  export type $CapCertificacionDetailPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CapCertificacionDetail"
+    objects: {
+      header: Prisma.$CapCertificacionHeaderPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      headerId: string
+      numeroMinuta: string
+      nombrePreparacion: string
+      nombreProducto: string
+      grsRac: Prisma.Decimal
+      grsTotal: Prisma.Decimal
+    }, ExtArgs["result"]["capCertificacionDetail"]>
+    composites: {}
+  }
+
+  type CapCertificacionDetailGetPayload<S extends boolean | null | undefined | CapCertificacionDetailDefaultArgs> = $Result.GetResult<Prisma.$CapCertificacionDetailPayload, S>
+
+  type CapCertificacionDetailCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<CapCertificacionDetailFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: CapCertificacionDetailCountAggregateInputType | true
+    }
+
+  export interface CapCertificacionDetailDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CapCertificacionDetail'], meta: { name: 'CapCertificacionDetail' } }
+    /**
+     * Find zero or one CapCertificacionDetail that matches the filter.
+     * @param {CapCertificacionDetailFindUniqueArgs} args - Arguments to find a CapCertificacionDetail
+     * @example
+     * // Get one CapCertificacionDetail
+     * const capCertificacionDetail = await prisma.capCertificacionDetail.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CapCertificacionDetailFindUniqueArgs>(args: SelectSubset<T, CapCertificacionDetailFindUniqueArgs<ExtArgs>>): Prisma__CapCertificacionDetailClient<$Result.GetResult<Prisma.$CapCertificacionDetailPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one CapCertificacionDetail that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {CapCertificacionDetailFindUniqueOrThrowArgs} args - Arguments to find a CapCertificacionDetail
+     * @example
+     * // Get one CapCertificacionDetail
+     * const capCertificacionDetail = await prisma.capCertificacionDetail.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CapCertificacionDetailFindUniqueOrThrowArgs>(args: SelectSubset<T, CapCertificacionDetailFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CapCertificacionDetailClient<$Result.GetResult<Prisma.$CapCertificacionDetailPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first CapCertificacionDetail that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CapCertificacionDetailFindFirstArgs} args - Arguments to find a CapCertificacionDetail
+     * @example
+     * // Get one CapCertificacionDetail
+     * const capCertificacionDetail = await prisma.capCertificacionDetail.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CapCertificacionDetailFindFirstArgs>(args?: SelectSubset<T, CapCertificacionDetailFindFirstArgs<ExtArgs>>): Prisma__CapCertificacionDetailClient<$Result.GetResult<Prisma.$CapCertificacionDetailPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first CapCertificacionDetail that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CapCertificacionDetailFindFirstOrThrowArgs} args - Arguments to find a CapCertificacionDetail
+     * @example
+     * // Get one CapCertificacionDetail
+     * const capCertificacionDetail = await prisma.capCertificacionDetail.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CapCertificacionDetailFindFirstOrThrowArgs>(args?: SelectSubset<T, CapCertificacionDetailFindFirstOrThrowArgs<ExtArgs>>): Prisma__CapCertificacionDetailClient<$Result.GetResult<Prisma.$CapCertificacionDetailPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more CapCertificacionDetails that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CapCertificacionDetailFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CapCertificacionDetails
+     * const capCertificacionDetails = await prisma.capCertificacionDetail.findMany()
+     * 
+     * // Get first 10 CapCertificacionDetails
+     * const capCertificacionDetails = await prisma.capCertificacionDetail.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const capCertificacionDetailWithIdOnly = await prisma.capCertificacionDetail.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CapCertificacionDetailFindManyArgs>(args?: SelectSubset<T, CapCertificacionDetailFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CapCertificacionDetailPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a CapCertificacionDetail.
+     * @param {CapCertificacionDetailCreateArgs} args - Arguments to create a CapCertificacionDetail.
+     * @example
+     * // Create one CapCertificacionDetail
+     * const CapCertificacionDetail = await prisma.capCertificacionDetail.create({
+     *   data: {
+     *     // ... data to create a CapCertificacionDetail
+     *   }
+     * })
+     * 
+     */
+    create<T extends CapCertificacionDetailCreateArgs>(args: SelectSubset<T, CapCertificacionDetailCreateArgs<ExtArgs>>): Prisma__CapCertificacionDetailClient<$Result.GetResult<Prisma.$CapCertificacionDetailPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many CapCertificacionDetails.
+     * @param {CapCertificacionDetailCreateManyArgs} args - Arguments to create many CapCertificacionDetails.
+     * @example
+     * // Create many CapCertificacionDetails
+     * const capCertificacionDetail = await prisma.capCertificacionDetail.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CapCertificacionDetailCreateManyArgs>(args?: SelectSubset<T, CapCertificacionDetailCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CapCertificacionDetails and returns the data saved in the database.
+     * @param {CapCertificacionDetailCreateManyAndReturnArgs} args - Arguments to create many CapCertificacionDetails.
+     * @example
+     * // Create many CapCertificacionDetails
+     * const capCertificacionDetail = await prisma.capCertificacionDetail.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CapCertificacionDetails and only return the `id`
+     * const capCertificacionDetailWithIdOnly = await prisma.capCertificacionDetail.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CapCertificacionDetailCreateManyAndReturnArgs>(args?: SelectSubset<T, CapCertificacionDetailCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CapCertificacionDetailPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a CapCertificacionDetail.
+     * @param {CapCertificacionDetailDeleteArgs} args - Arguments to delete one CapCertificacionDetail.
+     * @example
+     * // Delete one CapCertificacionDetail
+     * const CapCertificacionDetail = await prisma.capCertificacionDetail.delete({
+     *   where: {
+     *     // ... filter to delete one CapCertificacionDetail
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CapCertificacionDetailDeleteArgs>(args: SelectSubset<T, CapCertificacionDetailDeleteArgs<ExtArgs>>): Prisma__CapCertificacionDetailClient<$Result.GetResult<Prisma.$CapCertificacionDetailPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one CapCertificacionDetail.
+     * @param {CapCertificacionDetailUpdateArgs} args - Arguments to update one CapCertificacionDetail.
+     * @example
+     * // Update one CapCertificacionDetail
+     * const capCertificacionDetail = await prisma.capCertificacionDetail.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CapCertificacionDetailUpdateArgs>(args: SelectSubset<T, CapCertificacionDetailUpdateArgs<ExtArgs>>): Prisma__CapCertificacionDetailClient<$Result.GetResult<Prisma.$CapCertificacionDetailPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more CapCertificacionDetails.
+     * @param {CapCertificacionDetailDeleteManyArgs} args - Arguments to filter CapCertificacionDetails to delete.
+     * @example
+     * // Delete a few CapCertificacionDetails
+     * const { count } = await prisma.capCertificacionDetail.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CapCertificacionDetailDeleteManyArgs>(args?: SelectSubset<T, CapCertificacionDetailDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CapCertificacionDetails.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CapCertificacionDetailUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CapCertificacionDetails
+     * const capCertificacionDetail = await prisma.capCertificacionDetail.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CapCertificacionDetailUpdateManyArgs>(args: SelectSubset<T, CapCertificacionDetailUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one CapCertificacionDetail.
+     * @param {CapCertificacionDetailUpsertArgs} args - Arguments to update or create a CapCertificacionDetail.
+     * @example
+     * // Update or create a CapCertificacionDetail
+     * const capCertificacionDetail = await prisma.capCertificacionDetail.upsert({
+     *   create: {
+     *     // ... data to create a CapCertificacionDetail
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CapCertificacionDetail we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CapCertificacionDetailUpsertArgs>(args: SelectSubset<T, CapCertificacionDetailUpsertArgs<ExtArgs>>): Prisma__CapCertificacionDetailClient<$Result.GetResult<Prisma.$CapCertificacionDetailPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of CapCertificacionDetails.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CapCertificacionDetailCountArgs} args - Arguments to filter CapCertificacionDetails to count.
+     * @example
+     * // Count the number of CapCertificacionDetails
+     * const count = await prisma.capCertificacionDetail.count({
+     *   where: {
+     *     // ... the filter for the CapCertificacionDetails we want to count
+     *   }
+     * })
+    **/
+    count<T extends CapCertificacionDetailCountArgs>(
+      args?: Subset<T, CapCertificacionDetailCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CapCertificacionDetailCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CapCertificacionDetail.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CapCertificacionDetailAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CapCertificacionDetailAggregateArgs>(args: Subset<T, CapCertificacionDetailAggregateArgs>): Prisma.PrismaPromise<GetCapCertificacionDetailAggregateType<T>>
+
+    /**
+     * Group by CapCertificacionDetail.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CapCertificacionDetailGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CapCertificacionDetailGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CapCertificacionDetailGroupByArgs['orderBy'] }
+        : { orderBy?: CapCertificacionDetailGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CapCertificacionDetailGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCapCertificacionDetailGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CapCertificacionDetail model
+   */
+  readonly fields: CapCertificacionDetailFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CapCertificacionDetail.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CapCertificacionDetailClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    header<T extends CapCertificacionHeaderDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CapCertificacionHeaderDefaultArgs<ExtArgs>>): Prisma__CapCertificacionHeaderClient<$Result.GetResult<Prisma.$CapCertificacionHeaderPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CapCertificacionDetail model
+   */ 
+  interface CapCertificacionDetailFieldRefs {
+    readonly id: FieldRef<"CapCertificacionDetail", 'String'>
+    readonly headerId: FieldRef<"CapCertificacionDetail", 'String'>
+    readonly numeroMinuta: FieldRef<"CapCertificacionDetail", 'String'>
+    readonly nombrePreparacion: FieldRef<"CapCertificacionDetail", 'String'>
+    readonly nombreProducto: FieldRef<"CapCertificacionDetail", 'String'>
+    readonly grsRac: FieldRef<"CapCertificacionDetail", 'Decimal'>
+    readonly grsTotal: FieldRef<"CapCertificacionDetail", 'Decimal'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CapCertificacionDetail findUnique
+   */
+  export type CapCertificacionDetailFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CapCertificacionDetail
+     */
+    select?: CapCertificacionDetailSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CapCertificacionDetailInclude<ExtArgs> | null
+    /**
+     * Filter, which CapCertificacionDetail to fetch.
+     */
+    where: CapCertificacionDetailWhereUniqueInput
+  }
+
+  /**
+   * CapCertificacionDetail findUniqueOrThrow
+   */
+  export type CapCertificacionDetailFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CapCertificacionDetail
+     */
+    select?: CapCertificacionDetailSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CapCertificacionDetailInclude<ExtArgs> | null
+    /**
+     * Filter, which CapCertificacionDetail to fetch.
+     */
+    where: CapCertificacionDetailWhereUniqueInput
+  }
+
+  /**
+   * CapCertificacionDetail findFirst
+   */
+  export type CapCertificacionDetailFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CapCertificacionDetail
+     */
+    select?: CapCertificacionDetailSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CapCertificacionDetailInclude<ExtArgs> | null
+    /**
+     * Filter, which CapCertificacionDetail to fetch.
+     */
+    where?: CapCertificacionDetailWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CapCertificacionDetails to fetch.
+     */
+    orderBy?: CapCertificacionDetailOrderByWithRelationInput | CapCertificacionDetailOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CapCertificacionDetails.
+     */
+    cursor?: CapCertificacionDetailWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CapCertificacionDetails from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CapCertificacionDetails.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CapCertificacionDetails.
+     */
+    distinct?: CapCertificacionDetailScalarFieldEnum | CapCertificacionDetailScalarFieldEnum[]
+  }
+
+  /**
+   * CapCertificacionDetail findFirstOrThrow
+   */
+  export type CapCertificacionDetailFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CapCertificacionDetail
+     */
+    select?: CapCertificacionDetailSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CapCertificacionDetailInclude<ExtArgs> | null
+    /**
+     * Filter, which CapCertificacionDetail to fetch.
+     */
+    where?: CapCertificacionDetailWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CapCertificacionDetails to fetch.
+     */
+    orderBy?: CapCertificacionDetailOrderByWithRelationInput | CapCertificacionDetailOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CapCertificacionDetails.
+     */
+    cursor?: CapCertificacionDetailWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CapCertificacionDetails from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CapCertificacionDetails.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CapCertificacionDetails.
+     */
+    distinct?: CapCertificacionDetailScalarFieldEnum | CapCertificacionDetailScalarFieldEnum[]
+  }
+
+  /**
+   * CapCertificacionDetail findMany
+   */
+  export type CapCertificacionDetailFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CapCertificacionDetail
+     */
+    select?: CapCertificacionDetailSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CapCertificacionDetailInclude<ExtArgs> | null
+    /**
+     * Filter, which CapCertificacionDetails to fetch.
+     */
+    where?: CapCertificacionDetailWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CapCertificacionDetails to fetch.
+     */
+    orderBy?: CapCertificacionDetailOrderByWithRelationInput | CapCertificacionDetailOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CapCertificacionDetails.
+     */
+    cursor?: CapCertificacionDetailWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CapCertificacionDetails from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CapCertificacionDetails.
+     */
+    skip?: number
+    distinct?: CapCertificacionDetailScalarFieldEnum | CapCertificacionDetailScalarFieldEnum[]
+  }
+
+  /**
+   * CapCertificacionDetail create
+   */
+  export type CapCertificacionDetailCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CapCertificacionDetail
+     */
+    select?: CapCertificacionDetailSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CapCertificacionDetailInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CapCertificacionDetail.
+     */
+    data: XOR<CapCertificacionDetailCreateInput, CapCertificacionDetailUncheckedCreateInput>
+  }
+
+  /**
+   * CapCertificacionDetail createMany
+   */
+  export type CapCertificacionDetailCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CapCertificacionDetails.
+     */
+    data: CapCertificacionDetailCreateManyInput | CapCertificacionDetailCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CapCertificacionDetail createManyAndReturn
+   */
+  export type CapCertificacionDetailCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CapCertificacionDetail
+     */
+    select?: CapCertificacionDetailSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many CapCertificacionDetails.
+     */
+    data: CapCertificacionDetailCreateManyInput | CapCertificacionDetailCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CapCertificacionDetailIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CapCertificacionDetail update
+   */
+  export type CapCertificacionDetailUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CapCertificacionDetail
+     */
+    select?: CapCertificacionDetailSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CapCertificacionDetailInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CapCertificacionDetail.
+     */
+    data: XOR<CapCertificacionDetailUpdateInput, CapCertificacionDetailUncheckedUpdateInput>
+    /**
+     * Choose, which CapCertificacionDetail to update.
+     */
+    where: CapCertificacionDetailWhereUniqueInput
+  }
+
+  /**
+   * CapCertificacionDetail updateMany
+   */
+  export type CapCertificacionDetailUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CapCertificacionDetails.
+     */
+    data: XOR<CapCertificacionDetailUpdateManyMutationInput, CapCertificacionDetailUncheckedUpdateManyInput>
+    /**
+     * Filter which CapCertificacionDetails to update
+     */
+    where?: CapCertificacionDetailWhereInput
+  }
+
+  /**
+   * CapCertificacionDetail upsert
+   */
+  export type CapCertificacionDetailUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CapCertificacionDetail
+     */
+    select?: CapCertificacionDetailSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CapCertificacionDetailInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CapCertificacionDetail to update in case it exists.
+     */
+    where: CapCertificacionDetailWhereUniqueInput
+    /**
+     * In case the CapCertificacionDetail found by the `where` argument doesn't exist, create a new CapCertificacionDetail with this data.
+     */
+    create: XOR<CapCertificacionDetailCreateInput, CapCertificacionDetailUncheckedCreateInput>
+    /**
+     * In case the CapCertificacionDetail was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CapCertificacionDetailUpdateInput, CapCertificacionDetailUncheckedUpdateInput>
+  }
+
+  /**
+   * CapCertificacionDetail delete
+   */
+  export type CapCertificacionDetailDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CapCertificacionDetail
+     */
+    select?: CapCertificacionDetailSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CapCertificacionDetailInclude<ExtArgs> | null
+    /**
+     * Filter which CapCertificacionDetail to delete.
+     */
+    where: CapCertificacionDetailWhereUniqueInput
+  }
+
+  /**
+   * CapCertificacionDetail deleteMany
+   */
+  export type CapCertificacionDetailDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CapCertificacionDetails to delete
+     */
+    where?: CapCertificacionDetailWhereInput
+  }
+
+  /**
+   * CapCertificacionDetail without action
+   */
+  export type CapCertificacionDetailDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CapCertificacionDetail
+     */
+    select?: CapCertificacionDetailSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CapCertificacionDetailInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -42663,6 +46165,8 @@ export namespace Prisma {
     programa: 'programa',
     numeroCocina: 'numeroCocina',
     cocina: 'cocina',
+    numeroArea: 'numeroArea',
+    area: 'area',
     codigoProducto: 'codigoProducto',
     nombreProducto: 'nombreProducto',
     codigoSubServicio: 'codigoSubServicio',
@@ -42698,6 +46202,63 @@ export namespace Prisma {
   };
 
   export type MinutasScalarFieldEnum = (typeof MinutasScalarFieldEnum)[keyof typeof MinutasScalarFieldEnum]
+
+
+  export const RacionesScalarFieldEnum: {
+    id: 'id',
+    licitacion: 'licitacion',
+    numeroServicio: 'numeroServicio',
+    servicio: 'servicio',
+    numeroCocina: 'numeroCocina',
+    numeroArea: 'numeroArea',
+    numeroEnlace: 'numeroEnlace',
+    numeroLocacion: 'numeroLocacion',
+    locacion: 'locacion',
+    numeroPrograma: 'numeroPrograma',
+    programa: 'programa',
+    mes: 'mes',
+    anio: 'anio',
+    fecha: 'fecha',
+    estadoRacion: 'estadoRacion',
+    numeroBeneficiario: 'numeroBeneficiario',
+    beneficiario: 'beneficiario',
+    cantidad: 'cantidad',
+    rbd: 'rbd',
+    ut: 'ut',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type RacionesScalarFieldEnum = (typeof RacionesScalarFieldEnum)[keyof typeof RacionesScalarFieldEnum]
+
+
+  export const CapCertificacionHeaderScalarFieldEnum: {
+    id: 'id',
+    rbd: 'rbd',
+    fecha: 'fecha',
+    servicio: 'servicio',
+    programa: 'programa',
+    area: 'area',
+    racionesPreparar: 'racionesPreparar',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    usuario: 'usuario'
+  };
+
+  export type CapCertificacionHeaderScalarFieldEnum = (typeof CapCertificacionHeaderScalarFieldEnum)[keyof typeof CapCertificacionHeaderScalarFieldEnum]
+
+
+  export const CapCertificacionDetailScalarFieldEnum: {
+    id: 'id',
+    headerId: 'headerId',
+    numeroMinuta: 'numeroMinuta',
+    nombrePreparacion: 'nombrePreparacion',
+    nombreProducto: 'nombreProducto',
+    grsRac: 'grsRac',
+    grsTotal: 'grsTotal'
+  };
+
+  export type CapCertificacionDetailScalarFieldEnum = (typeof CapCertificacionDetailScalarFieldEnum)[keyof typeof CapCertificacionDetailScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -45840,6 +49401,8 @@ export namespace Prisma {
     programa?: StringFilter<"Preparaciones"> | string
     numeroCocina?: IntFilter<"Preparaciones"> | number
     cocina?: StringFilter<"Preparaciones"> | string
+    numeroArea?: StringFilter<"Preparaciones"> | string
+    area?: StringFilter<"Preparaciones"> | string
     codigoProducto?: StringFilter<"Preparaciones"> | string
     nombreProducto?: StringFilter<"Preparaciones"> | string
     codigoSubServicio?: StringFilter<"Preparaciones"> | string
@@ -45859,6 +49422,8 @@ export namespace Prisma {
     programa?: SortOrder
     numeroCocina?: SortOrder
     cocina?: SortOrder
+    numeroArea?: SortOrder
+    area?: SortOrder
     codigoProducto?: SortOrder
     nombreProducto?: SortOrder
     codigoSubServicio?: SortOrder
@@ -45881,6 +49446,8 @@ export namespace Prisma {
     programa?: StringFilter<"Preparaciones"> | string
     numeroCocina?: IntFilter<"Preparaciones"> | number
     cocina?: StringFilter<"Preparaciones"> | string
+    numeroArea?: StringFilter<"Preparaciones"> | string
+    area?: StringFilter<"Preparaciones"> | string
     codigoProducto?: StringFilter<"Preparaciones"> | string
     nombreProducto?: StringFilter<"Preparaciones"> | string
     codigoSubServicio?: StringFilter<"Preparaciones"> | string
@@ -45900,6 +49467,8 @@ export namespace Prisma {
     programa?: SortOrder
     numeroCocina?: SortOrder
     cocina?: SortOrder
+    numeroArea?: SortOrder
+    area?: SortOrder
     codigoProducto?: SortOrder
     nombreProducto?: SortOrder
     codigoSubServicio?: SortOrder
@@ -45927,6 +49496,8 @@ export namespace Prisma {
     programa?: StringWithAggregatesFilter<"Preparaciones"> | string
     numeroCocina?: IntWithAggregatesFilter<"Preparaciones"> | number
     cocina?: StringWithAggregatesFilter<"Preparaciones"> | string
+    numeroArea?: StringWithAggregatesFilter<"Preparaciones"> | string
+    area?: StringWithAggregatesFilter<"Preparaciones"> | string
     codigoProducto?: StringWithAggregatesFilter<"Preparaciones"> | string
     nombreProducto?: StringWithAggregatesFilter<"Preparaciones"> | string
     codigoSubServicio?: StringWithAggregatesFilter<"Preparaciones"> | string
@@ -46054,6 +49625,294 @@ export namespace Prisma {
     nombreEnlace?: StringWithAggregatesFilter<"Minutas"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Minutas"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Minutas"> | Date | string
+  }
+
+  export type RacionesWhereInput = {
+    AND?: RacionesWhereInput | RacionesWhereInput[]
+    OR?: RacionesWhereInput[]
+    NOT?: RacionesWhereInput | RacionesWhereInput[]
+    id?: StringFilter<"Raciones"> | string
+    licitacion?: StringFilter<"Raciones"> | string
+    numeroServicio?: StringFilter<"Raciones"> | string
+    servicio?: StringFilter<"Raciones"> | string
+    numeroCocina?: IntFilter<"Raciones"> | number
+    numeroArea?: StringFilter<"Raciones"> | string
+    numeroEnlace?: IntFilter<"Raciones"> | number
+    numeroLocacion?: StringFilter<"Raciones"> | string
+    locacion?: StringFilter<"Raciones"> | string
+    numeroPrograma?: StringFilter<"Raciones"> | string
+    programa?: StringFilter<"Raciones"> | string
+    mes?: IntFilter<"Raciones"> | number
+    anio?: IntFilter<"Raciones"> | number
+    fecha?: DateTimeFilter<"Raciones"> | Date | string
+    estadoRacion?: IntFilter<"Raciones"> | number
+    numeroBeneficiario?: IntFilter<"Raciones"> | number
+    beneficiario?: StringFilter<"Raciones"> | string
+    cantidad?: IntFilter<"Raciones"> | number
+    rbd?: IntFilter<"Raciones"> | number
+    ut?: IntFilter<"Raciones"> | number
+    createdAt?: DateTimeFilter<"Raciones"> | Date | string
+    updatedAt?: DateTimeFilter<"Raciones"> | Date | string
+  }
+
+  export type RacionesOrderByWithRelationInput = {
+    id?: SortOrder
+    licitacion?: SortOrder
+    numeroServicio?: SortOrder
+    servicio?: SortOrder
+    numeroCocina?: SortOrder
+    numeroArea?: SortOrder
+    numeroEnlace?: SortOrder
+    numeroLocacion?: SortOrder
+    locacion?: SortOrder
+    numeroPrograma?: SortOrder
+    programa?: SortOrder
+    mes?: SortOrder
+    anio?: SortOrder
+    fecha?: SortOrder
+    estadoRacion?: SortOrder
+    numeroBeneficiario?: SortOrder
+    beneficiario?: SortOrder
+    cantidad?: SortOrder
+    rbd?: SortOrder
+    ut?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RacionesWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: RacionesWhereInput | RacionesWhereInput[]
+    OR?: RacionesWhereInput[]
+    NOT?: RacionesWhereInput | RacionesWhereInput[]
+    licitacion?: StringFilter<"Raciones"> | string
+    numeroServicio?: StringFilter<"Raciones"> | string
+    servicio?: StringFilter<"Raciones"> | string
+    numeroCocina?: IntFilter<"Raciones"> | number
+    numeroArea?: StringFilter<"Raciones"> | string
+    numeroEnlace?: IntFilter<"Raciones"> | number
+    numeroLocacion?: StringFilter<"Raciones"> | string
+    locacion?: StringFilter<"Raciones"> | string
+    numeroPrograma?: StringFilter<"Raciones"> | string
+    programa?: StringFilter<"Raciones"> | string
+    mes?: IntFilter<"Raciones"> | number
+    anio?: IntFilter<"Raciones"> | number
+    fecha?: DateTimeFilter<"Raciones"> | Date | string
+    estadoRacion?: IntFilter<"Raciones"> | number
+    numeroBeneficiario?: IntFilter<"Raciones"> | number
+    beneficiario?: StringFilter<"Raciones"> | string
+    cantidad?: IntFilter<"Raciones"> | number
+    rbd?: IntFilter<"Raciones"> | number
+    ut?: IntFilter<"Raciones"> | number
+    createdAt?: DateTimeFilter<"Raciones"> | Date | string
+    updatedAt?: DateTimeFilter<"Raciones"> | Date | string
+  }, "id">
+
+  export type RacionesOrderByWithAggregationInput = {
+    id?: SortOrder
+    licitacion?: SortOrder
+    numeroServicio?: SortOrder
+    servicio?: SortOrder
+    numeroCocina?: SortOrder
+    numeroArea?: SortOrder
+    numeroEnlace?: SortOrder
+    numeroLocacion?: SortOrder
+    locacion?: SortOrder
+    numeroPrograma?: SortOrder
+    programa?: SortOrder
+    mes?: SortOrder
+    anio?: SortOrder
+    fecha?: SortOrder
+    estadoRacion?: SortOrder
+    numeroBeneficiario?: SortOrder
+    beneficiario?: SortOrder
+    cantidad?: SortOrder
+    rbd?: SortOrder
+    ut?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: RacionesCountOrderByAggregateInput
+    _avg?: RacionesAvgOrderByAggregateInput
+    _max?: RacionesMaxOrderByAggregateInput
+    _min?: RacionesMinOrderByAggregateInput
+    _sum?: RacionesSumOrderByAggregateInput
+  }
+
+  export type RacionesScalarWhereWithAggregatesInput = {
+    AND?: RacionesScalarWhereWithAggregatesInput | RacionesScalarWhereWithAggregatesInput[]
+    OR?: RacionesScalarWhereWithAggregatesInput[]
+    NOT?: RacionesScalarWhereWithAggregatesInput | RacionesScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Raciones"> | string
+    licitacion?: StringWithAggregatesFilter<"Raciones"> | string
+    numeroServicio?: StringWithAggregatesFilter<"Raciones"> | string
+    servicio?: StringWithAggregatesFilter<"Raciones"> | string
+    numeroCocina?: IntWithAggregatesFilter<"Raciones"> | number
+    numeroArea?: StringWithAggregatesFilter<"Raciones"> | string
+    numeroEnlace?: IntWithAggregatesFilter<"Raciones"> | number
+    numeroLocacion?: StringWithAggregatesFilter<"Raciones"> | string
+    locacion?: StringWithAggregatesFilter<"Raciones"> | string
+    numeroPrograma?: StringWithAggregatesFilter<"Raciones"> | string
+    programa?: StringWithAggregatesFilter<"Raciones"> | string
+    mes?: IntWithAggregatesFilter<"Raciones"> | number
+    anio?: IntWithAggregatesFilter<"Raciones"> | number
+    fecha?: DateTimeWithAggregatesFilter<"Raciones"> | Date | string
+    estadoRacion?: IntWithAggregatesFilter<"Raciones"> | number
+    numeroBeneficiario?: IntWithAggregatesFilter<"Raciones"> | number
+    beneficiario?: StringWithAggregatesFilter<"Raciones"> | string
+    cantidad?: IntWithAggregatesFilter<"Raciones"> | number
+    rbd?: IntWithAggregatesFilter<"Raciones"> | number
+    ut?: IntWithAggregatesFilter<"Raciones"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"Raciones"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Raciones"> | Date | string
+  }
+
+  export type CapCertificacionHeaderWhereInput = {
+    AND?: CapCertificacionHeaderWhereInput | CapCertificacionHeaderWhereInput[]
+    OR?: CapCertificacionHeaderWhereInput[]
+    NOT?: CapCertificacionHeaderWhereInput | CapCertificacionHeaderWhereInput[]
+    id?: StringFilter<"CapCertificacionHeader"> | string
+    rbd?: IntFilter<"CapCertificacionHeader"> | number
+    fecha?: DateTimeFilter<"CapCertificacionHeader"> | Date | string
+    servicio?: StringFilter<"CapCertificacionHeader"> | string
+    programa?: StringFilter<"CapCertificacionHeader"> | string
+    area?: StringNullableFilter<"CapCertificacionHeader"> | string | null
+    racionesPreparar?: IntFilter<"CapCertificacionHeader"> | number
+    createdAt?: DateTimeFilter<"CapCertificacionHeader"> | Date | string
+    updatedAt?: DateTimeFilter<"CapCertificacionHeader"> | Date | string
+    usuario?: StringNullableFilter<"CapCertificacionHeader"> | string | null
+    detalles?: CapCertificacionDetailListRelationFilter
+  }
+
+  export type CapCertificacionHeaderOrderByWithRelationInput = {
+    id?: SortOrder
+    rbd?: SortOrder
+    fecha?: SortOrder
+    servicio?: SortOrder
+    programa?: SortOrder
+    area?: SortOrderInput | SortOrder
+    racionesPreparar?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    usuario?: SortOrderInput | SortOrder
+    detalles?: CapCertificacionDetailOrderByRelationAggregateInput
+  }
+
+  export type CapCertificacionHeaderWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: CapCertificacionHeaderWhereInput | CapCertificacionHeaderWhereInput[]
+    OR?: CapCertificacionHeaderWhereInput[]
+    NOT?: CapCertificacionHeaderWhereInput | CapCertificacionHeaderWhereInput[]
+    rbd?: IntFilter<"CapCertificacionHeader"> | number
+    fecha?: DateTimeFilter<"CapCertificacionHeader"> | Date | string
+    servicio?: StringFilter<"CapCertificacionHeader"> | string
+    programa?: StringFilter<"CapCertificacionHeader"> | string
+    area?: StringNullableFilter<"CapCertificacionHeader"> | string | null
+    racionesPreparar?: IntFilter<"CapCertificacionHeader"> | number
+    createdAt?: DateTimeFilter<"CapCertificacionHeader"> | Date | string
+    updatedAt?: DateTimeFilter<"CapCertificacionHeader"> | Date | string
+    usuario?: StringNullableFilter<"CapCertificacionHeader"> | string | null
+    detalles?: CapCertificacionDetailListRelationFilter
+  }, "id">
+
+  export type CapCertificacionHeaderOrderByWithAggregationInput = {
+    id?: SortOrder
+    rbd?: SortOrder
+    fecha?: SortOrder
+    servicio?: SortOrder
+    programa?: SortOrder
+    area?: SortOrderInput | SortOrder
+    racionesPreparar?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    usuario?: SortOrderInput | SortOrder
+    _count?: CapCertificacionHeaderCountOrderByAggregateInput
+    _avg?: CapCertificacionHeaderAvgOrderByAggregateInput
+    _max?: CapCertificacionHeaderMaxOrderByAggregateInput
+    _min?: CapCertificacionHeaderMinOrderByAggregateInput
+    _sum?: CapCertificacionHeaderSumOrderByAggregateInput
+  }
+
+  export type CapCertificacionHeaderScalarWhereWithAggregatesInput = {
+    AND?: CapCertificacionHeaderScalarWhereWithAggregatesInput | CapCertificacionHeaderScalarWhereWithAggregatesInput[]
+    OR?: CapCertificacionHeaderScalarWhereWithAggregatesInput[]
+    NOT?: CapCertificacionHeaderScalarWhereWithAggregatesInput | CapCertificacionHeaderScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"CapCertificacionHeader"> | string
+    rbd?: IntWithAggregatesFilter<"CapCertificacionHeader"> | number
+    fecha?: DateTimeWithAggregatesFilter<"CapCertificacionHeader"> | Date | string
+    servicio?: StringWithAggregatesFilter<"CapCertificacionHeader"> | string
+    programa?: StringWithAggregatesFilter<"CapCertificacionHeader"> | string
+    area?: StringNullableWithAggregatesFilter<"CapCertificacionHeader"> | string | null
+    racionesPreparar?: IntWithAggregatesFilter<"CapCertificacionHeader"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"CapCertificacionHeader"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"CapCertificacionHeader"> | Date | string
+    usuario?: StringNullableWithAggregatesFilter<"CapCertificacionHeader"> | string | null
+  }
+
+  export type CapCertificacionDetailWhereInput = {
+    AND?: CapCertificacionDetailWhereInput | CapCertificacionDetailWhereInput[]
+    OR?: CapCertificacionDetailWhereInput[]
+    NOT?: CapCertificacionDetailWhereInput | CapCertificacionDetailWhereInput[]
+    id?: StringFilter<"CapCertificacionDetail"> | string
+    headerId?: StringFilter<"CapCertificacionDetail"> | string
+    numeroMinuta?: StringFilter<"CapCertificacionDetail"> | string
+    nombrePreparacion?: StringFilter<"CapCertificacionDetail"> | string
+    nombreProducto?: StringFilter<"CapCertificacionDetail"> | string
+    grsRac?: DecimalFilter<"CapCertificacionDetail"> | Decimal | DecimalJsLike | number | string
+    grsTotal?: DecimalFilter<"CapCertificacionDetail"> | Decimal | DecimalJsLike | number | string
+    header?: XOR<CapCertificacionHeaderRelationFilter, CapCertificacionHeaderWhereInput>
+  }
+
+  export type CapCertificacionDetailOrderByWithRelationInput = {
+    id?: SortOrder
+    headerId?: SortOrder
+    numeroMinuta?: SortOrder
+    nombrePreparacion?: SortOrder
+    nombreProducto?: SortOrder
+    grsRac?: SortOrder
+    grsTotal?: SortOrder
+    header?: CapCertificacionHeaderOrderByWithRelationInput
+  }
+
+  export type CapCertificacionDetailWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: CapCertificacionDetailWhereInput | CapCertificacionDetailWhereInput[]
+    OR?: CapCertificacionDetailWhereInput[]
+    NOT?: CapCertificacionDetailWhereInput | CapCertificacionDetailWhereInput[]
+    headerId?: StringFilter<"CapCertificacionDetail"> | string
+    numeroMinuta?: StringFilter<"CapCertificacionDetail"> | string
+    nombrePreparacion?: StringFilter<"CapCertificacionDetail"> | string
+    nombreProducto?: StringFilter<"CapCertificacionDetail"> | string
+    grsRac?: DecimalFilter<"CapCertificacionDetail"> | Decimal | DecimalJsLike | number | string
+    grsTotal?: DecimalFilter<"CapCertificacionDetail"> | Decimal | DecimalJsLike | number | string
+    header?: XOR<CapCertificacionHeaderRelationFilter, CapCertificacionHeaderWhereInput>
+  }, "id">
+
+  export type CapCertificacionDetailOrderByWithAggregationInput = {
+    id?: SortOrder
+    headerId?: SortOrder
+    numeroMinuta?: SortOrder
+    nombrePreparacion?: SortOrder
+    nombreProducto?: SortOrder
+    grsRac?: SortOrder
+    grsTotal?: SortOrder
+    _count?: CapCertificacionDetailCountOrderByAggregateInput
+    _avg?: CapCertificacionDetailAvgOrderByAggregateInput
+    _max?: CapCertificacionDetailMaxOrderByAggregateInput
+    _min?: CapCertificacionDetailMinOrderByAggregateInput
+    _sum?: CapCertificacionDetailSumOrderByAggregateInput
+  }
+
+  export type CapCertificacionDetailScalarWhereWithAggregatesInput = {
+    AND?: CapCertificacionDetailScalarWhereWithAggregatesInput | CapCertificacionDetailScalarWhereWithAggregatesInput[]
+    OR?: CapCertificacionDetailScalarWhereWithAggregatesInput[]
+    NOT?: CapCertificacionDetailScalarWhereWithAggregatesInput | CapCertificacionDetailScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"CapCertificacionDetail"> | string
+    headerId?: StringWithAggregatesFilter<"CapCertificacionDetail"> | string
+    numeroMinuta?: StringWithAggregatesFilter<"CapCertificacionDetail"> | string
+    nombrePreparacion?: StringWithAggregatesFilter<"CapCertificacionDetail"> | string
+    nombreProducto?: StringWithAggregatesFilter<"CapCertificacionDetail"> | string
+    grsRac?: DecimalWithAggregatesFilter<"CapCertificacionDetail"> | Decimal | DecimalJsLike | number | string
+    grsTotal?: DecimalWithAggregatesFilter<"CapCertificacionDetail"> | Decimal | DecimalJsLike | number | string
   }
 
   export type RoleCreateInput = {
@@ -49528,6 +53387,8 @@ export namespace Prisma {
     programa: string
     numeroCocina: number
     cocina: string
+    numeroArea: string
+    area: string
     codigoProducto: string
     nombreProducto: string
     codigoSubServicio: string
@@ -49547,6 +53408,8 @@ export namespace Prisma {
     programa: string
     numeroCocina: number
     cocina: string
+    numeroArea: string
+    area: string
     codigoProducto: string
     nombreProducto: string
     codigoSubServicio: string
@@ -49566,6 +53429,8 @@ export namespace Prisma {
     programa?: StringFieldUpdateOperationsInput | string
     numeroCocina?: IntFieldUpdateOperationsInput | number
     cocina?: StringFieldUpdateOperationsInput | string
+    numeroArea?: StringFieldUpdateOperationsInput | string
+    area?: StringFieldUpdateOperationsInput | string
     codigoProducto?: StringFieldUpdateOperationsInput | string
     nombreProducto?: StringFieldUpdateOperationsInput | string
     codigoSubServicio?: StringFieldUpdateOperationsInput | string
@@ -49585,6 +53450,8 @@ export namespace Prisma {
     programa?: StringFieldUpdateOperationsInput | string
     numeroCocina?: IntFieldUpdateOperationsInput | number
     cocina?: StringFieldUpdateOperationsInput | string
+    numeroArea?: StringFieldUpdateOperationsInput | string
+    area?: StringFieldUpdateOperationsInput | string
     codigoProducto?: StringFieldUpdateOperationsInput | string
     nombreProducto?: StringFieldUpdateOperationsInput | string
     codigoSubServicio?: StringFieldUpdateOperationsInput | string
@@ -49604,6 +53471,8 @@ export namespace Prisma {
     programa: string
     numeroCocina: number
     cocina: string
+    numeroArea: string
+    area: string
     codigoProducto: string
     nombreProducto: string
     codigoSubServicio: string
@@ -49623,6 +53492,8 @@ export namespace Prisma {
     programa?: StringFieldUpdateOperationsInput | string
     numeroCocina?: IntFieldUpdateOperationsInput | number
     cocina?: StringFieldUpdateOperationsInput | string
+    numeroArea?: StringFieldUpdateOperationsInput | string
+    area?: StringFieldUpdateOperationsInput | string
     codigoProducto?: StringFieldUpdateOperationsInput | string
     nombreProducto?: StringFieldUpdateOperationsInput | string
     codigoSubServicio?: StringFieldUpdateOperationsInput | string
@@ -49642,6 +53513,8 @@ export namespace Prisma {
     programa?: StringFieldUpdateOperationsInput | string
     numeroCocina?: IntFieldUpdateOperationsInput | number
     cocina?: StringFieldUpdateOperationsInput | string
+    numeroArea?: StringFieldUpdateOperationsInput | string
+    area?: StringFieldUpdateOperationsInput | string
     codigoProducto?: StringFieldUpdateOperationsInput | string
     nombreProducto?: StringFieldUpdateOperationsInput | string
     codigoSubServicio?: StringFieldUpdateOperationsInput | string
@@ -49797,6 +53670,345 @@ export namespace Prisma {
     nombreEnlace?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RacionesCreateInput = {
+    id?: string
+    licitacion: string
+    numeroServicio: string
+    servicio: string
+    numeroCocina: number
+    numeroArea: string
+    numeroEnlace: number
+    numeroLocacion: string
+    locacion: string
+    numeroPrograma: string
+    programa: string
+    mes: number
+    anio: number
+    fecha: Date | string
+    estadoRacion: number
+    numeroBeneficiario: number
+    beneficiario: string
+    cantidad: number
+    rbd: number
+    ut: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RacionesUncheckedCreateInput = {
+    id?: string
+    licitacion: string
+    numeroServicio: string
+    servicio: string
+    numeroCocina: number
+    numeroArea: string
+    numeroEnlace: number
+    numeroLocacion: string
+    locacion: string
+    numeroPrograma: string
+    programa: string
+    mes: number
+    anio: number
+    fecha: Date | string
+    estadoRacion: number
+    numeroBeneficiario: number
+    beneficiario: string
+    cantidad: number
+    rbd: number
+    ut: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RacionesUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licitacion?: StringFieldUpdateOperationsInput | string
+    numeroServicio?: StringFieldUpdateOperationsInput | string
+    servicio?: StringFieldUpdateOperationsInput | string
+    numeroCocina?: IntFieldUpdateOperationsInput | number
+    numeroArea?: StringFieldUpdateOperationsInput | string
+    numeroEnlace?: IntFieldUpdateOperationsInput | number
+    numeroLocacion?: StringFieldUpdateOperationsInput | string
+    locacion?: StringFieldUpdateOperationsInput | string
+    numeroPrograma?: StringFieldUpdateOperationsInput | string
+    programa?: StringFieldUpdateOperationsInput | string
+    mes?: IntFieldUpdateOperationsInput | number
+    anio?: IntFieldUpdateOperationsInput | number
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    estadoRacion?: IntFieldUpdateOperationsInput | number
+    numeroBeneficiario?: IntFieldUpdateOperationsInput | number
+    beneficiario?: StringFieldUpdateOperationsInput | string
+    cantidad?: IntFieldUpdateOperationsInput | number
+    rbd?: IntFieldUpdateOperationsInput | number
+    ut?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RacionesUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licitacion?: StringFieldUpdateOperationsInput | string
+    numeroServicio?: StringFieldUpdateOperationsInput | string
+    servicio?: StringFieldUpdateOperationsInput | string
+    numeroCocina?: IntFieldUpdateOperationsInput | number
+    numeroArea?: StringFieldUpdateOperationsInput | string
+    numeroEnlace?: IntFieldUpdateOperationsInput | number
+    numeroLocacion?: StringFieldUpdateOperationsInput | string
+    locacion?: StringFieldUpdateOperationsInput | string
+    numeroPrograma?: StringFieldUpdateOperationsInput | string
+    programa?: StringFieldUpdateOperationsInput | string
+    mes?: IntFieldUpdateOperationsInput | number
+    anio?: IntFieldUpdateOperationsInput | number
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    estadoRacion?: IntFieldUpdateOperationsInput | number
+    numeroBeneficiario?: IntFieldUpdateOperationsInput | number
+    beneficiario?: StringFieldUpdateOperationsInput | string
+    cantidad?: IntFieldUpdateOperationsInput | number
+    rbd?: IntFieldUpdateOperationsInput | number
+    ut?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RacionesCreateManyInput = {
+    id?: string
+    licitacion: string
+    numeroServicio: string
+    servicio: string
+    numeroCocina: number
+    numeroArea: string
+    numeroEnlace: number
+    numeroLocacion: string
+    locacion: string
+    numeroPrograma: string
+    programa: string
+    mes: number
+    anio: number
+    fecha: Date | string
+    estadoRacion: number
+    numeroBeneficiario: number
+    beneficiario: string
+    cantidad: number
+    rbd: number
+    ut: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RacionesUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licitacion?: StringFieldUpdateOperationsInput | string
+    numeroServicio?: StringFieldUpdateOperationsInput | string
+    servicio?: StringFieldUpdateOperationsInput | string
+    numeroCocina?: IntFieldUpdateOperationsInput | number
+    numeroArea?: StringFieldUpdateOperationsInput | string
+    numeroEnlace?: IntFieldUpdateOperationsInput | number
+    numeroLocacion?: StringFieldUpdateOperationsInput | string
+    locacion?: StringFieldUpdateOperationsInput | string
+    numeroPrograma?: StringFieldUpdateOperationsInput | string
+    programa?: StringFieldUpdateOperationsInput | string
+    mes?: IntFieldUpdateOperationsInput | number
+    anio?: IntFieldUpdateOperationsInput | number
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    estadoRacion?: IntFieldUpdateOperationsInput | number
+    numeroBeneficiario?: IntFieldUpdateOperationsInput | number
+    beneficiario?: StringFieldUpdateOperationsInput | string
+    cantidad?: IntFieldUpdateOperationsInput | number
+    rbd?: IntFieldUpdateOperationsInput | number
+    ut?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RacionesUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licitacion?: StringFieldUpdateOperationsInput | string
+    numeroServicio?: StringFieldUpdateOperationsInput | string
+    servicio?: StringFieldUpdateOperationsInput | string
+    numeroCocina?: IntFieldUpdateOperationsInput | number
+    numeroArea?: StringFieldUpdateOperationsInput | string
+    numeroEnlace?: IntFieldUpdateOperationsInput | number
+    numeroLocacion?: StringFieldUpdateOperationsInput | string
+    locacion?: StringFieldUpdateOperationsInput | string
+    numeroPrograma?: StringFieldUpdateOperationsInput | string
+    programa?: StringFieldUpdateOperationsInput | string
+    mes?: IntFieldUpdateOperationsInput | number
+    anio?: IntFieldUpdateOperationsInput | number
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    estadoRacion?: IntFieldUpdateOperationsInput | number
+    numeroBeneficiario?: IntFieldUpdateOperationsInput | number
+    beneficiario?: StringFieldUpdateOperationsInput | string
+    cantidad?: IntFieldUpdateOperationsInput | number
+    rbd?: IntFieldUpdateOperationsInput | number
+    ut?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CapCertificacionHeaderCreateInput = {
+    id?: string
+    rbd: number
+    fecha: Date | string
+    servicio: string
+    programa: string
+    area?: string | null
+    racionesPreparar: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    usuario?: string | null
+    detalles?: CapCertificacionDetailCreateNestedManyWithoutHeaderInput
+  }
+
+  export type CapCertificacionHeaderUncheckedCreateInput = {
+    id?: string
+    rbd: number
+    fecha: Date | string
+    servicio: string
+    programa: string
+    area?: string | null
+    racionesPreparar: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    usuario?: string | null
+    detalles?: CapCertificacionDetailUncheckedCreateNestedManyWithoutHeaderInput
+  }
+
+  export type CapCertificacionHeaderUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    servicio?: StringFieldUpdateOperationsInput | string
+    programa?: StringFieldUpdateOperationsInput | string
+    area?: NullableStringFieldUpdateOperationsInput | string | null
+    racionesPreparar?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuario?: NullableStringFieldUpdateOperationsInput | string | null
+    detalles?: CapCertificacionDetailUpdateManyWithoutHeaderNestedInput
+  }
+
+  export type CapCertificacionHeaderUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    servicio?: StringFieldUpdateOperationsInput | string
+    programa?: StringFieldUpdateOperationsInput | string
+    area?: NullableStringFieldUpdateOperationsInput | string | null
+    racionesPreparar?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuario?: NullableStringFieldUpdateOperationsInput | string | null
+    detalles?: CapCertificacionDetailUncheckedUpdateManyWithoutHeaderNestedInput
+  }
+
+  export type CapCertificacionHeaderCreateManyInput = {
+    id?: string
+    rbd: number
+    fecha: Date | string
+    servicio: string
+    programa: string
+    area?: string | null
+    racionesPreparar: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    usuario?: string | null
+  }
+
+  export type CapCertificacionHeaderUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    servicio?: StringFieldUpdateOperationsInput | string
+    programa?: StringFieldUpdateOperationsInput | string
+    area?: NullableStringFieldUpdateOperationsInput | string | null
+    racionesPreparar?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuario?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type CapCertificacionHeaderUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    servicio?: StringFieldUpdateOperationsInput | string
+    programa?: StringFieldUpdateOperationsInput | string
+    area?: NullableStringFieldUpdateOperationsInput | string | null
+    racionesPreparar?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuario?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type CapCertificacionDetailCreateInput = {
+    id?: string
+    numeroMinuta: string
+    nombrePreparacion: string
+    nombreProducto: string
+    grsRac: Decimal | DecimalJsLike | number | string
+    grsTotal: Decimal | DecimalJsLike | number | string
+    header: CapCertificacionHeaderCreateNestedOneWithoutDetallesInput
+  }
+
+  export type CapCertificacionDetailUncheckedCreateInput = {
+    id?: string
+    headerId: string
+    numeroMinuta: string
+    nombrePreparacion: string
+    nombreProducto: string
+    grsRac: Decimal | DecimalJsLike | number | string
+    grsTotal: Decimal | DecimalJsLike | number | string
+  }
+
+  export type CapCertificacionDetailUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroMinuta?: StringFieldUpdateOperationsInput | string
+    nombrePreparacion?: StringFieldUpdateOperationsInput | string
+    nombreProducto?: StringFieldUpdateOperationsInput | string
+    grsRac?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    grsTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    header?: CapCertificacionHeaderUpdateOneRequiredWithoutDetallesNestedInput
+  }
+
+  export type CapCertificacionDetailUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    headerId?: StringFieldUpdateOperationsInput | string
+    numeroMinuta?: StringFieldUpdateOperationsInput | string
+    nombrePreparacion?: StringFieldUpdateOperationsInput | string
+    nombreProducto?: StringFieldUpdateOperationsInput | string
+    grsRac?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    grsTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+  }
+
+  export type CapCertificacionDetailCreateManyInput = {
+    id?: string
+    headerId: string
+    numeroMinuta: string
+    nombrePreparacion: string
+    nombreProducto: string
+    grsRac: Decimal | DecimalJsLike | number | string
+    grsTotal: Decimal | DecimalJsLike | number | string
+  }
+
+  export type CapCertificacionDetailUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroMinuta?: StringFieldUpdateOperationsInput | string
+    nombrePreparacion?: StringFieldUpdateOperationsInput | string
+    nombreProducto?: StringFieldUpdateOperationsInput | string
+    grsRac?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    grsTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+  }
+
+  export type CapCertificacionDetailUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    headerId?: StringFieldUpdateOperationsInput | string
+    numeroMinuta?: StringFieldUpdateOperationsInput | string
+    nombrePreparacion?: StringFieldUpdateOperationsInput | string
+    nombreProducto?: StringFieldUpdateOperationsInput | string
+    grsRac?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    grsTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -51991,6 +56203,8 @@ export namespace Prisma {
     programa?: SortOrder
     numeroCocina?: SortOrder
     cocina?: SortOrder
+    numeroArea?: SortOrder
+    area?: SortOrder
     codigoProducto?: SortOrder
     nombreProducto?: SortOrder
     codigoSubServicio?: SortOrder
@@ -52017,6 +56231,8 @@ export namespace Prisma {
     programa?: SortOrder
     numeroCocina?: SortOrder
     cocina?: SortOrder
+    numeroArea?: SortOrder
+    area?: SortOrder
     codigoProducto?: SortOrder
     nombreProducto?: SortOrder
     codigoSubServicio?: SortOrder
@@ -52036,6 +56252,8 @@ export namespace Prisma {
     programa?: SortOrder
     numeroCocina?: SortOrder
     cocina?: SortOrder
+    numeroArea?: SortOrder
+    area?: SortOrder
     codigoProducto?: SortOrder
     nombreProducto?: SortOrder
     codigoSubServicio?: SortOrder
@@ -52175,6 +56393,209 @@ export namespace Prisma {
     _sum?: NestedBigIntFilter<$PrismaModel>
     _min?: NestedBigIntFilter<$PrismaModel>
     _max?: NestedBigIntFilter<$PrismaModel>
+  }
+
+  export type RacionesCountOrderByAggregateInput = {
+    id?: SortOrder
+    licitacion?: SortOrder
+    numeroServicio?: SortOrder
+    servicio?: SortOrder
+    numeroCocina?: SortOrder
+    numeroArea?: SortOrder
+    numeroEnlace?: SortOrder
+    numeroLocacion?: SortOrder
+    locacion?: SortOrder
+    numeroPrograma?: SortOrder
+    programa?: SortOrder
+    mes?: SortOrder
+    anio?: SortOrder
+    fecha?: SortOrder
+    estadoRacion?: SortOrder
+    numeroBeneficiario?: SortOrder
+    beneficiario?: SortOrder
+    cantidad?: SortOrder
+    rbd?: SortOrder
+    ut?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RacionesAvgOrderByAggregateInput = {
+    numeroCocina?: SortOrder
+    numeroEnlace?: SortOrder
+    mes?: SortOrder
+    anio?: SortOrder
+    estadoRacion?: SortOrder
+    numeroBeneficiario?: SortOrder
+    cantidad?: SortOrder
+    rbd?: SortOrder
+    ut?: SortOrder
+  }
+
+  export type RacionesMaxOrderByAggregateInput = {
+    id?: SortOrder
+    licitacion?: SortOrder
+    numeroServicio?: SortOrder
+    servicio?: SortOrder
+    numeroCocina?: SortOrder
+    numeroArea?: SortOrder
+    numeroEnlace?: SortOrder
+    numeroLocacion?: SortOrder
+    locacion?: SortOrder
+    numeroPrograma?: SortOrder
+    programa?: SortOrder
+    mes?: SortOrder
+    anio?: SortOrder
+    fecha?: SortOrder
+    estadoRacion?: SortOrder
+    numeroBeneficiario?: SortOrder
+    beneficiario?: SortOrder
+    cantidad?: SortOrder
+    rbd?: SortOrder
+    ut?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RacionesMinOrderByAggregateInput = {
+    id?: SortOrder
+    licitacion?: SortOrder
+    numeroServicio?: SortOrder
+    servicio?: SortOrder
+    numeroCocina?: SortOrder
+    numeroArea?: SortOrder
+    numeroEnlace?: SortOrder
+    numeroLocacion?: SortOrder
+    locacion?: SortOrder
+    numeroPrograma?: SortOrder
+    programa?: SortOrder
+    mes?: SortOrder
+    anio?: SortOrder
+    fecha?: SortOrder
+    estadoRacion?: SortOrder
+    numeroBeneficiario?: SortOrder
+    beneficiario?: SortOrder
+    cantidad?: SortOrder
+    rbd?: SortOrder
+    ut?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RacionesSumOrderByAggregateInput = {
+    numeroCocina?: SortOrder
+    numeroEnlace?: SortOrder
+    mes?: SortOrder
+    anio?: SortOrder
+    estadoRacion?: SortOrder
+    numeroBeneficiario?: SortOrder
+    cantidad?: SortOrder
+    rbd?: SortOrder
+    ut?: SortOrder
+  }
+
+  export type CapCertificacionDetailListRelationFilter = {
+    every?: CapCertificacionDetailWhereInput
+    some?: CapCertificacionDetailWhereInput
+    none?: CapCertificacionDetailWhereInput
+  }
+
+  export type CapCertificacionDetailOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CapCertificacionHeaderCountOrderByAggregateInput = {
+    id?: SortOrder
+    rbd?: SortOrder
+    fecha?: SortOrder
+    servicio?: SortOrder
+    programa?: SortOrder
+    area?: SortOrder
+    racionesPreparar?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    usuario?: SortOrder
+  }
+
+  export type CapCertificacionHeaderAvgOrderByAggregateInput = {
+    rbd?: SortOrder
+    racionesPreparar?: SortOrder
+  }
+
+  export type CapCertificacionHeaderMaxOrderByAggregateInput = {
+    id?: SortOrder
+    rbd?: SortOrder
+    fecha?: SortOrder
+    servicio?: SortOrder
+    programa?: SortOrder
+    area?: SortOrder
+    racionesPreparar?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    usuario?: SortOrder
+  }
+
+  export type CapCertificacionHeaderMinOrderByAggregateInput = {
+    id?: SortOrder
+    rbd?: SortOrder
+    fecha?: SortOrder
+    servicio?: SortOrder
+    programa?: SortOrder
+    area?: SortOrder
+    racionesPreparar?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    usuario?: SortOrder
+  }
+
+  export type CapCertificacionHeaderSumOrderByAggregateInput = {
+    rbd?: SortOrder
+    racionesPreparar?: SortOrder
+  }
+
+  export type CapCertificacionHeaderRelationFilter = {
+    is?: CapCertificacionHeaderWhereInput
+    isNot?: CapCertificacionHeaderWhereInput
+  }
+
+  export type CapCertificacionDetailCountOrderByAggregateInput = {
+    id?: SortOrder
+    headerId?: SortOrder
+    numeroMinuta?: SortOrder
+    nombrePreparacion?: SortOrder
+    nombreProducto?: SortOrder
+    grsRac?: SortOrder
+    grsTotal?: SortOrder
+  }
+
+  export type CapCertificacionDetailAvgOrderByAggregateInput = {
+    grsRac?: SortOrder
+    grsTotal?: SortOrder
+  }
+
+  export type CapCertificacionDetailMaxOrderByAggregateInput = {
+    id?: SortOrder
+    headerId?: SortOrder
+    numeroMinuta?: SortOrder
+    nombrePreparacion?: SortOrder
+    nombreProducto?: SortOrder
+    grsRac?: SortOrder
+    grsTotal?: SortOrder
+  }
+
+  export type CapCertificacionDetailMinOrderByAggregateInput = {
+    id?: SortOrder
+    headerId?: SortOrder
+    numeroMinuta?: SortOrder
+    nombrePreparacion?: SortOrder
+    nombreProducto?: SortOrder
+    grsRac?: SortOrder
+    grsTotal?: SortOrder
+  }
+
+  export type CapCertificacionDetailSumOrderByAggregateInput = {
+    grsRac?: SortOrder
+    grsTotal?: SortOrder
   }
 
   export type UserCreateNestedManyWithoutRoleInput = {
@@ -53261,6 +57682,62 @@ export namespace Prisma {
     decrement?: bigint | number
     multiply?: bigint | number
     divide?: bigint | number
+  }
+
+  export type CapCertificacionDetailCreateNestedManyWithoutHeaderInput = {
+    create?: XOR<CapCertificacionDetailCreateWithoutHeaderInput, CapCertificacionDetailUncheckedCreateWithoutHeaderInput> | CapCertificacionDetailCreateWithoutHeaderInput[] | CapCertificacionDetailUncheckedCreateWithoutHeaderInput[]
+    connectOrCreate?: CapCertificacionDetailCreateOrConnectWithoutHeaderInput | CapCertificacionDetailCreateOrConnectWithoutHeaderInput[]
+    createMany?: CapCertificacionDetailCreateManyHeaderInputEnvelope
+    connect?: CapCertificacionDetailWhereUniqueInput | CapCertificacionDetailWhereUniqueInput[]
+  }
+
+  export type CapCertificacionDetailUncheckedCreateNestedManyWithoutHeaderInput = {
+    create?: XOR<CapCertificacionDetailCreateWithoutHeaderInput, CapCertificacionDetailUncheckedCreateWithoutHeaderInput> | CapCertificacionDetailCreateWithoutHeaderInput[] | CapCertificacionDetailUncheckedCreateWithoutHeaderInput[]
+    connectOrCreate?: CapCertificacionDetailCreateOrConnectWithoutHeaderInput | CapCertificacionDetailCreateOrConnectWithoutHeaderInput[]
+    createMany?: CapCertificacionDetailCreateManyHeaderInputEnvelope
+    connect?: CapCertificacionDetailWhereUniqueInput | CapCertificacionDetailWhereUniqueInput[]
+  }
+
+  export type CapCertificacionDetailUpdateManyWithoutHeaderNestedInput = {
+    create?: XOR<CapCertificacionDetailCreateWithoutHeaderInput, CapCertificacionDetailUncheckedCreateWithoutHeaderInput> | CapCertificacionDetailCreateWithoutHeaderInput[] | CapCertificacionDetailUncheckedCreateWithoutHeaderInput[]
+    connectOrCreate?: CapCertificacionDetailCreateOrConnectWithoutHeaderInput | CapCertificacionDetailCreateOrConnectWithoutHeaderInput[]
+    upsert?: CapCertificacionDetailUpsertWithWhereUniqueWithoutHeaderInput | CapCertificacionDetailUpsertWithWhereUniqueWithoutHeaderInput[]
+    createMany?: CapCertificacionDetailCreateManyHeaderInputEnvelope
+    set?: CapCertificacionDetailWhereUniqueInput | CapCertificacionDetailWhereUniqueInput[]
+    disconnect?: CapCertificacionDetailWhereUniqueInput | CapCertificacionDetailWhereUniqueInput[]
+    delete?: CapCertificacionDetailWhereUniqueInput | CapCertificacionDetailWhereUniqueInput[]
+    connect?: CapCertificacionDetailWhereUniqueInput | CapCertificacionDetailWhereUniqueInput[]
+    update?: CapCertificacionDetailUpdateWithWhereUniqueWithoutHeaderInput | CapCertificacionDetailUpdateWithWhereUniqueWithoutHeaderInput[]
+    updateMany?: CapCertificacionDetailUpdateManyWithWhereWithoutHeaderInput | CapCertificacionDetailUpdateManyWithWhereWithoutHeaderInput[]
+    deleteMany?: CapCertificacionDetailScalarWhereInput | CapCertificacionDetailScalarWhereInput[]
+  }
+
+  export type CapCertificacionDetailUncheckedUpdateManyWithoutHeaderNestedInput = {
+    create?: XOR<CapCertificacionDetailCreateWithoutHeaderInput, CapCertificacionDetailUncheckedCreateWithoutHeaderInput> | CapCertificacionDetailCreateWithoutHeaderInput[] | CapCertificacionDetailUncheckedCreateWithoutHeaderInput[]
+    connectOrCreate?: CapCertificacionDetailCreateOrConnectWithoutHeaderInput | CapCertificacionDetailCreateOrConnectWithoutHeaderInput[]
+    upsert?: CapCertificacionDetailUpsertWithWhereUniqueWithoutHeaderInput | CapCertificacionDetailUpsertWithWhereUniqueWithoutHeaderInput[]
+    createMany?: CapCertificacionDetailCreateManyHeaderInputEnvelope
+    set?: CapCertificacionDetailWhereUniqueInput | CapCertificacionDetailWhereUniqueInput[]
+    disconnect?: CapCertificacionDetailWhereUniqueInput | CapCertificacionDetailWhereUniqueInput[]
+    delete?: CapCertificacionDetailWhereUniqueInput | CapCertificacionDetailWhereUniqueInput[]
+    connect?: CapCertificacionDetailWhereUniqueInput | CapCertificacionDetailWhereUniqueInput[]
+    update?: CapCertificacionDetailUpdateWithWhereUniqueWithoutHeaderInput | CapCertificacionDetailUpdateWithWhereUniqueWithoutHeaderInput[]
+    updateMany?: CapCertificacionDetailUpdateManyWithWhereWithoutHeaderInput | CapCertificacionDetailUpdateManyWithWhereWithoutHeaderInput[]
+    deleteMany?: CapCertificacionDetailScalarWhereInput | CapCertificacionDetailScalarWhereInput[]
+  }
+
+  export type CapCertificacionHeaderCreateNestedOneWithoutDetallesInput = {
+    create?: XOR<CapCertificacionHeaderCreateWithoutDetallesInput, CapCertificacionHeaderUncheckedCreateWithoutDetallesInput>
+    connectOrCreate?: CapCertificacionHeaderCreateOrConnectWithoutDetallesInput
+    connect?: CapCertificacionHeaderWhereUniqueInput
+  }
+
+  export type CapCertificacionHeaderUpdateOneRequiredWithoutDetallesNestedInput = {
+    create?: XOR<CapCertificacionHeaderCreateWithoutDetallesInput, CapCertificacionHeaderUncheckedCreateWithoutDetallesInput>
+    connectOrCreate?: CapCertificacionHeaderCreateOrConnectWithoutDetallesInput
+    upsert?: CapCertificacionHeaderUpsertWithoutDetallesInput
+    connect?: CapCertificacionHeaderWhereUniqueInput
+    update?: XOR<XOR<CapCertificacionHeaderUpdateToOneWithWhereWithoutDetallesInput, CapCertificacionHeaderUpdateWithoutDetallesInput>, CapCertificacionHeaderUncheckedUpdateWithoutDetallesInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -55565,6 +60042,131 @@ export namespace Prisma {
     users?: UserUncheckedUpdateManyWithoutSucursalesNestedInput
   }
 
+  export type CapCertificacionDetailCreateWithoutHeaderInput = {
+    id?: string
+    numeroMinuta: string
+    nombrePreparacion: string
+    nombreProducto: string
+    grsRac: Decimal | DecimalJsLike | number | string
+    grsTotal: Decimal | DecimalJsLike | number | string
+  }
+
+  export type CapCertificacionDetailUncheckedCreateWithoutHeaderInput = {
+    id?: string
+    numeroMinuta: string
+    nombrePreparacion: string
+    nombreProducto: string
+    grsRac: Decimal | DecimalJsLike | number | string
+    grsTotal: Decimal | DecimalJsLike | number | string
+  }
+
+  export type CapCertificacionDetailCreateOrConnectWithoutHeaderInput = {
+    where: CapCertificacionDetailWhereUniqueInput
+    create: XOR<CapCertificacionDetailCreateWithoutHeaderInput, CapCertificacionDetailUncheckedCreateWithoutHeaderInput>
+  }
+
+  export type CapCertificacionDetailCreateManyHeaderInputEnvelope = {
+    data: CapCertificacionDetailCreateManyHeaderInput | CapCertificacionDetailCreateManyHeaderInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CapCertificacionDetailUpsertWithWhereUniqueWithoutHeaderInput = {
+    where: CapCertificacionDetailWhereUniqueInput
+    update: XOR<CapCertificacionDetailUpdateWithoutHeaderInput, CapCertificacionDetailUncheckedUpdateWithoutHeaderInput>
+    create: XOR<CapCertificacionDetailCreateWithoutHeaderInput, CapCertificacionDetailUncheckedCreateWithoutHeaderInput>
+  }
+
+  export type CapCertificacionDetailUpdateWithWhereUniqueWithoutHeaderInput = {
+    where: CapCertificacionDetailWhereUniqueInput
+    data: XOR<CapCertificacionDetailUpdateWithoutHeaderInput, CapCertificacionDetailUncheckedUpdateWithoutHeaderInput>
+  }
+
+  export type CapCertificacionDetailUpdateManyWithWhereWithoutHeaderInput = {
+    where: CapCertificacionDetailScalarWhereInput
+    data: XOR<CapCertificacionDetailUpdateManyMutationInput, CapCertificacionDetailUncheckedUpdateManyWithoutHeaderInput>
+  }
+
+  export type CapCertificacionDetailScalarWhereInput = {
+    AND?: CapCertificacionDetailScalarWhereInput | CapCertificacionDetailScalarWhereInput[]
+    OR?: CapCertificacionDetailScalarWhereInput[]
+    NOT?: CapCertificacionDetailScalarWhereInput | CapCertificacionDetailScalarWhereInput[]
+    id?: StringFilter<"CapCertificacionDetail"> | string
+    headerId?: StringFilter<"CapCertificacionDetail"> | string
+    numeroMinuta?: StringFilter<"CapCertificacionDetail"> | string
+    nombrePreparacion?: StringFilter<"CapCertificacionDetail"> | string
+    nombreProducto?: StringFilter<"CapCertificacionDetail"> | string
+    grsRac?: DecimalFilter<"CapCertificacionDetail"> | Decimal | DecimalJsLike | number | string
+    grsTotal?: DecimalFilter<"CapCertificacionDetail"> | Decimal | DecimalJsLike | number | string
+  }
+
+  export type CapCertificacionHeaderCreateWithoutDetallesInput = {
+    id?: string
+    rbd: number
+    fecha: Date | string
+    servicio: string
+    programa: string
+    area?: string | null
+    racionesPreparar: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    usuario?: string | null
+  }
+
+  export type CapCertificacionHeaderUncheckedCreateWithoutDetallesInput = {
+    id?: string
+    rbd: number
+    fecha: Date | string
+    servicio: string
+    programa: string
+    area?: string | null
+    racionesPreparar: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    usuario?: string | null
+  }
+
+  export type CapCertificacionHeaderCreateOrConnectWithoutDetallesInput = {
+    where: CapCertificacionHeaderWhereUniqueInput
+    create: XOR<CapCertificacionHeaderCreateWithoutDetallesInput, CapCertificacionHeaderUncheckedCreateWithoutDetallesInput>
+  }
+
+  export type CapCertificacionHeaderUpsertWithoutDetallesInput = {
+    update: XOR<CapCertificacionHeaderUpdateWithoutDetallesInput, CapCertificacionHeaderUncheckedUpdateWithoutDetallesInput>
+    create: XOR<CapCertificacionHeaderCreateWithoutDetallesInput, CapCertificacionHeaderUncheckedCreateWithoutDetallesInput>
+    where?: CapCertificacionHeaderWhereInput
+  }
+
+  export type CapCertificacionHeaderUpdateToOneWithWhereWithoutDetallesInput = {
+    where?: CapCertificacionHeaderWhereInput
+    data: XOR<CapCertificacionHeaderUpdateWithoutDetallesInput, CapCertificacionHeaderUncheckedUpdateWithoutDetallesInput>
+  }
+
+  export type CapCertificacionHeaderUpdateWithoutDetallesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    servicio?: StringFieldUpdateOperationsInput | string
+    programa?: StringFieldUpdateOperationsInput | string
+    area?: NullableStringFieldUpdateOperationsInput | string | null
+    racionesPreparar?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuario?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type CapCertificacionHeaderUncheckedUpdateWithoutDetallesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    servicio?: StringFieldUpdateOperationsInput | string
+    programa?: StringFieldUpdateOperationsInput | string
+    area?: NullableStringFieldUpdateOperationsInput | string | null
+    racionesPreparar?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuario?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type UserCreateManyRoleInput = {
     id?: string
     username: string
@@ -56306,6 +60908,42 @@ export namespace Prisma {
     fechaCierre?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
+  export type CapCertificacionDetailCreateManyHeaderInput = {
+    id?: string
+    numeroMinuta: string
+    nombrePreparacion: string
+    nombreProducto: string
+    grsRac: Decimal | DecimalJsLike | number | string
+    grsTotal: Decimal | DecimalJsLike | number | string
+  }
+
+  export type CapCertificacionDetailUpdateWithoutHeaderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroMinuta?: StringFieldUpdateOperationsInput | string
+    nombrePreparacion?: StringFieldUpdateOperationsInput | string
+    nombreProducto?: StringFieldUpdateOperationsInput | string
+    grsRac?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    grsTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+  }
+
+  export type CapCertificacionDetailUncheckedUpdateWithoutHeaderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroMinuta?: StringFieldUpdateOperationsInput | string
+    nombrePreparacion?: StringFieldUpdateOperationsInput | string
+    nombreProducto?: StringFieldUpdateOperationsInput | string
+    grsRac?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    grsTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+  }
+
+  export type CapCertificacionDetailUncheckedUpdateManyWithoutHeaderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroMinuta?: StringFieldUpdateOperationsInput | string
+    nombrePreparacion?: StringFieldUpdateOperationsInput | string
+    nombreProducto?: StringFieldUpdateOperationsInput | string
+    grsRac?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    grsTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+  }
+
 
 
   /**
@@ -56347,6 +60985,10 @@ export namespace Prisma {
      * @deprecated Use RetornoProductosAlertaCountOutputTypeDefaultArgs instead
      */
     export type RetornoProductosAlertaCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = RetornoProductosAlertaCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use CapCertificacionHeaderCountOutputTypeDefaultArgs instead
+     */
+    export type CapCertificacionHeaderCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = CapCertificacionHeaderCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use RoleDefaultArgs instead
      */
@@ -56495,6 +61137,18 @@ export namespace Prisma {
      * @deprecated Use MinutasDefaultArgs instead
      */
     export type MinutasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = MinutasDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use RacionesDefaultArgs instead
+     */
+    export type RacionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = RacionesDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use CapCertificacionHeaderDefaultArgs instead
+     */
+    export type CapCertificacionHeaderArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = CapCertificacionHeaderDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use CapCertificacionDetailDefaultArgs instead
+     */
+    export type CapCertificacionDetailArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = CapCertificacionDetailDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany
