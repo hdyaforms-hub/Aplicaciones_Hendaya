@@ -57,12 +57,13 @@ export default function Sidebar({ user }: { user: User }) {
         {
             name: 'Tableros y Avances',
             icon: '📈',
-            requiredPermission: ['view_tablero', 'view_tablero_pan', 'view_tablero_gas', 'view_tablero_retiro'],
+            requiredPermission: ['view_tablero', 'view_tablero_pan', 'view_tablero_gas', 'view_tablero_retiro', 'view_tablero_elementos'],
             subItems: [
                 { name: 'Avance PMPA', href: '/dashboard/tablero', requiredPermission: 'view_tablero' },
                 { name: 'Solicitudes de Pan', href: '/dashboard/tablero/solicitudes-pan', requiredPermission: 'view_tablero_pan' },
                 { name: 'Solicitud de Gas', href: '/dashboard/tablero/solicitud-gas', requiredPermission: 'view_tablero_gas' },
-                { name: 'Retiro de Saldos', href: '/dashboard/tablero/retiro-saldos', requiredPermission: 'view_tablero_retiro' }
+                { name: 'Retiro de Saldos', href: '/dashboard/tablero/retiro-saldos', requiredPermission: 'view_tablero_retiro' },
+                { name: 'Elementos Esenciales', href: '/dashboard/tablero/elementos-esenciales', requiredPermission: 'view_tablero_elementos' }
             ]
         },
         {
@@ -99,6 +100,11 @@ export default function Sidebar({ user }: { user: User }) {
                             name: 'Captura de Certificación',
                             href: '/dashboard/areas/operaciones/captura-certificacion',
                             requiredPermission: 'view_captura_certificacion'
+                        },
+                        {
+                            name: 'Elementos Esenciales',
+                            href: '/dashboard/areas/operaciones/elementos-esenciales',
+                            requiredPermission: 'view_elementos_esenciales'
                         }
                     ]
                 },
