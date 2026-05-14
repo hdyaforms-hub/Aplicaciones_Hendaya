@@ -6,13 +6,16 @@ import { revalidatePath } from 'next/cache'
 
 // Interfaz que coincide con las columnas del Excel y BD
 export type PMPAData = {
-    sucursal: string
     ano: number
     mes: number
+    licitacion: number
+    ute: number
     rbd: number
     programa: string
     estrato: string
-    raceq: number
+    nivel: string
+    servicioLic: string
+    raceqJunaeb: number
     servicio: string
 }
 
@@ -26,7 +29,7 @@ export async function checkPMPAExists(data: PMPAData[]) {
         return { error: 'El archivo está vacío o tiene formato incorrecto' }
     }
 
-    // Buscamos si existe al menos un registro en la BD que coincida con el primer mes/año/sucursal
+    // Buscamos si existe al menos un registro en la BD que coincida con el primer mes/año/ute
     // (Asumiendo que los archivos vienen agrupados por esos criterios, o verificamos el primer row)
     const firstRow = data[0]
 
@@ -35,7 +38,7 @@ export async function checkPMPAExists(data: PMPAData[]) {
         where: {
             ano: firstRow.ano,
             mes: firstRow.mes,
-            sucursal: firstRow.sucursal
+            ute: firstRow.ute
         }
     })
 
@@ -57,51 +60,32 @@ export async function uploadPMPAData(data: PMPAData[], overwrite: boolean) {
     try {
         if (overwrite) {
             // Eliminar registros previos con los mismos criterios (distintos años/meses presentes en el excel)
-            // Agrupamos los criterios únicos para borrar exactamente lo que vamos a sobrescribir
-            const periodos = [...new Set(data.map(d => `${d.ano}-${d.mes}-${d.sucursal}`))]
+            const periodos = [...new Set(data.map(d => `${d.ano}-${d.mes}-${d.ute}`))]
 
             for (const p of periodos) {
-                const [ano, mes, sucursal] = p.split('-')
+                const [ano, mes, ute] = p.split('-')
                 await prisma.pMPA.deleteMany({
                     where: {
                         ano: parseInt(ano),
                         mes: parseInt(mes),
-                        sucursal: sucursal
+                        ute: parseInt(ute)
                     }
                 })
             }
         }
 
-        // --- PREPARACIÓN DE LICITACIÓN ---
-        // Obtener mapeo de RBD a licId para preservar el estado histórico
-        const uniqueRbds = [...new Set(data.map(d => d.rbd))]
-        const colegios = await prisma.colegios.findMany({
-            where: { colRBD: { in: uniqueRbds } },
-            select: { colRBD: true, colut: true }
-        })
-        const uniqueUts = [...new Set(colegios.map(c => c.colut))]
-        const utsMap = await prisma.uT.findMany({
-            where: { codUT: { in: uniqueUts } },
-            select: { codUT: true, licId: true }
-        })
-
-        const rbdToLicId: Record<number, number> = {}
-        colegios.forEach(c => {
-            const ut = utsMap.find(u => u.codUT === c.colut)
-            if (ut) rbdToLicId[c.colRBD] = ut.licId
-        })
-        // ---------------------------------
-
         // Mapear agregando el usuario que subió el registro
         const dataToInsert = data.map(d => ({
-            sucursal: String(d.sucursal).trim(),
             ano: Number(d.ano),
             mes: Number(d.mes),
+            licitacion: Number(d.licitacion),
+            ute: Number(d.ute),
             rbd: Number(d.rbd),
-            licId: rbdToLicId[Number(d.rbd)] || null,
             programa: String(d.programa).trim(),
             estrato: String(d.estrato).trim(),
-            raceq: Number(d.raceq),
+            nivel: String(d.nivel).trim(),
+            servicioLic: String(d.servicioLic).trim(),
+            raceqJunaeb: Number(d.raceqJunaeb),
             servicio: String(d.servicio).trim(),
             uploadedBy: username
         }))
@@ -118,7 +102,7 @@ export async function uploadPMPAData(data: PMPAData[], overwrite: boolean) {
     }
 }
 
-export async function deletePMPAPeriod(ano: number, mes: number, sucursal?: string) {
+export async function deletePMPAPeriod(ano: number, mes: number, ute?: number) {
     const session = await getSession()
     if (!session?.user?.role?.permissions.includes('view_pmpa')) {
         return { error: 'No tienes permisos para realizar esta acción' }
@@ -126,7 +110,7 @@ export async function deletePMPAPeriod(ano: number, mes: number, sucursal?: stri
 
     try {
         const where: any = { ano, mes }
-        if (sucursal) where.sucursal = sucursal
+        if (ute) where.ute = ute
 
         const deleted = await prisma.pMPA.deleteMany({ where })
         

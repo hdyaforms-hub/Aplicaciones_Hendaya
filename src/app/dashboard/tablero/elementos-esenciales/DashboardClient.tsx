@@ -195,7 +195,7 @@ export default function DashboardClient({
                     <div className="bg-[#1a5a75] p-6 rounded-3xl shadow-xl border border-white/10 overflow-hidden relative">
                         <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -mr-32 -mt-32 blur-3xl pointer-events-none" />
                         <h3 className="text-white text-lg font-bold mb-6 flex items-center gap-2">
-                            <span className="opacity-70">1)</span> Cumplimiento consolidado
+                            Cumplimiento consolidado
                         </h3>
                         <div className="text-center mb-4">
                             <p className="text-white/60 text-xs font-black uppercase tracking-[0.2em]">% CUMPL</p>
@@ -245,16 +245,52 @@ export default function DashboardClient({
                         </div>
                     </div>
 
-                    {/* 2) Cumplimiento por Región */}
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        {Object.entries(stats.regionSeries).map(([reg, data], idx) => (
-                            <div key={reg} className="bg-[#1a5a75] p-6 rounded-3xl shadow-xl border border-white/10">
-                                <h3 className="text-white text-center text-xl font-black uppercase tracking-widest mb-6">
-                                    {reg}
-                                </h3>
-                                <div className="h-[250px] w-full">
+                    {/* 2) Cumplimiento por Región Consolidado */}
+                    {(() => {
+                        const regionColors = ['#ffffff', '#22d3ee', '#fbbf24', '#f87171', '#c084fc', '#4ade80', '#fb923c', '#2dd4bf'];
+                        
+                        // Generar el set de todas las fechas (X-Axis)
+                        const allTimeKeys = Array.from(new Set(
+                            Object.values(stats.regionSeries).flatMap(series => series.map((d: any) => d.name))
+                        )).sort((a: any, b: any) => {
+                            const [m1, y1] = a.split('-').map(Number);
+                            const [m2, y2] = b.split('-').map(Number);
+                            return y1 === y2 ? m1 - m2 : y1 - y2;
+                        });
+
+                        // Construir datos consolidados
+                        const consolidatedRegionData = allTimeKeys.map(key => {
+                            const entry: any = { name: key };
+                            Object.entries(stats.regionSeries).forEach(([reg, series]) => {
+                                const found = series.find((d: any) => d.name === key);
+                                if (found) entry[reg] = found.cumplimiento;
+                            });
+                            return entry;
+                        });
+
+                        const activeRegions = Object.keys(stats.regionSeries);
+
+                        return (
+                            <div className="bg-[#1a5a75] p-8 rounded-3xl shadow-xl border border-white/10">
+                                <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+                                    <h3 className="text-white text-xl font-black uppercase tracking-widest">
+                                        {region ? `Evolución: ${region}` : 'Cumplimiento por Región'}
+                                    </h3>
+                                    {activeRegions.length > 1 && (
+                                        <div className="flex flex-wrap justify-center gap-4">
+                                            {activeRegions.map((reg, i) => (
+                                                <div key={reg} className="flex items-center gap-2">
+                                                    <div className="w-3 h-3 rounded-full" style={{ backgroundColor: regionColors[i % regionColors.length] }}></div>
+                                                    <span className="text-[10px] text-white/70 font-bold uppercase tracking-wider">{reg}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                                
+                                <div className="h-[400px] w-full">
                                     <ResponsiveContainer width="100%" height="100%">
-                                        <LineChart data={data}>
+                                        <LineChart data={consolidatedRegionData}>
                                             <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" vertical={false} />
                                             <XAxis 
                                                 dataKey="name" 
@@ -269,25 +305,43 @@ export default function DashboardClient({
                                                 tick={{ fill: 'white' }}
                                                 tickFormatter={(val) => `${val}%`}
                                             />
-                                            <Tooltip />
-                                            <Line 
-                                                type="monotone" 
-                                                dataKey="cumplimiento" 
-                                                stroke="#ffffff" 
-                                                strokeWidth={3} 
-                                                dot={{ r: 4, fill: '#ffffff' }}
+                                            <Tooltip 
+                                                contentStyle={{ backgroundColor: '#0f172a', border: 'none', borderRadius: '12px', color: 'white', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)' }}
+                                                itemStyle={{ fontSize: '11px', fontWeight: 'bold', padding: '2px 0' }}
+                                                labelStyle={{ fontWeight: 'black', marginBottom: '8px', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '4px' }}
+                                                formatter={(value: any) => [`${value}%`]}
                                             />
+                                            <Legend 
+                                                verticalAlign="top" 
+                                                align="right"
+                                                iconType="circle"
+                                                wrapperStyle={{ paddingBottom: '20px', fontSize: '10px', fontWeight: 'bold', textTransform: 'uppercase' }}
+                                            />
+                                            {activeRegions.map((reg, idx) => (
+                                                <Line 
+                                                    key={reg}
+                                                    type="monotone" 
+                                                    dataKey={reg} 
+                                                    name={reg}
+                                                    stroke={regionColors[idx % regionColors.length]} 
+                                                    strokeWidth={reg === region ? 5 : 3} 
+                                                    dot={{ r: 4, fill: regionColors[idx % regionColors.length], strokeWidth: 0 }}
+                                                    activeDot={{ r: 6, strokeWidth: 0 }}
+                                                    connectNulls
+                                                    animationDuration={1000}
+                                                />
+                                            ))}
                                         </LineChart>
                                     </ResponsiveContainer>
                                 </div>
                             </div>
-                        ))}
-                    </div>
+                        );
+                    })()}
 
                     {/* 3) Cumplimiento por Aspecto */}
                     <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
                         <h3 className="text-gray-900 text-lg font-bold mb-2 flex items-center gap-2">
-                            <span className="text-cyan-600">3)</span> Cumplimiento por aspecto – promedio anual
+                            Cumplimiento por aspecto – promedio anual
                         </h3>
                         <p className="text-gray-400 text-sm mb-8 text-center font-bold">Promedio de % Cumpl por Aspecto</p>
                         

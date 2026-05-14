@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createLicitacion, updateLicitacion, createUT, updateUT, createSucursal, updateSucursal } from './actions'
 
-type Licitacion = { licId: number, estado: number }
+type Licitacion = { licId: number, estado: number, licitacionHomologada?: string | null }
 type UT = { codUT: number, licId: number, estado: number, sucursalId: string | null }
 type Sucursal = { id: string, nombre: string, uts: UT[] }
 
@@ -32,17 +32,17 @@ export default function SucursalesDashboard({
     }
 
     // --- LICITACION LOGIC ---
-    const [licForm, setLicForm] = useState<{ licId: string, estado: number, isEdit: boolean }>({ licId: '', estado: 1, isEdit: false })
+    const [licForm, setLicForm] = useState<{ licId: string, licitacionHomologada: string, estado: number, isEdit: boolean }>({ licId: '', licitacionHomologada: '', estado: 1, isEdit: false })
     const handleLicSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         setLoading(true)
         const id = parseInt(licForm.licId)
         if (isNaN(id)) return showMessage('ID inválido', null)
 
-        const res = licForm.isEdit ? await updateLicitacion(id, licForm.estado) : await createLicitacion(id, licForm.estado)
+        const res = licForm.isEdit ? await updateLicitacion(id, licForm.estado, licForm.licitacionHomologada) : await createLicitacion(id, licForm.estado, licForm.licitacionHomologada)
         setLoading(false)
         if (res?.error) showMessage(res.error, null)
-        else { showMessage(null, 'Licitación guardada con éxito.'); setLicForm({ licId: '', estado: 1, isEdit: false }) }
+        else { showMessage(null, 'Licitación guardada con éxito.'); setLicForm({ licId: '', licitacionHomologada: '', estado: 1, isEdit: false }) }
     }
 
     // --- UT LOGIC ---
@@ -131,7 +131,7 @@ export default function SucursalesDashboard({
                                     (sucForm.isEdit ? 'Editar Sucursal' : 'Nueva Sucursal')}
                         </h3>
                         {/* Cancel Edit Buttons */}
-                        {activeTab === 'licitacion' && licForm.isEdit && <button onClick={() => setLicForm({ licId: '', estado: 1, isEdit: false })} className="text-xs px-2 py-1 bg-gray-100 hover:bg-gray-200 rounded text-gray-600">Cancelar</button>}
+                        {activeTab === 'licitacion' && licForm.isEdit && <button onClick={() => setLicForm({ licId: '', licitacionHomologada: '', estado: 1, isEdit: false })} className="text-xs px-2 py-1 bg-gray-100 hover:bg-gray-200 rounded text-gray-600">Cancelar</button>}
                         {activeTab === 'ut' && utForm.isEdit && <button onClick={() => setUtForm({ codUT: '', licId: '', estado: 1, isEdit: false })} className="text-xs px-2 py-1 bg-gray-100 hover:bg-gray-200 rounded text-gray-600">Cancelar</button>}
                         {activeTab === 'sucursal' && sucForm.isEdit && <button onClick={() => setSucForm({ id: '', nombre: '', uts: [], isEdit: false })} className="text-xs px-2 py-1 bg-gray-100 hover:bg-gray-200 rounded text-gray-600">Cancelar</button>}
                     </div>
@@ -142,6 +142,10 @@ export default function SucursalesDashboard({
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Código de Licitación (LicId)</label>
                                 <input type="number" required disabled={licForm.isEdit} value={licForm.licId} onChange={e => setLicForm({ ...licForm, licId: e.target.value })} className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-gray-900" />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Licitación Homologada (Alias)</label>
+                                <input type="text" value={licForm.licitacionHomologada} onChange={e => setLicForm({ ...licForm, licitacionHomologada: e.target.value })} placeholder="Ej: 5323 / 532023" className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-gray-900" />
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Estado (Vigencia)</label>
@@ -227,6 +231,7 @@ export default function SucursalesDashboard({
                                 <thead className="bg-gray-50 text-gray-600 border-b border-gray-100 sticky top-0">
                                     <tr>
                                         <th className="px-6 py-4 font-bold">LicId (Licitación)</th>
+                                        <th className="px-6 py-4 font-bold">Licitación Homologada</th>
                                         <th className="px-6 py-4 font-bold">Estado</th>
                                         <th className="px-6 py-4 font-bold text-center">Acciones</th>
                                     </tr>
@@ -235,13 +240,14 @@ export default function SucursalesDashboard({
                                     {licitaciones.map(lic => (
                                         <tr key={lic.licId} className="hover:bg-gray-50 transition-colors">
                                             <td className="px-6 py-3 font-bold text-gray-900">{lic.licId}</td>
+                                            <td className="px-6 py-3 text-gray-600 italic">{lic.licitacionHomologada || '---'}</td>
                                             <td className="px-6 py-3">
                                                 {lic.estado === 1
                                                     ? <span className="px-2 py-1 bg-green-100 text-green-700 rounded-md text-xs font-bold">1 - Vigente</span>
                                                     : <span className="px-2 py-1 bg-red-100 text-red-700 rounded-md text-xs font-bold">0 - No Vigente</span>}
                                             </td>
                                             <td className="px-6 py-3 text-center">
-                                                <button onClick={() => setLicForm({ licId: String(lic.licId), estado: lic.estado, isEdit: true })} className="text-cyan-600 hover:text-cyan-800 font-medium px-3 py-1 bg-cyan-50 hover:bg-cyan-100 rounded-lg">Editar</button>
+                                                <button onClick={() => setLicForm({ licId: String(lic.licId), licitacionHomologada: lic.licitacionHomologada || '', estado: lic.estado, isEdit: true })} className="text-cyan-600 hover:text-cyan-800 font-medium px-3 py-1 bg-cyan-50 hover:bg-cyan-100 rounded-lg">Editar</button>
                                             </td>
                                         </tr>
                                     ))}

@@ -65,8 +65,14 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }: { isOp
 
                 const data = await res.json()
                 if (!res.ok) {
-                    // Si el error es por formato (lo que devuelve el script de python)
-                    if (data.error && (data.error.includes('formato') || data.error.includes('no admitido') || data.error.includes('no es un acta válida'))) {
+                    // Si el error es por formato o validación (lo que devuelve el script de python o el backend)
+                    if (data.error && (
+                        data.error.includes('formato') || 
+                        data.error.includes('no admitido') || 
+                        data.error.includes('no es un acta válida') ||
+                        data.error.includes('no es del tipo') ||
+                        data.error.includes('ya existe')
+                    )) {
                         omitted.push({ name: file.name, reason: data.error });
                     } else {
                         throw new Error(data.error || `Error desconocido`)

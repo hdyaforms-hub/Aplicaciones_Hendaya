@@ -39,13 +39,13 @@ export default async function PMPAPage({
     const whereClause: any = {}
     if (filters.sucursal) {
         if (!canSeeAll && !userSucursales.includes(filters.sucursal)) {
-            whereClause.sucursal = { in: [] }
+            whereClause.ut = { sucursal: { nombre: { in: [] } } }
         } else {
-            whereClause.sucursal = filters.sucursal
+            whereClause.ut = { sucursal: { nombre: filters.sucursal } }
         }
     } else {
         if (!canSeeAll) {
-            whereClause.sucursal = { in: userSucursales }
+            whereClause.ut = { sucursal: { nombre: { in: userSucursales } } }
         }
     }
 
@@ -62,26 +62,32 @@ export default async function PMPAPage({
     // Obtener los datos filtrados
     const pmpaData = await prisma.pMPA.findMany({
         where: whereClause,
+        include: { ut: { include: { sucursal: true } } },
         skip: (currentPage - 1) * limit,
         take: limit,
         orderBy: [
             { ano: 'desc' },
-            { mes: 'desc' },
-            { sucursal: 'asc' }
+            { mes: 'desc' }
         ]
     })
 
-    // Agrupar para los combos usando queries directas sobre valores únicos
-    const combos = await prisma.pMPA.groupBy({
-        by: ['sucursal', 'ano', 'mes'],
-        where: canSeeAll ? {} : { sucursal: { in: userSucursales } },
-        orderBy: [{ ano: 'desc' }, { mes: 'desc' }, { sucursal: 'asc' }]
+    // Agrupar para los combos
+    const groupedAnosMeses = await prisma.pMPA.groupBy({
+        by: ['ano', 'mes'],
+        where: canSeeAll ? {} : { ut: { sucursal: { nombre: { in: userSucursales } } } },
+        orderBy: [{ ano: 'desc' }, { mes: 'desc' }]
+    })
+
+    const sucursalesRecords = await prisma.sucursal.findMany({
+        where: canSeeAll ? { uts: { some: { pmpas: { some: {} } } } } : { nombre: { in: userSucursales }, uts: { some: { pmpas: { some: {} } } } },
+        select: { nombre: true },
+        orderBy: { nombre: 'asc' }
     })
 
     // Generar opciones únicas
-    const sucursales = Array.from(new Set(combos.map((c: any) => c.sucursal as string))) as string[]
-    const anos = Array.from(new Set(combos.map((c: any) => c.ano as number))) as number[]
-    const meses = Array.from(new Set(combos.map((c: any) => c.mes as number))) as number[]
+    const sucursales = sucursalesRecords.map(s => s.nombre)
+    const anos = Array.from(new Set(groupedAnosMeses.map((c: any) => c.ano as number))) as number[]
+    const meses = Array.from(new Set(groupedAnosMeses.map((c: any) => c.mes as number))) as number[]
 
     return (
         <div className="space-y-6">
@@ -172,7 +178,7 @@ export default async function PMPAPage({
                         <tbody className="divide-y divide-gray-100 text-gray-700">
                             {pmpaData.map((d: any) => (
                                 <tr key={d.id} className="hover:bg-cyan-50/50 transition-colors">
-                                    <td className="px-6 py-3 font-medium text-gray-900">{d.sucursal}</td>
+                                    <td className="px-6 py-3 font-medium text-gray-900">{d.ut?.sucursal?.nombre || 'S/D'}</td>
                                     <td className="px-6 py-3">{d.ano}</td>
                                     <td className="px-6 py-3">{d.mes}</td>
                                     <td className="px-6 py-3">{d.rbd}</td>
@@ -182,7 +188,7 @@ export default async function PMPAPage({
                                         </span>
                                     </td>
                                     <td className="px-6 py-3">{d.estrato}</td>
-                                    <td className="px-6 py-3">{d.raceq}</td>
+                                    <td className="px-6 py-3">{d.raceqJunaeb}</td>
                                     <td className="px-6 py-3">{d.servicio}</td>
                                     <td className="px-6 py-3 border-l border-gray-100 border-dashed text-xs text-gray-500">
                                         {d.uploadedBy}

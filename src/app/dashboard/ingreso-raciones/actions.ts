@@ -113,13 +113,26 @@ export async function checkPmpaDisponibilidad(rbd: number, year: number, month: 
             return { error: 'Favor comunicarse con el administrador para que cargue el PMPA del mes en curso o mes que quiere trabajar.' }
         }
 
-        // Obtener programas y estratos únicos
-        const programas = Array.from(new Set(pmpaRecords.map((r: any) => r.programa as string)))
-        const estratos = Array.from(new Set(pmpaRecords.map((r: any) => r.estrato as string)))
+        const validRecords = pmpaRecords.filter((r: any) => r.raceqJunaeb > 0)
+
+        if (validRecords.length === 0) {
+            return { error: 'No se encontraron registros con raciones asignadas (> 0) para este periodo en el PMPA.' }
+        }
+
+        // Obtener pares únicos de programa y estrato
+        const validPairs = validRecords.map((r: any) => ({
+            programa: r.programa as string,
+            estrato: r.estrato as string
+        }))
+
+        // Eliminar duplicados de los pares
+        const uniquePairs = Array.from(new Set(validPairs.map(p => JSON.stringify(p)))).map(p => JSON.parse(p))
+
+        const programas = Array.from(new Set(uniquePairs.map(p => p.programa)))
 
         return {
             programas,
-            estratos
+            validPairs: uniquePairs
         }
     } catch (e) {
         console.error("Error checking PMPA:", e)
@@ -152,7 +165,7 @@ export type IngRacionFormData = {
     observacion: string
 }
 
-export async function getPmpaAssignmentsAndLastRecord(rbd: number, ano: number, mes: number, programa: string, estrato: string) {
+export async function getPmpaAssignmentsAndLastRecord(rbd: number, ano: number, mes: number, programa: string, estrato: string, fechaIngreso?: string) {
     const session = await getSession()
     if (!session?.user?.role?.permissions.includes('view_ingreso_raciones')) {
         return { error: 'No tienes permisos para consultar esta información.' }
@@ -180,7 +193,7 @@ export async function getPmpaAssignmentsAndLastRecord(rbd: number, ano: number, 
         }
 
         const pmpaRecords = await prisma.pMPA.findMany({
-            where: { rbd, ano, mes, programa, estrato }
+            where: { rbd, ano: ano, mes: mes, programa, estrato }
         })
 
         if (pmpaRecords.length === 0) {
@@ -196,21 +209,38 @@ export async function getPmpaAssignmentsAndLastRecord(rbd: number, ano: number, 
         }
 
         for (const record of pmpaRecords) {
-            if (record.servicio === 'D') asignados.desayunoAsig += record.raceq
-            if (record.servicio === 'A') asignados.almuerzoAsig += record.raceq
-            if (record.servicio === 'O') asignados.onceAsig += record.raceq
-            if (record.servicio === 'CO') asignados.colacionAsig += record.raceq
-            if (record.servicio === 'C') asignados.cenaAsig += record.raceq
+            if (record.servicio === 'D') asignados.desayunoAsig += record.raceqJunaeb
+            if (record.servicio === 'A') asignados.almuerzoAsig += record.raceqJunaeb
+            if (record.servicio === 'O') asignados.onceAsig += record.raceqJunaeb
+            if (record.servicio === 'CO') asignados.colacionAsig += record.raceqJunaeb
+            if (record.servicio === 'C') asignados.cenaAsig += record.raceqJunaeb
         }
 
-        // Consultar el último registro en la tabla IngRacion
+        // Consultar si existe un registro específico para esta fecha
+        let currentRecord = null
+        if (fechaIngreso) {
+            const utcFecha = new Date(`${fechaIngreso}T12:00:00Z`)
+            currentRecord = await prisma.ingRacion.findFirst({
+                where: { rbd, fechaIngreso: utcFecha, programa, estrato }
+            })
+        }
+
+        // Consultar el último registro en la tabla IngRacion (historial)
         const lastRecord = await prisma.ingRacion.findFirst({
-            where: { rbd, ano, mes, programa, estrato },
+            where: { rbd, programa, estrato },
             orderBy: { fechaIngreso: 'desc' }
         })
 
         return {
             asignados,
+            currentRecord: currentRecord ? {
+                desayunoIng: currentRecord.desayunoIng,
+                almuerzoIng: currentRecord.almuerzoIng,
+                onceIng: currentRecord.onceIng,
+                colacionIng: currentRecord.colacionIng,
+                cenaIng: currentRecord.cenaIng,
+                observacion: currentRecord.observacion || ''
+            } : null,
             ultimaFecha: lastRecord ? lastRecord.fechaIngreso.toISOString() : null
         }
     } catch (e) {
@@ -219,7 +249,7 @@ export async function getPmpaAssignmentsAndLastRecord(rbd: number, ano: number, 
     }
 }
 
-export async function saveIngRacion(data: IngRacionFormData) {
+export async function saveIngRacion(data: IngRacionFormData, forceUpdate: boolean = false) {
     const session = await getSession()
     if (!session?.user?.role?.permissions.includes('view_ingreso_raciones')) {
         return { error: 'No tienes permisos para guardar esta información.' }
@@ -267,8 +297,26 @@ export async function saveIngRacion(data: IngRacionFormData) {
             }
         })
 
-        if (existingRecord) {
-            return { error: 'Ya existe un registro guardado para este colegio con esta fecha, programa y estrato.' }
+        if (existingRecord && !forceUpdate) {
+            return { error: 'EXISTENTE' } // Use a specific code to trigger the confirm dialog in frontend
+        }
+
+        if (existingRecord && forceUpdate) {
+            const actualizada = await prisma.ingRacion.update({
+                where: { id: existingRecord.id },
+                data: {
+                    usuario: session.user.username as string,
+                    desayunoIng: data.desayunoIng,
+                    almuerzoIng: data.almuerzoIng,
+                    onceIng: data.onceIng,
+                    colacionIng: data.colacionIng,
+                    cenaIng: data.cenaIng,
+                    totalIng: data.totalIng,
+                    tasaPreparacion: data.tasaPreparacion,
+                    observacion: data.observacion
+                }
+            })
+            return { success: true, racion: actualizada }
         }
 
         const nuevaRacion = await prisma.ingRacion.create({

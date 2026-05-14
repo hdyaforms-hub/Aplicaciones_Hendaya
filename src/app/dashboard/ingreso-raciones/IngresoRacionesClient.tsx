@@ -22,9 +22,11 @@ export default function IngresoRacionesClient() {
     const [fechaTraba, setFechaTrabajo] = useState('')
     const [pmpaStatus, setPmpaStatus] = useState<'idle' | 'loading' | 'error' | 'success'>('idle')
     const [pmpaError, setPmpaError] = useState('')
+    const [asignacionesError, setAsignacionesError] = useState('')
 
     const [programas, setProgramas] = useState<string[]>([])
-    const [estratos, setEstratos] = useState<string[]>([])
+    const [validPairs, setValidPairs] = useState<{ programa: string, estrato: string }[]>([])
+    const [filteredEstratos, setFilteredEstratos] = useState<string[]>([])
 
     const [selectedPrograma, setSelectedPrograma] = useState('')
     const [selectedEstrato, setSelectedEstrato] = useState('')
@@ -125,9 +127,11 @@ export default function IngresoRacionesClient() {
         setPmpaStatus('idle')
         setPmpaError('')
         setProgramas([])
-        setEstratos([])
+        setValidPairs([])
+        setFilteredEstratos([])
         setSelectedPrograma('')
         setSelectedEstrato('')
+        setAsignacionesError('')
         setSaveMessage({ type: '', text: '' })
     }
 
@@ -147,8 +151,10 @@ export default function IngresoRacionesClient() {
 
         setPmpaStatus('loading')
         setPmpaError('')
+        setAsignacionesError('')
         setProgramas([])
-        setEstratos([])
+        setValidPairs([])
+        setFilteredEstratos([])
         setSelectedPrograma('')
         setSelectedEstrato('')
 
@@ -157,12 +163,27 @@ export default function IngresoRacionesClient() {
         if (result.error) {
             setPmpaStatus('error')
             setPmpaError(result.error)
-        } else if (result.programas && result.estratos) {
+        } else if (result.programas && result.validPairs) {
             setPmpaStatus('success')
             setProgramas(result.programas)
-            setEstratos(result.estratos)
+            setValidPairs(result.validPairs)
+            setFilteredEstratos([])
         }
     }
+
+    // Effect to update filtered estratos when programa changes
+    useEffect(() => {
+        if (selectedPrograma) {
+            const relevant = validPairs
+                .filter(p => p.programa === selectedPrograma)
+                .map(p => p.estrato)
+            setFilteredEstratos(Array.from(new Set(relevant)))
+            setSelectedEstrato('') // Reset estrato when program changes
+        } else {
+            setFilteredEstratos([])
+            setSelectedEstrato('')
+        }
+    }, [selectedPrograma, validPairs])
 
     // Effect to fetch Asignados once Dropdowns are selected
     useEffect(() => {
@@ -174,13 +195,37 @@ export default function IngresoRacionesClient() {
                 const year = utcDate.getFullYear()
                 const month = utcDate.getMonth() + 1
 
-                const res = await getPmpaAssignmentsAndLastRecord(selectedColegio.colRBD, year, month, selectedPrograma, selectedEstrato)
+                const res = await getPmpaAssignmentsAndLastRecord(selectedColegio.colRBD, year, month, selectedPrograma, selectedEstrato, fechaTraba)
                 if (res.error) {
-                    setPmpaError(res.error)
-                    setPmpaStatus('error')
+                    setAsignacionesError(res.error)
+                    setAsignados({ desayunoAsig: 0, almuerzoAsig: 0, onceAsig: 0, colacionAsig: 0, cenaAsig: 0 })
+                    setUltimaFecha(null)
+                    setDesayunoIng('')
+                    setAlmuerzoIng('')
+                    setOnceIng('')
+                    setColacionIng('')
+                    setCenaIng('')
+                    setObservacion('')
                 } else if (res.asignados) {
+                    setAsignacionesError('')
                     setAsignados(res.asignados)
                     setUltimaFecha(res.ultimaFecha)
+                    
+                    if (res.currentRecord) {
+                        setDesayunoIng(res.currentRecord.desayunoIng)
+                        setAlmuerzoIng(res.currentRecord.almuerzoIng)
+                        setOnceIng(res.currentRecord.onceIng)
+                        setColacionIng(res.currentRecord.colacionIng)
+                        setCenaIng(res.currentRecord.cenaIng)
+                        setObservacion(res.currentRecord.observacion)
+                    } else {
+                        setDesayunoIng('')
+                        setAlmuerzoIng('')
+                        setOnceIng('')
+                        setColacionIng('')
+                        setCenaIng('')
+                        setObservacion('')
+                    }
                 }
                 setAsignadosLoading(false)
             } else {
@@ -225,18 +270,23 @@ export default function IngresoRacionesClient() {
             observacion: observacion || ''
         }
 
-        const res = await saveIngRacion(payload)
+        let res = await saveIngRacion(payload, false)
+
+        if (res.error === 'EXISTENTE') {
+            const confirmUpdate = window.confirm("Ya existe un registro para esta fecha y configuración. ¿Deseas actualizar la información con los nuevos valores?")
+            if (confirmUpdate) {
+                res = await saveIngRacion(payload, true)
+            } else {
+                setIsSaving(false)
+                return
+            }
+        }
 
         if (res.error) {
             setSaveMessage({ type: 'error', text: res.error })
         } else {
             setSaveMessage({ type: 'success', text: 'Registro guardado exitosamente.' })
-            setDesayunoIng('')
-            setAlmuerzoIng('')
-            setOnceIng('')
-            setColacionIng('')
-            setCenaIng('')
-            setObservacion('')
+            // No reseteamos los campos si el usuario desea seguir viendo lo que guardó
             setUltimaFecha(new Date().toISOString())
         }
 
@@ -389,13 +439,22 @@ export default function IngresoRacionesClient() {
                                         <select
                                             value={selectedEstrato}
                                             onChange={(e) => setSelectedEstrato(e.target.value)}
-                                            className="w-full px-4 py-3 bg-white rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 text-gray-900 font-medium shadow-sm appearance-none"
+                                            className="w-full px-4 py-3 bg-white rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 text-gray-900 font-medium shadow-sm appearance-none disabled:opacity-50"
                                             style={{ backgroundImage: 'url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3e%3cpolyline points=\'6 9 12 15 18 9\'%3e%3c/polyline%3e%3c/svg%3e")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 1rem center', backgroundSize: '1em' }}
+                                            disabled={!selectedPrograma}
                                         >
-                                            <option value="">-- Seleccionar --</option>
-                                            {estratos.map(e => <option key={e} value={e}>{e}</option>)}
+                                            <option value="">{selectedPrograma ? '-- Seleccionar --' : 'Seleccione Programa...'}</option>
+                                            {filteredEstratos.map(e => <option key={e} value={e}>{e}</option>)}
                                         </select>
                                     </div>
+                                    
+                                    {/* Muestra de Error de Asignaciones sin ocultar los selects */}
+                                    {asignacionesError && (
+                                        <div className="sm:col-span-2 mt-2 p-4 bg-red-50 border border-red-200 text-red-700 rounded-xl text-sm font-medium flex gap-3 animate-in fade-in">
+                                            <span className="text-xl">⚠️</span>
+                                            <p className="leading-snug">{asignacionesError}</p>
+                                        </div>
+                                    )}
                                 </div>
                             )}
 

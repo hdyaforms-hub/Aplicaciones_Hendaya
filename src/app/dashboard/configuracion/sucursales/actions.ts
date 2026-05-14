@@ -11,7 +11,7 @@ function hasPermission(session: any) {
 }
 
 // ------ LICITACIONES ------
-export async function createLicitacion(licId: number, estado: number) {
+export async function createLicitacion(licId: number, estado: number, licitacionHomologada?: string) {
     const session = await getSession()
     if (!hasPermission(session)) return { error: 'No tienes permisos.' }
 
@@ -19,7 +19,7 @@ export async function createLicitacion(licId: number, estado: number) {
         const existing = await prisma.licitacion.findUnique({ where: { licId } })
         if (existing) return { error: 'Ya existe una licitación con ese código.' }
 
-        await prisma.licitacion.create({ data: { licId, estado } })
+        await prisma.licitacion.create({ data: { licId, estado, licitacionHomologada } })
         revalidatePath(MANTENEDOR_PATH)
         return { success: true }
     } catch (e: any) {
@@ -27,14 +27,14 @@ export async function createLicitacion(licId: number, estado: number) {
     }
 }
 
-export async function updateLicitacion(licId: number, estado: number) {
+export async function updateLicitacion(licId: number, estado: number, licitacionHomologada?: string) {
     const session = await getSession()
     if (!hasPermission(session)) return { error: 'No tienes permisos.' }
 
     try {
         await prisma.licitacion.update({
             where: { licId },
-            data: { estado }
+            data: { estado, licitacionHomologada }
         })
         revalidatePath(MANTENEDOR_PATH)
         return { success: true }

@@ -187,6 +187,15 @@ export default function Sidebar({ user }: { user: User }) {
                 { name: 'Productos', href: '/dashboard/productos', requiredPermission: 'view_productos' },
                 { name: 'Consumo de Gas por RBD', href: '/dashboard/consumo-gas', requiredPermission: 'view_consumo_gas' },
                 {
+                    name: 'Multas',
+                    requiredPermission: 'manage_utm',
+                    subItems: [
+                        { name: 'UTM', href: '/dashboard/mantenedor/multas/utm', requiredPermission: 'manage_utm' },
+                        { name: 'Aspectos EE', href: '/dashboard/mantenedor/multas/aspectos-ee', requiredPermission: 'manage_aspectos_ee' },
+                        { name: 'Servicios', href: '/dashboard/mantenedor/multas/servicios', requiredPermission: 'manage_multa_servicios' }
+                    ]
+                },
+                {
                     name: 'Calculadora',
                     requiredPermission: ['view_preparaciones', 'view_minutas', 'view_raciones'],
                     subItems: [

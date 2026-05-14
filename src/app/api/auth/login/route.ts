@@ -15,6 +15,7 @@ export async function POST(request: Request) {
             )
         }
 
+        console.log(`CWD: ${process.cwd()}`)
         console.log(`Intentando login para usuario: ${username}`)
 
         const user = await prisma.user.findUnique({
@@ -51,19 +52,33 @@ export async function POST(request: Request) {
         }
 
         console.log(`Password correcto. Armando session data...`)
+        let permissions = []
+        try {
+            permissions = JSON.parse(user.role.permissions)
+            console.log(`Permissions parsed: ${permissions.length} items`)
+        } catch (e) {
+            console.error(`Error parsing permissions:`, e)
+        }
+
         const sessionData = {
             id: user.id,
             username: user.username,
             name: user.name,
             role: {
                 name: user.role.name,
-                permissions: JSON.parse(user.role.permissions),
+                permissions: permissions,
             },
-            sucursales: user.sucursales.map((s: any) => s.nombre),
+            sucursales: user.sucursales?.map((s: any) => s.nombre) || [],
         }
 
         console.log(`Creando sesión...`)
-        await login(sessionData)
+        try {
+            await login(sessionData)
+            console.log(`Sesión creada exitosamente`)
+        } catch (e) {
+            console.error(`Error en await login(sessionData):`, e)
+            throw e
+        }
 
         console.log(`Login exitoso para: ${username}`)
         return NextResponse.json(
@@ -73,7 +88,7 @@ export async function POST(request: Request) {
     } catch (error: any) {
         console.error('CRITICAL: Login error stack trace:', error.stack || error)
         return NextResponse.json(
-            { message: 'Ocurrió un error en el servidor' },
+            { message: 'Ocurrió un error en el servidor: ' + error.message },
             { status: 500 }
         )
     }

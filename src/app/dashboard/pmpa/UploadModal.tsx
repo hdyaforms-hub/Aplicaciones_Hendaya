@@ -17,7 +17,7 @@ export default function UploadModal() {
 
     const fileInputRef = useRef<HTMLInputElement>(null)
 
-    const expectedColumns = ['sucursal', 'año', 'mes', 'rbd', 'programa', 'estrato', 'raceq', 'servicio']
+    const expectedColumns = ['anho', 'mes', 'licitacion', 'ute', 'rbd', 'programa', 'estrato', 'nivel', 'serviciolic', 'raceqjunaeb', 'servicio']
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setError('')
@@ -58,11 +58,14 @@ export default function UploadModal() {
                 return
             }
 
-            // Normalizar cabeceras a minúsculas para evitar problemas de mayúsculas/minúsculas
+            // Normalizar cabeceras a minúsculas y sin acentos para evitar problemas
+            const removeAccents = (str: string) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            
             const normalizedData = rawObjects.map(row => {
                 const newRow: Record<string, any> = {}
                 for (const key in row) {
-                    newRow[key.toString().toLowerCase().trim()] = row[key]
+                    const cleanKey = removeAccents(key.toString().toLowerCase().trim())
+                    newRow[cleanKey] = row[key]
                 }
                 return newRow
             })
@@ -82,19 +85,22 @@ export default function UploadModal() {
             // Mapear los datos al objeto final
             const formattedData: PMPAData[] = normalizedData.map(row => {
                 return {
-                    sucursal: String(row['sucursal'] || '').substring(0, 50),
-                    ano: Number(row['año']) || 0,
+                    ano: Number(row['anho']) || 0,
                     mes: Number(row['mes']) || 0,
+                    licitacion: Number(row['licitacion']) || 0,
+                    ute: Number(row['ute']) || 0,
                     rbd: Number(row['rbd']) || 0,
-                    programa: String(row['programa'] || '').substring(0, 20),
+                    programa: String(row['programa'] || '').substring(0, 50),
                     estrato: String(row['estrato'] || '').substring(0, 20),
-                    raceq: Number(row['raceq']) || 0,
+                    nivel: String(row['nivel'] || '').substring(0, 50),
+                    servicioLic: String(row['serviciolic'] || '').substring(0, 50),
+                    raceqJunaeb: Number(row['raceqjunaeb']) || 0,
                     servicio: String(row['servicio'] || '').substring(0, 10),
                 }
             })
 
-            // Filter empty or invalid rows (just based on sucursal & ano)
-            const cleanData = formattedData.filter(d => d.sucursal && d.ano > 0)
+            // Filter empty or invalid rows
+            const cleanData = formattedData.filter(d => d.ano > 0 && d.rbd > 0)
 
             if (cleanData.length === 0) {
                 setError('El archivo no contiene registros válidos.')
@@ -144,7 +150,7 @@ export default function UploadModal() {
 
     const handleDownloadTemplate = () => {
         const worksheet = xlsx.utils.json_to_sheet([])
-        xlsx.utils.sheet_add_aoa(worksheet, [['sucursal', 'año', 'mes', 'rbd', 'programa', 'estrato', 'raceq', 'servicio']], { origin: 'A1' })
+        xlsx.utils.sheet_add_aoa(worksheet, [['Anho', 'Mes', 'Licitación', 'UTE', 'RBD', 'Programa', 'Estrato', 'Nivel', 'ServicioLIC', 'RacEqJunaeb', 'servicio']], { origin: 'A1' })
         const workbook = xlsx.utils.book_new()
         xlsx.utils.book_append_sheet(workbook, worksheet, 'Plantilla_PMPA')
         xlsx.writeFile(workbook, 'Formato_Carga_Masiva_PMPA.xlsx')
@@ -233,7 +239,7 @@ export default function UploadModal() {
                                 ⚠️ Registros Existentes
                             </h4>
                             <p className="text-sm text-yellow-700 mb-6">
-                                Hemos detectado que ya existen registros cargados para las Sucursales, Años y Meses presentes en este archivo.
+                                Hemos detectado que ya existen registros cargados para los UTE, Años y Meses presentes en este archivo.
                                 <br /><br />
                                 <strong>¿Desea actualizar (sobrescribir) los registros?</strong>
                             </p>

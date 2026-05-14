@@ -42,6 +42,10 @@ export default function CapturaCertificacionClient() {
     const [error, setError] = useState('')
     const [successMsg, setSuccessMsg] = useState('')
 
+    // Valor base para detectar cambios manuales
+    const [baseRacionesValue, setBaseRacionesValue] = useState<number | ''>('')
+    const [isDirty, setIsDirty] = useState(false)
+
     // Buscar colegios cuando el usuario escribe
     useEffect(() => {
         if (!debouncedSearch || debouncedSearch.length < 2) {
@@ -72,6 +76,8 @@ export default function CapturaCertificacionClient() {
             setSelectedPrograma('')
             setSelectedArea('')
             setRacionesPreparar('')
+            setBaseRacionesValue('')
+            setIsDirty(false)
             setDetalle([])
             setError('')
             setSuccessMsg('')
@@ -109,21 +115,41 @@ export default function CapturaCertificacionClient() {
             )
             if (racion) {
                 setRacionesPreparar(racion.cantidad)
+                setBaseRacionesValue(racion.cantidad)
             } else {
                 setRacionesPreparar('')
+                setBaseRacionesValue('')
+            }
+            setIsDirty(false)
+            // Trigger auto-calculate if everything is ready
+            if (racion) {
+                handleCalcular(racion.cantidad)
             }
         } else {
             setRacionesPreparar('')
+            setBaseRacionesValue('')
+            setIsDirty(false)
         }
     }, [selectedServicio, selectedPrograma, selectedArea, racionesBase])
 
-    const handleCalcular = async () => {
+    const checkDirtyAndProceed = async (nextAction: () => void) => {
+        if (isDirty && detalle.length > 0) {
+            const confirmSave = window.confirm('Has modificado las raciones a preparar. ¿Deseas guardar los cambios antes de continuar?')
+            if (confirmSave) {
+                await handleGuardar()
+            }
+        }
+        nextAction()
+    }
+
+    const handleCalcular = async (customRaciones?: number | any) => {
         setError('')
         setSuccessMsg('')
-        setDetalle([])
+        
+        const raciones = typeof customRaciones === 'number' ? customRaciones : Number(racionesPreparar)
 
-        if (!selectedRbd || !fecha || !selectedServicio || !selectedPrograma || !selectedArea || !racionesPreparar) {
-            setError('Por favor complete todos los campos antes de calcular.')
+        if (!selectedRbd || !fecha || !selectedServicio || !selectedPrograma || !selectedArea || !raciones) {
+            // No error if it's just partial
             return
         }
 
@@ -134,11 +160,12 @@ export default function CapturaCertificacionClient() {
             selectedServicio, 
             selectedPrograma, 
             selectedArea,
-            Number(racionesPreparar)
+            raciones
         )
 
         if (result.error) {
             setError(result.error)
+            setDetalle([])
         } else if (result.success && result.detalle) {
             setDetalle(result.detalle)
         }
@@ -167,6 +194,8 @@ export default function CapturaCertificacionClient() {
             setError(result.error)
         } else if (result.success) {
             setSuccessMsg('Información registrada correctamente en la BD.')
+            setIsDirty(false)
+            setBaseRacionesValue(Number(racionesPreparar))
             // Opcional: limpiar la tabla
         }
         setLoading(false)
@@ -232,7 +261,7 @@ export default function CapturaCertificacionClient() {
                     <input
                         type="date"
                         value={fecha}
-                        onChange={(e) => setFecha(e.target.value)}
+                        onChange={(e) => checkDirtyAndProceed(() => setFecha(e.target.value))}
                         className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-gray-900 font-bold transition-all shadow-inner"
                     />
                 </div>
@@ -241,7 +270,7 @@ export default function CapturaCertificacionClient() {
                     <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1.5 ml-1">Servicio</label>
                     <select
                         value={selectedServicio}
-                        onChange={(e) => setSelectedServicio(e.target.value)}
+                        onChange={(e) => checkDirtyAndProceed(() => setSelectedServicio(e.target.value))}
                         className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-gray-900 font-bold transition-all shadow-inner disabled:opacity-50"
                         disabled={serviciosDisponibles.length === 0}
                     >
@@ -256,7 +285,7 @@ export default function CapturaCertificacionClient() {
                     <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1.5 ml-1">Programa</label>
                     <select
                         value={selectedPrograma}
-                        onChange={(e) => setSelectedPrograma(e.target.value)}
+                        onChange={(e) => checkDirtyAndProceed(() => setSelectedPrograma(e.target.value))}
                         className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-gray-900 font-bold transition-all shadow-inner disabled:opacity-50"
                         disabled={programasDisponibles.length === 0}
                     >
@@ -271,7 +300,7 @@ export default function CapturaCertificacionClient() {
                     <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1.5 ml-1">Área</label>
                     <select
                         value={selectedArea}
-                        onChange={(e) => setSelectedArea(e.target.value)}
+                        onChange={(e) => checkDirtyAndProceed(() => setSelectedArea(e.target.value))}
                         className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-gray-900 font-bold transition-all shadow-inner disabled:opacity-50"
                         disabled={areasDisponibles.length === 0}
                     >
@@ -287,7 +316,11 @@ export default function CapturaCertificacionClient() {
                     <input
                         type="number"
                         value={racionesPreparar}
-                        onChange={(e) => setRacionesPreparar(e.target.value === '' ? '' : Number(e.target.value))}
+                        onChange={(e) => {
+                            const val = e.target.value === '' ? '' : Number(e.target.value)
+                            setRacionesPreparar(val)
+                            setIsDirty(val !== baseRacionesValue)
+                        }}
                         placeholder="Cantidad"
                         className="w-full px-4 py-3 rounded-xl border-2 border-green-200 focus:ring-2 focus:ring-green-500 bg-green-50 text-green-900 font-black transition-all shadow-inner"
                     />
@@ -295,7 +328,7 @@ export default function CapturaCertificacionClient() {
 
                 <div className="flex gap-3 pt-2">
                     <button
-                        onClick={handleCalcular}
+                        onClick={() => handleCalcular()}
                         disabled={loading || !selectedServicio || !selectedPrograma || !selectedArea || !racionesPreparar}
                         className="flex-1 bg-cyan-600 hover:bg-cyan-700 text-white font-black py-3 px-4 rounded-xl shadow-lg shadow-cyan-200 transition-all active:scale-95 disabled:opacity-50 disabled:shadow-none flex justify-center items-center gap-2"
                     >
@@ -344,23 +377,36 @@ export default function CapturaCertificacionClient() {
                                     </td>
                                 </tr>
                             ) : (
-                                detalle.map((d, i) => (
-                                    <tr key={i} className="hover:bg-cyan-50/40 transition-colors">
-                                        <td className="px-6 py-4 font-black text-gray-500 text-xs">{d.numeroMinuta}</td>
-                                        <td className="px-6 py-4 font-bold text-gray-700 text-xs truncate max-w-[200px]" title={d.nombrePreparacion}>
-                                            {d.nombrePreparacion}
-                                        </td>
-                                        <td className="px-6 py-4 font-black text-gray-900 text-xs truncate max-w-[200px]" title={d.nombreProducto}>
-                                            {d.nombreProducto}
-                                        </td>
-                                        <td className="px-6 py-4 text-right font-bold text-gray-600 text-xs">
-                                            {Number(d.grsRac).toLocaleString('es-CL')}
-                                        </td>
-                                        <td className="px-6 py-4 text-right font-black text-cyan-700 text-sm bg-cyan-50/30">
-                                            {Number(d.grsTotal).toLocaleString('es-CL')}
-                                        </td>
-                                    </tr>
-                                ))
+                                detalle.map((d, i) => {
+                                    const isNewGroup = i === 0 || d.nombrePreparacion !== detalle[i-1].nombrePreparacion;
+                                    return (
+                                        <tr 
+                                            key={i} 
+                                            className={`
+                                                transition-colors
+                                                ${isNewGroup && i !== 0 ? 'border-t-4 border-slate-200' : ''}
+                                                ${isNewGroup ? 'bg-white' : 'bg-slate-50/20'}
+                                                hover:bg-cyan-50/40
+                                            `}
+                                        >
+                                            <td className={`px-6 py-4 font-black text-xs ${isNewGroup ? 'text-gray-500' : 'text-transparent'}`}>
+                                                {d.numeroMinuta}
+                                            </td>
+                                            <td className={`px-6 py-4 font-bold text-xs truncate max-w-[200px] ${isNewGroup ? 'text-gray-700' : 'text-gray-400 opacity-30'}`} title={d.nombrePreparacion}>
+                                                {d.nombrePreparacion}
+                                            </td>
+                                            <td className="px-6 py-4 font-black text-gray-900 text-xs truncate max-w-[200px]" title={d.nombreProducto}>
+                                                {d.nombreProducto}
+                                            </td>
+                                            <td className="px-6 py-4 text-right font-bold text-gray-600 text-xs">
+                                                {Number(d.grsRac).toLocaleString('es-CL')}
+                                            </td>
+                                            <td className={`px-6 py-4 text-right font-black text-cyan-700 text-sm ${isNewGroup ? 'bg-cyan-50/40' : 'bg-cyan-50/20'}`}>
+                                                {Number(d.grsTotal).toLocaleString('es-CL')}
+                                            </td>
+                                        </tr>
+                                    )
+                                })
                             )}
                         </tbody>
                     </table>

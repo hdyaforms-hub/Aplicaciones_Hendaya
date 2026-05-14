@@ -3,6 +3,13 @@
 import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 
+// Polyfill para serialización de BigInt en JSON (Prisma/Next.js)
+if (typeof BigInt !== 'undefined') {
+    (BigInt.prototype as any).toJSON = function () {
+        return this.toString()
+    }
+}
+
 // Obtiene los servicios y programas disponibles para un RBD en un mes/año específicos
 export async function getOpcionesCaptura(rbd: number, fecha: string) {
     const session = await getSession()
@@ -104,74 +111,70 @@ export async function getDetalleCertificacion(rbd: number, fecha: string, servic
         const mes = parseInt(month, 10)
         const anio = parseInt(year, 10)
 
-        // 1. Obtener la Licitacion, numPrograma y numCocina desde Raciones
+        // 1. Raciones base
         const racion = await prisma.raciones.findFirst({
             where: {
-                rbd: rbd,
-                mes: mes,
-                anio: anio,
-                servicio: servicio,
-                programa: programa,
-                numeroArea: area
+                rbd: Number(rbd),
+                mes: Number(mes),
+                anio: Number(anio),
+                servicio: String(servicio),
+                programa: String(programa),
+                numeroArea: String(area)
             }
         })
 
-        if (!racion) {
-            return { error: 'No se encontró información de la ración base para estos filtros.' }
-        }
+        if (!racion) return { error: 'No se encontró ración base.' }
 
-        // 2. Buscar las minutas correspondientes
+        // 2. Minutas
         const minutas = await prisma.minutas.findMany({
             where: {
-                licitacion: racion.licitacion,
-                numeroPrograma: racion.numeroPrograma,
-                codigoServicio: racion.numeroServicio,
-                dia: dia,
-                mes: mes,
-                anio: anio,
-                numeroCocina: racion.numeroCocina,
-                codigoEnlace: racion.numeroEnlace,
-                numeroMinuta: { contains: racion.numeroLocacion.trim() }
+                licitacion: String(racion.licitacion),
+                numeroPrograma: String(racion.numeroPrograma),
+                codigoServicio: String(racion.numeroServicio),
+                dia: dia, mes: mes, anio: anio,
+                numeroCocina: Number(racion.numeroCocina),
+                codigoEnlace: Number(racion.numeroEnlace),
+                numeroMinuta: { contains: String(racion.numeroLocacion || '').trim() }
             },
             distinct: ['numeroPreparacion']
         })
 
-        if (minutas.length === 0) {
-            return { error: 'No se encontraron minutas para el día, servicio y programa seleccionados.' }
-        }
+        if (minutas.length === 0) return { error: 'No hay minutas para este día.' }
 
-        const preparacionIds = Array.from(new Set(minutas.map(m => m.numeroPreparacion)))
-
-        // 3. Buscar los productos y gramajes en Preparaciones
+        // 3. Preparaciones (Mapeo directo para evitar proxies de Prisma)
         const preparaciones = []
-        for (const minuta of minutas) {
-             const productos = await prisma.preparaciones.findMany({
-                 where: {
-                     licitacion: racion.licitacion,
-                     numeroPreparacion: Number(minuta.numeroPreparacion),
-                     numeroArea: area
-                 }
-             })
-             
-             for (const prod of productos) {
-                 preparaciones.push({
-                     numeroMinuta: minuta.numeroMinuta,
-                     nombrePreparacion: prod.nombrePreparacion,
-                     nombreProducto: prod.nombreProducto.trim(),
-                     grsRac: Number(prod.cantPreparacion),
-                     grsTotal: Number(prod.cantPreparacion) * racionesPreparar
-                 })
-             }
+        for (let i = 0; i < minutas.length; i++) {
+            const m = minutas[i];
+            const currentMinuta = String(m.numeroMinuta);
+            const currentPrepId = Number(m.numeroPreparacion);
+            
+            const prods = await prisma.preparaciones.findMany({
+                where: {
+                    licitacion: String(racion.licitacion),
+                    numeroPreparacion: currentPrepId,
+                    numeroArea: String(area)
+                }
+            })
+            
+            for (let j = 0; j < prods.length; j++) {
+                const p = prods[j];
+                const grs = parseFloat(p.cantPreparacion.toString()) || 0;
+                preparaciones.push({
+                    numeroMinuta: currentMinuta,
+                    nombrePreparacion: String(p.nombrePreparacion),
+                    nombreProducto: String(p.nombreProducto || '').trim(),
+                    grsRac: Number(grs),
+                    grsTotal: Number(grs * racionesPreparar)
+                })
+            }
         }
 
-        if (preparaciones.length === 0) {
-            return { error: 'No se encontraron productos en la preparación de la minuta seleccionada.' }
-        }
+        if (preparaciones.length === 0) return { error: 'No hay productos en la preparación.' }
 
         return { success: true, detalle: preparaciones }
-    } catch (error) {
-        console.error('Error fetching detalle certificación:', error)
-        return { error: 'Ocurrió un error al calcular los insumos.' }
+    } catch (error: any) {
+        console.error('Error calculo:', error.message)
+        return { error: 'Error interno al calcular.' }
     }
 }
 
