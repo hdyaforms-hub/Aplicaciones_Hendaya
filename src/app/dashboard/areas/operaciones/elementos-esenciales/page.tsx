@@ -203,9 +203,9 @@ export default function ElementosEsencialesPage() {
                 <div>
                     <h2 className="text-2xl font-black text-gray-900 tracking-tight flex items-center gap-3">
                         <span className="p-2 bg-cyan-100 text-cyan-600 rounded-xl">📄</span> 
-                        Elementos Esenciales
+                        Carga de Elementos Esenciales
                     </h2>
-                    <p className="text-gray-500 mt-2 font-medium">Gestiona y consulta las actas de supervisión extraídas desde PDF.</p>
+                    <p className="text-gray-500 mt-2 font-medium">Carga masiva de EE ( extraídas desde PDF), Gestiona y consulta el control de los elementos esenciales.</p>
                 </div>
                 
                 <div className="flex gap-3">

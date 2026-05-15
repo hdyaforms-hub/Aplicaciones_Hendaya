@@ -14,6 +14,11 @@ export default function RoleForm({ availablePermissions }: { availablePermission
     const [isOpen, setIsOpen] = useState(false)
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
+    const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>({})
+
+    const toggleCategory = (category: string) => {
+        setExpandedCategories(prev => ({ ...prev, [category]: !prev[category] }))
+    }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -30,6 +35,13 @@ export default function RoleForm({ availablePermissions }: { availablePermission
         }
         setLoading(false)
     }
+
+    // Group permissions
+    const groupedPermissions = availablePermissions.reduce((acc, p) => {
+        if (!acc[p.category]) acc[p.category] = []
+        acc[p.category].push(p)
+        return acc
+    }, {} as Record<string, PermissionDef[]>)
 
     if (!isOpen) {
         return (
@@ -68,34 +80,53 @@ export default function RoleForm({ availablePermissions }: { availablePermission
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-3">Permisos de Acceso</label>
-                        <div className="space-y-6 border border-gray-200 rounded-2xl max-h-72 overflow-y-auto bg-gray-50 p-4 custom-scrollbar">
-                            {Object.entries(
-                                availablePermissions.reduce((acc, p) => {
-                                    if (!acc[p.category]) acc[p.category] = []
-                                    acc[p.category].push(p)
-                                    return acc
-                                }, {} as Record<string, PermissionDef[]>)
-                            ).map(([category, perms]) => (
-                                <div key={category} className="space-y-3">
-                                    <h4 className="text-xs font-black text-indigo-600 uppercase tracking-widest border-b border-gray-200 pb-1 mb-2">
-                                        📁 {category}
-                                    </h4>
-                                    <div className="grid grid-cols-1 gap-2">
-                                        {perms.map(p => (
-                                            <label key={p.id} className="flex items-start gap-3 p-2.5 hover:bg-white rounded-xl cursor-pointer transition-all border border-transparent hover:border-gray-200 hover:shadow-sm group">
-                                                <div className="flex h-5 items-center">
-                                                    <input name="permissions" value={p.id} type="checkbox" className="w-4 h-4 text-cyan-600 rounded border-gray-300 focus:ring-cyan-500 cursor-pointer" />
-                                                </div>
-                                                <div className="flex flex-col">
-                                                    <span className="text-sm font-bold text-gray-800 group-hover:text-cyan-700">{p.name}</span>
-                                                    <span className="text-[10px] text-gray-500 uppercase font-medium">{p.description}</span>
-                                                </div>
-                                            </label>
-                                        ))}
+                        <label className="block text-sm font-medium text-gray-700 mb-3 text-center uppercase tracking-widest font-black text-gray-400 text-xs">Permisos de Acceso</label>
+                        <div className="space-y-2 border border-gray-200 rounded-2xl max-h-[400px] overflow-y-auto bg-gray-50 p-2 custom-scrollbar">
+                            {Object.entries(groupedPermissions).map(([category, perms]) => {
+                                const isExpanded = expandedCategories[category]
+                                const isSubCategory = category.includes('->')
+                                
+                                return (
+                                    <div key={category} className={`overflow-hidden rounded-xl border transition-all ${isExpanded ? 'bg-white border-gray-200 shadow-sm mb-2' : 'bg-transparent border-transparent'}`}>
+                                        <button
+                                            type="button"
+                                            onClick={() => toggleCategory(category)}
+                                            className={`w-full flex items-center justify-between p-3 transition-all ${isExpanded ? 'bg-indigo-50/30' : 'hover:bg-gray-100/50'}`}
+                                        >
+                                            <div className="flex items-center gap-2">
+                                                <span className={`transition-transform duration-200 ${isExpanded ? 'rotate-90' : ''}`}>▶</span>
+                                                <span className={`text-[10px] font-black uppercase tracking-widest ${isExpanded ? 'text-indigo-600' : 'text-gray-500'}`}>
+                                                    {isSubCategory ? '↳ ' : '📁 '} {category}
+                                                </span>
+                                            </div>
+                                            <span className="text-[10px] font-bold bg-gray-200/50 px-2 py-0.5 rounded-full text-gray-600">
+                                                {perms.length}
+                                            </span>
+                                        </button>
+
+                                        <div className={`p-3 pt-0 transition-all duration-200 ${isExpanded ? 'block animate-in slide-in-from-top-2' : 'hidden'}`}>
+                                            <div className="grid grid-cols-1 gap-1 border-t border-gray-100 pt-2">
+                                                {perms.map(p => (
+                                                    <label key={p.id} className="flex items-start gap-3 p-2 hover:bg-gray-50 rounded-lg cursor-pointer transition-all group">
+                                                        <div className="flex h-5 items-center">
+                                                            <input
+                                                                name="permissions"
+                                                                value={p.id}
+                                                                type="checkbox"
+                                                                className="w-4 h-4 text-cyan-600 rounded border-gray-300 focus:ring-cyan-500 cursor-pointer"
+                                                            />
+                                                        </div>
+                                                        <div className="flex flex-col">
+                                                            <span className="text-xs font-bold text-gray-800 group-hover:text-cyan-700">{p.name}</span>
+                                                            <span className="text-[9px] text-gray-500 uppercase font-medium leading-tight">{p.description}</span>
+                                                        </div>
+                                                    </label>
+                                                ))}
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
+                                )
+                            })}
 
                             {availablePermissions.length === 0 && (
                                 <p className="text-sm text-gray-500 p-2 text-center italic">No hay permisos definidos</p>

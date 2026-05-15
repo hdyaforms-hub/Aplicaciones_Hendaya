@@ -94,7 +94,7 @@ export async function deleteAspectoEE(id: string) {
     }
 }
 
-export async function testFormula(folio: string, formula: string) {
+export async function testFormula(folio: string, formula: string, customValues?: { materiaPrima?: number, instrumento?: number, manipuladora?: number, nivelControlado?: number }) {
     if (!await checkPermission()) return { error: 'No tienes permisos.' }
 
     try {
@@ -154,6 +154,12 @@ export async function testFormula(folio: string, formula: string) {
         let evaluatedFormula = cleanFormula
             .replace(/UTM/g, utmValue.toString())
             .replace(/RACIONES/g, raciones.toString())
+            .replace(/NIVELCONTROLADO/g, (customValues?.nivelControlado ?? raciones).toString())
+            .replace(/MATERIAPRIMA/g, (customValues?.materiaPrima ?? 1).toString())
+            .replace(/INSTRUMENTO/g, (customValues?.instrumento ?? 1).toString())
+            .replace(/MANIPULADORA/g, (customValues?.manipuladora ?? 1).toString())
+            .replace(/CANTSERVICIO/g, (customValues?.cantServicio ?? 1).toString())
+            .replace(/ELEMENTOS/g, (customValues?.elementos ?? 1).toString())
 
         let result = 0
         try {
@@ -178,6 +184,58 @@ export async function testFormula(folio: string, formula: string) {
         }
     } catch (e) {
         return { error: 'Error al probar la fórmula.' }
+    }
+}
+
+export async function getPmpaLevelsForFolio(folio: string) {
+    if (!await checkPermission()) return { error: 'No tienes permisos.' }
+
+    try {
+        const cab = await prisma.elementosEsenciales_Cab.findFirst({
+            where: { folio }
+        })
+        if (!cab) return { error: `No se encontró el Folio ${folio}.` }
+
+        const rbd = cab.rbd
+        const fecha = cab.fechaSupervision
+        const licId = cab.licId
+        const rawServicio = cab.servicio || ''
+
+        if (!rbd || !fecha || !licId) return { error: 'Folio incompleto.' }
+
+        const anho = fecha.getFullYear()
+        const mes = fecha.getMonth() + 1
+        
+        // Determinar código de servicio (lógica repetida de testFormula, podríamos refactorizar)
+        let serviceCode = null
+        const match = rawServicio.match(/\(([A-Z])\)/)
+        if (match) serviceCode = match[1]
+        
+        if (!serviceCode) {
+            const servicios = await prisma.multaServicio.findMany()
+            const found = servicios.find(s => rawServicio.toLowerCase().includes(s.nombre.toLowerCase()) || rawServicio.toUpperCase() === s.codigo)
+            if (found) serviceCode = found.codigo
+        }
+
+        if (!serviceCode) return { error: 'No se pudo determinar el servicio.' }
+
+        const pmpas = await prisma.pMPA.findMany({
+            where: { rbd, ano: anho, mes, licitacion: licId, servicio: serviceCode },
+            select: { nivel: true, raceqJunaeb: true }
+        })
+
+        // Agrupar por nivel y sumar raciones
+        const levelsMap = pmpas.reduce((acc: any, curr) => {
+            if (!acc[curr.nivel]) acc[curr.nivel] = 0
+            acc[curr.nivel] += curr.raceqJunaeb
+            return acc
+        }, {})
+
+        const levels = Object.entries(levelsMap).map(([nivel, raciones]) => ({ nivel, raciones }))
+
+        return { success: true, levels }
+    } catch (e) {
+        return { error: 'Error al consultar niveles.' }
     }
 }
 

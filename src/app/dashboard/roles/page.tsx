@@ -3,6 +3,7 @@ import { getSession } from '@/lib/session'
 import { redirect } from 'next/navigation'
 import RoleForm from './RoleForm'
 import EditRoleForm from './EditRoleForm'
+import RolePermissionList from './RolePermissionList'
 
 export default async function RolesPage() {
     const session = await getSession()
@@ -19,61 +20,75 @@ export default async function RolesPage() {
 
     // Lista de permisos disponibles en el sistema
     const availablePermissions = [
-        { id: 'view_tablero', name: 'Tablero de Control', description: 'Acceso visual al reporte gráfico general.', category: 'Tableros' },
-        { id: 'view_tablero_pan', name: 'Tablero Avance Pan', description: 'Acceso detallado al tablero de analítica de pan.', category: 'Tableros' },
-        { id: 'view_tablero_gas', name: 'Tablero Avance Gas', description: 'Acceso detallado al tablero de analítica de gas.', category: 'Tableros' },
-        { id: 'view_tablero_retiro', name: 'Tablero Avance Retiro', description: 'Acceso detallado al tablero de analítica de retiro de saldos.', category: 'Tableros' },
-        { id: 'view_tablero_elementos', name: 'Tablero Elementos Esenciales', description: 'Visualización gráfica de cumplimiento de elementos esenciales.', category: 'Tableros' },
-        { id: 'manage_users', name: 'Gestionar Usuarios', description: 'Crear, editar o eliminar usuarios.', category: 'Administración' },
-        { id: 'manage_roles', name: 'Gestionar Roles', description: 'Administrar mantenedor de perfiles y permisos.', category: 'Administración' },
-        { id: 'view_reports', name: 'Ver Reportes', description: 'Acceso a visualización de datos de negocio.', category: 'Reportes' },
-        { id: 'view_solicitud_pan_report', name: 'Reporte Solicitud de Pan', description: 'Acceso al informe histórico de solicitudes de pan.', category: 'Reportes' },
-        { id: 'view_solicitud_gas_report', name: 'Reporte Solicitud de Gas', description: 'Acceso al informe histórico de solicitudes de gas.', category: 'Reportes' },
-        { id: 'view_retiro_report', name: 'Reporte Retiro de Saldos', description: 'Acceso al informe histórico de retiro de saldos.', category: 'Reportes' },
-        { id: 'view_pmpa', name: 'Módulo PMPA', description: 'Acceso a carga de Excel y listado PMPA.', category: 'Mantenedores' },
-        { id: 'view_ingreso_raciones', name: 'Ingreso de Raciones', description: 'Gestión y auditoría de raciones por colegio.', category: 'Aplicaciones' },
-        { id: 'view_solicitud_pan', name: 'Solicitud de Pan', description: 'Acceso a la aplicación de Solicitud de Pan.', category: 'Aplicaciones' },
-        { id: 'view_solicitud_gas', name: 'Solicitud de Gas', description: 'Acceso a la aplicación de Solicitud de Gas.', category: 'Aplicaciones' },
-        { id: 'view_retiro_saldos', name: 'Retiro de Saldos', description: 'Acceso a la aplicación de Retiro de Saldos y Rebaja de Stock.', category: 'Aplicaciones' },
-        { id: 'view_trabajos_preventivos', name: 'Cargar OT (Trabajos Preventivos / Correctivos)', description: 'Registro y seguimiento de mantenimientos preventivos y correctivos.', category: 'Áreas' },
-        { id: 'view_areas', name: 'Menú Áreas', description: 'Acceso al menú principal de Áreas.', category: 'Áreas' },
-        { id: 'view_operaciones', name: 'Submenú Operaciones', description: 'Acceso al submenú de Operaciones.', category: 'Áreas' },
-        { id: 'view_trabajos_prev_corr_menu', name: 'Submenú Trabajos Preventivos / Correctivos', description: 'Acceso al nivel de agrupación de trabajos en el menú.', category: 'Áreas' },
-        { id: 'manage_presupuesto', name: 'Presupuesto (Trabajos Preventivos / Correctivos)', description: 'Gestionar el presupuesto anual y visualización trimestral por sucursal.', category: 'Áreas' },
-        { id: 'view_estado_avance_tp', name: 'Estado de Avance (Trabajos Preventivos)', description: 'Visualizar el progreso semestral de trabajos preventivos.', category: 'Áreas' },
-        { id: 'view_captura_certificacion', name: 'Captura de Certificación', description: 'Acceso a la calculadora de brechas e insumos por RBD.', category: 'Áreas' },
-        { id: 'view_elementos_esenciales', name: 'Elementos Esenciales', description: 'Acceso al módulo de elementos esenciales, subir PDFs y exportar a Excel.', category: 'Áreas' },
-        { id: 'view_colegios', name: 'Mantenedor de Colegios', description: 'Acceso a mantenedor y carga masiva de Colegios.', category: 'Mantenedores' },
-        { id: 'view_productos', name: 'Mantenedor de Productos', description: 'Acceso a mantenedor y carga masiva de Productos.', category: 'Mantenedores' },
-        { id: 'view_preparaciones', name: 'Mantenedor de Preparaciones', description: 'Acceso a mantenedor y carga masiva de Preparaciones.', category: 'Mantenedores' },
-        { id: 'view_minutas', name: 'Mantenedor de Minutas', description: 'Acceso a mantenedor y carga masiva de Minutas.', category: 'Mantenedores' },
-        { id: 'view_raciones', name: 'Mantenedor de Raciones', description: 'Acceso a mantenedor y carga masiva de Raciones.', category: 'Mantenedores' },
-        { id: 'view_consumo_gas', name: 'Consumo de Gas por RBD', description: 'Administrar límites y consumos de gas por cada RBD.', category: 'Mantenedores' },
-        { id: 'manage_utm', name: 'Gestión de UTM', description: 'Acceso al mantenedor inteligente de UTM con sincronización SII.', category: 'Mantenedores' },
-        { id: 'manage_aspectos_ee', name: 'Aspectos EE (Fórmulas Multas)', description: 'Asociar fórmulas de multas a aspectos de elementos esenciales por licitación.', category: 'Mantenedores' },
-        { id: 'manage_multa_servicios', name: 'Servicios Multas', description: 'Mantenedor de códigos de servicio (D, A, O, C, T) para cálculos de multas.', category: 'Mantenedores' },
-        { id: 'manage_correo', name: 'Configuración de Correo', description: 'Acciones sobre credenciales de correo (Office365).', category: 'Administración' },
-        { id: 'manage_listas', name: 'Listas de Distribución', description: 'Gestión de destinatarios y listas de correos.', category: 'Administración' },
-        { id: 'manage_notificaciones', name: 'Notificaciones por Pantalla', description: 'Asociar listas de distribución a notificaciones de la aplicación.', category: 'Administración' },
-        { id: 'manage_sucursales', name: 'Mantenedor de Sucursales', description: 'Administración de Licitaciones, UTs y Sucursales.', category: 'Administración' },
-        { id: 'manage_areas', name: 'Mantenedor de Áreas', description: 'Creación y administración de áreas de la compañía.', category: 'Administración' },
-        { id: 'view_formularios', name: 'Gestión de Formularios', description: 'Acceso a la activación, edición y configuración de calendarios/privilegios.', category: 'Formularios' },
-        { id: 'create_formularios', name: 'Crear Formulario', description: 'Acceso al constructor para diseñar nuevos formularios dinámicos.', category: 'Formularios' },
-        { id: 'fill_formularios', name: 'Completar Formulario', description: 'Acceso para el llenado y envío de respuestas (incluye modal PDF).', category: 'Formularios' },
-        { id: 'view_respuestas', name: 'Respuestas de Formularios', description: 'Acceso a la visualización de respuestas históricas y descarga de PDFs.', category: 'Formularios' },
-        { id: 'view_anexos', name: 'Ver Anexos', description: 'Acceso al directorio telefónico de la empresa.', category: 'Ayuda' },
-        { id: 'manage_anexos', name: 'Gestionar Anexos', description: 'Acceso a crear, editar y subir de forma masiva los anexos.', category: 'Ayuda' },
-        { id: 'view_matriz_riesgo', name: 'Ver Matriz de Riesgo', description: 'Acceso al módulo de matrices de riesgo de la empresa.', category: 'Matriz de riesgo' },
-        { id: 'manage_matriz_2026', name: 'Ingresar nueva Matriz', description: 'Permite el ingreso de nuevas matrices de riesgo para el año 2026.', category: 'Matriz 2026' },
-        { id: 'manage_colegios_matriz', name: 'Colegios Activos', description: 'Gestionar colegios habilitados para la matriz de riesgo.', category: 'Matriz 2026' },
-        { id: 'manage_evaluacion_detallada', name: 'Evaluación Detallada', description: 'Realizar evaluación técnica detallada por puntos críticos.', category: 'Matriz 2026' },
-        { id: 'manage_mitigacion', name: 'Mitigación', description: 'Gestionar plazos y evidencias de solución para hallazgos de la matriz.', category: 'Matriz 2026' },
-        { id: 'view_auditoria', name: 'Auditoría Externa', description: 'Vista global completa de hallazgos y evidencias para auditores.', category: 'Matriz 2026' },
-        { id: 'view_estado_avance', name: 'Matriz 2026: Estado de Avance', description: 'Visualizar el estado de avance de la matriz de riesgo 2026.', category: 'Matriz 2026' },
-        { id: 'view_dashboard', name: 'Dashboard General', description: 'Acceso al dashboard general de la aplicación.', category: 'Tableros' },
-        { id: 'view_calidad', name: 'Menú Calidad', description: 'Acceso al menú de Calidad en el Sidebar.', category: 'Calidad' },
-        { id: 'view_retorno_productos', name: 'Retirada de productos', description: 'Acceso al dashboard de Retirada de productos.', category: 'Calidad' },
-        { id: 'manage_retorno_productos', name: 'Crear Alerta de Calidad', description: 'Permite crear nuevas alertas de retirada de productos.', category: 'Calidad' },
+        { id: 'view_tablero', name: 'Tablero de Control', description: 'Acceso visual al reporte gráfico general.', category: 'TABLEROS' },
+        { id: 'view_tablero_pan', name: 'Tablero Avance Pan', description: 'Acceso detallado al tablero de analítica de pan.', category: 'TABLEROS' },
+        { id: 'view_tablero_gas', name: 'Tablero Avance Gas', description: 'Acceso detallado al tablero de analítica de gas.', category: 'TABLEROS' },
+        { id: 'view_tablero_retiro', name: 'Tablero Avance Retiro', description: 'Acceso detallado al tablero de analítica de retiro de saldos.', category: 'TABLEROS' },
+        { id: 'view_tablero_elementos', name: 'Tablero Carga de Elementos Esenciales', description: 'Visualización gráfica de cumplimiento de elementos esenciales.', category: 'TABLEROS' },
+        
+        { id: 'view_ingreso_raciones', name: 'Ingreso de Raciones', description: 'Gestión y auditoría de raciones por colegio.', category: 'APLICACIONES' },
+        { id: 'view_solicitud_pan', name: 'Solicitud de Pan', description: 'Acceso a la aplicación de Solicitud de Pan.', category: 'APLICACIONES' },
+        { id: 'view_solicitud_gas', name: 'Solicitud de Gas', description: 'Acceso a la aplicación de Solicitud de Gas.', category: 'APLICACIONES' },
+        { id: 'view_retiro_saldos', name: 'Retiro de Saldos', description: 'Acceso a la aplicación de Retiro de Saldos y Rebaja de Stock.', category: 'APLICACIONES' },
+        
+        { id: 'view_areas', name: 'Menú Áreas', description: 'Acceso al menú principal de Áreas.', category: 'ÁREAS' },
+        { id: 'view_operaciones', name: 'Submenú Operaciones', description: 'Acceso al submenú de Operaciones.', category: 'ÁREAS -> OPERACIONES' },
+        { id: 'view_trabajos_prev_corr_menu', name: 'Submenú Trabajos Preventivos / Correctivos', description: 'Acceso al nivel de agrupación de trabajos en el menú.', category: 'ÁREAS -> OPERACIONES' },
+        { id: 'view_trabajos_preventivos', name: 'Cargar OT (Trabajos Preventivos / Correctivos)', description: 'Registro y seguimiento de mantenimientos preventivos y correctivos.', category: 'ÁREAS -> OPERACIONES' },
+        { id: 'manage_presupuesto', name: 'Presupuesto (Trabajos Preventivos / Correctivos)', description: 'Gestionar el presupuesto anual y visualización trimestral por sucursal.', category: 'ÁREAS -> OPERACIONES' },
+        { id: 'view_estado_avance_tp', name: 'Estado de Avance (Trabajos Preventivos)', description: 'Visualizar el progreso semestral de trabajos preventivos.', category: 'ÁREAS -> OPERACIONES' },
+        { id: 'view_captura_certificacion', name: 'Captura de Certificación', description: 'Acceso a la calculadora de brechas e insumos por RBD.', category: 'ÁREAS -> OPERACIONES' },
+        { id: 'view_elementos_esenciales', name: 'Carga de Elementos Esenciales', description: 'Acceso al módulo de elementos esenciales, subir PDFs y exportar a Excel.', category: 'ÁREAS -> OPERACIONES' },
+        
+        { id: 'view_calidad', name: 'Menú Calidad', description: 'Acceso al menú de Calidad en el Sidebar.', category: 'ÁREAS -> CALIDAD' },
+        { id: 'view_retorno_productos', name: 'Retirada de productos', description: 'Acceso al dashboard de Retirada de productos.', category: 'ÁREAS -> CALIDAD' },
+        { id: 'manage_retorno_productos', name: 'Crear Alerta de Calidad', description: 'Permite crear nuevas alertas de retirada de productos.', category: 'ÁREAS -> CALIDAD' },
+
+        { id: 'view_multas_areas', name: 'Menú Multas', description: 'Acceso al menú de Multas en Áreas.', category: 'ÁREAS -> MULTAS' },
+        { id: 'manage_calculos_ee', name: 'Cálculos de Elementos Esenciales', description: 'Permite calcular multas en base a elementos esenciales no conformes.', category: 'ÁREAS -> MULTAS' },
+
+        { id: 'view_matriz_riesgo', name: 'Ver Matriz de Riesgo', description: 'Acceso al menú principal de matrices de riesgo.', category: 'MATRIZ DE RIESGO' },
+
+        { id: 'manage_matriz_2026', name: 'Ingresar nueva Matriz', description: 'Permite el ingreso de nuevas matrices de riesgo para el año 2026.', category: 'MATRIZ DE RIESGO -> MATRIZ 2026' },
+        { id: 'manage_colegios_matriz', name: 'Colegios Activos', description: 'Gestionar colegios habilitados para la matriz de riesgo.', category: 'MATRIZ DE RIESGO -> MATRIZ 2026' },
+        { id: 'manage_evaluacion_detallada', name: 'Evaluación Detallada', description: 'Realizar evaluación técnica detallada por puntos críticos.', category: 'MATRIZ DE RIESGO -> MATRIZ 2026' },
+        { id: 'manage_mitigacion', name: 'Mitigación', description: 'Gestionar plazos y evidencias de solución para hallazgos de la matriz.', category: 'MATRIZ DE RIESGO -> MATRIZ 2026' },
+        { id: 'view_estado_avance', name: 'Estado de Avance', description: 'Visualizar el estado de avance de la matriz de riesgo 2026.', category: 'MATRIZ DE RIESGO -> MATRIZ 2026' },
+        { id: 'view_auditoria', name: 'Auditoría Externa', description: 'Vista global completa de hallazgos y evidencias para auditores.', category: 'MATRIZ DE RIESGO -> MATRIZ 2026' },
+
+        { id: 'view_pmpa', name: 'Módulo PMPA', description: 'Acceso a carga de Excel y listado PMPA.', category: 'MANTENEDORES' },
+        { id: 'view_colegios', name: 'Mantenedor de Colegios', description: 'Acceso a mantenedor y carga masiva de Colegios.', category: 'MANTENEDORES' },
+        { id: 'view_productos', name: 'Mantenedor de Productos', description: 'Acceso a mantenedor y carga masiva de Productos.', category: 'MANTENEDORES' },
+        { id: 'view_consumo_gas', name: 'Consumo de Gas por RBD', description: 'Administrar límites y consumos de gas por cada RBD.', category: 'MANTENEDORES' },
+        
+        { id: 'manage_utm', name: 'Gestión de UTM', description: 'Acceso al mantenedor inteligente de UTM con sincronización SII.', category: 'MANTENEDORES -> MULTAS' },
+        { id: 'manage_aspectos_ee', name: 'Fórmulas de Aspecto EE', description: 'Asociar fórmulas de multas a aspectos de elementos esenciales por licitación.', category: 'MANTENEDORES -> MULTAS' },
+        { id: 'manage_multa_servicios', name: 'Servicios Multas', description: 'Mantenedor de códigos de servicio (D, A, O, C, T) para cálculos de multas.', category: 'MANTENEDORES -> MULTAS' },
+
+        { id: 'view_preparaciones', name: 'Mantenedor de Preparaciones', description: 'Acceso a mantenedor y carga masiva de Preparaciones.', category: 'MANTENEDORES -> CALCULADORA' },
+        { id: 'view_minutas', name: 'Mantenedor de Minutas', description: 'Acceso a mantenedor y carga masiva de Minutas.', category: 'MANTENEDORES -> CALCULADORA' },
+        { id: 'view_raciones', name: 'Mantenedor de Raciones', description: 'Acceso a mantenedor y carga masiva de Raciones.', category: 'MANTENEDORES -> CALCULADORA' },
+
+        { id: 'view_reports', name: 'Ver Reportes', description: 'Acceso a visualización de datos de negocio.', category: 'REPORTES' },
+        { id: 'view_solicitud_pan_report', name: 'Reporte Solicitud de Pan', description: 'Acceso al informe histórico de solicitudes de pan.', category: 'REPORTES' },
+        { id: 'view_solicitud_gas_report', name: 'Reporte Solicitud de Gas', description: 'Acceso al informe histórico de solicitudes de gas.', category: 'REPORTES' },
+        { id: 'view_retiro_report', name: 'Reporte Retiro de Saldos', description: 'Acceso al informe histórico de retiro de saldos.', category: 'REPORTES' },
+
+        { id: 'manage_users', name: 'Gestionar Usuarios', description: 'Crear, editar o eliminar usuarios.', category: 'ADMINISTRACIÓN' },
+        { id: 'manage_roles', name: 'Gestionar Roles', description: 'Administrar mantenedor de perfiles y permisos.', category: 'ADMINISTRACIÓN' },
+        { id: 'manage_correo', name: 'Configuración de Correo', description: 'Acciones sobre credenciales de correo (Office365).', category: 'ADMINISTRACIÓN' },
+        { id: 'manage_listas', name: 'Listas de Distribución', description: 'Gestión de destinatarios y listas de correos.', category: 'ADMINISTRACIÓN' },
+        { id: 'manage_notificaciones', name: 'Notificaciones por Pantalla', description: 'Asociar listas de distribución a notificaciones de la aplicación.', category: 'ADMINISTRACIÓN' },
+        { id: 'manage_sucursales', name: 'Mantenedor de Sucursales', description: 'Administración de Licitaciones, UTs y Sucursales.', category: 'ADMINISTRACIÓN' },
+        { id: 'manage_areas', name: 'Mantenedor de Áreas', description: 'Creación y administración de áreas de la compañía.', category: 'ADMINISTRACIÓN' },
+
+        { id: 'view_formularios', name: 'Gestión de Formularios', description: 'Acceso a la activación, edición y configuración de calendarios/privilegios.', category: 'FORMULARIOS' },
+        { id: 'create_formularios', name: 'Crear Formulario', description: 'Acceso al constructor para diseñar nuevos formularios dinámicos.', category: 'FORMULARIOS' },
+        { id: 'fill_formularios', name: 'Completar Formulario', description: 'Acceso para el llenado y envío de respuestas (incluye modal PDF).', category: 'FORMULARIOS' },
+        { id: 'view_respuestas', name: 'Respuestas de Formularios', description: 'Acceso a la visualización de respuestas históricas y descarga de PDFs.', category: 'FORMULARIOS' },
+
+        { id: 'view_anexos', name: 'Ver Anexos', description: 'Acceso al directorio telefónico de la empresa.', category: 'AYUDA' },
+        { id: 'manage_anexos', name: 'Gestionar Anexos', description: 'Acceso a crear, editar y subir de forma masiva los anexos.', category: 'AYUDA' },
     ]
 
     return (
@@ -99,7 +114,12 @@ export default async function RolesPage() {
 
                             <div className="flex justify-between items-start mb-4">
                                 <div>
-                                    <h3 className="text-xl font-bold text-gray-900">{role.name}</h3>
+                                    <div className="flex items-center gap-3">
+                                        <h3 className="text-xl font-bold text-gray-900">{role.name}</h3>
+                                        <span className="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full font-bold border border-gray-200">
+                                            {rolePerms.filter(rp => availablePermissions.some(ap => ap.id === rp)).length} / {availablePermissions.length} aplicaciones asociadas
+                                        </span>
+                                    </div>
                                     <p className="text-sm text-gray-500 mt-1">{role.description || 'Sin descripción principal.'}</p>
                                 </div>
                                 <div className="flex flex-col items-end gap-2">
@@ -111,47 +131,13 @@ export default async function RolesPage() {
                             </div>
 
                             <div className="space-y-3 mt-6 border-t border-gray-50 pt-4">
-                                <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">Permisos Habilitados</p>
+                                <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Permisos Habilitados</p>
 
                                 {rolePerms.length > 0 ? (
-                                    <div className="space-y-4">
-                                        {Object.entries(
-                                            availablePermissions.reduce((acc, p) => {
-                                                if (rolePerms.includes(p.id)) {
-                                                    if (!acc[p.category]) acc[p.category] = []
-                                                    acc[p.category].push(p)
-                                                }
-                                                return acc
-                                            }, {} as Record<string, typeof availablePermissions>)
-                                        ).map(([category, perms]) => (
-                                            <div key={category} className="space-y-2">
-                                                <p className="text-[10px] font-black text-indigo-500 uppercase tracking-widest">{category}</p>
-                                                <div className="flex flex-wrap gap-2">
-                                                    {perms.map(p => (
-                                                        <span key={p.id} className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-gray-50 text-gray-700 border border-gray-100 shadow-sm">
-                                                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                                                            {p.name}
-                                                        </span>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        ))}
-                                        
-                                        {/* Permisos no mapeados en la UI actual (si existen) */}
-                                        {rolePerms.filter(rp => !availablePermissions.find(ap => ap.id === rp)).length > 0 && (
-                                            <div className="space-y-2">
-                                                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Otros / Sistema</p>
-                                                <div className="flex flex-wrap gap-2">
-                                                    {rolePerms.filter(rp => !availablePermissions.find(ap => ap.id === rp)).map(p => (
-                                                        <span key={p} className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-gray-50 text-gray-500 border border-gray-100 border-dashed">
-                                                            <span className="w-1.5 h-1.5 rounded-full bg-gray-300"></span>
-                                                            {p}
-                                                        </span>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        )}
-                                    </div>
+                                    <RolePermissionList 
+                                        rolePerms={rolePerms} 
+                                        availablePermissions={availablePermissions} 
+                                    />
                                 ) : (
                                     <p className="text-sm text-gray-400 italic">No tiene permisos operativos asignados.</p>
                                 )}

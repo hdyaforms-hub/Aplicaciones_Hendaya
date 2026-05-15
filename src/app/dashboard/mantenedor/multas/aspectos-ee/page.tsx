@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { getAspectosEE, saveAspectoEE, deleteAspectoEE, getLicitaciones, testFormula } from './actions'
+import { getAspectosEE, saveAspectoEE, deleteAspectoEE, getLicitaciones, testFormula, getPmpaLevelsForFolio } from './actions'
 
 export default function AspectosEEPage() {
     const [aspectos, setAspectos] = useState<any[]>([])
@@ -19,6 +19,9 @@ export default function AspectosEEPage() {
     const [testResult, setTestResult] = useState<any>(null)
     const [testing, setTesting] = useState(false)
     const [testError, setTestError] = useState('')
+    const [testCustomValues, setTestCustomValues] = useState<any>({})
+    const [pmpaLevels, setPmpaLevels] = useState<any[]>([])
+    const [loadingLevels, setLoadingLevels] = useState(false)
 
     // Form State
     const [formData, setFormData] = useState({
@@ -29,6 +32,9 @@ export default function AspectosEEPage() {
         formula: ''
     })
     const [isEdit, setIsEdit] = useState(false)
+    const [formulaError, setFormulaError] = useState('')
+
+    const RESERVED_KEYWORDS = ['UTM', 'RACIONES', 'MATERIAPRIMA', 'INSTRUMENTO', 'MANIPULADORA', 'NIVELCONTROLADO', 'CANTSERVICIO', 'ELEMENTOS']
 
     const fetchData = async () => {
         setLoading(true)
@@ -97,19 +103,37 @@ export default function AspectosEEPage() {
         setTestError('')
         setTestResult(null)
         
-        const res = await testFormula(testFolio, formData.formula)
+        const res = await testFormula(testFolio, formData.formula, {
+            materiaPrima: Number(testCustomValues.MATERIAPRIMA || 0),
+            instrumento: Number(testCustomValues.INSTRUMENTO || 0),
+            manipuladora: Number(testCustomValues.MANIPULADORA || 0),
+            nivelControlado: Number(testCustomValues.NIVELCONTROLADO || 0),
+            cantServicio: Number(testCustomValues.CANTSERVICIO || 0),
+            elementos: Number(testCustomValues.ELEMENTOS || 0)
+        })
         if (res.error) setTestError(res.error)
         else setTestResult(res.data)
         
         setTesting(false)
     }
 
+    const fetchLevels = async (folio: string) => {
+        if (!folio || folio.length < 5) return
+        setLoadingLevels(true)
+        const res = await getPmpaLevelsForFolio(folio)
+        if (res.levels) setPmpaLevels(res.levels)
+        setLoadingLevels(false)
+    }
+
+    const keywords = ['MATERIAPRIMA', 'INSTRUMENTO', 'MANIPULADORA', 'NIVELCONTROLADO', 'CANTSERVICIO', 'ELEMENTOS']
+    const activeKeywords = keywords.filter(k => formData.formula.toUpperCase().includes(k))
+
     return (
         <div className="space-y-6">
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center">
                 <div>
                     <h2 className="text-2xl font-bold text-gray-900 tracking-tight flex items-center gap-2">
-                        <span>📐</span> Aspectos Elementos Esenciales
+                        <span>📐</span> Fórmulas de Aspecto EE
                     </h2>
                     <p className="text-gray-500 mt-1">Asocia letras de aspectos y fórmulas de multas por licitación.</p>
                 </div>
@@ -146,6 +170,42 @@ export default function AspectosEEPage() {
                                     <p className="text-gray-600 text-sm leading-relaxed">
                                         Representa la cantidad de raciones (**RacEqJunaeb**) del PMPA. 
                                         El sistema suma automáticamente los registros que coincidan con el **RBD**, **Licitación**, **Año**, **Mes** y **Código de Servicio** del folio.
+                                    </p>
+                                </div>
+                                <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                                    <h4 className="font-black text-cyan-700 text-sm tracking-widest uppercase mb-1">MateriaPrima</h4>
+                                    <p className="text-gray-600 text-sm leading-relaxed">
+                                        Palabra reservada que habilitará un campo de entrada para que el usuario ingrese información sobre la materia prima durante la supervisión.
+                                    </p>
+                                </div>
+                                <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                                    <h4 className="font-black text-cyan-700 text-sm tracking-widest uppercase mb-1">Instrumento</h4>
+                                    <p className="text-gray-600 text-sm leading-relaxed">
+                                        Palabra reservada que habilitará un campo de entrada para registrar el instrumento utilizado en la medición.
+                                    </p>
+                                </div>
+                                <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                                    <h4 className="font-black text-cyan-700 text-sm tracking-widest uppercase mb-1">Manipuladora</h4>
+                                    <p className="text-gray-600 text-sm leading-relaxed">
+                                        Palabra reservada que habilitará un campo de entrada para registrar el nombre o RUT de la manipuladora observada.
+                                    </p>
+                                </div>
+                                <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                                    <h4 className="font-black text-cyan-700 text-sm tracking-widest uppercase mb-1">NivelControlado</h4>
+                                    <p className="text-gray-600 text-sm leading-relaxed">
+                                        Habilitará una lista desplegable con los niveles disponibles en el PMPA (filtrados por RBD y Periodo). Al seleccionar uno, el sistema utilizará la sumatoria de raciones (**RacEqJunaeb**) de dicho nivel.
+                                    </p>
+                                </div>
+                                <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                                    <h4 className="font-black text-cyan-700 text-sm tracking-widest uppercase mb-1">CantServicio</h4>
+                                    <p className="text-gray-600 text-sm leading-relaxed">
+                                        Palabra reservada que habilitará un campo de entrada para registrar la cantidad del servicio observado o controlado.
+                                    </p>
+                                </div>
+                                <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                                    <h4 className="font-black text-cyan-700 text-sm tracking-widest uppercase mb-1">ELEMENTOS</h4>
+                                    <p className="text-gray-600 text-sm leading-relaxed">
+                                        Palabra reservada relacionada con los elementos EPP (Guantes, delantales, pecheras, etc.). Habilitará un campo de entrada para su registro.
                                     </p>
                                 </div>
                             </div>
@@ -224,9 +284,26 @@ export default function AspectosEEPage() {
                                     rows={3}
                                     placeholder="Ej: (Incumplimientos * 0.5) * UTM"
                                     value={formData.formula}
-                                    onChange={e => setFormData({ ...formData, formula: e.target.value })}
-                                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-gray-900 font-mono text-sm"
+                                    onChange={e => {
+                                        const val = e.target.value
+                                        setFormData({ ...formData, formula: val })
+                                        
+                                        // Validar palabras reservadas
+                                        if (val) {
+                                            const words = val.match(/[A-Za-z]+/g) || []
+                                            const invalidWords = words.filter(w => !RESERVED_KEYWORDS.includes(w.toUpperCase()))
+                                            if (invalidWords.length > 0) {
+                                                setFormulaError(`Palabra(s) no reconocida(s): ${invalidWords.join(', ')}`)
+                                            } else {
+                                                setFormulaError('')
+                                            }
+                                        } else {
+                                            setFormulaError('')
+                                        }
+                                    }}
+                                    className={`w-full px-4 py-2.5 rounded-xl border focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-gray-900 font-mono text-sm transition-all ${formulaError ? 'border-red-400 ring-red-100' : 'border-gray-200'}`}
                                 />
+                                {formulaError && <p className="text-[10px] text-red-500 font-bold mt-1 animate-pulse">⚠️ {formulaError}</p>}
                             </div>
 
                             {error && <p className="text-xs text-red-500 font-medium">{error}</p>}
@@ -235,7 +312,7 @@ export default function AspectosEEPage() {
                             <div className="flex gap-2 pt-2">
                                 <button
                                     type="submit"
-                                    disabled={saving}
+                                    disabled={saving || !!formulaError}
                                     className="flex-1 py-2.5 bg-cyan-600 hover:bg-cyan-700 text-white rounded-xl font-bold transition-all disabled:opacity-50"
                                 >
                                     {saving ? 'Guardando...' : 'Guardar'}
@@ -270,19 +347,55 @@ export default function AspectosEEPage() {
                                         type="text"
                                         placeholder="Ej: 2024004477"
                                         value={testFolio}
-                                        onChange={e => setTestFolio(e.target.value)}
+                                        onChange={e => {
+                                            setTestFolio(e.target.value)
+                                            if (e.target.value.length >= 8) fetchLevels(e.target.value)
+                                        }}
                                         className="flex-1 px-4 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-sm"
                                     />
-                                    <button
-                                        type="button"
-                                        disabled={testing || !formData.formula}
-                                        onClick={handleTest}
-                                        className="px-4 py-2 bg-gray-900 text-white rounded-xl text-sm font-bold hover:bg-black transition-colors disabled:opacity-50"
-                                    >
-                                        {testing ? '...' : 'Probar'}
-                                    </button>
                                 </div>
                             </div>
+
+                            {/* Dynamic Inputs for Keywords */}
+                            {activeKeywords.length > 0 && (
+                                <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 space-y-3">
+                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Valores para la Fórmula:</p>
+                                    {activeKeywords.map(k => (
+                                        <div key={k}>
+                                            <label className="block text-[10px] font-bold text-slate-600 mb-1">{k}</label>
+                                            {k === 'NIVELCONTROLADO' ? (
+                                                <select
+                                                    value={testCustomValues[k] || ''}
+                                                    onChange={e => setTestCustomValues({ ...testCustomValues, [k]: e.target.value })}
+                                                    className="w-full px-3 py-1.5 rounded-lg border border-gray-200 text-xs bg-white"
+                                                >
+                                                    <option value="">Seleccione Nivel...</option>
+                                                    {pmpaLevels.map(l => (
+                                                        <option key={l.nivel} value={l.raciones}>{l.nivel} ({l.raciones} rac)</option>
+                                                    ))}
+                                                </select>
+                                            ) : (
+                                                <input
+                                                    type="number"
+                                                    placeholder="Ingrese valor..."
+                                                    value={testCustomValues[k] || ''}
+                                                    onChange={e => setTestCustomValues({ ...testCustomValues, [k]: e.target.value })}
+                                                    className="w-full px-3 py-1.5 rounded-lg border border-gray-200 text-xs bg-white"
+                                                />
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+
+                            <button
+                                type="button"
+                                disabled={testing || !formData.formula || !testFolio}
+                                onClick={handleTest}
+                                className="w-full py-2.5 bg-gray-900 text-white rounded-xl text-sm font-bold hover:bg-black transition-colors disabled:opacity-50"
+                            >
+                                {testing ? 'Calculando...' : 'Probar Fórmula'}
+                            </button>
 
                             {testError && <p className="text-xs text-red-500">{testError}</p>}
 

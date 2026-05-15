@@ -192,7 +192,9 @@ export async function saveCapturaCertificacion(headerData: any, detailData: any[
                 servicio: headerData.servicio,
                 programa: headerData.programa,
                 area: headerData.area,
-                racionesPreparar: headerData.racionesPreparar,
+                racionesBase: headerData.racionesBase || 0,
+                racionesDigitadas: headerData.racionesDigitadas || 0,
+                racionesPreparar: headerData.racionesDigitadas || 0,
                 usuario: session.user.username,
                 detalles: {
                     create: detailData.map(d => ({
@@ -209,5 +211,47 @@ export async function saveCapturaCertificacion(headerData: any, detailData: any[
     } catch (error) {
         console.error('Error saving captura certificación:', error)
         return { error: 'No se pudo guardar la información.' }
+    }
+}
+
+// Verifica si ya existe un registro para los parámetros dados
+export async function checkIfAlreadyCaptured(rbd: number, fecha: string, servicio: string, programa: string, area: string) {
+    try {
+        const header = await prisma.capCertificacionHeader.findFirst({
+            where: {
+                rbd: Number(rbd),
+                fecha: new Date(fecha),
+                servicio: String(servicio),
+                programa: String(programa),
+                area: String(area)
+            },
+            include: {
+                detalles: true
+            }
+        })
+
+        if (header) {
+            return {
+                exists: true,
+                header: {
+                    racionesBase: header.racionesBase,
+                    racionesDigitadas: header.racionesDigitadas,
+                    usuario: header.usuario,
+                    createdAt: header.createdAt
+                },
+                detalle: header.detalles.map(d => ({
+                    numeroMinuta: d.numeroMinuta,
+                    nombrePreparacion: d.nombrePreparacion,
+                    nombreProducto: d.nombreProducto,
+                    grsRac: Number(d.grsRac),
+                    grsTotal: Number(d.grsTotal)
+                }))
+            }
+        }
+
+        return { exists: false }
+    } catch (error) {
+        console.error('Error checking if already captured:', error)
+        return { exists: false, error: 'Error al verificar registro existente.' }
     }
 }

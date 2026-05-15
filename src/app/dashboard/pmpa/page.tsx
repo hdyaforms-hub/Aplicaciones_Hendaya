@@ -86,8 +86,11 @@ export default async function PMPAPage({
 
     // Generar opciones únicas
     const sucursales = sucursalesRecords.map(s => s.nombre)
-    const anos = Array.from(new Set(groupedAnosMeses.map((c: any) => c.ano as number))) as number[]
-    const meses = Array.from(new Set(groupedAnosMeses.map((c: any) => c.mes as number))) as number[]
+    const anos = Array.from(new Set(groupedAnosMeses.map((c: any) => c.ano as number))) as number[]    const meses = Array.from(new Set(groupedAnosMeses.map((c: any) => c.mes as number))).sort((a, b) => a - b)
+    const MONTH_NAMES = [
+        'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+        'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+    ]
 
     return (
         <div className="space-y-6">
@@ -136,7 +139,11 @@ export default async function PMPAPage({
                         className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-gray-900 appearance-none"
                     >
                         <option value="">Todos</option>
-                        {meses.map((m: number) => <option key={m} value={m}>{m}</option>)}
+                        {meses.map((m: number) => (
+                            <option key={m} value={m}>
+                                {MONTH_NAMES[m - 1] || m}
+                            </option>
+                        ))}
                     </select>
                 </div>
 
@@ -180,7 +187,7 @@ export default async function PMPAPage({
                                 <tr key={d.id} className="hover:bg-cyan-50/50 transition-colors">
                                     <td className="px-6 py-3 font-medium text-gray-900">{d.ut?.sucursal?.nombre || 'S/D'}</td>
                                     <td className="px-6 py-3">{d.ano}</td>
-                                    <td className="px-6 py-3">{d.mes}</td>
+                                    <td className="px-6 py-3">{MONTH_NAMES[d.mes - 1] || d.mes}</td>
                                     <td className="px-6 py-3">{d.rbd}</td>
                                     <td className="px-6 py-3">
                                         <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-slate-100 text-slate-800 border border-slate-200">

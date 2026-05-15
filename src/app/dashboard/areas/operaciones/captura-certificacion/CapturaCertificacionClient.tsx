@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useDebounce } from '@/hooks/use-debounce'
-import { getOpcionesCaptura, getColegioName, getDetalleCertificacion, saveCapturaCertificacion, searchColegios } from './actions'
+import { getOpcionesCaptura, getColegioName, getDetalleCertificacion, saveCapturaCertificacion, searchColegios, checkIfAlreadyCaptured } from './actions'
 
 interface DetalleCertificacion {
     numeroMinuta: string
@@ -45,6 +45,8 @@ export default function CapturaCertificacionClient() {
     // Valor base para detectar cambios manuales
     const [baseRacionesValue, setBaseRacionesValue] = useState<number | ''>('')
     const [isDirty, setIsDirty] = useState(false)
+    const [isSaved, setIsSaved] = useState(false)
+    const [racionesDigitadas, setRacionesDigitadas] = useState<number | ''>('')
 
     // Buscar colegios cuando el usuario escribe
     useEffect(() => {
@@ -107,30 +109,52 @@ export default function CapturaCertificacionClient() {
 
     // Actualizar Raciones a Preparar automáticamente cuando se selecciona un servicio, programa y área
     useEffect(() => {
-        if (selectedServicio && selectedPrograma && selectedArea && racionesBase.length > 0) {
-            const racion = racionesBase.find(r => 
-                r.servicio === selectedServicio && 
-                r.programa === selectedPrograma &&
-                r.numeroArea.trim() === selectedArea.trim()
-            )
-            if (racion) {
-                setRacionesPreparar(racion.cantidad)
-                setBaseRacionesValue(racion.cantidad)
-            } else {
-                setRacionesPreparar('')
-                setBaseRacionesValue('')
+        if (selectedServicio && selectedPrograma && selectedArea) {
+            const checkExisting = async () => {
+                setLoading(true)
+                const result = await checkIfAlreadyCaptured(selectedRbd!, fecha, selectedServicio, selectedPrograma, selectedArea)
+                if (result.exists) {
+                    setIsSaved(true)
+                    setRacionesPreparar(result.header?.racionesBase || 0)
+                    setRacionesDigitadas(result.header?.racionesDigitadas || 0)
+                    setBaseRacionesValue(result.header?.racionesBase || 0)
+                    setDetalle(result.detalle || [])
+                    setSuccessMsg(`Este registro ya fue guardado por ${result.header?.usuario} el ${new Date(result.header?.createdAt || '').toLocaleString()}. No se permiten modificaciones.`)
+                    setError('')
+                } else {
+                    setIsSaved(false)
+                    setSuccessMsg('')
+                    if (racionesBase.length > 0) {
+                        const racion = racionesBase.find(r => 
+                            r.servicio === selectedServicio && 
+                            r.programa === selectedPrograma &&
+                            r.numeroArea.trim() === selectedArea.trim()
+                        )
+                        if (racion) {
+                            setRacionesPreparar(racion.cantidad)
+                            setRacionesDigitadas(racion.cantidad)
+                            setBaseRacionesValue(racion.cantidad)
+                            handleCalcular(racion.cantidad)
+                        } else {
+                            setRacionesPreparar('')
+                            setRacionesDigitadas('')
+                            setBaseRacionesValue('')
+                            setDetalle([])
+                        }
+                    }
+                }
+                setLoading(false)
             }
-            setIsDirty(false)
-            // Trigger auto-calculate if everything is ready
-            if (racion) {
-                handleCalcular(racion.cantidad)
-            }
+            checkExisting()
         } else {
             setRacionesPreparar('')
+            setRacionesDigitadas('')
             setBaseRacionesValue('')
             setIsDirty(false)
+            setIsSaved(false)
+            setDetalle([])
         }
-    }, [selectedServicio, selectedPrograma, selectedArea, racionesBase])
+    }, [selectedServicio, selectedPrograma, selectedArea, racionesBase, fecha, selectedRbd])
 
     const checkDirtyAndProceed = async (nextAction: () => void) => {
         if (isDirty && detalle.length > 0) {
@@ -146,9 +170,9 @@ export default function CapturaCertificacionClient() {
         setError('')
         setSuccessMsg('')
         
-        const raciones = typeof customRaciones === 'number' ? customRaciones : Number(racionesPreparar)
+        const raciones = typeof customRaciones === 'number' ? customRaciones : Number(racionesDigitadas)
 
-        if (!selectedRbd || !fecha || !selectedServicio || !selectedPrograma || !selectedArea || !raciones) {
+        if (!selectedRbd || !fecha || !selectedServicio || !selectedPrograma || !selectedArea || raciones === undefined || raciones === null) {
             // No error if it's just partial
             return
         }
@@ -179,26 +203,53 @@ export default function CapturaCertificacionClient() {
         }
 
         setLoading(true)
+
+        // Aseguramos que el detalle tenga los totales calculados con las raciones actuales
+        const racionesActuales = Number(racionesDigitadas)
+        const detalleActualizado = detalle.map(d => ({
+            ...d,
+            grsTotal: Number(d.grsRac) * racionesActuales
+        }))
+
         const headerData = {
             rbd: selectedRbd,
             fecha,
             servicio: selectedServicio,
             programa: selectedPrograma,
             area: selectedArea,
-            racionesPreparar: Number(racionesPreparar)
+            racionesBase: Number(racionesPreparar),
+            racionesDigitadas: racionesActuales
         }
 
-        const result = await saveCapturaCertificacion(headerData, detalle)
+        const result = await saveCapturaCertificacion(headerData, detalleActualizado)
         
         if (result.error) {
             setError(result.error)
         } else if (result.success) {
             setSuccessMsg('Información registrada correctamente en la BD.')
             setIsDirty(false)
+            setIsSaved(true)
             setBaseRacionesValue(Number(racionesPreparar))
-            // Opcional: limpiar la tabla
+            setDetalle(detalleActualizado) // Actualizar la tabla con lo guardado
         }
         setLoading(false)
+    }
+
+    const handleNuevo = () => {
+        setSearchInput('')
+        setSelectedRbd(null)
+        setColegioName('')
+        setFecha(new Date().toISOString().split('T')[0])
+        setSelectedServicio('')
+        setSelectedPrograma('')
+        setSelectedArea('')
+        setRacionesPreparar('')
+        setRacionesDigitadas('')
+        setDetalle([])
+        setError('')
+        setSuccessMsg('')
+        setIsSaved(false)
+        setIsDirty(false)
     }
 
     return (
@@ -311,38 +362,58 @@ export default function CapturaCertificacionClient() {
                     </select>
                 </div>
 
-                <div>
-                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1.5 ml-1 text-green-600">Raciones a Preparar</label>
-                    <input
-                        type="number"
-                        value={racionesPreparar}
-                        onChange={(e) => {
-                            const val = e.target.value === '' ? '' : Number(e.target.value)
-                            setRacionesPreparar(val)
-                            setIsDirty(val !== baseRacionesValue)
-                        }}
-                        placeholder="Cantidad"
-                        className="w-full px-4 py-3 rounded-xl border-2 border-green-200 focus:ring-2 focus:ring-green-500 bg-green-50 text-green-900 font-black transition-all shadow-inner"
-                    />
+                <div className="grid grid-cols-2 gap-4">
+                    <div>
+                        <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1.5 ml-1">Raciones Base (DB)</label>
+                        <input
+                            type="number"
+                            value={racionesPreparar}
+                            disabled
+                            className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-100 text-gray-500 font-bold transition-all shadow-inner cursor-not-allowed"
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1.5 ml-1 text-green-600">Raciones a Digitar</label>
+                        <input
+                            type="number"
+                            value={racionesDigitadas}
+                            onChange={(e) => {
+                                const val = e.target.value === '' ? '' : Number(e.target.value)
+                                setRacionesDigitadas(val)
+                                setIsDirty(val !== racionesPreparar)
+                            }}
+                            disabled={isSaved || loading}
+                            placeholder="Cantidad"
+                            className={`w-full px-4 py-3 rounded-xl border-2 transition-all shadow-inner font-black ${isSaved ? 'bg-gray-50 border-gray-200 text-gray-400' : 'border-green-200 focus:ring-2 focus:ring-green-500 bg-green-50 text-green-900'}`}
+                        />
+                    </div>
                 </div>
 
-                <div className="flex gap-3 pt-2">
-                    <button
-                        onClick={() => handleCalcular()}
-                        disabled={loading || !selectedServicio || !selectedPrograma || !selectedArea || !racionesPreparar}
-                        className="flex-1 bg-cyan-600 hover:bg-cyan-700 text-white font-black py-3 px-4 rounded-xl shadow-lg shadow-cyan-200 transition-all active:scale-95 disabled:opacity-50 disabled:shadow-none flex justify-center items-center gap-2"
-                    >
-                        {loading ? 'Calculando...' : '🧮 Calcular'}
-                    </button>
-                    {detalle.length > 0 && (
+                <div className="flex flex-col gap-3 pt-2">
+                    <div className="flex gap-3">
                         <button
-                            onClick={handleGuardar}
-                            disabled={loading}
-                            className="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-black py-3 px-4 rounded-xl shadow-lg transition-all active:scale-95 disabled:opacity-50 flex justify-center items-center gap-2"
+                            onClick={() => handleCalcular()}
+                            disabled={loading || !selectedServicio || !selectedPrograma || !selectedArea || !racionesDigitadas || isSaved}
+                            className="flex-1 bg-cyan-600 hover:bg-cyan-700 text-white font-black py-3 px-4 rounded-xl shadow-lg shadow-cyan-200 transition-all active:scale-95 disabled:opacity-50 disabled:shadow-none flex justify-center items-center gap-2"
                         >
-                            💾 Guardar
+                            {loading ? 'Calculando...' : '🧮 Calcular'}
                         </button>
-                    )}
+                        {detalle.length > 0 && !isSaved && (
+                            <button
+                                onClick={handleGuardar}
+                                disabled={loading || isSaved}
+                                className="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-black py-3 px-4 rounded-xl shadow-lg transition-all active:scale-95 disabled:opacity-50 flex justify-center items-center gap-2"
+                            >
+                                💾 Guardar
+                            </button>
+                        )}
+                    </div>
+                    <button
+                        onClick={handleNuevo}
+                        className="w-full bg-slate-100 hover:bg-slate-200 text-slate-600 font-black py-3 px-4 rounded-xl transition-all active:scale-95 flex justify-center items-center gap-2 border border-slate-200"
+                    >
+                        ✨ Nuevo Registro
+                    </button>
                 </div>
             </div>
 
@@ -415,12 +486,6 @@ export default function CapturaCertificacionClient() {
                 {detalle.length > 0 && (
                     <div className="px-6 py-4 bg-slate-50/50 border-t border-gray-100 flex justify-between items-center">
                         <span className="text-xs font-bold text-gray-500">Total Productos: {detalle.length}</span>
-                        <div className="text-xs font-black text-slate-800 flex items-center gap-2">
-                            <span>Suma Total Grs:</span>
-                            <span className="bg-slate-200 px-3 py-1 rounded-lg">
-                                {detalle.reduce((acc, d) => acc + Number(d.grsTotal), 0).toLocaleString('es-CL')}
-                            </span>
-                        </div>
                     </div>
                 )}
             </div>

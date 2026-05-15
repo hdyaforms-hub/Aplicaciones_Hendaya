@@ -38,10 +38,10 @@ export default function Sidebar({ user }: { user: User }) {
     }
 
     const [expandedMenus, setExpandedMenus] = useState<Record<string, boolean>>({
-        'Aplicaciones': true,
+        'Aplicaciones': false,
         'Mantenedor': false,
         'Reportes': false,
-        'Áreas': true // Default expanded for easier navigation
+        'Áreas': false
     })
 
     const toggleMenu = (e: MouseEvent, name: string) => {
@@ -63,7 +63,7 @@ export default function Sidebar({ user }: { user: User }) {
                 { name: 'Solicitudes de Pan', href: '/dashboard/tablero/solicitudes-pan', requiredPermission: 'view_tablero_pan' },
                 { name: 'Solicitud de Gas', href: '/dashboard/tablero/solicitud-gas', requiredPermission: 'view_tablero_gas' },
                 { name: 'Retiro de Saldos', href: '/dashboard/tablero/retiro-saldos', requiredPermission: 'view_tablero_retiro' },
-                { name: 'Elementos Esenciales', href: '/dashboard/tablero/elementos-esenciales', requiredPermission: 'view_tablero_elementos' }
+                { name: 'Carga de Elementos Esenciales', href: '/dashboard/tablero/elementos-esenciales', requiredPermission: 'view_tablero_elementos' }
             ]
         },
         {
@@ -102,7 +102,7 @@ export default function Sidebar({ user }: { user: User }) {
                             requiredPermission: 'view_captura_certificacion'
                         },
                         {
-                            name: 'Elementos Esenciales',
+                            name: 'Carga de Elementos Esenciales',
                             href: '/dashboard/areas/operaciones/elementos-esenciales',
                             requiredPermission: 'view_elementos_esenciales'
                         }
@@ -133,9 +133,21 @@ export default function Sidebar({ user }: { user: User }) {
                             }
                         }
                     ]
+                },
+                {
+                    name: 'Multas',
+                    requiredPermission: 'view_multas_areas',
+                    subItems: [
+                        {
+                            name: 'Cálculos de Elementos Esenciales',
+                            href: '/dashboard/areas/multas/calculos',
+                            requiredPermission: 'manage_calculos_ee'
+                        }
+                    ]
                 }
             ]
         },
+
         {
             name: 'Matriz de riesgo',
             icon: '📋',
@@ -191,7 +203,7 @@ export default function Sidebar({ user }: { user: User }) {
                     requiredPermission: 'manage_utm',
                     subItems: [
                         { name: 'UTM', href: '/dashboard/mantenedor/multas/utm', requiredPermission: 'manage_utm' },
-                        { name: 'Aspectos EE', href: '/dashboard/mantenedor/multas/aspectos-ee', requiredPermission: 'manage_aspectos_ee' },
+                        { name: 'Fórmulas de Aspecto EE', href: '/dashboard/mantenedor/multas/aspectos-ee', requiredPermission: 'manage_aspectos_ee' },
                         { name: 'Servicios', href: '/dashboard/mantenedor/multas/servicios', requiredPermission: 'manage_multa_servicios' }
                     ]
                 },

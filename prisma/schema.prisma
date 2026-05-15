@@ -640,6 +640,8 @@ model CapCertificacionHeader {
   servicio         String
   programa         String
   area             String?
+  racionesBase     Int                      @default(0)
+  racionesDigitadas Int                     @default(0)
   racionesPreparar Int
   createdAt        DateTime                 @default(now())
   updatedAt        DateTime                 @updatedAt
@@ -698,4 +700,28 @@ model UTM {
   updatedAt DateTime @updatedAt
 
   @@unique([anho, mes])
+}
+
+model Multas_Elementos_Esenciales_Cab {
+  id                   String   @id @default(uuid())
+  folioOriginal        String   @unique
+  rbd                  Int
+  fechaSupervision     DateTime
+  licitacion           String?
+  montoTotalCalculado  Float
+  estadoCalculo        String   // Ej: "COMPLETO", "INCOMPLETO_POR_PMPA", "INCOMPLETO_POR_DATOS"
+  usuarioCalculo       String
+  fechaCalculo         DateTime @default(now())
+  detalles             Multas_Elementos_Esenciales_Det[]
+}
+
+model Multas_Elementos_Esenciales_Det {
+  id               String   @id @default(uuid())
+  cabId            String
+  letraAspecto     String
+  descripcion      String?  @db.Text
+  formulaAplicada  String?  @db.Text
+  montoMulta       Float
+  variablesUsadas  String?  @db.Text // JSON con los valores ingresados
+  cab              Multas_Elementos_Esenciales_Cab @relation(fields: [cabId], references: [id], onDelete: Cascade)
 }

@@ -102,7 +102,7 @@ export async function uploadPMPAData(data: PMPAData[], overwrite: boolean) {
     }
 }
 
-export async function deletePMPAPeriod(ano: number, mes: number, ute?: number) {
+export async function deletePMPAPeriod(ano: number, mes: number, sucursalName?: string) {
     const session = await getSession()
     if (!session?.user?.role?.permissions.includes('view_pmpa')) {
         return { error: 'No tienes permisos para realizar esta acción' }
@@ -110,7 +110,9 @@ export async function deletePMPAPeriod(ano: number, mes: number, ute?: number) {
 
     try {
         const where: any = { ano, mes }
-        if (ute) where.ute = ute
+        if (sucursalName) {
+            where.ut = { sucursal: { nombre: sucursalName } }
+        }
 
         const deleted = await prisma.pMPA.deleteMany({ where })
         
