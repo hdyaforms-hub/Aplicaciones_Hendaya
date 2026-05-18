@@ -275,11 +275,11 @@ export async function calculateAll(params: { search?: string, mes?: string, ano?
         // Apply Month/Year filters in JS
         if (params.mes && params.mes !== 'Todos los meses') {
             const mesIdx = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'].indexOf(params.mes) + 1
-            if (mesIdx > 0) folios = folios.filter(f => f.fechaSupervision?.getMonth() + 1 === mesIdx)
+            if (mesIdx > 0) folios = folios.filter(f => f.fechaSupervision && f.fechaSupervision.getMonth() + 1 === mesIdx)
         }
         if (params.ano) {
             const anoInt = parseInt(params.ano)
-            folios = folios.filter(f => f.fechaSupervision?.getFullYear() === anoInt)
+            folios = folios.filter(f => f.fechaSupervision && f.fechaSupervision.getFullYear() === anoInt)
         }
 
         if (folios.length === 0) return { count: 0 }
