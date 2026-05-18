@@ -98,14 +98,14 @@ export async function getFoliosIncompletos(params: {
             ].indexOf(params.mes) + 1
             
             if (mesIndex > 0) {
-                folios = folios.filter(f => f.fechaSupervision?.getMonth() + 1 === mesIndex)
+                folios = folios.filter(f => f.fechaSupervision && f.fechaSupervision.getMonth() + 1 === mesIndex)
             }
         }
         
         if (params.ano && params.ano.trim() !== '') {
             const anoInt = parseInt(params.ano)
             if (!isNaN(anoInt)) {
-                folios = folios.filter(f => f.fechaSupervision?.getFullYear() === anoInt)
+                folios = folios.filter(f => f.fechaSupervision && f.fechaSupervision.getFullYear() === anoInt)
             }
         }
 
