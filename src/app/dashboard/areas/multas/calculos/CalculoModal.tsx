@@ -17,6 +17,7 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
     const [detalles, setDetalles] = useState<any[]>([])
     const [hasPmpa, setHasPmpa] = useState(true)
     const [keywordsNeeded, setKeywordsNeeded] = useState<string[]>([])
+    const [pmpaNiveles, setPmpaNiveles] = useState<{ label: string, value: number }[]>([])
     const [customValues, setCustomValues] = useState<Record<string, string>>({})
     const [calculating, setCalculating] = useState(false)
     const [error, setError] = useState('')
@@ -45,87 +46,149 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
             setDetalles(res.detalles || [])
             setHasPmpa(res.hasPmpa || false)
             setKeywordsNeeded(res.keywordsNeeded || [])
+            setPmpaNiveles(res.pmpaNiveles || [])
+            
+            // Pre-populate with saved variables if any
+            if (res.savedVariables) {
+                const loadedValues = { ...res.savedVariables }
+                
+                // Backward compatibility: if NIVELCONTROLADO is stored as a number, map it back to the level label
+                const rawNivel = loadedValues['NIVELCONTROLADO']
+                if (rawNivel && !isNaN(Number(rawNivel))) {
+                    const racionesNum = Number(rawNivel)
+                    const matchingLevel = (res.pmpaNiveles || []).find(n => n.value === racionesNum)
+                    if (matchingLevel) {
+                        loadedValues['NIVELCONTROLADO'] = matchingLevel.label
+                    }
+                }
+                
+                setCustomValues(loadedValues)
+            } else {
+                setCustomValues({})
+            }
         }
         setLoading(false)
     }
+
+    const evaluateFormulaLocal = (formula: string, customVals: Record<string, string>) => {
+        try {
+            const cleanFormula = formula.toUpperCase()
+            const utmVal = data?.utmValue || 0
+            const totalRaciones = data?.racionesValue || 0
+            
+            // Get NIVELCONTROLADO raciones based on selection
+            const selectedLevelLabel = customVals['NIVELCONTROLADO'] || ''
+            const selectedLevelObj = pmpaNiveles.find(n => n.label === selectedLevelLabel)
+            
+            // If user has not selected a level yet, default to total raciones as fallback
+            const nivelControladoVal = selectedLevelObj ? selectedLevelObj.value : totalRaciones
+            
+            const materiaPrimaVal = Number(customVals['MATERIAPRIMA'] || 1)
+            const instrumentoVal = Number(customVals['INSTRUMENTO'] || 1)
+            const manipuladoraVal = Number(customVals['MANIPULADORA'] || 1)
+            const cantServicioVal = Number(customVals['CANTSERVICIO'] || 1)
+            const elementosVal = Number(customVals['ELEMENTOS'] || 1)
+
+            let evalForm = cleanFormula
+                .replace(/UTM/g, utmVal.toString())
+                .replace(/RACIONES/g, totalRaciones.toString())
+                .replace(/NIVELCONTROLADO/g, nivelControladoVal.toString())
+                .replace(/MATERIAPRIMA/g, materiaPrimaVal.toString())
+                .replace(/INSTRUMENTO/g, instrumentoVal.toString())
+                .replace(/MANIPULADORA/g, manipuladoraVal.toString())
+                .replace(/CANTSERVICIO/g, cantServicioVal.toString())
+                .replace(/ELEMENTOS/g, elementosVal.toString())
+
+            const sanitized = evalForm.replace(/[^0-9+\-*/().]/g, '')
+            const resultValue = new Function(`return ${sanitized}`)()
+            return {
+                formulaEvaluada: evalForm,
+                resultado: Number(resultValue) || 0
+            }
+        } catch (e) {
+            return { error: 'Error al evaluar' }
+        }
+    }
+
+    const calculatePreview = () => {
+        let totalMonto = 0
+        const detallesCalc: any[] = []
+        let hasError = false
+
+        for (const d of detalles) {
+            if (!d.formulaAsignada) continue
+
+            const evalRes = evaluateFormulaLocal(d.formulaAsignada, customValues)
+            if (evalRes.error) {
+                hasError = true
+                continue
+            }
+
+            totalMonto += evalRes.resultado || 0
+            detallesCalc.push({
+                letraAspecto: d.letraAspecto,
+                descripcion: d.observacionesOMedioDeVerificacion,
+                formulaAplicada: evalRes.formulaEvaluada,
+                montoMulta: evalRes.resultado || 0,
+                variablesUsadas: customValues
+            })
+        }
+
+        if (!hasError) {
+            setResult({ total: totalMonto, detallesCalculados: detallesCalc })
+        }
+    }
+
+    useEffect(() => {
+        if (data && detalles.length > 0) {
+            calculatePreview()
+        } else {
+            setResult(null)
+        }
+    }, [customValues, detalles, data])
 
     const handleCalculate = async () => {
         setCalculating(true)
         setError('')
 
-        // Validate missing inputs
-        for (const k of keywordsNeeded) {
-            if (!customValues[k]) {
-                setError(`Falta ingresar el valor para: ${k}`)
-                setCalculating(false)
-                return
-            }
-        }
-
         if (!hasPmpa) {
-            setError('No se puede calcular porque falta la información del PMPA para este folio.')
+            setError('No se puede guardar porque falta la información del PMPA para este folio.')
             setCalculating(false)
             return
         }
 
-        let totalMonto = 0
-        const detallesCalc: any[] = []
+        if (!result) {
+            setError('No hay un cálculo válido para guardar.')
+            setCalculating(false)
+            return
+        }
+
+        // Detect if any required variables are missing
+        const missingKeywords = keywordsNeeded.filter(k => !customValues[k])
+        const isAnyMissing = missingKeywords.length > 0
 
         try {
-            for (const d of detalles) {
-                if (d.incompleto) continue // Ignore incomplete aspects from calculation sum, but warn
-
-                if (!d.formulaAsignada) {
-                    setError(`El aspecto ${d.letraAspecto || ''} no tiene una fórmula asignada en el mantenedor.`)
-                    setCalculating(false)
-                    return
-                }
-
-                const testRes = await testFormula(folio, d.formulaAsignada, {
-                    materiaPrima: Number(customValues['MATERIAPRIMA'] || 0),
-                    instrumento: Number(customValues['INSTRUMENTO'] || 0),
-                    manipuladora: Number(customValues['MANIPULADORA'] || 0),
-                    nivelControlado: Number(customValues['NIVELCONTROLADO'] || 0),
-                    cantServicio: Number(customValues['CANTSERVICIO'] || 0),
-                    elementos: Number(customValues['ELEMENTOS'] || 0)
-                })
-
-                if (testRes.error) {
-                    setError(`Error en la fórmula del aspecto ${d.letraAspecto}: ${testRes.error}`)
-                    setCalculating(false)
-                    return
-                }
-
-                totalMonto += testRes.data?.resultado || 0
-
-                detallesCalc.push({
-                    letraAspecto: d.letraAspecto,
-                    descripcion: d.observacionesOMedioDeVerificacion,
-                    formulaAplicada: testRes.data?.formulaEvaluada,
-                    montoMulta: testRes.data?.resultado || 0,
-                    variablesUsadas: customValues
-                })
-            }
-
-            setResult({ total: totalMonto, detallesCalculados: detallesCalc })
-            
-            // Save to DB
-            const incompletoWarning = detalles.some(d => d.incompleto)
-            const estado = incompletoWarning ? 'INCOMPLETO_POR_DATOS' : 'COMPLETO'
+            // Save to DB (PENDIENTE if missing variables, CALCULADO if complete)
+            const estado = isAnyMissing ? 'PENDIENTE' : 'CALCULADO'
 
             const saveRes = await saveCalculo(
                 folio, 
                 data.rbd, 
                 data.fechaSupervision, 
                 data.licitacion || '', 
-                totalMonto, 
+                result.total, 
                 estado, 
-                detallesCalc
+                result.detallesCalculados
             )
 
             if (saveRes.error) {
                 setError(saveRes.error)
             } else {
+                if (isAnyMissing) {
+                    alert(`Cálculo guardado como PARCIAL. Quedaron variables pendientes: ${missingKeywords.join(', ')}. El estado del folio sigue siendo PENDIENTE.`)
+                } else {
+                    alert(`Cálculo guardado exitosamente como COMPLETADO.`)
+                }
                 onCalculated() // Refresh parent list
             }
 
@@ -194,13 +257,32 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
                                     {keywordsNeeded.map(k => (
                                         <div key={k}>
                                             <label className="block text-xs font-bold text-amber-800 mb-1">{k}</label>
-                                            <input
-                                                type="number"
-                                                className="w-full px-3 py-2 rounded-lg border border-amber-200 focus:ring-2 focus:ring-amber-500 bg-white"
-                                                placeholder={`Ingrese valor para ${k}`}
-                                                value={customValues[k] || ''}
-                                                onChange={e => setCustomValues(prev => ({ ...prev, [k]: e.target.value }))}
-                                            />
+                                            {k === 'NIVELCONTROLADO' ? (
+                                                <select
+                                                    className="w-full px-3 py-2 rounded-lg border border-amber-200 focus:ring-2 focus:ring-amber-500 bg-white"
+                                                    value={customValues[k] || ''}
+                                                    onChange={e => setCustomValues(prev => ({ ...prev, [k]: e.target.value }))}
+                                                >
+                                                    <option value="" disabled>Seleccione nivel...</option>
+                                                    {pmpaNiveles.length > 0 ? (
+                                                        pmpaNiveles.map(n => (
+                                                            <option key={n.label} value={n.label}>
+                                                                {n.label} ({n.value} raciones)
+                                                            </option>
+                                                        ))
+                                                    ) : (
+                                                        <option value="0">Sin niveles disponibles (0 raciones)</option>
+                                                    )}
+                                                </select>
+                                            ) : (
+                                                <input
+                                                    type="number"
+                                                    className="w-full px-3 py-2 rounded-lg border border-amber-200 focus:ring-2 focus:ring-amber-500 bg-white"
+                                                    placeholder={`Ingrese valor para ${k}`}
+                                                    value={customValues[k] || ''}
+                                                    onChange={e => setCustomValues(prev => ({ ...prev, [k]: e.target.value }))}
+                                                />
+                                            )}
                                         </div>
                                     ))}
                                 </div>
@@ -211,37 +293,94 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
                         <div>
                             <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">Aspectos a Evaluar (NC = X)</p>
                             <div className="space-y-3">
-                                {detalles.map(d => (
-                                    <div key={d.id} className={`p-4 rounded-2xl border ${d.incompleto ? 'bg-orange-50 border-orange-100' : 'bg-white border-gray-200'} shadow-sm`}>
-                                        <div className="flex gap-4">
-                                            <div className="w-12 h-12 shrink-0 bg-cyan-50 rounded-xl flex items-center justify-center font-black text-cyan-700 text-xl border border-cyan-100">
-                                                {d.letraAspecto || '?'}
-                                            </div>
-                                            <div className="flex-1">
-                                                {d.incompleto && (
-                                                    <span className="inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-orange-200 text-orange-800 mb-2">
-                                                        ⚠️ INCOMPLETO: No tiene X en CO, NC o NA
-                                                    </span>
-                                                )}
-                                                <p className="text-sm text-gray-800 font-medium leading-relaxed">{d.aspecto}</p>
-                                                <p className="text-xs text-gray-500 mt-2 bg-gray-50 p-2 rounded-lg italic">
-                                                    <span className="font-bold">Observación:</span> {d.observacionesOMedioDeVerificacion || 'Sin observaciones'}
-                                                </p>
-                                                <div className="mt-3 flex flex-wrap gap-2">
-                                                    <div className="text-xs font-mono text-cyan-700 bg-cyan-50 px-2 py-1 rounded w-fit border border-cyan-100">
-                                                        Fórmula: {d.formulaAsignada || 'NO ASIGNADA'}
-                                                    </div>
-                                                    {d.formulaAsignada && (
-                                                        <div className="text-[10px] font-bold text-amber-800 bg-amber-100/50 px-2 py-1 rounded border border-amber-200 flex gap-3">
-                                                            <span>💰 UTM: ${data?.utmValue?.toLocaleString()} <span className="font-normal opacity-70">({data?.utmPeriod})</span></span>
-                                                            <span>📊 RACIONES: {data?.racionesValue?.toLocaleString()}</span>
+                                {detalles.map(d => {
+                                    const calcObj = result?.detallesCalculados.find(c => c.letraAspecto === d.letraAspecto)
+
+                                    return (
+                                        <div key={d.id} className={`p-4 rounded-2xl border bg-white border-gray-200 shadow-sm hover:shadow-md transition-shadow`}>
+                                            <div className="flex gap-4">
+                                                <div className="w-12 h-12 shrink-0 bg-cyan-50 rounded-xl flex items-center justify-center font-black text-cyan-700 text-xl border border-cyan-100">
+                                                    {d.letraAspecto || '?'}
+                                                </div>
+                                                <div className="flex-1">
+                                                    <p className="text-sm text-gray-800 font-semibold leading-relaxed">{d.aspecto}</p>
+                                                    <p className="text-xs text-gray-500 mt-2 bg-gray-50 p-2 rounded-lg italic">
+                                                        <span className="font-bold">Observación:</span> {d.observacionesOMedioDeVerificacion || 'Sin observaciones'}
+                                                    </p>
+                                                    
+                                                    {/* Real-time aspect calculation display */}
+                                                    {calcObj && (
+                                                        <div className="mt-3 p-3 bg-emerald-50/50 rounded-xl border border-emerald-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 animate-in fade-in duration-300">
+                                                            <div>
+                                                                <p className="text-[10px] font-black text-emerald-800 uppercase tracking-widest mb-1">Cálculo en Tiempo Real</p>
+                                                                <p className="text-xs font-mono text-emerald-700 bg-white/80 px-2 py-1 rounded border border-emerald-100/50 w-fit">
+                                                                    {calcObj.formulaAplicada}
+                                                                </p>
+                                                            </div>
+                                                            <div className="text-left sm:text-right">
+                                                                <p className="text-[10px] font-black text-emerald-800 uppercase tracking-widest mb-0.5">Monto Multa</p>
+                                                                <p className="text-lg font-black text-emerald-600">${calcObj.montoMulta.toLocaleString(undefined, { maximumFractionDigits: 0 })}</p>
+                                                            </div>
                                                         </div>
                                                     )}
+
+                                                    <div className="mt-3 flex flex-wrap gap-2 items-center">
+                                                        <div className="text-xs font-mono text-cyan-700 bg-cyan-50 px-2 py-1 rounded w-fit border border-cyan-100">
+                                                            Fórmula: {d.formulaAsignada || 'NO ASIGNADA'}
+                                                        </div>
+                                                        {d.solucionable === 'Solucionable' ? (
+                                                            <span className="px-2 py-1 bg-emerald-50 text-emerald-700 text-[10px] font-black rounded border border-emerald-100 flex items-center gap-1">
+                                                                🟢 Solucionable
+                                                            </span>
+                                                        ) : d.solucionable === 'No Solucionable' ? (
+                                                            <span className="px-2 py-1 bg-rose-50 text-rose-700 text-[10px] font-black rounded border border-rose-100 flex items-center gap-1">
+                                                                🔴 No Solucionable
+                                                            </span>
+                                                        ) : (
+                                                            <span className="px-2 py-1 bg-slate-50 text-slate-500 text-[10px] font-bold rounded border border-slate-100 italic flex items-center gap-1">
+                                                                ⚪ Criterio no definido
+                                                            </span>
+                                                        )}
+                                                        {d.formulaAsignada && (
+                                                            <div className="text-[10px] font-bold text-amber-800 bg-amber-100/50 px-2 py-1 rounded border border-amber-200 flex flex-wrap gap-x-3 gap-y-1">
+                                                                {d.formulaAsignada.toUpperCase().includes('UTM') && (
+                                                                    <span>💰 UTM: ${data?.utmValue?.toLocaleString()} <span className="font-normal opacity-70">({data?.utmPeriod})</span></span>
+                                                                )}
+                                                                {d.formulaAsignada.toUpperCase().includes('RACIONES') && (
+                                                                    <span>📊 RACIONES: {data?.racionesValue?.toLocaleString()}</span>
+                                                                )}
+                                                                {d.formulaAsignada.toUpperCase().includes('NIVELCONTROLADO') && (() => {
+                                                                    const selectedLevelLabel = customValues['NIVELCONTROLADO'] || ''
+                                                                    const selectedLevelObj = pmpaNiveles.find(n => n.label === selectedLevelLabel)
+                                                                    return selectedLevelObj ? (
+                                                                        <span>⚖️ NIVEL CONTROLADO: {selectedLevelObj.label} ({selectedLevelObj.value} raciones)</span>
+                                                                    ) : (
+                                                                        <span className="text-amber-700 italic">⚖️ NIVEL CONTROLADO: Sin seleccionar (Raciones generales: {data?.racionesValue})</span>
+                                                                    )
+                                                                })()}
+                                                                {d.formulaAsignada.toUpperCase().includes('MATERIAPRIMA') && (
+                                                                    <span>📦 MATERIAPRIMA: {customValues['MATERIAPRIMA'] || 1}</span>
+                                                                )}
+                                                                {d.formulaAsignada.toUpperCase().includes('INSTRUMENTO') && (
+                                                                    <span>🔧 INSTRUMENTO: {customValues['INSTRUMENTO'] || 1}</span>
+                                                                )}
+                                                                {d.formulaAsignada.toUpperCase().includes('MANIPULADORA') && (
+                                                                    <span>👩‍🍳 MANIPULADORA: {customValues['MANIPULADORA'] || 1}</span>
+                                                                )}
+                                                                {d.formulaAsignada.toUpperCase().includes('CANTSERVICIO') && (
+                                                                    <span>🍽️ CANTSERVICIO: {customValues['CANTSERVICIO'] || 1}</span>
+                                                                )}
+                                                                {d.formulaAsignada.toUpperCase().includes('ELEMENTOS') && (
+                                                                    <span>🧩 ELEMENTOS: {customValues['ELEMENTOS'] || 1}</span>
+                                                                )}
+                                                            </div>
+                                                        )}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                ))}
+                                    )
+                                })}
 
                                 {detalles.length === 0 && (
                                     <p className="text-sm text-gray-500 italic text-center py-4">No hay aspectos con NC = X.</p>
@@ -277,7 +416,7 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
                             disabled={calculating || !hasPmpa || detalles.length === 0}
                             className="px-6 py-2.5 w-full sm:w-auto rounded-xl text-white bg-gray-900 hover:bg-black shadow-md font-bold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                            {calculating ? 'Calculando...' : 'Calcular Multa'}
+                            {calculating ? 'Guardando...' : 'Guardar Cálculo'}
                         </button>
                     </div>
                 </div>

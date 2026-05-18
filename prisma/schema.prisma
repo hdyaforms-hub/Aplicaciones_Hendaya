@@ -163,14 +163,15 @@ model Licitacion {
 }
 
 model AspectoEE {
-  id          String     @id @default(uuid())
-  licId       Int
-  letra       String     @db.VarChar(5)
-  descripcion String?    @db.Text
-  formula     String?    @db.Text
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  licitacion  Licitacion @relation(fields: [licId], references: [licId], onDelete: Cascade)
+  id           String     @id @default(uuid())
+  licId        Int
+  letra        String     @db.VarChar(5)
+  descripcion  String?    @db.Text
+  formula      String?    @db.Text
+  solucionable String?    @db.VarChar(20)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  licitacion   Licitacion @relation(fields: [licId], references: [licId], onDelete: Cascade)
 
   @@unique([licId, letra])
 }

@@ -64,10 +64,20 @@ export type NotificacionPantalla = $Result.DefaultSelection<Prisma.$Notificacion
  */
 export type PlantillaCorreo = $Result.DefaultSelection<Prisma.$PlantillaCorreoPayload>
 /**
+ * Model MultaServicio
+ * 
+ */
+export type MultaServicio = $Result.DefaultSelection<Prisma.$MultaServicioPayload>
+/**
  * Model Licitacion
  * 
  */
 export type Licitacion = $Result.DefaultSelection<Prisma.$LicitacionPayload>
+/**
+ * Model AspectoEE
+ * 
+ */
+export type AspectoEE = $Result.DefaultSelection<Prisma.$AspectoEEPayload>
 /**
  * Model Sucursal
  * 
@@ -213,6 +223,31 @@ export type CapCertificacionHeader = $Result.DefaultSelection<Prisma.$CapCertifi
  * 
  */
 export type CapCertificacionDetail = $Result.DefaultSelection<Prisma.$CapCertificacionDetailPayload>
+/**
+ * Model ElementosEsenciales_Cab
+ * 
+ */
+export type ElementosEsenciales_Cab = $Result.DefaultSelection<Prisma.$ElementosEsenciales_CabPayload>
+/**
+ * Model ElementosEsenciales_Det
+ * 
+ */
+export type ElementosEsenciales_Det = $Result.DefaultSelection<Prisma.$ElementosEsenciales_DetPayload>
+/**
+ * Model UTM
+ * 
+ */
+export type UTM = $Result.DefaultSelection<Prisma.$UTMPayload>
+/**
+ * Model Multas_Elementos_Esenciales_Cab
+ * 
+ */
+export type Multas_Elementos_Esenciales_Cab = $Result.DefaultSelection<Prisma.$Multas_Elementos_Esenciales_CabPayload>
+/**
+ * Model Multas_Elementos_Esenciales_Det
+ * 
+ */
+export type Multas_Elementos_Esenciales_Det = $Result.DefaultSelection<Prisma.$Multas_Elementos_Esenciales_DetPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -438,6 +473,16 @@ export class PrismaClient<
   get plantillaCorreo(): Prisma.PlantillaCorreoDelegate<ExtArgs>;
 
   /**
+   * `prisma.multaServicio`: Exposes CRUD operations for the **MultaServicio** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MultaServicios
+    * const multaServicios = await prisma.multaServicio.findMany()
+    * ```
+    */
+  get multaServicio(): Prisma.MultaServicioDelegate<ExtArgs>;
+
+  /**
    * `prisma.licitacion`: Exposes CRUD operations for the **Licitacion** model.
     * Example usage:
     * ```ts
@@ -446,6 +491,16 @@ export class PrismaClient<
     * ```
     */
   get licitacion(): Prisma.LicitacionDelegate<ExtArgs>;
+
+  /**
+   * `prisma.aspectoEE`: Exposes CRUD operations for the **AspectoEE** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AspectoEES
+    * const aspectoEES = await prisma.aspectoEE.findMany()
+    * ```
+    */
+  get aspectoEE(): Prisma.AspectoEEDelegate<ExtArgs>;
 
   /**
    * `prisma.sucursal`: Exposes CRUD operations for the **Sucursal** model.
@@ -736,6 +791,56 @@ export class PrismaClient<
     * ```
     */
   get capCertificacionDetail(): Prisma.CapCertificacionDetailDelegate<ExtArgs>;
+
+  /**
+   * `prisma.elementosEsenciales_Cab`: Exposes CRUD operations for the **ElementosEsenciales_Cab** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ElementosEsenciales_Cabs
+    * const elementosEsenciales_Cabs = await prisma.elementosEsenciales_Cab.findMany()
+    * ```
+    */
+  get elementosEsenciales_Cab(): Prisma.ElementosEsenciales_CabDelegate<ExtArgs>;
+
+  /**
+   * `prisma.elementosEsenciales_Det`: Exposes CRUD operations for the **ElementosEsenciales_Det** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ElementosEsenciales_Dets
+    * const elementosEsenciales_Dets = await prisma.elementosEsenciales_Det.findMany()
+    * ```
+    */
+  get elementosEsenciales_Det(): Prisma.ElementosEsenciales_DetDelegate<ExtArgs>;
+
+  /**
+   * `prisma.uTM`: Exposes CRUD operations for the **UTM** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UTMS
+    * const uTMS = await prisma.uTM.findMany()
+    * ```
+    */
+  get uTM(): Prisma.UTMDelegate<ExtArgs>;
+
+  /**
+   * `prisma.multas_Elementos_Esenciales_Cab`: Exposes CRUD operations for the **Multas_Elementos_Esenciales_Cab** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Multas_Elementos_Esenciales_Cabs
+    * const multas_Elementos_Esenciales_Cabs = await prisma.multas_Elementos_Esenciales_Cab.findMany()
+    * ```
+    */
+  get multas_Elementos_Esenciales_Cab(): Prisma.Multas_Elementos_Esenciales_CabDelegate<ExtArgs>;
+
+  /**
+   * `prisma.multas_Elementos_Esenciales_Det`: Exposes CRUD operations for the **Multas_Elementos_Esenciales_Det** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Multas_Elementos_Esenciales_Dets
+    * const multas_Elementos_Esenciales_Dets = await prisma.multas_Elementos_Esenciales_Det.findMany()
+    * ```
+    */
+  get multas_Elementos_Esenciales_Det(): Prisma.Multas_Elementos_Esenciales_DetDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -1187,7 +1292,9 @@ export namespace Prisma {
     ListaCorreo: 'ListaCorreo',
     NotificacionPantalla: 'NotificacionPantalla',
     PlantillaCorreo: 'PlantillaCorreo',
+    MultaServicio: 'MultaServicio',
     Licitacion: 'Licitacion',
+    AspectoEE: 'AspectoEE',
     Sucursal: 'Sucursal',
     Presupuesto: 'Presupuesto',
     SolicitudPan: 'SolicitudPan',
@@ -1216,7 +1323,12 @@ export namespace Prisma {
     Minutas: 'Minutas',
     Raciones: 'Raciones',
     CapCertificacionHeader: 'CapCertificacionHeader',
-    CapCertificacionDetail: 'CapCertificacionDetail'
+    CapCertificacionDetail: 'CapCertificacionDetail',
+    ElementosEsenciales_Cab: 'ElementosEsenciales_Cab',
+    ElementosEsenciales_Det: 'ElementosEsenciales_Det',
+    UTM: 'UTM',
+    Multas_Elementos_Esenciales_Cab: 'Multas_Elementos_Esenciales_Cab',
+    Multas_Elementos_Esenciales_Det: 'Multas_Elementos_Esenciales_Det'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1232,7 +1344,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "licitacion" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail"
+      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1936,6 +2048,76 @@ export namespace Prisma {
           }
         }
       }
+      MultaServicio: {
+        payload: Prisma.$MultaServicioPayload<ExtArgs>
+        fields: Prisma.MultaServicioFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MultaServicioFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MultaServicioPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MultaServicioFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MultaServicioPayload>
+          }
+          findFirst: {
+            args: Prisma.MultaServicioFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MultaServicioPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MultaServicioFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MultaServicioPayload>
+          }
+          findMany: {
+            args: Prisma.MultaServicioFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MultaServicioPayload>[]
+          }
+          create: {
+            args: Prisma.MultaServicioCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MultaServicioPayload>
+          }
+          createMany: {
+            args: Prisma.MultaServicioCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MultaServicioCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MultaServicioPayload>[]
+          }
+          delete: {
+            args: Prisma.MultaServicioDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MultaServicioPayload>
+          }
+          update: {
+            args: Prisma.MultaServicioUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MultaServicioPayload>
+          }
+          deleteMany: {
+            args: Prisma.MultaServicioDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MultaServicioUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.MultaServicioUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MultaServicioPayload>
+          }
+          aggregate: {
+            args: Prisma.MultaServicioAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMultaServicio>
+          }
+          groupBy: {
+            args: Prisma.MultaServicioGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MultaServicioGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MultaServicioCountArgs<ExtArgs>
+            result: $Utils.Optional<MultaServicioCountAggregateOutputType> | number
+          }
+        }
+      }
       Licitacion: {
         payload: Prisma.$LicitacionPayload<ExtArgs>
         fields: Prisma.LicitacionFieldRefs
@@ -2003,6 +2185,76 @@ export namespace Prisma {
           count: {
             args: Prisma.LicitacionCountArgs<ExtArgs>
             result: $Utils.Optional<LicitacionCountAggregateOutputType> | number
+          }
+        }
+      }
+      AspectoEE: {
+        payload: Prisma.$AspectoEEPayload<ExtArgs>
+        fields: Prisma.AspectoEEFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AspectoEEFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AspectoEEPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AspectoEEFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AspectoEEPayload>
+          }
+          findFirst: {
+            args: Prisma.AspectoEEFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AspectoEEPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AspectoEEFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AspectoEEPayload>
+          }
+          findMany: {
+            args: Prisma.AspectoEEFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AspectoEEPayload>[]
+          }
+          create: {
+            args: Prisma.AspectoEECreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AspectoEEPayload>
+          }
+          createMany: {
+            args: Prisma.AspectoEECreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AspectoEECreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AspectoEEPayload>[]
+          }
+          delete: {
+            args: Prisma.AspectoEEDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AspectoEEPayload>
+          }
+          update: {
+            args: Prisma.AspectoEEUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AspectoEEPayload>
+          }
+          deleteMany: {
+            args: Prisma.AspectoEEDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AspectoEEUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.AspectoEEUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AspectoEEPayload>
+          }
+          aggregate: {
+            args: Prisma.AspectoEEAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAspectoEE>
+          }
+          groupBy: {
+            args: Prisma.AspectoEEGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AspectoEEGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AspectoEECountArgs<ExtArgs>
+            result: $Utils.Optional<AspectoEECountAggregateOutputType> | number
           }
         }
       }
@@ -4036,6 +4288,356 @@ export namespace Prisma {
           }
         }
       }
+      ElementosEsenciales_Cab: {
+        payload: Prisma.$ElementosEsenciales_CabPayload<ExtArgs>
+        fields: Prisma.ElementosEsenciales_CabFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ElementosEsenciales_CabFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElementosEsenciales_CabPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ElementosEsenciales_CabFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElementosEsenciales_CabPayload>
+          }
+          findFirst: {
+            args: Prisma.ElementosEsenciales_CabFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElementosEsenciales_CabPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ElementosEsenciales_CabFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElementosEsenciales_CabPayload>
+          }
+          findMany: {
+            args: Prisma.ElementosEsenciales_CabFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElementosEsenciales_CabPayload>[]
+          }
+          create: {
+            args: Prisma.ElementosEsenciales_CabCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElementosEsenciales_CabPayload>
+          }
+          createMany: {
+            args: Prisma.ElementosEsenciales_CabCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ElementosEsenciales_CabCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElementosEsenciales_CabPayload>[]
+          }
+          delete: {
+            args: Prisma.ElementosEsenciales_CabDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElementosEsenciales_CabPayload>
+          }
+          update: {
+            args: Prisma.ElementosEsenciales_CabUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElementosEsenciales_CabPayload>
+          }
+          deleteMany: {
+            args: Prisma.ElementosEsenciales_CabDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ElementosEsenciales_CabUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ElementosEsenciales_CabUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElementosEsenciales_CabPayload>
+          }
+          aggregate: {
+            args: Prisma.ElementosEsenciales_CabAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateElementosEsenciales_Cab>
+          }
+          groupBy: {
+            args: Prisma.ElementosEsenciales_CabGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ElementosEsenciales_CabGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ElementosEsenciales_CabCountArgs<ExtArgs>
+            result: $Utils.Optional<ElementosEsenciales_CabCountAggregateOutputType> | number
+          }
+        }
+      }
+      ElementosEsenciales_Det: {
+        payload: Prisma.$ElementosEsenciales_DetPayload<ExtArgs>
+        fields: Prisma.ElementosEsenciales_DetFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ElementosEsenciales_DetFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElementosEsenciales_DetPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ElementosEsenciales_DetFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElementosEsenciales_DetPayload>
+          }
+          findFirst: {
+            args: Prisma.ElementosEsenciales_DetFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElementosEsenciales_DetPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ElementosEsenciales_DetFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElementosEsenciales_DetPayload>
+          }
+          findMany: {
+            args: Prisma.ElementosEsenciales_DetFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElementosEsenciales_DetPayload>[]
+          }
+          create: {
+            args: Prisma.ElementosEsenciales_DetCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElementosEsenciales_DetPayload>
+          }
+          createMany: {
+            args: Prisma.ElementosEsenciales_DetCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ElementosEsenciales_DetCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElementosEsenciales_DetPayload>[]
+          }
+          delete: {
+            args: Prisma.ElementosEsenciales_DetDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElementosEsenciales_DetPayload>
+          }
+          update: {
+            args: Prisma.ElementosEsenciales_DetUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElementosEsenciales_DetPayload>
+          }
+          deleteMany: {
+            args: Prisma.ElementosEsenciales_DetDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ElementosEsenciales_DetUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ElementosEsenciales_DetUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElementosEsenciales_DetPayload>
+          }
+          aggregate: {
+            args: Prisma.ElementosEsenciales_DetAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateElementosEsenciales_Det>
+          }
+          groupBy: {
+            args: Prisma.ElementosEsenciales_DetGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ElementosEsenciales_DetGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ElementosEsenciales_DetCountArgs<ExtArgs>
+            result: $Utils.Optional<ElementosEsenciales_DetCountAggregateOutputType> | number
+          }
+        }
+      }
+      UTM: {
+        payload: Prisma.$UTMPayload<ExtArgs>
+        fields: Prisma.UTMFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UTMFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UTMPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UTMFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UTMPayload>
+          }
+          findFirst: {
+            args: Prisma.UTMFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UTMPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UTMFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UTMPayload>
+          }
+          findMany: {
+            args: Prisma.UTMFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UTMPayload>[]
+          }
+          create: {
+            args: Prisma.UTMCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UTMPayload>
+          }
+          createMany: {
+            args: Prisma.UTMCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UTMCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UTMPayload>[]
+          }
+          delete: {
+            args: Prisma.UTMDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UTMPayload>
+          }
+          update: {
+            args: Prisma.UTMUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UTMPayload>
+          }
+          deleteMany: {
+            args: Prisma.UTMDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UTMUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.UTMUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UTMPayload>
+          }
+          aggregate: {
+            args: Prisma.UTMAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUTM>
+          }
+          groupBy: {
+            args: Prisma.UTMGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UTMGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UTMCountArgs<ExtArgs>
+            result: $Utils.Optional<UTMCountAggregateOutputType> | number
+          }
+        }
+      }
+      Multas_Elementos_Esenciales_Cab: {
+        payload: Prisma.$Multas_Elementos_Esenciales_CabPayload<ExtArgs>
+        fields: Prisma.Multas_Elementos_Esenciales_CabFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Multas_Elementos_Esenciales_CabFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Elementos_Esenciales_CabPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Multas_Elementos_Esenciales_CabFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Elementos_Esenciales_CabPayload>
+          }
+          findFirst: {
+            args: Prisma.Multas_Elementos_Esenciales_CabFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Elementos_Esenciales_CabPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Multas_Elementos_Esenciales_CabFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Elementos_Esenciales_CabPayload>
+          }
+          findMany: {
+            args: Prisma.Multas_Elementos_Esenciales_CabFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Elementos_Esenciales_CabPayload>[]
+          }
+          create: {
+            args: Prisma.Multas_Elementos_Esenciales_CabCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Elementos_Esenciales_CabPayload>
+          }
+          createMany: {
+            args: Prisma.Multas_Elementos_Esenciales_CabCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Multas_Elementos_Esenciales_CabCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Elementos_Esenciales_CabPayload>[]
+          }
+          delete: {
+            args: Prisma.Multas_Elementos_Esenciales_CabDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Elementos_Esenciales_CabPayload>
+          }
+          update: {
+            args: Prisma.Multas_Elementos_Esenciales_CabUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Elementos_Esenciales_CabPayload>
+          }
+          deleteMany: {
+            args: Prisma.Multas_Elementos_Esenciales_CabDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Multas_Elementos_Esenciales_CabUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Multas_Elementos_Esenciales_CabUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Elementos_Esenciales_CabPayload>
+          }
+          aggregate: {
+            args: Prisma.Multas_Elementos_Esenciales_CabAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMultas_Elementos_Esenciales_Cab>
+          }
+          groupBy: {
+            args: Prisma.Multas_Elementos_Esenciales_CabGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Elementos_Esenciales_CabGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Multas_Elementos_Esenciales_CabCountArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Elementos_Esenciales_CabCountAggregateOutputType> | number
+          }
+        }
+      }
+      Multas_Elementos_Esenciales_Det: {
+        payload: Prisma.$Multas_Elementos_Esenciales_DetPayload<ExtArgs>
+        fields: Prisma.Multas_Elementos_Esenciales_DetFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Multas_Elementos_Esenciales_DetFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Elementos_Esenciales_DetPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Multas_Elementos_Esenciales_DetFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Elementos_Esenciales_DetPayload>
+          }
+          findFirst: {
+            args: Prisma.Multas_Elementos_Esenciales_DetFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Elementos_Esenciales_DetPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Multas_Elementos_Esenciales_DetFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Elementos_Esenciales_DetPayload>
+          }
+          findMany: {
+            args: Prisma.Multas_Elementos_Esenciales_DetFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Elementos_Esenciales_DetPayload>[]
+          }
+          create: {
+            args: Prisma.Multas_Elementos_Esenciales_DetCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Elementos_Esenciales_DetPayload>
+          }
+          createMany: {
+            args: Prisma.Multas_Elementos_Esenciales_DetCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Multas_Elementos_Esenciales_DetCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Elementos_Esenciales_DetPayload>[]
+          }
+          delete: {
+            args: Prisma.Multas_Elementos_Esenciales_DetDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Elementos_Esenciales_DetPayload>
+          }
+          update: {
+            args: Prisma.Multas_Elementos_Esenciales_DetUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Elementos_Esenciales_DetPayload>
+          }
+          deleteMany: {
+            args: Prisma.Multas_Elementos_Esenciales_DetDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Multas_Elementos_Esenciales_DetUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Multas_Elementos_Esenciales_DetUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Multas_Elementos_Esenciales_DetPayload>
+          }
+          aggregate: {
+            args: Prisma.Multas_Elementos_Esenciales_DetAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMultas_Elementos_Esenciales_Det>
+          }
+          groupBy: {
+            args: Prisma.Multas_Elementos_Esenciales_DetGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Elementos_Esenciales_DetGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Multas_Elementos_Esenciales_DetCountArgs<ExtArgs>
+            result: $Utils.Optional<Multas_Elementos_Esenciales_DetCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -4309,10 +4911,12 @@ export namespace Prisma {
 
   export type LicitacionCountOutputType = {
     uts: number
+    aspectosEE: number
   }
 
   export type LicitacionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     uts?: boolean | LicitacionCountOutputTypeCountUtsArgs
+    aspectosEE?: boolean | LicitacionCountOutputTypeCountAspectosEEArgs
   }
 
   // Custom InputTypes
@@ -4331,6 +4935,13 @@ export namespace Prisma {
    */
   export type LicitacionCountOutputTypeCountUtsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UTWhereInput
+  }
+
+  /**
+   * LicitacionCountOutputType without action
+   */
+  export type LicitacionCountOutputTypeCountAspectosEEArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AspectoEEWhereInput
   }
 
 
@@ -4407,6 +5018,37 @@ export namespace Prisma {
    */
   export type SucursalCountOutputTypeCountUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserWhereInput
+  }
+
+
+  /**
+   * Count Type UTCountOutputType
+   */
+
+  export type UTCountOutputType = {
+    pmpas: number
+  }
+
+  export type UTCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    pmpas?: boolean | UTCountOutputTypeCountPmpasArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * UTCountOutputType without action
+   */
+  export type UTCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UTCountOutputType
+     */
+    select?: UTCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UTCountOutputType without action
+   */
+  export type UTCountOutputTypeCountPmpasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PMPAWhereInput
   }
 
 
@@ -4598,6 +5240,68 @@ export namespace Prisma {
    */
   export type CapCertificacionHeaderCountOutputTypeCountDetallesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CapCertificacionDetailWhereInput
+  }
+
+
+  /**
+   * Count Type ElementosEsenciales_CabCountOutputType
+   */
+
+  export type ElementosEsenciales_CabCountOutputType = {
+    detalles: number
+  }
+
+  export type ElementosEsenciales_CabCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    detalles?: boolean | ElementosEsenciales_CabCountOutputTypeCountDetallesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ElementosEsenciales_CabCountOutputType without action
+   */
+  export type ElementosEsenciales_CabCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElementosEsenciales_CabCountOutputType
+     */
+    select?: ElementosEsenciales_CabCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ElementosEsenciales_CabCountOutputType without action
+   */
+  export type ElementosEsenciales_CabCountOutputTypeCountDetallesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ElementosEsenciales_DetWhereInput
+  }
+
+
+  /**
+   * Count Type Multas_Elementos_Esenciales_CabCountOutputType
+   */
+
+  export type Multas_Elementos_Esenciales_CabCountOutputType = {
+    detalles: number
+  }
+
+  export type Multas_Elementos_Esenciales_CabCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    detalles?: boolean | Multas_Elementos_Esenciales_CabCountOutputTypeCountDetallesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * Multas_Elementos_Esenciales_CabCountOutputType without action
+   */
+  export type Multas_Elementos_Esenciales_CabCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Elementos_Esenciales_CabCountOutputType
+     */
+    select?: Multas_Elementos_Esenciales_CabCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * Multas_Elementos_Esenciales_CabCountOutputType without action
+   */
+  export type Multas_Elementos_Esenciales_CabCountOutputTypeCountDetallesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_Elementos_Esenciales_DetWhereInput
   }
 
 
@@ -6635,29 +7339,33 @@ export namespace Prisma {
   export type PMPAAvgAggregateOutputType = {
     ano: number | null
     mes: number | null
+    licitacion: number | null
+    ute: number | null
     rbd: number | null
-    licId: number | null
-    raceq: number | null
+    raceqJunaeb: number | null
   }
 
   export type PMPASumAggregateOutputType = {
     ano: number | null
     mes: number | null
+    licitacion: number | null
+    ute: number | null
     rbd: number | null
-    licId: number | null
-    raceq: number | null
+    raceqJunaeb: number | null
   }
 
   export type PMPAMinAggregateOutputType = {
     id: string | null
-    sucursal: string | null
     ano: number | null
     mes: number | null
+    licitacion: number | null
+    ute: number | null
     rbd: number | null
-    licId: number | null
     programa: string | null
     estrato: string | null
-    raceq: number | null
+    nivel: string | null
+    servicioLic: string | null
+    raceqJunaeb: number | null
     servicio: string | null
     uploadedBy: string | null
     createdAt: Date | null
@@ -6665,14 +7373,16 @@ export namespace Prisma {
 
   export type PMPAMaxAggregateOutputType = {
     id: string | null
-    sucursal: string | null
     ano: number | null
     mes: number | null
+    licitacion: number | null
+    ute: number | null
     rbd: number | null
-    licId: number | null
     programa: string | null
     estrato: string | null
-    raceq: number | null
+    nivel: string | null
+    servicioLic: string | null
+    raceqJunaeb: number | null
     servicio: string | null
     uploadedBy: string | null
     createdAt: Date | null
@@ -6680,14 +7390,16 @@ export namespace Prisma {
 
   export type PMPACountAggregateOutputType = {
     id: number
-    sucursal: number
     ano: number
     mes: number
+    licitacion: number
+    ute: number
     rbd: number
-    licId: number
     programa: number
     estrato: number
-    raceq: number
+    nivel: number
+    servicioLic: number
+    raceqJunaeb: number
     servicio: number
     uploadedBy: number
     createdAt: number
@@ -6698,29 +7410,33 @@ export namespace Prisma {
   export type PMPAAvgAggregateInputType = {
     ano?: true
     mes?: true
+    licitacion?: true
+    ute?: true
     rbd?: true
-    licId?: true
-    raceq?: true
+    raceqJunaeb?: true
   }
 
   export type PMPASumAggregateInputType = {
     ano?: true
     mes?: true
+    licitacion?: true
+    ute?: true
     rbd?: true
-    licId?: true
-    raceq?: true
+    raceqJunaeb?: true
   }
 
   export type PMPAMinAggregateInputType = {
     id?: true
-    sucursal?: true
     ano?: true
     mes?: true
+    licitacion?: true
+    ute?: true
     rbd?: true
-    licId?: true
     programa?: true
     estrato?: true
-    raceq?: true
+    nivel?: true
+    servicioLic?: true
+    raceqJunaeb?: true
     servicio?: true
     uploadedBy?: true
     createdAt?: true
@@ -6728,14 +7444,16 @@ export namespace Prisma {
 
   export type PMPAMaxAggregateInputType = {
     id?: true
-    sucursal?: true
     ano?: true
     mes?: true
+    licitacion?: true
+    ute?: true
     rbd?: true
-    licId?: true
     programa?: true
     estrato?: true
-    raceq?: true
+    nivel?: true
+    servicioLic?: true
+    raceqJunaeb?: true
     servicio?: true
     uploadedBy?: true
     createdAt?: true
@@ -6743,14 +7461,16 @@ export namespace Prisma {
 
   export type PMPACountAggregateInputType = {
     id?: true
-    sucursal?: true
     ano?: true
     mes?: true
+    licitacion?: true
+    ute?: true
     rbd?: true
-    licId?: true
     programa?: true
     estrato?: true
-    raceq?: true
+    nivel?: true
+    servicioLic?: true
+    raceqJunaeb?: true
     servicio?: true
     uploadedBy?: true
     createdAt?: true
@@ -6845,14 +7565,16 @@ export namespace Prisma {
 
   export type PMPAGroupByOutputType = {
     id: string
-    sucursal: string
     ano: number
     mes: number
+    licitacion: number
+    ute: number
     rbd: number
-    licId: number | null
     programa: string
     estrato: string
-    raceq: number
+    nivel: string
+    servicioLic: string
+    raceqJunaeb: number
     servicio: string
     uploadedBy: string
     createdAt: Date
@@ -6879,63 +7601,81 @@ export namespace Prisma {
 
   export type PMPASelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    sucursal?: boolean
     ano?: boolean
     mes?: boolean
+    licitacion?: boolean
+    ute?: boolean
     rbd?: boolean
-    licId?: boolean
     programa?: boolean
     estrato?: boolean
-    raceq?: boolean
+    nivel?: boolean
+    servicioLic?: boolean
+    raceqJunaeb?: boolean
     servicio?: boolean
     uploadedBy?: boolean
     createdAt?: boolean
+    ut?: boolean | PMPA$utArgs<ExtArgs>
   }, ExtArgs["result"]["pMPA"]>
 
   export type PMPASelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    sucursal?: boolean
     ano?: boolean
     mes?: boolean
+    licitacion?: boolean
+    ute?: boolean
     rbd?: boolean
-    licId?: boolean
     programa?: boolean
     estrato?: boolean
-    raceq?: boolean
+    nivel?: boolean
+    servicioLic?: boolean
+    raceqJunaeb?: boolean
     servicio?: boolean
     uploadedBy?: boolean
     createdAt?: boolean
+    ut?: boolean | PMPA$utArgs<ExtArgs>
   }, ExtArgs["result"]["pMPA"]>
 
   export type PMPASelectScalar = {
     id?: boolean
-    sucursal?: boolean
     ano?: boolean
     mes?: boolean
+    licitacion?: boolean
+    ute?: boolean
     rbd?: boolean
-    licId?: boolean
     programa?: boolean
     estrato?: boolean
-    raceq?: boolean
+    nivel?: boolean
+    servicioLic?: boolean
+    raceqJunaeb?: boolean
     servicio?: boolean
     uploadedBy?: boolean
     createdAt?: boolean
   }
 
+  export type PMPAInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    ut?: boolean | PMPA$utArgs<ExtArgs>
+  }
+  export type PMPAIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    ut?: boolean | PMPA$utArgs<ExtArgs>
+  }
 
   export type $PMPAPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "PMPA"
-    objects: {}
+    objects: {
+      ut: Prisma.$UTPayload<ExtArgs> | null
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      sucursal: string
       ano: number
       mes: number
+      licitacion: number
+      ute: number
       rbd: number
-      licId: number | null
       programa: string
       estrato: string
-      raceq: number
+      nivel: string
+      servicioLic: string
+      raceqJunaeb: number
       servicio: string
       uploadedBy: string
       createdAt: Date
@@ -7303,6 +8043,7 @@ export namespace Prisma {
    */
   export interface Prisma__PMPAClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    ut<T extends PMPA$utArgs<ExtArgs> = {}>(args?: Subset<T, PMPA$utArgs<ExtArgs>>): Prisma__UTClient<$Result.GetResult<Prisma.$UTPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7333,14 +8074,16 @@ export namespace Prisma {
    */ 
   interface PMPAFieldRefs {
     readonly id: FieldRef<"PMPA", 'String'>
-    readonly sucursal: FieldRef<"PMPA", 'String'>
     readonly ano: FieldRef<"PMPA", 'Int'>
     readonly mes: FieldRef<"PMPA", 'Int'>
+    readonly licitacion: FieldRef<"PMPA", 'Int'>
+    readonly ute: FieldRef<"PMPA", 'Int'>
     readonly rbd: FieldRef<"PMPA", 'Int'>
-    readonly licId: FieldRef<"PMPA", 'Int'>
     readonly programa: FieldRef<"PMPA", 'String'>
     readonly estrato: FieldRef<"PMPA", 'String'>
-    readonly raceq: FieldRef<"PMPA", 'Int'>
+    readonly nivel: FieldRef<"PMPA", 'String'>
+    readonly servicioLic: FieldRef<"PMPA", 'String'>
+    readonly raceqJunaeb: FieldRef<"PMPA", 'Int'>
     readonly servicio: FieldRef<"PMPA", 'String'>
     readonly uploadedBy: FieldRef<"PMPA", 'String'>
     readonly createdAt: FieldRef<"PMPA", 'DateTime'>
@@ -7357,6 +8100,10 @@ export namespace Prisma {
      */
     select?: PMPASelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PMPAInclude<ExtArgs> | null
+    /**
      * Filter, which PMPA to fetch.
      */
     where: PMPAWhereUniqueInput
@@ -7371,6 +8118,10 @@ export namespace Prisma {
      */
     select?: PMPASelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PMPAInclude<ExtArgs> | null
+    /**
      * Filter, which PMPA to fetch.
      */
     where: PMPAWhereUniqueInput
@@ -7384,6 +8135,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the PMPA
      */
     select?: PMPASelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PMPAInclude<ExtArgs> | null
     /**
      * Filter, which PMPA to fetch.
      */
@@ -7429,6 +8184,10 @@ export namespace Prisma {
      */
     select?: PMPASelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PMPAInclude<ExtArgs> | null
+    /**
      * Filter, which PMPA to fetch.
      */
     where?: PMPAWhereInput
@@ -7473,6 +8232,10 @@ export namespace Prisma {
      */
     select?: PMPASelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PMPAInclude<ExtArgs> | null
+    /**
      * Filter, which PMPAS to fetch.
      */
     where?: PMPAWhereInput
@@ -7512,6 +8275,10 @@ export namespace Prisma {
      */
     select?: PMPASelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PMPAInclude<ExtArgs> | null
+    /**
      * The data needed to create a PMPA.
      */
     data: XOR<PMPACreateInput, PMPAUncheckedCreateInput>
@@ -7541,6 +8308,10 @@ export namespace Prisma {
      */
     data: PMPACreateManyInput | PMPACreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PMPAIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -7551,6 +8322,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the PMPA
      */
     select?: PMPASelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PMPAInclude<ExtArgs> | null
     /**
      * The data needed to update a PMPA.
      */
@@ -7584,6 +8359,10 @@ export namespace Prisma {
      */
     select?: PMPASelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PMPAInclude<ExtArgs> | null
+    /**
      * The filter to search for the PMPA to update in case it exists.
      */
     where: PMPAWhereUniqueInput
@@ -7606,6 +8385,10 @@ export namespace Prisma {
      */
     select?: PMPASelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PMPAInclude<ExtArgs> | null
+    /**
      * Filter which PMPA to delete.
      */
     where: PMPAWhereUniqueInput
@@ -7622,6 +8405,21 @@ export namespace Prisma {
   }
 
   /**
+   * PMPA.ut
+   */
+  export type PMPA$utArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UT
+     */
+    select?: UTSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UTInclude<ExtArgs> | null
+    where?: UTWhereInput
+  }
+
+  /**
    * PMPA without action
    */
   export type PMPADefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7629,6 +8427,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the PMPA
      */
     select?: PMPASelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PMPAInclude<ExtArgs> | null
   }
 
 
@@ -14484,6 +15286,860 @@ export namespace Prisma {
 
 
   /**
+   * Model MultaServicio
+   */
+
+  export type AggregateMultaServicio = {
+    _count: MultaServicioCountAggregateOutputType | null
+    _min: MultaServicioMinAggregateOutputType | null
+    _max: MultaServicioMaxAggregateOutputType | null
+  }
+
+  export type MultaServicioMinAggregateOutputType = {
+    id: string | null
+    codigo: string | null
+    nombre: string | null
+  }
+
+  export type MultaServicioMaxAggregateOutputType = {
+    id: string | null
+    codigo: string | null
+    nombre: string | null
+  }
+
+  export type MultaServicioCountAggregateOutputType = {
+    id: number
+    codigo: number
+    nombre: number
+    _all: number
+  }
+
+
+  export type MultaServicioMinAggregateInputType = {
+    id?: true
+    codigo?: true
+    nombre?: true
+  }
+
+  export type MultaServicioMaxAggregateInputType = {
+    id?: true
+    codigo?: true
+    nombre?: true
+  }
+
+  export type MultaServicioCountAggregateInputType = {
+    id?: true
+    codigo?: true
+    nombre?: true
+    _all?: true
+  }
+
+  export type MultaServicioAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MultaServicio to aggregate.
+     */
+    where?: MultaServicioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MultaServicios to fetch.
+     */
+    orderBy?: MultaServicioOrderByWithRelationInput | MultaServicioOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MultaServicioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MultaServicios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MultaServicios.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MultaServicios
+    **/
+    _count?: true | MultaServicioCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MultaServicioMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MultaServicioMaxAggregateInputType
+  }
+
+  export type GetMultaServicioAggregateType<T extends MultaServicioAggregateArgs> = {
+        [P in keyof T & keyof AggregateMultaServicio]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMultaServicio[P]>
+      : GetScalarType<T[P], AggregateMultaServicio[P]>
+  }
+
+
+
+
+  export type MultaServicioGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MultaServicioWhereInput
+    orderBy?: MultaServicioOrderByWithAggregationInput | MultaServicioOrderByWithAggregationInput[]
+    by: MultaServicioScalarFieldEnum[] | MultaServicioScalarFieldEnum
+    having?: MultaServicioScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MultaServicioCountAggregateInputType | true
+    _min?: MultaServicioMinAggregateInputType
+    _max?: MultaServicioMaxAggregateInputType
+  }
+
+  export type MultaServicioGroupByOutputType = {
+    id: string
+    codigo: string
+    nombre: string
+    _count: MultaServicioCountAggregateOutputType | null
+    _min: MultaServicioMinAggregateOutputType | null
+    _max: MultaServicioMaxAggregateOutputType | null
+  }
+
+  type GetMultaServicioGroupByPayload<T extends MultaServicioGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MultaServicioGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MultaServicioGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MultaServicioGroupByOutputType[P]>
+            : GetScalarType<T[P], MultaServicioGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MultaServicioSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    codigo?: boolean
+    nombre?: boolean
+  }, ExtArgs["result"]["multaServicio"]>
+
+  export type MultaServicioSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    codigo?: boolean
+    nombre?: boolean
+  }, ExtArgs["result"]["multaServicio"]>
+
+  export type MultaServicioSelectScalar = {
+    id?: boolean
+    codigo?: boolean
+    nombre?: boolean
+  }
+
+
+  export type $MultaServicioPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MultaServicio"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      codigo: string
+      nombre: string
+    }, ExtArgs["result"]["multaServicio"]>
+    composites: {}
+  }
+
+  type MultaServicioGetPayload<S extends boolean | null | undefined | MultaServicioDefaultArgs> = $Result.GetResult<Prisma.$MultaServicioPayload, S>
+
+  type MultaServicioCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<MultaServicioFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: MultaServicioCountAggregateInputType | true
+    }
+
+  export interface MultaServicioDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MultaServicio'], meta: { name: 'MultaServicio' } }
+    /**
+     * Find zero or one MultaServicio that matches the filter.
+     * @param {MultaServicioFindUniqueArgs} args - Arguments to find a MultaServicio
+     * @example
+     * // Get one MultaServicio
+     * const multaServicio = await prisma.multaServicio.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MultaServicioFindUniqueArgs>(args: SelectSubset<T, MultaServicioFindUniqueArgs<ExtArgs>>): Prisma__MultaServicioClient<$Result.GetResult<Prisma.$MultaServicioPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one MultaServicio that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {MultaServicioFindUniqueOrThrowArgs} args - Arguments to find a MultaServicio
+     * @example
+     * // Get one MultaServicio
+     * const multaServicio = await prisma.multaServicio.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MultaServicioFindUniqueOrThrowArgs>(args: SelectSubset<T, MultaServicioFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MultaServicioClient<$Result.GetResult<Prisma.$MultaServicioPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first MultaServicio that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MultaServicioFindFirstArgs} args - Arguments to find a MultaServicio
+     * @example
+     * // Get one MultaServicio
+     * const multaServicio = await prisma.multaServicio.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MultaServicioFindFirstArgs>(args?: SelectSubset<T, MultaServicioFindFirstArgs<ExtArgs>>): Prisma__MultaServicioClient<$Result.GetResult<Prisma.$MultaServicioPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first MultaServicio that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MultaServicioFindFirstOrThrowArgs} args - Arguments to find a MultaServicio
+     * @example
+     * // Get one MultaServicio
+     * const multaServicio = await prisma.multaServicio.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MultaServicioFindFirstOrThrowArgs>(args?: SelectSubset<T, MultaServicioFindFirstOrThrowArgs<ExtArgs>>): Prisma__MultaServicioClient<$Result.GetResult<Prisma.$MultaServicioPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more MultaServicios that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MultaServicioFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MultaServicios
+     * const multaServicios = await prisma.multaServicio.findMany()
+     * 
+     * // Get first 10 MultaServicios
+     * const multaServicios = await prisma.multaServicio.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const multaServicioWithIdOnly = await prisma.multaServicio.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MultaServicioFindManyArgs>(args?: SelectSubset<T, MultaServicioFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MultaServicioPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a MultaServicio.
+     * @param {MultaServicioCreateArgs} args - Arguments to create a MultaServicio.
+     * @example
+     * // Create one MultaServicio
+     * const MultaServicio = await prisma.multaServicio.create({
+     *   data: {
+     *     // ... data to create a MultaServicio
+     *   }
+     * })
+     * 
+     */
+    create<T extends MultaServicioCreateArgs>(args: SelectSubset<T, MultaServicioCreateArgs<ExtArgs>>): Prisma__MultaServicioClient<$Result.GetResult<Prisma.$MultaServicioPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many MultaServicios.
+     * @param {MultaServicioCreateManyArgs} args - Arguments to create many MultaServicios.
+     * @example
+     * // Create many MultaServicios
+     * const multaServicio = await prisma.multaServicio.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MultaServicioCreateManyArgs>(args?: SelectSubset<T, MultaServicioCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many MultaServicios and returns the data saved in the database.
+     * @param {MultaServicioCreateManyAndReturnArgs} args - Arguments to create many MultaServicios.
+     * @example
+     * // Create many MultaServicios
+     * const multaServicio = await prisma.multaServicio.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many MultaServicios and only return the `id`
+     * const multaServicioWithIdOnly = await prisma.multaServicio.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MultaServicioCreateManyAndReturnArgs>(args?: SelectSubset<T, MultaServicioCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MultaServicioPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a MultaServicio.
+     * @param {MultaServicioDeleteArgs} args - Arguments to delete one MultaServicio.
+     * @example
+     * // Delete one MultaServicio
+     * const MultaServicio = await prisma.multaServicio.delete({
+     *   where: {
+     *     // ... filter to delete one MultaServicio
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MultaServicioDeleteArgs>(args: SelectSubset<T, MultaServicioDeleteArgs<ExtArgs>>): Prisma__MultaServicioClient<$Result.GetResult<Prisma.$MultaServicioPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one MultaServicio.
+     * @param {MultaServicioUpdateArgs} args - Arguments to update one MultaServicio.
+     * @example
+     * // Update one MultaServicio
+     * const multaServicio = await prisma.multaServicio.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MultaServicioUpdateArgs>(args: SelectSubset<T, MultaServicioUpdateArgs<ExtArgs>>): Prisma__MultaServicioClient<$Result.GetResult<Prisma.$MultaServicioPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more MultaServicios.
+     * @param {MultaServicioDeleteManyArgs} args - Arguments to filter MultaServicios to delete.
+     * @example
+     * // Delete a few MultaServicios
+     * const { count } = await prisma.multaServicio.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MultaServicioDeleteManyArgs>(args?: SelectSubset<T, MultaServicioDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MultaServicios.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MultaServicioUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MultaServicios
+     * const multaServicio = await prisma.multaServicio.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MultaServicioUpdateManyArgs>(args: SelectSubset<T, MultaServicioUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one MultaServicio.
+     * @param {MultaServicioUpsertArgs} args - Arguments to update or create a MultaServicio.
+     * @example
+     * // Update or create a MultaServicio
+     * const multaServicio = await prisma.multaServicio.upsert({
+     *   create: {
+     *     // ... data to create a MultaServicio
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MultaServicio we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MultaServicioUpsertArgs>(args: SelectSubset<T, MultaServicioUpsertArgs<ExtArgs>>): Prisma__MultaServicioClient<$Result.GetResult<Prisma.$MultaServicioPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of MultaServicios.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MultaServicioCountArgs} args - Arguments to filter MultaServicios to count.
+     * @example
+     * // Count the number of MultaServicios
+     * const count = await prisma.multaServicio.count({
+     *   where: {
+     *     // ... the filter for the MultaServicios we want to count
+     *   }
+     * })
+    **/
+    count<T extends MultaServicioCountArgs>(
+      args?: Subset<T, MultaServicioCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MultaServicioCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MultaServicio.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MultaServicioAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MultaServicioAggregateArgs>(args: Subset<T, MultaServicioAggregateArgs>): Prisma.PrismaPromise<GetMultaServicioAggregateType<T>>
+
+    /**
+     * Group by MultaServicio.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MultaServicioGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MultaServicioGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MultaServicioGroupByArgs['orderBy'] }
+        : { orderBy?: MultaServicioGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MultaServicioGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMultaServicioGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MultaServicio model
+   */
+  readonly fields: MultaServicioFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MultaServicio.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MultaServicioClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MultaServicio model
+   */ 
+  interface MultaServicioFieldRefs {
+    readonly id: FieldRef<"MultaServicio", 'String'>
+    readonly codigo: FieldRef<"MultaServicio", 'String'>
+    readonly nombre: FieldRef<"MultaServicio", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MultaServicio findUnique
+   */
+  export type MultaServicioFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MultaServicio
+     */
+    select?: MultaServicioSelect<ExtArgs> | null
+    /**
+     * Filter, which MultaServicio to fetch.
+     */
+    where: MultaServicioWhereUniqueInput
+  }
+
+  /**
+   * MultaServicio findUniqueOrThrow
+   */
+  export type MultaServicioFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MultaServicio
+     */
+    select?: MultaServicioSelect<ExtArgs> | null
+    /**
+     * Filter, which MultaServicio to fetch.
+     */
+    where: MultaServicioWhereUniqueInput
+  }
+
+  /**
+   * MultaServicio findFirst
+   */
+  export type MultaServicioFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MultaServicio
+     */
+    select?: MultaServicioSelect<ExtArgs> | null
+    /**
+     * Filter, which MultaServicio to fetch.
+     */
+    where?: MultaServicioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MultaServicios to fetch.
+     */
+    orderBy?: MultaServicioOrderByWithRelationInput | MultaServicioOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MultaServicios.
+     */
+    cursor?: MultaServicioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MultaServicios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MultaServicios.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MultaServicios.
+     */
+    distinct?: MultaServicioScalarFieldEnum | MultaServicioScalarFieldEnum[]
+  }
+
+  /**
+   * MultaServicio findFirstOrThrow
+   */
+  export type MultaServicioFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MultaServicio
+     */
+    select?: MultaServicioSelect<ExtArgs> | null
+    /**
+     * Filter, which MultaServicio to fetch.
+     */
+    where?: MultaServicioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MultaServicios to fetch.
+     */
+    orderBy?: MultaServicioOrderByWithRelationInput | MultaServicioOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MultaServicios.
+     */
+    cursor?: MultaServicioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MultaServicios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MultaServicios.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MultaServicios.
+     */
+    distinct?: MultaServicioScalarFieldEnum | MultaServicioScalarFieldEnum[]
+  }
+
+  /**
+   * MultaServicio findMany
+   */
+  export type MultaServicioFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MultaServicio
+     */
+    select?: MultaServicioSelect<ExtArgs> | null
+    /**
+     * Filter, which MultaServicios to fetch.
+     */
+    where?: MultaServicioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MultaServicios to fetch.
+     */
+    orderBy?: MultaServicioOrderByWithRelationInput | MultaServicioOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MultaServicios.
+     */
+    cursor?: MultaServicioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MultaServicios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MultaServicios.
+     */
+    skip?: number
+    distinct?: MultaServicioScalarFieldEnum | MultaServicioScalarFieldEnum[]
+  }
+
+  /**
+   * MultaServicio create
+   */
+  export type MultaServicioCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MultaServicio
+     */
+    select?: MultaServicioSelect<ExtArgs> | null
+    /**
+     * The data needed to create a MultaServicio.
+     */
+    data: XOR<MultaServicioCreateInput, MultaServicioUncheckedCreateInput>
+  }
+
+  /**
+   * MultaServicio createMany
+   */
+  export type MultaServicioCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MultaServicios.
+     */
+    data: MultaServicioCreateManyInput | MultaServicioCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MultaServicio createManyAndReturn
+   */
+  export type MultaServicioCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MultaServicio
+     */
+    select?: MultaServicioSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many MultaServicios.
+     */
+    data: MultaServicioCreateManyInput | MultaServicioCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MultaServicio update
+   */
+  export type MultaServicioUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MultaServicio
+     */
+    select?: MultaServicioSelect<ExtArgs> | null
+    /**
+     * The data needed to update a MultaServicio.
+     */
+    data: XOR<MultaServicioUpdateInput, MultaServicioUncheckedUpdateInput>
+    /**
+     * Choose, which MultaServicio to update.
+     */
+    where: MultaServicioWhereUniqueInput
+  }
+
+  /**
+   * MultaServicio updateMany
+   */
+  export type MultaServicioUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MultaServicios.
+     */
+    data: XOR<MultaServicioUpdateManyMutationInput, MultaServicioUncheckedUpdateManyInput>
+    /**
+     * Filter which MultaServicios to update
+     */
+    where?: MultaServicioWhereInput
+  }
+
+  /**
+   * MultaServicio upsert
+   */
+  export type MultaServicioUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MultaServicio
+     */
+    select?: MultaServicioSelect<ExtArgs> | null
+    /**
+     * The filter to search for the MultaServicio to update in case it exists.
+     */
+    where: MultaServicioWhereUniqueInput
+    /**
+     * In case the MultaServicio found by the `where` argument doesn't exist, create a new MultaServicio with this data.
+     */
+    create: XOR<MultaServicioCreateInput, MultaServicioUncheckedCreateInput>
+    /**
+     * In case the MultaServicio was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MultaServicioUpdateInput, MultaServicioUncheckedUpdateInput>
+  }
+
+  /**
+   * MultaServicio delete
+   */
+  export type MultaServicioDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MultaServicio
+     */
+    select?: MultaServicioSelect<ExtArgs> | null
+    /**
+     * Filter which MultaServicio to delete.
+     */
+    where: MultaServicioWhereUniqueInput
+  }
+
+  /**
+   * MultaServicio deleteMany
+   */
+  export type MultaServicioDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MultaServicios to delete
+     */
+    where?: MultaServicioWhereInput
+  }
+
+  /**
+   * MultaServicio without action
+   */
+  export type MultaServicioDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MultaServicio
+     */
+    select?: MultaServicioSelect<ExtArgs> | null
+  }
+
+
+  /**
    * Model Licitacion
    */
 
@@ -14507,6 +16163,7 @@ export namespace Prisma {
 
   export type LicitacionMinAggregateOutputType = {
     licId: number | null
+    licitacionHomologada: string | null
     estado: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -14514,6 +16171,7 @@ export namespace Prisma {
 
   export type LicitacionMaxAggregateOutputType = {
     licId: number | null
+    licitacionHomologada: string | null
     estado: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -14521,6 +16179,7 @@ export namespace Prisma {
 
   export type LicitacionCountAggregateOutputType = {
     licId: number
+    licitacionHomologada: number
     estado: number
     createdAt: number
     updatedAt: number
@@ -14540,6 +16199,7 @@ export namespace Prisma {
 
   export type LicitacionMinAggregateInputType = {
     licId?: true
+    licitacionHomologada?: true
     estado?: true
     createdAt?: true
     updatedAt?: true
@@ -14547,6 +16207,7 @@ export namespace Prisma {
 
   export type LicitacionMaxAggregateInputType = {
     licId?: true
+    licitacionHomologada?: true
     estado?: true
     createdAt?: true
     updatedAt?: true
@@ -14554,6 +16215,7 @@ export namespace Prisma {
 
   export type LicitacionCountAggregateInputType = {
     licId?: true
+    licitacionHomologada?: true
     estado?: true
     createdAt?: true
     updatedAt?: true
@@ -14648,6 +16310,7 @@ export namespace Prisma {
 
   export type LicitacionGroupByOutputType = {
     licId: number
+    licitacionHomologada: string | null
     estado: number
     createdAt: Date
     updatedAt: Date
@@ -14674,15 +16337,18 @@ export namespace Prisma {
 
   export type LicitacionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     licId?: boolean
+    licitacionHomologada?: boolean
     estado?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     uts?: boolean | Licitacion$utsArgs<ExtArgs>
+    aspectosEE?: boolean | Licitacion$aspectosEEArgs<ExtArgs>
     _count?: boolean | LicitacionCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["licitacion"]>
 
   export type LicitacionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     licId?: boolean
+    licitacionHomologada?: boolean
     estado?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -14690,6 +16356,7 @@ export namespace Prisma {
 
   export type LicitacionSelectScalar = {
     licId?: boolean
+    licitacionHomologada?: boolean
     estado?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -14697,6 +16364,7 @@ export namespace Prisma {
 
   export type LicitacionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     uts?: boolean | Licitacion$utsArgs<ExtArgs>
+    aspectosEE?: boolean | Licitacion$aspectosEEArgs<ExtArgs>
     _count?: boolean | LicitacionCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type LicitacionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -14705,9 +16373,11 @@ export namespace Prisma {
     name: "Licitacion"
     objects: {
       uts: Prisma.$UTPayload<ExtArgs>[]
+      aspectosEE: Prisma.$AspectoEEPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       licId: number
+      licitacionHomologada: string | null
       estado: number
       createdAt: Date
       updatedAt: Date
@@ -15076,6 +16746,7 @@ export namespace Prisma {
   export interface Prisma__LicitacionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     uts<T extends Licitacion$utsArgs<ExtArgs> = {}>(args?: Subset<T, Licitacion$utsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UTPayload<ExtArgs>, T, "findMany"> | Null>
+    aspectosEE<T extends Licitacion$aspectosEEArgs<ExtArgs> = {}>(args?: Subset<T, Licitacion$aspectosEEArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AspectoEEPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -15106,6 +16777,7 @@ export namespace Prisma {
    */ 
   interface LicitacionFieldRefs {
     readonly licId: FieldRef<"Licitacion", 'Int'>
+    readonly licitacionHomologada: FieldRef<"Licitacion", 'String'>
     readonly estado: FieldRef<"Licitacion", 'Int'>
     readonly createdAt: FieldRef<"Licitacion", 'DateTime'>
     readonly updatedAt: FieldRef<"Licitacion", 'DateTime'>
@@ -15443,6 +17115,26 @@ export namespace Prisma {
   }
 
   /**
+   * Licitacion.aspectosEE
+   */
+  export type Licitacion$aspectosEEArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AspectoEE
+     */
+    select?: AspectoEESelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AspectoEEInclude<ExtArgs> | null
+    where?: AspectoEEWhereInput
+    orderBy?: AspectoEEOrderByWithRelationInput | AspectoEEOrderByWithRelationInput[]
+    cursor?: AspectoEEWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AspectoEEScalarFieldEnum | AspectoEEScalarFieldEnum[]
+  }
+
+  /**
    * Licitacion without action
    */
   export type LicitacionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -15454,6 +17146,1009 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: LicitacionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AspectoEE
+   */
+
+  export type AggregateAspectoEE = {
+    _count: AspectoEECountAggregateOutputType | null
+    _avg: AspectoEEAvgAggregateOutputType | null
+    _sum: AspectoEESumAggregateOutputType | null
+    _min: AspectoEEMinAggregateOutputType | null
+    _max: AspectoEEMaxAggregateOutputType | null
+  }
+
+  export type AspectoEEAvgAggregateOutputType = {
+    licId: number | null
+  }
+
+  export type AspectoEESumAggregateOutputType = {
+    licId: number | null
+  }
+
+  export type AspectoEEMinAggregateOutputType = {
+    id: string | null
+    licId: number | null
+    letra: string | null
+    descripcion: string | null
+    formula: string | null
+    solucionable: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AspectoEEMaxAggregateOutputType = {
+    id: string | null
+    licId: number | null
+    letra: string | null
+    descripcion: string | null
+    formula: string | null
+    solucionable: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AspectoEECountAggregateOutputType = {
+    id: number
+    licId: number
+    letra: number
+    descripcion: number
+    formula: number
+    solucionable: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type AspectoEEAvgAggregateInputType = {
+    licId?: true
+  }
+
+  export type AspectoEESumAggregateInputType = {
+    licId?: true
+  }
+
+  export type AspectoEEMinAggregateInputType = {
+    id?: true
+    licId?: true
+    letra?: true
+    descripcion?: true
+    formula?: true
+    solucionable?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AspectoEEMaxAggregateInputType = {
+    id?: true
+    licId?: true
+    letra?: true
+    descripcion?: true
+    formula?: true
+    solucionable?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AspectoEECountAggregateInputType = {
+    id?: true
+    licId?: true
+    letra?: true
+    descripcion?: true
+    formula?: true
+    solucionable?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type AspectoEEAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AspectoEE to aggregate.
+     */
+    where?: AspectoEEWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AspectoEES to fetch.
+     */
+    orderBy?: AspectoEEOrderByWithRelationInput | AspectoEEOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AspectoEEWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AspectoEES from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AspectoEES.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AspectoEES
+    **/
+    _count?: true | AspectoEECountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AspectoEEAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AspectoEESumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AspectoEEMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AspectoEEMaxAggregateInputType
+  }
+
+  export type GetAspectoEEAggregateType<T extends AspectoEEAggregateArgs> = {
+        [P in keyof T & keyof AggregateAspectoEE]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAspectoEE[P]>
+      : GetScalarType<T[P], AggregateAspectoEE[P]>
+  }
+
+
+
+
+  export type AspectoEEGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AspectoEEWhereInput
+    orderBy?: AspectoEEOrderByWithAggregationInput | AspectoEEOrderByWithAggregationInput[]
+    by: AspectoEEScalarFieldEnum[] | AspectoEEScalarFieldEnum
+    having?: AspectoEEScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AspectoEECountAggregateInputType | true
+    _avg?: AspectoEEAvgAggregateInputType
+    _sum?: AspectoEESumAggregateInputType
+    _min?: AspectoEEMinAggregateInputType
+    _max?: AspectoEEMaxAggregateInputType
+  }
+
+  export type AspectoEEGroupByOutputType = {
+    id: string
+    licId: number
+    letra: string
+    descripcion: string | null
+    formula: string | null
+    solucionable: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: AspectoEECountAggregateOutputType | null
+    _avg: AspectoEEAvgAggregateOutputType | null
+    _sum: AspectoEESumAggregateOutputType | null
+    _min: AspectoEEMinAggregateOutputType | null
+    _max: AspectoEEMaxAggregateOutputType | null
+  }
+
+  type GetAspectoEEGroupByPayload<T extends AspectoEEGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AspectoEEGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AspectoEEGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AspectoEEGroupByOutputType[P]>
+            : GetScalarType<T[P], AspectoEEGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AspectoEESelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    licId?: boolean
+    letra?: boolean
+    descripcion?: boolean
+    formula?: boolean
+    solucionable?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    licitacion?: boolean | LicitacionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["aspectoEE"]>
+
+  export type AspectoEESelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    licId?: boolean
+    letra?: boolean
+    descripcion?: boolean
+    formula?: boolean
+    solucionable?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    licitacion?: boolean | LicitacionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["aspectoEE"]>
+
+  export type AspectoEESelectScalar = {
+    id?: boolean
+    licId?: boolean
+    letra?: boolean
+    descripcion?: boolean
+    formula?: boolean
+    solucionable?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type AspectoEEInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    licitacion?: boolean | LicitacionDefaultArgs<ExtArgs>
+  }
+  export type AspectoEEIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    licitacion?: boolean | LicitacionDefaultArgs<ExtArgs>
+  }
+
+  export type $AspectoEEPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AspectoEE"
+    objects: {
+      licitacion: Prisma.$LicitacionPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      licId: number
+      letra: string
+      descripcion: string | null
+      formula: string | null
+      solucionable: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["aspectoEE"]>
+    composites: {}
+  }
+
+  type AspectoEEGetPayload<S extends boolean | null | undefined | AspectoEEDefaultArgs> = $Result.GetResult<Prisma.$AspectoEEPayload, S>
+
+  type AspectoEECountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<AspectoEEFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: AspectoEECountAggregateInputType | true
+    }
+
+  export interface AspectoEEDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AspectoEE'], meta: { name: 'AspectoEE' } }
+    /**
+     * Find zero or one AspectoEE that matches the filter.
+     * @param {AspectoEEFindUniqueArgs} args - Arguments to find a AspectoEE
+     * @example
+     * // Get one AspectoEE
+     * const aspectoEE = await prisma.aspectoEE.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AspectoEEFindUniqueArgs>(args: SelectSubset<T, AspectoEEFindUniqueArgs<ExtArgs>>): Prisma__AspectoEEClient<$Result.GetResult<Prisma.$AspectoEEPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one AspectoEE that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {AspectoEEFindUniqueOrThrowArgs} args - Arguments to find a AspectoEE
+     * @example
+     * // Get one AspectoEE
+     * const aspectoEE = await prisma.aspectoEE.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AspectoEEFindUniqueOrThrowArgs>(args: SelectSubset<T, AspectoEEFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AspectoEEClient<$Result.GetResult<Prisma.$AspectoEEPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first AspectoEE that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AspectoEEFindFirstArgs} args - Arguments to find a AspectoEE
+     * @example
+     * // Get one AspectoEE
+     * const aspectoEE = await prisma.aspectoEE.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AspectoEEFindFirstArgs>(args?: SelectSubset<T, AspectoEEFindFirstArgs<ExtArgs>>): Prisma__AspectoEEClient<$Result.GetResult<Prisma.$AspectoEEPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first AspectoEE that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AspectoEEFindFirstOrThrowArgs} args - Arguments to find a AspectoEE
+     * @example
+     * // Get one AspectoEE
+     * const aspectoEE = await prisma.aspectoEE.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AspectoEEFindFirstOrThrowArgs>(args?: SelectSubset<T, AspectoEEFindFirstOrThrowArgs<ExtArgs>>): Prisma__AspectoEEClient<$Result.GetResult<Prisma.$AspectoEEPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more AspectoEES that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AspectoEEFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AspectoEES
+     * const aspectoEES = await prisma.aspectoEE.findMany()
+     * 
+     * // Get first 10 AspectoEES
+     * const aspectoEES = await prisma.aspectoEE.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const aspectoEEWithIdOnly = await prisma.aspectoEE.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AspectoEEFindManyArgs>(args?: SelectSubset<T, AspectoEEFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AspectoEEPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a AspectoEE.
+     * @param {AspectoEECreateArgs} args - Arguments to create a AspectoEE.
+     * @example
+     * // Create one AspectoEE
+     * const AspectoEE = await prisma.aspectoEE.create({
+     *   data: {
+     *     // ... data to create a AspectoEE
+     *   }
+     * })
+     * 
+     */
+    create<T extends AspectoEECreateArgs>(args: SelectSubset<T, AspectoEECreateArgs<ExtArgs>>): Prisma__AspectoEEClient<$Result.GetResult<Prisma.$AspectoEEPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many AspectoEES.
+     * @param {AspectoEECreateManyArgs} args - Arguments to create many AspectoEES.
+     * @example
+     * // Create many AspectoEES
+     * const aspectoEE = await prisma.aspectoEE.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AspectoEECreateManyArgs>(args?: SelectSubset<T, AspectoEECreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AspectoEES and returns the data saved in the database.
+     * @param {AspectoEECreateManyAndReturnArgs} args - Arguments to create many AspectoEES.
+     * @example
+     * // Create many AspectoEES
+     * const aspectoEE = await prisma.aspectoEE.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AspectoEES and only return the `id`
+     * const aspectoEEWithIdOnly = await prisma.aspectoEE.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AspectoEECreateManyAndReturnArgs>(args?: SelectSubset<T, AspectoEECreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AspectoEEPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a AspectoEE.
+     * @param {AspectoEEDeleteArgs} args - Arguments to delete one AspectoEE.
+     * @example
+     * // Delete one AspectoEE
+     * const AspectoEE = await prisma.aspectoEE.delete({
+     *   where: {
+     *     // ... filter to delete one AspectoEE
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AspectoEEDeleteArgs>(args: SelectSubset<T, AspectoEEDeleteArgs<ExtArgs>>): Prisma__AspectoEEClient<$Result.GetResult<Prisma.$AspectoEEPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one AspectoEE.
+     * @param {AspectoEEUpdateArgs} args - Arguments to update one AspectoEE.
+     * @example
+     * // Update one AspectoEE
+     * const aspectoEE = await prisma.aspectoEE.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AspectoEEUpdateArgs>(args: SelectSubset<T, AspectoEEUpdateArgs<ExtArgs>>): Prisma__AspectoEEClient<$Result.GetResult<Prisma.$AspectoEEPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more AspectoEES.
+     * @param {AspectoEEDeleteManyArgs} args - Arguments to filter AspectoEES to delete.
+     * @example
+     * // Delete a few AspectoEES
+     * const { count } = await prisma.aspectoEE.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AspectoEEDeleteManyArgs>(args?: SelectSubset<T, AspectoEEDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AspectoEES.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AspectoEEUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AspectoEES
+     * const aspectoEE = await prisma.aspectoEE.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AspectoEEUpdateManyArgs>(args: SelectSubset<T, AspectoEEUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one AspectoEE.
+     * @param {AspectoEEUpsertArgs} args - Arguments to update or create a AspectoEE.
+     * @example
+     * // Update or create a AspectoEE
+     * const aspectoEE = await prisma.aspectoEE.upsert({
+     *   create: {
+     *     // ... data to create a AspectoEE
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AspectoEE we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AspectoEEUpsertArgs>(args: SelectSubset<T, AspectoEEUpsertArgs<ExtArgs>>): Prisma__AspectoEEClient<$Result.GetResult<Prisma.$AspectoEEPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of AspectoEES.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AspectoEECountArgs} args - Arguments to filter AspectoEES to count.
+     * @example
+     * // Count the number of AspectoEES
+     * const count = await prisma.aspectoEE.count({
+     *   where: {
+     *     // ... the filter for the AspectoEES we want to count
+     *   }
+     * })
+    **/
+    count<T extends AspectoEECountArgs>(
+      args?: Subset<T, AspectoEECountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AspectoEECountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AspectoEE.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AspectoEEAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AspectoEEAggregateArgs>(args: Subset<T, AspectoEEAggregateArgs>): Prisma.PrismaPromise<GetAspectoEEAggregateType<T>>
+
+    /**
+     * Group by AspectoEE.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AspectoEEGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AspectoEEGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AspectoEEGroupByArgs['orderBy'] }
+        : { orderBy?: AspectoEEGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AspectoEEGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAspectoEEGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AspectoEE model
+   */
+  readonly fields: AspectoEEFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AspectoEE.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AspectoEEClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    licitacion<T extends LicitacionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LicitacionDefaultArgs<ExtArgs>>): Prisma__LicitacionClient<$Result.GetResult<Prisma.$LicitacionPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AspectoEE model
+   */ 
+  interface AspectoEEFieldRefs {
+    readonly id: FieldRef<"AspectoEE", 'String'>
+    readonly licId: FieldRef<"AspectoEE", 'Int'>
+    readonly letra: FieldRef<"AspectoEE", 'String'>
+    readonly descripcion: FieldRef<"AspectoEE", 'String'>
+    readonly formula: FieldRef<"AspectoEE", 'String'>
+    readonly solucionable: FieldRef<"AspectoEE", 'String'>
+    readonly createdAt: FieldRef<"AspectoEE", 'DateTime'>
+    readonly updatedAt: FieldRef<"AspectoEE", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AspectoEE findUnique
+   */
+  export type AspectoEEFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AspectoEE
+     */
+    select?: AspectoEESelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AspectoEEInclude<ExtArgs> | null
+    /**
+     * Filter, which AspectoEE to fetch.
+     */
+    where: AspectoEEWhereUniqueInput
+  }
+
+  /**
+   * AspectoEE findUniqueOrThrow
+   */
+  export type AspectoEEFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AspectoEE
+     */
+    select?: AspectoEESelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AspectoEEInclude<ExtArgs> | null
+    /**
+     * Filter, which AspectoEE to fetch.
+     */
+    where: AspectoEEWhereUniqueInput
+  }
+
+  /**
+   * AspectoEE findFirst
+   */
+  export type AspectoEEFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AspectoEE
+     */
+    select?: AspectoEESelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AspectoEEInclude<ExtArgs> | null
+    /**
+     * Filter, which AspectoEE to fetch.
+     */
+    where?: AspectoEEWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AspectoEES to fetch.
+     */
+    orderBy?: AspectoEEOrderByWithRelationInput | AspectoEEOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AspectoEES.
+     */
+    cursor?: AspectoEEWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AspectoEES from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AspectoEES.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AspectoEES.
+     */
+    distinct?: AspectoEEScalarFieldEnum | AspectoEEScalarFieldEnum[]
+  }
+
+  /**
+   * AspectoEE findFirstOrThrow
+   */
+  export type AspectoEEFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AspectoEE
+     */
+    select?: AspectoEESelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AspectoEEInclude<ExtArgs> | null
+    /**
+     * Filter, which AspectoEE to fetch.
+     */
+    where?: AspectoEEWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AspectoEES to fetch.
+     */
+    orderBy?: AspectoEEOrderByWithRelationInput | AspectoEEOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AspectoEES.
+     */
+    cursor?: AspectoEEWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AspectoEES from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AspectoEES.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AspectoEES.
+     */
+    distinct?: AspectoEEScalarFieldEnum | AspectoEEScalarFieldEnum[]
+  }
+
+  /**
+   * AspectoEE findMany
+   */
+  export type AspectoEEFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AspectoEE
+     */
+    select?: AspectoEESelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AspectoEEInclude<ExtArgs> | null
+    /**
+     * Filter, which AspectoEES to fetch.
+     */
+    where?: AspectoEEWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AspectoEES to fetch.
+     */
+    orderBy?: AspectoEEOrderByWithRelationInput | AspectoEEOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AspectoEES.
+     */
+    cursor?: AspectoEEWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AspectoEES from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AspectoEES.
+     */
+    skip?: number
+    distinct?: AspectoEEScalarFieldEnum | AspectoEEScalarFieldEnum[]
+  }
+
+  /**
+   * AspectoEE create
+   */
+  export type AspectoEECreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AspectoEE
+     */
+    select?: AspectoEESelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AspectoEEInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AspectoEE.
+     */
+    data: XOR<AspectoEECreateInput, AspectoEEUncheckedCreateInput>
+  }
+
+  /**
+   * AspectoEE createMany
+   */
+  export type AspectoEECreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AspectoEES.
+     */
+    data: AspectoEECreateManyInput | AspectoEECreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AspectoEE createManyAndReturn
+   */
+  export type AspectoEECreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AspectoEE
+     */
+    select?: AspectoEESelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many AspectoEES.
+     */
+    data: AspectoEECreateManyInput | AspectoEECreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AspectoEEIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AspectoEE update
+   */
+  export type AspectoEEUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AspectoEE
+     */
+    select?: AspectoEESelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AspectoEEInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AspectoEE.
+     */
+    data: XOR<AspectoEEUpdateInput, AspectoEEUncheckedUpdateInput>
+    /**
+     * Choose, which AspectoEE to update.
+     */
+    where: AspectoEEWhereUniqueInput
+  }
+
+  /**
+   * AspectoEE updateMany
+   */
+  export type AspectoEEUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AspectoEES.
+     */
+    data: XOR<AspectoEEUpdateManyMutationInput, AspectoEEUncheckedUpdateManyInput>
+    /**
+     * Filter which AspectoEES to update
+     */
+    where?: AspectoEEWhereInput
+  }
+
+  /**
+   * AspectoEE upsert
+   */
+  export type AspectoEEUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AspectoEE
+     */
+    select?: AspectoEESelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AspectoEEInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AspectoEE to update in case it exists.
+     */
+    where: AspectoEEWhereUniqueInput
+    /**
+     * In case the AspectoEE found by the `where` argument doesn't exist, create a new AspectoEE with this data.
+     */
+    create: XOR<AspectoEECreateInput, AspectoEEUncheckedCreateInput>
+    /**
+     * In case the AspectoEE was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AspectoEEUpdateInput, AspectoEEUncheckedUpdateInput>
+  }
+
+  /**
+   * AspectoEE delete
+   */
+  export type AspectoEEDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AspectoEE
+     */
+    select?: AspectoEESelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AspectoEEInclude<ExtArgs> | null
+    /**
+     * Filter which AspectoEE to delete.
+     */
+    where: AspectoEEWhereUniqueInput
+  }
+
+  /**
+   * AspectoEE deleteMany
+   */
+  export type AspectoEEDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AspectoEES to delete
+     */
+    where?: AspectoEEWhereInput
+  }
+
+  /**
+   * AspectoEE without action
+   */
+  export type AspectoEEDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AspectoEE
+     */
+    select?: AspectoEESelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AspectoEEInclude<ExtArgs> | null
   }
 
 
@@ -18720,6 +21415,8 @@ export namespace Prisma {
     updatedAt?: boolean
     licitacion?: boolean | LicitacionDefaultArgs<ExtArgs>
     sucursal?: boolean | UT$sucursalArgs<ExtArgs>
+    pmpas?: boolean | UT$pmpasArgs<ExtArgs>
+    _count?: boolean | UTCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["uT"]>
 
   export type UTSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -18745,6 +21442,8 @@ export namespace Prisma {
   export type UTInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     licitacion?: boolean | LicitacionDefaultArgs<ExtArgs>
     sucursal?: boolean | UT$sucursalArgs<ExtArgs>
+    pmpas?: boolean | UT$pmpasArgs<ExtArgs>
+    _count?: boolean | UTCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UTIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     licitacion?: boolean | LicitacionDefaultArgs<ExtArgs>
@@ -18756,6 +21455,7 @@ export namespace Prisma {
     objects: {
       licitacion: Prisma.$LicitacionPayload<ExtArgs>
       sucursal: Prisma.$SucursalPayload<ExtArgs> | null
+      pmpas: Prisma.$PMPAPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       codUT: number
@@ -19130,6 +21830,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     licitacion<T extends LicitacionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LicitacionDefaultArgs<ExtArgs>>): Prisma__LicitacionClient<$Result.GetResult<Prisma.$LicitacionPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     sucursal<T extends UT$sucursalArgs<ExtArgs> = {}>(args?: Subset<T, UT$sucursalArgs<ExtArgs>>): Prisma__SucursalClient<$Result.GetResult<Prisma.$SucursalPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    pmpas<T extends UT$pmpasArgs<ExtArgs> = {}>(args?: Subset<T, UT$pmpasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PMPAPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -19495,6 +22196,26 @@ export namespace Prisma {
      */
     include?: SucursalInclude<ExtArgs> | null
     where?: SucursalWhereInput
+  }
+
+  /**
+   * UT.pmpas
+   */
+  export type UT$pmpasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PMPA
+     */
+    select?: PMPASelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PMPAInclude<ExtArgs> | null
+    where?: PMPAWhereInput
+    orderBy?: PMPAOrderByWithRelationInput | PMPAOrderByWithRelationInput[]
+    cursor?: PMPAWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PMPAScalarFieldEnum | PMPAScalarFieldEnum[]
   }
 
   /**
@@ -43523,11 +46244,15 @@ export namespace Prisma {
 
   export type CapCertificacionHeaderAvgAggregateOutputType = {
     rbd: number | null
+    racionesBase: number | null
+    racionesDigitadas: number | null
     racionesPreparar: number | null
   }
 
   export type CapCertificacionHeaderSumAggregateOutputType = {
     rbd: number | null
+    racionesBase: number | null
+    racionesDigitadas: number | null
     racionesPreparar: number | null
   }
 
@@ -43538,6 +46263,8 @@ export namespace Prisma {
     servicio: string | null
     programa: string | null
     area: string | null
+    racionesBase: number | null
+    racionesDigitadas: number | null
     racionesPreparar: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -43551,6 +46278,8 @@ export namespace Prisma {
     servicio: string | null
     programa: string | null
     area: string | null
+    racionesBase: number | null
+    racionesDigitadas: number | null
     racionesPreparar: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -43564,6 +46293,8 @@ export namespace Prisma {
     servicio: number
     programa: number
     area: number
+    racionesBase: number
+    racionesDigitadas: number
     racionesPreparar: number
     createdAt: number
     updatedAt: number
@@ -43574,11 +46305,15 @@ export namespace Prisma {
 
   export type CapCertificacionHeaderAvgAggregateInputType = {
     rbd?: true
+    racionesBase?: true
+    racionesDigitadas?: true
     racionesPreparar?: true
   }
 
   export type CapCertificacionHeaderSumAggregateInputType = {
     rbd?: true
+    racionesBase?: true
+    racionesDigitadas?: true
     racionesPreparar?: true
   }
 
@@ -43589,6 +46324,8 @@ export namespace Prisma {
     servicio?: true
     programa?: true
     area?: true
+    racionesBase?: true
+    racionesDigitadas?: true
     racionesPreparar?: true
     createdAt?: true
     updatedAt?: true
@@ -43602,6 +46339,8 @@ export namespace Prisma {
     servicio?: true
     programa?: true
     area?: true
+    racionesBase?: true
+    racionesDigitadas?: true
     racionesPreparar?: true
     createdAt?: true
     updatedAt?: true
@@ -43615,6 +46354,8 @@ export namespace Prisma {
     servicio?: true
     programa?: true
     area?: true
+    racionesBase?: true
+    racionesDigitadas?: true
     racionesPreparar?: true
     createdAt?: true
     updatedAt?: true
@@ -43715,6 +46456,8 @@ export namespace Prisma {
     servicio: string
     programa: string
     area: string | null
+    racionesBase: number
+    racionesDigitadas: number
     racionesPreparar: number
     createdAt: Date
     updatedAt: Date
@@ -43747,6 +46490,8 @@ export namespace Prisma {
     servicio?: boolean
     programa?: boolean
     area?: boolean
+    racionesBase?: boolean
+    racionesDigitadas?: boolean
     racionesPreparar?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -43762,6 +46507,8 @@ export namespace Prisma {
     servicio?: boolean
     programa?: boolean
     area?: boolean
+    racionesBase?: boolean
+    racionesDigitadas?: boolean
     racionesPreparar?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -43775,6 +46522,8 @@ export namespace Prisma {
     servicio?: boolean
     programa?: boolean
     area?: boolean
+    racionesBase?: boolean
+    racionesDigitadas?: boolean
     racionesPreparar?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -43799,6 +46548,8 @@ export namespace Prisma {
       servicio: string
       programa: string
       area: string | null
+      racionesBase: number
+      racionesDigitadas: number
       racionesPreparar: number
       createdAt: Date
       updatedAt: Date
@@ -44203,6 +46954,8 @@ export namespace Prisma {
     readonly servicio: FieldRef<"CapCertificacionHeader", 'String'>
     readonly programa: FieldRef<"CapCertificacionHeader", 'String'>
     readonly area: FieldRef<"CapCertificacionHeader", 'String'>
+    readonly racionesBase: FieldRef<"CapCertificacionHeader", 'Int'>
+    readonly racionesDigitadas: FieldRef<"CapCertificacionHeader", 'Int'>
     readonly racionesPreparar: FieldRef<"CapCertificacionHeader", 'Int'>
     readonly createdAt: FieldRef<"CapCertificacionHeader", 'DateTime'>
     readonly updatedAt: FieldRef<"CapCertificacionHeader", 'DateTime'>
@@ -45551,6 +48304,5038 @@ export namespace Prisma {
 
 
   /**
+   * Model ElementosEsenciales_Cab
+   */
+
+  export type AggregateElementosEsenciales_Cab = {
+    _count: ElementosEsenciales_CabCountAggregateOutputType | null
+    _avg: ElementosEsenciales_CabAvgAggregateOutputType | null
+    _sum: ElementosEsenciales_CabSumAggregateOutputType | null
+    _min: ElementosEsenciales_CabMinAggregateOutputType | null
+    _max: ElementosEsenciales_CabMaxAggregateOutputType | null
+  }
+
+  export type ElementosEsenciales_CabAvgAggregateOutputType = {
+    licId: number | null
+    rbd: number | null
+  }
+
+  export type ElementosEsenciales_CabSumAggregateOutputType = {
+    licId: number | null
+    rbd: number | null
+  }
+
+  export type ElementosEsenciales_CabMinAggregateOutputType = {
+    id: string | null
+    licitacion: string | null
+    licId: number | null
+    folio: string | null
+    fechaSupervision: Date | null
+    rbd: number | null
+    region: string | null
+    comuna: string | null
+    servicio: string | null
+    horaInicio: string | null
+    hora: string | null
+    obsALosIncumplimiento: string | null
+    nombreArchivo: string | null
+    link: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ElementosEsenciales_CabMaxAggregateOutputType = {
+    id: string | null
+    licitacion: string | null
+    licId: number | null
+    folio: string | null
+    fechaSupervision: Date | null
+    rbd: number | null
+    region: string | null
+    comuna: string | null
+    servicio: string | null
+    horaInicio: string | null
+    hora: string | null
+    obsALosIncumplimiento: string | null
+    nombreArchivo: string | null
+    link: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ElementosEsenciales_CabCountAggregateOutputType = {
+    id: number
+    licitacion: number
+    licId: number
+    folio: number
+    fechaSupervision: number
+    rbd: number
+    region: number
+    comuna: number
+    servicio: number
+    horaInicio: number
+    hora: number
+    obsALosIncumplimiento: number
+    nombreArchivo: number
+    link: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ElementosEsenciales_CabAvgAggregateInputType = {
+    licId?: true
+    rbd?: true
+  }
+
+  export type ElementosEsenciales_CabSumAggregateInputType = {
+    licId?: true
+    rbd?: true
+  }
+
+  export type ElementosEsenciales_CabMinAggregateInputType = {
+    id?: true
+    licitacion?: true
+    licId?: true
+    folio?: true
+    fechaSupervision?: true
+    rbd?: true
+    region?: true
+    comuna?: true
+    servicio?: true
+    horaInicio?: true
+    hora?: true
+    obsALosIncumplimiento?: true
+    nombreArchivo?: true
+    link?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ElementosEsenciales_CabMaxAggregateInputType = {
+    id?: true
+    licitacion?: true
+    licId?: true
+    folio?: true
+    fechaSupervision?: true
+    rbd?: true
+    region?: true
+    comuna?: true
+    servicio?: true
+    horaInicio?: true
+    hora?: true
+    obsALosIncumplimiento?: true
+    nombreArchivo?: true
+    link?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ElementosEsenciales_CabCountAggregateInputType = {
+    id?: true
+    licitacion?: true
+    licId?: true
+    folio?: true
+    fechaSupervision?: true
+    rbd?: true
+    region?: true
+    comuna?: true
+    servicio?: true
+    horaInicio?: true
+    hora?: true
+    obsALosIncumplimiento?: true
+    nombreArchivo?: true
+    link?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ElementosEsenciales_CabAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ElementosEsenciales_Cab to aggregate.
+     */
+    where?: ElementosEsenciales_CabWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ElementosEsenciales_Cabs to fetch.
+     */
+    orderBy?: ElementosEsenciales_CabOrderByWithRelationInput | ElementosEsenciales_CabOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ElementosEsenciales_CabWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ElementosEsenciales_Cabs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ElementosEsenciales_Cabs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ElementosEsenciales_Cabs
+    **/
+    _count?: true | ElementosEsenciales_CabCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ElementosEsenciales_CabAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ElementosEsenciales_CabSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ElementosEsenciales_CabMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ElementosEsenciales_CabMaxAggregateInputType
+  }
+
+  export type GetElementosEsenciales_CabAggregateType<T extends ElementosEsenciales_CabAggregateArgs> = {
+        [P in keyof T & keyof AggregateElementosEsenciales_Cab]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateElementosEsenciales_Cab[P]>
+      : GetScalarType<T[P], AggregateElementosEsenciales_Cab[P]>
+  }
+
+
+
+
+  export type ElementosEsenciales_CabGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ElementosEsenciales_CabWhereInput
+    orderBy?: ElementosEsenciales_CabOrderByWithAggregationInput | ElementosEsenciales_CabOrderByWithAggregationInput[]
+    by: ElementosEsenciales_CabScalarFieldEnum[] | ElementosEsenciales_CabScalarFieldEnum
+    having?: ElementosEsenciales_CabScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ElementosEsenciales_CabCountAggregateInputType | true
+    _avg?: ElementosEsenciales_CabAvgAggregateInputType
+    _sum?: ElementosEsenciales_CabSumAggregateInputType
+    _min?: ElementosEsenciales_CabMinAggregateInputType
+    _max?: ElementosEsenciales_CabMaxAggregateInputType
+  }
+
+  export type ElementosEsenciales_CabGroupByOutputType = {
+    id: string
+    licitacion: string | null
+    licId: number | null
+    folio: string | null
+    fechaSupervision: Date | null
+    rbd: number | null
+    region: string | null
+    comuna: string | null
+    servicio: string | null
+    horaInicio: string | null
+    hora: string | null
+    obsALosIncumplimiento: string | null
+    nombreArchivo: string
+    link: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: ElementosEsenciales_CabCountAggregateOutputType | null
+    _avg: ElementosEsenciales_CabAvgAggregateOutputType | null
+    _sum: ElementosEsenciales_CabSumAggregateOutputType | null
+    _min: ElementosEsenciales_CabMinAggregateOutputType | null
+    _max: ElementosEsenciales_CabMaxAggregateOutputType | null
+  }
+
+  type GetElementosEsenciales_CabGroupByPayload<T extends ElementosEsenciales_CabGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ElementosEsenciales_CabGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ElementosEsenciales_CabGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ElementosEsenciales_CabGroupByOutputType[P]>
+            : GetScalarType<T[P], ElementosEsenciales_CabGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ElementosEsenciales_CabSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    licitacion?: boolean
+    licId?: boolean
+    folio?: boolean
+    fechaSupervision?: boolean
+    rbd?: boolean
+    region?: boolean
+    comuna?: boolean
+    servicio?: boolean
+    horaInicio?: boolean
+    hora?: boolean
+    obsALosIncumplimiento?: boolean
+    nombreArchivo?: boolean
+    link?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    detalles?: boolean | ElementosEsenciales_Cab$detallesArgs<ExtArgs>
+    _count?: boolean | ElementosEsenciales_CabCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["elementosEsenciales_Cab"]>
+
+  export type ElementosEsenciales_CabSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    licitacion?: boolean
+    licId?: boolean
+    folio?: boolean
+    fechaSupervision?: boolean
+    rbd?: boolean
+    region?: boolean
+    comuna?: boolean
+    servicio?: boolean
+    horaInicio?: boolean
+    hora?: boolean
+    obsALosIncumplimiento?: boolean
+    nombreArchivo?: boolean
+    link?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["elementosEsenciales_Cab"]>
+
+  export type ElementosEsenciales_CabSelectScalar = {
+    id?: boolean
+    licitacion?: boolean
+    licId?: boolean
+    folio?: boolean
+    fechaSupervision?: boolean
+    rbd?: boolean
+    region?: boolean
+    comuna?: boolean
+    servicio?: boolean
+    horaInicio?: boolean
+    hora?: boolean
+    obsALosIncumplimiento?: boolean
+    nombreArchivo?: boolean
+    link?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ElementosEsenciales_CabInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    detalles?: boolean | ElementosEsenciales_Cab$detallesArgs<ExtArgs>
+    _count?: boolean | ElementosEsenciales_CabCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type ElementosEsenciales_CabIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $ElementosEsenciales_CabPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ElementosEsenciales_Cab"
+    objects: {
+      detalles: Prisma.$ElementosEsenciales_DetPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      licitacion: string | null
+      licId: number | null
+      folio: string | null
+      fechaSupervision: Date | null
+      rbd: number | null
+      region: string | null
+      comuna: string | null
+      servicio: string | null
+      horaInicio: string | null
+      hora: string | null
+      obsALosIncumplimiento: string | null
+      nombreArchivo: string
+      link: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["elementosEsenciales_Cab"]>
+    composites: {}
+  }
+
+  type ElementosEsenciales_CabGetPayload<S extends boolean | null | undefined | ElementosEsenciales_CabDefaultArgs> = $Result.GetResult<Prisma.$ElementosEsenciales_CabPayload, S>
+
+  type ElementosEsenciales_CabCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ElementosEsenciales_CabFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ElementosEsenciales_CabCountAggregateInputType | true
+    }
+
+  export interface ElementosEsenciales_CabDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ElementosEsenciales_Cab'], meta: { name: 'ElementosEsenciales_Cab' } }
+    /**
+     * Find zero or one ElementosEsenciales_Cab that matches the filter.
+     * @param {ElementosEsenciales_CabFindUniqueArgs} args - Arguments to find a ElementosEsenciales_Cab
+     * @example
+     * // Get one ElementosEsenciales_Cab
+     * const elementosEsenciales_Cab = await prisma.elementosEsenciales_Cab.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ElementosEsenciales_CabFindUniqueArgs>(args: SelectSubset<T, ElementosEsenciales_CabFindUniqueArgs<ExtArgs>>): Prisma__ElementosEsenciales_CabClient<$Result.GetResult<Prisma.$ElementosEsenciales_CabPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one ElementosEsenciales_Cab that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {ElementosEsenciales_CabFindUniqueOrThrowArgs} args - Arguments to find a ElementosEsenciales_Cab
+     * @example
+     * // Get one ElementosEsenciales_Cab
+     * const elementosEsenciales_Cab = await prisma.elementosEsenciales_Cab.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ElementosEsenciales_CabFindUniqueOrThrowArgs>(args: SelectSubset<T, ElementosEsenciales_CabFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ElementosEsenciales_CabClient<$Result.GetResult<Prisma.$ElementosEsenciales_CabPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first ElementosEsenciales_Cab that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ElementosEsenciales_CabFindFirstArgs} args - Arguments to find a ElementosEsenciales_Cab
+     * @example
+     * // Get one ElementosEsenciales_Cab
+     * const elementosEsenciales_Cab = await prisma.elementosEsenciales_Cab.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ElementosEsenciales_CabFindFirstArgs>(args?: SelectSubset<T, ElementosEsenciales_CabFindFirstArgs<ExtArgs>>): Prisma__ElementosEsenciales_CabClient<$Result.GetResult<Prisma.$ElementosEsenciales_CabPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first ElementosEsenciales_Cab that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ElementosEsenciales_CabFindFirstOrThrowArgs} args - Arguments to find a ElementosEsenciales_Cab
+     * @example
+     * // Get one ElementosEsenciales_Cab
+     * const elementosEsenciales_Cab = await prisma.elementosEsenciales_Cab.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ElementosEsenciales_CabFindFirstOrThrowArgs>(args?: SelectSubset<T, ElementosEsenciales_CabFindFirstOrThrowArgs<ExtArgs>>): Prisma__ElementosEsenciales_CabClient<$Result.GetResult<Prisma.$ElementosEsenciales_CabPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more ElementosEsenciales_Cabs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ElementosEsenciales_CabFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ElementosEsenciales_Cabs
+     * const elementosEsenciales_Cabs = await prisma.elementosEsenciales_Cab.findMany()
+     * 
+     * // Get first 10 ElementosEsenciales_Cabs
+     * const elementosEsenciales_Cabs = await prisma.elementosEsenciales_Cab.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const elementosEsenciales_CabWithIdOnly = await prisma.elementosEsenciales_Cab.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ElementosEsenciales_CabFindManyArgs>(args?: SelectSubset<T, ElementosEsenciales_CabFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ElementosEsenciales_CabPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a ElementosEsenciales_Cab.
+     * @param {ElementosEsenciales_CabCreateArgs} args - Arguments to create a ElementosEsenciales_Cab.
+     * @example
+     * // Create one ElementosEsenciales_Cab
+     * const ElementosEsenciales_Cab = await prisma.elementosEsenciales_Cab.create({
+     *   data: {
+     *     // ... data to create a ElementosEsenciales_Cab
+     *   }
+     * })
+     * 
+     */
+    create<T extends ElementosEsenciales_CabCreateArgs>(args: SelectSubset<T, ElementosEsenciales_CabCreateArgs<ExtArgs>>): Prisma__ElementosEsenciales_CabClient<$Result.GetResult<Prisma.$ElementosEsenciales_CabPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many ElementosEsenciales_Cabs.
+     * @param {ElementosEsenciales_CabCreateManyArgs} args - Arguments to create many ElementosEsenciales_Cabs.
+     * @example
+     * // Create many ElementosEsenciales_Cabs
+     * const elementosEsenciales_Cab = await prisma.elementosEsenciales_Cab.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ElementosEsenciales_CabCreateManyArgs>(args?: SelectSubset<T, ElementosEsenciales_CabCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ElementosEsenciales_Cabs and returns the data saved in the database.
+     * @param {ElementosEsenciales_CabCreateManyAndReturnArgs} args - Arguments to create many ElementosEsenciales_Cabs.
+     * @example
+     * // Create many ElementosEsenciales_Cabs
+     * const elementosEsenciales_Cab = await prisma.elementosEsenciales_Cab.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ElementosEsenciales_Cabs and only return the `id`
+     * const elementosEsenciales_CabWithIdOnly = await prisma.elementosEsenciales_Cab.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ElementosEsenciales_CabCreateManyAndReturnArgs>(args?: SelectSubset<T, ElementosEsenciales_CabCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ElementosEsenciales_CabPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a ElementosEsenciales_Cab.
+     * @param {ElementosEsenciales_CabDeleteArgs} args - Arguments to delete one ElementosEsenciales_Cab.
+     * @example
+     * // Delete one ElementosEsenciales_Cab
+     * const ElementosEsenciales_Cab = await prisma.elementosEsenciales_Cab.delete({
+     *   where: {
+     *     // ... filter to delete one ElementosEsenciales_Cab
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ElementosEsenciales_CabDeleteArgs>(args: SelectSubset<T, ElementosEsenciales_CabDeleteArgs<ExtArgs>>): Prisma__ElementosEsenciales_CabClient<$Result.GetResult<Prisma.$ElementosEsenciales_CabPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one ElementosEsenciales_Cab.
+     * @param {ElementosEsenciales_CabUpdateArgs} args - Arguments to update one ElementosEsenciales_Cab.
+     * @example
+     * // Update one ElementosEsenciales_Cab
+     * const elementosEsenciales_Cab = await prisma.elementosEsenciales_Cab.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ElementosEsenciales_CabUpdateArgs>(args: SelectSubset<T, ElementosEsenciales_CabUpdateArgs<ExtArgs>>): Prisma__ElementosEsenciales_CabClient<$Result.GetResult<Prisma.$ElementosEsenciales_CabPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more ElementosEsenciales_Cabs.
+     * @param {ElementosEsenciales_CabDeleteManyArgs} args - Arguments to filter ElementosEsenciales_Cabs to delete.
+     * @example
+     * // Delete a few ElementosEsenciales_Cabs
+     * const { count } = await prisma.elementosEsenciales_Cab.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ElementosEsenciales_CabDeleteManyArgs>(args?: SelectSubset<T, ElementosEsenciales_CabDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ElementosEsenciales_Cabs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ElementosEsenciales_CabUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ElementosEsenciales_Cabs
+     * const elementosEsenciales_Cab = await prisma.elementosEsenciales_Cab.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ElementosEsenciales_CabUpdateManyArgs>(args: SelectSubset<T, ElementosEsenciales_CabUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ElementosEsenciales_Cab.
+     * @param {ElementosEsenciales_CabUpsertArgs} args - Arguments to update or create a ElementosEsenciales_Cab.
+     * @example
+     * // Update or create a ElementosEsenciales_Cab
+     * const elementosEsenciales_Cab = await prisma.elementosEsenciales_Cab.upsert({
+     *   create: {
+     *     // ... data to create a ElementosEsenciales_Cab
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ElementosEsenciales_Cab we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ElementosEsenciales_CabUpsertArgs>(args: SelectSubset<T, ElementosEsenciales_CabUpsertArgs<ExtArgs>>): Prisma__ElementosEsenciales_CabClient<$Result.GetResult<Prisma.$ElementosEsenciales_CabPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of ElementosEsenciales_Cabs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ElementosEsenciales_CabCountArgs} args - Arguments to filter ElementosEsenciales_Cabs to count.
+     * @example
+     * // Count the number of ElementosEsenciales_Cabs
+     * const count = await prisma.elementosEsenciales_Cab.count({
+     *   where: {
+     *     // ... the filter for the ElementosEsenciales_Cabs we want to count
+     *   }
+     * })
+    **/
+    count<T extends ElementosEsenciales_CabCountArgs>(
+      args?: Subset<T, ElementosEsenciales_CabCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ElementosEsenciales_CabCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ElementosEsenciales_Cab.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ElementosEsenciales_CabAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ElementosEsenciales_CabAggregateArgs>(args: Subset<T, ElementosEsenciales_CabAggregateArgs>): Prisma.PrismaPromise<GetElementosEsenciales_CabAggregateType<T>>
+
+    /**
+     * Group by ElementosEsenciales_Cab.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ElementosEsenciales_CabGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ElementosEsenciales_CabGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ElementosEsenciales_CabGroupByArgs['orderBy'] }
+        : { orderBy?: ElementosEsenciales_CabGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ElementosEsenciales_CabGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetElementosEsenciales_CabGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ElementosEsenciales_Cab model
+   */
+  readonly fields: ElementosEsenciales_CabFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ElementosEsenciales_Cab.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ElementosEsenciales_CabClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    detalles<T extends ElementosEsenciales_Cab$detallesArgs<ExtArgs> = {}>(args?: Subset<T, ElementosEsenciales_Cab$detallesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ElementosEsenciales_DetPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ElementosEsenciales_Cab model
+   */ 
+  interface ElementosEsenciales_CabFieldRefs {
+    readonly id: FieldRef<"ElementosEsenciales_Cab", 'String'>
+    readonly licitacion: FieldRef<"ElementosEsenciales_Cab", 'String'>
+    readonly licId: FieldRef<"ElementosEsenciales_Cab", 'Int'>
+    readonly folio: FieldRef<"ElementosEsenciales_Cab", 'String'>
+    readonly fechaSupervision: FieldRef<"ElementosEsenciales_Cab", 'DateTime'>
+    readonly rbd: FieldRef<"ElementosEsenciales_Cab", 'Int'>
+    readonly region: FieldRef<"ElementosEsenciales_Cab", 'String'>
+    readonly comuna: FieldRef<"ElementosEsenciales_Cab", 'String'>
+    readonly servicio: FieldRef<"ElementosEsenciales_Cab", 'String'>
+    readonly horaInicio: FieldRef<"ElementosEsenciales_Cab", 'String'>
+    readonly hora: FieldRef<"ElementosEsenciales_Cab", 'String'>
+    readonly obsALosIncumplimiento: FieldRef<"ElementosEsenciales_Cab", 'String'>
+    readonly nombreArchivo: FieldRef<"ElementosEsenciales_Cab", 'String'>
+    readonly link: FieldRef<"ElementosEsenciales_Cab", 'String'>
+    readonly createdAt: FieldRef<"ElementosEsenciales_Cab", 'DateTime'>
+    readonly updatedAt: FieldRef<"ElementosEsenciales_Cab", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ElementosEsenciales_Cab findUnique
+   */
+  export type ElementosEsenciales_CabFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElementosEsenciales_Cab
+     */
+    select?: ElementosEsenciales_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ElementosEsenciales_CabInclude<ExtArgs> | null
+    /**
+     * Filter, which ElementosEsenciales_Cab to fetch.
+     */
+    where: ElementosEsenciales_CabWhereUniqueInput
+  }
+
+  /**
+   * ElementosEsenciales_Cab findUniqueOrThrow
+   */
+  export type ElementosEsenciales_CabFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElementosEsenciales_Cab
+     */
+    select?: ElementosEsenciales_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ElementosEsenciales_CabInclude<ExtArgs> | null
+    /**
+     * Filter, which ElementosEsenciales_Cab to fetch.
+     */
+    where: ElementosEsenciales_CabWhereUniqueInput
+  }
+
+  /**
+   * ElementosEsenciales_Cab findFirst
+   */
+  export type ElementosEsenciales_CabFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElementosEsenciales_Cab
+     */
+    select?: ElementosEsenciales_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ElementosEsenciales_CabInclude<ExtArgs> | null
+    /**
+     * Filter, which ElementosEsenciales_Cab to fetch.
+     */
+    where?: ElementosEsenciales_CabWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ElementosEsenciales_Cabs to fetch.
+     */
+    orderBy?: ElementosEsenciales_CabOrderByWithRelationInput | ElementosEsenciales_CabOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ElementosEsenciales_Cabs.
+     */
+    cursor?: ElementosEsenciales_CabWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ElementosEsenciales_Cabs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ElementosEsenciales_Cabs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ElementosEsenciales_Cabs.
+     */
+    distinct?: ElementosEsenciales_CabScalarFieldEnum | ElementosEsenciales_CabScalarFieldEnum[]
+  }
+
+  /**
+   * ElementosEsenciales_Cab findFirstOrThrow
+   */
+  export type ElementosEsenciales_CabFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElementosEsenciales_Cab
+     */
+    select?: ElementosEsenciales_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ElementosEsenciales_CabInclude<ExtArgs> | null
+    /**
+     * Filter, which ElementosEsenciales_Cab to fetch.
+     */
+    where?: ElementosEsenciales_CabWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ElementosEsenciales_Cabs to fetch.
+     */
+    orderBy?: ElementosEsenciales_CabOrderByWithRelationInput | ElementosEsenciales_CabOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ElementosEsenciales_Cabs.
+     */
+    cursor?: ElementosEsenciales_CabWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ElementosEsenciales_Cabs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ElementosEsenciales_Cabs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ElementosEsenciales_Cabs.
+     */
+    distinct?: ElementosEsenciales_CabScalarFieldEnum | ElementosEsenciales_CabScalarFieldEnum[]
+  }
+
+  /**
+   * ElementosEsenciales_Cab findMany
+   */
+  export type ElementosEsenciales_CabFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElementosEsenciales_Cab
+     */
+    select?: ElementosEsenciales_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ElementosEsenciales_CabInclude<ExtArgs> | null
+    /**
+     * Filter, which ElementosEsenciales_Cabs to fetch.
+     */
+    where?: ElementosEsenciales_CabWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ElementosEsenciales_Cabs to fetch.
+     */
+    orderBy?: ElementosEsenciales_CabOrderByWithRelationInput | ElementosEsenciales_CabOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ElementosEsenciales_Cabs.
+     */
+    cursor?: ElementosEsenciales_CabWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ElementosEsenciales_Cabs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ElementosEsenciales_Cabs.
+     */
+    skip?: number
+    distinct?: ElementosEsenciales_CabScalarFieldEnum | ElementosEsenciales_CabScalarFieldEnum[]
+  }
+
+  /**
+   * ElementosEsenciales_Cab create
+   */
+  export type ElementosEsenciales_CabCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElementosEsenciales_Cab
+     */
+    select?: ElementosEsenciales_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ElementosEsenciales_CabInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ElementosEsenciales_Cab.
+     */
+    data: XOR<ElementosEsenciales_CabCreateInput, ElementosEsenciales_CabUncheckedCreateInput>
+  }
+
+  /**
+   * ElementosEsenciales_Cab createMany
+   */
+  export type ElementosEsenciales_CabCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ElementosEsenciales_Cabs.
+     */
+    data: ElementosEsenciales_CabCreateManyInput | ElementosEsenciales_CabCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ElementosEsenciales_Cab createManyAndReturn
+   */
+  export type ElementosEsenciales_CabCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElementosEsenciales_Cab
+     */
+    select?: ElementosEsenciales_CabSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many ElementosEsenciales_Cabs.
+     */
+    data: ElementosEsenciales_CabCreateManyInput | ElementosEsenciales_CabCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ElementosEsenciales_Cab update
+   */
+  export type ElementosEsenciales_CabUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElementosEsenciales_Cab
+     */
+    select?: ElementosEsenciales_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ElementosEsenciales_CabInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ElementosEsenciales_Cab.
+     */
+    data: XOR<ElementosEsenciales_CabUpdateInput, ElementosEsenciales_CabUncheckedUpdateInput>
+    /**
+     * Choose, which ElementosEsenciales_Cab to update.
+     */
+    where: ElementosEsenciales_CabWhereUniqueInput
+  }
+
+  /**
+   * ElementosEsenciales_Cab updateMany
+   */
+  export type ElementosEsenciales_CabUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ElementosEsenciales_Cabs.
+     */
+    data: XOR<ElementosEsenciales_CabUpdateManyMutationInput, ElementosEsenciales_CabUncheckedUpdateManyInput>
+    /**
+     * Filter which ElementosEsenciales_Cabs to update
+     */
+    where?: ElementosEsenciales_CabWhereInput
+  }
+
+  /**
+   * ElementosEsenciales_Cab upsert
+   */
+  export type ElementosEsenciales_CabUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElementosEsenciales_Cab
+     */
+    select?: ElementosEsenciales_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ElementosEsenciales_CabInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ElementosEsenciales_Cab to update in case it exists.
+     */
+    where: ElementosEsenciales_CabWhereUniqueInput
+    /**
+     * In case the ElementosEsenciales_Cab found by the `where` argument doesn't exist, create a new ElementosEsenciales_Cab with this data.
+     */
+    create: XOR<ElementosEsenciales_CabCreateInput, ElementosEsenciales_CabUncheckedCreateInput>
+    /**
+     * In case the ElementosEsenciales_Cab was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ElementosEsenciales_CabUpdateInput, ElementosEsenciales_CabUncheckedUpdateInput>
+  }
+
+  /**
+   * ElementosEsenciales_Cab delete
+   */
+  export type ElementosEsenciales_CabDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElementosEsenciales_Cab
+     */
+    select?: ElementosEsenciales_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ElementosEsenciales_CabInclude<ExtArgs> | null
+    /**
+     * Filter which ElementosEsenciales_Cab to delete.
+     */
+    where: ElementosEsenciales_CabWhereUniqueInput
+  }
+
+  /**
+   * ElementosEsenciales_Cab deleteMany
+   */
+  export type ElementosEsenciales_CabDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ElementosEsenciales_Cabs to delete
+     */
+    where?: ElementosEsenciales_CabWhereInput
+  }
+
+  /**
+   * ElementosEsenciales_Cab.detalles
+   */
+  export type ElementosEsenciales_Cab$detallesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElementosEsenciales_Det
+     */
+    select?: ElementosEsenciales_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ElementosEsenciales_DetInclude<ExtArgs> | null
+    where?: ElementosEsenciales_DetWhereInput
+    orderBy?: ElementosEsenciales_DetOrderByWithRelationInput | ElementosEsenciales_DetOrderByWithRelationInput[]
+    cursor?: ElementosEsenciales_DetWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ElementosEsenciales_DetScalarFieldEnum | ElementosEsenciales_DetScalarFieldEnum[]
+  }
+
+  /**
+   * ElementosEsenciales_Cab without action
+   */
+  export type ElementosEsenciales_CabDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElementosEsenciales_Cab
+     */
+    select?: ElementosEsenciales_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ElementosEsenciales_CabInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ElementosEsenciales_Det
+   */
+
+  export type AggregateElementosEsenciales_Det = {
+    _count: ElementosEsenciales_DetCountAggregateOutputType | null
+    _min: ElementosEsenciales_DetMinAggregateOutputType | null
+    _max: ElementosEsenciales_DetMaxAggregateOutputType | null
+  }
+
+  export type ElementosEsenciales_DetMinAggregateOutputType = {
+    id: string | null
+    cabId: string | null
+    aspecto: string | null
+    observacionesOMedioDeVerificacion: string | null
+    co: string | null
+    nc: string | null
+    na: string | null
+  }
+
+  export type ElementosEsenciales_DetMaxAggregateOutputType = {
+    id: string | null
+    cabId: string | null
+    aspecto: string | null
+    observacionesOMedioDeVerificacion: string | null
+    co: string | null
+    nc: string | null
+    na: string | null
+  }
+
+  export type ElementosEsenciales_DetCountAggregateOutputType = {
+    id: number
+    cabId: number
+    aspecto: number
+    observacionesOMedioDeVerificacion: number
+    co: number
+    nc: number
+    na: number
+    _all: number
+  }
+
+
+  export type ElementosEsenciales_DetMinAggregateInputType = {
+    id?: true
+    cabId?: true
+    aspecto?: true
+    observacionesOMedioDeVerificacion?: true
+    co?: true
+    nc?: true
+    na?: true
+  }
+
+  export type ElementosEsenciales_DetMaxAggregateInputType = {
+    id?: true
+    cabId?: true
+    aspecto?: true
+    observacionesOMedioDeVerificacion?: true
+    co?: true
+    nc?: true
+    na?: true
+  }
+
+  export type ElementosEsenciales_DetCountAggregateInputType = {
+    id?: true
+    cabId?: true
+    aspecto?: true
+    observacionesOMedioDeVerificacion?: true
+    co?: true
+    nc?: true
+    na?: true
+    _all?: true
+  }
+
+  export type ElementosEsenciales_DetAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ElementosEsenciales_Det to aggregate.
+     */
+    where?: ElementosEsenciales_DetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ElementosEsenciales_Dets to fetch.
+     */
+    orderBy?: ElementosEsenciales_DetOrderByWithRelationInput | ElementosEsenciales_DetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ElementosEsenciales_DetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ElementosEsenciales_Dets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ElementosEsenciales_Dets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ElementosEsenciales_Dets
+    **/
+    _count?: true | ElementosEsenciales_DetCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ElementosEsenciales_DetMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ElementosEsenciales_DetMaxAggregateInputType
+  }
+
+  export type GetElementosEsenciales_DetAggregateType<T extends ElementosEsenciales_DetAggregateArgs> = {
+        [P in keyof T & keyof AggregateElementosEsenciales_Det]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateElementosEsenciales_Det[P]>
+      : GetScalarType<T[P], AggregateElementosEsenciales_Det[P]>
+  }
+
+
+
+
+  export type ElementosEsenciales_DetGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ElementosEsenciales_DetWhereInput
+    orderBy?: ElementosEsenciales_DetOrderByWithAggregationInput | ElementosEsenciales_DetOrderByWithAggregationInput[]
+    by: ElementosEsenciales_DetScalarFieldEnum[] | ElementosEsenciales_DetScalarFieldEnum
+    having?: ElementosEsenciales_DetScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ElementosEsenciales_DetCountAggregateInputType | true
+    _min?: ElementosEsenciales_DetMinAggregateInputType
+    _max?: ElementosEsenciales_DetMaxAggregateInputType
+  }
+
+  export type ElementosEsenciales_DetGroupByOutputType = {
+    id: string
+    cabId: string
+    aspecto: string | null
+    observacionesOMedioDeVerificacion: string | null
+    co: string | null
+    nc: string | null
+    na: string | null
+    _count: ElementosEsenciales_DetCountAggregateOutputType | null
+    _min: ElementosEsenciales_DetMinAggregateOutputType | null
+    _max: ElementosEsenciales_DetMaxAggregateOutputType | null
+  }
+
+  type GetElementosEsenciales_DetGroupByPayload<T extends ElementosEsenciales_DetGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ElementosEsenciales_DetGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ElementosEsenciales_DetGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ElementosEsenciales_DetGroupByOutputType[P]>
+            : GetScalarType<T[P], ElementosEsenciales_DetGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ElementosEsenciales_DetSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cabId?: boolean
+    aspecto?: boolean
+    observacionesOMedioDeVerificacion?: boolean
+    co?: boolean
+    nc?: boolean
+    na?: boolean
+    cab?: boolean | ElementosEsenciales_CabDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["elementosEsenciales_Det"]>
+
+  export type ElementosEsenciales_DetSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cabId?: boolean
+    aspecto?: boolean
+    observacionesOMedioDeVerificacion?: boolean
+    co?: boolean
+    nc?: boolean
+    na?: boolean
+    cab?: boolean | ElementosEsenciales_CabDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["elementosEsenciales_Det"]>
+
+  export type ElementosEsenciales_DetSelectScalar = {
+    id?: boolean
+    cabId?: boolean
+    aspecto?: boolean
+    observacionesOMedioDeVerificacion?: boolean
+    co?: boolean
+    nc?: boolean
+    na?: boolean
+  }
+
+  export type ElementosEsenciales_DetInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    cab?: boolean | ElementosEsenciales_CabDefaultArgs<ExtArgs>
+  }
+  export type ElementosEsenciales_DetIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    cab?: boolean | ElementosEsenciales_CabDefaultArgs<ExtArgs>
+  }
+
+  export type $ElementosEsenciales_DetPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ElementosEsenciales_Det"
+    objects: {
+      cab: Prisma.$ElementosEsenciales_CabPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      cabId: string
+      aspecto: string | null
+      observacionesOMedioDeVerificacion: string | null
+      co: string | null
+      nc: string | null
+      na: string | null
+    }, ExtArgs["result"]["elementosEsenciales_Det"]>
+    composites: {}
+  }
+
+  type ElementosEsenciales_DetGetPayload<S extends boolean | null | undefined | ElementosEsenciales_DetDefaultArgs> = $Result.GetResult<Prisma.$ElementosEsenciales_DetPayload, S>
+
+  type ElementosEsenciales_DetCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ElementosEsenciales_DetFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ElementosEsenciales_DetCountAggregateInputType | true
+    }
+
+  export interface ElementosEsenciales_DetDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ElementosEsenciales_Det'], meta: { name: 'ElementosEsenciales_Det' } }
+    /**
+     * Find zero or one ElementosEsenciales_Det that matches the filter.
+     * @param {ElementosEsenciales_DetFindUniqueArgs} args - Arguments to find a ElementosEsenciales_Det
+     * @example
+     * // Get one ElementosEsenciales_Det
+     * const elementosEsenciales_Det = await prisma.elementosEsenciales_Det.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ElementosEsenciales_DetFindUniqueArgs>(args: SelectSubset<T, ElementosEsenciales_DetFindUniqueArgs<ExtArgs>>): Prisma__ElementosEsenciales_DetClient<$Result.GetResult<Prisma.$ElementosEsenciales_DetPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one ElementosEsenciales_Det that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {ElementosEsenciales_DetFindUniqueOrThrowArgs} args - Arguments to find a ElementosEsenciales_Det
+     * @example
+     * // Get one ElementosEsenciales_Det
+     * const elementosEsenciales_Det = await prisma.elementosEsenciales_Det.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ElementosEsenciales_DetFindUniqueOrThrowArgs>(args: SelectSubset<T, ElementosEsenciales_DetFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ElementosEsenciales_DetClient<$Result.GetResult<Prisma.$ElementosEsenciales_DetPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first ElementosEsenciales_Det that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ElementosEsenciales_DetFindFirstArgs} args - Arguments to find a ElementosEsenciales_Det
+     * @example
+     * // Get one ElementosEsenciales_Det
+     * const elementosEsenciales_Det = await prisma.elementosEsenciales_Det.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ElementosEsenciales_DetFindFirstArgs>(args?: SelectSubset<T, ElementosEsenciales_DetFindFirstArgs<ExtArgs>>): Prisma__ElementosEsenciales_DetClient<$Result.GetResult<Prisma.$ElementosEsenciales_DetPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first ElementosEsenciales_Det that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ElementosEsenciales_DetFindFirstOrThrowArgs} args - Arguments to find a ElementosEsenciales_Det
+     * @example
+     * // Get one ElementosEsenciales_Det
+     * const elementosEsenciales_Det = await prisma.elementosEsenciales_Det.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ElementosEsenciales_DetFindFirstOrThrowArgs>(args?: SelectSubset<T, ElementosEsenciales_DetFindFirstOrThrowArgs<ExtArgs>>): Prisma__ElementosEsenciales_DetClient<$Result.GetResult<Prisma.$ElementosEsenciales_DetPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more ElementosEsenciales_Dets that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ElementosEsenciales_DetFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ElementosEsenciales_Dets
+     * const elementosEsenciales_Dets = await prisma.elementosEsenciales_Det.findMany()
+     * 
+     * // Get first 10 ElementosEsenciales_Dets
+     * const elementosEsenciales_Dets = await prisma.elementosEsenciales_Det.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const elementosEsenciales_DetWithIdOnly = await prisma.elementosEsenciales_Det.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ElementosEsenciales_DetFindManyArgs>(args?: SelectSubset<T, ElementosEsenciales_DetFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ElementosEsenciales_DetPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a ElementosEsenciales_Det.
+     * @param {ElementosEsenciales_DetCreateArgs} args - Arguments to create a ElementosEsenciales_Det.
+     * @example
+     * // Create one ElementosEsenciales_Det
+     * const ElementosEsenciales_Det = await prisma.elementosEsenciales_Det.create({
+     *   data: {
+     *     // ... data to create a ElementosEsenciales_Det
+     *   }
+     * })
+     * 
+     */
+    create<T extends ElementosEsenciales_DetCreateArgs>(args: SelectSubset<T, ElementosEsenciales_DetCreateArgs<ExtArgs>>): Prisma__ElementosEsenciales_DetClient<$Result.GetResult<Prisma.$ElementosEsenciales_DetPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many ElementosEsenciales_Dets.
+     * @param {ElementosEsenciales_DetCreateManyArgs} args - Arguments to create many ElementosEsenciales_Dets.
+     * @example
+     * // Create many ElementosEsenciales_Dets
+     * const elementosEsenciales_Det = await prisma.elementosEsenciales_Det.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ElementosEsenciales_DetCreateManyArgs>(args?: SelectSubset<T, ElementosEsenciales_DetCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ElementosEsenciales_Dets and returns the data saved in the database.
+     * @param {ElementosEsenciales_DetCreateManyAndReturnArgs} args - Arguments to create many ElementosEsenciales_Dets.
+     * @example
+     * // Create many ElementosEsenciales_Dets
+     * const elementosEsenciales_Det = await prisma.elementosEsenciales_Det.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ElementosEsenciales_Dets and only return the `id`
+     * const elementosEsenciales_DetWithIdOnly = await prisma.elementosEsenciales_Det.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ElementosEsenciales_DetCreateManyAndReturnArgs>(args?: SelectSubset<T, ElementosEsenciales_DetCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ElementosEsenciales_DetPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a ElementosEsenciales_Det.
+     * @param {ElementosEsenciales_DetDeleteArgs} args - Arguments to delete one ElementosEsenciales_Det.
+     * @example
+     * // Delete one ElementosEsenciales_Det
+     * const ElementosEsenciales_Det = await prisma.elementosEsenciales_Det.delete({
+     *   where: {
+     *     // ... filter to delete one ElementosEsenciales_Det
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ElementosEsenciales_DetDeleteArgs>(args: SelectSubset<T, ElementosEsenciales_DetDeleteArgs<ExtArgs>>): Prisma__ElementosEsenciales_DetClient<$Result.GetResult<Prisma.$ElementosEsenciales_DetPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one ElementosEsenciales_Det.
+     * @param {ElementosEsenciales_DetUpdateArgs} args - Arguments to update one ElementosEsenciales_Det.
+     * @example
+     * // Update one ElementosEsenciales_Det
+     * const elementosEsenciales_Det = await prisma.elementosEsenciales_Det.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ElementosEsenciales_DetUpdateArgs>(args: SelectSubset<T, ElementosEsenciales_DetUpdateArgs<ExtArgs>>): Prisma__ElementosEsenciales_DetClient<$Result.GetResult<Prisma.$ElementosEsenciales_DetPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more ElementosEsenciales_Dets.
+     * @param {ElementosEsenciales_DetDeleteManyArgs} args - Arguments to filter ElementosEsenciales_Dets to delete.
+     * @example
+     * // Delete a few ElementosEsenciales_Dets
+     * const { count } = await prisma.elementosEsenciales_Det.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ElementosEsenciales_DetDeleteManyArgs>(args?: SelectSubset<T, ElementosEsenciales_DetDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ElementosEsenciales_Dets.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ElementosEsenciales_DetUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ElementosEsenciales_Dets
+     * const elementosEsenciales_Det = await prisma.elementosEsenciales_Det.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ElementosEsenciales_DetUpdateManyArgs>(args: SelectSubset<T, ElementosEsenciales_DetUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ElementosEsenciales_Det.
+     * @param {ElementosEsenciales_DetUpsertArgs} args - Arguments to update or create a ElementosEsenciales_Det.
+     * @example
+     * // Update or create a ElementosEsenciales_Det
+     * const elementosEsenciales_Det = await prisma.elementosEsenciales_Det.upsert({
+     *   create: {
+     *     // ... data to create a ElementosEsenciales_Det
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ElementosEsenciales_Det we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ElementosEsenciales_DetUpsertArgs>(args: SelectSubset<T, ElementosEsenciales_DetUpsertArgs<ExtArgs>>): Prisma__ElementosEsenciales_DetClient<$Result.GetResult<Prisma.$ElementosEsenciales_DetPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of ElementosEsenciales_Dets.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ElementosEsenciales_DetCountArgs} args - Arguments to filter ElementosEsenciales_Dets to count.
+     * @example
+     * // Count the number of ElementosEsenciales_Dets
+     * const count = await prisma.elementosEsenciales_Det.count({
+     *   where: {
+     *     // ... the filter for the ElementosEsenciales_Dets we want to count
+     *   }
+     * })
+    **/
+    count<T extends ElementosEsenciales_DetCountArgs>(
+      args?: Subset<T, ElementosEsenciales_DetCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ElementosEsenciales_DetCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ElementosEsenciales_Det.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ElementosEsenciales_DetAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ElementosEsenciales_DetAggregateArgs>(args: Subset<T, ElementosEsenciales_DetAggregateArgs>): Prisma.PrismaPromise<GetElementosEsenciales_DetAggregateType<T>>
+
+    /**
+     * Group by ElementosEsenciales_Det.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ElementosEsenciales_DetGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ElementosEsenciales_DetGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ElementosEsenciales_DetGroupByArgs['orderBy'] }
+        : { orderBy?: ElementosEsenciales_DetGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ElementosEsenciales_DetGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetElementosEsenciales_DetGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ElementosEsenciales_Det model
+   */
+  readonly fields: ElementosEsenciales_DetFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ElementosEsenciales_Det.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ElementosEsenciales_DetClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    cab<T extends ElementosEsenciales_CabDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ElementosEsenciales_CabDefaultArgs<ExtArgs>>): Prisma__ElementosEsenciales_CabClient<$Result.GetResult<Prisma.$ElementosEsenciales_CabPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ElementosEsenciales_Det model
+   */ 
+  interface ElementosEsenciales_DetFieldRefs {
+    readonly id: FieldRef<"ElementosEsenciales_Det", 'String'>
+    readonly cabId: FieldRef<"ElementosEsenciales_Det", 'String'>
+    readonly aspecto: FieldRef<"ElementosEsenciales_Det", 'String'>
+    readonly observacionesOMedioDeVerificacion: FieldRef<"ElementosEsenciales_Det", 'String'>
+    readonly co: FieldRef<"ElementosEsenciales_Det", 'String'>
+    readonly nc: FieldRef<"ElementosEsenciales_Det", 'String'>
+    readonly na: FieldRef<"ElementosEsenciales_Det", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ElementosEsenciales_Det findUnique
+   */
+  export type ElementosEsenciales_DetFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElementosEsenciales_Det
+     */
+    select?: ElementosEsenciales_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ElementosEsenciales_DetInclude<ExtArgs> | null
+    /**
+     * Filter, which ElementosEsenciales_Det to fetch.
+     */
+    where: ElementosEsenciales_DetWhereUniqueInput
+  }
+
+  /**
+   * ElementosEsenciales_Det findUniqueOrThrow
+   */
+  export type ElementosEsenciales_DetFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElementosEsenciales_Det
+     */
+    select?: ElementosEsenciales_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ElementosEsenciales_DetInclude<ExtArgs> | null
+    /**
+     * Filter, which ElementosEsenciales_Det to fetch.
+     */
+    where: ElementosEsenciales_DetWhereUniqueInput
+  }
+
+  /**
+   * ElementosEsenciales_Det findFirst
+   */
+  export type ElementosEsenciales_DetFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElementosEsenciales_Det
+     */
+    select?: ElementosEsenciales_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ElementosEsenciales_DetInclude<ExtArgs> | null
+    /**
+     * Filter, which ElementosEsenciales_Det to fetch.
+     */
+    where?: ElementosEsenciales_DetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ElementosEsenciales_Dets to fetch.
+     */
+    orderBy?: ElementosEsenciales_DetOrderByWithRelationInput | ElementosEsenciales_DetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ElementosEsenciales_Dets.
+     */
+    cursor?: ElementosEsenciales_DetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ElementosEsenciales_Dets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ElementosEsenciales_Dets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ElementosEsenciales_Dets.
+     */
+    distinct?: ElementosEsenciales_DetScalarFieldEnum | ElementosEsenciales_DetScalarFieldEnum[]
+  }
+
+  /**
+   * ElementosEsenciales_Det findFirstOrThrow
+   */
+  export type ElementosEsenciales_DetFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElementosEsenciales_Det
+     */
+    select?: ElementosEsenciales_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ElementosEsenciales_DetInclude<ExtArgs> | null
+    /**
+     * Filter, which ElementosEsenciales_Det to fetch.
+     */
+    where?: ElementosEsenciales_DetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ElementosEsenciales_Dets to fetch.
+     */
+    orderBy?: ElementosEsenciales_DetOrderByWithRelationInput | ElementosEsenciales_DetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ElementosEsenciales_Dets.
+     */
+    cursor?: ElementosEsenciales_DetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ElementosEsenciales_Dets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ElementosEsenciales_Dets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ElementosEsenciales_Dets.
+     */
+    distinct?: ElementosEsenciales_DetScalarFieldEnum | ElementosEsenciales_DetScalarFieldEnum[]
+  }
+
+  /**
+   * ElementosEsenciales_Det findMany
+   */
+  export type ElementosEsenciales_DetFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElementosEsenciales_Det
+     */
+    select?: ElementosEsenciales_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ElementosEsenciales_DetInclude<ExtArgs> | null
+    /**
+     * Filter, which ElementosEsenciales_Dets to fetch.
+     */
+    where?: ElementosEsenciales_DetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ElementosEsenciales_Dets to fetch.
+     */
+    orderBy?: ElementosEsenciales_DetOrderByWithRelationInput | ElementosEsenciales_DetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ElementosEsenciales_Dets.
+     */
+    cursor?: ElementosEsenciales_DetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ElementosEsenciales_Dets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ElementosEsenciales_Dets.
+     */
+    skip?: number
+    distinct?: ElementosEsenciales_DetScalarFieldEnum | ElementosEsenciales_DetScalarFieldEnum[]
+  }
+
+  /**
+   * ElementosEsenciales_Det create
+   */
+  export type ElementosEsenciales_DetCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElementosEsenciales_Det
+     */
+    select?: ElementosEsenciales_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ElementosEsenciales_DetInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ElementosEsenciales_Det.
+     */
+    data: XOR<ElementosEsenciales_DetCreateInput, ElementosEsenciales_DetUncheckedCreateInput>
+  }
+
+  /**
+   * ElementosEsenciales_Det createMany
+   */
+  export type ElementosEsenciales_DetCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ElementosEsenciales_Dets.
+     */
+    data: ElementosEsenciales_DetCreateManyInput | ElementosEsenciales_DetCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ElementosEsenciales_Det createManyAndReturn
+   */
+  export type ElementosEsenciales_DetCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElementosEsenciales_Det
+     */
+    select?: ElementosEsenciales_DetSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many ElementosEsenciales_Dets.
+     */
+    data: ElementosEsenciales_DetCreateManyInput | ElementosEsenciales_DetCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ElementosEsenciales_DetIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ElementosEsenciales_Det update
+   */
+  export type ElementosEsenciales_DetUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElementosEsenciales_Det
+     */
+    select?: ElementosEsenciales_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ElementosEsenciales_DetInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ElementosEsenciales_Det.
+     */
+    data: XOR<ElementosEsenciales_DetUpdateInput, ElementosEsenciales_DetUncheckedUpdateInput>
+    /**
+     * Choose, which ElementosEsenciales_Det to update.
+     */
+    where: ElementosEsenciales_DetWhereUniqueInput
+  }
+
+  /**
+   * ElementosEsenciales_Det updateMany
+   */
+  export type ElementosEsenciales_DetUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ElementosEsenciales_Dets.
+     */
+    data: XOR<ElementosEsenciales_DetUpdateManyMutationInput, ElementosEsenciales_DetUncheckedUpdateManyInput>
+    /**
+     * Filter which ElementosEsenciales_Dets to update
+     */
+    where?: ElementosEsenciales_DetWhereInput
+  }
+
+  /**
+   * ElementosEsenciales_Det upsert
+   */
+  export type ElementosEsenciales_DetUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElementosEsenciales_Det
+     */
+    select?: ElementosEsenciales_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ElementosEsenciales_DetInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ElementosEsenciales_Det to update in case it exists.
+     */
+    where: ElementosEsenciales_DetWhereUniqueInput
+    /**
+     * In case the ElementosEsenciales_Det found by the `where` argument doesn't exist, create a new ElementosEsenciales_Det with this data.
+     */
+    create: XOR<ElementosEsenciales_DetCreateInput, ElementosEsenciales_DetUncheckedCreateInput>
+    /**
+     * In case the ElementosEsenciales_Det was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ElementosEsenciales_DetUpdateInput, ElementosEsenciales_DetUncheckedUpdateInput>
+  }
+
+  /**
+   * ElementosEsenciales_Det delete
+   */
+  export type ElementosEsenciales_DetDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElementosEsenciales_Det
+     */
+    select?: ElementosEsenciales_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ElementosEsenciales_DetInclude<ExtArgs> | null
+    /**
+     * Filter which ElementosEsenciales_Det to delete.
+     */
+    where: ElementosEsenciales_DetWhereUniqueInput
+  }
+
+  /**
+   * ElementosEsenciales_Det deleteMany
+   */
+  export type ElementosEsenciales_DetDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ElementosEsenciales_Dets to delete
+     */
+    where?: ElementosEsenciales_DetWhereInput
+  }
+
+  /**
+   * ElementosEsenciales_Det without action
+   */
+  export type ElementosEsenciales_DetDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElementosEsenciales_Det
+     */
+    select?: ElementosEsenciales_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ElementosEsenciales_DetInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model UTM
+   */
+
+  export type AggregateUTM = {
+    _count: UTMCountAggregateOutputType | null
+    _avg: UTMAvgAggregateOutputType | null
+    _sum: UTMSumAggregateOutputType | null
+    _min: UTMMinAggregateOutputType | null
+    _max: UTMMaxAggregateOutputType | null
+  }
+
+  export type UTMAvgAggregateOutputType = {
+    anho: number | null
+    mes: number | null
+    monto: number | null
+  }
+
+  export type UTMSumAggregateOutputType = {
+    anho: number | null
+    mes: number | null
+    monto: number | null
+  }
+
+  export type UTMMinAggregateOutputType = {
+    id: string | null
+    anho: number | null
+    mes: number | null
+    monto: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UTMMaxAggregateOutputType = {
+    id: string | null
+    anho: number | null
+    mes: number | null
+    monto: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UTMCountAggregateOutputType = {
+    id: number
+    anho: number
+    mes: number
+    monto: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type UTMAvgAggregateInputType = {
+    anho?: true
+    mes?: true
+    monto?: true
+  }
+
+  export type UTMSumAggregateInputType = {
+    anho?: true
+    mes?: true
+    monto?: true
+  }
+
+  export type UTMMinAggregateInputType = {
+    id?: true
+    anho?: true
+    mes?: true
+    monto?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UTMMaxAggregateInputType = {
+    id?: true
+    anho?: true
+    mes?: true
+    monto?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UTMCountAggregateInputType = {
+    id?: true
+    anho?: true
+    mes?: true
+    monto?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type UTMAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UTM to aggregate.
+     */
+    where?: UTMWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UTMS to fetch.
+     */
+    orderBy?: UTMOrderByWithRelationInput | UTMOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UTMWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UTMS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UTMS.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UTMS
+    **/
+    _count?: true | UTMCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UTMAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UTMSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UTMMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UTMMaxAggregateInputType
+  }
+
+  export type GetUTMAggregateType<T extends UTMAggregateArgs> = {
+        [P in keyof T & keyof AggregateUTM]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUTM[P]>
+      : GetScalarType<T[P], AggregateUTM[P]>
+  }
+
+
+
+
+  export type UTMGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UTMWhereInput
+    orderBy?: UTMOrderByWithAggregationInput | UTMOrderByWithAggregationInput[]
+    by: UTMScalarFieldEnum[] | UTMScalarFieldEnum
+    having?: UTMScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UTMCountAggregateInputType | true
+    _avg?: UTMAvgAggregateInputType
+    _sum?: UTMSumAggregateInputType
+    _min?: UTMMinAggregateInputType
+    _max?: UTMMaxAggregateInputType
+  }
+
+  export type UTMGroupByOutputType = {
+    id: string
+    anho: number
+    mes: number
+    monto: number
+    createdAt: Date
+    updatedAt: Date
+    _count: UTMCountAggregateOutputType | null
+    _avg: UTMAvgAggregateOutputType | null
+    _sum: UTMSumAggregateOutputType | null
+    _min: UTMMinAggregateOutputType | null
+    _max: UTMMaxAggregateOutputType | null
+  }
+
+  type GetUTMGroupByPayload<T extends UTMGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UTMGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UTMGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UTMGroupByOutputType[P]>
+            : GetScalarType<T[P], UTMGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UTMSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    anho?: boolean
+    mes?: boolean
+    monto?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["uTM"]>
+
+  export type UTMSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    anho?: boolean
+    mes?: boolean
+    monto?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["uTM"]>
+
+  export type UTMSelectScalar = {
+    id?: boolean
+    anho?: boolean
+    mes?: boolean
+    monto?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type $UTMPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UTM"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      anho: number
+      mes: number
+      monto: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["uTM"]>
+    composites: {}
+  }
+
+  type UTMGetPayload<S extends boolean | null | undefined | UTMDefaultArgs> = $Result.GetResult<Prisma.$UTMPayload, S>
+
+  type UTMCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<UTMFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: UTMCountAggregateInputType | true
+    }
+
+  export interface UTMDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UTM'], meta: { name: 'UTM' } }
+    /**
+     * Find zero or one UTM that matches the filter.
+     * @param {UTMFindUniqueArgs} args - Arguments to find a UTM
+     * @example
+     * // Get one UTM
+     * const uTM = await prisma.uTM.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UTMFindUniqueArgs>(args: SelectSubset<T, UTMFindUniqueArgs<ExtArgs>>): Prisma__UTMClient<$Result.GetResult<Prisma.$UTMPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one UTM that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {UTMFindUniqueOrThrowArgs} args - Arguments to find a UTM
+     * @example
+     * // Get one UTM
+     * const uTM = await prisma.uTM.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UTMFindUniqueOrThrowArgs>(args: SelectSubset<T, UTMFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UTMClient<$Result.GetResult<Prisma.$UTMPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first UTM that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UTMFindFirstArgs} args - Arguments to find a UTM
+     * @example
+     * // Get one UTM
+     * const uTM = await prisma.uTM.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UTMFindFirstArgs>(args?: SelectSubset<T, UTMFindFirstArgs<ExtArgs>>): Prisma__UTMClient<$Result.GetResult<Prisma.$UTMPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first UTM that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UTMFindFirstOrThrowArgs} args - Arguments to find a UTM
+     * @example
+     * // Get one UTM
+     * const uTM = await prisma.uTM.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UTMFindFirstOrThrowArgs>(args?: SelectSubset<T, UTMFindFirstOrThrowArgs<ExtArgs>>): Prisma__UTMClient<$Result.GetResult<Prisma.$UTMPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more UTMS that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UTMFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UTMS
+     * const uTMS = await prisma.uTM.findMany()
+     * 
+     * // Get first 10 UTMS
+     * const uTMS = await prisma.uTM.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const uTMWithIdOnly = await prisma.uTM.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UTMFindManyArgs>(args?: SelectSubset<T, UTMFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UTMPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a UTM.
+     * @param {UTMCreateArgs} args - Arguments to create a UTM.
+     * @example
+     * // Create one UTM
+     * const UTM = await prisma.uTM.create({
+     *   data: {
+     *     // ... data to create a UTM
+     *   }
+     * })
+     * 
+     */
+    create<T extends UTMCreateArgs>(args: SelectSubset<T, UTMCreateArgs<ExtArgs>>): Prisma__UTMClient<$Result.GetResult<Prisma.$UTMPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many UTMS.
+     * @param {UTMCreateManyArgs} args - Arguments to create many UTMS.
+     * @example
+     * // Create many UTMS
+     * const uTM = await prisma.uTM.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UTMCreateManyArgs>(args?: SelectSubset<T, UTMCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UTMS and returns the data saved in the database.
+     * @param {UTMCreateManyAndReturnArgs} args - Arguments to create many UTMS.
+     * @example
+     * // Create many UTMS
+     * const uTM = await prisma.uTM.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UTMS and only return the `id`
+     * const uTMWithIdOnly = await prisma.uTM.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UTMCreateManyAndReturnArgs>(args?: SelectSubset<T, UTMCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UTMPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a UTM.
+     * @param {UTMDeleteArgs} args - Arguments to delete one UTM.
+     * @example
+     * // Delete one UTM
+     * const UTM = await prisma.uTM.delete({
+     *   where: {
+     *     // ... filter to delete one UTM
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UTMDeleteArgs>(args: SelectSubset<T, UTMDeleteArgs<ExtArgs>>): Prisma__UTMClient<$Result.GetResult<Prisma.$UTMPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one UTM.
+     * @param {UTMUpdateArgs} args - Arguments to update one UTM.
+     * @example
+     * // Update one UTM
+     * const uTM = await prisma.uTM.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UTMUpdateArgs>(args: SelectSubset<T, UTMUpdateArgs<ExtArgs>>): Prisma__UTMClient<$Result.GetResult<Prisma.$UTMPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more UTMS.
+     * @param {UTMDeleteManyArgs} args - Arguments to filter UTMS to delete.
+     * @example
+     * // Delete a few UTMS
+     * const { count } = await prisma.uTM.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UTMDeleteManyArgs>(args?: SelectSubset<T, UTMDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UTMS.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UTMUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UTMS
+     * const uTM = await prisma.uTM.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UTMUpdateManyArgs>(args: SelectSubset<T, UTMUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one UTM.
+     * @param {UTMUpsertArgs} args - Arguments to update or create a UTM.
+     * @example
+     * // Update or create a UTM
+     * const uTM = await prisma.uTM.upsert({
+     *   create: {
+     *     // ... data to create a UTM
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UTM we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UTMUpsertArgs>(args: SelectSubset<T, UTMUpsertArgs<ExtArgs>>): Prisma__UTMClient<$Result.GetResult<Prisma.$UTMPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of UTMS.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UTMCountArgs} args - Arguments to filter UTMS to count.
+     * @example
+     * // Count the number of UTMS
+     * const count = await prisma.uTM.count({
+     *   where: {
+     *     // ... the filter for the UTMS we want to count
+     *   }
+     * })
+    **/
+    count<T extends UTMCountArgs>(
+      args?: Subset<T, UTMCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UTMCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UTM.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UTMAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UTMAggregateArgs>(args: Subset<T, UTMAggregateArgs>): Prisma.PrismaPromise<GetUTMAggregateType<T>>
+
+    /**
+     * Group by UTM.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UTMGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UTMGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UTMGroupByArgs['orderBy'] }
+        : { orderBy?: UTMGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UTMGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUTMGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UTM model
+   */
+  readonly fields: UTMFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UTM.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UTMClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UTM model
+   */ 
+  interface UTMFieldRefs {
+    readonly id: FieldRef<"UTM", 'String'>
+    readonly anho: FieldRef<"UTM", 'Int'>
+    readonly mes: FieldRef<"UTM", 'Int'>
+    readonly monto: FieldRef<"UTM", 'Float'>
+    readonly createdAt: FieldRef<"UTM", 'DateTime'>
+    readonly updatedAt: FieldRef<"UTM", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UTM findUnique
+   */
+  export type UTMFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UTM
+     */
+    select?: UTMSelect<ExtArgs> | null
+    /**
+     * Filter, which UTM to fetch.
+     */
+    where: UTMWhereUniqueInput
+  }
+
+  /**
+   * UTM findUniqueOrThrow
+   */
+  export type UTMFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UTM
+     */
+    select?: UTMSelect<ExtArgs> | null
+    /**
+     * Filter, which UTM to fetch.
+     */
+    where: UTMWhereUniqueInput
+  }
+
+  /**
+   * UTM findFirst
+   */
+  export type UTMFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UTM
+     */
+    select?: UTMSelect<ExtArgs> | null
+    /**
+     * Filter, which UTM to fetch.
+     */
+    where?: UTMWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UTMS to fetch.
+     */
+    orderBy?: UTMOrderByWithRelationInput | UTMOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UTMS.
+     */
+    cursor?: UTMWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UTMS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UTMS.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UTMS.
+     */
+    distinct?: UTMScalarFieldEnum | UTMScalarFieldEnum[]
+  }
+
+  /**
+   * UTM findFirstOrThrow
+   */
+  export type UTMFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UTM
+     */
+    select?: UTMSelect<ExtArgs> | null
+    /**
+     * Filter, which UTM to fetch.
+     */
+    where?: UTMWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UTMS to fetch.
+     */
+    orderBy?: UTMOrderByWithRelationInput | UTMOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UTMS.
+     */
+    cursor?: UTMWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UTMS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UTMS.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UTMS.
+     */
+    distinct?: UTMScalarFieldEnum | UTMScalarFieldEnum[]
+  }
+
+  /**
+   * UTM findMany
+   */
+  export type UTMFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UTM
+     */
+    select?: UTMSelect<ExtArgs> | null
+    /**
+     * Filter, which UTMS to fetch.
+     */
+    where?: UTMWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UTMS to fetch.
+     */
+    orderBy?: UTMOrderByWithRelationInput | UTMOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UTMS.
+     */
+    cursor?: UTMWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UTMS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UTMS.
+     */
+    skip?: number
+    distinct?: UTMScalarFieldEnum | UTMScalarFieldEnum[]
+  }
+
+  /**
+   * UTM create
+   */
+  export type UTMCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UTM
+     */
+    select?: UTMSelect<ExtArgs> | null
+    /**
+     * The data needed to create a UTM.
+     */
+    data: XOR<UTMCreateInput, UTMUncheckedCreateInput>
+  }
+
+  /**
+   * UTM createMany
+   */
+  export type UTMCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UTMS.
+     */
+    data: UTMCreateManyInput | UTMCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * UTM createManyAndReturn
+   */
+  export type UTMCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UTM
+     */
+    select?: UTMSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many UTMS.
+     */
+    data: UTMCreateManyInput | UTMCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * UTM update
+   */
+  export type UTMUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UTM
+     */
+    select?: UTMSelect<ExtArgs> | null
+    /**
+     * The data needed to update a UTM.
+     */
+    data: XOR<UTMUpdateInput, UTMUncheckedUpdateInput>
+    /**
+     * Choose, which UTM to update.
+     */
+    where: UTMWhereUniqueInput
+  }
+
+  /**
+   * UTM updateMany
+   */
+  export type UTMUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UTMS.
+     */
+    data: XOR<UTMUpdateManyMutationInput, UTMUncheckedUpdateManyInput>
+    /**
+     * Filter which UTMS to update
+     */
+    where?: UTMWhereInput
+  }
+
+  /**
+   * UTM upsert
+   */
+  export type UTMUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UTM
+     */
+    select?: UTMSelect<ExtArgs> | null
+    /**
+     * The filter to search for the UTM to update in case it exists.
+     */
+    where: UTMWhereUniqueInput
+    /**
+     * In case the UTM found by the `where` argument doesn't exist, create a new UTM with this data.
+     */
+    create: XOR<UTMCreateInput, UTMUncheckedCreateInput>
+    /**
+     * In case the UTM was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UTMUpdateInput, UTMUncheckedUpdateInput>
+  }
+
+  /**
+   * UTM delete
+   */
+  export type UTMDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UTM
+     */
+    select?: UTMSelect<ExtArgs> | null
+    /**
+     * Filter which UTM to delete.
+     */
+    where: UTMWhereUniqueInput
+  }
+
+  /**
+   * UTM deleteMany
+   */
+  export type UTMDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UTMS to delete
+     */
+    where?: UTMWhereInput
+  }
+
+  /**
+   * UTM without action
+   */
+  export type UTMDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UTM
+     */
+    select?: UTMSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Multas_Elementos_Esenciales_Cab
+   */
+
+  export type AggregateMultas_Elementos_Esenciales_Cab = {
+    _count: Multas_Elementos_Esenciales_CabCountAggregateOutputType | null
+    _avg: Multas_Elementos_Esenciales_CabAvgAggregateOutputType | null
+    _sum: Multas_Elementos_Esenciales_CabSumAggregateOutputType | null
+    _min: Multas_Elementos_Esenciales_CabMinAggregateOutputType | null
+    _max: Multas_Elementos_Esenciales_CabMaxAggregateOutputType | null
+  }
+
+  export type Multas_Elementos_Esenciales_CabAvgAggregateOutputType = {
+    rbd: number | null
+    montoTotalCalculado: number | null
+  }
+
+  export type Multas_Elementos_Esenciales_CabSumAggregateOutputType = {
+    rbd: number | null
+    montoTotalCalculado: number | null
+  }
+
+  export type Multas_Elementos_Esenciales_CabMinAggregateOutputType = {
+    id: string | null
+    folioOriginal: string | null
+    rbd: number | null
+    fechaSupervision: Date | null
+    licitacion: string | null
+    montoTotalCalculado: number | null
+    estadoCalculo: string | null
+    usuarioCalculo: string | null
+    fechaCalculo: Date | null
+  }
+
+  export type Multas_Elementos_Esenciales_CabMaxAggregateOutputType = {
+    id: string | null
+    folioOriginal: string | null
+    rbd: number | null
+    fechaSupervision: Date | null
+    licitacion: string | null
+    montoTotalCalculado: number | null
+    estadoCalculo: string | null
+    usuarioCalculo: string | null
+    fechaCalculo: Date | null
+  }
+
+  export type Multas_Elementos_Esenciales_CabCountAggregateOutputType = {
+    id: number
+    folioOriginal: number
+    rbd: number
+    fechaSupervision: number
+    licitacion: number
+    montoTotalCalculado: number
+    estadoCalculo: number
+    usuarioCalculo: number
+    fechaCalculo: number
+    _all: number
+  }
+
+
+  export type Multas_Elementos_Esenciales_CabAvgAggregateInputType = {
+    rbd?: true
+    montoTotalCalculado?: true
+  }
+
+  export type Multas_Elementos_Esenciales_CabSumAggregateInputType = {
+    rbd?: true
+    montoTotalCalculado?: true
+  }
+
+  export type Multas_Elementos_Esenciales_CabMinAggregateInputType = {
+    id?: true
+    folioOriginal?: true
+    rbd?: true
+    fechaSupervision?: true
+    licitacion?: true
+    montoTotalCalculado?: true
+    estadoCalculo?: true
+    usuarioCalculo?: true
+    fechaCalculo?: true
+  }
+
+  export type Multas_Elementos_Esenciales_CabMaxAggregateInputType = {
+    id?: true
+    folioOriginal?: true
+    rbd?: true
+    fechaSupervision?: true
+    licitacion?: true
+    montoTotalCalculado?: true
+    estadoCalculo?: true
+    usuarioCalculo?: true
+    fechaCalculo?: true
+  }
+
+  export type Multas_Elementos_Esenciales_CabCountAggregateInputType = {
+    id?: true
+    folioOriginal?: true
+    rbd?: true
+    fechaSupervision?: true
+    licitacion?: true
+    montoTotalCalculado?: true
+    estadoCalculo?: true
+    usuarioCalculo?: true
+    fechaCalculo?: true
+    _all?: true
+  }
+
+  export type Multas_Elementos_Esenciales_CabAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Elementos_Esenciales_Cab to aggregate.
+     */
+    where?: Multas_Elementos_Esenciales_CabWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Elementos_Esenciales_Cabs to fetch.
+     */
+    orderBy?: Multas_Elementos_Esenciales_CabOrderByWithRelationInput | Multas_Elementos_Esenciales_CabOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Multas_Elementos_Esenciales_CabWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Elementos_Esenciales_Cabs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Elementos_Esenciales_Cabs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Multas_Elementos_Esenciales_Cabs
+    **/
+    _count?: true | Multas_Elementos_Esenciales_CabCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Multas_Elementos_Esenciales_CabAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Multas_Elementos_Esenciales_CabSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Multas_Elementos_Esenciales_CabMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Multas_Elementos_Esenciales_CabMaxAggregateInputType
+  }
+
+  export type GetMultas_Elementos_Esenciales_CabAggregateType<T extends Multas_Elementos_Esenciales_CabAggregateArgs> = {
+        [P in keyof T & keyof AggregateMultas_Elementos_Esenciales_Cab]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMultas_Elementos_Esenciales_Cab[P]>
+      : GetScalarType<T[P], AggregateMultas_Elementos_Esenciales_Cab[P]>
+  }
+
+
+
+
+  export type Multas_Elementos_Esenciales_CabGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_Elementos_Esenciales_CabWhereInput
+    orderBy?: Multas_Elementos_Esenciales_CabOrderByWithAggregationInput | Multas_Elementos_Esenciales_CabOrderByWithAggregationInput[]
+    by: Multas_Elementos_Esenciales_CabScalarFieldEnum[] | Multas_Elementos_Esenciales_CabScalarFieldEnum
+    having?: Multas_Elementos_Esenciales_CabScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Multas_Elementos_Esenciales_CabCountAggregateInputType | true
+    _avg?: Multas_Elementos_Esenciales_CabAvgAggregateInputType
+    _sum?: Multas_Elementos_Esenciales_CabSumAggregateInputType
+    _min?: Multas_Elementos_Esenciales_CabMinAggregateInputType
+    _max?: Multas_Elementos_Esenciales_CabMaxAggregateInputType
+  }
+
+  export type Multas_Elementos_Esenciales_CabGroupByOutputType = {
+    id: string
+    folioOriginal: string
+    rbd: number
+    fechaSupervision: Date
+    licitacion: string | null
+    montoTotalCalculado: number
+    estadoCalculo: string
+    usuarioCalculo: string
+    fechaCalculo: Date
+    _count: Multas_Elementos_Esenciales_CabCountAggregateOutputType | null
+    _avg: Multas_Elementos_Esenciales_CabAvgAggregateOutputType | null
+    _sum: Multas_Elementos_Esenciales_CabSumAggregateOutputType | null
+    _min: Multas_Elementos_Esenciales_CabMinAggregateOutputType | null
+    _max: Multas_Elementos_Esenciales_CabMaxAggregateOutputType | null
+  }
+
+  type GetMultas_Elementos_Esenciales_CabGroupByPayload<T extends Multas_Elementos_Esenciales_CabGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Multas_Elementos_Esenciales_CabGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Multas_Elementos_Esenciales_CabGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Multas_Elementos_Esenciales_CabGroupByOutputType[P]>
+            : GetScalarType<T[P], Multas_Elementos_Esenciales_CabGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Multas_Elementos_Esenciales_CabSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    folioOriginal?: boolean
+    rbd?: boolean
+    fechaSupervision?: boolean
+    licitacion?: boolean
+    montoTotalCalculado?: boolean
+    estadoCalculo?: boolean
+    usuarioCalculo?: boolean
+    fechaCalculo?: boolean
+    detalles?: boolean | Multas_Elementos_Esenciales_Cab$detallesArgs<ExtArgs>
+    _count?: boolean | Multas_Elementos_Esenciales_CabCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["multas_Elementos_Esenciales_Cab"]>
+
+  export type Multas_Elementos_Esenciales_CabSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    folioOriginal?: boolean
+    rbd?: boolean
+    fechaSupervision?: boolean
+    licitacion?: boolean
+    montoTotalCalculado?: boolean
+    estadoCalculo?: boolean
+    usuarioCalculo?: boolean
+    fechaCalculo?: boolean
+  }, ExtArgs["result"]["multas_Elementos_Esenciales_Cab"]>
+
+  export type Multas_Elementos_Esenciales_CabSelectScalar = {
+    id?: boolean
+    folioOriginal?: boolean
+    rbd?: boolean
+    fechaSupervision?: boolean
+    licitacion?: boolean
+    montoTotalCalculado?: boolean
+    estadoCalculo?: boolean
+    usuarioCalculo?: boolean
+    fechaCalculo?: boolean
+  }
+
+  export type Multas_Elementos_Esenciales_CabInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    detalles?: boolean | Multas_Elementos_Esenciales_Cab$detallesArgs<ExtArgs>
+    _count?: boolean | Multas_Elementos_Esenciales_CabCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type Multas_Elementos_Esenciales_CabIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $Multas_Elementos_Esenciales_CabPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Multas_Elementos_Esenciales_Cab"
+    objects: {
+      detalles: Prisma.$Multas_Elementos_Esenciales_DetPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      folioOriginal: string
+      rbd: number
+      fechaSupervision: Date
+      licitacion: string | null
+      montoTotalCalculado: number
+      estadoCalculo: string
+      usuarioCalculo: string
+      fechaCalculo: Date
+    }, ExtArgs["result"]["multas_Elementos_Esenciales_Cab"]>
+    composites: {}
+  }
+
+  type Multas_Elementos_Esenciales_CabGetPayload<S extends boolean | null | undefined | Multas_Elementos_Esenciales_CabDefaultArgs> = $Result.GetResult<Prisma.$Multas_Elementos_Esenciales_CabPayload, S>
+
+  type Multas_Elementos_Esenciales_CabCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Multas_Elementos_Esenciales_CabFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Multas_Elementos_Esenciales_CabCountAggregateInputType | true
+    }
+
+  export interface Multas_Elementos_Esenciales_CabDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Multas_Elementos_Esenciales_Cab'], meta: { name: 'Multas_Elementos_Esenciales_Cab' } }
+    /**
+     * Find zero or one Multas_Elementos_Esenciales_Cab that matches the filter.
+     * @param {Multas_Elementos_Esenciales_CabFindUniqueArgs} args - Arguments to find a Multas_Elementos_Esenciales_Cab
+     * @example
+     * // Get one Multas_Elementos_Esenciales_Cab
+     * const multas_Elementos_Esenciales_Cab = await prisma.multas_Elementos_Esenciales_Cab.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Multas_Elementos_Esenciales_CabFindUniqueArgs>(args: SelectSubset<T, Multas_Elementos_Esenciales_CabFindUniqueArgs<ExtArgs>>): Prisma__Multas_Elementos_Esenciales_CabClient<$Result.GetResult<Prisma.$Multas_Elementos_Esenciales_CabPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Multas_Elementos_Esenciales_Cab that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Multas_Elementos_Esenciales_CabFindUniqueOrThrowArgs} args - Arguments to find a Multas_Elementos_Esenciales_Cab
+     * @example
+     * // Get one Multas_Elementos_Esenciales_Cab
+     * const multas_Elementos_Esenciales_Cab = await prisma.multas_Elementos_Esenciales_Cab.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Multas_Elementos_Esenciales_CabFindUniqueOrThrowArgs>(args: SelectSubset<T, Multas_Elementos_Esenciales_CabFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Multas_Elementos_Esenciales_CabClient<$Result.GetResult<Prisma.$Multas_Elementos_Esenciales_CabPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Multas_Elementos_Esenciales_Cab that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Elementos_Esenciales_CabFindFirstArgs} args - Arguments to find a Multas_Elementos_Esenciales_Cab
+     * @example
+     * // Get one Multas_Elementos_Esenciales_Cab
+     * const multas_Elementos_Esenciales_Cab = await prisma.multas_Elementos_Esenciales_Cab.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Multas_Elementos_Esenciales_CabFindFirstArgs>(args?: SelectSubset<T, Multas_Elementos_Esenciales_CabFindFirstArgs<ExtArgs>>): Prisma__Multas_Elementos_Esenciales_CabClient<$Result.GetResult<Prisma.$Multas_Elementos_Esenciales_CabPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Multas_Elementos_Esenciales_Cab that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Elementos_Esenciales_CabFindFirstOrThrowArgs} args - Arguments to find a Multas_Elementos_Esenciales_Cab
+     * @example
+     * // Get one Multas_Elementos_Esenciales_Cab
+     * const multas_Elementos_Esenciales_Cab = await prisma.multas_Elementos_Esenciales_Cab.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Multas_Elementos_Esenciales_CabFindFirstOrThrowArgs>(args?: SelectSubset<T, Multas_Elementos_Esenciales_CabFindFirstOrThrowArgs<ExtArgs>>): Prisma__Multas_Elementos_Esenciales_CabClient<$Result.GetResult<Prisma.$Multas_Elementos_Esenciales_CabPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Multas_Elementos_Esenciales_Cabs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Elementos_Esenciales_CabFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Multas_Elementos_Esenciales_Cabs
+     * const multas_Elementos_Esenciales_Cabs = await prisma.multas_Elementos_Esenciales_Cab.findMany()
+     * 
+     * // Get first 10 Multas_Elementos_Esenciales_Cabs
+     * const multas_Elementos_Esenciales_Cabs = await prisma.multas_Elementos_Esenciales_Cab.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const multas_Elementos_Esenciales_CabWithIdOnly = await prisma.multas_Elementos_Esenciales_Cab.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Multas_Elementos_Esenciales_CabFindManyArgs>(args?: SelectSubset<T, Multas_Elementos_Esenciales_CabFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Elementos_Esenciales_CabPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Multas_Elementos_Esenciales_Cab.
+     * @param {Multas_Elementos_Esenciales_CabCreateArgs} args - Arguments to create a Multas_Elementos_Esenciales_Cab.
+     * @example
+     * // Create one Multas_Elementos_Esenciales_Cab
+     * const Multas_Elementos_Esenciales_Cab = await prisma.multas_Elementos_Esenciales_Cab.create({
+     *   data: {
+     *     // ... data to create a Multas_Elementos_Esenciales_Cab
+     *   }
+     * })
+     * 
+     */
+    create<T extends Multas_Elementos_Esenciales_CabCreateArgs>(args: SelectSubset<T, Multas_Elementos_Esenciales_CabCreateArgs<ExtArgs>>): Prisma__Multas_Elementos_Esenciales_CabClient<$Result.GetResult<Prisma.$Multas_Elementos_Esenciales_CabPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Multas_Elementos_Esenciales_Cabs.
+     * @param {Multas_Elementos_Esenciales_CabCreateManyArgs} args - Arguments to create many Multas_Elementos_Esenciales_Cabs.
+     * @example
+     * // Create many Multas_Elementos_Esenciales_Cabs
+     * const multas_Elementos_Esenciales_Cab = await prisma.multas_Elementos_Esenciales_Cab.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Multas_Elementos_Esenciales_CabCreateManyArgs>(args?: SelectSubset<T, Multas_Elementos_Esenciales_CabCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Multas_Elementos_Esenciales_Cabs and returns the data saved in the database.
+     * @param {Multas_Elementos_Esenciales_CabCreateManyAndReturnArgs} args - Arguments to create many Multas_Elementos_Esenciales_Cabs.
+     * @example
+     * // Create many Multas_Elementos_Esenciales_Cabs
+     * const multas_Elementos_Esenciales_Cab = await prisma.multas_Elementos_Esenciales_Cab.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Multas_Elementos_Esenciales_Cabs and only return the `id`
+     * const multas_Elementos_Esenciales_CabWithIdOnly = await prisma.multas_Elementos_Esenciales_Cab.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Multas_Elementos_Esenciales_CabCreateManyAndReturnArgs>(args?: SelectSubset<T, Multas_Elementos_Esenciales_CabCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Elementos_Esenciales_CabPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Multas_Elementos_Esenciales_Cab.
+     * @param {Multas_Elementos_Esenciales_CabDeleteArgs} args - Arguments to delete one Multas_Elementos_Esenciales_Cab.
+     * @example
+     * // Delete one Multas_Elementos_Esenciales_Cab
+     * const Multas_Elementos_Esenciales_Cab = await prisma.multas_Elementos_Esenciales_Cab.delete({
+     *   where: {
+     *     // ... filter to delete one Multas_Elementos_Esenciales_Cab
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Multas_Elementos_Esenciales_CabDeleteArgs>(args: SelectSubset<T, Multas_Elementos_Esenciales_CabDeleteArgs<ExtArgs>>): Prisma__Multas_Elementos_Esenciales_CabClient<$Result.GetResult<Prisma.$Multas_Elementos_Esenciales_CabPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Multas_Elementos_Esenciales_Cab.
+     * @param {Multas_Elementos_Esenciales_CabUpdateArgs} args - Arguments to update one Multas_Elementos_Esenciales_Cab.
+     * @example
+     * // Update one Multas_Elementos_Esenciales_Cab
+     * const multas_Elementos_Esenciales_Cab = await prisma.multas_Elementos_Esenciales_Cab.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Multas_Elementos_Esenciales_CabUpdateArgs>(args: SelectSubset<T, Multas_Elementos_Esenciales_CabUpdateArgs<ExtArgs>>): Prisma__Multas_Elementos_Esenciales_CabClient<$Result.GetResult<Prisma.$Multas_Elementos_Esenciales_CabPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Multas_Elementos_Esenciales_Cabs.
+     * @param {Multas_Elementos_Esenciales_CabDeleteManyArgs} args - Arguments to filter Multas_Elementos_Esenciales_Cabs to delete.
+     * @example
+     * // Delete a few Multas_Elementos_Esenciales_Cabs
+     * const { count } = await prisma.multas_Elementos_Esenciales_Cab.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Multas_Elementos_Esenciales_CabDeleteManyArgs>(args?: SelectSubset<T, Multas_Elementos_Esenciales_CabDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Multas_Elementos_Esenciales_Cabs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Elementos_Esenciales_CabUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Multas_Elementos_Esenciales_Cabs
+     * const multas_Elementos_Esenciales_Cab = await prisma.multas_Elementos_Esenciales_Cab.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Multas_Elementos_Esenciales_CabUpdateManyArgs>(args: SelectSubset<T, Multas_Elementos_Esenciales_CabUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Multas_Elementos_Esenciales_Cab.
+     * @param {Multas_Elementos_Esenciales_CabUpsertArgs} args - Arguments to update or create a Multas_Elementos_Esenciales_Cab.
+     * @example
+     * // Update or create a Multas_Elementos_Esenciales_Cab
+     * const multas_Elementos_Esenciales_Cab = await prisma.multas_Elementos_Esenciales_Cab.upsert({
+     *   create: {
+     *     // ... data to create a Multas_Elementos_Esenciales_Cab
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Multas_Elementos_Esenciales_Cab we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Multas_Elementos_Esenciales_CabUpsertArgs>(args: SelectSubset<T, Multas_Elementos_Esenciales_CabUpsertArgs<ExtArgs>>): Prisma__Multas_Elementos_Esenciales_CabClient<$Result.GetResult<Prisma.$Multas_Elementos_Esenciales_CabPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Multas_Elementos_Esenciales_Cabs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Elementos_Esenciales_CabCountArgs} args - Arguments to filter Multas_Elementos_Esenciales_Cabs to count.
+     * @example
+     * // Count the number of Multas_Elementos_Esenciales_Cabs
+     * const count = await prisma.multas_Elementos_Esenciales_Cab.count({
+     *   where: {
+     *     // ... the filter for the Multas_Elementos_Esenciales_Cabs we want to count
+     *   }
+     * })
+    **/
+    count<T extends Multas_Elementos_Esenciales_CabCountArgs>(
+      args?: Subset<T, Multas_Elementos_Esenciales_CabCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Multas_Elementos_Esenciales_CabCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Multas_Elementos_Esenciales_Cab.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Elementos_Esenciales_CabAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Multas_Elementos_Esenciales_CabAggregateArgs>(args: Subset<T, Multas_Elementos_Esenciales_CabAggregateArgs>): Prisma.PrismaPromise<GetMultas_Elementos_Esenciales_CabAggregateType<T>>
+
+    /**
+     * Group by Multas_Elementos_Esenciales_Cab.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Elementos_Esenciales_CabGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Multas_Elementos_Esenciales_CabGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Multas_Elementos_Esenciales_CabGroupByArgs['orderBy'] }
+        : { orderBy?: Multas_Elementos_Esenciales_CabGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Multas_Elementos_Esenciales_CabGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMultas_Elementos_Esenciales_CabGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Multas_Elementos_Esenciales_Cab model
+   */
+  readonly fields: Multas_Elementos_Esenciales_CabFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Multas_Elementos_Esenciales_Cab.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Multas_Elementos_Esenciales_CabClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    detalles<T extends Multas_Elementos_Esenciales_Cab$detallesArgs<ExtArgs> = {}>(args?: Subset<T, Multas_Elementos_Esenciales_Cab$detallesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Elementos_Esenciales_DetPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Multas_Elementos_Esenciales_Cab model
+   */ 
+  interface Multas_Elementos_Esenciales_CabFieldRefs {
+    readonly id: FieldRef<"Multas_Elementos_Esenciales_Cab", 'String'>
+    readonly folioOriginal: FieldRef<"Multas_Elementos_Esenciales_Cab", 'String'>
+    readonly rbd: FieldRef<"Multas_Elementos_Esenciales_Cab", 'Int'>
+    readonly fechaSupervision: FieldRef<"Multas_Elementos_Esenciales_Cab", 'DateTime'>
+    readonly licitacion: FieldRef<"Multas_Elementos_Esenciales_Cab", 'String'>
+    readonly montoTotalCalculado: FieldRef<"Multas_Elementos_Esenciales_Cab", 'Float'>
+    readonly estadoCalculo: FieldRef<"Multas_Elementos_Esenciales_Cab", 'String'>
+    readonly usuarioCalculo: FieldRef<"Multas_Elementos_Esenciales_Cab", 'String'>
+    readonly fechaCalculo: FieldRef<"Multas_Elementos_Esenciales_Cab", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Multas_Elementos_Esenciales_Cab findUnique
+   */
+  export type Multas_Elementos_Esenciales_CabFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Elementos_Esenciales_Cab
+     */
+    select?: Multas_Elementos_Esenciales_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Elementos_Esenciales_CabInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Elementos_Esenciales_Cab to fetch.
+     */
+    where: Multas_Elementos_Esenciales_CabWhereUniqueInput
+  }
+
+  /**
+   * Multas_Elementos_Esenciales_Cab findUniqueOrThrow
+   */
+  export type Multas_Elementos_Esenciales_CabFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Elementos_Esenciales_Cab
+     */
+    select?: Multas_Elementos_Esenciales_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Elementos_Esenciales_CabInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Elementos_Esenciales_Cab to fetch.
+     */
+    where: Multas_Elementos_Esenciales_CabWhereUniqueInput
+  }
+
+  /**
+   * Multas_Elementos_Esenciales_Cab findFirst
+   */
+  export type Multas_Elementos_Esenciales_CabFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Elementos_Esenciales_Cab
+     */
+    select?: Multas_Elementos_Esenciales_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Elementos_Esenciales_CabInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Elementos_Esenciales_Cab to fetch.
+     */
+    where?: Multas_Elementos_Esenciales_CabWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Elementos_Esenciales_Cabs to fetch.
+     */
+    orderBy?: Multas_Elementos_Esenciales_CabOrderByWithRelationInput | Multas_Elementos_Esenciales_CabOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Elementos_Esenciales_Cabs.
+     */
+    cursor?: Multas_Elementos_Esenciales_CabWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Elementos_Esenciales_Cabs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Elementos_Esenciales_Cabs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Elementos_Esenciales_Cabs.
+     */
+    distinct?: Multas_Elementos_Esenciales_CabScalarFieldEnum | Multas_Elementos_Esenciales_CabScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Elementos_Esenciales_Cab findFirstOrThrow
+   */
+  export type Multas_Elementos_Esenciales_CabFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Elementos_Esenciales_Cab
+     */
+    select?: Multas_Elementos_Esenciales_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Elementos_Esenciales_CabInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Elementos_Esenciales_Cab to fetch.
+     */
+    where?: Multas_Elementos_Esenciales_CabWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Elementos_Esenciales_Cabs to fetch.
+     */
+    orderBy?: Multas_Elementos_Esenciales_CabOrderByWithRelationInput | Multas_Elementos_Esenciales_CabOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Elementos_Esenciales_Cabs.
+     */
+    cursor?: Multas_Elementos_Esenciales_CabWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Elementos_Esenciales_Cabs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Elementos_Esenciales_Cabs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Elementos_Esenciales_Cabs.
+     */
+    distinct?: Multas_Elementos_Esenciales_CabScalarFieldEnum | Multas_Elementos_Esenciales_CabScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Elementos_Esenciales_Cab findMany
+   */
+  export type Multas_Elementos_Esenciales_CabFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Elementos_Esenciales_Cab
+     */
+    select?: Multas_Elementos_Esenciales_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Elementos_Esenciales_CabInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Elementos_Esenciales_Cabs to fetch.
+     */
+    where?: Multas_Elementos_Esenciales_CabWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Elementos_Esenciales_Cabs to fetch.
+     */
+    orderBy?: Multas_Elementos_Esenciales_CabOrderByWithRelationInput | Multas_Elementos_Esenciales_CabOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Multas_Elementos_Esenciales_Cabs.
+     */
+    cursor?: Multas_Elementos_Esenciales_CabWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Elementos_Esenciales_Cabs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Elementos_Esenciales_Cabs.
+     */
+    skip?: number
+    distinct?: Multas_Elementos_Esenciales_CabScalarFieldEnum | Multas_Elementos_Esenciales_CabScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Elementos_Esenciales_Cab create
+   */
+  export type Multas_Elementos_Esenciales_CabCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Elementos_Esenciales_Cab
+     */
+    select?: Multas_Elementos_Esenciales_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Elementos_Esenciales_CabInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Multas_Elementos_Esenciales_Cab.
+     */
+    data: XOR<Multas_Elementos_Esenciales_CabCreateInput, Multas_Elementos_Esenciales_CabUncheckedCreateInput>
+  }
+
+  /**
+   * Multas_Elementos_Esenciales_Cab createMany
+   */
+  export type Multas_Elementos_Esenciales_CabCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Multas_Elementos_Esenciales_Cabs.
+     */
+    data: Multas_Elementos_Esenciales_CabCreateManyInput | Multas_Elementos_Esenciales_CabCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Elementos_Esenciales_Cab createManyAndReturn
+   */
+  export type Multas_Elementos_Esenciales_CabCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Elementos_Esenciales_Cab
+     */
+    select?: Multas_Elementos_Esenciales_CabSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Multas_Elementos_Esenciales_Cabs.
+     */
+    data: Multas_Elementos_Esenciales_CabCreateManyInput | Multas_Elementos_Esenciales_CabCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Elementos_Esenciales_Cab update
+   */
+  export type Multas_Elementos_Esenciales_CabUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Elementos_Esenciales_Cab
+     */
+    select?: Multas_Elementos_Esenciales_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Elementos_Esenciales_CabInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Multas_Elementos_Esenciales_Cab.
+     */
+    data: XOR<Multas_Elementos_Esenciales_CabUpdateInput, Multas_Elementos_Esenciales_CabUncheckedUpdateInput>
+    /**
+     * Choose, which Multas_Elementos_Esenciales_Cab to update.
+     */
+    where: Multas_Elementos_Esenciales_CabWhereUniqueInput
+  }
+
+  /**
+   * Multas_Elementos_Esenciales_Cab updateMany
+   */
+  export type Multas_Elementos_Esenciales_CabUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Multas_Elementos_Esenciales_Cabs.
+     */
+    data: XOR<Multas_Elementos_Esenciales_CabUpdateManyMutationInput, Multas_Elementos_Esenciales_CabUncheckedUpdateManyInput>
+    /**
+     * Filter which Multas_Elementos_Esenciales_Cabs to update
+     */
+    where?: Multas_Elementos_Esenciales_CabWhereInput
+  }
+
+  /**
+   * Multas_Elementos_Esenciales_Cab upsert
+   */
+  export type Multas_Elementos_Esenciales_CabUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Elementos_Esenciales_Cab
+     */
+    select?: Multas_Elementos_Esenciales_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Elementos_Esenciales_CabInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Multas_Elementos_Esenciales_Cab to update in case it exists.
+     */
+    where: Multas_Elementos_Esenciales_CabWhereUniqueInput
+    /**
+     * In case the Multas_Elementos_Esenciales_Cab found by the `where` argument doesn't exist, create a new Multas_Elementos_Esenciales_Cab with this data.
+     */
+    create: XOR<Multas_Elementos_Esenciales_CabCreateInput, Multas_Elementos_Esenciales_CabUncheckedCreateInput>
+    /**
+     * In case the Multas_Elementos_Esenciales_Cab was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Multas_Elementos_Esenciales_CabUpdateInput, Multas_Elementos_Esenciales_CabUncheckedUpdateInput>
+  }
+
+  /**
+   * Multas_Elementos_Esenciales_Cab delete
+   */
+  export type Multas_Elementos_Esenciales_CabDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Elementos_Esenciales_Cab
+     */
+    select?: Multas_Elementos_Esenciales_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Elementos_Esenciales_CabInclude<ExtArgs> | null
+    /**
+     * Filter which Multas_Elementos_Esenciales_Cab to delete.
+     */
+    where: Multas_Elementos_Esenciales_CabWhereUniqueInput
+  }
+
+  /**
+   * Multas_Elementos_Esenciales_Cab deleteMany
+   */
+  export type Multas_Elementos_Esenciales_CabDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Elementos_Esenciales_Cabs to delete
+     */
+    where?: Multas_Elementos_Esenciales_CabWhereInput
+  }
+
+  /**
+   * Multas_Elementos_Esenciales_Cab.detalles
+   */
+  export type Multas_Elementos_Esenciales_Cab$detallesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Elementos_Esenciales_Det
+     */
+    select?: Multas_Elementos_Esenciales_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Elementos_Esenciales_DetInclude<ExtArgs> | null
+    where?: Multas_Elementos_Esenciales_DetWhereInput
+    orderBy?: Multas_Elementos_Esenciales_DetOrderByWithRelationInput | Multas_Elementos_Esenciales_DetOrderByWithRelationInput[]
+    cursor?: Multas_Elementos_Esenciales_DetWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Multas_Elementos_Esenciales_DetScalarFieldEnum | Multas_Elementos_Esenciales_DetScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Elementos_Esenciales_Cab without action
+   */
+  export type Multas_Elementos_Esenciales_CabDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Elementos_Esenciales_Cab
+     */
+    select?: Multas_Elementos_Esenciales_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Elementos_Esenciales_CabInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Multas_Elementos_Esenciales_Det
+   */
+
+  export type AggregateMultas_Elementos_Esenciales_Det = {
+    _count: Multas_Elementos_Esenciales_DetCountAggregateOutputType | null
+    _avg: Multas_Elementos_Esenciales_DetAvgAggregateOutputType | null
+    _sum: Multas_Elementos_Esenciales_DetSumAggregateOutputType | null
+    _min: Multas_Elementos_Esenciales_DetMinAggregateOutputType | null
+    _max: Multas_Elementos_Esenciales_DetMaxAggregateOutputType | null
+  }
+
+  export type Multas_Elementos_Esenciales_DetAvgAggregateOutputType = {
+    montoMulta: number | null
+  }
+
+  export type Multas_Elementos_Esenciales_DetSumAggregateOutputType = {
+    montoMulta: number | null
+  }
+
+  export type Multas_Elementos_Esenciales_DetMinAggregateOutputType = {
+    id: string | null
+    cabId: string | null
+    letraAspecto: string | null
+    descripcion: string | null
+    formulaAplicada: string | null
+    montoMulta: number | null
+    variablesUsadas: string | null
+  }
+
+  export type Multas_Elementos_Esenciales_DetMaxAggregateOutputType = {
+    id: string | null
+    cabId: string | null
+    letraAspecto: string | null
+    descripcion: string | null
+    formulaAplicada: string | null
+    montoMulta: number | null
+    variablesUsadas: string | null
+  }
+
+  export type Multas_Elementos_Esenciales_DetCountAggregateOutputType = {
+    id: number
+    cabId: number
+    letraAspecto: number
+    descripcion: number
+    formulaAplicada: number
+    montoMulta: number
+    variablesUsadas: number
+    _all: number
+  }
+
+
+  export type Multas_Elementos_Esenciales_DetAvgAggregateInputType = {
+    montoMulta?: true
+  }
+
+  export type Multas_Elementos_Esenciales_DetSumAggregateInputType = {
+    montoMulta?: true
+  }
+
+  export type Multas_Elementos_Esenciales_DetMinAggregateInputType = {
+    id?: true
+    cabId?: true
+    letraAspecto?: true
+    descripcion?: true
+    formulaAplicada?: true
+    montoMulta?: true
+    variablesUsadas?: true
+  }
+
+  export type Multas_Elementos_Esenciales_DetMaxAggregateInputType = {
+    id?: true
+    cabId?: true
+    letraAspecto?: true
+    descripcion?: true
+    formulaAplicada?: true
+    montoMulta?: true
+    variablesUsadas?: true
+  }
+
+  export type Multas_Elementos_Esenciales_DetCountAggregateInputType = {
+    id?: true
+    cabId?: true
+    letraAspecto?: true
+    descripcion?: true
+    formulaAplicada?: true
+    montoMulta?: true
+    variablesUsadas?: true
+    _all?: true
+  }
+
+  export type Multas_Elementos_Esenciales_DetAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Elementos_Esenciales_Det to aggregate.
+     */
+    where?: Multas_Elementos_Esenciales_DetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Elementos_Esenciales_Dets to fetch.
+     */
+    orderBy?: Multas_Elementos_Esenciales_DetOrderByWithRelationInput | Multas_Elementos_Esenciales_DetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Multas_Elementos_Esenciales_DetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Elementos_Esenciales_Dets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Elementos_Esenciales_Dets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Multas_Elementos_Esenciales_Dets
+    **/
+    _count?: true | Multas_Elementos_Esenciales_DetCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Multas_Elementos_Esenciales_DetAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Multas_Elementos_Esenciales_DetSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Multas_Elementos_Esenciales_DetMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Multas_Elementos_Esenciales_DetMaxAggregateInputType
+  }
+
+  export type GetMultas_Elementos_Esenciales_DetAggregateType<T extends Multas_Elementos_Esenciales_DetAggregateArgs> = {
+        [P in keyof T & keyof AggregateMultas_Elementos_Esenciales_Det]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMultas_Elementos_Esenciales_Det[P]>
+      : GetScalarType<T[P], AggregateMultas_Elementos_Esenciales_Det[P]>
+  }
+
+
+
+
+  export type Multas_Elementos_Esenciales_DetGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Multas_Elementos_Esenciales_DetWhereInput
+    orderBy?: Multas_Elementos_Esenciales_DetOrderByWithAggregationInput | Multas_Elementos_Esenciales_DetOrderByWithAggregationInput[]
+    by: Multas_Elementos_Esenciales_DetScalarFieldEnum[] | Multas_Elementos_Esenciales_DetScalarFieldEnum
+    having?: Multas_Elementos_Esenciales_DetScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Multas_Elementos_Esenciales_DetCountAggregateInputType | true
+    _avg?: Multas_Elementos_Esenciales_DetAvgAggregateInputType
+    _sum?: Multas_Elementos_Esenciales_DetSumAggregateInputType
+    _min?: Multas_Elementos_Esenciales_DetMinAggregateInputType
+    _max?: Multas_Elementos_Esenciales_DetMaxAggregateInputType
+  }
+
+  export type Multas_Elementos_Esenciales_DetGroupByOutputType = {
+    id: string
+    cabId: string
+    letraAspecto: string
+    descripcion: string | null
+    formulaAplicada: string | null
+    montoMulta: number
+    variablesUsadas: string | null
+    _count: Multas_Elementos_Esenciales_DetCountAggregateOutputType | null
+    _avg: Multas_Elementos_Esenciales_DetAvgAggregateOutputType | null
+    _sum: Multas_Elementos_Esenciales_DetSumAggregateOutputType | null
+    _min: Multas_Elementos_Esenciales_DetMinAggregateOutputType | null
+    _max: Multas_Elementos_Esenciales_DetMaxAggregateOutputType | null
+  }
+
+  type GetMultas_Elementos_Esenciales_DetGroupByPayload<T extends Multas_Elementos_Esenciales_DetGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Multas_Elementos_Esenciales_DetGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Multas_Elementos_Esenciales_DetGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Multas_Elementos_Esenciales_DetGroupByOutputType[P]>
+            : GetScalarType<T[P], Multas_Elementos_Esenciales_DetGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Multas_Elementos_Esenciales_DetSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cabId?: boolean
+    letraAspecto?: boolean
+    descripcion?: boolean
+    formulaAplicada?: boolean
+    montoMulta?: boolean
+    variablesUsadas?: boolean
+    cab?: boolean | Multas_Elementos_Esenciales_CabDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["multas_Elementos_Esenciales_Det"]>
+
+  export type Multas_Elementos_Esenciales_DetSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cabId?: boolean
+    letraAspecto?: boolean
+    descripcion?: boolean
+    formulaAplicada?: boolean
+    montoMulta?: boolean
+    variablesUsadas?: boolean
+    cab?: boolean | Multas_Elementos_Esenciales_CabDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["multas_Elementos_Esenciales_Det"]>
+
+  export type Multas_Elementos_Esenciales_DetSelectScalar = {
+    id?: boolean
+    cabId?: boolean
+    letraAspecto?: boolean
+    descripcion?: boolean
+    formulaAplicada?: boolean
+    montoMulta?: boolean
+    variablesUsadas?: boolean
+  }
+
+  export type Multas_Elementos_Esenciales_DetInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    cab?: boolean | Multas_Elementos_Esenciales_CabDefaultArgs<ExtArgs>
+  }
+  export type Multas_Elementos_Esenciales_DetIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    cab?: boolean | Multas_Elementos_Esenciales_CabDefaultArgs<ExtArgs>
+  }
+
+  export type $Multas_Elementos_Esenciales_DetPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Multas_Elementos_Esenciales_Det"
+    objects: {
+      cab: Prisma.$Multas_Elementos_Esenciales_CabPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      cabId: string
+      letraAspecto: string
+      descripcion: string | null
+      formulaAplicada: string | null
+      montoMulta: number
+      variablesUsadas: string | null
+    }, ExtArgs["result"]["multas_Elementos_Esenciales_Det"]>
+    composites: {}
+  }
+
+  type Multas_Elementos_Esenciales_DetGetPayload<S extends boolean | null | undefined | Multas_Elementos_Esenciales_DetDefaultArgs> = $Result.GetResult<Prisma.$Multas_Elementos_Esenciales_DetPayload, S>
+
+  type Multas_Elementos_Esenciales_DetCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Multas_Elementos_Esenciales_DetFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Multas_Elementos_Esenciales_DetCountAggregateInputType | true
+    }
+
+  export interface Multas_Elementos_Esenciales_DetDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Multas_Elementos_Esenciales_Det'], meta: { name: 'Multas_Elementos_Esenciales_Det' } }
+    /**
+     * Find zero or one Multas_Elementos_Esenciales_Det that matches the filter.
+     * @param {Multas_Elementos_Esenciales_DetFindUniqueArgs} args - Arguments to find a Multas_Elementos_Esenciales_Det
+     * @example
+     * // Get one Multas_Elementos_Esenciales_Det
+     * const multas_Elementos_Esenciales_Det = await prisma.multas_Elementos_Esenciales_Det.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Multas_Elementos_Esenciales_DetFindUniqueArgs>(args: SelectSubset<T, Multas_Elementos_Esenciales_DetFindUniqueArgs<ExtArgs>>): Prisma__Multas_Elementos_Esenciales_DetClient<$Result.GetResult<Prisma.$Multas_Elementos_Esenciales_DetPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Multas_Elementos_Esenciales_Det that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Multas_Elementos_Esenciales_DetFindUniqueOrThrowArgs} args - Arguments to find a Multas_Elementos_Esenciales_Det
+     * @example
+     * // Get one Multas_Elementos_Esenciales_Det
+     * const multas_Elementos_Esenciales_Det = await prisma.multas_Elementos_Esenciales_Det.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Multas_Elementos_Esenciales_DetFindUniqueOrThrowArgs>(args: SelectSubset<T, Multas_Elementos_Esenciales_DetFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Multas_Elementos_Esenciales_DetClient<$Result.GetResult<Prisma.$Multas_Elementos_Esenciales_DetPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Multas_Elementos_Esenciales_Det that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Elementos_Esenciales_DetFindFirstArgs} args - Arguments to find a Multas_Elementos_Esenciales_Det
+     * @example
+     * // Get one Multas_Elementos_Esenciales_Det
+     * const multas_Elementos_Esenciales_Det = await prisma.multas_Elementos_Esenciales_Det.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Multas_Elementos_Esenciales_DetFindFirstArgs>(args?: SelectSubset<T, Multas_Elementos_Esenciales_DetFindFirstArgs<ExtArgs>>): Prisma__Multas_Elementos_Esenciales_DetClient<$Result.GetResult<Prisma.$Multas_Elementos_Esenciales_DetPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Multas_Elementos_Esenciales_Det that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Elementos_Esenciales_DetFindFirstOrThrowArgs} args - Arguments to find a Multas_Elementos_Esenciales_Det
+     * @example
+     * // Get one Multas_Elementos_Esenciales_Det
+     * const multas_Elementos_Esenciales_Det = await prisma.multas_Elementos_Esenciales_Det.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Multas_Elementos_Esenciales_DetFindFirstOrThrowArgs>(args?: SelectSubset<T, Multas_Elementos_Esenciales_DetFindFirstOrThrowArgs<ExtArgs>>): Prisma__Multas_Elementos_Esenciales_DetClient<$Result.GetResult<Prisma.$Multas_Elementos_Esenciales_DetPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Multas_Elementos_Esenciales_Dets that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Elementos_Esenciales_DetFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Multas_Elementos_Esenciales_Dets
+     * const multas_Elementos_Esenciales_Dets = await prisma.multas_Elementos_Esenciales_Det.findMany()
+     * 
+     * // Get first 10 Multas_Elementos_Esenciales_Dets
+     * const multas_Elementos_Esenciales_Dets = await prisma.multas_Elementos_Esenciales_Det.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const multas_Elementos_Esenciales_DetWithIdOnly = await prisma.multas_Elementos_Esenciales_Det.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Multas_Elementos_Esenciales_DetFindManyArgs>(args?: SelectSubset<T, Multas_Elementos_Esenciales_DetFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Elementos_Esenciales_DetPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Multas_Elementos_Esenciales_Det.
+     * @param {Multas_Elementos_Esenciales_DetCreateArgs} args - Arguments to create a Multas_Elementos_Esenciales_Det.
+     * @example
+     * // Create one Multas_Elementos_Esenciales_Det
+     * const Multas_Elementos_Esenciales_Det = await prisma.multas_Elementos_Esenciales_Det.create({
+     *   data: {
+     *     // ... data to create a Multas_Elementos_Esenciales_Det
+     *   }
+     * })
+     * 
+     */
+    create<T extends Multas_Elementos_Esenciales_DetCreateArgs>(args: SelectSubset<T, Multas_Elementos_Esenciales_DetCreateArgs<ExtArgs>>): Prisma__Multas_Elementos_Esenciales_DetClient<$Result.GetResult<Prisma.$Multas_Elementos_Esenciales_DetPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Multas_Elementos_Esenciales_Dets.
+     * @param {Multas_Elementos_Esenciales_DetCreateManyArgs} args - Arguments to create many Multas_Elementos_Esenciales_Dets.
+     * @example
+     * // Create many Multas_Elementos_Esenciales_Dets
+     * const multas_Elementos_Esenciales_Det = await prisma.multas_Elementos_Esenciales_Det.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Multas_Elementos_Esenciales_DetCreateManyArgs>(args?: SelectSubset<T, Multas_Elementos_Esenciales_DetCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Multas_Elementos_Esenciales_Dets and returns the data saved in the database.
+     * @param {Multas_Elementos_Esenciales_DetCreateManyAndReturnArgs} args - Arguments to create many Multas_Elementos_Esenciales_Dets.
+     * @example
+     * // Create many Multas_Elementos_Esenciales_Dets
+     * const multas_Elementos_Esenciales_Det = await prisma.multas_Elementos_Esenciales_Det.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Multas_Elementos_Esenciales_Dets and only return the `id`
+     * const multas_Elementos_Esenciales_DetWithIdOnly = await prisma.multas_Elementos_Esenciales_Det.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Multas_Elementos_Esenciales_DetCreateManyAndReturnArgs>(args?: SelectSubset<T, Multas_Elementos_Esenciales_DetCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Multas_Elementos_Esenciales_DetPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Multas_Elementos_Esenciales_Det.
+     * @param {Multas_Elementos_Esenciales_DetDeleteArgs} args - Arguments to delete one Multas_Elementos_Esenciales_Det.
+     * @example
+     * // Delete one Multas_Elementos_Esenciales_Det
+     * const Multas_Elementos_Esenciales_Det = await prisma.multas_Elementos_Esenciales_Det.delete({
+     *   where: {
+     *     // ... filter to delete one Multas_Elementos_Esenciales_Det
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Multas_Elementos_Esenciales_DetDeleteArgs>(args: SelectSubset<T, Multas_Elementos_Esenciales_DetDeleteArgs<ExtArgs>>): Prisma__Multas_Elementos_Esenciales_DetClient<$Result.GetResult<Prisma.$Multas_Elementos_Esenciales_DetPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Multas_Elementos_Esenciales_Det.
+     * @param {Multas_Elementos_Esenciales_DetUpdateArgs} args - Arguments to update one Multas_Elementos_Esenciales_Det.
+     * @example
+     * // Update one Multas_Elementos_Esenciales_Det
+     * const multas_Elementos_Esenciales_Det = await prisma.multas_Elementos_Esenciales_Det.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Multas_Elementos_Esenciales_DetUpdateArgs>(args: SelectSubset<T, Multas_Elementos_Esenciales_DetUpdateArgs<ExtArgs>>): Prisma__Multas_Elementos_Esenciales_DetClient<$Result.GetResult<Prisma.$Multas_Elementos_Esenciales_DetPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Multas_Elementos_Esenciales_Dets.
+     * @param {Multas_Elementos_Esenciales_DetDeleteManyArgs} args - Arguments to filter Multas_Elementos_Esenciales_Dets to delete.
+     * @example
+     * // Delete a few Multas_Elementos_Esenciales_Dets
+     * const { count } = await prisma.multas_Elementos_Esenciales_Det.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Multas_Elementos_Esenciales_DetDeleteManyArgs>(args?: SelectSubset<T, Multas_Elementos_Esenciales_DetDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Multas_Elementos_Esenciales_Dets.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Elementos_Esenciales_DetUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Multas_Elementos_Esenciales_Dets
+     * const multas_Elementos_Esenciales_Det = await prisma.multas_Elementos_Esenciales_Det.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Multas_Elementos_Esenciales_DetUpdateManyArgs>(args: SelectSubset<T, Multas_Elementos_Esenciales_DetUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Multas_Elementos_Esenciales_Det.
+     * @param {Multas_Elementos_Esenciales_DetUpsertArgs} args - Arguments to update or create a Multas_Elementos_Esenciales_Det.
+     * @example
+     * // Update or create a Multas_Elementos_Esenciales_Det
+     * const multas_Elementos_Esenciales_Det = await prisma.multas_Elementos_Esenciales_Det.upsert({
+     *   create: {
+     *     // ... data to create a Multas_Elementos_Esenciales_Det
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Multas_Elementos_Esenciales_Det we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Multas_Elementos_Esenciales_DetUpsertArgs>(args: SelectSubset<T, Multas_Elementos_Esenciales_DetUpsertArgs<ExtArgs>>): Prisma__Multas_Elementos_Esenciales_DetClient<$Result.GetResult<Prisma.$Multas_Elementos_Esenciales_DetPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Multas_Elementos_Esenciales_Dets.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Elementos_Esenciales_DetCountArgs} args - Arguments to filter Multas_Elementos_Esenciales_Dets to count.
+     * @example
+     * // Count the number of Multas_Elementos_Esenciales_Dets
+     * const count = await prisma.multas_Elementos_Esenciales_Det.count({
+     *   where: {
+     *     // ... the filter for the Multas_Elementos_Esenciales_Dets we want to count
+     *   }
+     * })
+    **/
+    count<T extends Multas_Elementos_Esenciales_DetCountArgs>(
+      args?: Subset<T, Multas_Elementos_Esenciales_DetCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Multas_Elementos_Esenciales_DetCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Multas_Elementos_Esenciales_Det.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Elementos_Esenciales_DetAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Multas_Elementos_Esenciales_DetAggregateArgs>(args: Subset<T, Multas_Elementos_Esenciales_DetAggregateArgs>): Prisma.PrismaPromise<GetMultas_Elementos_Esenciales_DetAggregateType<T>>
+
+    /**
+     * Group by Multas_Elementos_Esenciales_Det.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Multas_Elementos_Esenciales_DetGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Multas_Elementos_Esenciales_DetGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Multas_Elementos_Esenciales_DetGroupByArgs['orderBy'] }
+        : { orderBy?: Multas_Elementos_Esenciales_DetGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Multas_Elementos_Esenciales_DetGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMultas_Elementos_Esenciales_DetGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Multas_Elementos_Esenciales_Det model
+   */
+  readonly fields: Multas_Elementos_Esenciales_DetFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Multas_Elementos_Esenciales_Det.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Multas_Elementos_Esenciales_DetClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    cab<T extends Multas_Elementos_Esenciales_CabDefaultArgs<ExtArgs> = {}>(args?: Subset<T, Multas_Elementos_Esenciales_CabDefaultArgs<ExtArgs>>): Prisma__Multas_Elementos_Esenciales_CabClient<$Result.GetResult<Prisma.$Multas_Elementos_Esenciales_CabPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Multas_Elementos_Esenciales_Det model
+   */ 
+  interface Multas_Elementos_Esenciales_DetFieldRefs {
+    readonly id: FieldRef<"Multas_Elementos_Esenciales_Det", 'String'>
+    readonly cabId: FieldRef<"Multas_Elementos_Esenciales_Det", 'String'>
+    readonly letraAspecto: FieldRef<"Multas_Elementos_Esenciales_Det", 'String'>
+    readonly descripcion: FieldRef<"Multas_Elementos_Esenciales_Det", 'String'>
+    readonly formulaAplicada: FieldRef<"Multas_Elementos_Esenciales_Det", 'String'>
+    readonly montoMulta: FieldRef<"Multas_Elementos_Esenciales_Det", 'Float'>
+    readonly variablesUsadas: FieldRef<"Multas_Elementos_Esenciales_Det", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Multas_Elementos_Esenciales_Det findUnique
+   */
+  export type Multas_Elementos_Esenciales_DetFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Elementos_Esenciales_Det
+     */
+    select?: Multas_Elementos_Esenciales_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Elementos_Esenciales_DetInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Elementos_Esenciales_Det to fetch.
+     */
+    where: Multas_Elementos_Esenciales_DetWhereUniqueInput
+  }
+
+  /**
+   * Multas_Elementos_Esenciales_Det findUniqueOrThrow
+   */
+  export type Multas_Elementos_Esenciales_DetFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Elementos_Esenciales_Det
+     */
+    select?: Multas_Elementos_Esenciales_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Elementos_Esenciales_DetInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Elementos_Esenciales_Det to fetch.
+     */
+    where: Multas_Elementos_Esenciales_DetWhereUniqueInput
+  }
+
+  /**
+   * Multas_Elementos_Esenciales_Det findFirst
+   */
+  export type Multas_Elementos_Esenciales_DetFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Elementos_Esenciales_Det
+     */
+    select?: Multas_Elementos_Esenciales_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Elementos_Esenciales_DetInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Elementos_Esenciales_Det to fetch.
+     */
+    where?: Multas_Elementos_Esenciales_DetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Elementos_Esenciales_Dets to fetch.
+     */
+    orderBy?: Multas_Elementos_Esenciales_DetOrderByWithRelationInput | Multas_Elementos_Esenciales_DetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Elementos_Esenciales_Dets.
+     */
+    cursor?: Multas_Elementos_Esenciales_DetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Elementos_Esenciales_Dets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Elementos_Esenciales_Dets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Elementos_Esenciales_Dets.
+     */
+    distinct?: Multas_Elementos_Esenciales_DetScalarFieldEnum | Multas_Elementos_Esenciales_DetScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Elementos_Esenciales_Det findFirstOrThrow
+   */
+  export type Multas_Elementos_Esenciales_DetFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Elementos_Esenciales_Det
+     */
+    select?: Multas_Elementos_Esenciales_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Elementos_Esenciales_DetInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Elementos_Esenciales_Det to fetch.
+     */
+    where?: Multas_Elementos_Esenciales_DetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Elementos_Esenciales_Dets to fetch.
+     */
+    orderBy?: Multas_Elementos_Esenciales_DetOrderByWithRelationInput | Multas_Elementos_Esenciales_DetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Multas_Elementos_Esenciales_Dets.
+     */
+    cursor?: Multas_Elementos_Esenciales_DetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Elementos_Esenciales_Dets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Elementos_Esenciales_Dets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Multas_Elementos_Esenciales_Dets.
+     */
+    distinct?: Multas_Elementos_Esenciales_DetScalarFieldEnum | Multas_Elementos_Esenciales_DetScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Elementos_Esenciales_Det findMany
+   */
+  export type Multas_Elementos_Esenciales_DetFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Elementos_Esenciales_Det
+     */
+    select?: Multas_Elementos_Esenciales_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Elementos_Esenciales_DetInclude<ExtArgs> | null
+    /**
+     * Filter, which Multas_Elementos_Esenciales_Dets to fetch.
+     */
+    where?: Multas_Elementos_Esenciales_DetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Multas_Elementos_Esenciales_Dets to fetch.
+     */
+    orderBy?: Multas_Elementos_Esenciales_DetOrderByWithRelationInput | Multas_Elementos_Esenciales_DetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Multas_Elementos_Esenciales_Dets.
+     */
+    cursor?: Multas_Elementos_Esenciales_DetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Multas_Elementos_Esenciales_Dets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Multas_Elementos_Esenciales_Dets.
+     */
+    skip?: number
+    distinct?: Multas_Elementos_Esenciales_DetScalarFieldEnum | Multas_Elementos_Esenciales_DetScalarFieldEnum[]
+  }
+
+  /**
+   * Multas_Elementos_Esenciales_Det create
+   */
+  export type Multas_Elementos_Esenciales_DetCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Elementos_Esenciales_Det
+     */
+    select?: Multas_Elementos_Esenciales_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Elementos_Esenciales_DetInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Multas_Elementos_Esenciales_Det.
+     */
+    data: XOR<Multas_Elementos_Esenciales_DetCreateInput, Multas_Elementos_Esenciales_DetUncheckedCreateInput>
+  }
+
+  /**
+   * Multas_Elementos_Esenciales_Det createMany
+   */
+  export type Multas_Elementos_Esenciales_DetCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Multas_Elementos_Esenciales_Dets.
+     */
+    data: Multas_Elementos_Esenciales_DetCreateManyInput | Multas_Elementos_Esenciales_DetCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Multas_Elementos_Esenciales_Det createManyAndReturn
+   */
+  export type Multas_Elementos_Esenciales_DetCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Elementos_Esenciales_Det
+     */
+    select?: Multas_Elementos_Esenciales_DetSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Multas_Elementos_Esenciales_Dets.
+     */
+    data: Multas_Elementos_Esenciales_DetCreateManyInput | Multas_Elementos_Esenciales_DetCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Elementos_Esenciales_DetIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Multas_Elementos_Esenciales_Det update
+   */
+  export type Multas_Elementos_Esenciales_DetUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Elementos_Esenciales_Det
+     */
+    select?: Multas_Elementos_Esenciales_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Elementos_Esenciales_DetInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Multas_Elementos_Esenciales_Det.
+     */
+    data: XOR<Multas_Elementos_Esenciales_DetUpdateInput, Multas_Elementos_Esenciales_DetUncheckedUpdateInput>
+    /**
+     * Choose, which Multas_Elementos_Esenciales_Det to update.
+     */
+    where: Multas_Elementos_Esenciales_DetWhereUniqueInput
+  }
+
+  /**
+   * Multas_Elementos_Esenciales_Det updateMany
+   */
+  export type Multas_Elementos_Esenciales_DetUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Multas_Elementos_Esenciales_Dets.
+     */
+    data: XOR<Multas_Elementos_Esenciales_DetUpdateManyMutationInput, Multas_Elementos_Esenciales_DetUncheckedUpdateManyInput>
+    /**
+     * Filter which Multas_Elementos_Esenciales_Dets to update
+     */
+    where?: Multas_Elementos_Esenciales_DetWhereInput
+  }
+
+  /**
+   * Multas_Elementos_Esenciales_Det upsert
+   */
+  export type Multas_Elementos_Esenciales_DetUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Elementos_Esenciales_Det
+     */
+    select?: Multas_Elementos_Esenciales_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Elementos_Esenciales_DetInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Multas_Elementos_Esenciales_Det to update in case it exists.
+     */
+    where: Multas_Elementos_Esenciales_DetWhereUniqueInput
+    /**
+     * In case the Multas_Elementos_Esenciales_Det found by the `where` argument doesn't exist, create a new Multas_Elementos_Esenciales_Det with this data.
+     */
+    create: XOR<Multas_Elementos_Esenciales_DetCreateInput, Multas_Elementos_Esenciales_DetUncheckedCreateInput>
+    /**
+     * In case the Multas_Elementos_Esenciales_Det was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Multas_Elementos_Esenciales_DetUpdateInput, Multas_Elementos_Esenciales_DetUncheckedUpdateInput>
+  }
+
+  /**
+   * Multas_Elementos_Esenciales_Det delete
+   */
+  export type Multas_Elementos_Esenciales_DetDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Elementos_Esenciales_Det
+     */
+    select?: Multas_Elementos_Esenciales_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Elementos_Esenciales_DetInclude<ExtArgs> | null
+    /**
+     * Filter which Multas_Elementos_Esenciales_Det to delete.
+     */
+    where: Multas_Elementos_Esenciales_DetWhereUniqueInput
+  }
+
+  /**
+   * Multas_Elementos_Esenciales_Det deleteMany
+   */
+  export type Multas_Elementos_Esenciales_DetDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Multas_Elementos_Esenciales_Dets to delete
+     */
+    where?: Multas_Elementos_Esenciales_DetWhereInput
+  }
+
+  /**
+   * Multas_Elementos_Esenciales_Det without action
+   */
+  export type Multas_Elementos_Esenciales_DetDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Multas_Elementos_Esenciales_Det
+     */
+    select?: Multas_Elementos_Esenciales_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Multas_Elementos_Esenciales_DetInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -45593,14 +53378,16 @@ export namespace Prisma {
 
   export const PMPAScalarFieldEnum: {
     id: 'id',
-    sucursal: 'sucursal',
     ano: 'ano',
     mes: 'mes',
+    licitacion: 'licitacion',
+    ute: 'ute',
     rbd: 'rbd',
-    licId: 'licId',
     programa: 'programa',
     estrato: 'estrato',
-    raceq: 'raceq',
+    nivel: 'nivel',
+    servicioLic: 'servicioLic',
+    raceqJunaeb: 'raceqJunaeb',
     servicio: 'servicio',
     uploadedBy: 'uploadedBy',
     createdAt: 'createdAt'
@@ -45718,14 +53505,38 @@ export namespace Prisma {
   export type PlantillaCorreoScalarFieldEnum = (typeof PlantillaCorreoScalarFieldEnum)[keyof typeof PlantillaCorreoScalarFieldEnum]
 
 
+  export const MultaServicioScalarFieldEnum: {
+    id: 'id',
+    codigo: 'codigo',
+    nombre: 'nombre'
+  };
+
+  export type MultaServicioScalarFieldEnum = (typeof MultaServicioScalarFieldEnum)[keyof typeof MultaServicioScalarFieldEnum]
+
+
   export const LicitacionScalarFieldEnum: {
     licId: 'licId',
+    licitacionHomologada: 'licitacionHomologada',
     estado: 'estado',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
 
   export type LicitacionScalarFieldEnum = (typeof LicitacionScalarFieldEnum)[keyof typeof LicitacionScalarFieldEnum]
+
+
+  export const AspectoEEScalarFieldEnum: {
+    id: 'id',
+    licId: 'licId',
+    letra: 'letra',
+    descripcion: 'descripcion',
+    formula: 'formula',
+    solucionable: 'solucionable',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type AspectoEEScalarFieldEnum = (typeof AspectoEEScalarFieldEnum)[keyof typeof AspectoEEScalarFieldEnum]
 
 
   export const SucursalScalarFieldEnum: {
@@ -46239,6 +54050,8 @@ export namespace Prisma {
     servicio: 'servicio',
     programa: 'programa',
     area: 'area',
+    racionesBase: 'racionesBase',
+    racionesDigitadas: 'racionesDigitadas',
     racionesPreparar: 'racionesPreparar',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
@@ -46259,6 +54072,81 @@ export namespace Prisma {
   };
 
   export type CapCertificacionDetailScalarFieldEnum = (typeof CapCertificacionDetailScalarFieldEnum)[keyof typeof CapCertificacionDetailScalarFieldEnum]
+
+
+  export const ElementosEsenciales_CabScalarFieldEnum: {
+    id: 'id',
+    licitacion: 'licitacion',
+    licId: 'licId',
+    folio: 'folio',
+    fechaSupervision: 'fechaSupervision',
+    rbd: 'rbd',
+    region: 'region',
+    comuna: 'comuna',
+    servicio: 'servicio',
+    horaInicio: 'horaInicio',
+    hora: 'hora',
+    obsALosIncumplimiento: 'obsALosIncumplimiento',
+    nombreArchivo: 'nombreArchivo',
+    link: 'link',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ElementosEsenciales_CabScalarFieldEnum = (typeof ElementosEsenciales_CabScalarFieldEnum)[keyof typeof ElementosEsenciales_CabScalarFieldEnum]
+
+
+  export const ElementosEsenciales_DetScalarFieldEnum: {
+    id: 'id',
+    cabId: 'cabId',
+    aspecto: 'aspecto',
+    observacionesOMedioDeVerificacion: 'observacionesOMedioDeVerificacion',
+    co: 'co',
+    nc: 'nc',
+    na: 'na'
+  };
+
+  export type ElementosEsenciales_DetScalarFieldEnum = (typeof ElementosEsenciales_DetScalarFieldEnum)[keyof typeof ElementosEsenciales_DetScalarFieldEnum]
+
+
+  export const UTMScalarFieldEnum: {
+    id: 'id',
+    anho: 'anho',
+    mes: 'mes',
+    monto: 'monto',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type UTMScalarFieldEnum = (typeof UTMScalarFieldEnum)[keyof typeof UTMScalarFieldEnum]
+
+
+  export const Multas_Elementos_Esenciales_CabScalarFieldEnum: {
+    id: 'id',
+    folioOriginal: 'folioOriginal',
+    rbd: 'rbd',
+    fechaSupervision: 'fechaSupervision',
+    licitacion: 'licitacion',
+    montoTotalCalculado: 'montoTotalCalculado',
+    estadoCalculo: 'estadoCalculo',
+    usuarioCalculo: 'usuarioCalculo',
+    fechaCalculo: 'fechaCalculo'
+  };
+
+  export type Multas_Elementos_Esenciales_CabScalarFieldEnum = (typeof Multas_Elementos_Esenciales_CabScalarFieldEnum)[keyof typeof Multas_Elementos_Esenciales_CabScalarFieldEnum]
+
+
+  export const Multas_Elementos_Esenciales_DetScalarFieldEnum: {
+    id: 'id',
+    cabId: 'cabId',
+    letraAspecto: 'letraAspecto',
+    descripcion: 'descripcion',
+    formulaAplicada: 'formulaAplicada',
+    montoMulta: 'montoMulta',
+    variablesUsadas: 'variablesUsadas'
+  };
+
+  export type Multas_Elementos_Esenciales_DetScalarFieldEnum = (typeof Multas_Elementos_Esenciales_DetScalarFieldEnum)[keyof typeof Multas_Elementos_Esenciales_DetScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -46533,32 +54421,38 @@ export namespace Prisma {
     OR?: PMPAWhereInput[]
     NOT?: PMPAWhereInput | PMPAWhereInput[]
     id?: StringFilter<"PMPA"> | string
-    sucursal?: StringFilter<"PMPA"> | string
     ano?: IntFilter<"PMPA"> | number
     mes?: IntFilter<"PMPA"> | number
+    licitacion?: IntFilter<"PMPA"> | number
+    ute?: IntFilter<"PMPA"> | number
     rbd?: IntFilter<"PMPA"> | number
-    licId?: IntNullableFilter<"PMPA"> | number | null
     programa?: StringFilter<"PMPA"> | string
     estrato?: StringFilter<"PMPA"> | string
-    raceq?: IntFilter<"PMPA"> | number
+    nivel?: StringFilter<"PMPA"> | string
+    servicioLic?: StringFilter<"PMPA"> | string
+    raceqJunaeb?: IntFilter<"PMPA"> | number
     servicio?: StringFilter<"PMPA"> | string
     uploadedBy?: StringFilter<"PMPA"> | string
     createdAt?: DateTimeFilter<"PMPA"> | Date | string
+    ut?: XOR<UTNullableRelationFilter, UTWhereInput> | null
   }
 
   export type PMPAOrderByWithRelationInput = {
     id?: SortOrder
-    sucursal?: SortOrder
     ano?: SortOrder
     mes?: SortOrder
+    licitacion?: SortOrder
+    ute?: SortOrder
     rbd?: SortOrder
-    licId?: SortOrderInput | SortOrder
     programa?: SortOrder
     estrato?: SortOrder
-    raceq?: SortOrder
+    nivel?: SortOrder
+    servicioLic?: SortOrder
+    raceqJunaeb?: SortOrder
     servicio?: SortOrder
     uploadedBy?: SortOrder
     createdAt?: SortOrder
+    ut?: UTOrderByWithRelationInput
   }
 
   export type PMPAWhereUniqueInput = Prisma.AtLeast<{
@@ -46566,29 +54460,34 @@ export namespace Prisma {
     AND?: PMPAWhereInput | PMPAWhereInput[]
     OR?: PMPAWhereInput[]
     NOT?: PMPAWhereInput | PMPAWhereInput[]
-    sucursal?: StringFilter<"PMPA"> | string
     ano?: IntFilter<"PMPA"> | number
     mes?: IntFilter<"PMPA"> | number
+    licitacion?: IntFilter<"PMPA"> | number
+    ute?: IntFilter<"PMPA"> | number
     rbd?: IntFilter<"PMPA"> | number
-    licId?: IntNullableFilter<"PMPA"> | number | null
     programa?: StringFilter<"PMPA"> | string
     estrato?: StringFilter<"PMPA"> | string
-    raceq?: IntFilter<"PMPA"> | number
+    nivel?: StringFilter<"PMPA"> | string
+    servicioLic?: StringFilter<"PMPA"> | string
+    raceqJunaeb?: IntFilter<"PMPA"> | number
     servicio?: StringFilter<"PMPA"> | string
     uploadedBy?: StringFilter<"PMPA"> | string
     createdAt?: DateTimeFilter<"PMPA"> | Date | string
+    ut?: XOR<UTNullableRelationFilter, UTWhereInput> | null
   }, "id">
 
   export type PMPAOrderByWithAggregationInput = {
     id?: SortOrder
-    sucursal?: SortOrder
     ano?: SortOrder
     mes?: SortOrder
+    licitacion?: SortOrder
+    ute?: SortOrder
     rbd?: SortOrder
-    licId?: SortOrderInput | SortOrder
     programa?: SortOrder
     estrato?: SortOrder
-    raceq?: SortOrder
+    nivel?: SortOrder
+    servicioLic?: SortOrder
+    raceqJunaeb?: SortOrder
     servicio?: SortOrder
     uploadedBy?: SortOrder
     createdAt?: SortOrder
@@ -46604,14 +54503,16 @@ export namespace Prisma {
     OR?: PMPAScalarWhereWithAggregatesInput[]
     NOT?: PMPAScalarWhereWithAggregatesInput | PMPAScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"PMPA"> | string
-    sucursal?: StringWithAggregatesFilter<"PMPA"> | string
     ano?: IntWithAggregatesFilter<"PMPA"> | number
     mes?: IntWithAggregatesFilter<"PMPA"> | number
+    licitacion?: IntWithAggregatesFilter<"PMPA"> | number
+    ute?: IntWithAggregatesFilter<"PMPA"> | number
     rbd?: IntWithAggregatesFilter<"PMPA"> | number
-    licId?: IntNullableWithAggregatesFilter<"PMPA"> | number | null
     programa?: StringWithAggregatesFilter<"PMPA"> | string
     estrato?: StringWithAggregatesFilter<"PMPA"> | string
-    raceq?: IntWithAggregatesFilter<"PMPA"> | number
+    nivel?: StringWithAggregatesFilter<"PMPA"> | string
+    servicioLic?: StringWithAggregatesFilter<"PMPA"> | string
+    raceqJunaeb?: IntWithAggregatesFilter<"PMPA"> | number
     servicio?: StringWithAggregatesFilter<"PMPA"> | string
     uploadedBy?: StringWithAggregatesFilter<"PMPA"> | string
     createdAt?: DateTimeWithAggregatesFilter<"PMPA"> | Date | string
@@ -47157,23 +55058,69 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"PlantillaCorreo"> | Date | string
   }
 
+  export type MultaServicioWhereInput = {
+    AND?: MultaServicioWhereInput | MultaServicioWhereInput[]
+    OR?: MultaServicioWhereInput[]
+    NOT?: MultaServicioWhereInput | MultaServicioWhereInput[]
+    id?: StringFilter<"MultaServicio"> | string
+    codigo?: StringFilter<"MultaServicio"> | string
+    nombre?: StringFilter<"MultaServicio"> | string
+  }
+
+  export type MultaServicioOrderByWithRelationInput = {
+    id?: SortOrder
+    codigo?: SortOrder
+    nombre?: SortOrder
+  }
+
+  export type MultaServicioWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    codigo?: string
+    AND?: MultaServicioWhereInput | MultaServicioWhereInput[]
+    OR?: MultaServicioWhereInput[]
+    NOT?: MultaServicioWhereInput | MultaServicioWhereInput[]
+    nombre?: StringFilter<"MultaServicio"> | string
+  }, "id" | "codigo">
+
+  export type MultaServicioOrderByWithAggregationInput = {
+    id?: SortOrder
+    codigo?: SortOrder
+    nombre?: SortOrder
+    _count?: MultaServicioCountOrderByAggregateInput
+    _max?: MultaServicioMaxOrderByAggregateInput
+    _min?: MultaServicioMinOrderByAggregateInput
+  }
+
+  export type MultaServicioScalarWhereWithAggregatesInput = {
+    AND?: MultaServicioScalarWhereWithAggregatesInput | MultaServicioScalarWhereWithAggregatesInput[]
+    OR?: MultaServicioScalarWhereWithAggregatesInput[]
+    NOT?: MultaServicioScalarWhereWithAggregatesInput | MultaServicioScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"MultaServicio"> | string
+    codigo?: StringWithAggregatesFilter<"MultaServicio"> | string
+    nombre?: StringWithAggregatesFilter<"MultaServicio"> | string
+  }
+
   export type LicitacionWhereInput = {
     AND?: LicitacionWhereInput | LicitacionWhereInput[]
     OR?: LicitacionWhereInput[]
     NOT?: LicitacionWhereInput | LicitacionWhereInput[]
     licId?: IntFilter<"Licitacion"> | number
+    licitacionHomologada?: StringNullableFilter<"Licitacion"> | string | null
     estado?: IntFilter<"Licitacion"> | number
     createdAt?: DateTimeFilter<"Licitacion"> | Date | string
     updatedAt?: DateTimeFilter<"Licitacion"> | Date | string
     uts?: UTListRelationFilter
+    aspectosEE?: AspectoEEListRelationFilter
   }
 
   export type LicitacionOrderByWithRelationInput = {
     licId?: SortOrder
+    licitacionHomologada?: SortOrderInput | SortOrder
     estado?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     uts?: UTOrderByRelationAggregateInput
+    aspectosEE?: AspectoEEOrderByRelationAggregateInput
   }
 
   export type LicitacionWhereUniqueInput = Prisma.AtLeast<{
@@ -47181,14 +55128,17 @@ export namespace Prisma {
     AND?: LicitacionWhereInput | LicitacionWhereInput[]
     OR?: LicitacionWhereInput[]
     NOT?: LicitacionWhereInput | LicitacionWhereInput[]
+    licitacionHomologada?: StringNullableFilter<"Licitacion"> | string | null
     estado?: IntFilter<"Licitacion"> | number
     createdAt?: DateTimeFilter<"Licitacion"> | Date | string
     updatedAt?: DateTimeFilter<"Licitacion"> | Date | string
     uts?: UTListRelationFilter
+    aspectosEE?: AspectoEEListRelationFilter
   }, "licId">
 
   export type LicitacionOrderByWithAggregationInput = {
     licId?: SortOrder
+    licitacionHomologada?: SortOrderInput | SortOrder
     estado?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -47204,9 +55154,83 @@ export namespace Prisma {
     OR?: LicitacionScalarWhereWithAggregatesInput[]
     NOT?: LicitacionScalarWhereWithAggregatesInput | LicitacionScalarWhereWithAggregatesInput[]
     licId?: IntWithAggregatesFilter<"Licitacion"> | number
+    licitacionHomologada?: StringNullableWithAggregatesFilter<"Licitacion"> | string | null
     estado?: IntWithAggregatesFilter<"Licitacion"> | number
     createdAt?: DateTimeWithAggregatesFilter<"Licitacion"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Licitacion"> | Date | string
+  }
+
+  export type AspectoEEWhereInput = {
+    AND?: AspectoEEWhereInput | AspectoEEWhereInput[]
+    OR?: AspectoEEWhereInput[]
+    NOT?: AspectoEEWhereInput | AspectoEEWhereInput[]
+    id?: StringFilter<"AspectoEE"> | string
+    licId?: IntFilter<"AspectoEE"> | number
+    letra?: StringFilter<"AspectoEE"> | string
+    descripcion?: StringNullableFilter<"AspectoEE"> | string | null
+    formula?: StringNullableFilter<"AspectoEE"> | string | null
+    solucionable?: StringNullableFilter<"AspectoEE"> | string | null
+    createdAt?: DateTimeFilter<"AspectoEE"> | Date | string
+    updatedAt?: DateTimeFilter<"AspectoEE"> | Date | string
+    licitacion?: XOR<LicitacionRelationFilter, LicitacionWhereInput>
+  }
+
+  export type AspectoEEOrderByWithRelationInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    letra?: SortOrder
+    descripcion?: SortOrderInput | SortOrder
+    formula?: SortOrderInput | SortOrder
+    solucionable?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    licitacion?: LicitacionOrderByWithRelationInput
+  }
+
+  export type AspectoEEWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    licId_letra?: AspectoEELicIdLetraCompoundUniqueInput
+    AND?: AspectoEEWhereInput | AspectoEEWhereInput[]
+    OR?: AspectoEEWhereInput[]
+    NOT?: AspectoEEWhereInput | AspectoEEWhereInput[]
+    licId?: IntFilter<"AspectoEE"> | number
+    letra?: StringFilter<"AspectoEE"> | string
+    descripcion?: StringNullableFilter<"AspectoEE"> | string | null
+    formula?: StringNullableFilter<"AspectoEE"> | string | null
+    solucionable?: StringNullableFilter<"AspectoEE"> | string | null
+    createdAt?: DateTimeFilter<"AspectoEE"> | Date | string
+    updatedAt?: DateTimeFilter<"AspectoEE"> | Date | string
+    licitacion?: XOR<LicitacionRelationFilter, LicitacionWhereInput>
+  }, "id" | "licId_letra">
+
+  export type AspectoEEOrderByWithAggregationInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    letra?: SortOrder
+    descripcion?: SortOrderInput | SortOrder
+    formula?: SortOrderInput | SortOrder
+    solucionable?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: AspectoEECountOrderByAggregateInput
+    _avg?: AspectoEEAvgOrderByAggregateInput
+    _max?: AspectoEEMaxOrderByAggregateInput
+    _min?: AspectoEEMinOrderByAggregateInput
+    _sum?: AspectoEESumOrderByAggregateInput
+  }
+
+  export type AspectoEEScalarWhereWithAggregatesInput = {
+    AND?: AspectoEEScalarWhereWithAggregatesInput | AspectoEEScalarWhereWithAggregatesInput[]
+    OR?: AspectoEEScalarWhereWithAggregatesInput[]
+    NOT?: AspectoEEScalarWhereWithAggregatesInput | AspectoEEScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AspectoEE"> | string
+    licId?: IntWithAggregatesFilter<"AspectoEE"> | number
+    letra?: StringWithAggregatesFilter<"AspectoEE"> | string
+    descripcion?: StringNullableWithAggregatesFilter<"AspectoEE"> | string | null
+    formula?: StringNullableWithAggregatesFilter<"AspectoEE"> | string | null
+    solucionable?: StringNullableWithAggregatesFilter<"AspectoEE"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"AspectoEE"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"AspectoEE"> | Date | string
   }
 
   export type SucursalWhereInput = {
@@ -47438,6 +55462,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"UT"> | Date | string
     licitacion?: XOR<LicitacionRelationFilter, LicitacionWhereInput>
     sucursal?: XOR<SucursalNullableRelationFilter, SucursalWhereInput> | null
+    pmpas?: PMPAListRelationFilter
   }
 
   export type UTOrderByWithRelationInput = {
@@ -47449,6 +55474,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     licitacion?: LicitacionOrderByWithRelationInput
     sucursal?: SucursalOrderByWithRelationInput
+    pmpas?: PMPAOrderByRelationAggregateInput
   }
 
   export type UTWhereUniqueInput = Prisma.AtLeast<{
@@ -47463,6 +55489,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"UT"> | Date | string
     licitacion?: XOR<LicitacionRelationFilter, LicitacionWhereInput>
     sucursal?: XOR<SucursalNullableRelationFilter, SucursalWhereInput> | null
+    pmpas?: PMPAListRelationFilter
   }, "codUT">
 
   export type UTOrderByWithAggregationInput = {
@@ -49776,6 +57803,8 @@ export namespace Prisma {
     servicio?: StringFilter<"CapCertificacionHeader"> | string
     programa?: StringFilter<"CapCertificacionHeader"> | string
     area?: StringNullableFilter<"CapCertificacionHeader"> | string | null
+    racionesBase?: IntFilter<"CapCertificacionHeader"> | number
+    racionesDigitadas?: IntFilter<"CapCertificacionHeader"> | number
     racionesPreparar?: IntFilter<"CapCertificacionHeader"> | number
     createdAt?: DateTimeFilter<"CapCertificacionHeader"> | Date | string
     updatedAt?: DateTimeFilter<"CapCertificacionHeader"> | Date | string
@@ -49790,6 +57819,8 @@ export namespace Prisma {
     servicio?: SortOrder
     programa?: SortOrder
     area?: SortOrderInput | SortOrder
+    racionesBase?: SortOrder
+    racionesDigitadas?: SortOrder
     racionesPreparar?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -49807,6 +57838,8 @@ export namespace Prisma {
     servicio?: StringFilter<"CapCertificacionHeader"> | string
     programa?: StringFilter<"CapCertificacionHeader"> | string
     area?: StringNullableFilter<"CapCertificacionHeader"> | string | null
+    racionesBase?: IntFilter<"CapCertificacionHeader"> | number
+    racionesDigitadas?: IntFilter<"CapCertificacionHeader"> | number
     racionesPreparar?: IntFilter<"CapCertificacionHeader"> | number
     createdAt?: DateTimeFilter<"CapCertificacionHeader"> | Date | string
     updatedAt?: DateTimeFilter<"CapCertificacionHeader"> | Date | string
@@ -49821,6 +57854,8 @@ export namespace Prisma {
     servicio?: SortOrder
     programa?: SortOrder
     area?: SortOrderInput | SortOrder
+    racionesBase?: SortOrder
+    racionesDigitadas?: SortOrder
     racionesPreparar?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -49842,6 +57877,8 @@ export namespace Prisma {
     servicio?: StringWithAggregatesFilter<"CapCertificacionHeader"> | string
     programa?: StringWithAggregatesFilter<"CapCertificacionHeader"> | string
     area?: StringNullableWithAggregatesFilter<"CapCertificacionHeader"> | string | null
+    racionesBase?: IntWithAggregatesFilter<"CapCertificacionHeader"> | number
+    racionesDigitadas?: IntWithAggregatesFilter<"CapCertificacionHeader"> | number
     racionesPreparar?: IntWithAggregatesFilter<"CapCertificacionHeader"> | number
     createdAt?: DateTimeWithAggregatesFilter<"CapCertificacionHeader"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"CapCertificacionHeader"> | Date | string
@@ -49913,6 +57950,387 @@ export namespace Prisma {
     nombreProducto?: StringWithAggregatesFilter<"CapCertificacionDetail"> | string
     grsRac?: DecimalWithAggregatesFilter<"CapCertificacionDetail"> | Decimal | DecimalJsLike | number | string
     grsTotal?: DecimalWithAggregatesFilter<"CapCertificacionDetail"> | Decimal | DecimalJsLike | number | string
+  }
+
+  export type ElementosEsenciales_CabWhereInput = {
+    AND?: ElementosEsenciales_CabWhereInput | ElementosEsenciales_CabWhereInput[]
+    OR?: ElementosEsenciales_CabWhereInput[]
+    NOT?: ElementosEsenciales_CabWhereInput | ElementosEsenciales_CabWhereInput[]
+    id?: StringFilter<"ElementosEsenciales_Cab"> | string
+    licitacion?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
+    licId?: IntNullableFilter<"ElementosEsenciales_Cab"> | number | null
+    folio?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
+    fechaSupervision?: DateTimeNullableFilter<"ElementosEsenciales_Cab"> | Date | string | null
+    rbd?: IntNullableFilter<"ElementosEsenciales_Cab"> | number | null
+    region?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
+    comuna?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
+    servicio?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
+    horaInicio?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
+    hora?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
+    obsALosIncumplimiento?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
+    nombreArchivo?: StringFilter<"ElementosEsenciales_Cab"> | string
+    link?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
+    createdAt?: DateTimeFilter<"ElementosEsenciales_Cab"> | Date | string
+    updatedAt?: DateTimeFilter<"ElementosEsenciales_Cab"> | Date | string
+    detalles?: ElementosEsenciales_DetListRelationFilter
+  }
+
+  export type ElementosEsenciales_CabOrderByWithRelationInput = {
+    id?: SortOrder
+    licitacion?: SortOrderInput | SortOrder
+    licId?: SortOrderInput | SortOrder
+    folio?: SortOrderInput | SortOrder
+    fechaSupervision?: SortOrderInput | SortOrder
+    rbd?: SortOrderInput | SortOrder
+    region?: SortOrderInput | SortOrder
+    comuna?: SortOrderInput | SortOrder
+    servicio?: SortOrderInput | SortOrder
+    horaInicio?: SortOrderInput | SortOrder
+    hora?: SortOrderInput | SortOrder
+    obsALosIncumplimiento?: SortOrderInput | SortOrder
+    nombreArchivo?: SortOrder
+    link?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    detalles?: ElementosEsenciales_DetOrderByRelationAggregateInput
+  }
+
+  export type ElementosEsenciales_CabWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ElementosEsenciales_CabWhereInput | ElementosEsenciales_CabWhereInput[]
+    OR?: ElementosEsenciales_CabWhereInput[]
+    NOT?: ElementosEsenciales_CabWhereInput | ElementosEsenciales_CabWhereInput[]
+    licitacion?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
+    licId?: IntNullableFilter<"ElementosEsenciales_Cab"> | number | null
+    folio?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
+    fechaSupervision?: DateTimeNullableFilter<"ElementosEsenciales_Cab"> | Date | string | null
+    rbd?: IntNullableFilter<"ElementosEsenciales_Cab"> | number | null
+    region?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
+    comuna?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
+    servicio?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
+    horaInicio?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
+    hora?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
+    obsALosIncumplimiento?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
+    nombreArchivo?: StringFilter<"ElementosEsenciales_Cab"> | string
+    link?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
+    createdAt?: DateTimeFilter<"ElementosEsenciales_Cab"> | Date | string
+    updatedAt?: DateTimeFilter<"ElementosEsenciales_Cab"> | Date | string
+    detalles?: ElementosEsenciales_DetListRelationFilter
+  }, "id">
+
+  export type ElementosEsenciales_CabOrderByWithAggregationInput = {
+    id?: SortOrder
+    licitacion?: SortOrderInput | SortOrder
+    licId?: SortOrderInput | SortOrder
+    folio?: SortOrderInput | SortOrder
+    fechaSupervision?: SortOrderInput | SortOrder
+    rbd?: SortOrderInput | SortOrder
+    region?: SortOrderInput | SortOrder
+    comuna?: SortOrderInput | SortOrder
+    servicio?: SortOrderInput | SortOrder
+    horaInicio?: SortOrderInput | SortOrder
+    hora?: SortOrderInput | SortOrder
+    obsALosIncumplimiento?: SortOrderInput | SortOrder
+    nombreArchivo?: SortOrder
+    link?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ElementosEsenciales_CabCountOrderByAggregateInput
+    _avg?: ElementosEsenciales_CabAvgOrderByAggregateInput
+    _max?: ElementosEsenciales_CabMaxOrderByAggregateInput
+    _min?: ElementosEsenciales_CabMinOrderByAggregateInput
+    _sum?: ElementosEsenciales_CabSumOrderByAggregateInput
+  }
+
+  export type ElementosEsenciales_CabScalarWhereWithAggregatesInput = {
+    AND?: ElementosEsenciales_CabScalarWhereWithAggregatesInput | ElementosEsenciales_CabScalarWhereWithAggregatesInput[]
+    OR?: ElementosEsenciales_CabScalarWhereWithAggregatesInput[]
+    NOT?: ElementosEsenciales_CabScalarWhereWithAggregatesInput | ElementosEsenciales_CabScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ElementosEsenciales_Cab"> | string
+    licitacion?: StringNullableWithAggregatesFilter<"ElementosEsenciales_Cab"> | string | null
+    licId?: IntNullableWithAggregatesFilter<"ElementosEsenciales_Cab"> | number | null
+    folio?: StringNullableWithAggregatesFilter<"ElementosEsenciales_Cab"> | string | null
+    fechaSupervision?: DateTimeNullableWithAggregatesFilter<"ElementosEsenciales_Cab"> | Date | string | null
+    rbd?: IntNullableWithAggregatesFilter<"ElementosEsenciales_Cab"> | number | null
+    region?: StringNullableWithAggregatesFilter<"ElementosEsenciales_Cab"> | string | null
+    comuna?: StringNullableWithAggregatesFilter<"ElementosEsenciales_Cab"> | string | null
+    servicio?: StringNullableWithAggregatesFilter<"ElementosEsenciales_Cab"> | string | null
+    horaInicio?: StringNullableWithAggregatesFilter<"ElementosEsenciales_Cab"> | string | null
+    hora?: StringNullableWithAggregatesFilter<"ElementosEsenciales_Cab"> | string | null
+    obsALosIncumplimiento?: StringNullableWithAggregatesFilter<"ElementosEsenciales_Cab"> | string | null
+    nombreArchivo?: StringWithAggregatesFilter<"ElementosEsenciales_Cab"> | string
+    link?: StringNullableWithAggregatesFilter<"ElementosEsenciales_Cab"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"ElementosEsenciales_Cab"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ElementosEsenciales_Cab"> | Date | string
+  }
+
+  export type ElementosEsenciales_DetWhereInput = {
+    AND?: ElementosEsenciales_DetWhereInput | ElementosEsenciales_DetWhereInput[]
+    OR?: ElementosEsenciales_DetWhereInput[]
+    NOT?: ElementosEsenciales_DetWhereInput | ElementosEsenciales_DetWhereInput[]
+    id?: StringFilter<"ElementosEsenciales_Det"> | string
+    cabId?: StringFilter<"ElementosEsenciales_Det"> | string
+    aspecto?: StringNullableFilter<"ElementosEsenciales_Det"> | string | null
+    observacionesOMedioDeVerificacion?: StringNullableFilter<"ElementosEsenciales_Det"> | string | null
+    co?: StringNullableFilter<"ElementosEsenciales_Det"> | string | null
+    nc?: StringNullableFilter<"ElementosEsenciales_Det"> | string | null
+    na?: StringNullableFilter<"ElementosEsenciales_Det"> | string | null
+    cab?: XOR<ElementosEsenciales_CabRelationFilter, ElementosEsenciales_CabWhereInput>
+  }
+
+  export type ElementosEsenciales_DetOrderByWithRelationInput = {
+    id?: SortOrder
+    cabId?: SortOrder
+    aspecto?: SortOrderInput | SortOrder
+    observacionesOMedioDeVerificacion?: SortOrderInput | SortOrder
+    co?: SortOrderInput | SortOrder
+    nc?: SortOrderInput | SortOrder
+    na?: SortOrderInput | SortOrder
+    cab?: ElementosEsenciales_CabOrderByWithRelationInput
+  }
+
+  export type ElementosEsenciales_DetWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ElementosEsenciales_DetWhereInput | ElementosEsenciales_DetWhereInput[]
+    OR?: ElementosEsenciales_DetWhereInput[]
+    NOT?: ElementosEsenciales_DetWhereInput | ElementosEsenciales_DetWhereInput[]
+    cabId?: StringFilter<"ElementosEsenciales_Det"> | string
+    aspecto?: StringNullableFilter<"ElementosEsenciales_Det"> | string | null
+    observacionesOMedioDeVerificacion?: StringNullableFilter<"ElementosEsenciales_Det"> | string | null
+    co?: StringNullableFilter<"ElementosEsenciales_Det"> | string | null
+    nc?: StringNullableFilter<"ElementosEsenciales_Det"> | string | null
+    na?: StringNullableFilter<"ElementosEsenciales_Det"> | string | null
+    cab?: XOR<ElementosEsenciales_CabRelationFilter, ElementosEsenciales_CabWhereInput>
+  }, "id">
+
+  export type ElementosEsenciales_DetOrderByWithAggregationInput = {
+    id?: SortOrder
+    cabId?: SortOrder
+    aspecto?: SortOrderInput | SortOrder
+    observacionesOMedioDeVerificacion?: SortOrderInput | SortOrder
+    co?: SortOrderInput | SortOrder
+    nc?: SortOrderInput | SortOrder
+    na?: SortOrderInput | SortOrder
+    _count?: ElementosEsenciales_DetCountOrderByAggregateInput
+    _max?: ElementosEsenciales_DetMaxOrderByAggregateInput
+    _min?: ElementosEsenciales_DetMinOrderByAggregateInput
+  }
+
+  export type ElementosEsenciales_DetScalarWhereWithAggregatesInput = {
+    AND?: ElementosEsenciales_DetScalarWhereWithAggregatesInput | ElementosEsenciales_DetScalarWhereWithAggregatesInput[]
+    OR?: ElementosEsenciales_DetScalarWhereWithAggregatesInput[]
+    NOT?: ElementosEsenciales_DetScalarWhereWithAggregatesInput | ElementosEsenciales_DetScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ElementosEsenciales_Det"> | string
+    cabId?: StringWithAggregatesFilter<"ElementosEsenciales_Det"> | string
+    aspecto?: StringNullableWithAggregatesFilter<"ElementosEsenciales_Det"> | string | null
+    observacionesOMedioDeVerificacion?: StringNullableWithAggregatesFilter<"ElementosEsenciales_Det"> | string | null
+    co?: StringNullableWithAggregatesFilter<"ElementosEsenciales_Det"> | string | null
+    nc?: StringNullableWithAggregatesFilter<"ElementosEsenciales_Det"> | string | null
+    na?: StringNullableWithAggregatesFilter<"ElementosEsenciales_Det"> | string | null
+  }
+
+  export type UTMWhereInput = {
+    AND?: UTMWhereInput | UTMWhereInput[]
+    OR?: UTMWhereInput[]
+    NOT?: UTMWhereInput | UTMWhereInput[]
+    id?: StringFilter<"UTM"> | string
+    anho?: IntFilter<"UTM"> | number
+    mes?: IntFilter<"UTM"> | number
+    monto?: FloatFilter<"UTM"> | number
+    createdAt?: DateTimeFilter<"UTM"> | Date | string
+    updatedAt?: DateTimeFilter<"UTM"> | Date | string
+  }
+
+  export type UTMOrderByWithRelationInput = {
+    id?: SortOrder
+    anho?: SortOrder
+    mes?: SortOrder
+    monto?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UTMWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    anho_mes?: UTMAnhoMesCompoundUniqueInput
+    AND?: UTMWhereInput | UTMWhereInput[]
+    OR?: UTMWhereInput[]
+    NOT?: UTMWhereInput | UTMWhereInput[]
+    anho?: IntFilter<"UTM"> | number
+    mes?: IntFilter<"UTM"> | number
+    monto?: FloatFilter<"UTM"> | number
+    createdAt?: DateTimeFilter<"UTM"> | Date | string
+    updatedAt?: DateTimeFilter<"UTM"> | Date | string
+  }, "id" | "anho_mes">
+
+  export type UTMOrderByWithAggregationInput = {
+    id?: SortOrder
+    anho?: SortOrder
+    mes?: SortOrder
+    monto?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: UTMCountOrderByAggregateInput
+    _avg?: UTMAvgOrderByAggregateInput
+    _max?: UTMMaxOrderByAggregateInput
+    _min?: UTMMinOrderByAggregateInput
+    _sum?: UTMSumOrderByAggregateInput
+  }
+
+  export type UTMScalarWhereWithAggregatesInput = {
+    AND?: UTMScalarWhereWithAggregatesInput | UTMScalarWhereWithAggregatesInput[]
+    OR?: UTMScalarWhereWithAggregatesInput[]
+    NOT?: UTMScalarWhereWithAggregatesInput | UTMScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"UTM"> | string
+    anho?: IntWithAggregatesFilter<"UTM"> | number
+    mes?: IntWithAggregatesFilter<"UTM"> | number
+    monto?: FloatWithAggregatesFilter<"UTM"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"UTM"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"UTM"> | Date | string
+  }
+
+  export type Multas_Elementos_Esenciales_CabWhereInput = {
+    AND?: Multas_Elementos_Esenciales_CabWhereInput | Multas_Elementos_Esenciales_CabWhereInput[]
+    OR?: Multas_Elementos_Esenciales_CabWhereInput[]
+    NOT?: Multas_Elementos_Esenciales_CabWhereInput | Multas_Elementos_Esenciales_CabWhereInput[]
+    id?: StringFilter<"Multas_Elementos_Esenciales_Cab"> | string
+    folioOriginal?: StringFilter<"Multas_Elementos_Esenciales_Cab"> | string
+    rbd?: IntFilter<"Multas_Elementos_Esenciales_Cab"> | number
+    fechaSupervision?: DateTimeFilter<"Multas_Elementos_Esenciales_Cab"> | Date | string
+    licitacion?: StringNullableFilter<"Multas_Elementos_Esenciales_Cab"> | string | null
+    montoTotalCalculado?: FloatFilter<"Multas_Elementos_Esenciales_Cab"> | number
+    estadoCalculo?: StringFilter<"Multas_Elementos_Esenciales_Cab"> | string
+    usuarioCalculo?: StringFilter<"Multas_Elementos_Esenciales_Cab"> | string
+    fechaCalculo?: DateTimeFilter<"Multas_Elementos_Esenciales_Cab"> | Date | string
+    detalles?: Multas_Elementos_Esenciales_DetListRelationFilter
+  }
+
+  export type Multas_Elementos_Esenciales_CabOrderByWithRelationInput = {
+    id?: SortOrder
+    folioOriginal?: SortOrder
+    rbd?: SortOrder
+    fechaSupervision?: SortOrder
+    licitacion?: SortOrderInput | SortOrder
+    montoTotalCalculado?: SortOrder
+    estadoCalculo?: SortOrder
+    usuarioCalculo?: SortOrder
+    fechaCalculo?: SortOrder
+    detalles?: Multas_Elementos_Esenciales_DetOrderByRelationAggregateInput
+  }
+
+  export type Multas_Elementos_Esenciales_CabWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    folioOriginal?: string
+    AND?: Multas_Elementos_Esenciales_CabWhereInput | Multas_Elementos_Esenciales_CabWhereInput[]
+    OR?: Multas_Elementos_Esenciales_CabWhereInput[]
+    NOT?: Multas_Elementos_Esenciales_CabWhereInput | Multas_Elementos_Esenciales_CabWhereInput[]
+    rbd?: IntFilter<"Multas_Elementos_Esenciales_Cab"> | number
+    fechaSupervision?: DateTimeFilter<"Multas_Elementos_Esenciales_Cab"> | Date | string
+    licitacion?: StringNullableFilter<"Multas_Elementos_Esenciales_Cab"> | string | null
+    montoTotalCalculado?: FloatFilter<"Multas_Elementos_Esenciales_Cab"> | number
+    estadoCalculo?: StringFilter<"Multas_Elementos_Esenciales_Cab"> | string
+    usuarioCalculo?: StringFilter<"Multas_Elementos_Esenciales_Cab"> | string
+    fechaCalculo?: DateTimeFilter<"Multas_Elementos_Esenciales_Cab"> | Date | string
+    detalles?: Multas_Elementos_Esenciales_DetListRelationFilter
+  }, "id" | "folioOriginal">
+
+  export type Multas_Elementos_Esenciales_CabOrderByWithAggregationInput = {
+    id?: SortOrder
+    folioOriginal?: SortOrder
+    rbd?: SortOrder
+    fechaSupervision?: SortOrder
+    licitacion?: SortOrderInput | SortOrder
+    montoTotalCalculado?: SortOrder
+    estadoCalculo?: SortOrder
+    usuarioCalculo?: SortOrder
+    fechaCalculo?: SortOrder
+    _count?: Multas_Elementos_Esenciales_CabCountOrderByAggregateInput
+    _avg?: Multas_Elementos_Esenciales_CabAvgOrderByAggregateInput
+    _max?: Multas_Elementos_Esenciales_CabMaxOrderByAggregateInput
+    _min?: Multas_Elementos_Esenciales_CabMinOrderByAggregateInput
+    _sum?: Multas_Elementos_Esenciales_CabSumOrderByAggregateInput
+  }
+
+  export type Multas_Elementos_Esenciales_CabScalarWhereWithAggregatesInput = {
+    AND?: Multas_Elementos_Esenciales_CabScalarWhereWithAggregatesInput | Multas_Elementos_Esenciales_CabScalarWhereWithAggregatesInput[]
+    OR?: Multas_Elementos_Esenciales_CabScalarWhereWithAggregatesInput[]
+    NOT?: Multas_Elementos_Esenciales_CabScalarWhereWithAggregatesInput | Multas_Elementos_Esenciales_CabScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Multas_Elementos_Esenciales_Cab"> | string
+    folioOriginal?: StringWithAggregatesFilter<"Multas_Elementos_Esenciales_Cab"> | string
+    rbd?: IntWithAggregatesFilter<"Multas_Elementos_Esenciales_Cab"> | number
+    fechaSupervision?: DateTimeWithAggregatesFilter<"Multas_Elementos_Esenciales_Cab"> | Date | string
+    licitacion?: StringNullableWithAggregatesFilter<"Multas_Elementos_Esenciales_Cab"> | string | null
+    montoTotalCalculado?: FloatWithAggregatesFilter<"Multas_Elementos_Esenciales_Cab"> | number
+    estadoCalculo?: StringWithAggregatesFilter<"Multas_Elementos_Esenciales_Cab"> | string
+    usuarioCalculo?: StringWithAggregatesFilter<"Multas_Elementos_Esenciales_Cab"> | string
+    fechaCalculo?: DateTimeWithAggregatesFilter<"Multas_Elementos_Esenciales_Cab"> | Date | string
+  }
+
+  export type Multas_Elementos_Esenciales_DetWhereInput = {
+    AND?: Multas_Elementos_Esenciales_DetWhereInput | Multas_Elementos_Esenciales_DetWhereInput[]
+    OR?: Multas_Elementos_Esenciales_DetWhereInput[]
+    NOT?: Multas_Elementos_Esenciales_DetWhereInput | Multas_Elementos_Esenciales_DetWhereInput[]
+    id?: StringFilter<"Multas_Elementos_Esenciales_Det"> | string
+    cabId?: StringFilter<"Multas_Elementos_Esenciales_Det"> | string
+    letraAspecto?: StringFilter<"Multas_Elementos_Esenciales_Det"> | string
+    descripcion?: StringNullableFilter<"Multas_Elementos_Esenciales_Det"> | string | null
+    formulaAplicada?: StringNullableFilter<"Multas_Elementos_Esenciales_Det"> | string | null
+    montoMulta?: FloatFilter<"Multas_Elementos_Esenciales_Det"> | number
+    variablesUsadas?: StringNullableFilter<"Multas_Elementos_Esenciales_Det"> | string | null
+    cab?: XOR<Multas_Elementos_Esenciales_CabRelationFilter, Multas_Elementos_Esenciales_CabWhereInput>
+  }
+
+  export type Multas_Elementos_Esenciales_DetOrderByWithRelationInput = {
+    id?: SortOrder
+    cabId?: SortOrder
+    letraAspecto?: SortOrder
+    descripcion?: SortOrderInput | SortOrder
+    formulaAplicada?: SortOrderInput | SortOrder
+    montoMulta?: SortOrder
+    variablesUsadas?: SortOrderInput | SortOrder
+    cab?: Multas_Elementos_Esenciales_CabOrderByWithRelationInput
+  }
+
+  export type Multas_Elementos_Esenciales_DetWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: Multas_Elementos_Esenciales_DetWhereInput | Multas_Elementos_Esenciales_DetWhereInput[]
+    OR?: Multas_Elementos_Esenciales_DetWhereInput[]
+    NOT?: Multas_Elementos_Esenciales_DetWhereInput | Multas_Elementos_Esenciales_DetWhereInput[]
+    cabId?: StringFilter<"Multas_Elementos_Esenciales_Det"> | string
+    letraAspecto?: StringFilter<"Multas_Elementos_Esenciales_Det"> | string
+    descripcion?: StringNullableFilter<"Multas_Elementos_Esenciales_Det"> | string | null
+    formulaAplicada?: StringNullableFilter<"Multas_Elementos_Esenciales_Det"> | string | null
+    montoMulta?: FloatFilter<"Multas_Elementos_Esenciales_Det"> | number
+    variablesUsadas?: StringNullableFilter<"Multas_Elementos_Esenciales_Det"> | string | null
+    cab?: XOR<Multas_Elementos_Esenciales_CabRelationFilter, Multas_Elementos_Esenciales_CabWhereInput>
+  }, "id">
+
+  export type Multas_Elementos_Esenciales_DetOrderByWithAggregationInput = {
+    id?: SortOrder
+    cabId?: SortOrder
+    letraAspecto?: SortOrder
+    descripcion?: SortOrderInput | SortOrder
+    formulaAplicada?: SortOrderInput | SortOrder
+    montoMulta?: SortOrder
+    variablesUsadas?: SortOrderInput | SortOrder
+    _count?: Multas_Elementos_Esenciales_DetCountOrderByAggregateInput
+    _avg?: Multas_Elementos_Esenciales_DetAvgOrderByAggregateInput
+    _max?: Multas_Elementos_Esenciales_DetMaxOrderByAggregateInput
+    _min?: Multas_Elementos_Esenciales_DetMinOrderByAggregateInput
+    _sum?: Multas_Elementos_Esenciales_DetSumOrderByAggregateInput
+  }
+
+  export type Multas_Elementos_Esenciales_DetScalarWhereWithAggregatesInput = {
+    AND?: Multas_Elementos_Esenciales_DetScalarWhereWithAggregatesInput | Multas_Elementos_Esenciales_DetScalarWhereWithAggregatesInput[]
+    OR?: Multas_Elementos_Esenciales_DetScalarWhereWithAggregatesInput[]
+    NOT?: Multas_Elementos_Esenciales_DetScalarWhereWithAggregatesInput | Multas_Elementos_Esenciales_DetScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Multas_Elementos_Esenciales_Det"> | string
+    cabId?: StringWithAggregatesFilter<"Multas_Elementos_Esenciales_Det"> | string
+    letraAspecto?: StringWithAggregatesFilter<"Multas_Elementos_Esenciales_Det"> | string
+    descripcion?: StringNullableWithAggregatesFilter<"Multas_Elementos_Esenciales_Det"> | string | null
+    formulaAplicada?: StringNullableWithAggregatesFilter<"Multas_Elementos_Esenciales_Det"> | string | null
+    montoMulta?: FloatWithAggregatesFilter<"Multas_Elementos_Esenciales_Det"> | number
+    variablesUsadas?: StringNullableWithAggregatesFilter<"Multas_Elementos_Esenciales_Det"> | string | null
   }
 
   export type RoleCreateInput = {
@@ -50079,29 +58497,33 @@ export namespace Prisma {
 
   export type PMPACreateInput = {
     id?: string
-    sucursal: string
     ano: number
     mes: number
+    licitacion: number
     rbd: number
-    licId?: number | null
     programa: string
     estrato: string
-    raceq: number
+    nivel: string
+    servicioLic: string
+    raceqJunaeb: number
     servicio: string
     uploadedBy: string
     createdAt?: Date | string
+    ut?: UTCreateNestedOneWithoutPmpasInput
   }
 
   export type PMPAUncheckedCreateInput = {
     id?: string
-    sucursal: string
     ano: number
     mes: number
+    licitacion: number
+    ute: number
     rbd: number
-    licId?: number | null
     programa: string
     estrato: string
-    raceq: number
+    nivel: string
+    servicioLic: string
+    raceqJunaeb: number
     servicio: string
     uploadedBy: string
     createdAt?: Date | string
@@ -50109,29 +58531,33 @@ export namespace Prisma {
 
   export type PMPAUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    sucursal?: StringFieldUpdateOperationsInput | string
     ano?: IntFieldUpdateOperationsInput | number
     mes?: IntFieldUpdateOperationsInput | number
+    licitacion?: IntFieldUpdateOperationsInput | number
     rbd?: IntFieldUpdateOperationsInput | number
-    licId?: NullableIntFieldUpdateOperationsInput | number | null
     programa?: StringFieldUpdateOperationsInput | string
     estrato?: StringFieldUpdateOperationsInput | string
-    raceq?: IntFieldUpdateOperationsInput | number
+    nivel?: StringFieldUpdateOperationsInput | string
+    servicioLic?: StringFieldUpdateOperationsInput | string
+    raceqJunaeb?: IntFieldUpdateOperationsInput | number
     servicio?: StringFieldUpdateOperationsInput | string
     uploadedBy?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ut?: UTUpdateOneWithoutPmpasNestedInput
   }
 
   export type PMPAUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    sucursal?: StringFieldUpdateOperationsInput | string
     ano?: IntFieldUpdateOperationsInput | number
     mes?: IntFieldUpdateOperationsInput | number
+    licitacion?: IntFieldUpdateOperationsInput | number
+    ute?: IntFieldUpdateOperationsInput | number
     rbd?: IntFieldUpdateOperationsInput | number
-    licId?: NullableIntFieldUpdateOperationsInput | number | null
     programa?: StringFieldUpdateOperationsInput | string
     estrato?: StringFieldUpdateOperationsInput | string
-    raceq?: IntFieldUpdateOperationsInput | number
+    nivel?: StringFieldUpdateOperationsInput | string
+    servicioLic?: StringFieldUpdateOperationsInput | string
+    raceqJunaeb?: IntFieldUpdateOperationsInput | number
     servicio?: StringFieldUpdateOperationsInput | string
     uploadedBy?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -50139,14 +58565,16 @@ export namespace Prisma {
 
   export type PMPACreateManyInput = {
     id?: string
-    sucursal: string
     ano: number
     mes: number
+    licitacion: number
+    ute: number
     rbd: number
-    licId?: number | null
     programa: string
     estrato: string
-    raceq: number
+    nivel: string
+    servicioLic: string
+    raceqJunaeb: number
     servicio: string
     uploadedBy: string
     createdAt?: Date | string
@@ -50154,14 +58582,15 @@ export namespace Prisma {
 
   export type PMPAUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    sucursal?: StringFieldUpdateOperationsInput | string
     ano?: IntFieldUpdateOperationsInput | number
     mes?: IntFieldUpdateOperationsInput | number
+    licitacion?: IntFieldUpdateOperationsInput | number
     rbd?: IntFieldUpdateOperationsInput | number
-    licId?: NullableIntFieldUpdateOperationsInput | number | null
     programa?: StringFieldUpdateOperationsInput | string
     estrato?: StringFieldUpdateOperationsInput | string
-    raceq?: IntFieldUpdateOperationsInput | number
+    nivel?: StringFieldUpdateOperationsInput | string
+    servicioLic?: StringFieldUpdateOperationsInput | string
+    raceqJunaeb?: IntFieldUpdateOperationsInput | number
     servicio?: StringFieldUpdateOperationsInput | string
     uploadedBy?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -50169,14 +58598,16 @@ export namespace Prisma {
 
   export type PMPAUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    sucursal?: StringFieldUpdateOperationsInput | string
     ano?: IntFieldUpdateOperationsInput | number
     mes?: IntFieldUpdateOperationsInput | number
+    licitacion?: IntFieldUpdateOperationsInput | number
+    ute?: IntFieldUpdateOperationsInput | number
     rbd?: IntFieldUpdateOperationsInput | number
-    licId?: NullableIntFieldUpdateOperationsInput | number | null
     programa?: StringFieldUpdateOperationsInput | string
     estrato?: StringFieldUpdateOperationsInput | string
-    raceq?: IntFieldUpdateOperationsInput | number
+    nivel?: StringFieldUpdateOperationsInput | string
+    servicioLic?: StringFieldUpdateOperationsInput | string
+    raceqJunaeb?: IntFieldUpdateOperationsInput | number
     servicio?: StringFieldUpdateOperationsInput | string
     uploadedBy?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -50800,44 +59231,96 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type MultaServicioCreateInput = {
+    id?: string
+    codigo: string
+    nombre: string
+  }
+
+  export type MultaServicioUncheckedCreateInput = {
+    id?: string
+    codigo: string
+    nombre: string
+  }
+
+  export type MultaServicioUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type MultaServicioUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type MultaServicioCreateManyInput = {
+    id?: string
+    codigo: string
+    nombre: string
+  }
+
+  export type MultaServicioUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type MultaServicioUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+  }
+
   export type LicitacionCreateInput = {
+    licitacionHomologada?: string | null
     estado?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     uts?: UTCreateNestedManyWithoutLicitacionInput
+    aspectosEE?: AspectoEECreateNestedManyWithoutLicitacionInput
   }
 
   export type LicitacionUncheckedCreateInput = {
     licId?: number
+    licitacionHomologada?: string | null
     estado?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     uts?: UTUncheckedCreateNestedManyWithoutLicitacionInput
+    aspectosEE?: AspectoEEUncheckedCreateNestedManyWithoutLicitacionInput
   }
 
   export type LicitacionUpdateInput = {
+    licitacionHomologada?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     uts?: UTUpdateManyWithoutLicitacionNestedInput
+    aspectosEE?: AspectoEEUpdateManyWithoutLicitacionNestedInput
   }
 
   export type LicitacionUncheckedUpdateInput = {
     licId?: IntFieldUpdateOperationsInput | number
+    licitacionHomologada?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     uts?: UTUncheckedUpdateManyWithoutLicitacionNestedInput
+    aspectosEE?: AspectoEEUncheckedUpdateManyWithoutLicitacionNestedInput
   }
 
   export type LicitacionCreateManyInput = {
     licId?: number
+    licitacionHomologada?: string | null
     estado?: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type LicitacionUpdateManyMutationInput = {
+    licitacionHomologada?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -50845,7 +59328,84 @@ export namespace Prisma {
 
   export type LicitacionUncheckedUpdateManyInput = {
     licId?: IntFieldUpdateOperationsInput | number
+    licitacionHomologada?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AspectoEECreateInput = {
+    id?: string
+    letra: string
+    descripcion?: string | null
+    formula?: string | null
+    solucionable?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    licitacion: LicitacionCreateNestedOneWithoutAspectosEEInput
+  }
+
+  export type AspectoEEUncheckedCreateInput = {
+    id?: string
+    licId: number
+    letra: string
+    descripcion?: string | null
+    formula?: string | null
+    solucionable?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AspectoEEUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    letra?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    formula?: NullableStringFieldUpdateOperationsInput | string | null
+    solucionable?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    licitacion?: LicitacionUpdateOneRequiredWithoutAspectosEENestedInput
+  }
+
+  export type AspectoEEUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    letra?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    formula?: NullableStringFieldUpdateOperationsInput | string | null
+    solucionable?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AspectoEECreateManyInput = {
+    id?: string
+    licId: number
+    letra: string
+    descripcion?: string | null
+    formula?: string | null
+    solucionable?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AspectoEEUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    letra?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    formula?: NullableStringFieldUpdateOperationsInput | string | null
+    solucionable?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AspectoEEUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    letra?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    formula?: NullableStringFieldUpdateOperationsInput | string | null
+    solucionable?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -51096,6 +59656,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     licitacion: LicitacionCreateNestedOneWithoutUtsInput
     sucursal?: SucursalCreateNestedOneWithoutUtsInput
+    pmpas?: PMPACreateNestedManyWithoutUtInput
   }
 
   export type UTUncheckedCreateInput = {
@@ -51105,6 +59666,7 @@ export namespace Prisma {
     sucursalId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    pmpas?: PMPAUncheckedCreateNestedManyWithoutUtInput
   }
 
   export type UTUpdateInput = {
@@ -51113,6 +59675,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     licitacion?: LicitacionUpdateOneRequiredWithoutUtsNestedInput
     sucursal?: SucursalUpdateOneWithoutUtsNestedInput
+    pmpas?: PMPAUpdateManyWithoutUtNestedInput
   }
 
   export type UTUncheckedUpdateInput = {
@@ -51122,6 +59685,7 @@ export namespace Prisma {
     sucursalId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    pmpas?: PMPAUncheckedUpdateManyWithoutUtNestedInput
   }
 
   export type UTCreateManyInput = {
@@ -53854,6 +62418,8 @@ export namespace Prisma {
     servicio: string
     programa: string
     area?: string | null
+    racionesBase?: number
+    racionesDigitadas?: number
     racionesPreparar: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -53868,6 +62434,8 @@ export namespace Prisma {
     servicio: string
     programa: string
     area?: string | null
+    racionesBase?: number
+    racionesDigitadas?: number
     racionesPreparar: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -53882,6 +62450,8 @@ export namespace Prisma {
     servicio?: StringFieldUpdateOperationsInput | string
     programa?: StringFieldUpdateOperationsInput | string
     area?: NullableStringFieldUpdateOperationsInput | string | null
+    racionesBase?: IntFieldUpdateOperationsInput | number
+    racionesDigitadas?: IntFieldUpdateOperationsInput | number
     racionesPreparar?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -53896,6 +62466,8 @@ export namespace Prisma {
     servicio?: StringFieldUpdateOperationsInput | string
     programa?: StringFieldUpdateOperationsInput | string
     area?: NullableStringFieldUpdateOperationsInput | string | null
+    racionesBase?: IntFieldUpdateOperationsInput | number
+    racionesDigitadas?: IntFieldUpdateOperationsInput | number
     racionesPreparar?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -53910,6 +62482,8 @@ export namespace Prisma {
     servicio: string
     programa: string
     area?: string | null
+    racionesBase?: number
+    racionesDigitadas?: number
     racionesPreparar: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -53923,6 +62497,8 @@ export namespace Prisma {
     servicio?: StringFieldUpdateOperationsInput | string
     programa?: StringFieldUpdateOperationsInput | string
     area?: NullableStringFieldUpdateOperationsInput | string | null
+    racionesBase?: IntFieldUpdateOperationsInput | number
+    racionesDigitadas?: IntFieldUpdateOperationsInput | number
     racionesPreparar?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -53936,6 +62512,8 @@ export namespace Prisma {
     servicio?: StringFieldUpdateOperationsInput | string
     programa?: StringFieldUpdateOperationsInput | string
     area?: NullableStringFieldUpdateOperationsInput | string | null
+    racionesBase?: IntFieldUpdateOperationsInput | number
+    racionesDigitadas?: IntFieldUpdateOperationsInput | number
     racionesPreparar?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -54009,6 +62587,432 @@ export namespace Prisma {
     nombreProducto?: StringFieldUpdateOperationsInput | string
     grsRac?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     grsTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+  }
+
+  export type ElementosEsenciales_CabCreateInput = {
+    id?: string
+    licitacion?: string | null
+    licId?: number | null
+    folio?: string | null
+    fechaSupervision?: Date | string | null
+    rbd?: number | null
+    region?: string | null
+    comuna?: string | null
+    servicio?: string | null
+    horaInicio?: string | null
+    hora?: string | null
+    obsALosIncumplimiento?: string | null
+    nombreArchivo: string
+    link?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    detalles?: ElementosEsenciales_DetCreateNestedManyWithoutCabInput
+  }
+
+  export type ElementosEsenciales_CabUncheckedCreateInput = {
+    id?: string
+    licitacion?: string | null
+    licId?: number | null
+    folio?: string | null
+    fechaSupervision?: Date | string | null
+    rbd?: number | null
+    region?: string | null
+    comuna?: string | null
+    servicio?: string | null
+    horaInicio?: string | null
+    hora?: string | null
+    obsALosIncumplimiento?: string | null
+    nombreArchivo: string
+    link?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    detalles?: ElementosEsenciales_DetUncheckedCreateNestedManyWithoutCabInput
+  }
+
+  export type ElementosEsenciales_CabUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licitacion?: NullableStringFieldUpdateOperationsInput | string | null
+    licId?: NullableIntFieldUpdateOperationsInput | number | null
+    folio?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaSupervision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    servicio?: NullableStringFieldUpdateOperationsInput | string | null
+    horaInicio?: NullableStringFieldUpdateOperationsInput | string | null
+    hora?: NullableStringFieldUpdateOperationsInput | string | null
+    obsALosIncumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreArchivo?: StringFieldUpdateOperationsInput | string
+    link?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    detalles?: ElementosEsenciales_DetUpdateManyWithoutCabNestedInput
+  }
+
+  export type ElementosEsenciales_CabUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licitacion?: NullableStringFieldUpdateOperationsInput | string | null
+    licId?: NullableIntFieldUpdateOperationsInput | number | null
+    folio?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaSupervision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    servicio?: NullableStringFieldUpdateOperationsInput | string | null
+    horaInicio?: NullableStringFieldUpdateOperationsInput | string | null
+    hora?: NullableStringFieldUpdateOperationsInput | string | null
+    obsALosIncumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreArchivo?: StringFieldUpdateOperationsInput | string
+    link?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    detalles?: ElementosEsenciales_DetUncheckedUpdateManyWithoutCabNestedInput
+  }
+
+  export type ElementosEsenciales_CabCreateManyInput = {
+    id?: string
+    licitacion?: string | null
+    licId?: number | null
+    folio?: string | null
+    fechaSupervision?: Date | string | null
+    rbd?: number | null
+    region?: string | null
+    comuna?: string | null
+    servicio?: string | null
+    horaInicio?: string | null
+    hora?: string | null
+    obsALosIncumplimiento?: string | null
+    nombreArchivo: string
+    link?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ElementosEsenciales_CabUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licitacion?: NullableStringFieldUpdateOperationsInput | string | null
+    licId?: NullableIntFieldUpdateOperationsInput | number | null
+    folio?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaSupervision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    servicio?: NullableStringFieldUpdateOperationsInput | string | null
+    horaInicio?: NullableStringFieldUpdateOperationsInput | string | null
+    hora?: NullableStringFieldUpdateOperationsInput | string | null
+    obsALosIncumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreArchivo?: StringFieldUpdateOperationsInput | string
+    link?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ElementosEsenciales_CabUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licitacion?: NullableStringFieldUpdateOperationsInput | string | null
+    licId?: NullableIntFieldUpdateOperationsInput | number | null
+    folio?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaSupervision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    servicio?: NullableStringFieldUpdateOperationsInput | string | null
+    horaInicio?: NullableStringFieldUpdateOperationsInput | string | null
+    hora?: NullableStringFieldUpdateOperationsInput | string | null
+    obsALosIncumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreArchivo?: StringFieldUpdateOperationsInput | string
+    link?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ElementosEsenciales_DetCreateInput = {
+    id?: string
+    aspecto?: string | null
+    observacionesOMedioDeVerificacion?: string | null
+    co?: string | null
+    nc?: string | null
+    na?: string | null
+    cab: ElementosEsenciales_CabCreateNestedOneWithoutDetallesInput
+  }
+
+  export type ElementosEsenciales_DetUncheckedCreateInput = {
+    id?: string
+    cabId: string
+    aspecto?: string | null
+    observacionesOMedioDeVerificacion?: string | null
+    co?: string | null
+    nc?: string | null
+    na?: string | null
+  }
+
+  export type ElementosEsenciales_DetUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    aspecto?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesOMedioDeVerificacion?: NullableStringFieldUpdateOperationsInput | string | null
+    co?: NullableStringFieldUpdateOperationsInput | string | null
+    nc?: NullableStringFieldUpdateOperationsInput | string | null
+    na?: NullableStringFieldUpdateOperationsInput | string | null
+    cab?: ElementosEsenciales_CabUpdateOneRequiredWithoutDetallesNestedInput
+  }
+
+  export type ElementosEsenciales_DetUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cabId?: StringFieldUpdateOperationsInput | string
+    aspecto?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesOMedioDeVerificacion?: NullableStringFieldUpdateOperationsInput | string | null
+    co?: NullableStringFieldUpdateOperationsInput | string | null
+    nc?: NullableStringFieldUpdateOperationsInput | string | null
+    na?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ElementosEsenciales_DetCreateManyInput = {
+    id?: string
+    cabId: string
+    aspecto?: string | null
+    observacionesOMedioDeVerificacion?: string | null
+    co?: string | null
+    nc?: string | null
+    na?: string | null
+  }
+
+  export type ElementosEsenciales_DetUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    aspecto?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesOMedioDeVerificacion?: NullableStringFieldUpdateOperationsInput | string | null
+    co?: NullableStringFieldUpdateOperationsInput | string | null
+    nc?: NullableStringFieldUpdateOperationsInput | string | null
+    na?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ElementosEsenciales_DetUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cabId?: StringFieldUpdateOperationsInput | string
+    aspecto?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesOMedioDeVerificacion?: NullableStringFieldUpdateOperationsInput | string | null
+    co?: NullableStringFieldUpdateOperationsInput | string | null
+    nc?: NullableStringFieldUpdateOperationsInput | string | null
+    na?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type UTMCreateInput = {
+    id?: string
+    anho: number
+    mes: number
+    monto: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UTMUncheckedCreateInput = {
+    id?: string
+    anho: number
+    mes: number
+    monto: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UTMUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    anho?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    monto?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UTMUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    anho?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    monto?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UTMCreateManyInput = {
+    id?: string
+    anho: number
+    mes: number
+    monto: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UTMUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    anho?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    monto?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UTMUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    anho?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    monto?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Elementos_Esenciales_CabCreateInput = {
+    id?: string
+    folioOriginal: string
+    rbd: number
+    fechaSupervision: Date | string
+    licitacion?: string | null
+    montoTotalCalculado: number
+    estadoCalculo: string
+    usuarioCalculo: string
+    fechaCalculo?: Date | string
+    detalles?: Multas_Elementos_Esenciales_DetCreateNestedManyWithoutCabInput
+  }
+
+  export type Multas_Elementos_Esenciales_CabUncheckedCreateInput = {
+    id?: string
+    folioOriginal: string
+    rbd: number
+    fechaSupervision: Date | string
+    licitacion?: string | null
+    montoTotalCalculado: number
+    estadoCalculo: string
+    usuarioCalculo: string
+    fechaCalculo?: Date | string
+    detalles?: Multas_Elementos_Esenciales_DetUncheckedCreateNestedManyWithoutCabInput
+  }
+
+  export type Multas_Elementos_Esenciales_CabUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folioOriginal?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    fechaSupervision?: DateTimeFieldUpdateOperationsInput | Date | string
+    licitacion?: NullableStringFieldUpdateOperationsInput | string | null
+    montoTotalCalculado?: FloatFieldUpdateOperationsInput | number
+    estadoCalculo?: StringFieldUpdateOperationsInput | string
+    usuarioCalculo?: StringFieldUpdateOperationsInput | string
+    fechaCalculo?: DateTimeFieldUpdateOperationsInput | Date | string
+    detalles?: Multas_Elementos_Esenciales_DetUpdateManyWithoutCabNestedInput
+  }
+
+  export type Multas_Elementos_Esenciales_CabUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folioOriginal?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    fechaSupervision?: DateTimeFieldUpdateOperationsInput | Date | string
+    licitacion?: NullableStringFieldUpdateOperationsInput | string | null
+    montoTotalCalculado?: FloatFieldUpdateOperationsInput | number
+    estadoCalculo?: StringFieldUpdateOperationsInput | string
+    usuarioCalculo?: StringFieldUpdateOperationsInput | string
+    fechaCalculo?: DateTimeFieldUpdateOperationsInput | Date | string
+    detalles?: Multas_Elementos_Esenciales_DetUncheckedUpdateManyWithoutCabNestedInput
+  }
+
+  export type Multas_Elementos_Esenciales_CabCreateManyInput = {
+    id?: string
+    folioOriginal: string
+    rbd: number
+    fechaSupervision: Date | string
+    licitacion?: string | null
+    montoTotalCalculado: number
+    estadoCalculo: string
+    usuarioCalculo: string
+    fechaCalculo?: Date | string
+  }
+
+  export type Multas_Elementos_Esenciales_CabUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folioOriginal?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    fechaSupervision?: DateTimeFieldUpdateOperationsInput | Date | string
+    licitacion?: NullableStringFieldUpdateOperationsInput | string | null
+    montoTotalCalculado?: FloatFieldUpdateOperationsInput | number
+    estadoCalculo?: StringFieldUpdateOperationsInput | string
+    usuarioCalculo?: StringFieldUpdateOperationsInput | string
+    fechaCalculo?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Elementos_Esenciales_CabUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folioOriginal?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    fechaSupervision?: DateTimeFieldUpdateOperationsInput | Date | string
+    licitacion?: NullableStringFieldUpdateOperationsInput | string | null
+    montoTotalCalculado?: FloatFieldUpdateOperationsInput | number
+    estadoCalculo?: StringFieldUpdateOperationsInput | string
+    usuarioCalculo?: StringFieldUpdateOperationsInput | string
+    fechaCalculo?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Elementos_Esenciales_DetCreateInput = {
+    id?: string
+    letraAspecto: string
+    descripcion?: string | null
+    formulaAplicada?: string | null
+    montoMulta: number
+    variablesUsadas?: string | null
+    cab: Multas_Elementos_Esenciales_CabCreateNestedOneWithoutDetallesInput
+  }
+
+  export type Multas_Elementos_Esenciales_DetUncheckedCreateInput = {
+    id?: string
+    cabId: string
+    letraAspecto: string
+    descripcion?: string | null
+    formulaAplicada?: string | null
+    montoMulta: number
+    variablesUsadas?: string | null
+  }
+
+  export type Multas_Elementos_Esenciales_DetUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    letraAspecto?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    formulaAplicada?: NullableStringFieldUpdateOperationsInput | string | null
+    montoMulta?: FloatFieldUpdateOperationsInput | number
+    variablesUsadas?: NullableStringFieldUpdateOperationsInput | string | null
+    cab?: Multas_Elementos_Esenciales_CabUpdateOneRequiredWithoutDetallesNestedInput
+  }
+
+  export type Multas_Elementos_Esenciales_DetUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cabId?: StringFieldUpdateOperationsInput | string
+    letraAspecto?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    formulaAplicada?: NullableStringFieldUpdateOperationsInput | string | null
+    montoMulta?: FloatFieldUpdateOperationsInput | number
+    variablesUsadas?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type Multas_Elementos_Esenciales_DetCreateManyInput = {
+    id?: string
+    cabId: string
+    letraAspecto: string
+    descripcion?: string | null
+    formulaAplicada?: string | null
+    montoMulta: number
+    variablesUsadas?: string | null
+  }
+
+  export type Multas_Elementos_Esenciales_DetUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    letraAspecto?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    formulaAplicada?: NullableStringFieldUpdateOperationsInput | string | null
+    montoMulta?: FloatFieldUpdateOperationsInput | number
+    variablesUsadas?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type Multas_Elementos_Esenciales_DetUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cabId?: StringFieldUpdateOperationsInput | string
+    letraAspecto?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    formulaAplicada?: NullableStringFieldUpdateOperationsInput | string | null
+    montoMulta?: FloatFieldUpdateOperationsInput | number
+    variablesUsadas?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -54239,27 +63243,23 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
-  export type IntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  export type UTNullableRelationFilter = {
+    is?: UTWhereInput | null
+    isNot?: UTWhereInput | null
   }
 
   export type PMPACountOrderByAggregateInput = {
     id?: SortOrder
-    sucursal?: SortOrder
     ano?: SortOrder
     mes?: SortOrder
+    licitacion?: SortOrder
+    ute?: SortOrder
     rbd?: SortOrder
-    licId?: SortOrder
     programa?: SortOrder
     estrato?: SortOrder
-    raceq?: SortOrder
+    nivel?: SortOrder
+    servicioLic?: SortOrder
+    raceqJunaeb?: SortOrder
     servicio?: SortOrder
     uploadedBy?: SortOrder
     createdAt?: SortOrder
@@ -54268,21 +63268,24 @@ export namespace Prisma {
   export type PMPAAvgOrderByAggregateInput = {
     ano?: SortOrder
     mes?: SortOrder
+    licitacion?: SortOrder
+    ute?: SortOrder
     rbd?: SortOrder
-    licId?: SortOrder
-    raceq?: SortOrder
+    raceqJunaeb?: SortOrder
   }
 
   export type PMPAMaxOrderByAggregateInput = {
     id?: SortOrder
-    sucursal?: SortOrder
     ano?: SortOrder
     mes?: SortOrder
+    licitacion?: SortOrder
+    ute?: SortOrder
     rbd?: SortOrder
-    licId?: SortOrder
     programa?: SortOrder
     estrato?: SortOrder
-    raceq?: SortOrder
+    nivel?: SortOrder
+    servicioLic?: SortOrder
+    raceqJunaeb?: SortOrder
     servicio?: SortOrder
     uploadedBy?: SortOrder
     createdAt?: SortOrder
@@ -54290,14 +63293,16 @@ export namespace Prisma {
 
   export type PMPAMinOrderByAggregateInput = {
     id?: SortOrder
-    sucursal?: SortOrder
     ano?: SortOrder
     mes?: SortOrder
+    licitacion?: SortOrder
+    ute?: SortOrder
     rbd?: SortOrder
-    licId?: SortOrder
     programa?: SortOrder
     estrato?: SortOrder
-    raceq?: SortOrder
+    nivel?: SortOrder
+    servicioLic?: SortOrder
+    raceqJunaeb?: SortOrder
     servicio?: SortOrder
     uploadedBy?: SortOrder
     createdAt?: SortOrder
@@ -54306,9 +63311,10 @@ export namespace Prisma {
   export type PMPASumOrderByAggregateInput = {
     ano?: SortOrder
     mes?: SortOrder
+    licitacion?: SortOrder
+    ute?: SortOrder
     rbd?: SortOrder
-    licId?: SortOrder
-    raceq?: SortOrder
+    raceqJunaeb?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -54325,22 +63331,6 @@ export namespace Prisma {
     _sum?: NestedIntFilter<$PrismaModel>
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type ColegiosCountOrderByAggregateInput = {
@@ -54393,6 +63383,17 @@ export namespace Prisma {
   export type ColegiosSumOrderByAggregateInput = {
     colut?: SortOrder
     colRBD?: SortOrder
+  }
+
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type FloatFilter<$PrismaModel = never> = {
@@ -54531,6 +63532,22 @@ export namespace Prisma {
     cenaAsig?: SortOrder
     totalAsig?: SortOrder
     tasaPreparacion?: SortOrder
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type FloatWithAggregatesFilter<$PrismaModel = never> = {
@@ -54717,18 +63734,47 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type MultaServicioCountOrderByAggregateInput = {
+    id?: SortOrder
+    codigo?: SortOrder
+    nombre?: SortOrder
+  }
+
+  export type MultaServicioMaxOrderByAggregateInput = {
+    id?: SortOrder
+    codigo?: SortOrder
+    nombre?: SortOrder
+  }
+
+  export type MultaServicioMinOrderByAggregateInput = {
+    id?: SortOrder
+    codigo?: SortOrder
+    nombre?: SortOrder
+  }
+
   export type UTListRelationFilter = {
     every?: UTWhereInput
     some?: UTWhereInput
     none?: UTWhereInput
   }
 
+  export type AspectoEEListRelationFilter = {
+    every?: AspectoEEWhereInput
+    some?: AspectoEEWhereInput
+    none?: AspectoEEWhereInput
+  }
+
   export type UTOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AspectoEEOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type LicitacionCountOrderByAggregateInput = {
     licId?: SortOrder
+    licitacionHomologada?: SortOrder
     estado?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -54741,6 +63787,7 @@ export namespace Prisma {
 
   export type LicitacionMaxOrderByAggregateInput = {
     licId?: SortOrder
+    licitacionHomologada?: SortOrder
     estado?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -54748,6 +63795,7 @@ export namespace Prisma {
 
   export type LicitacionMinOrderByAggregateInput = {
     licId?: SortOrder
+    licitacionHomologada?: SortOrder
     estado?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -54756,6 +63804,57 @@ export namespace Prisma {
   export type LicitacionSumOrderByAggregateInput = {
     licId?: SortOrder
     estado?: SortOrder
+  }
+
+  export type LicitacionRelationFilter = {
+    is?: LicitacionWhereInput
+    isNot?: LicitacionWhereInput
+  }
+
+  export type AspectoEELicIdLetraCompoundUniqueInput = {
+    licId: number
+    letra: string
+  }
+
+  export type AspectoEECountOrderByAggregateInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    letra?: SortOrder
+    descripcion?: SortOrder
+    formula?: SortOrder
+    solucionable?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AspectoEEAvgOrderByAggregateInput = {
+    licId?: SortOrder
+  }
+
+  export type AspectoEEMaxOrderByAggregateInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    letra?: SortOrder
+    descripcion?: SortOrder
+    formula?: SortOrder
+    solucionable?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AspectoEEMinOrderByAggregateInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    letra?: SortOrder
+    descripcion?: SortOrder
+    formula?: SortOrder
+    solucionable?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AspectoEESumOrderByAggregateInput = {
+    licId?: SortOrder
   }
 
   export type ListaCorreoListRelationFilter = {
@@ -54925,9 +64024,14 @@ export namespace Prisma {
     cantidad?: SortOrder
   }
 
-  export type LicitacionRelationFilter = {
-    is?: LicitacionWhereInput
-    isNot?: LicitacionWhereInput
+  export type PMPAListRelationFilter = {
+    every?: PMPAWhereInput
+    some?: PMPAWhereInput
+    none?: PMPAWhereInput
+  }
+
+  export type PMPAOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type UTCountOrderByAggregateInput = {
@@ -56511,6 +65615,8 @@ export namespace Prisma {
     servicio?: SortOrder
     programa?: SortOrder
     area?: SortOrder
+    racionesBase?: SortOrder
+    racionesDigitadas?: SortOrder
     racionesPreparar?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -56519,6 +65625,8 @@ export namespace Prisma {
 
   export type CapCertificacionHeaderAvgOrderByAggregateInput = {
     rbd?: SortOrder
+    racionesBase?: SortOrder
+    racionesDigitadas?: SortOrder
     racionesPreparar?: SortOrder
   }
 
@@ -56529,6 +65637,8 @@ export namespace Prisma {
     servicio?: SortOrder
     programa?: SortOrder
     area?: SortOrder
+    racionesBase?: SortOrder
+    racionesDigitadas?: SortOrder
     racionesPreparar?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -56542,6 +65652,8 @@ export namespace Prisma {
     servicio?: SortOrder
     programa?: SortOrder
     area?: SortOrder
+    racionesBase?: SortOrder
+    racionesDigitadas?: SortOrder
     racionesPreparar?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -56550,6 +65662,8 @@ export namespace Prisma {
 
   export type CapCertificacionHeaderSumOrderByAggregateInput = {
     rbd?: SortOrder
+    racionesBase?: SortOrder
+    racionesDigitadas?: SortOrder
     racionesPreparar?: SortOrder
   }
 
@@ -56596,6 +65710,261 @@ export namespace Prisma {
   export type CapCertificacionDetailSumOrderByAggregateInput = {
     grsRac?: SortOrder
     grsTotal?: SortOrder
+  }
+
+  export type ElementosEsenciales_DetListRelationFilter = {
+    every?: ElementosEsenciales_DetWhereInput
+    some?: ElementosEsenciales_DetWhereInput
+    none?: ElementosEsenciales_DetWhereInput
+  }
+
+  export type ElementosEsenciales_DetOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ElementosEsenciales_CabCountOrderByAggregateInput = {
+    id?: SortOrder
+    licitacion?: SortOrder
+    licId?: SortOrder
+    folio?: SortOrder
+    fechaSupervision?: SortOrder
+    rbd?: SortOrder
+    region?: SortOrder
+    comuna?: SortOrder
+    servicio?: SortOrder
+    horaInicio?: SortOrder
+    hora?: SortOrder
+    obsALosIncumplimiento?: SortOrder
+    nombreArchivo?: SortOrder
+    link?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ElementosEsenciales_CabAvgOrderByAggregateInput = {
+    licId?: SortOrder
+    rbd?: SortOrder
+  }
+
+  export type ElementosEsenciales_CabMaxOrderByAggregateInput = {
+    id?: SortOrder
+    licitacion?: SortOrder
+    licId?: SortOrder
+    folio?: SortOrder
+    fechaSupervision?: SortOrder
+    rbd?: SortOrder
+    region?: SortOrder
+    comuna?: SortOrder
+    servicio?: SortOrder
+    horaInicio?: SortOrder
+    hora?: SortOrder
+    obsALosIncumplimiento?: SortOrder
+    nombreArchivo?: SortOrder
+    link?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ElementosEsenciales_CabMinOrderByAggregateInput = {
+    id?: SortOrder
+    licitacion?: SortOrder
+    licId?: SortOrder
+    folio?: SortOrder
+    fechaSupervision?: SortOrder
+    rbd?: SortOrder
+    region?: SortOrder
+    comuna?: SortOrder
+    servicio?: SortOrder
+    horaInicio?: SortOrder
+    hora?: SortOrder
+    obsALosIncumplimiento?: SortOrder
+    nombreArchivo?: SortOrder
+    link?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ElementosEsenciales_CabSumOrderByAggregateInput = {
+    licId?: SortOrder
+    rbd?: SortOrder
+  }
+
+  export type ElementosEsenciales_CabRelationFilter = {
+    is?: ElementosEsenciales_CabWhereInput
+    isNot?: ElementosEsenciales_CabWhereInput
+  }
+
+  export type ElementosEsenciales_DetCountOrderByAggregateInput = {
+    id?: SortOrder
+    cabId?: SortOrder
+    aspecto?: SortOrder
+    observacionesOMedioDeVerificacion?: SortOrder
+    co?: SortOrder
+    nc?: SortOrder
+    na?: SortOrder
+  }
+
+  export type ElementosEsenciales_DetMaxOrderByAggregateInput = {
+    id?: SortOrder
+    cabId?: SortOrder
+    aspecto?: SortOrder
+    observacionesOMedioDeVerificacion?: SortOrder
+    co?: SortOrder
+    nc?: SortOrder
+    na?: SortOrder
+  }
+
+  export type ElementosEsenciales_DetMinOrderByAggregateInput = {
+    id?: SortOrder
+    cabId?: SortOrder
+    aspecto?: SortOrder
+    observacionesOMedioDeVerificacion?: SortOrder
+    co?: SortOrder
+    nc?: SortOrder
+    na?: SortOrder
+  }
+
+  export type UTMAnhoMesCompoundUniqueInput = {
+    anho: number
+    mes: number
+  }
+
+  export type UTMCountOrderByAggregateInput = {
+    id?: SortOrder
+    anho?: SortOrder
+    mes?: SortOrder
+    monto?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UTMAvgOrderByAggregateInput = {
+    anho?: SortOrder
+    mes?: SortOrder
+    monto?: SortOrder
+  }
+
+  export type UTMMaxOrderByAggregateInput = {
+    id?: SortOrder
+    anho?: SortOrder
+    mes?: SortOrder
+    monto?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UTMMinOrderByAggregateInput = {
+    id?: SortOrder
+    anho?: SortOrder
+    mes?: SortOrder
+    monto?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UTMSumOrderByAggregateInput = {
+    anho?: SortOrder
+    mes?: SortOrder
+    monto?: SortOrder
+  }
+
+  export type Multas_Elementos_Esenciales_DetListRelationFilter = {
+    every?: Multas_Elementos_Esenciales_DetWhereInput
+    some?: Multas_Elementos_Esenciales_DetWhereInput
+    none?: Multas_Elementos_Esenciales_DetWhereInput
+  }
+
+  export type Multas_Elementos_Esenciales_DetOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type Multas_Elementos_Esenciales_CabCountOrderByAggregateInput = {
+    id?: SortOrder
+    folioOriginal?: SortOrder
+    rbd?: SortOrder
+    fechaSupervision?: SortOrder
+    licitacion?: SortOrder
+    montoTotalCalculado?: SortOrder
+    estadoCalculo?: SortOrder
+    usuarioCalculo?: SortOrder
+    fechaCalculo?: SortOrder
+  }
+
+  export type Multas_Elementos_Esenciales_CabAvgOrderByAggregateInput = {
+    rbd?: SortOrder
+    montoTotalCalculado?: SortOrder
+  }
+
+  export type Multas_Elementos_Esenciales_CabMaxOrderByAggregateInput = {
+    id?: SortOrder
+    folioOriginal?: SortOrder
+    rbd?: SortOrder
+    fechaSupervision?: SortOrder
+    licitacion?: SortOrder
+    montoTotalCalculado?: SortOrder
+    estadoCalculo?: SortOrder
+    usuarioCalculo?: SortOrder
+    fechaCalculo?: SortOrder
+  }
+
+  export type Multas_Elementos_Esenciales_CabMinOrderByAggregateInput = {
+    id?: SortOrder
+    folioOriginal?: SortOrder
+    rbd?: SortOrder
+    fechaSupervision?: SortOrder
+    licitacion?: SortOrder
+    montoTotalCalculado?: SortOrder
+    estadoCalculo?: SortOrder
+    usuarioCalculo?: SortOrder
+    fechaCalculo?: SortOrder
+  }
+
+  export type Multas_Elementos_Esenciales_CabSumOrderByAggregateInput = {
+    rbd?: SortOrder
+    montoTotalCalculado?: SortOrder
+  }
+
+  export type Multas_Elementos_Esenciales_CabRelationFilter = {
+    is?: Multas_Elementos_Esenciales_CabWhereInput
+    isNot?: Multas_Elementos_Esenciales_CabWhereInput
+  }
+
+  export type Multas_Elementos_Esenciales_DetCountOrderByAggregateInput = {
+    id?: SortOrder
+    cabId?: SortOrder
+    letraAspecto?: SortOrder
+    descripcion?: SortOrder
+    formulaAplicada?: SortOrder
+    montoMulta?: SortOrder
+    variablesUsadas?: SortOrder
+  }
+
+  export type Multas_Elementos_Esenciales_DetAvgOrderByAggregateInput = {
+    montoMulta?: SortOrder
+  }
+
+  export type Multas_Elementos_Esenciales_DetMaxOrderByAggregateInput = {
+    id?: SortOrder
+    cabId?: SortOrder
+    letraAspecto?: SortOrder
+    descripcion?: SortOrder
+    formulaAplicada?: SortOrder
+    montoMulta?: SortOrder
+    variablesUsadas?: SortOrder
+  }
+
+  export type Multas_Elementos_Esenciales_DetMinOrderByAggregateInput = {
+    id?: SortOrder
+    cabId?: SortOrder
+    letraAspecto?: SortOrder
+    descripcion?: SortOrder
+    formulaAplicada?: SortOrder
+    montoMulta?: SortOrder
+    variablesUsadas?: SortOrder
+  }
+
+  export type Multas_Elementos_Esenciales_DetSumOrderByAggregateInput = {
+    montoMulta?: SortOrder
   }
 
   export type UserCreateNestedManyWithoutRoleInput = {
@@ -56784,12 +66153,28 @@ export namespace Prisma {
     deleteMany?: AreaScalarWhereInput | AreaScalarWhereInput[]
   }
 
+  export type UTCreateNestedOneWithoutPmpasInput = {
+    create?: XOR<UTCreateWithoutPmpasInput, UTUncheckedCreateWithoutPmpasInput>
+    connectOrCreate?: UTCreateOrConnectWithoutPmpasInput
+    connect?: UTWhereUniqueInput
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type UTUpdateOneWithoutPmpasNestedInput = {
+    create?: XOR<UTCreateWithoutPmpasInput, UTUncheckedCreateWithoutPmpasInput>
+    connectOrCreate?: UTCreateOrConnectWithoutPmpasInput
+    upsert?: UTUpsertWithoutPmpasInput
+    disconnect?: UTWhereInput | boolean
+    delete?: UTWhereInput | boolean
+    connect?: UTWhereUniqueInput
+    update?: XOR<XOR<UTUpdateToOneWithWhereWithoutPmpasInput, UTUpdateWithoutPmpasInput>, UTUncheckedUpdateWithoutPmpasInput>
   }
 
   export type NullableIntFieldUpdateOperationsInput = {
@@ -56887,11 +66272,25 @@ export namespace Prisma {
     connect?: UTWhereUniqueInput | UTWhereUniqueInput[]
   }
 
+  export type AspectoEECreateNestedManyWithoutLicitacionInput = {
+    create?: XOR<AspectoEECreateWithoutLicitacionInput, AspectoEEUncheckedCreateWithoutLicitacionInput> | AspectoEECreateWithoutLicitacionInput[] | AspectoEEUncheckedCreateWithoutLicitacionInput[]
+    connectOrCreate?: AspectoEECreateOrConnectWithoutLicitacionInput | AspectoEECreateOrConnectWithoutLicitacionInput[]
+    createMany?: AspectoEECreateManyLicitacionInputEnvelope
+    connect?: AspectoEEWhereUniqueInput | AspectoEEWhereUniqueInput[]
+  }
+
   export type UTUncheckedCreateNestedManyWithoutLicitacionInput = {
     create?: XOR<UTCreateWithoutLicitacionInput, UTUncheckedCreateWithoutLicitacionInput> | UTCreateWithoutLicitacionInput[] | UTUncheckedCreateWithoutLicitacionInput[]
     connectOrCreate?: UTCreateOrConnectWithoutLicitacionInput | UTCreateOrConnectWithoutLicitacionInput[]
     createMany?: UTCreateManyLicitacionInputEnvelope
     connect?: UTWhereUniqueInput | UTWhereUniqueInput[]
+  }
+
+  export type AspectoEEUncheckedCreateNestedManyWithoutLicitacionInput = {
+    create?: XOR<AspectoEECreateWithoutLicitacionInput, AspectoEEUncheckedCreateWithoutLicitacionInput> | AspectoEECreateWithoutLicitacionInput[] | AspectoEEUncheckedCreateWithoutLicitacionInput[]
+    connectOrCreate?: AspectoEECreateOrConnectWithoutLicitacionInput | AspectoEECreateOrConnectWithoutLicitacionInput[]
+    createMany?: AspectoEECreateManyLicitacionInputEnvelope
+    connect?: AspectoEEWhereUniqueInput | AspectoEEWhereUniqueInput[]
   }
 
   export type UTUpdateManyWithoutLicitacionNestedInput = {
@@ -56908,6 +66307,20 @@ export namespace Prisma {
     deleteMany?: UTScalarWhereInput | UTScalarWhereInput[]
   }
 
+  export type AspectoEEUpdateManyWithoutLicitacionNestedInput = {
+    create?: XOR<AspectoEECreateWithoutLicitacionInput, AspectoEEUncheckedCreateWithoutLicitacionInput> | AspectoEECreateWithoutLicitacionInput[] | AspectoEEUncheckedCreateWithoutLicitacionInput[]
+    connectOrCreate?: AspectoEECreateOrConnectWithoutLicitacionInput | AspectoEECreateOrConnectWithoutLicitacionInput[]
+    upsert?: AspectoEEUpsertWithWhereUniqueWithoutLicitacionInput | AspectoEEUpsertWithWhereUniqueWithoutLicitacionInput[]
+    createMany?: AspectoEECreateManyLicitacionInputEnvelope
+    set?: AspectoEEWhereUniqueInput | AspectoEEWhereUniqueInput[]
+    disconnect?: AspectoEEWhereUniqueInput | AspectoEEWhereUniqueInput[]
+    delete?: AspectoEEWhereUniqueInput | AspectoEEWhereUniqueInput[]
+    connect?: AspectoEEWhereUniqueInput | AspectoEEWhereUniqueInput[]
+    update?: AspectoEEUpdateWithWhereUniqueWithoutLicitacionInput | AspectoEEUpdateWithWhereUniqueWithoutLicitacionInput[]
+    updateMany?: AspectoEEUpdateManyWithWhereWithoutLicitacionInput | AspectoEEUpdateManyWithWhereWithoutLicitacionInput[]
+    deleteMany?: AspectoEEScalarWhereInput | AspectoEEScalarWhereInput[]
+  }
+
   export type UTUncheckedUpdateManyWithoutLicitacionNestedInput = {
     create?: XOR<UTCreateWithoutLicitacionInput, UTUncheckedCreateWithoutLicitacionInput> | UTCreateWithoutLicitacionInput[] | UTUncheckedCreateWithoutLicitacionInput[]
     connectOrCreate?: UTCreateOrConnectWithoutLicitacionInput | UTCreateOrConnectWithoutLicitacionInput[]
@@ -56920,6 +66333,34 @@ export namespace Prisma {
     update?: UTUpdateWithWhereUniqueWithoutLicitacionInput | UTUpdateWithWhereUniqueWithoutLicitacionInput[]
     updateMany?: UTUpdateManyWithWhereWithoutLicitacionInput | UTUpdateManyWithWhereWithoutLicitacionInput[]
     deleteMany?: UTScalarWhereInput | UTScalarWhereInput[]
+  }
+
+  export type AspectoEEUncheckedUpdateManyWithoutLicitacionNestedInput = {
+    create?: XOR<AspectoEECreateWithoutLicitacionInput, AspectoEEUncheckedCreateWithoutLicitacionInput> | AspectoEECreateWithoutLicitacionInput[] | AspectoEEUncheckedCreateWithoutLicitacionInput[]
+    connectOrCreate?: AspectoEECreateOrConnectWithoutLicitacionInput | AspectoEECreateOrConnectWithoutLicitacionInput[]
+    upsert?: AspectoEEUpsertWithWhereUniqueWithoutLicitacionInput | AspectoEEUpsertWithWhereUniqueWithoutLicitacionInput[]
+    createMany?: AspectoEECreateManyLicitacionInputEnvelope
+    set?: AspectoEEWhereUniqueInput | AspectoEEWhereUniqueInput[]
+    disconnect?: AspectoEEWhereUniqueInput | AspectoEEWhereUniqueInput[]
+    delete?: AspectoEEWhereUniqueInput | AspectoEEWhereUniqueInput[]
+    connect?: AspectoEEWhereUniqueInput | AspectoEEWhereUniqueInput[]
+    update?: AspectoEEUpdateWithWhereUniqueWithoutLicitacionInput | AspectoEEUpdateWithWhereUniqueWithoutLicitacionInput[]
+    updateMany?: AspectoEEUpdateManyWithWhereWithoutLicitacionInput | AspectoEEUpdateManyWithWhereWithoutLicitacionInput[]
+    deleteMany?: AspectoEEScalarWhereInput | AspectoEEScalarWhereInput[]
+  }
+
+  export type LicitacionCreateNestedOneWithoutAspectosEEInput = {
+    create?: XOR<LicitacionCreateWithoutAspectosEEInput, LicitacionUncheckedCreateWithoutAspectosEEInput>
+    connectOrCreate?: LicitacionCreateOrConnectWithoutAspectosEEInput
+    connect?: LicitacionWhereUniqueInput
+  }
+
+  export type LicitacionUpdateOneRequiredWithoutAspectosEENestedInput = {
+    create?: XOR<LicitacionCreateWithoutAspectosEEInput, LicitacionUncheckedCreateWithoutAspectosEEInput>
+    connectOrCreate?: LicitacionCreateOrConnectWithoutAspectosEEInput
+    upsert?: LicitacionUpsertWithoutAspectosEEInput
+    connect?: LicitacionWhereUniqueInput
+    update?: XOR<XOR<LicitacionUpdateToOneWithWhereWithoutAspectosEEInput, LicitacionUpdateWithoutAspectosEEInput>, LicitacionUncheckedUpdateWithoutAspectosEEInput>
   }
 
   export type ListaCorreoCreateNestedManyWithoutSucursalInput = {
@@ -57196,6 +66637,20 @@ export namespace Prisma {
     connect?: SucursalWhereUniqueInput
   }
 
+  export type PMPACreateNestedManyWithoutUtInput = {
+    create?: XOR<PMPACreateWithoutUtInput, PMPAUncheckedCreateWithoutUtInput> | PMPACreateWithoutUtInput[] | PMPAUncheckedCreateWithoutUtInput[]
+    connectOrCreate?: PMPACreateOrConnectWithoutUtInput | PMPACreateOrConnectWithoutUtInput[]
+    createMany?: PMPACreateManyUtInputEnvelope
+    connect?: PMPAWhereUniqueInput | PMPAWhereUniqueInput[]
+  }
+
+  export type PMPAUncheckedCreateNestedManyWithoutUtInput = {
+    create?: XOR<PMPACreateWithoutUtInput, PMPAUncheckedCreateWithoutUtInput> | PMPACreateWithoutUtInput[] | PMPAUncheckedCreateWithoutUtInput[]
+    connectOrCreate?: PMPACreateOrConnectWithoutUtInput | PMPACreateOrConnectWithoutUtInput[]
+    createMany?: PMPACreateManyUtInputEnvelope
+    connect?: PMPAWhereUniqueInput | PMPAWhereUniqueInput[]
+  }
+
   export type LicitacionUpdateOneRequiredWithoutUtsNestedInput = {
     create?: XOR<LicitacionCreateWithoutUtsInput, LicitacionUncheckedCreateWithoutUtsInput>
     connectOrCreate?: LicitacionCreateOrConnectWithoutUtsInput
@@ -57212,6 +66667,34 @@ export namespace Prisma {
     delete?: SucursalWhereInput | boolean
     connect?: SucursalWhereUniqueInput
     update?: XOR<XOR<SucursalUpdateToOneWithWhereWithoutUtsInput, SucursalUpdateWithoutUtsInput>, SucursalUncheckedUpdateWithoutUtsInput>
+  }
+
+  export type PMPAUpdateManyWithoutUtNestedInput = {
+    create?: XOR<PMPACreateWithoutUtInput, PMPAUncheckedCreateWithoutUtInput> | PMPACreateWithoutUtInput[] | PMPAUncheckedCreateWithoutUtInput[]
+    connectOrCreate?: PMPACreateOrConnectWithoutUtInput | PMPACreateOrConnectWithoutUtInput[]
+    upsert?: PMPAUpsertWithWhereUniqueWithoutUtInput | PMPAUpsertWithWhereUniqueWithoutUtInput[]
+    createMany?: PMPACreateManyUtInputEnvelope
+    set?: PMPAWhereUniqueInput | PMPAWhereUniqueInput[]
+    disconnect?: PMPAWhereUniqueInput | PMPAWhereUniqueInput[]
+    delete?: PMPAWhereUniqueInput | PMPAWhereUniqueInput[]
+    connect?: PMPAWhereUniqueInput | PMPAWhereUniqueInput[]
+    update?: PMPAUpdateWithWhereUniqueWithoutUtInput | PMPAUpdateWithWhereUniqueWithoutUtInput[]
+    updateMany?: PMPAUpdateManyWithWhereWithoutUtInput | PMPAUpdateManyWithWhereWithoutUtInput[]
+    deleteMany?: PMPAScalarWhereInput | PMPAScalarWhereInput[]
+  }
+
+  export type PMPAUncheckedUpdateManyWithoutUtNestedInput = {
+    create?: XOR<PMPACreateWithoutUtInput, PMPAUncheckedCreateWithoutUtInput> | PMPACreateWithoutUtInput[] | PMPAUncheckedCreateWithoutUtInput[]
+    connectOrCreate?: PMPACreateOrConnectWithoutUtInput | PMPACreateOrConnectWithoutUtInput[]
+    upsert?: PMPAUpsertWithWhereUniqueWithoutUtInput | PMPAUpsertWithWhereUniqueWithoutUtInput[]
+    createMany?: PMPACreateManyUtInputEnvelope
+    set?: PMPAWhereUniqueInput | PMPAWhereUniqueInput[]
+    disconnect?: PMPAWhereUniqueInput | PMPAWhereUniqueInput[]
+    delete?: PMPAWhereUniqueInput | PMPAWhereUniqueInput[]
+    connect?: PMPAWhereUniqueInput | PMPAWhereUniqueInput[]
+    update?: PMPAUpdateWithWhereUniqueWithoutUtInput | PMPAUpdateWithWhereUniqueWithoutUtInput[]
+    updateMany?: PMPAUpdateManyWithWhereWithoutUtInput | PMPAUpdateManyWithWhereWithoutUtInput[]
+    deleteMany?: PMPAScalarWhereInput | PMPAScalarWhereInput[]
   }
 
   export type RetiroSaldoDetailCreateNestedManyWithoutHeaderInput = {
@@ -57738,6 +67221,118 @@ export namespace Prisma {
     upsert?: CapCertificacionHeaderUpsertWithoutDetallesInput
     connect?: CapCertificacionHeaderWhereUniqueInput
     update?: XOR<XOR<CapCertificacionHeaderUpdateToOneWithWhereWithoutDetallesInput, CapCertificacionHeaderUpdateWithoutDetallesInput>, CapCertificacionHeaderUncheckedUpdateWithoutDetallesInput>
+  }
+
+  export type ElementosEsenciales_DetCreateNestedManyWithoutCabInput = {
+    create?: XOR<ElementosEsenciales_DetCreateWithoutCabInput, ElementosEsenciales_DetUncheckedCreateWithoutCabInput> | ElementosEsenciales_DetCreateWithoutCabInput[] | ElementosEsenciales_DetUncheckedCreateWithoutCabInput[]
+    connectOrCreate?: ElementosEsenciales_DetCreateOrConnectWithoutCabInput | ElementosEsenciales_DetCreateOrConnectWithoutCabInput[]
+    createMany?: ElementosEsenciales_DetCreateManyCabInputEnvelope
+    connect?: ElementosEsenciales_DetWhereUniqueInput | ElementosEsenciales_DetWhereUniqueInput[]
+  }
+
+  export type ElementosEsenciales_DetUncheckedCreateNestedManyWithoutCabInput = {
+    create?: XOR<ElementosEsenciales_DetCreateWithoutCabInput, ElementosEsenciales_DetUncheckedCreateWithoutCabInput> | ElementosEsenciales_DetCreateWithoutCabInput[] | ElementosEsenciales_DetUncheckedCreateWithoutCabInput[]
+    connectOrCreate?: ElementosEsenciales_DetCreateOrConnectWithoutCabInput | ElementosEsenciales_DetCreateOrConnectWithoutCabInput[]
+    createMany?: ElementosEsenciales_DetCreateManyCabInputEnvelope
+    connect?: ElementosEsenciales_DetWhereUniqueInput | ElementosEsenciales_DetWhereUniqueInput[]
+  }
+
+  export type ElementosEsenciales_DetUpdateManyWithoutCabNestedInput = {
+    create?: XOR<ElementosEsenciales_DetCreateWithoutCabInput, ElementosEsenciales_DetUncheckedCreateWithoutCabInput> | ElementosEsenciales_DetCreateWithoutCabInput[] | ElementosEsenciales_DetUncheckedCreateWithoutCabInput[]
+    connectOrCreate?: ElementosEsenciales_DetCreateOrConnectWithoutCabInput | ElementosEsenciales_DetCreateOrConnectWithoutCabInput[]
+    upsert?: ElementosEsenciales_DetUpsertWithWhereUniqueWithoutCabInput | ElementosEsenciales_DetUpsertWithWhereUniqueWithoutCabInput[]
+    createMany?: ElementosEsenciales_DetCreateManyCabInputEnvelope
+    set?: ElementosEsenciales_DetWhereUniqueInput | ElementosEsenciales_DetWhereUniqueInput[]
+    disconnect?: ElementosEsenciales_DetWhereUniqueInput | ElementosEsenciales_DetWhereUniqueInput[]
+    delete?: ElementosEsenciales_DetWhereUniqueInput | ElementosEsenciales_DetWhereUniqueInput[]
+    connect?: ElementosEsenciales_DetWhereUniqueInput | ElementosEsenciales_DetWhereUniqueInput[]
+    update?: ElementosEsenciales_DetUpdateWithWhereUniqueWithoutCabInput | ElementosEsenciales_DetUpdateWithWhereUniqueWithoutCabInput[]
+    updateMany?: ElementosEsenciales_DetUpdateManyWithWhereWithoutCabInput | ElementosEsenciales_DetUpdateManyWithWhereWithoutCabInput[]
+    deleteMany?: ElementosEsenciales_DetScalarWhereInput | ElementosEsenciales_DetScalarWhereInput[]
+  }
+
+  export type ElementosEsenciales_DetUncheckedUpdateManyWithoutCabNestedInput = {
+    create?: XOR<ElementosEsenciales_DetCreateWithoutCabInput, ElementosEsenciales_DetUncheckedCreateWithoutCabInput> | ElementosEsenciales_DetCreateWithoutCabInput[] | ElementosEsenciales_DetUncheckedCreateWithoutCabInput[]
+    connectOrCreate?: ElementosEsenciales_DetCreateOrConnectWithoutCabInput | ElementosEsenciales_DetCreateOrConnectWithoutCabInput[]
+    upsert?: ElementosEsenciales_DetUpsertWithWhereUniqueWithoutCabInput | ElementosEsenciales_DetUpsertWithWhereUniqueWithoutCabInput[]
+    createMany?: ElementosEsenciales_DetCreateManyCabInputEnvelope
+    set?: ElementosEsenciales_DetWhereUniqueInput | ElementosEsenciales_DetWhereUniqueInput[]
+    disconnect?: ElementosEsenciales_DetWhereUniqueInput | ElementosEsenciales_DetWhereUniqueInput[]
+    delete?: ElementosEsenciales_DetWhereUniqueInput | ElementosEsenciales_DetWhereUniqueInput[]
+    connect?: ElementosEsenciales_DetWhereUniqueInput | ElementosEsenciales_DetWhereUniqueInput[]
+    update?: ElementosEsenciales_DetUpdateWithWhereUniqueWithoutCabInput | ElementosEsenciales_DetUpdateWithWhereUniqueWithoutCabInput[]
+    updateMany?: ElementosEsenciales_DetUpdateManyWithWhereWithoutCabInput | ElementosEsenciales_DetUpdateManyWithWhereWithoutCabInput[]
+    deleteMany?: ElementosEsenciales_DetScalarWhereInput | ElementosEsenciales_DetScalarWhereInput[]
+  }
+
+  export type ElementosEsenciales_CabCreateNestedOneWithoutDetallesInput = {
+    create?: XOR<ElementosEsenciales_CabCreateWithoutDetallesInput, ElementosEsenciales_CabUncheckedCreateWithoutDetallesInput>
+    connectOrCreate?: ElementosEsenciales_CabCreateOrConnectWithoutDetallesInput
+    connect?: ElementosEsenciales_CabWhereUniqueInput
+  }
+
+  export type ElementosEsenciales_CabUpdateOneRequiredWithoutDetallesNestedInput = {
+    create?: XOR<ElementosEsenciales_CabCreateWithoutDetallesInput, ElementosEsenciales_CabUncheckedCreateWithoutDetallesInput>
+    connectOrCreate?: ElementosEsenciales_CabCreateOrConnectWithoutDetallesInput
+    upsert?: ElementosEsenciales_CabUpsertWithoutDetallesInput
+    connect?: ElementosEsenciales_CabWhereUniqueInput
+    update?: XOR<XOR<ElementosEsenciales_CabUpdateToOneWithWhereWithoutDetallesInput, ElementosEsenciales_CabUpdateWithoutDetallesInput>, ElementosEsenciales_CabUncheckedUpdateWithoutDetallesInput>
+  }
+
+  export type Multas_Elementos_Esenciales_DetCreateNestedManyWithoutCabInput = {
+    create?: XOR<Multas_Elementos_Esenciales_DetCreateWithoutCabInput, Multas_Elementos_Esenciales_DetUncheckedCreateWithoutCabInput> | Multas_Elementos_Esenciales_DetCreateWithoutCabInput[] | Multas_Elementos_Esenciales_DetUncheckedCreateWithoutCabInput[]
+    connectOrCreate?: Multas_Elementos_Esenciales_DetCreateOrConnectWithoutCabInput | Multas_Elementos_Esenciales_DetCreateOrConnectWithoutCabInput[]
+    createMany?: Multas_Elementos_Esenciales_DetCreateManyCabInputEnvelope
+    connect?: Multas_Elementos_Esenciales_DetWhereUniqueInput | Multas_Elementos_Esenciales_DetWhereUniqueInput[]
+  }
+
+  export type Multas_Elementos_Esenciales_DetUncheckedCreateNestedManyWithoutCabInput = {
+    create?: XOR<Multas_Elementos_Esenciales_DetCreateWithoutCabInput, Multas_Elementos_Esenciales_DetUncheckedCreateWithoutCabInput> | Multas_Elementos_Esenciales_DetCreateWithoutCabInput[] | Multas_Elementos_Esenciales_DetUncheckedCreateWithoutCabInput[]
+    connectOrCreate?: Multas_Elementos_Esenciales_DetCreateOrConnectWithoutCabInput | Multas_Elementos_Esenciales_DetCreateOrConnectWithoutCabInput[]
+    createMany?: Multas_Elementos_Esenciales_DetCreateManyCabInputEnvelope
+    connect?: Multas_Elementos_Esenciales_DetWhereUniqueInput | Multas_Elementos_Esenciales_DetWhereUniqueInput[]
+  }
+
+  export type Multas_Elementos_Esenciales_DetUpdateManyWithoutCabNestedInput = {
+    create?: XOR<Multas_Elementos_Esenciales_DetCreateWithoutCabInput, Multas_Elementos_Esenciales_DetUncheckedCreateWithoutCabInput> | Multas_Elementos_Esenciales_DetCreateWithoutCabInput[] | Multas_Elementos_Esenciales_DetUncheckedCreateWithoutCabInput[]
+    connectOrCreate?: Multas_Elementos_Esenciales_DetCreateOrConnectWithoutCabInput | Multas_Elementos_Esenciales_DetCreateOrConnectWithoutCabInput[]
+    upsert?: Multas_Elementos_Esenciales_DetUpsertWithWhereUniqueWithoutCabInput | Multas_Elementos_Esenciales_DetUpsertWithWhereUniqueWithoutCabInput[]
+    createMany?: Multas_Elementos_Esenciales_DetCreateManyCabInputEnvelope
+    set?: Multas_Elementos_Esenciales_DetWhereUniqueInput | Multas_Elementos_Esenciales_DetWhereUniqueInput[]
+    disconnect?: Multas_Elementos_Esenciales_DetWhereUniqueInput | Multas_Elementos_Esenciales_DetWhereUniqueInput[]
+    delete?: Multas_Elementos_Esenciales_DetWhereUniqueInput | Multas_Elementos_Esenciales_DetWhereUniqueInput[]
+    connect?: Multas_Elementos_Esenciales_DetWhereUniqueInput | Multas_Elementos_Esenciales_DetWhereUniqueInput[]
+    update?: Multas_Elementos_Esenciales_DetUpdateWithWhereUniqueWithoutCabInput | Multas_Elementos_Esenciales_DetUpdateWithWhereUniqueWithoutCabInput[]
+    updateMany?: Multas_Elementos_Esenciales_DetUpdateManyWithWhereWithoutCabInput | Multas_Elementos_Esenciales_DetUpdateManyWithWhereWithoutCabInput[]
+    deleteMany?: Multas_Elementos_Esenciales_DetScalarWhereInput | Multas_Elementos_Esenciales_DetScalarWhereInput[]
+  }
+
+  export type Multas_Elementos_Esenciales_DetUncheckedUpdateManyWithoutCabNestedInput = {
+    create?: XOR<Multas_Elementos_Esenciales_DetCreateWithoutCabInput, Multas_Elementos_Esenciales_DetUncheckedCreateWithoutCabInput> | Multas_Elementos_Esenciales_DetCreateWithoutCabInput[] | Multas_Elementos_Esenciales_DetUncheckedCreateWithoutCabInput[]
+    connectOrCreate?: Multas_Elementos_Esenciales_DetCreateOrConnectWithoutCabInput | Multas_Elementos_Esenciales_DetCreateOrConnectWithoutCabInput[]
+    upsert?: Multas_Elementos_Esenciales_DetUpsertWithWhereUniqueWithoutCabInput | Multas_Elementos_Esenciales_DetUpsertWithWhereUniqueWithoutCabInput[]
+    createMany?: Multas_Elementos_Esenciales_DetCreateManyCabInputEnvelope
+    set?: Multas_Elementos_Esenciales_DetWhereUniqueInput | Multas_Elementos_Esenciales_DetWhereUniqueInput[]
+    disconnect?: Multas_Elementos_Esenciales_DetWhereUniqueInput | Multas_Elementos_Esenciales_DetWhereUniqueInput[]
+    delete?: Multas_Elementos_Esenciales_DetWhereUniqueInput | Multas_Elementos_Esenciales_DetWhereUniqueInput[]
+    connect?: Multas_Elementos_Esenciales_DetWhereUniqueInput | Multas_Elementos_Esenciales_DetWhereUniqueInput[]
+    update?: Multas_Elementos_Esenciales_DetUpdateWithWhereUniqueWithoutCabInput | Multas_Elementos_Esenciales_DetUpdateWithWhereUniqueWithoutCabInput[]
+    updateMany?: Multas_Elementos_Esenciales_DetUpdateManyWithWhereWithoutCabInput | Multas_Elementos_Esenciales_DetUpdateManyWithWhereWithoutCabInput[]
+    deleteMany?: Multas_Elementos_Esenciales_DetScalarWhereInput | Multas_Elementos_Esenciales_DetScalarWhereInput[]
+  }
+
+  export type Multas_Elementos_Esenciales_CabCreateNestedOneWithoutDetallesInput = {
+    create?: XOR<Multas_Elementos_Esenciales_CabCreateWithoutDetallesInput, Multas_Elementos_Esenciales_CabUncheckedCreateWithoutDetallesInput>
+    connectOrCreate?: Multas_Elementos_Esenciales_CabCreateOrConnectWithoutDetallesInput
+    connect?: Multas_Elementos_Esenciales_CabWhereUniqueInput
+  }
+
+  export type Multas_Elementos_Esenciales_CabUpdateOneRequiredWithoutDetallesNestedInput = {
+    create?: XOR<Multas_Elementos_Esenciales_CabCreateWithoutDetallesInput, Multas_Elementos_Esenciales_CabUncheckedCreateWithoutDetallesInput>
+    connectOrCreate?: Multas_Elementos_Esenciales_CabCreateOrConnectWithoutDetallesInput
+    upsert?: Multas_Elementos_Esenciales_CabUpsertWithoutDetallesInput
+    connect?: Multas_Elementos_Esenciales_CabWhereUniqueInput
+    update?: XOR<XOR<Multas_Elementos_Esenciales_CabUpdateToOneWithWhereWithoutDetallesInput, Multas_Elementos_Esenciales_CabUpdateWithoutDetallesInput>, Multas_Elementos_Esenciales_CabUncheckedUpdateWithoutDetallesInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -58325,6 +67920,56 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Area"> | Date | string
   }
 
+  export type UTCreateWithoutPmpasInput = {
+    estado?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    licitacion: LicitacionCreateNestedOneWithoutUtsInput
+    sucursal?: SucursalCreateNestedOneWithoutUtsInput
+  }
+
+  export type UTUncheckedCreateWithoutPmpasInput = {
+    codUT?: number
+    licId: number
+    estado?: number
+    sucursalId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UTCreateOrConnectWithoutPmpasInput = {
+    where: UTWhereUniqueInput
+    create: XOR<UTCreateWithoutPmpasInput, UTUncheckedCreateWithoutPmpasInput>
+  }
+
+  export type UTUpsertWithoutPmpasInput = {
+    update: XOR<UTUpdateWithoutPmpasInput, UTUncheckedUpdateWithoutPmpasInput>
+    create: XOR<UTCreateWithoutPmpasInput, UTUncheckedCreateWithoutPmpasInput>
+    where?: UTWhereInput
+  }
+
+  export type UTUpdateToOneWithWhereWithoutPmpasInput = {
+    where?: UTWhereInput
+    data: XOR<UTUpdateWithoutPmpasInput, UTUncheckedUpdateWithoutPmpasInput>
+  }
+
+  export type UTUpdateWithoutPmpasInput = {
+    estado?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    licitacion?: LicitacionUpdateOneRequiredWithoutUtsNestedInput
+    sucursal?: SucursalUpdateOneWithoutUtsNestedInput
+  }
+
+  export type UTUncheckedUpdateWithoutPmpasInput = {
+    codUT?: IntFieldUpdateOperationsInput | number
+    licId?: IntFieldUpdateOperationsInput | number
+    estado?: IntFieldUpdateOperationsInput | number
+    sucursalId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type SucursalCreateWithoutListasCorreoInput = {
     id?: string
     nombre: string
@@ -58508,6 +68153,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     sucursal?: SucursalCreateNestedOneWithoutUtsInput
+    pmpas?: PMPACreateNestedManyWithoutUtInput
   }
 
   export type UTUncheckedCreateWithoutLicitacionInput = {
@@ -58516,6 +68162,7 @@ export namespace Prisma {
     sucursalId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    pmpas?: PMPAUncheckedCreateNestedManyWithoutUtInput
   }
 
   export type UTCreateOrConnectWithoutLicitacionInput = {
@@ -58525,6 +68172,36 @@ export namespace Prisma {
 
   export type UTCreateManyLicitacionInputEnvelope = {
     data: UTCreateManyLicitacionInput | UTCreateManyLicitacionInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AspectoEECreateWithoutLicitacionInput = {
+    id?: string
+    letra: string
+    descripcion?: string | null
+    formula?: string | null
+    solucionable?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AspectoEEUncheckedCreateWithoutLicitacionInput = {
+    id?: string
+    letra: string
+    descripcion?: string | null
+    formula?: string | null
+    solucionable?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AspectoEECreateOrConnectWithoutLicitacionInput = {
+    where: AspectoEEWhereUniqueInput
+    create: XOR<AspectoEECreateWithoutLicitacionInput, AspectoEEUncheckedCreateWithoutLicitacionInput>
+  }
+
+  export type AspectoEECreateManyLicitacionInputEnvelope = {
+    data: AspectoEECreateManyLicitacionInput | AspectoEECreateManyLicitacionInput[]
     skipDuplicates?: boolean
   }
 
@@ -58554,6 +68231,86 @@ export namespace Prisma {
     sucursalId?: StringNullableFilter<"UT"> | string | null
     createdAt?: DateTimeFilter<"UT"> | Date | string
     updatedAt?: DateTimeFilter<"UT"> | Date | string
+  }
+
+  export type AspectoEEUpsertWithWhereUniqueWithoutLicitacionInput = {
+    where: AspectoEEWhereUniqueInput
+    update: XOR<AspectoEEUpdateWithoutLicitacionInput, AspectoEEUncheckedUpdateWithoutLicitacionInput>
+    create: XOR<AspectoEECreateWithoutLicitacionInput, AspectoEEUncheckedCreateWithoutLicitacionInput>
+  }
+
+  export type AspectoEEUpdateWithWhereUniqueWithoutLicitacionInput = {
+    where: AspectoEEWhereUniqueInput
+    data: XOR<AspectoEEUpdateWithoutLicitacionInput, AspectoEEUncheckedUpdateWithoutLicitacionInput>
+  }
+
+  export type AspectoEEUpdateManyWithWhereWithoutLicitacionInput = {
+    where: AspectoEEScalarWhereInput
+    data: XOR<AspectoEEUpdateManyMutationInput, AspectoEEUncheckedUpdateManyWithoutLicitacionInput>
+  }
+
+  export type AspectoEEScalarWhereInput = {
+    AND?: AspectoEEScalarWhereInput | AspectoEEScalarWhereInput[]
+    OR?: AspectoEEScalarWhereInput[]
+    NOT?: AspectoEEScalarWhereInput | AspectoEEScalarWhereInput[]
+    id?: StringFilter<"AspectoEE"> | string
+    licId?: IntFilter<"AspectoEE"> | number
+    letra?: StringFilter<"AspectoEE"> | string
+    descripcion?: StringNullableFilter<"AspectoEE"> | string | null
+    formula?: StringNullableFilter<"AspectoEE"> | string | null
+    solucionable?: StringNullableFilter<"AspectoEE"> | string | null
+    createdAt?: DateTimeFilter<"AspectoEE"> | Date | string
+    updatedAt?: DateTimeFilter<"AspectoEE"> | Date | string
+  }
+
+  export type LicitacionCreateWithoutAspectosEEInput = {
+    licitacionHomologada?: string | null
+    estado?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    uts?: UTCreateNestedManyWithoutLicitacionInput
+  }
+
+  export type LicitacionUncheckedCreateWithoutAspectosEEInput = {
+    licId?: number
+    licitacionHomologada?: string | null
+    estado?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    uts?: UTUncheckedCreateNestedManyWithoutLicitacionInput
+  }
+
+  export type LicitacionCreateOrConnectWithoutAspectosEEInput = {
+    where: LicitacionWhereUniqueInput
+    create: XOR<LicitacionCreateWithoutAspectosEEInput, LicitacionUncheckedCreateWithoutAspectosEEInput>
+  }
+
+  export type LicitacionUpsertWithoutAspectosEEInput = {
+    update: XOR<LicitacionUpdateWithoutAspectosEEInput, LicitacionUncheckedUpdateWithoutAspectosEEInput>
+    create: XOR<LicitacionCreateWithoutAspectosEEInput, LicitacionUncheckedCreateWithoutAspectosEEInput>
+    where?: LicitacionWhereInput
+  }
+
+  export type LicitacionUpdateToOneWithWhereWithoutAspectosEEInput = {
+    where?: LicitacionWhereInput
+    data: XOR<LicitacionUpdateWithoutAspectosEEInput, LicitacionUncheckedUpdateWithoutAspectosEEInput>
+  }
+
+  export type LicitacionUpdateWithoutAspectosEEInput = {
+    licitacionHomologada?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uts?: UTUpdateManyWithoutLicitacionNestedInput
+  }
+
+  export type LicitacionUncheckedUpdateWithoutAspectosEEInput = {
+    licId?: IntFieldUpdateOperationsInput | number
+    licitacionHomologada?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uts?: UTUncheckedUpdateManyWithoutLicitacionNestedInput
   }
 
   export type ListaCorreoCreateWithoutSucursalInput = {
@@ -58675,6 +68432,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     licitacion: LicitacionCreateNestedOneWithoutUtsInput
+    pmpas?: PMPACreateNestedManyWithoutUtInput
   }
 
   export type UTUncheckedCreateWithoutSucursalInput = {
@@ -58683,6 +68441,7 @@ export namespace Prisma {
     estado?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    pmpas?: PMPAUncheckedCreateNestedManyWithoutUtInput
   }
 
   export type UTCreateOrConnectWithoutSucursalInput = {
@@ -58941,16 +68700,20 @@ export namespace Prisma {
   }
 
   export type LicitacionCreateWithoutUtsInput = {
+    licitacionHomologada?: string | null
     estado?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    aspectosEE?: AspectoEECreateNestedManyWithoutLicitacionInput
   }
 
   export type LicitacionUncheckedCreateWithoutUtsInput = {
     licId?: number
+    licitacionHomologada?: string | null
     estado?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    aspectosEE?: AspectoEEUncheckedCreateNestedManyWithoutLicitacionInput
   }
 
   export type LicitacionCreateOrConnectWithoutUtsInput = {
@@ -58987,6 +68750,48 @@ export namespace Prisma {
     create: XOR<SucursalCreateWithoutUtsInput, SucursalUncheckedCreateWithoutUtsInput>
   }
 
+  export type PMPACreateWithoutUtInput = {
+    id?: string
+    ano: number
+    mes: number
+    licitacion: number
+    rbd: number
+    programa: string
+    estrato: string
+    nivel: string
+    servicioLic: string
+    raceqJunaeb: number
+    servicio: string
+    uploadedBy: string
+    createdAt?: Date | string
+  }
+
+  export type PMPAUncheckedCreateWithoutUtInput = {
+    id?: string
+    ano: number
+    mes: number
+    licitacion: number
+    rbd: number
+    programa: string
+    estrato: string
+    nivel: string
+    servicioLic: string
+    raceqJunaeb: number
+    servicio: string
+    uploadedBy: string
+    createdAt?: Date | string
+  }
+
+  export type PMPACreateOrConnectWithoutUtInput = {
+    where: PMPAWhereUniqueInput
+    create: XOR<PMPACreateWithoutUtInput, PMPAUncheckedCreateWithoutUtInput>
+  }
+
+  export type PMPACreateManyUtInputEnvelope = {
+    data: PMPACreateManyUtInput | PMPACreateManyUtInput[]
+    skipDuplicates?: boolean
+  }
+
   export type LicitacionUpsertWithoutUtsInput = {
     update: XOR<LicitacionUpdateWithoutUtsInput, LicitacionUncheckedUpdateWithoutUtsInput>
     create: XOR<LicitacionCreateWithoutUtsInput, LicitacionUncheckedCreateWithoutUtsInput>
@@ -58999,16 +68804,20 @@ export namespace Prisma {
   }
 
   export type LicitacionUpdateWithoutUtsInput = {
+    licitacionHomologada?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    aspectosEE?: AspectoEEUpdateManyWithoutLicitacionNestedInput
   }
 
   export type LicitacionUncheckedUpdateWithoutUtsInput = {
     licId?: IntFieldUpdateOperationsInput | number
+    licitacionHomologada?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    aspectosEE?: AspectoEEUncheckedUpdateManyWithoutLicitacionNestedInput
   }
 
   export type SucursalUpsertWithoutUtsInput = {
@@ -59044,6 +68853,42 @@ export namespace Prisma {
     RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedUpdateManyWithoutSucursalNestedInput
     RetornoProductosSucursalEstado?: RetornoProductosSucursalEstadoUncheckedUpdateManyWithoutSucursalNestedInput
     users?: UserUncheckedUpdateManyWithoutSucursalesNestedInput
+  }
+
+  export type PMPAUpsertWithWhereUniqueWithoutUtInput = {
+    where: PMPAWhereUniqueInput
+    update: XOR<PMPAUpdateWithoutUtInput, PMPAUncheckedUpdateWithoutUtInput>
+    create: XOR<PMPACreateWithoutUtInput, PMPAUncheckedCreateWithoutUtInput>
+  }
+
+  export type PMPAUpdateWithWhereUniqueWithoutUtInput = {
+    where: PMPAWhereUniqueInput
+    data: XOR<PMPAUpdateWithoutUtInput, PMPAUncheckedUpdateWithoutUtInput>
+  }
+
+  export type PMPAUpdateManyWithWhereWithoutUtInput = {
+    where: PMPAScalarWhereInput
+    data: XOR<PMPAUpdateManyMutationInput, PMPAUncheckedUpdateManyWithoutUtInput>
+  }
+
+  export type PMPAScalarWhereInput = {
+    AND?: PMPAScalarWhereInput | PMPAScalarWhereInput[]
+    OR?: PMPAScalarWhereInput[]
+    NOT?: PMPAScalarWhereInput | PMPAScalarWhereInput[]
+    id?: StringFilter<"PMPA"> | string
+    ano?: IntFilter<"PMPA"> | number
+    mes?: IntFilter<"PMPA"> | number
+    licitacion?: IntFilter<"PMPA"> | number
+    ute?: IntFilter<"PMPA"> | number
+    rbd?: IntFilter<"PMPA"> | number
+    programa?: StringFilter<"PMPA"> | string
+    estrato?: StringFilter<"PMPA"> | string
+    nivel?: StringFilter<"PMPA"> | string
+    servicioLic?: StringFilter<"PMPA"> | string
+    raceqJunaeb?: IntFilter<"PMPA"> | number
+    servicio?: StringFilter<"PMPA"> | string
+    uploadedBy?: StringFilter<"PMPA"> | string
+    createdAt?: DateTimeFilter<"PMPA"> | Date | string
   }
 
   export type RetiroSaldoDetailCreateWithoutHeaderInput = {
@@ -60106,6 +69951,8 @@ export namespace Prisma {
     servicio: string
     programa: string
     area?: string | null
+    racionesBase?: number
+    racionesDigitadas?: number
     racionesPreparar: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -60119,6 +69966,8 @@ export namespace Prisma {
     servicio: string
     programa: string
     area?: string | null
+    racionesBase?: number
+    racionesDigitadas?: number
     racionesPreparar: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -60148,6 +69997,8 @@ export namespace Prisma {
     servicio?: StringFieldUpdateOperationsInput | string
     programa?: StringFieldUpdateOperationsInput | string
     area?: NullableStringFieldUpdateOperationsInput | string | null
+    racionesBase?: IntFieldUpdateOperationsInput | number
+    racionesDigitadas?: IntFieldUpdateOperationsInput | number
     racionesPreparar?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -60161,10 +70012,282 @@ export namespace Prisma {
     servicio?: StringFieldUpdateOperationsInput | string
     programa?: StringFieldUpdateOperationsInput | string
     area?: NullableStringFieldUpdateOperationsInput | string | null
+    racionesBase?: IntFieldUpdateOperationsInput | number
+    racionesDigitadas?: IntFieldUpdateOperationsInput | number
     racionesPreparar?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     usuario?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ElementosEsenciales_DetCreateWithoutCabInput = {
+    id?: string
+    aspecto?: string | null
+    observacionesOMedioDeVerificacion?: string | null
+    co?: string | null
+    nc?: string | null
+    na?: string | null
+  }
+
+  export type ElementosEsenciales_DetUncheckedCreateWithoutCabInput = {
+    id?: string
+    aspecto?: string | null
+    observacionesOMedioDeVerificacion?: string | null
+    co?: string | null
+    nc?: string | null
+    na?: string | null
+  }
+
+  export type ElementosEsenciales_DetCreateOrConnectWithoutCabInput = {
+    where: ElementosEsenciales_DetWhereUniqueInput
+    create: XOR<ElementosEsenciales_DetCreateWithoutCabInput, ElementosEsenciales_DetUncheckedCreateWithoutCabInput>
+  }
+
+  export type ElementosEsenciales_DetCreateManyCabInputEnvelope = {
+    data: ElementosEsenciales_DetCreateManyCabInput | ElementosEsenciales_DetCreateManyCabInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ElementosEsenciales_DetUpsertWithWhereUniqueWithoutCabInput = {
+    where: ElementosEsenciales_DetWhereUniqueInput
+    update: XOR<ElementosEsenciales_DetUpdateWithoutCabInput, ElementosEsenciales_DetUncheckedUpdateWithoutCabInput>
+    create: XOR<ElementosEsenciales_DetCreateWithoutCabInput, ElementosEsenciales_DetUncheckedCreateWithoutCabInput>
+  }
+
+  export type ElementosEsenciales_DetUpdateWithWhereUniqueWithoutCabInput = {
+    where: ElementosEsenciales_DetWhereUniqueInput
+    data: XOR<ElementosEsenciales_DetUpdateWithoutCabInput, ElementosEsenciales_DetUncheckedUpdateWithoutCabInput>
+  }
+
+  export type ElementosEsenciales_DetUpdateManyWithWhereWithoutCabInput = {
+    where: ElementosEsenciales_DetScalarWhereInput
+    data: XOR<ElementosEsenciales_DetUpdateManyMutationInput, ElementosEsenciales_DetUncheckedUpdateManyWithoutCabInput>
+  }
+
+  export type ElementosEsenciales_DetScalarWhereInput = {
+    AND?: ElementosEsenciales_DetScalarWhereInput | ElementosEsenciales_DetScalarWhereInput[]
+    OR?: ElementosEsenciales_DetScalarWhereInput[]
+    NOT?: ElementosEsenciales_DetScalarWhereInput | ElementosEsenciales_DetScalarWhereInput[]
+    id?: StringFilter<"ElementosEsenciales_Det"> | string
+    cabId?: StringFilter<"ElementosEsenciales_Det"> | string
+    aspecto?: StringNullableFilter<"ElementosEsenciales_Det"> | string | null
+    observacionesOMedioDeVerificacion?: StringNullableFilter<"ElementosEsenciales_Det"> | string | null
+    co?: StringNullableFilter<"ElementosEsenciales_Det"> | string | null
+    nc?: StringNullableFilter<"ElementosEsenciales_Det"> | string | null
+    na?: StringNullableFilter<"ElementosEsenciales_Det"> | string | null
+  }
+
+  export type ElementosEsenciales_CabCreateWithoutDetallesInput = {
+    id?: string
+    licitacion?: string | null
+    licId?: number | null
+    folio?: string | null
+    fechaSupervision?: Date | string | null
+    rbd?: number | null
+    region?: string | null
+    comuna?: string | null
+    servicio?: string | null
+    horaInicio?: string | null
+    hora?: string | null
+    obsALosIncumplimiento?: string | null
+    nombreArchivo: string
+    link?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ElementosEsenciales_CabUncheckedCreateWithoutDetallesInput = {
+    id?: string
+    licitacion?: string | null
+    licId?: number | null
+    folio?: string | null
+    fechaSupervision?: Date | string | null
+    rbd?: number | null
+    region?: string | null
+    comuna?: string | null
+    servicio?: string | null
+    horaInicio?: string | null
+    hora?: string | null
+    obsALosIncumplimiento?: string | null
+    nombreArchivo: string
+    link?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ElementosEsenciales_CabCreateOrConnectWithoutDetallesInput = {
+    where: ElementosEsenciales_CabWhereUniqueInput
+    create: XOR<ElementosEsenciales_CabCreateWithoutDetallesInput, ElementosEsenciales_CabUncheckedCreateWithoutDetallesInput>
+  }
+
+  export type ElementosEsenciales_CabUpsertWithoutDetallesInput = {
+    update: XOR<ElementosEsenciales_CabUpdateWithoutDetallesInput, ElementosEsenciales_CabUncheckedUpdateWithoutDetallesInput>
+    create: XOR<ElementosEsenciales_CabCreateWithoutDetallesInput, ElementosEsenciales_CabUncheckedCreateWithoutDetallesInput>
+    where?: ElementosEsenciales_CabWhereInput
+  }
+
+  export type ElementosEsenciales_CabUpdateToOneWithWhereWithoutDetallesInput = {
+    where?: ElementosEsenciales_CabWhereInput
+    data: XOR<ElementosEsenciales_CabUpdateWithoutDetallesInput, ElementosEsenciales_CabUncheckedUpdateWithoutDetallesInput>
+  }
+
+  export type ElementosEsenciales_CabUpdateWithoutDetallesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licitacion?: NullableStringFieldUpdateOperationsInput | string | null
+    licId?: NullableIntFieldUpdateOperationsInput | number | null
+    folio?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaSupervision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    servicio?: NullableStringFieldUpdateOperationsInput | string | null
+    horaInicio?: NullableStringFieldUpdateOperationsInput | string | null
+    hora?: NullableStringFieldUpdateOperationsInput | string | null
+    obsALosIncumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreArchivo?: StringFieldUpdateOperationsInput | string
+    link?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ElementosEsenciales_CabUncheckedUpdateWithoutDetallesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licitacion?: NullableStringFieldUpdateOperationsInput | string | null
+    licId?: NullableIntFieldUpdateOperationsInput | number | null
+    folio?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaSupervision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rbd?: NullableIntFieldUpdateOperationsInput | number | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    servicio?: NullableStringFieldUpdateOperationsInput | string | null
+    horaInicio?: NullableStringFieldUpdateOperationsInput | string | null
+    hora?: NullableStringFieldUpdateOperationsInput | string | null
+    obsALosIncumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreArchivo?: StringFieldUpdateOperationsInput | string
+    link?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Elementos_Esenciales_DetCreateWithoutCabInput = {
+    id?: string
+    letraAspecto: string
+    descripcion?: string | null
+    formulaAplicada?: string | null
+    montoMulta: number
+    variablesUsadas?: string | null
+  }
+
+  export type Multas_Elementos_Esenciales_DetUncheckedCreateWithoutCabInput = {
+    id?: string
+    letraAspecto: string
+    descripcion?: string | null
+    formulaAplicada?: string | null
+    montoMulta: number
+    variablesUsadas?: string | null
+  }
+
+  export type Multas_Elementos_Esenciales_DetCreateOrConnectWithoutCabInput = {
+    where: Multas_Elementos_Esenciales_DetWhereUniqueInput
+    create: XOR<Multas_Elementos_Esenciales_DetCreateWithoutCabInput, Multas_Elementos_Esenciales_DetUncheckedCreateWithoutCabInput>
+  }
+
+  export type Multas_Elementos_Esenciales_DetCreateManyCabInputEnvelope = {
+    data: Multas_Elementos_Esenciales_DetCreateManyCabInput | Multas_Elementos_Esenciales_DetCreateManyCabInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type Multas_Elementos_Esenciales_DetUpsertWithWhereUniqueWithoutCabInput = {
+    where: Multas_Elementos_Esenciales_DetWhereUniqueInput
+    update: XOR<Multas_Elementos_Esenciales_DetUpdateWithoutCabInput, Multas_Elementos_Esenciales_DetUncheckedUpdateWithoutCabInput>
+    create: XOR<Multas_Elementos_Esenciales_DetCreateWithoutCabInput, Multas_Elementos_Esenciales_DetUncheckedCreateWithoutCabInput>
+  }
+
+  export type Multas_Elementos_Esenciales_DetUpdateWithWhereUniqueWithoutCabInput = {
+    where: Multas_Elementos_Esenciales_DetWhereUniqueInput
+    data: XOR<Multas_Elementos_Esenciales_DetUpdateWithoutCabInput, Multas_Elementos_Esenciales_DetUncheckedUpdateWithoutCabInput>
+  }
+
+  export type Multas_Elementos_Esenciales_DetUpdateManyWithWhereWithoutCabInput = {
+    where: Multas_Elementos_Esenciales_DetScalarWhereInput
+    data: XOR<Multas_Elementos_Esenciales_DetUpdateManyMutationInput, Multas_Elementos_Esenciales_DetUncheckedUpdateManyWithoutCabInput>
+  }
+
+  export type Multas_Elementos_Esenciales_DetScalarWhereInput = {
+    AND?: Multas_Elementos_Esenciales_DetScalarWhereInput | Multas_Elementos_Esenciales_DetScalarWhereInput[]
+    OR?: Multas_Elementos_Esenciales_DetScalarWhereInput[]
+    NOT?: Multas_Elementos_Esenciales_DetScalarWhereInput | Multas_Elementos_Esenciales_DetScalarWhereInput[]
+    id?: StringFilter<"Multas_Elementos_Esenciales_Det"> | string
+    cabId?: StringFilter<"Multas_Elementos_Esenciales_Det"> | string
+    letraAspecto?: StringFilter<"Multas_Elementos_Esenciales_Det"> | string
+    descripcion?: StringNullableFilter<"Multas_Elementos_Esenciales_Det"> | string | null
+    formulaAplicada?: StringNullableFilter<"Multas_Elementos_Esenciales_Det"> | string | null
+    montoMulta?: FloatFilter<"Multas_Elementos_Esenciales_Det"> | number
+    variablesUsadas?: StringNullableFilter<"Multas_Elementos_Esenciales_Det"> | string | null
+  }
+
+  export type Multas_Elementos_Esenciales_CabCreateWithoutDetallesInput = {
+    id?: string
+    folioOriginal: string
+    rbd: number
+    fechaSupervision: Date | string
+    licitacion?: string | null
+    montoTotalCalculado: number
+    estadoCalculo: string
+    usuarioCalculo: string
+    fechaCalculo?: Date | string
+  }
+
+  export type Multas_Elementos_Esenciales_CabUncheckedCreateWithoutDetallesInput = {
+    id?: string
+    folioOriginal: string
+    rbd: number
+    fechaSupervision: Date | string
+    licitacion?: string | null
+    montoTotalCalculado: number
+    estadoCalculo: string
+    usuarioCalculo: string
+    fechaCalculo?: Date | string
+  }
+
+  export type Multas_Elementos_Esenciales_CabCreateOrConnectWithoutDetallesInput = {
+    where: Multas_Elementos_Esenciales_CabWhereUniqueInput
+    create: XOR<Multas_Elementos_Esenciales_CabCreateWithoutDetallesInput, Multas_Elementos_Esenciales_CabUncheckedCreateWithoutDetallesInput>
+  }
+
+  export type Multas_Elementos_Esenciales_CabUpsertWithoutDetallesInput = {
+    update: XOR<Multas_Elementos_Esenciales_CabUpdateWithoutDetallesInput, Multas_Elementos_Esenciales_CabUncheckedUpdateWithoutDetallesInput>
+    create: XOR<Multas_Elementos_Esenciales_CabCreateWithoutDetallesInput, Multas_Elementos_Esenciales_CabUncheckedCreateWithoutDetallesInput>
+    where?: Multas_Elementos_Esenciales_CabWhereInput
+  }
+
+  export type Multas_Elementos_Esenciales_CabUpdateToOneWithWhereWithoutDetallesInput = {
+    where?: Multas_Elementos_Esenciales_CabWhereInput
+    data: XOR<Multas_Elementos_Esenciales_CabUpdateWithoutDetallesInput, Multas_Elementos_Esenciales_CabUncheckedUpdateWithoutDetallesInput>
+  }
+
+  export type Multas_Elementos_Esenciales_CabUpdateWithoutDetallesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folioOriginal?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    fechaSupervision?: DateTimeFieldUpdateOperationsInput | Date | string
+    licitacion?: NullableStringFieldUpdateOperationsInput | string | null
+    montoTotalCalculado?: FloatFieldUpdateOperationsInput | number
+    estadoCalculo?: StringFieldUpdateOperationsInput | string
+    usuarioCalculo?: StringFieldUpdateOperationsInput | string
+    fechaCalculo?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Multas_Elementos_Esenciales_CabUncheckedUpdateWithoutDetallesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folioOriginal?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    fechaSupervision?: DateTimeFieldUpdateOperationsInput | Date | string
+    licitacion?: NullableStringFieldUpdateOperationsInput | string | null
+    montoTotalCalculado?: FloatFieldUpdateOperationsInput | number
+    estadoCalculo?: StringFieldUpdateOperationsInput | string
+    usuarioCalculo?: StringFieldUpdateOperationsInput | string
+    fechaCalculo?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserCreateManyRoleInput = {
@@ -60362,11 +70485,22 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type AspectoEECreateManyLicitacionInput = {
+    id?: string
+    letra: string
+    descripcion?: string | null
+    formula?: string | null
+    solucionable?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type UTUpdateWithoutLicitacionInput = {
     estado?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sucursal?: SucursalUpdateOneWithoutUtsNestedInput
+    pmpas?: PMPAUpdateManyWithoutUtNestedInput
   }
 
   export type UTUncheckedUpdateWithoutLicitacionInput = {
@@ -60375,12 +70509,43 @@ export namespace Prisma {
     sucursalId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    pmpas?: PMPAUncheckedUpdateManyWithoutUtNestedInput
   }
 
   export type UTUncheckedUpdateManyWithoutLicitacionInput = {
     codUT?: IntFieldUpdateOperationsInput | number
     estado?: IntFieldUpdateOperationsInput | number
     sucursalId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AspectoEEUpdateWithoutLicitacionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    letra?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    formula?: NullableStringFieldUpdateOperationsInput | string | null
+    solucionable?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AspectoEEUncheckedUpdateWithoutLicitacionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    letra?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    formula?: NullableStringFieldUpdateOperationsInput | string | null
+    solucionable?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AspectoEEUncheckedUpdateManyWithoutLicitacionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    letra?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    formula?: NullableStringFieldUpdateOperationsInput | string | null
+    solucionable?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -60544,6 +70709,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     licitacion?: LicitacionUpdateOneRequiredWithoutUtsNestedInput
+    pmpas?: PMPAUpdateManyWithoutUtNestedInput
   }
 
   export type UTUncheckedUpdateWithoutSucursalInput = {
@@ -60552,6 +70718,7 @@ export namespace Prisma {
     estado?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    pmpas?: PMPAUncheckedUpdateManyWithoutUtNestedInput
   }
 
   export type UTUncheckedUpdateManyWithoutSucursalInput = {
@@ -60600,6 +70767,70 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PMPACreateManyUtInput = {
+    id?: string
+    ano: number
+    mes: number
+    licitacion: number
+    rbd: number
+    programa: string
+    estrato: string
+    nivel: string
+    servicioLic: string
+    raceqJunaeb: number
+    servicio: string
+    uploadedBy: string
+    createdAt?: Date | string
+  }
+
+  export type PMPAUpdateWithoutUtInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ano?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    licitacion?: IntFieldUpdateOperationsInput | number
+    rbd?: IntFieldUpdateOperationsInput | number
+    programa?: StringFieldUpdateOperationsInput | string
+    estrato?: StringFieldUpdateOperationsInput | string
+    nivel?: StringFieldUpdateOperationsInput | string
+    servicioLic?: StringFieldUpdateOperationsInput | string
+    raceqJunaeb?: IntFieldUpdateOperationsInput | number
+    servicio?: StringFieldUpdateOperationsInput | string
+    uploadedBy?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PMPAUncheckedUpdateWithoutUtInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ano?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    licitacion?: IntFieldUpdateOperationsInput | number
+    rbd?: IntFieldUpdateOperationsInput | number
+    programa?: StringFieldUpdateOperationsInput | string
+    estrato?: StringFieldUpdateOperationsInput | string
+    nivel?: StringFieldUpdateOperationsInput | string
+    servicioLic?: StringFieldUpdateOperationsInput | string
+    raceqJunaeb?: IntFieldUpdateOperationsInput | number
+    servicio?: StringFieldUpdateOperationsInput | string
+    uploadedBy?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PMPAUncheckedUpdateManyWithoutUtInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ano?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    licitacion?: IntFieldUpdateOperationsInput | number
+    rbd?: IntFieldUpdateOperationsInput | number
+    programa?: StringFieldUpdateOperationsInput | string
+    estrato?: StringFieldUpdateOperationsInput | string
+    nivel?: StringFieldUpdateOperationsInput | string
+    servicioLic?: StringFieldUpdateOperationsInput | string
+    raceqJunaeb?: IntFieldUpdateOperationsInput | number
+    servicio?: StringFieldUpdateOperationsInput | string
+    uploadedBy?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type RetiroSaldoDetailCreateManyHeaderInput = {
@@ -60944,6 +71175,78 @@ export namespace Prisma {
     grsTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
+  export type ElementosEsenciales_DetCreateManyCabInput = {
+    id?: string
+    aspecto?: string | null
+    observacionesOMedioDeVerificacion?: string | null
+    co?: string | null
+    nc?: string | null
+    na?: string | null
+  }
+
+  export type ElementosEsenciales_DetUpdateWithoutCabInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    aspecto?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesOMedioDeVerificacion?: NullableStringFieldUpdateOperationsInput | string | null
+    co?: NullableStringFieldUpdateOperationsInput | string | null
+    nc?: NullableStringFieldUpdateOperationsInput | string | null
+    na?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ElementosEsenciales_DetUncheckedUpdateWithoutCabInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    aspecto?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesOMedioDeVerificacion?: NullableStringFieldUpdateOperationsInput | string | null
+    co?: NullableStringFieldUpdateOperationsInput | string | null
+    nc?: NullableStringFieldUpdateOperationsInput | string | null
+    na?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ElementosEsenciales_DetUncheckedUpdateManyWithoutCabInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    aspecto?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesOMedioDeVerificacion?: NullableStringFieldUpdateOperationsInput | string | null
+    co?: NullableStringFieldUpdateOperationsInput | string | null
+    nc?: NullableStringFieldUpdateOperationsInput | string | null
+    na?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type Multas_Elementos_Esenciales_DetCreateManyCabInput = {
+    id?: string
+    letraAspecto: string
+    descripcion?: string | null
+    formulaAplicada?: string | null
+    montoMulta: number
+    variablesUsadas?: string | null
+  }
+
+  export type Multas_Elementos_Esenciales_DetUpdateWithoutCabInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    letraAspecto?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    formulaAplicada?: NullableStringFieldUpdateOperationsInput | string | null
+    montoMulta?: FloatFieldUpdateOperationsInput | number
+    variablesUsadas?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type Multas_Elementos_Esenciales_DetUncheckedUpdateWithoutCabInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    letraAspecto?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    formulaAplicada?: NullableStringFieldUpdateOperationsInput | string | null
+    montoMulta?: FloatFieldUpdateOperationsInput | number
+    variablesUsadas?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type Multas_Elementos_Esenciales_DetUncheckedUpdateManyWithoutCabInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    letraAspecto?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    formulaAplicada?: NullableStringFieldUpdateOperationsInput | string | null
+    montoMulta?: FloatFieldUpdateOperationsInput | number
+    variablesUsadas?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
 
 
   /**
@@ -60970,6 +71273,10 @@ export namespace Prisma {
      */
     export type SucursalCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = SucursalCountOutputTypeDefaultArgs<ExtArgs>
     /**
+     * @deprecated Use UTCountOutputTypeDefaultArgs instead
+     */
+    export type UTCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UTCountOutputTypeDefaultArgs<ExtArgs>
+    /**
      * @deprecated Use RetiroSaldoHeaderCountOutputTypeDefaultArgs instead
      */
     export type RetiroSaldoHeaderCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = RetiroSaldoHeaderCountOutputTypeDefaultArgs<ExtArgs>
@@ -60989,6 +71296,14 @@ export namespace Prisma {
      * @deprecated Use CapCertificacionHeaderCountOutputTypeDefaultArgs instead
      */
     export type CapCertificacionHeaderCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = CapCertificacionHeaderCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ElementosEsenciales_CabCountOutputTypeDefaultArgs instead
+     */
+    export type ElementosEsenciales_CabCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ElementosEsenciales_CabCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Multas_Elementos_Esenciales_CabCountOutputTypeDefaultArgs instead
+     */
+    export type Multas_Elementos_Esenciales_CabCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Elementos_Esenciales_CabCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use RoleDefaultArgs instead
      */
@@ -61030,9 +71345,17 @@ export namespace Prisma {
      */
     export type PlantillaCorreoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PlantillaCorreoDefaultArgs<ExtArgs>
     /**
+     * @deprecated Use MultaServicioDefaultArgs instead
+     */
+    export type MultaServicioArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = MultaServicioDefaultArgs<ExtArgs>
+    /**
      * @deprecated Use LicitacionDefaultArgs instead
      */
     export type LicitacionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LicitacionDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use AspectoEEDefaultArgs instead
+     */
+    export type AspectoEEArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = AspectoEEDefaultArgs<ExtArgs>
     /**
      * @deprecated Use SucursalDefaultArgs instead
      */
@@ -61149,6 +71472,26 @@ export namespace Prisma {
      * @deprecated Use CapCertificacionDetailDefaultArgs instead
      */
     export type CapCertificacionDetailArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = CapCertificacionDetailDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ElementosEsenciales_CabDefaultArgs instead
+     */
+    export type ElementosEsenciales_CabArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ElementosEsenciales_CabDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ElementosEsenciales_DetDefaultArgs instead
+     */
+    export type ElementosEsenciales_DetArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ElementosEsenciales_DetDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use UTMDefaultArgs instead
+     */
+    export type UTMArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UTMDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Multas_Elementos_Esenciales_CabDefaultArgs instead
+     */
+    export type Multas_Elementos_Esenciales_CabArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Elementos_Esenciales_CabDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Multas_Elementos_Esenciales_DetDefaultArgs instead
+     */
+    export type Multas_Elementos_Esenciales_DetArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Elementos_Esenciales_DetDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

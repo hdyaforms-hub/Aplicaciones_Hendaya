@@ -81,7 +81,11 @@ export async function getFoliosIncompletos(params: {
                 rbd: true,
                 link: true,
                 servicio: true,
-                licId: true
+                licId: true,
+                detalles: {
+                    where: { nc: 'X' },
+                    select: { id: true, aspecto: true }
+                }
             },
             orderBy: { fechaSupervision: 'desc' }
         })
@@ -115,7 +119,8 @@ export async function getFoliosIncompletos(params: {
         // Fetch in parallel for speed
         const [calculos, schools, aspectos, pmpas, servicios] = await Promise.all([
             prisma.multas_Elementos_Esenciales_Cab.findMany({
-                where: { folioOriginal: { in: validFolios } }
+                where: { folioOriginal: { in: validFolios } },
+                include: { detalles: true }
             }),
             prisma.colegiosMatriz.findMany({
                 where: { colRBD: { in: validRBDs } },
@@ -174,13 +179,48 @@ export async function getFoliosIncompletos(params: {
                 missingFormula = true
             }
 
+            // Group non-compliant details by Solucionable / No Solucionable
+            let ncSolucionableCount = 0
+            let ncNoSolucionableCount = 0
+            if (f.detalles) {
+                for (const d of f.detalles) {
+                    const letraMatch = d.aspecto?.match(/^([A-Z])\./)
+                    const letra = letraMatch ? letraMatch[1] : null
+                    const asp = formulasForLic.find(form => form.letra === letra)
+                    if (asp && asp.solucionable === 'Solucionable') {
+                        ncSolucionableCount++
+                    } else {
+                        ncNoSolucionableCount++
+                    }
+                }
+            }
+
+            // Compute actual calculated amounts grouped by Solucionable / No Solucionable
+            let montoSolucionable = 0
+            let montoNoSolucionable = 0
+            if (calculo && (calculo as any).detalles) {
+                for (const d of (calculo as any).detalles) {
+                    const asp = formulasForLic.find(form => form.letra === d.letraAspecto)
+                    if (asp && asp.solucionable === 'Solucionable') {
+                        montoSolucionable += d.montoMulta || 0
+                    } else {
+                        montoNoSolucionable += d.montoMulta || 0
+                    }
+                }
+            }
+
             return {
                 ...f,
                 nombreEstablecimiento: school?.nombreEstablecimiento || 'Desconocido',
                 calculoEstado: calculo ? calculo.estadoCalculo : 'PENDIENTE',
                 montoCalculado: calculo ? calculo.montoTotalCalculado : 0,
                 missingPmpa,
-                missingFormula
+                missingFormula,
+                ncCount: f.detalles?.length || 0,
+                ncSolucionableCount,
+                ncNoSolucionableCount,
+                montoSolucionable,
+                montoNoSolucionable
             }
         })
 
@@ -288,27 +328,94 @@ export async function calculateAll(params: { search?: string, mes?: string, ano?
                 const detallesCalc = []
                 const formulasForLic = allAspectos.filter(a => a.licId === licId)
 
+                // 1. Fetch existing saved variables if any
+                let savedVars: Record<string, string> = {}
+                try {
+                    const existing = await prisma.multas_Elementos_Esenciales_Cab.findUnique({
+                        where: { folioOriginal: cab.folio! },
+                        include: { detalles: true }
+                    })
+                    if (existing && existing.detalles.length > 0) {
+                        const firstWithVars = existing.detalles.find(d => d.variablesUsadas)
+                        if (firstWithVars && firstWithVars.variablesUsadas) {
+                            savedVars = JSON.parse(firstWithVars.variablesUsadas)
+                        }
+                    }
+                } catch (e) {
+                    console.error("Error loading existing in massive:", e)
+                }
+
+                // 2. Map PMPA levels for NIVELCONTROLADO lookup
+                const nivelesMap = pmpas.reduce((acc: any, curr) => {
+                    if (!acc[curr.nivel]) acc[curr.nivel] = 0
+                    acc[curr.nivel] += curr.raceqJunaeb
+                    return acc
+                }, {})
+
+                // 3. Track needed keywords to determine correct final state
+                const keywordsNeeded = new Set<string>()
+                const RESERVED_KEYWORDS = ['MATERIAPRIMA', 'INSTRUMENTO', 'MANIPULADORA', 'NIVELCONTROLADO', 'CANTSERVICIO', 'ELEMENTOS']
+
+                for (const d of cab.detalles) {
+                    const letraMatch = d.aspecto?.match(/^([A-Z])\./)
+                    const letra = letraMatch ? letraMatch[1] : null
+                    const formula = formulasForLic.find(f => f.letra === letra)?.formula
+                    if (formula) {
+                        const words = formula.match(/[A-Za-z]+/g) || []
+                        words.forEach(w => {
+                            const upper = w.toUpperCase()
+                            if (RESERVED_KEYWORDS.includes(upper)) {
+                                keywordsNeeded.add(upper)
+                            }
+                        })
+                    }
+                }
+
+                const missingKeywords = Array.from(keywordsNeeded).filter(k => !savedVars[k])
+                const isAnyMissing = missingKeywords.length > 0
+                const finalEstado = isAnyMissing ? 'PENDIENTE' : 'CALCULADO'
+
+                // 4. Calculate details
                 for (const d of cab.detalles) {
                     const letraMatch = d.aspecto?.match(/^([A-Z])\./)
                     const letra = letraMatch ? letraMatch[1] : null
                     const formula = formulasForLic.find(f => f.letra === letra)?.formula
                     if (!formula) continue
 
-                    // Evaluation logic (simplified)
                     try {
                         const cleanFormula = formula.toUpperCase()
+                        
+                        // Look up NIVELCONTROLADO raciones
+                        const selectedLevelLabel = savedVars['NIVELCONTROLADO'] || ''
+                        let nivelControladoVal = raciones // default fallback
+                        if (selectedLevelLabel) {
+                            if (!isNaN(Number(selectedLevelLabel))) {
+                                nivelControladoVal = Number(selectedLevelLabel)
+                            } else {
+                                const matchedVal = nivelesMap[selectedLevelLabel]
+                                if (matchedVal !== undefined) {
+                                    nivelControladoVal = matchedVal
+                                }
+                            }
+                        }
+
+                        const materiaPrimaVal = Number(savedVars['MATERIAPRIMA'] || 1)
+                        const instrumentoVal = Number(savedVars['INSTRUMENTO'] || 1)
+                        const manipuladoraVal = Number(savedVars['MANIPULADORA'] || 1)
+                        const cantServicioVal = Number(savedVars['CANTSERVICIO'] || 1)
+                        const elementosVal = Number(savedVars['ELEMENTOS'] || 1)
+
                         let evalForm = cleanFormula
                             .replace(/UTM/g, utmVal.toString())
                             .replace(/RACIONES/g, raciones.toString())
-                            .replace(/NIVELCONTROLADO/g, raciones.toString()) // Default to raciones
-                            .replace(/MATERIAPRIMA/g, "1") // Default as requested
-                            .replace(/INSTRUMENTO/g, "1")
-                            .replace(/MANIPULADORA/g, "1")
-                            .replace(/CANTSERVICIO/g, "1")
-                            .replace(/ELEMENTOS/g, "1")
+                            .replace(/NIVELCONTROLADO/g, nivelControladoVal.toString())
+                            .replace(/MATERIAPRIMA/g, materiaPrimaVal.toString())
+                            .replace(/INSTRUMENTO/g, instrumentoVal.toString())
+                            .replace(/MANIPULADORA/g, manipuladoraVal.toString())
+                            .replace(/CANTSERVICIO/g, cantServicioVal.toString())
+                            .replace(/ELEMENTOS/g, elementosVal.toString())
 
-                        // Basic math eval
-                        const result = eval(evalForm.replace(/[^0-9+\-*/().]/g, ''))
+                        const result = new Function(`return ${evalForm.replace(/[^0-9+\-*/().]/g, '')}`)()
                         totalMonto += Number(result) || 0
 
                         detallesCalc.push({
@@ -316,19 +423,19 @@ export async function calculateAll(params: { search?: string, mes?: string, ano?
                             descripcion: d.observacionesOMedioDeVerificacion,
                             formulaAplicada: evalForm,
                             montoMulta: Number(result) || 0,
-                            variablesUsadas: JSON.stringify({ raciones, utm: utmVal, default: '1' })
+                            variablesUsadas: JSON.stringify(savedVars || {})
                         })
                     } catch (e) {
                         console.error('Error eval massive:', e)
                     }
                 }
 
-                // Save
+                // Save using finalEstado
                 await prisma.multas_Elementos_Esenciales_Cab.upsert({
                     where: { folioOriginal: cab.folio! },
                     update: {
                         montoTotalCalculado: totalMonto,
-                        estadoCalculo: 'CALCULO_MASIVO',
+                        estadoCalculo: finalEstado,
                         usuarioCalculo: session.user.username,
                         fechaCalculo: new Date(),
                         detalles: {
@@ -342,7 +449,7 @@ export async function calculateAll(params: { search?: string, mes?: string, ano?
                         fechaSupervision: fecha,
                         licitacion: cab.licitacion,
                         montoTotalCalculado: totalMonto,
-                        estadoCalculo: 'CALCULO_MASIVO',
+                        estadoCalculo: finalEstado,
                         usuarioCalculo: session.user.username,
                         detalles: {
                             create: detallesCalc
@@ -380,9 +487,9 @@ export async function getDetalleFolioParaCalculo(folio: string) {
             where: { licId: licId ?? -1 }
         })
 
-        // We need all details that are NC=X, OR details that have NO X in any (CO, NC, NA)
+        // Solo calcular aquellos aspectos que tienen NC = 'X'
         const detallesRelevantes = cab.detalles.filter(d => 
-            d.nc === 'X' || (!d.co && !d.nc && !d.na)
+            d.nc?.trim().toUpperCase() === 'X'
         )
 
         // Enhance with formula info
@@ -395,7 +502,8 @@ export async function getDetalleFolioParaCalculo(folio: string) {
                 ...d,
                 letraAspecto: letra,
                 formulaAsignada: formulaObj ? formulaObj.formula : null,
-                incompleto: (!d.co && !d.nc && !d.na) // Flag if it's missing X
+                solucionable: formulaObj ? formulaObj.solucionable : null,
+                incompleto: false
             }
         })
 
@@ -406,6 +514,7 @@ export async function getDetalleFolioParaCalculo(folio: string) {
         
         let pmpaRecord: any = null
         let utmRecord: any = null
+        let pmpaNiveles: { label: string, value: number }[] = []
 
         if (anho && mes && rbd) {
             // 1. UTM
@@ -427,9 +536,26 @@ export async function getDetalleFolioParaCalculo(folio: string) {
             }
 
             if (serviceCode) {
-                pmpaRecord = await prisma.pMPA.findFirst({
+                const allPmpas = await prisma.pMPA.findMany({
                     where: { rbd, ano: anho, mes, servicio: serviceCode }
                 })
+                
+                if (allPmpas.length > 0) {
+                    pmpaRecord = {
+                        raceqJunaeb: allPmpas.reduce((acc, curr) => acc + curr.raceqJunaeb, 0)
+                    }
+                    
+                    const nivelesMap = allPmpas.reduce((acc: any, curr) => {
+                        if (!acc[curr.nivel]) acc[curr.nivel] = 0
+                        acc[curr.nivel] += curr.raceqJunaeb
+                        return acc
+                    }, {})
+                    
+                    pmpaNiveles = Object.entries(nivelesMap).map(([nivel, raciones]) => ({
+                        label: nivel,
+                        value: raciones as number
+                    }))
+                }
             }
         }
 
@@ -449,6 +575,23 @@ export async function getDetalleFolioParaCalculo(folio: string) {
             }
         })
 
+        // Fetch previously saved variables if any
+        let savedVariables: Record<string, string> = {}
+        try {
+            const savedCalculo = await prisma.multas_Elementos_Esenciales_Cab.findUnique({
+                where: { folioOriginal: folio },
+                include: { detalles: true }
+            })
+            if (savedCalculo && savedCalculo.detalles.length > 0) {
+                const firstWithVars = savedCalculo.detalles.find(d => d.variablesUsadas)
+                if (firstWithVars && firstWithVars.variablesUsadas) {
+                    savedVariables = JSON.parse(firstWithVars.variablesUsadas)
+                }
+            }
+        } catch (e) {
+            console.error("Error loading saved variables:", e)
+        }
+
         return {
             data: cab,
             detalles: detallesConFormula,
@@ -456,7 +599,9 @@ export async function getDetalleFolioParaCalculo(folio: string) {
             utmValue: utmRecord?.monto || 0,
             utmPeriod: utmRecord ? `${mes}/${anho}` : 'N/D',
             racionesValue: pmpaRecord?.raceqJunaeb || 0,
-            keywordsNeeded: Array.from(keywordsNeeded)
+            keywordsNeeded: Array.from(keywordsNeeded),
+            pmpaNiveles,
+            savedVariables
         }
 
     } catch (error) {

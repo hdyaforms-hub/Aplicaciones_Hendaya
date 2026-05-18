@@ -145,14 +145,16 @@ exports.Prisma.UserScalarFieldEnum = {
 
 exports.Prisma.PMPAScalarFieldEnum = {
   id: 'id',
-  sucursal: 'sucursal',
   ano: 'ano',
   mes: 'mes',
+  licitacion: 'licitacion',
+  ute: 'ute',
   rbd: 'rbd',
-  licId: 'licId',
   programa: 'programa',
   estrato: 'estrato',
-  raceq: 'raceq',
+  nivel: 'nivel',
+  servicioLic: 'servicioLic',
+  raceqJunaeb: 'raceqJunaeb',
   servicio: 'servicio',
   uploadedBy: 'uploadedBy',
   createdAt: 'createdAt'
@@ -246,9 +248,27 @@ exports.Prisma.PlantillaCorreoScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.MultaServicioScalarFieldEnum = {
+  id: 'id',
+  codigo: 'codigo',
+  nombre: 'nombre'
+};
+
 exports.Prisma.LicitacionScalarFieldEnum = {
   licId: 'licId',
+  licitacionHomologada: 'licitacionHomologada',
   estado: 'estado',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.AspectoEEScalarFieldEnum = {
+  id: 'id',
+  licId: 'licId',
+  letra: 'letra',
+  descripcion: 'descripcion',
+  formula: 'formula',
+  solucionable: 'solucionable',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -683,6 +703,8 @@ exports.Prisma.CapCertificacionHeaderScalarFieldEnum = {
   servicio: 'servicio',
   programa: 'programa',
   area: 'area',
+  racionesBase: 'racionesBase',
+  racionesDigitadas: 'racionesDigitadas',
   racionesPreparar: 'racionesPreparar',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
@@ -697,6 +719,66 @@ exports.Prisma.CapCertificacionDetailScalarFieldEnum = {
   nombreProducto: 'nombreProducto',
   grsRac: 'grsRac',
   grsTotal: 'grsTotal'
+};
+
+exports.Prisma.ElementosEsenciales_CabScalarFieldEnum = {
+  id: 'id',
+  licitacion: 'licitacion',
+  licId: 'licId',
+  folio: 'folio',
+  fechaSupervision: 'fechaSupervision',
+  rbd: 'rbd',
+  region: 'region',
+  comuna: 'comuna',
+  servicio: 'servicio',
+  horaInicio: 'horaInicio',
+  hora: 'hora',
+  obsALosIncumplimiento: 'obsALosIncumplimiento',
+  nombreArchivo: 'nombreArchivo',
+  link: 'link',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ElementosEsenciales_DetScalarFieldEnum = {
+  id: 'id',
+  cabId: 'cabId',
+  aspecto: 'aspecto',
+  observacionesOMedioDeVerificacion: 'observacionesOMedioDeVerificacion',
+  co: 'co',
+  nc: 'nc',
+  na: 'na'
+};
+
+exports.Prisma.UTMScalarFieldEnum = {
+  id: 'id',
+  anho: 'anho',
+  mes: 'mes',
+  monto: 'monto',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.Multas_Elementos_Esenciales_CabScalarFieldEnum = {
+  id: 'id',
+  folioOriginal: 'folioOriginal',
+  rbd: 'rbd',
+  fechaSupervision: 'fechaSupervision',
+  licitacion: 'licitacion',
+  montoTotalCalculado: 'montoTotalCalculado',
+  estadoCalculo: 'estadoCalculo',
+  usuarioCalculo: 'usuarioCalculo',
+  fechaCalculo: 'fechaCalculo'
+};
+
+exports.Prisma.Multas_Elementos_Esenciales_DetScalarFieldEnum = {
+  id: 'id',
+  cabId: 'cabId',
+  letraAspecto: 'letraAspecto',
+  descripcion: 'descripcion',
+  formulaAplicada: 'formulaAplicada',
+  montoMulta: 'montoMulta',
+  variablesUsadas: 'variablesUsadas'
 };
 
 exports.Prisma.SortOrder = {
@@ -726,7 +808,9 @@ exports.Prisma.ModelName = {
   ListaCorreo: 'ListaCorreo',
   NotificacionPantalla: 'NotificacionPantalla',
   PlantillaCorreo: 'PlantillaCorreo',
+  MultaServicio: 'MultaServicio',
   Licitacion: 'Licitacion',
+  AspectoEE: 'AspectoEE',
   Sucursal: 'Sucursal',
   Presupuesto: 'Presupuesto',
   SolicitudPan: 'SolicitudPan',
@@ -755,7 +839,12 @@ exports.Prisma.ModelName = {
   Minutas: 'Minutas',
   Raciones: 'Raciones',
   CapCertificacionHeader: 'CapCertificacionHeader',
-  CapCertificacionDetail: 'CapCertificacionDetail'
+  CapCertificacionDetail: 'CapCertificacionDetail',
+  ElementosEsenciales_Cab: 'ElementosEsenciales_Cab',
+  ElementosEsenciales_Det: 'ElementosEsenciales_Det',
+  UTM: 'UTM',
+  Multas_Elementos_Esenciales_Cab: 'Multas_Elementos_Esenciales_Cab',
+  Multas_Elementos_Esenciales_Det: 'Multas_Elementos_Esenciales_Det'
 };
 
 /**

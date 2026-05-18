@@ -147,9 +147,6 @@ el plan me parece bien, solo agrega mis comentarios y ejecutalo
 
 https://ipalproalsa-my.sharepoint.com/personal/asistente_op_ipal_cl/Documents/Documentos/LORENA%20AVIL%C3%89S/MULTAS/Licitacion%2085-53-LR23
 
-
-
-
 /******************************************************************************/
 
 Licitacion	
@@ -221,4 +218,148 @@ Tabla MINUTAS
 	NombreEnlace varchar(150) 
 
 /*********************************************************************************************/
+Licitacion	
+NumeroPreparacion	
+NombrePreparacion	
+NumeroPrograma	
+Programa	
+NumeroCocina	
+Cocina	
+NumeroArea	
+Area	
+CodigoProducto	
+NombreProducto	
+CodigoSubServicio	
+NombreSubServicio	
+CantPreparacion	
+Porcentaje_Perdida
 
+/*********************************************************************************************/
+
+Necesito que agregues una nueva opcion en calculadora, el nombre que debe tener es "Raciones", debe tener la misma estructura que "Preparaciones" y "Minuta".
+El formato del Excel es 
+    Licitacion,
+	NumeroServicio,
+	Servicio,
+	NumeroCocina,
+	NumeroArea,
+	NumeroEnlace,
+	NumeroLocacion,
+	Locacion,
+	NumeroPrograma,
+	Programa,
+	MES,
+	AÑO,
+	Fecha,
+	EstadoRacion,
+	NumeroBeneficiario,
+	Beneficiario,
+	Cantidad,
+	RBD,
+	UT
+
+El modelo de datos es:
+Nombre de la tabla "Raciones"
+Campos:
+    Licitacion varchar(10) ,
+	NumeroServicio varchar(10) ,
+	Servicio varchar(100) ,
+	NumeroCocina int ,
+	NumeroArea char(5) ,
+	NumeroEnlace int ,
+	NumeroLocacion char(5) ,
+	Locacion varchar(150) ,
+	NumeroPrograma char(7) ,
+	Programa varchar(150) ,
+	MES int ,
+	AÑO int ,
+	Fecha datetime ,
+	EstadoRacion int ,
+	NumeroBeneficiario int ,
+	Beneficiario varchar(50) ,
+	Cantidad int ,
+	RBD int ,
+	UT int 
+
+/***********************************************************************************/
+
+necesito que crees una nueva opción dentro de Areas\Operaciones --> esta nueva opción debe llamarse "Captura de Certificación"
+favor guiarse por la imagen adjunta, debe tener un filtro inteligente de RBD/Nombre colegio (en la imagen son los campos RBD y Nombre) un campo de fecha (Fecha de hoy) y un campo de servicio (lista desplegable)
+la información que debe mostrar es: 
+1 --> DESAYUNO
+2 --> ALMUERZO
+3 --> ONCE
+4 --> CENA
+5 --> COLACIÓN
+Debe tener un campo seleccionable del programa (campo no esta en la imagen)
+y debe tener una caja de texto para ingresar las raciones a preparar (existe en la imagen y se llama "Raciones a preparar")
+al seleccionar esta información debe ser capaz de traer la información de la minuta y preparación y raciones asociadas debe desplegarse en una lista como muestra la imagen donde dice productos, pero debes poner un campo en el cual este el numero de la minuta y el nombre de la preparación y la idea es que en la columna donde dice Grs Rac (CantPreparacion) muestre los gramos que están en la tabla de preparación y en Grs Total es la multiplicación de Raciones a preparar x Grs Rac (CantPreparacion)
+Re cuerda que esta nueva pantalla debe pasar por la opción de roles / perfiles
+
+/***********************************************************************************/
+
+Necesito que hagas una nueva opción en  Areas\Operaciones--> esta nueva opción debe llamarse "Elementos esenciales", favor guíate por el proyecto que ya esta creado en la ruta "D:\Programas\Elementos esenciales", que esta desarrollado en Python, la idea es que ahora quede como una opción de la lataforma web, por ende ahora ya no debe cargarse en un Excel, si no en la base de datos, debes crear 2 tablas llamadas:
+ElementosEsenciales_Cab y ElementosEsenciales_Det
+la tabla ElementosEsenciales_Cab debe tener los siguientes campos:
+Licitación	
+Folio	
+Fecha_Supervisión	
+RBD	
+Región	
+Comuna	
+Servicio	
+Hora_Inicio	
+Hora	
+Obs_A_los_incumplimiento
+Nombre_Archivo	
+Link (subir el pdf y dejarlo en el aplicativo como un hipervínculo para poder visualizar el archivo)
+
+ElementosEsenciales_Det	
+Aspecto	
+Observaciones_o_medio_de_verificación	
+CO	
+NC	
+NA
+
+la aplicación debe contar con búsqueda inteligente por RBD/nombre establecimiento, licitación, mes, año
+también debe contar un un botón de exportar información a Excel con los siguientes campos a descargar en el archivo
+Licitación	
+Folio	
+Fecha_Supervisión	
+RBD	
+Región	
+Comuna	
+Servicio	
+Hora_Inicio	
+Hora	
+Obs_A_los_incumplimiento
+Nombre_Archivo	
+Aspecto	
+Observaciones_o_medio_de_verificación	
+CO	
+NC	
+NA
+
+/***********************************************************************************/
+
+Anho	int
+Mes	int
+Licitación int	
+UTE	int
+RBD	it
+Programa char	
+Estrato	 int
+Nivel	char
+ServicioLIC char	
+RacEqJunaeb	int
+servicio char
+
+en la pantalla de visualización debes mostrar la información como esta en la imagen ( la sucursal la debes rescatar con la Ut)
+en la pantalla de tablero y avances "avance PMPA" debes ajustarte a la data nueva la idea es que no se altere lo visual, creo que tienes toda la información como para mantener el cruce de tablas. lo mismo debe pasar con la pantalla de "ingreso de raciones" tratar de mantener todo para que no afecte la pantalla ni cruce de datos 
+
+
+/***********************************************************************************/
+
+En esta nueva pantalla debes traer todos folios (algo parecido a la imagen 1 adjunta), pero solo debes traer los folios de cuyos documentos tengan como detalle NC = X ya que son estos los item que no cumplen y deben ser calculados según las formulas hecha en el modulo de "Formulas de Aspecto EE", si a la formula le falta un dato de entrada (Palabra reservada que espera información de ingreso, debe informar en esta pantalla que falta información por agregar, asi también debe informar si el folio no tiene cargado el pmpa que debe leer para calcular, también debe tener en la cabecera los mismos filtros de la "Carga de Elementos Esenciales" y al lado una caja de texto con el monto total calculado y debe tener un botón de calcular todos los folios y en cada folio también debe tener un calcular si quiere calcular un solo folio, también debo poder ver el pdf (dejar columna archivo), al hacerle click al folio debe mostrar el mismo cuadro que en la imagen 2 pero debe tener las cajas de texto de las palabras reservadas esperando el ingreso de esta información para terminar el calculo, aquí solo debe mostrar los aspectos que son NC = X, los otros aspectos no se deben considerar, y si por algún motivo existe aun aspecto que no tenga X en ninguno de sus tres opciones (CO, NC, NA) también debería mostrarlo e informar al usuario que existe aspecto incompleto a calcular al lado del botón Ver PDF Original podrías colocar el botón calcular, una vez que este dato este completo toda esta información se debería guardar en una nueva o nuevas tablas en la base de datos, para no tener que estar llenando siempre esta información, la tabla llamala o llamalas Multas_Elementos_Esenciales y si ocupas 2 tablas llamalas Multas_Elementos_Esenciales_Cab y Multas_Elementos_Esenciales_Det
+
+/***********************************************************************************/

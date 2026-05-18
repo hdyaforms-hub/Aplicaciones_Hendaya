@@ -35,18 +35,22 @@ model User {
 }
 
 model PMPA {
-  id         String   @id @default(uuid())
-  sucursal   String
-  ano        Int
-  mes        Int
-  rbd        Int
-  licId      Int?
-  programa   String
-  estrato    String
-  raceq      Int
-  servicio   String
-  uploadedBy String
-  createdAt  DateTime @default(now())
+  id          String   @id @default(uuid())
+  ano         Int
+  mes         Int
+  licitacion  Int
+  ute         Int
+  rbd         Int
+  programa    String
+  estrato     String
+  nivel       String
+  servicioLic String
+  raceqJunaeb Int
+  servicio    String
+  uploadedBy  String
+  createdAt   DateTime @default(now())
+
+  ut UT? @relation(fields: [ute], references: [codUT])
 }
 
 model Colegios {
@@ -142,12 +146,34 @@ model PlantillaCorreo {
   updatedAt      DateTime @updatedAt
 }
 
+model MultaServicio {
+  id     String @id @default(uuid())
+  codigo String @unique @db.VarChar(5)
+  nombre String @db.VarChar(50)
+}
+
 model Licitacion {
-  licId     Int      @id @default(autoincrement())
-  estado    Int      @default(1)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  uts       UT[]
+  licId                Int         @id @default(autoincrement())
+  licitacionHomologada String?     @db.VarChar(20)
+  estado               Int         @default(1)
+  createdAt            DateTime    @default(now())
+  updatedAt            DateTime    @updatedAt
+  uts                  UT[]
+  aspectosEE           AspectoEE[]
+}
+
+model AspectoEE {
+  id           String     @id @default(uuid())
+  licId        Int
+  letra        String     @db.VarChar(5)
+  descripcion  String?    @db.Text
+  formula      String?    @db.Text
+  solucionable String?    @db.VarChar(20)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  licitacion   Licitacion @relation(fields: [licId], references: [licId], onDelete: Cascade)
+
+  @@unique([licId, letra])
 }
 
 model Sucursal {
@@ -199,6 +225,7 @@ model UT {
   updatedAt  DateTime   @updatedAt
   licitacion Licitacion @relation(fields: [licId], references: [licId])
   sucursal   Sucursal?  @relation(fields: [sucursalId], references: [id])
+  pmpas      PMPA[]
 }
 
 model SolicitudGas {
@@ -608,17 +635,19 @@ model Raciones {
 }
 
 model CapCertificacionHeader {
-  id               String                   @id @default(uuid())
-  rbd              Int
-  fecha            DateTime
-  servicio         String
-  programa         String
-  area             String?
-  racionesPreparar Int
-  createdAt        DateTime                 @default(now())
-  updatedAt        DateTime                 @updatedAt
-  usuario          String?
-  detalles         CapCertificacionDetail[]
+  id                String                   @id @default(uuid())
+  rbd               Int
+  fecha             DateTime
+  servicio          String
+  programa          String
+  area              String?
+  racionesBase      Int                      @default(0)
+  racionesDigitadas Int                      @default(0)
+  racionesPreparar  Int
+  createdAt         DateTime                 @default(now())
+  updatedAt         DateTime                 @updatedAt
+  usuario           String?
+  detalles          CapCertificacionDetail[]
 }
 
 model CapCertificacionDetail {
@@ -630,4 +659,70 @@ model CapCertificacionDetail {
   grsRac            Decimal                @db.Decimal(18, 2)
   grsTotal          Decimal                @db.Decimal(18, 2)
   header            CapCertificacionHeader @relation(fields: [headerId], references: [id], onDelete: Cascade)
+}
+
+model ElementosEsenciales_Cab {
+  id                    String                    @id @default(uuid())
+  licitacion            String?
+  licId                 Int?
+  folio                 String?
+  fechaSupervision      DateTime?
+  rbd                   Int?
+  region                String?
+  comuna                String?
+  servicio              String?
+  horaInicio            String?
+  hora                  String?
+  obsALosIncumplimiento String?                   @db.Text
+  nombreArchivo         String
+  link                  String?
+  createdAt             DateTime                  @default(now())
+  updatedAt             DateTime                  @updatedAt
+  detalles              ElementosEsenciales_Det[]
+}
+
+model ElementosEsenciales_Det {
+  id                                String                  @id @default(uuid())
+  cabId                             String
+  aspecto                           String?                 @db.Text
+  observacionesOMedioDeVerificacion String?                 @db.Text
+  co                                String?
+  nc                                String?
+  na                                String?
+  cab                               ElementosEsenciales_Cab @relation(fields: [cabId], references: [id], onDelete: Cascade)
+}
+
+model UTM {
+  id        String   @id @default(uuid())
+  anho      Int
+  mes       Int
+  monto     Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([anho, mes])
+}
+
+model Multas_Elementos_Esenciales_Cab {
+  id                  String                            @id @default(uuid())
+  folioOriginal       String                            @unique
+  rbd                 Int
+  fechaSupervision    DateTime
+  licitacion          String?
+  montoTotalCalculado Float
+  estadoCalculo       String // Ej: "COMPLETO", "INCOMPLETO_POR_PMPA", "INCOMPLETO_POR_DATOS"
+  usuarioCalculo      String
+  fechaCalculo        DateTime                          @default(now())
+  detalles            Multas_Elementos_Esenciales_Det[]
+}
+
+model Multas_Elementos_Esenciales_Det {
+  id              String                          @id @default(uuid())
+  cabId           String
+  letraAspecto    String
+  descripcion     String?                         @db.Text
+  formulaAplicada String?                         @db.Text
+  montoMulta      Float
+  variablesUsadas String?                         @db.Text // JSON con los valores ingresados
+  cab             Multas_Elementos_Esenciales_Cab @relation(fields: [cabId], references: [id], onDelete: Cascade)
 }

@@ -41,6 +41,19 @@ export default async function DashboardPage() {
             uts: Array.from(g.uts).sort((a, b) => a - b)
         }))
 
+    // Group periods by Year for a cleaner, structured presentation
+    const groupedPmpaByYear = sortedPmpaSummary.reduce((acc, curr) => {
+        if (!acc[curr.ano]) {
+            acc[curr.ano] = []
+        }
+        acc[curr.ano].push(curr)
+        return acc
+    }, {} as Record<number, typeof sortedPmpaSummary>)
+
+    const sortedYears = Object.keys(groupedPmpaByYear)
+        .map(Number)
+        .sort((a, b) => b - a)
+
     const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
 
     return (
@@ -103,30 +116,51 @@ export default async function DashboardPage() {
                 </div>
 
                 <div className="p-6">
-                    {sortedPmpaSummary.length > 0 ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                            {sortedPmpaSummary.map((item, idx) => (
-                                <div key={idx} className="bg-gray-50 border border-gray-100 rounded-2xl p-6 hover:border-cyan-200 transition-all group shadow-sm hover:shadow-md">
-                                    <div className="flex justify-between items-start mb-4 pb-4 border-b border-gray-200/60">
-                                        <div>
-                                            <h4 className="text-lg font-black text-gray-800">{monthNames[item.mes - 1]}</h4>
-                                            <span className="text-3xl font-black text-cyan-600/20 group-hover:text-cyan-600/40 transition-colors">{item.ano}</span>
+                    {sortedYears.length > 0 ? (
+                        <div className="space-y-6">
+                            {sortedYears.map((year) => {
+                                const periods = groupedPmpaByYear[year]
+                                return (
+                                    <div key={year} className="bg-white border border-gray-200/80 rounded-2xl shadow-sm overflow-hidden hover:shadow-md hover:border-gray-300/80 transition-all duration-200">
+                                        {/* Year Header */}
+                                        <div className="bg-slate-50/50 border-b border-gray-200/80 px-6 py-3.5 flex items-center justify-between">
+                                            <div className="flex items-center gap-2">
+                                                <div className="w-2.5 h-2.5 rounded-full bg-cyan-500" />
+                                                <h4 className="text-base font-bold text-slate-800 tracking-tight">{year}</h4>
+                                            </div>
+                                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                                                {periods.length} {periods.length === 1 ? 'Periodo' : 'Periodos'}
+                                            </span>
                                         </div>
-                                        <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm text-lg">📁</div>
-                                    </div>
-                                    
-                                    <div className="space-y-2">
-                                        <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">Unidades Territoriales:</p>
-                                        <div className="flex flex-wrap gap-2">
-                                            {item.uts.map(ut => (
-                                                <span key={ut} className="px-3 py-1.5 bg-white border border-gray-200 text-gray-700 rounded-lg text-xs font-bold shadow-sm hover:bg-cyan-600 hover:text-white hover:border-cyan-600 transition-all cursor-default">
-                                                    UT {ut}
-                                                </span>
+
+                                        {/* Period Rows */}
+                                        <div className="divide-y divide-gray-100">
+                                            {periods.map((item, idx) => (
+                                                <div key={idx} className="px-6 py-3 flex flex-col sm:flex-row sm:items-center gap-4 hover:bg-slate-50/40 transition-colors duration-150">
+                                                    {/* Month Badge */}
+                                                    <div className="sm:w-36 flex-shrink-0 flex items-center">
+                                                        <span className="inline-flex items-center gap-2 px-3 py-1 bg-cyan-50 text-cyan-700 rounded-lg text-xs font-bold border border-cyan-100/50 shadow-sm w-full sm:w-auto justify-center sm:justify-start">
+                                                            <span className="text-xs">📅</span>
+                                                            {monthNames[item.mes - 1]}
+                                                        </span>
+                                                    </div>
+
+                                                    {/* Territorial Units */}
+                                                    <div className="flex-1">
+                                                        <div className="flex flex-wrap gap-1.5 items-center">
+                                                            {item.uts.map(ut => (
+                                                                <span key={ut} className="px-2.5 py-1 bg-white border border-gray-200/60 hover:bg-cyan-600 hover:text-white hover:border-cyan-600 text-slate-600 rounded-lg text-xs font-bold shadow-sm transition-all duration-150 cursor-default">
+                                                                    UT {ut}
+                                                                </span>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             ))}
                                         </div>
                                     </div>
-                                </div>
-                            ))}
+                                )
+                            })}
                         </div>
                     ) : (
                         <div className="flex flex-col items-center justify-center py-12 text-center">

@@ -29,7 +29,8 @@ export default function AspectosEEPage() {
         licId: '',
         letra: '',
         descripcion: '',
-        formula: ''
+        formula: '',
+        solucionable: ''
     })
     const [isEdit, setIsEdit] = useState(false)
     const [formulaError, setFormulaError] = useState('')
@@ -59,14 +60,15 @@ export default function AspectosEEPage() {
             licId: parseInt(formData.licId),
             letra: formData.letra,
             descripcion: formData.descripcion,
-            formula: formData.formula
+            formula: formData.formula,
+            solucionable: formData.solucionable
         })
 
         if (res.error) {
             setError(res.error)
         } else {
             setSuccess('Aspecto guardado correctamente.')
-            setFormData({ id: '', licId: '', letra: '', descripcion: '', formula: '' })
+            setFormData({ id: '', licId: '', letra: '', descripcion: '', formula: '', solucionable: '' })
             setIsEdit(false)
             fetchData()
         }
@@ -79,7 +81,8 @@ export default function AspectosEEPage() {
             licId: String(asp.licId),
             letra: asp.letra,
             descripcion: asp.descripcion || '',
-            formula: asp.formula || ''
+            formula: asp.formula || '',
+            solucionable: asp.solucionable || ''
         })
         setIsEdit(true)
         setError('')
@@ -276,6 +279,20 @@ export default function AspectosEEPage() {
                             </div>
 
                             <div>
+                                <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-1">Solucionable / No Solucionable</label>
+                                <select
+                                    required
+                                    value={formData.solucionable}
+                                    onChange={e => setFormData({ ...formData, solucionable: e.target.value })}
+                                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-gray-900 font-bold"
+                                >
+                                    <option value="">Seleccione Criterio</option>
+                                    <option value="Solucionable">Solucionable</option>
+                                    <option value="No Solucionable">No Solucionable</option>
+                                </select>
+                            </div>
+
+                            <div>
                                 <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-1 flex justify-between">
                                     <span>Fórmula Multa</span>
                                     <span className="text-cyan-500 lowercase font-medium">Ej: 0.05 * UTM * RACIONES</span>
@@ -322,7 +339,7 @@ export default function AspectosEEPage() {
                                         type="button"
                                         onClick={() => {
                                             setIsEdit(false)
-                                            setFormData({ id: '', licId: '', letra: '', descripcion: '', formula: '' })
+                                            setFormData({ id: '', licId: '', letra: '', descripcion: '', formula: '', solucionable: '' })
                                             setTestResult(null)
                                         }}
                                         className="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-xl font-bold transition-all"
@@ -434,12 +451,13 @@ export default function AspectosEEPage() {
                                     <th className="px-6 py-4 text-xs font-black text-gray-400 uppercase tracking-widest">Licitación</th>
                                     <th className="px-6 py-4 text-xs font-black text-gray-400 uppercase tracking-widest">Letra</th>
                                     <th className="px-6 py-4 text-xs font-black text-gray-400 uppercase tracking-widest">Fórmula</th>
+                                    <th className="px-6 py-4 text-xs font-black text-gray-400 uppercase tracking-widest">Criterio</th>
                                     <th className="px-6 py-4 text-xs font-black text-gray-400 uppercase tracking-widest text-right">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-50">
                                 {loading ? (
-                                    <tr><td colSpan={4} className="px-6 py-12 text-center text-gray-400 italic">Cargando...</td></tr>
+                                    <tr><td colSpan={5} className="px-6 py-12 text-center text-gray-400 italic">Cargando...</td></tr>
                                 ) : aspectos.length > 0 ? (
                                     aspectos.map(asp => (
                                         <tr key={asp.id} className="hover:bg-gray-50/50 transition-colors group text-sm">
@@ -456,6 +474,15 @@ export default function AspectosEEPage() {
                                                 <div className="font-mono text-xs text-gray-600 truncate" title={asp.formula}>
                                                     {asp.formula || 'Sin fórmula'}
                                                 </div>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                {asp.solucionable ? (
+                                                    <span className={`px-2.5 py-1 rounded-lg text-xs font-bold border ${asp.solucionable === 'Solucionable' ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : 'bg-rose-50 text-rose-700 border-rose-100'}`}>
+                                                        {asp.solucionable}
+                                                    </span>
+                                                ) : (
+                                                    <span className="text-gray-400 text-xs italic">No definido</span>
+                                                )}
                                             </td>
                                             <td className="px-6 py-4 text-right">
                                                 <div className="flex justify-end gap-2">
@@ -478,7 +505,7 @@ export default function AspectosEEPage() {
                                         </tr>
                                     ))
                                 ) : (
-                                    <tr><td colSpan={4} className="px-6 py-12 text-center text-gray-400">No hay aspectos configurados.</td></tr>
+                                    <tr><td colSpan={5} className="px-6 py-12 text-center text-gray-400">No hay aspectos configurados.</td></tr>
                                 )}
                             </tbody>
                         </table>

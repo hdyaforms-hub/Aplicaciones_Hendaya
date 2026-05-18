@@ -42,7 +42,7 @@ export async function getAspectosEE(licId?: number) {
     }
 }
 
-export async function saveAspectoEE(data: { id?: string, licId: number, letra: string, descripcion?: string, formula?: string }) {
+export async function saveAspectoEE(data: { id?: string, licId: number, letra: string, descripcion?: string, formula?: string, solucionable?: string }) {
     if (!await checkPermission()) {
         return { error: 'No tienes permisos.' }
     }
@@ -54,7 +54,8 @@ export async function saveAspectoEE(data: { id?: string, licId: number, letra: s
                 data: {
                     letra: data.letra,
                     descripcion: data.descripcion,
-                    formula: data.formula
+                    formula: data.formula,
+                    solucionable: data.solucionable
                 }
             })
         } else {
@@ -69,7 +70,8 @@ export async function saveAspectoEE(data: { id?: string, licId: number, letra: s
                     licId: data.licId,
                     letra: data.letra,
                     descripcion: data.descripcion,
-                    formula: data.formula
+                    formula: data.formula,
+                    solucionable: data.solucionable
                 }
             })
         }
@@ -151,10 +153,19 @@ export async function testFormula(folio: string, formula: string, customValues?:
 
         // Evaluate
         const cleanFormula = formula.toUpperCase()
+
+        let finalRaciones = raciones
+        let finalNivelControlado = raciones
+
+        if (customValues?.nivelControlado !== undefined) {
+            finalNivelControlado = customValues.nivelControlado
+            finalRaciones = raciones
+        }
+
         let evaluatedFormula = cleanFormula
             .replace(/UTM/g, utmValue.toString())
-            .replace(/RACIONES/g, raciones.toString())
-            .replace(/NIVELCONTROLADO/g, (customValues?.nivelControlado ?? raciones).toString())
+            .replace(/RACIONES/g, finalRaciones.toString())
+            .replace(/NIVELCONTROLADO/g, finalNivelControlado.toString())
             .replace(/MATERIAPRIMA/g, (customValues?.materiaPrima ?? 1).toString())
             .replace(/INSTRUMENTO/g, (customValues?.instrumento ?? 1).toString())
             .replace(/MANIPULADORA/g, (customValues?.manipuladora ?? 1).toString())

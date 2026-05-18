@@ -25,6 +25,10 @@ export default function CalculosEEPage() {
     // Modal state
     const [selectedFolio, setSelectedFolio] = useState<string | null>(null)
 
+    // Sorting state
+    const [sortColumn, setSortColumn] = useState<string>('fechaSupervision')
+    const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc')
+
     const fetchRegistros = async () => {
         setLoading(true)
         try {
@@ -62,22 +66,59 @@ export default function CalculosEEPage() {
     }
 
     const totalCalculado = registros.reduce((acc, curr) => acc + (curr.montoCalculado || 0), 0)
+    const totalNcCount = registros.reduce((acc, curr) => acc + (curr.ncCount || 0), 0)
+    const totalNcSolucionableCount = registros.reduce((acc, curr) => acc + (curr.ncSolucionableCount || 0), 0)
+    const totalNcNoSolucionableCount = registros.reduce((acc, curr) => acc + (curr.ncNoSolucionableCount || 0), 0)
+    const totalMontoSolucionable = registros.reduce((acc, curr) => acc + (curr.montoSolucionable || 0), 0)
+    const totalMontoNoSolucionable = registros.reduce((acc, curr) => acc + (curr.montoNoSolucionable || 0), 0)
 
     // Detailed breakdown by year
     const breakdown = registros.reduce((acc: any, curr) => {
         const date = curr.fechaSupervision ? new Date(curr.fechaSupervision) : null
         const year = date ? date.getFullYear() : 'S/F'
-        if (!acc[year]) acc[year] = { total: 0, hasIssues: false }
+        if (!acc[year]) acc[year] = { total: 0, hasIssues: false, ncCount: 0, ncSolucionableCount: 0, ncNoSolucionableCount: 0, montoSolucionable: 0, montoNoSolucionable: 0 }
         acc[year].total += (curr.montoCalculado || 0)
-        if (curr.missingFormula || curr.missingPmpa) acc[year].hasIssues = true
+        acc[year].ncCount += (curr.ncCount || 0)
+        acc[year].ncSolucionableCount += (curr.ncSolucionableCount || 0)
+        acc[year].ncNoSolucionableCount += (curr.ncNoSolucionableCount || 0)
+        acc[year].montoSolucionable += (curr.montoSolucionable || 0)
+        acc[year].montoNoSolucionable += (curr.montoNoSolucionable || 0)
+        if (curr.missingFormula || curr.missingPmpa || curr.calculoEstado === 'PENDIENTE') acc[year].hasIssues = true
         return acc
     }, {})
 
     const years = Object.keys(breakdown).sort((a, b) => b.localeCompare(a))
 
+    // Sorting logic
+    const handleSort = (column: string) => {
+        if (sortColumn === column) {
+            setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')
+        } else {
+            setSortColumn(column)
+            setSortDirection('asc')
+        }
+    }
+
+    const sortedRegistros = [...registros].sort((a, b) => {
+        let valA = a[sortColumn]
+        let valB = b[sortColumn]
+
+        if (sortColumn === 'fechaSupervision') {
+            valA = valA ? new Date(valA).getTime() : 0
+            valB = valB ? new Date(valB).getTime() : 0
+        } else if (typeof valA === 'string' && typeof valB === 'string') {
+            valA = valA.toLowerCase()
+            valB = valB.toLowerCase()
+        }
+
+        if (valA < valB) return sortDirection === 'asc' ? -1 : 1
+        if (valA > valB) return sortDirection === 'asc' ? 1 : -1
+        return 0
+    })
+
     // Pagination logic
-    const totalPages = Math.ceil(registros.length / itemsPerPage)
-    const paginatedRegistros = registros.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+    const totalPages = Math.ceil(sortedRegistros.length / itemsPerPage)
+    const paginatedRegistros = sortedRegistros.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
 
     return (
         <div className="space-y-6 animate-in fade-in duration-500">
@@ -103,19 +144,41 @@ export default function CalculosEEPage() {
                     </button>
                 <div className="flex flex-wrap items-center gap-4">
                     {years.map(y => (
-                        <div key={y} className={`px-4 py-2 rounded-2xl border shadow-sm flex flex-col ${breakdown[y].hasIssues ? 'bg-amber-50 border-amber-100' : 'bg-emerald-50 border-emerald-100'}`}>
+                        <div key={y} className={`px-4 py-3 rounded-2xl border shadow-sm flex flex-col min-w-[185px] ${breakdown[y].hasIssues ? 'bg-amber-50/80 border-amber-100' : 'bg-emerald-50/80 border-emerald-100'}`}>
                             <div className="flex items-center justify-between gap-3">
                                 <span className={`text-[10px] font-black uppercase tracking-widest ${breakdown[y].hasIssues ? 'text-amber-600' : 'text-emerald-600'}`}>Año {y}</span>
                                 <span>{breakdown[y].hasIssues ? '⚠️' : '✅'}</span>
                             </div>
-                            <span className={`text-lg font-black ${breakdown[y].hasIssues ? 'text-amber-700' : 'text-emerald-700'}`}>
+                            <span className={`text-lg font-black leading-none mt-1 ${breakdown[y].hasIssues ? 'text-amber-700' : 'text-emerald-700'}`}>
                                 ${breakdown[y].total.toLocaleString(undefined, { maximumFractionDigits: 0 })}
                             </span>
+                            <div className="mt-2 pt-2 border-t border-dashed border-gray-200 flex flex-col gap-0.5 text-[10px] font-bold">
+                                <span className="text-emerald-600 flex items-center gap-1 leading-tight">
+                                    🟢 Sol: ${breakdown[y].montoSolucionable.toLocaleString(undefined, { maximumFractionDigits: 0 })} ({breakdown[y].ncSolucionableCount})
+                                </span>
+                                <span className="text-rose-600 flex items-center gap-1 leading-tight">
+                                    🔴 No Sol: ${breakdown[y].montoNoSolucionable.toLocaleString(undefined, { maximumFractionDigits: 0 })} ({breakdown[y].ncNoSolucionableCount})
+                                </span>
+                                <span className={`${breakdown[y].hasIssues ? 'text-amber-800' : 'text-emerald-800'} font-black mt-0.5 flex items-center gap-1 leading-tight`}>
+                                    📊 Total: ${breakdown[y].total.toLocaleString(undefined, { maximumFractionDigits: 0 })} ({breakdown[y].ncCount} NC)
+                                </span>
+                            </div>
                         </div>
                     ))}
-                    <div className="bg-slate-900 px-6 py-3 rounded-2xl shadow-xl">
-                        <p className="text-xs font-black text-slate-400 uppercase tracking-widest">Total General</p>
-                        <p className="text-2xl font-black text-white">${totalCalculado.toLocaleString(undefined, { maximumFractionDigits: 0 })}</p>
+                    <div className="bg-slate-900 px-6 py-3 rounded-2xl shadow-xl flex flex-col justify-center min-w-[220px]">
+                        <p className="text-xs font-black text-slate-400 uppercase tracking-widest leading-none">Total General</p>
+                        <p className="text-2xl font-black text-white mt-1 leading-none">${totalCalculado.toLocaleString(undefined, { maximumFractionDigits: 0 })}</p>
+                        <div className="mt-2.5 pt-2 border-t border-slate-800 flex flex-col gap-0.5 text-[10px] font-black uppercase tracking-wider">
+                            <span className="text-emerald-400 flex items-center gap-1 leading-tight">
+                                🟢 Sol: ${totalMontoSolucionable.toLocaleString(undefined, { maximumFractionDigits: 0 })} ({totalNcSolucionableCount})
+                            </span>
+                            <span className="text-rose-400 flex items-center gap-1 leading-tight">
+                                🔴 No Sol: ${totalMontoNoSolucionable.toLocaleString(undefined, { maximumFractionDigits: 0 })} ({totalNcNoSolucionableCount})
+                            </span>
+                            <span className="text-cyan-400 font-extrabold mt-0.5 flex items-center gap-1 leading-tight">
+                                📊 Total: ${totalCalculado.toLocaleString(undefined, { maximumFractionDigits: 0 })} ({totalNcCount} NC)
+                            </span>
+                        </div>
                     </div>
                 </div>
                 </div>
@@ -256,21 +319,37 @@ export default function CalculosEEPage() {
                     <table className="w-full text-left text-sm border-collapse">
                         <thead>
                             <tr className="bg-gray-50/50 border-b border-gray-100">
-                                <th className="px-6 py-4 font-black text-gray-400 uppercase tracking-widest text-xs">Licitación</th>
-                                <th className="px-6 py-4 font-black text-gray-400 uppercase tracking-widest text-xs">Folio</th>
-                                <th className="px-6 py-4 font-black text-gray-400 uppercase tracking-widest text-xs">Fecha</th>
-                                <th className="px-6 py-4 font-black text-gray-400 uppercase tracking-widest text-xs">RBD</th>
-                                <th className="px-6 py-4 font-black text-gray-400 uppercase tracking-widest text-xs">Establecimiento</th>
-                                <th className="px-6 py-4 font-black text-gray-400 uppercase tracking-widest text-xs">Archivo</th>
-                                <th className="px-6 py-4 font-black text-gray-400 uppercase tracking-widest text-xs">Estado Cálculo</th>
-                                <th className="px-6 py-4 font-black text-gray-400 uppercase tracking-widest text-xs text-right">Monto</th>
+                                {[
+                                    { key: 'licitacion', label: 'Licitación' },
+                                    { key: 'folio', label: 'Folio' },
+                                    { key: 'fechaSupervision', label: 'Fecha' },
+                                    { key: 'rbd', label: 'RBD' },
+                                    { key: 'nombreEstablecimiento', label: 'Establecimiento' },
+                                    { key: 'aspectosNc', label: 'Aspectos NC' },
+                                    { key: 'link', label: 'Archivo' },
+                                    { key: 'calculoEstado', label: 'Estado Cálculo' },
+                                    { key: 'montoCalculado', label: 'Monto' }
+                                ].map((col) => (
+                                    <th 
+                                        key={col.key}
+                                        onClick={() => col.key !== 'link' && col.key !== 'aspectosNc' && handleSort(col.key)}
+                                        className={`px-6 py-4 font-black text-gray-400 uppercase tracking-widest text-xs ${col.key !== 'link' && col.key !== 'aspectosNc' ? 'cursor-pointer hover:bg-gray-100/80 transition-colors' : ''} ${col.key === 'montoCalculado' ? 'text-right' : ''}`}
+                                    >
+                                        <div className={`flex items-center gap-1 ${col.key === 'montoCalculado' ? 'justify-end' : ''}`}>
+                                            {col.label}
+                                            {sortColumn === col.key && col.key !== 'link' && col.key !== 'aspectosNc' && (
+                                                <span className="text-cyan-500 font-bold">{sortDirection === 'asc' ? '↑' : '↓'}</span>
+                                            )}
+                                        </div>
+                                    </th>
+                                ))}
                                 <th className="px-6 py-4 font-black text-gray-400 uppercase tracking-widest text-xs text-center">Acción</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-50">
                             {loading ? (
                                 <tr>
-                                    <td colSpan={9} className="px-6 py-12 text-center text-gray-500">
+                                    <td colSpan={10} className="px-6 py-12 text-center text-gray-500">
                                         <div className="flex flex-col items-center gap-2">
                                             <div className="w-6 h-6 border-2 border-cyan-500 border-t-transparent rounded-full animate-spin"></div>
                                             <p className="text-sm font-medium">Buscando folios NC...</p>
@@ -279,7 +358,7 @@ export default function CalculosEEPage() {
                                 </tr>
                             ) : paginatedRegistros.length === 0 ? (
                                 <tr>
-                                    <td colSpan={9} className="px-6 py-12 text-center text-gray-400 font-medium">No se encontraron folios con elementos no conformes.</td>
+                                    <td colSpan={10} className="px-6 py-12 text-center text-gray-400 font-medium">No se encontraron folios con elementos no conformes.</td>
                                 </tr>
                             ) : (
                                 paginatedRegistros.map((reg, idx) => (
@@ -290,6 +369,23 @@ export default function CalculosEEPage() {
                                         <td className="px-6 py-4 text-slate-800 font-bold">{reg.rbd}</td>
                                         <td className="px-6 py-4 text-gray-600 text-xs font-medium max-w-[200px] truncate" title={reg.nombreEstablecimiento}>
                                             {reg.nombreEstablecimiento}
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            <div className="flex flex-col gap-1.5 justify-center">
+                                                {(reg.ncSolucionableCount || 0) > 0 && (
+                                                    <span className="px-2 py-0.5 bg-emerald-50 text-emerald-700 text-[10px] font-black rounded-md border border-emerald-100 w-fit flex items-center gap-1">
+                                                        🟢 Sol: ${(reg.montoSolucionable || 0).toLocaleString(undefined, { maximumFractionDigits: 0 })} ({reg.ncSolucionableCount})
+                                                    </span>
+                                                )}
+                                                {(reg.ncNoSolucionableCount || 0) > 0 && (
+                                                    <span className="px-2 py-0.5 bg-rose-50 text-rose-700 text-[10px] font-black rounded-md border border-rose-100 w-fit flex items-center gap-1">
+                                                        🔴 No Sol: ${(reg.montoNoSolucionable || 0).toLocaleString(undefined, { maximumFractionDigits: 0 })} ({reg.ncNoSolucionableCount})
+                                                    </span>
+                                                )}
+                                                {!(reg.ncSolucionableCount || 0) && !(reg.ncNoSolucionableCount || 0) && (
+                                                    <span className="text-gray-400 text-xs italic">Ninguno</span>
+                                                )}
+                                            </div>
                                         </td>
                                         <td className="px-6 py-4">
                                             {reg.link ? (
