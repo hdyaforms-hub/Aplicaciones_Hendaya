@@ -249,7 +249,7 @@ export async function getFoliosIncompletos(params: {
     }
 }
 
-export async function calculateAll(params: { search?: string, mes?: string, ano?: string, licitacion?: string, folio?: string }) {
+export async function calculateAll(params: { search?: string, mes?: string, ano?: string, licitacion?: string, folio?: string, estadoCalculo?: string, disponibilidad?: string }) {
     if (!await checkPermission('manage_calculos_ee')) return { error: 'No tienes permisos.' }
     const session = await getSession()
     if (!session) return { error: 'No autorizado' }
