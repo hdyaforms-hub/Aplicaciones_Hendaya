@@ -96,7 +96,7 @@ export async function deleteAspectoEE(id: string) {
     }
 }
 
-export async function testFormula(folio: string, formula: string, customValues?: { materiaPrima?: number, instrumento?: number, manipuladora?: number, nivelControlado?: number }) {
+export async function testFormula(folio: string, formula: string, customValues?: { materiaPrima?: number, instrumento?: number, manipuladora?: number, nivelControlado?: number, cantServicio?: number, elementos?: number }) {
     if (!await checkPermission()) return { error: 'No tienes permisos.' }
 
     try {
