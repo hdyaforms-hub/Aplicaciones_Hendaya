@@ -364,7 +364,19 @@ export default function CalculosEEPage() {
                                 paginatedRegistros.map((reg, idx) => (
                                     <tr key={idx} className="hover:bg-slate-50/50 transition-colors group">
                                         <td className="px-6 py-4 text-slate-700 font-medium">{reg.licitacion}</td>
-                                        <td className="px-6 py-4 text-slate-800 font-bold">{reg.folio}</td>
+                                        <td className="px-6 py-4 text-slate-800 font-bold">
+                                            <div className="flex items-center gap-1.5">
+                                                <span>{reg.folio}</span>
+                                                {reg.esServicioManual && (
+                                                    <span 
+                                                        title={`Servicio seleccionado manualmente: ${reg.servicioManual}\nObs: ${reg.observacionManualServicio}`}
+                                                        className="cursor-help text-indigo-600 bg-indigo-50 border border-indigo-100 rounded px-1.5 py-0.5 text-[10px] font-black animate-in fade-in zoom-in duration-300"
+                                                    >
+                                                        ✋
+                                                    </span>
+                                                )}
+                                            </div>
+                                        </td>
                                         <td className="px-6 py-4 text-gray-500">{reg.fechaSupervision ? new Date(reg.fechaSupervision).toLocaleDateString() : '-'}</td>
                                         <td className="px-6 py-4 text-slate-800 font-bold">{reg.rbd}</td>
                                         <td className="px-6 py-4 text-gray-600 text-xs font-medium max-w-[200px] truncate" title={reg.nombreEstablecimiento}>

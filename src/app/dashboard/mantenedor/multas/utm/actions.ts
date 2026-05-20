@@ -23,8 +23,8 @@ export async function getUtmRecords(anho?: number, mes?: number) {
         const records = await prisma.uTM.findMany({
             where,
             orderBy: [
-                { anho: 'asc' },
-                { mes: 'asc' }
+                { anho: 'desc' },
+                { mes: 'desc' }
             ]
         })
 

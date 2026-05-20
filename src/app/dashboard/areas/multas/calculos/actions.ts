@@ -81,6 +81,9 @@ export async function getFoliosIncompletos(params: {
                 rbd: true,
                 link: true,
                 servicio: true,
+                servicioManual: true,
+                observacionManualServicio: true,
+                esServicioManual: true,
                 licId: true,
                 detalles: {
                     where: { nc: 'X' },
@@ -146,7 +149,7 @@ export async function getFoliosIncompletos(params: {
             const anho = fecha?.getFullYear()
             const mes = fecha ? fecha.getMonth() + 1 : null
             const licId = f.licId
-            const rawServicio = (f as any).servicio || ''
+            const rawServicio = f.esServicioManual ? (f.servicioManual || '') : ((f as any).servicio || '')
 
             // 1. Service Code Extraction
             let serviceCode = null
@@ -300,7 +303,7 @@ export async function calculateAll(params: { search?: string, mes?: string, ano?
                 const rbd = cab.rbd
                 const fecha = cab.fechaSupervision
                 const licId = cab.licId
-                const rawServicio = cab.servicio || ''
+                const rawServicio = cab.esServicioManual ? (cab.servicioManual || '') : (cab.servicio || '')
                 if (!rbd || !fecha || !licId) return
 
                 // Service Code
@@ -524,7 +527,7 @@ export async function getDetalleFolioParaCalculo(folio: string) {
 
             // 2. Raciones (PMPA)
             // Extract service code
-            const rawServicio = cab.servicio || ''
+            const rawServicio = cab.esServicioManual ? (cab.servicioManual || '') : (cab.servicio || '')
             let serviceCode = null
             const sMatch = rawServicio.match(/\(([A-Z])\)/)
             if (sMatch) serviceCode = sMatch[1]
@@ -592,6 +595,10 @@ export async function getDetalleFolioParaCalculo(folio: string) {
             console.error("Error loading saved variables:", e)
         }
 
+        const serviciosDisponibles = await prisma.multaServicio.findMany({
+            orderBy: { nombre: 'asc' }
+        })
+
         return {
             data: cab,
             detalles: detallesConFormula,
@@ -601,12 +608,43 @@ export async function getDetalleFolioParaCalculo(folio: string) {
             racionesValue: pmpaRecord?.raceqJunaeb || 0,
             keywordsNeeded: Array.from(keywordsNeeded),
             pmpaNiveles,
-            savedVariables
+            savedVariables,
+            serviciosDisponibles
         }
 
     } catch (error) {
         console.error('Error getDetalleFolioParaCalculo:', error)
         return { error: 'Error al obtener el detalle del folio.' }
+    }
+}
+
+export async function guardarServicioManual(folio: string, servicioCodigo: string, observacion: string) {
+    const session = await getSession()
+    if (!session) return { error: 'No autorizado' }
+
+    if (!await checkPermission('manage_calculos_ee')) return { error: 'No tienes permisos.' }
+
+    try {
+        const serv = await prisma.multaServicio.findUnique({
+            where: { codigo: servicioCodigo }
+        })
+        if (!serv) return { error: 'El servicio seleccionado no es válido.' }
+
+        const servicioString = `${serv.nombre} (${serv.codigo})`
+
+        await prisma.elementosEsenciales_Cab.updateMany({
+            where: { folio },
+            data: {
+                esServicioManual: true,
+                servicioManual: servicioString,
+                observacionManualServicio: observacion
+            }
+        })
+
+        return { success: true }
+    } catch (e: any) {
+        console.error("Error al guardar servicio manual:", e)
+        return { error: 'Error al actualizar el servicio: ' + e.message }
     }
 }
 

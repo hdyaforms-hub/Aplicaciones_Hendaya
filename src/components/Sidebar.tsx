@@ -57,13 +57,14 @@ export default function Sidebar({ user }: { user: User }) {
         {
             name: 'Tableros y Avances',
             icon: '📈',
-            requiredPermission: ['view_tablero', 'view_tablero_pan', 'view_tablero_gas', 'view_tablero_retiro', 'view_tablero_elementos'],
+            requiredPermission: ['view_tablero', 'view_tablero_pan', 'view_tablero_gas', 'view_tablero_retiro', 'view_tablero_elementos', 'view_tablero_multas_ee'],
             subItems: [
                 { name: 'Avance PMPA', href: '/dashboard/tablero', requiredPermission: 'view_tablero' },
                 { name: 'Solicitudes de Pan', href: '/dashboard/tablero/solicitudes-pan', requiredPermission: 'view_tablero_pan' },
                 { name: 'Solicitud de Gas', href: '/dashboard/tablero/solicitud-gas', requiredPermission: 'view_tablero_gas' },
                 { name: 'Retiro de Saldos', href: '/dashboard/tablero/retiro-saldos', requiredPermission: 'view_tablero_retiro' },
-                { name: 'Carga de Elementos Esenciales', href: '/dashboard/tablero/elementos-esenciales', requiredPermission: 'view_tablero_elementos' }
+                { name: 'Carga de Elementos Esenciales', href: '/dashboard/tablero/elementos-esenciales', requiredPermission: 'view_tablero_elementos' },
+                { name: 'Multas EE', href: '/dashboard/tablero/multas-ee', requiredPermission: 'view_tablero_multas_ee' }
             ]
         },
         {
@@ -105,6 +106,16 @@ export default function Sidebar({ user }: { user: User }) {
                             name: 'Carga de Elementos Esenciales',
                             href: '/dashboard/areas/operaciones/elementos-esenciales',
                             requiredPermission: 'view_elementos_esenciales'
+                        },
+                        {
+                            name: 'Descargas PAE Online',
+                            href: '/dashboard/areas/operaciones/descargas-pae',
+                            requiredPermission: 'view_operaciones_descargas_pae'
+                        },
+                        {
+                            name: 'Cargar PaeOnline',
+                            href: '/dashboard/areas/operaciones/cargar-pae',
+                            requiredPermission: 'view_operaciones_cargar_pae'
                         }
                     ]
                 },
@@ -192,12 +203,19 @@ export default function Sidebar({ user }: { user: User }) {
         {
             name: 'Mantenedor',
             icon: '⚙️',
-            requiredPermission: ['view_colegios', 'view_productos', 'view_pmpa', 'view_consumo_gas', 'view_preparaciones', 'view_minutas', 'view_raciones'],
+            requiredPermission: ['view_colegios', 'view_productos', 'view_pmpa', 'view_consumo_gas', 'view_preparaciones', 'view_minutas', 'view_raciones', 'view_codigo_causa'],
             subItems: [
                 { name: 'PMPA', href: '/dashboard/pmpa', requiredPermission: 'view_pmpa' },
                 { name: 'Colegios', href: '/dashboard/colegios', requiredPermission: 'view_colegios' },
                 { name: 'Productos', href: '/dashboard/productos', requiredPermission: 'view_productos' },
                 { name: 'Consumo de Gas por RBD', href: '/dashboard/consumo-gas', requiredPermission: 'view_consumo_gas' },
+                {
+                    name: 'Pae Online',
+                    requiredPermission: 'view_codigo_causa',
+                    subItems: [
+                        { name: 'Código de Causa', href: '/dashboard/mantenedor/pae-online/codigo-causa', requiredPermission: 'view_codigo_causa' }
+                    ]
+                },
                 {
                     name: 'Multas',
                     requiredPermission: 'manage_utm',

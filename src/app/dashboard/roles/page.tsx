@@ -25,6 +25,7 @@ export default async function RolesPage() {
         { id: 'view_tablero_gas', name: 'Tablero Avance Gas', description: 'Acceso detallado al tablero de analítica de gas.', category: 'TABLEROS' },
         { id: 'view_tablero_retiro', name: 'Tablero Avance Retiro', description: 'Acceso detallado al tablero de analítica de retiro de saldos.', category: 'TABLEROS' },
         { id: 'view_tablero_elementos', name: 'Tablero Carga de Elementos Esenciales', description: 'Visualización gráfica de cumplimiento de elementos esenciales.', category: 'TABLEROS' },
+        { id: 'view_tablero_multas_ee', name: 'Tablero Multas EE', description: 'Acceso visual al reporte gráfico de multas de elementos esenciales.', category: 'TABLEROS' },
         
         { id: 'view_ingreso_raciones', name: 'Ingreso de Raciones', description: 'Gestión y auditoría de raciones por colegio.', category: 'APLICACIONES' },
         { id: 'view_solicitud_pan', name: 'Solicitud de Pan', description: 'Acceso a la aplicación de Solicitud de Pan.', category: 'APLICACIONES' },
@@ -39,6 +40,8 @@ export default async function RolesPage() {
         { id: 'view_estado_avance_tp', name: 'Estado de Avance (Trabajos Preventivos)', description: 'Visualizar el progreso semestral de trabajos preventivos.', category: 'ÁREAS -> OPERACIONES' },
         { id: 'view_captura_certificacion', name: 'Captura de Certificación', description: 'Acceso a la calculadora de brechas e insumos por RBD.', category: 'ÁREAS -> OPERACIONES' },
         { id: 'view_elementos_esenciales', name: 'Carga de Elementos Esenciales', description: 'Acceso al módulo de elementos esenciales, subir PDFs y exportar a Excel.', category: 'ÁREAS -> OPERACIONES' },
+        { id: 'view_operaciones_descargas_pae', name: 'Descargas PAE Online', description: 'Acceso al módulo de descargas automatizadas de informes PAE.', category: 'ÁREAS -> OPERACIONES' },
+        { id: 'view_operaciones_cargar_pae', name: 'Carga de PAE', description: 'Acceso al módulo de carga de archivos PAE.', category: 'ÁREAS -> OPERACIONES' },
         
         { id: 'view_calidad', name: 'Menú Calidad', description: 'Acceso al menú de Calidad en el Sidebar.', category: 'ÁREAS -> CALIDAD' },
         { id: 'view_retorno_productos', name: 'Retirada de productos', description: 'Acceso al dashboard de Retirada de productos.', category: 'ÁREAS -> CALIDAD' },
@@ -68,6 +71,8 @@ export default async function RolesPage() {
         { id: 'view_preparaciones', name: 'Mantenedor de Preparaciones', description: 'Acceso a mantenedor y carga masiva de Preparaciones.', category: 'MANTENEDORES -> CALCULADORA' },
         { id: 'view_minutas', name: 'Mantenedor de Minutas', description: 'Acceso a mantenedor y carga masiva de Minutas.', category: 'MANTENEDORES -> CALCULADORA' },
         { id: 'view_raciones', name: 'Mantenedor de Raciones', description: 'Acceso a mantenedor y carga masiva de Raciones.', category: 'MANTENEDORES -> CALCULADORA' },
+        
+        { id: 'view_codigo_causa', name: 'Mantenedor Código de Causa', description: 'Acceso y mantenedor de códigos de causa de PAE Online.', category: 'MANTENEDORES -> PAE ONLINE' },
 
         { id: 'view_reports', name: 'Ver Reportes', description: 'Acceso a visualización de datos de negocio.', category: 'REPORTES' },
         { id: 'view_solicitud_pan_report', name: 'Reporte Solicitud de Pan', description: 'Acceso al informe histórico de solicitudes de pan.', category: 'REPORTES' },

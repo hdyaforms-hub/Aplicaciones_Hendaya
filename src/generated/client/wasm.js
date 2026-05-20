@@ -731,6 +731,9 @@ exports.Prisma.ElementosEsenciales_CabScalarFieldEnum = {
   region: 'region',
   comuna: 'comuna',
   servicio: 'servicio',
+  servicioManual: 'servicioManual',
+  observacionManualServicio: 'observacionManualServicio',
+  esServicioManual: 'esServicioManual',
   horaInicio: 'horaInicio',
   hora: 'hora',
   obsALosIncumplimiento: 'obsALosIncumplimiento',
@@ -779,6 +782,53 @@ exports.Prisma.Multas_Elementos_Esenciales_DetScalarFieldEnum = {
   formulaAplicada: 'formulaAplicada',
   montoMulta: 'montoMulta',
   variablesUsadas: 'variablesUsadas'
+};
+
+exports.Prisma.DescargaPaeLogScalarFieldEnum = {
+  id: 'id',
+  ano: 'ano',
+  mes: 'mes',
+  institucion: 'institucion',
+  rbd: 'rbd',
+  urlGenerada: 'urlGenerada',
+  usuario: 'usuario',
+  fechaDescarga: 'fechaDescarga'
+};
+
+exports.Prisma.PaeOnlineCabScalarFieldEnum = {
+  id: 'id',
+  institucion: 'institucion',
+  mes: 'mes',
+  ano: 'ano',
+  folio: 'folio',
+  establecimiento: 'establecimiento',
+  comuna: 'comuna',
+  rbd: 'rbd',
+  estrato: 'estrato',
+  programa: 'programa',
+  licitacion: 'licitacion',
+  certificacion: 'certificacion',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.PaeOnlineDetScalarFieldEnum = {
+  id: 'id',
+  cabId: 'cabId',
+  dia: 'dia',
+  serCompletas: 'serCompletas',
+  serIncompletas: 'serIncompletas',
+  codProducto: 'codProducto',
+  noServido: 'noServido',
+  codCausa: 'codCausa',
+  totalRaciones: 'totalRaciones'
+};
+
+exports.Prisma.CodigoCausaScalarFieldEnum = {
+  id: 'id',
+  descripcion: 'descripcion',
+  imputable: 'imputable',
+  definicion: 'definicion',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -844,7 +894,11 @@ exports.Prisma.ModelName = {
   ElementosEsenciales_Det: 'ElementosEsenciales_Det',
   UTM: 'UTM',
   Multas_Elementos_Esenciales_Cab: 'Multas_Elementos_Esenciales_Cab',
-  Multas_Elementos_Esenciales_Det: 'Multas_Elementos_Esenciales_Det'
+  Multas_Elementos_Esenciales_Det: 'Multas_Elementos_Esenciales_Det',
+  DescargaPaeLog: 'DescargaPaeLog',
+  PaeOnlineCab: 'PaeOnlineCab',
+  PaeOnlineDet: 'PaeOnlineDet',
+  CodigoCausa: 'CodigoCausa'
 };
 
 /**

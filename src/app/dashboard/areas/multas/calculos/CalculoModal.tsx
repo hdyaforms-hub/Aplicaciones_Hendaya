@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { getDetalleFolioParaCalculo, saveCalculo } from './actions'
+import { getDetalleFolioParaCalculo, saveCalculo, guardarServicioManual } from './actions'
 import { testFormula } from '@/app/dashboard/mantenedor/multas/aspectos-ee/actions'
 
 interface CalculoModalProps {
@@ -22,6 +22,12 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
     const [calculating, setCalculating] = useState(false)
     const [error, setError] = useState('')
     const [result, setResult] = useState<{ total: number, detallesCalculados: any[] } | null>(null)
+
+    // Manual service states
+    const [serviciosDisponibles, setServiciosDisponibles] = useState<any[]>([])
+    const [selectedServicioManual, setSelectedServicioManual] = useState('')
+    const [observacionManualServicio, setObservacionManualServicio] = useState('')
+    const [guardandoServicioManual, setGuardandoServicioManual] = useState(false)
 
     useEffect(() => {
         if (isOpen && folio) {
@@ -47,6 +53,19 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
             setHasPmpa(res.hasPmpa || false)
             setKeywordsNeeded(res.keywordsNeeded || [])
             setPmpaNiveles(res.pmpaNiveles || [])
+            
+            // Populate services lists
+            setServiciosDisponibles(res.serviciosDisponibles || [])
+            if (res.data?.esServicioManual) {
+                const rawServManual = res.data?.servicioManual || ''
+                const sMatch = rawServManual.match(/\(([A-Z])\)/)
+                const code = sMatch ? sMatch[1] : ''
+                setSelectedServicioManual(code)
+                setObservacionManualServicio(res.data?.observacionManualServicio || '')
+            } else {
+                setSelectedServicioManual('')
+                setObservacionManualServicio('')
+            }
             
             // Pre-populate with saved variables if any
             if (res.savedVariables) {
@@ -230,7 +249,89 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
                                     <p><span className="font-semibold">Licitación:</span> {data?.licitacion}</p>
                                     <p><span className="font-semibold">RBD:</span> {data?.rbd}</p>
                                     <p><span className="font-semibold">Comuna:</span> {data?.comuna}</p>
-                                    <p><span className="font-semibold">Servicio:</span> {data?.servicio}</p>
+                                    <div className="space-y-2 mt-1">
+                                        {data?.esServicioManual ? (
+                                            <div className="space-y-1">
+                                                <div className="flex items-center gap-1.5 text-xs text-gray-700">
+                                                    <span className="font-semibold">Servicio:</span>
+                                                    <span className="font-black bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded border border-indigo-100 flex items-center gap-1">
+                                                        ✋ {data?.servicioManual} (Manual)
+                                                    </span>
+                                                </div>
+                                                {data?.observacionManualServicio && (
+                                                    <p className="text-[11px] text-gray-500 bg-indigo-50/30 p-2 rounded-lg border border-indigo-50 mt-1.5 leading-relaxed">
+                                                        <span className="font-bold text-indigo-900 block mb-0.5 text-[9px] uppercase tracking-wider">Obs. Selección Manual:</span>
+                                                        {data?.observacionManualServicio}
+                                                    </p>
+                                                )}
+                                                
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setData((prev: any) => ({ ...prev, esServicioManual: false, servicio: '' }))
+                                                    }}
+                                                    className="text-[10px] text-indigo-600 hover:text-indigo-800 font-black underline mt-1.5 block flex items-center gap-1 cursor-pointer"
+                                                >
+                                                    ✏️ Modificar Servicio Manual
+                                                </button>
+                                            </div>
+                                        ) : data?.servicio ? (
+                                            <p className="text-xs text-gray-700"><span className="font-semibold">Servicio:</span> {data?.servicio}</p>
+                                        ) : (
+                                            <div className="space-y-2.5 p-3.5 bg-amber-50/50 rounded-xl border border-amber-100 mt-2">
+                                                <p className="text-[10px] font-black text-amber-800 uppercase tracking-widest flex items-center gap-1">
+                                                    ⚠️ Sin Servicio Asignado
+                                                </p>
+                                                <div className="space-y-1">
+                                                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-wider">Seleccionar Servicio:</label>
+                                                    <select
+                                                        className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 bg-white text-xs font-bold text-gray-700"
+                                                        value={selectedServicioManual}
+                                                        onChange={e => setSelectedServicioManual(e.target.value)}
+                                                    >
+                                                        <option value="">-- Seleccionar servicio --</option>
+                                                        {serviciosDisponibles.map(s => (
+                                                            <option key={s.codigo} value={s.codigo}>
+                                                                {s.nombre} ({s.codigo})
+                                                            </option>
+                                                        ))}
+                                                    </select>
+                                                </div>
+                                                <div className="space-y-1">
+                                                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-wider">Observación Explicativa:</label>
+                                                    <textarea
+                                                        rows={2}
+                                                        className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 bg-white text-xs text-gray-700 font-medium leading-normal"
+                                                        placeholder="Detalle por qué se selecciona el servicio o por qué el folio viene sin servicio..."
+                                                        value={observacionManualServicio}
+                                                        onChange={e => setObservacionManualServicio(e.target.value)}
+                                                    />
+                                                </div>
+                                                <button
+                                                    type="button"
+                                                    disabled={!selectedServicioManual || !observacionManualServicio.trim() || guardandoServicioManual}
+                                                    onClick={async () => {
+                                                        setGuardandoServicioManual(true)
+                                                        const res = await guardarServicioManual(folio, selectedServicioManual, observacionManualServicio)
+                                                        if (res.error) {
+                                                            alert(res.error)
+                                                        } else {
+                                                            await fetchData()
+                                                            onCalculated() // Tell the parent list that the data changed
+                                                        }
+                                                        setGuardandoServicioManual(false)
+                                                    }}
+                                                    className="w-full py-2 bg-gray-900 hover:bg-black text-white text-xs font-black rounded-xl transition-all disabled:opacity-50 flex items-center justify-center gap-1.5 shadow-sm shadow-black/10 cursor-pointer"
+                                                >
+                                                    {guardandoServicioManual ? (
+                                                        <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                                    ) : (
+                                                        <>Aplicar Servicio ✋</>
+                                                    )}
+                                                </button>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                             <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100">

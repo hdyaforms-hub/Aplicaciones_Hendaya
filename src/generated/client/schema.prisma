@@ -662,23 +662,26 @@ model CapCertificacionDetail {
 }
 
 model ElementosEsenciales_Cab {
-  id                    String                    @id @default(uuid())
-  licitacion            String?
-  licId                 Int?
-  folio                 String?
-  fechaSupervision      DateTime?
-  rbd                   Int?
-  region                String?
-  comuna                String?
-  servicio              String?
-  horaInicio            String?
-  hora                  String?
-  obsALosIncumplimiento String?                   @db.Text
-  nombreArchivo         String
-  link                  String?
-  createdAt             DateTime                  @default(now())
-  updatedAt             DateTime                  @updatedAt
-  detalles              ElementosEsenciales_Det[]
+  id                        String                    @id @default(uuid())
+  licitacion                String?
+  licId                     Int?
+  folio                     String?
+  fechaSupervision          DateTime?
+  rbd                       Int?
+  region                    String?
+  comuna                    String?
+  servicio                  String?
+  servicioManual            String?
+  observacionManualServicio String?                   @db.Text
+  esServicioManual          Boolean                   @default(false)
+  horaInicio                String?
+  hora                      String?
+  obsALosIncumplimiento     String?                   @db.Text
+  nombreArchivo             String
+  link                      String?
+  createdAt                 DateTime                  @default(now())
+  updatedAt                 DateTime                  @updatedAt
+  detalles                  ElementosEsenciales_Det[]
 }
 
 model ElementosEsenciales_Det {
@@ -725,4 +728,53 @@ model Multas_Elementos_Esenciales_Det {
   montoMulta      Float
   variablesUsadas String?                         @db.Text // JSON con los valores ingresados
   cab             Multas_Elementos_Esenciales_Cab @relation(fields: [cabId], references: [id], onDelete: Cascade)
+}
+
+model DescargaPaeLog {
+  id            String   @id @default(uuid())
+  ano           Int
+  mes           Int
+  institucion   String
+  rbd           Int
+  urlGenerada   String   @db.Text
+  usuario       String
+  fechaDescarga DateTime @default(now())
+}
+
+model PaeOnlineCab {
+  id              String         @id @default(uuid())
+  institucion     String
+  mes             Int
+  ano             Int
+  folio           String         @unique
+  establecimiento String
+  comuna          String
+  rbd             Int
+  estrato         String
+  programa        String
+  licitacion      String
+  certificacion   String
+  createdAt       DateTime       @default(now())
+  detalles        PaeOnlineDet[]
+}
+
+model PaeOnlineDet {
+  id             String       @id @default(uuid())
+  cabId          String
+  dia            Int
+  serCompletas   Float
+  serIncompletas Float
+  codProducto    String       @db.VarChar(50)
+  noServido      Float
+  codCausa       String       @db.VarChar(50)
+  totalRaciones  Float
+  cab            PaeOnlineCab @relation(fields: [cabId], references: [id], onDelete: Cascade)
+}
+
+model CodigoCausa {
+  id          Int      @id
+  descripcion String
+  imputable   String   @default("Imputable")
+  definicion  String   @default("")
+  createdAt   DateTime @default(now())
 }

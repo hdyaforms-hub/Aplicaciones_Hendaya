@@ -248,6 +248,26 @@ export type Multas_Elementos_Esenciales_Cab = $Result.DefaultSelection<Prisma.$M
  * 
  */
 export type Multas_Elementos_Esenciales_Det = $Result.DefaultSelection<Prisma.$Multas_Elementos_Esenciales_DetPayload>
+/**
+ * Model DescargaPaeLog
+ * 
+ */
+export type DescargaPaeLog = $Result.DefaultSelection<Prisma.$DescargaPaeLogPayload>
+/**
+ * Model PaeOnlineCab
+ * 
+ */
+export type PaeOnlineCab = $Result.DefaultSelection<Prisma.$PaeOnlineCabPayload>
+/**
+ * Model PaeOnlineDet
+ * 
+ */
+export type PaeOnlineDet = $Result.DefaultSelection<Prisma.$PaeOnlineDetPayload>
+/**
+ * Model CodigoCausa
+ * 
+ */
+export type CodigoCausa = $Result.DefaultSelection<Prisma.$CodigoCausaPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -841,6 +861,46 @@ export class PrismaClient<
     * ```
     */
   get multas_Elementos_Esenciales_Det(): Prisma.Multas_Elementos_Esenciales_DetDelegate<ExtArgs>;
+
+  /**
+   * `prisma.descargaPaeLog`: Exposes CRUD operations for the **DescargaPaeLog** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DescargaPaeLogs
+    * const descargaPaeLogs = await prisma.descargaPaeLog.findMany()
+    * ```
+    */
+  get descargaPaeLog(): Prisma.DescargaPaeLogDelegate<ExtArgs>;
+
+  /**
+   * `prisma.paeOnlineCab`: Exposes CRUD operations for the **PaeOnlineCab** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PaeOnlineCabs
+    * const paeOnlineCabs = await prisma.paeOnlineCab.findMany()
+    * ```
+    */
+  get paeOnlineCab(): Prisma.PaeOnlineCabDelegate<ExtArgs>;
+
+  /**
+   * `prisma.paeOnlineDet`: Exposes CRUD operations for the **PaeOnlineDet** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PaeOnlineDets
+    * const paeOnlineDets = await prisma.paeOnlineDet.findMany()
+    * ```
+    */
+  get paeOnlineDet(): Prisma.PaeOnlineDetDelegate<ExtArgs>;
+
+  /**
+   * `prisma.codigoCausa`: Exposes CRUD operations for the **CodigoCausa** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CodigoCausas
+    * const codigoCausas = await prisma.codigoCausa.findMany()
+    * ```
+    */
+  get codigoCausa(): Prisma.CodigoCausaDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -1328,7 +1388,11 @@ export namespace Prisma {
     ElementosEsenciales_Det: 'ElementosEsenciales_Det',
     UTM: 'UTM',
     Multas_Elementos_Esenciales_Cab: 'Multas_Elementos_Esenciales_Cab',
-    Multas_Elementos_Esenciales_Det: 'Multas_Elementos_Esenciales_Det'
+    Multas_Elementos_Esenciales_Det: 'Multas_Elementos_Esenciales_Det',
+    DescargaPaeLog: 'DescargaPaeLog',
+    PaeOnlineCab: 'PaeOnlineCab',
+    PaeOnlineDet: 'PaeOnlineDet',
+    CodigoCausa: 'CodigoCausa'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1344,7 +1408,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det"
+      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -4638,6 +4702,286 @@ export namespace Prisma {
           }
         }
       }
+      DescargaPaeLog: {
+        payload: Prisma.$DescargaPaeLogPayload<ExtArgs>
+        fields: Prisma.DescargaPaeLogFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DescargaPaeLogFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DescargaPaeLogPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DescargaPaeLogFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DescargaPaeLogPayload>
+          }
+          findFirst: {
+            args: Prisma.DescargaPaeLogFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DescargaPaeLogPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DescargaPaeLogFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DescargaPaeLogPayload>
+          }
+          findMany: {
+            args: Prisma.DescargaPaeLogFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DescargaPaeLogPayload>[]
+          }
+          create: {
+            args: Prisma.DescargaPaeLogCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DescargaPaeLogPayload>
+          }
+          createMany: {
+            args: Prisma.DescargaPaeLogCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DescargaPaeLogCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DescargaPaeLogPayload>[]
+          }
+          delete: {
+            args: Prisma.DescargaPaeLogDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DescargaPaeLogPayload>
+          }
+          update: {
+            args: Prisma.DescargaPaeLogUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DescargaPaeLogPayload>
+          }
+          deleteMany: {
+            args: Prisma.DescargaPaeLogDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DescargaPaeLogUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.DescargaPaeLogUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DescargaPaeLogPayload>
+          }
+          aggregate: {
+            args: Prisma.DescargaPaeLogAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDescargaPaeLog>
+          }
+          groupBy: {
+            args: Prisma.DescargaPaeLogGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DescargaPaeLogGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DescargaPaeLogCountArgs<ExtArgs>
+            result: $Utils.Optional<DescargaPaeLogCountAggregateOutputType> | number
+          }
+        }
+      }
+      PaeOnlineCab: {
+        payload: Prisma.$PaeOnlineCabPayload<ExtArgs>
+        fields: Prisma.PaeOnlineCabFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PaeOnlineCabFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaeOnlineCabPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PaeOnlineCabFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaeOnlineCabPayload>
+          }
+          findFirst: {
+            args: Prisma.PaeOnlineCabFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaeOnlineCabPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PaeOnlineCabFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaeOnlineCabPayload>
+          }
+          findMany: {
+            args: Prisma.PaeOnlineCabFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaeOnlineCabPayload>[]
+          }
+          create: {
+            args: Prisma.PaeOnlineCabCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaeOnlineCabPayload>
+          }
+          createMany: {
+            args: Prisma.PaeOnlineCabCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PaeOnlineCabCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaeOnlineCabPayload>[]
+          }
+          delete: {
+            args: Prisma.PaeOnlineCabDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaeOnlineCabPayload>
+          }
+          update: {
+            args: Prisma.PaeOnlineCabUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaeOnlineCabPayload>
+          }
+          deleteMany: {
+            args: Prisma.PaeOnlineCabDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PaeOnlineCabUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.PaeOnlineCabUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaeOnlineCabPayload>
+          }
+          aggregate: {
+            args: Prisma.PaeOnlineCabAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePaeOnlineCab>
+          }
+          groupBy: {
+            args: Prisma.PaeOnlineCabGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PaeOnlineCabGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PaeOnlineCabCountArgs<ExtArgs>
+            result: $Utils.Optional<PaeOnlineCabCountAggregateOutputType> | number
+          }
+        }
+      }
+      PaeOnlineDet: {
+        payload: Prisma.$PaeOnlineDetPayload<ExtArgs>
+        fields: Prisma.PaeOnlineDetFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PaeOnlineDetFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaeOnlineDetPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PaeOnlineDetFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaeOnlineDetPayload>
+          }
+          findFirst: {
+            args: Prisma.PaeOnlineDetFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaeOnlineDetPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PaeOnlineDetFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaeOnlineDetPayload>
+          }
+          findMany: {
+            args: Prisma.PaeOnlineDetFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaeOnlineDetPayload>[]
+          }
+          create: {
+            args: Prisma.PaeOnlineDetCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaeOnlineDetPayload>
+          }
+          createMany: {
+            args: Prisma.PaeOnlineDetCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PaeOnlineDetCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaeOnlineDetPayload>[]
+          }
+          delete: {
+            args: Prisma.PaeOnlineDetDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaeOnlineDetPayload>
+          }
+          update: {
+            args: Prisma.PaeOnlineDetUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaeOnlineDetPayload>
+          }
+          deleteMany: {
+            args: Prisma.PaeOnlineDetDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PaeOnlineDetUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.PaeOnlineDetUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaeOnlineDetPayload>
+          }
+          aggregate: {
+            args: Prisma.PaeOnlineDetAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePaeOnlineDet>
+          }
+          groupBy: {
+            args: Prisma.PaeOnlineDetGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PaeOnlineDetGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PaeOnlineDetCountArgs<ExtArgs>
+            result: $Utils.Optional<PaeOnlineDetCountAggregateOutputType> | number
+          }
+        }
+      }
+      CodigoCausa: {
+        payload: Prisma.$CodigoCausaPayload<ExtArgs>
+        fields: Prisma.CodigoCausaFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CodigoCausaFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodigoCausaPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CodigoCausaFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodigoCausaPayload>
+          }
+          findFirst: {
+            args: Prisma.CodigoCausaFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodigoCausaPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CodigoCausaFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodigoCausaPayload>
+          }
+          findMany: {
+            args: Prisma.CodigoCausaFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodigoCausaPayload>[]
+          }
+          create: {
+            args: Prisma.CodigoCausaCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodigoCausaPayload>
+          }
+          createMany: {
+            args: Prisma.CodigoCausaCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CodigoCausaCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodigoCausaPayload>[]
+          }
+          delete: {
+            args: Prisma.CodigoCausaDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodigoCausaPayload>
+          }
+          update: {
+            args: Prisma.CodigoCausaUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodigoCausaPayload>
+          }
+          deleteMany: {
+            args: Prisma.CodigoCausaDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CodigoCausaUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.CodigoCausaUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodigoCausaPayload>
+          }
+          aggregate: {
+            args: Prisma.CodigoCausaAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCodigoCausa>
+          }
+          groupBy: {
+            args: Prisma.CodigoCausaGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CodigoCausaGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CodigoCausaCountArgs<ExtArgs>
+            result: $Utils.Optional<CodigoCausaCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -5302,6 +5646,37 @@ export namespace Prisma {
    */
   export type Multas_Elementos_Esenciales_CabCountOutputTypeCountDetallesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: Multas_Elementos_Esenciales_DetWhereInput
+  }
+
+
+  /**
+   * Count Type PaeOnlineCabCountOutputType
+   */
+
+  export type PaeOnlineCabCountOutputType = {
+    detalles: number
+  }
+
+  export type PaeOnlineCabCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    detalles?: boolean | PaeOnlineCabCountOutputTypeCountDetallesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * PaeOnlineCabCountOutputType without action
+   */
+  export type PaeOnlineCabCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaeOnlineCabCountOutputType
+     */
+    select?: PaeOnlineCabCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * PaeOnlineCabCountOutputType without action
+   */
+  export type PaeOnlineCabCountOutputTypeCountDetallesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PaeOnlineDetWhereInput
   }
 
 
@@ -48335,6 +48710,9 @@ export namespace Prisma {
     region: string | null
     comuna: string | null
     servicio: string | null
+    servicioManual: string | null
+    observacionManualServicio: string | null
+    esServicioManual: boolean | null
     horaInicio: string | null
     hora: string | null
     obsALosIncumplimiento: string | null
@@ -48354,6 +48732,9 @@ export namespace Prisma {
     region: string | null
     comuna: string | null
     servicio: string | null
+    servicioManual: string | null
+    observacionManualServicio: string | null
+    esServicioManual: boolean | null
     horaInicio: string | null
     hora: string | null
     obsALosIncumplimiento: string | null
@@ -48373,6 +48754,9 @@ export namespace Prisma {
     region: number
     comuna: number
     servicio: number
+    servicioManual: number
+    observacionManualServicio: number
+    esServicioManual: number
     horaInicio: number
     hora: number
     obsALosIncumplimiento: number
@@ -48404,6 +48788,9 @@ export namespace Prisma {
     region?: true
     comuna?: true
     servicio?: true
+    servicioManual?: true
+    observacionManualServicio?: true
+    esServicioManual?: true
     horaInicio?: true
     hora?: true
     obsALosIncumplimiento?: true
@@ -48423,6 +48810,9 @@ export namespace Prisma {
     region?: true
     comuna?: true
     servicio?: true
+    servicioManual?: true
+    observacionManualServicio?: true
+    esServicioManual?: true
     horaInicio?: true
     hora?: true
     obsALosIncumplimiento?: true
@@ -48442,6 +48832,9 @@ export namespace Prisma {
     region?: true
     comuna?: true
     servicio?: true
+    servicioManual?: true
+    observacionManualServicio?: true
+    esServicioManual?: true
     horaInicio?: true
     hora?: true
     obsALosIncumplimiento?: true
@@ -48548,6 +48941,9 @@ export namespace Prisma {
     region: string | null
     comuna: string | null
     servicio: string | null
+    servicioManual: string | null
+    observacionManualServicio: string | null
+    esServicioManual: boolean
     horaInicio: string | null
     hora: string | null
     obsALosIncumplimiento: string | null
@@ -48586,6 +48982,9 @@ export namespace Prisma {
     region?: boolean
     comuna?: boolean
     servicio?: boolean
+    servicioManual?: boolean
+    observacionManualServicio?: boolean
+    esServicioManual?: boolean
     horaInicio?: boolean
     hora?: boolean
     obsALosIncumplimiento?: boolean
@@ -48607,6 +49006,9 @@ export namespace Prisma {
     region?: boolean
     comuna?: boolean
     servicio?: boolean
+    servicioManual?: boolean
+    observacionManualServicio?: boolean
+    esServicioManual?: boolean
     horaInicio?: boolean
     hora?: boolean
     obsALosIncumplimiento?: boolean
@@ -48626,6 +49028,9 @@ export namespace Prisma {
     region?: boolean
     comuna?: boolean
     servicio?: boolean
+    servicioManual?: boolean
+    observacionManualServicio?: boolean
+    esServicioManual?: boolean
     horaInicio?: boolean
     hora?: boolean
     obsALosIncumplimiento?: boolean
@@ -48656,6 +49061,9 @@ export namespace Prisma {
       region: string | null
       comuna: string | null
       servicio: string | null
+      servicioManual: string | null
+      observacionManualServicio: string | null
+      esServicioManual: boolean
       horaInicio: string | null
       hora: string | null
       obsALosIncumplimiento: string | null
@@ -49066,6 +49474,9 @@ export namespace Prisma {
     readonly region: FieldRef<"ElementosEsenciales_Cab", 'String'>
     readonly comuna: FieldRef<"ElementosEsenciales_Cab", 'String'>
     readonly servicio: FieldRef<"ElementosEsenciales_Cab", 'String'>
+    readonly servicioManual: FieldRef<"ElementosEsenciales_Cab", 'String'>
+    readonly observacionManualServicio: FieldRef<"ElementosEsenciales_Cab", 'String'>
+    readonly esServicioManual: FieldRef<"ElementosEsenciales_Cab", 'Boolean'>
     readonly horaInicio: FieldRef<"ElementosEsenciales_Cab", 'String'>
     readonly hora: FieldRef<"ElementosEsenciales_Cab", 'String'>
     readonly obsALosIncumplimiento: FieldRef<"ElementosEsenciales_Cab", 'String'>
@@ -53336,6 +53747,3991 @@ export namespace Prisma {
 
 
   /**
+   * Model DescargaPaeLog
+   */
+
+  export type AggregateDescargaPaeLog = {
+    _count: DescargaPaeLogCountAggregateOutputType | null
+    _avg: DescargaPaeLogAvgAggregateOutputType | null
+    _sum: DescargaPaeLogSumAggregateOutputType | null
+    _min: DescargaPaeLogMinAggregateOutputType | null
+    _max: DescargaPaeLogMaxAggregateOutputType | null
+  }
+
+  export type DescargaPaeLogAvgAggregateOutputType = {
+    ano: number | null
+    mes: number | null
+    rbd: number | null
+  }
+
+  export type DescargaPaeLogSumAggregateOutputType = {
+    ano: number | null
+    mes: number | null
+    rbd: number | null
+  }
+
+  export type DescargaPaeLogMinAggregateOutputType = {
+    id: string | null
+    ano: number | null
+    mes: number | null
+    institucion: string | null
+    rbd: number | null
+    urlGenerada: string | null
+    usuario: string | null
+    fechaDescarga: Date | null
+  }
+
+  export type DescargaPaeLogMaxAggregateOutputType = {
+    id: string | null
+    ano: number | null
+    mes: number | null
+    institucion: string | null
+    rbd: number | null
+    urlGenerada: string | null
+    usuario: string | null
+    fechaDescarga: Date | null
+  }
+
+  export type DescargaPaeLogCountAggregateOutputType = {
+    id: number
+    ano: number
+    mes: number
+    institucion: number
+    rbd: number
+    urlGenerada: number
+    usuario: number
+    fechaDescarga: number
+    _all: number
+  }
+
+
+  export type DescargaPaeLogAvgAggregateInputType = {
+    ano?: true
+    mes?: true
+    rbd?: true
+  }
+
+  export type DescargaPaeLogSumAggregateInputType = {
+    ano?: true
+    mes?: true
+    rbd?: true
+  }
+
+  export type DescargaPaeLogMinAggregateInputType = {
+    id?: true
+    ano?: true
+    mes?: true
+    institucion?: true
+    rbd?: true
+    urlGenerada?: true
+    usuario?: true
+    fechaDescarga?: true
+  }
+
+  export type DescargaPaeLogMaxAggregateInputType = {
+    id?: true
+    ano?: true
+    mes?: true
+    institucion?: true
+    rbd?: true
+    urlGenerada?: true
+    usuario?: true
+    fechaDescarga?: true
+  }
+
+  export type DescargaPaeLogCountAggregateInputType = {
+    id?: true
+    ano?: true
+    mes?: true
+    institucion?: true
+    rbd?: true
+    urlGenerada?: true
+    usuario?: true
+    fechaDescarga?: true
+    _all?: true
+  }
+
+  export type DescargaPaeLogAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DescargaPaeLog to aggregate.
+     */
+    where?: DescargaPaeLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DescargaPaeLogs to fetch.
+     */
+    orderBy?: DescargaPaeLogOrderByWithRelationInput | DescargaPaeLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DescargaPaeLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DescargaPaeLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DescargaPaeLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DescargaPaeLogs
+    **/
+    _count?: true | DescargaPaeLogCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DescargaPaeLogAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DescargaPaeLogSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DescargaPaeLogMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DescargaPaeLogMaxAggregateInputType
+  }
+
+  export type GetDescargaPaeLogAggregateType<T extends DescargaPaeLogAggregateArgs> = {
+        [P in keyof T & keyof AggregateDescargaPaeLog]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDescargaPaeLog[P]>
+      : GetScalarType<T[P], AggregateDescargaPaeLog[P]>
+  }
+
+
+
+
+  export type DescargaPaeLogGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DescargaPaeLogWhereInput
+    orderBy?: DescargaPaeLogOrderByWithAggregationInput | DescargaPaeLogOrderByWithAggregationInput[]
+    by: DescargaPaeLogScalarFieldEnum[] | DescargaPaeLogScalarFieldEnum
+    having?: DescargaPaeLogScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DescargaPaeLogCountAggregateInputType | true
+    _avg?: DescargaPaeLogAvgAggregateInputType
+    _sum?: DescargaPaeLogSumAggregateInputType
+    _min?: DescargaPaeLogMinAggregateInputType
+    _max?: DescargaPaeLogMaxAggregateInputType
+  }
+
+  export type DescargaPaeLogGroupByOutputType = {
+    id: string
+    ano: number
+    mes: number
+    institucion: string
+    rbd: number
+    urlGenerada: string
+    usuario: string
+    fechaDescarga: Date
+    _count: DescargaPaeLogCountAggregateOutputType | null
+    _avg: DescargaPaeLogAvgAggregateOutputType | null
+    _sum: DescargaPaeLogSumAggregateOutputType | null
+    _min: DescargaPaeLogMinAggregateOutputType | null
+    _max: DescargaPaeLogMaxAggregateOutputType | null
+  }
+
+  type GetDescargaPaeLogGroupByPayload<T extends DescargaPaeLogGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DescargaPaeLogGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DescargaPaeLogGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DescargaPaeLogGroupByOutputType[P]>
+            : GetScalarType<T[P], DescargaPaeLogGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DescargaPaeLogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    ano?: boolean
+    mes?: boolean
+    institucion?: boolean
+    rbd?: boolean
+    urlGenerada?: boolean
+    usuario?: boolean
+    fechaDescarga?: boolean
+  }, ExtArgs["result"]["descargaPaeLog"]>
+
+  export type DescargaPaeLogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    ano?: boolean
+    mes?: boolean
+    institucion?: boolean
+    rbd?: boolean
+    urlGenerada?: boolean
+    usuario?: boolean
+    fechaDescarga?: boolean
+  }, ExtArgs["result"]["descargaPaeLog"]>
+
+  export type DescargaPaeLogSelectScalar = {
+    id?: boolean
+    ano?: boolean
+    mes?: boolean
+    institucion?: boolean
+    rbd?: boolean
+    urlGenerada?: boolean
+    usuario?: boolean
+    fechaDescarga?: boolean
+  }
+
+
+  export type $DescargaPaeLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DescargaPaeLog"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      ano: number
+      mes: number
+      institucion: string
+      rbd: number
+      urlGenerada: string
+      usuario: string
+      fechaDescarga: Date
+    }, ExtArgs["result"]["descargaPaeLog"]>
+    composites: {}
+  }
+
+  type DescargaPaeLogGetPayload<S extends boolean | null | undefined | DescargaPaeLogDefaultArgs> = $Result.GetResult<Prisma.$DescargaPaeLogPayload, S>
+
+  type DescargaPaeLogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<DescargaPaeLogFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: DescargaPaeLogCountAggregateInputType | true
+    }
+
+  export interface DescargaPaeLogDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DescargaPaeLog'], meta: { name: 'DescargaPaeLog' } }
+    /**
+     * Find zero or one DescargaPaeLog that matches the filter.
+     * @param {DescargaPaeLogFindUniqueArgs} args - Arguments to find a DescargaPaeLog
+     * @example
+     * // Get one DescargaPaeLog
+     * const descargaPaeLog = await prisma.descargaPaeLog.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DescargaPaeLogFindUniqueArgs>(args: SelectSubset<T, DescargaPaeLogFindUniqueArgs<ExtArgs>>): Prisma__DescargaPaeLogClient<$Result.GetResult<Prisma.$DescargaPaeLogPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one DescargaPaeLog that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {DescargaPaeLogFindUniqueOrThrowArgs} args - Arguments to find a DescargaPaeLog
+     * @example
+     * // Get one DescargaPaeLog
+     * const descargaPaeLog = await prisma.descargaPaeLog.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DescargaPaeLogFindUniqueOrThrowArgs>(args: SelectSubset<T, DescargaPaeLogFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DescargaPaeLogClient<$Result.GetResult<Prisma.$DescargaPaeLogPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first DescargaPaeLog that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DescargaPaeLogFindFirstArgs} args - Arguments to find a DescargaPaeLog
+     * @example
+     * // Get one DescargaPaeLog
+     * const descargaPaeLog = await prisma.descargaPaeLog.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DescargaPaeLogFindFirstArgs>(args?: SelectSubset<T, DescargaPaeLogFindFirstArgs<ExtArgs>>): Prisma__DescargaPaeLogClient<$Result.GetResult<Prisma.$DescargaPaeLogPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first DescargaPaeLog that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DescargaPaeLogFindFirstOrThrowArgs} args - Arguments to find a DescargaPaeLog
+     * @example
+     * // Get one DescargaPaeLog
+     * const descargaPaeLog = await prisma.descargaPaeLog.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DescargaPaeLogFindFirstOrThrowArgs>(args?: SelectSubset<T, DescargaPaeLogFindFirstOrThrowArgs<ExtArgs>>): Prisma__DescargaPaeLogClient<$Result.GetResult<Prisma.$DescargaPaeLogPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more DescargaPaeLogs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DescargaPaeLogFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DescargaPaeLogs
+     * const descargaPaeLogs = await prisma.descargaPaeLog.findMany()
+     * 
+     * // Get first 10 DescargaPaeLogs
+     * const descargaPaeLogs = await prisma.descargaPaeLog.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const descargaPaeLogWithIdOnly = await prisma.descargaPaeLog.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DescargaPaeLogFindManyArgs>(args?: SelectSubset<T, DescargaPaeLogFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DescargaPaeLogPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a DescargaPaeLog.
+     * @param {DescargaPaeLogCreateArgs} args - Arguments to create a DescargaPaeLog.
+     * @example
+     * // Create one DescargaPaeLog
+     * const DescargaPaeLog = await prisma.descargaPaeLog.create({
+     *   data: {
+     *     // ... data to create a DescargaPaeLog
+     *   }
+     * })
+     * 
+     */
+    create<T extends DescargaPaeLogCreateArgs>(args: SelectSubset<T, DescargaPaeLogCreateArgs<ExtArgs>>): Prisma__DescargaPaeLogClient<$Result.GetResult<Prisma.$DescargaPaeLogPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many DescargaPaeLogs.
+     * @param {DescargaPaeLogCreateManyArgs} args - Arguments to create many DescargaPaeLogs.
+     * @example
+     * // Create many DescargaPaeLogs
+     * const descargaPaeLog = await prisma.descargaPaeLog.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DescargaPaeLogCreateManyArgs>(args?: SelectSubset<T, DescargaPaeLogCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DescargaPaeLogs and returns the data saved in the database.
+     * @param {DescargaPaeLogCreateManyAndReturnArgs} args - Arguments to create many DescargaPaeLogs.
+     * @example
+     * // Create many DescargaPaeLogs
+     * const descargaPaeLog = await prisma.descargaPaeLog.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DescargaPaeLogs and only return the `id`
+     * const descargaPaeLogWithIdOnly = await prisma.descargaPaeLog.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DescargaPaeLogCreateManyAndReturnArgs>(args?: SelectSubset<T, DescargaPaeLogCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DescargaPaeLogPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a DescargaPaeLog.
+     * @param {DescargaPaeLogDeleteArgs} args - Arguments to delete one DescargaPaeLog.
+     * @example
+     * // Delete one DescargaPaeLog
+     * const DescargaPaeLog = await prisma.descargaPaeLog.delete({
+     *   where: {
+     *     // ... filter to delete one DescargaPaeLog
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DescargaPaeLogDeleteArgs>(args: SelectSubset<T, DescargaPaeLogDeleteArgs<ExtArgs>>): Prisma__DescargaPaeLogClient<$Result.GetResult<Prisma.$DescargaPaeLogPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one DescargaPaeLog.
+     * @param {DescargaPaeLogUpdateArgs} args - Arguments to update one DescargaPaeLog.
+     * @example
+     * // Update one DescargaPaeLog
+     * const descargaPaeLog = await prisma.descargaPaeLog.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DescargaPaeLogUpdateArgs>(args: SelectSubset<T, DescargaPaeLogUpdateArgs<ExtArgs>>): Prisma__DescargaPaeLogClient<$Result.GetResult<Prisma.$DescargaPaeLogPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more DescargaPaeLogs.
+     * @param {DescargaPaeLogDeleteManyArgs} args - Arguments to filter DescargaPaeLogs to delete.
+     * @example
+     * // Delete a few DescargaPaeLogs
+     * const { count } = await prisma.descargaPaeLog.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DescargaPaeLogDeleteManyArgs>(args?: SelectSubset<T, DescargaPaeLogDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DescargaPaeLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DescargaPaeLogUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DescargaPaeLogs
+     * const descargaPaeLog = await prisma.descargaPaeLog.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DescargaPaeLogUpdateManyArgs>(args: SelectSubset<T, DescargaPaeLogUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one DescargaPaeLog.
+     * @param {DescargaPaeLogUpsertArgs} args - Arguments to update or create a DescargaPaeLog.
+     * @example
+     * // Update or create a DescargaPaeLog
+     * const descargaPaeLog = await prisma.descargaPaeLog.upsert({
+     *   create: {
+     *     // ... data to create a DescargaPaeLog
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DescargaPaeLog we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DescargaPaeLogUpsertArgs>(args: SelectSubset<T, DescargaPaeLogUpsertArgs<ExtArgs>>): Prisma__DescargaPaeLogClient<$Result.GetResult<Prisma.$DescargaPaeLogPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of DescargaPaeLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DescargaPaeLogCountArgs} args - Arguments to filter DescargaPaeLogs to count.
+     * @example
+     * // Count the number of DescargaPaeLogs
+     * const count = await prisma.descargaPaeLog.count({
+     *   where: {
+     *     // ... the filter for the DescargaPaeLogs we want to count
+     *   }
+     * })
+    **/
+    count<T extends DescargaPaeLogCountArgs>(
+      args?: Subset<T, DescargaPaeLogCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DescargaPaeLogCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DescargaPaeLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DescargaPaeLogAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DescargaPaeLogAggregateArgs>(args: Subset<T, DescargaPaeLogAggregateArgs>): Prisma.PrismaPromise<GetDescargaPaeLogAggregateType<T>>
+
+    /**
+     * Group by DescargaPaeLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DescargaPaeLogGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DescargaPaeLogGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DescargaPaeLogGroupByArgs['orderBy'] }
+        : { orderBy?: DescargaPaeLogGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DescargaPaeLogGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDescargaPaeLogGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DescargaPaeLog model
+   */
+  readonly fields: DescargaPaeLogFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DescargaPaeLog.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DescargaPaeLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DescargaPaeLog model
+   */ 
+  interface DescargaPaeLogFieldRefs {
+    readonly id: FieldRef<"DescargaPaeLog", 'String'>
+    readonly ano: FieldRef<"DescargaPaeLog", 'Int'>
+    readonly mes: FieldRef<"DescargaPaeLog", 'Int'>
+    readonly institucion: FieldRef<"DescargaPaeLog", 'String'>
+    readonly rbd: FieldRef<"DescargaPaeLog", 'Int'>
+    readonly urlGenerada: FieldRef<"DescargaPaeLog", 'String'>
+    readonly usuario: FieldRef<"DescargaPaeLog", 'String'>
+    readonly fechaDescarga: FieldRef<"DescargaPaeLog", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DescargaPaeLog findUnique
+   */
+  export type DescargaPaeLogFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DescargaPaeLog
+     */
+    select?: DescargaPaeLogSelect<ExtArgs> | null
+    /**
+     * Filter, which DescargaPaeLog to fetch.
+     */
+    where: DescargaPaeLogWhereUniqueInput
+  }
+
+  /**
+   * DescargaPaeLog findUniqueOrThrow
+   */
+  export type DescargaPaeLogFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DescargaPaeLog
+     */
+    select?: DescargaPaeLogSelect<ExtArgs> | null
+    /**
+     * Filter, which DescargaPaeLog to fetch.
+     */
+    where: DescargaPaeLogWhereUniqueInput
+  }
+
+  /**
+   * DescargaPaeLog findFirst
+   */
+  export type DescargaPaeLogFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DescargaPaeLog
+     */
+    select?: DescargaPaeLogSelect<ExtArgs> | null
+    /**
+     * Filter, which DescargaPaeLog to fetch.
+     */
+    where?: DescargaPaeLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DescargaPaeLogs to fetch.
+     */
+    orderBy?: DescargaPaeLogOrderByWithRelationInput | DescargaPaeLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DescargaPaeLogs.
+     */
+    cursor?: DescargaPaeLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DescargaPaeLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DescargaPaeLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DescargaPaeLogs.
+     */
+    distinct?: DescargaPaeLogScalarFieldEnum | DescargaPaeLogScalarFieldEnum[]
+  }
+
+  /**
+   * DescargaPaeLog findFirstOrThrow
+   */
+  export type DescargaPaeLogFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DescargaPaeLog
+     */
+    select?: DescargaPaeLogSelect<ExtArgs> | null
+    /**
+     * Filter, which DescargaPaeLog to fetch.
+     */
+    where?: DescargaPaeLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DescargaPaeLogs to fetch.
+     */
+    orderBy?: DescargaPaeLogOrderByWithRelationInput | DescargaPaeLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DescargaPaeLogs.
+     */
+    cursor?: DescargaPaeLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DescargaPaeLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DescargaPaeLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DescargaPaeLogs.
+     */
+    distinct?: DescargaPaeLogScalarFieldEnum | DescargaPaeLogScalarFieldEnum[]
+  }
+
+  /**
+   * DescargaPaeLog findMany
+   */
+  export type DescargaPaeLogFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DescargaPaeLog
+     */
+    select?: DescargaPaeLogSelect<ExtArgs> | null
+    /**
+     * Filter, which DescargaPaeLogs to fetch.
+     */
+    where?: DescargaPaeLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DescargaPaeLogs to fetch.
+     */
+    orderBy?: DescargaPaeLogOrderByWithRelationInput | DescargaPaeLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DescargaPaeLogs.
+     */
+    cursor?: DescargaPaeLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DescargaPaeLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DescargaPaeLogs.
+     */
+    skip?: number
+    distinct?: DescargaPaeLogScalarFieldEnum | DescargaPaeLogScalarFieldEnum[]
+  }
+
+  /**
+   * DescargaPaeLog create
+   */
+  export type DescargaPaeLogCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DescargaPaeLog
+     */
+    select?: DescargaPaeLogSelect<ExtArgs> | null
+    /**
+     * The data needed to create a DescargaPaeLog.
+     */
+    data: XOR<DescargaPaeLogCreateInput, DescargaPaeLogUncheckedCreateInput>
+  }
+
+  /**
+   * DescargaPaeLog createMany
+   */
+  export type DescargaPaeLogCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DescargaPaeLogs.
+     */
+    data: DescargaPaeLogCreateManyInput | DescargaPaeLogCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DescargaPaeLog createManyAndReturn
+   */
+  export type DescargaPaeLogCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DescargaPaeLog
+     */
+    select?: DescargaPaeLogSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many DescargaPaeLogs.
+     */
+    data: DescargaPaeLogCreateManyInput | DescargaPaeLogCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DescargaPaeLog update
+   */
+  export type DescargaPaeLogUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DescargaPaeLog
+     */
+    select?: DescargaPaeLogSelect<ExtArgs> | null
+    /**
+     * The data needed to update a DescargaPaeLog.
+     */
+    data: XOR<DescargaPaeLogUpdateInput, DescargaPaeLogUncheckedUpdateInput>
+    /**
+     * Choose, which DescargaPaeLog to update.
+     */
+    where: DescargaPaeLogWhereUniqueInput
+  }
+
+  /**
+   * DescargaPaeLog updateMany
+   */
+  export type DescargaPaeLogUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DescargaPaeLogs.
+     */
+    data: XOR<DescargaPaeLogUpdateManyMutationInput, DescargaPaeLogUncheckedUpdateManyInput>
+    /**
+     * Filter which DescargaPaeLogs to update
+     */
+    where?: DescargaPaeLogWhereInput
+  }
+
+  /**
+   * DescargaPaeLog upsert
+   */
+  export type DescargaPaeLogUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DescargaPaeLog
+     */
+    select?: DescargaPaeLogSelect<ExtArgs> | null
+    /**
+     * The filter to search for the DescargaPaeLog to update in case it exists.
+     */
+    where: DescargaPaeLogWhereUniqueInput
+    /**
+     * In case the DescargaPaeLog found by the `where` argument doesn't exist, create a new DescargaPaeLog with this data.
+     */
+    create: XOR<DescargaPaeLogCreateInput, DescargaPaeLogUncheckedCreateInput>
+    /**
+     * In case the DescargaPaeLog was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DescargaPaeLogUpdateInput, DescargaPaeLogUncheckedUpdateInput>
+  }
+
+  /**
+   * DescargaPaeLog delete
+   */
+  export type DescargaPaeLogDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DescargaPaeLog
+     */
+    select?: DescargaPaeLogSelect<ExtArgs> | null
+    /**
+     * Filter which DescargaPaeLog to delete.
+     */
+    where: DescargaPaeLogWhereUniqueInput
+  }
+
+  /**
+   * DescargaPaeLog deleteMany
+   */
+  export type DescargaPaeLogDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DescargaPaeLogs to delete
+     */
+    where?: DescargaPaeLogWhereInput
+  }
+
+  /**
+   * DescargaPaeLog without action
+   */
+  export type DescargaPaeLogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DescargaPaeLog
+     */
+    select?: DescargaPaeLogSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * Model PaeOnlineCab
+   */
+
+  export type AggregatePaeOnlineCab = {
+    _count: PaeOnlineCabCountAggregateOutputType | null
+    _avg: PaeOnlineCabAvgAggregateOutputType | null
+    _sum: PaeOnlineCabSumAggregateOutputType | null
+    _min: PaeOnlineCabMinAggregateOutputType | null
+    _max: PaeOnlineCabMaxAggregateOutputType | null
+  }
+
+  export type PaeOnlineCabAvgAggregateOutputType = {
+    mes: number | null
+    ano: number | null
+    rbd: number | null
+  }
+
+  export type PaeOnlineCabSumAggregateOutputType = {
+    mes: number | null
+    ano: number | null
+    rbd: number | null
+  }
+
+  export type PaeOnlineCabMinAggregateOutputType = {
+    id: string | null
+    institucion: string | null
+    mes: number | null
+    ano: number | null
+    folio: string | null
+    establecimiento: string | null
+    comuna: string | null
+    rbd: number | null
+    estrato: string | null
+    programa: string | null
+    licitacion: string | null
+    certificacion: string | null
+    createdAt: Date | null
+  }
+
+  export type PaeOnlineCabMaxAggregateOutputType = {
+    id: string | null
+    institucion: string | null
+    mes: number | null
+    ano: number | null
+    folio: string | null
+    establecimiento: string | null
+    comuna: string | null
+    rbd: number | null
+    estrato: string | null
+    programa: string | null
+    licitacion: string | null
+    certificacion: string | null
+    createdAt: Date | null
+  }
+
+  export type PaeOnlineCabCountAggregateOutputType = {
+    id: number
+    institucion: number
+    mes: number
+    ano: number
+    folio: number
+    establecimiento: number
+    comuna: number
+    rbd: number
+    estrato: number
+    programa: number
+    licitacion: number
+    certificacion: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type PaeOnlineCabAvgAggregateInputType = {
+    mes?: true
+    ano?: true
+    rbd?: true
+  }
+
+  export type PaeOnlineCabSumAggregateInputType = {
+    mes?: true
+    ano?: true
+    rbd?: true
+  }
+
+  export type PaeOnlineCabMinAggregateInputType = {
+    id?: true
+    institucion?: true
+    mes?: true
+    ano?: true
+    folio?: true
+    establecimiento?: true
+    comuna?: true
+    rbd?: true
+    estrato?: true
+    programa?: true
+    licitacion?: true
+    certificacion?: true
+    createdAt?: true
+  }
+
+  export type PaeOnlineCabMaxAggregateInputType = {
+    id?: true
+    institucion?: true
+    mes?: true
+    ano?: true
+    folio?: true
+    establecimiento?: true
+    comuna?: true
+    rbd?: true
+    estrato?: true
+    programa?: true
+    licitacion?: true
+    certificacion?: true
+    createdAt?: true
+  }
+
+  export type PaeOnlineCabCountAggregateInputType = {
+    id?: true
+    institucion?: true
+    mes?: true
+    ano?: true
+    folio?: true
+    establecimiento?: true
+    comuna?: true
+    rbd?: true
+    estrato?: true
+    programa?: true
+    licitacion?: true
+    certificacion?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type PaeOnlineCabAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PaeOnlineCab to aggregate.
+     */
+    where?: PaeOnlineCabWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PaeOnlineCabs to fetch.
+     */
+    orderBy?: PaeOnlineCabOrderByWithRelationInput | PaeOnlineCabOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PaeOnlineCabWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PaeOnlineCabs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PaeOnlineCabs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PaeOnlineCabs
+    **/
+    _count?: true | PaeOnlineCabCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PaeOnlineCabAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PaeOnlineCabSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PaeOnlineCabMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PaeOnlineCabMaxAggregateInputType
+  }
+
+  export type GetPaeOnlineCabAggregateType<T extends PaeOnlineCabAggregateArgs> = {
+        [P in keyof T & keyof AggregatePaeOnlineCab]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePaeOnlineCab[P]>
+      : GetScalarType<T[P], AggregatePaeOnlineCab[P]>
+  }
+
+
+
+
+  export type PaeOnlineCabGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PaeOnlineCabWhereInput
+    orderBy?: PaeOnlineCabOrderByWithAggregationInput | PaeOnlineCabOrderByWithAggregationInput[]
+    by: PaeOnlineCabScalarFieldEnum[] | PaeOnlineCabScalarFieldEnum
+    having?: PaeOnlineCabScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PaeOnlineCabCountAggregateInputType | true
+    _avg?: PaeOnlineCabAvgAggregateInputType
+    _sum?: PaeOnlineCabSumAggregateInputType
+    _min?: PaeOnlineCabMinAggregateInputType
+    _max?: PaeOnlineCabMaxAggregateInputType
+  }
+
+  export type PaeOnlineCabGroupByOutputType = {
+    id: string
+    institucion: string
+    mes: number
+    ano: number
+    folio: string
+    establecimiento: string
+    comuna: string
+    rbd: number
+    estrato: string
+    programa: string
+    licitacion: string
+    certificacion: string
+    createdAt: Date
+    _count: PaeOnlineCabCountAggregateOutputType | null
+    _avg: PaeOnlineCabAvgAggregateOutputType | null
+    _sum: PaeOnlineCabSumAggregateOutputType | null
+    _min: PaeOnlineCabMinAggregateOutputType | null
+    _max: PaeOnlineCabMaxAggregateOutputType | null
+  }
+
+  type GetPaeOnlineCabGroupByPayload<T extends PaeOnlineCabGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PaeOnlineCabGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PaeOnlineCabGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PaeOnlineCabGroupByOutputType[P]>
+            : GetScalarType<T[P], PaeOnlineCabGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PaeOnlineCabSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    institucion?: boolean
+    mes?: boolean
+    ano?: boolean
+    folio?: boolean
+    establecimiento?: boolean
+    comuna?: boolean
+    rbd?: boolean
+    estrato?: boolean
+    programa?: boolean
+    licitacion?: boolean
+    certificacion?: boolean
+    createdAt?: boolean
+    detalles?: boolean | PaeOnlineCab$detallesArgs<ExtArgs>
+    _count?: boolean | PaeOnlineCabCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["paeOnlineCab"]>
+
+  export type PaeOnlineCabSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    institucion?: boolean
+    mes?: boolean
+    ano?: boolean
+    folio?: boolean
+    establecimiento?: boolean
+    comuna?: boolean
+    rbd?: boolean
+    estrato?: boolean
+    programa?: boolean
+    licitacion?: boolean
+    certificacion?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["paeOnlineCab"]>
+
+  export type PaeOnlineCabSelectScalar = {
+    id?: boolean
+    institucion?: boolean
+    mes?: boolean
+    ano?: boolean
+    folio?: boolean
+    establecimiento?: boolean
+    comuna?: boolean
+    rbd?: boolean
+    estrato?: boolean
+    programa?: boolean
+    licitacion?: boolean
+    certificacion?: boolean
+    createdAt?: boolean
+  }
+
+  export type PaeOnlineCabInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    detalles?: boolean | PaeOnlineCab$detallesArgs<ExtArgs>
+    _count?: boolean | PaeOnlineCabCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type PaeOnlineCabIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $PaeOnlineCabPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PaeOnlineCab"
+    objects: {
+      detalles: Prisma.$PaeOnlineDetPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      institucion: string
+      mes: number
+      ano: number
+      folio: string
+      establecimiento: string
+      comuna: string
+      rbd: number
+      estrato: string
+      programa: string
+      licitacion: string
+      certificacion: string
+      createdAt: Date
+    }, ExtArgs["result"]["paeOnlineCab"]>
+    composites: {}
+  }
+
+  type PaeOnlineCabGetPayload<S extends boolean | null | undefined | PaeOnlineCabDefaultArgs> = $Result.GetResult<Prisma.$PaeOnlineCabPayload, S>
+
+  type PaeOnlineCabCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<PaeOnlineCabFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: PaeOnlineCabCountAggregateInputType | true
+    }
+
+  export interface PaeOnlineCabDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PaeOnlineCab'], meta: { name: 'PaeOnlineCab' } }
+    /**
+     * Find zero or one PaeOnlineCab that matches the filter.
+     * @param {PaeOnlineCabFindUniqueArgs} args - Arguments to find a PaeOnlineCab
+     * @example
+     * // Get one PaeOnlineCab
+     * const paeOnlineCab = await prisma.paeOnlineCab.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PaeOnlineCabFindUniqueArgs>(args: SelectSubset<T, PaeOnlineCabFindUniqueArgs<ExtArgs>>): Prisma__PaeOnlineCabClient<$Result.GetResult<Prisma.$PaeOnlineCabPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one PaeOnlineCab that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {PaeOnlineCabFindUniqueOrThrowArgs} args - Arguments to find a PaeOnlineCab
+     * @example
+     * // Get one PaeOnlineCab
+     * const paeOnlineCab = await prisma.paeOnlineCab.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PaeOnlineCabFindUniqueOrThrowArgs>(args: SelectSubset<T, PaeOnlineCabFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PaeOnlineCabClient<$Result.GetResult<Prisma.$PaeOnlineCabPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first PaeOnlineCab that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaeOnlineCabFindFirstArgs} args - Arguments to find a PaeOnlineCab
+     * @example
+     * // Get one PaeOnlineCab
+     * const paeOnlineCab = await prisma.paeOnlineCab.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PaeOnlineCabFindFirstArgs>(args?: SelectSubset<T, PaeOnlineCabFindFirstArgs<ExtArgs>>): Prisma__PaeOnlineCabClient<$Result.GetResult<Prisma.$PaeOnlineCabPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first PaeOnlineCab that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaeOnlineCabFindFirstOrThrowArgs} args - Arguments to find a PaeOnlineCab
+     * @example
+     * // Get one PaeOnlineCab
+     * const paeOnlineCab = await prisma.paeOnlineCab.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PaeOnlineCabFindFirstOrThrowArgs>(args?: SelectSubset<T, PaeOnlineCabFindFirstOrThrowArgs<ExtArgs>>): Prisma__PaeOnlineCabClient<$Result.GetResult<Prisma.$PaeOnlineCabPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more PaeOnlineCabs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaeOnlineCabFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PaeOnlineCabs
+     * const paeOnlineCabs = await prisma.paeOnlineCab.findMany()
+     * 
+     * // Get first 10 PaeOnlineCabs
+     * const paeOnlineCabs = await prisma.paeOnlineCab.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const paeOnlineCabWithIdOnly = await prisma.paeOnlineCab.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PaeOnlineCabFindManyArgs>(args?: SelectSubset<T, PaeOnlineCabFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaeOnlineCabPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a PaeOnlineCab.
+     * @param {PaeOnlineCabCreateArgs} args - Arguments to create a PaeOnlineCab.
+     * @example
+     * // Create one PaeOnlineCab
+     * const PaeOnlineCab = await prisma.paeOnlineCab.create({
+     *   data: {
+     *     // ... data to create a PaeOnlineCab
+     *   }
+     * })
+     * 
+     */
+    create<T extends PaeOnlineCabCreateArgs>(args: SelectSubset<T, PaeOnlineCabCreateArgs<ExtArgs>>): Prisma__PaeOnlineCabClient<$Result.GetResult<Prisma.$PaeOnlineCabPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many PaeOnlineCabs.
+     * @param {PaeOnlineCabCreateManyArgs} args - Arguments to create many PaeOnlineCabs.
+     * @example
+     * // Create many PaeOnlineCabs
+     * const paeOnlineCab = await prisma.paeOnlineCab.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PaeOnlineCabCreateManyArgs>(args?: SelectSubset<T, PaeOnlineCabCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PaeOnlineCabs and returns the data saved in the database.
+     * @param {PaeOnlineCabCreateManyAndReturnArgs} args - Arguments to create many PaeOnlineCabs.
+     * @example
+     * // Create many PaeOnlineCabs
+     * const paeOnlineCab = await prisma.paeOnlineCab.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PaeOnlineCabs and only return the `id`
+     * const paeOnlineCabWithIdOnly = await prisma.paeOnlineCab.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PaeOnlineCabCreateManyAndReturnArgs>(args?: SelectSubset<T, PaeOnlineCabCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaeOnlineCabPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a PaeOnlineCab.
+     * @param {PaeOnlineCabDeleteArgs} args - Arguments to delete one PaeOnlineCab.
+     * @example
+     * // Delete one PaeOnlineCab
+     * const PaeOnlineCab = await prisma.paeOnlineCab.delete({
+     *   where: {
+     *     // ... filter to delete one PaeOnlineCab
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PaeOnlineCabDeleteArgs>(args: SelectSubset<T, PaeOnlineCabDeleteArgs<ExtArgs>>): Prisma__PaeOnlineCabClient<$Result.GetResult<Prisma.$PaeOnlineCabPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one PaeOnlineCab.
+     * @param {PaeOnlineCabUpdateArgs} args - Arguments to update one PaeOnlineCab.
+     * @example
+     * // Update one PaeOnlineCab
+     * const paeOnlineCab = await prisma.paeOnlineCab.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PaeOnlineCabUpdateArgs>(args: SelectSubset<T, PaeOnlineCabUpdateArgs<ExtArgs>>): Prisma__PaeOnlineCabClient<$Result.GetResult<Prisma.$PaeOnlineCabPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more PaeOnlineCabs.
+     * @param {PaeOnlineCabDeleteManyArgs} args - Arguments to filter PaeOnlineCabs to delete.
+     * @example
+     * // Delete a few PaeOnlineCabs
+     * const { count } = await prisma.paeOnlineCab.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PaeOnlineCabDeleteManyArgs>(args?: SelectSubset<T, PaeOnlineCabDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PaeOnlineCabs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaeOnlineCabUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PaeOnlineCabs
+     * const paeOnlineCab = await prisma.paeOnlineCab.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PaeOnlineCabUpdateManyArgs>(args: SelectSubset<T, PaeOnlineCabUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one PaeOnlineCab.
+     * @param {PaeOnlineCabUpsertArgs} args - Arguments to update or create a PaeOnlineCab.
+     * @example
+     * // Update or create a PaeOnlineCab
+     * const paeOnlineCab = await prisma.paeOnlineCab.upsert({
+     *   create: {
+     *     // ... data to create a PaeOnlineCab
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PaeOnlineCab we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PaeOnlineCabUpsertArgs>(args: SelectSubset<T, PaeOnlineCabUpsertArgs<ExtArgs>>): Prisma__PaeOnlineCabClient<$Result.GetResult<Prisma.$PaeOnlineCabPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of PaeOnlineCabs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaeOnlineCabCountArgs} args - Arguments to filter PaeOnlineCabs to count.
+     * @example
+     * // Count the number of PaeOnlineCabs
+     * const count = await prisma.paeOnlineCab.count({
+     *   where: {
+     *     // ... the filter for the PaeOnlineCabs we want to count
+     *   }
+     * })
+    **/
+    count<T extends PaeOnlineCabCountArgs>(
+      args?: Subset<T, PaeOnlineCabCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PaeOnlineCabCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PaeOnlineCab.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaeOnlineCabAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PaeOnlineCabAggregateArgs>(args: Subset<T, PaeOnlineCabAggregateArgs>): Prisma.PrismaPromise<GetPaeOnlineCabAggregateType<T>>
+
+    /**
+     * Group by PaeOnlineCab.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaeOnlineCabGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PaeOnlineCabGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PaeOnlineCabGroupByArgs['orderBy'] }
+        : { orderBy?: PaeOnlineCabGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PaeOnlineCabGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPaeOnlineCabGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PaeOnlineCab model
+   */
+  readonly fields: PaeOnlineCabFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PaeOnlineCab.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PaeOnlineCabClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    detalles<T extends PaeOnlineCab$detallesArgs<ExtArgs> = {}>(args?: Subset<T, PaeOnlineCab$detallesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaeOnlineDetPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PaeOnlineCab model
+   */ 
+  interface PaeOnlineCabFieldRefs {
+    readonly id: FieldRef<"PaeOnlineCab", 'String'>
+    readonly institucion: FieldRef<"PaeOnlineCab", 'String'>
+    readonly mes: FieldRef<"PaeOnlineCab", 'Int'>
+    readonly ano: FieldRef<"PaeOnlineCab", 'Int'>
+    readonly folio: FieldRef<"PaeOnlineCab", 'String'>
+    readonly establecimiento: FieldRef<"PaeOnlineCab", 'String'>
+    readonly comuna: FieldRef<"PaeOnlineCab", 'String'>
+    readonly rbd: FieldRef<"PaeOnlineCab", 'Int'>
+    readonly estrato: FieldRef<"PaeOnlineCab", 'String'>
+    readonly programa: FieldRef<"PaeOnlineCab", 'String'>
+    readonly licitacion: FieldRef<"PaeOnlineCab", 'String'>
+    readonly certificacion: FieldRef<"PaeOnlineCab", 'String'>
+    readonly createdAt: FieldRef<"PaeOnlineCab", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PaeOnlineCab findUnique
+   */
+  export type PaeOnlineCabFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaeOnlineCab
+     */
+    select?: PaeOnlineCabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaeOnlineCabInclude<ExtArgs> | null
+    /**
+     * Filter, which PaeOnlineCab to fetch.
+     */
+    where: PaeOnlineCabWhereUniqueInput
+  }
+
+  /**
+   * PaeOnlineCab findUniqueOrThrow
+   */
+  export type PaeOnlineCabFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaeOnlineCab
+     */
+    select?: PaeOnlineCabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaeOnlineCabInclude<ExtArgs> | null
+    /**
+     * Filter, which PaeOnlineCab to fetch.
+     */
+    where: PaeOnlineCabWhereUniqueInput
+  }
+
+  /**
+   * PaeOnlineCab findFirst
+   */
+  export type PaeOnlineCabFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaeOnlineCab
+     */
+    select?: PaeOnlineCabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaeOnlineCabInclude<ExtArgs> | null
+    /**
+     * Filter, which PaeOnlineCab to fetch.
+     */
+    where?: PaeOnlineCabWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PaeOnlineCabs to fetch.
+     */
+    orderBy?: PaeOnlineCabOrderByWithRelationInput | PaeOnlineCabOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PaeOnlineCabs.
+     */
+    cursor?: PaeOnlineCabWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PaeOnlineCabs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PaeOnlineCabs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PaeOnlineCabs.
+     */
+    distinct?: PaeOnlineCabScalarFieldEnum | PaeOnlineCabScalarFieldEnum[]
+  }
+
+  /**
+   * PaeOnlineCab findFirstOrThrow
+   */
+  export type PaeOnlineCabFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaeOnlineCab
+     */
+    select?: PaeOnlineCabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaeOnlineCabInclude<ExtArgs> | null
+    /**
+     * Filter, which PaeOnlineCab to fetch.
+     */
+    where?: PaeOnlineCabWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PaeOnlineCabs to fetch.
+     */
+    orderBy?: PaeOnlineCabOrderByWithRelationInput | PaeOnlineCabOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PaeOnlineCabs.
+     */
+    cursor?: PaeOnlineCabWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PaeOnlineCabs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PaeOnlineCabs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PaeOnlineCabs.
+     */
+    distinct?: PaeOnlineCabScalarFieldEnum | PaeOnlineCabScalarFieldEnum[]
+  }
+
+  /**
+   * PaeOnlineCab findMany
+   */
+  export type PaeOnlineCabFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaeOnlineCab
+     */
+    select?: PaeOnlineCabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaeOnlineCabInclude<ExtArgs> | null
+    /**
+     * Filter, which PaeOnlineCabs to fetch.
+     */
+    where?: PaeOnlineCabWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PaeOnlineCabs to fetch.
+     */
+    orderBy?: PaeOnlineCabOrderByWithRelationInput | PaeOnlineCabOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PaeOnlineCabs.
+     */
+    cursor?: PaeOnlineCabWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PaeOnlineCabs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PaeOnlineCabs.
+     */
+    skip?: number
+    distinct?: PaeOnlineCabScalarFieldEnum | PaeOnlineCabScalarFieldEnum[]
+  }
+
+  /**
+   * PaeOnlineCab create
+   */
+  export type PaeOnlineCabCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaeOnlineCab
+     */
+    select?: PaeOnlineCabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaeOnlineCabInclude<ExtArgs> | null
+    /**
+     * The data needed to create a PaeOnlineCab.
+     */
+    data: XOR<PaeOnlineCabCreateInput, PaeOnlineCabUncheckedCreateInput>
+  }
+
+  /**
+   * PaeOnlineCab createMany
+   */
+  export type PaeOnlineCabCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PaeOnlineCabs.
+     */
+    data: PaeOnlineCabCreateManyInput | PaeOnlineCabCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PaeOnlineCab createManyAndReturn
+   */
+  export type PaeOnlineCabCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaeOnlineCab
+     */
+    select?: PaeOnlineCabSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many PaeOnlineCabs.
+     */
+    data: PaeOnlineCabCreateManyInput | PaeOnlineCabCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PaeOnlineCab update
+   */
+  export type PaeOnlineCabUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaeOnlineCab
+     */
+    select?: PaeOnlineCabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaeOnlineCabInclude<ExtArgs> | null
+    /**
+     * The data needed to update a PaeOnlineCab.
+     */
+    data: XOR<PaeOnlineCabUpdateInput, PaeOnlineCabUncheckedUpdateInput>
+    /**
+     * Choose, which PaeOnlineCab to update.
+     */
+    where: PaeOnlineCabWhereUniqueInput
+  }
+
+  /**
+   * PaeOnlineCab updateMany
+   */
+  export type PaeOnlineCabUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PaeOnlineCabs.
+     */
+    data: XOR<PaeOnlineCabUpdateManyMutationInput, PaeOnlineCabUncheckedUpdateManyInput>
+    /**
+     * Filter which PaeOnlineCabs to update
+     */
+    where?: PaeOnlineCabWhereInput
+  }
+
+  /**
+   * PaeOnlineCab upsert
+   */
+  export type PaeOnlineCabUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaeOnlineCab
+     */
+    select?: PaeOnlineCabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaeOnlineCabInclude<ExtArgs> | null
+    /**
+     * The filter to search for the PaeOnlineCab to update in case it exists.
+     */
+    where: PaeOnlineCabWhereUniqueInput
+    /**
+     * In case the PaeOnlineCab found by the `where` argument doesn't exist, create a new PaeOnlineCab with this data.
+     */
+    create: XOR<PaeOnlineCabCreateInput, PaeOnlineCabUncheckedCreateInput>
+    /**
+     * In case the PaeOnlineCab was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PaeOnlineCabUpdateInput, PaeOnlineCabUncheckedUpdateInput>
+  }
+
+  /**
+   * PaeOnlineCab delete
+   */
+  export type PaeOnlineCabDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaeOnlineCab
+     */
+    select?: PaeOnlineCabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaeOnlineCabInclude<ExtArgs> | null
+    /**
+     * Filter which PaeOnlineCab to delete.
+     */
+    where: PaeOnlineCabWhereUniqueInput
+  }
+
+  /**
+   * PaeOnlineCab deleteMany
+   */
+  export type PaeOnlineCabDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PaeOnlineCabs to delete
+     */
+    where?: PaeOnlineCabWhereInput
+  }
+
+  /**
+   * PaeOnlineCab.detalles
+   */
+  export type PaeOnlineCab$detallesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaeOnlineDet
+     */
+    select?: PaeOnlineDetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaeOnlineDetInclude<ExtArgs> | null
+    where?: PaeOnlineDetWhereInput
+    orderBy?: PaeOnlineDetOrderByWithRelationInput | PaeOnlineDetOrderByWithRelationInput[]
+    cursor?: PaeOnlineDetWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PaeOnlineDetScalarFieldEnum | PaeOnlineDetScalarFieldEnum[]
+  }
+
+  /**
+   * PaeOnlineCab without action
+   */
+  export type PaeOnlineCabDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaeOnlineCab
+     */
+    select?: PaeOnlineCabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaeOnlineCabInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model PaeOnlineDet
+   */
+
+  export type AggregatePaeOnlineDet = {
+    _count: PaeOnlineDetCountAggregateOutputType | null
+    _avg: PaeOnlineDetAvgAggregateOutputType | null
+    _sum: PaeOnlineDetSumAggregateOutputType | null
+    _min: PaeOnlineDetMinAggregateOutputType | null
+    _max: PaeOnlineDetMaxAggregateOutputType | null
+  }
+
+  export type PaeOnlineDetAvgAggregateOutputType = {
+    dia: number | null
+    serCompletas: number | null
+    serIncompletas: number | null
+    noServido: number | null
+    totalRaciones: number | null
+  }
+
+  export type PaeOnlineDetSumAggregateOutputType = {
+    dia: number | null
+    serCompletas: number | null
+    serIncompletas: number | null
+    noServido: number | null
+    totalRaciones: number | null
+  }
+
+  export type PaeOnlineDetMinAggregateOutputType = {
+    id: string | null
+    cabId: string | null
+    dia: number | null
+    serCompletas: number | null
+    serIncompletas: number | null
+    codProducto: string | null
+    noServido: number | null
+    codCausa: string | null
+    totalRaciones: number | null
+  }
+
+  export type PaeOnlineDetMaxAggregateOutputType = {
+    id: string | null
+    cabId: string | null
+    dia: number | null
+    serCompletas: number | null
+    serIncompletas: number | null
+    codProducto: string | null
+    noServido: number | null
+    codCausa: string | null
+    totalRaciones: number | null
+  }
+
+  export type PaeOnlineDetCountAggregateOutputType = {
+    id: number
+    cabId: number
+    dia: number
+    serCompletas: number
+    serIncompletas: number
+    codProducto: number
+    noServido: number
+    codCausa: number
+    totalRaciones: number
+    _all: number
+  }
+
+
+  export type PaeOnlineDetAvgAggregateInputType = {
+    dia?: true
+    serCompletas?: true
+    serIncompletas?: true
+    noServido?: true
+    totalRaciones?: true
+  }
+
+  export type PaeOnlineDetSumAggregateInputType = {
+    dia?: true
+    serCompletas?: true
+    serIncompletas?: true
+    noServido?: true
+    totalRaciones?: true
+  }
+
+  export type PaeOnlineDetMinAggregateInputType = {
+    id?: true
+    cabId?: true
+    dia?: true
+    serCompletas?: true
+    serIncompletas?: true
+    codProducto?: true
+    noServido?: true
+    codCausa?: true
+    totalRaciones?: true
+  }
+
+  export type PaeOnlineDetMaxAggregateInputType = {
+    id?: true
+    cabId?: true
+    dia?: true
+    serCompletas?: true
+    serIncompletas?: true
+    codProducto?: true
+    noServido?: true
+    codCausa?: true
+    totalRaciones?: true
+  }
+
+  export type PaeOnlineDetCountAggregateInputType = {
+    id?: true
+    cabId?: true
+    dia?: true
+    serCompletas?: true
+    serIncompletas?: true
+    codProducto?: true
+    noServido?: true
+    codCausa?: true
+    totalRaciones?: true
+    _all?: true
+  }
+
+  export type PaeOnlineDetAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PaeOnlineDet to aggregate.
+     */
+    where?: PaeOnlineDetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PaeOnlineDets to fetch.
+     */
+    orderBy?: PaeOnlineDetOrderByWithRelationInput | PaeOnlineDetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PaeOnlineDetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PaeOnlineDets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PaeOnlineDets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PaeOnlineDets
+    **/
+    _count?: true | PaeOnlineDetCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PaeOnlineDetAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PaeOnlineDetSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PaeOnlineDetMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PaeOnlineDetMaxAggregateInputType
+  }
+
+  export type GetPaeOnlineDetAggregateType<T extends PaeOnlineDetAggregateArgs> = {
+        [P in keyof T & keyof AggregatePaeOnlineDet]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePaeOnlineDet[P]>
+      : GetScalarType<T[P], AggregatePaeOnlineDet[P]>
+  }
+
+
+
+
+  export type PaeOnlineDetGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PaeOnlineDetWhereInput
+    orderBy?: PaeOnlineDetOrderByWithAggregationInput | PaeOnlineDetOrderByWithAggregationInput[]
+    by: PaeOnlineDetScalarFieldEnum[] | PaeOnlineDetScalarFieldEnum
+    having?: PaeOnlineDetScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PaeOnlineDetCountAggregateInputType | true
+    _avg?: PaeOnlineDetAvgAggregateInputType
+    _sum?: PaeOnlineDetSumAggregateInputType
+    _min?: PaeOnlineDetMinAggregateInputType
+    _max?: PaeOnlineDetMaxAggregateInputType
+  }
+
+  export type PaeOnlineDetGroupByOutputType = {
+    id: string
+    cabId: string
+    dia: number
+    serCompletas: number
+    serIncompletas: number
+    codProducto: string
+    noServido: number
+    codCausa: string
+    totalRaciones: number
+    _count: PaeOnlineDetCountAggregateOutputType | null
+    _avg: PaeOnlineDetAvgAggregateOutputType | null
+    _sum: PaeOnlineDetSumAggregateOutputType | null
+    _min: PaeOnlineDetMinAggregateOutputType | null
+    _max: PaeOnlineDetMaxAggregateOutputType | null
+  }
+
+  type GetPaeOnlineDetGroupByPayload<T extends PaeOnlineDetGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PaeOnlineDetGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PaeOnlineDetGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PaeOnlineDetGroupByOutputType[P]>
+            : GetScalarType<T[P], PaeOnlineDetGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PaeOnlineDetSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cabId?: boolean
+    dia?: boolean
+    serCompletas?: boolean
+    serIncompletas?: boolean
+    codProducto?: boolean
+    noServido?: boolean
+    codCausa?: boolean
+    totalRaciones?: boolean
+    cab?: boolean | PaeOnlineCabDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["paeOnlineDet"]>
+
+  export type PaeOnlineDetSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cabId?: boolean
+    dia?: boolean
+    serCompletas?: boolean
+    serIncompletas?: boolean
+    codProducto?: boolean
+    noServido?: boolean
+    codCausa?: boolean
+    totalRaciones?: boolean
+    cab?: boolean | PaeOnlineCabDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["paeOnlineDet"]>
+
+  export type PaeOnlineDetSelectScalar = {
+    id?: boolean
+    cabId?: boolean
+    dia?: boolean
+    serCompletas?: boolean
+    serIncompletas?: boolean
+    codProducto?: boolean
+    noServido?: boolean
+    codCausa?: boolean
+    totalRaciones?: boolean
+  }
+
+  export type PaeOnlineDetInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    cab?: boolean | PaeOnlineCabDefaultArgs<ExtArgs>
+  }
+  export type PaeOnlineDetIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    cab?: boolean | PaeOnlineCabDefaultArgs<ExtArgs>
+  }
+
+  export type $PaeOnlineDetPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PaeOnlineDet"
+    objects: {
+      cab: Prisma.$PaeOnlineCabPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      cabId: string
+      dia: number
+      serCompletas: number
+      serIncompletas: number
+      codProducto: string
+      noServido: number
+      codCausa: string
+      totalRaciones: number
+    }, ExtArgs["result"]["paeOnlineDet"]>
+    composites: {}
+  }
+
+  type PaeOnlineDetGetPayload<S extends boolean | null | undefined | PaeOnlineDetDefaultArgs> = $Result.GetResult<Prisma.$PaeOnlineDetPayload, S>
+
+  type PaeOnlineDetCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<PaeOnlineDetFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: PaeOnlineDetCountAggregateInputType | true
+    }
+
+  export interface PaeOnlineDetDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PaeOnlineDet'], meta: { name: 'PaeOnlineDet' } }
+    /**
+     * Find zero or one PaeOnlineDet that matches the filter.
+     * @param {PaeOnlineDetFindUniqueArgs} args - Arguments to find a PaeOnlineDet
+     * @example
+     * // Get one PaeOnlineDet
+     * const paeOnlineDet = await prisma.paeOnlineDet.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PaeOnlineDetFindUniqueArgs>(args: SelectSubset<T, PaeOnlineDetFindUniqueArgs<ExtArgs>>): Prisma__PaeOnlineDetClient<$Result.GetResult<Prisma.$PaeOnlineDetPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one PaeOnlineDet that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {PaeOnlineDetFindUniqueOrThrowArgs} args - Arguments to find a PaeOnlineDet
+     * @example
+     * // Get one PaeOnlineDet
+     * const paeOnlineDet = await prisma.paeOnlineDet.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PaeOnlineDetFindUniqueOrThrowArgs>(args: SelectSubset<T, PaeOnlineDetFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PaeOnlineDetClient<$Result.GetResult<Prisma.$PaeOnlineDetPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first PaeOnlineDet that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaeOnlineDetFindFirstArgs} args - Arguments to find a PaeOnlineDet
+     * @example
+     * // Get one PaeOnlineDet
+     * const paeOnlineDet = await prisma.paeOnlineDet.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PaeOnlineDetFindFirstArgs>(args?: SelectSubset<T, PaeOnlineDetFindFirstArgs<ExtArgs>>): Prisma__PaeOnlineDetClient<$Result.GetResult<Prisma.$PaeOnlineDetPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first PaeOnlineDet that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaeOnlineDetFindFirstOrThrowArgs} args - Arguments to find a PaeOnlineDet
+     * @example
+     * // Get one PaeOnlineDet
+     * const paeOnlineDet = await prisma.paeOnlineDet.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PaeOnlineDetFindFirstOrThrowArgs>(args?: SelectSubset<T, PaeOnlineDetFindFirstOrThrowArgs<ExtArgs>>): Prisma__PaeOnlineDetClient<$Result.GetResult<Prisma.$PaeOnlineDetPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more PaeOnlineDets that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaeOnlineDetFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PaeOnlineDets
+     * const paeOnlineDets = await prisma.paeOnlineDet.findMany()
+     * 
+     * // Get first 10 PaeOnlineDets
+     * const paeOnlineDets = await prisma.paeOnlineDet.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const paeOnlineDetWithIdOnly = await prisma.paeOnlineDet.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PaeOnlineDetFindManyArgs>(args?: SelectSubset<T, PaeOnlineDetFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaeOnlineDetPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a PaeOnlineDet.
+     * @param {PaeOnlineDetCreateArgs} args - Arguments to create a PaeOnlineDet.
+     * @example
+     * // Create one PaeOnlineDet
+     * const PaeOnlineDet = await prisma.paeOnlineDet.create({
+     *   data: {
+     *     // ... data to create a PaeOnlineDet
+     *   }
+     * })
+     * 
+     */
+    create<T extends PaeOnlineDetCreateArgs>(args: SelectSubset<T, PaeOnlineDetCreateArgs<ExtArgs>>): Prisma__PaeOnlineDetClient<$Result.GetResult<Prisma.$PaeOnlineDetPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many PaeOnlineDets.
+     * @param {PaeOnlineDetCreateManyArgs} args - Arguments to create many PaeOnlineDets.
+     * @example
+     * // Create many PaeOnlineDets
+     * const paeOnlineDet = await prisma.paeOnlineDet.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PaeOnlineDetCreateManyArgs>(args?: SelectSubset<T, PaeOnlineDetCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PaeOnlineDets and returns the data saved in the database.
+     * @param {PaeOnlineDetCreateManyAndReturnArgs} args - Arguments to create many PaeOnlineDets.
+     * @example
+     * // Create many PaeOnlineDets
+     * const paeOnlineDet = await prisma.paeOnlineDet.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PaeOnlineDets and only return the `id`
+     * const paeOnlineDetWithIdOnly = await prisma.paeOnlineDet.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PaeOnlineDetCreateManyAndReturnArgs>(args?: SelectSubset<T, PaeOnlineDetCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaeOnlineDetPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a PaeOnlineDet.
+     * @param {PaeOnlineDetDeleteArgs} args - Arguments to delete one PaeOnlineDet.
+     * @example
+     * // Delete one PaeOnlineDet
+     * const PaeOnlineDet = await prisma.paeOnlineDet.delete({
+     *   where: {
+     *     // ... filter to delete one PaeOnlineDet
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PaeOnlineDetDeleteArgs>(args: SelectSubset<T, PaeOnlineDetDeleteArgs<ExtArgs>>): Prisma__PaeOnlineDetClient<$Result.GetResult<Prisma.$PaeOnlineDetPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one PaeOnlineDet.
+     * @param {PaeOnlineDetUpdateArgs} args - Arguments to update one PaeOnlineDet.
+     * @example
+     * // Update one PaeOnlineDet
+     * const paeOnlineDet = await prisma.paeOnlineDet.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PaeOnlineDetUpdateArgs>(args: SelectSubset<T, PaeOnlineDetUpdateArgs<ExtArgs>>): Prisma__PaeOnlineDetClient<$Result.GetResult<Prisma.$PaeOnlineDetPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more PaeOnlineDets.
+     * @param {PaeOnlineDetDeleteManyArgs} args - Arguments to filter PaeOnlineDets to delete.
+     * @example
+     * // Delete a few PaeOnlineDets
+     * const { count } = await prisma.paeOnlineDet.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PaeOnlineDetDeleteManyArgs>(args?: SelectSubset<T, PaeOnlineDetDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PaeOnlineDets.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaeOnlineDetUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PaeOnlineDets
+     * const paeOnlineDet = await prisma.paeOnlineDet.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PaeOnlineDetUpdateManyArgs>(args: SelectSubset<T, PaeOnlineDetUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one PaeOnlineDet.
+     * @param {PaeOnlineDetUpsertArgs} args - Arguments to update or create a PaeOnlineDet.
+     * @example
+     * // Update or create a PaeOnlineDet
+     * const paeOnlineDet = await prisma.paeOnlineDet.upsert({
+     *   create: {
+     *     // ... data to create a PaeOnlineDet
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PaeOnlineDet we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PaeOnlineDetUpsertArgs>(args: SelectSubset<T, PaeOnlineDetUpsertArgs<ExtArgs>>): Prisma__PaeOnlineDetClient<$Result.GetResult<Prisma.$PaeOnlineDetPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of PaeOnlineDets.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaeOnlineDetCountArgs} args - Arguments to filter PaeOnlineDets to count.
+     * @example
+     * // Count the number of PaeOnlineDets
+     * const count = await prisma.paeOnlineDet.count({
+     *   where: {
+     *     // ... the filter for the PaeOnlineDets we want to count
+     *   }
+     * })
+    **/
+    count<T extends PaeOnlineDetCountArgs>(
+      args?: Subset<T, PaeOnlineDetCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PaeOnlineDetCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PaeOnlineDet.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaeOnlineDetAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PaeOnlineDetAggregateArgs>(args: Subset<T, PaeOnlineDetAggregateArgs>): Prisma.PrismaPromise<GetPaeOnlineDetAggregateType<T>>
+
+    /**
+     * Group by PaeOnlineDet.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaeOnlineDetGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PaeOnlineDetGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PaeOnlineDetGroupByArgs['orderBy'] }
+        : { orderBy?: PaeOnlineDetGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PaeOnlineDetGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPaeOnlineDetGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PaeOnlineDet model
+   */
+  readonly fields: PaeOnlineDetFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PaeOnlineDet.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PaeOnlineDetClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    cab<T extends PaeOnlineCabDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PaeOnlineCabDefaultArgs<ExtArgs>>): Prisma__PaeOnlineCabClient<$Result.GetResult<Prisma.$PaeOnlineCabPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PaeOnlineDet model
+   */ 
+  interface PaeOnlineDetFieldRefs {
+    readonly id: FieldRef<"PaeOnlineDet", 'String'>
+    readonly cabId: FieldRef<"PaeOnlineDet", 'String'>
+    readonly dia: FieldRef<"PaeOnlineDet", 'Int'>
+    readonly serCompletas: FieldRef<"PaeOnlineDet", 'Float'>
+    readonly serIncompletas: FieldRef<"PaeOnlineDet", 'Float'>
+    readonly codProducto: FieldRef<"PaeOnlineDet", 'String'>
+    readonly noServido: FieldRef<"PaeOnlineDet", 'Float'>
+    readonly codCausa: FieldRef<"PaeOnlineDet", 'String'>
+    readonly totalRaciones: FieldRef<"PaeOnlineDet", 'Float'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PaeOnlineDet findUnique
+   */
+  export type PaeOnlineDetFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaeOnlineDet
+     */
+    select?: PaeOnlineDetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaeOnlineDetInclude<ExtArgs> | null
+    /**
+     * Filter, which PaeOnlineDet to fetch.
+     */
+    where: PaeOnlineDetWhereUniqueInput
+  }
+
+  /**
+   * PaeOnlineDet findUniqueOrThrow
+   */
+  export type PaeOnlineDetFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaeOnlineDet
+     */
+    select?: PaeOnlineDetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaeOnlineDetInclude<ExtArgs> | null
+    /**
+     * Filter, which PaeOnlineDet to fetch.
+     */
+    where: PaeOnlineDetWhereUniqueInput
+  }
+
+  /**
+   * PaeOnlineDet findFirst
+   */
+  export type PaeOnlineDetFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaeOnlineDet
+     */
+    select?: PaeOnlineDetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaeOnlineDetInclude<ExtArgs> | null
+    /**
+     * Filter, which PaeOnlineDet to fetch.
+     */
+    where?: PaeOnlineDetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PaeOnlineDets to fetch.
+     */
+    orderBy?: PaeOnlineDetOrderByWithRelationInput | PaeOnlineDetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PaeOnlineDets.
+     */
+    cursor?: PaeOnlineDetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PaeOnlineDets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PaeOnlineDets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PaeOnlineDets.
+     */
+    distinct?: PaeOnlineDetScalarFieldEnum | PaeOnlineDetScalarFieldEnum[]
+  }
+
+  /**
+   * PaeOnlineDet findFirstOrThrow
+   */
+  export type PaeOnlineDetFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaeOnlineDet
+     */
+    select?: PaeOnlineDetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaeOnlineDetInclude<ExtArgs> | null
+    /**
+     * Filter, which PaeOnlineDet to fetch.
+     */
+    where?: PaeOnlineDetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PaeOnlineDets to fetch.
+     */
+    orderBy?: PaeOnlineDetOrderByWithRelationInput | PaeOnlineDetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PaeOnlineDets.
+     */
+    cursor?: PaeOnlineDetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PaeOnlineDets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PaeOnlineDets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PaeOnlineDets.
+     */
+    distinct?: PaeOnlineDetScalarFieldEnum | PaeOnlineDetScalarFieldEnum[]
+  }
+
+  /**
+   * PaeOnlineDet findMany
+   */
+  export type PaeOnlineDetFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaeOnlineDet
+     */
+    select?: PaeOnlineDetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaeOnlineDetInclude<ExtArgs> | null
+    /**
+     * Filter, which PaeOnlineDets to fetch.
+     */
+    where?: PaeOnlineDetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PaeOnlineDets to fetch.
+     */
+    orderBy?: PaeOnlineDetOrderByWithRelationInput | PaeOnlineDetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PaeOnlineDets.
+     */
+    cursor?: PaeOnlineDetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PaeOnlineDets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PaeOnlineDets.
+     */
+    skip?: number
+    distinct?: PaeOnlineDetScalarFieldEnum | PaeOnlineDetScalarFieldEnum[]
+  }
+
+  /**
+   * PaeOnlineDet create
+   */
+  export type PaeOnlineDetCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaeOnlineDet
+     */
+    select?: PaeOnlineDetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaeOnlineDetInclude<ExtArgs> | null
+    /**
+     * The data needed to create a PaeOnlineDet.
+     */
+    data: XOR<PaeOnlineDetCreateInput, PaeOnlineDetUncheckedCreateInput>
+  }
+
+  /**
+   * PaeOnlineDet createMany
+   */
+  export type PaeOnlineDetCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PaeOnlineDets.
+     */
+    data: PaeOnlineDetCreateManyInput | PaeOnlineDetCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PaeOnlineDet createManyAndReturn
+   */
+  export type PaeOnlineDetCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaeOnlineDet
+     */
+    select?: PaeOnlineDetSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many PaeOnlineDets.
+     */
+    data: PaeOnlineDetCreateManyInput | PaeOnlineDetCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaeOnlineDetIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PaeOnlineDet update
+   */
+  export type PaeOnlineDetUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaeOnlineDet
+     */
+    select?: PaeOnlineDetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaeOnlineDetInclude<ExtArgs> | null
+    /**
+     * The data needed to update a PaeOnlineDet.
+     */
+    data: XOR<PaeOnlineDetUpdateInput, PaeOnlineDetUncheckedUpdateInput>
+    /**
+     * Choose, which PaeOnlineDet to update.
+     */
+    where: PaeOnlineDetWhereUniqueInput
+  }
+
+  /**
+   * PaeOnlineDet updateMany
+   */
+  export type PaeOnlineDetUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PaeOnlineDets.
+     */
+    data: XOR<PaeOnlineDetUpdateManyMutationInput, PaeOnlineDetUncheckedUpdateManyInput>
+    /**
+     * Filter which PaeOnlineDets to update
+     */
+    where?: PaeOnlineDetWhereInput
+  }
+
+  /**
+   * PaeOnlineDet upsert
+   */
+  export type PaeOnlineDetUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaeOnlineDet
+     */
+    select?: PaeOnlineDetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaeOnlineDetInclude<ExtArgs> | null
+    /**
+     * The filter to search for the PaeOnlineDet to update in case it exists.
+     */
+    where: PaeOnlineDetWhereUniqueInput
+    /**
+     * In case the PaeOnlineDet found by the `where` argument doesn't exist, create a new PaeOnlineDet with this data.
+     */
+    create: XOR<PaeOnlineDetCreateInput, PaeOnlineDetUncheckedCreateInput>
+    /**
+     * In case the PaeOnlineDet was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PaeOnlineDetUpdateInput, PaeOnlineDetUncheckedUpdateInput>
+  }
+
+  /**
+   * PaeOnlineDet delete
+   */
+  export type PaeOnlineDetDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaeOnlineDet
+     */
+    select?: PaeOnlineDetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaeOnlineDetInclude<ExtArgs> | null
+    /**
+     * Filter which PaeOnlineDet to delete.
+     */
+    where: PaeOnlineDetWhereUniqueInput
+  }
+
+  /**
+   * PaeOnlineDet deleteMany
+   */
+  export type PaeOnlineDetDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PaeOnlineDets to delete
+     */
+    where?: PaeOnlineDetWhereInput
+  }
+
+  /**
+   * PaeOnlineDet without action
+   */
+  export type PaeOnlineDetDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaeOnlineDet
+     */
+    select?: PaeOnlineDetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaeOnlineDetInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model CodigoCausa
+   */
+
+  export type AggregateCodigoCausa = {
+    _count: CodigoCausaCountAggregateOutputType | null
+    _avg: CodigoCausaAvgAggregateOutputType | null
+    _sum: CodigoCausaSumAggregateOutputType | null
+    _min: CodigoCausaMinAggregateOutputType | null
+    _max: CodigoCausaMaxAggregateOutputType | null
+  }
+
+  export type CodigoCausaAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type CodigoCausaSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type CodigoCausaMinAggregateOutputType = {
+    id: number | null
+    descripcion: string | null
+    imputable: string | null
+    definicion: string | null
+    createdAt: Date | null
+  }
+
+  export type CodigoCausaMaxAggregateOutputType = {
+    id: number | null
+    descripcion: string | null
+    imputable: string | null
+    definicion: string | null
+    createdAt: Date | null
+  }
+
+  export type CodigoCausaCountAggregateOutputType = {
+    id: number
+    descripcion: number
+    imputable: number
+    definicion: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type CodigoCausaAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type CodigoCausaSumAggregateInputType = {
+    id?: true
+  }
+
+  export type CodigoCausaMinAggregateInputType = {
+    id?: true
+    descripcion?: true
+    imputable?: true
+    definicion?: true
+    createdAt?: true
+  }
+
+  export type CodigoCausaMaxAggregateInputType = {
+    id?: true
+    descripcion?: true
+    imputable?: true
+    definicion?: true
+    createdAt?: true
+  }
+
+  export type CodigoCausaCountAggregateInputType = {
+    id?: true
+    descripcion?: true
+    imputable?: true
+    definicion?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type CodigoCausaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CodigoCausa to aggregate.
+     */
+    where?: CodigoCausaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CodigoCausas to fetch.
+     */
+    orderBy?: CodigoCausaOrderByWithRelationInput | CodigoCausaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CodigoCausaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CodigoCausas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CodigoCausas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CodigoCausas
+    **/
+    _count?: true | CodigoCausaCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CodigoCausaAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CodigoCausaSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CodigoCausaMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CodigoCausaMaxAggregateInputType
+  }
+
+  export type GetCodigoCausaAggregateType<T extends CodigoCausaAggregateArgs> = {
+        [P in keyof T & keyof AggregateCodigoCausa]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCodigoCausa[P]>
+      : GetScalarType<T[P], AggregateCodigoCausa[P]>
+  }
+
+
+
+
+  export type CodigoCausaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CodigoCausaWhereInput
+    orderBy?: CodigoCausaOrderByWithAggregationInput | CodigoCausaOrderByWithAggregationInput[]
+    by: CodigoCausaScalarFieldEnum[] | CodigoCausaScalarFieldEnum
+    having?: CodigoCausaScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CodigoCausaCountAggregateInputType | true
+    _avg?: CodigoCausaAvgAggregateInputType
+    _sum?: CodigoCausaSumAggregateInputType
+    _min?: CodigoCausaMinAggregateInputType
+    _max?: CodigoCausaMaxAggregateInputType
+  }
+
+  export type CodigoCausaGroupByOutputType = {
+    id: number
+    descripcion: string
+    imputable: string
+    definicion: string
+    createdAt: Date
+    _count: CodigoCausaCountAggregateOutputType | null
+    _avg: CodigoCausaAvgAggregateOutputType | null
+    _sum: CodigoCausaSumAggregateOutputType | null
+    _min: CodigoCausaMinAggregateOutputType | null
+    _max: CodigoCausaMaxAggregateOutputType | null
+  }
+
+  type GetCodigoCausaGroupByPayload<T extends CodigoCausaGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CodigoCausaGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CodigoCausaGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CodigoCausaGroupByOutputType[P]>
+            : GetScalarType<T[P], CodigoCausaGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CodigoCausaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    descripcion?: boolean
+    imputable?: boolean
+    definicion?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["codigoCausa"]>
+
+  export type CodigoCausaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    descripcion?: boolean
+    imputable?: boolean
+    definicion?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["codigoCausa"]>
+
+  export type CodigoCausaSelectScalar = {
+    id?: boolean
+    descripcion?: boolean
+    imputable?: boolean
+    definicion?: boolean
+    createdAt?: boolean
+  }
+
+
+  export type $CodigoCausaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CodigoCausa"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      descripcion: string
+      imputable: string
+      definicion: string
+      createdAt: Date
+    }, ExtArgs["result"]["codigoCausa"]>
+    composites: {}
+  }
+
+  type CodigoCausaGetPayload<S extends boolean | null | undefined | CodigoCausaDefaultArgs> = $Result.GetResult<Prisma.$CodigoCausaPayload, S>
+
+  type CodigoCausaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<CodigoCausaFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: CodigoCausaCountAggregateInputType | true
+    }
+
+  export interface CodigoCausaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CodigoCausa'], meta: { name: 'CodigoCausa' } }
+    /**
+     * Find zero or one CodigoCausa that matches the filter.
+     * @param {CodigoCausaFindUniqueArgs} args - Arguments to find a CodigoCausa
+     * @example
+     * // Get one CodigoCausa
+     * const codigoCausa = await prisma.codigoCausa.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CodigoCausaFindUniqueArgs>(args: SelectSubset<T, CodigoCausaFindUniqueArgs<ExtArgs>>): Prisma__CodigoCausaClient<$Result.GetResult<Prisma.$CodigoCausaPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one CodigoCausa that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {CodigoCausaFindUniqueOrThrowArgs} args - Arguments to find a CodigoCausa
+     * @example
+     * // Get one CodigoCausa
+     * const codigoCausa = await prisma.codigoCausa.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CodigoCausaFindUniqueOrThrowArgs>(args: SelectSubset<T, CodigoCausaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CodigoCausaClient<$Result.GetResult<Prisma.$CodigoCausaPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first CodigoCausa that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CodigoCausaFindFirstArgs} args - Arguments to find a CodigoCausa
+     * @example
+     * // Get one CodigoCausa
+     * const codigoCausa = await prisma.codigoCausa.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CodigoCausaFindFirstArgs>(args?: SelectSubset<T, CodigoCausaFindFirstArgs<ExtArgs>>): Prisma__CodigoCausaClient<$Result.GetResult<Prisma.$CodigoCausaPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first CodigoCausa that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CodigoCausaFindFirstOrThrowArgs} args - Arguments to find a CodigoCausa
+     * @example
+     * // Get one CodigoCausa
+     * const codigoCausa = await prisma.codigoCausa.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CodigoCausaFindFirstOrThrowArgs>(args?: SelectSubset<T, CodigoCausaFindFirstOrThrowArgs<ExtArgs>>): Prisma__CodigoCausaClient<$Result.GetResult<Prisma.$CodigoCausaPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more CodigoCausas that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CodigoCausaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CodigoCausas
+     * const codigoCausas = await prisma.codigoCausa.findMany()
+     * 
+     * // Get first 10 CodigoCausas
+     * const codigoCausas = await prisma.codigoCausa.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const codigoCausaWithIdOnly = await prisma.codigoCausa.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CodigoCausaFindManyArgs>(args?: SelectSubset<T, CodigoCausaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CodigoCausaPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a CodigoCausa.
+     * @param {CodigoCausaCreateArgs} args - Arguments to create a CodigoCausa.
+     * @example
+     * // Create one CodigoCausa
+     * const CodigoCausa = await prisma.codigoCausa.create({
+     *   data: {
+     *     // ... data to create a CodigoCausa
+     *   }
+     * })
+     * 
+     */
+    create<T extends CodigoCausaCreateArgs>(args: SelectSubset<T, CodigoCausaCreateArgs<ExtArgs>>): Prisma__CodigoCausaClient<$Result.GetResult<Prisma.$CodigoCausaPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many CodigoCausas.
+     * @param {CodigoCausaCreateManyArgs} args - Arguments to create many CodigoCausas.
+     * @example
+     * // Create many CodigoCausas
+     * const codigoCausa = await prisma.codigoCausa.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CodigoCausaCreateManyArgs>(args?: SelectSubset<T, CodigoCausaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CodigoCausas and returns the data saved in the database.
+     * @param {CodigoCausaCreateManyAndReturnArgs} args - Arguments to create many CodigoCausas.
+     * @example
+     * // Create many CodigoCausas
+     * const codigoCausa = await prisma.codigoCausa.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CodigoCausas and only return the `id`
+     * const codigoCausaWithIdOnly = await prisma.codigoCausa.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CodigoCausaCreateManyAndReturnArgs>(args?: SelectSubset<T, CodigoCausaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CodigoCausaPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a CodigoCausa.
+     * @param {CodigoCausaDeleteArgs} args - Arguments to delete one CodigoCausa.
+     * @example
+     * // Delete one CodigoCausa
+     * const CodigoCausa = await prisma.codigoCausa.delete({
+     *   where: {
+     *     // ... filter to delete one CodigoCausa
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CodigoCausaDeleteArgs>(args: SelectSubset<T, CodigoCausaDeleteArgs<ExtArgs>>): Prisma__CodigoCausaClient<$Result.GetResult<Prisma.$CodigoCausaPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one CodigoCausa.
+     * @param {CodigoCausaUpdateArgs} args - Arguments to update one CodigoCausa.
+     * @example
+     * // Update one CodigoCausa
+     * const codigoCausa = await prisma.codigoCausa.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CodigoCausaUpdateArgs>(args: SelectSubset<T, CodigoCausaUpdateArgs<ExtArgs>>): Prisma__CodigoCausaClient<$Result.GetResult<Prisma.$CodigoCausaPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more CodigoCausas.
+     * @param {CodigoCausaDeleteManyArgs} args - Arguments to filter CodigoCausas to delete.
+     * @example
+     * // Delete a few CodigoCausas
+     * const { count } = await prisma.codigoCausa.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CodigoCausaDeleteManyArgs>(args?: SelectSubset<T, CodigoCausaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CodigoCausas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CodigoCausaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CodigoCausas
+     * const codigoCausa = await prisma.codigoCausa.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CodigoCausaUpdateManyArgs>(args: SelectSubset<T, CodigoCausaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one CodigoCausa.
+     * @param {CodigoCausaUpsertArgs} args - Arguments to update or create a CodigoCausa.
+     * @example
+     * // Update or create a CodigoCausa
+     * const codigoCausa = await prisma.codigoCausa.upsert({
+     *   create: {
+     *     // ... data to create a CodigoCausa
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CodigoCausa we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CodigoCausaUpsertArgs>(args: SelectSubset<T, CodigoCausaUpsertArgs<ExtArgs>>): Prisma__CodigoCausaClient<$Result.GetResult<Prisma.$CodigoCausaPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of CodigoCausas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CodigoCausaCountArgs} args - Arguments to filter CodigoCausas to count.
+     * @example
+     * // Count the number of CodigoCausas
+     * const count = await prisma.codigoCausa.count({
+     *   where: {
+     *     // ... the filter for the CodigoCausas we want to count
+     *   }
+     * })
+    **/
+    count<T extends CodigoCausaCountArgs>(
+      args?: Subset<T, CodigoCausaCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CodigoCausaCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CodigoCausa.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CodigoCausaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CodigoCausaAggregateArgs>(args: Subset<T, CodigoCausaAggregateArgs>): Prisma.PrismaPromise<GetCodigoCausaAggregateType<T>>
+
+    /**
+     * Group by CodigoCausa.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CodigoCausaGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CodigoCausaGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CodigoCausaGroupByArgs['orderBy'] }
+        : { orderBy?: CodigoCausaGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CodigoCausaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCodigoCausaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CodigoCausa model
+   */
+  readonly fields: CodigoCausaFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CodigoCausa.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CodigoCausaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CodigoCausa model
+   */ 
+  interface CodigoCausaFieldRefs {
+    readonly id: FieldRef<"CodigoCausa", 'Int'>
+    readonly descripcion: FieldRef<"CodigoCausa", 'String'>
+    readonly imputable: FieldRef<"CodigoCausa", 'String'>
+    readonly definicion: FieldRef<"CodigoCausa", 'String'>
+    readonly createdAt: FieldRef<"CodigoCausa", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CodigoCausa findUnique
+   */
+  export type CodigoCausaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodigoCausa
+     */
+    select?: CodigoCausaSelect<ExtArgs> | null
+    /**
+     * Filter, which CodigoCausa to fetch.
+     */
+    where: CodigoCausaWhereUniqueInput
+  }
+
+  /**
+   * CodigoCausa findUniqueOrThrow
+   */
+  export type CodigoCausaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodigoCausa
+     */
+    select?: CodigoCausaSelect<ExtArgs> | null
+    /**
+     * Filter, which CodigoCausa to fetch.
+     */
+    where: CodigoCausaWhereUniqueInput
+  }
+
+  /**
+   * CodigoCausa findFirst
+   */
+  export type CodigoCausaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodigoCausa
+     */
+    select?: CodigoCausaSelect<ExtArgs> | null
+    /**
+     * Filter, which CodigoCausa to fetch.
+     */
+    where?: CodigoCausaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CodigoCausas to fetch.
+     */
+    orderBy?: CodigoCausaOrderByWithRelationInput | CodigoCausaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CodigoCausas.
+     */
+    cursor?: CodigoCausaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CodigoCausas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CodigoCausas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CodigoCausas.
+     */
+    distinct?: CodigoCausaScalarFieldEnum | CodigoCausaScalarFieldEnum[]
+  }
+
+  /**
+   * CodigoCausa findFirstOrThrow
+   */
+  export type CodigoCausaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodigoCausa
+     */
+    select?: CodigoCausaSelect<ExtArgs> | null
+    /**
+     * Filter, which CodigoCausa to fetch.
+     */
+    where?: CodigoCausaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CodigoCausas to fetch.
+     */
+    orderBy?: CodigoCausaOrderByWithRelationInput | CodigoCausaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CodigoCausas.
+     */
+    cursor?: CodigoCausaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CodigoCausas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CodigoCausas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CodigoCausas.
+     */
+    distinct?: CodigoCausaScalarFieldEnum | CodigoCausaScalarFieldEnum[]
+  }
+
+  /**
+   * CodigoCausa findMany
+   */
+  export type CodigoCausaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodigoCausa
+     */
+    select?: CodigoCausaSelect<ExtArgs> | null
+    /**
+     * Filter, which CodigoCausas to fetch.
+     */
+    where?: CodigoCausaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CodigoCausas to fetch.
+     */
+    orderBy?: CodigoCausaOrderByWithRelationInput | CodigoCausaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CodigoCausas.
+     */
+    cursor?: CodigoCausaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CodigoCausas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CodigoCausas.
+     */
+    skip?: number
+    distinct?: CodigoCausaScalarFieldEnum | CodigoCausaScalarFieldEnum[]
+  }
+
+  /**
+   * CodigoCausa create
+   */
+  export type CodigoCausaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodigoCausa
+     */
+    select?: CodigoCausaSelect<ExtArgs> | null
+    /**
+     * The data needed to create a CodigoCausa.
+     */
+    data: XOR<CodigoCausaCreateInput, CodigoCausaUncheckedCreateInput>
+  }
+
+  /**
+   * CodigoCausa createMany
+   */
+  export type CodigoCausaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CodigoCausas.
+     */
+    data: CodigoCausaCreateManyInput | CodigoCausaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CodigoCausa createManyAndReturn
+   */
+  export type CodigoCausaCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodigoCausa
+     */
+    select?: CodigoCausaSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many CodigoCausas.
+     */
+    data: CodigoCausaCreateManyInput | CodigoCausaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CodigoCausa update
+   */
+  export type CodigoCausaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodigoCausa
+     */
+    select?: CodigoCausaSelect<ExtArgs> | null
+    /**
+     * The data needed to update a CodigoCausa.
+     */
+    data: XOR<CodigoCausaUpdateInput, CodigoCausaUncheckedUpdateInput>
+    /**
+     * Choose, which CodigoCausa to update.
+     */
+    where: CodigoCausaWhereUniqueInput
+  }
+
+  /**
+   * CodigoCausa updateMany
+   */
+  export type CodigoCausaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CodigoCausas.
+     */
+    data: XOR<CodigoCausaUpdateManyMutationInput, CodigoCausaUncheckedUpdateManyInput>
+    /**
+     * Filter which CodigoCausas to update
+     */
+    where?: CodigoCausaWhereInput
+  }
+
+  /**
+   * CodigoCausa upsert
+   */
+  export type CodigoCausaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodigoCausa
+     */
+    select?: CodigoCausaSelect<ExtArgs> | null
+    /**
+     * The filter to search for the CodigoCausa to update in case it exists.
+     */
+    where: CodigoCausaWhereUniqueInput
+    /**
+     * In case the CodigoCausa found by the `where` argument doesn't exist, create a new CodigoCausa with this data.
+     */
+    create: XOR<CodigoCausaCreateInput, CodigoCausaUncheckedCreateInput>
+    /**
+     * In case the CodigoCausa was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CodigoCausaUpdateInput, CodigoCausaUncheckedUpdateInput>
+  }
+
+  /**
+   * CodigoCausa delete
+   */
+  export type CodigoCausaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodigoCausa
+     */
+    select?: CodigoCausaSelect<ExtArgs> | null
+    /**
+     * Filter which CodigoCausa to delete.
+     */
+    where: CodigoCausaWhereUniqueInput
+  }
+
+  /**
+   * CodigoCausa deleteMany
+   */
+  export type CodigoCausaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CodigoCausas to delete
+     */
+    where?: CodigoCausaWhereInput
+  }
+
+  /**
+   * CodigoCausa without action
+   */
+  export type CodigoCausaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodigoCausa
+     */
+    select?: CodigoCausaSelect<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -54084,6 +58480,9 @@ export namespace Prisma {
     region: 'region',
     comuna: 'comuna',
     servicio: 'servicio',
+    servicioManual: 'servicioManual',
+    observacionManualServicio: 'observacionManualServicio',
+    esServicioManual: 'esServicioManual',
     horaInicio: 'horaInicio',
     hora: 'hora',
     obsALosIncumplimiento: 'obsALosIncumplimiento',
@@ -54147,6 +58546,65 @@ export namespace Prisma {
   };
 
   export type Multas_Elementos_Esenciales_DetScalarFieldEnum = (typeof Multas_Elementos_Esenciales_DetScalarFieldEnum)[keyof typeof Multas_Elementos_Esenciales_DetScalarFieldEnum]
+
+
+  export const DescargaPaeLogScalarFieldEnum: {
+    id: 'id',
+    ano: 'ano',
+    mes: 'mes',
+    institucion: 'institucion',
+    rbd: 'rbd',
+    urlGenerada: 'urlGenerada',
+    usuario: 'usuario',
+    fechaDescarga: 'fechaDescarga'
+  };
+
+  export type DescargaPaeLogScalarFieldEnum = (typeof DescargaPaeLogScalarFieldEnum)[keyof typeof DescargaPaeLogScalarFieldEnum]
+
+
+  export const PaeOnlineCabScalarFieldEnum: {
+    id: 'id',
+    institucion: 'institucion',
+    mes: 'mes',
+    ano: 'ano',
+    folio: 'folio',
+    establecimiento: 'establecimiento',
+    comuna: 'comuna',
+    rbd: 'rbd',
+    estrato: 'estrato',
+    programa: 'programa',
+    licitacion: 'licitacion',
+    certificacion: 'certificacion',
+    createdAt: 'createdAt'
+  };
+
+  export type PaeOnlineCabScalarFieldEnum = (typeof PaeOnlineCabScalarFieldEnum)[keyof typeof PaeOnlineCabScalarFieldEnum]
+
+
+  export const PaeOnlineDetScalarFieldEnum: {
+    id: 'id',
+    cabId: 'cabId',
+    dia: 'dia',
+    serCompletas: 'serCompletas',
+    serIncompletas: 'serIncompletas',
+    codProducto: 'codProducto',
+    noServido: 'noServido',
+    codCausa: 'codCausa',
+    totalRaciones: 'totalRaciones'
+  };
+
+  export type PaeOnlineDetScalarFieldEnum = (typeof PaeOnlineDetScalarFieldEnum)[keyof typeof PaeOnlineDetScalarFieldEnum]
+
+
+  export const CodigoCausaScalarFieldEnum: {
+    id: 'id',
+    descripcion: 'descripcion',
+    imputable: 'imputable',
+    definicion: 'definicion',
+    createdAt: 'createdAt'
+  };
+
+  export type CodigoCausaScalarFieldEnum = (typeof CodigoCausaScalarFieldEnum)[keyof typeof CodigoCausaScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -57965,6 +62423,9 @@ export namespace Prisma {
     region?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
     comuna?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
     servicio?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
+    servicioManual?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
+    observacionManualServicio?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
+    esServicioManual?: BoolFilter<"ElementosEsenciales_Cab"> | boolean
     horaInicio?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
     hora?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
     obsALosIncumplimiento?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
@@ -57985,6 +62446,9 @@ export namespace Prisma {
     region?: SortOrderInput | SortOrder
     comuna?: SortOrderInput | SortOrder
     servicio?: SortOrderInput | SortOrder
+    servicioManual?: SortOrderInput | SortOrder
+    observacionManualServicio?: SortOrderInput | SortOrder
+    esServicioManual?: SortOrder
     horaInicio?: SortOrderInput | SortOrder
     hora?: SortOrderInput | SortOrder
     obsALosIncumplimiento?: SortOrderInput | SortOrder
@@ -58008,6 +62472,9 @@ export namespace Prisma {
     region?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
     comuna?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
     servicio?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
+    servicioManual?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
+    observacionManualServicio?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
+    esServicioManual?: BoolFilter<"ElementosEsenciales_Cab"> | boolean
     horaInicio?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
     hora?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
     obsALosIncumplimiento?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
@@ -58028,6 +62495,9 @@ export namespace Prisma {
     region?: SortOrderInput | SortOrder
     comuna?: SortOrderInput | SortOrder
     servicio?: SortOrderInput | SortOrder
+    servicioManual?: SortOrderInput | SortOrder
+    observacionManualServicio?: SortOrderInput | SortOrder
+    esServicioManual?: SortOrder
     horaInicio?: SortOrderInput | SortOrder
     hora?: SortOrderInput | SortOrder
     obsALosIncumplimiento?: SortOrderInput | SortOrder
@@ -58055,6 +62525,9 @@ export namespace Prisma {
     region?: StringNullableWithAggregatesFilter<"ElementosEsenciales_Cab"> | string | null
     comuna?: StringNullableWithAggregatesFilter<"ElementosEsenciales_Cab"> | string | null
     servicio?: StringNullableWithAggregatesFilter<"ElementosEsenciales_Cab"> | string | null
+    servicioManual?: StringNullableWithAggregatesFilter<"ElementosEsenciales_Cab"> | string | null
+    observacionManualServicio?: StringNullableWithAggregatesFilter<"ElementosEsenciales_Cab"> | string | null
+    esServicioManual?: BoolWithAggregatesFilter<"ElementosEsenciales_Cab"> | boolean
     horaInicio?: StringNullableWithAggregatesFilter<"ElementosEsenciales_Cab"> | string | null
     hora?: StringNullableWithAggregatesFilter<"ElementosEsenciales_Cab"> | string | null
     obsALosIncumplimiento?: StringNullableWithAggregatesFilter<"ElementosEsenciales_Cab"> | string | null
@@ -58331,6 +62804,303 @@ export namespace Prisma {
     formulaAplicada?: StringNullableWithAggregatesFilter<"Multas_Elementos_Esenciales_Det"> | string | null
     montoMulta?: FloatWithAggregatesFilter<"Multas_Elementos_Esenciales_Det"> | number
     variablesUsadas?: StringNullableWithAggregatesFilter<"Multas_Elementos_Esenciales_Det"> | string | null
+  }
+
+  export type DescargaPaeLogWhereInput = {
+    AND?: DescargaPaeLogWhereInput | DescargaPaeLogWhereInput[]
+    OR?: DescargaPaeLogWhereInput[]
+    NOT?: DescargaPaeLogWhereInput | DescargaPaeLogWhereInput[]
+    id?: StringFilter<"DescargaPaeLog"> | string
+    ano?: IntFilter<"DescargaPaeLog"> | number
+    mes?: IntFilter<"DescargaPaeLog"> | number
+    institucion?: StringFilter<"DescargaPaeLog"> | string
+    rbd?: IntFilter<"DescargaPaeLog"> | number
+    urlGenerada?: StringFilter<"DescargaPaeLog"> | string
+    usuario?: StringFilter<"DescargaPaeLog"> | string
+    fechaDescarga?: DateTimeFilter<"DescargaPaeLog"> | Date | string
+  }
+
+  export type DescargaPaeLogOrderByWithRelationInput = {
+    id?: SortOrder
+    ano?: SortOrder
+    mes?: SortOrder
+    institucion?: SortOrder
+    rbd?: SortOrder
+    urlGenerada?: SortOrder
+    usuario?: SortOrder
+    fechaDescarga?: SortOrder
+  }
+
+  export type DescargaPaeLogWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: DescargaPaeLogWhereInput | DescargaPaeLogWhereInput[]
+    OR?: DescargaPaeLogWhereInput[]
+    NOT?: DescargaPaeLogWhereInput | DescargaPaeLogWhereInput[]
+    ano?: IntFilter<"DescargaPaeLog"> | number
+    mes?: IntFilter<"DescargaPaeLog"> | number
+    institucion?: StringFilter<"DescargaPaeLog"> | string
+    rbd?: IntFilter<"DescargaPaeLog"> | number
+    urlGenerada?: StringFilter<"DescargaPaeLog"> | string
+    usuario?: StringFilter<"DescargaPaeLog"> | string
+    fechaDescarga?: DateTimeFilter<"DescargaPaeLog"> | Date | string
+  }, "id">
+
+  export type DescargaPaeLogOrderByWithAggregationInput = {
+    id?: SortOrder
+    ano?: SortOrder
+    mes?: SortOrder
+    institucion?: SortOrder
+    rbd?: SortOrder
+    urlGenerada?: SortOrder
+    usuario?: SortOrder
+    fechaDescarga?: SortOrder
+    _count?: DescargaPaeLogCountOrderByAggregateInput
+    _avg?: DescargaPaeLogAvgOrderByAggregateInput
+    _max?: DescargaPaeLogMaxOrderByAggregateInput
+    _min?: DescargaPaeLogMinOrderByAggregateInput
+    _sum?: DescargaPaeLogSumOrderByAggregateInput
+  }
+
+  export type DescargaPaeLogScalarWhereWithAggregatesInput = {
+    AND?: DescargaPaeLogScalarWhereWithAggregatesInput | DescargaPaeLogScalarWhereWithAggregatesInput[]
+    OR?: DescargaPaeLogScalarWhereWithAggregatesInput[]
+    NOT?: DescargaPaeLogScalarWhereWithAggregatesInput | DescargaPaeLogScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"DescargaPaeLog"> | string
+    ano?: IntWithAggregatesFilter<"DescargaPaeLog"> | number
+    mes?: IntWithAggregatesFilter<"DescargaPaeLog"> | number
+    institucion?: StringWithAggregatesFilter<"DescargaPaeLog"> | string
+    rbd?: IntWithAggregatesFilter<"DescargaPaeLog"> | number
+    urlGenerada?: StringWithAggregatesFilter<"DescargaPaeLog"> | string
+    usuario?: StringWithAggregatesFilter<"DescargaPaeLog"> | string
+    fechaDescarga?: DateTimeWithAggregatesFilter<"DescargaPaeLog"> | Date | string
+  }
+
+  export type PaeOnlineCabWhereInput = {
+    AND?: PaeOnlineCabWhereInput | PaeOnlineCabWhereInput[]
+    OR?: PaeOnlineCabWhereInput[]
+    NOT?: PaeOnlineCabWhereInput | PaeOnlineCabWhereInput[]
+    id?: StringFilter<"PaeOnlineCab"> | string
+    institucion?: StringFilter<"PaeOnlineCab"> | string
+    mes?: IntFilter<"PaeOnlineCab"> | number
+    ano?: IntFilter<"PaeOnlineCab"> | number
+    folio?: StringFilter<"PaeOnlineCab"> | string
+    establecimiento?: StringFilter<"PaeOnlineCab"> | string
+    comuna?: StringFilter<"PaeOnlineCab"> | string
+    rbd?: IntFilter<"PaeOnlineCab"> | number
+    estrato?: StringFilter<"PaeOnlineCab"> | string
+    programa?: StringFilter<"PaeOnlineCab"> | string
+    licitacion?: StringFilter<"PaeOnlineCab"> | string
+    certificacion?: StringFilter<"PaeOnlineCab"> | string
+    createdAt?: DateTimeFilter<"PaeOnlineCab"> | Date | string
+    detalles?: PaeOnlineDetListRelationFilter
+  }
+
+  export type PaeOnlineCabOrderByWithRelationInput = {
+    id?: SortOrder
+    institucion?: SortOrder
+    mes?: SortOrder
+    ano?: SortOrder
+    folio?: SortOrder
+    establecimiento?: SortOrder
+    comuna?: SortOrder
+    rbd?: SortOrder
+    estrato?: SortOrder
+    programa?: SortOrder
+    licitacion?: SortOrder
+    certificacion?: SortOrder
+    createdAt?: SortOrder
+    detalles?: PaeOnlineDetOrderByRelationAggregateInput
+  }
+
+  export type PaeOnlineCabWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    folio?: string
+    AND?: PaeOnlineCabWhereInput | PaeOnlineCabWhereInput[]
+    OR?: PaeOnlineCabWhereInput[]
+    NOT?: PaeOnlineCabWhereInput | PaeOnlineCabWhereInput[]
+    institucion?: StringFilter<"PaeOnlineCab"> | string
+    mes?: IntFilter<"PaeOnlineCab"> | number
+    ano?: IntFilter<"PaeOnlineCab"> | number
+    establecimiento?: StringFilter<"PaeOnlineCab"> | string
+    comuna?: StringFilter<"PaeOnlineCab"> | string
+    rbd?: IntFilter<"PaeOnlineCab"> | number
+    estrato?: StringFilter<"PaeOnlineCab"> | string
+    programa?: StringFilter<"PaeOnlineCab"> | string
+    licitacion?: StringFilter<"PaeOnlineCab"> | string
+    certificacion?: StringFilter<"PaeOnlineCab"> | string
+    createdAt?: DateTimeFilter<"PaeOnlineCab"> | Date | string
+    detalles?: PaeOnlineDetListRelationFilter
+  }, "id" | "folio">
+
+  export type PaeOnlineCabOrderByWithAggregationInput = {
+    id?: SortOrder
+    institucion?: SortOrder
+    mes?: SortOrder
+    ano?: SortOrder
+    folio?: SortOrder
+    establecimiento?: SortOrder
+    comuna?: SortOrder
+    rbd?: SortOrder
+    estrato?: SortOrder
+    programa?: SortOrder
+    licitacion?: SortOrder
+    certificacion?: SortOrder
+    createdAt?: SortOrder
+    _count?: PaeOnlineCabCountOrderByAggregateInput
+    _avg?: PaeOnlineCabAvgOrderByAggregateInput
+    _max?: PaeOnlineCabMaxOrderByAggregateInput
+    _min?: PaeOnlineCabMinOrderByAggregateInput
+    _sum?: PaeOnlineCabSumOrderByAggregateInput
+  }
+
+  export type PaeOnlineCabScalarWhereWithAggregatesInput = {
+    AND?: PaeOnlineCabScalarWhereWithAggregatesInput | PaeOnlineCabScalarWhereWithAggregatesInput[]
+    OR?: PaeOnlineCabScalarWhereWithAggregatesInput[]
+    NOT?: PaeOnlineCabScalarWhereWithAggregatesInput | PaeOnlineCabScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"PaeOnlineCab"> | string
+    institucion?: StringWithAggregatesFilter<"PaeOnlineCab"> | string
+    mes?: IntWithAggregatesFilter<"PaeOnlineCab"> | number
+    ano?: IntWithAggregatesFilter<"PaeOnlineCab"> | number
+    folio?: StringWithAggregatesFilter<"PaeOnlineCab"> | string
+    establecimiento?: StringWithAggregatesFilter<"PaeOnlineCab"> | string
+    comuna?: StringWithAggregatesFilter<"PaeOnlineCab"> | string
+    rbd?: IntWithAggregatesFilter<"PaeOnlineCab"> | number
+    estrato?: StringWithAggregatesFilter<"PaeOnlineCab"> | string
+    programa?: StringWithAggregatesFilter<"PaeOnlineCab"> | string
+    licitacion?: StringWithAggregatesFilter<"PaeOnlineCab"> | string
+    certificacion?: StringWithAggregatesFilter<"PaeOnlineCab"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"PaeOnlineCab"> | Date | string
+  }
+
+  export type PaeOnlineDetWhereInput = {
+    AND?: PaeOnlineDetWhereInput | PaeOnlineDetWhereInput[]
+    OR?: PaeOnlineDetWhereInput[]
+    NOT?: PaeOnlineDetWhereInput | PaeOnlineDetWhereInput[]
+    id?: StringFilter<"PaeOnlineDet"> | string
+    cabId?: StringFilter<"PaeOnlineDet"> | string
+    dia?: IntFilter<"PaeOnlineDet"> | number
+    serCompletas?: FloatFilter<"PaeOnlineDet"> | number
+    serIncompletas?: FloatFilter<"PaeOnlineDet"> | number
+    codProducto?: StringFilter<"PaeOnlineDet"> | string
+    noServido?: FloatFilter<"PaeOnlineDet"> | number
+    codCausa?: StringFilter<"PaeOnlineDet"> | string
+    totalRaciones?: FloatFilter<"PaeOnlineDet"> | number
+    cab?: XOR<PaeOnlineCabRelationFilter, PaeOnlineCabWhereInput>
+  }
+
+  export type PaeOnlineDetOrderByWithRelationInput = {
+    id?: SortOrder
+    cabId?: SortOrder
+    dia?: SortOrder
+    serCompletas?: SortOrder
+    serIncompletas?: SortOrder
+    codProducto?: SortOrder
+    noServido?: SortOrder
+    codCausa?: SortOrder
+    totalRaciones?: SortOrder
+    cab?: PaeOnlineCabOrderByWithRelationInput
+  }
+
+  export type PaeOnlineDetWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: PaeOnlineDetWhereInput | PaeOnlineDetWhereInput[]
+    OR?: PaeOnlineDetWhereInput[]
+    NOT?: PaeOnlineDetWhereInput | PaeOnlineDetWhereInput[]
+    cabId?: StringFilter<"PaeOnlineDet"> | string
+    dia?: IntFilter<"PaeOnlineDet"> | number
+    serCompletas?: FloatFilter<"PaeOnlineDet"> | number
+    serIncompletas?: FloatFilter<"PaeOnlineDet"> | number
+    codProducto?: StringFilter<"PaeOnlineDet"> | string
+    noServido?: FloatFilter<"PaeOnlineDet"> | number
+    codCausa?: StringFilter<"PaeOnlineDet"> | string
+    totalRaciones?: FloatFilter<"PaeOnlineDet"> | number
+    cab?: XOR<PaeOnlineCabRelationFilter, PaeOnlineCabWhereInput>
+  }, "id">
+
+  export type PaeOnlineDetOrderByWithAggregationInput = {
+    id?: SortOrder
+    cabId?: SortOrder
+    dia?: SortOrder
+    serCompletas?: SortOrder
+    serIncompletas?: SortOrder
+    codProducto?: SortOrder
+    noServido?: SortOrder
+    codCausa?: SortOrder
+    totalRaciones?: SortOrder
+    _count?: PaeOnlineDetCountOrderByAggregateInput
+    _avg?: PaeOnlineDetAvgOrderByAggregateInput
+    _max?: PaeOnlineDetMaxOrderByAggregateInput
+    _min?: PaeOnlineDetMinOrderByAggregateInput
+    _sum?: PaeOnlineDetSumOrderByAggregateInput
+  }
+
+  export type PaeOnlineDetScalarWhereWithAggregatesInput = {
+    AND?: PaeOnlineDetScalarWhereWithAggregatesInput | PaeOnlineDetScalarWhereWithAggregatesInput[]
+    OR?: PaeOnlineDetScalarWhereWithAggregatesInput[]
+    NOT?: PaeOnlineDetScalarWhereWithAggregatesInput | PaeOnlineDetScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"PaeOnlineDet"> | string
+    cabId?: StringWithAggregatesFilter<"PaeOnlineDet"> | string
+    dia?: IntWithAggregatesFilter<"PaeOnlineDet"> | number
+    serCompletas?: FloatWithAggregatesFilter<"PaeOnlineDet"> | number
+    serIncompletas?: FloatWithAggregatesFilter<"PaeOnlineDet"> | number
+    codProducto?: StringWithAggregatesFilter<"PaeOnlineDet"> | string
+    noServido?: FloatWithAggregatesFilter<"PaeOnlineDet"> | number
+    codCausa?: StringWithAggregatesFilter<"PaeOnlineDet"> | string
+    totalRaciones?: FloatWithAggregatesFilter<"PaeOnlineDet"> | number
+  }
+
+  export type CodigoCausaWhereInput = {
+    AND?: CodigoCausaWhereInput | CodigoCausaWhereInput[]
+    OR?: CodigoCausaWhereInput[]
+    NOT?: CodigoCausaWhereInput | CodigoCausaWhereInput[]
+    id?: IntFilter<"CodigoCausa"> | number
+    descripcion?: StringFilter<"CodigoCausa"> | string
+    imputable?: StringFilter<"CodigoCausa"> | string
+    definicion?: StringFilter<"CodigoCausa"> | string
+    createdAt?: DateTimeFilter<"CodigoCausa"> | Date | string
+  }
+
+  export type CodigoCausaOrderByWithRelationInput = {
+    id?: SortOrder
+    descripcion?: SortOrder
+    imputable?: SortOrder
+    definicion?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CodigoCausaWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: CodigoCausaWhereInput | CodigoCausaWhereInput[]
+    OR?: CodigoCausaWhereInput[]
+    NOT?: CodigoCausaWhereInput | CodigoCausaWhereInput[]
+    descripcion?: StringFilter<"CodigoCausa"> | string
+    imputable?: StringFilter<"CodigoCausa"> | string
+    definicion?: StringFilter<"CodigoCausa"> | string
+    createdAt?: DateTimeFilter<"CodigoCausa"> | Date | string
+  }, "id">
+
+  export type CodigoCausaOrderByWithAggregationInput = {
+    id?: SortOrder
+    descripcion?: SortOrder
+    imputable?: SortOrder
+    definicion?: SortOrder
+    createdAt?: SortOrder
+    _count?: CodigoCausaCountOrderByAggregateInput
+    _avg?: CodigoCausaAvgOrderByAggregateInput
+    _max?: CodigoCausaMaxOrderByAggregateInput
+    _min?: CodigoCausaMinOrderByAggregateInput
+    _sum?: CodigoCausaSumOrderByAggregateInput
+  }
+
+  export type CodigoCausaScalarWhereWithAggregatesInput = {
+    AND?: CodigoCausaScalarWhereWithAggregatesInput | CodigoCausaScalarWhereWithAggregatesInput[]
+    OR?: CodigoCausaScalarWhereWithAggregatesInput[]
+    NOT?: CodigoCausaScalarWhereWithAggregatesInput | CodigoCausaScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"CodigoCausa"> | number
+    descripcion?: StringWithAggregatesFilter<"CodigoCausa"> | string
+    imputable?: StringWithAggregatesFilter<"CodigoCausa"> | string
+    definicion?: StringWithAggregatesFilter<"CodigoCausa"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"CodigoCausa"> | Date | string
   }
 
   export type RoleCreateInput = {
@@ -62599,6 +67369,9 @@ export namespace Prisma {
     region?: string | null
     comuna?: string | null
     servicio?: string | null
+    servicioManual?: string | null
+    observacionManualServicio?: string | null
+    esServicioManual?: boolean
     horaInicio?: string | null
     hora?: string | null
     obsALosIncumplimiento?: string | null
@@ -62619,6 +67392,9 @@ export namespace Prisma {
     region?: string | null
     comuna?: string | null
     servicio?: string | null
+    servicioManual?: string | null
+    observacionManualServicio?: string | null
+    esServicioManual?: boolean
     horaInicio?: string | null
     hora?: string | null
     obsALosIncumplimiento?: string | null
@@ -62639,6 +67415,9 @@ export namespace Prisma {
     region?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: NullableStringFieldUpdateOperationsInput | string | null
     servicio?: NullableStringFieldUpdateOperationsInput | string | null
+    servicioManual?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionManualServicio?: NullableStringFieldUpdateOperationsInput | string | null
+    esServicioManual?: BoolFieldUpdateOperationsInput | boolean
     horaInicio?: NullableStringFieldUpdateOperationsInput | string | null
     hora?: NullableStringFieldUpdateOperationsInput | string | null
     obsALosIncumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
@@ -62659,6 +67438,9 @@ export namespace Prisma {
     region?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: NullableStringFieldUpdateOperationsInput | string | null
     servicio?: NullableStringFieldUpdateOperationsInput | string | null
+    servicioManual?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionManualServicio?: NullableStringFieldUpdateOperationsInput | string | null
+    esServicioManual?: BoolFieldUpdateOperationsInput | boolean
     horaInicio?: NullableStringFieldUpdateOperationsInput | string | null
     hora?: NullableStringFieldUpdateOperationsInput | string | null
     obsALosIncumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
@@ -62679,6 +67461,9 @@ export namespace Prisma {
     region?: string | null
     comuna?: string | null
     servicio?: string | null
+    servicioManual?: string | null
+    observacionManualServicio?: string | null
+    esServicioManual?: boolean
     horaInicio?: string | null
     hora?: string | null
     obsALosIncumplimiento?: string | null
@@ -62698,6 +67483,9 @@ export namespace Prisma {
     region?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: NullableStringFieldUpdateOperationsInput | string | null
     servicio?: NullableStringFieldUpdateOperationsInput | string | null
+    servicioManual?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionManualServicio?: NullableStringFieldUpdateOperationsInput | string | null
+    esServicioManual?: BoolFieldUpdateOperationsInput | boolean
     horaInicio?: NullableStringFieldUpdateOperationsInput | string | null
     hora?: NullableStringFieldUpdateOperationsInput | string | null
     obsALosIncumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
@@ -62717,6 +67505,9 @@ export namespace Prisma {
     region?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: NullableStringFieldUpdateOperationsInput | string | null
     servicio?: NullableStringFieldUpdateOperationsInput | string | null
+    servicioManual?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionManualServicio?: NullableStringFieldUpdateOperationsInput | string | null
+    esServicioManual?: BoolFieldUpdateOperationsInput | boolean
     horaInicio?: NullableStringFieldUpdateOperationsInput | string | null
     hora?: NullableStringFieldUpdateOperationsInput | string | null
     obsALosIncumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
@@ -63013,6 +67804,338 @@ export namespace Prisma {
     formulaAplicada?: NullableStringFieldUpdateOperationsInput | string | null
     montoMulta?: FloatFieldUpdateOperationsInput | number
     variablesUsadas?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type DescargaPaeLogCreateInput = {
+    id?: string
+    ano: number
+    mes: number
+    institucion: string
+    rbd: number
+    urlGenerada: string
+    usuario: string
+    fechaDescarga?: Date | string
+  }
+
+  export type DescargaPaeLogUncheckedCreateInput = {
+    id?: string
+    ano: number
+    mes: number
+    institucion: string
+    rbd: number
+    urlGenerada: string
+    usuario: string
+    fechaDescarga?: Date | string
+  }
+
+  export type DescargaPaeLogUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ano?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    institucion?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    urlGenerada?: StringFieldUpdateOperationsInput | string
+    usuario?: StringFieldUpdateOperationsInput | string
+    fechaDescarga?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DescargaPaeLogUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ano?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    institucion?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    urlGenerada?: StringFieldUpdateOperationsInput | string
+    usuario?: StringFieldUpdateOperationsInput | string
+    fechaDescarga?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DescargaPaeLogCreateManyInput = {
+    id?: string
+    ano: number
+    mes: number
+    institucion: string
+    rbd: number
+    urlGenerada: string
+    usuario: string
+    fechaDescarga?: Date | string
+  }
+
+  export type DescargaPaeLogUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ano?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    institucion?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    urlGenerada?: StringFieldUpdateOperationsInput | string
+    usuario?: StringFieldUpdateOperationsInput | string
+    fechaDescarga?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DescargaPaeLogUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ano?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    institucion?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    urlGenerada?: StringFieldUpdateOperationsInput | string
+    usuario?: StringFieldUpdateOperationsInput | string
+    fechaDescarga?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaeOnlineCabCreateInput = {
+    id?: string
+    institucion: string
+    mes: number
+    ano: number
+    folio: string
+    establecimiento: string
+    comuna: string
+    rbd: number
+    estrato: string
+    programa: string
+    licitacion: string
+    certificacion: string
+    createdAt?: Date | string
+    detalles?: PaeOnlineDetCreateNestedManyWithoutCabInput
+  }
+
+  export type PaeOnlineCabUncheckedCreateInput = {
+    id?: string
+    institucion: string
+    mes: number
+    ano: number
+    folio: string
+    establecimiento: string
+    comuna: string
+    rbd: number
+    estrato: string
+    programa: string
+    licitacion: string
+    certificacion: string
+    createdAt?: Date | string
+    detalles?: PaeOnlineDetUncheckedCreateNestedManyWithoutCabInput
+  }
+
+  export type PaeOnlineCabUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    institucion?: StringFieldUpdateOperationsInput | string
+    mes?: IntFieldUpdateOperationsInput | number
+    ano?: IntFieldUpdateOperationsInput | number
+    folio?: StringFieldUpdateOperationsInput | string
+    establecimiento?: StringFieldUpdateOperationsInput | string
+    comuna?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    estrato?: StringFieldUpdateOperationsInput | string
+    programa?: StringFieldUpdateOperationsInput | string
+    licitacion?: StringFieldUpdateOperationsInput | string
+    certificacion?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    detalles?: PaeOnlineDetUpdateManyWithoutCabNestedInput
+  }
+
+  export type PaeOnlineCabUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    institucion?: StringFieldUpdateOperationsInput | string
+    mes?: IntFieldUpdateOperationsInput | number
+    ano?: IntFieldUpdateOperationsInput | number
+    folio?: StringFieldUpdateOperationsInput | string
+    establecimiento?: StringFieldUpdateOperationsInput | string
+    comuna?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    estrato?: StringFieldUpdateOperationsInput | string
+    programa?: StringFieldUpdateOperationsInput | string
+    licitacion?: StringFieldUpdateOperationsInput | string
+    certificacion?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    detalles?: PaeOnlineDetUncheckedUpdateManyWithoutCabNestedInput
+  }
+
+  export type PaeOnlineCabCreateManyInput = {
+    id?: string
+    institucion: string
+    mes: number
+    ano: number
+    folio: string
+    establecimiento: string
+    comuna: string
+    rbd: number
+    estrato: string
+    programa: string
+    licitacion: string
+    certificacion: string
+    createdAt?: Date | string
+  }
+
+  export type PaeOnlineCabUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    institucion?: StringFieldUpdateOperationsInput | string
+    mes?: IntFieldUpdateOperationsInput | number
+    ano?: IntFieldUpdateOperationsInput | number
+    folio?: StringFieldUpdateOperationsInput | string
+    establecimiento?: StringFieldUpdateOperationsInput | string
+    comuna?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    estrato?: StringFieldUpdateOperationsInput | string
+    programa?: StringFieldUpdateOperationsInput | string
+    licitacion?: StringFieldUpdateOperationsInput | string
+    certificacion?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaeOnlineCabUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    institucion?: StringFieldUpdateOperationsInput | string
+    mes?: IntFieldUpdateOperationsInput | number
+    ano?: IntFieldUpdateOperationsInput | number
+    folio?: StringFieldUpdateOperationsInput | string
+    establecimiento?: StringFieldUpdateOperationsInput | string
+    comuna?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    estrato?: StringFieldUpdateOperationsInput | string
+    programa?: StringFieldUpdateOperationsInput | string
+    licitacion?: StringFieldUpdateOperationsInput | string
+    certificacion?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaeOnlineDetCreateInput = {
+    id?: string
+    dia: number
+    serCompletas: number
+    serIncompletas: number
+    codProducto: string
+    noServido: number
+    codCausa: string
+    totalRaciones: number
+    cab: PaeOnlineCabCreateNestedOneWithoutDetallesInput
+  }
+
+  export type PaeOnlineDetUncheckedCreateInput = {
+    id?: string
+    cabId: string
+    dia: number
+    serCompletas: number
+    serIncompletas: number
+    codProducto: string
+    noServido: number
+    codCausa: string
+    totalRaciones: number
+  }
+
+  export type PaeOnlineDetUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dia?: IntFieldUpdateOperationsInput | number
+    serCompletas?: FloatFieldUpdateOperationsInput | number
+    serIncompletas?: FloatFieldUpdateOperationsInput | number
+    codProducto?: StringFieldUpdateOperationsInput | string
+    noServido?: FloatFieldUpdateOperationsInput | number
+    codCausa?: StringFieldUpdateOperationsInput | string
+    totalRaciones?: FloatFieldUpdateOperationsInput | number
+    cab?: PaeOnlineCabUpdateOneRequiredWithoutDetallesNestedInput
+  }
+
+  export type PaeOnlineDetUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cabId?: StringFieldUpdateOperationsInput | string
+    dia?: IntFieldUpdateOperationsInput | number
+    serCompletas?: FloatFieldUpdateOperationsInput | number
+    serIncompletas?: FloatFieldUpdateOperationsInput | number
+    codProducto?: StringFieldUpdateOperationsInput | string
+    noServido?: FloatFieldUpdateOperationsInput | number
+    codCausa?: StringFieldUpdateOperationsInput | string
+    totalRaciones?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type PaeOnlineDetCreateManyInput = {
+    id?: string
+    cabId: string
+    dia: number
+    serCompletas: number
+    serIncompletas: number
+    codProducto: string
+    noServido: number
+    codCausa: string
+    totalRaciones: number
+  }
+
+  export type PaeOnlineDetUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dia?: IntFieldUpdateOperationsInput | number
+    serCompletas?: FloatFieldUpdateOperationsInput | number
+    serIncompletas?: FloatFieldUpdateOperationsInput | number
+    codProducto?: StringFieldUpdateOperationsInput | string
+    noServido?: FloatFieldUpdateOperationsInput | number
+    codCausa?: StringFieldUpdateOperationsInput | string
+    totalRaciones?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type PaeOnlineDetUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cabId?: StringFieldUpdateOperationsInput | string
+    dia?: IntFieldUpdateOperationsInput | number
+    serCompletas?: FloatFieldUpdateOperationsInput | number
+    serIncompletas?: FloatFieldUpdateOperationsInput | number
+    codProducto?: StringFieldUpdateOperationsInput | string
+    noServido?: FloatFieldUpdateOperationsInput | number
+    codCausa?: StringFieldUpdateOperationsInput | string
+    totalRaciones?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type CodigoCausaCreateInput = {
+    id: number
+    descripcion: string
+    imputable?: string
+    definicion?: string
+    createdAt?: Date | string
+  }
+
+  export type CodigoCausaUncheckedCreateInput = {
+    id: number
+    descripcion: string
+    imputable?: string
+    definicion?: string
+    createdAt?: Date | string
+  }
+
+  export type CodigoCausaUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    descripcion?: StringFieldUpdateOperationsInput | string
+    imputable?: StringFieldUpdateOperationsInput | string
+    definicion?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CodigoCausaUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    descripcion?: StringFieldUpdateOperationsInput | string
+    imputable?: StringFieldUpdateOperationsInput | string
+    definicion?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CodigoCausaCreateManyInput = {
+    id: number
+    descripcion: string
+    imputable?: string
+    definicion?: string
+    createdAt?: Date | string
+  }
+
+  export type CodigoCausaUpdateManyMutationInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    descripcion?: StringFieldUpdateOperationsInput | string
+    imputable?: StringFieldUpdateOperationsInput | string
+    definicion?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CodigoCausaUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    descripcion?: StringFieldUpdateOperationsInput | string
+    imputable?: StringFieldUpdateOperationsInput | string
+    definicion?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -65732,6 +70855,9 @@ export namespace Prisma {
     region?: SortOrder
     comuna?: SortOrder
     servicio?: SortOrder
+    servicioManual?: SortOrder
+    observacionManualServicio?: SortOrder
+    esServicioManual?: SortOrder
     horaInicio?: SortOrder
     hora?: SortOrder
     obsALosIncumplimiento?: SortOrder
@@ -65756,6 +70882,9 @@ export namespace Prisma {
     region?: SortOrder
     comuna?: SortOrder
     servicio?: SortOrder
+    servicioManual?: SortOrder
+    observacionManualServicio?: SortOrder
+    esServicioManual?: SortOrder
     horaInicio?: SortOrder
     hora?: SortOrder
     obsALosIncumplimiento?: SortOrder
@@ -65775,6 +70904,9 @@ export namespace Prisma {
     region?: SortOrder
     comuna?: SortOrder
     servicio?: SortOrder
+    servicioManual?: SortOrder
+    observacionManualServicio?: SortOrder
+    esServicioManual?: SortOrder
     horaInicio?: SortOrder
     hora?: SortOrder
     obsALosIncumplimiento?: SortOrder
@@ -65965,6 +71097,210 @@ export namespace Prisma {
 
   export type Multas_Elementos_Esenciales_DetSumOrderByAggregateInput = {
     montoMulta?: SortOrder
+  }
+
+  export type DescargaPaeLogCountOrderByAggregateInput = {
+    id?: SortOrder
+    ano?: SortOrder
+    mes?: SortOrder
+    institucion?: SortOrder
+    rbd?: SortOrder
+    urlGenerada?: SortOrder
+    usuario?: SortOrder
+    fechaDescarga?: SortOrder
+  }
+
+  export type DescargaPaeLogAvgOrderByAggregateInput = {
+    ano?: SortOrder
+    mes?: SortOrder
+    rbd?: SortOrder
+  }
+
+  export type DescargaPaeLogMaxOrderByAggregateInput = {
+    id?: SortOrder
+    ano?: SortOrder
+    mes?: SortOrder
+    institucion?: SortOrder
+    rbd?: SortOrder
+    urlGenerada?: SortOrder
+    usuario?: SortOrder
+    fechaDescarga?: SortOrder
+  }
+
+  export type DescargaPaeLogMinOrderByAggregateInput = {
+    id?: SortOrder
+    ano?: SortOrder
+    mes?: SortOrder
+    institucion?: SortOrder
+    rbd?: SortOrder
+    urlGenerada?: SortOrder
+    usuario?: SortOrder
+    fechaDescarga?: SortOrder
+  }
+
+  export type DescargaPaeLogSumOrderByAggregateInput = {
+    ano?: SortOrder
+    mes?: SortOrder
+    rbd?: SortOrder
+  }
+
+  export type PaeOnlineDetListRelationFilter = {
+    every?: PaeOnlineDetWhereInput
+    some?: PaeOnlineDetWhereInput
+    none?: PaeOnlineDetWhereInput
+  }
+
+  export type PaeOnlineDetOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type PaeOnlineCabCountOrderByAggregateInput = {
+    id?: SortOrder
+    institucion?: SortOrder
+    mes?: SortOrder
+    ano?: SortOrder
+    folio?: SortOrder
+    establecimiento?: SortOrder
+    comuna?: SortOrder
+    rbd?: SortOrder
+    estrato?: SortOrder
+    programa?: SortOrder
+    licitacion?: SortOrder
+    certificacion?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type PaeOnlineCabAvgOrderByAggregateInput = {
+    mes?: SortOrder
+    ano?: SortOrder
+    rbd?: SortOrder
+  }
+
+  export type PaeOnlineCabMaxOrderByAggregateInput = {
+    id?: SortOrder
+    institucion?: SortOrder
+    mes?: SortOrder
+    ano?: SortOrder
+    folio?: SortOrder
+    establecimiento?: SortOrder
+    comuna?: SortOrder
+    rbd?: SortOrder
+    estrato?: SortOrder
+    programa?: SortOrder
+    licitacion?: SortOrder
+    certificacion?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type PaeOnlineCabMinOrderByAggregateInput = {
+    id?: SortOrder
+    institucion?: SortOrder
+    mes?: SortOrder
+    ano?: SortOrder
+    folio?: SortOrder
+    establecimiento?: SortOrder
+    comuna?: SortOrder
+    rbd?: SortOrder
+    estrato?: SortOrder
+    programa?: SortOrder
+    licitacion?: SortOrder
+    certificacion?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type PaeOnlineCabSumOrderByAggregateInput = {
+    mes?: SortOrder
+    ano?: SortOrder
+    rbd?: SortOrder
+  }
+
+  export type PaeOnlineCabRelationFilter = {
+    is?: PaeOnlineCabWhereInput
+    isNot?: PaeOnlineCabWhereInput
+  }
+
+  export type PaeOnlineDetCountOrderByAggregateInput = {
+    id?: SortOrder
+    cabId?: SortOrder
+    dia?: SortOrder
+    serCompletas?: SortOrder
+    serIncompletas?: SortOrder
+    codProducto?: SortOrder
+    noServido?: SortOrder
+    codCausa?: SortOrder
+    totalRaciones?: SortOrder
+  }
+
+  export type PaeOnlineDetAvgOrderByAggregateInput = {
+    dia?: SortOrder
+    serCompletas?: SortOrder
+    serIncompletas?: SortOrder
+    noServido?: SortOrder
+    totalRaciones?: SortOrder
+  }
+
+  export type PaeOnlineDetMaxOrderByAggregateInput = {
+    id?: SortOrder
+    cabId?: SortOrder
+    dia?: SortOrder
+    serCompletas?: SortOrder
+    serIncompletas?: SortOrder
+    codProducto?: SortOrder
+    noServido?: SortOrder
+    codCausa?: SortOrder
+    totalRaciones?: SortOrder
+  }
+
+  export type PaeOnlineDetMinOrderByAggregateInput = {
+    id?: SortOrder
+    cabId?: SortOrder
+    dia?: SortOrder
+    serCompletas?: SortOrder
+    serIncompletas?: SortOrder
+    codProducto?: SortOrder
+    noServido?: SortOrder
+    codCausa?: SortOrder
+    totalRaciones?: SortOrder
+  }
+
+  export type PaeOnlineDetSumOrderByAggregateInput = {
+    dia?: SortOrder
+    serCompletas?: SortOrder
+    serIncompletas?: SortOrder
+    noServido?: SortOrder
+    totalRaciones?: SortOrder
+  }
+
+  export type CodigoCausaCountOrderByAggregateInput = {
+    id?: SortOrder
+    descripcion?: SortOrder
+    imputable?: SortOrder
+    definicion?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CodigoCausaAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type CodigoCausaMaxOrderByAggregateInput = {
+    id?: SortOrder
+    descripcion?: SortOrder
+    imputable?: SortOrder
+    definicion?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CodigoCausaMinOrderByAggregateInput = {
+    id?: SortOrder
+    descripcion?: SortOrder
+    imputable?: SortOrder
+    definicion?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CodigoCausaSumOrderByAggregateInput = {
+    id?: SortOrder
   }
 
   export type UserCreateNestedManyWithoutRoleInput = {
@@ -67333,6 +72669,62 @@ export namespace Prisma {
     upsert?: Multas_Elementos_Esenciales_CabUpsertWithoutDetallesInput
     connect?: Multas_Elementos_Esenciales_CabWhereUniqueInput
     update?: XOR<XOR<Multas_Elementos_Esenciales_CabUpdateToOneWithWhereWithoutDetallesInput, Multas_Elementos_Esenciales_CabUpdateWithoutDetallesInput>, Multas_Elementos_Esenciales_CabUncheckedUpdateWithoutDetallesInput>
+  }
+
+  export type PaeOnlineDetCreateNestedManyWithoutCabInput = {
+    create?: XOR<PaeOnlineDetCreateWithoutCabInput, PaeOnlineDetUncheckedCreateWithoutCabInput> | PaeOnlineDetCreateWithoutCabInput[] | PaeOnlineDetUncheckedCreateWithoutCabInput[]
+    connectOrCreate?: PaeOnlineDetCreateOrConnectWithoutCabInput | PaeOnlineDetCreateOrConnectWithoutCabInput[]
+    createMany?: PaeOnlineDetCreateManyCabInputEnvelope
+    connect?: PaeOnlineDetWhereUniqueInput | PaeOnlineDetWhereUniqueInput[]
+  }
+
+  export type PaeOnlineDetUncheckedCreateNestedManyWithoutCabInput = {
+    create?: XOR<PaeOnlineDetCreateWithoutCabInput, PaeOnlineDetUncheckedCreateWithoutCabInput> | PaeOnlineDetCreateWithoutCabInput[] | PaeOnlineDetUncheckedCreateWithoutCabInput[]
+    connectOrCreate?: PaeOnlineDetCreateOrConnectWithoutCabInput | PaeOnlineDetCreateOrConnectWithoutCabInput[]
+    createMany?: PaeOnlineDetCreateManyCabInputEnvelope
+    connect?: PaeOnlineDetWhereUniqueInput | PaeOnlineDetWhereUniqueInput[]
+  }
+
+  export type PaeOnlineDetUpdateManyWithoutCabNestedInput = {
+    create?: XOR<PaeOnlineDetCreateWithoutCabInput, PaeOnlineDetUncheckedCreateWithoutCabInput> | PaeOnlineDetCreateWithoutCabInput[] | PaeOnlineDetUncheckedCreateWithoutCabInput[]
+    connectOrCreate?: PaeOnlineDetCreateOrConnectWithoutCabInput | PaeOnlineDetCreateOrConnectWithoutCabInput[]
+    upsert?: PaeOnlineDetUpsertWithWhereUniqueWithoutCabInput | PaeOnlineDetUpsertWithWhereUniqueWithoutCabInput[]
+    createMany?: PaeOnlineDetCreateManyCabInputEnvelope
+    set?: PaeOnlineDetWhereUniqueInput | PaeOnlineDetWhereUniqueInput[]
+    disconnect?: PaeOnlineDetWhereUniqueInput | PaeOnlineDetWhereUniqueInput[]
+    delete?: PaeOnlineDetWhereUniqueInput | PaeOnlineDetWhereUniqueInput[]
+    connect?: PaeOnlineDetWhereUniqueInput | PaeOnlineDetWhereUniqueInput[]
+    update?: PaeOnlineDetUpdateWithWhereUniqueWithoutCabInput | PaeOnlineDetUpdateWithWhereUniqueWithoutCabInput[]
+    updateMany?: PaeOnlineDetUpdateManyWithWhereWithoutCabInput | PaeOnlineDetUpdateManyWithWhereWithoutCabInput[]
+    deleteMany?: PaeOnlineDetScalarWhereInput | PaeOnlineDetScalarWhereInput[]
+  }
+
+  export type PaeOnlineDetUncheckedUpdateManyWithoutCabNestedInput = {
+    create?: XOR<PaeOnlineDetCreateWithoutCabInput, PaeOnlineDetUncheckedCreateWithoutCabInput> | PaeOnlineDetCreateWithoutCabInput[] | PaeOnlineDetUncheckedCreateWithoutCabInput[]
+    connectOrCreate?: PaeOnlineDetCreateOrConnectWithoutCabInput | PaeOnlineDetCreateOrConnectWithoutCabInput[]
+    upsert?: PaeOnlineDetUpsertWithWhereUniqueWithoutCabInput | PaeOnlineDetUpsertWithWhereUniqueWithoutCabInput[]
+    createMany?: PaeOnlineDetCreateManyCabInputEnvelope
+    set?: PaeOnlineDetWhereUniqueInput | PaeOnlineDetWhereUniqueInput[]
+    disconnect?: PaeOnlineDetWhereUniqueInput | PaeOnlineDetWhereUniqueInput[]
+    delete?: PaeOnlineDetWhereUniqueInput | PaeOnlineDetWhereUniqueInput[]
+    connect?: PaeOnlineDetWhereUniqueInput | PaeOnlineDetWhereUniqueInput[]
+    update?: PaeOnlineDetUpdateWithWhereUniqueWithoutCabInput | PaeOnlineDetUpdateWithWhereUniqueWithoutCabInput[]
+    updateMany?: PaeOnlineDetUpdateManyWithWhereWithoutCabInput | PaeOnlineDetUpdateManyWithWhereWithoutCabInput[]
+    deleteMany?: PaeOnlineDetScalarWhereInput | PaeOnlineDetScalarWhereInput[]
+  }
+
+  export type PaeOnlineCabCreateNestedOneWithoutDetallesInput = {
+    create?: XOR<PaeOnlineCabCreateWithoutDetallesInput, PaeOnlineCabUncheckedCreateWithoutDetallesInput>
+    connectOrCreate?: PaeOnlineCabCreateOrConnectWithoutDetallesInput
+    connect?: PaeOnlineCabWhereUniqueInput
+  }
+
+  export type PaeOnlineCabUpdateOneRequiredWithoutDetallesNestedInput = {
+    create?: XOR<PaeOnlineCabCreateWithoutDetallesInput, PaeOnlineCabUncheckedCreateWithoutDetallesInput>
+    connectOrCreate?: PaeOnlineCabCreateOrConnectWithoutDetallesInput
+    upsert?: PaeOnlineCabUpsertWithoutDetallesInput
+    connect?: PaeOnlineCabWhereUniqueInput
+    update?: XOR<XOR<PaeOnlineCabUpdateToOneWithWhereWithoutDetallesInput, PaeOnlineCabUpdateWithoutDetallesInput>, PaeOnlineCabUncheckedUpdateWithoutDetallesInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -70087,6 +75479,9 @@ export namespace Prisma {
     region?: string | null
     comuna?: string | null
     servicio?: string | null
+    servicioManual?: string | null
+    observacionManualServicio?: string | null
+    esServicioManual?: boolean
     horaInicio?: string | null
     hora?: string | null
     obsALosIncumplimiento?: string | null
@@ -70106,6 +75501,9 @@ export namespace Prisma {
     region?: string | null
     comuna?: string | null
     servicio?: string | null
+    servicioManual?: string | null
+    observacionManualServicio?: string | null
+    esServicioManual?: boolean
     horaInicio?: string | null
     hora?: string | null
     obsALosIncumplimiento?: string | null
@@ -70141,6 +75539,9 @@ export namespace Prisma {
     region?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: NullableStringFieldUpdateOperationsInput | string | null
     servicio?: NullableStringFieldUpdateOperationsInput | string | null
+    servicioManual?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionManualServicio?: NullableStringFieldUpdateOperationsInput | string | null
+    esServicioManual?: BoolFieldUpdateOperationsInput | boolean
     horaInicio?: NullableStringFieldUpdateOperationsInput | string | null
     hora?: NullableStringFieldUpdateOperationsInput | string | null
     obsALosIncumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
@@ -70160,6 +75561,9 @@ export namespace Prisma {
     region?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: NullableStringFieldUpdateOperationsInput | string | null
     servicio?: NullableStringFieldUpdateOperationsInput | string | null
+    servicioManual?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionManualServicio?: NullableStringFieldUpdateOperationsInput | string | null
+    esServicioManual?: BoolFieldUpdateOperationsInput | boolean
     horaInicio?: NullableStringFieldUpdateOperationsInput | string | null
     hora?: NullableStringFieldUpdateOperationsInput | string | null
     obsALosIncumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
@@ -70288,6 +75692,149 @@ export namespace Prisma {
     estadoCalculo?: StringFieldUpdateOperationsInput | string
     usuarioCalculo?: StringFieldUpdateOperationsInput | string
     fechaCalculo?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaeOnlineDetCreateWithoutCabInput = {
+    id?: string
+    dia: number
+    serCompletas: number
+    serIncompletas: number
+    codProducto: string
+    noServido: number
+    codCausa: string
+    totalRaciones: number
+  }
+
+  export type PaeOnlineDetUncheckedCreateWithoutCabInput = {
+    id?: string
+    dia: number
+    serCompletas: number
+    serIncompletas: number
+    codProducto: string
+    noServido: number
+    codCausa: string
+    totalRaciones: number
+  }
+
+  export type PaeOnlineDetCreateOrConnectWithoutCabInput = {
+    where: PaeOnlineDetWhereUniqueInput
+    create: XOR<PaeOnlineDetCreateWithoutCabInput, PaeOnlineDetUncheckedCreateWithoutCabInput>
+  }
+
+  export type PaeOnlineDetCreateManyCabInputEnvelope = {
+    data: PaeOnlineDetCreateManyCabInput | PaeOnlineDetCreateManyCabInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PaeOnlineDetUpsertWithWhereUniqueWithoutCabInput = {
+    where: PaeOnlineDetWhereUniqueInput
+    update: XOR<PaeOnlineDetUpdateWithoutCabInput, PaeOnlineDetUncheckedUpdateWithoutCabInput>
+    create: XOR<PaeOnlineDetCreateWithoutCabInput, PaeOnlineDetUncheckedCreateWithoutCabInput>
+  }
+
+  export type PaeOnlineDetUpdateWithWhereUniqueWithoutCabInput = {
+    where: PaeOnlineDetWhereUniqueInput
+    data: XOR<PaeOnlineDetUpdateWithoutCabInput, PaeOnlineDetUncheckedUpdateWithoutCabInput>
+  }
+
+  export type PaeOnlineDetUpdateManyWithWhereWithoutCabInput = {
+    where: PaeOnlineDetScalarWhereInput
+    data: XOR<PaeOnlineDetUpdateManyMutationInput, PaeOnlineDetUncheckedUpdateManyWithoutCabInput>
+  }
+
+  export type PaeOnlineDetScalarWhereInput = {
+    AND?: PaeOnlineDetScalarWhereInput | PaeOnlineDetScalarWhereInput[]
+    OR?: PaeOnlineDetScalarWhereInput[]
+    NOT?: PaeOnlineDetScalarWhereInput | PaeOnlineDetScalarWhereInput[]
+    id?: StringFilter<"PaeOnlineDet"> | string
+    cabId?: StringFilter<"PaeOnlineDet"> | string
+    dia?: IntFilter<"PaeOnlineDet"> | number
+    serCompletas?: FloatFilter<"PaeOnlineDet"> | number
+    serIncompletas?: FloatFilter<"PaeOnlineDet"> | number
+    codProducto?: StringFilter<"PaeOnlineDet"> | string
+    noServido?: FloatFilter<"PaeOnlineDet"> | number
+    codCausa?: StringFilter<"PaeOnlineDet"> | string
+    totalRaciones?: FloatFilter<"PaeOnlineDet"> | number
+  }
+
+  export type PaeOnlineCabCreateWithoutDetallesInput = {
+    id?: string
+    institucion: string
+    mes: number
+    ano: number
+    folio: string
+    establecimiento: string
+    comuna: string
+    rbd: number
+    estrato: string
+    programa: string
+    licitacion: string
+    certificacion: string
+    createdAt?: Date | string
+  }
+
+  export type PaeOnlineCabUncheckedCreateWithoutDetallesInput = {
+    id?: string
+    institucion: string
+    mes: number
+    ano: number
+    folio: string
+    establecimiento: string
+    comuna: string
+    rbd: number
+    estrato: string
+    programa: string
+    licitacion: string
+    certificacion: string
+    createdAt?: Date | string
+  }
+
+  export type PaeOnlineCabCreateOrConnectWithoutDetallesInput = {
+    where: PaeOnlineCabWhereUniqueInput
+    create: XOR<PaeOnlineCabCreateWithoutDetallesInput, PaeOnlineCabUncheckedCreateWithoutDetallesInput>
+  }
+
+  export type PaeOnlineCabUpsertWithoutDetallesInput = {
+    update: XOR<PaeOnlineCabUpdateWithoutDetallesInput, PaeOnlineCabUncheckedUpdateWithoutDetallesInput>
+    create: XOR<PaeOnlineCabCreateWithoutDetallesInput, PaeOnlineCabUncheckedCreateWithoutDetallesInput>
+    where?: PaeOnlineCabWhereInput
+  }
+
+  export type PaeOnlineCabUpdateToOneWithWhereWithoutDetallesInput = {
+    where?: PaeOnlineCabWhereInput
+    data: XOR<PaeOnlineCabUpdateWithoutDetallesInput, PaeOnlineCabUncheckedUpdateWithoutDetallesInput>
+  }
+
+  export type PaeOnlineCabUpdateWithoutDetallesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    institucion?: StringFieldUpdateOperationsInput | string
+    mes?: IntFieldUpdateOperationsInput | number
+    ano?: IntFieldUpdateOperationsInput | number
+    folio?: StringFieldUpdateOperationsInput | string
+    establecimiento?: StringFieldUpdateOperationsInput | string
+    comuna?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    estrato?: StringFieldUpdateOperationsInput | string
+    programa?: StringFieldUpdateOperationsInput | string
+    licitacion?: StringFieldUpdateOperationsInput | string
+    certificacion?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaeOnlineCabUncheckedUpdateWithoutDetallesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    institucion?: StringFieldUpdateOperationsInput | string
+    mes?: IntFieldUpdateOperationsInput | number
+    ano?: IntFieldUpdateOperationsInput | number
+    folio?: StringFieldUpdateOperationsInput | string
+    establecimiento?: StringFieldUpdateOperationsInput | string
+    comuna?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    estrato?: StringFieldUpdateOperationsInput | string
+    programa?: StringFieldUpdateOperationsInput | string
+    licitacion?: StringFieldUpdateOperationsInput | string
+    certificacion?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserCreateManyRoleInput = {
@@ -71247,6 +76794,50 @@ export namespace Prisma {
     variablesUsadas?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type PaeOnlineDetCreateManyCabInput = {
+    id?: string
+    dia: number
+    serCompletas: number
+    serIncompletas: number
+    codProducto: string
+    noServido: number
+    codCausa: string
+    totalRaciones: number
+  }
+
+  export type PaeOnlineDetUpdateWithoutCabInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dia?: IntFieldUpdateOperationsInput | number
+    serCompletas?: FloatFieldUpdateOperationsInput | number
+    serIncompletas?: FloatFieldUpdateOperationsInput | number
+    codProducto?: StringFieldUpdateOperationsInput | string
+    noServido?: FloatFieldUpdateOperationsInput | number
+    codCausa?: StringFieldUpdateOperationsInput | string
+    totalRaciones?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type PaeOnlineDetUncheckedUpdateWithoutCabInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dia?: IntFieldUpdateOperationsInput | number
+    serCompletas?: FloatFieldUpdateOperationsInput | number
+    serIncompletas?: FloatFieldUpdateOperationsInput | number
+    codProducto?: StringFieldUpdateOperationsInput | string
+    noServido?: FloatFieldUpdateOperationsInput | number
+    codCausa?: StringFieldUpdateOperationsInput | string
+    totalRaciones?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type PaeOnlineDetUncheckedUpdateManyWithoutCabInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dia?: IntFieldUpdateOperationsInput | number
+    serCompletas?: FloatFieldUpdateOperationsInput | number
+    serIncompletas?: FloatFieldUpdateOperationsInput | number
+    codProducto?: StringFieldUpdateOperationsInput | string
+    noServido?: FloatFieldUpdateOperationsInput | number
+    codCausa?: StringFieldUpdateOperationsInput | string
+    totalRaciones?: FloatFieldUpdateOperationsInput | number
+  }
+
 
 
   /**
@@ -71304,6 +76895,10 @@ export namespace Prisma {
      * @deprecated Use Multas_Elementos_Esenciales_CabCountOutputTypeDefaultArgs instead
      */
     export type Multas_Elementos_Esenciales_CabCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Elementos_Esenciales_CabCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use PaeOnlineCabCountOutputTypeDefaultArgs instead
+     */
+    export type PaeOnlineCabCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PaeOnlineCabCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use RoleDefaultArgs instead
      */
@@ -71492,6 +77087,22 @@ export namespace Prisma {
      * @deprecated Use Multas_Elementos_Esenciales_DetDefaultArgs instead
      */
     export type Multas_Elementos_Esenciales_DetArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Elementos_Esenciales_DetDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use DescargaPaeLogDefaultArgs instead
+     */
+    export type DescargaPaeLogArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DescargaPaeLogDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use PaeOnlineCabDefaultArgs instead
+     */
+    export type PaeOnlineCabArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PaeOnlineCabDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use PaeOnlineDetDefaultArgs instead
+     */
+    export type PaeOnlineDetArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PaeOnlineDetDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use CodigoCausaDefaultArgs instead
+     */
+    export type CodigoCausaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = CodigoCausaDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany
