@@ -16,7 +16,10 @@ export async function getRbdsPorInstitucion(institucion: string) {
                 institucion: { 
                     equals: institucion, 
                     mode: 'insensitive' 
-                } 
+                },
+                colRBD: {
+                    notIn: [31, 32, 1101, 1302]
+                }
             },
             select: { 
                 colRBD: true, 

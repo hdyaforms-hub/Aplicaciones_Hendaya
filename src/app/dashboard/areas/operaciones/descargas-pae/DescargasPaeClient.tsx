@@ -26,10 +26,12 @@ export default function DescargasPaeClient() {
     const [currentIndex, setCurrentIndex] = useState<number>(-1)
     const [currentSchoolName, setCurrentSchoolName] = useState<string>('')
     const [items, setItems] = useState<UrlItem[]>([])
+    const [seleccionados, setSeleccionados] = useState<Set<number>>(new Set())
     const [error, setError] = useState<string | null>(null)
     const [successMessage, setSuccessMessage] = useState<string | null>(null)
 
     const bookmarkRef = useRef<HTMLAnchorElement>(null);
+    const masterCheckboxRef = useRef<HTMLInputElement>(null);
 
     // Código JavaScript para el marcador (Bookmarklet)
     const bookmarkletCode = `javascript:(function(){
@@ -105,6 +107,7 @@ export default function DescargasPaeClient() {
         setError(null)
         setSuccessMessage(null)
         setItems([])
+        setSeleccionados(new Set())
         setCurrentIndex(-1)
         setCurrentSchoolName('')
 
@@ -115,13 +118,16 @@ export default function DescargasPaeClient() {
             }
             const data = res.data;
 
-            if (data.length === 0) {
+            const RBDS_EXCLUIDOS = [31, 32, 1101, 1302];
+            const filteredData = data.filter((col: any) => !RBDS_EXCLUIDOS.includes(col.colRBD));
+
+            if (filteredData.length === 0) {
                 setError(`No se encontraron establecimientos para la institución ${institucion}.`)
                 setLoading(false)
                 return
             }
 
-            const newItems: UrlItem[] = data.map((col: any) => {
+            const newItems: UrlItem[] = filteredData.map((col: any) => {
                 let url = '';
                 if (institucion.toUpperCase() === 'JUNAEB') {
                     url = `https://pae.junaeb.cl/reportes/pdf/informePDFRBD.asp?month=${mes}&iYear=${ano}&tipo=1&RBD=${col.colRBD}`;
@@ -141,6 +147,7 @@ export default function DescargasPaeClient() {
             });
 
             setItems(newItems)
+            setSeleccionados(new Set(newItems.map(item => item.rbd)))
             
         } catch (err: any) {
             setError(err.message)
@@ -150,7 +157,11 @@ export default function DescargasPaeClient() {
     }
 
     const handleDescargarZIP = async () => {
-        if (items.length === 0) return;
+        const selectedItems = items.filter(item => seleccionados.has(item.rbd));
+        if (selectedItems.length === 0) {
+            setError("Debes seleccionar al menos un RBD para descargar.");
+            return;
+        }
         if (!paeCookie) {
             setError("Debes vincular tu sesión de Junaeb primero.");
             return;
@@ -162,9 +173,14 @@ export default function DescargasPaeClient() {
 
         const zip = new JSZip();
         let successCount = 0;
+        let processedCount = 0;
 
         for (let i = 0; i < items.length; i++) {
-            setCurrentIndex(i);
+            if (!seleccionados.has(items[i].rbd)) {
+                continue;
+            }
+
+            setCurrentIndex(processedCount);
             setCurrentSchoolName(items[i].nombre);
 
             // Actualizar estado del elemento a 'Descargando'
@@ -225,6 +241,7 @@ export default function DescargasPaeClient() {
                 });
             }
 
+            processedCount++;
             // Un pequeño delay de 100ms para suavizar el renderizado visual
             await new Promise(resolve => setTimeout(resolve, 100));
         }
@@ -252,7 +269,7 @@ export default function DescargasPaeClient() {
             document.body.removeChild(a);
             window.URL.revokeObjectURL(url);
 
-            setSuccessMessage(`¡Éxito! Se han descargado y empaquetado correctamente ${successCount} de ${items.length} informes en tu archivo ZIP.`);
+            setSuccessMessage(`¡Éxito! Se han descargado y empaquetado correctamente ${successCount} de ${selectedItems.length} informes en tu archivo ZIP.`);
         } catch (zipErr) {
             setError("Ocurrió un error al compilar el archivo ZIP comprimido.");
         } finally {
@@ -267,6 +284,35 @@ export default function DescargasPaeClient() {
         localStorage.removeItem('pae_session_linked_time');
         setPaeCookie('');
         setIsLinked(false);
+    };
+
+    const allSelected = items.length > 0 && seleccionados.size === items.length;
+    const someSelected = items.length > 0 && seleccionados.size > 0 && seleccionados.size < items.length;
+
+    useEffect(() => {
+        if (masterCheckboxRef.current) {
+            masterCheckboxRef.current.indeterminate = someSelected;
+        }
+    }, [someSelected]);
+
+    const handleToggleAll = () => {
+        if (allSelected) {
+            setSeleccionados(new Set());
+        } else {
+            setSeleccionados(new Set(items.map(item => item.rbd)));
+        }
+    };
+
+    const handleToggleRow = (rbd: number) => {
+        setSeleccionados(prev => {
+            const next = new Set(prev);
+            if (next.has(rbd)) {
+                next.delete(rbd);
+            } else {
+                next.add(rbd);
+            }
+            return next;
+        });
     };
 
     const mesesNombres = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
@@ -418,14 +464,14 @@ export default function DescargasPaeClient() {
                     <div className="flex justify-between items-center mb-3">
                         <span className="text-sm font-bold text-indigo-900">Progreso de Descarga e Integración ZIP</span>
                         <span className="text-xs font-black text-indigo-600 uppercase font-mono bg-indigo-100 px-2 py-1 rounded-md">
-                            {currentIndex + 1} de {items.length} colegios ({Math.round(((currentIndex + 1) / items.length) * 100)}%)
+                            {currentIndex + 1} de {seleccionados.size} colegios ({Math.round(((currentIndex + 1) / seleccionados.size) * 100)}%)
                         </span>
                     </div>
                     
                     <div className="w-full bg-indigo-200/50 rounded-full h-3 mb-2 overflow-hidden">
                         <div 
                             className="bg-indigo-600 h-3 rounded-full transition-all duration-300 ease-out"
-                            style={{ width: `${((currentIndex + 1) / items.length) * 100}%` }}
+                            style={{ width: `${((currentIndex + 1) / seleccionados.size) * 100}%` }}
                         ></div>
                     </div>
                     
@@ -445,10 +491,15 @@ export default function DescargasPaeClient() {
                         </div>
                         <button 
                             onClick={handleDescargarZIP}
-                            disabled={downloading || !isLinked}
+                            disabled={downloading || !isLinked || seleccionados.size === 0}
                             className="px-5 py-2 bg-indigo-600 text-white rounded-xl shadow-md shadow-indigo-600/20 font-bold hover:bg-indigo-500 disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 animate-in zoom-in"
                         >
-                            <span>⚡</span> {downloading ? 'Descargando...' : 'Descargar Todo en un ZIP'}
+                            <span>⚡</span>{' '}
+                            {downloading
+                                ? 'Descargando...'
+                                : seleccionados.size === items.length
+                                ? `Descargar Todo en un ZIP (${seleccionados.size})`
+                                : `Descargar Seleccionados (${seleccionados.size}) en un ZIP`}
                         </button>
                     </div>
 
@@ -462,6 +513,16 @@ export default function DescargasPaeClient() {
                         <table className="w-full text-left text-sm text-gray-500">
                             <thead className="text-xs text-gray-700 uppercase bg-gray-100 border-b border-gray-200 sticky top-0 z-10">
                                 <tr>
+                                    <th className="px-4 py-3 text-center w-12">
+                                        <input 
+                                            type="checkbox" 
+                                            ref={masterCheckboxRef}
+                                            checked={allSelected}
+                                            onChange={handleToggleAll}
+                                            disabled={downloading}
+                                            className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 cursor-pointer disabled:opacity-50 transition-colors"
+                                        />
+                                    </th>
                                     <th className="px-6 py-3 font-bold">RBD</th>
                                     <th className="px-6 py-3 font-bold">Establecimiento</th>
                                     <th className="px-6 py-3 font-bold">URL Destino</th>
@@ -482,10 +543,19 @@ export default function DescargasPaeClient() {
                                                         : 'hover:bg-gray-50/50'
                                         }`}
                                     >
+                                        <td className="px-4 py-3 text-center w-12">
+                                            <input 
+                                                type="checkbox" 
+                                                checked={seleccionados.has(item.rbd)}
+                                                onChange={() => handleToggleRow(item.rbd)}
+                                                disabled={downloading}
+                                                className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 cursor-pointer disabled:opacity-50 transition-colors"
+                                            />
+                                        </td>
                                         <td className="px-6 py-3">
                                             <span className="px-2 py-1 bg-gray-100 text-gray-800 rounded-lg text-xs font-bold font-mono">
                                                 {item.rbd}
-                                            </span>
+                                             </span>
                                         </td>
                                         <td className="px-6 py-3 font-medium text-gray-900 max-w-[250px] truncate" title={item.nombre}>
                                             {item.nombre}
