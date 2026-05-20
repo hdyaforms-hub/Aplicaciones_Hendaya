@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { buscarRbdAutocomplete, obtenerPaeOnline, guardarRegistrosPae, eliminarRegistrosPae, obtenerDetalleFolio } from './actions'
 
 const nombresMeses = [
@@ -11,6 +11,8 @@ const nombresMeses = [
 export default function CargarPaeClient() {
     // Estados principales
     const [registros, setRegistros] = useState<any[]>([])
+    const [sortField, setSortField] = useState<string>('')
+    const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc')
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const [successMsg, setSuccessMsg] = useState<string | null>(null)
@@ -216,6 +218,57 @@ export default function CargarPaeClient() {
         setLoading(false)
     }
 
+    const handleSort = (field: string) => {
+        if (sortField === field) {
+            setSortDirection(prev => (prev === 'asc' ? 'desc' : 'asc'));
+        } else {
+            setSortField(field);
+            setSortDirection('asc');
+        }
+    };
+
+    const sortedRegistros = useMemo(() => {
+        if (!sortField) return registros;
+
+        return [...registros].sort((a, b) => {
+            let valA = a[sortField];
+            let valB = b[sortField];
+
+            // Caso especial para ordenar por Año y Mes combinado
+            if (sortField === 'ano_mes') {
+                if (a.ano !== b.ano) {
+                    return sortDirection === 'asc' ? a.ano - b.ano : b.ano - a.ano;
+                }
+                return sortDirection === 'asc' ? a.mes - b.mes : b.mes - a.mes;
+            }
+
+            // Normalización para strings
+            if (typeof valA === 'string' && typeof valB === 'string') {
+                return sortDirection === 'asc' 
+                    ? valA.localeCompare(valB)
+                    : valB.localeCompare(valA);
+            }
+
+            // Para valores indefinidos o nulos
+            if (valA === undefined || valA === null) return 1;
+            if (valB === undefined || valB === null) return -1;
+
+            // Números y otros tipos comparables
+            if (valA < valB) return sortDirection === 'asc' ? -1 : 1;
+            if (valA > valB) return sortDirection === 'asc' ? 1 : -1;
+            return 0;
+        });
+    }, [registros, sortField, sortDirection]);
+
+    const renderSortIcon = (field: string) => {
+        if (sortField !== field) {
+            return <span className="text-gray-400 opacity-40 group-hover:opacity-100 ml-1.5 transition-opacity duration-150 font-normal">⇅</span>;
+        }
+        return sortDirection === 'asc' 
+            ? <span className="text-indigo-600 ml-1.5 font-bold animate-in fade-in duration-200">▲</span>
+            : <span className="text-indigo-600 ml-1.5 font-bold animate-in fade-in duration-200">▼</span>;
+    };
+
     return (
         <div className="space-y-6">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
@@ -318,24 +371,64 @@ export default function CargarPaeClient() {
                     <table className="w-full text-left text-sm text-gray-600">
                         <thead className="text-xs text-gray-700 uppercase bg-gray-100 sticky top-0 z-10 font-bold">
                             <tr>
-                                <th className="px-4 py-3">Folio</th>
-                                <th className="px-4 py-3">Licitación</th>
-                                <th className="px-4 py-3">Institución</th>
-                                <th className="px-4 py-3">Año/Mes</th>
-                                <th className="px-4 py-3">RBD</th>
-                                <th className="px-4 py-3">Estrato</th>
-                                <th className="px-4 py-3">Programa</th>
-                                <th className="px-4 py-3">Certificación</th>
-                                <th className="px-4 py-3 text-center">Acción</th>
+                                <th onClick={() => handleSort('folio')} className="px-4 py-3 cursor-pointer select-none hover:bg-gray-200/80 transition-colors group">
+                                    <div className="flex items-center">
+                                        <span>Folio</span>
+                                        {renderSortIcon('folio')}
+                                    </div>
+                                </th>
+                                <th onClick={() => handleSort('licitacion')} className="px-4 py-3 cursor-pointer select-none hover:bg-gray-200/80 transition-colors group">
+                                    <div className="flex items-center">
+                                        <span>Licitación</span>
+                                        {renderSortIcon('licitacion')}
+                                    </div>
+                                </th>
+                                <th onClick={() => handleSort('institucion')} className="px-4 py-3 cursor-pointer select-none hover:bg-gray-200/80 transition-colors group">
+                                    <div className="flex items-center">
+                                        <span>Institución</span>
+                                        {renderSortIcon('institucion')}
+                                    </div>
+                                </th>
+                                <th onClick={() => handleSort('ano_mes')} className="px-4 py-3 cursor-pointer select-none hover:bg-gray-200/80 transition-colors group">
+                                    <div className="flex items-center">
+                                        <span>Año/Mes</span>
+                                        {renderSortIcon('ano_mes')}
+                                    </div>
+                                </th>
+                                <th onClick={() => handleSort('rbd')} className="px-4 py-3 cursor-pointer select-none hover:bg-gray-200/80 transition-colors group">
+                                    <div className="flex items-center">
+                                        <span>RBD</span>
+                                        {renderSortIcon('rbd')}
+                                    </div>
+                                </th>
+                                <th onClick={() => handleSort('estrato')} className="px-4 py-3 cursor-pointer select-none hover:bg-gray-200/80 transition-colors group">
+                                    <div className="flex items-center">
+                                        <span>Estrato</span>
+                                        {renderSortIcon('estrato')}
+                                    </div>
+                                </th>
+                                <th onClick={() => handleSort('programa')} className="px-4 py-3 cursor-pointer select-none hover:bg-gray-200/80 transition-colors group">
+                                    <div className="flex items-center">
+                                        <span>Programa</span>
+                                        {renderSortIcon('programa')}
+                                    </div>
+                                </th>
+                                <th onClick={() => handleSort('certificacion')} className="px-4 py-3 cursor-pointer select-none hover:bg-gray-200/80 transition-colors group">
+                                    <div className="flex items-center">
+                                        <span>Certificación</span>
+                                        {renderSortIcon('certificacion')}
+                                    </div>
+                                </th>
+                                <th className="px-4 py-3 text-center select-none">Acción</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100">
                             {loading ? (
                                 <tr><td colSpan={9} className="px-4 py-10 text-center font-bold text-gray-500">Cargando datos...</td></tr>
-                            ) : registros.length === 0 ? (
+                            ) : sortedRegistros.length === 0 ? (
                                 <tr><td colSpan={9} className="px-4 py-10 text-center font-bold text-gray-500">No se encontraron registros PAE. Sube un archivo ZIP para comenzar.</td></tr>
                             ) : (
-                                registros.map(reg => (
+                                sortedRegistros.map(reg => (
                                     <tr key={reg.id} className="hover:bg-gray-50 transition-colors">
                                         <td className="px-4 py-3">
                                             <button 
