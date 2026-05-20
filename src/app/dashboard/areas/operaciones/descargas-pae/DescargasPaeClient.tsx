@@ -33,26 +33,26 @@ export default function DescargasPaeClient() {
     const bookmarkRef = useRef<HTMLAnchorElement>(null);
     const masterCheckboxRef = useRef<HTMLInputElement>(null);
 
-    // Código JavaScript para el marcador (Bookmarklet)
-    const bookmarkletCode = `javascript:(function(){
-        const cookie = document.cookie;
-        if (!cookie || !cookie.includes('ASPSESSIONID')) {
-            alert('Error: No se detectó una sesión activa en Junaeb. Por favor inicia sesión primero en esta pestaña.');
-            return;
-        }
-        const syncUrl = 'http://localhost:3001/dashboard/areas/operaciones/descargas-pae?cookie=' + encodeURIComponent(cookie);
-        const w = window.open(syncUrl, 'hendaya_sync_popup', 'width=350,height=250,scrollbars=no,resizable=no');
-        if (w) {
-            alert('¡Sesión de Junaeb sincronizada con Hendaya exitosamente!');
-        } else {
-            alert('Por favor, permite ventanas emergentes en esta página para sincronizar tu sesión.');
-        }
-    })();`.replace(/\s+/g, ' ');
-
     // Escuchar la sincronización de cookies mediante URL o localStorage
     useEffect(() => {
-        if (bookmarkRef.current) {
-            bookmarkRef.current.setAttribute('href', bookmarkletCode);
+        if (typeof window !== 'undefined' && bookmarkRef.current) {
+            const origin = window.location.origin;
+            const dynamicBookmarkletCode = `javascript:(function(){
+                const cookie = document.cookie;
+                if (!cookie || !cookie.includes('ASPSESSIONID')) {
+                    alert('Error: No se detectó una sesión activa en Junaeb. Por favor inicia sesión primero en esta pestaña.');
+                    return;
+                }
+                const syncUrl = '${origin}/dashboard/areas/operaciones/descargas-pae?cookie=' + encodeURIComponent(cookie);
+                const w = window.open(syncUrl, 'hendaya_sync_popup', 'width=350,height=250,scrollbars=no,resizable=no');
+                if (w) {
+                    alert('¡Sesión de Junaeb sincronizada con Hendaya exitosamente!');
+                } else {
+                    alert('Por favor, permite ventanas emergentes en esta página para sincronizar tu sesión.');
+                }
+            })();`.replace(/\s+/g, ' ');
+
+            bookmarkRef.current.setAttribute('href', dynamicBookmarkletCode);
         }
 
         // 1. Detectar si entramos desde el mini-popup de sincronización
