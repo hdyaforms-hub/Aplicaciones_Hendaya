@@ -154,12 +154,14 @@ export type IngRacionFormData = {
     onceIng: number
     colacionIng: number
     cenaIng: number
+    tercerServicioIng: number
     totalIng: number
     desayunoAsig: number
     almuerzoAsig: number
     onceAsig: number
     colacionAsig: number
     cenaAsig: number
+    tercerServicioAsig: number
     totalAsig: number
     tasaPreparacion: number
     observacion: string
@@ -205,7 +207,8 @@ export async function getPmpaAssignmentsAndLastRecord(rbd: number, ano: number, 
             almuerzoAsig: 0,
             onceAsig: 0,
             colacionAsig: 0,
-            cenaAsig: 0
+            cenaAsig: 0,
+            tercerServicioAsig: 0
         }
 
         for (const record of pmpaRecords) {
@@ -214,6 +217,7 @@ export async function getPmpaAssignmentsAndLastRecord(rbd: number, ano: number, 
             if (record.servicio === 'O') asignados.onceAsig += record.raceqJunaeb
             if (record.servicio === 'CO') asignados.colacionAsig += record.raceqJunaeb
             if (record.servicio === 'C') asignados.cenaAsig += record.raceqJunaeb
+            if (record.servicio === 'T') asignados.tercerServicioAsig += record.raceqJunaeb
         }
 
         // Consultar si existe un registro específico para esta fecha
@@ -239,6 +243,7 @@ export async function getPmpaAssignmentsAndLastRecord(rbd: number, ano: number, 
                 onceIng: currentRecord.onceIng,
                 colacionIng: currentRecord.colacionIng,
                 cenaIng: currentRecord.cenaIng,
+                tercerServicioIng: currentRecord.tercerServicioIng,
                 observacion: currentRecord.observacion || ''
             } : null,
             ultimaFecha: lastRecord ? lastRecord.fechaIngreso.toISOString() : null
@@ -311,6 +316,7 @@ export async function saveIngRacion(data: IngRacionFormData, forceUpdate: boolea
                     onceIng: data.onceIng,
                     colacionIng: data.colacionIng,
                     cenaIng: data.cenaIng,
+                    tercerServicioIng: data.tercerServicioIng,
                     totalIng: data.totalIng,
                     tasaPreparacion: data.tasaPreparacion,
                     observacion: data.observacion
@@ -336,12 +342,14 @@ export async function saveIngRacion(data: IngRacionFormData, forceUpdate: boolea
                 onceIng: data.onceIng,
                 colacionIng: data.colacionIng,
                 cenaIng: data.cenaIng,
+                tercerServicioIng: data.tercerServicioIng,
                 totalIng: data.totalIng,
                 desayunoAsig: data.desayunoAsig,
                 almuerzoAsig: data.almuerzoAsig,
                 onceAsig: data.onceAsig,
                 colacionAsig: data.colacionAsig,
                 cenaAsig: data.cenaAsig,
+                tercerServicioAsig: data.tercerServicioAsig,
                 totalAsig: data.totalAsig,
                 tasaPreparacion: data.tasaPreparacion,
                 observacion: data.observacion,

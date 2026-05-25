@@ -42,6 +42,12 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
         }
 
+        const isAdmin = session.user?.role?.name === 'Administrador';
+        const hasPermission = session.user?.role?.permissions?.includes('view_operaciones_cargar_pae');
+        if (!isAdmin && !hasPermission) {
+            return NextResponse.json({ error: 'Acceso denegado: Permisos insuficientes' }, { status: 403 });
+        }
+
         const formData = await req.formData();
         const file = formData.get('file') as File;
         

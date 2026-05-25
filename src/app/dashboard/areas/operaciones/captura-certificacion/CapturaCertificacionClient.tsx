@@ -107,6 +107,31 @@ export default function CapturaCertificacionClient() {
         fetchInfo()
     }, [selectedRbd, fecha])
 
+    // Vista previa para cuando no existe un registro guardado aún
+    const handleCalcularPreview = async (customRaciones: number) => {
+        setError('')
+        setSuccessMsg('')
+        if (!selectedRbd || !fecha || !selectedServicio || !selectedPrograma || !selectedArea) {
+            return
+        }
+
+        const result = await getDetalleCertificacion(
+            selectedRbd, 
+            fecha, 
+            selectedServicio, 
+            selectedPrograma, 
+            selectedArea,
+            customRaciones
+        )
+
+        if (result.error) {
+            setError(result.error)
+            setDetalle([])
+        } else if (result.success && result.detalle) {
+            setDetalle(result.detalle)
+        }
+    }
+
     // Actualizar Raciones a Preparar automáticamente cuando se selecciona un servicio, programa y área
     useEffect(() => {
         if (selectedServicio && selectedPrograma && selectedArea) {
@@ -119,7 +144,7 @@ export default function CapturaCertificacionClient() {
                     setRacionesDigitadas(result.header?.racionesDigitadas || 0)
                     setBaseRacionesValue(result.header?.racionesBase || 0)
                     setDetalle(result.detalle || [])
-                    setSuccessMsg(`Este registro ya fue guardado por ${result.header?.usuario} el ${new Date(result.header?.createdAt || '').toLocaleString()}. No se permiten modificaciones.`)
+                    setSuccessMsg(`Este registro ya fue guardado por ${result.header?.usuario} el ${new Date(result.header?.createdAt || '').toLocaleString()}. Puede modificar las raciones a digitar y presionar Calcular para actualizar.`)
                     setError('')
                 } else {
                     setIsSaved(false)
@@ -134,7 +159,7 @@ export default function CapturaCertificacionClient() {
                             setRacionesPreparar(racion.cantidad)
                             setRacionesDigitadas(racion.cantidad)
                             setBaseRacionesValue(racion.cantidad)
-                            handleCalcular(racion.cantidad)
+                            handleCalcularPreview(racion.cantidad)
                         } else {
                             setRacionesPreparar('')
                             setRacionesDigitadas('')
@@ -166,18 +191,32 @@ export default function CapturaCertificacionClient() {
         nextAction()
     }
 
-    const handleCalcular = async (customRaciones?: number | any) => {
+    const handleCalcular = async () => {
         setError('')
         setSuccessMsg('')
         
-        const raciones = typeof customRaciones === 'number' ? customRaciones : Number(racionesDigitadas)
+        const raciones = Number(racionesDigitadas)
+        const base = Number(racionesPreparar)
 
-        if (!selectedRbd || !fecha || !selectedServicio || !selectedPrograma || !selectedArea || raciones === undefined || raciones === null) {
-            // No error if it's just partial
+        if (!selectedRbd || !fecha || !selectedServicio || !selectedPrograma || !selectedArea) {
+            setError('Todos los parámetros son obligatorios.')
+            return
+        }
+
+        if (isNaN(raciones) || raciones <= 0) {
+            setError('Las raciones a digitar deben ser un número mayor a 0.')
+            return
+        }
+
+        // Validación de raciones máximas
+        if (raciones > base) {
+            setError(`No se puede digitar ni guardar más 'Raciones a digitar' (${raciones}) que las 'Raciones Base' (${base}).`)
             return
         }
 
         setLoading(true)
+
+        // Obtener detalles calculados
         const result = await getDetalleCertificacion(
             selectedRbd, 
             fecha, 
@@ -190,8 +229,34 @@ export default function CapturaCertificacionClient() {
         if (result.error) {
             setError(result.error)
             setDetalle([])
-        } else if (result.success && result.detalle) {
-            setDetalle(result.detalle)
+            setLoading(false)
+            return
+        }
+
+        if (result.success && result.detalle) {
+            // Guardar o actualizar en la base de datos
+            const headerData = {
+                rbd: selectedRbd,
+                fecha,
+                servicio: selectedServicio,
+                programa: selectedPrograma,
+                area: selectedArea,
+                racionesBase: base,
+                racionesDigitadas: raciones
+            }
+
+            const saveResult = await saveCapturaCertificacion(headerData, result.detalle)
+
+            if (saveResult.error) {
+                setError(saveResult.error)
+                setDetalle([])
+            } else if (saveResult.success) {
+                setSuccessMsg('Cálculo realizado y guardado correctamente en la BD.')
+                setIsDirty(false)
+                setIsSaved(true)
+                setBaseRacionesValue(base)
+                setDetalle(result.detalle)
+            }
         }
         setLoading(false)
     }
@@ -202,10 +267,18 @@ export default function CapturaCertificacionClient() {
             return
         }
 
+        const racionesActuales = Number(racionesDigitadas)
+        const base = Number(racionesPreparar)
+
+        // Validación de raciones máximas
+        if (racionesActuales > base) {
+            setError(`No se puede guardar más 'Raciones a digitar' (${racionesActuales}) que las 'Raciones Base' (${base}).`)
+            return
+        }
+
         setLoading(true)
 
         // Aseguramos que el detalle tenga los totales calculados con las raciones actuales
-        const racionesActuales = Number(racionesDigitadas)
         const detalleActualizado = detalle.map(d => ({
             ...d,
             grsTotal: Number(d.grsRac) * racionesActuales
@@ -217,7 +290,7 @@ export default function CapturaCertificacionClient() {
             servicio: selectedServicio,
             programa: selectedPrograma,
             area: selectedArea,
-            racionesBase: Number(racionesPreparar),
+            racionesBase: base,
             racionesDigitadas: racionesActuales
         }
 
@@ -229,7 +302,7 @@ export default function CapturaCertificacionClient() {
             setSuccessMsg('Información registrada correctamente en la BD.')
             setIsDirty(false)
             setIsSaved(true)
-            setBaseRacionesValue(Number(racionesPreparar))
+            setBaseRacionesValue(base)
             setDetalle(detalleActualizado) // Actualizar la tabla con lo guardado
         }
         setLoading(false)
@@ -382,32 +455,21 @@ export default function CapturaCertificacionClient() {
                                 setRacionesDigitadas(val)
                                 setIsDirty(val !== racionesPreparar)
                             }}
-                            disabled={isSaved || loading}
+                            disabled={loading}
                             placeholder="Cantidad"
-                            className={`w-full px-4 py-3 rounded-xl border-2 transition-all shadow-inner font-black ${isSaved ? 'bg-gray-50 border-gray-200 text-gray-400' : 'border-green-200 focus:ring-2 focus:ring-green-500 bg-green-50 text-green-900'}`}
+                            className="w-full px-4 py-3 rounded-xl border-2 transition-all shadow-inner font-black border-green-200 focus:ring-2 focus:ring-green-500 bg-green-50 text-green-900 disabled:opacity-50"
                         />
                     </div>
                 </div>
 
                 <div className="flex flex-col gap-3 pt-2">
-                    <div className="flex gap-3">
-                        <button
-                            onClick={() => handleCalcular()}
-                            disabled={loading || !selectedServicio || !selectedPrograma || !selectedArea || !racionesDigitadas || isSaved}
-                            className="flex-1 bg-cyan-600 hover:bg-cyan-700 text-white font-black py-3 px-4 rounded-xl shadow-lg shadow-cyan-200 transition-all active:scale-95 disabled:opacity-50 disabled:shadow-none flex justify-center items-center gap-2"
-                        >
-                            {loading ? 'Calculando...' : '🧮 Calcular'}
-                        </button>
-                        {detalle.length > 0 && !isSaved && (
-                            <button
-                                onClick={handleGuardar}
-                                disabled={loading || isSaved}
-                                className="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-black py-3 px-4 rounded-xl shadow-lg transition-all active:scale-95 disabled:opacity-50 flex justify-center items-center gap-2"
-                            >
-                                💾 Guardar
-                            </button>
-                        )}
-                    </div>
+                    <button
+                        onClick={handleCalcular}
+                        disabled={loading || !selectedServicio || !selectedPrograma || !selectedArea || !racionesDigitadas}
+                        className="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-black py-3 px-4 rounded-xl shadow-lg shadow-cyan-200 transition-all active:scale-95 disabled:opacity-50 disabled:shadow-none flex justify-center items-center gap-2"
+                    >
+                        {loading ? 'Calculando...' : '🧮 Calcular'}
+                    </button>
                     <button
                         onClick={handleNuevo}
                         className="w-full bg-slate-100 hover:bg-slate-200 text-slate-600 font-black py-3 px-4 rounded-xl transition-all active:scale-95 flex justify-center items-center gap-2 border border-slate-200"

@@ -185,24 +185,42 @@ export async function saveCapturaCertificacion(headerData: any, detailData: any[
     }
 
     try {
+        // Buscar si ya existe un registro para los mismos filtros
+        const existing = await prisma.capCertificacionHeader.findFirst({
+            where: {
+                rbd: Number(headerData.rbd),
+                fecha: new Date(headerData.fecha),
+                servicio: String(headerData.servicio),
+                programa: String(headerData.programa),
+                area: String(headerData.area)
+            }
+        })
+
+        if (existing) {
+            // Eliminar el registro anterior (cascada sobre los detalles)
+            await prisma.capCertificacionHeader.delete({
+                where: { id: existing.id }
+            })
+        }
+
         await prisma.capCertificacionHeader.create({
             data: {
-                rbd: headerData.rbd,
+                rbd: Number(headerData.rbd),
                 fecha: new Date(headerData.fecha),
-                servicio: headerData.servicio,
-                programa: headerData.programa,
-                area: headerData.area,
-                racionesBase: headerData.racionesBase || 0,
-                racionesDigitadas: headerData.racionesDigitadas || 0,
-                racionesPreparar: headerData.racionesDigitadas || 0,
+                servicio: String(headerData.servicio),
+                programa: String(headerData.programa),
+                area: String(headerData.area),
+                racionesBase: Number(headerData.racionesBase || 0),
+                racionesDigitadas: Number(headerData.racionesDigitadas || 0),
+                racionesPreparar: Number(headerData.racionesDigitadas || 0),
                 usuario: session.user.username,
                 detalles: {
                     create: detailData.map(d => ({
-                        numeroMinuta: d.numeroMinuta,
-                        nombrePreparacion: d.nombrePreparacion,
-                        nombreProducto: d.nombreProducto,
-                        grsRac: d.grsRac,
-                        grsTotal: d.grsTotal
+                        numeroMinuta: String(d.numeroMinuta),
+                        nombrePreparacion: String(d.nombrePreparacion),
+                        nombreProducto: String(d.nombreProducto),
+                        grsRac: Number(d.grsRac),
+                        grsTotal: Number(d.grsTotal)
                     }))
                 }
             }

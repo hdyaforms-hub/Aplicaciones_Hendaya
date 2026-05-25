@@ -98,7 +98,7 @@ export default function Sidebar({ user }: { user: User }) {
                             ]
                         },
                         {
-                            name: 'Captura de Certificación',
+                            name: 'Cálculo de gramaje',
                             href: '/dashboard/areas/operaciones/captura-certificacion',
                             requiredPermission: 'view_captura_certificacion'
                         },
@@ -126,9 +126,8 @@ export default function Sidebar({ user }: { user: User }) {
                     showCondition: (user: User) => {
                         const isAdmin = user.role.name === 'Administrador' || user.role.name === 'admin';
                         const hasCalidad = user.areas?.some(a => a.nombre.toLowerCase().includes('calidad'));
-                        const hasSucursal = user.sucursales && user.sucursales.length > 0;
                         const hasPerm = user.role.permissions.includes('view_calidad') || user.role.permissions.includes('view_retorno_productos');
-                        return !!(isAdmin || hasCalidad || hasSucursal || hasPerm);
+                        return !!(isAdmin || hasCalidad || hasPerm);
                     },
                     subItems: [
                         { 
@@ -138,9 +137,8 @@ export default function Sidebar({ user }: { user: User }) {
                             showCondition: (user: User) => {
                                 const isAdmin = user.role.name === 'Administrador' || user.role.name === 'admin';
                                 const hasCalidad = user.areas?.some(a => a.nombre.toLowerCase().includes('calidad'));
-                                const hasSucursal = user.sucursales && user.sucursales.length > 0;
                                 const hasPerm = user.role.permissions.includes('view_retorno_productos');
-                                return !!(isAdmin || hasCalidad || hasSucursal || hasPerm);
+                                return !!(isAdmin || hasCalidad || hasPerm);
                             }
                         }
                     ]

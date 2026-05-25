@@ -9,6 +9,12 @@ export async function GET(request: Request) {
             return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
         }
 
+        const isAdmin = session.user.role?.name === 'Administrador';
+        const hasPermission = session.user.role?.permissions?.includes('view_elementos_esenciales');
+        if (!isAdmin && !hasPermission) {
+            return NextResponse.json({ error: 'Acceso denegado: Permisos insuficientes' }, { status: 403 });
+        }
+
         const { searchParams } = new URL(request.url);
         const search = searchParams.get('search') || '';
         const rbdParam = searchParams.get('rbd') || '';
@@ -115,6 +121,12 @@ export async function DELETE(request: Request) {
         const session = await getSession();
         if (!session?.user) {
             return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
+        }
+
+        const isAdmin = session.user.role?.name === 'Administrador';
+        const hasPermission = session.user.role?.permissions?.includes('view_elementos_esenciales');
+        if (!isAdmin && !hasPermission) {
+            return NextResponse.json({ error: 'Acceso denegado: Permisos insuficientes' }, { status: 403 });
         }
 
         const { ids } = await request.json();

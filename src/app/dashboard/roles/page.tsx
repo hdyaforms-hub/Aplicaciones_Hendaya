@@ -38,7 +38,7 @@ export default async function RolesPage() {
         { id: 'view_trabajos_preventivos', name: 'Cargar OT (Trabajos Preventivos / Correctivos)', description: 'Registro y seguimiento de mantenimientos preventivos y correctivos.', category: 'ÁREAS -> OPERACIONES' },
         { id: 'manage_presupuesto', name: 'Presupuesto (Trabajos Preventivos / Correctivos)', description: 'Gestionar el presupuesto anual y visualización trimestral por sucursal.', category: 'ÁREAS -> OPERACIONES' },
         { id: 'view_estado_avance_tp', name: 'Estado de Avance (Trabajos Preventivos)', description: 'Visualizar el progreso semestral de trabajos preventivos.', category: 'ÁREAS -> OPERACIONES' },
-        { id: 'view_captura_certificacion', name: 'Captura de Certificación', description: 'Acceso a la calculadora de brechas e insumos por RBD.', category: 'ÁREAS -> OPERACIONES' },
+        { id: 'view_captura_certificacion', name: 'Cálculo de gramaje', description: 'Acceso a la calculadora de brechas e insumos por RBD.', category: 'ÁREAS -> OPERACIONES' },
         { id: 'view_elementos_esenciales', name: 'Carga de Elementos Esenciales', description: 'Acceso al módulo de elementos esenciales, subir PDFs y exportar a Excel.', category: 'ÁREAS -> OPERACIONES' },
         { id: 'view_operaciones_descargas_pae', name: 'Descargas PAE Online', description: 'Acceso al módulo de descargas automatizadas de informes PAE.', category: 'ÁREAS -> OPERACIONES' },
         { id: 'view_operaciones_cargar_pae', name: 'Carga de PAE', description: 'Acceso al módulo de carga de archivos PAE.', category: 'ÁREAS -> OPERACIONES' },

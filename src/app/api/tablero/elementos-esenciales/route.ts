@@ -6,6 +6,12 @@ export async function GET(request: Request) {
     const session = await getSession();
     if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
+    const isAdmin = session.user?.role?.name === 'Administrador';
+    const hasPermission = session.user?.role?.permissions?.includes('view_elementos_esenciales');
+    if (!isAdmin && !hasPermission) {
+        return NextResponse.json({ error: 'Acceso denegado: Permisos insuficientes' }, { status: 403 });
+    }
+
     const { searchParams } = new URL(request.url);
     const licitacion = searchParams.get('licitacion');
     const rbd = searchParams.get('rbd');

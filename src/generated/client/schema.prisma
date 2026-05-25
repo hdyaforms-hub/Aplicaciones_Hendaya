@@ -85,12 +85,14 @@ model IngRacion {
   onceIng               Int
   colacionIng           Int
   cenaIng               Int
+  tercerServicioIng     Int      @default(0)
   totalIng              Int
   desayunoAsig          Int
   almuerzoAsig          Int
   onceAsig              Int
   colacionAsig          Int
   cenaAsig              Int
+  tercerServicioAsig    Int      @default(0)
   totalAsig             Int
   tasaPreparacion       Float
   observacion           String

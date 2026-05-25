@@ -9819,12 +9819,14 @@ export namespace Prisma {
     onceIng: number | null
     colacionIng: number | null
     cenaIng: number | null
+    tercerServicioIng: number | null
     totalIng: number | null
     desayunoAsig: number | null
     almuerzoAsig: number | null
     onceAsig: number | null
     colacionAsig: number | null
     cenaAsig: number | null
+    tercerServicioAsig: number | null
     totalAsig: number | null
     tasaPreparacion: number | null
   }
@@ -9839,12 +9841,14 @@ export namespace Prisma {
     onceIng: number | null
     colacionIng: number | null
     cenaIng: number | null
+    tercerServicioIng: number | null
     totalIng: number | null
     desayunoAsig: number | null
     almuerzoAsig: number | null
     onceAsig: number | null
     colacionAsig: number | null
     cenaAsig: number | null
+    tercerServicioAsig: number | null
     totalAsig: number | null
     tasaPreparacion: number | null
   }
@@ -9867,12 +9871,14 @@ export namespace Prisma {
     onceIng: number | null
     colacionIng: number | null
     cenaIng: number | null
+    tercerServicioIng: number | null
     totalIng: number | null
     desayunoAsig: number | null
     almuerzoAsig: number | null
     onceAsig: number | null
     colacionAsig: number | null
     cenaAsig: number | null
+    tercerServicioAsig: number | null
     totalAsig: number | null
     tasaPreparacion: number | null
     observacion: string | null
@@ -9896,12 +9902,14 @@ export namespace Prisma {
     onceIng: number | null
     colacionIng: number | null
     cenaIng: number | null
+    tercerServicioIng: number | null
     totalIng: number | null
     desayunoAsig: number | null
     almuerzoAsig: number | null
     onceAsig: number | null
     colacionAsig: number | null
     cenaAsig: number | null
+    tercerServicioAsig: number | null
     totalAsig: number | null
     tasaPreparacion: number | null
     observacion: string | null
@@ -9925,12 +9933,14 @@ export namespace Prisma {
     onceIng: number
     colacionIng: number
     cenaIng: number
+    tercerServicioIng: number
     totalIng: number
     desayunoAsig: number
     almuerzoAsig: number
     onceAsig: number
     colacionAsig: number
     cenaAsig: number
+    tercerServicioAsig: number
     totalAsig: number
     tasaPreparacion: number
     observacion: number
@@ -9948,12 +9958,14 @@ export namespace Prisma {
     onceIng?: true
     colacionIng?: true
     cenaIng?: true
+    tercerServicioIng?: true
     totalIng?: true
     desayunoAsig?: true
     almuerzoAsig?: true
     onceAsig?: true
     colacionAsig?: true
     cenaAsig?: true
+    tercerServicioAsig?: true
     totalAsig?: true
     tasaPreparacion?: true
   }
@@ -9968,12 +9980,14 @@ export namespace Prisma {
     onceIng?: true
     colacionIng?: true
     cenaIng?: true
+    tercerServicioIng?: true
     totalIng?: true
     desayunoAsig?: true
     almuerzoAsig?: true
     onceAsig?: true
     colacionAsig?: true
     cenaAsig?: true
+    tercerServicioAsig?: true
     totalAsig?: true
     tasaPreparacion?: true
   }
@@ -9996,12 +10010,14 @@ export namespace Prisma {
     onceIng?: true
     colacionIng?: true
     cenaIng?: true
+    tercerServicioIng?: true
     totalIng?: true
     desayunoAsig?: true
     almuerzoAsig?: true
     onceAsig?: true
     colacionAsig?: true
     cenaAsig?: true
+    tercerServicioAsig?: true
     totalAsig?: true
     tasaPreparacion?: true
     observacion?: true
@@ -10025,12 +10041,14 @@ export namespace Prisma {
     onceIng?: true
     colacionIng?: true
     cenaIng?: true
+    tercerServicioIng?: true
     totalIng?: true
     desayunoAsig?: true
     almuerzoAsig?: true
     onceAsig?: true
     colacionAsig?: true
     cenaAsig?: true
+    tercerServicioAsig?: true
     totalAsig?: true
     tasaPreparacion?: true
     observacion?: true
@@ -10054,12 +10072,14 @@ export namespace Prisma {
     onceIng?: true
     colacionIng?: true
     cenaIng?: true
+    tercerServicioIng?: true
     totalIng?: true
     desayunoAsig?: true
     almuerzoAsig?: true
     onceAsig?: true
     colacionAsig?: true
     cenaAsig?: true
+    tercerServicioAsig?: true
     totalAsig?: true
     tasaPreparacion?: true
     observacion?: true
@@ -10170,12 +10190,14 @@ export namespace Prisma {
     onceIng: number
     colacionIng: number
     cenaIng: number
+    tercerServicioIng: number
     totalIng: number
     desayunoAsig: number
     almuerzoAsig: number
     onceAsig: number
     colacionAsig: number
     cenaAsig: number
+    tercerServicioAsig: number
     totalAsig: number
     tasaPreparacion: number
     observacion: string
@@ -10218,12 +10240,14 @@ export namespace Prisma {
     onceIng?: boolean
     colacionIng?: boolean
     cenaIng?: boolean
+    tercerServicioIng?: boolean
     totalIng?: boolean
     desayunoAsig?: boolean
     almuerzoAsig?: boolean
     onceAsig?: boolean
     colacionAsig?: boolean
     cenaAsig?: boolean
+    tercerServicioAsig?: boolean
     totalAsig?: boolean
     tasaPreparacion?: boolean
     observacion?: boolean
@@ -10247,12 +10271,14 @@ export namespace Prisma {
     onceIng?: boolean
     colacionIng?: boolean
     cenaIng?: boolean
+    tercerServicioIng?: boolean
     totalIng?: boolean
     desayunoAsig?: boolean
     almuerzoAsig?: boolean
     onceAsig?: boolean
     colacionAsig?: boolean
     cenaAsig?: boolean
+    tercerServicioAsig?: boolean
     totalAsig?: boolean
     tasaPreparacion?: boolean
     observacion?: boolean
@@ -10276,12 +10302,14 @@ export namespace Prisma {
     onceIng?: boolean
     colacionIng?: boolean
     cenaIng?: boolean
+    tercerServicioIng?: boolean
     totalIng?: boolean
     desayunoAsig?: boolean
     almuerzoAsig?: boolean
     onceAsig?: boolean
     colacionAsig?: boolean
     cenaAsig?: boolean
+    tercerServicioAsig?: boolean
     totalAsig?: boolean
     tasaPreparacion?: boolean
     observacion?: boolean
@@ -10309,12 +10337,14 @@ export namespace Prisma {
       onceIng: number
       colacionIng: number
       cenaIng: number
+      tercerServicioIng: number
       totalIng: number
       desayunoAsig: number
       almuerzoAsig: number
       onceAsig: number
       colacionAsig: number
       cenaAsig: number
+      tercerServicioAsig: number
       totalAsig: number
       tasaPreparacion: number
       observacion: string
@@ -10728,12 +10758,14 @@ export namespace Prisma {
     readonly onceIng: FieldRef<"IngRacion", 'Int'>
     readonly colacionIng: FieldRef<"IngRacion", 'Int'>
     readonly cenaIng: FieldRef<"IngRacion", 'Int'>
+    readonly tercerServicioIng: FieldRef<"IngRacion", 'Int'>
     readonly totalIng: FieldRef<"IngRacion", 'Int'>
     readonly desayunoAsig: FieldRef<"IngRacion", 'Int'>
     readonly almuerzoAsig: FieldRef<"IngRacion", 'Int'>
     readonly onceAsig: FieldRef<"IngRacion", 'Int'>
     readonly colacionAsig: FieldRef<"IngRacion", 'Int'>
     readonly cenaAsig: FieldRef<"IngRacion", 'Int'>
+    readonly tercerServicioAsig: FieldRef<"IngRacion", 'Int'>
     readonly totalAsig: FieldRef<"IngRacion", 'Int'>
     readonly tasaPreparacion: FieldRef<"IngRacion", 'Float'>
     readonly observacion: FieldRef<"IngRacion", 'String'>
@@ -57827,12 +57859,14 @@ export namespace Prisma {
     onceIng: 'onceIng',
     colacionIng: 'colacionIng',
     cenaIng: 'cenaIng',
+    tercerServicioIng: 'tercerServicioIng',
     totalIng: 'totalIng',
     desayunoAsig: 'desayunoAsig',
     almuerzoAsig: 'almuerzoAsig',
     onceAsig: 'onceAsig',
     colacionAsig: 'colacionAsig',
     cenaAsig: 'cenaAsig',
+    tercerServicioAsig: 'tercerServicioAsig',
     totalAsig: 'totalAsig',
     tasaPreparacion: 'tasaPreparacion',
     observacion: 'observacion'
@@ -59081,12 +59115,14 @@ export namespace Prisma {
     onceIng?: IntFilter<"IngRacion"> | number
     colacionIng?: IntFilter<"IngRacion"> | number
     cenaIng?: IntFilter<"IngRacion"> | number
+    tercerServicioIng?: IntFilter<"IngRacion"> | number
     totalIng?: IntFilter<"IngRacion"> | number
     desayunoAsig?: IntFilter<"IngRacion"> | number
     almuerzoAsig?: IntFilter<"IngRacion"> | number
     onceAsig?: IntFilter<"IngRacion"> | number
     colacionAsig?: IntFilter<"IngRacion"> | number
     cenaAsig?: IntFilter<"IngRacion"> | number
+    tercerServicioAsig?: IntFilter<"IngRacion"> | number
     totalAsig?: IntFilter<"IngRacion"> | number
     tasaPreparacion?: FloatFilter<"IngRacion"> | number
     observacion?: StringFilter<"IngRacion"> | string
@@ -59110,12 +59146,14 @@ export namespace Prisma {
     onceIng?: SortOrder
     colacionIng?: SortOrder
     cenaIng?: SortOrder
+    tercerServicioIng?: SortOrder
     totalIng?: SortOrder
     desayunoAsig?: SortOrder
     almuerzoAsig?: SortOrder
     onceAsig?: SortOrder
     colacionAsig?: SortOrder
     cenaAsig?: SortOrder
+    tercerServicioAsig?: SortOrder
     totalAsig?: SortOrder
     tasaPreparacion?: SortOrder
     observacion?: SortOrder
@@ -59142,12 +59180,14 @@ export namespace Prisma {
     onceIng?: IntFilter<"IngRacion"> | number
     colacionIng?: IntFilter<"IngRacion"> | number
     cenaIng?: IntFilter<"IngRacion"> | number
+    tercerServicioIng?: IntFilter<"IngRacion"> | number
     totalIng?: IntFilter<"IngRacion"> | number
     desayunoAsig?: IntFilter<"IngRacion"> | number
     almuerzoAsig?: IntFilter<"IngRacion"> | number
     onceAsig?: IntFilter<"IngRacion"> | number
     colacionAsig?: IntFilter<"IngRacion"> | number
     cenaAsig?: IntFilter<"IngRacion"> | number
+    tercerServicioAsig?: IntFilter<"IngRacion"> | number
     totalAsig?: IntFilter<"IngRacion"> | number
     tasaPreparacion?: FloatFilter<"IngRacion"> | number
     observacion?: StringFilter<"IngRacion"> | string
@@ -59171,12 +59211,14 @@ export namespace Prisma {
     onceIng?: SortOrder
     colacionIng?: SortOrder
     cenaIng?: SortOrder
+    tercerServicioIng?: SortOrder
     totalIng?: SortOrder
     desayunoAsig?: SortOrder
     almuerzoAsig?: SortOrder
     onceAsig?: SortOrder
     colacionAsig?: SortOrder
     cenaAsig?: SortOrder
+    tercerServicioAsig?: SortOrder
     totalAsig?: SortOrder
     tasaPreparacion?: SortOrder
     observacion?: SortOrder
@@ -59208,12 +59250,14 @@ export namespace Prisma {
     onceIng?: IntWithAggregatesFilter<"IngRacion"> | number
     colacionIng?: IntWithAggregatesFilter<"IngRacion"> | number
     cenaIng?: IntWithAggregatesFilter<"IngRacion"> | number
+    tercerServicioIng?: IntWithAggregatesFilter<"IngRacion"> | number
     totalIng?: IntWithAggregatesFilter<"IngRacion"> | number
     desayunoAsig?: IntWithAggregatesFilter<"IngRacion"> | number
     almuerzoAsig?: IntWithAggregatesFilter<"IngRacion"> | number
     onceAsig?: IntWithAggregatesFilter<"IngRacion"> | number
     colacionAsig?: IntWithAggregatesFilter<"IngRacion"> | number
     cenaAsig?: IntWithAggregatesFilter<"IngRacion"> | number
+    tercerServicioAsig?: IntWithAggregatesFilter<"IngRacion"> | number
     totalAsig?: IntWithAggregatesFilter<"IngRacion"> | number
     tasaPreparacion?: FloatWithAggregatesFilter<"IngRacion"> | number
     observacion?: StringWithAggregatesFilter<"IngRacion"> | string
@@ -63499,12 +63543,14 @@ export namespace Prisma {
     onceIng: number
     colacionIng: number
     cenaIng: number
+    tercerServicioIng?: number
     totalIng: number
     desayunoAsig: number
     almuerzoAsig: number
     onceAsig: number
     colacionAsig: number
     cenaAsig: number
+    tercerServicioAsig?: number
     totalAsig: number
     tasaPreparacion: number
     observacion: string
@@ -63528,12 +63574,14 @@ export namespace Prisma {
     onceIng: number
     colacionIng: number
     cenaIng: number
+    tercerServicioIng?: number
     totalIng: number
     desayunoAsig: number
     almuerzoAsig: number
     onceAsig: number
     colacionAsig: number
     cenaAsig: number
+    tercerServicioAsig?: number
     totalAsig: number
     tasaPreparacion: number
     observacion: string
@@ -63557,12 +63605,14 @@ export namespace Prisma {
     onceIng?: IntFieldUpdateOperationsInput | number
     colacionIng?: IntFieldUpdateOperationsInput | number
     cenaIng?: IntFieldUpdateOperationsInput | number
+    tercerServicioIng?: IntFieldUpdateOperationsInput | number
     totalIng?: IntFieldUpdateOperationsInput | number
     desayunoAsig?: IntFieldUpdateOperationsInput | number
     almuerzoAsig?: IntFieldUpdateOperationsInput | number
     onceAsig?: IntFieldUpdateOperationsInput | number
     colacionAsig?: IntFieldUpdateOperationsInput | number
     cenaAsig?: IntFieldUpdateOperationsInput | number
+    tercerServicioAsig?: IntFieldUpdateOperationsInput | number
     totalAsig?: IntFieldUpdateOperationsInput | number
     tasaPreparacion?: FloatFieldUpdateOperationsInput | number
     observacion?: StringFieldUpdateOperationsInput | string
@@ -63586,12 +63636,14 @@ export namespace Prisma {
     onceIng?: IntFieldUpdateOperationsInput | number
     colacionIng?: IntFieldUpdateOperationsInput | number
     cenaIng?: IntFieldUpdateOperationsInput | number
+    tercerServicioIng?: IntFieldUpdateOperationsInput | number
     totalIng?: IntFieldUpdateOperationsInput | number
     desayunoAsig?: IntFieldUpdateOperationsInput | number
     almuerzoAsig?: IntFieldUpdateOperationsInput | number
     onceAsig?: IntFieldUpdateOperationsInput | number
     colacionAsig?: IntFieldUpdateOperationsInput | number
     cenaAsig?: IntFieldUpdateOperationsInput | number
+    tercerServicioAsig?: IntFieldUpdateOperationsInput | number
     totalAsig?: IntFieldUpdateOperationsInput | number
     tasaPreparacion?: FloatFieldUpdateOperationsInput | number
     observacion?: StringFieldUpdateOperationsInput | string
@@ -63615,12 +63667,14 @@ export namespace Prisma {
     onceIng: number
     colacionIng: number
     cenaIng: number
+    tercerServicioIng?: number
     totalIng: number
     desayunoAsig: number
     almuerzoAsig: number
     onceAsig: number
     colacionAsig: number
     cenaAsig: number
+    tercerServicioAsig?: number
     totalAsig: number
     tasaPreparacion: number
     observacion: string
@@ -63644,12 +63698,14 @@ export namespace Prisma {
     onceIng?: IntFieldUpdateOperationsInput | number
     colacionIng?: IntFieldUpdateOperationsInput | number
     cenaIng?: IntFieldUpdateOperationsInput | number
+    tercerServicioIng?: IntFieldUpdateOperationsInput | number
     totalIng?: IntFieldUpdateOperationsInput | number
     desayunoAsig?: IntFieldUpdateOperationsInput | number
     almuerzoAsig?: IntFieldUpdateOperationsInput | number
     onceAsig?: IntFieldUpdateOperationsInput | number
     colacionAsig?: IntFieldUpdateOperationsInput | number
     cenaAsig?: IntFieldUpdateOperationsInput | number
+    tercerServicioAsig?: IntFieldUpdateOperationsInput | number
     totalAsig?: IntFieldUpdateOperationsInput | number
     tasaPreparacion?: FloatFieldUpdateOperationsInput | number
     observacion?: StringFieldUpdateOperationsInput | string
@@ -63673,12 +63729,14 @@ export namespace Prisma {
     onceIng?: IntFieldUpdateOperationsInput | number
     colacionIng?: IntFieldUpdateOperationsInput | number
     cenaIng?: IntFieldUpdateOperationsInput | number
+    tercerServicioIng?: IntFieldUpdateOperationsInput | number
     totalIng?: IntFieldUpdateOperationsInput | number
     desayunoAsig?: IntFieldUpdateOperationsInput | number
     almuerzoAsig?: IntFieldUpdateOperationsInput | number
     onceAsig?: IntFieldUpdateOperationsInput | number
     colacionAsig?: IntFieldUpdateOperationsInput | number
     cenaAsig?: IntFieldUpdateOperationsInput | number
+    tercerServicioAsig?: IntFieldUpdateOperationsInput | number
     totalAsig?: IntFieldUpdateOperationsInput | number
     tasaPreparacion?: FloatFieldUpdateOperationsInput | number
     observacion?: StringFieldUpdateOperationsInput | string
@@ -68548,12 +68606,14 @@ export namespace Prisma {
     onceIng?: SortOrder
     colacionIng?: SortOrder
     cenaIng?: SortOrder
+    tercerServicioIng?: SortOrder
     totalIng?: SortOrder
     desayunoAsig?: SortOrder
     almuerzoAsig?: SortOrder
     onceAsig?: SortOrder
     colacionAsig?: SortOrder
     cenaAsig?: SortOrder
+    tercerServicioAsig?: SortOrder
     totalAsig?: SortOrder
     tasaPreparacion?: SortOrder
     observacion?: SortOrder
@@ -68569,12 +68629,14 @@ export namespace Prisma {
     onceIng?: SortOrder
     colacionIng?: SortOrder
     cenaIng?: SortOrder
+    tercerServicioIng?: SortOrder
     totalIng?: SortOrder
     desayunoAsig?: SortOrder
     almuerzoAsig?: SortOrder
     onceAsig?: SortOrder
     colacionAsig?: SortOrder
     cenaAsig?: SortOrder
+    tercerServicioAsig?: SortOrder
     totalAsig?: SortOrder
     tasaPreparacion?: SortOrder
   }
@@ -68597,12 +68659,14 @@ export namespace Prisma {
     onceIng?: SortOrder
     colacionIng?: SortOrder
     cenaIng?: SortOrder
+    tercerServicioIng?: SortOrder
     totalIng?: SortOrder
     desayunoAsig?: SortOrder
     almuerzoAsig?: SortOrder
     onceAsig?: SortOrder
     colacionAsig?: SortOrder
     cenaAsig?: SortOrder
+    tercerServicioAsig?: SortOrder
     totalAsig?: SortOrder
     tasaPreparacion?: SortOrder
     observacion?: SortOrder
@@ -68626,12 +68690,14 @@ export namespace Prisma {
     onceIng?: SortOrder
     colacionIng?: SortOrder
     cenaIng?: SortOrder
+    tercerServicioIng?: SortOrder
     totalIng?: SortOrder
     desayunoAsig?: SortOrder
     almuerzoAsig?: SortOrder
     onceAsig?: SortOrder
     colacionAsig?: SortOrder
     cenaAsig?: SortOrder
+    tercerServicioAsig?: SortOrder
     totalAsig?: SortOrder
     tasaPreparacion?: SortOrder
     observacion?: SortOrder
@@ -68647,12 +68713,14 @@ export namespace Prisma {
     onceIng?: SortOrder
     colacionIng?: SortOrder
     cenaIng?: SortOrder
+    tercerServicioIng?: SortOrder
     totalIng?: SortOrder
     desayunoAsig?: SortOrder
     almuerzoAsig?: SortOrder
     onceAsig?: SortOrder
     colacionAsig?: SortOrder
     cenaAsig?: SortOrder
+    tercerServicioAsig?: SortOrder
     totalAsig?: SortOrder
     tasaPreparacion?: SortOrder
   }

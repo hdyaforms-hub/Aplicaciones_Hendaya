@@ -16,7 +16,7 @@ export default async function CapturaCertificacionPage() {
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
                     <h2 className="text-2xl font-black text-gray-900 tracking-tight flex items-center gap-2">
-                        <span className="text-3xl">📋</span> Captura de Certificación
+                        <span className="text-3xl">📋</span> Cálculo de gramaje
                     </h2>
                     <p className="text-gray-500 font-bold text-sm ml-1">Cálculo de insumos y brechas por RBD</p>
                 </div>

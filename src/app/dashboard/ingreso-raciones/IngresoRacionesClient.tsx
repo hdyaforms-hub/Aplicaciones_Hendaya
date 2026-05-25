@@ -37,6 +37,7 @@ export default function IngresoRacionesClient() {
     const [onceIng, setOnceIng] = useState<number | ''>('')
     const [colacionIng, setColacionIng] = useState<number | ''>('')
     const [cenaIng, setCenaIng] = useState<number | ''>('')
+    const [tercerServicioIng, setTercerServicioIng] = useState<number | ''>('')
     const [observacion, setObservacion] = useState('')
 
     const [asignados, setAsignados] = useState({
@@ -44,7 +45,8 @@ export default function IngresoRacionesClient() {
         almuerzoAsig: 0,
         onceAsig: 0,
         colacionAsig: 0,
-        cenaAsig: 0
+        cenaAsig: 0,
+        tercerServicioAsig: 0
     })
     const [asignadosLoading, setAsignadosLoading] = useState(false)
     const [ultimaFecha, setUltimaFecha] = useState<string | null>(null)
@@ -60,8 +62,8 @@ export default function IngresoRacionesClient() {
     const searchRef = useRef<HTMLDivElement>(null)
 
     // Calculations
-    const totalIng = (Number(desayunoIng) || 0) + (Number(almuerzoIng) || 0) + (Number(onceIng) || 0) + (Number(colacionIng) || 0) + (Number(cenaIng) || 0)
-    const totalAsig = asignados.desayunoAsig + asignados.almuerzoAsig + asignados.onceAsig + asignados.colacionAsig + asignados.cenaAsig
+    const totalIng = (Number(desayunoIng) || 0) + (Number(almuerzoIng) || 0) + (Number(onceIng) || 0) + (Number(colacionIng) || 0) + (Number(cenaIng) || 0) + (Number(tercerServicioIng) || 0)
+    const totalAsig = asignados.desayunoAsig + asignados.almuerzoAsig + asignados.onceAsig + asignados.colacionAsig + asignados.cenaAsig + asignados.tercerServicioAsig
     const tasaPreparacion = totalAsig > 0 ? (totalIng / totalAsig) : 0
 
     // 1. Obtener Geolocalización al cargar
@@ -198,13 +200,14 @@ export default function IngresoRacionesClient() {
                 const res = await getPmpaAssignmentsAndLastRecord(selectedColegio.colRBD, year, month, selectedPrograma, selectedEstrato, fechaTraba)
                 if (res.error) {
                     setAsignacionesError(res.error)
-                    setAsignados({ desayunoAsig: 0, almuerzoAsig: 0, onceAsig: 0, colacionAsig: 0, cenaAsig: 0 })
+                    setAsignados({ desayunoAsig: 0, almuerzoAsig: 0, onceAsig: 0, colacionAsig: 0, cenaAsig: 0, tercerServicioAsig: 0 })
                     setUltimaFecha(null)
                     setDesayunoIng('')
                     setAlmuerzoIng('')
                     setOnceIng('')
                     setColacionIng('')
                     setCenaIng('')
+                    setTercerServicioIng('')
                     setObservacion('')
                 } else if (res.asignados) {
                     setAsignacionesError('')
@@ -217,6 +220,7 @@ export default function IngresoRacionesClient() {
                         setOnceIng(res.currentRecord.onceIng)
                         setColacionIng(res.currentRecord.colacionIng)
                         setCenaIng(res.currentRecord.cenaIng)
+                        setTercerServicioIng(res.currentRecord.tercerServicioIng)
                         setObservacion(res.currentRecord.observacion)
                     } else {
                         setDesayunoIng('')
@@ -224,12 +228,13 @@ export default function IngresoRacionesClient() {
                         setOnceIng('')
                         setColacionIng('')
                         setCenaIng('')
+                        setTercerServicioIng('')
                         setObservacion('')
                     }
                 }
                 setAsignadosLoading(false)
             } else {
-                setAsignados({ desayunoAsig: 0, almuerzoAsig: 0, onceAsig: 0, colacionAsig: 0, cenaAsig: 0 })
+                setAsignados({ desayunoAsig: 0, almuerzoAsig: 0, onceAsig: 0, colacionAsig: 0, cenaAsig: 0, tercerServicioAsig: 0 })
                 setUltimaFecha(null)
             }
         }
@@ -259,12 +264,14 @@ export default function IngresoRacionesClient() {
             onceIng: Number(onceIng) || 0,
             colacionIng: Number(colacionIng) || 0,
             cenaIng: Number(cenaIng) || 0,
+            tercerServicioIng: Number(tercerServicioIng) || 0,
             totalIng,
             desayunoAsig: asignados.desayunoAsig,
             almuerzoAsig: asignados.almuerzoAsig,
             onceAsig: asignados.onceAsig,
             colacionAsig: asignados.colacionAsig,
             cenaAsig: asignados.cenaAsig,
+            tercerServicioAsig: asignados.tercerServicioAsig,
             totalAsig,
             tasaPreparacion: Number(tasaPreparacion.toFixed(4)),
             observacion: observacion || ''
@@ -532,6 +539,13 @@ export default function IngresoRacionesClient() {
                                         <input type="number" value={cenaIng} onChange={e => setCenaIng(e.target.value === '' ? '' : parseInt(e.target.value))} className="w-full text-center px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:outline-none" min="0" />
                                     </td>
                                     <td className="px-4 py-2 border-l border-gray-200 text-center text-gray-500 bg-gray-50/50">{asignados.cenaAsig}</td>
+                                </tr>
+                                <tr>
+                                    <td className="px-4 py-4 flex items-center gap-2"><span>🏷️</span> Tercer Servicio</td>
+                                    <td className="px-4 py-2">
+                                        <input type="number" value={tercerServicioIng} onChange={e => setTercerServicioIng(e.target.value === '' ? '' : parseInt(e.target.value))} className="w-full text-center px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:outline-none" min="0" />
+                                    </td>
+                                    <td className="px-4 py-2 border-l border-gray-200 text-center text-gray-500 bg-gray-50/50">{asignados.tercerServicioAsig}</td>
                                 </tr>
 
                                 {/* Resultados y Resumenes */}

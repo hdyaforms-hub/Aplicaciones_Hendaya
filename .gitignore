@@ -51,3 +51,7 @@ next-env.d.ts
 /check_perms.js
 /update_admin.js
 /check_db_config.ts
+
+# uploads
+/public/uploads
+

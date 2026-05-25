@@ -363,3 +363,68 @@ en la pantalla de tablero y avances "avance PMPA" debes ajustarte a la data nuev
 En esta nueva pantalla debes traer todos folios (algo parecido a la imagen 1 adjunta), pero solo debes traer los folios de cuyos documentos tengan como detalle NC = X ya que son estos los item que no cumplen y deben ser calculados según las formulas hecha en el modulo de "Formulas de Aspecto EE", si a la formula le falta un dato de entrada (Palabra reservada que espera información de ingreso, debe informar en esta pantalla que falta información por agregar, asi también debe informar si el folio no tiene cargado el pmpa que debe leer para calcular, también debe tener en la cabecera los mismos filtros de la "Carga de Elementos Esenciales" y al lado una caja de texto con el monto total calculado y debe tener un botón de calcular todos los folios y en cada folio también debe tener un calcular si quiere calcular un solo folio, también debo poder ver el pdf (dejar columna archivo), al hacerle click al folio debe mostrar el mismo cuadro que en la imagen 2 pero debe tener las cajas de texto de las palabras reservadas esperando el ingreso de esta información para terminar el calculo, aquí solo debe mostrar los aspectos que son NC = X, los otros aspectos no se deben considerar, y si por algún motivo existe aun aspecto que no tenga X en ninguno de sus tres opciones (CO, NC, NA) también debería mostrarlo e informar al usuario que existe aspecto incompleto a calcular al lado del botón Ver PDF Original podrías colocar el botón calcular, una vez que este dato este completo toda esta información se debería guardar en una nueva o nuevas tablas en la base de datos, para no tener que estar llenando siempre esta información, la tabla llamala o llamalas Multas_Elementos_Esenciales y si ocupas 2 tablas llamalas Multas_Elementos_Esenciales_Cab y Multas_Elementos_Esenciales_Det
 
 /***********************************************************************************/
+
+Necesito un nuevo modulo dentro de Areas\Operaciones\ este nuevo modulo se debe llamar "Descargas Pae Online", básate o copia el código e idea del proyecto que esta en la ruta "D:\Programas\Descarga PaeOnline", ahora en vez de leer un Excel con las rutas de las url tu debes crearlas dentro del sistema las url son:
+JUNAEB:
+https://pae.junaeb.cl/reportes/pdf/informePDFRBD.asp?month=<Mes a procesar>&iYear=<Año a Procesar>&tipo=1&RBD=<RBD a Procesar>
+	Ejemplo :https://pae.junaeb.cl/reportes/pdf/informePDFRBD.asp?month=4&iYear=2026&tipo=1&RBD=421
+
+JUNJI:
+https://pae.junaeb.cl/reportes/pdf/informePDFRBD.asp?month=<Mes a procesar>&iYear=<año a procesar>&tipo=1&RBD=110011<RBD a procesar
+	Ejemplo: https://pae.junaeb.cl/reportes/pdf/informePDFRBD.asp?month=4&iYear=2026&tipo=1&RBD=110011880564
+
+El año, mes e institución (Junji / Junaeb) se debe seleccionar por pantalla y el rbd debes ir a buscarlos todos los junaeb y Junji (Tabla colegios)dependiendo la institución a descargar (si es junaeb) solo debes descargar la url junaeb y si es Junji solo debes descargar Junji
+
+estos datos debe solicitarlos antes de comenzar la descarga.
+También debes considerar los roles y perfiles en este nuevo modulo
+debes crear una tabla en donde debes dejar registro del o los documentos descargados
+
+/***********************************************************************************/
+
+Necesito un nuevo modulo dentro de Areas\Operaciones\ este nuevo modulo se debe llamar "Cargar PaeOnline" (recuerda que debes crear los privilegios de acceso de este nuevo modulo en roles y permisos).
+Esta aplicación debe leer el contenido de los archivos .zip que descarga el modulo "Descargas PAE Online".
+En resumen debe leer los archivos PDF y todas las hojas del PDF, pero solo debes considerar las que cumplan con el formato de carga. Debe leer todo lo que marque en amarillo en la imagen1 que te adjunto. y debes rescatar toda la información que esta dentro del cuadro que también esta en la imagen1.
+esta información debes almacenarlas dentro de 2 tablas las cuales son
+PaeOnlineCab --> toda la información que esta en color amarillo
+PaeOnlineDet --> toda la información que esta en el cuadro rojo
+El modelo de datos es el siguiente
+
+PaeOnlineCab
+	Institución --> (esta en la cabecera del archivo dice: "Formulario JUNAEB Programa Alimentación Escolar" aquí debes rescatar JUNAEB
+	Mes --> (También esta en la cabecera del archivo y dice normalmente: Período Informado Enero 2026) aquí debes rescatar Enero y lo debes transcribir con su valor numérico por ende debe guardarse en la base de datos con valor 1
+	Año --> (También esta en la cabecera del archivo y dice normalmente: Período Informado Enero 2026) aquí debes rescatar 2026
+	Folio --> esta en la parte superior derecha y debes rescatar el valor numérico que tiene después de la palabra folio
+	Establecimiento --> debes rescatar el valor numérico que tiene después de la palabra Establecimiento:
+	Comuna --> debes rescatar el valor numérico que tiene después de la palabra Comuna: 
+	RBD --> debes rescatar el valor numérico que tiene después de la palabra RBD:
+	Estrato --> debes rescatar el valor numérico que tiene después de la palabra Estrato: y antes del paréntesis, ejemplo: 182 (MEJOR NIÑEZ) en este caso debes rescatar 182
+	Programa --> debes rescatar el valor numérico que tiene después de la palabra Programa:S-309 y antes del paréntesis, ejemplo: S-309 (S 309 CALORIAS) en este caso debes rescatar S-309
+	Licitacion --> debes rescatar el valor numérico que tiene después de la palabra Licitación:
+	Certificacion --> debes rescatar la informacion que esta a continuación de "Certificación Diaria de Raciones" Ejemplo: dice en el pdf: "Certificación Diaria de Raciones D/O DESAYUNO U ONCE" en este caso debes guardar "D/O DESAYUNO U ONCE"
+
+PaeOnlineDet
+	Dia 		--> Int
+	Ser_Completas 	--> Float
+	Ser_Incompletas --> Float
+	Cod_Producto 	--> Char(50)
+	No_Servido 	--> Float
+	Cod_Causa       --> Char(50)
+	Total_Raciones  --> Float
+
+Una vez cargado debe mostrarse la información en una tabla que tenga las siguiente información:
+  Licitación
+, institución
+, Año
+, Mes
+, folio (debe ser un link para poder ver el detalle del documento)
+, RBD
+, Estrato
+, Programa
+, Certificacion
+
+La aplicacion debe contar con criterios de seleccion para filtrar la informacion, los criterios que debes considerar son:
+  Licitacion
+, Institucion
+, Año
+, Mes
+, Rbd (busqueda inteligente autocompletativa, se debe buscar por rbd o nombre del establecimiento, a medida que uno escribe un nombre debe mostrar un listados de los posibles establecimientos para poder seleccionar la opción.
