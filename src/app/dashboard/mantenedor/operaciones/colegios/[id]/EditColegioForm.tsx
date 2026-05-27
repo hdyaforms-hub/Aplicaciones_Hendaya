@@ -40,7 +40,7 @@ export default function EditColegioForm({ colegio }: { colegio: ColegioRecord })
             router.refresh()
             // Redirect after slight delay
             setTimeout(() => {
-                router.push('/dashboard/colegios')
+                router.push('/dashboard/mantenedor/operaciones/colegios')
             }, 1500)
         }
         setLoading(false)
@@ -110,7 +110,7 @@ export default function EditColegioForm({ colegio }: { colegio: ColegioRecord })
             <div className="pt-4 flex gap-3 sm:justify-end">
                 <button
                     type="button"
-                    onClick={() => router.push('/dashboard/colegios')}
+                    onClick={() => router.push('/dashboard/mantenedor/operaciones/colegios')}
                     className="px-5 py-2.5 rounded-xl text-gray-600 bg-gray-100 hover:bg-gray-200 font-medium transition-colors w-full sm:w-auto text-center"
                 >
                     Volver

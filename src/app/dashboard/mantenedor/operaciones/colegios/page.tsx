@@ -120,7 +120,7 @@ export default async function ColegiosPage({
         if (filters.sucursal) params.set('sucursal', filters.sucursal)
         if (filters.ut !== undefined) params.set('ut', filters.ut.toString())
         params.set('page', p.toString())
-        return `/dashboard/colegios?${params.toString()}`
+        return `/dashboard/mantenedor/operaciones/colegios?${params.toString()}`
     }
 
     return (
@@ -168,7 +168,7 @@ export default async function ColegiosPage({
                             {colegiosData.map((d: any) => (
                                 <tr key={d.id} className="hover:bg-cyan-50/50 transition-colors">
                                     <td className="px-6 py-3 font-bold text-gray-900 bg-gray-50/50">
-                                        <Link href={`/dashboard/colegios/${d.id}`} className="text-cyan-700 hover:text-cyan-900 hover:underline flex items-center gap-1 group">
+                                        <Link href={`/dashboard/mantenedor/operaciones/colegios/${d.id}`} className="text-cyan-700 hover:text-cyan-900 hover:underline flex items-center gap-1 group">
                                             {d.colRBD} <span className="text-[10px] opacity-0 group-hover:opacity-100 transition-opacity">✏️</span>
                                         </Link>
                                     </td>
