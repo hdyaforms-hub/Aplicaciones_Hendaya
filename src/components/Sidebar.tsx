@@ -58,9 +58,10 @@ export default function Sidebar({ user }: { user: User }) {
         {
             name: 'Tableros y Avances',
             icon: '📈',
-            requiredPermission: ['view_tablero', 'view_tablero_pan', 'view_tablero_gas', 'view_tablero_retiro', 'view_tablero_elementos', 'view_tablero_multas_ee'],
+            requiredPermission: ['view_tablero', 'view_tablero_pan', 'view_tablero_gas', 'view_tablero_retiro', 'view_tablero_elementos', 'view_tablero_multas_ee', 'view_tablero_organigrama'],
             subItems: [
                 { name: 'Avance PMPA', href: '/dashboard/tablero', requiredPermission: 'view_tablero' },
+                { name: 'Organigrama por zonas', href: '/dashboard/tablero/organigrama', requiredPermission: 'view_tablero_organigrama' },
                 { name: 'Solicitudes de Pan', href: '/dashboard/tablero/solicitudes-pan', requiredPermission: 'view_tablero_pan' },
                 { name: 'Solicitud de Gas', href: '/dashboard/tablero/solicitud-gas', requiredPermission: 'view_tablero_gas' },
                 { name: 'Retiro de Saldos', href: '/dashboard/tablero/retiro-saldos', requiredPermission: 'view_tablero_retiro' },

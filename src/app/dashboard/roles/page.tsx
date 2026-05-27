@@ -26,6 +26,7 @@ export default async function RolesPage() {
         { id: 'view_tablero_retiro', name: 'Tablero Avance Retiro', description: 'Acceso detallado al tablero de analítica de retiro de saldos.', category: 'TABLEROS' },
         { id: 'view_tablero_elementos', name: 'Tablero Carga de Elementos Esenciales', description: 'Visualización gráfica de cumplimiento de elementos esenciales.', category: 'TABLEROS' },
         { id: 'view_tablero_multas_ee', name: 'Tablero Multas EE', description: 'Acceso visual al reporte gráfico de multas de elementos esenciales.', category: 'TABLEROS' },
+        { id: 'view_tablero_organigrama', name: 'Tablero Organigrama por zonas', description: 'Visualización gráfica de la jerarquía operativa (Jefe Zonal -> Jefe de Operaciones -> Supervisor) por sucursal.', category: 'TABLEROS' },
         
         { id: 'view_ingreso_raciones', name: 'Ingreso de Raciones', description: 'Gestión y auditoría de raciones por colegio.', category: 'APLICACIONES' },
         { id: 'view_solicitud_pan', name: 'Solicitud de Pan', description: 'Acceso a la aplicación de Solicitud de Pan.', category: 'APLICACIONES' },
