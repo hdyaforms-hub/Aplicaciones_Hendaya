@@ -428,3 +428,24 @@ La aplicacion debe contar con criterios de seleccion para filtrar la informacion
 , Año
 , Mes
 , Rbd (busqueda inteligente autocompletativa, se debe buscar por rbd o nombre del establecimiento, a medida que uno escribe un nombre debe mostrar un listados de los posibles establecimientos para poder seleccionar la opción.
+
+/*************************************************************************************************/
+
+"C:\Program Files\PostgreSQL\18\bin\pg_dump.exe" -U postgres -d Hend_App -F c -f D:\DataPostgreSQL\Backup\Hend_App.backup
+
+/*****************************************************************************************************************/
+
+debes crear una nueva opción dentro de Mantenedor, la nueva opción se deme llamar "Operaciones".
+Una vez creado "Operaciones" debes mover desde la opción configuración las opción de menú "Mantenedor de Sucursal" y debes dejarlo dentro de Mantenedor\Operaciones y cambiarle el nombre a "Sucursal", este cambio hazlo también en la opción de roles y perfiles.
+Luego debes mover desde Mantención la opción de "Mantenedor de Area" y debes dejarlo en "Mantenedor" y le cambias el nombre a Area (ejemplo "Mantenedor de Area" --> "Area", este cambio hazlo también en la opción de roles y perfiles.
+también debes mover las opciones "PMPA", "Colegio", "Consumo de Gas x RBD" a la opcion Mantenedor\Operaciones.
+
+Dentro de "Mantenedor\Operaciones", Crea un nuevo modulo llamado Vehiculos (Esta pantalla debe crear, modificar y eliminar). esta pantalla debe tener una lista desplegable con la UT, una lista desplegable con la sucursales asociadas a la UT, un campo de patente
+
+Dentro de "Mantenedor\Operaciones", Crea un nuevo modulo llamado Zonales.
+Esta pantalla debe crear, modificar y eliminar al o a los jefes zonales.
+La pantalla debe tener un campo de nombre, Apellido y correo del jefe zonal. debe contar con una lista seleccionable de licitacion,  sucursal, en la cual debo seleccionar a que sucursal pertenece el zonal y una vez que seleccione la sucursal debe mostrarme todas las ut asociadas
+
+Dentro de "Mantenedor\Operaciones", Crea un nuevo modulo llamado Jefe de Operación (Esta pantalla debe crear, modificar y eliminar), aqui debe contar con los campos nombre, Apellido y correo del jefe operacion y debe tener una lista desplegable de los jefes zonales para asociarlo.
+
+Dentro de "Mantenedor\Operaciones", Crea un nuevo modulo llamado Superviso (Esta pantalla debe crear, modificar y eliminar), aqui debe contar con los campos nombre, Apellido y correo del supervisor, y debe tener una lista desplegable de los jefes de operaciones para asociarlo. tambien debe tener otra lista desplegable llamada camioneta asociada y debe mostrar las patentes de las camionetas

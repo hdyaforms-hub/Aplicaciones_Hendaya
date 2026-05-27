@@ -30,3 +30,10 @@ Estas reglas deben ser seguidas estrictamente por cualquier asistente de intelig
     5. "No existe"
     6. "No Aplica"
 *   **Excepción para "Patio de Servicio":** La pregunta "¿Existe Patio de servicio?" TIENE EXCLUSIVAMENTE dos opciones: "Existe" y "No existe". Esta es la única excepción a las 6 opciones estándar en la sección actual y NO debe perder sus botones exclusivos.
+
+## 5. PUERTOS Y ENTORNOS DE EJECUCIÓN (MEMORIA DE PROYECTO)
+
+*   **ENTORNO DE DESARROLLO / PRUEBAS:** Se ejecuta **exclusivamente** en el puerto **3001** (URL: `http://localhost:3001`).
+    *   El script `"dev"` en `package.json` está configurado para levantar en este puerto (`next dev -p 3001`) para evitar colisiones y mantener el orden.
+*   **ENTORNO DE PRODUCCIÓN:** Se ejecuta **exclusivamente** en el puerto **3000** (URL: `http://localhost:3000`).
+

@@ -1,0 +1,1142 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import {
+    createJefeZonal, updateJefeZonal, deleteJefeZonal,
+    createJefeOperacion, updateJefeOperacion, deleteJefeOperacion,
+    createSupervisor, updateSupervisor, deleteSupervisor
+} from './actions'
+
+interface PersonalClientProps {
+    initialZonales: any[]
+    initialJefesOperacion: any[]
+    initialSupervisores: any[]
+    licitaciones: any[]
+    sucursales: any[]
+    vehiculos: any[]
+    colegios: any[]
+    userPermissions: string[]
+}
+
+export default function PersonalClient({
+    initialZonales,
+    initialJefesOperacion,
+    initialSupervisores,
+    licitaciones,
+    sucursales,
+    vehiculos,
+    colegios,
+    userPermissions
+}: PersonalClientProps) {
+    const searchParams = useSearchParams()
+    const router = useRouter()
+
+    // Determine initial active tab based on query param
+    const defaultTab = searchParams.get('tab') || 'zonales'
+    const [activeTab, setActiveTab] = useState(defaultTab)
+
+    // Sync state with URL parameter changes
+    useEffect(() => {
+        const tab = searchParams.get('tab')
+        if (tab && (tab === 'zonales' || tab === 'jefe-operacion' || tab === 'supervisor')) {
+            setActiveTab(tab)
+        }
+    }, [searchParams])
+
+    const handleTabChange = (tabName: string) => {
+        setActiveTab(tabName)
+        router.push(`/dashboard/mantenedor/operaciones/personal?tab=${tabName}`)
+    }
+
+    // Main States
+    const [isAdding, setIsAdding] = useState(false)
+    const [editingId, setEditingId] = useState<string | null>(null)
+    const [loading, setLoading] = useState(false)
+    const [feedback, setFeedback] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
+    
+    // Search queries
+    const [searchZonal, setSearchZonal] = useState('')
+    const [searchOp, setSearchOp] = useState('')
+    const [searchSuper, setSearchSuper] = useState('')
+
+    // Many-to-many checklists filters
+    const [licFilter, setLicFilter] = useState('')
+    const [sucFilter, setSucFilter] = useState('')
+    const [camionetaFilter, setCamionetaFilter] = useState('')
+    const [rbdFilter, setRbdFilter] = useState('')
+
+    // Form States
+    // Zonal Form
+    const [zonalForm, setZonalForm] = useState({
+        nombre: '',
+        apellido: '',
+        correo: '',
+        licitaciones: [] as number[],
+        sucursales: [] as string[],
+        vigente: true
+    })
+
+    // Jefe de Operacion Form
+    const [opForm, setOpForm] = useState({
+        nombre: '',
+        apellido: '',
+        correo: '',
+        jefeZonalId: '',
+        vigente: true
+    })
+
+    // Supervisor Form
+    const [superForm, setSuperForm] = useState({
+        nombre: '',
+        apellido: '',
+        correo: '',
+        dependsDirectlyOnZonal: false,
+        jefeOperacionId: '',
+        jefeZonalId: '',
+        camionetaIds: [] as string[],
+        rbdIds: [] as number[],
+        vigente: true
+    })
+
+    // Reset Forms
+    const resetForms = () => {
+        setIsAdding(false)
+        setEditingId(null)
+        setFeedback(null)
+        
+        setZonalForm({
+            nombre: '',
+            apellido: '',
+            correo: '',
+            licitaciones: [],
+            sucursales: [],
+            vigente: true
+        })
+
+        setOpForm({
+            nombre: '',
+            apellido: '',
+            correo: '',
+            jefeZonalId: '',
+            vigente: true
+        })
+
+        setSuperForm({
+            nombre: '',
+            apellido: '',
+            correo: '',
+            dependsDirectlyOnZonal: false,
+            jefeOperacionId: '',
+            jefeZonalId: '',
+            camionetaIds: [],
+            rbdIds: [],
+            vigente: true
+        })
+
+        setLicFilter('')
+        setSucFilter('')
+        setCamionetaFilter('')
+        setRbdFilter('')
+    }
+
+    // Auto-timeout feedbacks
+    const triggerFeedback = (type: 'success' | 'error', message: string) => {
+        setFeedback({ type, message })
+        if (type === 'success') {
+            resetForms()
+            router.refresh()
+            setTimeout(() => {
+                setFeedback(null)
+                window.location.reload()
+            }, 1500)
+        }
+    }
+
+    // Edit actions mapping
+    const handleEditZonal = (z: any) => {
+        setZonalForm({
+            nombre: z.nombre,
+            apellido: z.apellido,
+            correo: z.correo,
+            licitaciones: z.licitaciones.map((l: any) => l.licitacionId),
+            sucursales: z.sucursales.map((s: any) => s.sucursalId),
+            vigente: z.vigente
+        })
+        setEditingId(z.id)
+        setIsAdding(true)
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+
+    const handleEditOp = (o: any) => {
+        setOpForm({
+            nombre: o.nombre,
+            apellido: o.apellido,
+            correo: o.correo,
+            jefeZonalId: o.jefeZonalId,
+            vigente: o.vigente
+        })
+        setEditingId(o.id)
+        setIsAdding(true)
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+
+    const handleEditSuper = (s: any) => {
+        const isDirect = !s.jefeOperacionId && !!s.jefeZonalId
+        setSuperForm({
+            nombre: s.nombre,
+            apellido: s.apellido,
+            correo: s.correo,
+            dependsDirectlyOnZonal: isDirect,
+            jefeOperacionId: s.jefeOperacionId || '',
+            jefeZonalId: s.jefeZonalId || '',
+            camionetaIds: s.camionetas.map((c: any) => c.vehiculoId),
+            rbdIds: s.rbdsAuditar.map((r: any) => r.rbd),
+            vigente: s.vigente
+        })
+        setEditingId(s.id)
+        setIsAdding(true)
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+
+    // Submit handlers
+    const handleSubmitZonal = async (e: React.FormEvent) => {
+        e.preventDefault()
+        setLoading(true)
+        if (zonalForm.licitaciones.length === 0 || zonalForm.sucursales.length === 0) {
+            triggerFeedback('error', 'Debes seleccionar al menos una Licitación y una Sucursal.')
+            setLoading(false)
+            return
+        }
+
+        try {
+            let res
+            if (editingId) {
+                res = await updateJefeZonal(editingId, zonalForm)
+            } else {
+                res = await createJefeZonal(zonalForm)
+            }
+
+            if (res.success) {
+                triggerFeedback('success', editingId ? 'Jefe Zonal actualizado.' : 'Jefe Zonal registrado.')
+            } else {
+                triggerFeedback('error', res.error || 'Ocurrió un error.')
+            }
+        } catch (err) {
+            triggerFeedback('error', 'Error al procesar la solicitud.')
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const handleSubmitOp = async (e: React.FormEvent) => {
+        e.preventDefault()
+        setLoading(true)
+        if (!opForm.jefeZonalId) {
+            triggerFeedback('error', 'El Jefe Zonal es requerido.')
+            setLoading(false)
+            return
+        }
+
+        try {
+            let res
+            if (editingId) {
+                res = await updateJefeOperacion(editingId, opForm)
+            } else {
+                res = await createJefeOperacion(opForm)
+            }
+
+            if (res.success) {
+                triggerFeedback('success', editingId ? 'Jefe de Operación actualizado.' : 'Jefe de Operación registrado.')
+            } else {
+                triggerFeedback('error', res.error || 'Ocurrió un error.')
+            }
+        } catch (err) {
+            triggerFeedback('error', 'Error al procesar la solicitud.')
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const handleSubmitSuper = async (e: React.FormEvent) => {
+        e.preventDefault()
+        setLoading(true)
+        
+        const hasDep = superForm.dependsDirectlyOnZonal ? !!superForm.jefeZonalId : !!superForm.jefeOperacionId
+        if (!hasDep) {
+            triggerFeedback('error', 'Debes asociar al supervisor con un Jefe de Operación o un Jefe Zonal.')
+            setLoading(false)
+            return
+        }
+
+        try {
+            const dataToSave = {
+                nombre: superForm.nombre,
+                apellido: superForm.apellido,
+                correo: superForm.correo,
+                jefeOperacionId: superForm.dependsDirectlyOnZonal ? null : superForm.jefeOperacionId,
+                jefeZonalId: superForm.dependsDirectlyOnZonal ? superForm.jefeZonalId : null,
+                camionetaIds: superForm.camionetaIds,
+                rbdIds: superForm.rbdIds,
+                vigente: superForm.vigente
+            }
+
+            let res
+            if (editingId) {
+                res = await updateSupervisor(editingId, dataToSave)
+            } else {
+                res = await createSupervisor(dataToSave)
+            }
+
+            if (res.success) {
+                triggerFeedback('success', editingId ? 'Supervisor actualizado.' : 'Supervisor registrado.')
+            } else {
+                triggerFeedback('error', res.error || 'Ocurrió un error.')
+            }
+        } catch (err) {
+            triggerFeedback('error', 'Error al procesar la solicitud.')
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    // Delete actions
+    const handleDeleteZonal = async (id: string) => {
+        if (!confirm('¿Estás seguro de eliminar este Jefe Zonal?')) return
+        setLoading(true)
+        try {
+            const res = await deleteJefeZonal(id)
+            if (res.success) triggerFeedback('success', 'Jefe Zonal eliminado.')
+            else triggerFeedback('error', res.error || 'Error al eliminar.')
+        } catch (err) {
+            triggerFeedback('error', 'Error de red.')
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const handleDeleteOp = async (id: string) => {
+        if (!confirm('¿Estás seguro de eliminar este Jefe de Operación?')) return
+        setLoading(true)
+        try {
+            const res = await deleteJefeOperacion(id)
+            if (res.success) triggerFeedback('success', 'Jefe de Operación eliminado.')
+            else triggerFeedback('error', res.error || 'Error al eliminar.')
+        } catch (err) {
+            triggerFeedback('error', 'Error de red.')
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const handleDeleteSuper = async (id: string) => {
+        if (!confirm('¿Estás seguro de eliminar este Supervisor?')) return
+        setLoading(true)
+        try {
+            const res = await deleteSupervisor(id)
+            if (res.success) triggerFeedback('success', 'Supervisor eliminado.')
+            else triggerFeedback('error', res.error || 'Error al eliminar.')
+        } catch (err) {
+            triggerFeedback('error', 'Error de red.')
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    // CASCADING UT CALCULATION FOR ZONAL SCREEN
+    // Given the selected sucursales, fetch their UT names
+    const getUTsForSelectedSucursales = (selectedSucIds: string[]) => {
+        if (selectedSucIds.length === 0) return []
+        // We can get all UTs that belong to any of the selected sucursales
+        // In our sucursales dataset, we can search for uts. In `initialZonales` or `initialSupervisores` we don't have all UTs directly, 
+        // but we can query them from their UT relationships if available or just list the sucursal names.
+        // Wait, does `sucursales` have UTs? Let's check how sucursales list is passed. 
+        // Yes, `sucursales` in database is a simple table.
+        // Let's see: in `Zonal` creation, the user selects Sucursales. The prompt says: "debe contar con una lista seleccionable de licitación, sucursal... y una vez que seleccione la sucursal debe mostrarme todas las ut asociadas".
+        // Let's map UTs of selected sucursales:
+        const matchingUts: number[] = []
+        sucursales
+            .filter(s => selectedSucIds.includes(s.id))
+            .forEach(s => {
+                if (s.uts) {
+                    s.uts.forEach((ut: any) => matchingUts.push(ut.codUT))
+                }
+            })
+        return [...new Set(matchingUts)].sort((a, b) => a - b)
+    }
+
+    // CASCADING SUCURSAL/RBD FILTER FOR SUPERVISOR FORM
+    // Find the sucursal of the selected chief
+    const getAllowedSucursalesForSupervisor = () => {
+        let selectedZonal: any = null
+
+        if (superForm.dependsDirectlyOnZonal) {
+            // Depende directo del Zonal
+            selectedZonal = initialZonales.find(z => z.id === superForm.jefeZonalId)
+        } else {
+            // Depende del Jefe de Operación
+            const selectedOp = initialJefesOperacion.find(o => o.id === superForm.jefeOperacionId)
+            if (selectedOp) {
+                selectedZonal = initialZonales.find(z => z.id === selectedOp.jefeZonalId)
+            }
+        }
+
+        if (!selectedZonal) return []
+        // Return names of sucursales associated with this Zonal
+        return selectedZonal.sucursales.map((s: any) => s.sucursal.nombre.toLowerCase())
+    }
+
+    const allowedSucursales = getAllowedSucursalesForSupervisor()
+
+    // Filter RBD list by allowed sucursal names
+    const filteredColegiosForSupervisor = colegios.filter(col => {
+        if (allowedSucursales.length === 0) return false // No chief chosen yet
+        return col.sucursal && allowedSucursales.includes(col.sucursal.toLowerCase())
+    })
+
+    return (
+        <div className="space-y-6">
+            {/* Header */}
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <div>
+                    <h2 className="text-2xl font-bold text-gray-900 tracking-tight flex items-center gap-2">
+                        <span>👥</span> Personal y Jerarquía de Operaciones
+                    </h2>
+                    <p className="text-gray-500 mt-1">Configura la jerarquía operativa de Jefes Zonales, Jefes de Operación y Supervisores</p>
+                </div>
+
+                {!isAdding && (
+                    <button
+                        onClick={() => setIsAdding(true)}
+                        className="bg-slate-900 hover:bg-slate-800 text-white px-4 py-2.5 rounded-xl font-semibold transition-all flex items-center gap-2 shadow-lg shadow-slate-900/10"
+                    >
+                        <span>➕</span> Nuevo Registro ({activeTab === 'zonales' ? 'Zonal' : activeTab === 'jefe-operacion' ? 'Jefe de Operación' : 'Supervisor'})
+                    </button>
+                )}
+            </div>
+
+            {/* Tabs Selector */}
+            <div className="flex border-b border-gray-200 bg-white px-4 pt-3 rounded-2xl shadow-sm border border-gray-100">
+                <button
+                    onClick={() => { handleTabChange('zonales'); resetForms(); }}
+                    className={`pb-3 px-4 font-bold text-sm transition-all border-b-2 ${activeTab === 'zonales' ? 'border-cyan-500 text-cyan-600' : 'border-transparent text-gray-400 hover:text-gray-600'}`}
+                >
+                    💼 Jefes Zonales
+                </button>
+                <button
+                    onClick={() => { handleTabChange('jefe-operacion'); resetForms(); }}
+                    className={`pb-3 px-4 font-bold text-sm transition-all border-b-2 ${activeTab === 'jefe-operacion' ? 'border-cyan-500 text-cyan-600' : 'border-transparent text-gray-400 hover:text-gray-600'}`}
+                >
+                    👔 Jefes de Operación
+                </button>
+                <button
+                    onClick={() => { handleTabChange('supervisor'); resetForms(); }}
+                    className={`pb-3 px-4 font-bold text-sm transition-all border-b-2 ${activeTab === 'supervisor' ? 'border-cyan-500 text-cyan-600' : 'border-transparent text-gray-400 hover:text-gray-600'}`}
+                >
+                    🛡️ Supervisores
+                </button>
+            </div>
+
+            {/* Success and Error Feedbacks */}
+            {feedback && (
+                <div className={`p-4 rounded-xl text-sm font-medium flex items-center gap-2 animate-in fade-in zoom-in duration-300 ${feedback.type === 'success' ? 'bg-green-50 border border-green-100 text-green-600' : 'bg-red-50 border border-red-100 text-red-600'}`}>
+                    <span>{feedback.type === 'success' ? '✅' : '⚠️'}</span> {feedback.message}
+                </div>
+            )}
+
+            {/* FORM CONTAINER */}
+            {isAdding && (
+                <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-100 animate-in fade-in slide-in-from-top-4 duration-300">
+                    <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                        {editingId ? '📝 Editar Dependencia' : '✨ Registrar Nueva Dependencia'}
+                    </h3>
+
+                    {/* JEFES ZONALES FORM */}
+                    {activeTab === 'zonales' && (
+                        <form onSubmit={handleSubmitZonal} className="space-y-6">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div className="space-y-2">
+                                    <label className="text-sm font-semibold text-gray-700">Nombre</label>
+                                    <input
+                                        title="Nombre"
+                                        type="text" required placeholder="Ej: Roberto"
+                                        value={zonalForm.nombre} onChange={(e) => setZonalForm({ ...zonalForm, nombre: e.target.value })}
+                                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all outline-none"
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-sm font-semibold text-gray-700">Apellido</label>
+                                    <input
+                                        title="Apellido"
+                                        type="text" required placeholder="Ej: Gómez"
+                                        value={zonalForm.apellido} onChange={(e) => setZonalForm({ ...zonalForm, apellido: e.target.value })}
+                                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all outline-none"
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-sm font-semibold text-gray-700">Correo Electrónico</label>
+                                    <input
+                                        title="Correo"
+                                        type="email" required placeholder="roberto.gomez@empresa.cl"
+                                        value={zonalForm.correo} onChange={(e) => setZonalForm({ ...zonalForm, correo: e.target.value })}
+                                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all outline-none"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Many-to-many listboxes */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {/* Licitaciones selection */}
+                                <div className="space-y-2">
+                                    <label className="text-sm font-semibold text-gray-700 flex justify-between">
+                                        <span>Asociar Licitaciones (Múltiple)</span>
+                                        <span className="text-xs text-gray-400 font-medium">{zonalForm.licitaciones.length} seleccionadas</span>
+                                    </label>
+                                    <input
+                                        title="Filtrar Licitación"
+                                        type="text" placeholder="Filtrar licitaciones..." value={licFilter} onChange={(e) => setLicFilter(e.target.value)}
+                                        className="w-full px-3 py-1.5 rounded-lg border border-gray-200 text-xs outline-none focus:ring-1 focus:ring-cyan-500"
+                                    />
+                                    <div className="border border-gray-200 rounded-xl max-h-40 overflow-y-auto p-3 space-y-2 bg-gray-50/30">
+                                        {licitaciones
+                                            .filter(l => String(l.licId).includes(licFilter) || (l.licitacionHomologada && l.licitacionHomologada.toLowerCase().includes(licFilter.toLowerCase())))
+                                            .map(l => {
+                                                const isChecked = zonalForm.licitaciones.includes(l.licId)
+                                                return (
+                                                    <label key={l.licId} className="flex items-center gap-2 cursor-pointer text-sm">
+                                                        <input
+                                                            type="checkbox" checked={isChecked}
+                                                            onChange={() => {
+                                                                setZonalForm(prev => {
+                                                                    const exist = prev.licitaciones.includes(l.licId)
+                                                                    const updated = exist 
+                                                                        ? prev.licitaciones.filter(id => id !== l.licId)
+                                                                        : [...prev.licitaciones, l.licId]
+                                                                    return { ...prev, licitaciones: updated }
+                                                                })
+                                                            }}
+                                                            className="w-4 h-4 rounded text-cyan-600 focus:ring-cyan-500"
+                                                        />
+                                                        <span className="font-semibold text-slate-700">Lic. {l.licId}</span>
+                                                        <span className="text-xs text-gray-400">{l.licitacionHomologada || ''}</span>
+                                                    </label>
+                                                )
+                                            })}
+                                    </div>
+                                </div>
+
+                                {/* Sucursales selection */}
+                                <div className="space-y-2">
+                                    <label className="text-sm font-semibold text-gray-700 flex justify-between">
+                                        <span>Asociar Sucursales (Múltiple)</span>
+                                        <span className="text-xs text-gray-400 font-medium">{zonalForm.sucursales.length} seleccionadas</span>
+                                    </label>
+                                    <input
+                                        title="Filtrar Sucursal"
+                                        type="text" placeholder="Filtrar sucursales..." value={sucFilter} onChange={(e) => setSucFilter(e.target.value)}
+                                        className="w-full px-3 py-1.5 rounded-lg border border-gray-200 text-xs outline-none focus:ring-1 focus:ring-cyan-500"
+                                    />
+                                    <div className="border border-gray-200 rounded-xl max-h-40 overflow-y-auto p-3 space-y-2 bg-gray-50/30">
+                                        {sucursales
+                                            .filter(s => s.nombre.toLowerCase().includes(sucFilter.toLowerCase()))
+                                            .map(s => {
+                                                const isChecked = zonalForm.sucursales.includes(s.id)
+                                                return (
+                                                    <label key={s.id} className="flex items-center gap-2 cursor-pointer text-sm">
+                                                        <input
+                                                            type="checkbox" checked={isChecked}
+                                                            onChange={() => {
+                                                                setZonalForm(prev => {
+                                                                    const exist = prev.sucursales.includes(s.id)
+                                                                    const updated = exist 
+                                                                        ? prev.sucursales.filter(id => id !== s.id)
+                                                                        : [...prev.sucursales, s.id]
+                                                                    return { ...prev, sucursales: updated }
+                                                                })
+                                                            }}
+                                                            className="w-4 h-4 rounded text-cyan-600 focus:ring-cyan-500"
+                                                        />
+                                                        <span className="font-semibold text-slate-700">{s.nombre}</span>
+                                                    </label>
+                                                )
+                                            })}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* CASCADING DYNAMIC UT DISPLAY */}
+                            {zonalForm.sucursales.length > 0 && (
+                                <div className="p-4 bg-slate-50 border border-slate-100 rounded-xl">
+                                    <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Unidades Territoriales (UT) Cubiertas</h4>
+                                    <div className="flex flex-wrap gap-2">
+                                        {getUTsForSelectedSucursales(zonalForm.sucursales).map(ut => (
+                                            <span key={ut} className="inline-flex items-center px-3 py-1 bg-cyan-100 text-cyan-800 rounded-lg text-xs font-bold border border-cyan-200 shadow-sm">
+                                                UT {ut}
+                                            </span>
+                                        ))}
+                                        {getUTsForSelectedSucursales(zonalForm.sucursales).length === 0 && (
+                                            <span className="text-xs text-gray-400 italic">Las sucursales seleccionadas no tienen UTs asociadas actualmente.</span>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Vigente check */}
+                            <div>
+                                <label className="flex items-center gap-3 cursor-pointer bg-gray-50 px-4 py-2.5 rounded-xl border border-gray-100 w-full md:w-auto">
+                                    <input
+                                        type="checkbox" checked={zonalForm.vigente}
+                                        onChange={(e) => setZonalForm({ ...zonalForm, vigente: e.target.checked })}
+                                        className="w-5 h-5 rounded border-gray-300 text-cyan-600 focus:ring-cyan-500"
+                                    />
+                                    <span className="text-sm font-medium text-gray-700">Zonal Vigente / Activo</span>
+                                </label>
+                            </div>
+
+                            {/* Buttons */}
+                            <div className="flex justify-end gap-3 pt-2 border-t border-gray-50">
+                                <button type="button" onClick={resetForms} className="px-6 py-2.5 rounded-xl font-semibold text-gray-600 hover:bg-gray-100 transition-all">Cancelar</button>
+                                <button type="submit" disabled={loading} className="bg-gradient-to-r from-cyan-600 to-sky-600 hover:from-cyan-700 hover:to-sky-700 text-white px-8 py-2.5 rounded-xl font-bold transition-all shadow-lg shadow-cyan-600/20 disabled:opacity-50">{loading ? 'Guardando...' : editingId ? 'Actualizar Zonal' : 'Registrar Zonal'}</button>
+                            </div>
+                        </form>
+                    )}
+
+                    {/* JEFES DE OPERACIÓN FORM */}
+                    {activeTab === 'jefe-operacion' && (
+                        <form onSubmit={handleSubmitOp} className="space-y-6">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div className="space-y-2">
+                                    <label className="text-sm font-semibold text-gray-700">Nombre</label>
+                                    <input
+                                        title="Nombre"
+                                        type="text" required placeholder="Ej: Carmen"
+                                        value={opForm.nombre} onChange={(e) => setOpForm({ ...opForm, nombre: e.target.value })}
+                                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none"
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-sm font-semibold text-gray-700">Apellido</label>
+                                    <input
+                                        title="Apellido"
+                                        type="text" required placeholder="Ej: Castillo"
+                                        value={opForm.apellido} onChange={(e) => setOpForm({ ...opForm, apellido: e.target.value })}
+                                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none"
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-sm font-semibold text-gray-700">Correo Electrónico</label>
+                                    <input
+                                        title="Correo"
+                                        type="email" required placeholder="carmen.castillo@empresa.cl"
+                                        value={opForm.correo} onChange={(e) => setOpForm({ ...opForm, correo: e.target.value })}
+                                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {/* Zonal Dropdown */}
+                                <div className="space-y-2">
+                                    <label className="text-sm font-semibold text-gray-700">Jefe Zonal Asociado</label>
+                                    <select
+                                        title="Jefe Zonal"
+                                        required
+                                        value={opForm.jefeZonalId}
+                                        onChange={(e) => setOpForm({ ...opForm, jefeZonalId: e.target.value })}
+                                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none bg-white"
+                                    >
+                                        <option value="">Selecciona Jefe Zonal...</option>
+                                        {initialZonales.filter(z => z.vigente).map(z => (
+                                            <option key={z.id} value={z.id}>
+                                                {z.nombre} {z.apellido} ({z.sucursales.map((s: any) => s.sucursal.nombre).join(', ')})
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                {/* Vigente */}
+                                <div className="flex items-end pb-1">
+                                    <label className="flex items-center gap-3 cursor-pointer bg-gray-50 px-4 py-2.5 rounded-xl border border-gray-100 w-full">
+                                        <input
+                                            type="checkbox" checked={opForm.vigente}
+                                            onChange={(e) => setOpForm({ ...opForm, vigente: e.target.checked })}
+                                            className="w-5 h-5 rounded border-gray-300 text-cyan-600 focus:ring-cyan-500"
+                                        />
+                                        <span className="text-sm font-medium text-gray-700">Jefe de Operación Vigente / Activo</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            {/* Buttons */}
+                            <div className="flex justify-end gap-3 pt-2 border-t border-gray-50">
+                                <button type="button" onClick={resetForms} className="px-6 py-2.5 rounded-xl font-semibold text-gray-600 hover:bg-gray-100 transition-all">Cancelar</button>
+                                <button type="submit" disabled={loading} className="bg-gradient-to-r from-cyan-600 to-sky-600 hover:from-cyan-700 hover:to-sky-700 text-white px-8 py-2.5 rounded-xl font-bold transition-all shadow-lg shadow-cyan-600/20 disabled:opacity-50">{loading ? 'Guardando...' : editingId ? 'Actualizar Registro' : 'Registrar Jefe Operación'}</button>
+                            </div>
+                        </form>
+                    )}
+
+                    {/* SUPERVISORES FORM */}
+                    {activeTab === 'supervisor' && (
+                        <form onSubmit={handleSubmitSuper} className="space-y-6">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div className="space-y-2">
+                                    <label className="text-sm font-semibold text-gray-700">Nombre</label>
+                                    <input
+                                        title="Nombre"
+                                        type="text" required placeholder="Ej: Marcelo"
+                                        value={superForm.nombre} onChange={(e) => setSuperForm({ ...superForm, nombre: e.target.value })}
+                                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none"
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-sm font-semibold text-gray-700">Apellido</label>
+                                    <input
+                                        title="Apellido"
+                                        type="text" required placeholder="Ej: Ríos"
+                                        value={superForm.apellido} onChange={(e) => setSuperForm({ ...superForm, apellido: e.target.value })}
+                                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none"
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-sm font-semibold text-gray-700">Correo Electrónico</label>
+                                    <input
+                                        title="Correo"
+                                        type="email" required placeholder="marcelo.rios@empresa.cl"
+                                        value={superForm.correo} onChange={(e) => setSuperForm({ ...superForm, correo: e.target.value })}
+                                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Inteligencia de dependencia */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                                <div className="space-y-3 md:col-span-2">
+                                    <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider">Dependencia Operacional</h4>
+                                    
+                                    <label className="flex items-center gap-2 cursor-pointer text-sm font-bold text-slate-700">
+                                        <input
+                                            type="checkbox"
+                                            checked={superForm.dependsDirectlyOnZonal}
+                                            onChange={(e) => setSuperForm(prev => ({ 
+                                                ...prev, 
+                                                dependsDirectlyOnZonal: e.target.checked,
+                                                jefeOperacionId: '', // Reset
+                                                jefeZonalId: ''       // Reset
+                                            }))}
+                                            className="w-4 h-4 rounded text-cyan-600 focus:ring-cyan-500"
+                                        />
+                                        <span>⚠️ No tiene Jefe de Operación (Depende directo de Jefe Zonal)</span>
+                                    </label>
+                                </div>
+
+                                {!superForm.dependsDirectlyOnZonal ? (
+                                    /* Seleccionar Jefe de Operaciones */
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-semibold text-gray-700">Jefe de Operación Asociado</label>
+                                        <select
+                                            title="Jefe de Operación"
+                                            required
+                                            value={superForm.jefeOperacionId}
+                                            onChange={(e) => setSuperForm(prev => ({ 
+                                                ...prev, 
+                                                jefeOperacionId: e.target.value,
+                                                jefeZonalId: '',
+                                                rbdIds: [] // Reset RBD checklist since sucursal will change
+                                            }))}
+                                            className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 bg-white"
+                                        >
+                                            <option value="">Selecciona Jefe de Operación...</option>
+                                            {initialJefesOperacion.filter(o => o.vigente).map(o => (
+                                                <option key={o.id} value={o.id}>
+                                                    {o.nombre} {o.apellido} (Zonal: {o.jefeZonal.nombre} {o.jefeZonal.apellido})
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                ) : (
+                                    /* Depende directo del Zonal */
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-semibold text-gray-700">Jefe Zonal Asociado (Dependencia Directa)</label>
+                                        <select
+                                            title="Jefe Zonal"
+                                            required
+                                            value={superForm.jefeZonalId}
+                                            onChange={(e) => setSuperForm(prev => ({ 
+                                                ...prev, 
+                                                jefeZonalId: e.target.value,
+                                                jefeOperacionId: '',
+                                                rbdIds: [] // Reset RBD checklist since sucursal will change
+                                            }))}
+                                            className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 bg-white"
+                                        >
+                                            <option value="">Selecciona Jefe Zonal...</option>
+                                            {initialZonales.filter(z => z.vigente).map(z => (
+                                                <option key={z.id} value={z.id}>
+                                                    {z.nombre} {z.apellido} ({z.sucursales.map((s: any) => s.sucursal.nombre).join(', ')})
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                )}
+
+                                {/* Vigente */}
+                                <div className="flex items-end pb-1">
+                                    <label className="flex items-center gap-3 cursor-pointer bg-white px-4 py-2.5 rounded-xl border border-gray-200 w-full">
+                                        <input
+                                            type="checkbox" checked={superForm.vigente}
+                                            onChange={(e) => setSuperForm({ ...superForm, vigente: e.target.checked })}
+                                            className="w-5 h-5 rounded border-gray-300 text-cyan-600 focus:ring-cyan-500"
+                                        />
+                                        <span className="text-sm font-medium text-gray-700">Supervisor Vigente / Activo</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            {/* Camionetas y RBDs */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {/* Camionetas checklist (display plate) */}
+                                <div className="space-y-2">
+                                    <label className="text-sm font-semibold text-gray-700 flex justify-between">
+                                        <span>Camionetas Asociadas (Múltiple)</span>
+                                        <span className="text-xs text-gray-400 font-medium">{superForm.camionetaIds.length} seleccionadas</span>
+                                    </label>
+                                    <input
+                                        title="Filtrar Camionetas"
+                                        type="text" placeholder="Filtrar camionetas..." value={camionetaFilter} onChange={(e) => setCamionetaFilter(e.target.value)}
+                                        className="w-full px-3 py-1.5 rounded-lg border border-gray-200 text-xs outline-none focus:ring-1 focus:ring-cyan-500"
+                                    />
+                                    <div className="border border-gray-200 rounded-xl max-h-40 overflow-y-auto p-3 space-y-2 bg-gray-50/30">
+                                        {vehiculos
+                                            .filter(v => v.patente.toLowerCase().includes(camionetaFilter.toLowerCase()) || v.tipoVehiculo.nombre.toLowerCase().includes(camionetaFilter.toLowerCase()))
+                                            .map(v => {
+                                                const isChecked = superForm.camionetaIds.includes(v.id)
+                                                return (
+                                                    <label key={v.id} className="flex items-center gap-2 cursor-pointer text-sm">
+                                                        <input
+                                                            type="checkbox" checked={isChecked}
+                                                            onChange={() => {
+                                                                setSuperForm(prev => {
+                                                                    const exist = prev.camionetaIds.includes(v.id)
+                                                                    const updated = exist 
+                                                                        ? prev.camionetaIds.filter(id => id !== v.id)
+                                                                        : [...prev.camionetaIds, v.id]
+                                                                    return { ...prev, camionetaIds: updated }
+                                                                })
+                                                            }}
+                                                            className="w-4 h-4 rounded text-cyan-600 focus:ring-cyan-500"
+                                                        />
+                                                        <span className="font-bold text-slate-700 font-mono tracking-wider">{v.patente}</span>
+                                                        <span className="text-xs text-gray-400">({v.tipoVehiculo.nombre})</span>
+                                                    </label>
+                                                )
+                                            })}
+                                    </div>
+                                </div>
+
+                                {/* RBDs a Auditar Checklist (filtered in cascade) */}
+                                <div className="space-y-2">
+                                    <div className="flex justify-between items-center">
+                                        <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                                            <span>RBDs a Auditar</span>
+                                            {allowedSucursales.length > 0 && (
+                                                <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-cyan-100 text-cyan-800 border border-cyan-200">
+                                                    Filtrado por: {allowedSucursales.join(', ').toUpperCase()}
+                                                </span>
+                                            )}
+                                        </label>
+                                        <span className="text-xs text-gray-400 font-medium">{superForm.rbdIds.length} seleccionados</span>
+                                    </div>
+                                    <input
+                                        title="Filtrar RBD"
+                                        type="text" placeholder="Filtrar RBD o colegio..." value={rbdFilter} onChange={(e) => setRbdFilter(e.target.value)}
+                                        className="w-full px-3 py-1.5 rounded-lg border border-gray-200 text-xs outline-none focus:ring-1 focus:ring-cyan-500"
+                                    />
+                                    <div className="border border-gray-200 rounded-xl max-h-40 overflow-y-auto p-3 space-y-2 bg-gray-50/30">
+                                        {filteredColegiosForSupervisor
+                                            .filter((col: any) => String(col.colRBD).includes(rbdFilter) || col.nombreEstablecimiento.toLowerCase().includes(rbdFilter.toLowerCase()))
+                                            .map((col: any) => {
+                                                const isChecked = superForm.rbdIds.includes(col.colRBD)
+                                                return (
+                                                    <label key={col.colRBD} className="flex items-center gap-2 cursor-pointer text-sm">
+                                                        <input
+                                                            type="checkbox" checked={isChecked}
+                                                            onChange={() => {
+                                                                setSuperForm(prev => {
+                                                                    const exist = prev.rbdIds.includes(col.colRBD)
+                                                                    const updated = exist 
+                                                                        ? prev.rbdIds.filter(id => id !== col.colRBD)
+                                                                        : [...prev.rbdIds, col.colRBD]
+                                                                    return { ...prev, rbdIds: updated }
+                                                                })
+                                                            }}
+                                                            className="w-4 h-4 rounded text-cyan-600 focus:ring-cyan-500"
+                                                        />
+                                                        <span className="font-bold text-slate-800">{col.colRBD}</span>
+                                                        <span className="text-xs text-gray-600 truncate max-w-[200px]" title={col.nombreEstablecimiento}>{col.nombreEstablecimiento}</span>
+                                                    </label>
+                                                )
+                                            })}
+
+                                        {allowedSucursales.length === 0 && (
+                                            <div className="text-xs text-slate-400 italic text-center py-4">Selecciona primero un Jefe de Operación o Jefe Zonal para listar sus RBDs.</div>
+                                        )}
+                                        {allowedSucursales.length > 0 && filteredColegiosForSupervisor.length === 0 && (
+                                            <div className="text-xs text-slate-400 italic text-center py-4">No se encontraron RBDs para la sucursal de dependencia de este jefe.</div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Buttons */}
+                            <div className="flex justify-end gap-3 pt-2 border-t border-gray-50">
+                                <button type="button" onClick={resetForms} className="px-6 py-2.5 rounded-xl font-semibold text-gray-600 hover:bg-gray-100 transition-all">Cancelar</button>
+                                <button type="submit" disabled={loading} className="bg-gradient-to-r from-cyan-600 to-sky-600 hover:from-cyan-700 hover:to-sky-700 text-white px-8 py-2.5 rounded-xl font-bold transition-all shadow-lg shadow-cyan-600/20 disabled:opacity-50">{loading ? 'Guardando...' : editingId ? 'Actualizar Registro' : 'Registrar Supervisor'}</button>
+                            </div>
+                        </form>
+                    )}
+                </div>
+            )}
+
+            {/* LISTINGS SECTION */}
+
+            {/* JEFES ZONALES TAB */}
+            {activeTab === 'zonales' && (
+                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div className="p-5 border-b border-gray-50 bg-gray-50/20 flex flex-col sm:flex-row gap-4 items-center justify-between">
+                        <div className="relative w-full sm:max-w-md">
+                            <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">🔍</span>
+                            <input
+                                title="Buscar zonal"
+                                type="text" value={searchZonal} onChange={(e) => setSearchZonal(e.target.value)}
+                                placeholder="Buscar jefe zonal por nombre, correo, sucursal..."
+                                className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-gray-200 outline-none text-sm bg-white focus:ring-1 focus:ring-cyan-500"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-left border-collapse whitespace-nowrap">
+                            <thead>
+                                <tr className="bg-gray-50/50 border-b border-gray-100 text-slate-600 text-xs font-bold uppercase tracking-wider">
+                                    <th className="px-6 py-4">Nombre Completo</th>
+                                    <th className="px-6 py-4">Correo</th>
+                                    <th className="px-6 py-4">Licitaciones</th>
+                                    <th className="px-6 py-4">Sucursales</th>
+                                    <th className="px-6 py-4">UTs Cubiertas</th>
+                                    <th className="px-6 py-4 text-center">Estado</th>
+                                    {userPermissions.includes('manage_zonales') && <th className="px-6 py-4 text-right">Acciones</th>}
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-gray-100 text-sm text-gray-700">
+                                {initialZonales
+                                    .filter(z => {
+                                        const q = searchZonal.toLowerCase().trim()
+                                        return z.nombre.toLowerCase().includes(q) || z.apellido.toLowerCase().includes(q) || z.correo.toLowerCase().includes(q) || z.sucursales.some((s: any) => s.sucursal.nombre.toLowerCase().includes(q))
+                                    })
+                                    .map(z => {
+                                        const zonalUts = getUTsForSelectedSucursales(z.sucursales.map((s: any) => s.sucursalId))
+                                        return (
+                                            <tr key={z.id} className="hover:bg-cyan-50/20 transition-colors">
+                                                <td className="px-6 py-4 font-bold text-gray-900">{z.nombre} {z.apellido}</td>
+                                                <td className="px-6 py-4">{z.correo}</td>
+                                                <td className="px-6 py-4">
+                                                    <div className="flex flex-wrap gap-1">
+                                                        {z.licitaciones.map((l: any) => (
+                                                            <span key={l.licitacionId} className="inline-flex px-1.5 py-0.5 rounded text-[10px] font-bold bg-slate-100 border border-slate-200">
+                                                                Lic. {l.licitacionId}
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    <div className="flex flex-wrap gap-1">
+                                                        {z.sucursales.map((s: any) => (
+                                                            <span key={s.sucursalId} className="inline-flex px-2 py-0.5 rounded text-xs font-semibold bg-cyan-50 text-cyan-700 border border-cyan-100">
+                                                                {s.sucursal.nombre}
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    <span className="text-xs font-semibold text-slate-500">{zonalUts.length} UTs ({zonalUts.join(', ')})</span>
+                                                </td>
+                                                <td className="px-6 py-4 text-center">
+                                                    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold border ${z.vigente ? 'bg-green-50 text-green-700 border-green-100' : 'bg-red-50 text-red-700 border-red-100'}`}>
+                                                        {z.vigente ? 'Vigente' : 'No Vigente'}
+                                                    </span>
+                                                </td>
+                                                {userPermissions.includes('manage_zonales') && (
+                                                    <td className="px-6 py-4 text-right">
+                                                        <div className="flex justify-end gap-2">
+                                                            <button onClick={() => handleEditZonal(z)} className="p-1.5 text-gray-400 hover:text-cyan-600 hover:bg-cyan-50 rounded-lg"><span className="text-md">✏️</span></button>
+                                                            <button onClick={() => handleDeleteZonal(z.id)} className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg"><span className="text-md">🗑️</span></button>
+                                                        </div>
+                                                    </td>
+                                                )}
+                                            </tr>
+                                        )
+                                    })}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            )}
+
+            {/* JEFES DE OPERACIÓN TAB */}
+            {activeTab === 'jefe-operacion' && (
+                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div className="p-5 border-b border-gray-50 bg-gray-50/20 flex flex-col sm:flex-row gap-4 items-center justify-between">
+                        <div className="relative w-full sm:max-w-md">
+                            <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">🔍</span>
+                            <input
+                                title="Buscar jefe operacion"
+                                type="text" value={searchOp} onChange={(e) => setSearchOp(e.target.value)}
+                                placeholder="Buscar jefe de operación por nombre, correo, zonal..."
+                                className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-gray-200 outline-none text-sm bg-white focus:ring-1 focus:ring-cyan-500"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-left border-collapse whitespace-nowrap">
+                            <thead>
+                                <tr className="bg-gray-50/50 border-b border-gray-100 text-slate-600 text-xs font-bold uppercase tracking-wider">
+                                    <th className="px-6 py-4">Nombre Completo</th>
+                                    <th className="px-6 py-4">Correo</th>
+                                    <th className="px-6 py-4">Jefe Zonal Dependiente</th>
+                                    <th className="px-6 py-4">Sucursales Asociadas</th>
+                                    <th className="px-6 py-4 text-center">Estado</th>
+                                    {userPermissions.includes('manage_jefe_operacion') && <th className="px-6 py-4 text-right">Acciones</th>}
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-gray-100 text-sm text-gray-700">
+                                {initialJefesOperacion
+                                    .filter(o => {
+                                        const q = searchOp.toLowerCase().trim()
+                                        return o.nombre.toLowerCase().includes(q) || o.apellido.toLowerCase().includes(q) || o.correo.toLowerCase().includes(q) || o.jefeZonal.nombre.toLowerCase().includes(q)
+                                    })
+                                    .map(o => (
+                                        <tr key={o.id} className="hover:bg-cyan-50/20 transition-colors">
+                                            <td className="px-6 py-4 font-bold text-gray-900">{o.nombre} {o.apellido}</td>
+                                            <td className="px-6 py-4">{o.correo}</td>
+                                            <td className="px-6 py-4 font-semibold text-slate-700">{o.jefeZonal.nombre} {o.jefeZonal.apellido}</td>
+                                            <td className="px-6 py-4">
+                                                <div className="flex flex-wrap gap-1">
+                                                    {o.jefeZonal.sucursales.map((s: any) => (
+                                                        <span key={s.sucursalId} className="inline-flex px-2 py-0.5 rounded text-xs font-semibold bg-cyan-50 text-cyan-700 border border-cyan-100">
+                                                            {s.sucursal.nombre}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-4 text-center">
+                                                <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold border ${o.vigente ? 'bg-green-50 text-green-700 border-green-100' : 'bg-red-50 text-red-700 border-red-100'}`}>
+                                                    {o.vigente ? 'Vigente' : 'No Vigente'}
+                                                </span>
+                                            </td>
+                                            {userPermissions.includes('manage_jefe_operacion') && (
+                                                <td className="px-6 py-4 text-right">
+                                                    <div className="flex justify-end gap-2">
+                                                        <button onClick={() => handleEditOp(o)} className="p-1.5 text-gray-400 hover:text-cyan-600 hover:bg-cyan-50 rounded-lg"><span className="text-md">✏️</span></button>
+                                                        <button onClick={() => handleDeleteOp(o.id)} className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg"><span className="text-md">🗑️</span></button>
+                                                    </div>
+                                                </td>
+                                            )}
+                                        </tr>
+                                    ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            )}
+
+            {/* SUPERVISORES TAB */}
+            {activeTab === 'supervisor' && (
+                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div className="p-5 border-b border-gray-50 bg-gray-50/20 flex flex-col sm:flex-row gap-4 items-center justify-between">
+                        <div className="relative w-full sm:max-w-md">
+                            <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">🔍</span>
+                            <input
+                                title="Buscar supervisor"
+                                type="text" value={searchSuper} onChange={(e) => setSearchSuper(e.target.value)}
+                                placeholder="Buscar supervisor por nombre, correo..."
+                                className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-gray-200 outline-none text-sm bg-white focus:ring-1 focus:ring-cyan-500"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-left border-collapse whitespace-nowrap">
+                            <thead>
+                                <tr className="bg-gray-50/50 border-b border-gray-100 text-slate-600 text-xs font-bold uppercase tracking-wider">
+                                    <th className="px-6 py-4">Nombre Completo</th>
+                                    <th className="px-6 py-4">Correo</th>
+                                    <th className="px-6 py-4">Asociado Con</th>
+                                    <th className="px-6 py-4">Camionetas</th>
+                                    <th className="px-6 py-4">RBDs Auditados</th>
+                                    <th className="px-6 py-4 text-center">Estado</th>
+                                    {userPermissions.includes('manage_supervisor') && <th className="px-6 py-4 text-right">Acciones</th>}
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-gray-100 text-sm text-gray-700">
+                                {initialSupervisores
+                                    .filter(s => {
+                                        const q = searchSuper.toLowerCase().trim()
+                                        return s.nombre.toLowerCase().includes(q) || s.apellido.toLowerCase().includes(q) || s.correo.toLowerCase().includes(q)
+                                    })
+                                    .map(s => {
+                                        const hasOp = !!s.jefeOperacion
+                                        const dependencyName = hasOp 
+                                            ? `👔 Jefe Op: ${s.jefeOperacion.nombre} ${s.jefeOperacion.apellido}`
+                                            : `💼 Jefe Zonal: ${s.jefeZonal?.nombre} ${s.jefeZonal?.apellido}`
+
+                                        return (
+                                            <tr key={s.id} className="hover:bg-cyan-50/20 transition-colors">
+                                                <td className="px-6 py-4 font-bold text-gray-900">{s.nombre} {s.apellido}</td>
+                                                <td className="px-6 py-4">{s.correo}</td>
+                                                <td className="px-6 py-4 font-medium text-slate-700">
+                                                    <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold ${hasOp ? 'bg-indigo-50 text-indigo-700 border border-indigo-100' : 'bg-amber-50 text-amber-700 border border-amber-100'}`}>
+                                                        {dependencyName}
+                                                    </span>
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    <div className="flex flex-wrap gap-1">
+                                                        {s.camionetas.map((c: any) => (
+                                                            <span key={c.vehiculoId} className="inline-flex font-mono font-bold tracking-wider px-1.5 py-0.5 rounded text-xs bg-slate-100 text-slate-800 border border-slate-200">
+                                                                {c.vehiculo.patente}
+                                                            </span>
+                                                        ))}
+                                                        {s.camionetas.length === 0 && (
+                                                            <span className="text-xs text-gray-400 italic">Ninguna</span>
+                                                        )}
+                                                    </div>
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    <span className="text-xs font-semibold text-slate-500" title={s.rbdsAuditar.map((r: any) => r.rbd).join(', ')}>
+                                                        {s.rbdsAuditar.length} RBDs asignados
+                                                    </span>
+                                                </td>
+                                                <td className="px-6 py-4 text-center">
+                                                    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold border ${s.vigente ? 'bg-green-50 text-green-700 border-green-100' : 'bg-red-50 text-red-700 border-red-100'}`}>
+                                                        {s.vigente ? 'Vigente' : 'No Vigente'}
+                                                    </span>
+                                                </td>
+                                                {userPermissions.includes('manage_supervisor') && (
+                                                    <td className="px-6 py-4 text-right">
+                                                        <div className="flex justify-end gap-2">
+                                                            <button onClick={() => handleEditSuper(s)} className="p-1.5 text-gray-400 hover:text-cyan-600 hover:bg-cyan-50 rounded-lg"><span className="text-md">✏️</span></button>
+                                                            <button onClick={() => handleDeleteSuper(s.id)} className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg"><span className="text-md">🗑️</span></button>
+                                                        </div>
+                                                    </td>
+                                                )}
+                                            </tr>
+                                        )
+                                    })}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            )}
+        </div>
+    )
+}

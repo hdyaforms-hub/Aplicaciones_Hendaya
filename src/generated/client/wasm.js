@@ -833,6 +833,81 @@ exports.Prisma.CodigoCausaScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.TipoVehiculoScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.VehiculoScalarFieldEnum = {
+  id: 'id',
+  patente: 'patente',
+  utId: 'utId',
+  sucursalId: 'sucursalId',
+  tipoVehiculoId: 'tipoVehiculoId',
+  licId: 'licId',
+  utIds: 'utIds',
+  vigente: 'vigente',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.JefeZonalScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  apellido: 'apellido',
+  correo: 'correo',
+  vigente: 'vigente',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.JefeZonalLicitacionScalarFieldEnum = {
+  jefeZonalId: 'jefeZonalId',
+  licitacionId: 'licitacionId'
+};
+
+exports.Prisma.JefeZonalSucursalScalarFieldEnum = {
+  jefeZonalId: 'jefeZonalId',
+  sucursalId: 'sucursalId'
+};
+
+exports.Prisma.JefeOperacionScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  apellido: 'apellido',
+  correo: 'correo',
+  jefeZonalId: 'jefeZonalId',
+  vigente: 'vigente',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SupervisorScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  apellido: 'apellido',
+  correo: 'correo',
+  jefeOperacionId: 'jefeOperacionId',
+  jefeZonalId: 'jefeZonalId',
+  vigente: 'vigente',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SupervisorVehiculoScalarFieldEnum = {
+  supervisorId: 'supervisorId',
+  vehiculoId: 'vehiculoId'
+};
+
+exports.Prisma.SupervisorRbdScalarFieldEnum = {
+  id: 'id',
+  supervisorId: 'supervisorId',
+  rbd: 'rbd',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -900,7 +975,16 @@ exports.Prisma.ModelName = {
   DescargaPaeLog: 'DescargaPaeLog',
   PaeOnlineCab: 'PaeOnlineCab',
   PaeOnlineDet: 'PaeOnlineDet',
-  CodigoCausa: 'CodigoCausa'
+  CodigoCausa: 'CodigoCausa',
+  TipoVehiculo: 'TipoVehiculo',
+  Vehiculo: 'Vehiculo',
+  JefeZonal: 'JefeZonal',
+  JefeZonalLicitacion: 'JefeZonalLicitacion',
+  JefeZonalSucursal: 'JefeZonalSucursal',
+  JefeOperacion: 'JefeOperacion',
+  Supervisor: 'Supervisor',
+  SupervisorVehiculo: 'SupervisorVehiculo',
+  SupervisorRbd: 'SupervisorRbd'
 };
 
 /**

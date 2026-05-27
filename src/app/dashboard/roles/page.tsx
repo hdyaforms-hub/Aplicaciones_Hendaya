@@ -59,11 +59,19 @@ export default async function RolesPage() {
         { id: 'view_estado_avance', name: 'Estado de Avance', description: 'Visualizar el estado de avance de la matriz de riesgo 2026.', category: 'MATRIZ DE RIESGO -> MATRIZ 2026' },
         { id: 'view_auditoria', name: 'Auditoría Externa', description: 'Vista global completa de hallazgos y evidencias para auditores.', category: 'MATRIZ DE RIESGO -> MATRIZ 2026' },
 
-        { id: 'view_pmpa', name: 'Módulo PMPA', description: 'Acceso a carga de Excel y listado PMPA.', category: 'MANTENEDORES' },
-        { id: 'view_colegios', name: 'Mantenedor de Colegios', description: 'Acceso a mantenedor y carga masiva de Colegios.', category: 'MANTENEDORES' },
         { id: 'view_productos', name: 'Mantenedor de Productos', description: 'Acceso a mantenedor y carga masiva de Productos.', category: 'MANTENEDORES' },
-        { id: 'view_consumo_gas', name: 'Consumo de Gas por RBD', description: 'Administrar límites y consumos de gas por cada RBD.', category: 'MANTENEDORES' },
+        { id: 'manage_areas', name: 'Área', description: 'Creación y administración de áreas de la compañía.', category: 'MANTENEDORES' },
+
+        { id: 'view_pmpa', name: 'PMPA', description: 'Acceso a carga de Excel y listado PMPA.', category: 'MANTENEDORES -> OPERACIONES' },
+        { id: 'view_colegios', name: 'Colegio', description: 'Acceso a mantenedor y carga masiva de Colegios.', category: 'MANTENEDORES -> OPERACIONES' },
+        { id: 'view_consumo_gas', name: 'Consumo de Gas x RBD', description: 'Administrar límites y consumos de gas por cada RBD.', category: 'MANTENEDORES -> OPERACIONES' },
         
+        { id: 'manage_vehiculos', name: 'Vehículos', description: 'Administración de flota de vehículos, tipos de vehículos y patentes.', category: 'MANTENEDORES -> OPERACIONES' },
+        { id: 'manage_zonales', name: 'Zonales', description: 'Administración de Jefes Zonales, licitaciones y sucursales asignadas.', category: 'MANTENEDORES -> OPERACIONES' },
+        { id: 'manage_jefe_operacion', name: 'Jefes de Operación', description: 'Administración de Jefes de Operación y su asignación a Jefes Zonales.', category: 'MANTENEDORES -> OPERACIONES' },
+        { id: 'manage_supervisor', name: 'Supervisores', description: 'Administración de Supervisores, camionetas asociadas y RBDs a auditar.', category: 'MANTENEDORES -> OPERACIONES' },
+        { id: 'manage_sucursales', name: 'Sucursal', description: 'Administración de Licitaciones, UTs y Sucursales.', category: 'MANTENEDORES -> OPERACIONES' },
+
         { id: 'manage_utm', name: 'Gestión de UTM', description: 'Acceso al mantenedor inteligente de UTM con sincronización SII.', category: 'MANTENEDORES -> MULTAS' },
         { id: 'manage_aspectos_ee', name: 'Fórmulas de Aspecto EE', description: 'Asociar fórmulas de multas a aspectos de elementos esenciales por licitación.', category: 'MANTENEDORES -> MULTAS' },
         { id: 'manage_multa_servicios', name: 'Servicios Multas', description: 'Mantenedor de códigos de servicio (D, A, O, C, T) para cálculos de multas.', category: 'MANTENEDORES -> MULTAS' },
@@ -84,8 +92,6 @@ export default async function RolesPage() {
         { id: 'manage_correo', name: 'Configuración de Correo', description: 'Acciones sobre credenciales de correo (Office365).', category: 'ADMINISTRACIÓN' },
         { id: 'manage_listas', name: 'Listas de Distribución', description: 'Gestión de destinatarios y listas de correos.', category: 'ADMINISTRACIÓN' },
         { id: 'manage_notificaciones', name: 'Notificaciones por Pantalla', description: 'Asociar listas de distribución a notificaciones de la aplicación.', category: 'ADMINISTRACIÓN' },
-        { id: 'manage_sucursales', name: 'Mantenedor de Sucursales', description: 'Administración de Licitaciones, UTs y Sucursales.', category: 'ADMINISTRACIÓN' },
-        { id: 'manage_areas', name: 'Mantenedor de Áreas', description: 'Creación y administración de áreas de la compañía.', category: 'ADMINISTRACIÓN' },
 
         { id: 'view_formularios', name: 'Gestión de Formularios', description: 'Acceso a la activación, edición y configuración de calendarios/privilegios.', category: 'FORMULARIOS' },
         { id: 'create_formularios', name: 'Crear Formulario', description: 'Acceso al constructor para diseñar nuevos formularios dinámicos.', category: 'FORMULARIOS' },

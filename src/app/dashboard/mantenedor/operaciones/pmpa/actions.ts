@@ -94,7 +94,7 @@ export async function uploadPMPAData(data: PMPAData[], overwrite: boolean) {
         await prisma.pMPA.createMany({
             data: dataToInsert
         })
-        revalidatePath('/dashboard/pmpa')
+        revalidatePath('/dashboard/mantenedor/operaciones/pmpa')
         return { success: true, count: dataToInsert.length }
     } catch (error: any) {
         console.error('Error insertando datos PMPA:', error)
@@ -116,7 +116,7 @@ export async function deletePMPAPeriod(ano: number, mes: number, sucursalName?: 
 
         const deleted = await prisma.pMPA.deleteMany({ where })
         
-        revalidatePath('/dashboard/pmpa')
+        revalidatePath('/dashboard/mantenedor/operaciones/pmpa')
         return { success: true, count: deleted.count }
     } catch (error: any) {
         console.error('Error eliminando periodo PMPA:', error)

@@ -4,7 +4,7 @@ import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { revalidatePath } from 'next/cache'
 
-const MANTENEDOR_PATH = '/dashboard/configuracion/areas'
+const MANTENEDOR_PATH = '/dashboard/mantenedor/areas'
 
 async function hasPermission() {
     const session = await getSession()

@@ -4,7 +4,7 @@ import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { revalidatePath } from 'next/cache'
 
-const MANTENEDOR_PATH = '/dashboard/configuracion/sucursales'
+const MANTENEDOR_PATH = '/dashboard/mantenedor/operaciones/sucursales'
 
 function hasPermission(session: any) {
     return session?.user?.role?.permissions.includes('manage_sucursales')

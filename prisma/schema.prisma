@@ -155,13 +155,15 @@ model MultaServicio {
 }
 
 model Licitacion {
-  licId                Int         @id @default(autoincrement())
-  licitacionHomologada String?     @db.VarChar(20)
-  estado               Int         @default(1)
-  createdAt            DateTime    @default(now())
-  updatedAt            DateTime    @updatedAt
+  licId                Int                   @id @default(autoincrement())
+  licitacionHomologada String?               @db.VarChar(20)
+  estado               Int                   @default(1)
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
   uts                  UT[]
   aspectosEE           AspectoEE[]
+  jefesZonales         JefeZonalLicitacion[]
+  vehiculos            Vehiculo[]
 }
 
 model AspectoEE {
@@ -189,6 +191,8 @@ model Sucursal {
   RetornoProductosSucursalEstado RetornoProductosSucursalEstado[]
   uts                            UT[]
   users                          User[]                           @relation("SucursalToUser")
+  jefesZonales                   JefeZonalSucursal[]
+  vehiculos                      Vehiculo[]
 }
 
 model Presupuesto {
@@ -228,6 +232,7 @@ model UT {
   licitacion Licitacion @relation(fields: [licId], references: [licId])
   sucursal   Sucursal?  @relation(fields: [sucursalId], references: [id])
   pmpas      PMPA[]
+  vehiculos  Vehiculo[]
 }
 
 model SolicitudGas {
@@ -779,4 +784,126 @@ model CodigoCausa {
   imputable   String   @default("Imputable")
   definicion  String   @default("")
   createdAt   DateTime @default(now())
+}
+
+// Tipos de vehículo personalizables (Camión, Camioneta, etc.)
+model TipoVehiculo {
+  id        String     @id @default(uuid())
+  nombre    String     @unique
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  vehiculos Vehiculo[]
+}
+
+// Registro de vehículos / camionetas
+model Vehiculo {
+  id             String               @id @default(uuid())
+  patente        String               @unique
+  utId           Int?                 // Opcional para soportar sucursales sin UT (ej. Casa Matriz)
+  sucursalId     String
+  tipoVehiculoId String
+  licId          Int?                 // Opcional: Licitación asociada
+  utIds          String?              // Lista JSON de UTs asociadas "[codUT1, codUT2]"
+  vigente        Boolean              @default(true)
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime             @updatedAt
+
+  ut           UT?                  @relation(fields: [utId], references: [codUT])
+  sucursal     Sucursal             @relation(fields: [sucursalId], references: [id])
+  tipoVehiculo TipoVehiculo         @relation(fields: [tipoVehiculoId], references: [id])
+  licitacion   Licitacion?          @relation(fields: [licId], references: [licId])
+  supervisores SupervisorVehiculo[]
+}
+
+// Jefes Zonales
+model JefeZonal {
+  id             String                @id @default(uuid())
+  nombre         String
+  apellido       String
+  correo         String
+  vigente        Boolean               @default(true)
+  createdAt      DateTime              @default(now())
+  updatedAt      DateTime              @updatedAt
+
+  licitaciones   JefeZonalLicitacion[]
+  sucursales     JefeZonalSucursal[]
+  jefesOperacion JefeOperacion[]
+  supervisores   Supervisor[]          // Directos si no hay Jefe de Operación
+}
+
+// Relaciones Muchos a Muchos para Jefe Zonal
+model JefeZonalLicitacion {
+  jefeZonalId  String
+  licitacionId Int
+
+  jefeZonal  JefeZonal  @relation(fields: [jefeZonalId], references: [id], onDelete: Cascade)
+  licitacion Licitacion @relation(fields: [licitacionId], references: [licId], onDelete: Cascade)
+
+  @@id([jefeZonalId, licitacionId])
+}
+
+model JefeZonalSucursal {
+  jefeZonalId String
+  sucursalId  String
+
+  jefeZonal JefeZonal @relation(fields: [jefeZonalId], references: [id], onDelete: Cascade)
+  sucursal  Sucursal  @relation(fields: [sucursalId], references: [id], onDelete: Cascade)
+
+  @@id([jefeZonalId, sucursalId])
+}
+
+// Jefes de Operación
+model JefeOperacion {
+  id          String       @id @default(uuid())
+  nombre      String
+  apellido    String
+  correo      String
+  jefeZonalId String
+  vigente     Boolean      @default(true)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  jefeZonal    JefeZonal    @relation(fields: [jefeZonalId], references: [id])
+  supervisores Supervisor[]
+}
+
+// Supervisores de Operación
+model Supervisor {
+  id              String               @id @default(uuid())
+  nombre          String
+  apellido        String
+  correo          String
+  jefeOperacionId String?
+  jefeZonalId     String?              // Para supervisores directos a Zonal
+  vigente         Boolean              @default(true)
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
+
+  jefeOperacion JefeOperacion?       @relation(fields: [jefeOperacionId], references: [id])
+  jefeZonal     JefeZonal?           @relation(fields: [jefeZonalId], references: [id])
+  camionetas    SupervisorVehiculo[]
+  rbdsAuditar   SupervisorRbd[]
+}
+
+// Relación Muchos a Muchos entre Supervisor y Vehículos/Camionetas
+model SupervisorVehiculo {
+  supervisorId String
+  vehiculoId   String
+
+  supervisor Supervisor @relation(fields: [supervisorId], references: [id], onDelete: Cascade)
+  vehiculo   Vehiculo   @relation(fields: [vehiculoId], references: [id], onDelete: Cascade)
+
+  @@id([supervisorId, vehiculoId])
+}
+
+// Relación Muchos a Muchos para los RBDs que audita un Supervisor
+model SupervisorRbd {
+  id           String     @id @default(uuid())
+  supervisorId String
+  rbd          Int
+  createdAt    DateTime   @default(now())
+
+  supervisor Supervisor @relation(fields: [supervisorId], references: [id], onDelete: Cascade)
+
+  @@unique([supervisorId, rbd])
 }

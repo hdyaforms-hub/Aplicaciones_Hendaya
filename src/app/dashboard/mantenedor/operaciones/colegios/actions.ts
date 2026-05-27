@@ -99,7 +99,7 @@ export async function uploadColegiosData(data: ColegioData[], overwrite: boolean
             }
         }
 
-        revalidatePath('/dashboard/colegios')
+        revalidatePath('/dashboard/mantenedor/operaciones/colegios')
         return { success: true, count: dataToInsert.length }
     } catch (error: any) {
         console.error('Error insertando datos Colegios:', error)
@@ -138,7 +138,7 @@ export async function updateColegio(id: string, data: Partial<ColegioData>) {
             })
         }
 
-        revalidatePath('/dashboard/colegios')
+        revalidatePath('/dashboard/mantenedor/operaciones/colegios')
         return { success: true }
     } catch (e) {
         console.error("Error updating colegio:", e)
@@ -164,7 +164,7 @@ export async function deleteColegioByRBD(rbd: number) {
             data: { isActive: false }
         })
 
-        revalidatePath('/dashboard/colegios')
+        revalidatePath('/dashboard/mantenedor/operaciones/colegios')
         return { success: true }
     } catch (error) {
         console.error('Error eliminando colegio por RBD:', error)

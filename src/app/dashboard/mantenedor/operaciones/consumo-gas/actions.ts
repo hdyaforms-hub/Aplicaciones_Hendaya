@@ -123,7 +123,7 @@ export async function saveConsumoGas(data: {
             }
         })
 
-        revalidatePath('/dashboard/consumo-gas')
+        revalidatePath('/dashboard/mantenedor/operaciones/consumo-gas')
         return { success: true }
     } catch (e) {
         console.error("Error saving consumo gas:", e)
@@ -175,7 +175,7 @@ export async function bulkUploadConsumoGas(data: { rbd: number, litros: number, 
             })
         }
 
-        revalidatePath('/dashboard/consumo-gas')
+        revalidatePath('/dashboard/mantenedor/operaciones/consumo-gas')
         return { success: true, count: data.length }
     } catch (e) {
         console.error("Error bulk uploading consumo gas:", e)

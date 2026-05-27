@@ -40,6 +40,7 @@ export default function Sidebar({ user }: { user: User }) {
     const [expandedMenus, setExpandedMenus] = useState<Record<string, boolean>>({
         'Aplicaciones': false,
         'Mantenedor': false,
+        'Mantenedor-Operaciones': false,
         'Reportes': false,
         'Áreas': false
     })
@@ -201,12 +202,24 @@ export default function Sidebar({ user }: { user: User }) {
         {
             name: 'Mantenedor',
             icon: '⚙️',
-            requiredPermission: ['view_colegios', 'view_productos', 'view_pmpa', 'view_consumo_gas', 'view_preparaciones', 'view_minutas', 'view_raciones', 'view_codigo_causa'],
+            requiredPermission: ['view_colegios', 'view_productos', 'view_pmpa', 'view_consumo_gas', 'view_preparaciones', 'view_minutas', 'view_raciones', 'view_codigo_causa', 'manage_sucursales', 'manage_areas', 'manage_vehiculos', 'manage_zonales', 'manage_jefe_operacion', 'manage_supervisor'],
             subItems: [
-                { name: 'PMPA', href: '/dashboard/pmpa', requiredPermission: 'view_pmpa' },
-                { name: 'Colegios', href: '/dashboard/colegios', requiredPermission: 'view_colegios' },
+                {
+                    name: 'Operaciones',
+                    requiredPermission: ['view_pmpa', 'view_colegios', 'view_consumo_gas', 'manage_sucursales', 'manage_vehiculos', 'manage_zonales', 'manage_jefe_operacion', 'manage_supervisor'],
+                    subItems: [
+                        { name: 'Sucursal', href: '/dashboard/mantenedor/operaciones/sucursales', requiredPermission: 'manage_sucursales' },
+                        { name: 'PMPA', href: '/dashboard/mantenedor/operaciones/pmpa', requiredPermission: 'view_pmpa' },
+                        { name: 'Colegio', href: '/dashboard/mantenedor/operaciones/colegios', requiredPermission: 'view_colegios' },
+                        { name: 'Consumo de Gas x RBD', href: '/dashboard/mantenedor/operaciones/consumo-gas', requiredPermission: 'view_consumo_gas' },
+                        { name: 'Vehículos', href: '/dashboard/mantenedor/operaciones/vehiculos', requiredPermission: 'manage_vehiculos' },
+                        { name: 'Zonales', href: '/dashboard/mantenedor/operaciones/personal?tab=zonales', requiredPermission: 'manage_zonales' },
+                        { name: 'Jefes de Operación', href: '/dashboard/mantenedor/operaciones/personal?tab=jefe-operacion', requiredPermission: 'manage_jefe_operacion' },
+                        { name: 'Supervisores', href: '/dashboard/mantenedor/operaciones/personal?tab=supervisor', requiredPermission: 'manage_supervisor' }
+                    ]
+                },
+                { name: 'Área', href: '/dashboard/mantenedor/areas', requiredPermission: 'manage_areas' },
                 { name: 'Productos', href: '/dashboard/productos', requiredPermission: 'view_productos' },
-                { name: 'Consumo de Gas por RBD', href: '/dashboard/consumo-gas', requiredPermission: 'view_consumo_gas' },
                 {
                     name: 'Pae Online',
                     requiredPermission: 'view_codigo_causa',
@@ -237,15 +250,13 @@ export default function Sidebar({ user }: { user: User }) {
         {
             name: 'Configuración',
             icon: '🔧',
-            requiredPermission: ['manage_correo', 'manage_listas', 'manage_notificaciones', 'manage_sucursales', 'manage_users', 'manage_roles'],
+            requiredPermission: ['manage_correo', 'manage_listas', 'manage_notificaciones', 'manage_users', 'manage_roles'],
             subItems: [
                 { name: 'Gestión de Usuarios', href: '/dashboard/users', requiredPermission: 'manage_users' },
                 { name: 'Roles y Perfiles', href: '/dashboard/roles', requiredPermission: 'manage_roles' },
                 { name: 'Configuración de Correo', href: '/dashboard/configuracion/correo', requiredPermission: 'manage_correo' },
                 { name: 'Listas de Distribución', href: '/dashboard/configuracion/listas-correo', requiredPermission: 'manage_listas' },
-                { name: 'Notificaciones por Pantalla', href: '/dashboard/configuracion/notificaciones', requiredPermission: 'manage_notificaciones' },
-                { name: 'Mantenedor de Sucursales', href: '/dashboard/configuracion/sucursales', requiredPermission: 'manage_sucursales' },
-                { name: 'Mantenedor de Áreas', href: '/dashboard/configuracion/areas', requiredPermission: 'manage_areas' }
+                { name: 'Notificaciones por Pantalla', href: '/dashboard/configuracion/notificaciones', requiredPermission: 'manage_notificaciones' }
             ]
         },
         {
