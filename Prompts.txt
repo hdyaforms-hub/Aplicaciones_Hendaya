@@ -437,15 +437,27 @@ La aplicacion debe contar con criterios de seleccion para filtrar la informacion
 
 debes crear una nueva opción dentro de Mantenedor, la nueva opción se deme llamar "Operaciones".
 Una vez creado "Operaciones" debes mover desde la opción configuración las opción de menú "Mantenedor de Sucursal" y debes dejarlo dentro de Mantenedor\Operaciones y cambiarle el nombre a "Sucursal", este cambio hazlo también en la opción de roles y perfiles.
-Luego debes mover desde Mantención la opción de "Mantenedor de Area" y debes dejarlo en "Mantenedor" y le cambias el nombre a Area (ejemplo "Mantenedor de Area" --> "Area", este cambio hazlo también en la opción de roles y perfiles.
-también debes mover las opciones "PMPA", "Colegio", "Consumo de Gas x RBD" a la opcion Mantenedor\Operaciones.
+Luego debes mover desde Mantención la opción de "Mantenedor de Área" y debes dejarlo en "Mantenedor" y le cambias el nombre a Área (ejemplo "Mantenedor de Area" --> "Area", este cambio hazlo también en la opción de roles y perfiles.
+también debes mover las opciones "PMPA", "Colegio", "Consumo de Gas x RBD" a la opción Mantenedor\Operaciones.
 
-Dentro de "Mantenedor\Operaciones", Crea un nuevo modulo llamado Vehiculos (Esta pantalla debe crear, modificar y eliminar). esta pantalla debe tener una lista desplegable con la UT, una lista desplegable con la sucursales asociadas a la UT, un campo de patente
+Dentro de "Mantenedor\Operaciones", Crea un nuevo modulo llamado Vehículos (Esta pantalla debe crear, modificar y eliminar). esta pantalla debe tener una lista de selección con la UT, una lista selección con la sucursales asociadas a la UT, una lista desplegable con tipo de vehículo (Camión / Camioneta, también pon un botón de agregar por si aparezca en el futuro otro tipo de vehículo, todo esto debe ser guardado en la base de datos) un campo de patente, un check de vigente / no vigente. 
 
 Dentro de "Mantenedor\Operaciones", Crea un nuevo modulo llamado Zonales.
 Esta pantalla debe crear, modificar y eliminar al o a los jefes zonales.
-La pantalla debe tener un campo de nombre, Apellido y correo del jefe zonal. debe contar con una lista seleccionable de licitacion,  sucursal, en la cual debo seleccionar a que sucursal pertenece el zonal y una vez que seleccione la sucursal debe mostrarme todas las ut asociadas
+La pantalla debe tener un campo de nombre, Apellido y correo del jefe zonal. debe contar con una lista seleccionable de licitación,  sucursal, en la cual debo seleccionar a que sucursal pertenece el zonal y una vez que seleccione la sucursal debe mostrarme todas las ut asociadas, debe tener un check de Vigente/no Vigente.
 
-Dentro de "Mantenedor\Operaciones", Crea un nuevo modulo llamado Jefe de Operación (Esta pantalla debe crear, modificar y eliminar), aqui debe contar con los campos nombre, Apellido y correo del jefe operacion y debe tener una lista desplegable de los jefes zonales para asociarlo.
+Dentro de "Mantenedor\Operaciones", Crea un nuevo modulo llamado Jefe de Operación (Esta pantalla debe crear, modificar y eliminar), aquí debe contar con los campos nombre, Apellido y correo del jefe operación y debe tener una lista desplegable de los jefes zonales para asociarlo, debe tener un check de Vigente/no Vigente.
 
-Dentro de "Mantenedor\Operaciones", Crea un nuevo modulo llamado Superviso (Esta pantalla debe crear, modificar y eliminar), aqui debe contar con los campos nombre, Apellido y correo del supervisor, y debe tener una lista desplegable de los jefes de operaciones para asociarlo. tambien debe tener otra lista desplegable llamada camioneta asociada y debe mostrar las patentes de las camionetas
+Dentro de "Mantenedor\Operaciones", Crea un nuevo modulo llamado Supervisor (Esta pantalla debe crear, modificar y eliminar), aquí debe contar con los campos nombre, Apellido y correo del supervisor, y debe tener una lista de selección de los jefes de operaciones para asociarlo. también debe tener otra lista de selección llamada camioneta asociada y debe mostrar las patentes de las camionetas, también debe tener un check de Vigente/no Vigente. Y una lista desplegable de los RBD para seleccionar cuales son los que debe auditar el Supervisor (esta lista debe ser filtrada según la sucursal que este asociado su zonal o jefe de operaciones.
+
+Nota: en algunas sucursales no existen Jefes de operación por ende los supervisores dependen directo del Jefe Zonal, por ende debes agregar una inteligencia para que si no tengo jefe de operaciones yo pueda seleccionar un jefe zonal para asociar al supervisor.
+
+ahora no se que sea mas adecuado si hacer 3 pantallas (Zonales, Jefes de Operación y Supervisor) o llevarlas todas en la misma pantalla, aquí lo dejo a tu libre elección y veas cual es la forma mas fácil de llevar estos módulos, por lo mismo no hice el modelo de datos para que esto lo fabriques tu
+
+/*****************************************************************************************************************/
+
+
+
+
+/*****************************************************************************************************************/
+

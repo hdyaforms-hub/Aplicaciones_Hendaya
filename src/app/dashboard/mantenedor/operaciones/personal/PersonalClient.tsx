@@ -385,10 +385,38 @@ export default function PersonalClient({
 
     const allowedSucursales = getAllowedSucursalesForSupervisor()
 
+    // Find the sucursal IDs of the selected chief
+    const getAllowedSucursalIdsForSupervisor = () => {
+        let selectedZonal: any = null
+
+        if (superForm.dependsDirectlyOnZonal) {
+            // Depende directo del Zonal
+            selectedZonal = initialZonales.find(z => z.id === superForm.jefeZonalId)
+        } else {
+            // Depende del Jefe de Operación
+            const selectedOp = initialJefesOperacion.find(o => o.id === superForm.jefeOperacionId)
+            if (selectedOp) {
+                selectedZonal = initialZonales.find(z => z.id === selectedOp.jefeZonalId)
+            }
+        }
+
+        if (!selectedZonal) return []
+        // Return IDs of sucursales associated with this Zonal
+        return selectedZonal.sucursales.map((s: any) => s.sucursalId)
+    }
+
+    const allowedSucursalIds = getAllowedSucursalIdsForSupervisor()
+
     // Filter RBD list by allowed sucursal names
     const filteredColegiosForSupervisor = colegios.filter(col => {
         if (allowedSucursales.length === 0) return false // No chief chosen yet
         return col.sucursal && allowedSucursales.includes(col.sucursal.toLowerCase())
+    })
+
+    // Filter vehicles list by allowed sucursal IDs
+    const filteredVehiculosForSupervisor = vehiculos.filter(v => {
+        if (allowedSucursalIds.length === 0) return false // No chief chosen yet
+        return allowedSucursalIds.includes(v.sucursalId)
     })
 
     return (
@@ -718,7 +746,9 @@ export default function PersonalClient({
                                                 ...prev, 
                                                 dependsDirectlyOnZonal: e.target.checked,
                                                 jefeOperacionId: '', // Reset
-                                                jefeZonalId: ''       // Reset
+                                                jefeZonalId: '',      // Reset
+                                                rbdIds: [],
+                                                camionetaIds: []
                                             }))}
                                             className="w-4 h-4 rounded text-cyan-600 focus:ring-cyan-500"
                                         />
@@ -738,7 +768,8 @@ export default function PersonalClient({
                                                 ...prev, 
                                                 jefeOperacionId: e.target.value,
                                                 jefeZonalId: '',
-                                                rbdIds: [] // Reset RBD checklist since sucursal will change
+                                                rbdIds: [], // Reset RBD checklist since sucursal will change
+                                                camionetaIds: [] // Reset camioneta checklist
                                             }))}
                                             className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 bg-white"
                                         >
@@ -762,7 +793,8 @@ export default function PersonalClient({
                                                 ...prev, 
                                                 jefeZonalId: e.target.value,
                                                 jefeOperacionId: '',
-                                                rbdIds: [] // Reset RBD checklist since sucursal will change
+                                                rbdIds: [], // Reset RBD checklist since sucursal will change
+                                                camionetaIds: [] // Reset camioneta checklist
                                             }))}
                                             className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 bg-white"
                                         >
@@ -793,17 +825,24 @@ export default function PersonalClient({
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 {/* Camionetas checklist (display plate) */}
                                 <div className="space-y-2">
-                                    <label className="text-sm font-semibold text-gray-700 flex justify-between">
-                                        <span>Camionetas Asociadas (Múltiple)</span>
+                                    <div className="flex justify-between items-center">
+                                        <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                                            <span>Camionetas Asociadas (Múltiple)</span>
+                                            {allowedSucursales.length > 0 && (
+                                                <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-cyan-100 text-cyan-800 border border-cyan-200">
+                                                    Filtrado por: {allowedSucursales.join(', ').toUpperCase()}
+                                                </span>
+                                            )}
+                                        </label>
                                         <span className="text-xs text-gray-400 font-medium">{superForm.camionetaIds.length} seleccionadas</span>
-                                    </label>
+                                    </div>
                                     <input
                                         title="Filtrar Camionetas"
                                         type="text" placeholder="Filtrar camionetas..." value={camionetaFilter} onChange={(e) => setCamionetaFilter(e.target.value)}
                                         className="w-full px-3 py-1.5 rounded-lg border border-gray-200 text-xs outline-none focus:ring-1 focus:ring-cyan-500"
                                     />
                                     <div className="border border-gray-200 rounded-xl max-h-40 overflow-y-auto p-3 space-y-2 bg-gray-50/30">
-                                        {vehiculos
+                                        {filteredVehiculosForSupervisor
                                             .filter(v => v.patente.toLowerCase().includes(camionetaFilter.toLowerCase()) || v.tipoVehiculo.nombre.toLowerCase().includes(camionetaFilter.toLowerCase()))
                                             .map(v => {
                                                 const isChecked = superForm.camionetaIds.includes(v.id)
@@ -827,6 +866,13 @@ export default function PersonalClient({
                                                     </label>
                                                 )
                                             })}
+
+                                        {allowedSucursalIds.length === 0 && (
+                                            <div className="text-xs text-slate-400 italic text-center py-4">Selecciona primero un Jefe de Operación o Jefe Zonal para listar sus camionetas.</div>
+                                        )}
+                                        {allowedSucursalIds.length > 0 && filteredVehiculosForSupervisor.length === 0 && (
+                                            <div className="text-xs text-slate-400 italic text-center py-4">No se encontraron camionetas para la sucursal de dependencia de este jefe.</div>
+                                        )}
                                     </div>
                                 </div>
 
