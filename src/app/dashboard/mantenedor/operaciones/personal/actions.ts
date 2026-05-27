@@ -27,6 +27,9 @@ export async function getLicitaciones() {
 export async function getSucursales() {
     try {
         return await prisma.sucursal.findMany({
+            include: {
+                uts: true
+            },
             orderBy: { nombre: 'asc' }
         })
     } catch (e) {

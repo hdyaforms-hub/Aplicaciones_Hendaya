@@ -345,21 +345,18 @@ export default function PersonalClient({
 
     // CASCADING UT CALCULATION FOR ZONAL SCREEN
     // Given the selected sucursales, fetch their UT names
-    const getUTsForSelectedSucursales = (selectedSucIds: string[]) => {
+    const getUTsForSelectedSucursales = (selectedSucIds: string[], selectedLicIds?: number[]) => {
         if (selectedSucIds.length === 0) return []
-        // We can get all UTs that belong to any of the selected sucursales
-        // In our sucursales dataset, we can search for uts. In `initialZonales` or `initialSupervisores` we don't have all UTs directly, 
-        // but we can query them from their UT relationships if available or just list the sucursal names.
-        // Wait, does `sucursales` have UTs? Let's check how sucursales list is passed. 
-        // Yes, `sucursales` in database is a simple table.
-        // Let's see: in `Zonal` creation, the user selects Sucursales. The prompt says: "debe contar con una lista seleccionable de licitación, sucursal... y una vez que seleccione la sucursal debe mostrarme todas las ut asociadas".
-        // Let's map UTs of selected sucursales:
         const matchingUts: number[] = []
         sucursales
             .filter(s => selectedSucIds.includes(s.id))
             .forEach(s => {
                 if (s.uts) {
-                    s.uts.forEach((ut: any) => matchingUts.push(ut.codUT))
+                    s.uts.forEach((ut: any) => {
+                        if (!selectedLicIds || selectedLicIds.length === 0 || selectedLicIds.includes(ut.licId)) {
+                            matchingUts.push(ut.codUT)
+                        }
+                    })
                 }
             })
         return [...new Set(matchingUts)].sort((a, b) => a - b)
@@ -569,12 +566,12 @@ export default function PersonalClient({
                                 <div className="p-4 bg-slate-50 border border-slate-100 rounded-xl">
                                     <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Unidades Territoriales (UT) Cubiertas</h4>
                                     <div className="flex flex-wrap gap-2">
-                                        {getUTsForSelectedSucursales(zonalForm.sucursales).map(ut => (
+                                        {getUTsForSelectedSucursales(zonalForm.sucursales, zonalForm.licitaciones).map(ut => (
                                             <span key={ut} className="inline-flex items-center px-3 py-1 bg-cyan-100 text-cyan-800 rounded-lg text-xs font-bold border border-cyan-200 shadow-sm">
                                                 UT {ut}
                                             </span>
                                         ))}
-                                        {getUTsForSelectedSucursales(zonalForm.sucursales).length === 0 && (
+                                        {getUTsForSelectedSucursales(zonalForm.sucursales, zonalForm.licitaciones).length === 0 && (
                                             <span className="text-xs text-gray-400 italic">Las sucursales seleccionadas no tienen UTs asociadas actualmente.</span>
                                         )}
                                     </div>
@@ -934,7 +931,10 @@ export default function PersonalClient({
                                         return z.nombre.toLowerCase().includes(q) || z.apellido.toLowerCase().includes(q) || z.correo.toLowerCase().includes(q) || z.sucursales.some((s: any) => s.sucursal.nombre.toLowerCase().includes(q))
                                     })
                                     .map(z => {
-                                        const zonalUts = getUTsForSelectedSucursales(z.sucursales.map((s: any) => s.sucursalId))
+                                        const zonalUts = getUTsForSelectedSucursales(
+                                            z.sucursales.map((s: any) => s.sucursalId),
+                                            z.licitaciones.map((l: any) => l.licitacionId)
+                                        )
                                         return (
                                             <tr key={z.id} className="hover:bg-cyan-50/20 transition-colors">
                                                 <td className="px-6 py-4 font-bold text-gray-900">{z.nombre} {z.apellido}</td>
