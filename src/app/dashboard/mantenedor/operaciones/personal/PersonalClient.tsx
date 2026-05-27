@@ -1118,6 +1118,7 @@ export default function PersonalClient({
                                     <th className="px-6 py-4">Nombre Completo</th>
                                     <th className="px-6 py-4">Correo</th>
                                     <th className="px-6 py-4">Asociado Con</th>
+                                    <th className="px-6 py-4">Sucursales</th>
                                     <th className="px-6 py-4">Camionetas</th>
                                     <th className="px-6 py-4">RBDs Auditados</th>
                                     <th className="px-6 py-4 text-center">Estado</th>
@@ -1128,13 +1129,18 @@ export default function PersonalClient({
                                 {initialSupervisores
                                     .filter(s => {
                                         const q = searchSuper.toLowerCase().trim()
-                                        return s.nombre.toLowerCase().includes(q) || s.apellido.toLowerCase().includes(q) || s.correo.toLowerCase().includes(q)
+                                        const zonal = s.jefeOperacion?.jefeZonal || s.jefeZonal
+                                        const hasSuc = zonal?.sucursales.some((su: any) => su.sucursal.nombre.toLowerCase().includes(q))
+                                        return s.nombre.toLowerCase().includes(q) || s.apellido.toLowerCase().includes(q) || s.correo.toLowerCase().includes(q) || hasSuc
                                     })
                                     .map(s => {
                                         const hasOp = !!s.jefeOperacion
                                         const dependencyName = hasOp 
                                             ? `👔 Jefe Op: ${s.jefeOperacion.nombre} ${s.jefeOperacion.apellido}`
                                             : `💼 Jefe Zonal: ${s.jefeZonal?.nombre} ${s.jefeZonal?.apellido}`
+                                        
+                                        const zonal = s.jefeOperacion?.jefeZonal || s.jefeZonal
+                                        const supervisorSucursales = zonal?.sucursales || []
 
                                         return (
                                             <tr key={s.id} className="hover:bg-cyan-50/20 transition-colors">
@@ -1144,6 +1150,18 @@ export default function PersonalClient({
                                                     <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold ${hasOp ? 'bg-indigo-50 text-indigo-700 border border-indigo-100' : 'bg-amber-50 text-amber-700 border border-amber-100'}`}>
                                                         {dependencyName}
                                                     </span>
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    <div className="flex flex-wrap gap-1">
+                                                        {supervisorSucursales.map((su: any) => (
+                                                            <span key={su.sucursalId} className="inline-flex px-2 py-0.5 rounded text-xs font-semibold bg-cyan-50 text-cyan-700 border border-cyan-100">
+                                                                {su.sucursal.nombre}
+                                                            </span>
+                                                        ))}
+                                                        {supervisorSucursales.length === 0 && (
+                                                            <span className="text-xs text-gray-400 italic">Ninguna</span>
+                                                        )}
+                                                    </div>
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     <div className="flex flex-wrap gap-1">
