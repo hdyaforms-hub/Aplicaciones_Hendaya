@@ -57,7 +57,11 @@ export async function getColegios() {
             select: {
                 colRBD: true,
                 nombreEstablecimiento: true,
-                sucursal: true
+                sucursal: true,
+                colut: true,
+                direccionEstablecimiento: true,
+                comuna: true,
+                institucion: true
             },
             distinct: ['colRBD'],
             orderBy: { nombreEstablecimiento: 'asc' }

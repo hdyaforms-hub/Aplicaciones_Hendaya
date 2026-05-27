@@ -2,6 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { jsPDF } from 'jspdf'
+import autoTable from 'jspdf-autotable'
+import * as XLSX from 'xlsx'
 import {
     createJefeZonal, updateJefeZonal, deleteJefeZonal,
     createJefeOperacion, updateJefeOperacion, deleteJefeOperacion,
@@ -59,6 +62,7 @@ export default function PersonalClient({
     const [searchZonal, setSearchZonal] = useState('')
     const [searchOp, setSearchOp] = useState('')
     const [searchSuper, setSearchSuper] = useState('')
+    const [showDownloadDropdown, setShowDownloadDropdown] = useState(false)
 
     // Sort states: { col: string, dir: 'asc' | 'desc' }
     const [sortZonal, setSortZonal] = useState<{ col: string; dir: 'asc' | 'desc' }>({ col: 'nombre', dir: 'asc' })
@@ -537,6 +541,268 @@ export default function PersonalClient({
 
     const totalSuperPages = Math.ceil(sortedSupervisores.length / itemsPerPage) || 1
     const pagedSupervisores = sortedSupervisores.slice((pageSuper - 1) * itemsPerPage, pageSuper * itemsPerPage)
+
+    const downloadExcel = () => {
+        const headers = [
+            'Licitación',
+            'Sucursal',
+            'Jefe Zonal Nombre',
+            'Jefe Zonal Correo',
+            'Jefe Zonal Patentes',
+            'Jefe de Operación Nombre',
+            'Jefe de Operación Correo',
+            'Jefe de Operación Patentes',
+            'Supervisor Nombre',
+            'Supervisor Correo',
+            'Supervisor Patentes',
+            'UT',
+            'RBD',
+            'Nombre del Establecimiento',
+            'Dirección del Establecimiento',
+            'Comuna',
+            'Institución'
+        ]
+
+        const data: any[] = []
+
+        sortedSupervisores.forEach((s) => {
+            const zonalId = s.jefeZonalId || s.jefeOperacion?.jefeZonalId
+            const fullZonal = zonalId ? initialZonales.find(z => z.id === zonalId) : null
+            const zonalNombre = fullZonal ? `${fullZonal.nombre} ${fullZonal.apellido}` : ''
+            const zonalCorreo = fullZonal ? fullZonal.correo : ''
+            const zonalPatentes = fullZonal ? (fullZonal.vehiculos || []).map((v: any) => v.vehiculo.patente).join(', ') : ''
+
+            const fullOp = s.jefeOperacionId ? initialJefesOperacion.find(o => o.id === s.jefeOperacionId) : null
+            const opNombre = fullOp ? `${fullOp.nombre} ${fullOp.apellido}` : ''
+            const opCorreo = fullOp ? fullOp.correo : ''
+            const opPatentes = fullOp ? (fullOp.vehiculos || []).map((v: any) => v.vehiculo.patente).join(', ') : ''
+
+            const supNombre = `${s.nombre} ${s.apellido}`
+            const supCorreo = s.correo
+            const supPatentes = s.camionetas.map((c: any) => c.vehiculo.patente).join(', ')
+
+            const zonalObj = s.jefeOperacion?.jefeZonal || s.jefeZonal
+            const supervisorSucursalesNames = (zonalObj?.sucursales || []).map((su: any) => su.sucursal.nombre).join(', ')
+
+            if (s.rbdsAuditar && s.rbdsAuditar.length > 0) {
+                s.rbdsAuditar.forEach((r: any) => {
+                    const school = colegios.find(col => col.colRBD === r.rbd)
+                    const rbdVal = r.rbd
+                    const schoolNombre = school ? school.nombreEstablecimiento : ''
+                    const schoolDireccion = school ? school.direccionEstablecimiento || '' : ''
+                    const schoolComuna = school ? school.comuna || '' : ''
+                    const schoolInstitucion = school ? school.institucion || '' : ''
+                    const schoolSucursal = school ? school.sucursal : supervisorSucursalesNames
+
+                    let licIdVal = ''
+                    if (school && school.colut) {
+                        let foundLicId: number | null = null
+                        for (const suc of sucursales) {
+                            if (suc.uts) {
+                                const foundUt = suc.uts.find((ut: any) => ut.codUT === school.colut)
+                                if (foundUt) {
+                                    foundLicId = foundUt.licId
+                                    break
+                                }
+                            }
+                        }
+                        if (foundLicId !== null) {
+                            licIdVal = `Lic. ${foundLicId}`
+                        } else if (fullZonal && fullZonal.licitaciones && fullZonal.licitaciones.length > 0) {
+                            licIdVal = fullZonal.licitaciones.map((l: any) => `Lic. ${l.licitacionId}`).join(', ')
+                        }
+                    } else if (fullZonal && fullZonal.licitaciones && fullZonal.licitaciones.length > 0) {
+                        licIdVal = fullZonal.licitaciones.map((l: any) => `Lic. ${l.licitacionId}`).join(', ')
+                    }
+
+                    data.push([
+                        licIdVal,
+                        schoolSucursal,
+                        zonalNombre,
+                        zonalCorreo,
+                        zonalPatentes,
+                        opNombre,
+                        opCorreo,
+                        opPatentes,
+                        supNombre,
+                        supCorreo,
+                        supPatentes,
+                        school ? school.colut : '',
+                        rbdVal,
+                        schoolNombre,
+                        schoolDireccion,
+                        schoolComuna,
+                        schoolInstitucion
+                    ])
+                })
+            } else {
+                let licIdVal = ''
+                if (fullZonal && fullZonal.licitaciones && fullZonal.licitaciones.length > 0) {
+                    licIdVal = fullZonal.licitaciones.map((l: any) => `Lic. ${l.licitacionId}`).join(', ')
+                }
+
+                data.push([
+                    licIdVal,
+                    supervisorSucursalesNames,
+                    zonalNombre,
+                    zonalCorreo,
+                    zonalPatentes,
+                    opNombre,
+                    opCorreo,
+                    opPatentes,
+                    supNombre,
+                    supCorreo,
+                    supPatentes,
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    ''
+                ])
+            }
+        })
+
+        const ws = XLSX.utils.aoa_to_sheet([headers, ...data])
+        const wb = XLSX.utils.book_new()
+        XLSX.utils.book_append_sheet(wb, ws, "Supervisores")
+        XLSX.writeFile(wb, "Reporte_Supervisores.xlsx")
+    }
+
+    const downloadPDF = () => {
+        const doc = new jsPDF('landscape')
+        doc.setFontSize(16)
+        doc.text('Reporte Consolidado de Supervisores y Dependencias', 14, 18)
+        doc.setFontSize(9)
+        doc.setTextColor(100)
+        doc.text(`Generado el: ${new Date().toLocaleString()}`, 14, 25)
+
+        const headers = [[
+            'Licitación',
+            'Sucursal',
+            'Jefe Zonal',
+            'Jefe de Operación',
+            'Supervisor',
+            'UT / RBD',
+            'Establecimiento (Dirección / Comuna)',
+            'Institución'
+        ]]
+
+        const data: any[] = []
+
+        sortedSupervisores.forEach((s) => {
+            const zonalId = s.jefeZonalId || s.jefeOperacion?.jefeZonalId
+            const fullZonal = zonalId ? initialZonales.find(z => z.id === zonalId) : null
+            const zonalNombre = fullZonal ? `${fullZonal.nombre} ${fullZonal.apellido}` : ''
+            const zonalCorreo = fullZonal ? fullZonal.correo : ''
+            const zonalPatentes = fullZonal ? (fullZonal.vehiculos || []).map((v: any) => v.vehiculo.patente).join(', ') : ''
+
+            const fullOp = s.jefeOperacionId ? initialJefesOperacion.find(o => o.id === s.jefeOperacionId) : null
+            const opNombre = fullOp ? `${fullOp.nombre} ${fullOp.apellido}` : ''
+            const opCorreo = fullOp ? fullOp.correo : ''
+            const opPatentes = fullOp ? (fullOp.vehiculos || []).map((v: any) => v.vehiculo.patente).join(', ') : ''
+
+            const supNombre = `${s.nombre} ${s.apellido}`
+            const supCorreo = s.correo
+            const supPatentes = s.camionetas.map((c: any) => c.vehiculo.patente).join(', ')
+
+            const zonalObj = s.jefeOperacion?.jefeZonal || s.jefeZonal
+            const supervisorSucursalesNames = (zonalObj?.sucursales || []).map((su: any) => su.sucursal.nombre).join(', ')
+
+            const zonalCell = zonalNombre 
+                ? `${zonalNombre}\n${zonalCorreo}${zonalPatentes ? `\nPat: ${zonalPatentes}` : ''}`
+                : 'No Asignado'
+
+            const opCell = opNombre
+                ? `${opNombre}\n${opCorreo}${opPatentes ? `\nPat: ${opPatentes}` : ''}`
+                : 'No Asignado'
+
+            const supCell = `${supNombre}\n${supCorreo}${supPatentes ? `\nPat: ${supPatentes}` : ''}`
+
+            if (s.rbdsAuditar && s.rbdsAuditar.length > 0) {
+                s.rbdsAuditar.forEach((r: any) => {
+                    const school = colegios.find(col => col.colRBD === r.rbd)
+                    const rbdVal = r.rbd
+                    const schoolNombre = school ? school.nombreEstablecimiento : ''
+                    const schoolDireccion = school ? school.direccionEstablecimiento || '' : ''
+                    const schoolComuna = school ? school.comuna || '' : ''
+                    const schoolInstitucion = school ? school.institucion || '' : ''
+                    const schoolSucursal = school ? school.sucursal : supervisorSucursalesNames
+
+                    let licIdVal = ''
+                    if (school && school.colut) {
+                        let foundLicId: number | null = null
+                        for (const suc of sucursales) {
+                            if (suc.uts) {
+                                const foundUt = suc.uts.find((ut: any) => ut.codUT === school.colut)
+                                if (foundUt) {
+                                    foundLicId = foundUt.licId
+                                    break
+                                }
+                            }
+                        }
+                        if (foundLicId !== null) {
+                            licIdVal = `Lic. ${foundLicId}`
+                        } else if (fullZonal && fullZonal.licitaciones && fullZonal.licitaciones.length > 0) {
+                            licIdVal = fullZonal.licitaciones.map((l: any) => `Lic. ${l.licitacionId}`).join(', ')
+                        }
+                    } else if (fullZonal && fullZonal.licitaciones && fullZonal.licitaciones.length > 0) {
+                        licIdVal = fullZonal.licitaciones.map((l: any) => `Lic. ${l.licitacionId}`).join(', ')
+                    }
+
+                    const schoolCell = `${schoolNombre}${schoolDireccion ? `\nDir: ${schoolDireccion}` : ''}${schoolComuna ? `\nComuna: ${schoolComuna}` : ''}`
+
+                    data.push([
+                        licIdVal,
+                        schoolSucursal,
+                        zonalCell,
+                        opCell,
+                        supCell,
+                        `UT: ${school ? school.colut : ''}\nRBD: ${rbdVal}`,
+                        schoolCell,
+                        schoolInstitucion
+                    ])
+                })
+            } else {
+                let licIdVal = ''
+                if (fullZonal && fullZonal.licitaciones && fullZonal.licitaciones.length > 0) {
+                    licIdVal = fullZonal.licitaciones.map((l: any) => `Lic. ${l.licitacionId}`).join(', ')
+                }
+
+                data.push([
+                    licIdVal,
+                    supervisorSucursalesNames,
+                    zonalCell,
+                    opCell,
+                    supCell,
+                    'Sin RBDs',
+                    'Ninguno',
+                    'Ninguna'
+                ])
+            }
+        })
+
+        autoTable(doc, {
+            startY: 30,
+            head: headers,
+            body: data,
+            theme: 'grid',
+            styles: { fontSize: 7, cellPadding: 2, overflow: 'linebreak' },
+            headStyles: { fillColor: [14, 165, 233], textColor: [255, 255, 255], fontStyle: 'bold' },
+            columnStyles: {
+                0: { cellWidth: 20 },
+                1: { cellWidth: 20 },
+                2: { cellWidth: 38 },
+                3: { cellWidth: 38 },
+                4: { cellWidth: 38 },
+                5: { cellWidth: 20 },
+                6: { cellWidth: 70 },
+                7: { cellWidth: 25 }
+            }
+        })
+
+        doc.save("Reporte_Supervisores.pdf")
+    }
 
     const renderPagination = (currentPage: number, totalPages: number, setPage: (p: number) => void, totalItems: number) => {
         if (totalPages <= 1) return null
@@ -1420,6 +1686,36 @@ export default function PersonalClient({
                                 placeholder="Buscar supervisor por nombre, correo..."
                                 className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-gray-200 outline-none text-sm bg-white focus:ring-1 focus:ring-cyan-500"
                             />
+                        </div>
+
+                        {/* Download Dropdown */}
+                        <div className="relative">
+                            <button
+                                onClick={() => setShowDownloadDropdown(!showDownloadDropdown)}
+                                className="bg-slate-900 hover:bg-slate-800 text-white px-4 py-2 rounded-xl font-semibold text-sm transition-all flex items-center gap-2 shadow-lg shadow-slate-900/10 cursor-pointer select-none"
+                                title="Descargar Reportes"
+                            >
+                                <span>📥</span> Descargar
+                            </button>
+                            {showDownloadDropdown && (
+                                <>
+                                    <div className="fixed inset-0 z-10" onClick={() => setShowDownloadDropdown(false)} />
+                                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-100 py-1.5 z-20 animate-in fade-in slide-in-from-top-2 duration-200">
+                                        <button
+                                            onClick={() => { downloadExcel(); setShowDownloadDropdown(false); }}
+                                            className="w-full text-left px-4 py-2 hover:bg-slate-50 text-sm font-semibold text-gray-700 flex items-center gap-2 transition-colors cursor-pointer"
+                                        >
+                                            <span className="text-emerald-600">📊</span> Descargar Excel
+                                        </button>
+                                        <button
+                                            onClick={() => { downloadPDF(); setShowDownloadDropdown(false); }}
+                                            className="w-full text-left px-4 py-2 hover:bg-slate-50 text-sm font-semibold text-gray-700 flex items-center gap-2 transition-colors cursor-pointer"
+                                        >
+                                            <span className="text-rose-600">📄</span> Descargar PDF
+                                        </button>
+                                    </div>
+                                </>
+                            )}
                         </div>
                     </div>
 
