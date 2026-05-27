@@ -37,3 +37,21 @@ Estas reglas deben ser seguidas estrictamente por cualquier asistente de intelig
     *   El script `"dev"` en `package.json` está configurado para levantar en este puerto (`next dev -p 3001`) para evitar colisiones y mantener el orden.
 *   **ENTORNO DE PRODUCCIÓN:** Se ejecuta **exclusivamente** en el puerto **3000** (URL: `http://localhost:3000`).
 
+## 6. DESPLIEGUE Y CONTROL DE VERSIONES (CRÍTICO)
+
+*   **PROHIBIDO HACER PUSH A GITHUB O DEPLOY A PRODUCCIÓN AUTOMÁTICAMENTE:** La IA **NUNCA** debe ejecutar `git push`, `deploy_prod.bat`, `npm run build` en producción, ni ningún comando de despliegue, a menos que el usuario lo solicite **explícita y textualmente**.
+*   Solo implementar cambios en el entorno de desarrollo (`d:\Programas\AplicacionWeb`, puerto 3001).
+*   Esperar instrucción explícita del usuario para subir a GitHub o desplegar a producción.
+
+## 7. INTEGRIDAD DE DATOS EN BASE DE DATOS (CRÍTICO)
+
+*   **JAMÁS BORRAR DATOS DE TABLAS EXISTENTES:** Al agregar nuevas relaciones o columnas al schema de Prisma, **NUNCA** se debe perder la información de las tablas existentes.
+*   **`prisma db push` es seguro** para agregar nuevas tablas y columnas sin eliminar datos. Pero si un cambio requiriese borrar datos, la IA debe **detenerse y pedir autorización explícita**.
+*   **SIEMPRE REGENERAR EL CLIENTE PRISMA después de cambios al schema:** Al modificar `schema.prisma` se debe ejecutar `npx prisma generate` con el servidor de desarrollo **detenido** (para evitar el bloqueo del archivo DLL del motor de Prisma). Luego reiniciar el servidor. Si no se regenera el cliente, las consultas fallarán con `Unknown field` aunque la base de datos ya tenga las tablas correctas.
+*   **Flujo correcto para cambios de schema:**
+    1. Modificar `schema.prisma`
+    2. Detener el servidor de desarrollo (`kill` de la tarea npm run dev)
+    3. Ejecutar `npx prisma db push` (solo agrega, no borra datos)
+    4. Ejecutar `npx prisma generate` (actualiza el cliente TypeScript)
+    5. Reiniciar el servidor de desarrollo
+

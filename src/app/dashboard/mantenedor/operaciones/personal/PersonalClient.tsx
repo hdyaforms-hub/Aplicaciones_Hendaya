@@ -60,6 +60,30 @@ export default function PersonalClient({
     const [searchOp, setSearchOp] = useState('')
     const [searchSuper, setSearchSuper] = useState('')
 
+    // Sort states: { col: string, dir: 'asc' | 'desc' }
+    const [sortZonal, setSortZonal] = useState<{ col: string; dir: 'asc' | 'desc' }>({ col: 'nombre', dir: 'asc' })
+    const [sortOp, setSortOp] = useState<{ col: string; dir: 'asc' | 'desc' }>({ col: 'nombre', dir: 'asc' })
+    const [sortSuper, setSortSuper] = useState<{ col: string; dir: 'asc' | 'desc' }>({ col: 'nombre', dir: 'asc' })
+
+    // Pagination states
+    const [pageZonal, setPageZonal] = useState(1)
+    const [pageOp, setPageOp] = useState(1)
+    const [pageSuper, setPageSuper] = useState(1)
+    const itemsPerPage = 10
+
+    // Reset pagination on search or sort changes
+    useEffect(() => {
+        setPageZonal(1)
+    }, [searchZonal, sortZonal])
+
+    useEffect(() => {
+        setPageOp(1)
+    }, [searchOp, sortOp])
+
+    useEffect(() => {
+        setPageSuper(1)
+    }, [searchSuper, sortSuper])
+
     // Many-to-many checklists filters
     const [licFilter, setLicFilter] = useState('')
     const [sucFilter, setSucFilter] = useState('')
@@ -428,6 +452,159 @@ export default function PersonalClient({
         if (allowedSucursalIds.length === 0) return false // No chief chosen yet
         return allowedSucursalIds.includes(v.sucursalId)
     })
+
+    // ---- Sort helpers ----
+    const toggleSort = (
+        current: { col: string; dir: 'asc' | 'desc' },
+        col: string,
+        setter: (v: { col: string; dir: 'asc' | 'desc' }) => void
+    ) => {
+        setter(current.col === col ? { col, dir: current.dir === 'asc' ? 'desc' : 'asc' } : { col, dir: 'asc' })
+    }
+
+    const sortIcon = (current: { col: string; dir: 'asc' | 'desc' }, col: string) => {
+        if (current.col !== col) return <span className="ml-1 opacity-25 text-xs">⇅</span>
+        return current.dir === 'asc'
+            ? <span className="ml-1 text-cyan-500 text-xs">↑</span>
+            : <span className="ml-1 text-cyan-500 text-xs">↓</span>
+    }
+
+    const sortedZonales = [...initialZonales]
+        .filter(z => {
+            const q = searchZonal.toLowerCase().trim()
+            return z.nombre.toLowerCase().includes(q) || z.apellido.toLowerCase().includes(q) || z.correo.toLowerCase().includes(q) || z.sucursales.some((s: any) => s.sucursal.nombre.toLowerCase().includes(q))
+        })
+        .sort((a, b) => {
+            const dir = sortZonal.dir === 'asc' ? 1 : -1
+            switch (sortZonal.col) {
+                case 'nombre':    return dir * (`${a.nombre} ${a.apellido}`).localeCompare(`${b.nombre} ${b.apellido}`)
+                case 'correo':    return dir * a.correo.localeCompare(b.correo)
+                case 'sucursal':  return dir * (a.sucursales.map((s: any) => s.sucursal.nombre).join(',').localeCompare(b.sucursales.map((s: any) => s.sucursal.nombre).join(',')))
+                case 'licitacion':return dir * (a.licitaciones.length - b.licitaciones.length)
+                case 'uts':       return dir * (getUTsForSelectedSucursales(a.sucursales.map((s: any) => s.sucursalId), a.licitaciones.map((l: any) => l.licitacionId)).length - getUTsForSelectedSucursales(b.sucursales.map((s: any) => s.sucursalId), b.licitaciones.map((l: any) => l.licitacionId)).length)
+                case 'patentes':  return dir * ((a.vehiculos || []).length - (b.vehiculos || []).length)
+                case 'estado':    return dir * (Number(b.vigente) - Number(a.vigente))
+                default:          return 0
+            }
+        })
+
+    const sortedJefesOp = [...initialJefesOperacion]
+        .filter(o => {
+            const q = searchOp.toLowerCase().trim()
+            return o.nombre.toLowerCase().includes(q) || o.apellido.toLowerCase().includes(q) || o.correo.toLowerCase().includes(q) || o.jefeZonal.nombre.toLowerCase().includes(q)
+        })
+        .sort((a, b) => {
+            const dir = sortOp.dir === 'asc' ? 1 : -1
+            switch (sortOp.col) {
+                case 'nombre':    return dir * (`${a.nombre} ${a.apellido}`).localeCompare(`${b.nombre} ${b.apellido}`)
+                case 'correo':    return dir * a.correo.localeCompare(b.correo)
+                case 'zonal':     return dir * (`${a.jefeZonal.nombre} ${a.jefeZonal.apellido}`).localeCompare(`${b.jefeZonal.nombre} ${b.jefeZonal.apellido}`)
+                case 'sucursal':  return dir * (a.jefeZonal.sucursales.map((s: any) => s.sucursal.nombre).join(',').localeCompare(b.jefeZonal.sucursales.map((s: any) => s.sucursal.nombre).join(',')))
+                case 'patentes':  return dir * ((a.vehiculos || []).length - (b.vehiculos || []).length)
+                case 'estado':    return dir * (Number(b.vigente) - Number(a.vigente))
+                default:          return 0
+            }
+        })
+
+    const sortedSupervisores = [...initialSupervisores]
+        .filter(s => {
+            const q = searchSuper.toLowerCase().trim()
+            const zonal = s.jefeOperacion?.jefeZonal || s.jefeZonal
+            const hasSuc = zonal?.sucursales.some((su: any) => su.sucursal.nombre.toLowerCase().includes(q))
+            return s.nombre.toLowerCase().includes(q) || s.apellido.toLowerCase().includes(q) || s.correo.toLowerCase().includes(q) || hasSuc
+        })
+        .sort((a, b) => {
+            const dir = sortSuper.dir === 'asc' ? 1 : -1
+            const zonalA = a.jefeOperacion?.jefeZonal || a.jefeZonal
+            const zonalB = b.jefeOperacion?.jefeZonal || b.jefeZonal
+            switch (sortSuper.col) {
+                case 'nombre':    return dir * (`${a.nombre} ${a.apellido}`).localeCompare(`${b.nombre} ${b.apellido}`)
+                case 'correo':    return dir * a.correo.localeCompare(b.correo)
+                case 'dep':       return dir * (a.jefeOperacion ? `op:${a.jefeOperacion.nombre}` : `zonal:${a.jefeZonal?.nombre}`).localeCompare(b.jefeOperacion ? `op:${b.jefeOperacion.nombre}` : `zonal:${b.jefeZonal?.nombre}`)
+                case 'sucursal':  return dir * ((zonalA?.sucursales.map((s: any) => s.sucursal.nombre).join(',') || '').localeCompare(zonalB?.sucursales.map((s: any) => s.sucursal.nombre).join(',') || ''))
+                case 'camionetas':return dir * (a.camionetas.length - b.camionetas.length)
+                case 'rbds':      return dir * (a.rbdsAuditar.length - b.rbdsAuditar.length)
+                case 'estado':    return dir * (Number(b.vigente) - Number(a.vigente))
+                default:          return 0
+            }
+        })
+
+    const totalZonalPages = Math.ceil(sortedZonales.length / itemsPerPage) || 1
+    const pagedZonales = sortedZonales.slice((pageZonal - 1) * itemsPerPage, pageZonal * itemsPerPage)
+
+    const totalOpPages = Math.ceil(sortedJefesOp.length / itemsPerPage) || 1
+    const pagedJefesOp = sortedJefesOp.slice((pageOp - 1) * itemsPerPage, pageOp * itemsPerPage)
+
+    const totalSuperPages = Math.ceil(sortedSupervisores.length / itemsPerPage) || 1
+    const pagedSupervisores = sortedSupervisores.slice((pageSuper - 1) * itemsPerPage, pageSuper * itemsPerPage)
+
+    const renderPagination = (currentPage: number, totalPages: number, setPage: (p: number) => void, totalItems: number) => {
+        if (totalPages <= 1) return null
+        const pageNumbers: any[] = []
+        for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+            if (totalPages > 7) {
+                if (pageNum !== 1 && pageNum !== totalPages && Math.abs(pageNum - currentPage) > 1) {
+                    if (pageNum === 2 && currentPage > 3) {
+                        pageNumbers.push('dots-start')
+                    } else if (pageNum === totalPages - 1 && currentPage < totalPages - 2) {
+                        pageNumbers.push('dots-end')
+                    }
+                    continue
+                }
+            }
+            pageNumbers.push(pageNum)
+        }
+
+        return (
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-6 py-4 border-t border-gray-100 bg-gray-50/10">
+                <span className="text-xs text-gray-500 font-medium">
+                    Mostrando <span className="font-bold text-gray-700">{Math.min((currentPage - 1) * itemsPerPage + 1, totalItems)}</span> a{' '}
+                    <span className="font-bold text-gray-700">{Math.min(currentPage * itemsPerPage, totalItems)}</span> de{' '}
+                    <span className="font-bold text-gray-700">{totalItems}</span> registros
+                </span>
+                <div className="flex items-center gap-1.5">
+                    <button
+                        type="button"
+                        onClick={() => setPage(Math.max(currentPage - 1, 1))}
+                        disabled={currentPage === 1}
+                        className="px-3 py-1.5 rounded-lg border border-gray-200 text-xs font-semibold text-gray-500 hover:bg-gray-50 disabled:opacity-40 disabled:hover:bg-transparent transition-all cursor-pointer disabled:cursor-not-allowed"
+                    >
+                        Anterior
+                    </button>
+                    
+                    {pageNumbers.map((p, idx) => {
+                        if (p === 'dots-start' || p === 'dots-end') {
+                            return <span key={`${p}-${idx}`} className="text-gray-400 text-xs px-1 select-none">...</span>
+                        }
+                        const isCurrent = p === currentPage
+                        return (
+                            <button
+                                key={p}
+                                type="button"
+                                onClick={() => setPage(p)}
+                                className={`w-8 h-8 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                                    isCurrent
+                                        ? 'bg-cyan-500 text-white shadow-md shadow-cyan-500/10'
+                                        : 'border border-gray-200 text-gray-600 hover:bg-gray-50'
+                                }`}
+                            >
+                                {p}
+                            </button>
+                        )
+                    })}
+
+                    <button
+                        type="button"
+                        onClick={() => setPage(Math.min(currentPage + 1, totalPages))}
+                        disabled={currentPage === totalPages}
+                        className="px-3 py-1.5 rounded-lg border border-gray-200 text-xs font-semibold text-gray-500 hover:bg-gray-50 disabled:opacity-40 disabled:hover:bg-transparent transition-all cursor-pointer disabled:cursor-not-allowed"
+                    >
+                        Siguiente
+                    </button>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <div className="space-y-6">
@@ -1079,22 +1256,16 @@ export default function PersonalClient({
                         <table className="w-full text-left border-collapse whitespace-nowrap">
                             <thead>
                                 <tr className="bg-gray-50/50 border-b border-gray-100 text-slate-600 text-xs font-bold uppercase tracking-wider">
-                                    <th className="px-6 py-4">Nombre Completo</th>
-                                    <th className="px-6 py-4">Correo</th>
-                                    <th className="px-6 py-4">Licitaciones</th>
-                                    <th className="px-6 py-4">Sucursales</th>
-                                    <th className="px-6 py-4">UTs Cubiertas</th>
-                                    <th className="px-6 py-4">Patentes</th>
-                                    <th className="px-6 py-4 text-center">Estado</th>
+                                    {([['nombre','Nombre Completo'],['correo','Correo'],['licitacion','Licitaciones'],['sucursal','Sucursales'],['uts','UTs Cubiertas'],['patentes','Patentes'],['estado','Estado']] as [string,string][]).map(([col, label]) => (
+                                        <th key={col} onClick={() => toggleSort(sortZonal, col, setSortZonal)} className={`px-6 py-4 cursor-pointer select-none hover:bg-cyan-50/50 transition-colors whitespace-nowrap ${col === 'estado' ? 'text-center' : ''}`}>
+                                            {label}{sortIcon(sortZonal, col)}
+                                        </th>
+                                    ))}
                                     {userPermissions.includes('manage_zonales') && <th className="px-6 py-4 text-right">Acciones</th>}
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100 text-sm text-gray-700">
-                                {initialZonales
-                                    .filter(z => {
-                                        const q = searchZonal.toLowerCase().trim()
-                                        return z.nombre.toLowerCase().includes(q) || z.apellido.toLowerCase().includes(q) || z.correo.toLowerCase().includes(q) || z.sucursales.some((s: any) => s.sucursal.nombre.toLowerCase().includes(q))
-                                    })
+                                {pagedZonales
                                     .map(z => {
                                         const zonalUts = getUTsForSelectedSucursales(
                                             z.sucursales.map((s: any) => s.sucursalId),
@@ -1156,6 +1327,7 @@ export default function PersonalClient({
                             </tbody>
                         </table>
                     </div>
+                    {renderPagination(pageZonal, totalZonalPages, setPageZonal, sortedZonales.length)}
                 </div>
             )}
 
@@ -1178,21 +1350,16 @@ export default function PersonalClient({
                         <table className="w-full text-left border-collapse whitespace-nowrap">
                             <thead>
                                 <tr className="bg-gray-50/50 border-b border-gray-100 text-slate-600 text-xs font-bold uppercase tracking-wider">
-                                    <th className="px-6 py-4">Nombre Completo</th>
-                                    <th className="px-6 py-4">Correo</th>
-                                    <th className="px-6 py-4">Jefe Zonal Dependiente</th>
-                                    <th className="px-6 py-4">Sucursales Asociadas</th>
-                                    <th className="px-6 py-4">Patentes</th>
-                                    <th className="px-6 py-4 text-center">Estado</th>
+                                    {([['nombre','Nombre Completo'],['correo','Correo'],['zonal','Jefe Zonal Dependiente'],['sucursal','Sucursales Asociadas'],['patentes','Patentes'],['estado','Estado']] as [string,string][]).map(([col, label]) => (
+                                        <th key={col} onClick={() => toggleSort(sortOp, col, setSortOp)} className={`px-6 py-4 cursor-pointer select-none hover:bg-cyan-50/50 transition-colors whitespace-nowrap ${col === 'estado' ? 'text-center' : ''}`}>
+                                            {label}{sortIcon(sortOp, col)}
+                                        </th>
+                                    ))}
                                     {userPermissions.includes('manage_jefe_operacion') && <th className="px-6 py-4 text-right">Acciones</th>}
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100 text-sm text-gray-700">
-                                {initialJefesOperacion
-                                    .filter(o => {
-                                        const q = searchOp.toLowerCase().trim()
-                                        return o.nombre.toLowerCase().includes(q) || o.apellido.toLowerCase().includes(q) || o.correo.toLowerCase().includes(q) || o.jefeZonal.nombre.toLowerCase().includes(q)
-                                    })
+                                {pagedJefesOp
                                     .map(o => (
                                         <tr key={o.id} className="hover:bg-cyan-50/20 transition-colors">
                                             <td className="px-6 py-4 font-bold text-gray-900">{o.nombre} {o.apellido}</td>
@@ -1237,6 +1404,7 @@ export default function PersonalClient({
                             </tbody>
                         </table>
                     </div>
+                    {renderPagination(pageOp, totalOpPages, setPageOp, sortedJefesOp.length)}
                 </div>
             )}
 
@@ -1259,24 +1427,16 @@ export default function PersonalClient({
                         <table className="w-full text-left border-collapse whitespace-nowrap">
                             <thead>
                                 <tr className="bg-gray-50/50 border-b border-gray-100 text-slate-600 text-xs font-bold uppercase tracking-wider">
-                                    <th className="px-6 py-4">Nombre Completo</th>
-                                    <th className="px-6 py-4">Correo</th>
-                                    <th className="px-6 py-4">Asociado Con</th>
-                                    <th className="px-6 py-4">Sucursales</th>
-                                    <th className="px-6 py-4">Camionetas</th>
-                                    <th className="px-6 py-4">RBDs Auditados</th>
-                                    <th className="px-6 py-4 text-center">Estado</th>
+                                    {([['nombre','Nombre Completo'],['correo','Correo'],['dep','Asociado Con'],['sucursal','Sucursales'],['camionetas','Camionetas'],['rbds','RBDs Auditados'],['estado','Estado']] as [string,string][]).map(([col, label]) => (
+                                        <th key={col} onClick={() => toggleSort(sortSuper, col, setSortSuper)} className={`px-6 py-4 cursor-pointer select-none hover:bg-cyan-50/50 transition-colors whitespace-nowrap ${col === 'estado' ? 'text-center' : ''}`}>
+                                            {label}{sortIcon(sortSuper, col)}
+                                        </th>
+                                    ))}
                                     {userPermissions.includes('manage_supervisor') && <th className="px-6 py-4 text-right">Acciones</th>}
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100 text-sm text-gray-700">
-                                {initialSupervisores
-                                    .filter(s => {
-                                        const q = searchSuper.toLowerCase().trim()
-                                        const zonal = s.jefeOperacion?.jefeZonal || s.jefeZonal
-                                        const hasSuc = zonal?.sucursales.some((su: any) => su.sucursal.nombre.toLowerCase().includes(q))
-                                        return s.nombre.toLowerCase().includes(q) || s.apellido.toLowerCase().includes(q) || s.correo.toLowerCase().includes(q) || hasSuc
-                                    })
+                                {pagedSupervisores
                                     .map(s => {
                                         const hasOp = !!s.jefeOperacion
                                         const dependencyName = hasOp 
@@ -1343,6 +1503,7 @@ export default function PersonalClient({
                             </tbody>
                         </table>
                     </div>
+                    {renderPagination(pageSuper, totalSuperPages, setPageSuper, sortedSupervisores.length)}
                 </div>
             )}
         </div>
