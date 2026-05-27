@@ -183,6 +183,9 @@ model AspectoEE {
 model Sucursal {
   id                             String                           @id @default(uuid())
   nombre                         String                           @unique
+  region                         String?
+  comuna                         String?
+  direccion                      String?
   createdAt                      DateTime                         @default(now())
   updatedAt                      DateTime                         @updatedAt
   listasCorreo                   ListaCorreo[]

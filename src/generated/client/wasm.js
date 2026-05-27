@@ -278,6 +278,9 @@ exports.Prisma.AspectoEEScalarFieldEnum = {
 exports.Prisma.SucursalScalarFieldEnum = {
   id: 'id',
   nombre: 'nombre',
+  region: 'region',
+  comuna: 'comuna',
+  direccion: 'direccion',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

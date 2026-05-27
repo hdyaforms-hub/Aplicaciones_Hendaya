@@ -6,7 +6,7 @@ import { createLicitacion, updateLicitacion, createUT, updateUT, createSucursal,
 
 type Licitacion = { licId: number, estado: number, licitacionHomologada?: string | null }
 type UT = { codUT: number, licId: number, estado: number, sucursalId: string | null }
-type Sucursal = { id: string, nombre: string, uts: UT[] }
+type Sucursal = { id: string, nombre: string, region?: string | null, comuna?: string | null, direccion?: string | null, uts: UT[] }
 
 export default function SucursalesDashboard({
     licitaciones, uts, sucursales
@@ -61,18 +61,18 @@ export default function SucursalesDashboard({
     }
 
     // --- SUCURSAL LOGIC ---
-    const [sucForm, setSucForm] = useState<{ id: string, nombre: string, uts: number[], isEdit: boolean }>({ id: '', nombre: '', uts: [], isEdit: false })
+    const [sucForm, setSucForm] = useState<{ id: string, nombre: string, region: string, comuna: string, direccion: string, uts: number[], isEdit: boolean }>({ id: '', nombre: '', region: '', comuna: '', direccion: '', uts: [], isEdit: false })
     const handleSucSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         setLoading(true)
 
         const res = sucForm.isEdit
-            ? await updateSucursal(sucForm.id, sucForm.nombre, sucForm.uts)
-            : await createSucursal(sucForm.nombre, sucForm.uts)
+            ? await updateSucursal(sucForm.id, sucForm.nombre, sucForm.uts, sucForm.region, sucForm.comuna, sucForm.direccion)
+            : await createSucursal(sucForm.nombre, sucForm.uts, sucForm.region, sucForm.comuna, sucForm.direccion)
 
         setLoading(false)
         if (res?.error) showMessage(res.error, null)
-        else { showMessage(null, 'Sucursal guardada con éxito.'); setSucForm({ id: '', nombre: '', uts: [], isEdit: false }) }
+        else { showMessage(null, 'Sucursal guardada con éxito.'); setSucForm({ id: '', nombre: '', region: '', comuna: '', direccion: '', uts: [], isEdit: false }) }
     }
 
     const handleUtToggle = (cod: number) => {
@@ -133,7 +133,7 @@ export default function SucursalesDashboard({
                         {/* Cancel Edit Buttons */}
                         {activeTab === 'licitacion' && licForm.isEdit && <button onClick={() => setLicForm({ licId: '', licitacionHomologada: '', estado: 1, isEdit: false })} className="text-xs px-2 py-1 bg-gray-100 hover:bg-gray-200 rounded text-gray-600">Cancelar</button>}
                         {activeTab === 'ut' && utForm.isEdit && <button onClick={() => setUtForm({ codUT: '', licId: '', estado: 1, isEdit: false })} className="text-xs px-2 py-1 bg-gray-100 hover:bg-gray-200 rounded text-gray-600">Cancelar</button>}
-                        {activeTab === 'sucursal' && sucForm.isEdit && <button onClick={() => setSucForm({ id: '', nombre: '', uts: [], isEdit: false })} className="text-xs px-2 py-1 bg-gray-100 hover:bg-gray-200 rounded text-gray-600">Cancelar</button>}
+                        {activeTab === 'sucursal' && sucForm.isEdit && <button onClick={() => setSucForm({ id: '', nombre: '', region: '', comuna: '', direccion: '', uts: [], isEdit: false })} className="text-xs px-2 py-1 bg-gray-100 hover:bg-gray-200 rounded text-gray-600">Cancelar</button>}
                     </div>
 
                     {/* Licitacion Form */}
@@ -195,6 +195,21 @@ export default function SucursalesDashboard({
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Nombre Sucursal</label>
                                 <input type="text" required value={sucForm.nombre} onChange={e => setSucForm({ ...sucForm, nombre: e.target.value })} placeholder="Ej: Sucursal Norte" className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-gray-900" />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Región</label>
+                                <input type="text" value={sucForm.region} onChange={e => setSucForm({ ...sucForm, region: e.target.value })} placeholder="Ej: Metropolitana" className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-gray-900" />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Comuna</label>
+                                <input type="text" value={sucForm.comuna} onChange={e => setSucForm({ ...sucForm, comuna: e.target.value })} placeholder="Ej: Santiago" className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-gray-900" />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Dirección</label>
+                                <input type="text" value={sucForm.direccion} onChange={e => setSucForm({ ...sucForm, direccion: e.target.value })} placeholder="Ej: Av. Libertador 123" className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-gray-900" />
                             </div>
 
                             <div>
@@ -301,6 +316,8 @@ export default function SucursalesDashboard({
                                 <thead className="bg-gray-50 text-gray-600 border-b border-gray-100 sticky top-0">
                                     <tr>
                                         <th className="px-6 py-4 font-bold">Nombre Sucursal</th>
+                                        <th className="px-6 py-4 font-bold">Ubicación (Región / Comuna)</th>
+                                        <th className="px-6 py-4 font-bold">Dirección</th>
                                         <th className="px-6 py-4 font-bold">Unidades Territoriales Asociadas</th>
                                         <th className="px-6 py-4 font-bold text-center">Acciones</th>
                                     </tr>
@@ -309,6 +326,14 @@ export default function SucursalesDashboard({
                                     {sucursales.map(suc => (
                                         <tr key={suc.id} className="hover:bg-gray-50 transition-colors">
                                             <td className="px-6 py-4 font-bold text-sky-800 text-base">{suc.nombre}</td>
+                                            <td className="px-6 py-4 text-gray-700">
+                                                {suc.region || suc.comuna ? (
+                                                    <span>{suc.region || '---'} / {suc.comuna || '---'}</span>
+                                                ) : <span className="text-gray-400 italic text-xs">No definida</span>}
+                                            </td>
+                                            <td className="px-6 py-4 text-gray-700 truncate max-w-[200px]" title={suc.direccion || ''}>
+                                                {suc.direccion || <span className="text-gray-400 italic text-xs">No definida</span>}
+                                            </td>
                                             <td className="px-6 py-4">
                                                 {suc.uts && suc.uts.length > 0 ? (
                                                     <div className="flex flex-wrap gap-1">
@@ -319,11 +344,11 @@ export default function SucursalesDashboard({
                                                 ) : <span className="text-gray-400 italic text-xs">Sin UTs</span>}
                                             </td>
                                             <td className="px-6 py-4 text-center">
-                                                <button onClick={() => setSucForm({ id: suc.id, nombre: suc.nombre, uts: suc.uts.map(u => u.codUT), isEdit: true })} className="text-cyan-600 hover:text-cyan-800 font-medium px-3 py-1 bg-cyan-50 hover:bg-cyan-100 rounded-lg">Editar</button>
+                                                <button onClick={() => setSucForm({ id: suc.id, nombre: suc.nombre, region: suc.region || '', comuna: suc.comuna || '', direccion: suc.direccion || '', uts: suc.uts.map(u => u.codUT), isEdit: true })} className="text-cyan-600 hover:text-cyan-800 font-medium px-3 py-1 bg-cyan-50 hover:bg-cyan-100 rounded-lg">Editar</button>
                                             </td>
                                         </tr>
                                     ))}
-                                    {sucursales.length === 0 && <tr><td colSpan={3} className="px-6 py-10 text-center text-gray-500">No existen Sucursales.</td></tr>}
+                                    {sucursales.length === 0 && <tr><td colSpan={5} className="px-6 py-10 text-center text-gray-500">No existen Sucursales.</td></tr>}
                                 </tbody>
                             </table>
                         </div>

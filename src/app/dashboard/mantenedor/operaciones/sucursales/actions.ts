@@ -79,7 +79,7 @@ export async function updateUT(codUT: number, licId: number, estado: number) {
 
 
 // ------ SUCURSALES ------
-export async function createSucursal(nombre: string, utCodes: number[]) {
+export async function createSucursal(nombre: string, utCodes: number[], region?: string, comuna?: string, direccion?: string) {
     const session = await getSession()
     if (!hasPermission(session)) return { error: 'No tienes permisos.' }
 
@@ -103,6 +103,9 @@ export async function createSucursal(nombre: string, utCodes: number[]) {
         await prisma.sucursal.create({
             data: {
                 nombre,
+                region: region?.trim() || null,
+                comuna: comuna?.trim() || null,
+                direccion: direccion?.trim() || null,
                 uts: { connect: utCodes.map(cod => ({ codUT: cod })) }
             }
         })
@@ -113,7 +116,7 @@ export async function createSucursal(nombre: string, utCodes: number[]) {
     }
 }
 
-export async function updateSucursal(id: string, nombre: string, utCodes: number[]) {
+export async function updateSucursal(id: string, nombre: string, utCodes: number[], region?: string, comuna?: string, direccion?: string) {
     const session = await getSession()
     if (!hasPermission(session)) return { error: 'No tienes permisos.' }
 
@@ -136,11 +139,13 @@ export async function updateSucursal(id: string, nombre: string, utCodes: number
         }
 
         // Actualizar datos de la sucursal y reconectar las UT.
-        // Prisma support 'set' which overrides the connection to given associations
         await prisma.sucursal.update({
             where: { id },
             data: {
                 nombre,
+                region: region?.trim() || null,
+                comuna: comuna?.trim() || null,
+                direccion: direccion?.trim() || null,
                 uts: { set: utCodes.map(cod => ({ codUT: cod })) }
             }
         })

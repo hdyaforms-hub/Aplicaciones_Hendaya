@@ -19838,6 +19838,9 @@ export namespace Prisma {
   export type SucursalMinAggregateOutputType = {
     id: string | null
     nombre: string | null
+    region: string | null
+    comuna: string | null
+    direccion: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -19845,6 +19848,9 @@ export namespace Prisma {
   export type SucursalMaxAggregateOutputType = {
     id: string | null
     nombre: string | null
+    region: string | null
+    comuna: string | null
+    direccion: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -19852,6 +19858,9 @@ export namespace Prisma {
   export type SucursalCountAggregateOutputType = {
     id: number
     nombre: number
+    region: number
+    comuna: number
+    direccion: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -19861,6 +19870,9 @@ export namespace Prisma {
   export type SucursalMinAggregateInputType = {
     id?: true
     nombre?: true
+    region?: true
+    comuna?: true
+    direccion?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -19868,6 +19880,9 @@ export namespace Prisma {
   export type SucursalMaxAggregateInputType = {
     id?: true
     nombre?: true
+    region?: true
+    comuna?: true
+    direccion?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -19875,6 +19890,9 @@ export namespace Prisma {
   export type SucursalCountAggregateInputType = {
     id?: true
     nombre?: true
+    region?: true
+    comuna?: true
+    direccion?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -19955,6 +19973,9 @@ export namespace Prisma {
   export type SucursalGroupByOutputType = {
     id: string
     nombre: string
+    region: string | null
+    comuna: string | null
+    direccion: string | null
     createdAt: Date
     updatedAt: Date
     _count: SucursalCountAggregateOutputType | null
@@ -19979,6 +20000,9 @@ export namespace Prisma {
   export type SucursalSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     nombre?: boolean
+    region?: boolean
+    comuna?: boolean
+    direccion?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     listasCorreo?: boolean | Sucursal$listasCorreoArgs<ExtArgs>
@@ -19995,6 +20019,9 @@ export namespace Prisma {
   export type SucursalSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     nombre?: boolean
+    region?: boolean
+    comuna?: boolean
+    direccion?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["sucursal"]>
@@ -20002,6 +20029,9 @@ export namespace Prisma {
   export type SucursalSelectScalar = {
     id?: boolean
     nombre?: boolean
+    region?: boolean
+    comuna?: boolean
+    direccion?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
@@ -20034,6 +20064,9 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       nombre: string
+      region: string | null
+      comuna: string | null
+      direccion: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["sucursal"]>
@@ -20439,6 +20472,9 @@ export namespace Prisma {
   interface SucursalFieldRefs {
     readonly id: FieldRef<"Sucursal", 'String'>
     readonly nombre: FieldRef<"Sucursal", 'String'>
+    readonly region: FieldRef<"Sucursal", 'String'>
+    readonly comuna: FieldRef<"Sucursal", 'String'>
+    readonly direccion: FieldRef<"Sucursal", 'String'>
     readonly createdAt: FieldRef<"Sucursal", 'DateTime'>
     readonly updatedAt: FieldRef<"Sucursal", 'DateTime'>
   }
@@ -70057,6 +70093,9 @@ export namespace Prisma {
   export const SucursalScalarFieldEnum: {
     id: 'id',
     nombre: 'nombre',
+    region: 'region',
+    comuna: 'comuna',
+    direccion: 'direccion',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -71950,6 +71989,9 @@ export namespace Prisma {
     NOT?: SucursalWhereInput | SucursalWhereInput[]
     id?: StringFilter<"Sucursal"> | string
     nombre?: StringFilter<"Sucursal"> | string
+    region?: StringNullableFilter<"Sucursal"> | string | null
+    comuna?: StringNullableFilter<"Sucursal"> | string | null
+    direccion?: StringNullableFilter<"Sucursal"> | string | null
     createdAt?: DateTimeFilter<"Sucursal"> | Date | string
     updatedAt?: DateTimeFilter<"Sucursal"> | Date | string
     listasCorreo?: ListaCorreoListRelationFilter
@@ -71965,6 +72007,9 @@ export namespace Prisma {
   export type SucursalOrderByWithRelationInput = {
     id?: SortOrder
     nombre?: SortOrder
+    region?: SortOrderInput | SortOrder
+    comuna?: SortOrderInput | SortOrder
+    direccion?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     listasCorreo?: ListaCorreoOrderByRelationAggregateInput
@@ -71983,6 +72028,9 @@ export namespace Prisma {
     AND?: SucursalWhereInput | SucursalWhereInput[]
     OR?: SucursalWhereInput[]
     NOT?: SucursalWhereInput | SucursalWhereInput[]
+    region?: StringNullableFilter<"Sucursal"> | string | null
+    comuna?: StringNullableFilter<"Sucursal"> | string | null
+    direccion?: StringNullableFilter<"Sucursal"> | string | null
     createdAt?: DateTimeFilter<"Sucursal"> | Date | string
     updatedAt?: DateTimeFilter<"Sucursal"> | Date | string
     listasCorreo?: ListaCorreoListRelationFilter
@@ -71998,6 +72046,9 @@ export namespace Prisma {
   export type SucursalOrderByWithAggregationInput = {
     id?: SortOrder
     nombre?: SortOrder
+    region?: SortOrderInput | SortOrder
+    comuna?: SortOrderInput | SortOrder
+    direccion?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: SucursalCountOrderByAggregateInput
@@ -72011,6 +72062,9 @@ export namespace Prisma {
     NOT?: SucursalScalarWhereWithAggregatesInput | SucursalScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Sucursal"> | string
     nombre?: StringWithAggregatesFilter<"Sucursal"> | string
+    region?: StringNullableWithAggregatesFilter<"Sucursal"> | string | null
+    comuna?: StringNullableWithAggregatesFilter<"Sucursal"> | string | null
+    direccion?: StringNullableWithAggregatesFilter<"Sucursal"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Sucursal"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Sucursal"> | Date | string
   }
@@ -77129,6 +77183,9 @@ export namespace Prisma {
   export type SucursalCreateInput = {
     id?: string
     nombre: string
+    region?: string | null
+    comuna?: string | null
+    direccion?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     listasCorreo?: ListaCorreoCreateNestedManyWithoutSucursalInput
@@ -77144,6 +77201,9 @@ export namespace Prisma {
   export type SucursalUncheckedCreateInput = {
     id?: string
     nombre: string
+    region?: string | null
+    comuna?: string | null
+    direccion?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     listasCorreo?: ListaCorreoUncheckedCreateNestedManyWithoutSucursalInput
@@ -77159,6 +77219,9 @@ export namespace Prisma {
   export type SucursalUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     listasCorreo?: ListaCorreoUpdateManyWithoutSucursalNestedInput
@@ -77174,6 +77237,9 @@ export namespace Prisma {
   export type SucursalUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     listasCorreo?: ListaCorreoUncheckedUpdateManyWithoutSucursalNestedInput
@@ -77189,6 +77255,9 @@ export namespace Prisma {
   export type SucursalCreateManyInput = {
     id?: string
     nombre: string
+    region?: string | null
+    comuna?: string | null
+    direccion?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -77196,6 +77265,9 @@ export namespace Prisma {
   export type SucursalUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -77203,6 +77275,9 @@ export namespace Prisma {
   export type SucursalUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -82655,6 +82730,9 @@ export namespace Prisma {
   export type SucursalCountOrderByAggregateInput = {
     id?: SortOrder
     nombre?: SortOrder
+    region?: SortOrder
+    comuna?: SortOrder
+    direccion?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -82662,6 +82740,9 @@ export namespace Prisma {
   export type SucursalMaxOrderByAggregateInput = {
     id?: SortOrder
     nombre?: SortOrder
+    region?: SortOrder
+    comuna?: SortOrder
+    direccion?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -82669,6 +82750,9 @@ export namespace Prisma {
   export type SucursalMinOrderByAggregateInput = {
     id?: SortOrder
     nombre?: SortOrder
+    region?: SortOrder
+    comuna?: SortOrder
+    direccion?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -88168,6 +88252,9 @@ export namespace Prisma {
   export type SucursalCreateWithoutUsersInput = {
     id?: string
     nombre: string
+    region?: string | null
+    comuna?: string | null
+    direccion?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     listasCorreo?: ListaCorreoCreateNestedManyWithoutSucursalInput
@@ -88182,6 +88269,9 @@ export namespace Prisma {
   export type SucursalUncheckedCreateWithoutUsersInput = {
     id?: string
     nombre: string
+    region?: string | null
+    comuna?: string | null
+    direccion?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     listasCorreo?: ListaCorreoUncheckedCreateNestedManyWithoutSucursalInput
@@ -88310,6 +88400,9 @@ export namespace Prisma {
     NOT?: SucursalScalarWhereInput | SucursalScalarWhereInput[]
     id?: StringFilter<"Sucursal"> | string
     nombre?: StringFilter<"Sucursal"> | string
+    region?: StringNullableFilter<"Sucursal"> | string | null
+    comuna?: StringNullableFilter<"Sucursal"> | string | null
+    direccion?: StringNullableFilter<"Sucursal"> | string | null
     createdAt?: DateTimeFilter<"Sucursal"> | Date | string
     updatedAt?: DateTimeFilter<"Sucursal"> | Date | string
   }
@@ -88432,6 +88525,9 @@ export namespace Prisma {
   export type SucursalCreateWithoutListasCorreoInput = {
     id?: string
     nombre: string
+    region?: string | null
+    comuna?: string | null
+    direccion?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     presupuestos?: PresupuestoCreateNestedManyWithoutSucursalInput
@@ -88446,6 +88542,9 @@ export namespace Prisma {
   export type SucursalUncheckedCreateWithoutListasCorreoInput = {
     id?: string
     nombre: string
+    region?: string | null
+    comuna?: string | null
+    direccion?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     presupuestos?: PresupuestoUncheckedCreateNestedManyWithoutSucursalInput
@@ -88502,6 +88601,9 @@ export namespace Prisma {
   export type SucursalUpdateWithoutListasCorreoInput = {
     id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     presupuestos?: PresupuestoUpdateManyWithoutSucursalNestedInput
@@ -88516,6 +88618,9 @@ export namespace Prisma {
   export type SucursalUncheckedUpdateWithoutListasCorreoInput = {
     id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     presupuestos?: PresupuestoUncheckedUpdateManyWithoutSucursalNestedInput
@@ -89329,6 +89434,9 @@ export namespace Prisma {
   export type SucursalCreateWithoutPresupuestosInput = {
     id?: string
     nombre: string
+    region?: string | null
+    comuna?: string | null
+    direccion?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     listasCorreo?: ListaCorreoCreateNestedManyWithoutSucursalInput
@@ -89343,6 +89451,9 @@ export namespace Prisma {
   export type SucursalUncheckedCreateWithoutPresupuestosInput = {
     id?: string
     nombre: string
+    region?: string | null
+    comuna?: string | null
+    direccion?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     listasCorreo?: ListaCorreoUncheckedCreateNestedManyWithoutSucursalInput
@@ -89373,6 +89484,9 @@ export namespace Prisma {
   export type SucursalUpdateWithoutPresupuestosInput = {
     id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     listasCorreo?: ListaCorreoUpdateManyWithoutSucursalNestedInput
@@ -89387,6 +89501,9 @@ export namespace Prisma {
   export type SucursalUncheckedUpdateWithoutPresupuestosInput = {
     id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     listasCorreo?: ListaCorreoUncheckedUpdateManyWithoutSucursalNestedInput
@@ -89427,6 +89544,9 @@ export namespace Prisma {
   export type SucursalCreateWithoutUtsInput = {
     id?: string
     nombre: string
+    region?: string | null
+    comuna?: string | null
+    direccion?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     listasCorreo?: ListaCorreoCreateNestedManyWithoutSucursalInput
@@ -89441,6 +89561,9 @@ export namespace Prisma {
   export type SucursalUncheckedCreateWithoutUtsInput = {
     id?: string
     nombre: string
+    region?: string | null
+    comuna?: string | null
+    direccion?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     listasCorreo?: ListaCorreoUncheckedCreateNestedManyWithoutSucursalInput
@@ -89585,6 +89708,9 @@ export namespace Prisma {
   export type SucursalUpdateWithoutUtsInput = {
     id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     listasCorreo?: ListaCorreoUpdateManyWithoutSucursalNestedInput
@@ -89599,6 +89725,9 @@ export namespace Prisma {
   export type SucursalUncheckedUpdateWithoutUtsInput = {
     id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     listasCorreo?: ListaCorreoUncheckedUpdateManyWithoutSucursalNestedInput
@@ -90410,6 +90539,9 @@ export namespace Prisma {
   export type SucursalCreateWithoutRetornoProductosSucursalEstadoInput = {
     id?: string
     nombre: string
+    region?: string | null
+    comuna?: string | null
+    direccion?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     listasCorreo?: ListaCorreoCreateNestedManyWithoutSucursalInput
@@ -90424,6 +90556,9 @@ export namespace Prisma {
   export type SucursalUncheckedCreateWithoutRetornoProductosSucursalEstadoInput = {
     id?: string
     nombre: string
+    region?: string | null
+    comuna?: string | null
+    direccion?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     listasCorreo?: ListaCorreoUncheckedCreateNestedManyWithoutSucursalInput
@@ -90497,6 +90632,9 @@ export namespace Prisma {
   export type SucursalUpdateWithoutRetornoProductosSucursalEstadoInput = {
     id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     listasCorreo?: ListaCorreoUpdateManyWithoutSucursalNestedInput
@@ -90511,6 +90649,9 @@ export namespace Prisma {
   export type SucursalUncheckedUpdateWithoutRetornoProductosSucursalEstadoInput = {
     id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     listasCorreo?: ListaCorreoUncheckedUpdateManyWithoutSucursalNestedInput
@@ -90562,6 +90703,9 @@ export namespace Prisma {
   export type SucursalCreateWithoutRetornoProductosMovimientoInput = {
     id?: string
     nombre: string
+    region?: string | null
+    comuna?: string | null
+    direccion?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     listasCorreo?: ListaCorreoCreateNestedManyWithoutSucursalInput
@@ -90576,6 +90720,9 @@ export namespace Prisma {
   export type SucursalUncheckedCreateWithoutRetornoProductosMovimientoInput = {
     id?: string
     nombre: string
+    region?: string | null
+    comuna?: string | null
+    direccion?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     listasCorreo?: ListaCorreoUncheckedCreateNestedManyWithoutSucursalInput
@@ -90649,6 +90796,9 @@ export namespace Prisma {
   export type SucursalUpdateWithoutRetornoProductosMovimientoInput = {
     id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     listasCorreo?: ListaCorreoUpdateManyWithoutSucursalNestedInput
@@ -90663,6 +90813,9 @@ export namespace Prisma {
   export type SucursalUncheckedUpdateWithoutRetornoProductosMovimientoInput = {
     id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     listasCorreo?: ListaCorreoUncheckedUpdateManyWithoutSucursalNestedInput
@@ -91315,6 +91468,9 @@ export namespace Prisma {
   export type SucursalCreateWithoutVehiculosInput = {
     id?: string
     nombre: string
+    region?: string | null
+    comuna?: string | null
+    direccion?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     listasCorreo?: ListaCorreoCreateNestedManyWithoutSucursalInput
@@ -91329,6 +91485,9 @@ export namespace Prisma {
   export type SucursalUncheckedCreateWithoutVehiculosInput = {
     id?: string
     nombre: string
+    region?: string | null
+    comuna?: string | null
+    direccion?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     listasCorreo?: ListaCorreoUncheckedCreateNestedManyWithoutSucursalInput
@@ -91488,6 +91647,9 @@ export namespace Prisma {
   export type SucursalUpdateWithoutVehiculosInput = {
     id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     listasCorreo?: ListaCorreoUpdateManyWithoutSucursalNestedInput
@@ -91502,6 +91664,9 @@ export namespace Prisma {
   export type SucursalUncheckedUpdateWithoutVehiculosInput = {
     id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     listasCorreo?: ListaCorreoUncheckedUpdateManyWithoutSucursalNestedInput
@@ -92041,6 +92206,9 @@ export namespace Prisma {
   export type SucursalCreateWithoutJefesZonalesInput = {
     id?: string
     nombre: string
+    region?: string | null
+    comuna?: string | null
+    direccion?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     listasCorreo?: ListaCorreoCreateNestedManyWithoutSucursalInput
@@ -92055,6 +92223,9 @@ export namespace Prisma {
   export type SucursalUncheckedCreateWithoutJefesZonalesInput = {
     id?: string
     nombre: string
+    region?: string | null
+    comuna?: string | null
+    direccion?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     listasCorreo?: ListaCorreoUncheckedCreateNestedManyWithoutSucursalInput
@@ -92124,6 +92295,9 @@ export namespace Prisma {
   export type SucursalUpdateWithoutJefesZonalesInput = {
     id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     listasCorreo?: ListaCorreoUpdateManyWithoutSucursalNestedInput
@@ -92138,6 +92312,9 @@ export namespace Prisma {
   export type SucursalUncheckedUpdateWithoutJefesZonalesInput = {
     id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     listasCorreo?: ListaCorreoUncheckedUpdateManyWithoutSucursalNestedInput
@@ -93078,6 +93255,9 @@ export namespace Prisma {
   export type SucursalUpdateWithoutUsersInput = {
     id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     listasCorreo?: ListaCorreoUpdateManyWithoutSucursalNestedInput
@@ -93092,6 +93272,9 @@ export namespace Prisma {
   export type SucursalUncheckedUpdateWithoutUsersInput = {
     id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     listasCorreo?: ListaCorreoUncheckedUpdateManyWithoutSucursalNestedInput
@@ -93106,6 +93289,9 @@ export namespace Prisma {
   export type SucursalUncheckedUpdateManyWithoutUsersInput = {
     id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
