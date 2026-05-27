@@ -294,10 +294,20 @@ export type JefeZonalLicitacion = $Result.DefaultSelection<Prisma.$JefeZonalLici
  */
 export type JefeZonalSucursal = $Result.DefaultSelection<Prisma.$JefeZonalSucursalPayload>
 /**
+ * Model JefeZonalVehiculo
+ * 
+ */
+export type JefeZonalVehiculo = $Result.DefaultSelection<Prisma.$JefeZonalVehiculoPayload>
+/**
  * Model JefeOperacion
  * 
  */
 export type JefeOperacion = $Result.DefaultSelection<Prisma.$JefeOperacionPayload>
+/**
+ * Model JefeOperacionVehiculo
+ * 
+ */
+export type JefeOperacionVehiculo = $Result.DefaultSelection<Prisma.$JefeOperacionVehiculoPayload>
 /**
  * Model Supervisor
  * 
@@ -998,6 +1008,16 @@ export class PrismaClient<
   get jefeZonalSucursal(): Prisma.JefeZonalSucursalDelegate<ExtArgs>;
 
   /**
+   * `prisma.jefeZonalVehiculo`: Exposes CRUD operations for the **JefeZonalVehiculo** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more JefeZonalVehiculos
+    * const jefeZonalVehiculos = await prisma.jefeZonalVehiculo.findMany()
+    * ```
+    */
+  get jefeZonalVehiculo(): Prisma.JefeZonalVehiculoDelegate<ExtArgs>;
+
+  /**
    * `prisma.jefeOperacion`: Exposes CRUD operations for the **JefeOperacion** model.
     * Example usage:
     * ```ts
@@ -1006,6 +1026,16 @@ export class PrismaClient<
     * ```
     */
   get jefeOperacion(): Prisma.JefeOperacionDelegate<ExtArgs>;
+
+  /**
+   * `prisma.jefeOperacionVehiculo`: Exposes CRUD operations for the **JefeOperacionVehiculo** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more JefeOperacionVehiculos
+    * const jefeOperacionVehiculos = await prisma.jefeOperacionVehiculo.findMany()
+    * ```
+    */
+  get jefeOperacionVehiculo(): Prisma.JefeOperacionVehiculoDelegate<ExtArgs>;
 
   /**
    * `prisma.supervisor`: Exposes CRUD operations for the **Supervisor** model.
@@ -1533,7 +1563,9 @@ export namespace Prisma {
     JefeZonal: 'JefeZonal',
     JefeZonalLicitacion: 'JefeZonalLicitacion',
     JefeZonalSucursal: 'JefeZonalSucursal',
+    JefeZonalVehiculo: 'JefeZonalVehiculo',
     JefeOperacion: 'JefeOperacion',
+    JefeOperacionVehiculo: 'JefeOperacionVehiculo',
     Supervisor: 'Supervisor',
     SupervisorVehiculo: 'SupervisorVehiculo',
     SupervisorRbd: 'SupervisorRbd'
@@ -1552,7 +1584,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeOperacion" | "supervisor" | "supervisorVehiculo" | "supervisorRbd"
+      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -5476,6 +5508,76 @@ export namespace Prisma {
           }
         }
       }
+      JefeZonalVehiculo: {
+        payload: Prisma.$JefeZonalVehiculoPayload<ExtArgs>
+        fields: Prisma.JefeZonalVehiculoFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.JefeZonalVehiculoFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JefeZonalVehiculoPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.JefeZonalVehiculoFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JefeZonalVehiculoPayload>
+          }
+          findFirst: {
+            args: Prisma.JefeZonalVehiculoFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JefeZonalVehiculoPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.JefeZonalVehiculoFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JefeZonalVehiculoPayload>
+          }
+          findMany: {
+            args: Prisma.JefeZonalVehiculoFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JefeZonalVehiculoPayload>[]
+          }
+          create: {
+            args: Prisma.JefeZonalVehiculoCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JefeZonalVehiculoPayload>
+          }
+          createMany: {
+            args: Prisma.JefeZonalVehiculoCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.JefeZonalVehiculoCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JefeZonalVehiculoPayload>[]
+          }
+          delete: {
+            args: Prisma.JefeZonalVehiculoDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JefeZonalVehiculoPayload>
+          }
+          update: {
+            args: Prisma.JefeZonalVehiculoUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JefeZonalVehiculoPayload>
+          }
+          deleteMany: {
+            args: Prisma.JefeZonalVehiculoDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.JefeZonalVehiculoUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.JefeZonalVehiculoUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JefeZonalVehiculoPayload>
+          }
+          aggregate: {
+            args: Prisma.JefeZonalVehiculoAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateJefeZonalVehiculo>
+          }
+          groupBy: {
+            args: Prisma.JefeZonalVehiculoGroupByArgs<ExtArgs>
+            result: $Utils.Optional<JefeZonalVehiculoGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.JefeZonalVehiculoCountArgs<ExtArgs>
+            result: $Utils.Optional<JefeZonalVehiculoCountAggregateOutputType> | number
+          }
+        }
+      }
       JefeOperacion: {
         payload: Prisma.$JefeOperacionPayload<ExtArgs>
         fields: Prisma.JefeOperacionFieldRefs
@@ -5543,6 +5645,76 @@ export namespace Prisma {
           count: {
             args: Prisma.JefeOperacionCountArgs<ExtArgs>
             result: $Utils.Optional<JefeOperacionCountAggregateOutputType> | number
+          }
+        }
+      }
+      JefeOperacionVehiculo: {
+        payload: Prisma.$JefeOperacionVehiculoPayload<ExtArgs>
+        fields: Prisma.JefeOperacionVehiculoFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.JefeOperacionVehiculoFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JefeOperacionVehiculoPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.JefeOperacionVehiculoFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JefeOperacionVehiculoPayload>
+          }
+          findFirst: {
+            args: Prisma.JefeOperacionVehiculoFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JefeOperacionVehiculoPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.JefeOperacionVehiculoFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JefeOperacionVehiculoPayload>
+          }
+          findMany: {
+            args: Prisma.JefeOperacionVehiculoFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JefeOperacionVehiculoPayload>[]
+          }
+          create: {
+            args: Prisma.JefeOperacionVehiculoCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JefeOperacionVehiculoPayload>
+          }
+          createMany: {
+            args: Prisma.JefeOperacionVehiculoCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.JefeOperacionVehiculoCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JefeOperacionVehiculoPayload>[]
+          }
+          delete: {
+            args: Prisma.JefeOperacionVehiculoDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JefeOperacionVehiculoPayload>
+          }
+          update: {
+            args: Prisma.JefeOperacionVehiculoUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JefeOperacionVehiculoPayload>
+          }
+          deleteMany: {
+            args: Prisma.JefeOperacionVehiculoDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.JefeOperacionVehiculoUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.JefeOperacionVehiculoUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JefeOperacionVehiculoPayload>
+          }
+          aggregate: {
+            args: Prisma.JefeOperacionVehiculoAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateJefeOperacionVehiculo>
+          }
+          groupBy: {
+            args: Prisma.JefeOperacionVehiculoGroupByArgs<ExtArgs>
+            result: $Utils.Optional<JefeOperacionVehiculoGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.JefeOperacionVehiculoCountArgs<ExtArgs>
+            result: $Utils.Optional<JefeOperacionVehiculoCountAggregateOutputType> | number
           }
         }
       }
@@ -6536,10 +6708,14 @@ export namespace Prisma {
 
   export type VehiculoCountOutputType = {
     supervisores: number
+    jefesZonales: number
+    jefesOperacion: number
   }
 
   export type VehiculoCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     supervisores?: boolean | VehiculoCountOutputTypeCountSupervisoresArgs
+    jefesZonales?: boolean | VehiculoCountOutputTypeCountJefesZonalesArgs
+    jefesOperacion?: boolean | VehiculoCountOutputTypeCountJefesOperacionArgs
   }
 
   // Custom InputTypes
@@ -6560,6 +6736,20 @@ export namespace Prisma {
     where?: SupervisorVehiculoWhereInput
   }
 
+  /**
+   * VehiculoCountOutputType without action
+   */
+  export type VehiculoCountOutputTypeCountJefesZonalesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: JefeZonalVehiculoWhereInput
+  }
+
+  /**
+   * VehiculoCountOutputType without action
+   */
+  export type VehiculoCountOutputTypeCountJefesOperacionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: JefeOperacionVehiculoWhereInput
+  }
+
 
   /**
    * Count Type JefeZonalCountOutputType
@@ -6568,6 +6758,7 @@ export namespace Prisma {
   export type JefeZonalCountOutputType = {
     licitaciones: number
     sucursales: number
+    vehiculos: number
     jefesOperacion: number
     supervisores: number
   }
@@ -6575,6 +6766,7 @@ export namespace Prisma {
   export type JefeZonalCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     licitaciones?: boolean | JefeZonalCountOutputTypeCountLicitacionesArgs
     sucursales?: boolean | JefeZonalCountOutputTypeCountSucursalesArgs
+    vehiculos?: boolean | JefeZonalCountOutputTypeCountVehiculosArgs
     jefesOperacion?: boolean | JefeZonalCountOutputTypeCountJefesOperacionArgs
     supervisores?: boolean | JefeZonalCountOutputTypeCountSupervisoresArgs
   }
@@ -6607,6 +6799,13 @@ export namespace Prisma {
   /**
    * JefeZonalCountOutputType without action
    */
+  export type JefeZonalCountOutputTypeCountVehiculosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: JefeZonalVehiculoWhereInput
+  }
+
+  /**
+   * JefeZonalCountOutputType without action
+   */
   export type JefeZonalCountOutputTypeCountJefesOperacionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: JefeOperacionWhereInput
   }
@@ -6625,10 +6824,12 @@ export namespace Prisma {
 
   export type JefeOperacionCountOutputType = {
     supervisores: number
+    vehiculos: number
   }
 
   export type JefeOperacionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     supervisores?: boolean | JefeOperacionCountOutputTypeCountSupervisoresArgs
+    vehiculos?: boolean | JefeOperacionCountOutputTypeCountVehiculosArgs
   }
 
   // Custom InputTypes
@@ -6647,6 +6848,13 @@ export namespace Prisma {
    */
   export type JefeOperacionCountOutputTypeCountSupervisoresArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SupervisorWhereInput
+  }
+
+  /**
+   * JefeOperacionCountOutputType without action
+   */
+  export type JefeOperacionCountOutputTypeCountVehiculosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: JefeOperacionVehiculoWhereInput
   }
 
 
@@ -60076,6 +60284,8 @@ export namespace Prisma {
     tipoVehiculo?: boolean | TipoVehiculoDefaultArgs<ExtArgs>
     licitacion?: boolean | Vehiculo$licitacionArgs<ExtArgs>
     supervisores?: boolean | Vehiculo$supervisoresArgs<ExtArgs>
+    jefesZonales?: boolean | Vehiculo$jefesZonalesArgs<ExtArgs>
+    jefesOperacion?: boolean | Vehiculo$jefesOperacionArgs<ExtArgs>
     _count?: boolean | VehiculoCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["vehiculo"]>
 
@@ -60115,6 +60325,8 @@ export namespace Prisma {
     tipoVehiculo?: boolean | TipoVehiculoDefaultArgs<ExtArgs>
     licitacion?: boolean | Vehiculo$licitacionArgs<ExtArgs>
     supervisores?: boolean | Vehiculo$supervisoresArgs<ExtArgs>
+    jefesZonales?: boolean | Vehiculo$jefesZonalesArgs<ExtArgs>
+    jefesOperacion?: boolean | Vehiculo$jefesOperacionArgs<ExtArgs>
     _count?: boolean | VehiculoCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type VehiculoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -60132,6 +60344,8 @@ export namespace Prisma {
       tipoVehiculo: Prisma.$TipoVehiculoPayload<ExtArgs>
       licitacion: Prisma.$LicitacionPayload<ExtArgs> | null
       supervisores: Prisma.$SupervisorVehiculoPayload<ExtArgs>[]
+      jefesZonales: Prisma.$JefeZonalVehiculoPayload<ExtArgs>[]
+      jefesOperacion: Prisma.$JefeOperacionVehiculoPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -60513,6 +60727,8 @@ export namespace Prisma {
     tipoVehiculo<T extends TipoVehiculoDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TipoVehiculoDefaultArgs<ExtArgs>>): Prisma__TipoVehiculoClient<$Result.GetResult<Prisma.$TipoVehiculoPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     licitacion<T extends Vehiculo$licitacionArgs<ExtArgs> = {}>(args?: Subset<T, Vehiculo$licitacionArgs<ExtArgs>>): Prisma__LicitacionClient<$Result.GetResult<Prisma.$LicitacionPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     supervisores<T extends Vehiculo$supervisoresArgs<ExtArgs> = {}>(args?: Subset<T, Vehiculo$supervisoresArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SupervisorVehiculoPayload<ExtArgs>, T, "findMany"> | Null>
+    jefesZonales<T extends Vehiculo$jefesZonalesArgs<ExtArgs> = {}>(args?: Subset<T, Vehiculo$jefesZonalesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JefeZonalVehiculoPayload<ExtArgs>, T, "findMany"> | Null>
+    jefesOperacion<T extends Vehiculo$jefesOperacionArgs<ExtArgs> = {}>(args?: Subset<T, Vehiculo$jefesOperacionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JefeOperacionVehiculoPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -60920,6 +61136,46 @@ export namespace Prisma {
   }
 
   /**
+   * Vehiculo.jefesZonales
+   */
+  export type Vehiculo$jefesZonalesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JefeZonalVehiculo
+     */
+    select?: JefeZonalVehiculoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JefeZonalVehiculoInclude<ExtArgs> | null
+    where?: JefeZonalVehiculoWhereInput
+    orderBy?: JefeZonalVehiculoOrderByWithRelationInput | JefeZonalVehiculoOrderByWithRelationInput[]
+    cursor?: JefeZonalVehiculoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: JefeZonalVehiculoScalarFieldEnum | JefeZonalVehiculoScalarFieldEnum[]
+  }
+
+  /**
+   * Vehiculo.jefesOperacion
+   */
+  export type Vehiculo$jefesOperacionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JefeOperacionVehiculo
+     */
+    select?: JefeOperacionVehiculoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JefeOperacionVehiculoInclude<ExtArgs> | null
+    where?: JefeOperacionVehiculoWhereInput
+    orderBy?: JefeOperacionVehiculoOrderByWithRelationInput | JefeOperacionVehiculoOrderByWithRelationInput[]
+    cursor?: JefeOperacionVehiculoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: JefeOperacionVehiculoScalarFieldEnum | JefeOperacionVehiculoScalarFieldEnum[]
+  }
+
+  /**
    * Vehiculo without action
    */
   export type VehiculoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -61116,6 +61372,7 @@ export namespace Prisma {
     updatedAt?: boolean
     licitaciones?: boolean | JefeZonal$licitacionesArgs<ExtArgs>
     sucursales?: boolean | JefeZonal$sucursalesArgs<ExtArgs>
+    vehiculos?: boolean | JefeZonal$vehiculosArgs<ExtArgs>
     jefesOperacion?: boolean | JefeZonal$jefesOperacionArgs<ExtArgs>
     supervisores?: boolean | JefeZonal$supervisoresArgs<ExtArgs>
     _count?: boolean | JefeZonalCountOutputTypeDefaultArgs<ExtArgs>
@@ -61144,6 +61401,7 @@ export namespace Prisma {
   export type JefeZonalInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     licitaciones?: boolean | JefeZonal$licitacionesArgs<ExtArgs>
     sucursales?: boolean | JefeZonal$sucursalesArgs<ExtArgs>
+    vehiculos?: boolean | JefeZonal$vehiculosArgs<ExtArgs>
     jefesOperacion?: boolean | JefeZonal$jefesOperacionArgs<ExtArgs>
     supervisores?: boolean | JefeZonal$supervisoresArgs<ExtArgs>
     _count?: boolean | JefeZonalCountOutputTypeDefaultArgs<ExtArgs>
@@ -61155,6 +61413,7 @@ export namespace Prisma {
     objects: {
       licitaciones: Prisma.$JefeZonalLicitacionPayload<ExtArgs>[]
       sucursales: Prisma.$JefeZonalSucursalPayload<ExtArgs>[]
+      vehiculos: Prisma.$JefeZonalVehiculoPayload<ExtArgs>[]
       jefesOperacion: Prisma.$JefeOperacionPayload<ExtArgs>[]
       supervisores: Prisma.$SupervisorPayload<ExtArgs>[]
     }
@@ -61532,6 +61791,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     licitaciones<T extends JefeZonal$licitacionesArgs<ExtArgs> = {}>(args?: Subset<T, JefeZonal$licitacionesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JefeZonalLicitacionPayload<ExtArgs>, T, "findMany"> | Null>
     sucursales<T extends JefeZonal$sucursalesArgs<ExtArgs> = {}>(args?: Subset<T, JefeZonal$sucursalesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JefeZonalSucursalPayload<ExtArgs>, T, "findMany"> | Null>
+    vehiculos<T extends JefeZonal$vehiculosArgs<ExtArgs> = {}>(args?: Subset<T, JefeZonal$vehiculosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JefeZonalVehiculoPayload<ExtArgs>, T, "findMany"> | Null>
     jefesOperacion<T extends JefeZonal$jefesOperacionArgs<ExtArgs> = {}>(args?: Subset<T, JefeZonal$jefesOperacionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JefeOperacionPayload<ExtArgs>, T, "findMany"> | Null>
     supervisores<T extends JefeZonal$supervisoresArgs<ExtArgs> = {}>(args?: Subset<T, JefeZonal$supervisoresArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SupervisorPayload<ExtArgs>, T, "findMany"> | Null>
     /**
@@ -61921,6 +62181,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: JefeZonalSucursalScalarFieldEnum | JefeZonalSucursalScalarFieldEnum[]
+  }
+
+  /**
+   * JefeZonal.vehiculos
+   */
+  export type JefeZonal$vehiculosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JefeZonalVehiculo
+     */
+    select?: JefeZonalVehiculoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JefeZonalVehiculoInclude<ExtArgs> | null
+    where?: JefeZonalVehiculoWhereInput
+    orderBy?: JefeZonalVehiculoOrderByWithRelationInput | JefeZonalVehiculoOrderByWithRelationInput[]
+    cursor?: JefeZonalVehiculoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: JefeZonalVehiculoScalarFieldEnum | JefeZonalVehiculoScalarFieldEnum[]
   }
 
   /**
@@ -63819,6 +64099,909 @@ export namespace Prisma {
 
 
   /**
+   * Model JefeZonalVehiculo
+   */
+
+  export type AggregateJefeZonalVehiculo = {
+    _count: JefeZonalVehiculoCountAggregateOutputType | null
+    _min: JefeZonalVehiculoMinAggregateOutputType | null
+    _max: JefeZonalVehiculoMaxAggregateOutputType | null
+  }
+
+  export type JefeZonalVehiculoMinAggregateOutputType = {
+    jefeZonalId: string | null
+    vehiculoId: string | null
+  }
+
+  export type JefeZonalVehiculoMaxAggregateOutputType = {
+    jefeZonalId: string | null
+    vehiculoId: string | null
+  }
+
+  export type JefeZonalVehiculoCountAggregateOutputType = {
+    jefeZonalId: number
+    vehiculoId: number
+    _all: number
+  }
+
+
+  export type JefeZonalVehiculoMinAggregateInputType = {
+    jefeZonalId?: true
+    vehiculoId?: true
+  }
+
+  export type JefeZonalVehiculoMaxAggregateInputType = {
+    jefeZonalId?: true
+    vehiculoId?: true
+  }
+
+  export type JefeZonalVehiculoCountAggregateInputType = {
+    jefeZonalId?: true
+    vehiculoId?: true
+    _all?: true
+  }
+
+  export type JefeZonalVehiculoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which JefeZonalVehiculo to aggregate.
+     */
+    where?: JefeZonalVehiculoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of JefeZonalVehiculos to fetch.
+     */
+    orderBy?: JefeZonalVehiculoOrderByWithRelationInput | JefeZonalVehiculoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: JefeZonalVehiculoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` JefeZonalVehiculos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` JefeZonalVehiculos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned JefeZonalVehiculos
+    **/
+    _count?: true | JefeZonalVehiculoCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: JefeZonalVehiculoMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: JefeZonalVehiculoMaxAggregateInputType
+  }
+
+  export type GetJefeZonalVehiculoAggregateType<T extends JefeZonalVehiculoAggregateArgs> = {
+        [P in keyof T & keyof AggregateJefeZonalVehiculo]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateJefeZonalVehiculo[P]>
+      : GetScalarType<T[P], AggregateJefeZonalVehiculo[P]>
+  }
+
+
+
+
+  export type JefeZonalVehiculoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: JefeZonalVehiculoWhereInput
+    orderBy?: JefeZonalVehiculoOrderByWithAggregationInput | JefeZonalVehiculoOrderByWithAggregationInput[]
+    by: JefeZonalVehiculoScalarFieldEnum[] | JefeZonalVehiculoScalarFieldEnum
+    having?: JefeZonalVehiculoScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: JefeZonalVehiculoCountAggregateInputType | true
+    _min?: JefeZonalVehiculoMinAggregateInputType
+    _max?: JefeZonalVehiculoMaxAggregateInputType
+  }
+
+  export type JefeZonalVehiculoGroupByOutputType = {
+    jefeZonalId: string
+    vehiculoId: string
+    _count: JefeZonalVehiculoCountAggregateOutputType | null
+    _min: JefeZonalVehiculoMinAggregateOutputType | null
+    _max: JefeZonalVehiculoMaxAggregateOutputType | null
+  }
+
+  type GetJefeZonalVehiculoGroupByPayload<T extends JefeZonalVehiculoGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<JefeZonalVehiculoGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof JefeZonalVehiculoGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], JefeZonalVehiculoGroupByOutputType[P]>
+            : GetScalarType<T[P], JefeZonalVehiculoGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type JefeZonalVehiculoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    jefeZonalId?: boolean
+    vehiculoId?: boolean
+    jefeZonal?: boolean | JefeZonalDefaultArgs<ExtArgs>
+    vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["jefeZonalVehiculo"]>
+
+  export type JefeZonalVehiculoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    jefeZonalId?: boolean
+    vehiculoId?: boolean
+    jefeZonal?: boolean | JefeZonalDefaultArgs<ExtArgs>
+    vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["jefeZonalVehiculo"]>
+
+  export type JefeZonalVehiculoSelectScalar = {
+    jefeZonalId?: boolean
+    vehiculoId?: boolean
+  }
+
+  export type JefeZonalVehiculoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    jefeZonal?: boolean | JefeZonalDefaultArgs<ExtArgs>
+    vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
+  }
+  export type JefeZonalVehiculoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    jefeZonal?: boolean | JefeZonalDefaultArgs<ExtArgs>
+    vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
+  }
+
+  export type $JefeZonalVehiculoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "JefeZonalVehiculo"
+    objects: {
+      jefeZonal: Prisma.$JefeZonalPayload<ExtArgs>
+      vehiculo: Prisma.$VehiculoPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      jefeZonalId: string
+      vehiculoId: string
+    }, ExtArgs["result"]["jefeZonalVehiculo"]>
+    composites: {}
+  }
+
+  type JefeZonalVehiculoGetPayload<S extends boolean | null | undefined | JefeZonalVehiculoDefaultArgs> = $Result.GetResult<Prisma.$JefeZonalVehiculoPayload, S>
+
+  type JefeZonalVehiculoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<JefeZonalVehiculoFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: JefeZonalVehiculoCountAggregateInputType | true
+    }
+
+  export interface JefeZonalVehiculoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['JefeZonalVehiculo'], meta: { name: 'JefeZonalVehiculo' } }
+    /**
+     * Find zero or one JefeZonalVehiculo that matches the filter.
+     * @param {JefeZonalVehiculoFindUniqueArgs} args - Arguments to find a JefeZonalVehiculo
+     * @example
+     * // Get one JefeZonalVehiculo
+     * const jefeZonalVehiculo = await prisma.jefeZonalVehiculo.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends JefeZonalVehiculoFindUniqueArgs>(args: SelectSubset<T, JefeZonalVehiculoFindUniqueArgs<ExtArgs>>): Prisma__JefeZonalVehiculoClient<$Result.GetResult<Prisma.$JefeZonalVehiculoPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one JefeZonalVehiculo that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {JefeZonalVehiculoFindUniqueOrThrowArgs} args - Arguments to find a JefeZonalVehiculo
+     * @example
+     * // Get one JefeZonalVehiculo
+     * const jefeZonalVehiculo = await prisma.jefeZonalVehiculo.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends JefeZonalVehiculoFindUniqueOrThrowArgs>(args: SelectSubset<T, JefeZonalVehiculoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__JefeZonalVehiculoClient<$Result.GetResult<Prisma.$JefeZonalVehiculoPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first JefeZonalVehiculo that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JefeZonalVehiculoFindFirstArgs} args - Arguments to find a JefeZonalVehiculo
+     * @example
+     * // Get one JefeZonalVehiculo
+     * const jefeZonalVehiculo = await prisma.jefeZonalVehiculo.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends JefeZonalVehiculoFindFirstArgs>(args?: SelectSubset<T, JefeZonalVehiculoFindFirstArgs<ExtArgs>>): Prisma__JefeZonalVehiculoClient<$Result.GetResult<Prisma.$JefeZonalVehiculoPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first JefeZonalVehiculo that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JefeZonalVehiculoFindFirstOrThrowArgs} args - Arguments to find a JefeZonalVehiculo
+     * @example
+     * // Get one JefeZonalVehiculo
+     * const jefeZonalVehiculo = await prisma.jefeZonalVehiculo.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends JefeZonalVehiculoFindFirstOrThrowArgs>(args?: SelectSubset<T, JefeZonalVehiculoFindFirstOrThrowArgs<ExtArgs>>): Prisma__JefeZonalVehiculoClient<$Result.GetResult<Prisma.$JefeZonalVehiculoPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more JefeZonalVehiculos that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JefeZonalVehiculoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all JefeZonalVehiculos
+     * const jefeZonalVehiculos = await prisma.jefeZonalVehiculo.findMany()
+     * 
+     * // Get first 10 JefeZonalVehiculos
+     * const jefeZonalVehiculos = await prisma.jefeZonalVehiculo.findMany({ take: 10 })
+     * 
+     * // Only select the `jefeZonalId`
+     * const jefeZonalVehiculoWithJefeZonalIdOnly = await prisma.jefeZonalVehiculo.findMany({ select: { jefeZonalId: true } })
+     * 
+     */
+    findMany<T extends JefeZonalVehiculoFindManyArgs>(args?: SelectSubset<T, JefeZonalVehiculoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JefeZonalVehiculoPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a JefeZonalVehiculo.
+     * @param {JefeZonalVehiculoCreateArgs} args - Arguments to create a JefeZonalVehiculo.
+     * @example
+     * // Create one JefeZonalVehiculo
+     * const JefeZonalVehiculo = await prisma.jefeZonalVehiculo.create({
+     *   data: {
+     *     // ... data to create a JefeZonalVehiculo
+     *   }
+     * })
+     * 
+     */
+    create<T extends JefeZonalVehiculoCreateArgs>(args: SelectSubset<T, JefeZonalVehiculoCreateArgs<ExtArgs>>): Prisma__JefeZonalVehiculoClient<$Result.GetResult<Prisma.$JefeZonalVehiculoPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many JefeZonalVehiculos.
+     * @param {JefeZonalVehiculoCreateManyArgs} args - Arguments to create many JefeZonalVehiculos.
+     * @example
+     * // Create many JefeZonalVehiculos
+     * const jefeZonalVehiculo = await prisma.jefeZonalVehiculo.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends JefeZonalVehiculoCreateManyArgs>(args?: SelectSubset<T, JefeZonalVehiculoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many JefeZonalVehiculos and returns the data saved in the database.
+     * @param {JefeZonalVehiculoCreateManyAndReturnArgs} args - Arguments to create many JefeZonalVehiculos.
+     * @example
+     * // Create many JefeZonalVehiculos
+     * const jefeZonalVehiculo = await prisma.jefeZonalVehiculo.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many JefeZonalVehiculos and only return the `jefeZonalId`
+     * const jefeZonalVehiculoWithJefeZonalIdOnly = await prisma.jefeZonalVehiculo.createManyAndReturn({ 
+     *   select: { jefeZonalId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends JefeZonalVehiculoCreateManyAndReturnArgs>(args?: SelectSubset<T, JefeZonalVehiculoCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JefeZonalVehiculoPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a JefeZonalVehiculo.
+     * @param {JefeZonalVehiculoDeleteArgs} args - Arguments to delete one JefeZonalVehiculo.
+     * @example
+     * // Delete one JefeZonalVehiculo
+     * const JefeZonalVehiculo = await prisma.jefeZonalVehiculo.delete({
+     *   where: {
+     *     // ... filter to delete one JefeZonalVehiculo
+     *   }
+     * })
+     * 
+     */
+    delete<T extends JefeZonalVehiculoDeleteArgs>(args: SelectSubset<T, JefeZonalVehiculoDeleteArgs<ExtArgs>>): Prisma__JefeZonalVehiculoClient<$Result.GetResult<Prisma.$JefeZonalVehiculoPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one JefeZonalVehiculo.
+     * @param {JefeZonalVehiculoUpdateArgs} args - Arguments to update one JefeZonalVehiculo.
+     * @example
+     * // Update one JefeZonalVehiculo
+     * const jefeZonalVehiculo = await prisma.jefeZonalVehiculo.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends JefeZonalVehiculoUpdateArgs>(args: SelectSubset<T, JefeZonalVehiculoUpdateArgs<ExtArgs>>): Prisma__JefeZonalVehiculoClient<$Result.GetResult<Prisma.$JefeZonalVehiculoPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more JefeZonalVehiculos.
+     * @param {JefeZonalVehiculoDeleteManyArgs} args - Arguments to filter JefeZonalVehiculos to delete.
+     * @example
+     * // Delete a few JefeZonalVehiculos
+     * const { count } = await prisma.jefeZonalVehiculo.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends JefeZonalVehiculoDeleteManyArgs>(args?: SelectSubset<T, JefeZonalVehiculoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more JefeZonalVehiculos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JefeZonalVehiculoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many JefeZonalVehiculos
+     * const jefeZonalVehiculo = await prisma.jefeZonalVehiculo.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends JefeZonalVehiculoUpdateManyArgs>(args: SelectSubset<T, JefeZonalVehiculoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one JefeZonalVehiculo.
+     * @param {JefeZonalVehiculoUpsertArgs} args - Arguments to update or create a JefeZonalVehiculo.
+     * @example
+     * // Update or create a JefeZonalVehiculo
+     * const jefeZonalVehiculo = await prisma.jefeZonalVehiculo.upsert({
+     *   create: {
+     *     // ... data to create a JefeZonalVehiculo
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the JefeZonalVehiculo we want to update
+     *   }
+     * })
+     */
+    upsert<T extends JefeZonalVehiculoUpsertArgs>(args: SelectSubset<T, JefeZonalVehiculoUpsertArgs<ExtArgs>>): Prisma__JefeZonalVehiculoClient<$Result.GetResult<Prisma.$JefeZonalVehiculoPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of JefeZonalVehiculos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JefeZonalVehiculoCountArgs} args - Arguments to filter JefeZonalVehiculos to count.
+     * @example
+     * // Count the number of JefeZonalVehiculos
+     * const count = await prisma.jefeZonalVehiculo.count({
+     *   where: {
+     *     // ... the filter for the JefeZonalVehiculos we want to count
+     *   }
+     * })
+    **/
+    count<T extends JefeZonalVehiculoCountArgs>(
+      args?: Subset<T, JefeZonalVehiculoCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], JefeZonalVehiculoCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a JefeZonalVehiculo.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JefeZonalVehiculoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends JefeZonalVehiculoAggregateArgs>(args: Subset<T, JefeZonalVehiculoAggregateArgs>): Prisma.PrismaPromise<GetJefeZonalVehiculoAggregateType<T>>
+
+    /**
+     * Group by JefeZonalVehiculo.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JefeZonalVehiculoGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends JefeZonalVehiculoGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: JefeZonalVehiculoGroupByArgs['orderBy'] }
+        : { orderBy?: JefeZonalVehiculoGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, JefeZonalVehiculoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetJefeZonalVehiculoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the JefeZonalVehiculo model
+   */
+  readonly fields: JefeZonalVehiculoFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for JefeZonalVehiculo.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__JefeZonalVehiculoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    jefeZonal<T extends JefeZonalDefaultArgs<ExtArgs> = {}>(args?: Subset<T, JefeZonalDefaultArgs<ExtArgs>>): Prisma__JefeZonalClient<$Result.GetResult<Prisma.$JefeZonalPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    vehiculo<T extends VehiculoDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VehiculoDefaultArgs<ExtArgs>>): Prisma__VehiculoClient<$Result.GetResult<Prisma.$VehiculoPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the JefeZonalVehiculo model
+   */ 
+  interface JefeZonalVehiculoFieldRefs {
+    readonly jefeZonalId: FieldRef<"JefeZonalVehiculo", 'String'>
+    readonly vehiculoId: FieldRef<"JefeZonalVehiculo", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * JefeZonalVehiculo findUnique
+   */
+  export type JefeZonalVehiculoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JefeZonalVehiculo
+     */
+    select?: JefeZonalVehiculoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JefeZonalVehiculoInclude<ExtArgs> | null
+    /**
+     * Filter, which JefeZonalVehiculo to fetch.
+     */
+    where: JefeZonalVehiculoWhereUniqueInput
+  }
+
+  /**
+   * JefeZonalVehiculo findUniqueOrThrow
+   */
+  export type JefeZonalVehiculoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JefeZonalVehiculo
+     */
+    select?: JefeZonalVehiculoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JefeZonalVehiculoInclude<ExtArgs> | null
+    /**
+     * Filter, which JefeZonalVehiculo to fetch.
+     */
+    where: JefeZonalVehiculoWhereUniqueInput
+  }
+
+  /**
+   * JefeZonalVehiculo findFirst
+   */
+  export type JefeZonalVehiculoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JefeZonalVehiculo
+     */
+    select?: JefeZonalVehiculoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JefeZonalVehiculoInclude<ExtArgs> | null
+    /**
+     * Filter, which JefeZonalVehiculo to fetch.
+     */
+    where?: JefeZonalVehiculoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of JefeZonalVehiculos to fetch.
+     */
+    orderBy?: JefeZonalVehiculoOrderByWithRelationInput | JefeZonalVehiculoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for JefeZonalVehiculos.
+     */
+    cursor?: JefeZonalVehiculoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` JefeZonalVehiculos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` JefeZonalVehiculos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of JefeZonalVehiculos.
+     */
+    distinct?: JefeZonalVehiculoScalarFieldEnum | JefeZonalVehiculoScalarFieldEnum[]
+  }
+
+  /**
+   * JefeZonalVehiculo findFirstOrThrow
+   */
+  export type JefeZonalVehiculoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JefeZonalVehiculo
+     */
+    select?: JefeZonalVehiculoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JefeZonalVehiculoInclude<ExtArgs> | null
+    /**
+     * Filter, which JefeZonalVehiculo to fetch.
+     */
+    where?: JefeZonalVehiculoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of JefeZonalVehiculos to fetch.
+     */
+    orderBy?: JefeZonalVehiculoOrderByWithRelationInput | JefeZonalVehiculoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for JefeZonalVehiculos.
+     */
+    cursor?: JefeZonalVehiculoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` JefeZonalVehiculos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` JefeZonalVehiculos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of JefeZonalVehiculos.
+     */
+    distinct?: JefeZonalVehiculoScalarFieldEnum | JefeZonalVehiculoScalarFieldEnum[]
+  }
+
+  /**
+   * JefeZonalVehiculo findMany
+   */
+  export type JefeZonalVehiculoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JefeZonalVehiculo
+     */
+    select?: JefeZonalVehiculoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JefeZonalVehiculoInclude<ExtArgs> | null
+    /**
+     * Filter, which JefeZonalVehiculos to fetch.
+     */
+    where?: JefeZonalVehiculoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of JefeZonalVehiculos to fetch.
+     */
+    orderBy?: JefeZonalVehiculoOrderByWithRelationInput | JefeZonalVehiculoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing JefeZonalVehiculos.
+     */
+    cursor?: JefeZonalVehiculoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` JefeZonalVehiculos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` JefeZonalVehiculos.
+     */
+    skip?: number
+    distinct?: JefeZonalVehiculoScalarFieldEnum | JefeZonalVehiculoScalarFieldEnum[]
+  }
+
+  /**
+   * JefeZonalVehiculo create
+   */
+  export type JefeZonalVehiculoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JefeZonalVehiculo
+     */
+    select?: JefeZonalVehiculoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JefeZonalVehiculoInclude<ExtArgs> | null
+    /**
+     * The data needed to create a JefeZonalVehiculo.
+     */
+    data: XOR<JefeZonalVehiculoCreateInput, JefeZonalVehiculoUncheckedCreateInput>
+  }
+
+  /**
+   * JefeZonalVehiculo createMany
+   */
+  export type JefeZonalVehiculoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many JefeZonalVehiculos.
+     */
+    data: JefeZonalVehiculoCreateManyInput | JefeZonalVehiculoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * JefeZonalVehiculo createManyAndReturn
+   */
+  export type JefeZonalVehiculoCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JefeZonalVehiculo
+     */
+    select?: JefeZonalVehiculoSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many JefeZonalVehiculos.
+     */
+    data: JefeZonalVehiculoCreateManyInput | JefeZonalVehiculoCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JefeZonalVehiculoIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * JefeZonalVehiculo update
+   */
+  export type JefeZonalVehiculoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JefeZonalVehiculo
+     */
+    select?: JefeZonalVehiculoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JefeZonalVehiculoInclude<ExtArgs> | null
+    /**
+     * The data needed to update a JefeZonalVehiculo.
+     */
+    data: XOR<JefeZonalVehiculoUpdateInput, JefeZonalVehiculoUncheckedUpdateInput>
+    /**
+     * Choose, which JefeZonalVehiculo to update.
+     */
+    where: JefeZonalVehiculoWhereUniqueInput
+  }
+
+  /**
+   * JefeZonalVehiculo updateMany
+   */
+  export type JefeZonalVehiculoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update JefeZonalVehiculos.
+     */
+    data: XOR<JefeZonalVehiculoUpdateManyMutationInput, JefeZonalVehiculoUncheckedUpdateManyInput>
+    /**
+     * Filter which JefeZonalVehiculos to update
+     */
+    where?: JefeZonalVehiculoWhereInput
+  }
+
+  /**
+   * JefeZonalVehiculo upsert
+   */
+  export type JefeZonalVehiculoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JefeZonalVehiculo
+     */
+    select?: JefeZonalVehiculoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JefeZonalVehiculoInclude<ExtArgs> | null
+    /**
+     * The filter to search for the JefeZonalVehiculo to update in case it exists.
+     */
+    where: JefeZonalVehiculoWhereUniqueInput
+    /**
+     * In case the JefeZonalVehiculo found by the `where` argument doesn't exist, create a new JefeZonalVehiculo with this data.
+     */
+    create: XOR<JefeZonalVehiculoCreateInput, JefeZonalVehiculoUncheckedCreateInput>
+    /**
+     * In case the JefeZonalVehiculo was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<JefeZonalVehiculoUpdateInput, JefeZonalVehiculoUncheckedUpdateInput>
+  }
+
+  /**
+   * JefeZonalVehiculo delete
+   */
+  export type JefeZonalVehiculoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JefeZonalVehiculo
+     */
+    select?: JefeZonalVehiculoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JefeZonalVehiculoInclude<ExtArgs> | null
+    /**
+     * Filter which JefeZonalVehiculo to delete.
+     */
+    where: JefeZonalVehiculoWhereUniqueInput
+  }
+
+  /**
+   * JefeZonalVehiculo deleteMany
+   */
+  export type JefeZonalVehiculoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which JefeZonalVehiculos to delete
+     */
+    where?: JefeZonalVehiculoWhereInput
+  }
+
+  /**
+   * JefeZonalVehiculo without action
+   */
+  export type JefeZonalVehiculoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JefeZonalVehiculo
+     */
+    select?: JefeZonalVehiculoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JefeZonalVehiculoInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model JefeOperacion
    */
 
@@ -64008,6 +65191,7 @@ export namespace Prisma {
     updatedAt?: boolean
     jefeZonal?: boolean | JefeZonalDefaultArgs<ExtArgs>
     supervisores?: boolean | JefeOperacion$supervisoresArgs<ExtArgs>
+    vehiculos?: boolean | JefeOperacion$vehiculosArgs<ExtArgs>
     _count?: boolean | JefeOperacionCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["jefeOperacion"]>
 
@@ -64037,6 +65221,7 @@ export namespace Prisma {
   export type JefeOperacionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     jefeZonal?: boolean | JefeZonalDefaultArgs<ExtArgs>
     supervisores?: boolean | JefeOperacion$supervisoresArgs<ExtArgs>
+    vehiculos?: boolean | JefeOperacion$vehiculosArgs<ExtArgs>
     _count?: boolean | JefeOperacionCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type JefeOperacionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -64048,6 +65233,7 @@ export namespace Prisma {
     objects: {
       jefeZonal: Prisma.$JefeZonalPayload<ExtArgs>
       supervisores: Prisma.$SupervisorPayload<ExtArgs>[]
+      vehiculos: Prisma.$JefeOperacionVehiculoPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -64424,6 +65610,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     jefeZonal<T extends JefeZonalDefaultArgs<ExtArgs> = {}>(args?: Subset<T, JefeZonalDefaultArgs<ExtArgs>>): Prisma__JefeZonalClient<$Result.GetResult<Prisma.$JefeZonalPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     supervisores<T extends JefeOperacion$supervisoresArgs<ExtArgs> = {}>(args?: Subset<T, JefeOperacion$supervisoresArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SupervisorPayload<ExtArgs>, T, "findMany"> | Null>
+    vehiculos<T extends JefeOperacion$vehiculosArgs<ExtArgs> = {}>(args?: Subset<T, JefeOperacion$vehiculosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JefeOperacionVehiculoPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -64799,6 +65986,26 @@ export namespace Prisma {
   }
 
   /**
+   * JefeOperacion.vehiculos
+   */
+  export type JefeOperacion$vehiculosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JefeOperacionVehiculo
+     */
+    select?: JefeOperacionVehiculoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JefeOperacionVehiculoInclude<ExtArgs> | null
+    where?: JefeOperacionVehiculoWhereInput
+    orderBy?: JefeOperacionVehiculoOrderByWithRelationInput | JefeOperacionVehiculoOrderByWithRelationInput[]
+    cursor?: JefeOperacionVehiculoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: JefeOperacionVehiculoScalarFieldEnum | JefeOperacionVehiculoScalarFieldEnum[]
+  }
+
+  /**
    * JefeOperacion without action
    */
   export type JefeOperacionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -64810,6 +66017,909 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: JefeOperacionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model JefeOperacionVehiculo
+   */
+
+  export type AggregateJefeOperacionVehiculo = {
+    _count: JefeOperacionVehiculoCountAggregateOutputType | null
+    _min: JefeOperacionVehiculoMinAggregateOutputType | null
+    _max: JefeOperacionVehiculoMaxAggregateOutputType | null
+  }
+
+  export type JefeOperacionVehiculoMinAggregateOutputType = {
+    jefeOperacionId: string | null
+    vehiculoId: string | null
+  }
+
+  export type JefeOperacionVehiculoMaxAggregateOutputType = {
+    jefeOperacionId: string | null
+    vehiculoId: string | null
+  }
+
+  export type JefeOperacionVehiculoCountAggregateOutputType = {
+    jefeOperacionId: number
+    vehiculoId: number
+    _all: number
+  }
+
+
+  export type JefeOperacionVehiculoMinAggregateInputType = {
+    jefeOperacionId?: true
+    vehiculoId?: true
+  }
+
+  export type JefeOperacionVehiculoMaxAggregateInputType = {
+    jefeOperacionId?: true
+    vehiculoId?: true
+  }
+
+  export type JefeOperacionVehiculoCountAggregateInputType = {
+    jefeOperacionId?: true
+    vehiculoId?: true
+    _all?: true
+  }
+
+  export type JefeOperacionVehiculoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which JefeOperacionVehiculo to aggregate.
+     */
+    where?: JefeOperacionVehiculoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of JefeOperacionVehiculos to fetch.
+     */
+    orderBy?: JefeOperacionVehiculoOrderByWithRelationInput | JefeOperacionVehiculoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: JefeOperacionVehiculoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` JefeOperacionVehiculos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` JefeOperacionVehiculos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned JefeOperacionVehiculos
+    **/
+    _count?: true | JefeOperacionVehiculoCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: JefeOperacionVehiculoMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: JefeOperacionVehiculoMaxAggregateInputType
+  }
+
+  export type GetJefeOperacionVehiculoAggregateType<T extends JefeOperacionVehiculoAggregateArgs> = {
+        [P in keyof T & keyof AggregateJefeOperacionVehiculo]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateJefeOperacionVehiculo[P]>
+      : GetScalarType<T[P], AggregateJefeOperacionVehiculo[P]>
+  }
+
+
+
+
+  export type JefeOperacionVehiculoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: JefeOperacionVehiculoWhereInput
+    orderBy?: JefeOperacionVehiculoOrderByWithAggregationInput | JefeOperacionVehiculoOrderByWithAggregationInput[]
+    by: JefeOperacionVehiculoScalarFieldEnum[] | JefeOperacionVehiculoScalarFieldEnum
+    having?: JefeOperacionVehiculoScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: JefeOperacionVehiculoCountAggregateInputType | true
+    _min?: JefeOperacionVehiculoMinAggregateInputType
+    _max?: JefeOperacionVehiculoMaxAggregateInputType
+  }
+
+  export type JefeOperacionVehiculoGroupByOutputType = {
+    jefeOperacionId: string
+    vehiculoId: string
+    _count: JefeOperacionVehiculoCountAggregateOutputType | null
+    _min: JefeOperacionVehiculoMinAggregateOutputType | null
+    _max: JefeOperacionVehiculoMaxAggregateOutputType | null
+  }
+
+  type GetJefeOperacionVehiculoGroupByPayload<T extends JefeOperacionVehiculoGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<JefeOperacionVehiculoGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof JefeOperacionVehiculoGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], JefeOperacionVehiculoGroupByOutputType[P]>
+            : GetScalarType<T[P], JefeOperacionVehiculoGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type JefeOperacionVehiculoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    jefeOperacionId?: boolean
+    vehiculoId?: boolean
+    jefeOperacion?: boolean | JefeOperacionDefaultArgs<ExtArgs>
+    vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["jefeOperacionVehiculo"]>
+
+  export type JefeOperacionVehiculoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    jefeOperacionId?: boolean
+    vehiculoId?: boolean
+    jefeOperacion?: boolean | JefeOperacionDefaultArgs<ExtArgs>
+    vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["jefeOperacionVehiculo"]>
+
+  export type JefeOperacionVehiculoSelectScalar = {
+    jefeOperacionId?: boolean
+    vehiculoId?: boolean
+  }
+
+  export type JefeOperacionVehiculoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    jefeOperacion?: boolean | JefeOperacionDefaultArgs<ExtArgs>
+    vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
+  }
+  export type JefeOperacionVehiculoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    jefeOperacion?: boolean | JefeOperacionDefaultArgs<ExtArgs>
+    vehiculo?: boolean | VehiculoDefaultArgs<ExtArgs>
+  }
+
+  export type $JefeOperacionVehiculoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "JefeOperacionVehiculo"
+    objects: {
+      jefeOperacion: Prisma.$JefeOperacionPayload<ExtArgs>
+      vehiculo: Prisma.$VehiculoPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      jefeOperacionId: string
+      vehiculoId: string
+    }, ExtArgs["result"]["jefeOperacionVehiculo"]>
+    composites: {}
+  }
+
+  type JefeOperacionVehiculoGetPayload<S extends boolean | null | undefined | JefeOperacionVehiculoDefaultArgs> = $Result.GetResult<Prisma.$JefeOperacionVehiculoPayload, S>
+
+  type JefeOperacionVehiculoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<JefeOperacionVehiculoFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: JefeOperacionVehiculoCountAggregateInputType | true
+    }
+
+  export interface JefeOperacionVehiculoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['JefeOperacionVehiculo'], meta: { name: 'JefeOperacionVehiculo' } }
+    /**
+     * Find zero or one JefeOperacionVehiculo that matches the filter.
+     * @param {JefeOperacionVehiculoFindUniqueArgs} args - Arguments to find a JefeOperacionVehiculo
+     * @example
+     * // Get one JefeOperacionVehiculo
+     * const jefeOperacionVehiculo = await prisma.jefeOperacionVehiculo.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends JefeOperacionVehiculoFindUniqueArgs>(args: SelectSubset<T, JefeOperacionVehiculoFindUniqueArgs<ExtArgs>>): Prisma__JefeOperacionVehiculoClient<$Result.GetResult<Prisma.$JefeOperacionVehiculoPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one JefeOperacionVehiculo that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {JefeOperacionVehiculoFindUniqueOrThrowArgs} args - Arguments to find a JefeOperacionVehiculo
+     * @example
+     * // Get one JefeOperacionVehiculo
+     * const jefeOperacionVehiculo = await prisma.jefeOperacionVehiculo.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends JefeOperacionVehiculoFindUniqueOrThrowArgs>(args: SelectSubset<T, JefeOperacionVehiculoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__JefeOperacionVehiculoClient<$Result.GetResult<Prisma.$JefeOperacionVehiculoPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first JefeOperacionVehiculo that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JefeOperacionVehiculoFindFirstArgs} args - Arguments to find a JefeOperacionVehiculo
+     * @example
+     * // Get one JefeOperacionVehiculo
+     * const jefeOperacionVehiculo = await prisma.jefeOperacionVehiculo.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends JefeOperacionVehiculoFindFirstArgs>(args?: SelectSubset<T, JefeOperacionVehiculoFindFirstArgs<ExtArgs>>): Prisma__JefeOperacionVehiculoClient<$Result.GetResult<Prisma.$JefeOperacionVehiculoPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first JefeOperacionVehiculo that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JefeOperacionVehiculoFindFirstOrThrowArgs} args - Arguments to find a JefeOperacionVehiculo
+     * @example
+     * // Get one JefeOperacionVehiculo
+     * const jefeOperacionVehiculo = await prisma.jefeOperacionVehiculo.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends JefeOperacionVehiculoFindFirstOrThrowArgs>(args?: SelectSubset<T, JefeOperacionVehiculoFindFirstOrThrowArgs<ExtArgs>>): Prisma__JefeOperacionVehiculoClient<$Result.GetResult<Prisma.$JefeOperacionVehiculoPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more JefeOperacionVehiculos that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JefeOperacionVehiculoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all JefeOperacionVehiculos
+     * const jefeOperacionVehiculos = await prisma.jefeOperacionVehiculo.findMany()
+     * 
+     * // Get first 10 JefeOperacionVehiculos
+     * const jefeOperacionVehiculos = await prisma.jefeOperacionVehiculo.findMany({ take: 10 })
+     * 
+     * // Only select the `jefeOperacionId`
+     * const jefeOperacionVehiculoWithJefeOperacionIdOnly = await prisma.jefeOperacionVehiculo.findMany({ select: { jefeOperacionId: true } })
+     * 
+     */
+    findMany<T extends JefeOperacionVehiculoFindManyArgs>(args?: SelectSubset<T, JefeOperacionVehiculoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JefeOperacionVehiculoPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a JefeOperacionVehiculo.
+     * @param {JefeOperacionVehiculoCreateArgs} args - Arguments to create a JefeOperacionVehiculo.
+     * @example
+     * // Create one JefeOperacionVehiculo
+     * const JefeOperacionVehiculo = await prisma.jefeOperacionVehiculo.create({
+     *   data: {
+     *     // ... data to create a JefeOperacionVehiculo
+     *   }
+     * })
+     * 
+     */
+    create<T extends JefeOperacionVehiculoCreateArgs>(args: SelectSubset<T, JefeOperacionVehiculoCreateArgs<ExtArgs>>): Prisma__JefeOperacionVehiculoClient<$Result.GetResult<Prisma.$JefeOperacionVehiculoPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many JefeOperacionVehiculos.
+     * @param {JefeOperacionVehiculoCreateManyArgs} args - Arguments to create many JefeOperacionVehiculos.
+     * @example
+     * // Create many JefeOperacionVehiculos
+     * const jefeOperacionVehiculo = await prisma.jefeOperacionVehiculo.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends JefeOperacionVehiculoCreateManyArgs>(args?: SelectSubset<T, JefeOperacionVehiculoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many JefeOperacionVehiculos and returns the data saved in the database.
+     * @param {JefeOperacionVehiculoCreateManyAndReturnArgs} args - Arguments to create many JefeOperacionVehiculos.
+     * @example
+     * // Create many JefeOperacionVehiculos
+     * const jefeOperacionVehiculo = await prisma.jefeOperacionVehiculo.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many JefeOperacionVehiculos and only return the `jefeOperacionId`
+     * const jefeOperacionVehiculoWithJefeOperacionIdOnly = await prisma.jefeOperacionVehiculo.createManyAndReturn({ 
+     *   select: { jefeOperacionId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends JefeOperacionVehiculoCreateManyAndReturnArgs>(args?: SelectSubset<T, JefeOperacionVehiculoCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JefeOperacionVehiculoPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a JefeOperacionVehiculo.
+     * @param {JefeOperacionVehiculoDeleteArgs} args - Arguments to delete one JefeOperacionVehiculo.
+     * @example
+     * // Delete one JefeOperacionVehiculo
+     * const JefeOperacionVehiculo = await prisma.jefeOperacionVehiculo.delete({
+     *   where: {
+     *     // ... filter to delete one JefeOperacionVehiculo
+     *   }
+     * })
+     * 
+     */
+    delete<T extends JefeOperacionVehiculoDeleteArgs>(args: SelectSubset<T, JefeOperacionVehiculoDeleteArgs<ExtArgs>>): Prisma__JefeOperacionVehiculoClient<$Result.GetResult<Prisma.$JefeOperacionVehiculoPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one JefeOperacionVehiculo.
+     * @param {JefeOperacionVehiculoUpdateArgs} args - Arguments to update one JefeOperacionVehiculo.
+     * @example
+     * // Update one JefeOperacionVehiculo
+     * const jefeOperacionVehiculo = await prisma.jefeOperacionVehiculo.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends JefeOperacionVehiculoUpdateArgs>(args: SelectSubset<T, JefeOperacionVehiculoUpdateArgs<ExtArgs>>): Prisma__JefeOperacionVehiculoClient<$Result.GetResult<Prisma.$JefeOperacionVehiculoPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more JefeOperacionVehiculos.
+     * @param {JefeOperacionVehiculoDeleteManyArgs} args - Arguments to filter JefeOperacionVehiculos to delete.
+     * @example
+     * // Delete a few JefeOperacionVehiculos
+     * const { count } = await prisma.jefeOperacionVehiculo.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends JefeOperacionVehiculoDeleteManyArgs>(args?: SelectSubset<T, JefeOperacionVehiculoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more JefeOperacionVehiculos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JefeOperacionVehiculoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many JefeOperacionVehiculos
+     * const jefeOperacionVehiculo = await prisma.jefeOperacionVehiculo.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends JefeOperacionVehiculoUpdateManyArgs>(args: SelectSubset<T, JefeOperacionVehiculoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one JefeOperacionVehiculo.
+     * @param {JefeOperacionVehiculoUpsertArgs} args - Arguments to update or create a JefeOperacionVehiculo.
+     * @example
+     * // Update or create a JefeOperacionVehiculo
+     * const jefeOperacionVehiculo = await prisma.jefeOperacionVehiculo.upsert({
+     *   create: {
+     *     // ... data to create a JefeOperacionVehiculo
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the JefeOperacionVehiculo we want to update
+     *   }
+     * })
+     */
+    upsert<T extends JefeOperacionVehiculoUpsertArgs>(args: SelectSubset<T, JefeOperacionVehiculoUpsertArgs<ExtArgs>>): Prisma__JefeOperacionVehiculoClient<$Result.GetResult<Prisma.$JefeOperacionVehiculoPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of JefeOperacionVehiculos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JefeOperacionVehiculoCountArgs} args - Arguments to filter JefeOperacionVehiculos to count.
+     * @example
+     * // Count the number of JefeOperacionVehiculos
+     * const count = await prisma.jefeOperacionVehiculo.count({
+     *   where: {
+     *     // ... the filter for the JefeOperacionVehiculos we want to count
+     *   }
+     * })
+    **/
+    count<T extends JefeOperacionVehiculoCountArgs>(
+      args?: Subset<T, JefeOperacionVehiculoCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], JefeOperacionVehiculoCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a JefeOperacionVehiculo.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JefeOperacionVehiculoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends JefeOperacionVehiculoAggregateArgs>(args: Subset<T, JefeOperacionVehiculoAggregateArgs>): Prisma.PrismaPromise<GetJefeOperacionVehiculoAggregateType<T>>
+
+    /**
+     * Group by JefeOperacionVehiculo.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JefeOperacionVehiculoGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends JefeOperacionVehiculoGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: JefeOperacionVehiculoGroupByArgs['orderBy'] }
+        : { orderBy?: JefeOperacionVehiculoGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, JefeOperacionVehiculoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetJefeOperacionVehiculoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the JefeOperacionVehiculo model
+   */
+  readonly fields: JefeOperacionVehiculoFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for JefeOperacionVehiculo.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__JefeOperacionVehiculoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    jefeOperacion<T extends JefeOperacionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, JefeOperacionDefaultArgs<ExtArgs>>): Prisma__JefeOperacionClient<$Result.GetResult<Prisma.$JefeOperacionPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    vehiculo<T extends VehiculoDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VehiculoDefaultArgs<ExtArgs>>): Prisma__VehiculoClient<$Result.GetResult<Prisma.$VehiculoPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the JefeOperacionVehiculo model
+   */ 
+  interface JefeOperacionVehiculoFieldRefs {
+    readonly jefeOperacionId: FieldRef<"JefeOperacionVehiculo", 'String'>
+    readonly vehiculoId: FieldRef<"JefeOperacionVehiculo", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * JefeOperacionVehiculo findUnique
+   */
+  export type JefeOperacionVehiculoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JefeOperacionVehiculo
+     */
+    select?: JefeOperacionVehiculoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JefeOperacionVehiculoInclude<ExtArgs> | null
+    /**
+     * Filter, which JefeOperacionVehiculo to fetch.
+     */
+    where: JefeOperacionVehiculoWhereUniqueInput
+  }
+
+  /**
+   * JefeOperacionVehiculo findUniqueOrThrow
+   */
+  export type JefeOperacionVehiculoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JefeOperacionVehiculo
+     */
+    select?: JefeOperacionVehiculoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JefeOperacionVehiculoInclude<ExtArgs> | null
+    /**
+     * Filter, which JefeOperacionVehiculo to fetch.
+     */
+    where: JefeOperacionVehiculoWhereUniqueInput
+  }
+
+  /**
+   * JefeOperacionVehiculo findFirst
+   */
+  export type JefeOperacionVehiculoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JefeOperacionVehiculo
+     */
+    select?: JefeOperacionVehiculoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JefeOperacionVehiculoInclude<ExtArgs> | null
+    /**
+     * Filter, which JefeOperacionVehiculo to fetch.
+     */
+    where?: JefeOperacionVehiculoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of JefeOperacionVehiculos to fetch.
+     */
+    orderBy?: JefeOperacionVehiculoOrderByWithRelationInput | JefeOperacionVehiculoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for JefeOperacionVehiculos.
+     */
+    cursor?: JefeOperacionVehiculoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` JefeOperacionVehiculos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` JefeOperacionVehiculos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of JefeOperacionVehiculos.
+     */
+    distinct?: JefeOperacionVehiculoScalarFieldEnum | JefeOperacionVehiculoScalarFieldEnum[]
+  }
+
+  /**
+   * JefeOperacionVehiculo findFirstOrThrow
+   */
+  export type JefeOperacionVehiculoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JefeOperacionVehiculo
+     */
+    select?: JefeOperacionVehiculoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JefeOperacionVehiculoInclude<ExtArgs> | null
+    /**
+     * Filter, which JefeOperacionVehiculo to fetch.
+     */
+    where?: JefeOperacionVehiculoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of JefeOperacionVehiculos to fetch.
+     */
+    orderBy?: JefeOperacionVehiculoOrderByWithRelationInput | JefeOperacionVehiculoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for JefeOperacionVehiculos.
+     */
+    cursor?: JefeOperacionVehiculoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` JefeOperacionVehiculos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` JefeOperacionVehiculos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of JefeOperacionVehiculos.
+     */
+    distinct?: JefeOperacionVehiculoScalarFieldEnum | JefeOperacionVehiculoScalarFieldEnum[]
+  }
+
+  /**
+   * JefeOperacionVehiculo findMany
+   */
+  export type JefeOperacionVehiculoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JefeOperacionVehiculo
+     */
+    select?: JefeOperacionVehiculoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JefeOperacionVehiculoInclude<ExtArgs> | null
+    /**
+     * Filter, which JefeOperacionVehiculos to fetch.
+     */
+    where?: JefeOperacionVehiculoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of JefeOperacionVehiculos to fetch.
+     */
+    orderBy?: JefeOperacionVehiculoOrderByWithRelationInput | JefeOperacionVehiculoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing JefeOperacionVehiculos.
+     */
+    cursor?: JefeOperacionVehiculoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` JefeOperacionVehiculos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` JefeOperacionVehiculos.
+     */
+    skip?: number
+    distinct?: JefeOperacionVehiculoScalarFieldEnum | JefeOperacionVehiculoScalarFieldEnum[]
+  }
+
+  /**
+   * JefeOperacionVehiculo create
+   */
+  export type JefeOperacionVehiculoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JefeOperacionVehiculo
+     */
+    select?: JefeOperacionVehiculoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JefeOperacionVehiculoInclude<ExtArgs> | null
+    /**
+     * The data needed to create a JefeOperacionVehiculo.
+     */
+    data: XOR<JefeOperacionVehiculoCreateInput, JefeOperacionVehiculoUncheckedCreateInput>
+  }
+
+  /**
+   * JefeOperacionVehiculo createMany
+   */
+  export type JefeOperacionVehiculoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many JefeOperacionVehiculos.
+     */
+    data: JefeOperacionVehiculoCreateManyInput | JefeOperacionVehiculoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * JefeOperacionVehiculo createManyAndReturn
+   */
+  export type JefeOperacionVehiculoCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JefeOperacionVehiculo
+     */
+    select?: JefeOperacionVehiculoSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many JefeOperacionVehiculos.
+     */
+    data: JefeOperacionVehiculoCreateManyInput | JefeOperacionVehiculoCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JefeOperacionVehiculoIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * JefeOperacionVehiculo update
+   */
+  export type JefeOperacionVehiculoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JefeOperacionVehiculo
+     */
+    select?: JefeOperacionVehiculoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JefeOperacionVehiculoInclude<ExtArgs> | null
+    /**
+     * The data needed to update a JefeOperacionVehiculo.
+     */
+    data: XOR<JefeOperacionVehiculoUpdateInput, JefeOperacionVehiculoUncheckedUpdateInput>
+    /**
+     * Choose, which JefeOperacionVehiculo to update.
+     */
+    where: JefeOperacionVehiculoWhereUniqueInput
+  }
+
+  /**
+   * JefeOperacionVehiculo updateMany
+   */
+  export type JefeOperacionVehiculoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update JefeOperacionVehiculos.
+     */
+    data: XOR<JefeOperacionVehiculoUpdateManyMutationInput, JefeOperacionVehiculoUncheckedUpdateManyInput>
+    /**
+     * Filter which JefeOperacionVehiculos to update
+     */
+    where?: JefeOperacionVehiculoWhereInput
+  }
+
+  /**
+   * JefeOperacionVehiculo upsert
+   */
+  export type JefeOperacionVehiculoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JefeOperacionVehiculo
+     */
+    select?: JefeOperacionVehiculoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JefeOperacionVehiculoInclude<ExtArgs> | null
+    /**
+     * The filter to search for the JefeOperacionVehiculo to update in case it exists.
+     */
+    where: JefeOperacionVehiculoWhereUniqueInput
+    /**
+     * In case the JefeOperacionVehiculo found by the `where` argument doesn't exist, create a new JefeOperacionVehiculo with this data.
+     */
+    create: XOR<JefeOperacionVehiculoCreateInput, JefeOperacionVehiculoUncheckedCreateInput>
+    /**
+     * In case the JefeOperacionVehiculo was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<JefeOperacionVehiculoUpdateInput, JefeOperacionVehiculoUncheckedUpdateInput>
+  }
+
+  /**
+   * JefeOperacionVehiculo delete
+   */
+  export type JefeOperacionVehiculoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JefeOperacionVehiculo
+     */
+    select?: JefeOperacionVehiculoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JefeOperacionVehiculoInclude<ExtArgs> | null
+    /**
+     * Filter which JefeOperacionVehiculo to delete.
+     */
+    where: JefeOperacionVehiculoWhereUniqueInput
+  }
+
+  /**
+   * JefeOperacionVehiculo deleteMany
+   */
+  export type JefeOperacionVehiculoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which JefeOperacionVehiculos to delete
+     */
+    where?: JefeOperacionVehiculoWhereInput
+  }
+
+  /**
+   * JefeOperacionVehiculo without action
+   */
+  export type JefeOperacionVehiculoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JefeOperacionVehiculo
+     */
+    select?: JefeOperacionVehiculoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JefeOperacionVehiculoInclude<ExtArgs> | null
   }
 
 
@@ -68671,6 +70781,14 @@ export namespace Prisma {
   export type JefeZonalSucursalScalarFieldEnum = (typeof JefeZonalSucursalScalarFieldEnum)[keyof typeof JefeZonalSucursalScalarFieldEnum]
 
 
+  export const JefeZonalVehiculoScalarFieldEnum: {
+    jefeZonalId: 'jefeZonalId',
+    vehiculoId: 'vehiculoId'
+  };
+
+  export type JefeZonalVehiculoScalarFieldEnum = (typeof JefeZonalVehiculoScalarFieldEnum)[keyof typeof JefeZonalVehiculoScalarFieldEnum]
+
+
   export const JefeOperacionScalarFieldEnum: {
     id: 'id',
     nombre: 'nombre',
@@ -68683,6 +70801,14 @@ export namespace Prisma {
   };
 
   export type JefeOperacionScalarFieldEnum = (typeof JefeOperacionScalarFieldEnum)[keyof typeof JefeOperacionScalarFieldEnum]
+
+
+  export const JefeOperacionVehiculoScalarFieldEnum: {
+    jefeOperacionId: 'jefeOperacionId',
+    vehiculoId: 'vehiculoId'
+  };
+
+  export type JefeOperacionVehiculoScalarFieldEnum = (typeof JefeOperacionVehiculoScalarFieldEnum)[keyof typeof JefeOperacionVehiculoScalarFieldEnum]
 
 
   export const SupervisorScalarFieldEnum: {
@@ -73308,6 +75434,8 @@ export namespace Prisma {
     tipoVehiculo?: XOR<TipoVehiculoRelationFilter, TipoVehiculoWhereInput>
     licitacion?: XOR<LicitacionNullableRelationFilter, LicitacionWhereInput> | null
     supervisores?: SupervisorVehiculoListRelationFilter
+    jefesZonales?: JefeZonalVehiculoListRelationFilter
+    jefesOperacion?: JefeOperacionVehiculoListRelationFilter
   }
 
   export type VehiculoOrderByWithRelationInput = {
@@ -73326,6 +75454,8 @@ export namespace Prisma {
     tipoVehiculo?: TipoVehiculoOrderByWithRelationInput
     licitacion?: LicitacionOrderByWithRelationInput
     supervisores?: SupervisorVehiculoOrderByRelationAggregateInput
+    jefesZonales?: JefeZonalVehiculoOrderByRelationAggregateInput
+    jefesOperacion?: JefeOperacionVehiculoOrderByRelationAggregateInput
   }
 
   export type VehiculoWhereUniqueInput = Prisma.AtLeast<{
@@ -73347,6 +75477,8 @@ export namespace Prisma {
     tipoVehiculo?: XOR<TipoVehiculoRelationFilter, TipoVehiculoWhereInput>
     licitacion?: XOR<LicitacionNullableRelationFilter, LicitacionWhereInput> | null
     supervisores?: SupervisorVehiculoListRelationFilter
+    jefesZonales?: JefeZonalVehiculoListRelationFilter
+    jefesOperacion?: JefeOperacionVehiculoListRelationFilter
   }, "id" | "patente">
 
   export type VehiculoOrderByWithAggregationInput = {
@@ -73396,6 +75528,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"JefeZonal"> | Date | string
     licitaciones?: JefeZonalLicitacionListRelationFilter
     sucursales?: JefeZonalSucursalListRelationFilter
+    vehiculos?: JefeZonalVehiculoListRelationFilter
     jefesOperacion?: JefeOperacionListRelationFilter
     supervisores?: SupervisorListRelationFilter
   }
@@ -73410,6 +75543,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     licitaciones?: JefeZonalLicitacionOrderByRelationAggregateInput
     sucursales?: JefeZonalSucursalOrderByRelationAggregateInput
+    vehiculos?: JefeZonalVehiculoOrderByRelationAggregateInput
     jefesOperacion?: JefeOperacionOrderByRelationAggregateInput
     supervisores?: SupervisorOrderByRelationAggregateInput
   }
@@ -73427,6 +75561,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"JefeZonal"> | Date | string
     licitaciones?: JefeZonalLicitacionListRelationFilter
     sucursales?: JefeZonalSucursalListRelationFilter
+    vehiculos?: JefeZonalVehiculoListRelationFilter
     jefesOperacion?: JefeOperacionListRelationFilter
     supervisores?: SupervisorListRelationFilter
   }, "id">
@@ -73547,6 +75682,50 @@ export namespace Prisma {
     sucursalId?: StringWithAggregatesFilter<"JefeZonalSucursal"> | string
   }
 
+  export type JefeZonalVehiculoWhereInput = {
+    AND?: JefeZonalVehiculoWhereInput | JefeZonalVehiculoWhereInput[]
+    OR?: JefeZonalVehiculoWhereInput[]
+    NOT?: JefeZonalVehiculoWhereInput | JefeZonalVehiculoWhereInput[]
+    jefeZonalId?: StringFilter<"JefeZonalVehiculo"> | string
+    vehiculoId?: StringFilter<"JefeZonalVehiculo"> | string
+    jefeZonal?: XOR<JefeZonalRelationFilter, JefeZonalWhereInput>
+    vehiculo?: XOR<VehiculoRelationFilter, VehiculoWhereInput>
+  }
+
+  export type JefeZonalVehiculoOrderByWithRelationInput = {
+    jefeZonalId?: SortOrder
+    vehiculoId?: SortOrder
+    jefeZonal?: JefeZonalOrderByWithRelationInput
+    vehiculo?: VehiculoOrderByWithRelationInput
+  }
+
+  export type JefeZonalVehiculoWhereUniqueInput = Prisma.AtLeast<{
+    jefeZonalId_vehiculoId?: JefeZonalVehiculoJefeZonalIdVehiculoIdCompoundUniqueInput
+    AND?: JefeZonalVehiculoWhereInput | JefeZonalVehiculoWhereInput[]
+    OR?: JefeZonalVehiculoWhereInput[]
+    NOT?: JefeZonalVehiculoWhereInput | JefeZonalVehiculoWhereInput[]
+    jefeZonalId?: StringFilter<"JefeZonalVehiculo"> | string
+    vehiculoId?: StringFilter<"JefeZonalVehiculo"> | string
+    jefeZonal?: XOR<JefeZonalRelationFilter, JefeZonalWhereInput>
+    vehiculo?: XOR<VehiculoRelationFilter, VehiculoWhereInput>
+  }, "jefeZonalId_vehiculoId">
+
+  export type JefeZonalVehiculoOrderByWithAggregationInput = {
+    jefeZonalId?: SortOrder
+    vehiculoId?: SortOrder
+    _count?: JefeZonalVehiculoCountOrderByAggregateInput
+    _max?: JefeZonalVehiculoMaxOrderByAggregateInput
+    _min?: JefeZonalVehiculoMinOrderByAggregateInput
+  }
+
+  export type JefeZonalVehiculoScalarWhereWithAggregatesInput = {
+    AND?: JefeZonalVehiculoScalarWhereWithAggregatesInput | JefeZonalVehiculoScalarWhereWithAggregatesInput[]
+    OR?: JefeZonalVehiculoScalarWhereWithAggregatesInput[]
+    NOT?: JefeZonalVehiculoScalarWhereWithAggregatesInput | JefeZonalVehiculoScalarWhereWithAggregatesInput[]
+    jefeZonalId?: StringWithAggregatesFilter<"JefeZonalVehiculo"> | string
+    vehiculoId?: StringWithAggregatesFilter<"JefeZonalVehiculo"> | string
+  }
+
   export type JefeOperacionWhereInput = {
     AND?: JefeOperacionWhereInput | JefeOperacionWhereInput[]
     OR?: JefeOperacionWhereInput[]
@@ -73561,6 +75740,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"JefeOperacion"> | Date | string
     jefeZonal?: XOR<JefeZonalRelationFilter, JefeZonalWhereInput>
     supervisores?: SupervisorListRelationFilter
+    vehiculos?: JefeOperacionVehiculoListRelationFilter
   }
 
   export type JefeOperacionOrderByWithRelationInput = {
@@ -73574,6 +75754,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     jefeZonal?: JefeZonalOrderByWithRelationInput
     supervisores?: SupervisorOrderByRelationAggregateInput
+    vehiculos?: JefeOperacionVehiculoOrderByRelationAggregateInput
   }
 
   export type JefeOperacionWhereUniqueInput = Prisma.AtLeast<{
@@ -73590,6 +75771,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"JefeOperacion"> | Date | string
     jefeZonal?: XOR<JefeZonalRelationFilter, JefeZonalWhereInput>
     supervisores?: SupervisorListRelationFilter
+    vehiculos?: JefeOperacionVehiculoListRelationFilter
   }, "id">
 
   export type JefeOperacionOrderByWithAggregationInput = {
@@ -73618,6 +75800,50 @@ export namespace Prisma {
     vigente?: BoolWithAggregatesFilter<"JefeOperacion"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"JefeOperacion"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"JefeOperacion"> | Date | string
+  }
+
+  export type JefeOperacionVehiculoWhereInput = {
+    AND?: JefeOperacionVehiculoWhereInput | JefeOperacionVehiculoWhereInput[]
+    OR?: JefeOperacionVehiculoWhereInput[]
+    NOT?: JefeOperacionVehiculoWhereInput | JefeOperacionVehiculoWhereInput[]
+    jefeOperacionId?: StringFilter<"JefeOperacionVehiculo"> | string
+    vehiculoId?: StringFilter<"JefeOperacionVehiculo"> | string
+    jefeOperacion?: XOR<JefeOperacionRelationFilter, JefeOperacionWhereInput>
+    vehiculo?: XOR<VehiculoRelationFilter, VehiculoWhereInput>
+  }
+
+  export type JefeOperacionVehiculoOrderByWithRelationInput = {
+    jefeOperacionId?: SortOrder
+    vehiculoId?: SortOrder
+    jefeOperacion?: JefeOperacionOrderByWithRelationInput
+    vehiculo?: VehiculoOrderByWithRelationInput
+  }
+
+  export type JefeOperacionVehiculoWhereUniqueInput = Prisma.AtLeast<{
+    jefeOperacionId_vehiculoId?: JefeOperacionVehiculoJefeOperacionIdVehiculoIdCompoundUniqueInput
+    AND?: JefeOperacionVehiculoWhereInput | JefeOperacionVehiculoWhereInput[]
+    OR?: JefeOperacionVehiculoWhereInput[]
+    NOT?: JefeOperacionVehiculoWhereInput | JefeOperacionVehiculoWhereInput[]
+    jefeOperacionId?: StringFilter<"JefeOperacionVehiculo"> | string
+    vehiculoId?: StringFilter<"JefeOperacionVehiculo"> | string
+    jefeOperacion?: XOR<JefeOperacionRelationFilter, JefeOperacionWhereInput>
+    vehiculo?: XOR<VehiculoRelationFilter, VehiculoWhereInput>
+  }, "jefeOperacionId_vehiculoId">
+
+  export type JefeOperacionVehiculoOrderByWithAggregationInput = {
+    jefeOperacionId?: SortOrder
+    vehiculoId?: SortOrder
+    _count?: JefeOperacionVehiculoCountOrderByAggregateInput
+    _max?: JefeOperacionVehiculoMaxOrderByAggregateInput
+    _min?: JefeOperacionVehiculoMinOrderByAggregateInput
+  }
+
+  export type JefeOperacionVehiculoScalarWhereWithAggregatesInput = {
+    AND?: JefeOperacionVehiculoScalarWhereWithAggregatesInput | JefeOperacionVehiculoScalarWhereWithAggregatesInput[]
+    OR?: JefeOperacionVehiculoScalarWhereWithAggregatesInput[]
+    NOT?: JefeOperacionVehiculoScalarWhereWithAggregatesInput | JefeOperacionVehiculoScalarWhereWithAggregatesInput[]
+    jefeOperacionId?: StringWithAggregatesFilter<"JefeOperacionVehiculo"> | string
+    vehiculoId?: StringWithAggregatesFilter<"JefeOperacionVehiculo"> | string
   }
 
   export type SupervisorWhereInput = {
@@ -78935,6 +81161,8 @@ export namespace Prisma {
     tipoVehiculo: TipoVehiculoCreateNestedOneWithoutVehiculosInput
     licitacion?: LicitacionCreateNestedOneWithoutVehiculosInput
     supervisores?: SupervisorVehiculoCreateNestedManyWithoutVehiculoInput
+    jefesZonales?: JefeZonalVehiculoCreateNestedManyWithoutVehiculoInput
+    jefesOperacion?: JefeOperacionVehiculoCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUncheckedCreateInput = {
@@ -78949,6 +81177,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     supervisores?: SupervisorVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    jefesZonales?: JefeZonalVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    jefesOperacion?: JefeOperacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUpdateInput = {
@@ -78963,6 +81193,8 @@ export namespace Prisma {
     tipoVehiculo?: TipoVehiculoUpdateOneRequiredWithoutVehiculosNestedInput
     licitacion?: LicitacionUpdateOneWithoutVehiculosNestedInput
     supervisores?: SupervisorVehiculoUpdateManyWithoutVehiculoNestedInput
+    jefesZonales?: JefeZonalVehiculoUpdateManyWithoutVehiculoNestedInput
+    jefesOperacion?: JefeOperacionVehiculoUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateInput = {
@@ -78977,6 +81209,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     supervisores?: SupervisorVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    jefesZonales?: JefeZonalVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    jefesOperacion?: JefeOperacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoCreateManyInput = {
@@ -79024,6 +81258,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     licitaciones?: JefeZonalLicitacionCreateNestedManyWithoutJefeZonalInput
     sucursales?: JefeZonalSucursalCreateNestedManyWithoutJefeZonalInput
+    vehiculos?: JefeZonalVehiculoCreateNestedManyWithoutJefeZonalInput
     jefesOperacion?: JefeOperacionCreateNestedManyWithoutJefeZonalInput
     supervisores?: SupervisorCreateNestedManyWithoutJefeZonalInput
   }
@@ -79038,6 +81273,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     licitaciones?: JefeZonalLicitacionUncheckedCreateNestedManyWithoutJefeZonalInput
     sucursales?: JefeZonalSucursalUncheckedCreateNestedManyWithoutJefeZonalInput
+    vehiculos?: JefeZonalVehiculoUncheckedCreateNestedManyWithoutJefeZonalInput
     jefesOperacion?: JefeOperacionUncheckedCreateNestedManyWithoutJefeZonalInput
     supervisores?: SupervisorUncheckedCreateNestedManyWithoutJefeZonalInput
   }
@@ -79052,6 +81288,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     licitaciones?: JefeZonalLicitacionUpdateManyWithoutJefeZonalNestedInput
     sucursales?: JefeZonalSucursalUpdateManyWithoutJefeZonalNestedInput
+    vehiculos?: JefeZonalVehiculoUpdateManyWithoutJefeZonalNestedInput
     jefesOperacion?: JefeOperacionUpdateManyWithoutJefeZonalNestedInput
     supervisores?: SupervisorUpdateManyWithoutJefeZonalNestedInput
   }
@@ -79066,6 +81303,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     licitaciones?: JefeZonalLicitacionUncheckedUpdateManyWithoutJefeZonalNestedInput
     sucursales?: JefeZonalSucursalUncheckedUpdateManyWithoutJefeZonalNestedInput
+    vehiculos?: JefeZonalVehiculoUncheckedUpdateManyWithoutJefeZonalNestedInput
     jefesOperacion?: JefeOperacionUncheckedUpdateManyWithoutJefeZonalNestedInput
     supervisores?: SupervisorUncheckedUpdateManyWithoutJefeZonalNestedInput
   }
@@ -79168,6 +81406,40 @@ export namespace Prisma {
     sucursalId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type JefeZonalVehiculoCreateInput = {
+    jefeZonal: JefeZonalCreateNestedOneWithoutVehiculosInput
+    vehiculo: VehiculoCreateNestedOneWithoutJefesZonalesInput
+  }
+
+  export type JefeZonalVehiculoUncheckedCreateInput = {
+    jefeZonalId: string
+    vehiculoId: string
+  }
+
+  export type JefeZonalVehiculoUpdateInput = {
+    jefeZonal?: JefeZonalUpdateOneRequiredWithoutVehiculosNestedInput
+    vehiculo?: VehiculoUpdateOneRequiredWithoutJefesZonalesNestedInput
+  }
+
+  export type JefeZonalVehiculoUncheckedUpdateInput = {
+    jefeZonalId?: StringFieldUpdateOperationsInput | string
+    vehiculoId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type JefeZonalVehiculoCreateManyInput = {
+    jefeZonalId: string
+    vehiculoId: string
+  }
+
+  export type JefeZonalVehiculoUpdateManyMutationInput = {
+
+  }
+
+  export type JefeZonalVehiculoUncheckedUpdateManyInput = {
+    jefeZonalId?: StringFieldUpdateOperationsInput | string
+    vehiculoId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type JefeOperacionCreateInput = {
     id?: string
     nombre: string
@@ -79178,6 +81450,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     jefeZonal: JefeZonalCreateNestedOneWithoutJefesOperacionInput
     supervisores?: SupervisorCreateNestedManyWithoutJefeOperacionInput
+    vehiculos?: JefeOperacionVehiculoCreateNestedManyWithoutJefeOperacionInput
   }
 
   export type JefeOperacionUncheckedCreateInput = {
@@ -79190,6 +81463,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     supervisores?: SupervisorUncheckedCreateNestedManyWithoutJefeOperacionInput
+    vehiculos?: JefeOperacionVehiculoUncheckedCreateNestedManyWithoutJefeOperacionInput
   }
 
   export type JefeOperacionUpdateInput = {
@@ -79202,6 +81476,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     jefeZonal?: JefeZonalUpdateOneRequiredWithoutJefesOperacionNestedInput
     supervisores?: SupervisorUpdateManyWithoutJefeOperacionNestedInput
+    vehiculos?: JefeOperacionVehiculoUpdateManyWithoutJefeOperacionNestedInput
   }
 
   export type JefeOperacionUncheckedUpdateInput = {
@@ -79214,6 +81489,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     supervisores?: SupervisorUncheckedUpdateManyWithoutJefeOperacionNestedInput
+    vehiculos?: JefeOperacionVehiculoUncheckedUpdateManyWithoutJefeOperacionNestedInput
   }
 
   export type JefeOperacionCreateManyInput = {
@@ -79246,6 +81522,40 @@ export namespace Prisma {
     vigente?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type JefeOperacionVehiculoCreateInput = {
+    jefeOperacion: JefeOperacionCreateNestedOneWithoutVehiculosInput
+    vehiculo: VehiculoCreateNestedOneWithoutJefesOperacionInput
+  }
+
+  export type JefeOperacionVehiculoUncheckedCreateInput = {
+    jefeOperacionId: string
+    vehiculoId: string
+  }
+
+  export type JefeOperacionVehiculoUpdateInput = {
+    jefeOperacion?: JefeOperacionUpdateOneRequiredWithoutVehiculosNestedInput
+    vehiculo?: VehiculoUpdateOneRequiredWithoutJefesOperacionNestedInput
+  }
+
+  export type JefeOperacionVehiculoUncheckedUpdateInput = {
+    jefeOperacionId?: StringFieldUpdateOperationsInput | string
+    vehiculoId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type JefeOperacionVehiculoCreateManyInput = {
+    jefeOperacionId: string
+    vehiculoId: string
+  }
+
+  export type JefeOperacionVehiculoUpdateManyMutationInput = {
+
+  }
+
+  export type JefeOperacionVehiculoUncheckedUpdateManyInput = {
+    jefeOperacionId?: StringFieldUpdateOperationsInput | string
+    vehiculoId?: StringFieldUpdateOperationsInput | string
   }
 
   export type SupervisorCreateInput = {
@@ -82662,7 +84972,27 @@ export namespace Prisma {
     none?: SupervisorVehiculoWhereInput
   }
 
+  export type JefeZonalVehiculoListRelationFilter = {
+    every?: JefeZonalVehiculoWhereInput
+    some?: JefeZonalVehiculoWhereInput
+    none?: JefeZonalVehiculoWhereInput
+  }
+
+  export type JefeOperacionVehiculoListRelationFilter = {
+    every?: JefeOperacionVehiculoWhereInput
+    some?: JefeOperacionVehiculoWhereInput
+    none?: JefeOperacionVehiculoWhereInput
+  }
+
   export type SupervisorVehiculoOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type JefeZonalVehiculoOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type JefeOperacionVehiculoOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -82818,6 +85148,31 @@ export namespace Prisma {
     sucursalId?: SortOrder
   }
 
+  export type VehiculoRelationFilter = {
+    is?: VehiculoWhereInput
+    isNot?: VehiculoWhereInput
+  }
+
+  export type JefeZonalVehiculoJefeZonalIdVehiculoIdCompoundUniqueInput = {
+    jefeZonalId: string
+    vehiculoId: string
+  }
+
+  export type JefeZonalVehiculoCountOrderByAggregateInput = {
+    jefeZonalId?: SortOrder
+    vehiculoId?: SortOrder
+  }
+
+  export type JefeZonalVehiculoMaxOrderByAggregateInput = {
+    jefeZonalId?: SortOrder
+    vehiculoId?: SortOrder
+  }
+
+  export type JefeZonalVehiculoMinOrderByAggregateInput = {
+    jefeZonalId?: SortOrder
+    vehiculoId?: SortOrder
+  }
+
   export type JefeOperacionCountOrderByAggregateInput = {
     id?: SortOrder
     nombre?: SortOrder
@@ -82849,6 +85204,31 @@ export namespace Prisma {
     vigente?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type JefeOperacionRelationFilter = {
+    is?: JefeOperacionWhereInput
+    isNot?: JefeOperacionWhereInput
+  }
+
+  export type JefeOperacionVehiculoJefeOperacionIdVehiculoIdCompoundUniqueInput = {
+    jefeOperacionId: string
+    vehiculoId: string
+  }
+
+  export type JefeOperacionVehiculoCountOrderByAggregateInput = {
+    jefeOperacionId?: SortOrder
+    vehiculoId?: SortOrder
+  }
+
+  export type JefeOperacionVehiculoMaxOrderByAggregateInput = {
+    jefeOperacionId?: SortOrder
+    vehiculoId?: SortOrder
+  }
+
+  export type JefeOperacionVehiculoMinOrderByAggregateInput = {
+    jefeOperacionId?: SortOrder
+    vehiculoId?: SortOrder
   }
 
   export type JefeOperacionNullableRelationFilter = {
@@ -82910,11 +85290,6 @@ export namespace Prisma {
   export type SupervisorRelationFilter = {
     is?: SupervisorWhereInput
     isNot?: SupervisorWhereInput
-  }
-
-  export type VehiculoRelationFilter = {
-    is?: VehiculoWhereInput
-    isNot?: VehiculoWhereInput
   }
 
   export type SupervisorVehiculoSupervisorIdVehiculoIdCompoundUniqueInput = {
@@ -84678,11 +87053,39 @@ export namespace Prisma {
     connect?: SupervisorVehiculoWhereUniqueInput | SupervisorVehiculoWhereUniqueInput[]
   }
 
+  export type JefeZonalVehiculoCreateNestedManyWithoutVehiculoInput = {
+    create?: XOR<JefeZonalVehiculoCreateWithoutVehiculoInput, JefeZonalVehiculoUncheckedCreateWithoutVehiculoInput> | JefeZonalVehiculoCreateWithoutVehiculoInput[] | JefeZonalVehiculoUncheckedCreateWithoutVehiculoInput[]
+    connectOrCreate?: JefeZonalVehiculoCreateOrConnectWithoutVehiculoInput | JefeZonalVehiculoCreateOrConnectWithoutVehiculoInput[]
+    createMany?: JefeZonalVehiculoCreateManyVehiculoInputEnvelope
+    connect?: JefeZonalVehiculoWhereUniqueInput | JefeZonalVehiculoWhereUniqueInput[]
+  }
+
+  export type JefeOperacionVehiculoCreateNestedManyWithoutVehiculoInput = {
+    create?: XOR<JefeOperacionVehiculoCreateWithoutVehiculoInput, JefeOperacionVehiculoUncheckedCreateWithoutVehiculoInput> | JefeOperacionVehiculoCreateWithoutVehiculoInput[] | JefeOperacionVehiculoUncheckedCreateWithoutVehiculoInput[]
+    connectOrCreate?: JefeOperacionVehiculoCreateOrConnectWithoutVehiculoInput | JefeOperacionVehiculoCreateOrConnectWithoutVehiculoInput[]
+    createMany?: JefeOperacionVehiculoCreateManyVehiculoInputEnvelope
+    connect?: JefeOperacionVehiculoWhereUniqueInput | JefeOperacionVehiculoWhereUniqueInput[]
+  }
+
   export type SupervisorVehiculoUncheckedCreateNestedManyWithoutVehiculoInput = {
     create?: XOR<SupervisorVehiculoCreateWithoutVehiculoInput, SupervisorVehiculoUncheckedCreateWithoutVehiculoInput> | SupervisorVehiculoCreateWithoutVehiculoInput[] | SupervisorVehiculoUncheckedCreateWithoutVehiculoInput[]
     connectOrCreate?: SupervisorVehiculoCreateOrConnectWithoutVehiculoInput | SupervisorVehiculoCreateOrConnectWithoutVehiculoInput[]
     createMany?: SupervisorVehiculoCreateManyVehiculoInputEnvelope
     connect?: SupervisorVehiculoWhereUniqueInput | SupervisorVehiculoWhereUniqueInput[]
+  }
+
+  export type JefeZonalVehiculoUncheckedCreateNestedManyWithoutVehiculoInput = {
+    create?: XOR<JefeZonalVehiculoCreateWithoutVehiculoInput, JefeZonalVehiculoUncheckedCreateWithoutVehiculoInput> | JefeZonalVehiculoCreateWithoutVehiculoInput[] | JefeZonalVehiculoUncheckedCreateWithoutVehiculoInput[]
+    connectOrCreate?: JefeZonalVehiculoCreateOrConnectWithoutVehiculoInput | JefeZonalVehiculoCreateOrConnectWithoutVehiculoInput[]
+    createMany?: JefeZonalVehiculoCreateManyVehiculoInputEnvelope
+    connect?: JefeZonalVehiculoWhereUniqueInput | JefeZonalVehiculoWhereUniqueInput[]
+  }
+
+  export type JefeOperacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput = {
+    create?: XOR<JefeOperacionVehiculoCreateWithoutVehiculoInput, JefeOperacionVehiculoUncheckedCreateWithoutVehiculoInput> | JefeOperacionVehiculoCreateWithoutVehiculoInput[] | JefeOperacionVehiculoUncheckedCreateWithoutVehiculoInput[]
+    connectOrCreate?: JefeOperacionVehiculoCreateOrConnectWithoutVehiculoInput | JefeOperacionVehiculoCreateOrConnectWithoutVehiculoInput[]
+    createMany?: JefeOperacionVehiculoCreateManyVehiculoInputEnvelope
+    connect?: JefeOperacionVehiculoWhereUniqueInput | JefeOperacionVehiculoWhereUniqueInput[]
   }
 
   export type UTUpdateOneWithoutVehiculosNestedInput = {
@@ -84735,6 +87138,34 @@ export namespace Prisma {
     deleteMany?: SupervisorVehiculoScalarWhereInput | SupervisorVehiculoScalarWhereInput[]
   }
 
+  export type JefeZonalVehiculoUpdateManyWithoutVehiculoNestedInput = {
+    create?: XOR<JefeZonalVehiculoCreateWithoutVehiculoInput, JefeZonalVehiculoUncheckedCreateWithoutVehiculoInput> | JefeZonalVehiculoCreateWithoutVehiculoInput[] | JefeZonalVehiculoUncheckedCreateWithoutVehiculoInput[]
+    connectOrCreate?: JefeZonalVehiculoCreateOrConnectWithoutVehiculoInput | JefeZonalVehiculoCreateOrConnectWithoutVehiculoInput[]
+    upsert?: JefeZonalVehiculoUpsertWithWhereUniqueWithoutVehiculoInput | JefeZonalVehiculoUpsertWithWhereUniqueWithoutVehiculoInput[]
+    createMany?: JefeZonalVehiculoCreateManyVehiculoInputEnvelope
+    set?: JefeZonalVehiculoWhereUniqueInput | JefeZonalVehiculoWhereUniqueInput[]
+    disconnect?: JefeZonalVehiculoWhereUniqueInput | JefeZonalVehiculoWhereUniqueInput[]
+    delete?: JefeZonalVehiculoWhereUniqueInput | JefeZonalVehiculoWhereUniqueInput[]
+    connect?: JefeZonalVehiculoWhereUniqueInput | JefeZonalVehiculoWhereUniqueInput[]
+    update?: JefeZonalVehiculoUpdateWithWhereUniqueWithoutVehiculoInput | JefeZonalVehiculoUpdateWithWhereUniqueWithoutVehiculoInput[]
+    updateMany?: JefeZonalVehiculoUpdateManyWithWhereWithoutVehiculoInput | JefeZonalVehiculoUpdateManyWithWhereWithoutVehiculoInput[]
+    deleteMany?: JefeZonalVehiculoScalarWhereInput | JefeZonalVehiculoScalarWhereInput[]
+  }
+
+  export type JefeOperacionVehiculoUpdateManyWithoutVehiculoNestedInput = {
+    create?: XOR<JefeOperacionVehiculoCreateWithoutVehiculoInput, JefeOperacionVehiculoUncheckedCreateWithoutVehiculoInput> | JefeOperacionVehiculoCreateWithoutVehiculoInput[] | JefeOperacionVehiculoUncheckedCreateWithoutVehiculoInput[]
+    connectOrCreate?: JefeOperacionVehiculoCreateOrConnectWithoutVehiculoInput | JefeOperacionVehiculoCreateOrConnectWithoutVehiculoInput[]
+    upsert?: JefeOperacionVehiculoUpsertWithWhereUniqueWithoutVehiculoInput | JefeOperacionVehiculoUpsertWithWhereUniqueWithoutVehiculoInput[]
+    createMany?: JefeOperacionVehiculoCreateManyVehiculoInputEnvelope
+    set?: JefeOperacionVehiculoWhereUniqueInput | JefeOperacionVehiculoWhereUniqueInput[]
+    disconnect?: JefeOperacionVehiculoWhereUniqueInput | JefeOperacionVehiculoWhereUniqueInput[]
+    delete?: JefeOperacionVehiculoWhereUniqueInput | JefeOperacionVehiculoWhereUniqueInput[]
+    connect?: JefeOperacionVehiculoWhereUniqueInput | JefeOperacionVehiculoWhereUniqueInput[]
+    update?: JefeOperacionVehiculoUpdateWithWhereUniqueWithoutVehiculoInput | JefeOperacionVehiculoUpdateWithWhereUniqueWithoutVehiculoInput[]
+    updateMany?: JefeOperacionVehiculoUpdateManyWithWhereWithoutVehiculoInput | JefeOperacionVehiculoUpdateManyWithWhereWithoutVehiculoInput[]
+    deleteMany?: JefeOperacionVehiculoScalarWhereInput | JefeOperacionVehiculoScalarWhereInput[]
+  }
+
   export type SupervisorVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput = {
     create?: XOR<SupervisorVehiculoCreateWithoutVehiculoInput, SupervisorVehiculoUncheckedCreateWithoutVehiculoInput> | SupervisorVehiculoCreateWithoutVehiculoInput[] | SupervisorVehiculoUncheckedCreateWithoutVehiculoInput[]
     connectOrCreate?: SupervisorVehiculoCreateOrConnectWithoutVehiculoInput | SupervisorVehiculoCreateOrConnectWithoutVehiculoInput[]
@@ -84749,6 +87180,34 @@ export namespace Prisma {
     deleteMany?: SupervisorVehiculoScalarWhereInput | SupervisorVehiculoScalarWhereInput[]
   }
 
+  export type JefeZonalVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput = {
+    create?: XOR<JefeZonalVehiculoCreateWithoutVehiculoInput, JefeZonalVehiculoUncheckedCreateWithoutVehiculoInput> | JefeZonalVehiculoCreateWithoutVehiculoInput[] | JefeZonalVehiculoUncheckedCreateWithoutVehiculoInput[]
+    connectOrCreate?: JefeZonalVehiculoCreateOrConnectWithoutVehiculoInput | JefeZonalVehiculoCreateOrConnectWithoutVehiculoInput[]
+    upsert?: JefeZonalVehiculoUpsertWithWhereUniqueWithoutVehiculoInput | JefeZonalVehiculoUpsertWithWhereUniqueWithoutVehiculoInput[]
+    createMany?: JefeZonalVehiculoCreateManyVehiculoInputEnvelope
+    set?: JefeZonalVehiculoWhereUniqueInput | JefeZonalVehiculoWhereUniqueInput[]
+    disconnect?: JefeZonalVehiculoWhereUniqueInput | JefeZonalVehiculoWhereUniqueInput[]
+    delete?: JefeZonalVehiculoWhereUniqueInput | JefeZonalVehiculoWhereUniqueInput[]
+    connect?: JefeZonalVehiculoWhereUniqueInput | JefeZonalVehiculoWhereUniqueInput[]
+    update?: JefeZonalVehiculoUpdateWithWhereUniqueWithoutVehiculoInput | JefeZonalVehiculoUpdateWithWhereUniqueWithoutVehiculoInput[]
+    updateMany?: JefeZonalVehiculoUpdateManyWithWhereWithoutVehiculoInput | JefeZonalVehiculoUpdateManyWithWhereWithoutVehiculoInput[]
+    deleteMany?: JefeZonalVehiculoScalarWhereInput | JefeZonalVehiculoScalarWhereInput[]
+  }
+
+  export type JefeOperacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput = {
+    create?: XOR<JefeOperacionVehiculoCreateWithoutVehiculoInput, JefeOperacionVehiculoUncheckedCreateWithoutVehiculoInput> | JefeOperacionVehiculoCreateWithoutVehiculoInput[] | JefeOperacionVehiculoUncheckedCreateWithoutVehiculoInput[]
+    connectOrCreate?: JefeOperacionVehiculoCreateOrConnectWithoutVehiculoInput | JefeOperacionVehiculoCreateOrConnectWithoutVehiculoInput[]
+    upsert?: JefeOperacionVehiculoUpsertWithWhereUniqueWithoutVehiculoInput | JefeOperacionVehiculoUpsertWithWhereUniqueWithoutVehiculoInput[]
+    createMany?: JefeOperacionVehiculoCreateManyVehiculoInputEnvelope
+    set?: JefeOperacionVehiculoWhereUniqueInput | JefeOperacionVehiculoWhereUniqueInput[]
+    disconnect?: JefeOperacionVehiculoWhereUniqueInput | JefeOperacionVehiculoWhereUniqueInput[]
+    delete?: JefeOperacionVehiculoWhereUniqueInput | JefeOperacionVehiculoWhereUniqueInput[]
+    connect?: JefeOperacionVehiculoWhereUniqueInput | JefeOperacionVehiculoWhereUniqueInput[]
+    update?: JefeOperacionVehiculoUpdateWithWhereUniqueWithoutVehiculoInput | JefeOperacionVehiculoUpdateWithWhereUniqueWithoutVehiculoInput[]
+    updateMany?: JefeOperacionVehiculoUpdateManyWithWhereWithoutVehiculoInput | JefeOperacionVehiculoUpdateManyWithWhereWithoutVehiculoInput[]
+    deleteMany?: JefeOperacionVehiculoScalarWhereInput | JefeOperacionVehiculoScalarWhereInput[]
+  }
+
   export type JefeZonalLicitacionCreateNestedManyWithoutJefeZonalInput = {
     create?: XOR<JefeZonalLicitacionCreateWithoutJefeZonalInput, JefeZonalLicitacionUncheckedCreateWithoutJefeZonalInput> | JefeZonalLicitacionCreateWithoutJefeZonalInput[] | JefeZonalLicitacionUncheckedCreateWithoutJefeZonalInput[]
     connectOrCreate?: JefeZonalLicitacionCreateOrConnectWithoutJefeZonalInput | JefeZonalLicitacionCreateOrConnectWithoutJefeZonalInput[]
@@ -84761,6 +87220,13 @@ export namespace Prisma {
     connectOrCreate?: JefeZonalSucursalCreateOrConnectWithoutJefeZonalInput | JefeZonalSucursalCreateOrConnectWithoutJefeZonalInput[]
     createMany?: JefeZonalSucursalCreateManyJefeZonalInputEnvelope
     connect?: JefeZonalSucursalWhereUniqueInput | JefeZonalSucursalWhereUniqueInput[]
+  }
+
+  export type JefeZonalVehiculoCreateNestedManyWithoutJefeZonalInput = {
+    create?: XOR<JefeZonalVehiculoCreateWithoutJefeZonalInput, JefeZonalVehiculoUncheckedCreateWithoutJefeZonalInput> | JefeZonalVehiculoCreateWithoutJefeZonalInput[] | JefeZonalVehiculoUncheckedCreateWithoutJefeZonalInput[]
+    connectOrCreate?: JefeZonalVehiculoCreateOrConnectWithoutJefeZonalInput | JefeZonalVehiculoCreateOrConnectWithoutJefeZonalInput[]
+    createMany?: JefeZonalVehiculoCreateManyJefeZonalInputEnvelope
+    connect?: JefeZonalVehiculoWhereUniqueInput | JefeZonalVehiculoWhereUniqueInput[]
   }
 
   export type JefeOperacionCreateNestedManyWithoutJefeZonalInput = {
@@ -84789,6 +87255,13 @@ export namespace Prisma {
     connectOrCreate?: JefeZonalSucursalCreateOrConnectWithoutJefeZonalInput | JefeZonalSucursalCreateOrConnectWithoutJefeZonalInput[]
     createMany?: JefeZonalSucursalCreateManyJefeZonalInputEnvelope
     connect?: JefeZonalSucursalWhereUniqueInput | JefeZonalSucursalWhereUniqueInput[]
+  }
+
+  export type JefeZonalVehiculoUncheckedCreateNestedManyWithoutJefeZonalInput = {
+    create?: XOR<JefeZonalVehiculoCreateWithoutJefeZonalInput, JefeZonalVehiculoUncheckedCreateWithoutJefeZonalInput> | JefeZonalVehiculoCreateWithoutJefeZonalInput[] | JefeZonalVehiculoUncheckedCreateWithoutJefeZonalInput[]
+    connectOrCreate?: JefeZonalVehiculoCreateOrConnectWithoutJefeZonalInput | JefeZonalVehiculoCreateOrConnectWithoutJefeZonalInput[]
+    createMany?: JefeZonalVehiculoCreateManyJefeZonalInputEnvelope
+    connect?: JefeZonalVehiculoWhereUniqueInput | JefeZonalVehiculoWhereUniqueInput[]
   }
 
   export type JefeOperacionUncheckedCreateNestedManyWithoutJefeZonalInput = {
@@ -84831,6 +87304,20 @@ export namespace Prisma {
     update?: JefeZonalSucursalUpdateWithWhereUniqueWithoutJefeZonalInput | JefeZonalSucursalUpdateWithWhereUniqueWithoutJefeZonalInput[]
     updateMany?: JefeZonalSucursalUpdateManyWithWhereWithoutJefeZonalInput | JefeZonalSucursalUpdateManyWithWhereWithoutJefeZonalInput[]
     deleteMany?: JefeZonalSucursalScalarWhereInput | JefeZonalSucursalScalarWhereInput[]
+  }
+
+  export type JefeZonalVehiculoUpdateManyWithoutJefeZonalNestedInput = {
+    create?: XOR<JefeZonalVehiculoCreateWithoutJefeZonalInput, JefeZonalVehiculoUncheckedCreateWithoutJefeZonalInput> | JefeZonalVehiculoCreateWithoutJefeZonalInput[] | JefeZonalVehiculoUncheckedCreateWithoutJefeZonalInput[]
+    connectOrCreate?: JefeZonalVehiculoCreateOrConnectWithoutJefeZonalInput | JefeZonalVehiculoCreateOrConnectWithoutJefeZonalInput[]
+    upsert?: JefeZonalVehiculoUpsertWithWhereUniqueWithoutJefeZonalInput | JefeZonalVehiculoUpsertWithWhereUniqueWithoutJefeZonalInput[]
+    createMany?: JefeZonalVehiculoCreateManyJefeZonalInputEnvelope
+    set?: JefeZonalVehiculoWhereUniqueInput | JefeZonalVehiculoWhereUniqueInput[]
+    disconnect?: JefeZonalVehiculoWhereUniqueInput | JefeZonalVehiculoWhereUniqueInput[]
+    delete?: JefeZonalVehiculoWhereUniqueInput | JefeZonalVehiculoWhereUniqueInput[]
+    connect?: JefeZonalVehiculoWhereUniqueInput | JefeZonalVehiculoWhereUniqueInput[]
+    update?: JefeZonalVehiculoUpdateWithWhereUniqueWithoutJefeZonalInput | JefeZonalVehiculoUpdateWithWhereUniqueWithoutJefeZonalInput[]
+    updateMany?: JefeZonalVehiculoUpdateManyWithWhereWithoutJefeZonalInput | JefeZonalVehiculoUpdateManyWithWhereWithoutJefeZonalInput[]
+    deleteMany?: JefeZonalVehiculoScalarWhereInput | JefeZonalVehiculoScalarWhereInput[]
   }
 
   export type JefeOperacionUpdateManyWithoutJefeZonalNestedInput = {
@@ -84887,6 +87374,20 @@ export namespace Prisma {
     update?: JefeZonalSucursalUpdateWithWhereUniqueWithoutJefeZonalInput | JefeZonalSucursalUpdateWithWhereUniqueWithoutJefeZonalInput[]
     updateMany?: JefeZonalSucursalUpdateManyWithWhereWithoutJefeZonalInput | JefeZonalSucursalUpdateManyWithWhereWithoutJefeZonalInput[]
     deleteMany?: JefeZonalSucursalScalarWhereInput | JefeZonalSucursalScalarWhereInput[]
+  }
+
+  export type JefeZonalVehiculoUncheckedUpdateManyWithoutJefeZonalNestedInput = {
+    create?: XOR<JefeZonalVehiculoCreateWithoutJefeZonalInput, JefeZonalVehiculoUncheckedCreateWithoutJefeZonalInput> | JefeZonalVehiculoCreateWithoutJefeZonalInput[] | JefeZonalVehiculoUncheckedCreateWithoutJefeZonalInput[]
+    connectOrCreate?: JefeZonalVehiculoCreateOrConnectWithoutJefeZonalInput | JefeZonalVehiculoCreateOrConnectWithoutJefeZonalInput[]
+    upsert?: JefeZonalVehiculoUpsertWithWhereUniqueWithoutJefeZonalInput | JefeZonalVehiculoUpsertWithWhereUniqueWithoutJefeZonalInput[]
+    createMany?: JefeZonalVehiculoCreateManyJefeZonalInputEnvelope
+    set?: JefeZonalVehiculoWhereUniqueInput | JefeZonalVehiculoWhereUniqueInput[]
+    disconnect?: JefeZonalVehiculoWhereUniqueInput | JefeZonalVehiculoWhereUniqueInput[]
+    delete?: JefeZonalVehiculoWhereUniqueInput | JefeZonalVehiculoWhereUniqueInput[]
+    connect?: JefeZonalVehiculoWhereUniqueInput | JefeZonalVehiculoWhereUniqueInput[]
+    update?: JefeZonalVehiculoUpdateWithWhereUniqueWithoutJefeZonalInput | JefeZonalVehiculoUpdateWithWhereUniqueWithoutJefeZonalInput[]
+    updateMany?: JefeZonalVehiculoUpdateManyWithWhereWithoutJefeZonalInput | JefeZonalVehiculoUpdateManyWithWhereWithoutJefeZonalInput[]
+    deleteMany?: JefeZonalVehiculoScalarWhereInput | JefeZonalVehiculoScalarWhereInput[]
   }
 
   export type JefeOperacionUncheckedUpdateManyWithoutJefeZonalNestedInput = {
@@ -84973,6 +87474,34 @@ export namespace Prisma {
     update?: XOR<XOR<SucursalUpdateToOneWithWhereWithoutJefesZonalesInput, SucursalUpdateWithoutJefesZonalesInput>, SucursalUncheckedUpdateWithoutJefesZonalesInput>
   }
 
+  export type JefeZonalCreateNestedOneWithoutVehiculosInput = {
+    create?: XOR<JefeZonalCreateWithoutVehiculosInput, JefeZonalUncheckedCreateWithoutVehiculosInput>
+    connectOrCreate?: JefeZonalCreateOrConnectWithoutVehiculosInput
+    connect?: JefeZonalWhereUniqueInput
+  }
+
+  export type VehiculoCreateNestedOneWithoutJefesZonalesInput = {
+    create?: XOR<VehiculoCreateWithoutJefesZonalesInput, VehiculoUncheckedCreateWithoutJefesZonalesInput>
+    connectOrCreate?: VehiculoCreateOrConnectWithoutJefesZonalesInput
+    connect?: VehiculoWhereUniqueInput
+  }
+
+  export type JefeZonalUpdateOneRequiredWithoutVehiculosNestedInput = {
+    create?: XOR<JefeZonalCreateWithoutVehiculosInput, JefeZonalUncheckedCreateWithoutVehiculosInput>
+    connectOrCreate?: JefeZonalCreateOrConnectWithoutVehiculosInput
+    upsert?: JefeZonalUpsertWithoutVehiculosInput
+    connect?: JefeZonalWhereUniqueInput
+    update?: XOR<XOR<JefeZonalUpdateToOneWithWhereWithoutVehiculosInput, JefeZonalUpdateWithoutVehiculosInput>, JefeZonalUncheckedUpdateWithoutVehiculosInput>
+  }
+
+  export type VehiculoUpdateOneRequiredWithoutJefesZonalesNestedInput = {
+    create?: XOR<VehiculoCreateWithoutJefesZonalesInput, VehiculoUncheckedCreateWithoutJefesZonalesInput>
+    connectOrCreate?: VehiculoCreateOrConnectWithoutJefesZonalesInput
+    upsert?: VehiculoUpsertWithoutJefesZonalesInput
+    connect?: VehiculoWhereUniqueInput
+    update?: XOR<XOR<VehiculoUpdateToOneWithWhereWithoutJefesZonalesInput, VehiculoUpdateWithoutJefesZonalesInput>, VehiculoUncheckedUpdateWithoutJefesZonalesInput>
+  }
+
   export type JefeZonalCreateNestedOneWithoutJefesOperacionInput = {
     create?: XOR<JefeZonalCreateWithoutJefesOperacionInput, JefeZonalUncheckedCreateWithoutJefesOperacionInput>
     connectOrCreate?: JefeZonalCreateOrConnectWithoutJefesOperacionInput
@@ -84986,11 +87515,25 @@ export namespace Prisma {
     connect?: SupervisorWhereUniqueInput | SupervisorWhereUniqueInput[]
   }
 
+  export type JefeOperacionVehiculoCreateNestedManyWithoutJefeOperacionInput = {
+    create?: XOR<JefeOperacionVehiculoCreateWithoutJefeOperacionInput, JefeOperacionVehiculoUncheckedCreateWithoutJefeOperacionInput> | JefeOperacionVehiculoCreateWithoutJefeOperacionInput[] | JefeOperacionVehiculoUncheckedCreateWithoutJefeOperacionInput[]
+    connectOrCreate?: JefeOperacionVehiculoCreateOrConnectWithoutJefeOperacionInput | JefeOperacionVehiculoCreateOrConnectWithoutJefeOperacionInput[]
+    createMany?: JefeOperacionVehiculoCreateManyJefeOperacionInputEnvelope
+    connect?: JefeOperacionVehiculoWhereUniqueInput | JefeOperacionVehiculoWhereUniqueInput[]
+  }
+
   export type SupervisorUncheckedCreateNestedManyWithoutJefeOperacionInput = {
     create?: XOR<SupervisorCreateWithoutJefeOperacionInput, SupervisorUncheckedCreateWithoutJefeOperacionInput> | SupervisorCreateWithoutJefeOperacionInput[] | SupervisorUncheckedCreateWithoutJefeOperacionInput[]
     connectOrCreate?: SupervisorCreateOrConnectWithoutJefeOperacionInput | SupervisorCreateOrConnectWithoutJefeOperacionInput[]
     createMany?: SupervisorCreateManyJefeOperacionInputEnvelope
     connect?: SupervisorWhereUniqueInput | SupervisorWhereUniqueInput[]
+  }
+
+  export type JefeOperacionVehiculoUncheckedCreateNestedManyWithoutJefeOperacionInput = {
+    create?: XOR<JefeOperacionVehiculoCreateWithoutJefeOperacionInput, JefeOperacionVehiculoUncheckedCreateWithoutJefeOperacionInput> | JefeOperacionVehiculoCreateWithoutJefeOperacionInput[] | JefeOperacionVehiculoUncheckedCreateWithoutJefeOperacionInput[]
+    connectOrCreate?: JefeOperacionVehiculoCreateOrConnectWithoutJefeOperacionInput | JefeOperacionVehiculoCreateOrConnectWithoutJefeOperacionInput[]
+    createMany?: JefeOperacionVehiculoCreateManyJefeOperacionInputEnvelope
+    connect?: JefeOperacionVehiculoWhereUniqueInput | JefeOperacionVehiculoWhereUniqueInput[]
   }
 
   export type JefeZonalUpdateOneRequiredWithoutJefesOperacionNestedInput = {
@@ -85015,6 +87558,20 @@ export namespace Prisma {
     deleteMany?: SupervisorScalarWhereInput | SupervisorScalarWhereInput[]
   }
 
+  export type JefeOperacionVehiculoUpdateManyWithoutJefeOperacionNestedInput = {
+    create?: XOR<JefeOperacionVehiculoCreateWithoutJefeOperacionInput, JefeOperacionVehiculoUncheckedCreateWithoutJefeOperacionInput> | JefeOperacionVehiculoCreateWithoutJefeOperacionInput[] | JefeOperacionVehiculoUncheckedCreateWithoutJefeOperacionInput[]
+    connectOrCreate?: JefeOperacionVehiculoCreateOrConnectWithoutJefeOperacionInput | JefeOperacionVehiculoCreateOrConnectWithoutJefeOperacionInput[]
+    upsert?: JefeOperacionVehiculoUpsertWithWhereUniqueWithoutJefeOperacionInput | JefeOperacionVehiculoUpsertWithWhereUniqueWithoutJefeOperacionInput[]
+    createMany?: JefeOperacionVehiculoCreateManyJefeOperacionInputEnvelope
+    set?: JefeOperacionVehiculoWhereUniqueInput | JefeOperacionVehiculoWhereUniqueInput[]
+    disconnect?: JefeOperacionVehiculoWhereUniqueInput | JefeOperacionVehiculoWhereUniqueInput[]
+    delete?: JefeOperacionVehiculoWhereUniqueInput | JefeOperacionVehiculoWhereUniqueInput[]
+    connect?: JefeOperacionVehiculoWhereUniqueInput | JefeOperacionVehiculoWhereUniqueInput[]
+    update?: JefeOperacionVehiculoUpdateWithWhereUniqueWithoutJefeOperacionInput | JefeOperacionVehiculoUpdateWithWhereUniqueWithoutJefeOperacionInput[]
+    updateMany?: JefeOperacionVehiculoUpdateManyWithWhereWithoutJefeOperacionInput | JefeOperacionVehiculoUpdateManyWithWhereWithoutJefeOperacionInput[]
+    deleteMany?: JefeOperacionVehiculoScalarWhereInput | JefeOperacionVehiculoScalarWhereInput[]
+  }
+
   export type SupervisorUncheckedUpdateManyWithoutJefeOperacionNestedInput = {
     create?: XOR<SupervisorCreateWithoutJefeOperacionInput, SupervisorUncheckedCreateWithoutJefeOperacionInput> | SupervisorCreateWithoutJefeOperacionInput[] | SupervisorUncheckedCreateWithoutJefeOperacionInput[]
     connectOrCreate?: SupervisorCreateOrConnectWithoutJefeOperacionInput | SupervisorCreateOrConnectWithoutJefeOperacionInput[]
@@ -85027,6 +87584,48 @@ export namespace Prisma {
     update?: SupervisorUpdateWithWhereUniqueWithoutJefeOperacionInput | SupervisorUpdateWithWhereUniqueWithoutJefeOperacionInput[]
     updateMany?: SupervisorUpdateManyWithWhereWithoutJefeOperacionInput | SupervisorUpdateManyWithWhereWithoutJefeOperacionInput[]
     deleteMany?: SupervisorScalarWhereInput | SupervisorScalarWhereInput[]
+  }
+
+  export type JefeOperacionVehiculoUncheckedUpdateManyWithoutJefeOperacionNestedInput = {
+    create?: XOR<JefeOperacionVehiculoCreateWithoutJefeOperacionInput, JefeOperacionVehiculoUncheckedCreateWithoutJefeOperacionInput> | JefeOperacionVehiculoCreateWithoutJefeOperacionInput[] | JefeOperacionVehiculoUncheckedCreateWithoutJefeOperacionInput[]
+    connectOrCreate?: JefeOperacionVehiculoCreateOrConnectWithoutJefeOperacionInput | JefeOperacionVehiculoCreateOrConnectWithoutJefeOperacionInput[]
+    upsert?: JefeOperacionVehiculoUpsertWithWhereUniqueWithoutJefeOperacionInput | JefeOperacionVehiculoUpsertWithWhereUniqueWithoutJefeOperacionInput[]
+    createMany?: JefeOperacionVehiculoCreateManyJefeOperacionInputEnvelope
+    set?: JefeOperacionVehiculoWhereUniqueInput | JefeOperacionVehiculoWhereUniqueInput[]
+    disconnect?: JefeOperacionVehiculoWhereUniqueInput | JefeOperacionVehiculoWhereUniqueInput[]
+    delete?: JefeOperacionVehiculoWhereUniqueInput | JefeOperacionVehiculoWhereUniqueInput[]
+    connect?: JefeOperacionVehiculoWhereUniqueInput | JefeOperacionVehiculoWhereUniqueInput[]
+    update?: JefeOperacionVehiculoUpdateWithWhereUniqueWithoutJefeOperacionInput | JefeOperacionVehiculoUpdateWithWhereUniqueWithoutJefeOperacionInput[]
+    updateMany?: JefeOperacionVehiculoUpdateManyWithWhereWithoutJefeOperacionInput | JefeOperacionVehiculoUpdateManyWithWhereWithoutJefeOperacionInput[]
+    deleteMany?: JefeOperacionVehiculoScalarWhereInput | JefeOperacionVehiculoScalarWhereInput[]
+  }
+
+  export type JefeOperacionCreateNestedOneWithoutVehiculosInput = {
+    create?: XOR<JefeOperacionCreateWithoutVehiculosInput, JefeOperacionUncheckedCreateWithoutVehiculosInput>
+    connectOrCreate?: JefeOperacionCreateOrConnectWithoutVehiculosInput
+    connect?: JefeOperacionWhereUniqueInput
+  }
+
+  export type VehiculoCreateNestedOneWithoutJefesOperacionInput = {
+    create?: XOR<VehiculoCreateWithoutJefesOperacionInput, VehiculoUncheckedCreateWithoutJefesOperacionInput>
+    connectOrCreate?: VehiculoCreateOrConnectWithoutJefesOperacionInput
+    connect?: VehiculoWhereUniqueInput
+  }
+
+  export type JefeOperacionUpdateOneRequiredWithoutVehiculosNestedInput = {
+    create?: XOR<JefeOperacionCreateWithoutVehiculosInput, JefeOperacionUncheckedCreateWithoutVehiculosInput>
+    connectOrCreate?: JefeOperacionCreateOrConnectWithoutVehiculosInput
+    upsert?: JefeOperacionUpsertWithoutVehiculosInput
+    connect?: JefeOperacionWhereUniqueInput
+    update?: XOR<XOR<JefeOperacionUpdateToOneWithWhereWithoutVehiculosInput, JefeOperacionUpdateWithoutVehiculosInput>, JefeOperacionUncheckedUpdateWithoutVehiculosInput>
+  }
+
+  export type VehiculoUpdateOneRequiredWithoutJefesOperacionNestedInput = {
+    create?: XOR<VehiculoCreateWithoutJefesOperacionInput, VehiculoUncheckedCreateWithoutJefesOperacionInput>
+    connectOrCreate?: VehiculoCreateOrConnectWithoutJefesOperacionInput
+    upsert?: VehiculoUpsertWithoutJefesOperacionInput
+    connect?: VehiculoWhereUniqueInput
+    update?: XOR<XOR<VehiculoUpdateToOneWithWhereWithoutJefesOperacionInput, VehiculoUpdateWithoutJefesOperacionInput>, VehiculoUncheckedUpdateWithoutJefesOperacionInput>
   }
 
   export type JefeOperacionCreateNestedOneWithoutSupervisoresInput = {
@@ -86104,6 +88703,8 @@ export namespace Prisma {
     sucursal: SucursalCreateNestedOneWithoutVehiculosInput
     tipoVehiculo: TipoVehiculoCreateNestedOneWithoutVehiculosInput
     supervisores?: SupervisorVehiculoCreateNestedManyWithoutVehiculoInput
+    jefesZonales?: JefeZonalVehiculoCreateNestedManyWithoutVehiculoInput
+    jefesOperacion?: JefeOperacionVehiculoCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUncheckedCreateWithoutLicitacionInput = {
@@ -86117,6 +88718,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     supervisores?: SupervisorVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    jefesZonales?: JefeZonalVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    jefesOperacion?: JefeOperacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoCreateOrConnectWithoutLicitacionInput = {
@@ -86506,6 +89109,8 @@ export namespace Prisma {
     tipoVehiculo: TipoVehiculoCreateNestedOneWithoutVehiculosInput
     licitacion?: LicitacionCreateNestedOneWithoutVehiculosInput
     supervisores?: SupervisorVehiculoCreateNestedManyWithoutVehiculoInput
+    jefesZonales?: JefeZonalVehiculoCreateNestedManyWithoutVehiculoInput
+    jefesOperacion?: JefeOperacionVehiculoCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUncheckedCreateWithoutSucursalInput = {
@@ -86519,6 +89124,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     supervisores?: SupervisorVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    jefesZonales?: JefeZonalVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    jefesOperacion?: JefeOperacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoCreateOrConnectWithoutSucursalInput = {
@@ -86903,6 +89510,8 @@ export namespace Prisma {
     tipoVehiculo: TipoVehiculoCreateNestedOneWithoutVehiculosInput
     licitacion?: LicitacionCreateNestedOneWithoutVehiculosInput
     supervisores?: SupervisorVehiculoCreateNestedManyWithoutVehiculoInput
+    jefesZonales?: JefeZonalVehiculoCreateNestedManyWithoutVehiculoInput
+    jefesOperacion?: JefeOperacionVehiculoCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUncheckedCreateWithoutUtInput = {
@@ -86916,6 +89525,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     supervisores?: SupervisorVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    jefesZonales?: JefeZonalVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    jefesOperacion?: JefeOperacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoCreateOrConnectWithoutUtInput = {
@@ -88632,6 +91243,8 @@ export namespace Prisma {
     sucursal: SucursalCreateNestedOneWithoutVehiculosInput
     licitacion?: LicitacionCreateNestedOneWithoutVehiculosInput
     supervisores?: SupervisorVehiculoCreateNestedManyWithoutVehiculoInput
+    jefesZonales?: JefeZonalVehiculoCreateNestedManyWithoutVehiculoInput
+    jefesOperacion?: JefeOperacionVehiculoCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUncheckedCreateWithoutTipoVehiculoInput = {
@@ -88645,6 +91258,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     supervisores?: SupervisorVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    jefesZonales?: JefeZonalVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    jefesOperacion?: JefeOperacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoCreateOrConnectWithoutTipoVehiculoInput = {
@@ -88790,6 +91405,42 @@ export namespace Prisma {
 
   export type SupervisorVehiculoCreateManyVehiculoInputEnvelope = {
     data: SupervisorVehiculoCreateManyVehiculoInput | SupervisorVehiculoCreateManyVehiculoInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type JefeZonalVehiculoCreateWithoutVehiculoInput = {
+    jefeZonal: JefeZonalCreateNestedOneWithoutVehiculosInput
+  }
+
+  export type JefeZonalVehiculoUncheckedCreateWithoutVehiculoInput = {
+    jefeZonalId: string
+  }
+
+  export type JefeZonalVehiculoCreateOrConnectWithoutVehiculoInput = {
+    where: JefeZonalVehiculoWhereUniqueInput
+    create: XOR<JefeZonalVehiculoCreateWithoutVehiculoInput, JefeZonalVehiculoUncheckedCreateWithoutVehiculoInput>
+  }
+
+  export type JefeZonalVehiculoCreateManyVehiculoInputEnvelope = {
+    data: JefeZonalVehiculoCreateManyVehiculoInput | JefeZonalVehiculoCreateManyVehiculoInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type JefeOperacionVehiculoCreateWithoutVehiculoInput = {
+    jefeOperacion: JefeOperacionCreateNestedOneWithoutVehiculosInput
+  }
+
+  export type JefeOperacionVehiculoUncheckedCreateWithoutVehiculoInput = {
+    jefeOperacionId: string
+  }
+
+  export type JefeOperacionVehiculoCreateOrConnectWithoutVehiculoInput = {
+    where: JefeOperacionVehiculoWhereUniqueInput
+    create: XOR<JefeOperacionVehiculoCreateWithoutVehiculoInput, JefeOperacionVehiculoUncheckedCreateWithoutVehiculoInput>
+  }
+
+  export type JefeOperacionVehiculoCreateManyVehiculoInputEnvelope = {
+    data: JefeOperacionVehiculoCreateManyVehiculoInput | JefeOperacionVehiculoCreateManyVehiculoInput[]
     skipDuplicates?: boolean
   }
 
@@ -88943,6 +91594,54 @@ export namespace Prisma {
     vehiculoId?: StringFilter<"SupervisorVehiculo"> | string
   }
 
+  export type JefeZonalVehiculoUpsertWithWhereUniqueWithoutVehiculoInput = {
+    where: JefeZonalVehiculoWhereUniqueInput
+    update: XOR<JefeZonalVehiculoUpdateWithoutVehiculoInput, JefeZonalVehiculoUncheckedUpdateWithoutVehiculoInput>
+    create: XOR<JefeZonalVehiculoCreateWithoutVehiculoInput, JefeZonalVehiculoUncheckedCreateWithoutVehiculoInput>
+  }
+
+  export type JefeZonalVehiculoUpdateWithWhereUniqueWithoutVehiculoInput = {
+    where: JefeZonalVehiculoWhereUniqueInput
+    data: XOR<JefeZonalVehiculoUpdateWithoutVehiculoInput, JefeZonalVehiculoUncheckedUpdateWithoutVehiculoInput>
+  }
+
+  export type JefeZonalVehiculoUpdateManyWithWhereWithoutVehiculoInput = {
+    where: JefeZonalVehiculoScalarWhereInput
+    data: XOR<JefeZonalVehiculoUpdateManyMutationInput, JefeZonalVehiculoUncheckedUpdateManyWithoutVehiculoInput>
+  }
+
+  export type JefeZonalVehiculoScalarWhereInput = {
+    AND?: JefeZonalVehiculoScalarWhereInput | JefeZonalVehiculoScalarWhereInput[]
+    OR?: JefeZonalVehiculoScalarWhereInput[]
+    NOT?: JefeZonalVehiculoScalarWhereInput | JefeZonalVehiculoScalarWhereInput[]
+    jefeZonalId?: StringFilter<"JefeZonalVehiculo"> | string
+    vehiculoId?: StringFilter<"JefeZonalVehiculo"> | string
+  }
+
+  export type JefeOperacionVehiculoUpsertWithWhereUniqueWithoutVehiculoInput = {
+    where: JefeOperacionVehiculoWhereUniqueInput
+    update: XOR<JefeOperacionVehiculoUpdateWithoutVehiculoInput, JefeOperacionVehiculoUncheckedUpdateWithoutVehiculoInput>
+    create: XOR<JefeOperacionVehiculoCreateWithoutVehiculoInput, JefeOperacionVehiculoUncheckedCreateWithoutVehiculoInput>
+  }
+
+  export type JefeOperacionVehiculoUpdateWithWhereUniqueWithoutVehiculoInput = {
+    where: JefeOperacionVehiculoWhereUniqueInput
+    data: XOR<JefeOperacionVehiculoUpdateWithoutVehiculoInput, JefeOperacionVehiculoUncheckedUpdateWithoutVehiculoInput>
+  }
+
+  export type JefeOperacionVehiculoUpdateManyWithWhereWithoutVehiculoInput = {
+    where: JefeOperacionVehiculoScalarWhereInput
+    data: XOR<JefeOperacionVehiculoUpdateManyMutationInput, JefeOperacionVehiculoUncheckedUpdateManyWithoutVehiculoInput>
+  }
+
+  export type JefeOperacionVehiculoScalarWhereInput = {
+    AND?: JefeOperacionVehiculoScalarWhereInput | JefeOperacionVehiculoScalarWhereInput[]
+    OR?: JefeOperacionVehiculoScalarWhereInput[]
+    NOT?: JefeOperacionVehiculoScalarWhereInput | JefeOperacionVehiculoScalarWhereInput[]
+    jefeOperacionId?: StringFilter<"JefeOperacionVehiculo"> | string
+    vehiculoId?: StringFilter<"JefeOperacionVehiculo"> | string
+  }
+
   export type JefeZonalLicitacionCreateWithoutJefeZonalInput = {
     licitacion: LicitacionCreateNestedOneWithoutJefesZonalesInput
   }
@@ -88979,6 +91678,24 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type JefeZonalVehiculoCreateWithoutJefeZonalInput = {
+    vehiculo: VehiculoCreateNestedOneWithoutJefesZonalesInput
+  }
+
+  export type JefeZonalVehiculoUncheckedCreateWithoutJefeZonalInput = {
+    vehiculoId: string
+  }
+
+  export type JefeZonalVehiculoCreateOrConnectWithoutJefeZonalInput = {
+    where: JefeZonalVehiculoWhereUniqueInput
+    create: XOR<JefeZonalVehiculoCreateWithoutJefeZonalInput, JefeZonalVehiculoUncheckedCreateWithoutJefeZonalInput>
+  }
+
+  export type JefeZonalVehiculoCreateManyJefeZonalInputEnvelope = {
+    data: JefeZonalVehiculoCreateManyJefeZonalInput | JefeZonalVehiculoCreateManyJefeZonalInput[]
+    skipDuplicates?: boolean
+  }
+
   export type JefeOperacionCreateWithoutJefeZonalInput = {
     id?: string
     nombre: string
@@ -88988,6 +91705,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     supervisores?: SupervisorCreateNestedManyWithoutJefeOperacionInput
+    vehiculos?: JefeOperacionVehiculoCreateNestedManyWithoutJefeOperacionInput
   }
 
   export type JefeOperacionUncheckedCreateWithoutJefeZonalInput = {
@@ -88999,6 +91717,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     supervisores?: SupervisorUncheckedCreateNestedManyWithoutJefeOperacionInput
+    vehiculos?: JefeOperacionVehiculoUncheckedCreateNestedManyWithoutJefeOperacionInput
   }
 
   export type JefeOperacionCreateOrConnectWithoutJefeZonalInput = {
@@ -89079,6 +91798,22 @@ export namespace Prisma {
     data: XOR<JefeZonalSucursalUpdateManyMutationInput, JefeZonalSucursalUncheckedUpdateManyWithoutJefeZonalInput>
   }
 
+  export type JefeZonalVehiculoUpsertWithWhereUniqueWithoutJefeZonalInput = {
+    where: JefeZonalVehiculoWhereUniqueInput
+    update: XOR<JefeZonalVehiculoUpdateWithoutJefeZonalInput, JefeZonalVehiculoUncheckedUpdateWithoutJefeZonalInput>
+    create: XOR<JefeZonalVehiculoCreateWithoutJefeZonalInput, JefeZonalVehiculoUncheckedCreateWithoutJefeZonalInput>
+  }
+
+  export type JefeZonalVehiculoUpdateWithWhereUniqueWithoutJefeZonalInput = {
+    where: JefeZonalVehiculoWhereUniqueInput
+    data: XOR<JefeZonalVehiculoUpdateWithoutJefeZonalInput, JefeZonalVehiculoUncheckedUpdateWithoutJefeZonalInput>
+  }
+
+  export type JefeZonalVehiculoUpdateManyWithWhereWithoutJefeZonalInput = {
+    where: JefeZonalVehiculoScalarWhereInput
+    data: XOR<JefeZonalVehiculoUpdateManyMutationInput, JefeZonalVehiculoUncheckedUpdateManyWithoutJefeZonalInput>
+  }
+
   export type JefeOperacionUpsertWithWhereUniqueWithoutJefeZonalInput = {
     where: JefeOperacionWhereUniqueInput
     update: XOR<JefeOperacionUpdateWithoutJefeZonalInput, JefeOperacionUncheckedUpdateWithoutJefeZonalInput>
@@ -89149,6 +91884,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     sucursales?: JefeZonalSucursalCreateNestedManyWithoutJefeZonalInput
+    vehiculos?: JefeZonalVehiculoCreateNestedManyWithoutJefeZonalInput
     jefesOperacion?: JefeOperacionCreateNestedManyWithoutJefeZonalInput
     supervisores?: SupervisorCreateNestedManyWithoutJefeZonalInput
   }
@@ -89162,6 +91898,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     sucursales?: JefeZonalSucursalUncheckedCreateNestedManyWithoutJefeZonalInput
+    vehiculos?: JefeZonalVehiculoUncheckedCreateNestedManyWithoutJefeZonalInput
     jefesOperacion?: JefeOperacionUncheckedCreateNestedManyWithoutJefeZonalInput
     supervisores?: SupervisorUncheckedCreateNestedManyWithoutJefeZonalInput
   }
@@ -89217,6 +91954,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sucursales?: JefeZonalSucursalUpdateManyWithoutJefeZonalNestedInput
+    vehiculos?: JefeZonalVehiculoUpdateManyWithoutJefeZonalNestedInput
     jefesOperacion?: JefeOperacionUpdateManyWithoutJefeZonalNestedInput
     supervisores?: SupervisorUpdateManyWithoutJefeZonalNestedInput
   }
@@ -89230,6 +91968,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sucursales?: JefeZonalSucursalUncheckedUpdateManyWithoutJefeZonalNestedInput
+    vehiculos?: JefeZonalVehiculoUncheckedUpdateManyWithoutJefeZonalNestedInput
     jefesOperacion?: JefeOperacionUncheckedUpdateManyWithoutJefeZonalNestedInput
     supervisores?: SupervisorUncheckedUpdateManyWithoutJefeZonalNestedInput
   }
@@ -89275,6 +92014,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     licitaciones?: JefeZonalLicitacionCreateNestedManyWithoutJefeZonalInput
+    vehiculos?: JefeZonalVehiculoCreateNestedManyWithoutJefeZonalInput
     jefesOperacion?: JefeOperacionCreateNestedManyWithoutJefeZonalInput
     supervisores?: SupervisorCreateNestedManyWithoutJefeZonalInput
   }
@@ -89288,6 +92028,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     licitaciones?: JefeZonalLicitacionUncheckedCreateNestedManyWithoutJefeZonalInput
+    vehiculos?: JefeZonalVehiculoUncheckedCreateNestedManyWithoutJefeZonalInput
     jefesOperacion?: JefeOperacionUncheckedCreateNestedManyWithoutJefeZonalInput
     supervisores?: SupervisorUncheckedCreateNestedManyWithoutJefeZonalInput
   }
@@ -89350,6 +92091,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     licitaciones?: JefeZonalLicitacionUpdateManyWithoutJefeZonalNestedInput
+    vehiculos?: JefeZonalVehiculoUpdateManyWithoutJefeZonalNestedInput
     jefesOperacion?: JefeOperacionUpdateManyWithoutJefeZonalNestedInput
     supervisores?: SupervisorUpdateManyWithoutJefeZonalNestedInput
   }
@@ -89363,6 +92105,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     licitaciones?: JefeZonalLicitacionUncheckedUpdateManyWithoutJefeZonalNestedInput
+    vehiculos?: JefeZonalVehiculoUncheckedUpdateManyWithoutJefeZonalNestedInput
     jefesOperacion?: JefeOperacionUncheckedUpdateManyWithoutJefeZonalNestedInput
     supervisores?: SupervisorUncheckedUpdateManyWithoutJefeZonalNestedInput
   }
@@ -89406,6 +92149,154 @@ export namespace Prisma {
     vehiculos?: VehiculoUncheckedUpdateManyWithoutSucursalNestedInput
   }
 
+  export type JefeZonalCreateWithoutVehiculosInput = {
+    id?: string
+    nombre: string
+    apellido: string
+    correo: string
+    vigente?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    licitaciones?: JefeZonalLicitacionCreateNestedManyWithoutJefeZonalInput
+    sucursales?: JefeZonalSucursalCreateNestedManyWithoutJefeZonalInput
+    jefesOperacion?: JefeOperacionCreateNestedManyWithoutJefeZonalInput
+    supervisores?: SupervisorCreateNestedManyWithoutJefeZonalInput
+  }
+
+  export type JefeZonalUncheckedCreateWithoutVehiculosInput = {
+    id?: string
+    nombre: string
+    apellido: string
+    correo: string
+    vigente?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    licitaciones?: JefeZonalLicitacionUncheckedCreateNestedManyWithoutJefeZonalInput
+    sucursales?: JefeZonalSucursalUncheckedCreateNestedManyWithoutJefeZonalInput
+    jefesOperacion?: JefeOperacionUncheckedCreateNestedManyWithoutJefeZonalInput
+    supervisores?: SupervisorUncheckedCreateNestedManyWithoutJefeZonalInput
+  }
+
+  export type JefeZonalCreateOrConnectWithoutVehiculosInput = {
+    where: JefeZonalWhereUniqueInput
+    create: XOR<JefeZonalCreateWithoutVehiculosInput, JefeZonalUncheckedCreateWithoutVehiculosInput>
+  }
+
+  export type VehiculoCreateWithoutJefesZonalesInput = {
+    id?: string
+    patente: string
+    utIds?: string | null
+    vigente?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    ut?: UTCreateNestedOneWithoutVehiculosInput
+    sucursal: SucursalCreateNestedOneWithoutVehiculosInput
+    tipoVehiculo: TipoVehiculoCreateNestedOneWithoutVehiculosInput
+    licitacion?: LicitacionCreateNestedOneWithoutVehiculosInput
+    supervisores?: SupervisorVehiculoCreateNestedManyWithoutVehiculoInput
+    jefesOperacion?: JefeOperacionVehiculoCreateNestedManyWithoutVehiculoInput
+  }
+
+  export type VehiculoUncheckedCreateWithoutJefesZonalesInput = {
+    id?: string
+    patente: string
+    utId?: number | null
+    sucursalId: string
+    tipoVehiculoId: string
+    licId?: number | null
+    utIds?: string | null
+    vigente?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    supervisores?: SupervisorVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    jefesOperacion?: JefeOperacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+  }
+
+  export type VehiculoCreateOrConnectWithoutJefesZonalesInput = {
+    where: VehiculoWhereUniqueInput
+    create: XOR<VehiculoCreateWithoutJefesZonalesInput, VehiculoUncheckedCreateWithoutJefesZonalesInput>
+  }
+
+  export type JefeZonalUpsertWithoutVehiculosInput = {
+    update: XOR<JefeZonalUpdateWithoutVehiculosInput, JefeZonalUncheckedUpdateWithoutVehiculosInput>
+    create: XOR<JefeZonalCreateWithoutVehiculosInput, JefeZonalUncheckedCreateWithoutVehiculosInput>
+    where?: JefeZonalWhereInput
+  }
+
+  export type JefeZonalUpdateToOneWithWhereWithoutVehiculosInput = {
+    where?: JefeZonalWhereInput
+    data: XOR<JefeZonalUpdateWithoutVehiculosInput, JefeZonalUncheckedUpdateWithoutVehiculosInput>
+  }
+
+  export type JefeZonalUpdateWithoutVehiculosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    apellido?: StringFieldUpdateOperationsInput | string
+    correo?: StringFieldUpdateOperationsInput | string
+    vigente?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    licitaciones?: JefeZonalLicitacionUpdateManyWithoutJefeZonalNestedInput
+    sucursales?: JefeZonalSucursalUpdateManyWithoutJefeZonalNestedInput
+    jefesOperacion?: JefeOperacionUpdateManyWithoutJefeZonalNestedInput
+    supervisores?: SupervisorUpdateManyWithoutJefeZonalNestedInput
+  }
+
+  export type JefeZonalUncheckedUpdateWithoutVehiculosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    apellido?: StringFieldUpdateOperationsInput | string
+    correo?: StringFieldUpdateOperationsInput | string
+    vigente?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    licitaciones?: JefeZonalLicitacionUncheckedUpdateManyWithoutJefeZonalNestedInput
+    sucursales?: JefeZonalSucursalUncheckedUpdateManyWithoutJefeZonalNestedInput
+    jefesOperacion?: JefeOperacionUncheckedUpdateManyWithoutJefeZonalNestedInput
+    supervisores?: SupervisorUncheckedUpdateManyWithoutJefeZonalNestedInput
+  }
+
+  export type VehiculoUpsertWithoutJefesZonalesInput = {
+    update: XOR<VehiculoUpdateWithoutJefesZonalesInput, VehiculoUncheckedUpdateWithoutJefesZonalesInput>
+    create: XOR<VehiculoCreateWithoutJefesZonalesInput, VehiculoUncheckedCreateWithoutJefesZonalesInput>
+    where?: VehiculoWhereInput
+  }
+
+  export type VehiculoUpdateToOneWithWhereWithoutJefesZonalesInput = {
+    where?: VehiculoWhereInput
+    data: XOR<VehiculoUpdateWithoutJefesZonalesInput, VehiculoUncheckedUpdateWithoutJefesZonalesInput>
+  }
+
+  export type VehiculoUpdateWithoutJefesZonalesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    patente?: StringFieldUpdateOperationsInput | string
+    utIds?: NullableStringFieldUpdateOperationsInput | string | null
+    vigente?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ut?: UTUpdateOneWithoutVehiculosNestedInput
+    sucursal?: SucursalUpdateOneRequiredWithoutVehiculosNestedInput
+    tipoVehiculo?: TipoVehiculoUpdateOneRequiredWithoutVehiculosNestedInput
+    licitacion?: LicitacionUpdateOneWithoutVehiculosNestedInput
+    supervisores?: SupervisorVehiculoUpdateManyWithoutVehiculoNestedInput
+    jefesOperacion?: JefeOperacionVehiculoUpdateManyWithoutVehiculoNestedInput
+  }
+
+  export type VehiculoUncheckedUpdateWithoutJefesZonalesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    patente?: StringFieldUpdateOperationsInput | string
+    utId?: NullableIntFieldUpdateOperationsInput | number | null
+    sucursalId?: StringFieldUpdateOperationsInput | string
+    tipoVehiculoId?: StringFieldUpdateOperationsInput | string
+    licId?: NullableIntFieldUpdateOperationsInput | number | null
+    utIds?: NullableStringFieldUpdateOperationsInput | string | null
+    vigente?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    supervisores?: SupervisorVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    jefesOperacion?: JefeOperacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+  }
+
   export type JefeZonalCreateWithoutJefesOperacionInput = {
     id?: string
     nombre: string
@@ -89416,6 +92307,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     licitaciones?: JefeZonalLicitacionCreateNestedManyWithoutJefeZonalInput
     sucursales?: JefeZonalSucursalCreateNestedManyWithoutJefeZonalInput
+    vehiculos?: JefeZonalVehiculoCreateNestedManyWithoutJefeZonalInput
     supervisores?: SupervisorCreateNestedManyWithoutJefeZonalInput
   }
 
@@ -89429,6 +92321,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     licitaciones?: JefeZonalLicitacionUncheckedCreateNestedManyWithoutJefeZonalInput
     sucursales?: JefeZonalSucursalUncheckedCreateNestedManyWithoutJefeZonalInput
+    vehiculos?: JefeZonalVehiculoUncheckedCreateNestedManyWithoutJefeZonalInput
     supervisores?: SupervisorUncheckedCreateNestedManyWithoutJefeZonalInput
   }
 
@@ -89473,6 +92366,24 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type JefeOperacionVehiculoCreateWithoutJefeOperacionInput = {
+    vehiculo: VehiculoCreateNestedOneWithoutJefesOperacionInput
+  }
+
+  export type JefeOperacionVehiculoUncheckedCreateWithoutJefeOperacionInput = {
+    vehiculoId: string
+  }
+
+  export type JefeOperacionVehiculoCreateOrConnectWithoutJefeOperacionInput = {
+    where: JefeOperacionVehiculoWhereUniqueInput
+    create: XOR<JefeOperacionVehiculoCreateWithoutJefeOperacionInput, JefeOperacionVehiculoUncheckedCreateWithoutJefeOperacionInput>
+  }
+
+  export type JefeOperacionVehiculoCreateManyJefeOperacionInputEnvelope = {
+    data: JefeOperacionVehiculoCreateManyJefeOperacionInput | JefeOperacionVehiculoCreateManyJefeOperacionInput[]
+    skipDuplicates?: boolean
+  }
+
   export type JefeZonalUpsertWithoutJefesOperacionInput = {
     update: XOR<JefeZonalUpdateWithoutJefesOperacionInput, JefeZonalUncheckedUpdateWithoutJefesOperacionInput>
     create: XOR<JefeZonalCreateWithoutJefesOperacionInput, JefeZonalUncheckedCreateWithoutJefesOperacionInput>
@@ -89494,6 +92405,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     licitaciones?: JefeZonalLicitacionUpdateManyWithoutJefeZonalNestedInput
     sucursales?: JefeZonalSucursalUpdateManyWithoutJefeZonalNestedInput
+    vehiculos?: JefeZonalVehiculoUpdateManyWithoutJefeZonalNestedInput
     supervisores?: SupervisorUpdateManyWithoutJefeZonalNestedInput
   }
 
@@ -89507,6 +92419,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     licitaciones?: JefeZonalLicitacionUncheckedUpdateManyWithoutJefeZonalNestedInput
     sucursales?: JefeZonalSucursalUncheckedUpdateManyWithoutJefeZonalNestedInput
+    vehiculos?: JefeZonalVehiculoUncheckedUpdateManyWithoutJefeZonalNestedInput
     supervisores?: SupervisorUncheckedUpdateManyWithoutJefeZonalNestedInput
   }
 
@@ -89526,6 +92439,162 @@ export namespace Prisma {
     data: XOR<SupervisorUpdateManyMutationInput, SupervisorUncheckedUpdateManyWithoutJefeOperacionInput>
   }
 
+  export type JefeOperacionVehiculoUpsertWithWhereUniqueWithoutJefeOperacionInput = {
+    where: JefeOperacionVehiculoWhereUniqueInput
+    update: XOR<JefeOperacionVehiculoUpdateWithoutJefeOperacionInput, JefeOperacionVehiculoUncheckedUpdateWithoutJefeOperacionInput>
+    create: XOR<JefeOperacionVehiculoCreateWithoutJefeOperacionInput, JefeOperacionVehiculoUncheckedCreateWithoutJefeOperacionInput>
+  }
+
+  export type JefeOperacionVehiculoUpdateWithWhereUniqueWithoutJefeOperacionInput = {
+    where: JefeOperacionVehiculoWhereUniqueInput
+    data: XOR<JefeOperacionVehiculoUpdateWithoutJefeOperacionInput, JefeOperacionVehiculoUncheckedUpdateWithoutJefeOperacionInput>
+  }
+
+  export type JefeOperacionVehiculoUpdateManyWithWhereWithoutJefeOperacionInput = {
+    where: JefeOperacionVehiculoScalarWhereInput
+    data: XOR<JefeOperacionVehiculoUpdateManyMutationInput, JefeOperacionVehiculoUncheckedUpdateManyWithoutJefeOperacionInput>
+  }
+
+  export type JefeOperacionCreateWithoutVehiculosInput = {
+    id?: string
+    nombre: string
+    apellido: string
+    correo: string
+    vigente?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    jefeZonal: JefeZonalCreateNestedOneWithoutJefesOperacionInput
+    supervisores?: SupervisorCreateNestedManyWithoutJefeOperacionInput
+  }
+
+  export type JefeOperacionUncheckedCreateWithoutVehiculosInput = {
+    id?: string
+    nombre: string
+    apellido: string
+    correo: string
+    jefeZonalId: string
+    vigente?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    supervisores?: SupervisorUncheckedCreateNestedManyWithoutJefeOperacionInput
+  }
+
+  export type JefeOperacionCreateOrConnectWithoutVehiculosInput = {
+    where: JefeOperacionWhereUniqueInput
+    create: XOR<JefeOperacionCreateWithoutVehiculosInput, JefeOperacionUncheckedCreateWithoutVehiculosInput>
+  }
+
+  export type VehiculoCreateWithoutJefesOperacionInput = {
+    id?: string
+    patente: string
+    utIds?: string | null
+    vigente?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    ut?: UTCreateNestedOneWithoutVehiculosInput
+    sucursal: SucursalCreateNestedOneWithoutVehiculosInput
+    tipoVehiculo: TipoVehiculoCreateNestedOneWithoutVehiculosInput
+    licitacion?: LicitacionCreateNestedOneWithoutVehiculosInput
+    supervisores?: SupervisorVehiculoCreateNestedManyWithoutVehiculoInput
+    jefesZonales?: JefeZonalVehiculoCreateNestedManyWithoutVehiculoInput
+  }
+
+  export type VehiculoUncheckedCreateWithoutJefesOperacionInput = {
+    id?: string
+    patente: string
+    utId?: number | null
+    sucursalId: string
+    tipoVehiculoId: string
+    licId?: number | null
+    utIds?: string | null
+    vigente?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    supervisores?: SupervisorVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    jefesZonales?: JefeZonalVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+  }
+
+  export type VehiculoCreateOrConnectWithoutJefesOperacionInput = {
+    where: VehiculoWhereUniqueInput
+    create: XOR<VehiculoCreateWithoutJefesOperacionInput, VehiculoUncheckedCreateWithoutJefesOperacionInput>
+  }
+
+  export type JefeOperacionUpsertWithoutVehiculosInput = {
+    update: XOR<JefeOperacionUpdateWithoutVehiculosInput, JefeOperacionUncheckedUpdateWithoutVehiculosInput>
+    create: XOR<JefeOperacionCreateWithoutVehiculosInput, JefeOperacionUncheckedCreateWithoutVehiculosInput>
+    where?: JefeOperacionWhereInput
+  }
+
+  export type JefeOperacionUpdateToOneWithWhereWithoutVehiculosInput = {
+    where?: JefeOperacionWhereInput
+    data: XOR<JefeOperacionUpdateWithoutVehiculosInput, JefeOperacionUncheckedUpdateWithoutVehiculosInput>
+  }
+
+  export type JefeOperacionUpdateWithoutVehiculosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    apellido?: StringFieldUpdateOperationsInput | string
+    correo?: StringFieldUpdateOperationsInput | string
+    vigente?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    jefeZonal?: JefeZonalUpdateOneRequiredWithoutJefesOperacionNestedInput
+    supervisores?: SupervisorUpdateManyWithoutJefeOperacionNestedInput
+  }
+
+  export type JefeOperacionUncheckedUpdateWithoutVehiculosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    apellido?: StringFieldUpdateOperationsInput | string
+    correo?: StringFieldUpdateOperationsInput | string
+    jefeZonalId?: StringFieldUpdateOperationsInput | string
+    vigente?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    supervisores?: SupervisorUncheckedUpdateManyWithoutJefeOperacionNestedInput
+  }
+
+  export type VehiculoUpsertWithoutJefesOperacionInput = {
+    update: XOR<VehiculoUpdateWithoutJefesOperacionInput, VehiculoUncheckedUpdateWithoutJefesOperacionInput>
+    create: XOR<VehiculoCreateWithoutJefesOperacionInput, VehiculoUncheckedCreateWithoutJefesOperacionInput>
+    where?: VehiculoWhereInput
+  }
+
+  export type VehiculoUpdateToOneWithWhereWithoutJefesOperacionInput = {
+    where?: VehiculoWhereInput
+    data: XOR<VehiculoUpdateWithoutJefesOperacionInput, VehiculoUncheckedUpdateWithoutJefesOperacionInput>
+  }
+
+  export type VehiculoUpdateWithoutJefesOperacionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    patente?: StringFieldUpdateOperationsInput | string
+    utIds?: NullableStringFieldUpdateOperationsInput | string | null
+    vigente?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ut?: UTUpdateOneWithoutVehiculosNestedInput
+    sucursal?: SucursalUpdateOneRequiredWithoutVehiculosNestedInput
+    tipoVehiculo?: TipoVehiculoUpdateOneRequiredWithoutVehiculosNestedInput
+    licitacion?: LicitacionUpdateOneWithoutVehiculosNestedInput
+    supervisores?: SupervisorVehiculoUpdateManyWithoutVehiculoNestedInput
+    jefesZonales?: JefeZonalVehiculoUpdateManyWithoutVehiculoNestedInput
+  }
+
+  export type VehiculoUncheckedUpdateWithoutJefesOperacionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    patente?: StringFieldUpdateOperationsInput | string
+    utId?: NullableIntFieldUpdateOperationsInput | number | null
+    sucursalId?: StringFieldUpdateOperationsInput | string
+    tipoVehiculoId?: StringFieldUpdateOperationsInput | string
+    licId?: NullableIntFieldUpdateOperationsInput | number | null
+    utIds?: NullableStringFieldUpdateOperationsInput | string | null
+    vigente?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    supervisores?: SupervisorVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    jefesZonales?: JefeZonalVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+  }
+
   export type JefeOperacionCreateWithoutSupervisoresInput = {
     id?: string
     nombre: string
@@ -89535,6 +92604,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     jefeZonal: JefeZonalCreateNestedOneWithoutJefesOperacionInput
+    vehiculos?: JefeOperacionVehiculoCreateNestedManyWithoutJefeOperacionInput
   }
 
   export type JefeOperacionUncheckedCreateWithoutSupervisoresInput = {
@@ -89546,6 +92616,7 @@ export namespace Prisma {
     vigente?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    vehiculos?: JefeOperacionVehiculoUncheckedCreateNestedManyWithoutJefeOperacionInput
   }
 
   export type JefeOperacionCreateOrConnectWithoutSupervisoresInput = {
@@ -89563,6 +92634,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     licitaciones?: JefeZonalLicitacionCreateNestedManyWithoutJefeZonalInput
     sucursales?: JefeZonalSucursalCreateNestedManyWithoutJefeZonalInput
+    vehiculos?: JefeZonalVehiculoCreateNestedManyWithoutJefeZonalInput
     jefesOperacion?: JefeOperacionCreateNestedManyWithoutJefeZonalInput
   }
 
@@ -89576,6 +92648,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     licitaciones?: JefeZonalLicitacionUncheckedCreateNestedManyWithoutJefeZonalInput
     sucursales?: JefeZonalSucursalUncheckedCreateNestedManyWithoutJefeZonalInput
+    vehiculos?: JefeZonalVehiculoUncheckedCreateNestedManyWithoutJefeZonalInput
     jefesOperacion?: JefeOperacionUncheckedCreateNestedManyWithoutJefeZonalInput
   }
 
@@ -89644,6 +92717,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     jefeZonal?: JefeZonalUpdateOneRequiredWithoutJefesOperacionNestedInput
+    vehiculos?: JefeOperacionVehiculoUpdateManyWithoutJefeOperacionNestedInput
   }
 
   export type JefeOperacionUncheckedUpdateWithoutSupervisoresInput = {
@@ -89655,6 +92729,7 @@ export namespace Prisma {
     vigente?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    vehiculos?: JefeOperacionVehiculoUncheckedUpdateManyWithoutJefeOperacionNestedInput
   }
 
   export type JefeZonalUpsertWithoutSupervisoresInput = {
@@ -89678,6 +92753,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     licitaciones?: JefeZonalLicitacionUpdateManyWithoutJefeZonalNestedInput
     sucursales?: JefeZonalSucursalUpdateManyWithoutJefeZonalNestedInput
+    vehiculos?: JefeZonalVehiculoUpdateManyWithoutJefeZonalNestedInput
     jefesOperacion?: JefeOperacionUpdateManyWithoutJefeZonalNestedInput
   }
 
@@ -89691,6 +92767,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     licitaciones?: JefeZonalLicitacionUncheckedUpdateManyWithoutJefeZonalNestedInput
     sucursales?: JefeZonalSucursalUncheckedUpdateManyWithoutJefeZonalNestedInput
+    vehiculos?: JefeZonalVehiculoUncheckedUpdateManyWithoutJefeZonalNestedInput
     jefesOperacion?: JefeOperacionUncheckedUpdateManyWithoutJefeZonalNestedInput
   }
 
@@ -89778,6 +92855,8 @@ export namespace Prisma {
     sucursal: SucursalCreateNestedOneWithoutVehiculosInput
     tipoVehiculo: TipoVehiculoCreateNestedOneWithoutVehiculosInput
     licitacion?: LicitacionCreateNestedOneWithoutVehiculosInput
+    jefesZonales?: JefeZonalVehiculoCreateNestedManyWithoutVehiculoInput
+    jefesOperacion?: JefeOperacionVehiculoCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoUncheckedCreateWithoutSupervisoresInput = {
@@ -89791,6 +92870,8 @@ export namespace Prisma {
     vigente?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    jefesZonales?: JefeZonalVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
+    jefesOperacion?: JefeOperacionVehiculoUncheckedCreateNestedManyWithoutVehiculoInput
   }
 
   export type VehiculoCreateOrConnectWithoutSupervisoresInput = {
@@ -89857,6 +92938,8 @@ export namespace Prisma {
     sucursal?: SucursalUpdateOneRequiredWithoutVehiculosNestedInput
     tipoVehiculo?: TipoVehiculoUpdateOneRequiredWithoutVehiculosNestedInput
     licitacion?: LicitacionUpdateOneWithoutVehiculosNestedInput
+    jefesZonales?: JefeZonalVehiculoUpdateManyWithoutVehiculoNestedInput
+    jefesOperacion?: JefeOperacionVehiculoUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateWithoutSupervisoresInput = {
@@ -89870,6 +92953,8 @@ export namespace Prisma {
     vigente?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    jefesZonales?: JefeZonalVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    jefesOperacion?: JefeOperacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
   }
 
   export type SupervisorCreateWithoutRbdsAuditarInput = {
@@ -90245,6 +93330,8 @@ export namespace Prisma {
     sucursal?: SucursalUpdateOneRequiredWithoutVehiculosNestedInput
     tipoVehiculo?: TipoVehiculoUpdateOneRequiredWithoutVehiculosNestedInput
     supervisores?: SupervisorVehiculoUpdateManyWithoutVehiculoNestedInput
+    jefesZonales?: JefeZonalVehiculoUpdateManyWithoutVehiculoNestedInput
+    jefesOperacion?: JefeOperacionVehiculoUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateWithoutLicitacionInput = {
@@ -90258,6 +93345,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     supervisores?: SupervisorVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    jefesZonales?: JefeZonalVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    jefesOperacion?: JefeOperacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateManyWithoutLicitacionInput = {
@@ -90532,6 +93621,8 @@ export namespace Prisma {
     tipoVehiculo?: TipoVehiculoUpdateOneRequiredWithoutVehiculosNestedInput
     licitacion?: LicitacionUpdateOneWithoutVehiculosNestedInput
     supervisores?: SupervisorVehiculoUpdateManyWithoutVehiculoNestedInput
+    jefesZonales?: JefeZonalVehiculoUpdateManyWithoutVehiculoNestedInput
+    jefesOperacion?: JefeOperacionVehiculoUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateWithoutSucursalInput = {
@@ -90545,6 +93636,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     supervisores?: SupervisorVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    jefesZonales?: JefeZonalVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    jefesOperacion?: JefeOperacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateManyWithoutSucursalInput = {
@@ -90646,6 +93739,8 @@ export namespace Prisma {
     tipoVehiculo?: TipoVehiculoUpdateOneRequiredWithoutVehiculosNestedInput
     licitacion?: LicitacionUpdateOneWithoutVehiculosNestedInput
     supervisores?: SupervisorVehiculoUpdateManyWithoutVehiculoNestedInput
+    jefesZonales?: JefeZonalVehiculoUpdateManyWithoutVehiculoNestedInput
+    jefesOperacion?: JefeOperacionVehiculoUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateWithoutUtInput = {
@@ -90659,6 +93754,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     supervisores?: SupervisorVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    jefesZonales?: JefeZonalVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    jefesOperacion?: JefeOperacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateManyWithoutUtInput = {
@@ -91154,6 +94251,8 @@ export namespace Prisma {
     sucursal?: SucursalUpdateOneRequiredWithoutVehiculosNestedInput
     licitacion?: LicitacionUpdateOneWithoutVehiculosNestedInput
     supervisores?: SupervisorVehiculoUpdateManyWithoutVehiculoNestedInput
+    jefesZonales?: JefeZonalVehiculoUpdateManyWithoutVehiculoNestedInput
+    jefesOperacion?: JefeOperacionVehiculoUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateWithoutTipoVehiculoInput = {
@@ -91167,6 +94266,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     supervisores?: SupervisorVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    jefesZonales?: JefeZonalVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
+    jefesOperacion?: JefeOperacionVehiculoUncheckedUpdateManyWithoutVehiculoNestedInput
   }
 
   export type VehiculoUncheckedUpdateManyWithoutTipoVehiculoInput = {
@@ -91185,6 +94286,14 @@ export namespace Prisma {
     supervisorId: string
   }
 
+  export type JefeZonalVehiculoCreateManyVehiculoInput = {
+    jefeZonalId: string
+  }
+
+  export type JefeOperacionVehiculoCreateManyVehiculoInput = {
+    jefeOperacionId: string
+  }
+
   export type SupervisorVehiculoUpdateWithoutVehiculoInput = {
     supervisor?: SupervisorUpdateOneRequiredWithoutCamionetasNestedInput
   }
@@ -91197,12 +94306,40 @@ export namespace Prisma {
     supervisorId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type JefeZonalVehiculoUpdateWithoutVehiculoInput = {
+    jefeZonal?: JefeZonalUpdateOneRequiredWithoutVehiculosNestedInput
+  }
+
+  export type JefeZonalVehiculoUncheckedUpdateWithoutVehiculoInput = {
+    jefeZonalId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type JefeZonalVehiculoUncheckedUpdateManyWithoutVehiculoInput = {
+    jefeZonalId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type JefeOperacionVehiculoUpdateWithoutVehiculoInput = {
+    jefeOperacion?: JefeOperacionUpdateOneRequiredWithoutVehiculosNestedInput
+  }
+
+  export type JefeOperacionVehiculoUncheckedUpdateWithoutVehiculoInput = {
+    jefeOperacionId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type JefeOperacionVehiculoUncheckedUpdateManyWithoutVehiculoInput = {
+    jefeOperacionId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type JefeZonalLicitacionCreateManyJefeZonalInput = {
     licitacionId: number
   }
 
   export type JefeZonalSucursalCreateManyJefeZonalInput = {
     sucursalId: string
+  }
+
+  export type JefeZonalVehiculoCreateManyJefeZonalInput = {
+    vehiculoId: string
   }
 
   export type JefeOperacionCreateManyJefeZonalInput = {
@@ -91250,6 +94387,18 @@ export namespace Prisma {
     sucursalId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type JefeZonalVehiculoUpdateWithoutJefeZonalInput = {
+    vehiculo?: VehiculoUpdateOneRequiredWithoutJefesZonalesNestedInput
+  }
+
+  export type JefeZonalVehiculoUncheckedUpdateWithoutJefeZonalInput = {
+    vehiculoId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type JefeZonalVehiculoUncheckedUpdateManyWithoutJefeZonalInput = {
+    vehiculoId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type JefeOperacionUpdateWithoutJefeZonalInput = {
     id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
@@ -91259,6 +94408,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     supervisores?: SupervisorUpdateManyWithoutJefeOperacionNestedInput
+    vehiculos?: JefeOperacionVehiculoUpdateManyWithoutJefeOperacionNestedInput
   }
 
   export type JefeOperacionUncheckedUpdateWithoutJefeZonalInput = {
@@ -91270,6 +94420,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     supervisores?: SupervisorUncheckedUpdateManyWithoutJefeOperacionNestedInput
+    vehiculos?: JefeOperacionVehiculoUncheckedUpdateManyWithoutJefeOperacionNestedInput
   }
 
   export type JefeOperacionUncheckedUpdateManyWithoutJefeZonalInput = {
@@ -91330,6 +94481,10 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type JefeOperacionVehiculoCreateManyJefeOperacionInput = {
+    vehiculoId: string
+  }
+
   export type SupervisorUpdateWithoutJefeOperacionInput = {
     id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
@@ -91365,6 +94520,18 @@ export namespace Prisma {
     vigente?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type JefeOperacionVehiculoUpdateWithoutJefeOperacionInput = {
+    vehiculo?: VehiculoUpdateOneRequiredWithoutJefesOperacionNestedInput
+  }
+
+  export type JefeOperacionVehiculoUncheckedUpdateWithoutJefeOperacionInput = {
+    vehiculoId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type JefeOperacionVehiculoUncheckedUpdateManyWithoutJefeOperacionInput = {
+    vehiculoId?: StringFieldUpdateOperationsInput | string
   }
 
   export type SupervisorVehiculoCreateManySupervisorInput = {
@@ -91713,9 +94880,17 @@ export namespace Prisma {
      */
     export type JefeZonalSucursalArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = JefeZonalSucursalDefaultArgs<ExtArgs>
     /**
+     * @deprecated Use JefeZonalVehiculoDefaultArgs instead
+     */
+    export type JefeZonalVehiculoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = JefeZonalVehiculoDefaultArgs<ExtArgs>
+    /**
      * @deprecated Use JefeOperacionDefaultArgs instead
      */
     export type JefeOperacionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = JefeOperacionDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use JefeOperacionVehiculoDefaultArgs instead
+     */
+    export type JefeOperacionVehiculoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = JefeOperacionVehiculoDefaultArgs<ExtArgs>
     /**
      * @deprecated Use SupervisorDefaultArgs instead
      */

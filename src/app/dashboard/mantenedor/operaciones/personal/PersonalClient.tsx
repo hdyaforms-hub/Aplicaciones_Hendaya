@@ -65,6 +65,8 @@ export default function PersonalClient({
     const [sucFilter, setSucFilter] = useState('')
     const [camionetaFilter, setCamionetaFilter] = useState('')
     const [rbdFilter, setRbdFilter] = useState('')
+    const [zonalVehFilter, setZonalVehFilter] = useState('')
+    const [opVehFilter, setOpVehFilter] = useState('')
 
     // Form States
     // Zonal Form
@@ -74,6 +76,7 @@ export default function PersonalClient({
         correo: '',
         licitaciones: [] as number[],
         sucursales: [] as string[],
+        vehiculoIds: [] as string[],
         vigente: true
     })
 
@@ -83,6 +86,7 @@ export default function PersonalClient({
         apellido: '',
         correo: '',
         jefeZonalId: '',
+        vehiculoIds: [] as string[],
         vigente: true
     })
 
@@ -111,6 +115,7 @@ export default function PersonalClient({
             correo: '',
             licitaciones: [],
             sucursales: [],
+            vehiculoIds: [],
             vigente: true
         })
 
@@ -119,6 +124,7 @@ export default function PersonalClient({
             apellido: '',
             correo: '',
             jefeZonalId: '',
+            vehiculoIds: [],
             vigente: true
         })
 
@@ -138,6 +144,8 @@ export default function PersonalClient({
         setSucFilter('')
         setCamionetaFilter('')
         setRbdFilter('')
+        setZonalVehFilter('')
+        setOpVehFilter('')
     }
 
     // Auto-timeout feedbacks
@@ -161,6 +169,7 @@ export default function PersonalClient({
             correo: z.correo,
             licitaciones: z.licitaciones.map((l: any) => l.licitacionId),
             sucursales: z.sucursales.map((s: any) => s.sucursalId),
+            vehiculoIds: (z.vehiculos || []).map((v: any) => v.vehiculoId),
             vigente: z.vigente
         })
         setEditingId(z.id)
@@ -174,6 +183,7 @@ export default function PersonalClient({
             apellido: o.apellido,
             correo: o.correo,
             jefeZonalId: o.jefeZonalId,
+            vehiculoIds: (o.vehiculos || []).map((v: any) => v.vehiculoId),
             vigente: o.vigente
         })
         setEditingId(o.id)
@@ -212,9 +222,9 @@ export default function PersonalClient({
         try {
             let res
             if (editingId) {
-                res = await updateJefeZonal(editingId, zonalForm)
+                res = await updateJefeZonal(editingId, { ...zonalForm })
             } else {
-                res = await createJefeZonal(zonalForm)
+                res = await createJefeZonal({ ...zonalForm })
             }
 
             if (res.success) {
@@ -241,9 +251,9 @@ export default function PersonalClient({
         try {
             let res
             if (editingId) {
-                res = await updateJefeOperacion(editingId, opForm)
+                res = await updateJefeOperacion(editingId, { ...opForm })
             } else {
-                res = await createJefeOperacion(opForm)
+                res = await createJefeOperacion({ ...opForm })
             }
 
             if (res.success) {
@@ -606,6 +616,57 @@ export default function PersonalClient({
                                 </div>
                             )}
 
+                            {/* Patentes / Vehiculos - filtered by selected sucursales */}
+                            <div className="space-y-2">
+                                <div className="flex justify-between items-center">
+                                    <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                                        <span>🚗 Patentes / Vehículos Asociados (Múltiple)</span>
+                                        {zonalForm.sucursales.length > 0 && (
+                                            <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-cyan-100 text-cyan-800 border border-cyan-200">
+                                                Filtrado por sucursales seleccionadas
+                                            </span>
+                                        )}
+                                    </label>
+                                    <span className="text-xs text-gray-400 font-medium">{zonalForm.vehiculoIds.length} seleccionadas</span>
+                                </div>
+                                <input
+                                    title="Filtrar Vehículo"
+                                    type="text" placeholder="Filtrar por patente o tipo..." value={zonalVehFilter} onChange={(e) => setZonalVehFilter(e.target.value)}
+                                    className="w-full px-3 py-1.5 rounded-lg border border-gray-200 text-xs outline-none focus:ring-1 focus:ring-cyan-500"
+                                />
+                                <div className="border border-gray-200 rounded-xl max-h-36 overflow-y-auto p-3 space-y-2 bg-gray-50/30">
+                                    {(() => {
+                                        const filteredVehs = vehiculos
+                                            .filter(v => zonalForm.sucursales.length === 0 || zonalForm.sucursales.includes(v.sucursalId))
+                                            .filter(v => v.patente.toLowerCase().includes(zonalVehFilter.toLowerCase()) || v.tipoVehiculo.nombre.toLowerCase().includes(zonalVehFilter.toLowerCase()))
+                                        return filteredVehs.length === 0 ? (
+                                            <div className="text-xs text-slate-400 italic text-center py-3">
+                                                {zonalForm.sucursales.length === 0 ? 'Selecciona sucursal(es) para filtrar vehículos.' : 'No hay vehículos disponibles para las sucursales seleccionadas.'}
+                                            </div>
+                                        ) : filteredVehs.map(v => {
+                                            const isChecked = zonalForm.vehiculoIds.includes(v.id)
+                                            return (
+                                                <label key={v.id} className="flex items-center gap-2 cursor-pointer text-sm">
+                                                    <input
+                                                        type="checkbox" checked={isChecked}
+                                                        onChange={() => {
+                                                            setZonalForm(prev => {
+                                                                const exist = prev.vehiculoIds.includes(v.id)
+                                                                const updated = exist ? prev.vehiculoIds.filter(id => id !== v.id) : [...prev.vehiculoIds, v.id]
+                                                                return { ...prev, vehiculoIds: updated }
+                                                            })
+                                                        }}
+                                                        className="w-4 h-4 rounded text-cyan-600 focus:ring-cyan-500"
+                                                    />
+                                                    <span className="font-bold text-slate-700 font-mono tracking-wider">{v.patente}</span>
+                                                    <span className="text-xs text-gray-400">({v.tipoVehiculo.nombre})</span>
+                                                </label>
+                                            )
+                                        })
+                                    })()}
+                                </div>
+                            </div>
+
                             {/* Vigente check */}
                             <div>
                                 <label className="flex items-center gap-3 cursor-pointer bg-gray-50 px-4 py-2.5 rounded-xl border border-gray-100 w-full md:w-auto">
@@ -667,7 +728,7 @@ export default function PersonalClient({
                                         title="Jefe Zonal"
                                         required
                                         value={opForm.jefeZonalId}
-                                        onChange={(e) => setOpForm({ ...opForm, jefeZonalId: e.target.value })}
+                                        onChange={(e) => setOpForm({ ...opForm, jefeZonalId: e.target.value, vehiculoIds: [] })}
                                         className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none bg-white"
                                     >
                                         <option value="">Selecciona Jefe Zonal...</option>
@@ -689,6 +750,63 @@ export default function PersonalClient({
                                         />
                                         <span className="text-sm font-medium text-gray-700">Jefe de Operación Vigente / Activo</span>
                                     </label>
+                                </div>
+                            </div>
+
+                            {/* Patentes / Vehiculos del Jefe de Operación - filtered by zonal's sucursales */}
+                            <div className="space-y-2">
+                                <div className="flex justify-between items-center">
+                                    <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                                        <span>🚗 Patentes / Vehículos Asociados (Múltiple)</span>
+                                        {opForm.jefeZonalId && (() => {
+                                            const selectedZonal = initialZonales.find(z => z.id === opForm.jefeZonalId)
+                                            const sucNames = selectedZonal?.sucursales.map((s: any) => s.sucursal.nombre).join(', ') || ''
+                                            return sucNames ? (
+                                                <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-100 text-indigo-700 border border-indigo-200">
+                                                    Filtrado por: {sucNames.toUpperCase()}
+                                                </span>
+                                            ) : null
+                                        })()}
+                                    </label>
+                                    <span className="text-xs text-gray-400 font-medium">{opForm.vehiculoIds.length} seleccionadas</span>
+                                </div>
+                                <input
+                                    title="Filtrar Vehículo"
+                                    type="text" placeholder="Filtrar por patente o tipo..." value={opVehFilter} onChange={(e) => setOpVehFilter(e.target.value)}
+                                    className="w-full px-3 py-1.5 rounded-lg border border-gray-200 text-xs outline-none focus:ring-1 focus:ring-cyan-500"
+                                />
+                                <div className="border border-gray-200 rounded-xl max-h-36 overflow-y-auto p-3 space-y-2 bg-gray-50/30">
+                                    {(() => {
+                                        const selectedZonal = initialZonales.find(z => z.id === opForm.jefeZonalId)
+                                        const zonalSucIds = selectedZonal?.sucursales.map((s: any) => s.sucursalId) || []
+                                        const filteredVehs = vehiculos
+                                            .filter(v => zonalSucIds.length === 0 || zonalSucIds.includes(v.sucursalId))
+                                            .filter(v => v.patente.toLowerCase().includes(opVehFilter.toLowerCase()) || v.tipoVehiculo.nombre.toLowerCase().includes(opVehFilter.toLowerCase()))
+                                        return filteredVehs.length === 0 ? (
+                                            <div className="text-xs text-slate-400 italic text-center py-3">
+                                                {!opForm.jefeZonalId ? 'Selecciona un Jefe Zonal para filtrar vehículos.' : 'No hay vehículos disponibles para las sucursales de este Jefe Zonal.'}
+                                            </div>
+                                        ) : filteredVehs.map(v => {
+                                            const isChecked = opForm.vehiculoIds.includes(v.id)
+                                            return (
+                                                <label key={v.id} className="flex items-center gap-2 cursor-pointer text-sm">
+                                                    <input
+                                                        type="checkbox" checked={isChecked}
+                                                        onChange={() => {
+                                                            setOpForm(prev => {
+                                                                const exist = prev.vehiculoIds.includes(v.id)
+                                                                const updated = exist ? prev.vehiculoIds.filter(id => id !== v.id) : [...prev.vehiculoIds, v.id]
+                                                                return { ...prev, vehiculoIds: updated }
+                                                            })
+                                                        }}
+                                                        className="w-4 h-4 rounded text-cyan-600 focus:ring-cyan-500"
+                                                    />
+                                                    <span className="font-bold text-slate-700 font-mono tracking-wider">{v.patente}</span>
+                                                    <span className="text-xs text-gray-400">({v.tipoVehiculo.nombre})</span>
+                                                </label>
+                                            )
+                                        })
+                                    })()}
                                 </div>
                             </div>
 
@@ -966,6 +1084,7 @@ export default function PersonalClient({
                                     <th className="px-6 py-4">Licitaciones</th>
                                     <th className="px-6 py-4">Sucursales</th>
                                     <th className="px-6 py-4">UTs Cubiertas</th>
+                                    <th className="px-6 py-4">Patentes</th>
                                     <th className="px-6 py-4 text-center">Estado</th>
                                     {userPermissions.includes('manage_zonales') && <th className="px-6 py-4 text-right">Acciones</th>}
                                 </tr>
@@ -1005,6 +1124,18 @@ export default function PersonalClient({
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     <span className="text-xs font-semibold text-slate-500">{zonalUts.length} UTs ({zonalUts.join(', ')})</span>
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    <div className="flex flex-wrap gap-1">
+                                                        {(z.vehiculos || []).map((v: any) => (
+                                                            <span key={v.vehiculoId} className="inline-flex font-mono font-bold tracking-wider px-1.5 py-0.5 rounded text-xs bg-slate-100 text-slate-800 border border-slate-200">
+                                                                {v.vehiculo.patente}
+                                                            </span>
+                                                        ))}
+                                                        {(z.vehiculos || []).length === 0 && (
+                                                            <span className="text-xs text-gray-400 italic">Ninguna</span>
+                                                        )}
+                                                    </div>
                                                 </td>
                                                 <td className="px-6 py-4 text-center">
                                                     <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold border ${z.vigente ? 'bg-green-50 text-green-700 border-green-100' : 'bg-red-50 text-red-700 border-red-100'}`}>
@@ -1051,6 +1182,7 @@ export default function PersonalClient({
                                     <th className="px-6 py-4">Correo</th>
                                     <th className="px-6 py-4">Jefe Zonal Dependiente</th>
                                     <th className="px-6 py-4">Sucursales Asociadas</th>
+                                    <th className="px-6 py-4">Patentes</th>
                                     <th className="px-6 py-4 text-center">Estado</th>
                                     {userPermissions.includes('manage_jefe_operacion') && <th className="px-6 py-4 text-right">Acciones</th>}
                                 </tr>
@@ -1073,6 +1205,18 @@ export default function PersonalClient({
                                                             {s.sucursal.nombre}
                                                         </span>
                                                     ))}
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <div className="flex flex-wrap gap-1">
+                                                    {(o.vehiculos || []).map((v: any) => (
+                                                        <span key={v.vehiculoId} className="inline-flex font-mono font-bold tracking-wider px-1.5 py-0.5 rounded text-xs bg-slate-100 text-slate-800 border border-slate-200">
+                                                            {v.vehiculo.patente}
+                                                        </span>
+                                                    ))}
+                                                    {(o.vehiculos || []).length === 0 && (
+                                                        <span className="text-xs text-gray-400 italic">Ninguna</span>
+                                                    )}
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4 text-center">

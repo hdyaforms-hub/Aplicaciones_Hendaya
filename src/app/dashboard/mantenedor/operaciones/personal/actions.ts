@@ -78,6 +78,9 @@ export async function getZonales() {
                 },
                 sucursales: {
                     include: { sucursal: true }
+                },
+                vehiculos: {
+                    include: { vehiculo: { include: { tipoVehiculo: true } } }
                 }
             },
             orderBy: { nombre: 'asc' }
@@ -94,6 +97,7 @@ export async function createJefeZonal(data: {
     correo: string
     licitaciones: number[]
     sucursales: string[]
+    vehiculoIds: string[]
     vigente: boolean
 }) {
     if (!await hasPermission('manage_zonales')) return { error: 'No tienes permisos.' }
@@ -110,6 +114,9 @@ export async function createJefeZonal(data: {
                 },
                 sucursales: {
                     create: data.sucursales.map(id => ({ sucursalId: id }))
+                },
+                vehiculos: {
+                    create: data.vehiculoIds.map(id => ({ vehiculoId: id }))
                 }
             }
         })
@@ -128,15 +135,16 @@ export async function updateJefeZonal(id: string, data: {
     correo: string
     licitaciones: number[]
     sucursales: string[]
+    vehiculoIds: string[]
     vigente: boolean
 }) {
     if (!await hasPermission('manage_zonales')) return { error: 'No tienes permisos.' }
 
     try {
-        // En una transacción o secuencial, limpiamos e insertamos
         await prisma.$transaction([
             prisma.jefeZonalLicitacion.deleteMany({ where: { jefeZonalId: id } }),
             prisma.jefeZonalSucursal.deleteMany({ where: { jefeZonalId: id } }),
+            (prisma as any).jefeZonalVehiculo.deleteMany({ where: { jefeZonalId: id } }),
             prisma.jefeZonal.update({
                 where: { id },
                 data: {
@@ -149,6 +157,9 @@ export async function updateJefeZonal(id: string, data: {
                     },
                     sucursales: {
                         create: data.sucursales.map(sucId => ({ sucursalId: sucId }))
+                    },
+                    vehiculos: {
+                        create: data.vehiculoIds.map(vId => ({ vehiculoId: vId }))
                     }
                 }
             })
@@ -177,6 +188,7 @@ export async function deleteJefeZonal(id: string) {
         await prisma.$transaction([
             prisma.jefeZonalLicitacion.deleteMany({ where: { jefeZonalId: id } }),
             prisma.jefeZonalSucursal.deleteMany({ where: { jefeZonalId: id } }),
+            (prisma as any).jefeZonalVehiculo.deleteMany({ where: { jefeZonalId: id } }),
             prisma.jefeZonal.delete({ where: { id } })
         ])
 
@@ -199,6 +211,9 @@ export async function getJefesOperacion() {
                             include: { sucursal: true }
                         }
                     }
+                },
+                vehiculos: {
+                    include: { vehiculo: { include: { tipoVehiculo: true } } }
                 }
             },
             orderBy: { nombre: 'asc' }
@@ -214,6 +229,7 @@ export async function createJefeOperacion(data: {
     apellido: string
     correo: string
     jefeZonalId: string
+    vehiculoIds: string[]
     vigente: boolean
 }) {
     if (!await hasPermission('manage_jefe_operacion')) return { error: 'No tienes permisos.' }
@@ -225,7 +241,10 @@ export async function createJefeOperacion(data: {
                 apellido: data.apellido.trim(),
                 correo: data.correo.trim().toLowerCase(),
                 jefeZonalId: data.jefeZonalId,
-                vigente: data.vigente
+                vigente: data.vigente,
+                vehiculos: {
+                    create: data.vehiculoIds.map(id => ({ vehiculoId: id }))
+                }
             }
         })
 
@@ -242,21 +261,28 @@ export async function updateJefeOperacion(id: string, data: {
     apellido: string
     correo: string
     jefeZonalId: string
+    vehiculoIds: string[]
     vigente: boolean
 }) {
     if (!await hasPermission('manage_jefe_operacion')) return { error: 'No tienes permisos.' }
 
     try {
-        await prisma.jefeOperacion.update({
-            where: { id },
-            data: {
-                nombre: data.nombre.trim(),
-                apellido: data.apellido.trim(),
-                correo: data.correo.trim().toLowerCase(),
-                jefeZonalId: data.jefeZonalId,
-                vigente: data.vigente
-            }
-        })
+        await prisma.$transaction([
+            (prisma as any).jefeOperacionVehiculo.deleteMany({ where: { jefeOperacionId: id } }),
+            prisma.jefeOperacion.update({
+                where: { id },
+                data: {
+                    nombre: data.nombre.trim(),
+                    apellido: data.apellido.trim(),
+                    correo: data.correo.trim().toLowerCase(),
+                    jefeZonalId: data.jefeZonalId,
+                    vigente: data.vigente,
+                    vehiculos: {
+                        create: data.vehiculoIds.map(vId => ({ vehiculoId: vId }))
+                    }
+                }
+            })
+        ])
 
         revalidatePath(PATH)
         return { success: true }
@@ -276,7 +302,10 @@ export async function deleteJefeOperacion(id: string) {
             return { error: 'No se puede eliminar porque tiene supervisores asociados.' }
         }
 
-        await prisma.jefeOperacion.delete({ where: { id } })
+        await prisma.$transaction([
+            (prisma as any).jefeOperacionVehiculo.deleteMany({ where: { jefeOperacionId: id } }),
+            prisma.jefeOperacion.delete({ where: { id } })
+        ])
         revalidatePath(PATH)
         return { success: true }
     } catch (e: any) {

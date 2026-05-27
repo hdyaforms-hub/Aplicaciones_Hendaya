@@ -873,6 +873,11 @@ exports.Prisma.JefeZonalSucursalScalarFieldEnum = {
   sucursalId: 'sucursalId'
 };
 
+exports.Prisma.JefeZonalVehiculoScalarFieldEnum = {
+  jefeZonalId: 'jefeZonalId',
+  vehiculoId: 'vehiculoId'
+};
+
 exports.Prisma.JefeOperacionScalarFieldEnum = {
   id: 'id',
   nombre: 'nombre',
@@ -882,6 +887,11 @@ exports.Prisma.JefeOperacionScalarFieldEnum = {
   vigente: 'vigente',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.JefeOperacionVehiculoScalarFieldEnum = {
+  jefeOperacionId: 'jefeOperacionId',
+  vehiculoId: 'vehiculoId'
 };
 
 exports.Prisma.SupervisorScalarFieldEnum = {
@@ -981,7 +991,9 @@ exports.Prisma.ModelName = {
   JefeZonal: 'JefeZonal',
   JefeZonalLicitacion: 'JefeZonalLicitacion',
   JefeZonalSucursal: 'JefeZonalSucursal',
+  JefeZonalVehiculo: 'JefeZonalVehiculo',
   JefeOperacion: 'JefeOperacion',
+  JefeOperacionVehiculo: 'JefeOperacionVehiculo',
   Supervisor: 'Supervisor',
   SupervisorVehiculo: 'SupervisorVehiculo',
   SupervisorRbd: 'SupervisorRbd'
