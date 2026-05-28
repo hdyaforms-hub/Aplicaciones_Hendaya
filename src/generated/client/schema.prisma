@@ -936,3 +936,25 @@ model SupervisorRbd {
 
   @@unique([supervisorId, rbd])
 }
+
+model DistanciaCache {
+  id          String   @id @default(uuid())
+  sucursal    String // Nombre de la sucursal de origen
+  rbd         Int // RBD del colegio de destino
+  distanciaKm Float // Distancia por carretera en kilómetros
+  duracionMin Int // Tiempo estimado de viaje en minutos
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([sucursal, rbd])
+}
+
+model ConsumoApiGoogle {
+  id        String   @id @default(uuid())
+  mes       Int // Mes calendario (1-12)
+  anio      Int // Año calendario
+  cantidad  Int      @default(0) // Peticiones realizadas en este mes/año
+  updatedAt DateTime @updatedAt
+
+  @@unique([mes, anio])
+}

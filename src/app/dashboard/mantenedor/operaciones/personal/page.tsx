@@ -9,16 +9,22 @@ import {
     getVehiculos, 
     getColegios 
 } from './actions'
+import { getDistanciasCache, getConsumoActual } from './googleMapsAction'
 import PersonalClient from './PersonalClient'
 
 export default async function PersonalPage() {
     const session = await getSession()
-    const permissions = session?.user?.role?.permissions || []
+    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
+    let permissions = session?.user?.role?.permissions || []
+    if (isAdmin && !permissions.includes('view_tablero_distancias')) {
+        permissions = [...permissions, 'view_tablero_distancias']
+    }
 
     const hasAnyPermission = 
         permissions.includes('manage_zonales') || 
         permissions.includes('manage_jefe_operacion') || 
-        permissions.includes('manage_supervisor')
+        permissions.includes('manage_supervisor') ||
+        permissions.includes('view_tablero_distancias')
 
     if (!hasAnyPermission) {
         redirect('/dashboard')
@@ -31,7 +37,9 @@ export default async function PersonalPage() {
         licitaciones,
         sucursales,
         vehiculos,
-        colegios
+        colegios,
+        distanciasCache,
+        consumoActual
     ] = await Promise.all([
         getZonales(),
         getJefesOperacion(),
@@ -39,7 +47,9 @@ export default async function PersonalPage() {
         getLicitaciones(),
         getSucursales(),
         getVehiculos(),
-        getColegios()
+        getColegios(),
+        getDistanciasCache(),
+        getConsumoActual()
     ])
 
     return (
@@ -52,6 +62,8 @@ export default async function PersonalPage() {
             vehiculos={vehiculos}
             colegios={colegios}
             userPermissions={permissions}
+            initialDistanciasCache={distanciasCache}
+            initialConsumoActual={consumoActual}
         />
     )
 }

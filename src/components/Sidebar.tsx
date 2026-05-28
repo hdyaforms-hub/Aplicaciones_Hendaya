@@ -51,14 +51,17 @@ export default function Sidebar({ user }: { user: User }) {
         setExpandedMenus(prev => ({ ...prev, [name]: !prev[name] }))
     }
 
-    const permissions = user.role.permissions
+    const isAdmin = user.role.name === 'admin' || user.role.name === 'Administrador'
+    const permissions = isAdmin && !user.role.permissions.includes('view_tablero_distancias')
+        ? [...user.role.permissions, 'view_tablero_distancias']
+        : user.role.permissions
 
     const menuItems: MenuItem[] = [
         { name: 'Inicio', href: '/dashboard', icon: '🏠', requiredPermission: null },
         {
             name: 'Tableros y Avances',
             icon: '📈',
-            requiredPermission: ['view_tablero', 'view_tablero_pan', 'view_tablero_gas', 'view_tablero_retiro', 'view_tablero_elementos', 'view_tablero_multas_ee', 'view_tablero_organigrama'],
+            requiredPermission: ['view_tablero', 'view_tablero_pan', 'view_tablero_gas', 'view_tablero_retiro', 'view_tablero_elementos', 'view_tablero_multas_ee', 'view_tablero_organigrama', 'view_tablero_distancias'],
             subItems: [
                 { name: 'Avance PMPA', href: '/dashboard/tablero', requiredPermission: 'view_tablero' },
                 { name: 'Organigrama por zonas', href: '/dashboard/tablero/organigrama', requiredPermission: 'view_tablero_organigrama' },
@@ -66,7 +69,8 @@ export default function Sidebar({ user }: { user: User }) {
                 { name: 'Solicitud de Gas', href: '/dashboard/tablero/solicitud-gas', requiredPermission: 'view_tablero_gas' },
                 { name: 'Retiro de Saldos', href: '/dashboard/tablero/retiro-saldos', requiredPermission: 'view_tablero_retiro' },
                 { name: 'Carga de Elementos Esenciales', href: '/dashboard/tablero/elementos-esenciales', requiredPermission: 'view_tablero_elementos' },
-                { name: 'Multas EE', href: '/dashboard/tablero/multas-ee', requiredPermission: 'view_tablero_multas_ee' }
+                { name: 'Multas EE', href: '/dashboard/tablero/multas-ee', requiredPermission: 'view_tablero_multas_ee' },
+                { name: 'Tablero de Kilometraje', href: '/dashboard/tablero/kilometraje', requiredPermission: 'view_tablero_distancias' }
             ]
         },
         {

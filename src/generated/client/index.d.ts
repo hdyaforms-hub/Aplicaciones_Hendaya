@@ -323,6 +323,16 @@ export type SupervisorVehiculo = $Result.DefaultSelection<Prisma.$SupervisorVehi
  * 
  */
 export type SupervisorRbd = $Result.DefaultSelection<Prisma.$SupervisorRbdPayload>
+/**
+ * Model DistanciaCache
+ * 
+ */
+export type DistanciaCache = $Result.DefaultSelection<Prisma.$DistanciaCachePayload>
+/**
+ * Model ConsumoApiGoogle
+ * 
+ */
+export type ConsumoApiGoogle = $Result.DefaultSelection<Prisma.$ConsumoApiGooglePayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -1066,6 +1076,26 @@ export class PrismaClient<
     * ```
     */
   get supervisorRbd(): Prisma.SupervisorRbdDelegate<ExtArgs>;
+
+  /**
+   * `prisma.distanciaCache`: Exposes CRUD operations for the **DistanciaCache** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DistanciaCaches
+    * const distanciaCaches = await prisma.distanciaCache.findMany()
+    * ```
+    */
+  get distanciaCache(): Prisma.DistanciaCacheDelegate<ExtArgs>;
+
+  /**
+   * `prisma.consumoApiGoogle`: Exposes CRUD operations for the **ConsumoApiGoogle** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ConsumoApiGoogles
+    * const consumoApiGoogles = await prisma.consumoApiGoogle.findMany()
+    * ```
+    */
+  get consumoApiGoogle(): Prisma.ConsumoApiGoogleDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -1568,7 +1598,9 @@ export namespace Prisma {
     JefeOperacionVehiculo: 'JefeOperacionVehiculo',
     Supervisor: 'Supervisor',
     SupervisorVehiculo: 'SupervisorVehiculo',
-    SupervisorRbd: 'SupervisorRbd'
+    SupervisorRbd: 'SupervisorRbd',
+    DistanciaCache: 'DistanciaCache',
+    ConsumoApiGoogle: 'ConsumoApiGoogle'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1584,7 +1616,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd"
+      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -5925,6 +5957,146 @@ export namespace Prisma {
           count: {
             args: Prisma.SupervisorRbdCountArgs<ExtArgs>
             result: $Utils.Optional<SupervisorRbdCountAggregateOutputType> | number
+          }
+        }
+      }
+      DistanciaCache: {
+        payload: Prisma.$DistanciaCachePayload<ExtArgs>
+        fields: Prisma.DistanciaCacheFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DistanciaCacheFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DistanciaCachePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DistanciaCacheFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DistanciaCachePayload>
+          }
+          findFirst: {
+            args: Prisma.DistanciaCacheFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DistanciaCachePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DistanciaCacheFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DistanciaCachePayload>
+          }
+          findMany: {
+            args: Prisma.DistanciaCacheFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DistanciaCachePayload>[]
+          }
+          create: {
+            args: Prisma.DistanciaCacheCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DistanciaCachePayload>
+          }
+          createMany: {
+            args: Prisma.DistanciaCacheCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DistanciaCacheCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DistanciaCachePayload>[]
+          }
+          delete: {
+            args: Prisma.DistanciaCacheDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DistanciaCachePayload>
+          }
+          update: {
+            args: Prisma.DistanciaCacheUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DistanciaCachePayload>
+          }
+          deleteMany: {
+            args: Prisma.DistanciaCacheDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DistanciaCacheUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.DistanciaCacheUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DistanciaCachePayload>
+          }
+          aggregate: {
+            args: Prisma.DistanciaCacheAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDistanciaCache>
+          }
+          groupBy: {
+            args: Prisma.DistanciaCacheGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DistanciaCacheGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DistanciaCacheCountArgs<ExtArgs>
+            result: $Utils.Optional<DistanciaCacheCountAggregateOutputType> | number
+          }
+        }
+      }
+      ConsumoApiGoogle: {
+        payload: Prisma.$ConsumoApiGooglePayload<ExtArgs>
+        fields: Prisma.ConsumoApiGoogleFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ConsumoApiGoogleFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConsumoApiGooglePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ConsumoApiGoogleFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConsumoApiGooglePayload>
+          }
+          findFirst: {
+            args: Prisma.ConsumoApiGoogleFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConsumoApiGooglePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ConsumoApiGoogleFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConsumoApiGooglePayload>
+          }
+          findMany: {
+            args: Prisma.ConsumoApiGoogleFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConsumoApiGooglePayload>[]
+          }
+          create: {
+            args: Prisma.ConsumoApiGoogleCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConsumoApiGooglePayload>
+          }
+          createMany: {
+            args: Prisma.ConsumoApiGoogleCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ConsumoApiGoogleCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConsumoApiGooglePayload>[]
+          }
+          delete: {
+            args: Prisma.ConsumoApiGoogleDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConsumoApiGooglePayload>
+          }
+          update: {
+            args: Prisma.ConsumoApiGoogleUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConsumoApiGooglePayload>
+          }
+          deleteMany: {
+            args: Prisma.ConsumoApiGoogleDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ConsumoApiGoogleUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ConsumoApiGoogleUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConsumoApiGooglePayload>
+          }
+          aggregate: {
+            args: Prisma.ConsumoApiGoogleAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateConsumoApiGoogle>
+          }
+          groupBy: {
+            args: Prisma.ConsumoApiGoogleGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ConsumoApiGoogleGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ConsumoApiGoogleCountArgs<ExtArgs>
+            result: $Utils.Optional<ConsumoApiGoogleCountAggregateOutputType> | number
           }
         }
       }
@@ -69885,6 +70057,1870 @@ export namespace Prisma {
 
 
   /**
+   * Model DistanciaCache
+   */
+
+  export type AggregateDistanciaCache = {
+    _count: DistanciaCacheCountAggregateOutputType | null
+    _avg: DistanciaCacheAvgAggregateOutputType | null
+    _sum: DistanciaCacheSumAggregateOutputType | null
+    _min: DistanciaCacheMinAggregateOutputType | null
+    _max: DistanciaCacheMaxAggregateOutputType | null
+  }
+
+  export type DistanciaCacheAvgAggregateOutputType = {
+    rbd: number | null
+    distanciaKm: number | null
+    duracionMin: number | null
+  }
+
+  export type DistanciaCacheSumAggregateOutputType = {
+    rbd: number | null
+    distanciaKm: number | null
+    duracionMin: number | null
+  }
+
+  export type DistanciaCacheMinAggregateOutputType = {
+    id: string | null
+    sucursal: string | null
+    rbd: number | null
+    distanciaKm: number | null
+    duracionMin: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type DistanciaCacheMaxAggregateOutputType = {
+    id: string | null
+    sucursal: string | null
+    rbd: number | null
+    distanciaKm: number | null
+    duracionMin: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type DistanciaCacheCountAggregateOutputType = {
+    id: number
+    sucursal: number
+    rbd: number
+    distanciaKm: number
+    duracionMin: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type DistanciaCacheAvgAggregateInputType = {
+    rbd?: true
+    distanciaKm?: true
+    duracionMin?: true
+  }
+
+  export type DistanciaCacheSumAggregateInputType = {
+    rbd?: true
+    distanciaKm?: true
+    duracionMin?: true
+  }
+
+  export type DistanciaCacheMinAggregateInputType = {
+    id?: true
+    sucursal?: true
+    rbd?: true
+    distanciaKm?: true
+    duracionMin?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type DistanciaCacheMaxAggregateInputType = {
+    id?: true
+    sucursal?: true
+    rbd?: true
+    distanciaKm?: true
+    duracionMin?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type DistanciaCacheCountAggregateInputType = {
+    id?: true
+    sucursal?: true
+    rbd?: true
+    distanciaKm?: true
+    duracionMin?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type DistanciaCacheAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DistanciaCache to aggregate.
+     */
+    where?: DistanciaCacheWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DistanciaCaches to fetch.
+     */
+    orderBy?: DistanciaCacheOrderByWithRelationInput | DistanciaCacheOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DistanciaCacheWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DistanciaCaches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DistanciaCaches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DistanciaCaches
+    **/
+    _count?: true | DistanciaCacheCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DistanciaCacheAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DistanciaCacheSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DistanciaCacheMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DistanciaCacheMaxAggregateInputType
+  }
+
+  export type GetDistanciaCacheAggregateType<T extends DistanciaCacheAggregateArgs> = {
+        [P in keyof T & keyof AggregateDistanciaCache]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDistanciaCache[P]>
+      : GetScalarType<T[P], AggregateDistanciaCache[P]>
+  }
+
+
+
+
+  export type DistanciaCacheGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DistanciaCacheWhereInput
+    orderBy?: DistanciaCacheOrderByWithAggregationInput | DistanciaCacheOrderByWithAggregationInput[]
+    by: DistanciaCacheScalarFieldEnum[] | DistanciaCacheScalarFieldEnum
+    having?: DistanciaCacheScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DistanciaCacheCountAggregateInputType | true
+    _avg?: DistanciaCacheAvgAggregateInputType
+    _sum?: DistanciaCacheSumAggregateInputType
+    _min?: DistanciaCacheMinAggregateInputType
+    _max?: DistanciaCacheMaxAggregateInputType
+  }
+
+  export type DistanciaCacheGroupByOutputType = {
+    id: string
+    sucursal: string
+    rbd: number
+    distanciaKm: number
+    duracionMin: number
+    createdAt: Date
+    updatedAt: Date
+    _count: DistanciaCacheCountAggregateOutputType | null
+    _avg: DistanciaCacheAvgAggregateOutputType | null
+    _sum: DistanciaCacheSumAggregateOutputType | null
+    _min: DistanciaCacheMinAggregateOutputType | null
+    _max: DistanciaCacheMaxAggregateOutputType | null
+  }
+
+  type GetDistanciaCacheGroupByPayload<T extends DistanciaCacheGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DistanciaCacheGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DistanciaCacheGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DistanciaCacheGroupByOutputType[P]>
+            : GetScalarType<T[P], DistanciaCacheGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DistanciaCacheSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    sucursal?: boolean
+    rbd?: boolean
+    distanciaKm?: boolean
+    duracionMin?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["distanciaCache"]>
+
+  export type DistanciaCacheSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    sucursal?: boolean
+    rbd?: boolean
+    distanciaKm?: boolean
+    duracionMin?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["distanciaCache"]>
+
+  export type DistanciaCacheSelectScalar = {
+    id?: boolean
+    sucursal?: boolean
+    rbd?: boolean
+    distanciaKm?: boolean
+    duracionMin?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type $DistanciaCachePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DistanciaCache"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      sucursal: string
+      rbd: number
+      distanciaKm: number
+      duracionMin: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["distanciaCache"]>
+    composites: {}
+  }
+
+  type DistanciaCacheGetPayload<S extends boolean | null | undefined | DistanciaCacheDefaultArgs> = $Result.GetResult<Prisma.$DistanciaCachePayload, S>
+
+  type DistanciaCacheCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<DistanciaCacheFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: DistanciaCacheCountAggregateInputType | true
+    }
+
+  export interface DistanciaCacheDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DistanciaCache'], meta: { name: 'DistanciaCache' } }
+    /**
+     * Find zero or one DistanciaCache that matches the filter.
+     * @param {DistanciaCacheFindUniqueArgs} args - Arguments to find a DistanciaCache
+     * @example
+     * // Get one DistanciaCache
+     * const distanciaCache = await prisma.distanciaCache.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DistanciaCacheFindUniqueArgs>(args: SelectSubset<T, DistanciaCacheFindUniqueArgs<ExtArgs>>): Prisma__DistanciaCacheClient<$Result.GetResult<Prisma.$DistanciaCachePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one DistanciaCache that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {DistanciaCacheFindUniqueOrThrowArgs} args - Arguments to find a DistanciaCache
+     * @example
+     * // Get one DistanciaCache
+     * const distanciaCache = await prisma.distanciaCache.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DistanciaCacheFindUniqueOrThrowArgs>(args: SelectSubset<T, DistanciaCacheFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DistanciaCacheClient<$Result.GetResult<Prisma.$DistanciaCachePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first DistanciaCache that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DistanciaCacheFindFirstArgs} args - Arguments to find a DistanciaCache
+     * @example
+     * // Get one DistanciaCache
+     * const distanciaCache = await prisma.distanciaCache.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DistanciaCacheFindFirstArgs>(args?: SelectSubset<T, DistanciaCacheFindFirstArgs<ExtArgs>>): Prisma__DistanciaCacheClient<$Result.GetResult<Prisma.$DistanciaCachePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first DistanciaCache that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DistanciaCacheFindFirstOrThrowArgs} args - Arguments to find a DistanciaCache
+     * @example
+     * // Get one DistanciaCache
+     * const distanciaCache = await prisma.distanciaCache.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DistanciaCacheFindFirstOrThrowArgs>(args?: SelectSubset<T, DistanciaCacheFindFirstOrThrowArgs<ExtArgs>>): Prisma__DistanciaCacheClient<$Result.GetResult<Prisma.$DistanciaCachePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more DistanciaCaches that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DistanciaCacheFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DistanciaCaches
+     * const distanciaCaches = await prisma.distanciaCache.findMany()
+     * 
+     * // Get first 10 DistanciaCaches
+     * const distanciaCaches = await prisma.distanciaCache.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const distanciaCacheWithIdOnly = await prisma.distanciaCache.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DistanciaCacheFindManyArgs>(args?: SelectSubset<T, DistanciaCacheFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DistanciaCachePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a DistanciaCache.
+     * @param {DistanciaCacheCreateArgs} args - Arguments to create a DistanciaCache.
+     * @example
+     * // Create one DistanciaCache
+     * const DistanciaCache = await prisma.distanciaCache.create({
+     *   data: {
+     *     // ... data to create a DistanciaCache
+     *   }
+     * })
+     * 
+     */
+    create<T extends DistanciaCacheCreateArgs>(args: SelectSubset<T, DistanciaCacheCreateArgs<ExtArgs>>): Prisma__DistanciaCacheClient<$Result.GetResult<Prisma.$DistanciaCachePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many DistanciaCaches.
+     * @param {DistanciaCacheCreateManyArgs} args - Arguments to create many DistanciaCaches.
+     * @example
+     * // Create many DistanciaCaches
+     * const distanciaCache = await prisma.distanciaCache.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DistanciaCacheCreateManyArgs>(args?: SelectSubset<T, DistanciaCacheCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DistanciaCaches and returns the data saved in the database.
+     * @param {DistanciaCacheCreateManyAndReturnArgs} args - Arguments to create many DistanciaCaches.
+     * @example
+     * // Create many DistanciaCaches
+     * const distanciaCache = await prisma.distanciaCache.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DistanciaCaches and only return the `id`
+     * const distanciaCacheWithIdOnly = await prisma.distanciaCache.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DistanciaCacheCreateManyAndReturnArgs>(args?: SelectSubset<T, DistanciaCacheCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DistanciaCachePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a DistanciaCache.
+     * @param {DistanciaCacheDeleteArgs} args - Arguments to delete one DistanciaCache.
+     * @example
+     * // Delete one DistanciaCache
+     * const DistanciaCache = await prisma.distanciaCache.delete({
+     *   where: {
+     *     // ... filter to delete one DistanciaCache
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DistanciaCacheDeleteArgs>(args: SelectSubset<T, DistanciaCacheDeleteArgs<ExtArgs>>): Prisma__DistanciaCacheClient<$Result.GetResult<Prisma.$DistanciaCachePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one DistanciaCache.
+     * @param {DistanciaCacheUpdateArgs} args - Arguments to update one DistanciaCache.
+     * @example
+     * // Update one DistanciaCache
+     * const distanciaCache = await prisma.distanciaCache.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DistanciaCacheUpdateArgs>(args: SelectSubset<T, DistanciaCacheUpdateArgs<ExtArgs>>): Prisma__DistanciaCacheClient<$Result.GetResult<Prisma.$DistanciaCachePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more DistanciaCaches.
+     * @param {DistanciaCacheDeleteManyArgs} args - Arguments to filter DistanciaCaches to delete.
+     * @example
+     * // Delete a few DistanciaCaches
+     * const { count } = await prisma.distanciaCache.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DistanciaCacheDeleteManyArgs>(args?: SelectSubset<T, DistanciaCacheDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DistanciaCaches.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DistanciaCacheUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DistanciaCaches
+     * const distanciaCache = await prisma.distanciaCache.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DistanciaCacheUpdateManyArgs>(args: SelectSubset<T, DistanciaCacheUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one DistanciaCache.
+     * @param {DistanciaCacheUpsertArgs} args - Arguments to update or create a DistanciaCache.
+     * @example
+     * // Update or create a DistanciaCache
+     * const distanciaCache = await prisma.distanciaCache.upsert({
+     *   create: {
+     *     // ... data to create a DistanciaCache
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DistanciaCache we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DistanciaCacheUpsertArgs>(args: SelectSubset<T, DistanciaCacheUpsertArgs<ExtArgs>>): Prisma__DistanciaCacheClient<$Result.GetResult<Prisma.$DistanciaCachePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of DistanciaCaches.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DistanciaCacheCountArgs} args - Arguments to filter DistanciaCaches to count.
+     * @example
+     * // Count the number of DistanciaCaches
+     * const count = await prisma.distanciaCache.count({
+     *   where: {
+     *     // ... the filter for the DistanciaCaches we want to count
+     *   }
+     * })
+    **/
+    count<T extends DistanciaCacheCountArgs>(
+      args?: Subset<T, DistanciaCacheCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DistanciaCacheCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DistanciaCache.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DistanciaCacheAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DistanciaCacheAggregateArgs>(args: Subset<T, DistanciaCacheAggregateArgs>): Prisma.PrismaPromise<GetDistanciaCacheAggregateType<T>>
+
+    /**
+     * Group by DistanciaCache.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DistanciaCacheGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DistanciaCacheGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DistanciaCacheGroupByArgs['orderBy'] }
+        : { orderBy?: DistanciaCacheGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DistanciaCacheGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDistanciaCacheGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DistanciaCache model
+   */
+  readonly fields: DistanciaCacheFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DistanciaCache.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DistanciaCacheClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DistanciaCache model
+   */ 
+  interface DistanciaCacheFieldRefs {
+    readonly id: FieldRef<"DistanciaCache", 'String'>
+    readonly sucursal: FieldRef<"DistanciaCache", 'String'>
+    readonly rbd: FieldRef<"DistanciaCache", 'Int'>
+    readonly distanciaKm: FieldRef<"DistanciaCache", 'Float'>
+    readonly duracionMin: FieldRef<"DistanciaCache", 'Int'>
+    readonly createdAt: FieldRef<"DistanciaCache", 'DateTime'>
+    readonly updatedAt: FieldRef<"DistanciaCache", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DistanciaCache findUnique
+   */
+  export type DistanciaCacheFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DistanciaCache
+     */
+    select?: DistanciaCacheSelect<ExtArgs> | null
+    /**
+     * Filter, which DistanciaCache to fetch.
+     */
+    where: DistanciaCacheWhereUniqueInput
+  }
+
+  /**
+   * DistanciaCache findUniqueOrThrow
+   */
+  export type DistanciaCacheFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DistanciaCache
+     */
+    select?: DistanciaCacheSelect<ExtArgs> | null
+    /**
+     * Filter, which DistanciaCache to fetch.
+     */
+    where: DistanciaCacheWhereUniqueInput
+  }
+
+  /**
+   * DistanciaCache findFirst
+   */
+  export type DistanciaCacheFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DistanciaCache
+     */
+    select?: DistanciaCacheSelect<ExtArgs> | null
+    /**
+     * Filter, which DistanciaCache to fetch.
+     */
+    where?: DistanciaCacheWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DistanciaCaches to fetch.
+     */
+    orderBy?: DistanciaCacheOrderByWithRelationInput | DistanciaCacheOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DistanciaCaches.
+     */
+    cursor?: DistanciaCacheWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DistanciaCaches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DistanciaCaches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DistanciaCaches.
+     */
+    distinct?: DistanciaCacheScalarFieldEnum | DistanciaCacheScalarFieldEnum[]
+  }
+
+  /**
+   * DistanciaCache findFirstOrThrow
+   */
+  export type DistanciaCacheFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DistanciaCache
+     */
+    select?: DistanciaCacheSelect<ExtArgs> | null
+    /**
+     * Filter, which DistanciaCache to fetch.
+     */
+    where?: DistanciaCacheWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DistanciaCaches to fetch.
+     */
+    orderBy?: DistanciaCacheOrderByWithRelationInput | DistanciaCacheOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DistanciaCaches.
+     */
+    cursor?: DistanciaCacheWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DistanciaCaches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DistanciaCaches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DistanciaCaches.
+     */
+    distinct?: DistanciaCacheScalarFieldEnum | DistanciaCacheScalarFieldEnum[]
+  }
+
+  /**
+   * DistanciaCache findMany
+   */
+  export type DistanciaCacheFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DistanciaCache
+     */
+    select?: DistanciaCacheSelect<ExtArgs> | null
+    /**
+     * Filter, which DistanciaCaches to fetch.
+     */
+    where?: DistanciaCacheWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DistanciaCaches to fetch.
+     */
+    orderBy?: DistanciaCacheOrderByWithRelationInput | DistanciaCacheOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DistanciaCaches.
+     */
+    cursor?: DistanciaCacheWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DistanciaCaches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DistanciaCaches.
+     */
+    skip?: number
+    distinct?: DistanciaCacheScalarFieldEnum | DistanciaCacheScalarFieldEnum[]
+  }
+
+  /**
+   * DistanciaCache create
+   */
+  export type DistanciaCacheCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DistanciaCache
+     */
+    select?: DistanciaCacheSelect<ExtArgs> | null
+    /**
+     * The data needed to create a DistanciaCache.
+     */
+    data: XOR<DistanciaCacheCreateInput, DistanciaCacheUncheckedCreateInput>
+  }
+
+  /**
+   * DistanciaCache createMany
+   */
+  export type DistanciaCacheCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DistanciaCaches.
+     */
+    data: DistanciaCacheCreateManyInput | DistanciaCacheCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DistanciaCache createManyAndReturn
+   */
+  export type DistanciaCacheCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DistanciaCache
+     */
+    select?: DistanciaCacheSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many DistanciaCaches.
+     */
+    data: DistanciaCacheCreateManyInput | DistanciaCacheCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DistanciaCache update
+   */
+  export type DistanciaCacheUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DistanciaCache
+     */
+    select?: DistanciaCacheSelect<ExtArgs> | null
+    /**
+     * The data needed to update a DistanciaCache.
+     */
+    data: XOR<DistanciaCacheUpdateInput, DistanciaCacheUncheckedUpdateInput>
+    /**
+     * Choose, which DistanciaCache to update.
+     */
+    where: DistanciaCacheWhereUniqueInput
+  }
+
+  /**
+   * DistanciaCache updateMany
+   */
+  export type DistanciaCacheUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DistanciaCaches.
+     */
+    data: XOR<DistanciaCacheUpdateManyMutationInput, DistanciaCacheUncheckedUpdateManyInput>
+    /**
+     * Filter which DistanciaCaches to update
+     */
+    where?: DistanciaCacheWhereInput
+  }
+
+  /**
+   * DistanciaCache upsert
+   */
+  export type DistanciaCacheUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DistanciaCache
+     */
+    select?: DistanciaCacheSelect<ExtArgs> | null
+    /**
+     * The filter to search for the DistanciaCache to update in case it exists.
+     */
+    where: DistanciaCacheWhereUniqueInput
+    /**
+     * In case the DistanciaCache found by the `where` argument doesn't exist, create a new DistanciaCache with this data.
+     */
+    create: XOR<DistanciaCacheCreateInput, DistanciaCacheUncheckedCreateInput>
+    /**
+     * In case the DistanciaCache was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DistanciaCacheUpdateInput, DistanciaCacheUncheckedUpdateInput>
+  }
+
+  /**
+   * DistanciaCache delete
+   */
+  export type DistanciaCacheDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DistanciaCache
+     */
+    select?: DistanciaCacheSelect<ExtArgs> | null
+    /**
+     * Filter which DistanciaCache to delete.
+     */
+    where: DistanciaCacheWhereUniqueInput
+  }
+
+  /**
+   * DistanciaCache deleteMany
+   */
+  export type DistanciaCacheDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DistanciaCaches to delete
+     */
+    where?: DistanciaCacheWhereInput
+  }
+
+  /**
+   * DistanciaCache without action
+   */
+  export type DistanciaCacheDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DistanciaCache
+     */
+    select?: DistanciaCacheSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ConsumoApiGoogle
+   */
+
+  export type AggregateConsumoApiGoogle = {
+    _count: ConsumoApiGoogleCountAggregateOutputType | null
+    _avg: ConsumoApiGoogleAvgAggregateOutputType | null
+    _sum: ConsumoApiGoogleSumAggregateOutputType | null
+    _min: ConsumoApiGoogleMinAggregateOutputType | null
+    _max: ConsumoApiGoogleMaxAggregateOutputType | null
+  }
+
+  export type ConsumoApiGoogleAvgAggregateOutputType = {
+    mes: number | null
+    anio: number | null
+    cantidad: number | null
+  }
+
+  export type ConsumoApiGoogleSumAggregateOutputType = {
+    mes: number | null
+    anio: number | null
+    cantidad: number | null
+  }
+
+  export type ConsumoApiGoogleMinAggregateOutputType = {
+    id: string | null
+    mes: number | null
+    anio: number | null
+    cantidad: number | null
+    updatedAt: Date | null
+  }
+
+  export type ConsumoApiGoogleMaxAggregateOutputType = {
+    id: string | null
+    mes: number | null
+    anio: number | null
+    cantidad: number | null
+    updatedAt: Date | null
+  }
+
+  export type ConsumoApiGoogleCountAggregateOutputType = {
+    id: number
+    mes: number
+    anio: number
+    cantidad: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ConsumoApiGoogleAvgAggregateInputType = {
+    mes?: true
+    anio?: true
+    cantidad?: true
+  }
+
+  export type ConsumoApiGoogleSumAggregateInputType = {
+    mes?: true
+    anio?: true
+    cantidad?: true
+  }
+
+  export type ConsumoApiGoogleMinAggregateInputType = {
+    id?: true
+    mes?: true
+    anio?: true
+    cantidad?: true
+    updatedAt?: true
+  }
+
+  export type ConsumoApiGoogleMaxAggregateInputType = {
+    id?: true
+    mes?: true
+    anio?: true
+    cantidad?: true
+    updatedAt?: true
+  }
+
+  export type ConsumoApiGoogleCountAggregateInputType = {
+    id?: true
+    mes?: true
+    anio?: true
+    cantidad?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ConsumoApiGoogleAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ConsumoApiGoogle to aggregate.
+     */
+    where?: ConsumoApiGoogleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ConsumoApiGoogles to fetch.
+     */
+    orderBy?: ConsumoApiGoogleOrderByWithRelationInput | ConsumoApiGoogleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ConsumoApiGoogleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ConsumoApiGoogles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ConsumoApiGoogles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ConsumoApiGoogles
+    **/
+    _count?: true | ConsumoApiGoogleCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ConsumoApiGoogleAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ConsumoApiGoogleSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ConsumoApiGoogleMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ConsumoApiGoogleMaxAggregateInputType
+  }
+
+  export type GetConsumoApiGoogleAggregateType<T extends ConsumoApiGoogleAggregateArgs> = {
+        [P in keyof T & keyof AggregateConsumoApiGoogle]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateConsumoApiGoogle[P]>
+      : GetScalarType<T[P], AggregateConsumoApiGoogle[P]>
+  }
+
+
+
+
+  export type ConsumoApiGoogleGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ConsumoApiGoogleWhereInput
+    orderBy?: ConsumoApiGoogleOrderByWithAggregationInput | ConsumoApiGoogleOrderByWithAggregationInput[]
+    by: ConsumoApiGoogleScalarFieldEnum[] | ConsumoApiGoogleScalarFieldEnum
+    having?: ConsumoApiGoogleScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ConsumoApiGoogleCountAggregateInputType | true
+    _avg?: ConsumoApiGoogleAvgAggregateInputType
+    _sum?: ConsumoApiGoogleSumAggregateInputType
+    _min?: ConsumoApiGoogleMinAggregateInputType
+    _max?: ConsumoApiGoogleMaxAggregateInputType
+  }
+
+  export type ConsumoApiGoogleGroupByOutputType = {
+    id: string
+    mes: number
+    anio: number
+    cantidad: number
+    updatedAt: Date
+    _count: ConsumoApiGoogleCountAggregateOutputType | null
+    _avg: ConsumoApiGoogleAvgAggregateOutputType | null
+    _sum: ConsumoApiGoogleSumAggregateOutputType | null
+    _min: ConsumoApiGoogleMinAggregateOutputType | null
+    _max: ConsumoApiGoogleMaxAggregateOutputType | null
+  }
+
+  type GetConsumoApiGoogleGroupByPayload<T extends ConsumoApiGoogleGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ConsumoApiGoogleGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ConsumoApiGoogleGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ConsumoApiGoogleGroupByOutputType[P]>
+            : GetScalarType<T[P], ConsumoApiGoogleGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ConsumoApiGoogleSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    mes?: boolean
+    anio?: boolean
+    cantidad?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["consumoApiGoogle"]>
+
+  export type ConsumoApiGoogleSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    mes?: boolean
+    anio?: boolean
+    cantidad?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["consumoApiGoogle"]>
+
+  export type ConsumoApiGoogleSelectScalar = {
+    id?: boolean
+    mes?: boolean
+    anio?: boolean
+    cantidad?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type $ConsumoApiGooglePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ConsumoApiGoogle"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      mes: number
+      anio: number
+      cantidad: number
+      updatedAt: Date
+    }, ExtArgs["result"]["consumoApiGoogle"]>
+    composites: {}
+  }
+
+  type ConsumoApiGoogleGetPayload<S extends boolean | null | undefined | ConsumoApiGoogleDefaultArgs> = $Result.GetResult<Prisma.$ConsumoApiGooglePayload, S>
+
+  type ConsumoApiGoogleCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ConsumoApiGoogleFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ConsumoApiGoogleCountAggregateInputType | true
+    }
+
+  export interface ConsumoApiGoogleDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ConsumoApiGoogle'], meta: { name: 'ConsumoApiGoogle' } }
+    /**
+     * Find zero or one ConsumoApiGoogle that matches the filter.
+     * @param {ConsumoApiGoogleFindUniqueArgs} args - Arguments to find a ConsumoApiGoogle
+     * @example
+     * // Get one ConsumoApiGoogle
+     * const consumoApiGoogle = await prisma.consumoApiGoogle.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ConsumoApiGoogleFindUniqueArgs>(args: SelectSubset<T, ConsumoApiGoogleFindUniqueArgs<ExtArgs>>): Prisma__ConsumoApiGoogleClient<$Result.GetResult<Prisma.$ConsumoApiGooglePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one ConsumoApiGoogle that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {ConsumoApiGoogleFindUniqueOrThrowArgs} args - Arguments to find a ConsumoApiGoogle
+     * @example
+     * // Get one ConsumoApiGoogle
+     * const consumoApiGoogle = await prisma.consumoApiGoogle.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ConsumoApiGoogleFindUniqueOrThrowArgs>(args: SelectSubset<T, ConsumoApiGoogleFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ConsumoApiGoogleClient<$Result.GetResult<Prisma.$ConsumoApiGooglePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first ConsumoApiGoogle that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConsumoApiGoogleFindFirstArgs} args - Arguments to find a ConsumoApiGoogle
+     * @example
+     * // Get one ConsumoApiGoogle
+     * const consumoApiGoogle = await prisma.consumoApiGoogle.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ConsumoApiGoogleFindFirstArgs>(args?: SelectSubset<T, ConsumoApiGoogleFindFirstArgs<ExtArgs>>): Prisma__ConsumoApiGoogleClient<$Result.GetResult<Prisma.$ConsumoApiGooglePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first ConsumoApiGoogle that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConsumoApiGoogleFindFirstOrThrowArgs} args - Arguments to find a ConsumoApiGoogle
+     * @example
+     * // Get one ConsumoApiGoogle
+     * const consumoApiGoogle = await prisma.consumoApiGoogle.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ConsumoApiGoogleFindFirstOrThrowArgs>(args?: SelectSubset<T, ConsumoApiGoogleFindFirstOrThrowArgs<ExtArgs>>): Prisma__ConsumoApiGoogleClient<$Result.GetResult<Prisma.$ConsumoApiGooglePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more ConsumoApiGoogles that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConsumoApiGoogleFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ConsumoApiGoogles
+     * const consumoApiGoogles = await prisma.consumoApiGoogle.findMany()
+     * 
+     * // Get first 10 ConsumoApiGoogles
+     * const consumoApiGoogles = await prisma.consumoApiGoogle.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const consumoApiGoogleWithIdOnly = await prisma.consumoApiGoogle.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ConsumoApiGoogleFindManyArgs>(args?: SelectSubset<T, ConsumoApiGoogleFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConsumoApiGooglePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a ConsumoApiGoogle.
+     * @param {ConsumoApiGoogleCreateArgs} args - Arguments to create a ConsumoApiGoogle.
+     * @example
+     * // Create one ConsumoApiGoogle
+     * const ConsumoApiGoogle = await prisma.consumoApiGoogle.create({
+     *   data: {
+     *     // ... data to create a ConsumoApiGoogle
+     *   }
+     * })
+     * 
+     */
+    create<T extends ConsumoApiGoogleCreateArgs>(args: SelectSubset<T, ConsumoApiGoogleCreateArgs<ExtArgs>>): Prisma__ConsumoApiGoogleClient<$Result.GetResult<Prisma.$ConsumoApiGooglePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many ConsumoApiGoogles.
+     * @param {ConsumoApiGoogleCreateManyArgs} args - Arguments to create many ConsumoApiGoogles.
+     * @example
+     * // Create many ConsumoApiGoogles
+     * const consumoApiGoogle = await prisma.consumoApiGoogle.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ConsumoApiGoogleCreateManyArgs>(args?: SelectSubset<T, ConsumoApiGoogleCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ConsumoApiGoogles and returns the data saved in the database.
+     * @param {ConsumoApiGoogleCreateManyAndReturnArgs} args - Arguments to create many ConsumoApiGoogles.
+     * @example
+     * // Create many ConsumoApiGoogles
+     * const consumoApiGoogle = await prisma.consumoApiGoogle.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ConsumoApiGoogles and only return the `id`
+     * const consumoApiGoogleWithIdOnly = await prisma.consumoApiGoogle.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ConsumoApiGoogleCreateManyAndReturnArgs>(args?: SelectSubset<T, ConsumoApiGoogleCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConsumoApiGooglePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a ConsumoApiGoogle.
+     * @param {ConsumoApiGoogleDeleteArgs} args - Arguments to delete one ConsumoApiGoogle.
+     * @example
+     * // Delete one ConsumoApiGoogle
+     * const ConsumoApiGoogle = await prisma.consumoApiGoogle.delete({
+     *   where: {
+     *     // ... filter to delete one ConsumoApiGoogle
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ConsumoApiGoogleDeleteArgs>(args: SelectSubset<T, ConsumoApiGoogleDeleteArgs<ExtArgs>>): Prisma__ConsumoApiGoogleClient<$Result.GetResult<Prisma.$ConsumoApiGooglePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one ConsumoApiGoogle.
+     * @param {ConsumoApiGoogleUpdateArgs} args - Arguments to update one ConsumoApiGoogle.
+     * @example
+     * // Update one ConsumoApiGoogle
+     * const consumoApiGoogle = await prisma.consumoApiGoogle.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ConsumoApiGoogleUpdateArgs>(args: SelectSubset<T, ConsumoApiGoogleUpdateArgs<ExtArgs>>): Prisma__ConsumoApiGoogleClient<$Result.GetResult<Prisma.$ConsumoApiGooglePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more ConsumoApiGoogles.
+     * @param {ConsumoApiGoogleDeleteManyArgs} args - Arguments to filter ConsumoApiGoogles to delete.
+     * @example
+     * // Delete a few ConsumoApiGoogles
+     * const { count } = await prisma.consumoApiGoogle.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ConsumoApiGoogleDeleteManyArgs>(args?: SelectSubset<T, ConsumoApiGoogleDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ConsumoApiGoogles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConsumoApiGoogleUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ConsumoApiGoogles
+     * const consumoApiGoogle = await prisma.consumoApiGoogle.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ConsumoApiGoogleUpdateManyArgs>(args: SelectSubset<T, ConsumoApiGoogleUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ConsumoApiGoogle.
+     * @param {ConsumoApiGoogleUpsertArgs} args - Arguments to update or create a ConsumoApiGoogle.
+     * @example
+     * // Update or create a ConsumoApiGoogle
+     * const consumoApiGoogle = await prisma.consumoApiGoogle.upsert({
+     *   create: {
+     *     // ... data to create a ConsumoApiGoogle
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ConsumoApiGoogle we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ConsumoApiGoogleUpsertArgs>(args: SelectSubset<T, ConsumoApiGoogleUpsertArgs<ExtArgs>>): Prisma__ConsumoApiGoogleClient<$Result.GetResult<Prisma.$ConsumoApiGooglePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of ConsumoApiGoogles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConsumoApiGoogleCountArgs} args - Arguments to filter ConsumoApiGoogles to count.
+     * @example
+     * // Count the number of ConsumoApiGoogles
+     * const count = await prisma.consumoApiGoogle.count({
+     *   where: {
+     *     // ... the filter for the ConsumoApiGoogles we want to count
+     *   }
+     * })
+    **/
+    count<T extends ConsumoApiGoogleCountArgs>(
+      args?: Subset<T, ConsumoApiGoogleCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ConsumoApiGoogleCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ConsumoApiGoogle.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConsumoApiGoogleAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ConsumoApiGoogleAggregateArgs>(args: Subset<T, ConsumoApiGoogleAggregateArgs>): Prisma.PrismaPromise<GetConsumoApiGoogleAggregateType<T>>
+
+    /**
+     * Group by ConsumoApiGoogle.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConsumoApiGoogleGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ConsumoApiGoogleGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ConsumoApiGoogleGroupByArgs['orderBy'] }
+        : { orderBy?: ConsumoApiGoogleGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ConsumoApiGoogleGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetConsumoApiGoogleGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ConsumoApiGoogle model
+   */
+  readonly fields: ConsumoApiGoogleFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ConsumoApiGoogle.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ConsumoApiGoogleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ConsumoApiGoogle model
+   */ 
+  interface ConsumoApiGoogleFieldRefs {
+    readonly id: FieldRef<"ConsumoApiGoogle", 'String'>
+    readonly mes: FieldRef<"ConsumoApiGoogle", 'Int'>
+    readonly anio: FieldRef<"ConsumoApiGoogle", 'Int'>
+    readonly cantidad: FieldRef<"ConsumoApiGoogle", 'Int'>
+    readonly updatedAt: FieldRef<"ConsumoApiGoogle", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ConsumoApiGoogle findUnique
+   */
+  export type ConsumoApiGoogleFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConsumoApiGoogle
+     */
+    select?: ConsumoApiGoogleSelect<ExtArgs> | null
+    /**
+     * Filter, which ConsumoApiGoogle to fetch.
+     */
+    where: ConsumoApiGoogleWhereUniqueInput
+  }
+
+  /**
+   * ConsumoApiGoogle findUniqueOrThrow
+   */
+  export type ConsumoApiGoogleFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConsumoApiGoogle
+     */
+    select?: ConsumoApiGoogleSelect<ExtArgs> | null
+    /**
+     * Filter, which ConsumoApiGoogle to fetch.
+     */
+    where: ConsumoApiGoogleWhereUniqueInput
+  }
+
+  /**
+   * ConsumoApiGoogle findFirst
+   */
+  export type ConsumoApiGoogleFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConsumoApiGoogle
+     */
+    select?: ConsumoApiGoogleSelect<ExtArgs> | null
+    /**
+     * Filter, which ConsumoApiGoogle to fetch.
+     */
+    where?: ConsumoApiGoogleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ConsumoApiGoogles to fetch.
+     */
+    orderBy?: ConsumoApiGoogleOrderByWithRelationInput | ConsumoApiGoogleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ConsumoApiGoogles.
+     */
+    cursor?: ConsumoApiGoogleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ConsumoApiGoogles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ConsumoApiGoogles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ConsumoApiGoogles.
+     */
+    distinct?: ConsumoApiGoogleScalarFieldEnum | ConsumoApiGoogleScalarFieldEnum[]
+  }
+
+  /**
+   * ConsumoApiGoogle findFirstOrThrow
+   */
+  export type ConsumoApiGoogleFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConsumoApiGoogle
+     */
+    select?: ConsumoApiGoogleSelect<ExtArgs> | null
+    /**
+     * Filter, which ConsumoApiGoogle to fetch.
+     */
+    where?: ConsumoApiGoogleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ConsumoApiGoogles to fetch.
+     */
+    orderBy?: ConsumoApiGoogleOrderByWithRelationInput | ConsumoApiGoogleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ConsumoApiGoogles.
+     */
+    cursor?: ConsumoApiGoogleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ConsumoApiGoogles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ConsumoApiGoogles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ConsumoApiGoogles.
+     */
+    distinct?: ConsumoApiGoogleScalarFieldEnum | ConsumoApiGoogleScalarFieldEnum[]
+  }
+
+  /**
+   * ConsumoApiGoogle findMany
+   */
+  export type ConsumoApiGoogleFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConsumoApiGoogle
+     */
+    select?: ConsumoApiGoogleSelect<ExtArgs> | null
+    /**
+     * Filter, which ConsumoApiGoogles to fetch.
+     */
+    where?: ConsumoApiGoogleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ConsumoApiGoogles to fetch.
+     */
+    orderBy?: ConsumoApiGoogleOrderByWithRelationInput | ConsumoApiGoogleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ConsumoApiGoogles.
+     */
+    cursor?: ConsumoApiGoogleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ConsumoApiGoogles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ConsumoApiGoogles.
+     */
+    skip?: number
+    distinct?: ConsumoApiGoogleScalarFieldEnum | ConsumoApiGoogleScalarFieldEnum[]
+  }
+
+  /**
+   * ConsumoApiGoogle create
+   */
+  export type ConsumoApiGoogleCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConsumoApiGoogle
+     */
+    select?: ConsumoApiGoogleSelect<ExtArgs> | null
+    /**
+     * The data needed to create a ConsumoApiGoogle.
+     */
+    data: XOR<ConsumoApiGoogleCreateInput, ConsumoApiGoogleUncheckedCreateInput>
+  }
+
+  /**
+   * ConsumoApiGoogle createMany
+   */
+  export type ConsumoApiGoogleCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ConsumoApiGoogles.
+     */
+    data: ConsumoApiGoogleCreateManyInput | ConsumoApiGoogleCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ConsumoApiGoogle createManyAndReturn
+   */
+  export type ConsumoApiGoogleCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConsumoApiGoogle
+     */
+    select?: ConsumoApiGoogleSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many ConsumoApiGoogles.
+     */
+    data: ConsumoApiGoogleCreateManyInput | ConsumoApiGoogleCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ConsumoApiGoogle update
+   */
+  export type ConsumoApiGoogleUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConsumoApiGoogle
+     */
+    select?: ConsumoApiGoogleSelect<ExtArgs> | null
+    /**
+     * The data needed to update a ConsumoApiGoogle.
+     */
+    data: XOR<ConsumoApiGoogleUpdateInput, ConsumoApiGoogleUncheckedUpdateInput>
+    /**
+     * Choose, which ConsumoApiGoogle to update.
+     */
+    where: ConsumoApiGoogleWhereUniqueInput
+  }
+
+  /**
+   * ConsumoApiGoogle updateMany
+   */
+  export type ConsumoApiGoogleUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ConsumoApiGoogles.
+     */
+    data: XOR<ConsumoApiGoogleUpdateManyMutationInput, ConsumoApiGoogleUncheckedUpdateManyInput>
+    /**
+     * Filter which ConsumoApiGoogles to update
+     */
+    where?: ConsumoApiGoogleWhereInput
+  }
+
+  /**
+   * ConsumoApiGoogle upsert
+   */
+  export type ConsumoApiGoogleUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConsumoApiGoogle
+     */
+    select?: ConsumoApiGoogleSelect<ExtArgs> | null
+    /**
+     * The filter to search for the ConsumoApiGoogle to update in case it exists.
+     */
+    where: ConsumoApiGoogleWhereUniqueInput
+    /**
+     * In case the ConsumoApiGoogle found by the `where` argument doesn't exist, create a new ConsumoApiGoogle with this data.
+     */
+    create: XOR<ConsumoApiGoogleCreateInput, ConsumoApiGoogleUncheckedCreateInput>
+    /**
+     * In case the ConsumoApiGoogle was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ConsumoApiGoogleUpdateInput, ConsumoApiGoogleUncheckedUpdateInput>
+  }
+
+  /**
+   * ConsumoApiGoogle delete
+   */
+  export type ConsumoApiGoogleDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConsumoApiGoogle
+     */
+    select?: ConsumoApiGoogleSelect<ExtArgs> | null
+    /**
+     * Filter which ConsumoApiGoogle to delete.
+     */
+    where: ConsumoApiGoogleWhereUniqueInput
+  }
+
+  /**
+   * ConsumoApiGoogle deleteMany
+   */
+  export type ConsumoApiGoogleDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ConsumoApiGoogles to delete
+     */
+    where?: ConsumoApiGoogleWhereInput
+  }
+
+  /**
+   * ConsumoApiGoogle without action
+   */
+  export type ConsumoApiGoogleDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConsumoApiGoogle
+     */
+    select?: ConsumoApiGoogleSelect<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -70881,6 +72917,30 @@ export namespace Prisma {
   };
 
   export type SupervisorRbdScalarFieldEnum = (typeof SupervisorRbdScalarFieldEnum)[keyof typeof SupervisorRbdScalarFieldEnum]
+
+
+  export const DistanciaCacheScalarFieldEnum: {
+    id: 'id',
+    sucursal: 'sucursal',
+    rbd: 'rbd',
+    distanciaKm: 'distanciaKm',
+    duracionMin: 'duracionMin',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type DistanciaCacheScalarFieldEnum = (typeof DistanciaCacheScalarFieldEnum)[keyof typeof DistanciaCacheScalarFieldEnum]
+
+
+  export const ConsumoApiGoogleScalarFieldEnum: {
+    id: 'id',
+    mes: 'mes',
+    anio: 'anio',
+    cantidad: 'cantidad',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ConsumoApiGoogleScalarFieldEnum = (typeof ConsumoApiGoogleScalarFieldEnum)[keyof typeof ConsumoApiGoogleScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -76079,6 +78139,126 @@ export namespace Prisma {
     supervisorId?: StringWithAggregatesFilter<"SupervisorRbd"> | string
     rbd?: IntWithAggregatesFilter<"SupervisorRbd"> | number
     createdAt?: DateTimeWithAggregatesFilter<"SupervisorRbd"> | Date | string
+  }
+
+  export type DistanciaCacheWhereInput = {
+    AND?: DistanciaCacheWhereInput | DistanciaCacheWhereInput[]
+    OR?: DistanciaCacheWhereInput[]
+    NOT?: DistanciaCacheWhereInput | DistanciaCacheWhereInput[]
+    id?: StringFilter<"DistanciaCache"> | string
+    sucursal?: StringFilter<"DistanciaCache"> | string
+    rbd?: IntFilter<"DistanciaCache"> | number
+    distanciaKm?: FloatFilter<"DistanciaCache"> | number
+    duracionMin?: IntFilter<"DistanciaCache"> | number
+    createdAt?: DateTimeFilter<"DistanciaCache"> | Date | string
+    updatedAt?: DateTimeFilter<"DistanciaCache"> | Date | string
+  }
+
+  export type DistanciaCacheOrderByWithRelationInput = {
+    id?: SortOrder
+    sucursal?: SortOrder
+    rbd?: SortOrder
+    distanciaKm?: SortOrder
+    duracionMin?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DistanciaCacheWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    sucursal_rbd?: DistanciaCacheSucursalRbdCompoundUniqueInput
+    AND?: DistanciaCacheWhereInput | DistanciaCacheWhereInput[]
+    OR?: DistanciaCacheWhereInput[]
+    NOT?: DistanciaCacheWhereInput | DistanciaCacheWhereInput[]
+    sucursal?: StringFilter<"DistanciaCache"> | string
+    rbd?: IntFilter<"DistanciaCache"> | number
+    distanciaKm?: FloatFilter<"DistanciaCache"> | number
+    duracionMin?: IntFilter<"DistanciaCache"> | number
+    createdAt?: DateTimeFilter<"DistanciaCache"> | Date | string
+    updatedAt?: DateTimeFilter<"DistanciaCache"> | Date | string
+  }, "id" | "sucursal_rbd">
+
+  export type DistanciaCacheOrderByWithAggregationInput = {
+    id?: SortOrder
+    sucursal?: SortOrder
+    rbd?: SortOrder
+    distanciaKm?: SortOrder
+    duracionMin?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: DistanciaCacheCountOrderByAggregateInput
+    _avg?: DistanciaCacheAvgOrderByAggregateInput
+    _max?: DistanciaCacheMaxOrderByAggregateInput
+    _min?: DistanciaCacheMinOrderByAggregateInput
+    _sum?: DistanciaCacheSumOrderByAggregateInput
+  }
+
+  export type DistanciaCacheScalarWhereWithAggregatesInput = {
+    AND?: DistanciaCacheScalarWhereWithAggregatesInput | DistanciaCacheScalarWhereWithAggregatesInput[]
+    OR?: DistanciaCacheScalarWhereWithAggregatesInput[]
+    NOT?: DistanciaCacheScalarWhereWithAggregatesInput | DistanciaCacheScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"DistanciaCache"> | string
+    sucursal?: StringWithAggregatesFilter<"DistanciaCache"> | string
+    rbd?: IntWithAggregatesFilter<"DistanciaCache"> | number
+    distanciaKm?: FloatWithAggregatesFilter<"DistanciaCache"> | number
+    duracionMin?: IntWithAggregatesFilter<"DistanciaCache"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"DistanciaCache"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"DistanciaCache"> | Date | string
+  }
+
+  export type ConsumoApiGoogleWhereInput = {
+    AND?: ConsumoApiGoogleWhereInput | ConsumoApiGoogleWhereInput[]
+    OR?: ConsumoApiGoogleWhereInput[]
+    NOT?: ConsumoApiGoogleWhereInput | ConsumoApiGoogleWhereInput[]
+    id?: StringFilter<"ConsumoApiGoogle"> | string
+    mes?: IntFilter<"ConsumoApiGoogle"> | number
+    anio?: IntFilter<"ConsumoApiGoogle"> | number
+    cantidad?: IntFilter<"ConsumoApiGoogle"> | number
+    updatedAt?: DateTimeFilter<"ConsumoApiGoogle"> | Date | string
+  }
+
+  export type ConsumoApiGoogleOrderByWithRelationInput = {
+    id?: SortOrder
+    mes?: SortOrder
+    anio?: SortOrder
+    cantidad?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ConsumoApiGoogleWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    mes_anio?: ConsumoApiGoogleMesAnioCompoundUniqueInput
+    AND?: ConsumoApiGoogleWhereInput | ConsumoApiGoogleWhereInput[]
+    OR?: ConsumoApiGoogleWhereInput[]
+    NOT?: ConsumoApiGoogleWhereInput | ConsumoApiGoogleWhereInput[]
+    mes?: IntFilter<"ConsumoApiGoogle"> | number
+    anio?: IntFilter<"ConsumoApiGoogle"> | number
+    cantidad?: IntFilter<"ConsumoApiGoogle"> | number
+    updatedAt?: DateTimeFilter<"ConsumoApiGoogle"> | Date | string
+  }, "id" | "mes_anio">
+
+  export type ConsumoApiGoogleOrderByWithAggregationInput = {
+    id?: SortOrder
+    mes?: SortOrder
+    anio?: SortOrder
+    cantidad?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ConsumoApiGoogleCountOrderByAggregateInput
+    _avg?: ConsumoApiGoogleAvgOrderByAggregateInput
+    _max?: ConsumoApiGoogleMaxOrderByAggregateInput
+    _min?: ConsumoApiGoogleMinOrderByAggregateInput
+    _sum?: ConsumoApiGoogleSumOrderByAggregateInput
+  }
+
+  export type ConsumoApiGoogleScalarWhereWithAggregatesInput = {
+    AND?: ConsumoApiGoogleScalarWhereWithAggregatesInput | ConsumoApiGoogleScalarWhereWithAggregatesInput[]
+    OR?: ConsumoApiGoogleScalarWhereWithAggregatesInput[]
+    NOT?: ConsumoApiGoogleScalarWhereWithAggregatesInput | ConsumoApiGoogleScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ConsumoApiGoogle"> | string
+    mes?: IntWithAggregatesFilter<"ConsumoApiGoogle"> | number
+    anio?: IntWithAggregatesFilter<"ConsumoApiGoogle"> | number
+    cantidad?: IntWithAggregatesFilter<"ConsumoApiGoogle"> | number
+    updatedAt?: DateTimeWithAggregatesFilter<"ConsumoApiGoogle"> | Date | string
   }
 
   export type RoleCreateInput = {
@@ -81805,6 +83985,132 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type DistanciaCacheCreateInput = {
+    id?: string
+    sucursal: string
+    rbd: number
+    distanciaKm: number
+    duracionMin: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DistanciaCacheUncheckedCreateInput = {
+    id?: string
+    sucursal: string
+    rbd: number
+    distanciaKm: number
+    duracionMin: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DistanciaCacheUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sucursal?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    distanciaKm?: FloatFieldUpdateOperationsInput | number
+    duracionMin?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DistanciaCacheUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sucursal?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    distanciaKm?: FloatFieldUpdateOperationsInput | number
+    duracionMin?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DistanciaCacheCreateManyInput = {
+    id?: string
+    sucursal: string
+    rbd: number
+    distanciaKm: number
+    duracionMin: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DistanciaCacheUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sucursal?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    distanciaKm?: FloatFieldUpdateOperationsInput | number
+    duracionMin?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DistanciaCacheUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sucursal?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    distanciaKm?: FloatFieldUpdateOperationsInput | number
+    duracionMin?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ConsumoApiGoogleCreateInput = {
+    id?: string
+    mes: number
+    anio: number
+    cantidad?: number
+    updatedAt?: Date | string
+  }
+
+  export type ConsumoApiGoogleUncheckedCreateInput = {
+    id?: string
+    mes: number
+    anio: number
+    cantidad?: number
+    updatedAt?: Date | string
+  }
+
+  export type ConsumoApiGoogleUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    mes?: IntFieldUpdateOperationsInput | number
+    anio?: IntFieldUpdateOperationsInput | number
+    cantidad?: IntFieldUpdateOperationsInput | number
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ConsumoApiGoogleUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    mes?: IntFieldUpdateOperationsInput | number
+    anio?: IntFieldUpdateOperationsInput | number
+    cantidad?: IntFieldUpdateOperationsInput | number
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ConsumoApiGoogleCreateManyInput = {
+    id?: string
+    mes: number
+    anio: number
+    cantidad?: number
+    updatedAt?: Date | string
+  }
+
+  export type ConsumoApiGoogleUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    mes?: IntFieldUpdateOperationsInput | number
+    anio?: IntFieldUpdateOperationsInput | number
+    cantidad?: IntFieldUpdateOperationsInput | number
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ConsumoApiGoogleUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    mes?: IntFieldUpdateOperationsInput | number
+    anio?: IntFieldUpdateOperationsInput | number
+    cantidad?: IntFieldUpdateOperationsInput | number
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -85428,6 +87734,94 @@ export namespace Prisma {
 
   export type SupervisorRbdSumOrderByAggregateInput = {
     rbd?: SortOrder
+  }
+
+  export type DistanciaCacheSucursalRbdCompoundUniqueInput = {
+    sucursal: string
+    rbd: number
+  }
+
+  export type DistanciaCacheCountOrderByAggregateInput = {
+    id?: SortOrder
+    sucursal?: SortOrder
+    rbd?: SortOrder
+    distanciaKm?: SortOrder
+    duracionMin?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DistanciaCacheAvgOrderByAggregateInput = {
+    rbd?: SortOrder
+    distanciaKm?: SortOrder
+    duracionMin?: SortOrder
+  }
+
+  export type DistanciaCacheMaxOrderByAggregateInput = {
+    id?: SortOrder
+    sucursal?: SortOrder
+    rbd?: SortOrder
+    distanciaKm?: SortOrder
+    duracionMin?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DistanciaCacheMinOrderByAggregateInput = {
+    id?: SortOrder
+    sucursal?: SortOrder
+    rbd?: SortOrder
+    distanciaKm?: SortOrder
+    duracionMin?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DistanciaCacheSumOrderByAggregateInput = {
+    rbd?: SortOrder
+    distanciaKm?: SortOrder
+    duracionMin?: SortOrder
+  }
+
+  export type ConsumoApiGoogleMesAnioCompoundUniqueInput = {
+    mes: number
+    anio: number
+  }
+
+  export type ConsumoApiGoogleCountOrderByAggregateInput = {
+    id?: SortOrder
+    mes?: SortOrder
+    anio?: SortOrder
+    cantidad?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ConsumoApiGoogleAvgOrderByAggregateInput = {
+    mes?: SortOrder
+    anio?: SortOrder
+    cantidad?: SortOrder
+  }
+
+  export type ConsumoApiGoogleMaxOrderByAggregateInput = {
+    id?: SortOrder
+    mes?: SortOrder
+    anio?: SortOrder
+    cantidad?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ConsumoApiGoogleMinOrderByAggregateInput = {
+    id?: SortOrder
+    mes?: SortOrder
+    anio?: SortOrder
+    cantidad?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ConsumoApiGoogleSumOrderByAggregateInput = {
+    mes?: SortOrder
+    anio?: SortOrder
+    cantidad?: SortOrder
   }
 
   export type UserCreateNestedManyWithoutRoleInput = {
@@ -95089,6 +97483,14 @@ export namespace Prisma {
      * @deprecated Use SupervisorRbdDefaultArgs instead
      */
     export type SupervisorRbdArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = SupervisorRbdDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use DistanciaCacheDefaultArgs instead
+     */
+    export type DistanciaCacheArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DistanciaCacheDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ConsumoApiGoogleDefaultArgs instead
+     */
+    export type ConsumoApiGoogleArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ConsumoApiGoogleDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

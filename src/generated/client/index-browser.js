@@ -921,6 +921,24 @@ exports.Prisma.SupervisorRbdScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.DistanciaCacheScalarFieldEnum = {
+  id: 'id',
+  sucursal: 'sucursal',
+  rbd: 'rbd',
+  distanciaKm: 'distanciaKm',
+  duracionMin: 'duracionMin',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ConsumoApiGoogleScalarFieldEnum = {
+  id: 'id',
+  mes: 'mes',
+  anio: 'anio',
+  cantidad: 'cantidad',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -999,7 +1017,9 @@ exports.Prisma.ModelName = {
   JefeOperacionVehiculo: 'JefeOperacionVehiculo',
   Supervisor: 'Supervisor',
   SupervisorVehiculo: 'SupervisorVehiculo',
-  SupervisorRbd: 'SupervisorRbd'
+  SupervisorRbd: 'SupervisorRbd',
+  DistanciaCache: 'DistanciaCache',
+  ConsumoApiGoogle: 'ConsumoApiGoogle'
 };
 
 /**
