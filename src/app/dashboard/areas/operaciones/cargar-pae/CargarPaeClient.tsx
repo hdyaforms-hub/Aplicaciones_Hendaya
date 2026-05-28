@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useMemo } from 'react'
-import { buscarRbdAutocomplete, obtenerPaeOnline, guardarRegistrosPae, eliminarRegistrosPae, obtenerDetalleFolio } from './actions'
+import { buscarRbdAutocomplete, obtenerPaeOnline, guardarRegistrosPae, eliminarRegistrosPae, obtenerDetalleFolio, obtenerPeriodosCargadosPae } from './actions'
 
 const nombresMeses = [
     'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
@@ -20,7 +20,8 @@ export default function CargarPaeClient() {
     // Filtros
     const [fLicitacion, setFLicitacion] = useState('')
     const [fInstitucion, setFInstitucion] = useState('')
-    const [fAno, setFAno] = useState<number | ''>('')
+    const [fAnoDesde, setFAnoDesde] = useState<number | ''>('')
+    const [fAnoHasta, setFAnoHasta] = useState<number | ''>('')
     const [fMes, setFMes] = useState<number | ''>('')
     const [fRbdText, setFRbdText] = useState('')
     const [fRbdValor, setFRbdValor] = useState<number | null>(null)
@@ -47,17 +48,27 @@ export default function CargarPaeClient() {
     const [delRbd, setDelRbd] = useState('')
     const [delFolio, setDelFolio] = useState('')
     const [deleting, setDeleting] = useState(false)
+    const [periodosCargados, setPeriodosCargados] = useState<{ano: number, mes: number}[]>([])
 
     useEffect(() => {
         cargarTabla()
+        cargarPeriodosCargados()
     }, [])
+
+    const cargarPeriodosCargados = async () => {
+        const res = await obtenerPeriodosCargadosPae()
+        if (res.success && res.data) {
+            setPeriodosCargados(res.data)
+        }
+    }
 
     const cargarTabla = async () => {
         setLoading(true)
         const res = await obtenerPaeOnline({
             licitacion: fLicitacion || undefined,
             institucion: fInstitucion || undefined,
-            ano: fAno === '' ? undefined : Number(fAno),
+            anoDesde: fAnoDesde === '' ? undefined : Number(fAnoDesde),
+            anoHasta: fAnoHasta === '' ? undefined : Number(fAnoHasta),
             mes: fMes === '' ? undefined : Number(fMes),
             rbd: fRbdValor || undefined
         })
@@ -141,6 +152,7 @@ export default function CargarPaeClient() {
         if (res.success) {
             setSuccessMsg(`Carga exitosa. ${res.insertados} registros nuevos. ${res.actualizados} registros actualizados.`)
             cargarTabla() // Recargar la tabla
+            cargarPeriodosCargados() // Refrescar calendario
         } else {
             setError(res.error || 'Error al guardar en base de datos')
         }
@@ -170,6 +182,7 @@ export default function CargarPaeClient() {
             setSuccessMsg(`Eliminación exitosa. Se eliminaron ${res.count} registros.`);
             setShowDeleteModal(false);
             cargarTabla(); // Actualizar la vista
+            cargarPeriodosCargados();
             // Resetear inputs de eliminación
             setDelRbd('');
             setDelFolio('');
@@ -299,10 +312,28 @@ export default function CargarPaeClient() {
             {error && <div className="p-4 bg-red-50 text-red-700 font-bold rounded-xl border border-red-100 animate-in fade-in">{error}</div>}
             {successMsg && <div className="p-4 bg-emerald-50 text-emerald-700 font-bold rounded-xl border border-emerald-100 animate-in fade-in">{successMsg}</div>}
 
+            {/* Calendario Informativo de Meses Cargados */}
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <h3 className="text-sm font-bold text-gray-800 uppercase tracking-wider mb-4 flex items-center gap-2">
+                    <span>📅</span> Periodos Cargados
+                </h3>
+                {periodosCargados.length === 0 ? (
+                    <p className="text-sm text-gray-500 italic">Aún no se ha cargado información para ningún periodo.</p>
+                ) : (
+                    <div className="flex flex-wrap gap-2">
+                        {periodosCargados.map(p => (
+                            <div key={`${p.ano}-${p.mes}`} className="px-3 py-1.5 bg-indigo-50 border border-indigo-100 text-indigo-700 rounded-lg text-xs font-bold shadow-sm flex items-center gap-1 hover:bg-indigo-100 transition-colors">
+                                <span>🗓️</span> {nombresMeses[p.mes - 1]} {p.ano}
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
+
             {/* Filtros de Búsqueda */}
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-4">
                 <h3 className="text-sm font-bold text-gray-800 uppercase tracking-wider mb-2">Filtros de Búsqueda</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
                     <div>
                         <label className="block text-xs font-bold text-gray-500 mb-1">Institución</label>
                         <select value={fInstitucion} onChange={e => setFInstitucion(e.target.value)} className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500">
@@ -312,8 +343,12 @@ export default function CargarPaeClient() {
                         </select>
                     </div>
                     <div>
-                        <label className="block text-xs font-bold text-gray-500 mb-1">Año</label>
-                        <input type="number" value={fAno} onChange={e => setFAno(e.target.value ? Number(e.target.value) : '')} className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500" placeholder="Ej: 2026" />
+                        <label className="block text-xs font-bold text-gray-500 mb-1">Año Desde</label>
+                        <input type="number" value={fAnoDesde} onChange={e => setFAnoDesde(e.target.value ? Number(e.target.value) : '')} className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500" placeholder="Ej: 2025" />
+                    </div>
+                    <div>
+                        <label className="block text-xs font-bold text-gray-500 mb-1">Año Hasta</label>
+                        <input type="number" value={fAnoHasta} onChange={e => setFAnoHasta(e.target.value ? Number(e.target.value) : '')} className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500" placeholder="Ej: 2026" />
                     </div>
                     <div>
                         <label className="block text-xs font-bold text-gray-500 mb-1">Mes</label>

@@ -956,6 +956,37 @@ model ConsumoApiGoogle {
   cantidad  Int      @default(0) // Peticiones realizadas en este mes/año
   updatedAt DateTime @updatedAt
 
-  @@unique([mes, anio])
+  @@unique([mes, anio], name: "mes_anio")
 }
 
+model Cab_LeePdfEstandarPae {
+  id                            String   @id @default(uuid())
+  NombreArchivoPdf              String
+  Licitacion                    Int?
+  Folio                         String   @unique
+  Res_Sanitaria_N               String?
+  Nombre_Num_establecimiento    String?
+  RBD                           Int?
+  Region                        String?
+  Comuna                        String?
+  Fecha_Supervision             DateTime?
+  Porcentaje_cumplimiento_final Float?
+  Observaciones                 String?  @db.Text
+  createdAt                     DateTime @default(now())
+  updatedAt                     DateTime @updatedAt
+
+  detalles Det_LeePdfEstandarPae[]
+}
+
+model Det_LeePdfEstandarPae {
+  id                       String   @id @default(uuid())
+  cabeceraId               String
+  Infraestructura          String?  @db.Text
+  Calificacion             String?
+  Descripcion              String?  @db.Text
+  Comprometiendo_Inocuidad String?
+  Tipo_NC                  String?
+  Otros_Comentarios        String?  @db.Text
+
+  cabecera Cab_LeePdfEstandarPae @relation(fields: [cabeceraId], references: [id], onDelete: Cascade)
+}

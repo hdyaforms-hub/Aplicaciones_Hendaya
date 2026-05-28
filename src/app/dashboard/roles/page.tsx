@@ -48,6 +48,7 @@ export default async function RolesPage() {
         { id: 'view_calidad', name: 'Menú Calidad', description: 'Acceso al menú de Calidad en el Sidebar.', category: 'ÁREAS -> CALIDAD' },
         { id: 'view_retorno_productos', name: 'Retirada de productos', description: 'Acceso al dashboard de Retirada de productos.', category: 'ÁREAS -> CALIDAD' },
         { id: 'manage_retorno_productos', name: 'Crear Alerta de Calidad', description: 'Permite crear nuevas alertas de retirada de productos.', category: 'ÁREAS -> CALIDAD' },
+        { id: 'view_calidad_subir_actas_estandar_pae', name: 'Subir Actas Estándar PAE', description: 'Acceso a la carga masiva y gestión de actas PDF del Estándar PAE.', category: 'ÁREAS -> CALIDAD' },
 
         { id: 'view_multas_areas', name: 'Menú Multas', description: 'Acceso al menú de Multas en Áreas.', category: 'ÁREAS -> MULTAS' },
         { id: 'manage_calculos_ee', name: 'Cálculos de Elementos Esenciales', description: 'Permite calcular multas en base a elementos esenciales no conformes.', category: 'ÁREAS -> MULTAS' },

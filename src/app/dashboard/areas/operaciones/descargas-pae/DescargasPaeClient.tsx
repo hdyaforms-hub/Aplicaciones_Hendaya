@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { getRbdsPorInstitucion } from './actions'
-import JSZip from 'jszip'
 
 interface UrlItem {
     ano: number;
@@ -23,12 +22,15 @@ export default function DescargasPaeClient() {
     
     const [loading, setLoading] = useState(false)
     const [downloading, setDownloading] = useState(false)
+    const [jobId, setJobId] = useState<string | null>(null)
+    const [progress, setProgress] = useState<{ total: number, processed: number }>({ total: 0, processed: 0 })
     const [currentIndex, setCurrentIndex] = useState<number>(-1)
     const [currentSchoolName, setCurrentSchoolName] = useState<string>('')
     const [items, setItems] = useState<UrlItem[]>([])
     const [seleccionados, setSeleccionados] = useState<Set<number>>(new Set())
     const [error, setError] = useState<string | null>(null)
     const [successMessage, setSuccessMessage] = useState<string | null>(null)
+    const [searchQuery, setSearchQuery] = useState<string>('')
 
     const bookmarkRef = useRef<HTMLAnchorElement>(null);
     const masterCheckboxRef = useRef<HTMLInputElement>(null);
@@ -169,115 +171,82 @@ export default function DescargasPaeClient() {
 
         setDownloading(true);
         setError(null);
-        setSuccessMessage(null);
-
-        const zip = new JSZip();
-        let successCount = 0;
-        let processedCount = 0;
-
-        for (let i = 0; i < items.length; i++) {
-            if (!seleccionados.has(items[i].rbd)) {
-                continue;
-            }
-
-            setCurrentIndex(processedCount);
-            setCurrentSchoolName(items[i].nombre);
-
-            // Actualizar estado del elemento a 'Descargando'
-            setItems(prev => {
-                const copy = [...prev];
-                copy[i].status = 'Descargando';
-                return copy;
-            });
-
-            try {
-                const response = await fetch('/api/areas/operaciones/descargas-pae/download-single', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        urlGenerada: items[i].urlGenerada,
-                        paeCookie,
-                        ano: items[i].ano,
-                        mes: items[i].mes,
-                        institucion: items[i].institucion,
-                        rbd: items[i].rbd,
-                        nombre: items[i].nombre
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error(`Fallo status ${response.status}`);
-                }
-
-                const arrayBuffer = await response.arrayBuffer();
-                
-                // Formatear nombre de archivo limpio dentro del ZIP
-                const cleanName = items[i].nombre
-                    .replace(/[^a-zA-Z0-9\s]/g, '')
-                    .replace(/\s+/g, '_')
-                    .slice(0, 50);
-                const filename = `${items[i].rbd}_${cleanName}.pdf`;
-
-                // Añadir al ZIP
-                zip.file(filename, arrayBuffer);
-                successCount++;
-
-                // Actualizar estado del elemento a 'Descargado'
-                setItems(prev => {
-                    const copy = [...prev];
-                    copy[i].status = 'Descargado';
-                    return copy;
-                });
-
-            } catch (err) {
-                console.error(`Error descargando ${items[i].rbd}:`, err);
-                // Marcar como Fallo en la tabla para que el usuario sepa cuál falló, pero continuar con los demás
-                setItems(prev => {
-                    const copy = [...prev];
-                    copy[i].status = 'Fallo';
-                    return copy;
-                });
-            }
-
-            processedCount++;
-            // Un pequeño delay de 100ms para suavizar el renderizado visual
-            await new Promise(resolve => setTimeout(resolve, 100));
-        }
-
-        if (successCount === 0) {
-            setError("No se pudo descargar ningún PDF. Por favor, asegúrate de tener una sesión activa de Junaeb.");
-            setDownloading(false);
-            setCurrentIndex(-1);
-            setCurrentSchoolName('');
-            return;
-        }
+        setSuccessMessage("Iniciando tarea en segundo plano...");
+        setProgress({ total: selectedItems.length, processed: 0 });
 
         try {
-            // Generar el archivo ZIP final
-            const content = await zip.generateAsync({ type: 'blob' });
-            
-            // Descargar el archivo binario ZIP
-            const url = window.URL.createObjectURL(content);
-            const a = document.createElement('a');
-            a.href = url;
-            const cleanDate = new Date().toISOString().slice(0, 10);
-            a.download = `informes_pae_${institucion.toLowerCase()}_${mes}_${ano}_creado_${cleanDate}.zip`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
+            const res = await fetch('/api/areas/operaciones/descargas-pae/download-zip', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'start',
+                    payload: {
+                        paeCookie,
+                        items: selectedItems,
+                        institucion,
+                        mes,
+                        ano
+                    }
+                })
+            });
 
-            setSuccessMessage(`¡Éxito! Se han descargado y empaquetado correctamente ${successCount} de ${selectedItems.length} informes en tu archivo ZIP.`);
-        } catch (zipErr) {
-            setError("Ocurrió un error al compilar el archivo ZIP comprimido.");
-        } finally {
+            const data = await res.json();
+            if (!res.ok || !data.success) {
+                throw new Error(data.error || 'Error al iniciar la descarga');
+            }
+
+            setJobId(data.jobId);
+            setSuccessMessage("Tarea en segundo plano iniciada con éxito. Por favor espera mientras se procesa...");
+        } catch (err: any) {
+            setError(err.message);
+            setSuccessMessage(null);
             setDownloading(false);
-            setCurrentIndex(-1);
-            setCurrentSchoolName('');
         }
     };
+
+    const handleCancelarZIP = async () => {
+        if (!jobId) return;
+        try {
+            await fetch('/api/areas/operaciones/descargas-pae/download-zip', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'cancel', jobId })
+            });
+            // El polling recogerá el estado "cancelled"
+        } catch (err: any) {
+            console.error('Error cancelando:', err);
+        }
+    };
+
+    // Polling effect
+    useEffect(() => {
+        if (!jobId) return;
+
+        const interval = setInterval(async () => {
+            try {
+                const res = await fetch(`/api/areas/operaciones/descargas-pae/download-zip?action=status&jobId=${jobId}`);
+                const data = await res.json();
+
+                if (res.ok) {
+                    setProgress({ total: data.total, processed: data.processed });
+
+                    if (data.status === 'completed' || data.status === 'cancelled') {
+                        clearInterval(interval);
+                        setDownloading(false);
+                        setJobId(null);
+                        setSuccessMessage(data.status === 'completed' ? '¡Descarga completada! El archivo final está guardándose.' : 'Descarga cancelada. Generando archivo con el progreso parcial...');
+                        
+                        // Iniciar la descarga del archivo estático
+                        window.location.href = `/api/areas/operaciones/descargas-pae/download-zip?action=download&jobId=${jobId}`;
+                    }
+                }
+            } catch (err) {
+                console.error("Error consultando estado", err);
+            }
+        }, 2000);
+
+        return () => clearInterval(interval);
+    }, [jobId]);
 
     const handleDesvincular = () => {
         localStorage.removeItem('pae_session_cookie');
@@ -286,8 +255,9 @@ export default function DescargasPaeClient() {
         setIsLinked(false);
     };
 
-    const allSelected = items.length > 0 && seleccionados.size === items.length;
-    const someSelected = items.length > 0 && seleccionados.size > 0 && seleccionados.size < items.length;
+    const filteredItems = items.filter(item => item.rbd.toString().includes(searchQuery) || item.nombre.toLowerCase().includes(searchQuery.toLowerCase()))
+    const allSelected = filteredItems.length > 0 && seleccionados.size === filteredItems.length;
+    const someSelected = filteredItems.length > 0 && seleccionados.size > 0 && seleccionados.size < filteredItems.length;
 
     useEffect(() => {
         if (masterCheckboxRef.current) {
@@ -299,7 +269,7 @@ export default function DescargasPaeClient() {
         if (allSelected) {
             setSeleccionados(new Set());
         } else {
-            setSeleccionados(new Set(items.map(item => item.rbd)));
+            setSeleccionados(new Set(filteredItems.map(item => item.rbd)));
         }
     };
 
@@ -451,63 +421,91 @@ export default function DescargasPaeClient() {
                     </div>
                 </div>
 
+                {/* Mensajes Globales de la Interfaz */}
                 {error && (
-                    <div className="mt-4 p-3 bg-red-50 text-red-700 text-sm font-semibold rounded-lg border border-red-100 animate-in fade-in">
+                    <div className="p-4 bg-red-50 text-red-700 font-bold rounded-xl border border-red-100 animate-in fade-in max-w-7xl mx-auto">
                         {error}
+                    </div>
+                )}
+                
+                {/* Barra de Progreso */}
+                {downloading && (
+                    <div className="p-6 bg-indigo-50 text-indigo-900 font-medium rounded-xl border border-indigo-100 animate-in fade-in max-w-7xl mx-auto shadow-sm space-y-4">
+                        <div className="flex justify-between items-center">
+                            <h4 className="font-bold text-lg flex items-center gap-2">
+                                <span className="animate-spin inline-block w-5 h-5 border-2 border-indigo-600 border-t-transparent rounded-full"></span>
+                                Generando archivo ZIP...
+                            </h4>
+                            <span className="font-bold text-indigo-600 text-lg">
+                                {progress.processed} / {progress.total}
+                            </span>
+                        </div>
+                        <div className="w-full bg-indigo-200 rounded-full h-3">
+                            <div 
+                                className="bg-indigo-600 h-3 rounded-full transition-all duration-500 ease-out"
+                                style={{ width: `${progress.total > 0 ? (progress.processed / progress.total) * 100 : 0}%` }}
+                            ></div>
+                        </div>
+                        <div className="flex justify-between items-center text-sm">
+                            <p className="text-indigo-700">Por favor, no cierres esta ventana hasta que finalice.</p>
+                            <button 
+                                onClick={handleCancelarZIP}
+                                className="px-4 py-2 bg-red-100 text-red-700 hover:bg-red-200 hover:text-red-800 rounded-lg font-bold transition-colors flex items-center gap-2"
+                            >
+                                <span>🛑</span> Detener y Guardar Progreso
+                            </button>
+                        </div>
+                    </div>
+                )}
+                
+                {/* Mensaje de éxito */}
+                {successMessage && !downloading && (
+                    <div className="p-6 bg-emerald-50 text-emerald-800 font-medium rounded-xl border border-emerald-100 animate-in fade-in max-w-7xl mx-auto shadow-sm flex items-start gap-4">
+                        <span className="text-2xl">✅</span>
+                        <div>
+                            <h4 className="font-bold text-lg mb-1">Operación Finalizada</h4>
+                            <p className="text-sm">{successMessage}</p>
+                        </div>
                     </div>
                 )}
             </div>
 
-            {/* Real-time Queue Progress Bar */}
-            {downloading && currentIndex >= 0 && (
-                <div className="bg-indigo-50 border border-indigo-100 p-6 rounded-2xl shadow-sm animate-in slide-in-from-top duration-300">
-                    <div className="flex justify-between items-center mb-3">
-                        <span className="text-sm font-bold text-indigo-900">Progreso de Descarga e Integración ZIP</span>
-                        <span className="text-xs font-black text-indigo-600 uppercase font-mono bg-indigo-100 px-2 py-1 rounded-md">
-                            {currentIndex + 1} de {seleccionados.size} colegios ({Math.round(((currentIndex + 1) / seleccionados.size) * 100)}%)
-                        </span>
-                    </div>
-                    
-                    <div className="w-full bg-indigo-200/50 rounded-full h-3 mb-2 overflow-hidden">
-                        <div 
-                            className="bg-indigo-600 h-3 rounded-full transition-all duration-300 ease-out"
-                            style={{ width: `${((currentIndex + 1) / seleccionados.size) * 100}%` }}
-                        ></div>
-                    </div>
-                    
-                    <p className="text-xs text-indigo-700 font-semibold mt-2">
-                        Procesando actualmente: <strong className="text-indigo-950 font-bold">{currentSchoolName}</strong> (RBD: {items[currentIndex]?.rbd})
-                    </p>
-                </div>
-            )}
-
             {/* Results Table */}
             {items.length > 0 && (
                 <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col animate-in fade-in slide-in-from-top-4 duration-300">
-                    <div className="p-4 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
-                        <div>
-                            <h3 className="font-bold text-gray-800 text-lg">Enlaces Disponibles ({items.length})</h3>
-                            <p className="text-xs text-gray-500">Sincroniza tu sesión de Junaeb primero y luego inicia la descarga comprimida.</p>
+                    <div className="p-4 border-b border-gray-100 bg-gray-50 flex flex-col gap-4">
+                        <div className="flex justify-between items-center w-full">
+                            <div>
+                                <h3 className="font-bold text-gray-800 text-lg">Enlaces Disponibles ({filteredItems.length})</h3>
+                                <p className="text-xs text-gray-500">Sincroniza tu sesión de Junaeb primero y luego inicia la descarga comprimida.</p>
+                            </div>
+                            <button 
+                                onClick={handleDescargarZIP}
+                                disabled={downloading || !isLinked || seleccionados.size === 0}
+                                className="px-5 py-2 bg-indigo-600 text-white rounded-xl shadow-md shadow-indigo-600/20 font-bold hover:bg-indigo-500 disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 animate-in zoom-in"
+                            >
+                                <span>⚡</span>{' '}
+                                {downloading
+                                    ? 'Descargando...'
+                                    : seleccionados.size === filteredItems.length && filteredItems.length > 0
+                                    ? `Descargar Todo en un ZIP (${seleccionados.size})`
+                                    : `Descargar Seleccionados (${seleccionados.size}) en un ZIP`}
+                            </button>
                         </div>
-                        <button 
-                            onClick={handleDescargarZIP}
-                            disabled={downloading || !isLinked || seleccionados.size === 0}
-                            className="px-5 py-2 bg-indigo-600 text-white rounded-xl shadow-md shadow-indigo-600/20 font-bold hover:bg-indigo-500 disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 animate-in zoom-in"
-                        >
-                            <span>⚡</span>{' '}
-                            {downloading
-                                ? 'Descargando...'
-                                : seleccionados.size === items.length
-                                ? `Descargar Todo en un ZIP (${seleccionados.size})`
-                                : `Descargar Seleccionados (${seleccionados.size}) en un ZIP`}
-                        </button>
+                        <div className="relative">
+                            <span className="absolute left-3 top-2.5 text-gray-400">🔍</span>
+                            <input 
+                                type="text" 
+                                placeholder="Buscar por RBD o Establecimiento..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                disabled={downloading}
+                                className="w-full pl-9 pr-4 py-2 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all font-medium"
+                            />
+                        </div>
                     </div>
-
-                    {successMessage && (
-                        <div className="p-3 bg-green-50 border-b border-green-100 text-green-800 text-sm font-bold flex items-center gap-2 animate-in slide-in-from-top duration-300">
-                            <span>✅</span> {successMessage}
-                        </div>
-                    )}
+                    
+                    {/* Quitamos el success message de acá porque lo mostramos globalmente arriba */}
 
                     <div className="overflow-x-auto max-h-[400px] overflow-y-auto">
                         <table className="w-full text-left text-sm text-gray-500">
@@ -525,23 +523,13 @@ export default function DescargasPaeClient() {
                                     </th>
                                     <th className="px-6 py-3 font-bold">RBD</th>
                                     <th className="px-6 py-3 font-bold">Establecimiento</th>
-                                    <th className="px-6 py-3 font-bold">URL Destino</th>
-                                    <th className="px-6 py-3 font-bold text-center">Estado</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-50">
-                                {items.map((item, idx) => (
+                                {filteredItems.map((item, idx) => (
                                     <tr 
                                         key={idx} 
-                                        className={`transition-colors duration-150 ${
-                                            item.status === 'Descargando' 
-                                                ? 'bg-indigo-50 hover:bg-indigo-100/50' 
-                                                : item.status === 'Descargado' 
-                                                    ? 'bg-emerald-50/20 hover:bg-emerald-50/40' 
-                                                    : item.status === 'Fallo' 
-                                                        ? 'bg-red-50/30 hover:bg-red-50/50'
-                                                        : 'hover:bg-gray-50/50'
-                                        }`}
+                                        className="transition-colors duration-150 hover:bg-gray-50/50"
                                     >
                                         <td className="px-4 py-3 text-center w-12">
                                             <input 
@@ -559,22 +547,6 @@ export default function DescargasPaeClient() {
                                         </td>
                                         <td className="px-6 py-3 font-medium text-gray-900 max-w-[250px] truncate" title={item.nombre}>
                                             {item.nombre}
-                                        </td>
-                                        <td className="px-6 py-3 max-w-[300px] truncate">
-                                            <a href={item.urlGenerada} target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:text-indigo-800 hover:underline font-mono text-xs">
-                                                {item.urlGenerada}
-                                            </a>
-                                        </td>
-                                        <td className="px-6 py-3 text-center">
-                                            {item.status === 'Pendiente' ? (
-                                                <span className="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-lg text-xs font-bold">Pendiente</span>
-                                            ) : item.status === 'Descargando' ? (
-                                                <span className="px-2 py-1 bg-indigo-600 text-white rounded-lg text-xs font-bold animate-pulse">⏳ Descargando</span>
-                                            ) : item.status === 'Fallo' ? (
-                                                <span className="px-2 py-1 bg-red-100 text-red-800 rounded-lg text-xs font-bold">✗ Falló</span>
-                                            ) : (
-                                                <span className="px-2 py-1 bg-green-100 text-green-800 rounded-lg text-xs font-bold">✓ Completado</span>
-                                            )}
                                         </td>
                                     </tr>
                                 ))}

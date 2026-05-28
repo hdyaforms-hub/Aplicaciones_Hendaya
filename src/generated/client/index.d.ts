@@ -333,6 +333,16 @@ export type DistanciaCache = $Result.DefaultSelection<Prisma.$DistanciaCachePayl
  * 
  */
 export type ConsumoApiGoogle = $Result.DefaultSelection<Prisma.$ConsumoApiGooglePayload>
+/**
+ * Model Cab_LeePdfEstandarPae
+ * 
+ */
+export type Cab_LeePdfEstandarPae = $Result.DefaultSelection<Prisma.$Cab_LeePdfEstandarPaePayload>
+/**
+ * Model Det_LeePdfEstandarPae
+ * 
+ */
+export type Det_LeePdfEstandarPae = $Result.DefaultSelection<Prisma.$Det_LeePdfEstandarPaePayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -1096,6 +1106,26 @@ export class PrismaClient<
     * ```
     */
   get consumoApiGoogle(): Prisma.ConsumoApiGoogleDelegate<ExtArgs>;
+
+  /**
+   * `prisma.cab_LeePdfEstandarPae`: Exposes CRUD operations for the **Cab_LeePdfEstandarPae** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Cab_LeePdfEstandarPaes
+    * const cab_LeePdfEstandarPaes = await prisma.cab_LeePdfEstandarPae.findMany()
+    * ```
+    */
+  get cab_LeePdfEstandarPae(): Prisma.Cab_LeePdfEstandarPaeDelegate<ExtArgs>;
+
+  /**
+   * `prisma.det_LeePdfEstandarPae`: Exposes CRUD operations for the **Det_LeePdfEstandarPae** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Det_LeePdfEstandarPaes
+    * const det_LeePdfEstandarPaes = await prisma.det_LeePdfEstandarPae.findMany()
+    * ```
+    */
+  get det_LeePdfEstandarPae(): Prisma.Det_LeePdfEstandarPaeDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -1600,7 +1630,9 @@ export namespace Prisma {
     SupervisorVehiculo: 'SupervisorVehiculo',
     SupervisorRbd: 'SupervisorRbd',
     DistanciaCache: 'DistanciaCache',
-    ConsumoApiGoogle: 'ConsumoApiGoogle'
+    ConsumoApiGoogle: 'ConsumoApiGoogle',
+    Cab_LeePdfEstandarPae: 'Cab_LeePdfEstandarPae',
+    Det_LeePdfEstandarPae: 'Det_LeePdfEstandarPae'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1616,7 +1648,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle"
+      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -6100,6 +6132,146 @@ export namespace Prisma {
           }
         }
       }
+      Cab_LeePdfEstandarPae: {
+        payload: Prisma.$Cab_LeePdfEstandarPaePayload<ExtArgs>
+        fields: Prisma.Cab_LeePdfEstandarPaeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Cab_LeePdfEstandarPaeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cab_LeePdfEstandarPaePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Cab_LeePdfEstandarPaeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cab_LeePdfEstandarPaePayload>
+          }
+          findFirst: {
+            args: Prisma.Cab_LeePdfEstandarPaeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cab_LeePdfEstandarPaePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Cab_LeePdfEstandarPaeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cab_LeePdfEstandarPaePayload>
+          }
+          findMany: {
+            args: Prisma.Cab_LeePdfEstandarPaeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cab_LeePdfEstandarPaePayload>[]
+          }
+          create: {
+            args: Prisma.Cab_LeePdfEstandarPaeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cab_LeePdfEstandarPaePayload>
+          }
+          createMany: {
+            args: Prisma.Cab_LeePdfEstandarPaeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Cab_LeePdfEstandarPaeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cab_LeePdfEstandarPaePayload>[]
+          }
+          delete: {
+            args: Prisma.Cab_LeePdfEstandarPaeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cab_LeePdfEstandarPaePayload>
+          }
+          update: {
+            args: Prisma.Cab_LeePdfEstandarPaeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cab_LeePdfEstandarPaePayload>
+          }
+          deleteMany: {
+            args: Prisma.Cab_LeePdfEstandarPaeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Cab_LeePdfEstandarPaeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Cab_LeePdfEstandarPaeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cab_LeePdfEstandarPaePayload>
+          }
+          aggregate: {
+            args: Prisma.Cab_LeePdfEstandarPaeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCab_LeePdfEstandarPae>
+          }
+          groupBy: {
+            args: Prisma.Cab_LeePdfEstandarPaeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Cab_LeePdfEstandarPaeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Cab_LeePdfEstandarPaeCountArgs<ExtArgs>
+            result: $Utils.Optional<Cab_LeePdfEstandarPaeCountAggregateOutputType> | number
+          }
+        }
+      }
+      Det_LeePdfEstandarPae: {
+        payload: Prisma.$Det_LeePdfEstandarPaePayload<ExtArgs>
+        fields: Prisma.Det_LeePdfEstandarPaeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Det_LeePdfEstandarPaeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Det_LeePdfEstandarPaePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Det_LeePdfEstandarPaeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Det_LeePdfEstandarPaePayload>
+          }
+          findFirst: {
+            args: Prisma.Det_LeePdfEstandarPaeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Det_LeePdfEstandarPaePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Det_LeePdfEstandarPaeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Det_LeePdfEstandarPaePayload>
+          }
+          findMany: {
+            args: Prisma.Det_LeePdfEstandarPaeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Det_LeePdfEstandarPaePayload>[]
+          }
+          create: {
+            args: Prisma.Det_LeePdfEstandarPaeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Det_LeePdfEstandarPaePayload>
+          }
+          createMany: {
+            args: Prisma.Det_LeePdfEstandarPaeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Det_LeePdfEstandarPaeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Det_LeePdfEstandarPaePayload>[]
+          }
+          delete: {
+            args: Prisma.Det_LeePdfEstandarPaeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Det_LeePdfEstandarPaePayload>
+          }
+          update: {
+            args: Prisma.Det_LeePdfEstandarPaeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Det_LeePdfEstandarPaePayload>
+          }
+          deleteMany: {
+            args: Prisma.Det_LeePdfEstandarPaeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Det_LeePdfEstandarPaeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Det_LeePdfEstandarPaeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Det_LeePdfEstandarPaePayload>
+          }
+          aggregate: {
+            args: Prisma.Det_LeePdfEstandarPaeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDet_LeePdfEstandarPae>
+          }
+          groupBy: {
+            args: Prisma.Det_LeePdfEstandarPaeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Det_LeePdfEstandarPaeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Det_LeePdfEstandarPaeCountArgs<ExtArgs>
+            result: $Utils.Optional<Det_LeePdfEstandarPaeCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -7067,6 +7239,37 @@ export namespace Prisma {
    */
   export type SupervisorCountOutputTypeCountRbdsAuditarArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SupervisorRbdWhereInput
+  }
+
+
+  /**
+   * Count Type Cab_LeePdfEstandarPaeCountOutputType
+   */
+
+  export type Cab_LeePdfEstandarPaeCountOutputType = {
+    detalles: number
+  }
+
+  export type Cab_LeePdfEstandarPaeCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    detalles?: boolean | Cab_LeePdfEstandarPaeCountOutputTypeCountDetallesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * Cab_LeePdfEstandarPaeCountOutputType without action
+   */
+  export type Cab_LeePdfEstandarPaeCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cab_LeePdfEstandarPaeCountOutputType
+     */
+    select?: Cab_LeePdfEstandarPaeCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * Cab_LeePdfEstandarPaeCountOutputType without action
+   */
+  export type Cab_LeePdfEstandarPaeCountOutputTypeCountDetallesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Det_LeePdfEstandarPaeWhereInput
   }
 
 
@@ -71921,6 +72124,2073 @@ export namespace Prisma {
 
 
   /**
+   * Model Cab_LeePdfEstandarPae
+   */
+
+  export type AggregateCab_LeePdfEstandarPae = {
+    _count: Cab_LeePdfEstandarPaeCountAggregateOutputType | null
+    _avg: Cab_LeePdfEstandarPaeAvgAggregateOutputType | null
+    _sum: Cab_LeePdfEstandarPaeSumAggregateOutputType | null
+    _min: Cab_LeePdfEstandarPaeMinAggregateOutputType | null
+    _max: Cab_LeePdfEstandarPaeMaxAggregateOutputType | null
+  }
+
+  export type Cab_LeePdfEstandarPaeAvgAggregateOutputType = {
+    Licitacion: number | null
+    RBD: number | null
+    Porcentaje_cumplimiento_final: number | null
+  }
+
+  export type Cab_LeePdfEstandarPaeSumAggregateOutputType = {
+    Licitacion: number | null
+    RBD: number | null
+    Porcentaje_cumplimiento_final: number | null
+  }
+
+  export type Cab_LeePdfEstandarPaeMinAggregateOutputType = {
+    id: string | null
+    NombreArchivoPdf: string | null
+    Licitacion: number | null
+    Folio: string | null
+    Res_Sanitaria_N: string | null
+    Nombre_Num_establecimiento: string | null
+    RBD: number | null
+    Region: string | null
+    Comuna: string | null
+    Fecha_Supervision: Date | null
+    Porcentaje_cumplimiento_final: number | null
+    Observaciones: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Cab_LeePdfEstandarPaeMaxAggregateOutputType = {
+    id: string | null
+    NombreArchivoPdf: string | null
+    Licitacion: number | null
+    Folio: string | null
+    Res_Sanitaria_N: string | null
+    Nombre_Num_establecimiento: string | null
+    RBD: number | null
+    Region: string | null
+    Comuna: string | null
+    Fecha_Supervision: Date | null
+    Porcentaje_cumplimiento_final: number | null
+    Observaciones: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Cab_LeePdfEstandarPaeCountAggregateOutputType = {
+    id: number
+    NombreArchivoPdf: number
+    Licitacion: number
+    Folio: number
+    Res_Sanitaria_N: number
+    Nombre_Num_establecimiento: number
+    RBD: number
+    Region: number
+    Comuna: number
+    Fecha_Supervision: number
+    Porcentaje_cumplimiento_final: number
+    Observaciones: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type Cab_LeePdfEstandarPaeAvgAggregateInputType = {
+    Licitacion?: true
+    RBD?: true
+    Porcentaje_cumplimiento_final?: true
+  }
+
+  export type Cab_LeePdfEstandarPaeSumAggregateInputType = {
+    Licitacion?: true
+    RBD?: true
+    Porcentaje_cumplimiento_final?: true
+  }
+
+  export type Cab_LeePdfEstandarPaeMinAggregateInputType = {
+    id?: true
+    NombreArchivoPdf?: true
+    Licitacion?: true
+    Folio?: true
+    Res_Sanitaria_N?: true
+    Nombre_Num_establecimiento?: true
+    RBD?: true
+    Region?: true
+    Comuna?: true
+    Fecha_Supervision?: true
+    Porcentaje_cumplimiento_final?: true
+    Observaciones?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Cab_LeePdfEstandarPaeMaxAggregateInputType = {
+    id?: true
+    NombreArchivoPdf?: true
+    Licitacion?: true
+    Folio?: true
+    Res_Sanitaria_N?: true
+    Nombre_Num_establecimiento?: true
+    RBD?: true
+    Region?: true
+    Comuna?: true
+    Fecha_Supervision?: true
+    Porcentaje_cumplimiento_final?: true
+    Observaciones?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Cab_LeePdfEstandarPaeCountAggregateInputType = {
+    id?: true
+    NombreArchivoPdf?: true
+    Licitacion?: true
+    Folio?: true
+    Res_Sanitaria_N?: true
+    Nombre_Num_establecimiento?: true
+    RBD?: true
+    Region?: true
+    Comuna?: true
+    Fecha_Supervision?: true
+    Porcentaje_cumplimiento_final?: true
+    Observaciones?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type Cab_LeePdfEstandarPaeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Cab_LeePdfEstandarPae to aggregate.
+     */
+    where?: Cab_LeePdfEstandarPaeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cab_LeePdfEstandarPaes to fetch.
+     */
+    orderBy?: Cab_LeePdfEstandarPaeOrderByWithRelationInput | Cab_LeePdfEstandarPaeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Cab_LeePdfEstandarPaeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cab_LeePdfEstandarPaes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cab_LeePdfEstandarPaes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Cab_LeePdfEstandarPaes
+    **/
+    _count?: true | Cab_LeePdfEstandarPaeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Cab_LeePdfEstandarPaeAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Cab_LeePdfEstandarPaeSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Cab_LeePdfEstandarPaeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Cab_LeePdfEstandarPaeMaxAggregateInputType
+  }
+
+  export type GetCab_LeePdfEstandarPaeAggregateType<T extends Cab_LeePdfEstandarPaeAggregateArgs> = {
+        [P in keyof T & keyof AggregateCab_LeePdfEstandarPae]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCab_LeePdfEstandarPae[P]>
+      : GetScalarType<T[P], AggregateCab_LeePdfEstandarPae[P]>
+  }
+
+
+
+
+  export type Cab_LeePdfEstandarPaeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Cab_LeePdfEstandarPaeWhereInput
+    orderBy?: Cab_LeePdfEstandarPaeOrderByWithAggregationInput | Cab_LeePdfEstandarPaeOrderByWithAggregationInput[]
+    by: Cab_LeePdfEstandarPaeScalarFieldEnum[] | Cab_LeePdfEstandarPaeScalarFieldEnum
+    having?: Cab_LeePdfEstandarPaeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Cab_LeePdfEstandarPaeCountAggregateInputType | true
+    _avg?: Cab_LeePdfEstandarPaeAvgAggregateInputType
+    _sum?: Cab_LeePdfEstandarPaeSumAggregateInputType
+    _min?: Cab_LeePdfEstandarPaeMinAggregateInputType
+    _max?: Cab_LeePdfEstandarPaeMaxAggregateInputType
+  }
+
+  export type Cab_LeePdfEstandarPaeGroupByOutputType = {
+    id: string
+    NombreArchivoPdf: string
+    Licitacion: number | null
+    Folio: string
+    Res_Sanitaria_N: string | null
+    Nombre_Num_establecimiento: string | null
+    RBD: number | null
+    Region: string | null
+    Comuna: string | null
+    Fecha_Supervision: Date | null
+    Porcentaje_cumplimiento_final: number | null
+    Observaciones: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: Cab_LeePdfEstandarPaeCountAggregateOutputType | null
+    _avg: Cab_LeePdfEstandarPaeAvgAggregateOutputType | null
+    _sum: Cab_LeePdfEstandarPaeSumAggregateOutputType | null
+    _min: Cab_LeePdfEstandarPaeMinAggregateOutputType | null
+    _max: Cab_LeePdfEstandarPaeMaxAggregateOutputType | null
+  }
+
+  type GetCab_LeePdfEstandarPaeGroupByPayload<T extends Cab_LeePdfEstandarPaeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Cab_LeePdfEstandarPaeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Cab_LeePdfEstandarPaeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Cab_LeePdfEstandarPaeGroupByOutputType[P]>
+            : GetScalarType<T[P], Cab_LeePdfEstandarPaeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Cab_LeePdfEstandarPaeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    NombreArchivoPdf?: boolean
+    Licitacion?: boolean
+    Folio?: boolean
+    Res_Sanitaria_N?: boolean
+    Nombre_Num_establecimiento?: boolean
+    RBD?: boolean
+    Region?: boolean
+    Comuna?: boolean
+    Fecha_Supervision?: boolean
+    Porcentaje_cumplimiento_final?: boolean
+    Observaciones?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    detalles?: boolean | Cab_LeePdfEstandarPae$detallesArgs<ExtArgs>
+    _count?: boolean | Cab_LeePdfEstandarPaeCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cab_LeePdfEstandarPae"]>
+
+  export type Cab_LeePdfEstandarPaeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    NombreArchivoPdf?: boolean
+    Licitacion?: boolean
+    Folio?: boolean
+    Res_Sanitaria_N?: boolean
+    Nombre_Num_establecimiento?: boolean
+    RBD?: boolean
+    Region?: boolean
+    Comuna?: boolean
+    Fecha_Supervision?: boolean
+    Porcentaje_cumplimiento_final?: boolean
+    Observaciones?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["cab_LeePdfEstandarPae"]>
+
+  export type Cab_LeePdfEstandarPaeSelectScalar = {
+    id?: boolean
+    NombreArchivoPdf?: boolean
+    Licitacion?: boolean
+    Folio?: boolean
+    Res_Sanitaria_N?: boolean
+    Nombre_Num_establecimiento?: boolean
+    RBD?: boolean
+    Region?: boolean
+    Comuna?: boolean
+    Fecha_Supervision?: boolean
+    Porcentaje_cumplimiento_final?: boolean
+    Observaciones?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type Cab_LeePdfEstandarPaeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    detalles?: boolean | Cab_LeePdfEstandarPae$detallesArgs<ExtArgs>
+    _count?: boolean | Cab_LeePdfEstandarPaeCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type Cab_LeePdfEstandarPaeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $Cab_LeePdfEstandarPaePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Cab_LeePdfEstandarPae"
+    objects: {
+      detalles: Prisma.$Det_LeePdfEstandarPaePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      NombreArchivoPdf: string
+      Licitacion: number | null
+      Folio: string
+      Res_Sanitaria_N: string | null
+      Nombre_Num_establecimiento: string | null
+      RBD: number | null
+      Region: string | null
+      Comuna: string | null
+      Fecha_Supervision: Date | null
+      Porcentaje_cumplimiento_final: number | null
+      Observaciones: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["cab_LeePdfEstandarPae"]>
+    composites: {}
+  }
+
+  type Cab_LeePdfEstandarPaeGetPayload<S extends boolean | null | undefined | Cab_LeePdfEstandarPaeDefaultArgs> = $Result.GetResult<Prisma.$Cab_LeePdfEstandarPaePayload, S>
+
+  type Cab_LeePdfEstandarPaeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Cab_LeePdfEstandarPaeFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Cab_LeePdfEstandarPaeCountAggregateInputType | true
+    }
+
+  export interface Cab_LeePdfEstandarPaeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Cab_LeePdfEstandarPae'], meta: { name: 'Cab_LeePdfEstandarPae' } }
+    /**
+     * Find zero or one Cab_LeePdfEstandarPae that matches the filter.
+     * @param {Cab_LeePdfEstandarPaeFindUniqueArgs} args - Arguments to find a Cab_LeePdfEstandarPae
+     * @example
+     * // Get one Cab_LeePdfEstandarPae
+     * const cab_LeePdfEstandarPae = await prisma.cab_LeePdfEstandarPae.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Cab_LeePdfEstandarPaeFindUniqueArgs>(args: SelectSubset<T, Cab_LeePdfEstandarPaeFindUniqueArgs<ExtArgs>>): Prisma__Cab_LeePdfEstandarPaeClient<$Result.GetResult<Prisma.$Cab_LeePdfEstandarPaePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Cab_LeePdfEstandarPae that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Cab_LeePdfEstandarPaeFindUniqueOrThrowArgs} args - Arguments to find a Cab_LeePdfEstandarPae
+     * @example
+     * // Get one Cab_LeePdfEstandarPae
+     * const cab_LeePdfEstandarPae = await prisma.cab_LeePdfEstandarPae.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Cab_LeePdfEstandarPaeFindUniqueOrThrowArgs>(args: SelectSubset<T, Cab_LeePdfEstandarPaeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Cab_LeePdfEstandarPaeClient<$Result.GetResult<Prisma.$Cab_LeePdfEstandarPaePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Cab_LeePdfEstandarPae that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cab_LeePdfEstandarPaeFindFirstArgs} args - Arguments to find a Cab_LeePdfEstandarPae
+     * @example
+     * // Get one Cab_LeePdfEstandarPae
+     * const cab_LeePdfEstandarPae = await prisma.cab_LeePdfEstandarPae.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Cab_LeePdfEstandarPaeFindFirstArgs>(args?: SelectSubset<T, Cab_LeePdfEstandarPaeFindFirstArgs<ExtArgs>>): Prisma__Cab_LeePdfEstandarPaeClient<$Result.GetResult<Prisma.$Cab_LeePdfEstandarPaePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Cab_LeePdfEstandarPae that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cab_LeePdfEstandarPaeFindFirstOrThrowArgs} args - Arguments to find a Cab_LeePdfEstandarPae
+     * @example
+     * // Get one Cab_LeePdfEstandarPae
+     * const cab_LeePdfEstandarPae = await prisma.cab_LeePdfEstandarPae.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Cab_LeePdfEstandarPaeFindFirstOrThrowArgs>(args?: SelectSubset<T, Cab_LeePdfEstandarPaeFindFirstOrThrowArgs<ExtArgs>>): Prisma__Cab_LeePdfEstandarPaeClient<$Result.GetResult<Prisma.$Cab_LeePdfEstandarPaePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Cab_LeePdfEstandarPaes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cab_LeePdfEstandarPaeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Cab_LeePdfEstandarPaes
+     * const cab_LeePdfEstandarPaes = await prisma.cab_LeePdfEstandarPae.findMany()
+     * 
+     * // Get first 10 Cab_LeePdfEstandarPaes
+     * const cab_LeePdfEstandarPaes = await prisma.cab_LeePdfEstandarPae.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const cab_LeePdfEstandarPaeWithIdOnly = await prisma.cab_LeePdfEstandarPae.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Cab_LeePdfEstandarPaeFindManyArgs>(args?: SelectSubset<T, Cab_LeePdfEstandarPaeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Cab_LeePdfEstandarPaePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Cab_LeePdfEstandarPae.
+     * @param {Cab_LeePdfEstandarPaeCreateArgs} args - Arguments to create a Cab_LeePdfEstandarPae.
+     * @example
+     * // Create one Cab_LeePdfEstandarPae
+     * const Cab_LeePdfEstandarPae = await prisma.cab_LeePdfEstandarPae.create({
+     *   data: {
+     *     // ... data to create a Cab_LeePdfEstandarPae
+     *   }
+     * })
+     * 
+     */
+    create<T extends Cab_LeePdfEstandarPaeCreateArgs>(args: SelectSubset<T, Cab_LeePdfEstandarPaeCreateArgs<ExtArgs>>): Prisma__Cab_LeePdfEstandarPaeClient<$Result.GetResult<Prisma.$Cab_LeePdfEstandarPaePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Cab_LeePdfEstandarPaes.
+     * @param {Cab_LeePdfEstandarPaeCreateManyArgs} args - Arguments to create many Cab_LeePdfEstandarPaes.
+     * @example
+     * // Create many Cab_LeePdfEstandarPaes
+     * const cab_LeePdfEstandarPae = await prisma.cab_LeePdfEstandarPae.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Cab_LeePdfEstandarPaeCreateManyArgs>(args?: SelectSubset<T, Cab_LeePdfEstandarPaeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Cab_LeePdfEstandarPaes and returns the data saved in the database.
+     * @param {Cab_LeePdfEstandarPaeCreateManyAndReturnArgs} args - Arguments to create many Cab_LeePdfEstandarPaes.
+     * @example
+     * // Create many Cab_LeePdfEstandarPaes
+     * const cab_LeePdfEstandarPae = await prisma.cab_LeePdfEstandarPae.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Cab_LeePdfEstandarPaes and only return the `id`
+     * const cab_LeePdfEstandarPaeWithIdOnly = await prisma.cab_LeePdfEstandarPae.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Cab_LeePdfEstandarPaeCreateManyAndReturnArgs>(args?: SelectSubset<T, Cab_LeePdfEstandarPaeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Cab_LeePdfEstandarPaePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Cab_LeePdfEstandarPae.
+     * @param {Cab_LeePdfEstandarPaeDeleteArgs} args - Arguments to delete one Cab_LeePdfEstandarPae.
+     * @example
+     * // Delete one Cab_LeePdfEstandarPae
+     * const Cab_LeePdfEstandarPae = await prisma.cab_LeePdfEstandarPae.delete({
+     *   where: {
+     *     // ... filter to delete one Cab_LeePdfEstandarPae
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Cab_LeePdfEstandarPaeDeleteArgs>(args: SelectSubset<T, Cab_LeePdfEstandarPaeDeleteArgs<ExtArgs>>): Prisma__Cab_LeePdfEstandarPaeClient<$Result.GetResult<Prisma.$Cab_LeePdfEstandarPaePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Cab_LeePdfEstandarPae.
+     * @param {Cab_LeePdfEstandarPaeUpdateArgs} args - Arguments to update one Cab_LeePdfEstandarPae.
+     * @example
+     * // Update one Cab_LeePdfEstandarPae
+     * const cab_LeePdfEstandarPae = await prisma.cab_LeePdfEstandarPae.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Cab_LeePdfEstandarPaeUpdateArgs>(args: SelectSubset<T, Cab_LeePdfEstandarPaeUpdateArgs<ExtArgs>>): Prisma__Cab_LeePdfEstandarPaeClient<$Result.GetResult<Prisma.$Cab_LeePdfEstandarPaePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Cab_LeePdfEstandarPaes.
+     * @param {Cab_LeePdfEstandarPaeDeleteManyArgs} args - Arguments to filter Cab_LeePdfEstandarPaes to delete.
+     * @example
+     * // Delete a few Cab_LeePdfEstandarPaes
+     * const { count } = await prisma.cab_LeePdfEstandarPae.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Cab_LeePdfEstandarPaeDeleteManyArgs>(args?: SelectSubset<T, Cab_LeePdfEstandarPaeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Cab_LeePdfEstandarPaes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cab_LeePdfEstandarPaeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Cab_LeePdfEstandarPaes
+     * const cab_LeePdfEstandarPae = await prisma.cab_LeePdfEstandarPae.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Cab_LeePdfEstandarPaeUpdateManyArgs>(args: SelectSubset<T, Cab_LeePdfEstandarPaeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Cab_LeePdfEstandarPae.
+     * @param {Cab_LeePdfEstandarPaeUpsertArgs} args - Arguments to update or create a Cab_LeePdfEstandarPae.
+     * @example
+     * // Update or create a Cab_LeePdfEstandarPae
+     * const cab_LeePdfEstandarPae = await prisma.cab_LeePdfEstandarPae.upsert({
+     *   create: {
+     *     // ... data to create a Cab_LeePdfEstandarPae
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Cab_LeePdfEstandarPae we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Cab_LeePdfEstandarPaeUpsertArgs>(args: SelectSubset<T, Cab_LeePdfEstandarPaeUpsertArgs<ExtArgs>>): Prisma__Cab_LeePdfEstandarPaeClient<$Result.GetResult<Prisma.$Cab_LeePdfEstandarPaePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Cab_LeePdfEstandarPaes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cab_LeePdfEstandarPaeCountArgs} args - Arguments to filter Cab_LeePdfEstandarPaes to count.
+     * @example
+     * // Count the number of Cab_LeePdfEstandarPaes
+     * const count = await prisma.cab_LeePdfEstandarPae.count({
+     *   where: {
+     *     // ... the filter for the Cab_LeePdfEstandarPaes we want to count
+     *   }
+     * })
+    **/
+    count<T extends Cab_LeePdfEstandarPaeCountArgs>(
+      args?: Subset<T, Cab_LeePdfEstandarPaeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Cab_LeePdfEstandarPaeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Cab_LeePdfEstandarPae.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cab_LeePdfEstandarPaeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Cab_LeePdfEstandarPaeAggregateArgs>(args: Subset<T, Cab_LeePdfEstandarPaeAggregateArgs>): Prisma.PrismaPromise<GetCab_LeePdfEstandarPaeAggregateType<T>>
+
+    /**
+     * Group by Cab_LeePdfEstandarPae.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cab_LeePdfEstandarPaeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Cab_LeePdfEstandarPaeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Cab_LeePdfEstandarPaeGroupByArgs['orderBy'] }
+        : { orderBy?: Cab_LeePdfEstandarPaeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Cab_LeePdfEstandarPaeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCab_LeePdfEstandarPaeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Cab_LeePdfEstandarPae model
+   */
+  readonly fields: Cab_LeePdfEstandarPaeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Cab_LeePdfEstandarPae.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Cab_LeePdfEstandarPaeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    detalles<T extends Cab_LeePdfEstandarPae$detallesArgs<ExtArgs> = {}>(args?: Subset<T, Cab_LeePdfEstandarPae$detallesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Det_LeePdfEstandarPaePayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Cab_LeePdfEstandarPae model
+   */ 
+  interface Cab_LeePdfEstandarPaeFieldRefs {
+    readonly id: FieldRef<"Cab_LeePdfEstandarPae", 'String'>
+    readonly NombreArchivoPdf: FieldRef<"Cab_LeePdfEstandarPae", 'String'>
+    readonly Licitacion: FieldRef<"Cab_LeePdfEstandarPae", 'Int'>
+    readonly Folio: FieldRef<"Cab_LeePdfEstandarPae", 'String'>
+    readonly Res_Sanitaria_N: FieldRef<"Cab_LeePdfEstandarPae", 'String'>
+    readonly Nombre_Num_establecimiento: FieldRef<"Cab_LeePdfEstandarPae", 'String'>
+    readonly RBD: FieldRef<"Cab_LeePdfEstandarPae", 'Int'>
+    readonly Region: FieldRef<"Cab_LeePdfEstandarPae", 'String'>
+    readonly Comuna: FieldRef<"Cab_LeePdfEstandarPae", 'String'>
+    readonly Fecha_Supervision: FieldRef<"Cab_LeePdfEstandarPae", 'DateTime'>
+    readonly Porcentaje_cumplimiento_final: FieldRef<"Cab_LeePdfEstandarPae", 'Float'>
+    readonly Observaciones: FieldRef<"Cab_LeePdfEstandarPae", 'String'>
+    readonly createdAt: FieldRef<"Cab_LeePdfEstandarPae", 'DateTime'>
+    readonly updatedAt: FieldRef<"Cab_LeePdfEstandarPae", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Cab_LeePdfEstandarPae findUnique
+   */
+  export type Cab_LeePdfEstandarPaeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cab_LeePdfEstandarPae
+     */
+    select?: Cab_LeePdfEstandarPaeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cab_LeePdfEstandarPaeInclude<ExtArgs> | null
+    /**
+     * Filter, which Cab_LeePdfEstandarPae to fetch.
+     */
+    where: Cab_LeePdfEstandarPaeWhereUniqueInput
+  }
+
+  /**
+   * Cab_LeePdfEstandarPae findUniqueOrThrow
+   */
+  export type Cab_LeePdfEstandarPaeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cab_LeePdfEstandarPae
+     */
+    select?: Cab_LeePdfEstandarPaeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cab_LeePdfEstandarPaeInclude<ExtArgs> | null
+    /**
+     * Filter, which Cab_LeePdfEstandarPae to fetch.
+     */
+    where: Cab_LeePdfEstandarPaeWhereUniqueInput
+  }
+
+  /**
+   * Cab_LeePdfEstandarPae findFirst
+   */
+  export type Cab_LeePdfEstandarPaeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cab_LeePdfEstandarPae
+     */
+    select?: Cab_LeePdfEstandarPaeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cab_LeePdfEstandarPaeInclude<ExtArgs> | null
+    /**
+     * Filter, which Cab_LeePdfEstandarPae to fetch.
+     */
+    where?: Cab_LeePdfEstandarPaeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cab_LeePdfEstandarPaes to fetch.
+     */
+    orderBy?: Cab_LeePdfEstandarPaeOrderByWithRelationInput | Cab_LeePdfEstandarPaeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Cab_LeePdfEstandarPaes.
+     */
+    cursor?: Cab_LeePdfEstandarPaeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cab_LeePdfEstandarPaes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cab_LeePdfEstandarPaes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Cab_LeePdfEstandarPaes.
+     */
+    distinct?: Cab_LeePdfEstandarPaeScalarFieldEnum | Cab_LeePdfEstandarPaeScalarFieldEnum[]
+  }
+
+  /**
+   * Cab_LeePdfEstandarPae findFirstOrThrow
+   */
+  export type Cab_LeePdfEstandarPaeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cab_LeePdfEstandarPae
+     */
+    select?: Cab_LeePdfEstandarPaeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cab_LeePdfEstandarPaeInclude<ExtArgs> | null
+    /**
+     * Filter, which Cab_LeePdfEstandarPae to fetch.
+     */
+    where?: Cab_LeePdfEstandarPaeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cab_LeePdfEstandarPaes to fetch.
+     */
+    orderBy?: Cab_LeePdfEstandarPaeOrderByWithRelationInput | Cab_LeePdfEstandarPaeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Cab_LeePdfEstandarPaes.
+     */
+    cursor?: Cab_LeePdfEstandarPaeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cab_LeePdfEstandarPaes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cab_LeePdfEstandarPaes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Cab_LeePdfEstandarPaes.
+     */
+    distinct?: Cab_LeePdfEstandarPaeScalarFieldEnum | Cab_LeePdfEstandarPaeScalarFieldEnum[]
+  }
+
+  /**
+   * Cab_LeePdfEstandarPae findMany
+   */
+  export type Cab_LeePdfEstandarPaeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cab_LeePdfEstandarPae
+     */
+    select?: Cab_LeePdfEstandarPaeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cab_LeePdfEstandarPaeInclude<ExtArgs> | null
+    /**
+     * Filter, which Cab_LeePdfEstandarPaes to fetch.
+     */
+    where?: Cab_LeePdfEstandarPaeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cab_LeePdfEstandarPaes to fetch.
+     */
+    orderBy?: Cab_LeePdfEstandarPaeOrderByWithRelationInput | Cab_LeePdfEstandarPaeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Cab_LeePdfEstandarPaes.
+     */
+    cursor?: Cab_LeePdfEstandarPaeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cab_LeePdfEstandarPaes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cab_LeePdfEstandarPaes.
+     */
+    skip?: number
+    distinct?: Cab_LeePdfEstandarPaeScalarFieldEnum | Cab_LeePdfEstandarPaeScalarFieldEnum[]
+  }
+
+  /**
+   * Cab_LeePdfEstandarPae create
+   */
+  export type Cab_LeePdfEstandarPaeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cab_LeePdfEstandarPae
+     */
+    select?: Cab_LeePdfEstandarPaeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cab_LeePdfEstandarPaeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Cab_LeePdfEstandarPae.
+     */
+    data: XOR<Cab_LeePdfEstandarPaeCreateInput, Cab_LeePdfEstandarPaeUncheckedCreateInput>
+  }
+
+  /**
+   * Cab_LeePdfEstandarPae createMany
+   */
+  export type Cab_LeePdfEstandarPaeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Cab_LeePdfEstandarPaes.
+     */
+    data: Cab_LeePdfEstandarPaeCreateManyInput | Cab_LeePdfEstandarPaeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Cab_LeePdfEstandarPae createManyAndReturn
+   */
+  export type Cab_LeePdfEstandarPaeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cab_LeePdfEstandarPae
+     */
+    select?: Cab_LeePdfEstandarPaeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Cab_LeePdfEstandarPaes.
+     */
+    data: Cab_LeePdfEstandarPaeCreateManyInput | Cab_LeePdfEstandarPaeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Cab_LeePdfEstandarPae update
+   */
+  export type Cab_LeePdfEstandarPaeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cab_LeePdfEstandarPae
+     */
+    select?: Cab_LeePdfEstandarPaeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cab_LeePdfEstandarPaeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Cab_LeePdfEstandarPae.
+     */
+    data: XOR<Cab_LeePdfEstandarPaeUpdateInput, Cab_LeePdfEstandarPaeUncheckedUpdateInput>
+    /**
+     * Choose, which Cab_LeePdfEstandarPae to update.
+     */
+    where: Cab_LeePdfEstandarPaeWhereUniqueInput
+  }
+
+  /**
+   * Cab_LeePdfEstandarPae updateMany
+   */
+  export type Cab_LeePdfEstandarPaeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Cab_LeePdfEstandarPaes.
+     */
+    data: XOR<Cab_LeePdfEstandarPaeUpdateManyMutationInput, Cab_LeePdfEstandarPaeUncheckedUpdateManyInput>
+    /**
+     * Filter which Cab_LeePdfEstandarPaes to update
+     */
+    where?: Cab_LeePdfEstandarPaeWhereInput
+  }
+
+  /**
+   * Cab_LeePdfEstandarPae upsert
+   */
+  export type Cab_LeePdfEstandarPaeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cab_LeePdfEstandarPae
+     */
+    select?: Cab_LeePdfEstandarPaeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cab_LeePdfEstandarPaeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Cab_LeePdfEstandarPae to update in case it exists.
+     */
+    where: Cab_LeePdfEstandarPaeWhereUniqueInput
+    /**
+     * In case the Cab_LeePdfEstandarPae found by the `where` argument doesn't exist, create a new Cab_LeePdfEstandarPae with this data.
+     */
+    create: XOR<Cab_LeePdfEstandarPaeCreateInput, Cab_LeePdfEstandarPaeUncheckedCreateInput>
+    /**
+     * In case the Cab_LeePdfEstandarPae was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Cab_LeePdfEstandarPaeUpdateInput, Cab_LeePdfEstandarPaeUncheckedUpdateInput>
+  }
+
+  /**
+   * Cab_LeePdfEstandarPae delete
+   */
+  export type Cab_LeePdfEstandarPaeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cab_LeePdfEstandarPae
+     */
+    select?: Cab_LeePdfEstandarPaeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cab_LeePdfEstandarPaeInclude<ExtArgs> | null
+    /**
+     * Filter which Cab_LeePdfEstandarPae to delete.
+     */
+    where: Cab_LeePdfEstandarPaeWhereUniqueInput
+  }
+
+  /**
+   * Cab_LeePdfEstandarPae deleteMany
+   */
+  export type Cab_LeePdfEstandarPaeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Cab_LeePdfEstandarPaes to delete
+     */
+    where?: Cab_LeePdfEstandarPaeWhereInput
+  }
+
+  /**
+   * Cab_LeePdfEstandarPae.detalles
+   */
+  export type Cab_LeePdfEstandarPae$detallesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Det_LeePdfEstandarPae
+     */
+    select?: Det_LeePdfEstandarPaeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Det_LeePdfEstandarPaeInclude<ExtArgs> | null
+    where?: Det_LeePdfEstandarPaeWhereInput
+    orderBy?: Det_LeePdfEstandarPaeOrderByWithRelationInput | Det_LeePdfEstandarPaeOrderByWithRelationInput[]
+    cursor?: Det_LeePdfEstandarPaeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Det_LeePdfEstandarPaeScalarFieldEnum | Det_LeePdfEstandarPaeScalarFieldEnum[]
+  }
+
+  /**
+   * Cab_LeePdfEstandarPae without action
+   */
+  export type Cab_LeePdfEstandarPaeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cab_LeePdfEstandarPae
+     */
+    select?: Cab_LeePdfEstandarPaeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cab_LeePdfEstandarPaeInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Det_LeePdfEstandarPae
+   */
+
+  export type AggregateDet_LeePdfEstandarPae = {
+    _count: Det_LeePdfEstandarPaeCountAggregateOutputType | null
+    _min: Det_LeePdfEstandarPaeMinAggregateOutputType | null
+    _max: Det_LeePdfEstandarPaeMaxAggregateOutputType | null
+  }
+
+  export type Det_LeePdfEstandarPaeMinAggregateOutputType = {
+    id: string | null
+    cabeceraId: string | null
+    Infraestructura: string | null
+    Calificacion: string | null
+    Descripcion: string | null
+    Comprometiendo_Inocuidad: string | null
+    Tipo_NC: string | null
+    Otros_Comentarios: string | null
+  }
+
+  export type Det_LeePdfEstandarPaeMaxAggregateOutputType = {
+    id: string | null
+    cabeceraId: string | null
+    Infraestructura: string | null
+    Calificacion: string | null
+    Descripcion: string | null
+    Comprometiendo_Inocuidad: string | null
+    Tipo_NC: string | null
+    Otros_Comentarios: string | null
+  }
+
+  export type Det_LeePdfEstandarPaeCountAggregateOutputType = {
+    id: number
+    cabeceraId: number
+    Infraestructura: number
+    Calificacion: number
+    Descripcion: number
+    Comprometiendo_Inocuidad: number
+    Tipo_NC: number
+    Otros_Comentarios: number
+    _all: number
+  }
+
+
+  export type Det_LeePdfEstandarPaeMinAggregateInputType = {
+    id?: true
+    cabeceraId?: true
+    Infraestructura?: true
+    Calificacion?: true
+    Descripcion?: true
+    Comprometiendo_Inocuidad?: true
+    Tipo_NC?: true
+    Otros_Comentarios?: true
+  }
+
+  export type Det_LeePdfEstandarPaeMaxAggregateInputType = {
+    id?: true
+    cabeceraId?: true
+    Infraestructura?: true
+    Calificacion?: true
+    Descripcion?: true
+    Comprometiendo_Inocuidad?: true
+    Tipo_NC?: true
+    Otros_Comentarios?: true
+  }
+
+  export type Det_LeePdfEstandarPaeCountAggregateInputType = {
+    id?: true
+    cabeceraId?: true
+    Infraestructura?: true
+    Calificacion?: true
+    Descripcion?: true
+    Comprometiendo_Inocuidad?: true
+    Tipo_NC?: true
+    Otros_Comentarios?: true
+    _all?: true
+  }
+
+  export type Det_LeePdfEstandarPaeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Det_LeePdfEstandarPae to aggregate.
+     */
+    where?: Det_LeePdfEstandarPaeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Det_LeePdfEstandarPaes to fetch.
+     */
+    orderBy?: Det_LeePdfEstandarPaeOrderByWithRelationInput | Det_LeePdfEstandarPaeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Det_LeePdfEstandarPaeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Det_LeePdfEstandarPaes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Det_LeePdfEstandarPaes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Det_LeePdfEstandarPaes
+    **/
+    _count?: true | Det_LeePdfEstandarPaeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Det_LeePdfEstandarPaeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Det_LeePdfEstandarPaeMaxAggregateInputType
+  }
+
+  export type GetDet_LeePdfEstandarPaeAggregateType<T extends Det_LeePdfEstandarPaeAggregateArgs> = {
+        [P in keyof T & keyof AggregateDet_LeePdfEstandarPae]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDet_LeePdfEstandarPae[P]>
+      : GetScalarType<T[P], AggregateDet_LeePdfEstandarPae[P]>
+  }
+
+
+
+
+  export type Det_LeePdfEstandarPaeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Det_LeePdfEstandarPaeWhereInput
+    orderBy?: Det_LeePdfEstandarPaeOrderByWithAggregationInput | Det_LeePdfEstandarPaeOrderByWithAggregationInput[]
+    by: Det_LeePdfEstandarPaeScalarFieldEnum[] | Det_LeePdfEstandarPaeScalarFieldEnum
+    having?: Det_LeePdfEstandarPaeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Det_LeePdfEstandarPaeCountAggregateInputType | true
+    _min?: Det_LeePdfEstandarPaeMinAggregateInputType
+    _max?: Det_LeePdfEstandarPaeMaxAggregateInputType
+  }
+
+  export type Det_LeePdfEstandarPaeGroupByOutputType = {
+    id: string
+    cabeceraId: string
+    Infraestructura: string | null
+    Calificacion: string | null
+    Descripcion: string | null
+    Comprometiendo_Inocuidad: string | null
+    Tipo_NC: string | null
+    Otros_Comentarios: string | null
+    _count: Det_LeePdfEstandarPaeCountAggregateOutputType | null
+    _min: Det_LeePdfEstandarPaeMinAggregateOutputType | null
+    _max: Det_LeePdfEstandarPaeMaxAggregateOutputType | null
+  }
+
+  type GetDet_LeePdfEstandarPaeGroupByPayload<T extends Det_LeePdfEstandarPaeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Det_LeePdfEstandarPaeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Det_LeePdfEstandarPaeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Det_LeePdfEstandarPaeGroupByOutputType[P]>
+            : GetScalarType<T[P], Det_LeePdfEstandarPaeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Det_LeePdfEstandarPaeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cabeceraId?: boolean
+    Infraestructura?: boolean
+    Calificacion?: boolean
+    Descripcion?: boolean
+    Comprometiendo_Inocuidad?: boolean
+    Tipo_NC?: boolean
+    Otros_Comentarios?: boolean
+    cabecera?: boolean | Cab_LeePdfEstandarPaeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["det_LeePdfEstandarPae"]>
+
+  export type Det_LeePdfEstandarPaeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cabeceraId?: boolean
+    Infraestructura?: boolean
+    Calificacion?: boolean
+    Descripcion?: boolean
+    Comprometiendo_Inocuidad?: boolean
+    Tipo_NC?: boolean
+    Otros_Comentarios?: boolean
+    cabecera?: boolean | Cab_LeePdfEstandarPaeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["det_LeePdfEstandarPae"]>
+
+  export type Det_LeePdfEstandarPaeSelectScalar = {
+    id?: boolean
+    cabeceraId?: boolean
+    Infraestructura?: boolean
+    Calificacion?: boolean
+    Descripcion?: boolean
+    Comprometiendo_Inocuidad?: boolean
+    Tipo_NC?: boolean
+    Otros_Comentarios?: boolean
+  }
+
+  export type Det_LeePdfEstandarPaeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    cabecera?: boolean | Cab_LeePdfEstandarPaeDefaultArgs<ExtArgs>
+  }
+  export type Det_LeePdfEstandarPaeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    cabecera?: boolean | Cab_LeePdfEstandarPaeDefaultArgs<ExtArgs>
+  }
+
+  export type $Det_LeePdfEstandarPaePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Det_LeePdfEstandarPae"
+    objects: {
+      cabecera: Prisma.$Cab_LeePdfEstandarPaePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      cabeceraId: string
+      Infraestructura: string | null
+      Calificacion: string | null
+      Descripcion: string | null
+      Comprometiendo_Inocuidad: string | null
+      Tipo_NC: string | null
+      Otros_Comentarios: string | null
+    }, ExtArgs["result"]["det_LeePdfEstandarPae"]>
+    composites: {}
+  }
+
+  type Det_LeePdfEstandarPaeGetPayload<S extends boolean | null | undefined | Det_LeePdfEstandarPaeDefaultArgs> = $Result.GetResult<Prisma.$Det_LeePdfEstandarPaePayload, S>
+
+  type Det_LeePdfEstandarPaeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Det_LeePdfEstandarPaeFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Det_LeePdfEstandarPaeCountAggregateInputType | true
+    }
+
+  export interface Det_LeePdfEstandarPaeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Det_LeePdfEstandarPae'], meta: { name: 'Det_LeePdfEstandarPae' } }
+    /**
+     * Find zero or one Det_LeePdfEstandarPae that matches the filter.
+     * @param {Det_LeePdfEstandarPaeFindUniqueArgs} args - Arguments to find a Det_LeePdfEstandarPae
+     * @example
+     * // Get one Det_LeePdfEstandarPae
+     * const det_LeePdfEstandarPae = await prisma.det_LeePdfEstandarPae.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Det_LeePdfEstandarPaeFindUniqueArgs>(args: SelectSubset<T, Det_LeePdfEstandarPaeFindUniqueArgs<ExtArgs>>): Prisma__Det_LeePdfEstandarPaeClient<$Result.GetResult<Prisma.$Det_LeePdfEstandarPaePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Det_LeePdfEstandarPae that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Det_LeePdfEstandarPaeFindUniqueOrThrowArgs} args - Arguments to find a Det_LeePdfEstandarPae
+     * @example
+     * // Get one Det_LeePdfEstandarPae
+     * const det_LeePdfEstandarPae = await prisma.det_LeePdfEstandarPae.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Det_LeePdfEstandarPaeFindUniqueOrThrowArgs>(args: SelectSubset<T, Det_LeePdfEstandarPaeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Det_LeePdfEstandarPaeClient<$Result.GetResult<Prisma.$Det_LeePdfEstandarPaePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Det_LeePdfEstandarPae that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Det_LeePdfEstandarPaeFindFirstArgs} args - Arguments to find a Det_LeePdfEstandarPae
+     * @example
+     * // Get one Det_LeePdfEstandarPae
+     * const det_LeePdfEstandarPae = await prisma.det_LeePdfEstandarPae.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Det_LeePdfEstandarPaeFindFirstArgs>(args?: SelectSubset<T, Det_LeePdfEstandarPaeFindFirstArgs<ExtArgs>>): Prisma__Det_LeePdfEstandarPaeClient<$Result.GetResult<Prisma.$Det_LeePdfEstandarPaePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Det_LeePdfEstandarPae that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Det_LeePdfEstandarPaeFindFirstOrThrowArgs} args - Arguments to find a Det_LeePdfEstandarPae
+     * @example
+     * // Get one Det_LeePdfEstandarPae
+     * const det_LeePdfEstandarPae = await prisma.det_LeePdfEstandarPae.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Det_LeePdfEstandarPaeFindFirstOrThrowArgs>(args?: SelectSubset<T, Det_LeePdfEstandarPaeFindFirstOrThrowArgs<ExtArgs>>): Prisma__Det_LeePdfEstandarPaeClient<$Result.GetResult<Prisma.$Det_LeePdfEstandarPaePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Det_LeePdfEstandarPaes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Det_LeePdfEstandarPaeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Det_LeePdfEstandarPaes
+     * const det_LeePdfEstandarPaes = await prisma.det_LeePdfEstandarPae.findMany()
+     * 
+     * // Get first 10 Det_LeePdfEstandarPaes
+     * const det_LeePdfEstandarPaes = await prisma.det_LeePdfEstandarPae.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const det_LeePdfEstandarPaeWithIdOnly = await prisma.det_LeePdfEstandarPae.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Det_LeePdfEstandarPaeFindManyArgs>(args?: SelectSubset<T, Det_LeePdfEstandarPaeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Det_LeePdfEstandarPaePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Det_LeePdfEstandarPae.
+     * @param {Det_LeePdfEstandarPaeCreateArgs} args - Arguments to create a Det_LeePdfEstandarPae.
+     * @example
+     * // Create one Det_LeePdfEstandarPae
+     * const Det_LeePdfEstandarPae = await prisma.det_LeePdfEstandarPae.create({
+     *   data: {
+     *     // ... data to create a Det_LeePdfEstandarPae
+     *   }
+     * })
+     * 
+     */
+    create<T extends Det_LeePdfEstandarPaeCreateArgs>(args: SelectSubset<T, Det_LeePdfEstandarPaeCreateArgs<ExtArgs>>): Prisma__Det_LeePdfEstandarPaeClient<$Result.GetResult<Prisma.$Det_LeePdfEstandarPaePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Det_LeePdfEstandarPaes.
+     * @param {Det_LeePdfEstandarPaeCreateManyArgs} args - Arguments to create many Det_LeePdfEstandarPaes.
+     * @example
+     * // Create many Det_LeePdfEstandarPaes
+     * const det_LeePdfEstandarPae = await prisma.det_LeePdfEstandarPae.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Det_LeePdfEstandarPaeCreateManyArgs>(args?: SelectSubset<T, Det_LeePdfEstandarPaeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Det_LeePdfEstandarPaes and returns the data saved in the database.
+     * @param {Det_LeePdfEstandarPaeCreateManyAndReturnArgs} args - Arguments to create many Det_LeePdfEstandarPaes.
+     * @example
+     * // Create many Det_LeePdfEstandarPaes
+     * const det_LeePdfEstandarPae = await prisma.det_LeePdfEstandarPae.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Det_LeePdfEstandarPaes and only return the `id`
+     * const det_LeePdfEstandarPaeWithIdOnly = await prisma.det_LeePdfEstandarPae.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Det_LeePdfEstandarPaeCreateManyAndReturnArgs>(args?: SelectSubset<T, Det_LeePdfEstandarPaeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Det_LeePdfEstandarPaePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Det_LeePdfEstandarPae.
+     * @param {Det_LeePdfEstandarPaeDeleteArgs} args - Arguments to delete one Det_LeePdfEstandarPae.
+     * @example
+     * // Delete one Det_LeePdfEstandarPae
+     * const Det_LeePdfEstandarPae = await prisma.det_LeePdfEstandarPae.delete({
+     *   where: {
+     *     // ... filter to delete one Det_LeePdfEstandarPae
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Det_LeePdfEstandarPaeDeleteArgs>(args: SelectSubset<T, Det_LeePdfEstandarPaeDeleteArgs<ExtArgs>>): Prisma__Det_LeePdfEstandarPaeClient<$Result.GetResult<Prisma.$Det_LeePdfEstandarPaePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Det_LeePdfEstandarPae.
+     * @param {Det_LeePdfEstandarPaeUpdateArgs} args - Arguments to update one Det_LeePdfEstandarPae.
+     * @example
+     * // Update one Det_LeePdfEstandarPae
+     * const det_LeePdfEstandarPae = await prisma.det_LeePdfEstandarPae.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Det_LeePdfEstandarPaeUpdateArgs>(args: SelectSubset<T, Det_LeePdfEstandarPaeUpdateArgs<ExtArgs>>): Prisma__Det_LeePdfEstandarPaeClient<$Result.GetResult<Prisma.$Det_LeePdfEstandarPaePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Det_LeePdfEstandarPaes.
+     * @param {Det_LeePdfEstandarPaeDeleteManyArgs} args - Arguments to filter Det_LeePdfEstandarPaes to delete.
+     * @example
+     * // Delete a few Det_LeePdfEstandarPaes
+     * const { count } = await prisma.det_LeePdfEstandarPae.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Det_LeePdfEstandarPaeDeleteManyArgs>(args?: SelectSubset<T, Det_LeePdfEstandarPaeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Det_LeePdfEstandarPaes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Det_LeePdfEstandarPaeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Det_LeePdfEstandarPaes
+     * const det_LeePdfEstandarPae = await prisma.det_LeePdfEstandarPae.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Det_LeePdfEstandarPaeUpdateManyArgs>(args: SelectSubset<T, Det_LeePdfEstandarPaeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Det_LeePdfEstandarPae.
+     * @param {Det_LeePdfEstandarPaeUpsertArgs} args - Arguments to update or create a Det_LeePdfEstandarPae.
+     * @example
+     * // Update or create a Det_LeePdfEstandarPae
+     * const det_LeePdfEstandarPae = await prisma.det_LeePdfEstandarPae.upsert({
+     *   create: {
+     *     // ... data to create a Det_LeePdfEstandarPae
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Det_LeePdfEstandarPae we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Det_LeePdfEstandarPaeUpsertArgs>(args: SelectSubset<T, Det_LeePdfEstandarPaeUpsertArgs<ExtArgs>>): Prisma__Det_LeePdfEstandarPaeClient<$Result.GetResult<Prisma.$Det_LeePdfEstandarPaePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Det_LeePdfEstandarPaes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Det_LeePdfEstandarPaeCountArgs} args - Arguments to filter Det_LeePdfEstandarPaes to count.
+     * @example
+     * // Count the number of Det_LeePdfEstandarPaes
+     * const count = await prisma.det_LeePdfEstandarPae.count({
+     *   where: {
+     *     // ... the filter for the Det_LeePdfEstandarPaes we want to count
+     *   }
+     * })
+    **/
+    count<T extends Det_LeePdfEstandarPaeCountArgs>(
+      args?: Subset<T, Det_LeePdfEstandarPaeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Det_LeePdfEstandarPaeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Det_LeePdfEstandarPae.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Det_LeePdfEstandarPaeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Det_LeePdfEstandarPaeAggregateArgs>(args: Subset<T, Det_LeePdfEstandarPaeAggregateArgs>): Prisma.PrismaPromise<GetDet_LeePdfEstandarPaeAggregateType<T>>
+
+    /**
+     * Group by Det_LeePdfEstandarPae.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Det_LeePdfEstandarPaeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Det_LeePdfEstandarPaeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Det_LeePdfEstandarPaeGroupByArgs['orderBy'] }
+        : { orderBy?: Det_LeePdfEstandarPaeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Det_LeePdfEstandarPaeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDet_LeePdfEstandarPaeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Det_LeePdfEstandarPae model
+   */
+  readonly fields: Det_LeePdfEstandarPaeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Det_LeePdfEstandarPae.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Det_LeePdfEstandarPaeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    cabecera<T extends Cab_LeePdfEstandarPaeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, Cab_LeePdfEstandarPaeDefaultArgs<ExtArgs>>): Prisma__Cab_LeePdfEstandarPaeClient<$Result.GetResult<Prisma.$Cab_LeePdfEstandarPaePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Det_LeePdfEstandarPae model
+   */ 
+  interface Det_LeePdfEstandarPaeFieldRefs {
+    readonly id: FieldRef<"Det_LeePdfEstandarPae", 'String'>
+    readonly cabeceraId: FieldRef<"Det_LeePdfEstandarPae", 'String'>
+    readonly Infraestructura: FieldRef<"Det_LeePdfEstandarPae", 'String'>
+    readonly Calificacion: FieldRef<"Det_LeePdfEstandarPae", 'String'>
+    readonly Descripcion: FieldRef<"Det_LeePdfEstandarPae", 'String'>
+    readonly Comprometiendo_Inocuidad: FieldRef<"Det_LeePdfEstandarPae", 'String'>
+    readonly Tipo_NC: FieldRef<"Det_LeePdfEstandarPae", 'String'>
+    readonly Otros_Comentarios: FieldRef<"Det_LeePdfEstandarPae", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Det_LeePdfEstandarPae findUnique
+   */
+  export type Det_LeePdfEstandarPaeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Det_LeePdfEstandarPae
+     */
+    select?: Det_LeePdfEstandarPaeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Det_LeePdfEstandarPaeInclude<ExtArgs> | null
+    /**
+     * Filter, which Det_LeePdfEstandarPae to fetch.
+     */
+    where: Det_LeePdfEstandarPaeWhereUniqueInput
+  }
+
+  /**
+   * Det_LeePdfEstandarPae findUniqueOrThrow
+   */
+  export type Det_LeePdfEstandarPaeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Det_LeePdfEstandarPae
+     */
+    select?: Det_LeePdfEstandarPaeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Det_LeePdfEstandarPaeInclude<ExtArgs> | null
+    /**
+     * Filter, which Det_LeePdfEstandarPae to fetch.
+     */
+    where: Det_LeePdfEstandarPaeWhereUniqueInput
+  }
+
+  /**
+   * Det_LeePdfEstandarPae findFirst
+   */
+  export type Det_LeePdfEstandarPaeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Det_LeePdfEstandarPae
+     */
+    select?: Det_LeePdfEstandarPaeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Det_LeePdfEstandarPaeInclude<ExtArgs> | null
+    /**
+     * Filter, which Det_LeePdfEstandarPae to fetch.
+     */
+    where?: Det_LeePdfEstandarPaeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Det_LeePdfEstandarPaes to fetch.
+     */
+    orderBy?: Det_LeePdfEstandarPaeOrderByWithRelationInput | Det_LeePdfEstandarPaeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Det_LeePdfEstandarPaes.
+     */
+    cursor?: Det_LeePdfEstandarPaeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Det_LeePdfEstandarPaes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Det_LeePdfEstandarPaes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Det_LeePdfEstandarPaes.
+     */
+    distinct?: Det_LeePdfEstandarPaeScalarFieldEnum | Det_LeePdfEstandarPaeScalarFieldEnum[]
+  }
+
+  /**
+   * Det_LeePdfEstandarPae findFirstOrThrow
+   */
+  export type Det_LeePdfEstandarPaeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Det_LeePdfEstandarPae
+     */
+    select?: Det_LeePdfEstandarPaeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Det_LeePdfEstandarPaeInclude<ExtArgs> | null
+    /**
+     * Filter, which Det_LeePdfEstandarPae to fetch.
+     */
+    where?: Det_LeePdfEstandarPaeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Det_LeePdfEstandarPaes to fetch.
+     */
+    orderBy?: Det_LeePdfEstandarPaeOrderByWithRelationInput | Det_LeePdfEstandarPaeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Det_LeePdfEstandarPaes.
+     */
+    cursor?: Det_LeePdfEstandarPaeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Det_LeePdfEstandarPaes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Det_LeePdfEstandarPaes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Det_LeePdfEstandarPaes.
+     */
+    distinct?: Det_LeePdfEstandarPaeScalarFieldEnum | Det_LeePdfEstandarPaeScalarFieldEnum[]
+  }
+
+  /**
+   * Det_LeePdfEstandarPae findMany
+   */
+  export type Det_LeePdfEstandarPaeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Det_LeePdfEstandarPae
+     */
+    select?: Det_LeePdfEstandarPaeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Det_LeePdfEstandarPaeInclude<ExtArgs> | null
+    /**
+     * Filter, which Det_LeePdfEstandarPaes to fetch.
+     */
+    where?: Det_LeePdfEstandarPaeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Det_LeePdfEstandarPaes to fetch.
+     */
+    orderBy?: Det_LeePdfEstandarPaeOrderByWithRelationInput | Det_LeePdfEstandarPaeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Det_LeePdfEstandarPaes.
+     */
+    cursor?: Det_LeePdfEstandarPaeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Det_LeePdfEstandarPaes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Det_LeePdfEstandarPaes.
+     */
+    skip?: number
+    distinct?: Det_LeePdfEstandarPaeScalarFieldEnum | Det_LeePdfEstandarPaeScalarFieldEnum[]
+  }
+
+  /**
+   * Det_LeePdfEstandarPae create
+   */
+  export type Det_LeePdfEstandarPaeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Det_LeePdfEstandarPae
+     */
+    select?: Det_LeePdfEstandarPaeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Det_LeePdfEstandarPaeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Det_LeePdfEstandarPae.
+     */
+    data: XOR<Det_LeePdfEstandarPaeCreateInput, Det_LeePdfEstandarPaeUncheckedCreateInput>
+  }
+
+  /**
+   * Det_LeePdfEstandarPae createMany
+   */
+  export type Det_LeePdfEstandarPaeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Det_LeePdfEstandarPaes.
+     */
+    data: Det_LeePdfEstandarPaeCreateManyInput | Det_LeePdfEstandarPaeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Det_LeePdfEstandarPae createManyAndReturn
+   */
+  export type Det_LeePdfEstandarPaeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Det_LeePdfEstandarPae
+     */
+    select?: Det_LeePdfEstandarPaeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Det_LeePdfEstandarPaes.
+     */
+    data: Det_LeePdfEstandarPaeCreateManyInput | Det_LeePdfEstandarPaeCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Det_LeePdfEstandarPaeIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Det_LeePdfEstandarPae update
+   */
+  export type Det_LeePdfEstandarPaeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Det_LeePdfEstandarPae
+     */
+    select?: Det_LeePdfEstandarPaeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Det_LeePdfEstandarPaeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Det_LeePdfEstandarPae.
+     */
+    data: XOR<Det_LeePdfEstandarPaeUpdateInput, Det_LeePdfEstandarPaeUncheckedUpdateInput>
+    /**
+     * Choose, which Det_LeePdfEstandarPae to update.
+     */
+    where: Det_LeePdfEstandarPaeWhereUniqueInput
+  }
+
+  /**
+   * Det_LeePdfEstandarPae updateMany
+   */
+  export type Det_LeePdfEstandarPaeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Det_LeePdfEstandarPaes.
+     */
+    data: XOR<Det_LeePdfEstandarPaeUpdateManyMutationInput, Det_LeePdfEstandarPaeUncheckedUpdateManyInput>
+    /**
+     * Filter which Det_LeePdfEstandarPaes to update
+     */
+    where?: Det_LeePdfEstandarPaeWhereInput
+  }
+
+  /**
+   * Det_LeePdfEstandarPae upsert
+   */
+  export type Det_LeePdfEstandarPaeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Det_LeePdfEstandarPae
+     */
+    select?: Det_LeePdfEstandarPaeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Det_LeePdfEstandarPaeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Det_LeePdfEstandarPae to update in case it exists.
+     */
+    where: Det_LeePdfEstandarPaeWhereUniqueInput
+    /**
+     * In case the Det_LeePdfEstandarPae found by the `where` argument doesn't exist, create a new Det_LeePdfEstandarPae with this data.
+     */
+    create: XOR<Det_LeePdfEstandarPaeCreateInput, Det_LeePdfEstandarPaeUncheckedCreateInput>
+    /**
+     * In case the Det_LeePdfEstandarPae was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Det_LeePdfEstandarPaeUpdateInput, Det_LeePdfEstandarPaeUncheckedUpdateInput>
+  }
+
+  /**
+   * Det_LeePdfEstandarPae delete
+   */
+  export type Det_LeePdfEstandarPaeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Det_LeePdfEstandarPae
+     */
+    select?: Det_LeePdfEstandarPaeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Det_LeePdfEstandarPaeInclude<ExtArgs> | null
+    /**
+     * Filter which Det_LeePdfEstandarPae to delete.
+     */
+    where: Det_LeePdfEstandarPaeWhereUniqueInput
+  }
+
+  /**
+   * Det_LeePdfEstandarPae deleteMany
+   */
+  export type Det_LeePdfEstandarPaeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Det_LeePdfEstandarPaes to delete
+     */
+    where?: Det_LeePdfEstandarPaeWhereInput
+  }
+
+  /**
+   * Det_LeePdfEstandarPae without action
+   */
+  export type Det_LeePdfEstandarPaeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Det_LeePdfEstandarPae
+     */
+    select?: Det_LeePdfEstandarPaeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Det_LeePdfEstandarPaeInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -72941,6 +75211,40 @@ export namespace Prisma {
   };
 
   export type ConsumoApiGoogleScalarFieldEnum = (typeof ConsumoApiGoogleScalarFieldEnum)[keyof typeof ConsumoApiGoogleScalarFieldEnum]
+
+
+  export const Cab_LeePdfEstandarPaeScalarFieldEnum: {
+    id: 'id',
+    NombreArchivoPdf: 'NombreArchivoPdf',
+    Licitacion: 'Licitacion',
+    Folio: 'Folio',
+    Res_Sanitaria_N: 'Res_Sanitaria_N',
+    Nombre_Num_establecimiento: 'Nombre_Num_establecimiento',
+    RBD: 'RBD',
+    Region: 'Region',
+    Comuna: 'Comuna',
+    Fecha_Supervision: 'Fecha_Supervision',
+    Porcentaje_cumplimiento_final: 'Porcentaje_cumplimiento_final',
+    Observaciones: 'Observaciones',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type Cab_LeePdfEstandarPaeScalarFieldEnum = (typeof Cab_LeePdfEstandarPaeScalarFieldEnum)[keyof typeof Cab_LeePdfEstandarPaeScalarFieldEnum]
+
+
+  export const Det_LeePdfEstandarPaeScalarFieldEnum: {
+    id: 'id',
+    cabeceraId: 'cabeceraId',
+    Infraestructura: 'Infraestructura',
+    Calificacion: 'Calificacion',
+    Descripcion: 'Descripcion',
+    Comprometiendo_Inocuidad: 'Comprometiendo_Inocuidad',
+    Tipo_NC: 'Tipo_NC',
+    Otros_Comentarios: 'Otros_Comentarios'
+  };
+
+  export type Det_LeePdfEstandarPaeScalarFieldEnum = (typeof Det_LeePdfEstandarPaeScalarFieldEnum)[keyof typeof Det_LeePdfEstandarPaeScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -78227,7 +80531,7 @@ export namespace Prisma {
 
   export type ConsumoApiGoogleWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    mes_anio?: ConsumoApiGoogleMesAnioCompoundUniqueInput
+    mes_anio?: ConsumoApiGoogleMes_anioCompoundUniqueInput
     AND?: ConsumoApiGoogleWhereInput | ConsumoApiGoogleWhereInput[]
     OR?: ConsumoApiGoogleWhereInput[]
     NOT?: ConsumoApiGoogleWhereInput | ConsumoApiGoogleWhereInput[]
@@ -78259,6 +80563,178 @@ export namespace Prisma {
     anio?: IntWithAggregatesFilter<"ConsumoApiGoogle"> | number
     cantidad?: IntWithAggregatesFilter<"ConsumoApiGoogle"> | number
     updatedAt?: DateTimeWithAggregatesFilter<"ConsumoApiGoogle"> | Date | string
+  }
+
+  export type Cab_LeePdfEstandarPaeWhereInput = {
+    AND?: Cab_LeePdfEstandarPaeWhereInput | Cab_LeePdfEstandarPaeWhereInput[]
+    OR?: Cab_LeePdfEstandarPaeWhereInput[]
+    NOT?: Cab_LeePdfEstandarPaeWhereInput | Cab_LeePdfEstandarPaeWhereInput[]
+    id?: StringFilter<"Cab_LeePdfEstandarPae"> | string
+    NombreArchivoPdf?: StringFilter<"Cab_LeePdfEstandarPae"> | string
+    Licitacion?: IntNullableFilter<"Cab_LeePdfEstandarPae"> | number | null
+    Folio?: StringFilter<"Cab_LeePdfEstandarPae"> | string
+    Res_Sanitaria_N?: StringNullableFilter<"Cab_LeePdfEstandarPae"> | string | null
+    Nombre_Num_establecimiento?: StringNullableFilter<"Cab_LeePdfEstandarPae"> | string | null
+    RBD?: IntNullableFilter<"Cab_LeePdfEstandarPae"> | number | null
+    Region?: StringNullableFilter<"Cab_LeePdfEstandarPae"> | string | null
+    Comuna?: StringNullableFilter<"Cab_LeePdfEstandarPae"> | string | null
+    Fecha_Supervision?: DateTimeNullableFilter<"Cab_LeePdfEstandarPae"> | Date | string | null
+    Porcentaje_cumplimiento_final?: FloatNullableFilter<"Cab_LeePdfEstandarPae"> | number | null
+    Observaciones?: StringNullableFilter<"Cab_LeePdfEstandarPae"> | string | null
+    createdAt?: DateTimeFilter<"Cab_LeePdfEstandarPae"> | Date | string
+    updatedAt?: DateTimeFilter<"Cab_LeePdfEstandarPae"> | Date | string
+    detalles?: Det_LeePdfEstandarPaeListRelationFilter
+  }
+
+  export type Cab_LeePdfEstandarPaeOrderByWithRelationInput = {
+    id?: SortOrder
+    NombreArchivoPdf?: SortOrder
+    Licitacion?: SortOrderInput | SortOrder
+    Folio?: SortOrder
+    Res_Sanitaria_N?: SortOrderInput | SortOrder
+    Nombre_Num_establecimiento?: SortOrderInput | SortOrder
+    RBD?: SortOrderInput | SortOrder
+    Region?: SortOrderInput | SortOrder
+    Comuna?: SortOrderInput | SortOrder
+    Fecha_Supervision?: SortOrderInput | SortOrder
+    Porcentaje_cumplimiento_final?: SortOrderInput | SortOrder
+    Observaciones?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    detalles?: Det_LeePdfEstandarPaeOrderByRelationAggregateInput
+  }
+
+  export type Cab_LeePdfEstandarPaeWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    Folio?: string
+    AND?: Cab_LeePdfEstandarPaeWhereInput | Cab_LeePdfEstandarPaeWhereInput[]
+    OR?: Cab_LeePdfEstandarPaeWhereInput[]
+    NOT?: Cab_LeePdfEstandarPaeWhereInput | Cab_LeePdfEstandarPaeWhereInput[]
+    NombreArchivoPdf?: StringFilter<"Cab_LeePdfEstandarPae"> | string
+    Licitacion?: IntNullableFilter<"Cab_LeePdfEstandarPae"> | number | null
+    Res_Sanitaria_N?: StringNullableFilter<"Cab_LeePdfEstandarPae"> | string | null
+    Nombre_Num_establecimiento?: StringNullableFilter<"Cab_LeePdfEstandarPae"> | string | null
+    RBD?: IntNullableFilter<"Cab_LeePdfEstandarPae"> | number | null
+    Region?: StringNullableFilter<"Cab_LeePdfEstandarPae"> | string | null
+    Comuna?: StringNullableFilter<"Cab_LeePdfEstandarPae"> | string | null
+    Fecha_Supervision?: DateTimeNullableFilter<"Cab_LeePdfEstandarPae"> | Date | string | null
+    Porcentaje_cumplimiento_final?: FloatNullableFilter<"Cab_LeePdfEstandarPae"> | number | null
+    Observaciones?: StringNullableFilter<"Cab_LeePdfEstandarPae"> | string | null
+    createdAt?: DateTimeFilter<"Cab_LeePdfEstandarPae"> | Date | string
+    updatedAt?: DateTimeFilter<"Cab_LeePdfEstandarPae"> | Date | string
+    detalles?: Det_LeePdfEstandarPaeListRelationFilter
+  }, "id" | "Folio">
+
+  export type Cab_LeePdfEstandarPaeOrderByWithAggregationInput = {
+    id?: SortOrder
+    NombreArchivoPdf?: SortOrder
+    Licitacion?: SortOrderInput | SortOrder
+    Folio?: SortOrder
+    Res_Sanitaria_N?: SortOrderInput | SortOrder
+    Nombre_Num_establecimiento?: SortOrderInput | SortOrder
+    RBD?: SortOrderInput | SortOrder
+    Region?: SortOrderInput | SortOrder
+    Comuna?: SortOrderInput | SortOrder
+    Fecha_Supervision?: SortOrderInput | SortOrder
+    Porcentaje_cumplimiento_final?: SortOrderInput | SortOrder
+    Observaciones?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: Cab_LeePdfEstandarPaeCountOrderByAggregateInput
+    _avg?: Cab_LeePdfEstandarPaeAvgOrderByAggregateInput
+    _max?: Cab_LeePdfEstandarPaeMaxOrderByAggregateInput
+    _min?: Cab_LeePdfEstandarPaeMinOrderByAggregateInput
+    _sum?: Cab_LeePdfEstandarPaeSumOrderByAggregateInput
+  }
+
+  export type Cab_LeePdfEstandarPaeScalarWhereWithAggregatesInput = {
+    AND?: Cab_LeePdfEstandarPaeScalarWhereWithAggregatesInput | Cab_LeePdfEstandarPaeScalarWhereWithAggregatesInput[]
+    OR?: Cab_LeePdfEstandarPaeScalarWhereWithAggregatesInput[]
+    NOT?: Cab_LeePdfEstandarPaeScalarWhereWithAggregatesInput | Cab_LeePdfEstandarPaeScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Cab_LeePdfEstandarPae"> | string
+    NombreArchivoPdf?: StringWithAggregatesFilter<"Cab_LeePdfEstandarPae"> | string
+    Licitacion?: IntNullableWithAggregatesFilter<"Cab_LeePdfEstandarPae"> | number | null
+    Folio?: StringWithAggregatesFilter<"Cab_LeePdfEstandarPae"> | string
+    Res_Sanitaria_N?: StringNullableWithAggregatesFilter<"Cab_LeePdfEstandarPae"> | string | null
+    Nombre_Num_establecimiento?: StringNullableWithAggregatesFilter<"Cab_LeePdfEstandarPae"> | string | null
+    RBD?: IntNullableWithAggregatesFilter<"Cab_LeePdfEstandarPae"> | number | null
+    Region?: StringNullableWithAggregatesFilter<"Cab_LeePdfEstandarPae"> | string | null
+    Comuna?: StringNullableWithAggregatesFilter<"Cab_LeePdfEstandarPae"> | string | null
+    Fecha_Supervision?: DateTimeNullableWithAggregatesFilter<"Cab_LeePdfEstandarPae"> | Date | string | null
+    Porcentaje_cumplimiento_final?: FloatNullableWithAggregatesFilter<"Cab_LeePdfEstandarPae"> | number | null
+    Observaciones?: StringNullableWithAggregatesFilter<"Cab_LeePdfEstandarPae"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Cab_LeePdfEstandarPae"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Cab_LeePdfEstandarPae"> | Date | string
+  }
+
+  export type Det_LeePdfEstandarPaeWhereInput = {
+    AND?: Det_LeePdfEstandarPaeWhereInput | Det_LeePdfEstandarPaeWhereInput[]
+    OR?: Det_LeePdfEstandarPaeWhereInput[]
+    NOT?: Det_LeePdfEstandarPaeWhereInput | Det_LeePdfEstandarPaeWhereInput[]
+    id?: StringFilter<"Det_LeePdfEstandarPae"> | string
+    cabeceraId?: StringFilter<"Det_LeePdfEstandarPae"> | string
+    Infraestructura?: StringNullableFilter<"Det_LeePdfEstandarPae"> | string | null
+    Calificacion?: StringNullableFilter<"Det_LeePdfEstandarPae"> | string | null
+    Descripcion?: StringNullableFilter<"Det_LeePdfEstandarPae"> | string | null
+    Comprometiendo_Inocuidad?: StringNullableFilter<"Det_LeePdfEstandarPae"> | string | null
+    Tipo_NC?: StringNullableFilter<"Det_LeePdfEstandarPae"> | string | null
+    Otros_Comentarios?: StringNullableFilter<"Det_LeePdfEstandarPae"> | string | null
+    cabecera?: XOR<Cab_LeePdfEstandarPaeRelationFilter, Cab_LeePdfEstandarPaeWhereInput>
+  }
+
+  export type Det_LeePdfEstandarPaeOrderByWithRelationInput = {
+    id?: SortOrder
+    cabeceraId?: SortOrder
+    Infraestructura?: SortOrderInput | SortOrder
+    Calificacion?: SortOrderInput | SortOrder
+    Descripcion?: SortOrderInput | SortOrder
+    Comprometiendo_Inocuidad?: SortOrderInput | SortOrder
+    Tipo_NC?: SortOrderInput | SortOrder
+    Otros_Comentarios?: SortOrderInput | SortOrder
+    cabecera?: Cab_LeePdfEstandarPaeOrderByWithRelationInput
+  }
+
+  export type Det_LeePdfEstandarPaeWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: Det_LeePdfEstandarPaeWhereInput | Det_LeePdfEstandarPaeWhereInput[]
+    OR?: Det_LeePdfEstandarPaeWhereInput[]
+    NOT?: Det_LeePdfEstandarPaeWhereInput | Det_LeePdfEstandarPaeWhereInput[]
+    cabeceraId?: StringFilter<"Det_LeePdfEstandarPae"> | string
+    Infraestructura?: StringNullableFilter<"Det_LeePdfEstandarPae"> | string | null
+    Calificacion?: StringNullableFilter<"Det_LeePdfEstandarPae"> | string | null
+    Descripcion?: StringNullableFilter<"Det_LeePdfEstandarPae"> | string | null
+    Comprometiendo_Inocuidad?: StringNullableFilter<"Det_LeePdfEstandarPae"> | string | null
+    Tipo_NC?: StringNullableFilter<"Det_LeePdfEstandarPae"> | string | null
+    Otros_Comentarios?: StringNullableFilter<"Det_LeePdfEstandarPae"> | string | null
+    cabecera?: XOR<Cab_LeePdfEstandarPaeRelationFilter, Cab_LeePdfEstandarPaeWhereInput>
+  }, "id">
+
+  export type Det_LeePdfEstandarPaeOrderByWithAggregationInput = {
+    id?: SortOrder
+    cabeceraId?: SortOrder
+    Infraestructura?: SortOrderInput | SortOrder
+    Calificacion?: SortOrderInput | SortOrder
+    Descripcion?: SortOrderInput | SortOrder
+    Comprometiendo_Inocuidad?: SortOrderInput | SortOrder
+    Tipo_NC?: SortOrderInput | SortOrder
+    Otros_Comentarios?: SortOrderInput | SortOrder
+    _count?: Det_LeePdfEstandarPaeCountOrderByAggregateInput
+    _max?: Det_LeePdfEstandarPaeMaxOrderByAggregateInput
+    _min?: Det_LeePdfEstandarPaeMinOrderByAggregateInput
+  }
+
+  export type Det_LeePdfEstandarPaeScalarWhereWithAggregatesInput = {
+    AND?: Det_LeePdfEstandarPaeScalarWhereWithAggregatesInput | Det_LeePdfEstandarPaeScalarWhereWithAggregatesInput[]
+    OR?: Det_LeePdfEstandarPaeScalarWhereWithAggregatesInput[]
+    NOT?: Det_LeePdfEstandarPaeScalarWhereWithAggregatesInput | Det_LeePdfEstandarPaeScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Det_LeePdfEstandarPae"> | string
+    cabeceraId?: StringWithAggregatesFilter<"Det_LeePdfEstandarPae"> | string
+    Infraestructura?: StringNullableWithAggregatesFilter<"Det_LeePdfEstandarPae"> | string | null
+    Calificacion?: StringNullableWithAggregatesFilter<"Det_LeePdfEstandarPae"> | string | null
+    Descripcion?: StringNullableWithAggregatesFilter<"Det_LeePdfEstandarPae"> | string | null
+    Comprometiendo_Inocuidad?: StringNullableWithAggregatesFilter<"Det_LeePdfEstandarPae"> | string | null
+    Tipo_NC?: StringNullableWithAggregatesFilter<"Det_LeePdfEstandarPae"> | string | null
+    Otros_Comentarios?: StringNullableWithAggregatesFilter<"Det_LeePdfEstandarPae"> | string | null
   }
 
   export type RoleCreateInput = {
@@ -84111,6 +86587,205 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type Cab_LeePdfEstandarPaeCreateInput = {
+    id?: string
+    NombreArchivoPdf: string
+    Licitacion?: number | null
+    Folio: string
+    Res_Sanitaria_N?: string | null
+    Nombre_Num_establecimiento?: string | null
+    RBD?: number | null
+    Region?: string | null
+    Comuna?: string | null
+    Fecha_Supervision?: Date | string | null
+    Porcentaje_cumplimiento_final?: number | null
+    Observaciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    detalles?: Det_LeePdfEstandarPaeCreateNestedManyWithoutCabeceraInput
+  }
+
+  export type Cab_LeePdfEstandarPaeUncheckedCreateInput = {
+    id?: string
+    NombreArchivoPdf: string
+    Licitacion?: number | null
+    Folio: string
+    Res_Sanitaria_N?: string | null
+    Nombre_Num_establecimiento?: string | null
+    RBD?: number | null
+    Region?: string | null
+    Comuna?: string | null
+    Fecha_Supervision?: Date | string | null
+    Porcentaje_cumplimiento_final?: number | null
+    Observaciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    detalles?: Det_LeePdfEstandarPaeUncheckedCreateNestedManyWithoutCabeceraInput
+  }
+
+  export type Cab_LeePdfEstandarPaeUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    NombreArchivoPdf?: StringFieldUpdateOperationsInput | string
+    Licitacion?: NullableIntFieldUpdateOperationsInput | number | null
+    Folio?: StringFieldUpdateOperationsInput | string
+    Res_Sanitaria_N?: NullableStringFieldUpdateOperationsInput | string | null
+    Nombre_Num_establecimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    RBD?: NullableIntFieldUpdateOperationsInput | number | null
+    Region?: NullableStringFieldUpdateOperationsInput | string | null
+    Comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    Fecha_Supervision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Porcentaje_cumplimiento_final?: NullableFloatFieldUpdateOperationsInput | number | null
+    Observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    detalles?: Det_LeePdfEstandarPaeUpdateManyWithoutCabeceraNestedInput
+  }
+
+  export type Cab_LeePdfEstandarPaeUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    NombreArchivoPdf?: StringFieldUpdateOperationsInput | string
+    Licitacion?: NullableIntFieldUpdateOperationsInput | number | null
+    Folio?: StringFieldUpdateOperationsInput | string
+    Res_Sanitaria_N?: NullableStringFieldUpdateOperationsInput | string | null
+    Nombre_Num_establecimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    RBD?: NullableIntFieldUpdateOperationsInput | number | null
+    Region?: NullableStringFieldUpdateOperationsInput | string | null
+    Comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    Fecha_Supervision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Porcentaje_cumplimiento_final?: NullableFloatFieldUpdateOperationsInput | number | null
+    Observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    detalles?: Det_LeePdfEstandarPaeUncheckedUpdateManyWithoutCabeceraNestedInput
+  }
+
+  export type Cab_LeePdfEstandarPaeCreateManyInput = {
+    id?: string
+    NombreArchivoPdf: string
+    Licitacion?: number | null
+    Folio: string
+    Res_Sanitaria_N?: string | null
+    Nombre_Num_establecimiento?: string | null
+    RBD?: number | null
+    Region?: string | null
+    Comuna?: string | null
+    Fecha_Supervision?: Date | string | null
+    Porcentaje_cumplimiento_final?: number | null
+    Observaciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Cab_LeePdfEstandarPaeUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    NombreArchivoPdf?: StringFieldUpdateOperationsInput | string
+    Licitacion?: NullableIntFieldUpdateOperationsInput | number | null
+    Folio?: StringFieldUpdateOperationsInput | string
+    Res_Sanitaria_N?: NullableStringFieldUpdateOperationsInput | string | null
+    Nombre_Num_establecimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    RBD?: NullableIntFieldUpdateOperationsInput | number | null
+    Region?: NullableStringFieldUpdateOperationsInput | string | null
+    Comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    Fecha_Supervision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Porcentaje_cumplimiento_final?: NullableFloatFieldUpdateOperationsInput | number | null
+    Observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Cab_LeePdfEstandarPaeUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    NombreArchivoPdf?: StringFieldUpdateOperationsInput | string
+    Licitacion?: NullableIntFieldUpdateOperationsInput | number | null
+    Folio?: StringFieldUpdateOperationsInput | string
+    Res_Sanitaria_N?: NullableStringFieldUpdateOperationsInput | string | null
+    Nombre_Num_establecimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    RBD?: NullableIntFieldUpdateOperationsInput | number | null
+    Region?: NullableStringFieldUpdateOperationsInput | string | null
+    Comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    Fecha_Supervision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Porcentaje_cumplimiento_final?: NullableFloatFieldUpdateOperationsInput | number | null
+    Observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Det_LeePdfEstandarPaeCreateInput = {
+    id?: string
+    Infraestructura?: string | null
+    Calificacion?: string | null
+    Descripcion?: string | null
+    Comprometiendo_Inocuidad?: string | null
+    Tipo_NC?: string | null
+    Otros_Comentarios?: string | null
+    cabecera: Cab_LeePdfEstandarPaeCreateNestedOneWithoutDetallesInput
+  }
+
+  export type Det_LeePdfEstandarPaeUncheckedCreateInput = {
+    id?: string
+    cabeceraId: string
+    Infraestructura?: string | null
+    Calificacion?: string | null
+    Descripcion?: string | null
+    Comprometiendo_Inocuidad?: string | null
+    Tipo_NC?: string | null
+    Otros_Comentarios?: string | null
+  }
+
+  export type Det_LeePdfEstandarPaeUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    Infraestructura?: NullableStringFieldUpdateOperationsInput | string | null
+    Calificacion?: NullableStringFieldUpdateOperationsInput | string | null
+    Descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    Comprometiendo_Inocuidad?: NullableStringFieldUpdateOperationsInput | string | null
+    Tipo_NC?: NullableStringFieldUpdateOperationsInput | string | null
+    Otros_Comentarios?: NullableStringFieldUpdateOperationsInput | string | null
+    cabecera?: Cab_LeePdfEstandarPaeUpdateOneRequiredWithoutDetallesNestedInput
+  }
+
+  export type Det_LeePdfEstandarPaeUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cabeceraId?: StringFieldUpdateOperationsInput | string
+    Infraestructura?: NullableStringFieldUpdateOperationsInput | string | null
+    Calificacion?: NullableStringFieldUpdateOperationsInput | string | null
+    Descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    Comprometiendo_Inocuidad?: NullableStringFieldUpdateOperationsInput | string | null
+    Tipo_NC?: NullableStringFieldUpdateOperationsInput | string | null
+    Otros_Comentarios?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type Det_LeePdfEstandarPaeCreateManyInput = {
+    id?: string
+    cabeceraId: string
+    Infraestructura?: string | null
+    Calificacion?: string | null
+    Descripcion?: string | null
+    Comprometiendo_Inocuidad?: string | null
+    Tipo_NC?: string | null
+    Otros_Comentarios?: string | null
+  }
+
+  export type Det_LeePdfEstandarPaeUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    Infraestructura?: NullableStringFieldUpdateOperationsInput | string | null
+    Calificacion?: NullableStringFieldUpdateOperationsInput | string | null
+    Descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    Comprometiendo_Inocuidad?: NullableStringFieldUpdateOperationsInput | string | null
+    Tipo_NC?: NullableStringFieldUpdateOperationsInput | string | null
+    Otros_Comentarios?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type Det_LeePdfEstandarPaeUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cabeceraId?: StringFieldUpdateOperationsInput | string
+    Infraestructura?: NullableStringFieldUpdateOperationsInput | string | null
+    Calificacion?: NullableStringFieldUpdateOperationsInput | string | null
+    Descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    Comprometiendo_Inocuidad?: NullableStringFieldUpdateOperationsInput | string | null
+    Tipo_NC?: NullableStringFieldUpdateOperationsInput | string | null
+    Otros_Comentarios?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -87783,7 +90458,7 @@ export namespace Prisma {
     duracionMin?: SortOrder
   }
 
-  export type ConsumoApiGoogleMesAnioCompoundUniqueInput = {
+  export type ConsumoApiGoogleMes_anioCompoundUniqueInput = {
     mes: number
     anio: number
   }
@@ -87822,6 +90497,117 @@ export namespace Prisma {
     mes?: SortOrder
     anio?: SortOrder
     cantidad?: SortOrder
+  }
+
+  export type Det_LeePdfEstandarPaeListRelationFilter = {
+    every?: Det_LeePdfEstandarPaeWhereInput
+    some?: Det_LeePdfEstandarPaeWhereInput
+    none?: Det_LeePdfEstandarPaeWhereInput
+  }
+
+  export type Det_LeePdfEstandarPaeOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type Cab_LeePdfEstandarPaeCountOrderByAggregateInput = {
+    id?: SortOrder
+    NombreArchivoPdf?: SortOrder
+    Licitacion?: SortOrder
+    Folio?: SortOrder
+    Res_Sanitaria_N?: SortOrder
+    Nombre_Num_establecimiento?: SortOrder
+    RBD?: SortOrder
+    Region?: SortOrder
+    Comuna?: SortOrder
+    Fecha_Supervision?: SortOrder
+    Porcentaje_cumplimiento_final?: SortOrder
+    Observaciones?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Cab_LeePdfEstandarPaeAvgOrderByAggregateInput = {
+    Licitacion?: SortOrder
+    RBD?: SortOrder
+    Porcentaje_cumplimiento_final?: SortOrder
+  }
+
+  export type Cab_LeePdfEstandarPaeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    NombreArchivoPdf?: SortOrder
+    Licitacion?: SortOrder
+    Folio?: SortOrder
+    Res_Sanitaria_N?: SortOrder
+    Nombre_Num_establecimiento?: SortOrder
+    RBD?: SortOrder
+    Region?: SortOrder
+    Comuna?: SortOrder
+    Fecha_Supervision?: SortOrder
+    Porcentaje_cumplimiento_final?: SortOrder
+    Observaciones?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Cab_LeePdfEstandarPaeMinOrderByAggregateInput = {
+    id?: SortOrder
+    NombreArchivoPdf?: SortOrder
+    Licitacion?: SortOrder
+    Folio?: SortOrder
+    Res_Sanitaria_N?: SortOrder
+    Nombre_Num_establecimiento?: SortOrder
+    RBD?: SortOrder
+    Region?: SortOrder
+    Comuna?: SortOrder
+    Fecha_Supervision?: SortOrder
+    Porcentaje_cumplimiento_final?: SortOrder
+    Observaciones?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Cab_LeePdfEstandarPaeSumOrderByAggregateInput = {
+    Licitacion?: SortOrder
+    RBD?: SortOrder
+    Porcentaje_cumplimiento_final?: SortOrder
+  }
+
+  export type Cab_LeePdfEstandarPaeRelationFilter = {
+    is?: Cab_LeePdfEstandarPaeWhereInput
+    isNot?: Cab_LeePdfEstandarPaeWhereInput
+  }
+
+  export type Det_LeePdfEstandarPaeCountOrderByAggregateInput = {
+    id?: SortOrder
+    cabeceraId?: SortOrder
+    Infraestructura?: SortOrder
+    Calificacion?: SortOrder
+    Descripcion?: SortOrder
+    Comprometiendo_Inocuidad?: SortOrder
+    Tipo_NC?: SortOrder
+    Otros_Comentarios?: SortOrder
+  }
+
+  export type Det_LeePdfEstandarPaeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    cabeceraId?: SortOrder
+    Infraestructura?: SortOrder
+    Calificacion?: SortOrder
+    Descripcion?: SortOrder
+    Comprometiendo_Inocuidad?: SortOrder
+    Tipo_NC?: SortOrder
+    Otros_Comentarios?: SortOrder
+  }
+
+  export type Det_LeePdfEstandarPaeMinOrderByAggregateInput = {
+    id?: SortOrder
+    cabeceraId?: SortOrder
+    Infraestructura?: SortOrder
+    Calificacion?: SortOrder
+    Descripcion?: SortOrder
+    Comprometiendo_Inocuidad?: SortOrder
+    Tipo_NC?: SortOrder
+    Otros_Comentarios?: SortOrder
   }
 
   export type UserCreateNestedManyWithoutRoleInput = {
@@ -90262,6 +93048,62 @@ export namespace Prisma {
     upsert?: SupervisorUpsertWithoutRbdsAuditarInput
     connect?: SupervisorWhereUniqueInput
     update?: XOR<XOR<SupervisorUpdateToOneWithWhereWithoutRbdsAuditarInput, SupervisorUpdateWithoutRbdsAuditarInput>, SupervisorUncheckedUpdateWithoutRbdsAuditarInput>
+  }
+
+  export type Det_LeePdfEstandarPaeCreateNestedManyWithoutCabeceraInput = {
+    create?: XOR<Det_LeePdfEstandarPaeCreateWithoutCabeceraInput, Det_LeePdfEstandarPaeUncheckedCreateWithoutCabeceraInput> | Det_LeePdfEstandarPaeCreateWithoutCabeceraInput[] | Det_LeePdfEstandarPaeUncheckedCreateWithoutCabeceraInput[]
+    connectOrCreate?: Det_LeePdfEstandarPaeCreateOrConnectWithoutCabeceraInput | Det_LeePdfEstandarPaeCreateOrConnectWithoutCabeceraInput[]
+    createMany?: Det_LeePdfEstandarPaeCreateManyCabeceraInputEnvelope
+    connect?: Det_LeePdfEstandarPaeWhereUniqueInput | Det_LeePdfEstandarPaeWhereUniqueInput[]
+  }
+
+  export type Det_LeePdfEstandarPaeUncheckedCreateNestedManyWithoutCabeceraInput = {
+    create?: XOR<Det_LeePdfEstandarPaeCreateWithoutCabeceraInput, Det_LeePdfEstandarPaeUncheckedCreateWithoutCabeceraInput> | Det_LeePdfEstandarPaeCreateWithoutCabeceraInput[] | Det_LeePdfEstandarPaeUncheckedCreateWithoutCabeceraInput[]
+    connectOrCreate?: Det_LeePdfEstandarPaeCreateOrConnectWithoutCabeceraInput | Det_LeePdfEstandarPaeCreateOrConnectWithoutCabeceraInput[]
+    createMany?: Det_LeePdfEstandarPaeCreateManyCabeceraInputEnvelope
+    connect?: Det_LeePdfEstandarPaeWhereUniqueInput | Det_LeePdfEstandarPaeWhereUniqueInput[]
+  }
+
+  export type Det_LeePdfEstandarPaeUpdateManyWithoutCabeceraNestedInput = {
+    create?: XOR<Det_LeePdfEstandarPaeCreateWithoutCabeceraInput, Det_LeePdfEstandarPaeUncheckedCreateWithoutCabeceraInput> | Det_LeePdfEstandarPaeCreateWithoutCabeceraInput[] | Det_LeePdfEstandarPaeUncheckedCreateWithoutCabeceraInput[]
+    connectOrCreate?: Det_LeePdfEstandarPaeCreateOrConnectWithoutCabeceraInput | Det_LeePdfEstandarPaeCreateOrConnectWithoutCabeceraInput[]
+    upsert?: Det_LeePdfEstandarPaeUpsertWithWhereUniqueWithoutCabeceraInput | Det_LeePdfEstandarPaeUpsertWithWhereUniqueWithoutCabeceraInput[]
+    createMany?: Det_LeePdfEstandarPaeCreateManyCabeceraInputEnvelope
+    set?: Det_LeePdfEstandarPaeWhereUniqueInput | Det_LeePdfEstandarPaeWhereUniqueInput[]
+    disconnect?: Det_LeePdfEstandarPaeWhereUniqueInput | Det_LeePdfEstandarPaeWhereUniqueInput[]
+    delete?: Det_LeePdfEstandarPaeWhereUniqueInput | Det_LeePdfEstandarPaeWhereUniqueInput[]
+    connect?: Det_LeePdfEstandarPaeWhereUniqueInput | Det_LeePdfEstandarPaeWhereUniqueInput[]
+    update?: Det_LeePdfEstandarPaeUpdateWithWhereUniqueWithoutCabeceraInput | Det_LeePdfEstandarPaeUpdateWithWhereUniqueWithoutCabeceraInput[]
+    updateMany?: Det_LeePdfEstandarPaeUpdateManyWithWhereWithoutCabeceraInput | Det_LeePdfEstandarPaeUpdateManyWithWhereWithoutCabeceraInput[]
+    deleteMany?: Det_LeePdfEstandarPaeScalarWhereInput | Det_LeePdfEstandarPaeScalarWhereInput[]
+  }
+
+  export type Det_LeePdfEstandarPaeUncheckedUpdateManyWithoutCabeceraNestedInput = {
+    create?: XOR<Det_LeePdfEstandarPaeCreateWithoutCabeceraInput, Det_LeePdfEstandarPaeUncheckedCreateWithoutCabeceraInput> | Det_LeePdfEstandarPaeCreateWithoutCabeceraInput[] | Det_LeePdfEstandarPaeUncheckedCreateWithoutCabeceraInput[]
+    connectOrCreate?: Det_LeePdfEstandarPaeCreateOrConnectWithoutCabeceraInput | Det_LeePdfEstandarPaeCreateOrConnectWithoutCabeceraInput[]
+    upsert?: Det_LeePdfEstandarPaeUpsertWithWhereUniqueWithoutCabeceraInput | Det_LeePdfEstandarPaeUpsertWithWhereUniqueWithoutCabeceraInput[]
+    createMany?: Det_LeePdfEstandarPaeCreateManyCabeceraInputEnvelope
+    set?: Det_LeePdfEstandarPaeWhereUniqueInput | Det_LeePdfEstandarPaeWhereUniqueInput[]
+    disconnect?: Det_LeePdfEstandarPaeWhereUniqueInput | Det_LeePdfEstandarPaeWhereUniqueInput[]
+    delete?: Det_LeePdfEstandarPaeWhereUniqueInput | Det_LeePdfEstandarPaeWhereUniqueInput[]
+    connect?: Det_LeePdfEstandarPaeWhereUniqueInput | Det_LeePdfEstandarPaeWhereUniqueInput[]
+    update?: Det_LeePdfEstandarPaeUpdateWithWhereUniqueWithoutCabeceraInput | Det_LeePdfEstandarPaeUpdateWithWhereUniqueWithoutCabeceraInput[]
+    updateMany?: Det_LeePdfEstandarPaeUpdateManyWithWhereWithoutCabeceraInput | Det_LeePdfEstandarPaeUpdateManyWithWhereWithoutCabeceraInput[]
+    deleteMany?: Det_LeePdfEstandarPaeScalarWhereInput | Det_LeePdfEstandarPaeScalarWhereInput[]
+  }
+
+  export type Cab_LeePdfEstandarPaeCreateNestedOneWithoutDetallesInput = {
+    create?: XOR<Cab_LeePdfEstandarPaeCreateWithoutDetallesInput, Cab_LeePdfEstandarPaeUncheckedCreateWithoutDetallesInput>
+    connectOrCreate?: Cab_LeePdfEstandarPaeCreateOrConnectWithoutDetallesInput
+    connect?: Cab_LeePdfEstandarPaeWhereUniqueInput
+  }
+
+  export type Cab_LeePdfEstandarPaeUpdateOneRequiredWithoutDetallesNestedInput = {
+    create?: XOR<Cab_LeePdfEstandarPaeCreateWithoutDetallesInput, Cab_LeePdfEstandarPaeUncheckedCreateWithoutDetallesInput>
+    connectOrCreate?: Cab_LeePdfEstandarPaeCreateOrConnectWithoutDetallesInput
+    upsert?: Cab_LeePdfEstandarPaeUpsertWithoutDetallesInput
+    connect?: Cab_LeePdfEstandarPaeWhereUniqueInput
+    update?: XOR<XOR<Cab_LeePdfEstandarPaeUpdateToOneWithWhereWithoutDetallesInput, Cab_LeePdfEstandarPaeUpdateWithoutDetallesInput>, Cab_LeePdfEstandarPaeUncheckedUpdateWithoutDetallesInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -95596,6 +98438,150 @@ export namespace Prisma {
     camionetas?: SupervisorVehiculoUncheckedUpdateManyWithoutSupervisorNestedInput
   }
 
+  export type Det_LeePdfEstandarPaeCreateWithoutCabeceraInput = {
+    id?: string
+    Infraestructura?: string | null
+    Calificacion?: string | null
+    Descripcion?: string | null
+    Comprometiendo_Inocuidad?: string | null
+    Tipo_NC?: string | null
+    Otros_Comentarios?: string | null
+  }
+
+  export type Det_LeePdfEstandarPaeUncheckedCreateWithoutCabeceraInput = {
+    id?: string
+    Infraestructura?: string | null
+    Calificacion?: string | null
+    Descripcion?: string | null
+    Comprometiendo_Inocuidad?: string | null
+    Tipo_NC?: string | null
+    Otros_Comentarios?: string | null
+  }
+
+  export type Det_LeePdfEstandarPaeCreateOrConnectWithoutCabeceraInput = {
+    where: Det_LeePdfEstandarPaeWhereUniqueInput
+    create: XOR<Det_LeePdfEstandarPaeCreateWithoutCabeceraInput, Det_LeePdfEstandarPaeUncheckedCreateWithoutCabeceraInput>
+  }
+
+  export type Det_LeePdfEstandarPaeCreateManyCabeceraInputEnvelope = {
+    data: Det_LeePdfEstandarPaeCreateManyCabeceraInput | Det_LeePdfEstandarPaeCreateManyCabeceraInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type Det_LeePdfEstandarPaeUpsertWithWhereUniqueWithoutCabeceraInput = {
+    where: Det_LeePdfEstandarPaeWhereUniqueInput
+    update: XOR<Det_LeePdfEstandarPaeUpdateWithoutCabeceraInput, Det_LeePdfEstandarPaeUncheckedUpdateWithoutCabeceraInput>
+    create: XOR<Det_LeePdfEstandarPaeCreateWithoutCabeceraInput, Det_LeePdfEstandarPaeUncheckedCreateWithoutCabeceraInput>
+  }
+
+  export type Det_LeePdfEstandarPaeUpdateWithWhereUniqueWithoutCabeceraInput = {
+    where: Det_LeePdfEstandarPaeWhereUniqueInput
+    data: XOR<Det_LeePdfEstandarPaeUpdateWithoutCabeceraInput, Det_LeePdfEstandarPaeUncheckedUpdateWithoutCabeceraInput>
+  }
+
+  export type Det_LeePdfEstandarPaeUpdateManyWithWhereWithoutCabeceraInput = {
+    where: Det_LeePdfEstandarPaeScalarWhereInput
+    data: XOR<Det_LeePdfEstandarPaeUpdateManyMutationInput, Det_LeePdfEstandarPaeUncheckedUpdateManyWithoutCabeceraInput>
+  }
+
+  export type Det_LeePdfEstandarPaeScalarWhereInput = {
+    AND?: Det_LeePdfEstandarPaeScalarWhereInput | Det_LeePdfEstandarPaeScalarWhereInput[]
+    OR?: Det_LeePdfEstandarPaeScalarWhereInput[]
+    NOT?: Det_LeePdfEstandarPaeScalarWhereInput | Det_LeePdfEstandarPaeScalarWhereInput[]
+    id?: StringFilter<"Det_LeePdfEstandarPae"> | string
+    cabeceraId?: StringFilter<"Det_LeePdfEstandarPae"> | string
+    Infraestructura?: StringNullableFilter<"Det_LeePdfEstandarPae"> | string | null
+    Calificacion?: StringNullableFilter<"Det_LeePdfEstandarPae"> | string | null
+    Descripcion?: StringNullableFilter<"Det_LeePdfEstandarPae"> | string | null
+    Comprometiendo_Inocuidad?: StringNullableFilter<"Det_LeePdfEstandarPae"> | string | null
+    Tipo_NC?: StringNullableFilter<"Det_LeePdfEstandarPae"> | string | null
+    Otros_Comentarios?: StringNullableFilter<"Det_LeePdfEstandarPae"> | string | null
+  }
+
+  export type Cab_LeePdfEstandarPaeCreateWithoutDetallesInput = {
+    id?: string
+    NombreArchivoPdf: string
+    Licitacion?: number | null
+    Folio: string
+    Res_Sanitaria_N?: string | null
+    Nombre_Num_establecimiento?: string | null
+    RBD?: number | null
+    Region?: string | null
+    Comuna?: string | null
+    Fecha_Supervision?: Date | string | null
+    Porcentaje_cumplimiento_final?: number | null
+    Observaciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Cab_LeePdfEstandarPaeUncheckedCreateWithoutDetallesInput = {
+    id?: string
+    NombreArchivoPdf: string
+    Licitacion?: number | null
+    Folio: string
+    Res_Sanitaria_N?: string | null
+    Nombre_Num_establecimiento?: string | null
+    RBD?: number | null
+    Region?: string | null
+    Comuna?: string | null
+    Fecha_Supervision?: Date | string | null
+    Porcentaje_cumplimiento_final?: number | null
+    Observaciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Cab_LeePdfEstandarPaeCreateOrConnectWithoutDetallesInput = {
+    where: Cab_LeePdfEstandarPaeWhereUniqueInput
+    create: XOR<Cab_LeePdfEstandarPaeCreateWithoutDetallesInput, Cab_LeePdfEstandarPaeUncheckedCreateWithoutDetallesInput>
+  }
+
+  export type Cab_LeePdfEstandarPaeUpsertWithoutDetallesInput = {
+    update: XOR<Cab_LeePdfEstandarPaeUpdateWithoutDetallesInput, Cab_LeePdfEstandarPaeUncheckedUpdateWithoutDetallesInput>
+    create: XOR<Cab_LeePdfEstandarPaeCreateWithoutDetallesInput, Cab_LeePdfEstandarPaeUncheckedCreateWithoutDetallesInput>
+    where?: Cab_LeePdfEstandarPaeWhereInput
+  }
+
+  export type Cab_LeePdfEstandarPaeUpdateToOneWithWhereWithoutDetallesInput = {
+    where?: Cab_LeePdfEstandarPaeWhereInput
+    data: XOR<Cab_LeePdfEstandarPaeUpdateWithoutDetallesInput, Cab_LeePdfEstandarPaeUncheckedUpdateWithoutDetallesInput>
+  }
+
+  export type Cab_LeePdfEstandarPaeUpdateWithoutDetallesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    NombreArchivoPdf?: StringFieldUpdateOperationsInput | string
+    Licitacion?: NullableIntFieldUpdateOperationsInput | number | null
+    Folio?: StringFieldUpdateOperationsInput | string
+    Res_Sanitaria_N?: NullableStringFieldUpdateOperationsInput | string | null
+    Nombre_Num_establecimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    RBD?: NullableIntFieldUpdateOperationsInput | number | null
+    Region?: NullableStringFieldUpdateOperationsInput | string | null
+    Comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    Fecha_Supervision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Porcentaje_cumplimiento_final?: NullableFloatFieldUpdateOperationsInput | number | null
+    Observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Cab_LeePdfEstandarPaeUncheckedUpdateWithoutDetallesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    NombreArchivoPdf?: StringFieldUpdateOperationsInput | string
+    Licitacion?: NullableIntFieldUpdateOperationsInput | number | null
+    Folio?: StringFieldUpdateOperationsInput | string
+    Res_Sanitaria_N?: NullableStringFieldUpdateOperationsInput | string | null
+    Nombre_Num_establecimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    RBD?: NullableIntFieldUpdateOperationsInput | number | null
+    Region?: NullableStringFieldUpdateOperationsInput | string | null
+    Comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    Fecha_Supervision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Porcentaje_cumplimiento_final?: NullableFloatFieldUpdateOperationsInput | number | null
+    Observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type UserCreateManyRoleInput = {
     id?: string
     username: string
@@ -97154,6 +100140,46 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type Det_LeePdfEstandarPaeCreateManyCabeceraInput = {
+    id?: string
+    Infraestructura?: string | null
+    Calificacion?: string | null
+    Descripcion?: string | null
+    Comprometiendo_Inocuidad?: string | null
+    Tipo_NC?: string | null
+    Otros_Comentarios?: string | null
+  }
+
+  export type Det_LeePdfEstandarPaeUpdateWithoutCabeceraInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    Infraestructura?: NullableStringFieldUpdateOperationsInput | string | null
+    Calificacion?: NullableStringFieldUpdateOperationsInput | string | null
+    Descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    Comprometiendo_Inocuidad?: NullableStringFieldUpdateOperationsInput | string | null
+    Tipo_NC?: NullableStringFieldUpdateOperationsInput | string | null
+    Otros_Comentarios?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type Det_LeePdfEstandarPaeUncheckedUpdateWithoutCabeceraInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    Infraestructura?: NullableStringFieldUpdateOperationsInput | string | null
+    Calificacion?: NullableStringFieldUpdateOperationsInput | string | null
+    Descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    Comprometiendo_Inocuidad?: NullableStringFieldUpdateOperationsInput | string | null
+    Tipo_NC?: NullableStringFieldUpdateOperationsInput | string | null
+    Otros_Comentarios?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type Det_LeePdfEstandarPaeUncheckedUpdateManyWithoutCabeceraInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    Infraestructura?: NullableStringFieldUpdateOperationsInput | string | null
+    Calificacion?: NullableStringFieldUpdateOperationsInput | string | null
+    Descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    Comprometiendo_Inocuidad?: NullableStringFieldUpdateOperationsInput | string | null
+    Tipo_NC?: NullableStringFieldUpdateOperationsInput | string | null
+    Otros_Comentarios?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
 
 
   /**
@@ -97235,6 +100261,10 @@ export namespace Prisma {
      * @deprecated Use SupervisorCountOutputTypeDefaultArgs instead
      */
     export type SupervisorCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = SupervisorCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Cab_LeePdfEstandarPaeCountOutputTypeDefaultArgs instead
+     */
+    export type Cab_LeePdfEstandarPaeCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Cab_LeePdfEstandarPaeCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use RoleDefaultArgs instead
      */
@@ -97491,6 +100521,14 @@ export namespace Prisma {
      * @deprecated Use ConsumoApiGoogleDefaultArgs instead
      */
     export type ConsumoApiGoogleArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ConsumoApiGoogleDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Cab_LeePdfEstandarPaeDefaultArgs instead
+     */
+    export type Cab_LeePdfEstandarPaeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Cab_LeePdfEstandarPaeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Det_LeePdfEstandarPaeDefaultArgs instead
+     */
+    export type Det_LeePdfEstandarPaeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Det_LeePdfEstandarPaeDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

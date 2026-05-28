@@ -939,6 +939,34 @@ exports.Prisma.ConsumoApiGoogleScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.Cab_LeePdfEstandarPaeScalarFieldEnum = {
+  id: 'id',
+  NombreArchivoPdf: 'NombreArchivoPdf',
+  Licitacion: 'Licitacion',
+  Folio: 'Folio',
+  Res_Sanitaria_N: 'Res_Sanitaria_N',
+  Nombre_Num_establecimiento: 'Nombre_Num_establecimiento',
+  RBD: 'RBD',
+  Region: 'Region',
+  Comuna: 'Comuna',
+  Fecha_Supervision: 'Fecha_Supervision',
+  Porcentaje_cumplimiento_final: 'Porcentaje_cumplimiento_final',
+  Observaciones: 'Observaciones',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.Det_LeePdfEstandarPaeScalarFieldEnum = {
+  id: 'id',
+  cabeceraId: 'cabeceraId',
+  Infraestructura: 'Infraestructura',
+  Calificacion: 'Calificacion',
+  Descripcion: 'Descripcion',
+  Comprometiendo_Inocuidad: 'Comprometiendo_Inocuidad',
+  Tipo_NC: 'Tipo_NC',
+  Otros_Comentarios: 'Otros_Comentarios'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1019,7 +1047,9 @@ exports.Prisma.ModelName = {
   SupervisorVehiculo: 'SupervisorVehiculo',
   SupervisorRbd: 'SupervisorRbd',
   DistanciaCache: 'DistanciaCache',
-  ConsumoApiGoogle: 'ConsumoApiGoogle'
+  ConsumoApiGoogle: 'ConsumoApiGoogle',
+  Cab_LeePdfEstandarPae: 'Cab_LeePdfEstandarPae',
+  Det_LeePdfEstandarPae: 'Det_LeePdfEstandarPae'
 };
 
 /**

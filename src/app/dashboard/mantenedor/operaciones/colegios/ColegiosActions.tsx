@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { deleteColegioByRBD, syncJUNAEBToMatriz } from './actions'
 import { useRouter } from 'next/navigation'
+import CrearColegioModal from './CrearColegioModal'
 
 export default function ColegiosActions() {
     const [isDeleting, setIsDeleting] = useState(false)
@@ -64,6 +65,7 @@ export default function ColegiosActions() {
             >
                 {isDeleting ? '⌛' : '🗑️'} {isDeleting ? 'Eliminando...' : 'Eliminar por RBD'}
             </button>
+            <CrearColegioModal />
         </div>
     )
 }

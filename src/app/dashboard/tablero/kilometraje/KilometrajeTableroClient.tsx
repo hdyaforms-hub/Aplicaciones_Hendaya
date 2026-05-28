@@ -52,7 +52,7 @@ export default function KilometrajeTableroClient({
                 computedRbdPairs.add(key)
                 totalAssignedSchools++
 
-                const cache = distanciasCache.find(c => c.sucursal === sucursalName && c.rbd === r.rbd)
+                const cache = distanciasCache.find(c => c.sucursal.trim().toUpperCase() === (sucursalName || '').trim().toUpperCase() && c.rbd === r.rbd)
                 if (cache) {
                     if (cache.distanciaKm === -1) {
                         errorCount++
@@ -85,7 +85,7 @@ export default function KilometrajeTableroClient({
                     const assignedSuc = school ? school.sucursal : sucursalName
                     if (assignedSuc === sucursalName) {
                         numSchools++
-                        const cache = distanciasCache.find(c => c.sucursal === sucursalName && c.rbd === r.rbd)
+                        const cache = distanciasCache.find(c => c.sucursal.trim().toUpperCase() === (sucursalName || '').trim().toUpperCase() && c.rbd === r.rbd)
                         if (cache && cache.distanciaKm > 0) {
                             sucursalKm += cache.distanciaKm
                         }
@@ -368,7 +368,7 @@ export default function KilometrajeTableroClient({
                                         if (selectedSucursal !== 'todos' && schoolSucursal !== selectedSucursal) return
 
                                         if (schoolSucursal) {
-                                            const cache = distanciasCache.find(c => c.sucursal === schoolSucursal && c.rbd === r.rbd)
+                                            const cache = distanciasCache.find(c => c.sucursal.trim().toUpperCase() === (schoolSucursal || '').trim().toUpperCase() && c.rbd === r.rbd)
                                             if (cache) {
                                                 if (cache.distanciaKm === -1) {
                                                     hasError = true
@@ -533,9 +533,9 @@ export default function KilometrajeTableroClient({
                                             {pagedModalRbds.map((r: any, idx: number) => {
                                                 const school = colegios.find(col => col.colRBD === r.rbd)
                                                 const schoolSucursal = school ? school.sucursal : (supervisorSucursales?.[0]?.sucursal?.nombre || null)
-                                                const sucursalObj = sucursales.find(su => su.nombre === schoolSucursal)
+                                                const sucursalObj = sucursales.find(su => su.nombre.trim().toUpperCase() === (schoolSucursal || '').trim().toUpperCase())
                                                 
-                                                const cache = schoolSucursal ? distanciasCache.find(c => c.sucursal === schoolSucursal && c.rbd === r.rbd) : null
+                                                const cache = schoolSucursal ? distanciasCache.find(c => c.sucursal.trim().toUpperCase() === schoolSucursal.trim().toUpperCase() && c.rbd === r.rbd) : null
                                                 
                                                 let distStr = 'Pendiente'
                                                 let durStr = 'Pendiente'

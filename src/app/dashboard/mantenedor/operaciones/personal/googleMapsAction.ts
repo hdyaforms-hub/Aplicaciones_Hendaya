@@ -78,9 +78,7 @@ export async function calculateSingleDistance(sucursalNombre: string, rbd: numbe
         }
 
         // Fetch physical addresses
-        const sucursal = await prisma.sucursal.findUnique({
-            where: { nombre: sucursalNombre }
-        })
+        const sucursales = await prisma.sucursal.findMany(); const sucursal = sucursales.find(s => s.nombre.trim().toUpperCase() === sucursalNombre.trim().toUpperCase());
 
         const colegios = await prisma.colegios.findMany({
             where: { colRBD: rbd }

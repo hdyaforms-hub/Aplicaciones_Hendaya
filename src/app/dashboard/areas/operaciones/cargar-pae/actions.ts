@@ -35,7 +35,8 @@ export async function buscarRbdAutocomplete(query: string) {
 export async function obtenerPaeOnline(filtros: {
     licitacion?: string;
     institucion?: string;
-    ano?: number;
+    anoDesde?: number;
+    anoHasta?: number;
     mes?: number;
     rbd?: number;
 }) {
@@ -44,9 +45,14 @@ export async function obtenerPaeOnline(filtros: {
         
         if (filtros.licitacion) where.licitacion = filtros.licitacion;
         if (filtros.institucion) where.institucion = filtros.institucion;
-        if (filtros.ano) where.ano = filtros.ano;
         if (filtros.mes) where.mes = filtros.mes;
         if (filtros.rbd) where.rbd = filtros.rbd;
+        
+        if (filtros.anoDesde || filtros.anoHasta) {
+            where.ano = {};
+            if (filtros.anoDesde) where.ano.gte = filtros.anoDesde;
+            if (filtros.anoHasta) where.ano.lte = filtros.anoHasta;
+        }
         
         const registros = await prisma.paeOnlineCab.findMany({
             where,
@@ -57,6 +63,18 @@ export async function obtenerPaeOnline(filtros: {
         return { success: true, data: registros };
     } catch (error: any) {
         return { success: false, error: 'Error al cargar los registros PAE.' };
+    }
+}
+
+export async function obtenerPeriodosCargadosPae() {
+    try {
+        const periodos = await prisma.paeOnlineCab.groupBy({
+            by: ['ano', 'mes'],
+            orderBy: [{ ano: 'desc' }, { mes: 'desc' }]
+        });
+        return { success: true, data: periodos };
+    } catch (error: any) {
+        return { success: false, error: 'Error al obtener periodos' };
     }
 }
 

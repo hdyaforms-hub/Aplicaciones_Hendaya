@@ -146,6 +146,11 @@ export default function Sidebar({ user }: { user: User }) {
                                 const hasPerm = user.role.permissions.includes('view_retorno_productos');
                                 return !!(isAdmin || hasCalidad || hasPerm);
                             }
+                        },
+                        {
+                            name: 'Subir Actas Estándar PAE',
+                            href: '/dashboard/areas/calidad/subir-actas-pae',
+                            requiredPermission: 'view_calidad_subir_actas_estandar_pae'
                         }
                     ]
                 },

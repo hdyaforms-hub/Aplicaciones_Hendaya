@@ -23,12 +23,27 @@ export async function POST(req: NextRequest) {
         }
 
         // Fetch de un único PDF con la cookie provista
-        const res = await fetch(urlGenerada, {
-            headers: {
-                'Cookie': paeCookie,
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+        // AbortController con timeout de 30s para evitar que el proceso quede colgado
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 30_000);
+
+        let res: Response;
+        try {
+            res = await fetch(urlGenerada, {
+                signal: controller.signal,
+                headers: {
+                    'Cookie': paeCookie,
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+                }
+            });
+        } catch (fetchErr: any) {
+            if (fetchErr?.name === 'AbortError') {
+                return NextResponse.json({ error: 'Tiempo de espera agotado: el servidor de Junaeb no respondió en 30 segundos.' }, { status: 504 });
             }
-        });
+            throw fetchErr;
+        } finally {
+            clearTimeout(timeoutId);
+        }
 
         if (!res.ok) {
             return NextResponse.json({ error: `Error en servidor Junaeb (status ${res.status})` }, { status: res.status });

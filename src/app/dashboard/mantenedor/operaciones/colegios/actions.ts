@@ -100,6 +100,7 @@ export async function uploadColegiosData(data: ColegioData[], overwrite: boolean
         }
 
         revalidatePath('/dashboard/mantenedor/operaciones/colegios')
+        revalidatePath('/dashboard/mantenedor/operaciones/personal')
         return { success: true, count: dataToInsert.length }
     } catch (error: any) {
         console.error('Error insertando datos Colegios:', error)
@@ -211,3 +212,17 @@ export async function syncJUNAEBToMatriz() {
     }
 }
 
+  
+export async function crearColegioManual(data: ColegioData) {  
+    const session = await getSession()  
+    if (!session?.user?.role?.permissions.includes('view_colegios')) return { error: 'Sin permisos' }  
+    try {  
+        const existing = await prisma.colegios.findFirst({ where: { colRBD: Number(data.colRBD) } })  
+        if (existing) return { error: 'El RBD ya existe' }  
+        await prisma.colegios.create({ data: { ...data, colRBD: Number(data.colRBD), colut: Number(data.colut), sucursal: data.sucursal.trim(), nombreEstablecimiento: data.nombreEstablecimiento.trim(), uploadedBy: session.user.username as string } })  
+        if (data.institucion === 'JUNAEB') { await prisma.colegiosMatriz.create({ data: { colRBD: Number(data.colRBD), nombreEstablecimiento: data.nombreEstablecimiento.trim(), institucion: data.institucion, sucursal: data.sucursal.trim(), colut: Number(data.colut), isActive: true } }) }  
+        revalidatePath('/dashboard/mantenedor/operaciones/colegios')  
+        revalidatePath('/dashboard/mantenedor/operaciones/personal')  
+        return { success: true }  
+    } catch (e) { return { error: 'Error al crear' } }  
+} 

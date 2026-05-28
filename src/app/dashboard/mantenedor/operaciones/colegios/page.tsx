@@ -9,7 +9,7 @@ import ColegiosActions from './ColegiosActions'
 export default async function ColegiosPage({
     searchParams
 }: {
-    searchParams: Promise<{ rbd?: string, sucursal?: string, ut?: string, page?: string }>
+    searchParams: Promise<{ rbd?: string, sucursal?: string, ut?: string, page?: string, sort?: string, dir?: string }>
 }) {
     const session = await getSession()
     const permissions = session?.user?.role?.permissions || []
@@ -24,6 +24,8 @@ export default async function ColegiosPage({
         sucursal: resolvedParams.sucursal || '',
         ut: resolvedParams.ut && !isNaN(Number(resolvedParams.ut)) ? Number(resolvedParams.ut) : undefined,
     }
+    const sortCol = resolvedParams.sort || 'nombreEstablecimiento'
+    const sortDir = resolvedParams.dir === 'desc' ? 'desc' : 'asc'
 
     // Limpiar query where
     const whereClause: any = {}
@@ -108,9 +110,9 @@ export default async function ColegiosPage({
         where: whereClause,
         skip: (currentPage - 1) * limit,
         take: limit,
-        orderBy: [
-            { nombreEstablecimiento: 'asc' }
-        ]
+        orderBy: {
+            [sortCol]: sortDir
+        }
     })
 
     // Helper para mantener filtros en la paginación
@@ -119,8 +121,32 @@ export default async function ColegiosPage({
         if (filters.rbd !== undefined) params.set('rbd', filters.rbd.toString())
         if (filters.sucursal) params.set('sucursal', filters.sucursal)
         if (filters.ut !== undefined) params.set('ut', filters.ut.toString())
+        if (resolvedParams.sort) params.set('sort', resolvedParams.sort)
+        if (resolvedParams.dir) params.set('dir', resolvedParams.dir)
         params.set('page', p.toString())
         return `/dashboard/mantenedor/operaciones/colegios?${params.toString()}`
+    }
+
+    const getSortUrl = (col: string) => {
+        const params = new URLSearchParams()
+        if (filters.rbd !== undefined) params.set('rbd', filters.rbd.toString())
+        if (filters.sucursal) params.set('sucursal', filters.sucursal)
+        if (filters.ut !== undefined) params.set('ut', filters.ut.toString())
+        params.set('sort', col)
+        params.set('dir', sortCol === col && sortDir === 'asc' ? 'desc' : 'asc')
+        return `/dashboard/mantenedor/operaciones/colegios?${params.toString()}`
+    }
+    
+    const renderSortHeader = (title: string, col: string, className: string = '') => {
+        const isSorted = sortCol === col
+        return (
+            <th className={`px-6 py-4 font-semibold ${className}`}>
+                <Link href={getSortUrl(col)} className="flex items-center gap-1 hover:text-cyan-700 transition-colors">
+                    {title}
+                    {isSorted ? (sortDir === 'asc' ? <span className="text-xs">🔼</span> : <span className="text-xs">🔽</span>) : <span className="text-xs opacity-20">↕️</span>}
+                </Link>
+            </th>
+        )
     }
 
     return (
@@ -153,14 +179,14 @@ export default async function ColegiosPage({
                     <table className="w-full text-left text-sm whitespace-nowrap relative">
                         <thead className="bg-slate-50 text-slate-600 border-b border-gray-200 sticky top-0 z-10 shadow-sm shadow-slate-200/50">
                             <tr>
-                                <th className="px-6 py-4 font-semibold">RBD</th>
-                                <th className="px-6 py-4 font-semibold">RBD-DV</th>
-                                <th className="px-6 py-4 font-semibold">UT</th>
-                                <th className="px-6 py-4 font-semibold">Institución</th>
-                                <th className="px-6 py-4 font-semibold">Sucursal</th>
-                                <th className="px-6 py-4 font-semibold min-w-[200px]">Nombre Establecimiento</th>
-                                <th className="px-6 py-4 font-semibold min-w-[200px]">Dirección</th>
-                                <th className="px-6 py-4 font-semibold">Comuna</th>
+                                {renderSortHeader('RBD', 'colRBD')}
+                                {renderSortHeader('RBD-DV', 'colRBDDV')}
+                                {renderSortHeader('UT', 'colut')}
+                                {renderSortHeader('Institución', 'institucion')}
+                                {renderSortHeader('Sucursal', 'sucursal')}
+                                {renderSortHeader('Nombre Establecimiento', 'nombreEstablecimiento', 'min-w-[200px]')}
+                                {renderSortHeader('Dirección', 'direccionEstablecimiento', 'min-w-[200px]')}
+                                {renderSortHeader('Comuna', 'comuna')}
                                 <th className="px-6 py-4 font-semibold border-l border-gray-200 bg-cyan-50 text-cyan-800">Cargado Por</th>
                             </tr>
                         </thead>

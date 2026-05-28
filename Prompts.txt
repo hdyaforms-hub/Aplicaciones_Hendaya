@@ -456,8 +456,47 @@ ahora no se que sea mas adecuado si hacer 3 pantallas (Zonales, Jefes de Operaci
 
 /*****************************************************************************************************************/
 
+Necesito que crees un nuevo modulo dentro de "Area\Calidad" que se llame "Subir Actas estándar Pae" toma el código del proyecto que esta en "D:\Programas\Lee Pdf Estandar Pae". 
+Debe seguir leyendo los archivos pdf tal cual lo tiene el código del proyecto anteriormente mencionado, ahora la idea es que lo guardes en la base de datos.
+Debe contar con 2 tablas uno de cabecera y otro detalle el cual detallo a continuación:
+Tabla Cabecera
+	Cab_LeePdfEstandarPae
+		NombreArchivoPdf		string
+		Licitacion			Int	
+		Folio				Int
+		Res_Sanitaria_N	 		String
+		Nombre_Num_establecimiento	Strin
+		RBD				Int
+		Region				String
+		Comuna				String
+		Fecha_Supervision 		Date					
+		Porcentaje_cumplimiento_final	Porcentaje
+		Observaciones			String
 
+Tabla Detalle
+	Det_LeePdfEstandarPae	
+		Infraestructura			String
+		Calificacion			String
+		Descripcion			String
+		Comprometiendo_Inocuidad	String
+		Tipo_NC				String
+		Otros_Comentarios		String
 
+La aplicación debe validar si el archivo ya fue cargado, si ya fue cargado debe preguntar si desea reemplazar el archivo, debe cargar 1 a N archivos pdf.
+la tabla que muestra la información cargada debe contar con cabecera de orden ascendente y descendente, también al hacerle click en el folio debe mostrar el detalle cargado. muestra de 10 registros con botón siguiente
+Guíate por la imagen que adjunto (Imagen 1). debe tener también (imagen 2) un cuadro de resumen donde muestre el rbd, fecha,sucursal (UT / Sucursal) Nombre del establecimiento y el % de cumplimiento y un cuadro general con el Promedio del % de cumplimiento
+
+1% hasta 69% en rojo
+70% al 89% amarillo
+90% al 100% en verde
 
 /*****************************************************************************************************************/
+
+/*****************************************************************************************************************/
+
+/*****************************************************************************************************************/
+
+
+
+
 
