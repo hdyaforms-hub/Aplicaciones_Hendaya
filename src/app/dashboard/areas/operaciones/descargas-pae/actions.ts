@@ -11,11 +11,20 @@ export async function getRbdsPorInstitucion(institucion: string) {
             throw new Error("No autorizado");
         }
 
+        const activeUTs = await prisma.uT.findMany({
+            where: { estado: 1 },
+            select: { codUT: true }
+        });
+        const activeUTIds = activeUTs.map(ut => ut.codUT);
+
         const colegios = await prisma.colegios.findMany({
             where: { 
                 institucion: { 
                     equals: institucion, 
                     mode: 'insensitive' 
+                },
+                colut: {
+                    in: activeUTIds
                 },
                 colRBD: {
                     notIn: [31, 32, 1101, 1302]

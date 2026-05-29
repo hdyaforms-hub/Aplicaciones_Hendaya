@@ -48,7 +48,7 @@ export default function CargarPaeClient() {
     const [delRbd, setDelRbd] = useState('')
     const [delFolio, setDelFolio] = useState('')
     const [deleting, setDeleting] = useState(false)
-    const [periodosCargados, setPeriodosCargados] = useState<{ano: number, mes: number}[]>([])
+    const [periodosCargados, setPeriodosCargados] = useState<{ano: number, mes: number, instituciones: string[]}[]>([])
 
     useEffect(() => {
         cargarTabla()
@@ -58,7 +58,22 @@ export default function CargarPaeClient() {
     const cargarPeriodosCargados = async () => {
         const res = await obtenerPeriodosCargadosPae()
         if (res.success && res.data) {
-            setPeriodosCargados(res.data)
+            const map = new Map<string, {ano: number, mes: number, instituciones: Set<string>}>();
+            res.data.forEach((p: any) => {
+                const key = `${p.ano}-${p.mes}`;
+                if (!map.has(key)) {
+                    map.set(key, { ano: p.ano, mes: p.mes, instituciones: new Set() });
+                }
+                if (p.institucion) {
+                    map.get(key)!.instituciones.add(p.institucion.toUpperCase());
+                }
+            });
+            const result = Array.from(map.values()).map(x => ({
+                ano: x.ano,
+                mes: x.mes,
+                instituciones: Array.from(x.instituciones)
+            }));
+            setPeriodosCargados(result)
         }
     }
 
@@ -282,6 +297,13 @@ export default function CargarPaeClient() {
             : <span className="text-indigo-600 ml-1.5 font-bold animate-in fade-in duration-200">▼</span>;
     };
 
+    const yearsToRender: number[] = [];
+    const maxLoadedYear = periodosCargados.reduce((max, p) => Math.max(max, p.ano), 2026);
+    const minLoadedYear = periodosCargados.reduce((min, p) => Math.min(min, p.ano), 2024);
+    for (let y = maxLoadedYear; y >= Math.min(2024, minLoadedYear); y--) {
+        yearsToRender.push(y);
+    }
+
     return (
         <div className="space-y-6">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
@@ -317,17 +339,42 @@ export default function CargarPaeClient() {
                 <h3 className="text-sm font-bold text-gray-800 uppercase tracking-wider mb-4 flex items-center gap-2">
                     <span>📅</span> Periodos Cargados
                 </h3>
-                {periodosCargados.length === 0 ? (
-                    <p className="text-sm text-gray-500 italic">Aún no se ha cargado información para ningún periodo.</p>
-                ) : (
-                    <div className="flex flex-wrap gap-2">
-                        {periodosCargados.map(p => (
-                            <div key={`${p.ano}-${p.mes}`} className="px-3 py-1.5 bg-indigo-50 border border-indigo-100 text-indigo-700 rounded-lg text-xs font-bold shadow-sm flex items-center gap-1 hover:bg-indigo-100 transition-colors">
-                                <span>🗓️</span> {nombresMeses[p.mes - 1]} {p.ano}
-                            </div>
-                        ))}
+                <div className="overflow-x-auto">
+                    <div className="max-h-[125px] overflow-y-auto pr-2">
+                        <div className="flex flex-col gap-2 min-w-max">
+                            {yearsToRender.map(year => (
+                                <div key={year} className="flex gap-2">
+                                    {Array.from({ length: 12 }).map((_, idx) => {
+                                        const month = idx + 1;
+                                        const loadedInfo = periodosCargados.find(p => p.ano === year && p.mes === month);
+                                        const isLoaded = !!loadedInfo;
+                                        const hasJunaeb = loadedInfo ? loadedInfo.instituciones.includes('JUNAEB') : false;
+                                        const hasJunji = loadedInfo ? loadedInfo.instituciones.includes('JUNJI') : false;
+                                        
+                                        let bgColor = 'bg-red-200';
+                                        if (hasJunaeb && hasJunji) bgColor = 'bg-green-200';
+                                        else if (hasJunaeb || hasJunji) bgColor = 'bg-yellow-200';
+
+                                        const text = `${year}/${month.toString().padStart(2, '0')}`;
+                                        
+                                        return (
+                                            <div 
+                                                key={month} 
+                                                className={`flex flex-col items-center justify-center border border-gray-800 text-xs font-bold w-[80px] h-[38px] shadow-sm transition-colors ${bgColor} text-gray-900`}
+                                            >
+                                                <span>{text}</span>
+                                                <div className="flex gap-1.5 text-[9px] leading-none mt-0.5 font-black">
+                                                    <span className={hasJunaeb ? 'text-green-800' : 'text-red-600/60 line-through'} title="JUNAEB">JB</span>
+                                                    <span className={hasJunji ? 'text-green-800' : 'text-red-600/60 line-through'} title="JUNJI">JI</span>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                )}
+                </div>
             </div>
 
             {/* Filtros de Búsqueda */}

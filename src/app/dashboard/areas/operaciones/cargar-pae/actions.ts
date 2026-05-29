@@ -69,7 +69,7 @@ export async function obtenerPaeOnline(filtros: {
 export async function obtenerPeriodosCargadosPae() {
     try {
         const periodos = await prisma.paeOnlineCab.groupBy({
-            by: ['ano', 'mes'],
+            by: ['ano', 'mes', 'institucion'],
             orderBy: [{ ano: 'desc' }, { mes: 'desc' }]
         });
         return { success: true, data: periodos };

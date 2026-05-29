@@ -523,6 +523,8 @@ export default function DescargasPaeClient() {
                                     </th>
                                     <th className="px-6 py-3 font-bold">RBD</th>
                                     <th className="px-6 py-3 font-bold">Establecimiento</th>
+                                    <th className="px-6 py-3 font-bold">Mes</th>
+                                    <th className="px-6 py-3 font-bold">Año</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-50">
@@ -547,6 +549,12 @@ export default function DescargasPaeClient() {
                                         </td>
                                         <td className="px-6 py-3 font-medium text-gray-900 max-w-[250px] truncate" title={item.nombre}>
                                             {item.nombre}
+                                        </td>
+                                        <td className="px-6 py-3 font-medium text-gray-600">
+                                            {mesesNombres[item.mes - 1]}
+                                        </td>
+                                        <td className="px-6 py-3 font-medium text-gray-600 font-mono">
+                                            {item.ano}
                                         </td>
                                     </tr>
                                 ))}
