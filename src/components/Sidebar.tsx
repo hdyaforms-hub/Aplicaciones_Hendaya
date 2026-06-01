@@ -104,11 +104,6 @@ export default function Sidebar({ user }: { user: User }) {
                             ]
                         },
                         {
-                            name: 'Cálculo de gramaje',
-                            href: '/dashboard/areas/operaciones/captura-certificacion',
-                            requiredPermission: 'view_captura_certificacion'
-                        },
-                        {
                             name: 'Carga de Elementos Esenciales',
                             href: '/dashboard/areas/operaciones/elementos-esenciales',
                             requiredPermission: 'view_elementos_esenciales'
@@ -122,6 +117,18 @@ export default function Sidebar({ user }: { user: User }) {
                             name: 'Cargar PaeOnline',
                             href: '/dashboard/areas/operaciones/cargar-pae',
                             requiredPermission: 'view_operaciones_cargar_pae'
+                        }
+                    ]
+                },
+                {
+                    name: 'Manipuladoras',
+                    requiredPermission: 'view_manipuladoras',
+                    requiredArea: 'Manipuladoras',
+                    subItems: [
+                        {
+                            name: 'Cálculo de gramaje',
+                            href: '/dashboard/areas/manipuladoras/captura-certificacion',
+                            requiredPermission: 'view_captura_certificacion'
                         }
                     ]
                 },
