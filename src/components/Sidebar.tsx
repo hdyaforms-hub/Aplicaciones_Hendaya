@@ -219,7 +219,7 @@ export default function Sidebar({ user }: { user: User }) {
         {
             name: 'Mantenedor',
             icon: '⚙️',
-            requiredPermission: ['view_colegios', 'view_productos', 'view_pmpa', 'view_consumo_gas', 'view_preparaciones', 'view_minutas', 'view_raciones', 'view_codigo_causa', 'manage_sucursales', 'manage_areas', 'manage_vehiculos', 'manage_zonales', 'manage_jefe_operacion', 'manage_supervisor'],
+            requiredPermission: ['view_colegios', 'view_productos', 'view_pmpa', 'view_consumo_gas', 'view_preparaciones', 'view_minutas', 'view_raciones', 'view_codigo_causa', 'manage_sucursales', 'manage_areas', 'manage_vehiculos', 'manage_zonales', 'manage_jefe_operacion', 'manage_supervisor', 'manage_manipuladoras_masiva'],
             subItems: [
                 {
                     name: 'Operaciones',
@@ -233,6 +233,13 @@ export default function Sidebar({ user }: { user: User }) {
                         { name: 'Zonales', href: '/dashboard/mantenedor/operaciones/personal?tab=zonales', requiredPermission: 'manage_zonales' },
                         { name: 'Jefes de Operación', href: '/dashboard/mantenedor/operaciones/personal?tab=jefe-operacion', requiredPermission: 'manage_jefe_operacion' },
                         { name: 'Supervisores', href: '/dashboard/mantenedor/operaciones/personal?tab=supervisor', requiredPermission: 'manage_supervisor' }
+                    ]
+                },
+                {
+                    name: 'Manipuladora',
+                    requiredPermission: 'manage_manipuladoras_masiva',
+                    subItems: [
+                        { name: 'Carga Masiva de usuario', href: '/dashboard/mantenedor/manipuladoras', requiredPermission: 'manage_manipuladoras_masiva' }
                     ]
                 },
                 { name: 'Área', href: '/dashboard/mantenedor/areas', requiredPermission: 'manage_areas' },

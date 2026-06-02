@@ -139,6 +139,9 @@ exports.Prisma.UserScalarFieldEnum = {
   name: 'name',
   roleId: 'roleId',
   isActive: 'isActive',
+  isDeleted: 'isDeleted',
+  mustChangePassword: 'mustChangePassword',
+  rbds: 'rbds',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -713,7 +716,8 @@ exports.Prisma.CapCertificacionHeaderScalarFieldEnum = {
   racionesPreparar: 'racionesPreparar',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  usuario: 'usuario'
+  usuario: 'usuario',
+  motivoCambioAdmin: 'motivoCambioAdmin'
 };
 
 exports.Prisma.CapCertificacionDetailScalarFieldEnum = {

@@ -69,6 +69,15 @@ export async function POST(request: Request) {
                 permissions: permissions,
             },
             sucursales: user.sucursales?.map((s: any) => s.nombre) || [],
+            rbds: user.rbds || [],
+        }
+
+        if (user.mustChangePassword) {
+            console.log(`Usuario debe cambiar contraseña: ${username}`)
+            return NextResponse.json(
+                { message: 'Debe cambiar su contraseña por seguridad', mustChangePassword: true, tempUser: user.username },
+                { status: 202 }
+            )
         }
 
         console.log(`Creando sesión...`)

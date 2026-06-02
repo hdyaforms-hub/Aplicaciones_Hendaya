@@ -178,9 +178,10 @@ export async function getDetalleCertificacion(rbd: number, fecha: string, servic
     }
 }
 
-export async function saveCapturaCertificacion(headerData: any, detailData: any[]) {
+export async function saveCapturaCertificacion(headerData: any, detailData: any[], adminOverrideReason?: string) {
     const session = await getSession()
-    if (!session?.user?.role?.permissions.includes('view_captura_certificacion') && session?.user?.role?.name !== 'admin') {
+    const isAdmin = session?.user?.role?.name === 'admin' || session?.user?.role?.name === 'Administrador'
+    if (!session?.user?.role?.permissions.includes('view_captura_certificacion') && !isAdmin) {
         return { error: 'No tienes permisos para realizar esta acción' }
     }
 
@@ -197,6 +198,10 @@ export async function saveCapturaCertificacion(headerData: any, detailData: any[
         })
 
         if (existing) {
+            if (!isAdmin) {
+                return { error: 'El cálculo ya se realizó para este día. Si cometió un error debe informar a su supervisor.' }
+            }
+
             // Eliminar el registro anterior (cascada sobre los detalles)
             await prisma.capCertificacionHeader.delete({
                 where: { id: existing.id }
@@ -214,6 +219,7 @@ export async function saveCapturaCertificacion(headerData: any, detailData: any[
                 racionesDigitadas: Number(headerData.racionesDigitadas || 0),
                 racionesPreparar: Number(headerData.racionesDigitadas || 0),
                 usuario: session.user.username,
+                motivoCambioAdmin: isAdmin && existing ? adminOverrideReason : null,
                 detalles: {
                     create: detailData.map(d => ({
                         numeroMinuta: String(d.numeroMinuta),

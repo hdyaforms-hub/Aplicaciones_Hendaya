@@ -32,6 +32,7 @@ export default function EditUserForm({
     const [isOpen, setIsOpen] = useState(false)
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
+    const [resetPassword, setResetPassword] = useState(false)
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -90,7 +91,11 @@ export default function EditUserForm({
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Nueva Contraseña (Opcional)</label>
-                                <input name="password" type="password" className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-gray-900" placeholder="Dejar en blanco para no cambiar" />
+                                <input name="password" type="password" disabled={resetPassword} className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-gray-900 disabled:opacity-50 disabled:cursor-not-allowed" placeholder={resetPassword ? "Contraseña reseteada" : "Dejar en blanco para no cambiar"} />
+                                <label className="flex items-center gap-2 mt-3 cursor-pointer">
+                                    <input type="checkbox" name="resetPassword" checked={resetPassword} onChange={(e) => setResetPassword(e.target.checked)} className="w-4 h-4 text-red-600 rounded border-gray-300 focus:ring-red-500" />
+                                    <span className="text-sm font-medium text-red-600">Resetear contraseña por defecto (Henda.2026$)</span>
+                                </label>
                             </div>
 
                             <div>

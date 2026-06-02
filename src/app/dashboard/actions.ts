@@ -77,6 +77,7 @@ export async function updateUser(formData: FormData) {
     const isActive = formData.get('isActive') !== 'false'
     const sucursales = formData.getAll('sucursales') as string[]
     const areas = formData.getAll('areas') as string[]
+    const resetPassword = formData.get('resetPassword') === 'on'
 
     if (!id) return { error: 'ID de usuario no proporcionado' }
 
@@ -103,8 +104,12 @@ export async function updateUser(formData: FormData) {
             }
         }
 
-        if (password) {
+        if (resetPassword) {
+            dataToUpdate.passwordHash = await bcrypt.hash('Henda.2026$', 10)
+            dataToUpdate.mustChangePassword = true
+        } else if (password) {
             dataToUpdate.passwordHash = await bcrypt.hash(password, 10)
+            dataToUpdate.mustChangePassword = false
         }
 
         await prisma.user.update({

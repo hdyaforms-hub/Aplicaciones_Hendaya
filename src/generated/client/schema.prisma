@@ -19,19 +19,22 @@ model Role {
 }
 
 model User {
-  id           String           @id @default(uuid())
-  username     String           @unique
-  email        String?          @unique
-  passwordHash String
-  name         String?
-  roleId       String
-  isActive     Boolean          @default(true)
-  createdAt    DateTime         @default(now())
-  updatedAt    DateTime         @updatedAt
-  role         Role             @relation(fields: [roleId], references: [id])
-  sucursales   Sucursal[]       @relation("SucursalToUser")
-  allowedForms FormDefinition[] @relation("UserForms")
-  areas        Area[]           @relation("UserAreas")
+  id                 String           @id @default(uuid())
+  username           String           @unique
+  email              String?          @unique
+  passwordHash       String
+  name               String?
+  roleId             String
+  isActive           Boolean          @default(true)
+  isDeleted          Boolean          @default(false)
+  mustChangePassword Boolean          @default(false)
+  rbds               Int[]            @default([])
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+  role               Role             @relation(fields: [roleId], references: [id])
+  sucursales         Sucursal[]       @relation("SucursalToUser")
+  allowedForms       FormDefinition[] @relation("UserForms")
+  areas              Area[]           @relation("UserAreas")
 }
 
 model PMPA {

@@ -14,6 +14,12 @@ export default async function UsersPage() {
     }
 
     const users = await prisma.user.findMany({
+        where: {
+            isDeleted: false,
+            role: {
+                name: { not: 'Manipuladoras' }
+            }
+        },
         include: { role: true, sucursales: true, areas: true },
         orderBy: { createdAt: 'desc' }
     })

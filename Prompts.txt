@@ -523,7 +523,26 @@ Guíate por la imagen que adjunto (Imagen 1). debe tener también (imagen 2) un 
 }
 /*****************************************************************************************************************/
 
+Estupendo.
+Dentro del menú Mantenedor, Necesito que hagas una nueva opción de menú llamado "Manipuladora", dentro de manipuladora una opción llamada "Carga Masiva de usuario".
+En esta pantalla debe tener un botón de carga masiva, el cual debe leer un Excel que tenga los siguientes campos:
+NombreCompleto
+NombreUsuario
+CorreoElectronico (opcional)
+Contraseña --> debe asumir el check del reseteo de contraseña para que ella ingrese "Henda.2026$" y la reemplace por una nueva
+Rol --> "Manipuladoras"
+EstadoUsuario --> Vigente
+AreaAsignada --> MANIPULADORAS
+SucursalesPermitidas (puede ser CD COPIAPO, CD METRO, CD COYHAIQUE, ETC)
+EstablecimientoTrabajo --> debe anotarse el rbd en el cual ella trabajara ejemplo 421
 
+Si te das cuenta lo que te estoy solicitando es igual al modulo de gestión de usuario, la idea es que lo lleves por separado ya que esto es exclusivamente para los usuarios que tienen el rol: Manipuladoras y el áreas asignadas: MANIPULADORAS.
+Porque se quiere llevar por separado ya que en este caso pueden ser mas de 1000 cuentas posibles a crear por ende seria un desorden enorme llevar esto en conjunto a las cuentas normales de usuario, por eso se quiere separar, segundo en este caso también tienen un campo nuevo que se llama EstablecimientoTrabajo y la idea es que ella solo pueda ver el o los RBD asociados a su cuenta, la idea igual es que uses la misma tabla de roles y permiso pero que información se separe en sus distintas pantallas, si es manipuladora aparezca en esta nueva ventana y si es un usuario administrativo (que no tenga Area o rol manipuladora) se vea en la pantalla de gestión de usuario.
+Como te comentaba la idea de que sea carga masiva es por lo mismo para no estar cargando mas de 1000 usuarios uno por uno
+La ventana también debe contar con la opción de editar cuenta, resetear contraseña, y asignación del o los RBD que debe ver, por ende los rbd que me debe mostrar son solos los rbd de la sucursal que tiene asociada la manipuladora o nuevo usuario, el listado de los rbd debes hacer que sea una búsqueda inteligente, o sea yo anoto un posible rbd o nombre y debe mostrarme una lista de los establecimiento que tengan coincidencias (esto es cuando yo quiera editar una cuenta), también debe contar con un botón de eliminar usuario (al presionar esto el usuario solo debe desaparecer de la pantalla ya que si lo borras se perdería el cruce de la información que el usuario ingreso en el tiempo),  un botón de "formato del Excel" en el cual me descargue el Excel con el formato para realizar cargas masiva.
+También debe contar con un botón de nueva manipuladora por si se quisiera ingresar un solo usuario.
+En la tabla que se mostrara la información debe contar con el orden al presionar cada titulo de las columnas (ascendentes y descendentes), no debe mostrar mas de 10 registros, por ende debe contar con botón siguiente/anterior.
+Esta tabla debe contar con fitros de: Sucursal, Nombre Completo, nombre usuario, RBD/establecimiento
 
 /*****************************************************************************************************************/
 

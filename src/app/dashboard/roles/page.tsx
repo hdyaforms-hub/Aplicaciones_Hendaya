@@ -46,6 +46,7 @@ export default async function RolesPage() {
         
         { id: 'view_manipuladoras', name: 'Submenú Manipuladoras', description: 'Acceso al submenú de Manipuladoras.', category: 'ÁREAS -> MANIPULADORAS' },
         { id: 'view_captura_certificacion', name: 'Cálculo de gramaje', description: 'Acceso a la calculadora de brechas e insumos por RBD.', category: 'ÁREAS -> MANIPULADORAS' },
+        { id: 'manage_manipuladoras_masiva', name: 'Gestión y Carga Masiva Manipuladoras', description: 'Permite crear, cargar desde Excel y editar manipuladoras.', category: 'ÁREAS -> MANIPULADORAS' },
         
         { id: 'view_calidad', name: 'Menú Calidad', description: 'Acceso al menú de Calidad en el Sidebar.', category: 'ÁREAS -> CALIDAD' },
         { id: 'view_retorno_productos', name: 'Retirada de productos', description: 'Acceso al dashboard de Retirada de productos.', category: 'ÁREAS -> CALIDAD' },

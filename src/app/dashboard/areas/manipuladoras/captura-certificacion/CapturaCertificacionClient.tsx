@@ -12,8 +12,18 @@ interface DetalleCertificacion {
     grsTotal: number
 }
 
-export default function CapturaCertificacionClient() {
-    const [fecha, setFecha] = useState(() => new Date().toISOString().split('T')[0])
+export default function CapturaCertificacionClient({ 
+    isAdmin = false, 
+    colegiosAsignados = [] 
+}: { 
+    isAdmin?: boolean, 
+    colegiosAsignados?: { colRBD: number, nombreEstablecimiento: string }[] 
+}) {
+    const getLocalDay = () => {
+        const d = new Date()
+        return new Date(d.getTime() - (d.getTimezoneOffset() * 60000)).toISOString().split('T')[0]
+    }
+    const [fecha, setFecha] = useState(getLocalDay)
     const [searchInput, setSearchInput] = useState('')
     const [selectedRbd, setSelectedRbd] = useState<number | null>(null)
     const [colegioName, setColegioName] = useState('')
@@ -47,6 +57,7 @@ export default function CapturaCertificacionClient() {
     const [isDirty, setIsDirty] = useState(false)
     const [isSaved, setIsSaved] = useState(false)
     const [racionesDigitadas, setRacionesDigitadas] = useState<number | ''>('')
+    const [adminOverrideReason, setAdminOverrideReason] = useState('')
 
     // Buscar colegios cuando el usuario escribe
     useEffect(() => {
@@ -178,6 +189,7 @@ export default function CapturaCertificacionClient() {
             setIsDirty(false)
             setIsSaved(false)
             setDetalle([])
+            setAdminOverrideReason('')
         }
     }, [selectedServicio, selectedPrograma, selectedArea, racionesBase, fecha, selectedRbd])
 
@@ -245,7 +257,7 @@ export default function CapturaCertificacionClient() {
                 racionesDigitadas: raciones
             }
 
-            const saveResult = await saveCapturaCertificacion(headerData, result.detalle)
+            const saveResult = await saveCapturaCertificacion(headerData, result.detalle, adminOverrideReason)
 
             if (saveResult.error) {
                 setError(saveResult.error)
@@ -256,6 +268,7 @@ export default function CapturaCertificacionClient() {
                 setIsSaved(true)
                 setBaseRacionesValue(base)
                 setDetalle(result.detalle)
+                setAdminOverrideReason('')
             }
         }
         setLoading(false)
@@ -294,7 +307,7 @@ export default function CapturaCertificacionClient() {
             racionesDigitadas: racionesActuales
         }
 
-        const result = await saveCapturaCertificacion(headerData, detalleActualizado)
+        const result = await saveCapturaCertificacion(headerData, detalleActualizado, adminOverrideReason)
         
         if (result.error) {
             setError(result.error)
@@ -304,6 +317,7 @@ export default function CapturaCertificacionClient() {
             setIsSaved(true)
             setBaseRacionesValue(base)
             setDetalle(detalleActualizado) // Actualizar la tabla con lo guardado
+            setAdminOverrideReason('')
         }
         setLoading(false)
     }
@@ -323,6 +337,7 @@ export default function CapturaCertificacionClient() {
         setSuccessMsg('')
         setIsSaved(false)
         setIsDirty(false)
+        setAdminOverrideReason('')
     }
 
     return (
@@ -336,49 +351,78 @@ export default function CapturaCertificacionClient() {
 
                 <div className="relative">
                     <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1.5 ml-1">RBD o Nombre del Colegio</label>
-                    <input
-                        type="text"
-                        value={searchInput}
-                        onChange={(e) => {
-                            setSearchInput(e.target.value)
-                            if (selectedRbd) setSelectedRbd(null)
-                        }}
-                        placeholder="Ej: 399 o Gaspar Cabrales..."
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-gray-900 font-bold transition-all shadow-inner"
-                        onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
-                        onFocus={() => {
-                            if (searchResults.length > 0) setShowDropdown(true)
-                        }}
-                    />
                     
-                    {showDropdown && searchResults.length > 0 && (
-                        <div className="absolute z-50 w-full mt-1 bg-white rounded-xl shadow-xl border border-gray-100 max-h-60 overflow-y-auto">
-                            {searchResults.map((col) => (
-                                <div
-                                    key={col.colRBD}
-                                    className="px-4 py-3 hover:bg-cyan-50 cursor-pointer border-b border-gray-50 last:border-0 transition-colors"
-                                    onMouseDown={(e) => {
-                                        e.preventDefault() // Prevenir onBlur
-                                        setSelectedRbd(col.colRBD)
-                                        setSearchInput(`${col.colRBD} - ${col.nombreEstablecimiento}`)
-                                        setColegioName(col.nombreEstablecimiento)
-                                        setShowDropdown(false)
-                                    }}
-                                >
-                                    <span className="font-black text-cyan-600 text-xs mr-2">RBD: {col.colRBD}</span>
-                                    <span className="font-bold text-gray-700 text-xs">{col.nombreEstablecimiento}</span>
-                                </div>
+                    {!isAdmin ? (
+                        <select
+                            value={selectedRbd || ''}
+                            onChange={(e) => {
+                                const val = e.target.value
+                                if (!val) {
+                                    setSelectedRbd(null)
+                                    setColegioName('')
+                                } else {
+                                    const rbdNum = Number(val)
+                                    setSelectedRbd(rbdNum)
+                                    const col = colegiosAsignados.find(c => c.colRBD === rbdNum)
+                                    if (col) setColegioName(col.nombreEstablecimiento)
+                                }
+                            }}
+                            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-gray-900 font-bold transition-all shadow-inner"
+                        >
+                            <option value="">Seleccione un RBD...</option>
+                            {colegiosAsignados.map(c => (
+                                <option key={c.colRBD} value={c.colRBD}>{c.colRBD} - {c.nombreEstablecimiento}</option>
                             ))}
-                        </div>
+                        </select>
+                    ) : (
+                        <>
+                            <input
+                                type="text"
+                                value={searchInput}
+                                onChange={(e) => {
+                                    setSearchInput(e.target.value)
+                                    if (selectedRbd) setSelectedRbd(null)
+                                }}
+                                placeholder="Ej: 399 o Gaspar Cabrales..."
+                                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-gray-900 font-bold transition-all shadow-inner"
+                                onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
+                                onFocus={() => {
+                                    if (searchResults.length > 0) setShowDropdown(true)
+                                }}
+                            />
+                            
+                            {showDropdown && searchResults.length > 0 && (
+                                <div className="absolute z-50 w-full mt-1 bg-white rounded-xl shadow-xl border border-gray-100 max-h-60 overflow-y-auto">
+                                    {searchResults.map((col) => (
+                                        <div
+                                            key={col.colRBD}
+                                            className="px-4 py-3 hover:bg-cyan-50 cursor-pointer border-b border-gray-50 last:border-0 transition-colors"
+                                            onMouseDown={(e) => {
+                                                e.preventDefault() // Prevenir onBlur
+                                                setSelectedRbd(col.colRBD)
+                                                setSearchInput(`${col.colRBD} - ${col.nombreEstablecimiento}`)
+                                                setColegioName(col.nombreEstablecimiento)
+                                                setShowDropdown(false)
+                                            }}
+                                        >
+                                            <span className="font-black text-cyan-600 text-xs mr-2">RBD: {col.colRBD}</span>
+                                            <span className="font-bold text-gray-700 text-xs">{col.nombreEstablecimiento}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </>
                     )}
                 </div>
 
-                <div>
-                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1.5 ml-1">Nombre</label>
-                    <div className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-100 text-gray-600 font-bold min-h-[46px] flex items-center">
-                        {colegioName || '-'}
+                {isAdmin && (
+                    <div>
+                        <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1.5 ml-1">Nombre</label>
+                        <div className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-100 text-gray-600 font-bold min-h-[46px] flex items-center">
+                            {colegioName || '-'}
+                        </div>
                     </div>
-                </div>
+                )}
 
                 <div>
                     <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1.5 ml-1">Fecha</label>
@@ -455,20 +499,42 @@ export default function CapturaCertificacionClient() {
                                 setRacionesDigitadas(val)
                                 setIsDirty(val !== racionesPreparar)
                             }}
-                            disabled={loading}
+                            disabled={loading || (!isAdmin && isSaved)}
                             placeholder="Cantidad"
                             className="w-full px-4 py-3 rounded-xl border-2 transition-all shadow-inner font-black border-green-200 focus:ring-2 focus:ring-green-500 bg-green-50 text-green-900 disabled:opacity-50"
                         />
                     </div>
                 </div>
 
+                {isAdmin && isSaved && (
+                    <div>
+                        <label className="block text-[10px] font-black text-amber-500 uppercase tracking-widest mb-1.5 ml-1">Leyenda Modificación (Admin)</label>
+                        <input
+                            type="text"
+                            value={adminOverrideReason}
+                            onChange={e => setAdminOverrideReason(e.target.value)}
+                            placeholder="Ej: Se ajustó la cantidad porque..."
+                            className="w-full px-4 py-3 rounded-xl border-2 border-amber-200 focus:ring-2 focus:ring-amber-500 bg-amber-50 text-amber-900 font-medium transition-all shadow-inner text-sm"
+                        />
+                    </div>
+                )}
+
+                {!isAdmin && isSaved && (
+                    <div className="p-3 bg-red-50 rounded-xl border border-red-200">
+                        <p className="text-red-700 text-xs font-bold flex items-start gap-2">
+                            <span className="text-lg leading-none">⚠️</span> 
+                            El cálculo ya se realizó para este día. Si cometió un error, informe a su supervisor.
+                        </p>
+                    </div>
+                )}
+
                 <div className="flex flex-col gap-3 pt-2">
                     <button
                         onClick={handleCalcular}
-                        disabled={loading || !selectedServicio || !selectedPrograma || !selectedArea || !racionesDigitadas}
+                        disabled={loading || !selectedServicio || !selectedPrograma || !selectedArea || !racionesDigitadas || (!isAdmin && isSaved)}
                         className="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-black py-3 px-4 rounded-xl shadow-lg shadow-cyan-200 transition-all active:scale-95 disabled:opacity-50 disabled:shadow-none flex justify-center items-center gap-2"
                     >
-                        {loading ? 'Calculando...' : '🧮 Calcular'}
+                        {loading ? 'Calculando...' : '🧮 Calcular / Guardar'}
                     </button>
                     <button
                         onClick={handleNuevo}

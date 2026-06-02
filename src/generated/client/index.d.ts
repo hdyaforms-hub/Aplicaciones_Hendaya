@@ -8243,8 +8243,18 @@ export namespace Prisma {
 
   export type AggregateUser = {
     _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
+  }
+
+  export type UserAvgAggregateOutputType = {
+    rbds: number | null
+  }
+
+  export type UserSumAggregateOutputType = {
+    rbds: number[]
   }
 
   export type UserMinAggregateOutputType = {
@@ -8255,6 +8265,8 @@ export namespace Prisma {
     name: string | null
     roleId: string | null
     isActive: boolean | null
+    isDeleted: boolean | null
+    mustChangePassword: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -8267,6 +8279,8 @@ export namespace Prisma {
     name: string | null
     roleId: string | null
     isActive: boolean | null
+    isDeleted: boolean | null
+    mustChangePassword: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -8279,11 +8293,22 @@ export namespace Prisma {
     name: number
     roleId: number
     isActive: number
+    isDeleted: number
+    mustChangePassword: number
+    rbds: number
     createdAt: number
     updatedAt: number
     _all: number
   }
 
+
+  export type UserAvgAggregateInputType = {
+    rbds?: true
+  }
+
+  export type UserSumAggregateInputType = {
+    rbds?: true
+  }
 
   export type UserMinAggregateInputType = {
     id?: true
@@ -8293,6 +8318,8 @@ export namespace Prisma {
     name?: true
     roleId?: true
     isActive?: true
+    isDeleted?: true
+    mustChangePassword?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -8305,6 +8332,8 @@ export namespace Prisma {
     name?: true
     roleId?: true
     isActive?: true
+    isDeleted?: true
+    mustChangePassword?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -8317,6 +8346,9 @@ export namespace Prisma {
     name?: true
     roleId?: true
     isActive?: true
+    isDeleted?: true
+    mustChangePassword?: true
+    rbds?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -8360,6 +8392,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: UserAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: UserMinAggregateInputType
@@ -8390,6 +8434,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: UserCountAggregateInputType | true
+    _avg?: UserAvgAggregateInputType
+    _sum?: UserSumAggregateInputType
     _min?: UserMinAggregateInputType
     _max?: UserMaxAggregateInputType
   }
@@ -8402,9 +8448,14 @@ export namespace Prisma {
     name: string | null
     roleId: string
     isActive: boolean
+    isDeleted: boolean
+    mustChangePassword: boolean
+    rbds: number[]
     createdAt: Date
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
   }
@@ -8431,6 +8482,9 @@ export namespace Prisma {
     name?: boolean
     roleId?: boolean
     isActive?: boolean
+    isDeleted?: boolean
+    mustChangePassword?: boolean
+    rbds?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     role?: boolean | RoleDefaultArgs<ExtArgs>
@@ -8448,6 +8502,9 @@ export namespace Prisma {
     name?: boolean
     roleId?: boolean
     isActive?: boolean
+    isDeleted?: boolean
+    mustChangePassword?: boolean
+    rbds?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     role?: boolean | RoleDefaultArgs<ExtArgs>
@@ -8461,6 +8518,9 @@ export namespace Prisma {
     name?: boolean
     roleId?: boolean
     isActive?: boolean
+    isDeleted?: boolean
+    mustChangePassword?: boolean
+    rbds?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
@@ -8492,6 +8552,9 @@ export namespace Prisma {
       name: string | null
       roleId: string
       isActive: boolean
+      isDeleted: boolean
+      mustChangePassword: boolean
+      rbds: number[]
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["user"]>
@@ -8898,6 +8961,9 @@ export namespace Prisma {
     readonly name: FieldRef<"User", 'String'>
     readonly roleId: FieldRef<"User", 'String'>
     readonly isActive: FieldRef<"User", 'Boolean'>
+    readonly isDeleted: FieldRef<"User", 'Boolean'>
+    readonly mustChangePassword: FieldRef<"User", 'Boolean'>
+    readonly rbds: FieldRef<"User", 'Int[]'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
@@ -48425,6 +48491,7 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     usuario: string | null
+    motivoCambioAdmin: string | null
   }
 
   export type CapCertificacionHeaderMaxAggregateOutputType = {
@@ -48440,6 +48507,7 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     usuario: string | null
+    motivoCambioAdmin: string | null
   }
 
   export type CapCertificacionHeaderCountAggregateOutputType = {
@@ -48455,6 +48523,7 @@ export namespace Prisma {
     createdAt: number
     updatedAt: number
     usuario: number
+    motivoCambioAdmin: number
     _all: number
   }
 
@@ -48486,6 +48555,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     usuario?: true
+    motivoCambioAdmin?: true
   }
 
   export type CapCertificacionHeaderMaxAggregateInputType = {
@@ -48501,6 +48571,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     usuario?: true
+    motivoCambioAdmin?: true
   }
 
   export type CapCertificacionHeaderCountAggregateInputType = {
@@ -48516,6 +48587,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     usuario?: true
+    motivoCambioAdmin?: true
     _all?: true
   }
 
@@ -48618,6 +48690,7 @@ export namespace Prisma {
     createdAt: Date
     updatedAt: Date
     usuario: string | null
+    motivoCambioAdmin: string | null
     _count: CapCertificacionHeaderCountAggregateOutputType | null
     _avg: CapCertificacionHeaderAvgAggregateOutputType | null
     _sum: CapCertificacionHeaderSumAggregateOutputType | null
@@ -48652,6 +48725,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     usuario?: boolean
+    motivoCambioAdmin?: boolean
     detalles?: boolean | CapCertificacionHeader$detallesArgs<ExtArgs>
     _count?: boolean | CapCertificacionHeaderCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["capCertificacionHeader"]>
@@ -48669,6 +48743,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     usuario?: boolean
+    motivoCambioAdmin?: boolean
   }, ExtArgs["result"]["capCertificacionHeader"]>
 
   export type CapCertificacionHeaderSelectScalar = {
@@ -48684,6 +48759,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     usuario?: boolean
+    motivoCambioAdmin?: boolean
   }
 
   export type CapCertificacionHeaderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -48710,6 +48786,7 @@ export namespace Prisma {
       createdAt: Date
       updatedAt: Date
       usuario: string | null
+      motivoCambioAdmin: string | null
     }, ExtArgs["result"]["capCertificacionHeader"]>
     composites: {}
   }
@@ -49116,6 +49193,7 @@ export namespace Prisma {
     readonly createdAt: FieldRef<"CapCertificacionHeader", 'DateTime'>
     readonly updatedAt: FieldRef<"CapCertificacionHeader", 'DateTime'>
     readonly usuario: FieldRef<"CapCertificacionHeader", 'String'>
+    readonly motivoCambioAdmin: FieldRef<"CapCertificacionHeader", 'String'>
   }
     
 
@@ -74224,6 +74302,9 @@ export namespace Prisma {
     name: 'name',
     roleId: 'roleId',
     isActive: 'isActive',
+    isDeleted: 'isDeleted',
+    mustChangePassword: 'mustChangePassword',
+    rbds: 'rbds',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -74915,7 +74996,8 @@ export namespace Prisma {
     racionesPreparar: 'racionesPreparar',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
-    usuario: 'usuario'
+    usuario: 'usuario',
+    motivoCambioAdmin: 'motivoCambioAdmin'
   };
 
   export type CapCertificacionHeaderScalarFieldEnum = (typeof CapCertificacionHeaderScalarFieldEnum)[keyof typeof CapCertificacionHeaderScalarFieldEnum]
@@ -75312,16 +75394,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Int'
+   * Reference to a field of type 'Int[]'
    */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
 
   /**
-   * Reference to a field of type 'Int[]'
+   * Reference to a field of type 'Int'
    */
-  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
     
 
 
@@ -75441,6 +75523,9 @@ export namespace Prisma {
     name?: StringNullableFilter<"User"> | string | null
     roleId?: StringFilter<"User"> | string
     isActive?: BoolFilter<"User"> | boolean
+    isDeleted?: BoolFilter<"User"> | boolean
+    mustChangePassword?: BoolFilter<"User"> | boolean
+    rbds?: IntNullableListFilter<"User">
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     role?: XOR<RoleRelationFilter, RoleWhereInput>
@@ -75457,6 +75542,9 @@ export namespace Prisma {
     name?: SortOrderInput | SortOrder
     roleId?: SortOrder
     isActive?: SortOrder
+    isDeleted?: SortOrder
+    mustChangePassword?: SortOrder
+    rbds?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     role?: RoleOrderByWithRelationInput
@@ -75476,6 +75564,9 @@ export namespace Prisma {
     name?: StringNullableFilter<"User"> | string | null
     roleId?: StringFilter<"User"> | string
     isActive?: BoolFilter<"User"> | boolean
+    isDeleted?: BoolFilter<"User"> | boolean
+    mustChangePassword?: BoolFilter<"User"> | boolean
+    rbds?: IntNullableListFilter<"User">
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     role?: XOR<RoleRelationFilter, RoleWhereInput>
@@ -75492,11 +75583,16 @@ export namespace Prisma {
     name?: SortOrderInput | SortOrder
     roleId?: SortOrder
     isActive?: SortOrder
+    isDeleted?: SortOrder
+    mustChangePassword?: SortOrder
+    rbds?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
+    _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
+    _sum?: UserSumOrderByAggregateInput
   }
 
   export type UserScalarWhereWithAggregatesInput = {
@@ -75510,6 +75606,9 @@ export namespace Prisma {
     name?: StringNullableWithAggregatesFilter<"User"> | string | null
     roleId?: StringWithAggregatesFilter<"User"> | string
     isActive?: BoolWithAggregatesFilter<"User"> | boolean
+    isDeleted?: BoolWithAggregatesFilter<"User"> | boolean
+    mustChangePassword?: BoolWithAggregatesFilter<"User"> | boolean
+    rbds?: IntNullableListFilter<"User">
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
@@ -78947,6 +79046,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"CapCertificacionHeader"> | Date | string
     updatedAt?: DateTimeFilter<"CapCertificacionHeader"> | Date | string
     usuario?: StringNullableFilter<"CapCertificacionHeader"> | string | null
+    motivoCambioAdmin?: StringNullableFilter<"CapCertificacionHeader"> | string | null
     detalles?: CapCertificacionDetailListRelationFilter
   }
 
@@ -78963,6 +79063,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     usuario?: SortOrderInput | SortOrder
+    motivoCambioAdmin?: SortOrderInput | SortOrder
     detalles?: CapCertificacionDetailOrderByRelationAggregateInput
   }
 
@@ -78982,6 +79083,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"CapCertificacionHeader"> | Date | string
     updatedAt?: DateTimeFilter<"CapCertificacionHeader"> | Date | string
     usuario?: StringNullableFilter<"CapCertificacionHeader"> | string | null
+    motivoCambioAdmin?: StringNullableFilter<"CapCertificacionHeader"> | string | null
     detalles?: CapCertificacionDetailListRelationFilter
   }, "id">
 
@@ -78998,6 +79100,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     usuario?: SortOrderInput | SortOrder
+    motivoCambioAdmin?: SortOrderInput | SortOrder
     _count?: CapCertificacionHeaderCountOrderByAggregateInput
     _avg?: CapCertificacionHeaderAvgOrderByAggregateInput
     _max?: CapCertificacionHeaderMaxOrderByAggregateInput
@@ -79021,6 +79124,7 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"CapCertificacionHeader"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"CapCertificacionHeader"> | Date | string
     usuario?: StringNullableWithAggregatesFilter<"CapCertificacionHeader"> | string | null
+    motivoCambioAdmin?: StringNullableWithAggregatesFilter<"CapCertificacionHeader"> | string | null
   }
 
   export type CapCertificacionDetailWhereInput = {
@@ -80811,6 +80915,9 @@ export namespace Prisma {
     passwordHash: string
     name?: string | null
     isActive?: boolean
+    isDeleted?: boolean
+    mustChangePassword?: boolean
+    rbds?: UserCreaterbdsInput | number[]
     createdAt?: Date | string
     updatedAt?: Date | string
     role: RoleCreateNestedOneWithoutUsersInput
@@ -80827,6 +80934,9 @@ export namespace Prisma {
     name?: string | null
     roleId: string
     isActive?: boolean
+    isDeleted?: boolean
+    mustChangePassword?: boolean
+    rbds?: UserCreaterbdsInput | number[]
     createdAt?: Date | string
     updatedAt?: Date | string
     sucursales?: SucursalUncheckedCreateNestedManyWithoutUsersInput
@@ -80841,6 +80951,9 @@ export namespace Prisma {
     passwordHash?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
+    mustChangePassword?: BoolFieldUpdateOperationsInput | boolean
+    rbds?: UserUpdaterbdsInput | number[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: RoleUpdateOneRequiredWithoutUsersNestedInput
@@ -80857,6 +80970,9 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     roleId?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
+    mustChangePassword?: BoolFieldUpdateOperationsInput | boolean
+    rbds?: UserUpdaterbdsInput | number[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sucursales?: SucursalUncheckedUpdateManyWithoutUsersNestedInput
@@ -80872,6 +80988,9 @@ export namespace Prisma {
     name?: string | null
     roleId: string
     isActive?: boolean
+    isDeleted?: boolean
+    mustChangePassword?: boolean
+    rbds?: UserCreaterbdsInput | number[]
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -80883,6 +81002,9 @@ export namespace Prisma {
     passwordHash?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
+    mustChangePassword?: BoolFieldUpdateOperationsInput | boolean
+    rbds?: UserUpdaterbdsInput | number[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -80895,6 +81017,9 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     roleId?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
+    mustChangePassword?: BoolFieldUpdateOperationsInput | boolean
+    rbds?: UserUpdaterbdsInput | number[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -84883,6 +85008,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     usuario?: string | null
+    motivoCambioAdmin?: string | null
     detalles?: CapCertificacionDetailCreateNestedManyWithoutHeaderInput
   }
 
@@ -84899,6 +85025,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     usuario?: string | null
+    motivoCambioAdmin?: string | null
     detalles?: CapCertificacionDetailUncheckedCreateNestedManyWithoutHeaderInput
   }
 
@@ -84915,6 +85042,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     usuario?: NullableStringFieldUpdateOperationsInput | string | null
+    motivoCambioAdmin?: NullableStringFieldUpdateOperationsInput | string | null
     detalles?: CapCertificacionDetailUpdateManyWithoutHeaderNestedInput
   }
 
@@ -84931,6 +85059,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     usuario?: NullableStringFieldUpdateOperationsInput | string | null
+    motivoCambioAdmin?: NullableStringFieldUpdateOperationsInput | string | null
     detalles?: CapCertificacionDetailUncheckedUpdateManyWithoutHeaderNestedInput
   }
 
@@ -84947,6 +85076,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     usuario?: string | null
+    motivoCambioAdmin?: string | null
   }
 
   export type CapCertificacionHeaderUpdateManyMutationInput = {
@@ -84962,6 +85092,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     usuario?: NullableStringFieldUpdateOperationsInput | string | null
+    motivoCambioAdmin?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type CapCertificacionHeaderUncheckedUpdateManyInput = {
@@ -84977,6 +85108,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     usuario?: NullableStringFieldUpdateOperationsInput | string | null
+    motivoCambioAdmin?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type CapCertificacionDetailCreateInput = {
@@ -86924,6 +87056,14 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type IntNullableListFilter<$PrismaModel = never> = {
+    equals?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    has?: number | IntFieldRefInput<$PrismaModel> | null
+    hasEvery?: number[] | ListIntFieldRefInput<$PrismaModel>
+    hasSome?: number[] | ListIntFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
   export type RoleRelationFilter = {
     is?: RoleWhereInput
     isNot?: RoleWhereInput
@@ -86967,8 +87107,15 @@ export namespace Prisma {
     name?: SortOrder
     roleId?: SortOrder
     isActive?: SortOrder
+    isDeleted?: SortOrder
+    mustChangePassword?: SortOrder
+    rbds?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type UserAvgOrderByAggregateInput = {
+    rbds?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -86979,6 +87126,8 @@ export namespace Prisma {
     name?: SortOrder
     roleId?: SortOrder
     isActive?: SortOrder
+    isDeleted?: SortOrder
+    mustChangePassword?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -86991,8 +87140,14 @@ export namespace Prisma {
     name?: SortOrder
     roleId?: SortOrder
     isActive?: SortOrder
+    isDeleted?: SortOrder
+    mustChangePassword?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type UserSumOrderByAggregateInput = {
+    rbds?: SortOrder
   }
 
   export type BoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -89441,6 +89596,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     usuario?: SortOrder
+    motivoCambioAdmin?: SortOrder
   }
 
   export type CapCertificacionHeaderAvgOrderByAggregateInput = {
@@ -89463,6 +89619,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     usuario?: SortOrder
+    motivoCambioAdmin?: SortOrder
   }
 
   export type CapCertificacionHeaderMinOrderByAggregateInput = {
@@ -89478,6 +89635,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     usuario?: SortOrder
+    motivoCambioAdmin?: SortOrder
   }
 
   export type CapCertificacionHeaderSumOrderByAggregateInput = {
@@ -90664,6 +90822,10 @@ export namespace Prisma {
     deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
   }
 
+  export type UserCreaterbdsInput = {
+    set: number[]
+  }
+
   export type RoleCreateNestedOneWithoutUsersInput = {
     create?: XOR<RoleCreateWithoutUsersInput, RoleUncheckedCreateWithoutUsersInput>
     connectOrCreate?: RoleCreateOrConnectWithoutUsersInput
@@ -90708,6 +90870,11 @@ export namespace Prisma {
 
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
+  }
+
+  export type UserUpdaterbdsInput = {
+    set?: number[]
+    push?: number | number[]
   }
 
   export type RoleUpdateOneRequiredWithoutUsersNestedInput = {
@@ -93400,6 +93567,9 @@ export namespace Prisma {
     passwordHash: string
     name?: string | null
     isActive?: boolean
+    isDeleted?: boolean
+    mustChangePassword?: boolean
+    rbds?: UserCreaterbdsInput | number[]
     createdAt?: Date | string
     updatedAt?: Date | string
     sucursales?: SucursalCreateNestedManyWithoutUsersInput
@@ -93414,6 +93584,9 @@ export namespace Prisma {
     passwordHash: string
     name?: string | null
     isActive?: boolean
+    isDeleted?: boolean
+    mustChangePassword?: boolean
+    rbds?: UserCreaterbdsInput | number[]
     createdAt?: Date | string
     updatedAt?: Date | string
     sucursales?: SucursalUncheckedCreateNestedManyWithoutUsersInput
@@ -93458,6 +93631,9 @@ export namespace Prisma {
     name?: StringNullableFilter<"User"> | string | null
     roleId?: StringFilter<"User"> | string
     isActive?: BoolFilter<"User"> | boolean
+    isDeleted?: BoolFilter<"User"> | boolean
+    mustChangePassword?: BoolFilter<"User"> | boolean
+    rbds?: IntNullableListFilter<"User">
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
   }
@@ -94395,6 +94571,9 @@ export namespace Prisma {
     passwordHash: string
     name?: string | null
     isActive?: boolean
+    isDeleted?: boolean
+    mustChangePassword?: boolean
+    rbds?: UserCreaterbdsInput | number[]
     createdAt?: Date | string
     updatedAt?: Date | string
     role: RoleCreateNestedOneWithoutUsersInput
@@ -94410,6 +94589,9 @@ export namespace Prisma {
     name?: string | null
     roleId: string
     isActive?: boolean
+    isDeleted?: boolean
+    mustChangePassword?: boolean
+    rbds?: UserCreaterbdsInput | number[]
     createdAt?: Date | string
     updatedAt?: Date | string
     allowedForms?: FormDefinitionUncheckedCreateNestedManyWithoutAllowedUsersInput
@@ -95246,6 +95428,9 @@ export namespace Prisma {
     passwordHash: string
     name?: string | null
     isActive?: boolean
+    isDeleted?: boolean
+    mustChangePassword?: boolean
+    rbds?: UserCreaterbdsInput | number[]
     createdAt?: Date | string
     updatedAt?: Date | string
     role: RoleCreateNestedOneWithoutUsersInput
@@ -95261,6 +95446,9 @@ export namespace Prisma {
     name?: string | null
     roleId: string
     isActive?: boolean
+    isDeleted?: boolean
+    mustChangePassword?: boolean
+    rbds?: UserCreaterbdsInput | number[]
     createdAt?: Date | string
     updatedAt?: Date | string
     sucursales?: SucursalUncheckedCreateNestedManyWithoutUsersInput
@@ -95423,6 +95611,9 @@ export namespace Prisma {
     passwordHash: string
     name?: string | null
     isActive?: boolean
+    isDeleted?: boolean
+    mustChangePassword?: boolean
+    rbds?: UserCreaterbdsInput | number[]
     createdAt?: Date | string
     updatedAt?: Date | string
     role: RoleCreateNestedOneWithoutUsersInput
@@ -95438,6 +95629,9 @@ export namespace Prisma {
     name?: string | null
     roleId: string
     isActive?: boolean
+    isDeleted?: boolean
+    mustChangePassword?: boolean
+    rbds?: UserCreaterbdsInput | number[]
     createdAt?: Date | string
     updatedAt?: Date | string
     sucursales?: SucursalUncheckedCreateNestedManyWithoutUsersInput
@@ -96133,6 +96327,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     usuario?: string | null
+    motivoCambioAdmin?: string | null
   }
 
   export type CapCertificacionHeaderUncheckedCreateWithoutDetallesInput = {
@@ -96148,6 +96343,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     usuario?: string | null
+    motivoCambioAdmin?: string | null
   }
 
   export type CapCertificacionHeaderCreateOrConnectWithoutDetallesInput = {
@@ -96179,6 +96375,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     usuario?: NullableStringFieldUpdateOperationsInput | string | null
+    motivoCambioAdmin?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type CapCertificacionHeaderUncheckedUpdateWithoutDetallesInput = {
@@ -96194,6 +96391,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     usuario?: NullableStringFieldUpdateOperationsInput | string | null
+    motivoCambioAdmin?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ElementosEsenciales_DetCreateWithoutCabInput = {
@@ -98589,6 +98787,9 @@ export namespace Prisma {
     passwordHash: string
     name?: string | null
     isActive?: boolean
+    isDeleted?: boolean
+    mustChangePassword?: boolean
+    rbds?: UserCreaterbdsInput | number[]
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -98600,6 +98801,9 @@ export namespace Prisma {
     passwordHash?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
+    mustChangePassword?: BoolFieldUpdateOperationsInput | boolean
+    rbds?: UserUpdaterbdsInput | number[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sucursales?: SucursalUpdateManyWithoutUsersNestedInput
@@ -98614,6 +98818,9 @@ export namespace Prisma {
     passwordHash?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
+    mustChangePassword?: BoolFieldUpdateOperationsInput | boolean
+    rbds?: UserUpdaterbdsInput | number[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sucursales?: SucursalUncheckedUpdateManyWithoutUsersNestedInput
@@ -98628,6 +98835,9 @@ export namespace Prisma {
     passwordHash?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
+    mustChangePassword?: BoolFieldUpdateOperationsInput | boolean
+    rbds?: UserUpdaterbdsInput | number[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -99131,6 +99341,9 @@ export namespace Prisma {
     passwordHash?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
+    mustChangePassword?: BoolFieldUpdateOperationsInput | boolean
+    rbds?: UserUpdaterbdsInput | number[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: RoleUpdateOneRequiredWithoutUsersNestedInput
@@ -99146,6 +99359,9 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     roleId?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
+    mustChangePassword?: BoolFieldUpdateOperationsInput | boolean
+    rbds?: UserUpdaterbdsInput | number[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     allowedForms?: FormDefinitionUncheckedUpdateManyWithoutAllowedUsersNestedInput
@@ -99160,6 +99376,9 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     roleId?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
+    mustChangePassword?: BoolFieldUpdateOperationsInput | boolean
+    rbds?: UserUpdaterbdsInput | number[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -99439,6 +99658,9 @@ export namespace Prisma {
     passwordHash?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
+    mustChangePassword?: BoolFieldUpdateOperationsInput | boolean
+    rbds?: UserUpdaterbdsInput | number[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: RoleUpdateOneRequiredWithoutUsersNestedInput
@@ -99454,6 +99676,9 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     roleId?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
+    mustChangePassword?: BoolFieldUpdateOperationsInput | boolean
+    rbds?: UserUpdaterbdsInput | number[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sucursales?: SucursalUncheckedUpdateManyWithoutUsersNestedInput
@@ -99468,6 +99693,9 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     roleId?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
+    mustChangePassword?: BoolFieldUpdateOperationsInput | boolean
+    rbds?: UserUpdaterbdsInput | number[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -99541,6 +99769,9 @@ export namespace Prisma {
     passwordHash?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
+    mustChangePassword?: BoolFieldUpdateOperationsInput | boolean
+    rbds?: UserUpdaterbdsInput | number[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: RoleUpdateOneRequiredWithoutUsersNestedInput
@@ -99556,6 +99787,9 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     roleId?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
+    mustChangePassword?: BoolFieldUpdateOperationsInput | boolean
+    rbds?: UserUpdaterbdsInput | number[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sucursales?: SucursalUncheckedUpdateManyWithoutUsersNestedInput
@@ -99570,6 +99804,9 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     roleId?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
+    mustChangePassword?: BoolFieldUpdateOperationsInput | boolean
+    rbds?: UserUpdaterbdsInput | number[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

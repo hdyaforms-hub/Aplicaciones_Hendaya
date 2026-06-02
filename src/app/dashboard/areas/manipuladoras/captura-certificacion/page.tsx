@@ -1,3 +1,4 @@
+import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { redirect } from 'next/navigation'
 import CapturaCertificacionClient from './CapturaCertificacionClient'
@@ -11,6 +12,18 @@ export default async function CapturaCertificacionPage() {
         redirect('/dashboard')
     }
 
+    // Obtener los colegios asignados al usuario si no es admin
+    const userRbds = session?.user?.rbds || []
+    let colegiosAsignados: { colRBD: number, nombreEstablecimiento: string }[] = []
+    
+    if (!isAdmin && userRbds.length > 0) {
+        colegiosAsignados = await prisma.colegios.findMany({
+            where: { colRBD: { in: userRbds } },
+            select: { colRBD: true, nombreEstablecimiento: true },
+            orderBy: { nombreEstablecimiento: 'asc' }
+        })
+    }
+
     return (
         <div className="space-y-6">
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -22,7 +35,10 @@ export default async function CapturaCertificacionPage() {
                 </div>
             </div>
 
-            <CapturaCertificacionClient />
+            <CapturaCertificacionClient 
+                isAdmin={isAdmin} 
+                colegiosAsignados={colegiosAsignados} 
+            />
         </div>
     )
 }
