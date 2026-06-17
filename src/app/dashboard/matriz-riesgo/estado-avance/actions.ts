@@ -3,7 +3,33 @@
 import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { isBefore, isAfter, startOfYear, endOfYear } from 'date-fns'
-import { FIELD_MAPPING, PROBLEM_VALUES } from '../mitigacion/mapping'
+
+async function getUserFilters() {
+    const session = await getSession();
+    if (!session?.user) return { isAdmin: false, userSucursales: [], allowedUTs: [], userRbds: [] };
+
+    const isAdmin = session.user.role?.name === 'Administrador' || session.user.role?.name === 'admin';
+    const userSucursales = session.user.sucursales || [];
+    const userRbds = session.user.rbds || [];
+    let allowedUTs: number[] = [];
+
+    if (!isAdmin && userSucursales.length > 0) {
+        const sucursalesDb = await prisma.sucursal.findMany({
+            where: { nombre: { in: userSucursales } },
+            include: { uts: true }
+        });
+        allowedUTs = sucursalesDb.flatMap(s => s.uts.map((ut: any) => ut.codUT));
+    }
+
+    return { isAdmin, userSucursales, allowedUTs, userRbds };
+}
+
+const PROBLEM_VALUES = [
+    'NO',
+    'NO_EXISTE',
+    'MALO_NO_CUMPLE',
+    'NO_HAY_REQUIERE'
+]
 
 export async function getEstadoAvanceData() {
     const session = await getSession()
@@ -17,16 +43,46 @@ export async function getEstadoAvanceData() {
         
         const cutoff = new Date(configSemestre.fechaFin1)
         
+        const { isAdmin, userSucursales, allowedUTs, userRbds } = await getUserFilters()
+
         // 1. Obtener todos los colegios adjudicados (activos)
-        const adjudicados = await prisma.colegiosMatriz.findMany({ where: { isActive: true } })
+        const adjudicadosWhere: any = { isActive: true }
+        if (!isAdmin) {
+            const orConditions = []
+            if (userSucursales.length > 0) orConditions.push({ sucursal: { in: userSucursales } })
+            if (userRbds.length > 0) orConditions.push({ colRBD: { in: userRbds } })
+            
+            if (orConditions.length > 0) {
+                adjudicadosWhere.OR = orConditions
+            } else {
+                adjudicadosWhere.id = 'NO_DATA'
+            }
+        }
+        const adjudicados = await prisma.colegiosMatriz.findMany({ where: adjudicadosWhere })
         
-        // 2. Obtener todas las matrices del 2026
-        const matrices = await prisma.matrizRiesgo2026.findMany({
-            where: {
-                createdAt: {
-                    gte: startOfYear(new Date('2026-01-01')),
-                    lte: endOfYear(new Date('2026-12-31'))
-                }
+        // 2. Obtener todas las matrices (evaluaciones) del nuevo sistema
+        const matricesWhere: any = {
+            fechaIngreso: {
+                gte: startOfYear(new Date('2026-01-01')),
+                lte: endOfYear(new Date('2026-12-31'))
+            }
+        }
+        if (!isAdmin) {
+            const orConditions = []
+            if (allowedUTs.length > 0) orConditions.push({ ut: { in: allowedUTs } })
+            if (userRbds.length > 0) orConditions.push({ rbd: { in: userRbds } })
+
+            if (orConditions.length > 0) {
+                matricesWhere.OR = orConditions
+            } else {
+                matricesWhere.id = 'NO_DATA'
+            }
+        }
+
+        const matrices = await prisma.matrizT_RespuestasCabecera.findMany({
+            where: matricesWhere,
+            include: {
+                detalles: true
             }
         })
 
@@ -41,14 +97,14 @@ export async function getEstadoAvanceData() {
                 const adjUT = adjudicados.filter(c => c.colut === ut)
                 const matricesUT = matrices.filter(m => {
                     if (m.ut !== ut) return false
-                    const d = new Date(m.createdAt)
+                    const d = new Date(m.fechaIngreso)
                     return sem === 1 ? (isBefore(d, cutoff) || d.getTime() === cutoff.getTime()) : isAfter(d, cutoff)
                 })
 
                 // Para Mitigación (Segundo Semestre abarca todo el año - YTD)
                 const matricesUT_Mitigacion = matrices.filter(m => {
                     if (m.ut !== ut) return false
-                    const d = new Date(m.createdAt)
+                    const d = new Date(m.fechaIngreso)
                     return sem === 1 ? (isBefore(d, cutoff) || d.getTime() === cutoff.getTime()) : true
                 })
 
@@ -73,12 +129,12 @@ export async function getEstadoAvanceData() {
                     let unsolvedInThisActa = false
                     let hasAtLeastOneMitigation = false
 
-                    Object.entries(FIELD_MAPPING).forEach(([preguntaId, fieldName]) => {
-                        const val = (m as any)[fieldName]
-                        if (PROBLEM_VALUES.includes(val)) {
+                    m.detalles.forEach(respuesta => {
+                        if (respuesta.valor && PROBLEM_VALUES.includes(respuesta.valor)) {
                             hasProblems = true
                             totalItemsLevantados++
-                            const mit = mitigaciones.find(mit => mit.matrizId === m.id.toString() && mit.preguntaId === preguntaId)
+                            
+                            const mit = mitigaciones.find(mit => mit.matrizId === m.id && mit.preguntaId === respuesta.preguntaId)
                             if (mit?.fechaSolucion) {
                                 totalItemsSolucionados++
                             } else {

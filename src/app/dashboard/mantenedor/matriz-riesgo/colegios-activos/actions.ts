@@ -34,7 +34,7 @@ export async function saveMatrizSemesterConfig(data: { anio: number, fechaFin1: 
             }
         })
 
-        revalidatePath('/dashboard/matriz-riesgo/matriz-2026/colegios-activos')
+        revalidatePath('/dashboard/mantenedor/matriz-riesgo/colegios-activos')
         revalidatePath('/dashboard/matriz-riesgo/matriz-2026/mitigacion')
         return { success: true, config }
     } catch (e) {

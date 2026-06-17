@@ -1,0 +1,268 @@
+'use server'
+
+import { prisma } from '@/lib/prisma'
+import { getSession } from '@/lib/session'
+import { revalidatePath } from 'next/cache'
+
+export async function getLicitaciones() {
+    try {
+        const licitaciones = await prisma.licitacion.findMany({
+            where: { estado: 1 },
+            orderBy: { licId: 'asc' }
+        })
+        return { success: true, licitaciones }
+    } catch (e) {
+        console.error(e)
+        return { error: 'Error al obtener licitaciones.' }
+    }
+}
+
+export async function getMatrices() {
+    try {
+        const matrices = await prisma.matrizT_Cabecera.findMany({
+            include: {
+                licitacion: true,
+                _count: {
+                    select: { respuestas: true }
+                }
+            },
+            orderBy: { createdAt: 'desc' }
+        })
+        return { success: true, matrices }
+    } catch (e) {
+        console.error(e)
+        return { error: 'Error al cargar matrices.' }
+    }
+}
+
+export async function getMatrix(id: string) {
+    try {
+        const matrix = await prisma.matrizT_Cabecera.findUnique({
+            where: { id },
+            include: {
+                licitacion: true,
+                detalles: {
+                    orderBy: { orden: 'asc' }
+                }
+            }
+        })
+        return { success: true, matrix }
+    } catch (e) {
+        console.error(e)
+        return { error: 'Error al cargar la matriz.' }
+    }
+}
+
+export async function saveMatrixHeader(data: { id?: string, licId: number, anio: number, titulo: string, estado: boolean }) {
+    const session = await getSession()
+    if (!session?.user?.role?.permissions.includes('manage_nueva_matriz')) {
+        return { error: 'No tienes permisos para esta acción.' }
+    }
+
+    try {
+        if (data.id) {
+            // Check if answered
+            const answersCount = await prisma.matrizT_RespuestasCabecera.count({
+                where: { cabeceraId: data.id }
+            })
+            if (answersCount > 0) {
+                return { error: 'No se puede modificar esta matriz porque ya tiene respuestas contestadas.' }
+            }
+
+            const matrix = await prisma.matrizT_Cabecera.update({
+                where: { id: data.id },
+                data: {
+                    licId: Number(data.licId),
+                    anio: Number(data.anio),
+                    titulo: data.titulo,
+                    estado: data.estado
+                }
+            })
+            revalidatePath('/dashboard/mantenedor/matriz-riesgo/nueva-matriz')
+            return { success: true, matrix }
+        } else {
+            const matrix = await prisma.matrizT_Cabecera.create({
+                data: {
+                    licId: Number(data.licId),
+                    anio: Number(data.anio),
+                    titulo: data.titulo,
+                    estado: data.estado
+                }
+            })
+            revalidatePath('/dashboard/mantenedor/matriz-riesgo/nueva-matriz')
+            return { success: true, matrix }
+        }
+    } catch (e) {
+        console.error(e)
+        return { error: 'Error al guardar la cabecera de la matriz.' }
+    }
+}
+
+export async function deleteMatrix(id: string) {
+    const session = await getSession()
+    if (!session?.user?.role?.permissions.includes('manage_nueva_matriz')) {
+        return { error: 'No tienes permisos para esta acción.' }
+    }
+
+    try {
+        const answersCount = await prisma.matrizT_RespuestasCabecera.count({
+            where: { cabeceraId: id }
+        })
+        if (answersCount > 0) {
+            return { error: 'No se puede eliminar la matriz porque ya tiene respuestas contestadas.' }
+        }
+
+        await prisma.matrizT_Cabecera.delete({
+            where: { id }
+        })
+        revalidatePath('/dashboard/mantenedor/matriz-riesgo/nueva-matriz')
+        return { success: true }
+    } catch (e) {
+        console.error(e)
+        return { error: 'Error al eliminar la matriz.' }
+    }
+}
+
+export async function duplicateMatrix(id: string) {
+    const session = await getSession()
+    if (!session?.user?.role?.permissions.includes('manage_nueva_matriz')) {
+        return { error: 'No tienes permisos para esta acción.' }
+    }
+
+    try {
+        const source = await prisma.matrizT_Cabecera.findUnique({
+            where: { id },
+            include: { detalles: true }
+        })
+
+        if (!source) return { error: 'La matriz de origen no existe.' }
+
+        // Create new header
+        const duplicated = await prisma.matrizT_Cabecera.create({
+            data: {
+                licId: source.licId,
+                anio: source.anio,
+                titulo: `Copia de ${source.titulo}`,
+                estado: false, // default to inactive copy
+                instrucciones: source.instrucciones
+            }
+        })
+
+        // Copy details
+        if (source.detalles && source.detalles.length > 0) {
+            const newDetalles = source.detalles.map(d => ({
+                cabeceraId: duplicated.id,
+                preguntaNombre: d.preguntaNombre,
+                tipoRespuesta: d.tipoRespuesta,
+                obligatorio: d.obligatorio,
+                seccion: d.seccion,
+                orden: d.orden,
+                gravedad: d.gravedad,
+                probabilidad: d.probabilidad,
+                nivelRiesgo: d.nivelRiesgo,
+                justificacion: d.justificacion,
+                riesgoSignificativo: d.riesgoSignificativo,
+                recursoNecesario: d.recursoNecesario,
+                resultadoEsperado: d.resultadoEsperado,
+                respImplementacion: d.respImplementacion,
+                respSeguimiento: d.respSeguimiento,
+                evidenciaCumplimiento: d.evidenciaCumplimiento,
+                evidenciaEficacia: d.evidenciaEficacia
+            }))
+
+            await prisma.matrizT_Detalle.createMany({
+                data: newDetalles
+            })
+        }
+
+        revalidatePath('/dashboard/mantenedor/matriz-riesgo/nueva-matriz')
+        return { success: true, duplicatedId: duplicated.id }
+    } catch (e) {
+        console.error(e)
+        return { error: 'Error al duplicar la matriz.' }
+    }
+}
+
+export async function saveMatrixTemplate(cabeceraId: string, details: any[], instrucciones?: string) {
+    const session = await getSession()
+    if (!session?.user?.role?.permissions.includes('manage_nueva_matriz')) {
+        return { error: 'No tienes permisos para esta acción.' }
+    }
+
+    try {
+        const answersCount = await prisma.matrizT_RespuestasCabecera.count({
+            where: { cabeceraId }
+        })
+
+        if (instrucciones !== undefined) {
+            await prisma.matrizT_Cabecera.update({
+                where: { id: cabeceraId },
+                data: { instrucciones }
+            })
+        }
+        if (answersCount > 0) {
+            // Partial Update: Only update the fields that don't affect existing answers
+            // such as calculo and hoja B fields. We cannot delete/insert questions.
+            if (details && details.length > 0) {
+                for (const d of details) {
+                    if (d.id && !d.id.toString().startsWith('temp-')) {
+                        await prisma.matrizT_Detalle.update({
+                            where: { id: d.id },
+                            data: {
+                                gravedad: d.gravedad ? Number(d.gravedad) : null,
+                                probabilidad: d.probabilidad ? Number(d.probabilidad) : null,
+                                nivelRiesgo: d.nivelRiesgo ? Number(d.nivelRiesgo) : null,
+                                justificacion: d.justificacion || null,
+                                riesgoSignificativo: d.riesgoSignificativo || null,
+                                recursoNecesario: d.recursoNecesario || null,
+                                resultadoEsperado: d.resultadoEsperado || null,
+                                respImplementacion: d.respImplementacion || null,
+                                respSeguimiento: d.respSeguimiento || null,
+                                evidenciaCumplimiento: d.evidenciaCumplimiento || null,
+                                evidenciaEficacia: d.evidenciaEficacia || null
+                            }
+                        })
+                    }
+                }
+            }
+        } else {
+            // Delete all old details
+            await prisma.matrizT_Detalle.deleteMany({
+                where: { cabeceraId }
+            })
+
+            // Insert new details
+            if (details && details.length > 0) {
+                const dataToInsert = details.map((d, index) => ({
+                    cabeceraId,
+                    preguntaNombre: d.preguntaNombre,
+                    tipoRespuesta: d.tipoRespuesta,
+                    obligatorio: d.obligatorio === true || d.obligatorio === 'true',
+                    seccion: d.seccion,
+                    orden: index,
+                    gravedad: d.gravedad ? Number(d.gravedad) : null,
+                    probabilidad: d.probabilidad ? Number(d.probabilidad) : null,
+                    nivelRiesgo: d.nivelRiesgo ? Number(d.nivelRiesgo) : null,
+                    justificacion: d.justificacion || null,
+                    riesgoSignificativo: d.riesgoSignificativo || null,
+                    recursoNecesario: d.recursoNecesario || null,
+                    resultadoEsperado: d.resultadoEsperado || null,
+                    respImplementacion: d.respImplementacion || null,
+                    respSeguimiento: d.respSeguimiento || null,
+                    evidenciaCumplimiento: d.evidenciaCumplimiento || null,
+                    evidenciaEficacia: d.evidenciaEficacia || null
+                }))
+
+                await prisma.matrizT_Detalle.createMany({
+                    data: dataToInsert
+                })
+            }
+        }
+
+        revalidatePath(`/dashboard/mantenedor/matriz-riesgo/nueva-matriz/${cabeceraId}`)
+        return { success: true }
+    } catch (e) {
+        console.error(e)
+        return { error: 'Error al guardar el detalle de la matriz.' }
+    }
+}

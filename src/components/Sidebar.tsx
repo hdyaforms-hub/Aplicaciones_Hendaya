@@ -30,6 +30,7 @@ export default function Sidebar({ user }: { user: User }) {
     const router = useRouter()
     const [isLoggingOut, setIsLoggingOut] = useState(false)
     const [isMobileOpen, setIsMobileOpen] = useState(false)
+    const [isCollapsed, setIsCollapsed] = useState(false)
 
     const handleLogout = async () => {
         setIsLoggingOut(true)
@@ -48,6 +49,7 @@ export default function Sidebar({ user }: { user: User }) {
     const toggleMenu = (e: MouseEvent, name: string) => {
         e.preventDefault()
         e.stopPropagation()
+        if (isCollapsed) setIsCollapsed(false)
         setExpandedMenus(prev => ({ ...prev, [name]: !prev[name] }))
     }
 
@@ -178,18 +180,21 @@ export default function Sidebar({ user }: { user: User }) {
         {
             name: 'Matriz de riesgo',
             icon: '📋',
-            requiredPermission: ['view_matriz_riesgo', 'manage_matriz_2026', 'manage_colegios_matriz', 'manage_evaluacion_detallada', 'manage_mitigacion', 'view_auditoria'],
+            requiredPermission: ['view_matriz_riesgo', 'fill_nueva_matriz', 'view_detalle_matriz', 'manage_matriz_2026', 'manage_evaluacion_detallada', 'manage_mitigacion', 'view_estado_avance', 'view_auditoria', 'view_inf_auditoria_mitigacion', 'view_hoja_b_estandar_pae'],
             subItems: [
+                { name: 'Ingresar nueva Matriz', href: '/dashboard/matriz-riesgo/ingresar', requiredPermission: 'fill_nueva_matriz' },
+                { name: 'Detalle Matriz', href: '/dashboard/matriz-riesgo/detalle', requiredPermission: 'view_detalle_matriz' },
+                { name: 'Mitigación', href: '/dashboard/matriz-riesgo/mitigacion', requiredPermission: 'manage_mitigacion' },
+                { name: 'Estado de Avance', href: '/dashboard/matriz-riesgo/estado-avance', requiredPermission: 'view_estado_avance' },
+                { name: 'Auditoría', href: '/dashboard/matriz-riesgo/auditoria', requiredPermission: 'view_auditoria' },
+                { name: 'Inf. Auditoria Mitigación', href: '/dashboard/matriz-riesgo/inf-auditoria-mitigacion', requiredPermission: 'view_inf_auditoria_mitigacion' },
+                { name: 'Hoja B Estandar Pae', href: '/dashboard/matriz-riesgo/hoja-b-estandar-pae', requiredPermission: 'view_hoja_b_estandar_pae' },
                 {
                     name: 'Matriz 2026',
-                    requiredPermission: ['manage_matriz_2026', 'manage_colegios_matriz', 'manage_evaluacion_detallada', 'manage_mitigacion', 'view_estado_avance', 'view_auditoria'],
+                    requiredPermission: ['manage_matriz_2026', 'manage_evaluacion_detallada'],
                     subItems: [
                         { name: 'Ingresar nueva Matriz', href: '/dashboard/matriz-riesgo/matriz-2026/ingresar', requiredPermission: 'manage_matriz_2026' },
-                        { name: 'Colegios Activos', href: '/dashboard/matriz-riesgo/matriz-2026/colegios-activos', requiredPermission: 'manage_colegios_matriz' },
-                        { name: 'Evaluación Detallada', href: '/dashboard/matriz-riesgo/matriz-2026/evaluacion-detallada', requiredPermission: 'manage_evaluacion_detallada' },
-                        { name: 'Mitigación', href: '/dashboard/matriz-riesgo/matriz-2026/mitigacion', requiredPermission: 'manage_mitigacion' },
-                        { name: 'Estado de Avance', href: '/dashboard/matriz-riesgo/matriz-2026/estado-avance', requiredPermission: 'view_estado_avance' },
-                        { name: 'Auditoría', href: '/dashboard/matriz-riesgo/matriz-2026/auditoria', requiredPermission: 'view_auditoria' }
+                        { name: 'Evaluación Detallada', href: '/dashboard/matriz-riesgo/matriz-2026/evaluacion-detallada', requiredPermission: 'manage_evaluacion_detallada' }
                     ]
                 }
             ]
@@ -219,7 +224,7 @@ export default function Sidebar({ user }: { user: User }) {
         {
             name: 'Mantenedor',
             icon: '⚙️',
-            requiredPermission: ['view_colegios', 'view_productos', 'view_pmpa', 'view_consumo_gas', 'view_preparaciones', 'view_minutas', 'view_raciones', 'view_codigo_causa', 'manage_sucursales', 'manage_areas', 'manage_vehiculos', 'manage_zonales', 'manage_jefe_operacion', 'manage_supervisor', 'manage_manipuladoras_masiva'],
+            requiredPermission: ['view_colegios', 'view_productos', 'view_pmpa', 'view_consumo_gas', 'view_preparaciones', 'view_minutas', 'view_raciones', 'view_codigo_causa', 'manage_sucursales', 'manage_areas', 'manage_vehiculos', 'manage_zonales', 'manage_jefe_operacion', 'manage_supervisor', 'manage_manipuladoras_masiva', 'manage_colegios_matriz', 'manage_nueva_matriz'],
             subItems: [
                 {
                     name: 'Operaciones',
@@ -240,6 +245,14 @@ export default function Sidebar({ user }: { user: User }) {
                     requiredPermission: 'manage_manipuladoras_masiva',
                     subItems: [
                         { name: 'Carga Masiva de usuario', href: '/dashboard/mantenedor/manipuladoras', requiredPermission: 'manage_manipuladoras_masiva' }
+                    ]
+                },
+                {
+                    name: 'Matriz de Riesgo',
+                    requiredPermission: ['manage_colegios_matriz', 'manage_nueva_matriz'],
+                    subItems: [
+                        { name: 'Colegios Activos', href: '/dashboard/mantenedor/matriz-riesgo/colegios-activos', requiredPermission: 'manage_colegios_matriz' },
+                        { name: 'Nueva Matriz', href: '/dashboard/mantenedor/matriz-riesgo/nueva-matriz', requiredPermission: 'manage_nueva_matriz' }
                     ]
                 },
                 { name: 'Área', href: '/dashboard/mantenedor/areas', requiredPermission: 'manage_areas' },
@@ -353,19 +366,24 @@ export default function Sidebar({ user }: { user: User }) {
                 <div key={item.name} className={depth > 0 ? "mt-1" : ""}>
                     <button
                         onClick={(e) => toggleMenu(e, itemKey)}
-                        className={`${baseStyles} ${depthStyles} ${isActive ? activeStyles : ''}`}
+                        className={`${baseStyles} ${depthStyles} ${isActive ? activeStyles : ''} ${isCollapsed && depth === 0 ? 'justify-center px-0' : ''}`}
+                        title={isCollapsed ? item.name : undefined}
                     >
-                        <div className="flex items-center gap-3">
+                        <div className={`flex items-center gap-3 ${isCollapsed && depth === 0 ? 'justify-center' : ''}`}>
                             {item.icon && (
                                 <span className="text-xl transition-transform duration-200 group-hover:scale-110">
                                     {item.icon}
                                 </span>
                             )}
-                            <span className={depth === 0 ? "" : "truncate"}>{item.name}</span>
+                            {!isCollapsed && (
+                                <span className={depth === 0 ? "" : "truncate"}>{item.name}</span>
+                            )}
                         </div>
-                        <span className={`transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} style={{ fontSize: depth === 0 ? '12px' : '10px' }}>
-                            ▼
-                        </span>
+                        {!isCollapsed && (
+                            <span className={`transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} style={{ fontSize: depth === 0 ? '12px' : '10px' }}>
+                                ▼
+                            </span>
+                        )}
                     </button>
 
                     {isExpanded && (
@@ -383,15 +401,18 @@ export default function Sidebar({ user }: { user: User }) {
             <Link
                 key={item.name}
                 href={item.href!}
-                className={`${baseStyles} ${depthStyles} ${isActive ? activeStyles : ''}`}
+                className={`${baseStyles} ${depthStyles} ${isActive ? activeStyles : ''} ${isCollapsed && depth === 0 ? 'justify-center px-0' : ''}`}
+                title={isCollapsed ? item.name : undefined}
             >
-                <div className="flex items-center gap-3">
+                <div className={`flex items-center gap-3 ${isCollapsed && depth === 0 ? 'justify-center' : ''}`}>
                     {item.icon && (
                         <span className={`text-xl transition-transform duration-200 ${isActive ? 'scale-110' : 'group-hover:scale-110'}`}>
                             {item.icon}
                         </span>
                     )}
-                    <span className={depth === 0 ? "font-medium" : ""}>{item.name}</span>
+                    {!isCollapsed && (
+                        <span className={depth === 0 ? "font-medium" : ""}>{item.name}</span>
+                    )}
                 </div>
             </Link>
         )
@@ -415,18 +436,32 @@ export default function Sidebar({ user }: { user: User }) {
                 />
             )}
 
-            <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-slate-900 border-r border-slate-800 text-slate-300 flex flex-col h-screen shrink-0 transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-                <div className="h-16 flex items-center px-6 border-b border-slate-800 bg-slate-950/50">
-                    <div className="flex items-center gap-2">
-                        <span className="text-2xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-sky-400 drop-shadow-[0_0_10px_rgba(6,182,212,0.2)]">HENDAYA</span>
+            <aside className={`fixed inset-y-0 left-0 z-50 ${isCollapsed ? 'w-20' : 'w-64'} bg-slate-900 border-r border-slate-800 text-slate-300 flex flex-col h-screen shrink-0 transition-all duration-300 ease-in-out lg:relative lg:translate-x-0 ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+                <div className="h-16 flex items-center justify-between px-4 border-b border-slate-800 bg-slate-950/50">
+                    <div className="flex items-center gap-2 overflow-hidden">
+                        {!isCollapsed ? (
+                            <span className="text-2xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-sky-400 drop-shadow-[0_0_10px_rgba(6,182,212,0.2)]">HENDAYA</span>
+                        ) : (
+                            <span className="text-2xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-sky-400 ml-1">H</span>
+                        )}
                     </div>
+                    {/* Desktop Collapse Toggle */}
+                    <button 
+                        onClick={() => setIsCollapsed(!isCollapsed)}
+                        className="hidden lg:flex p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+                        title={isCollapsed ? "Expandir menú" : "Ocultar menú"}
+                    >
+                        {isCollapsed ? '▶' : '◀'}
+                    </button>
                 </div>
 
                 {/* Navigation */}
                 <nav className="flex-1 overflow-y-auto py-6 px-3 space-y-1 scrollbar-hide">
-                    <p className="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
-                        Menú Principal
-                    </p>
+                    {!isCollapsed && (
+                        <p className="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
+                            Menú Principal
+                        </p>
+                    )}
                     {visibleItems.map((item) => (
                         <SidebarNavItem key={item.name} item={item} depth={0} parentPath="" />
                     ))}
@@ -437,12 +472,15 @@ export default function Sidebar({ user }: { user: User }) {
                     <button
                         onClick={handleLogout}
                         disabled={isLoggingOut}
-                        className="flex w-full items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-red-500/10 hover:text-red-400 transition-all duration-200 group"
+                        className={`flex w-full items-center gap-3 py-2.5 rounded-xl text-slate-400 hover:bg-red-500/10 hover:text-red-400 transition-all duration-200 group ${isCollapsed ? 'justify-center px-0' : 'px-3'}`}
+                        title={isCollapsed ? "Cerrar Sesión" : undefined}
                     >
                         <span className="text-xl group-hover:-translate-x-1 transition-transform">🚪</span>
-                        <span className="font-medium">{isLoggingOut ? 'Saliendo...' : 'Cerrar Sesión'}</span>
+                        {!isCollapsed && (
+                            <span className="font-medium">{isLoggingOut ? 'Saliendo...' : 'Cerrar Sesión'}</span>
+                        )}
                     </button>
-                    {user.name && (
+                    {!isCollapsed && user.name && (
                         <div className="mt-2 px-3 py-2 rounded-lg bg-slate-900/50 border border-slate-800/50">
                             <p className="text-xs text-slate-500 truncate">Usuario</p>
                             <p className="text-sm font-bold text-slate-300 truncate">{user.name}</p>

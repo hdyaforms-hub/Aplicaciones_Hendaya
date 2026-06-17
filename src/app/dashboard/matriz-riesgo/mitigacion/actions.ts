@@ -3,8 +3,26 @@
 import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { revalidatePath } from 'next/cache'
-import { FIELD_MAPPING, PROBLEM_VALUES } from './mapping'
-import { addDays } from 'date-fns'
+
+async function getUserFilters() {
+    const session = await getSession();
+    if (!session?.user) return { isAdmin: false, userSucursales: [], allowedUTs: [], userRbds: [] };
+
+    const isAdmin = session.user.role?.name === 'Administrador' || session.user.role?.name === 'admin';
+    const userSucursales = session.user.sucursales || [];
+    const userRbds = session.user.rbds || [];
+    let allowedUTs: number[] = [];
+
+    if (!isAdmin && userSucursales.length > 0) {
+        const sucursalesDb = await prisma.sucursal.findMany({
+            where: { nombre: { in: userSucursales } },
+            include: { uts: true }
+        });
+        allowedUTs = sucursalesDb.flatMap(s => s.uts.map((ut: any) => ut.codUT));
+    }
+
+    return { isAdmin, userSucursales, allowedUTs, userRbds };
+}
 
 export async function getMitigacionData(semestre: 1 | 2 = 1) {
     const session = await getSession()
@@ -23,25 +41,46 @@ export async function getMitigacionData(semestre: 1 | 2 = 1) {
             ? { lte: cutoffDate }
             : { gt: cutoffDate }
 
-        // Obtener matrices del año 2026
-        const matrices = await prisma.matrizRiesgo2026.findMany({
-            where: {
-                createdAt: {
-                    ...dateFilter,
-                    gte: new Date('2026-01-01'),
-                    lt: new Date('2027-01-01')
-                }
-            },
-            orderBy: { createdAt: 'desc' }
-        })
+        const { isAdmin, allowedUTs, userRbds } = await getUserFilters()
+        
+        const where: any = {
+            fechaIngreso: {
+                ...dateFilter,
+                gte: new Date('2026-01-01'),
+                lt: new Date('2027-01-01')
+            }
+        }
+        
+        if (!isAdmin) {
+            const orConditions = []
+            if (allowedUTs.length > 0) orConditions.push({ ut: { in: allowedUTs } })
+            if (userRbds.length > 0) orConditions.push({ rbd: { in: userRbds } })
 
-        // Configuración de riesgos para calcular plazos
-        const riskConfigs = await prisma.matrizConfigPregunta.findMany()
+            if (orConditions.length > 0) {
+                where.OR = orConditions
+            } else {
+                where.id = 'NO_DATA'
+            }
+        }
+
+        // Obtener respuestas (evaluaciones realizadas)
+        const matrices = await prisma.matrizT_RespuestasCabecera.findMany({
+            where,
+            include: {
+                cabecera: {
+                    include: {
+                        detalles: true // Preguntas de la plantilla
+                    }
+                },
+                detalles: true // Respuestas del usuario
+            },
+            orderBy: { fechaIngreso: 'desc' }
+        })
 
         // Mitigaciones ya guardadas
         const mitigaciones = await prisma.matrizMitigacion.findMany()
 
-        return { success: true, matrices, riskConfigs, mitigaciones, cutoffDate }
+        return { success: true, matrices, mitigaciones, cutoffDate }
     } catch (e) {
         console.error(e)
         return { error: 'Error al cargar datos de mitigación.' }
@@ -81,7 +120,7 @@ export async function saveMitigacionAction(data: {
             }
         })
 
-        revalidatePath('/dashboard/matriz-riesgo/matriz-2026/mitigacion')
+        revalidatePath('/dashboard/matriz-riesgo/mitigacion')
         return { success: true }
     } catch (e) {
         console.error(e)

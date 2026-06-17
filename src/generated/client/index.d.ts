@@ -343,6 +343,26 @@ export type Cab_LeePdfEstandarPae = $Result.DefaultSelection<Prisma.$Cab_LeePdfE
  * 
  */
 export type Det_LeePdfEstandarPae = $Result.DefaultSelection<Prisma.$Det_LeePdfEstandarPaePayload>
+/**
+ * Model MatrizT_Cabecera
+ * 
+ */
+export type MatrizT_Cabecera = $Result.DefaultSelection<Prisma.$MatrizT_CabeceraPayload>
+/**
+ * Model MatrizT_Detalle
+ * 
+ */
+export type MatrizT_Detalle = $Result.DefaultSelection<Prisma.$MatrizT_DetallePayload>
+/**
+ * Model MatrizT_RespuestasCabecera
+ * 
+ */
+export type MatrizT_RespuestasCabecera = $Result.DefaultSelection<Prisma.$MatrizT_RespuestasCabeceraPayload>
+/**
+ * Model MatrizT_RespuestasDetalle
+ * 
+ */
+export type MatrizT_RespuestasDetalle = $Result.DefaultSelection<Prisma.$MatrizT_RespuestasDetallePayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -1126,6 +1146,46 @@ export class PrismaClient<
     * ```
     */
   get det_LeePdfEstandarPae(): Prisma.Det_LeePdfEstandarPaeDelegate<ExtArgs>;
+
+  /**
+   * `prisma.matrizT_Cabecera`: Exposes CRUD operations for the **MatrizT_Cabecera** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MatrizT_Cabeceras
+    * const matrizT_Cabeceras = await prisma.matrizT_Cabecera.findMany()
+    * ```
+    */
+  get matrizT_Cabecera(): Prisma.MatrizT_CabeceraDelegate<ExtArgs>;
+
+  /**
+   * `prisma.matrizT_Detalle`: Exposes CRUD operations for the **MatrizT_Detalle** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MatrizT_Detalles
+    * const matrizT_Detalles = await prisma.matrizT_Detalle.findMany()
+    * ```
+    */
+  get matrizT_Detalle(): Prisma.MatrizT_DetalleDelegate<ExtArgs>;
+
+  /**
+   * `prisma.matrizT_RespuestasCabecera`: Exposes CRUD operations for the **MatrizT_RespuestasCabecera** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MatrizT_RespuestasCabeceras
+    * const matrizT_RespuestasCabeceras = await prisma.matrizT_RespuestasCabecera.findMany()
+    * ```
+    */
+  get matrizT_RespuestasCabecera(): Prisma.MatrizT_RespuestasCabeceraDelegate<ExtArgs>;
+
+  /**
+   * `prisma.matrizT_RespuestasDetalle`: Exposes CRUD operations for the **MatrizT_RespuestasDetalle** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MatrizT_RespuestasDetalles
+    * const matrizT_RespuestasDetalles = await prisma.matrizT_RespuestasDetalle.findMany()
+    * ```
+    */
+  get matrizT_RespuestasDetalle(): Prisma.MatrizT_RespuestasDetalleDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -1632,7 +1692,11 @@ export namespace Prisma {
     DistanciaCache: 'DistanciaCache',
     ConsumoApiGoogle: 'ConsumoApiGoogle',
     Cab_LeePdfEstandarPae: 'Cab_LeePdfEstandarPae',
-    Det_LeePdfEstandarPae: 'Det_LeePdfEstandarPae'
+    Det_LeePdfEstandarPae: 'Det_LeePdfEstandarPae',
+    MatrizT_Cabecera: 'MatrizT_Cabecera',
+    MatrizT_Detalle: 'MatrizT_Detalle',
+    MatrizT_RespuestasCabecera: 'MatrizT_RespuestasCabecera',
+    MatrizT_RespuestasDetalle: 'MatrizT_RespuestasDetalle'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1648,7 +1712,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae"
+      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -6272,6 +6336,286 @@ export namespace Prisma {
           }
         }
       }
+      MatrizT_Cabecera: {
+        payload: Prisma.$MatrizT_CabeceraPayload<ExtArgs>
+        fields: Prisma.MatrizT_CabeceraFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MatrizT_CabeceraFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_CabeceraPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MatrizT_CabeceraFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_CabeceraPayload>
+          }
+          findFirst: {
+            args: Prisma.MatrizT_CabeceraFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_CabeceraPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MatrizT_CabeceraFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_CabeceraPayload>
+          }
+          findMany: {
+            args: Prisma.MatrizT_CabeceraFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_CabeceraPayload>[]
+          }
+          create: {
+            args: Prisma.MatrizT_CabeceraCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_CabeceraPayload>
+          }
+          createMany: {
+            args: Prisma.MatrizT_CabeceraCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MatrizT_CabeceraCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_CabeceraPayload>[]
+          }
+          delete: {
+            args: Prisma.MatrizT_CabeceraDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_CabeceraPayload>
+          }
+          update: {
+            args: Prisma.MatrizT_CabeceraUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_CabeceraPayload>
+          }
+          deleteMany: {
+            args: Prisma.MatrizT_CabeceraDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MatrizT_CabeceraUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.MatrizT_CabeceraUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_CabeceraPayload>
+          }
+          aggregate: {
+            args: Prisma.MatrizT_CabeceraAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMatrizT_Cabecera>
+          }
+          groupBy: {
+            args: Prisma.MatrizT_CabeceraGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MatrizT_CabeceraGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MatrizT_CabeceraCountArgs<ExtArgs>
+            result: $Utils.Optional<MatrizT_CabeceraCountAggregateOutputType> | number
+          }
+        }
+      }
+      MatrizT_Detalle: {
+        payload: Prisma.$MatrizT_DetallePayload<ExtArgs>
+        fields: Prisma.MatrizT_DetalleFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MatrizT_DetalleFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_DetallePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MatrizT_DetalleFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_DetallePayload>
+          }
+          findFirst: {
+            args: Prisma.MatrizT_DetalleFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_DetallePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MatrizT_DetalleFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_DetallePayload>
+          }
+          findMany: {
+            args: Prisma.MatrizT_DetalleFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_DetallePayload>[]
+          }
+          create: {
+            args: Prisma.MatrizT_DetalleCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_DetallePayload>
+          }
+          createMany: {
+            args: Prisma.MatrizT_DetalleCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MatrizT_DetalleCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_DetallePayload>[]
+          }
+          delete: {
+            args: Prisma.MatrizT_DetalleDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_DetallePayload>
+          }
+          update: {
+            args: Prisma.MatrizT_DetalleUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_DetallePayload>
+          }
+          deleteMany: {
+            args: Prisma.MatrizT_DetalleDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MatrizT_DetalleUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.MatrizT_DetalleUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_DetallePayload>
+          }
+          aggregate: {
+            args: Prisma.MatrizT_DetalleAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMatrizT_Detalle>
+          }
+          groupBy: {
+            args: Prisma.MatrizT_DetalleGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MatrizT_DetalleGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MatrizT_DetalleCountArgs<ExtArgs>
+            result: $Utils.Optional<MatrizT_DetalleCountAggregateOutputType> | number
+          }
+        }
+      }
+      MatrizT_RespuestasCabecera: {
+        payload: Prisma.$MatrizT_RespuestasCabeceraPayload<ExtArgs>
+        fields: Prisma.MatrizT_RespuestasCabeceraFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MatrizT_RespuestasCabeceraFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_RespuestasCabeceraPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MatrizT_RespuestasCabeceraFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_RespuestasCabeceraPayload>
+          }
+          findFirst: {
+            args: Prisma.MatrizT_RespuestasCabeceraFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_RespuestasCabeceraPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MatrizT_RespuestasCabeceraFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_RespuestasCabeceraPayload>
+          }
+          findMany: {
+            args: Prisma.MatrizT_RespuestasCabeceraFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_RespuestasCabeceraPayload>[]
+          }
+          create: {
+            args: Prisma.MatrizT_RespuestasCabeceraCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_RespuestasCabeceraPayload>
+          }
+          createMany: {
+            args: Prisma.MatrizT_RespuestasCabeceraCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MatrizT_RespuestasCabeceraCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_RespuestasCabeceraPayload>[]
+          }
+          delete: {
+            args: Prisma.MatrizT_RespuestasCabeceraDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_RespuestasCabeceraPayload>
+          }
+          update: {
+            args: Prisma.MatrizT_RespuestasCabeceraUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_RespuestasCabeceraPayload>
+          }
+          deleteMany: {
+            args: Prisma.MatrizT_RespuestasCabeceraDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MatrizT_RespuestasCabeceraUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.MatrizT_RespuestasCabeceraUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_RespuestasCabeceraPayload>
+          }
+          aggregate: {
+            args: Prisma.MatrizT_RespuestasCabeceraAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMatrizT_RespuestasCabecera>
+          }
+          groupBy: {
+            args: Prisma.MatrizT_RespuestasCabeceraGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MatrizT_RespuestasCabeceraGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MatrizT_RespuestasCabeceraCountArgs<ExtArgs>
+            result: $Utils.Optional<MatrizT_RespuestasCabeceraCountAggregateOutputType> | number
+          }
+        }
+      }
+      MatrizT_RespuestasDetalle: {
+        payload: Prisma.$MatrizT_RespuestasDetallePayload<ExtArgs>
+        fields: Prisma.MatrizT_RespuestasDetalleFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MatrizT_RespuestasDetalleFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_RespuestasDetallePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MatrizT_RespuestasDetalleFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_RespuestasDetallePayload>
+          }
+          findFirst: {
+            args: Prisma.MatrizT_RespuestasDetalleFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_RespuestasDetallePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MatrizT_RespuestasDetalleFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_RespuestasDetallePayload>
+          }
+          findMany: {
+            args: Prisma.MatrizT_RespuestasDetalleFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_RespuestasDetallePayload>[]
+          }
+          create: {
+            args: Prisma.MatrizT_RespuestasDetalleCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_RespuestasDetallePayload>
+          }
+          createMany: {
+            args: Prisma.MatrizT_RespuestasDetalleCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MatrizT_RespuestasDetalleCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_RespuestasDetallePayload>[]
+          }
+          delete: {
+            args: Prisma.MatrizT_RespuestasDetalleDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_RespuestasDetallePayload>
+          }
+          update: {
+            args: Prisma.MatrizT_RespuestasDetalleUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_RespuestasDetallePayload>
+          }
+          deleteMany: {
+            args: Prisma.MatrizT_RespuestasDetalleDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MatrizT_RespuestasDetalleUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.MatrizT_RespuestasDetalleUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MatrizT_RespuestasDetallePayload>
+          }
+          aggregate: {
+            args: Prisma.MatrizT_RespuestasDetalleAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMatrizT_RespuestasDetalle>
+          }
+          groupBy: {
+            args: Prisma.MatrizT_RespuestasDetalleGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MatrizT_RespuestasDetalleGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MatrizT_RespuestasDetalleCountArgs<ExtArgs>
+            result: $Utils.Optional<MatrizT_RespuestasDetalleCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -6548,6 +6892,7 @@ export namespace Prisma {
     aspectosEE: number
     jefesZonales: number
     vehiculos: number
+    matrices: number
   }
 
   export type LicitacionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6555,6 +6900,7 @@ export namespace Prisma {
     aspectosEE?: boolean | LicitacionCountOutputTypeCountAspectosEEArgs
     jefesZonales?: boolean | LicitacionCountOutputTypeCountJefesZonalesArgs
     vehiculos?: boolean | LicitacionCountOutputTypeCountVehiculosArgs
+    matrices?: boolean | LicitacionCountOutputTypeCountMatricesArgs
   }
 
   // Custom InputTypes
@@ -6594,6 +6940,13 @@ export namespace Prisma {
    */
   export type LicitacionCountOutputTypeCountVehiculosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: VehiculoWhereInput
+  }
+
+  /**
+   * LicitacionCountOutputType without action
+   */
+  export type LicitacionCountOutputTypeCountMatricesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MatrizT_CabeceraWhereInput
   }
 
 
@@ -7270,6 +7623,108 @@ export namespace Prisma {
    */
   export type Cab_LeePdfEstandarPaeCountOutputTypeCountDetallesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: Det_LeePdfEstandarPaeWhereInput
+  }
+
+
+  /**
+   * Count Type MatrizT_CabeceraCountOutputType
+   */
+
+  export type MatrizT_CabeceraCountOutputType = {
+    detalles: number
+    respuestas: number
+  }
+
+  export type MatrizT_CabeceraCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    detalles?: boolean | MatrizT_CabeceraCountOutputTypeCountDetallesArgs
+    respuestas?: boolean | MatrizT_CabeceraCountOutputTypeCountRespuestasArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * MatrizT_CabeceraCountOutputType without action
+   */
+  export type MatrizT_CabeceraCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_CabeceraCountOutputType
+     */
+    select?: MatrizT_CabeceraCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * MatrizT_CabeceraCountOutputType without action
+   */
+  export type MatrizT_CabeceraCountOutputTypeCountDetallesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MatrizT_DetalleWhereInput
+  }
+
+  /**
+   * MatrizT_CabeceraCountOutputType without action
+   */
+  export type MatrizT_CabeceraCountOutputTypeCountRespuestasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MatrizT_RespuestasCabeceraWhereInput
+  }
+
+
+  /**
+   * Count Type MatrizT_DetalleCountOutputType
+   */
+
+  export type MatrizT_DetalleCountOutputType = {
+    respuestasDetalle: number
+  }
+
+  export type MatrizT_DetalleCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    respuestasDetalle?: boolean | MatrizT_DetalleCountOutputTypeCountRespuestasDetalleArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * MatrizT_DetalleCountOutputType without action
+   */
+  export type MatrizT_DetalleCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_DetalleCountOutputType
+     */
+    select?: MatrizT_DetalleCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * MatrizT_DetalleCountOutputType without action
+   */
+  export type MatrizT_DetalleCountOutputTypeCountRespuestasDetalleArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MatrizT_RespuestasDetalleWhereInput
+  }
+
+
+  /**
+   * Count Type MatrizT_RespuestasCabeceraCountOutputType
+   */
+
+  export type MatrizT_RespuestasCabeceraCountOutputType = {
+    detalles: number
+  }
+
+  export type MatrizT_RespuestasCabeceraCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    detalles?: boolean | MatrizT_RespuestasCabeceraCountOutputTypeCountDetallesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * MatrizT_RespuestasCabeceraCountOutputType without action
+   */
+  export type MatrizT_RespuestasCabeceraCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_RespuestasCabeceraCountOutputType
+     */
+    select?: MatrizT_RespuestasCabeceraCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * MatrizT_RespuestasCabeceraCountOutputType without action
+   */
+  export type MatrizT_RespuestasCabeceraCountOutputTypeCountDetallesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MatrizT_RespuestasDetalleWhereInput
   }
 
 
@@ -18411,6 +18866,7 @@ export namespace Prisma {
     aspectosEE?: boolean | Licitacion$aspectosEEArgs<ExtArgs>
     jefesZonales?: boolean | Licitacion$jefesZonalesArgs<ExtArgs>
     vehiculos?: boolean | Licitacion$vehiculosArgs<ExtArgs>
+    matrices?: boolean | Licitacion$matricesArgs<ExtArgs>
     _count?: boolean | LicitacionCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["licitacion"]>
 
@@ -18435,6 +18891,7 @@ export namespace Prisma {
     aspectosEE?: boolean | Licitacion$aspectosEEArgs<ExtArgs>
     jefesZonales?: boolean | Licitacion$jefesZonalesArgs<ExtArgs>
     vehiculos?: boolean | Licitacion$vehiculosArgs<ExtArgs>
+    matrices?: boolean | Licitacion$matricesArgs<ExtArgs>
     _count?: boolean | LicitacionCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type LicitacionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -18446,6 +18903,7 @@ export namespace Prisma {
       aspectosEE: Prisma.$AspectoEEPayload<ExtArgs>[]
       jefesZonales: Prisma.$JefeZonalLicitacionPayload<ExtArgs>[]
       vehiculos: Prisma.$VehiculoPayload<ExtArgs>[]
+      matrices: Prisma.$MatrizT_CabeceraPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       licId: number
@@ -18821,6 +19279,7 @@ export namespace Prisma {
     aspectosEE<T extends Licitacion$aspectosEEArgs<ExtArgs> = {}>(args?: Subset<T, Licitacion$aspectosEEArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AspectoEEPayload<ExtArgs>, T, "findMany"> | Null>
     jefesZonales<T extends Licitacion$jefesZonalesArgs<ExtArgs> = {}>(args?: Subset<T, Licitacion$jefesZonalesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JefeZonalLicitacionPayload<ExtArgs>, T, "findMany"> | Null>
     vehiculos<T extends Licitacion$vehiculosArgs<ExtArgs> = {}>(args?: Subset<T, Licitacion$vehiculosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VehiculoPayload<ExtArgs>, T, "findMany"> | Null>
+    matrices<T extends Licitacion$matricesArgs<ExtArgs> = {}>(args?: Subset<T, Licitacion$matricesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MatrizT_CabeceraPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -19246,6 +19705,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: VehiculoScalarFieldEnum | VehiculoScalarFieldEnum[]
+  }
+
+  /**
+   * Licitacion.matrices
+   */
+  export type Licitacion$matricesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_Cabecera
+     */
+    select?: MatrizT_CabeceraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_CabeceraInclude<ExtArgs> | null
+    where?: MatrizT_CabeceraWhereInput
+    orderBy?: MatrizT_CabeceraOrderByWithRelationInput | MatrizT_CabeceraOrderByWithRelationInput[]
+    cursor?: MatrizT_CabeceraWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MatrizT_CabeceraScalarFieldEnum | MatrizT_CabeceraScalarFieldEnum[]
   }
 
   /**
@@ -74269,6 +74748,4236 @@ export namespace Prisma {
 
 
   /**
+   * Model MatrizT_Cabecera
+   */
+
+  export type AggregateMatrizT_Cabecera = {
+    _count: MatrizT_CabeceraCountAggregateOutputType | null
+    _avg: MatrizT_CabeceraAvgAggregateOutputType | null
+    _sum: MatrizT_CabeceraSumAggregateOutputType | null
+    _min: MatrizT_CabeceraMinAggregateOutputType | null
+    _max: MatrizT_CabeceraMaxAggregateOutputType | null
+  }
+
+  export type MatrizT_CabeceraAvgAggregateOutputType = {
+    licId: number | null
+    anio: number | null
+  }
+
+  export type MatrizT_CabeceraSumAggregateOutputType = {
+    licId: number | null
+    anio: number | null
+  }
+
+  export type MatrizT_CabeceraMinAggregateOutputType = {
+    id: string | null
+    licId: number | null
+    anio: number | null
+    titulo: string | null
+    estado: boolean | null
+    instrucciones: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MatrizT_CabeceraMaxAggregateOutputType = {
+    id: string | null
+    licId: number | null
+    anio: number | null
+    titulo: string | null
+    estado: boolean | null
+    instrucciones: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MatrizT_CabeceraCountAggregateOutputType = {
+    id: number
+    licId: number
+    anio: number
+    titulo: number
+    estado: number
+    instrucciones: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type MatrizT_CabeceraAvgAggregateInputType = {
+    licId?: true
+    anio?: true
+  }
+
+  export type MatrizT_CabeceraSumAggregateInputType = {
+    licId?: true
+    anio?: true
+  }
+
+  export type MatrizT_CabeceraMinAggregateInputType = {
+    id?: true
+    licId?: true
+    anio?: true
+    titulo?: true
+    estado?: true
+    instrucciones?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MatrizT_CabeceraMaxAggregateInputType = {
+    id?: true
+    licId?: true
+    anio?: true
+    titulo?: true
+    estado?: true
+    instrucciones?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MatrizT_CabeceraCountAggregateInputType = {
+    id?: true
+    licId?: true
+    anio?: true
+    titulo?: true
+    estado?: true
+    instrucciones?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type MatrizT_CabeceraAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MatrizT_Cabecera to aggregate.
+     */
+    where?: MatrizT_CabeceraWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MatrizT_Cabeceras to fetch.
+     */
+    orderBy?: MatrizT_CabeceraOrderByWithRelationInput | MatrizT_CabeceraOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MatrizT_CabeceraWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MatrizT_Cabeceras from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MatrizT_Cabeceras.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MatrizT_Cabeceras
+    **/
+    _count?: true | MatrizT_CabeceraCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MatrizT_CabeceraAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MatrizT_CabeceraSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MatrizT_CabeceraMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MatrizT_CabeceraMaxAggregateInputType
+  }
+
+  export type GetMatrizT_CabeceraAggregateType<T extends MatrizT_CabeceraAggregateArgs> = {
+        [P in keyof T & keyof AggregateMatrizT_Cabecera]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMatrizT_Cabecera[P]>
+      : GetScalarType<T[P], AggregateMatrizT_Cabecera[P]>
+  }
+
+
+
+
+  export type MatrizT_CabeceraGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MatrizT_CabeceraWhereInput
+    orderBy?: MatrizT_CabeceraOrderByWithAggregationInput | MatrizT_CabeceraOrderByWithAggregationInput[]
+    by: MatrizT_CabeceraScalarFieldEnum[] | MatrizT_CabeceraScalarFieldEnum
+    having?: MatrizT_CabeceraScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MatrizT_CabeceraCountAggregateInputType | true
+    _avg?: MatrizT_CabeceraAvgAggregateInputType
+    _sum?: MatrizT_CabeceraSumAggregateInputType
+    _min?: MatrizT_CabeceraMinAggregateInputType
+    _max?: MatrizT_CabeceraMaxAggregateInputType
+  }
+
+  export type MatrizT_CabeceraGroupByOutputType = {
+    id: string
+    licId: number
+    anio: number
+    titulo: string
+    estado: boolean
+    instrucciones: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: MatrizT_CabeceraCountAggregateOutputType | null
+    _avg: MatrizT_CabeceraAvgAggregateOutputType | null
+    _sum: MatrizT_CabeceraSumAggregateOutputType | null
+    _min: MatrizT_CabeceraMinAggregateOutputType | null
+    _max: MatrizT_CabeceraMaxAggregateOutputType | null
+  }
+
+  type GetMatrizT_CabeceraGroupByPayload<T extends MatrizT_CabeceraGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MatrizT_CabeceraGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MatrizT_CabeceraGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MatrizT_CabeceraGroupByOutputType[P]>
+            : GetScalarType<T[P], MatrizT_CabeceraGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MatrizT_CabeceraSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    licId?: boolean
+    anio?: boolean
+    titulo?: boolean
+    estado?: boolean
+    instrucciones?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    licitacion?: boolean | LicitacionDefaultArgs<ExtArgs>
+    detalles?: boolean | MatrizT_Cabecera$detallesArgs<ExtArgs>
+    respuestas?: boolean | MatrizT_Cabecera$respuestasArgs<ExtArgs>
+    _count?: boolean | MatrizT_CabeceraCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["matrizT_Cabecera"]>
+
+  export type MatrizT_CabeceraSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    licId?: boolean
+    anio?: boolean
+    titulo?: boolean
+    estado?: boolean
+    instrucciones?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    licitacion?: boolean | LicitacionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["matrizT_Cabecera"]>
+
+  export type MatrizT_CabeceraSelectScalar = {
+    id?: boolean
+    licId?: boolean
+    anio?: boolean
+    titulo?: boolean
+    estado?: boolean
+    instrucciones?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type MatrizT_CabeceraInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    licitacion?: boolean | LicitacionDefaultArgs<ExtArgs>
+    detalles?: boolean | MatrizT_Cabecera$detallesArgs<ExtArgs>
+    respuestas?: boolean | MatrizT_Cabecera$respuestasArgs<ExtArgs>
+    _count?: boolean | MatrizT_CabeceraCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type MatrizT_CabeceraIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    licitacion?: boolean | LicitacionDefaultArgs<ExtArgs>
+  }
+
+  export type $MatrizT_CabeceraPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MatrizT_Cabecera"
+    objects: {
+      licitacion: Prisma.$LicitacionPayload<ExtArgs>
+      detalles: Prisma.$MatrizT_DetallePayload<ExtArgs>[]
+      respuestas: Prisma.$MatrizT_RespuestasCabeceraPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      licId: number
+      anio: number
+      titulo: string
+      estado: boolean
+      instrucciones: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["matrizT_Cabecera"]>
+    composites: {}
+  }
+
+  type MatrizT_CabeceraGetPayload<S extends boolean | null | undefined | MatrizT_CabeceraDefaultArgs> = $Result.GetResult<Prisma.$MatrizT_CabeceraPayload, S>
+
+  type MatrizT_CabeceraCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<MatrizT_CabeceraFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: MatrizT_CabeceraCountAggregateInputType | true
+    }
+
+  export interface MatrizT_CabeceraDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MatrizT_Cabecera'], meta: { name: 'MatrizT_Cabecera' } }
+    /**
+     * Find zero or one MatrizT_Cabecera that matches the filter.
+     * @param {MatrizT_CabeceraFindUniqueArgs} args - Arguments to find a MatrizT_Cabecera
+     * @example
+     * // Get one MatrizT_Cabecera
+     * const matrizT_Cabecera = await prisma.matrizT_Cabecera.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MatrizT_CabeceraFindUniqueArgs>(args: SelectSubset<T, MatrizT_CabeceraFindUniqueArgs<ExtArgs>>): Prisma__MatrizT_CabeceraClient<$Result.GetResult<Prisma.$MatrizT_CabeceraPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one MatrizT_Cabecera that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {MatrizT_CabeceraFindUniqueOrThrowArgs} args - Arguments to find a MatrizT_Cabecera
+     * @example
+     * // Get one MatrizT_Cabecera
+     * const matrizT_Cabecera = await prisma.matrizT_Cabecera.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MatrizT_CabeceraFindUniqueOrThrowArgs>(args: SelectSubset<T, MatrizT_CabeceraFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MatrizT_CabeceraClient<$Result.GetResult<Prisma.$MatrizT_CabeceraPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first MatrizT_Cabecera that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatrizT_CabeceraFindFirstArgs} args - Arguments to find a MatrizT_Cabecera
+     * @example
+     * // Get one MatrizT_Cabecera
+     * const matrizT_Cabecera = await prisma.matrizT_Cabecera.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MatrizT_CabeceraFindFirstArgs>(args?: SelectSubset<T, MatrizT_CabeceraFindFirstArgs<ExtArgs>>): Prisma__MatrizT_CabeceraClient<$Result.GetResult<Prisma.$MatrizT_CabeceraPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first MatrizT_Cabecera that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatrizT_CabeceraFindFirstOrThrowArgs} args - Arguments to find a MatrizT_Cabecera
+     * @example
+     * // Get one MatrizT_Cabecera
+     * const matrizT_Cabecera = await prisma.matrizT_Cabecera.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MatrizT_CabeceraFindFirstOrThrowArgs>(args?: SelectSubset<T, MatrizT_CabeceraFindFirstOrThrowArgs<ExtArgs>>): Prisma__MatrizT_CabeceraClient<$Result.GetResult<Prisma.$MatrizT_CabeceraPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more MatrizT_Cabeceras that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatrizT_CabeceraFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MatrizT_Cabeceras
+     * const matrizT_Cabeceras = await prisma.matrizT_Cabecera.findMany()
+     * 
+     * // Get first 10 MatrizT_Cabeceras
+     * const matrizT_Cabeceras = await prisma.matrizT_Cabecera.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const matrizT_CabeceraWithIdOnly = await prisma.matrizT_Cabecera.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MatrizT_CabeceraFindManyArgs>(args?: SelectSubset<T, MatrizT_CabeceraFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MatrizT_CabeceraPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a MatrizT_Cabecera.
+     * @param {MatrizT_CabeceraCreateArgs} args - Arguments to create a MatrizT_Cabecera.
+     * @example
+     * // Create one MatrizT_Cabecera
+     * const MatrizT_Cabecera = await prisma.matrizT_Cabecera.create({
+     *   data: {
+     *     // ... data to create a MatrizT_Cabecera
+     *   }
+     * })
+     * 
+     */
+    create<T extends MatrizT_CabeceraCreateArgs>(args: SelectSubset<T, MatrizT_CabeceraCreateArgs<ExtArgs>>): Prisma__MatrizT_CabeceraClient<$Result.GetResult<Prisma.$MatrizT_CabeceraPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many MatrizT_Cabeceras.
+     * @param {MatrizT_CabeceraCreateManyArgs} args - Arguments to create many MatrizT_Cabeceras.
+     * @example
+     * // Create many MatrizT_Cabeceras
+     * const matrizT_Cabecera = await prisma.matrizT_Cabecera.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MatrizT_CabeceraCreateManyArgs>(args?: SelectSubset<T, MatrizT_CabeceraCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many MatrizT_Cabeceras and returns the data saved in the database.
+     * @param {MatrizT_CabeceraCreateManyAndReturnArgs} args - Arguments to create many MatrizT_Cabeceras.
+     * @example
+     * // Create many MatrizT_Cabeceras
+     * const matrizT_Cabecera = await prisma.matrizT_Cabecera.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many MatrizT_Cabeceras and only return the `id`
+     * const matrizT_CabeceraWithIdOnly = await prisma.matrizT_Cabecera.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MatrizT_CabeceraCreateManyAndReturnArgs>(args?: SelectSubset<T, MatrizT_CabeceraCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MatrizT_CabeceraPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a MatrizT_Cabecera.
+     * @param {MatrizT_CabeceraDeleteArgs} args - Arguments to delete one MatrizT_Cabecera.
+     * @example
+     * // Delete one MatrizT_Cabecera
+     * const MatrizT_Cabecera = await prisma.matrizT_Cabecera.delete({
+     *   where: {
+     *     // ... filter to delete one MatrizT_Cabecera
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MatrizT_CabeceraDeleteArgs>(args: SelectSubset<T, MatrizT_CabeceraDeleteArgs<ExtArgs>>): Prisma__MatrizT_CabeceraClient<$Result.GetResult<Prisma.$MatrizT_CabeceraPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one MatrizT_Cabecera.
+     * @param {MatrizT_CabeceraUpdateArgs} args - Arguments to update one MatrizT_Cabecera.
+     * @example
+     * // Update one MatrizT_Cabecera
+     * const matrizT_Cabecera = await prisma.matrizT_Cabecera.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MatrizT_CabeceraUpdateArgs>(args: SelectSubset<T, MatrizT_CabeceraUpdateArgs<ExtArgs>>): Prisma__MatrizT_CabeceraClient<$Result.GetResult<Prisma.$MatrizT_CabeceraPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more MatrizT_Cabeceras.
+     * @param {MatrizT_CabeceraDeleteManyArgs} args - Arguments to filter MatrizT_Cabeceras to delete.
+     * @example
+     * // Delete a few MatrizT_Cabeceras
+     * const { count } = await prisma.matrizT_Cabecera.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MatrizT_CabeceraDeleteManyArgs>(args?: SelectSubset<T, MatrizT_CabeceraDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MatrizT_Cabeceras.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatrizT_CabeceraUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MatrizT_Cabeceras
+     * const matrizT_Cabecera = await prisma.matrizT_Cabecera.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MatrizT_CabeceraUpdateManyArgs>(args: SelectSubset<T, MatrizT_CabeceraUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one MatrizT_Cabecera.
+     * @param {MatrizT_CabeceraUpsertArgs} args - Arguments to update or create a MatrizT_Cabecera.
+     * @example
+     * // Update or create a MatrizT_Cabecera
+     * const matrizT_Cabecera = await prisma.matrizT_Cabecera.upsert({
+     *   create: {
+     *     // ... data to create a MatrizT_Cabecera
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MatrizT_Cabecera we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MatrizT_CabeceraUpsertArgs>(args: SelectSubset<T, MatrizT_CabeceraUpsertArgs<ExtArgs>>): Prisma__MatrizT_CabeceraClient<$Result.GetResult<Prisma.$MatrizT_CabeceraPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of MatrizT_Cabeceras.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatrizT_CabeceraCountArgs} args - Arguments to filter MatrizT_Cabeceras to count.
+     * @example
+     * // Count the number of MatrizT_Cabeceras
+     * const count = await prisma.matrizT_Cabecera.count({
+     *   where: {
+     *     // ... the filter for the MatrizT_Cabeceras we want to count
+     *   }
+     * })
+    **/
+    count<T extends MatrizT_CabeceraCountArgs>(
+      args?: Subset<T, MatrizT_CabeceraCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MatrizT_CabeceraCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MatrizT_Cabecera.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatrizT_CabeceraAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MatrizT_CabeceraAggregateArgs>(args: Subset<T, MatrizT_CabeceraAggregateArgs>): Prisma.PrismaPromise<GetMatrizT_CabeceraAggregateType<T>>
+
+    /**
+     * Group by MatrizT_Cabecera.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatrizT_CabeceraGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MatrizT_CabeceraGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MatrizT_CabeceraGroupByArgs['orderBy'] }
+        : { orderBy?: MatrizT_CabeceraGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MatrizT_CabeceraGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMatrizT_CabeceraGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MatrizT_Cabecera model
+   */
+  readonly fields: MatrizT_CabeceraFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MatrizT_Cabecera.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MatrizT_CabeceraClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    licitacion<T extends LicitacionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LicitacionDefaultArgs<ExtArgs>>): Prisma__LicitacionClient<$Result.GetResult<Prisma.$LicitacionPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    detalles<T extends MatrizT_Cabecera$detallesArgs<ExtArgs> = {}>(args?: Subset<T, MatrizT_Cabecera$detallesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MatrizT_DetallePayload<ExtArgs>, T, "findMany"> | Null>
+    respuestas<T extends MatrizT_Cabecera$respuestasArgs<ExtArgs> = {}>(args?: Subset<T, MatrizT_Cabecera$respuestasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MatrizT_RespuestasCabeceraPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MatrizT_Cabecera model
+   */ 
+  interface MatrizT_CabeceraFieldRefs {
+    readonly id: FieldRef<"MatrizT_Cabecera", 'String'>
+    readonly licId: FieldRef<"MatrizT_Cabecera", 'Int'>
+    readonly anio: FieldRef<"MatrizT_Cabecera", 'Int'>
+    readonly titulo: FieldRef<"MatrizT_Cabecera", 'String'>
+    readonly estado: FieldRef<"MatrizT_Cabecera", 'Boolean'>
+    readonly instrucciones: FieldRef<"MatrizT_Cabecera", 'String'>
+    readonly createdAt: FieldRef<"MatrizT_Cabecera", 'DateTime'>
+    readonly updatedAt: FieldRef<"MatrizT_Cabecera", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MatrizT_Cabecera findUnique
+   */
+  export type MatrizT_CabeceraFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_Cabecera
+     */
+    select?: MatrizT_CabeceraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_CabeceraInclude<ExtArgs> | null
+    /**
+     * Filter, which MatrizT_Cabecera to fetch.
+     */
+    where: MatrizT_CabeceraWhereUniqueInput
+  }
+
+  /**
+   * MatrizT_Cabecera findUniqueOrThrow
+   */
+  export type MatrizT_CabeceraFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_Cabecera
+     */
+    select?: MatrizT_CabeceraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_CabeceraInclude<ExtArgs> | null
+    /**
+     * Filter, which MatrizT_Cabecera to fetch.
+     */
+    where: MatrizT_CabeceraWhereUniqueInput
+  }
+
+  /**
+   * MatrizT_Cabecera findFirst
+   */
+  export type MatrizT_CabeceraFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_Cabecera
+     */
+    select?: MatrizT_CabeceraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_CabeceraInclude<ExtArgs> | null
+    /**
+     * Filter, which MatrizT_Cabecera to fetch.
+     */
+    where?: MatrizT_CabeceraWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MatrizT_Cabeceras to fetch.
+     */
+    orderBy?: MatrizT_CabeceraOrderByWithRelationInput | MatrizT_CabeceraOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MatrizT_Cabeceras.
+     */
+    cursor?: MatrizT_CabeceraWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MatrizT_Cabeceras from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MatrizT_Cabeceras.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MatrizT_Cabeceras.
+     */
+    distinct?: MatrizT_CabeceraScalarFieldEnum | MatrizT_CabeceraScalarFieldEnum[]
+  }
+
+  /**
+   * MatrizT_Cabecera findFirstOrThrow
+   */
+  export type MatrizT_CabeceraFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_Cabecera
+     */
+    select?: MatrizT_CabeceraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_CabeceraInclude<ExtArgs> | null
+    /**
+     * Filter, which MatrizT_Cabecera to fetch.
+     */
+    where?: MatrizT_CabeceraWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MatrizT_Cabeceras to fetch.
+     */
+    orderBy?: MatrizT_CabeceraOrderByWithRelationInput | MatrizT_CabeceraOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MatrizT_Cabeceras.
+     */
+    cursor?: MatrizT_CabeceraWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MatrizT_Cabeceras from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MatrizT_Cabeceras.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MatrizT_Cabeceras.
+     */
+    distinct?: MatrizT_CabeceraScalarFieldEnum | MatrizT_CabeceraScalarFieldEnum[]
+  }
+
+  /**
+   * MatrizT_Cabecera findMany
+   */
+  export type MatrizT_CabeceraFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_Cabecera
+     */
+    select?: MatrizT_CabeceraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_CabeceraInclude<ExtArgs> | null
+    /**
+     * Filter, which MatrizT_Cabeceras to fetch.
+     */
+    where?: MatrizT_CabeceraWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MatrizT_Cabeceras to fetch.
+     */
+    orderBy?: MatrizT_CabeceraOrderByWithRelationInput | MatrizT_CabeceraOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MatrizT_Cabeceras.
+     */
+    cursor?: MatrizT_CabeceraWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MatrizT_Cabeceras from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MatrizT_Cabeceras.
+     */
+    skip?: number
+    distinct?: MatrizT_CabeceraScalarFieldEnum | MatrizT_CabeceraScalarFieldEnum[]
+  }
+
+  /**
+   * MatrizT_Cabecera create
+   */
+  export type MatrizT_CabeceraCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_Cabecera
+     */
+    select?: MatrizT_CabeceraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_CabeceraInclude<ExtArgs> | null
+    /**
+     * The data needed to create a MatrizT_Cabecera.
+     */
+    data: XOR<MatrizT_CabeceraCreateInput, MatrizT_CabeceraUncheckedCreateInput>
+  }
+
+  /**
+   * MatrizT_Cabecera createMany
+   */
+  export type MatrizT_CabeceraCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MatrizT_Cabeceras.
+     */
+    data: MatrizT_CabeceraCreateManyInput | MatrizT_CabeceraCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MatrizT_Cabecera createManyAndReturn
+   */
+  export type MatrizT_CabeceraCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_Cabecera
+     */
+    select?: MatrizT_CabeceraSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many MatrizT_Cabeceras.
+     */
+    data: MatrizT_CabeceraCreateManyInput | MatrizT_CabeceraCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_CabeceraIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MatrizT_Cabecera update
+   */
+  export type MatrizT_CabeceraUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_Cabecera
+     */
+    select?: MatrizT_CabeceraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_CabeceraInclude<ExtArgs> | null
+    /**
+     * The data needed to update a MatrizT_Cabecera.
+     */
+    data: XOR<MatrizT_CabeceraUpdateInput, MatrizT_CabeceraUncheckedUpdateInput>
+    /**
+     * Choose, which MatrizT_Cabecera to update.
+     */
+    where: MatrizT_CabeceraWhereUniqueInput
+  }
+
+  /**
+   * MatrizT_Cabecera updateMany
+   */
+  export type MatrizT_CabeceraUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MatrizT_Cabeceras.
+     */
+    data: XOR<MatrizT_CabeceraUpdateManyMutationInput, MatrizT_CabeceraUncheckedUpdateManyInput>
+    /**
+     * Filter which MatrizT_Cabeceras to update
+     */
+    where?: MatrizT_CabeceraWhereInput
+  }
+
+  /**
+   * MatrizT_Cabecera upsert
+   */
+  export type MatrizT_CabeceraUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_Cabecera
+     */
+    select?: MatrizT_CabeceraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_CabeceraInclude<ExtArgs> | null
+    /**
+     * The filter to search for the MatrizT_Cabecera to update in case it exists.
+     */
+    where: MatrizT_CabeceraWhereUniqueInput
+    /**
+     * In case the MatrizT_Cabecera found by the `where` argument doesn't exist, create a new MatrizT_Cabecera with this data.
+     */
+    create: XOR<MatrizT_CabeceraCreateInput, MatrizT_CabeceraUncheckedCreateInput>
+    /**
+     * In case the MatrizT_Cabecera was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MatrizT_CabeceraUpdateInput, MatrizT_CabeceraUncheckedUpdateInput>
+  }
+
+  /**
+   * MatrizT_Cabecera delete
+   */
+  export type MatrizT_CabeceraDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_Cabecera
+     */
+    select?: MatrizT_CabeceraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_CabeceraInclude<ExtArgs> | null
+    /**
+     * Filter which MatrizT_Cabecera to delete.
+     */
+    where: MatrizT_CabeceraWhereUniqueInput
+  }
+
+  /**
+   * MatrizT_Cabecera deleteMany
+   */
+  export type MatrizT_CabeceraDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MatrizT_Cabeceras to delete
+     */
+    where?: MatrizT_CabeceraWhereInput
+  }
+
+  /**
+   * MatrizT_Cabecera.detalles
+   */
+  export type MatrizT_Cabecera$detallesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_Detalle
+     */
+    select?: MatrizT_DetalleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_DetalleInclude<ExtArgs> | null
+    where?: MatrizT_DetalleWhereInput
+    orderBy?: MatrizT_DetalleOrderByWithRelationInput | MatrizT_DetalleOrderByWithRelationInput[]
+    cursor?: MatrizT_DetalleWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MatrizT_DetalleScalarFieldEnum | MatrizT_DetalleScalarFieldEnum[]
+  }
+
+  /**
+   * MatrizT_Cabecera.respuestas
+   */
+  export type MatrizT_Cabecera$respuestasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_RespuestasCabecera
+     */
+    select?: MatrizT_RespuestasCabeceraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_RespuestasCabeceraInclude<ExtArgs> | null
+    where?: MatrizT_RespuestasCabeceraWhereInput
+    orderBy?: MatrizT_RespuestasCabeceraOrderByWithRelationInput | MatrizT_RespuestasCabeceraOrderByWithRelationInput[]
+    cursor?: MatrizT_RespuestasCabeceraWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MatrizT_RespuestasCabeceraScalarFieldEnum | MatrizT_RespuestasCabeceraScalarFieldEnum[]
+  }
+
+  /**
+   * MatrizT_Cabecera without action
+   */
+  export type MatrizT_CabeceraDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_Cabecera
+     */
+    select?: MatrizT_CabeceraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_CabeceraInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model MatrizT_Detalle
+   */
+
+  export type AggregateMatrizT_Detalle = {
+    _count: MatrizT_DetalleCountAggregateOutputType | null
+    _avg: MatrizT_DetalleAvgAggregateOutputType | null
+    _sum: MatrizT_DetalleSumAggregateOutputType | null
+    _min: MatrizT_DetalleMinAggregateOutputType | null
+    _max: MatrizT_DetalleMaxAggregateOutputType | null
+  }
+
+  export type MatrizT_DetalleAvgAggregateOutputType = {
+    orden: number | null
+    gravedad: number | null
+    probabilidad: number | null
+    nivelRiesgo: number | null
+  }
+
+  export type MatrizT_DetalleSumAggregateOutputType = {
+    orden: number | null
+    gravedad: number | null
+    probabilidad: number | null
+    nivelRiesgo: number | null
+  }
+
+  export type MatrizT_DetalleMinAggregateOutputType = {
+    id: string | null
+    cabeceraId: string | null
+    preguntaNombre: string | null
+    tipoRespuesta: string | null
+    obligatorio: boolean | null
+    seccion: string | null
+    orden: number | null
+    gravedad: number | null
+    probabilidad: number | null
+    nivelRiesgo: number | null
+    justificacion: string | null
+    riesgoSignificativo: string | null
+    recursoNecesario: string | null
+    resultadoEsperado: string | null
+    respImplementacion: string | null
+    respSeguimiento: string | null
+    evidenciaCumplimiento: string | null
+    evidenciaEficacia: string | null
+  }
+
+  export type MatrizT_DetalleMaxAggregateOutputType = {
+    id: string | null
+    cabeceraId: string | null
+    preguntaNombre: string | null
+    tipoRespuesta: string | null
+    obligatorio: boolean | null
+    seccion: string | null
+    orden: number | null
+    gravedad: number | null
+    probabilidad: number | null
+    nivelRiesgo: number | null
+    justificacion: string | null
+    riesgoSignificativo: string | null
+    recursoNecesario: string | null
+    resultadoEsperado: string | null
+    respImplementacion: string | null
+    respSeguimiento: string | null
+    evidenciaCumplimiento: string | null
+    evidenciaEficacia: string | null
+  }
+
+  export type MatrizT_DetalleCountAggregateOutputType = {
+    id: number
+    cabeceraId: number
+    preguntaNombre: number
+    tipoRespuesta: number
+    obligatorio: number
+    seccion: number
+    orden: number
+    gravedad: number
+    probabilidad: number
+    nivelRiesgo: number
+    justificacion: number
+    riesgoSignificativo: number
+    recursoNecesario: number
+    resultadoEsperado: number
+    respImplementacion: number
+    respSeguimiento: number
+    evidenciaCumplimiento: number
+    evidenciaEficacia: number
+    _all: number
+  }
+
+
+  export type MatrizT_DetalleAvgAggregateInputType = {
+    orden?: true
+    gravedad?: true
+    probabilidad?: true
+    nivelRiesgo?: true
+  }
+
+  export type MatrizT_DetalleSumAggregateInputType = {
+    orden?: true
+    gravedad?: true
+    probabilidad?: true
+    nivelRiesgo?: true
+  }
+
+  export type MatrizT_DetalleMinAggregateInputType = {
+    id?: true
+    cabeceraId?: true
+    preguntaNombre?: true
+    tipoRespuesta?: true
+    obligatorio?: true
+    seccion?: true
+    orden?: true
+    gravedad?: true
+    probabilidad?: true
+    nivelRiesgo?: true
+    justificacion?: true
+    riesgoSignificativo?: true
+    recursoNecesario?: true
+    resultadoEsperado?: true
+    respImplementacion?: true
+    respSeguimiento?: true
+    evidenciaCumplimiento?: true
+    evidenciaEficacia?: true
+  }
+
+  export type MatrizT_DetalleMaxAggregateInputType = {
+    id?: true
+    cabeceraId?: true
+    preguntaNombre?: true
+    tipoRespuesta?: true
+    obligatorio?: true
+    seccion?: true
+    orden?: true
+    gravedad?: true
+    probabilidad?: true
+    nivelRiesgo?: true
+    justificacion?: true
+    riesgoSignificativo?: true
+    recursoNecesario?: true
+    resultadoEsperado?: true
+    respImplementacion?: true
+    respSeguimiento?: true
+    evidenciaCumplimiento?: true
+    evidenciaEficacia?: true
+  }
+
+  export type MatrizT_DetalleCountAggregateInputType = {
+    id?: true
+    cabeceraId?: true
+    preguntaNombre?: true
+    tipoRespuesta?: true
+    obligatorio?: true
+    seccion?: true
+    orden?: true
+    gravedad?: true
+    probabilidad?: true
+    nivelRiesgo?: true
+    justificacion?: true
+    riesgoSignificativo?: true
+    recursoNecesario?: true
+    resultadoEsperado?: true
+    respImplementacion?: true
+    respSeguimiento?: true
+    evidenciaCumplimiento?: true
+    evidenciaEficacia?: true
+    _all?: true
+  }
+
+  export type MatrizT_DetalleAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MatrizT_Detalle to aggregate.
+     */
+    where?: MatrizT_DetalleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MatrizT_Detalles to fetch.
+     */
+    orderBy?: MatrizT_DetalleOrderByWithRelationInput | MatrizT_DetalleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MatrizT_DetalleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MatrizT_Detalles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MatrizT_Detalles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MatrizT_Detalles
+    **/
+    _count?: true | MatrizT_DetalleCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MatrizT_DetalleAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MatrizT_DetalleSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MatrizT_DetalleMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MatrizT_DetalleMaxAggregateInputType
+  }
+
+  export type GetMatrizT_DetalleAggregateType<T extends MatrizT_DetalleAggregateArgs> = {
+        [P in keyof T & keyof AggregateMatrizT_Detalle]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMatrizT_Detalle[P]>
+      : GetScalarType<T[P], AggregateMatrizT_Detalle[P]>
+  }
+
+
+
+
+  export type MatrizT_DetalleGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MatrizT_DetalleWhereInput
+    orderBy?: MatrizT_DetalleOrderByWithAggregationInput | MatrizT_DetalleOrderByWithAggregationInput[]
+    by: MatrizT_DetalleScalarFieldEnum[] | MatrizT_DetalleScalarFieldEnum
+    having?: MatrizT_DetalleScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MatrizT_DetalleCountAggregateInputType | true
+    _avg?: MatrizT_DetalleAvgAggregateInputType
+    _sum?: MatrizT_DetalleSumAggregateInputType
+    _min?: MatrizT_DetalleMinAggregateInputType
+    _max?: MatrizT_DetalleMaxAggregateInputType
+  }
+
+  export type MatrizT_DetalleGroupByOutputType = {
+    id: string
+    cabeceraId: string
+    preguntaNombre: string
+    tipoRespuesta: string
+    obligatorio: boolean
+    seccion: string
+    orden: number
+    gravedad: number | null
+    probabilidad: number | null
+    nivelRiesgo: number | null
+    justificacion: string | null
+    riesgoSignificativo: string | null
+    recursoNecesario: string | null
+    resultadoEsperado: string | null
+    respImplementacion: string | null
+    respSeguimiento: string | null
+    evidenciaCumplimiento: string | null
+    evidenciaEficacia: string | null
+    _count: MatrizT_DetalleCountAggregateOutputType | null
+    _avg: MatrizT_DetalleAvgAggregateOutputType | null
+    _sum: MatrizT_DetalleSumAggregateOutputType | null
+    _min: MatrizT_DetalleMinAggregateOutputType | null
+    _max: MatrizT_DetalleMaxAggregateOutputType | null
+  }
+
+  type GetMatrizT_DetalleGroupByPayload<T extends MatrizT_DetalleGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MatrizT_DetalleGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MatrizT_DetalleGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MatrizT_DetalleGroupByOutputType[P]>
+            : GetScalarType<T[P], MatrizT_DetalleGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MatrizT_DetalleSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cabeceraId?: boolean
+    preguntaNombre?: boolean
+    tipoRespuesta?: boolean
+    obligatorio?: boolean
+    seccion?: boolean
+    orden?: boolean
+    gravedad?: boolean
+    probabilidad?: boolean
+    nivelRiesgo?: boolean
+    justificacion?: boolean
+    riesgoSignificativo?: boolean
+    recursoNecesario?: boolean
+    resultadoEsperado?: boolean
+    respImplementacion?: boolean
+    respSeguimiento?: boolean
+    evidenciaCumplimiento?: boolean
+    evidenciaEficacia?: boolean
+    cabecera?: boolean | MatrizT_CabeceraDefaultArgs<ExtArgs>
+    respuestasDetalle?: boolean | MatrizT_Detalle$respuestasDetalleArgs<ExtArgs>
+    _count?: boolean | MatrizT_DetalleCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["matrizT_Detalle"]>
+
+  export type MatrizT_DetalleSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cabeceraId?: boolean
+    preguntaNombre?: boolean
+    tipoRespuesta?: boolean
+    obligatorio?: boolean
+    seccion?: boolean
+    orden?: boolean
+    gravedad?: boolean
+    probabilidad?: boolean
+    nivelRiesgo?: boolean
+    justificacion?: boolean
+    riesgoSignificativo?: boolean
+    recursoNecesario?: boolean
+    resultadoEsperado?: boolean
+    respImplementacion?: boolean
+    respSeguimiento?: boolean
+    evidenciaCumplimiento?: boolean
+    evidenciaEficacia?: boolean
+    cabecera?: boolean | MatrizT_CabeceraDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["matrizT_Detalle"]>
+
+  export type MatrizT_DetalleSelectScalar = {
+    id?: boolean
+    cabeceraId?: boolean
+    preguntaNombre?: boolean
+    tipoRespuesta?: boolean
+    obligatorio?: boolean
+    seccion?: boolean
+    orden?: boolean
+    gravedad?: boolean
+    probabilidad?: boolean
+    nivelRiesgo?: boolean
+    justificacion?: boolean
+    riesgoSignificativo?: boolean
+    recursoNecesario?: boolean
+    resultadoEsperado?: boolean
+    respImplementacion?: boolean
+    respSeguimiento?: boolean
+    evidenciaCumplimiento?: boolean
+    evidenciaEficacia?: boolean
+  }
+
+  export type MatrizT_DetalleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    cabecera?: boolean | MatrizT_CabeceraDefaultArgs<ExtArgs>
+    respuestasDetalle?: boolean | MatrizT_Detalle$respuestasDetalleArgs<ExtArgs>
+    _count?: boolean | MatrizT_DetalleCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type MatrizT_DetalleIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    cabecera?: boolean | MatrizT_CabeceraDefaultArgs<ExtArgs>
+  }
+
+  export type $MatrizT_DetallePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MatrizT_Detalle"
+    objects: {
+      cabecera: Prisma.$MatrizT_CabeceraPayload<ExtArgs>
+      respuestasDetalle: Prisma.$MatrizT_RespuestasDetallePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      cabeceraId: string
+      preguntaNombre: string
+      tipoRespuesta: string
+      obligatorio: boolean
+      seccion: string
+      orden: number
+      gravedad: number | null
+      probabilidad: number | null
+      nivelRiesgo: number | null
+      justificacion: string | null
+      riesgoSignificativo: string | null
+      recursoNecesario: string | null
+      resultadoEsperado: string | null
+      respImplementacion: string | null
+      respSeguimiento: string | null
+      evidenciaCumplimiento: string | null
+      evidenciaEficacia: string | null
+    }, ExtArgs["result"]["matrizT_Detalle"]>
+    composites: {}
+  }
+
+  type MatrizT_DetalleGetPayload<S extends boolean | null | undefined | MatrizT_DetalleDefaultArgs> = $Result.GetResult<Prisma.$MatrizT_DetallePayload, S>
+
+  type MatrizT_DetalleCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<MatrizT_DetalleFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: MatrizT_DetalleCountAggregateInputType | true
+    }
+
+  export interface MatrizT_DetalleDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MatrizT_Detalle'], meta: { name: 'MatrizT_Detalle' } }
+    /**
+     * Find zero or one MatrizT_Detalle that matches the filter.
+     * @param {MatrizT_DetalleFindUniqueArgs} args - Arguments to find a MatrizT_Detalle
+     * @example
+     * // Get one MatrizT_Detalle
+     * const matrizT_Detalle = await prisma.matrizT_Detalle.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MatrizT_DetalleFindUniqueArgs>(args: SelectSubset<T, MatrizT_DetalleFindUniqueArgs<ExtArgs>>): Prisma__MatrizT_DetalleClient<$Result.GetResult<Prisma.$MatrizT_DetallePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one MatrizT_Detalle that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {MatrizT_DetalleFindUniqueOrThrowArgs} args - Arguments to find a MatrizT_Detalle
+     * @example
+     * // Get one MatrizT_Detalle
+     * const matrizT_Detalle = await prisma.matrizT_Detalle.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MatrizT_DetalleFindUniqueOrThrowArgs>(args: SelectSubset<T, MatrizT_DetalleFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MatrizT_DetalleClient<$Result.GetResult<Prisma.$MatrizT_DetallePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first MatrizT_Detalle that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatrizT_DetalleFindFirstArgs} args - Arguments to find a MatrizT_Detalle
+     * @example
+     * // Get one MatrizT_Detalle
+     * const matrizT_Detalle = await prisma.matrizT_Detalle.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MatrizT_DetalleFindFirstArgs>(args?: SelectSubset<T, MatrizT_DetalleFindFirstArgs<ExtArgs>>): Prisma__MatrizT_DetalleClient<$Result.GetResult<Prisma.$MatrizT_DetallePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first MatrizT_Detalle that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatrizT_DetalleFindFirstOrThrowArgs} args - Arguments to find a MatrizT_Detalle
+     * @example
+     * // Get one MatrizT_Detalle
+     * const matrizT_Detalle = await prisma.matrizT_Detalle.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MatrizT_DetalleFindFirstOrThrowArgs>(args?: SelectSubset<T, MatrizT_DetalleFindFirstOrThrowArgs<ExtArgs>>): Prisma__MatrizT_DetalleClient<$Result.GetResult<Prisma.$MatrizT_DetallePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more MatrizT_Detalles that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatrizT_DetalleFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MatrizT_Detalles
+     * const matrizT_Detalles = await prisma.matrizT_Detalle.findMany()
+     * 
+     * // Get first 10 MatrizT_Detalles
+     * const matrizT_Detalles = await prisma.matrizT_Detalle.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const matrizT_DetalleWithIdOnly = await prisma.matrizT_Detalle.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MatrizT_DetalleFindManyArgs>(args?: SelectSubset<T, MatrizT_DetalleFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MatrizT_DetallePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a MatrizT_Detalle.
+     * @param {MatrizT_DetalleCreateArgs} args - Arguments to create a MatrizT_Detalle.
+     * @example
+     * // Create one MatrizT_Detalle
+     * const MatrizT_Detalle = await prisma.matrizT_Detalle.create({
+     *   data: {
+     *     // ... data to create a MatrizT_Detalle
+     *   }
+     * })
+     * 
+     */
+    create<T extends MatrizT_DetalleCreateArgs>(args: SelectSubset<T, MatrizT_DetalleCreateArgs<ExtArgs>>): Prisma__MatrizT_DetalleClient<$Result.GetResult<Prisma.$MatrizT_DetallePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many MatrizT_Detalles.
+     * @param {MatrizT_DetalleCreateManyArgs} args - Arguments to create many MatrizT_Detalles.
+     * @example
+     * // Create many MatrizT_Detalles
+     * const matrizT_Detalle = await prisma.matrizT_Detalle.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MatrizT_DetalleCreateManyArgs>(args?: SelectSubset<T, MatrizT_DetalleCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many MatrizT_Detalles and returns the data saved in the database.
+     * @param {MatrizT_DetalleCreateManyAndReturnArgs} args - Arguments to create many MatrizT_Detalles.
+     * @example
+     * // Create many MatrizT_Detalles
+     * const matrizT_Detalle = await prisma.matrizT_Detalle.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many MatrizT_Detalles and only return the `id`
+     * const matrizT_DetalleWithIdOnly = await prisma.matrizT_Detalle.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MatrizT_DetalleCreateManyAndReturnArgs>(args?: SelectSubset<T, MatrizT_DetalleCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MatrizT_DetallePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a MatrizT_Detalle.
+     * @param {MatrizT_DetalleDeleteArgs} args - Arguments to delete one MatrizT_Detalle.
+     * @example
+     * // Delete one MatrizT_Detalle
+     * const MatrizT_Detalle = await prisma.matrizT_Detalle.delete({
+     *   where: {
+     *     // ... filter to delete one MatrizT_Detalle
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MatrizT_DetalleDeleteArgs>(args: SelectSubset<T, MatrizT_DetalleDeleteArgs<ExtArgs>>): Prisma__MatrizT_DetalleClient<$Result.GetResult<Prisma.$MatrizT_DetallePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one MatrizT_Detalle.
+     * @param {MatrizT_DetalleUpdateArgs} args - Arguments to update one MatrizT_Detalle.
+     * @example
+     * // Update one MatrizT_Detalle
+     * const matrizT_Detalle = await prisma.matrizT_Detalle.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MatrizT_DetalleUpdateArgs>(args: SelectSubset<T, MatrizT_DetalleUpdateArgs<ExtArgs>>): Prisma__MatrizT_DetalleClient<$Result.GetResult<Prisma.$MatrizT_DetallePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more MatrizT_Detalles.
+     * @param {MatrizT_DetalleDeleteManyArgs} args - Arguments to filter MatrizT_Detalles to delete.
+     * @example
+     * // Delete a few MatrizT_Detalles
+     * const { count } = await prisma.matrizT_Detalle.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MatrizT_DetalleDeleteManyArgs>(args?: SelectSubset<T, MatrizT_DetalleDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MatrizT_Detalles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatrizT_DetalleUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MatrizT_Detalles
+     * const matrizT_Detalle = await prisma.matrizT_Detalle.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MatrizT_DetalleUpdateManyArgs>(args: SelectSubset<T, MatrizT_DetalleUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one MatrizT_Detalle.
+     * @param {MatrizT_DetalleUpsertArgs} args - Arguments to update or create a MatrizT_Detalle.
+     * @example
+     * // Update or create a MatrizT_Detalle
+     * const matrizT_Detalle = await prisma.matrizT_Detalle.upsert({
+     *   create: {
+     *     // ... data to create a MatrizT_Detalle
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MatrizT_Detalle we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MatrizT_DetalleUpsertArgs>(args: SelectSubset<T, MatrizT_DetalleUpsertArgs<ExtArgs>>): Prisma__MatrizT_DetalleClient<$Result.GetResult<Prisma.$MatrizT_DetallePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of MatrizT_Detalles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatrizT_DetalleCountArgs} args - Arguments to filter MatrizT_Detalles to count.
+     * @example
+     * // Count the number of MatrizT_Detalles
+     * const count = await prisma.matrizT_Detalle.count({
+     *   where: {
+     *     // ... the filter for the MatrizT_Detalles we want to count
+     *   }
+     * })
+    **/
+    count<T extends MatrizT_DetalleCountArgs>(
+      args?: Subset<T, MatrizT_DetalleCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MatrizT_DetalleCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MatrizT_Detalle.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatrizT_DetalleAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MatrizT_DetalleAggregateArgs>(args: Subset<T, MatrizT_DetalleAggregateArgs>): Prisma.PrismaPromise<GetMatrizT_DetalleAggregateType<T>>
+
+    /**
+     * Group by MatrizT_Detalle.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatrizT_DetalleGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MatrizT_DetalleGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MatrizT_DetalleGroupByArgs['orderBy'] }
+        : { orderBy?: MatrizT_DetalleGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MatrizT_DetalleGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMatrizT_DetalleGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MatrizT_Detalle model
+   */
+  readonly fields: MatrizT_DetalleFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MatrizT_Detalle.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MatrizT_DetalleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    cabecera<T extends MatrizT_CabeceraDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MatrizT_CabeceraDefaultArgs<ExtArgs>>): Prisma__MatrizT_CabeceraClient<$Result.GetResult<Prisma.$MatrizT_CabeceraPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    respuestasDetalle<T extends MatrizT_Detalle$respuestasDetalleArgs<ExtArgs> = {}>(args?: Subset<T, MatrizT_Detalle$respuestasDetalleArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MatrizT_RespuestasDetallePayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MatrizT_Detalle model
+   */ 
+  interface MatrizT_DetalleFieldRefs {
+    readonly id: FieldRef<"MatrizT_Detalle", 'String'>
+    readonly cabeceraId: FieldRef<"MatrizT_Detalle", 'String'>
+    readonly preguntaNombre: FieldRef<"MatrizT_Detalle", 'String'>
+    readonly tipoRespuesta: FieldRef<"MatrizT_Detalle", 'String'>
+    readonly obligatorio: FieldRef<"MatrizT_Detalle", 'Boolean'>
+    readonly seccion: FieldRef<"MatrizT_Detalle", 'String'>
+    readonly orden: FieldRef<"MatrizT_Detalle", 'Int'>
+    readonly gravedad: FieldRef<"MatrizT_Detalle", 'Int'>
+    readonly probabilidad: FieldRef<"MatrizT_Detalle", 'Int'>
+    readonly nivelRiesgo: FieldRef<"MatrizT_Detalle", 'Int'>
+    readonly justificacion: FieldRef<"MatrizT_Detalle", 'String'>
+    readonly riesgoSignificativo: FieldRef<"MatrizT_Detalle", 'String'>
+    readonly recursoNecesario: FieldRef<"MatrizT_Detalle", 'String'>
+    readonly resultadoEsperado: FieldRef<"MatrizT_Detalle", 'String'>
+    readonly respImplementacion: FieldRef<"MatrizT_Detalle", 'String'>
+    readonly respSeguimiento: FieldRef<"MatrizT_Detalle", 'String'>
+    readonly evidenciaCumplimiento: FieldRef<"MatrizT_Detalle", 'String'>
+    readonly evidenciaEficacia: FieldRef<"MatrizT_Detalle", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MatrizT_Detalle findUnique
+   */
+  export type MatrizT_DetalleFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_Detalle
+     */
+    select?: MatrizT_DetalleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_DetalleInclude<ExtArgs> | null
+    /**
+     * Filter, which MatrizT_Detalle to fetch.
+     */
+    where: MatrizT_DetalleWhereUniqueInput
+  }
+
+  /**
+   * MatrizT_Detalle findUniqueOrThrow
+   */
+  export type MatrizT_DetalleFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_Detalle
+     */
+    select?: MatrizT_DetalleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_DetalleInclude<ExtArgs> | null
+    /**
+     * Filter, which MatrizT_Detalle to fetch.
+     */
+    where: MatrizT_DetalleWhereUniqueInput
+  }
+
+  /**
+   * MatrizT_Detalle findFirst
+   */
+  export type MatrizT_DetalleFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_Detalle
+     */
+    select?: MatrizT_DetalleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_DetalleInclude<ExtArgs> | null
+    /**
+     * Filter, which MatrizT_Detalle to fetch.
+     */
+    where?: MatrizT_DetalleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MatrizT_Detalles to fetch.
+     */
+    orderBy?: MatrizT_DetalleOrderByWithRelationInput | MatrizT_DetalleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MatrizT_Detalles.
+     */
+    cursor?: MatrizT_DetalleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MatrizT_Detalles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MatrizT_Detalles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MatrizT_Detalles.
+     */
+    distinct?: MatrizT_DetalleScalarFieldEnum | MatrizT_DetalleScalarFieldEnum[]
+  }
+
+  /**
+   * MatrizT_Detalle findFirstOrThrow
+   */
+  export type MatrizT_DetalleFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_Detalle
+     */
+    select?: MatrizT_DetalleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_DetalleInclude<ExtArgs> | null
+    /**
+     * Filter, which MatrizT_Detalle to fetch.
+     */
+    where?: MatrizT_DetalleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MatrizT_Detalles to fetch.
+     */
+    orderBy?: MatrizT_DetalleOrderByWithRelationInput | MatrizT_DetalleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MatrizT_Detalles.
+     */
+    cursor?: MatrizT_DetalleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MatrizT_Detalles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MatrizT_Detalles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MatrizT_Detalles.
+     */
+    distinct?: MatrizT_DetalleScalarFieldEnum | MatrizT_DetalleScalarFieldEnum[]
+  }
+
+  /**
+   * MatrizT_Detalle findMany
+   */
+  export type MatrizT_DetalleFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_Detalle
+     */
+    select?: MatrizT_DetalleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_DetalleInclude<ExtArgs> | null
+    /**
+     * Filter, which MatrizT_Detalles to fetch.
+     */
+    where?: MatrizT_DetalleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MatrizT_Detalles to fetch.
+     */
+    orderBy?: MatrizT_DetalleOrderByWithRelationInput | MatrizT_DetalleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MatrizT_Detalles.
+     */
+    cursor?: MatrizT_DetalleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MatrizT_Detalles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MatrizT_Detalles.
+     */
+    skip?: number
+    distinct?: MatrizT_DetalleScalarFieldEnum | MatrizT_DetalleScalarFieldEnum[]
+  }
+
+  /**
+   * MatrizT_Detalle create
+   */
+  export type MatrizT_DetalleCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_Detalle
+     */
+    select?: MatrizT_DetalleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_DetalleInclude<ExtArgs> | null
+    /**
+     * The data needed to create a MatrizT_Detalle.
+     */
+    data: XOR<MatrizT_DetalleCreateInput, MatrizT_DetalleUncheckedCreateInput>
+  }
+
+  /**
+   * MatrizT_Detalle createMany
+   */
+  export type MatrizT_DetalleCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MatrizT_Detalles.
+     */
+    data: MatrizT_DetalleCreateManyInput | MatrizT_DetalleCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MatrizT_Detalle createManyAndReturn
+   */
+  export type MatrizT_DetalleCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_Detalle
+     */
+    select?: MatrizT_DetalleSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many MatrizT_Detalles.
+     */
+    data: MatrizT_DetalleCreateManyInput | MatrizT_DetalleCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_DetalleIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MatrizT_Detalle update
+   */
+  export type MatrizT_DetalleUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_Detalle
+     */
+    select?: MatrizT_DetalleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_DetalleInclude<ExtArgs> | null
+    /**
+     * The data needed to update a MatrizT_Detalle.
+     */
+    data: XOR<MatrizT_DetalleUpdateInput, MatrizT_DetalleUncheckedUpdateInput>
+    /**
+     * Choose, which MatrizT_Detalle to update.
+     */
+    where: MatrizT_DetalleWhereUniqueInput
+  }
+
+  /**
+   * MatrizT_Detalle updateMany
+   */
+  export type MatrizT_DetalleUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MatrizT_Detalles.
+     */
+    data: XOR<MatrizT_DetalleUpdateManyMutationInput, MatrizT_DetalleUncheckedUpdateManyInput>
+    /**
+     * Filter which MatrizT_Detalles to update
+     */
+    where?: MatrizT_DetalleWhereInput
+  }
+
+  /**
+   * MatrizT_Detalle upsert
+   */
+  export type MatrizT_DetalleUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_Detalle
+     */
+    select?: MatrizT_DetalleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_DetalleInclude<ExtArgs> | null
+    /**
+     * The filter to search for the MatrizT_Detalle to update in case it exists.
+     */
+    where: MatrizT_DetalleWhereUniqueInput
+    /**
+     * In case the MatrizT_Detalle found by the `where` argument doesn't exist, create a new MatrizT_Detalle with this data.
+     */
+    create: XOR<MatrizT_DetalleCreateInput, MatrizT_DetalleUncheckedCreateInput>
+    /**
+     * In case the MatrizT_Detalle was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MatrizT_DetalleUpdateInput, MatrizT_DetalleUncheckedUpdateInput>
+  }
+
+  /**
+   * MatrizT_Detalle delete
+   */
+  export type MatrizT_DetalleDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_Detalle
+     */
+    select?: MatrizT_DetalleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_DetalleInclude<ExtArgs> | null
+    /**
+     * Filter which MatrizT_Detalle to delete.
+     */
+    where: MatrizT_DetalleWhereUniqueInput
+  }
+
+  /**
+   * MatrizT_Detalle deleteMany
+   */
+  export type MatrizT_DetalleDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MatrizT_Detalles to delete
+     */
+    where?: MatrizT_DetalleWhereInput
+  }
+
+  /**
+   * MatrizT_Detalle.respuestasDetalle
+   */
+  export type MatrizT_Detalle$respuestasDetalleArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_RespuestasDetalle
+     */
+    select?: MatrizT_RespuestasDetalleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_RespuestasDetalleInclude<ExtArgs> | null
+    where?: MatrizT_RespuestasDetalleWhereInput
+    orderBy?: MatrizT_RespuestasDetalleOrderByWithRelationInput | MatrizT_RespuestasDetalleOrderByWithRelationInput[]
+    cursor?: MatrizT_RespuestasDetalleWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MatrizT_RespuestasDetalleScalarFieldEnum | MatrizT_RespuestasDetalleScalarFieldEnum[]
+  }
+
+  /**
+   * MatrizT_Detalle without action
+   */
+  export type MatrizT_DetalleDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_Detalle
+     */
+    select?: MatrizT_DetalleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_DetalleInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model MatrizT_RespuestasCabecera
+   */
+
+  export type AggregateMatrizT_RespuestasCabecera = {
+    _count: MatrizT_RespuestasCabeceraCountAggregateOutputType | null
+    _avg: MatrizT_RespuestasCabeceraAvgAggregateOutputType | null
+    _sum: MatrizT_RespuestasCabeceraSumAggregateOutputType | null
+    _min: MatrizT_RespuestasCabeceraMinAggregateOutputType | null
+    _max: MatrizT_RespuestasCabeceraMaxAggregateOutputType | null
+  }
+
+  export type MatrizT_RespuestasCabeceraAvgAggregateOutputType = {
+    licId: number | null
+    ut: number | null
+    rbd: number | null
+  }
+
+  export type MatrizT_RespuestasCabeceraSumAggregateOutputType = {
+    licId: number | null
+    ut: number | null
+    rbd: number | null
+  }
+
+  export type MatrizT_RespuestasCabeceraMinAggregateOutputType = {
+    id: string | null
+    cabeceraId: string | null
+    usuario: string | null
+    fechaIngreso: Date | null
+    supervisorNombre: string | null
+    supervisorCorreo: string | null
+    licId: number | null
+    ut: number | null
+    rbd: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MatrizT_RespuestasCabeceraMaxAggregateOutputType = {
+    id: string | null
+    cabeceraId: string | null
+    usuario: string | null
+    fechaIngreso: Date | null
+    supervisorNombre: string | null
+    supervisorCorreo: string | null
+    licId: number | null
+    ut: number | null
+    rbd: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MatrizT_RespuestasCabeceraCountAggregateOutputType = {
+    id: number
+    cabeceraId: number
+    usuario: number
+    fechaIngreso: number
+    supervisorNombre: number
+    supervisorCorreo: number
+    licId: number
+    ut: number
+    rbd: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type MatrizT_RespuestasCabeceraAvgAggregateInputType = {
+    licId?: true
+    ut?: true
+    rbd?: true
+  }
+
+  export type MatrizT_RespuestasCabeceraSumAggregateInputType = {
+    licId?: true
+    ut?: true
+    rbd?: true
+  }
+
+  export type MatrizT_RespuestasCabeceraMinAggregateInputType = {
+    id?: true
+    cabeceraId?: true
+    usuario?: true
+    fechaIngreso?: true
+    supervisorNombre?: true
+    supervisorCorreo?: true
+    licId?: true
+    ut?: true
+    rbd?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MatrizT_RespuestasCabeceraMaxAggregateInputType = {
+    id?: true
+    cabeceraId?: true
+    usuario?: true
+    fechaIngreso?: true
+    supervisorNombre?: true
+    supervisorCorreo?: true
+    licId?: true
+    ut?: true
+    rbd?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MatrizT_RespuestasCabeceraCountAggregateInputType = {
+    id?: true
+    cabeceraId?: true
+    usuario?: true
+    fechaIngreso?: true
+    supervisorNombre?: true
+    supervisorCorreo?: true
+    licId?: true
+    ut?: true
+    rbd?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type MatrizT_RespuestasCabeceraAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MatrizT_RespuestasCabecera to aggregate.
+     */
+    where?: MatrizT_RespuestasCabeceraWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MatrizT_RespuestasCabeceras to fetch.
+     */
+    orderBy?: MatrizT_RespuestasCabeceraOrderByWithRelationInput | MatrizT_RespuestasCabeceraOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MatrizT_RespuestasCabeceraWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MatrizT_RespuestasCabeceras from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MatrizT_RespuestasCabeceras.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MatrizT_RespuestasCabeceras
+    **/
+    _count?: true | MatrizT_RespuestasCabeceraCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MatrizT_RespuestasCabeceraAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MatrizT_RespuestasCabeceraSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MatrizT_RespuestasCabeceraMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MatrizT_RespuestasCabeceraMaxAggregateInputType
+  }
+
+  export type GetMatrizT_RespuestasCabeceraAggregateType<T extends MatrizT_RespuestasCabeceraAggregateArgs> = {
+        [P in keyof T & keyof AggregateMatrizT_RespuestasCabecera]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMatrizT_RespuestasCabecera[P]>
+      : GetScalarType<T[P], AggregateMatrizT_RespuestasCabecera[P]>
+  }
+
+
+
+
+  export type MatrizT_RespuestasCabeceraGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MatrizT_RespuestasCabeceraWhereInput
+    orderBy?: MatrizT_RespuestasCabeceraOrderByWithAggregationInput | MatrizT_RespuestasCabeceraOrderByWithAggregationInput[]
+    by: MatrizT_RespuestasCabeceraScalarFieldEnum[] | MatrizT_RespuestasCabeceraScalarFieldEnum
+    having?: MatrizT_RespuestasCabeceraScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MatrizT_RespuestasCabeceraCountAggregateInputType | true
+    _avg?: MatrizT_RespuestasCabeceraAvgAggregateInputType
+    _sum?: MatrizT_RespuestasCabeceraSumAggregateInputType
+    _min?: MatrizT_RespuestasCabeceraMinAggregateInputType
+    _max?: MatrizT_RespuestasCabeceraMaxAggregateInputType
+  }
+
+  export type MatrizT_RespuestasCabeceraGroupByOutputType = {
+    id: string
+    cabeceraId: string
+    usuario: string
+    fechaIngreso: Date
+    supervisorNombre: string
+    supervisorCorreo: string
+    licId: number
+    ut: number
+    rbd: number
+    createdAt: Date
+    updatedAt: Date
+    _count: MatrizT_RespuestasCabeceraCountAggregateOutputType | null
+    _avg: MatrizT_RespuestasCabeceraAvgAggregateOutputType | null
+    _sum: MatrizT_RespuestasCabeceraSumAggregateOutputType | null
+    _min: MatrizT_RespuestasCabeceraMinAggregateOutputType | null
+    _max: MatrizT_RespuestasCabeceraMaxAggregateOutputType | null
+  }
+
+  type GetMatrizT_RespuestasCabeceraGroupByPayload<T extends MatrizT_RespuestasCabeceraGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MatrizT_RespuestasCabeceraGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MatrizT_RespuestasCabeceraGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MatrizT_RespuestasCabeceraGroupByOutputType[P]>
+            : GetScalarType<T[P], MatrizT_RespuestasCabeceraGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MatrizT_RespuestasCabeceraSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cabeceraId?: boolean
+    usuario?: boolean
+    fechaIngreso?: boolean
+    supervisorNombre?: boolean
+    supervisorCorreo?: boolean
+    licId?: boolean
+    ut?: boolean
+    rbd?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    cabecera?: boolean | MatrizT_CabeceraDefaultArgs<ExtArgs>
+    detalles?: boolean | MatrizT_RespuestasCabecera$detallesArgs<ExtArgs>
+    _count?: boolean | MatrizT_RespuestasCabeceraCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["matrizT_RespuestasCabecera"]>
+
+  export type MatrizT_RespuestasCabeceraSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cabeceraId?: boolean
+    usuario?: boolean
+    fechaIngreso?: boolean
+    supervisorNombre?: boolean
+    supervisorCorreo?: boolean
+    licId?: boolean
+    ut?: boolean
+    rbd?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    cabecera?: boolean | MatrizT_CabeceraDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["matrizT_RespuestasCabecera"]>
+
+  export type MatrizT_RespuestasCabeceraSelectScalar = {
+    id?: boolean
+    cabeceraId?: boolean
+    usuario?: boolean
+    fechaIngreso?: boolean
+    supervisorNombre?: boolean
+    supervisorCorreo?: boolean
+    licId?: boolean
+    ut?: boolean
+    rbd?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type MatrizT_RespuestasCabeceraInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    cabecera?: boolean | MatrizT_CabeceraDefaultArgs<ExtArgs>
+    detalles?: boolean | MatrizT_RespuestasCabecera$detallesArgs<ExtArgs>
+    _count?: boolean | MatrizT_RespuestasCabeceraCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type MatrizT_RespuestasCabeceraIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    cabecera?: boolean | MatrizT_CabeceraDefaultArgs<ExtArgs>
+  }
+
+  export type $MatrizT_RespuestasCabeceraPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MatrizT_RespuestasCabecera"
+    objects: {
+      cabecera: Prisma.$MatrizT_CabeceraPayload<ExtArgs>
+      detalles: Prisma.$MatrizT_RespuestasDetallePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      cabeceraId: string
+      usuario: string
+      fechaIngreso: Date
+      supervisorNombre: string
+      supervisorCorreo: string
+      licId: number
+      ut: number
+      rbd: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["matrizT_RespuestasCabecera"]>
+    composites: {}
+  }
+
+  type MatrizT_RespuestasCabeceraGetPayload<S extends boolean | null | undefined | MatrizT_RespuestasCabeceraDefaultArgs> = $Result.GetResult<Prisma.$MatrizT_RespuestasCabeceraPayload, S>
+
+  type MatrizT_RespuestasCabeceraCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<MatrizT_RespuestasCabeceraFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: MatrizT_RespuestasCabeceraCountAggregateInputType | true
+    }
+
+  export interface MatrizT_RespuestasCabeceraDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MatrizT_RespuestasCabecera'], meta: { name: 'MatrizT_RespuestasCabecera' } }
+    /**
+     * Find zero or one MatrizT_RespuestasCabecera that matches the filter.
+     * @param {MatrizT_RespuestasCabeceraFindUniqueArgs} args - Arguments to find a MatrizT_RespuestasCabecera
+     * @example
+     * // Get one MatrizT_RespuestasCabecera
+     * const matrizT_RespuestasCabecera = await prisma.matrizT_RespuestasCabecera.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MatrizT_RespuestasCabeceraFindUniqueArgs>(args: SelectSubset<T, MatrizT_RespuestasCabeceraFindUniqueArgs<ExtArgs>>): Prisma__MatrizT_RespuestasCabeceraClient<$Result.GetResult<Prisma.$MatrizT_RespuestasCabeceraPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one MatrizT_RespuestasCabecera that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {MatrizT_RespuestasCabeceraFindUniqueOrThrowArgs} args - Arguments to find a MatrizT_RespuestasCabecera
+     * @example
+     * // Get one MatrizT_RespuestasCabecera
+     * const matrizT_RespuestasCabecera = await prisma.matrizT_RespuestasCabecera.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MatrizT_RespuestasCabeceraFindUniqueOrThrowArgs>(args: SelectSubset<T, MatrizT_RespuestasCabeceraFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MatrizT_RespuestasCabeceraClient<$Result.GetResult<Prisma.$MatrizT_RespuestasCabeceraPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first MatrizT_RespuestasCabecera that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatrizT_RespuestasCabeceraFindFirstArgs} args - Arguments to find a MatrizT_RespuestasCabecera
+     * @example
+     * // Get one MatrizT_RespuestasCabecera
+     * const matrizT_RespuestasCabecera = await prisma.matrizT_RespuestasCabecera.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MatrizT_RespuestasCabeceraFindFirstArgs>(args?: SelectSubset<T, MatrizT_RespuestasCabeceraFindFirstArgs<ExtArgs>>): Prisma__MatrizT_RespuestasCabeceraClient<$Result.GetResult<Prisma.$MatrizT_RespuestasCabeceraPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first MatrizT_RespuestasCabecera that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatrizT_RespuestasCabeceraFindFirstOrThrowArgs} args - Arguments to find a MatrizT_RespuestasCabecera
+     * @example
+     * // Get one MatrizT_RespuestasCabecera
+     * const matrizT_RespuestasCabecera = await prisma.matrizT_RespuestasCabecera.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MatrizT_RespuestasCabeceraFindFirstOrThrowArgs>(args?: SelectSubset<T, MatrizT_RespuestasCabeceraFindFirstOrThrowArgs<ExtArgs>>): Prisma__MatrizT_RespuestasCabeceraClient<$Result.GetResult<Prisma.$MatrizT_RespuestasCabeceraPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more MatrizT_RespuestasCabeceras that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatrizT_RespuestasCabeceraFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MatrizT_RespuestasCabeceras
+     * const matrizT_RespuestasCabeceras = await prisma.matrizT_RespuestasCabecera.findMany()
+     * 
+     * // Get first 10 MatrizT_RespuestasCabeceras
+     * const matrizT_RespuestasCabeceras = await prisma.matrizT_RespuestasCabecera.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const matrizT_RespuestasCabeceraWithIdOnly = await prisma.matrizT_RespuestasCabecera.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MatrizT_RespuestasCabeceraFindManyArgs>(args?: SelectSubset<T, MatrizT_RespuestasCabeceraFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MatrizT_RespuestasCabeceraPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a MatrizT_RespuestasCabecera.
+     * @param {MatrizT_RespuestasCabeceraCreateArgs} args - Arguments to create a MatrizT_RespuestasCabecera.
+     * @example
+     * // Create one MatrizT_RespuestasCabecera
+     * const MatrizT_RespuestasCabecera = await prisma.matrizT_RespuestasCabecera.create({
+     *   data: {
+     *     // ... data to create a MatrizT_RespuestasCabecera
+     *   }
+     * })
+     * 
+     */
+    create<T extends MatrizT_RespuestasCabeceraCreateArgs>(args: SelectSubset<T, MatrizT_RespuestasCabeceraCreateArgs<ExtArgs>>): Prisma__MatrizT_RespuestasCabeceraClient<$Result.GetResult<Prisma.$MatrizT_RespuestasCabeceraPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many MatrizT_RespuestasCabeceras.
+     * @param {MatrizT_RespuestasCabeceraCreateManyArgs} args - Arguments to create many MatrizT_RespuestasCabeceras.
+     * @example
+     * // Create many MatrizT_RespuestasCabeceras
+     * const matrizT_RespuestasCabecera = await prisma.matrizT_RespuestasCabecera.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MatrizT_RespuestasCabeceraCreateManyArgs>(args?: SelectSubset<T, MatrizT_RespuestasCabeceraCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many MatrizT_RespuestasCabeceras and returns the data saved in the database.
+     * @param {MatrizT_RespuestasCabeceraCreateManyAndReturnArgs} args - Arguments to create many MatrizT_RespuestasCabeceras.
+     * @example
+     * // Create many MatrizT_RespuestasCabeceras
+     * const matrizT_RespuestasCabecera = await prisma.matrizT_RespuestasCabecera.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many MatrizT_RespuestasCabeceras and only return the `id`
+     * const matrizT_RespuestasCabeceraWithIdOnly = await prisma.matrizT_RespuestasCabecera.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MatrizT_RespuestasCabeceraCreateManyAndReturnArgs>(args?: SelectSubset<T, MatrizT_RespuestasCabeceraCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MatrizT_RespuestasCabeceraPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a MatrizT_RespuestasCabecera.
+     * @param {MatrizT_RespuestasCabeceraDeleteArgs} args - Arguments to delete one MatrizT_RespuestasCabecera.
+     * @example
+     * // Delete one MatrizT_RespuestasCabecera
+     * const MatrizT_RespuestasCabecera = await prisma.matrizT_RespuestasCabecera.delete({
+     *   where: {
+     *     // ... filter to delete one MatrizT_RespuestasCabecera
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MatrizT_RespuestasCabeceraDeleteArgs>(args: SelectSubset<T, MatrizT_RespuestasCabeceraDeleteArgs<ExtArgs>>): Prisma__MatrizT_RespuestasCabeceraClient<$Result.GetResult<Prisma.$MatrizT_RespuestasCabeceraPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one MatrizT_RespuestasCabecera.
+     * @param {MatrizT_RespuestasCabeceraUpdateArgs} args - Arguments to update one MatrizT_RespuestasCabecera.
+     * @example
+     * // Update one MatrizT_RespuestasCabecera
+     * const matrizT_RespuestasCabecera = await prisma.matrizT_RespuestasCabecera.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MatrizT_RespuestasCabeceraUpdateArgs>(args: SelectSubset<T, MatrizT_RespuestasCabeceraUpdateArgs<ExtArgs>>): Prisma__MatrizT_RespuestasCabeceraClient<$Result.GetResult<Prisma.$MatrizT_RespuestasCabeceraPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more MatrizT_RespuestasCabeceras.
+     * @param {MatrizT_RespuestasCabeceraDeleteManyArgs} args - Arguments to filter MatrizT_RespuestasCabeceras to delete.
+     * @example
+     * // Delete a few MatrizT_RespuestasCabeceras
+     * const { count } = await prisma.matrizT_RespuestasCabecera.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MatrizT_RespuestasCabeceraDeleteManyArgs>(args?: SelectSubset<T, MatrizT_RespuestasCabeceraDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MatrizT_RespuestasCabeceras.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatrizT_RespuestasCabeceraUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MatrizT_RespuestasCabeceras
+     * const matrizT_RespuestasCabecera = await prisma.matrizT_RespuestasCabecera.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MatrizT_RespuestasCabeceraUpdateManyArgs>(args: SelectSubset<T, MatrizT_RespuestasCabeceraUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one MatrizT_RespuestasCabecera.
+     * @param {MatrizT_RespuestasCabeceraUpsertArgs} args - Arguments to update or create a MatrizT_RespuestasCabecera.
+     * @example
+     * // Update or create a MatrizT_RespuestasCabecera
+     * const matrizT_RespuestasCabecera = await prisma.matrizT_RespuestasCabecera.upsert({
+     *   create: {
+     *     // ... data to create a MatrizT_RespuestasCabecera
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MatrizT_RespuestasCabecera we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MatrizT_RespuestasCabeceraUpsertArgs>(args: SelectSubset<T, MatrizT_RespuestasCabeceraUpsertArgs<ExtArgs>>): Prisma__MatrizT_RespuestasCabeceraClient<$Result.GetResult<Prisma.$MatrizT_RespuestasCabeceraPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of MatrizT_RespuestasCabeceras.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatrizT_RespuestasCabeceraCountArgs} args - Arguments to filter MatrizT_RespuestasCabeceras to count.
+     * @example
+     * // Count the number of MatrizT_RespuestasCabeceras
+     * const count = await prisma.matrizT_RespuestasCabecera.count({
+     *   where: {
+     *     // ... the filter for the MatrizT_RespuestasCabeceras we want to count
+     *   }
+     * })
+    **/
+    count<T extends MatrizT_RespuestasCabeceraCountArgs>(
+      args?: Subset<T, MatrizT_RespuestasCabeceraCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MatrizT_RespuestasCabeceraCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MatrizT_RespuestasCabecera.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatrizT_RespuestasCabeceraAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MatrizT_RespuestasCabeceraAggregateArgs>(args: Subset<T, MatrizT_RespuestasCabeceraAggregateArgs>): Prisma.PrismaPromise<GetMatrizT_RespuestasCabeceraAggregateType<T>>
+
+    /**
+     * Group by MatrizT_RespuestasCabecera.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatrizT_RespuestasCabeceraGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MatrizT_RespuestasCabeceraGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MatrizT_RespuestasCabeceraGroupByArgs['orderBy'] }
+        : { orderBy?: MatrizT_RespuestasCabeceraGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MatrizT_RespuestasCabeceraGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMatrizT_RespuestasCabeceraGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MatrizT_RespuestasCabecera model
+   */
+  readonly fields: MatrizT_RespuestasCabeceraFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MatrizT_RespuestasCabecera.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MatrizT_RespuestasCabeceraClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    cabecera<T extends MatrizT_CabeceraDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MatrizT_CabeceraDefaultArgs<ExtArgs>>): Prisma__MatrizT_CabeceraClient<$Result.GetResult<Prisma.$MatrizT_CabeceraPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    detalles<T extends MatrizT_RespuestasCabecera$detallesArgs<ExtArgs> = {}>(args?: Subset<T, MatrizT_RespuestasCabecera$detallesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MatrizT_RespuestasDetallePayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MatrizT_RespuestasCabecera model
+   */ 
+  interface MatrizT_RespuestasCabeceraFieldRefs {
+    readonly id: FieldRef<"MatrizT_RespuestasCabecera", 'String'>
+    readonly cabeceraId: FieldRef<"MatrizT_RespuestasCabecera", 'String'>
+    readonly usuario: FieldRef<"MatrizT_RespuestasCabecera", 'String'>
+    readonly fechaIngreso: FieldRef<"MatrizT_RespuestasCabecera", 'DateTime'>
+    readonly supervisorNombre: FieldRef<"MatrizT_RespuestasCabecera", 'String'>
+    readonly supervisorCorreo: FieldRef<"MatrizT_RespuestasCabecera", 'String'>
+    readonly licId: FieldRef<"MatrizT_RespuestasCabecera", 'Int'>
+    readonly ut: FieldRef<"MatrizT_RespuestasCabecera", 'Int'>
+    readonly rbd: FieldRef<"MatrizT_RespuestasCabecera", 'Int'>
+    readonly createdAt: FieldRef<"MatrizT_RespuestasCabecera", 'DateTime'>
+    readonly updatedAt: FieldRef<"MatrizT_RespuestasCabecera", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MatrizT_RespuestasCabecera findUnique
+   */
+  export type MatrizT_RespuestasCabeceraFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_RespuestasCabecera
+     */
+    select?: MatrizT_RespuestasCabeceraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_RespuestasCabeceraInclude<ExtArgs> | null
+    /**
+     * Filter, which MatrizT_RespuestasCabecera to fetch.
+     */
+    where: MatrizT_RespuestasCabeceraWhereUniqueInput
+  }
+
+  /**
+   * MatrizT_RespuestasCabecera findUniqueOrThrow
+   */
+  export type MatrizT_RespuestasCabeceraFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_RespuestasCabecera
+     */
+    select?: MatrizT_RespuestasCabeceraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_RespuestasCabeceraInclude<ExtArgs> | null
+    /**
+     * Filter, which MatrizT_RespuestasCabecera to fetch.
+     */
+    where: MatrizT_RespuestasCabeceraWhereUniqueInput
+  }
+
+  /**
+   * MatrizT_RespuestasCabecera findFirst
+   */
+  export type MatrizT_RespuestasCabeceraFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_RespuestasCabecera
+     */
+    select?: MatrizT_RespuestasCabeceraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_RespuestasCabeceraInclude<ExtArgs> | null
+    /**
+     * Filter, which MatrizT_RespuestasCabecera to fetch.
+     */
+    where?: MatrizT_RespuestasCabeceraWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MatrizT_RespuestasCabeceras to fetch.
+     */
+    orderBy?: MatrizT_RespuestasCabeceraOrderByWithRelationInput | MatrizT_RespuestasCabeceraOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MatrizT_RespuestasCabeceras.
+     */
+    cursor?: MatrizT_RespuestasCabeceraWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MatrizT_RespuestasCabeceras from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MatrizT_RespuestasCabeceras.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MatrizT_RespuestasCabeceras.
+     */
+    distinct?: MatrizT_RespuestasCabeceraScalarFieldEnum | MatrizT_RespuestasCabeceraScalarFieldEnum[]
+  }
+
+  /**
+   * MatrizT_RespuestasCabecera findFirstOrThrow
+   */
+  export type MatrizT_RespuestasCabeceraFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_RespuestasCabecera
+     */
+    select?: MatrizT_RespuestasCabeceraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_RespuestasCabeceraInclude<ExtArgs> | null
+    /**
+     * Filter, which MatrizT_RespuestasCabecera to fetch.
+     */
+    where?: MatrizT_RespuestasCabeceraWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MatrizT_RespuestasCabeceras to fetch.
+     */
+    orderBy?: MatrizT_RespuestasCabeceraOrderByWithRelationInput | MatrizT_RespuestasCabeceraOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MatrizT_RespuestasCabeceras.
+     */
+    cursor?: MatrizT_RespuestasCabeceraWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MatrizT_RespuestasCabeceras from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MatrizT_RespuestasCabeceras.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MatrizT_RespuestasCabeceras.
+     */
+    distinct?: MatrizT_RespuestasCabeceraScalarFieldEnum | MatrizT_RespuestasCabeceraScalarFieldEnum[]
+  }
+
+  /**
+   * MatrizT_RespuestasCabecera findMany
+   */
+  export type MatrizT_RespuestasCabeceraFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_RespuestasCabecera
+     */
+    select?: MatrizT_RespuestasCabeceraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_RespuestasCabeceraInclude<ExtArgs> | null
+    /**
+     * Filter, which MatrizT_RespuestasCabeceras to fetch.
+     */
+    where?: MatrizT_RespuestasCabeceraWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MatrizT_RespuestasCabeceras to fetch.
+     */
+    orderBy?: MatrizT_RespuestasCabeceraOrderByWithRelationInput | MatrizT_RespuestasCabeceraOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MatrizT_RespuestasCabeceras.
+     */
+    cursor?: MatrizT_RespuestasCabeceraWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MatrizT_RespuestasCabeceras from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MatrizT_RespuestasCabeceras.
+     */
+    skip?: number
+    distinct?: MatrizT_RespuestasCabeceraScalarFieldEnum | MatrizT_RespuestasCabeceraScalarFieldEnum[]
+  }
+
+  /**
+   * MatrizT_RespuestasCabecera create
+   */
+  export type MatrizT_RespuestasCabeceraCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_RespuestasCabecera
+     */
+    select?: MatrizT_RespuestasCabeceraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_RespuestasCabeceraInclude<ExtArgs> | null
+    /**
+     * The data needed to create a MatrizT_RespuestasCabecera.
+     */
+    data: XOR<MatrizT_RespuestasCabeceraCreateInput, MatrizT_RespuestasCabeceraUncheckedCreateInput>
+  }
+
+  /**
+   * MatrizT_RespuestasCabecera createMany
+   */
+  export type MatrizT_RespuestasCabeceraCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MatrizT_RespuestasCabeceras.
+     */
+    data: MatrizT_RespuestasCabeceraCreateManyInput | MatrizT_RespuestasCabeceraCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MatrizT_RespuestasCabecera createManyAndReturn
+   */
+  export type MatrizT_RespuestasCabeceraCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_RespuestasCabecera
+     */
+    select?: MatrizT_RespuestasCabeceraSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many MatrizT_RespuestasCabeceras.
+     */
+    data: MatrizT_RespuestasCabeceraCreateManyInput | MatrizT_RespuestasCabeceraCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_RespuestasCabeceraIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MatrizT_RespuestasCabecera update
+   */
+  export type MatrizT_RespuestasCabeceraUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_RespuestasCabecera
+     */
+    select?: MatrizT_RespuestasCabeceraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_RespuestasCabeceraInclude<ExtArgs> | null
+    /**
+     * The data needed to update a MatrizT_RespuestasCabecera.
+     */
+    data: XOR<MatrizT_RespuestasCabeceraUpdateInput, MatrizT_RespuestasCabeceraUncheckedUpdateInput>
+    /**
+     * Choose, which MatrizT_RespuestasCabecera to update.
+     */
+    where: MatrizT_RespuestasCabeceraWhereUniqueInput
+  }
+
+  /**
+   * MatrizT_RespuestasCabecera updateMany
+   */
+  export type MatrizT_RespuestasCabeceraUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MatrizT_RespuestasCabeceras.
+     */
+    data: XOR<MatrizT_RespuestasCabeceraUpdateManyMutationInput, MatrizT_RespuestasCabeceraUncheckedUpdateManyInput>
+    /**
+     * Filter which MatrizT_RespuestasCabeceras to update
+     */
+    where?: MatrizT_RespuestasCabeceraWhereInput
+  }
+
+  /**
+   * MatrizT_RespuestasCabecera upsert
+   */
+  export type MatrizT_RespuestasCabeceraUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_RespuestasCabecera
+     */
+    select?: MatrizT_RespuestasCabeceraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_RespuestasCabeceraInclude<ExtArgs> | null
+    /**
+     * The filter to search for the MatrizT_RespuestasCabecera to update in case it exists.
+     */
+    where: MatrizT_RespuestasCabeceraWhereUniqueInput
+    /**
+     * In case the MatrizT_RespuestasCabecera found by the `where` argument doesn't exist, create a new MatrizT_RespuestasCabecera with this data.
+     */
+    create: XOR<MatrizT_RespuestasCabeceraCreateInput, MatrizT_RespuestasCabeceraUncheckedCreateInput>
+    /**
+     * In case the MatrizT_RespuestasCabecera was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MatrizT_RespuestasCabeceraUpdateInput, MatrizT_RespuestasCabeceraUncheckedUpdateInput>
+  }
+
+  /**
+   * MatrizT_RespuestasCabecera delete
+   */
+  export type MatrizT_RespuestasCabeceraDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_RespuestasCabecera
+     */
+    select?: MatrizT_RespuestasCabeceraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_RespuestasCabeceraInclude<ExtArgs> | null
+    /**
+     * Filter which MatrizT_RespuestasCabecera to delete.
+     */
+    where: MatrizT_RespuestasCabeceraWhereUniqueInput
+  }
+
+  /**
+   * MatrizT_RespuestasCabecera deleteMany
+   */
+  export type MatrizT_RespuestasCabeceraDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MatrizT_RespuestasCabeceras to delete
+     */
+    where?: MatrizT_RespuestasCabeceraWhereInput
+  }
+
+  /**
+   * MatrizT_RespuestasCabecera.detalles
+   */
+  export type MatrizT_RespuestasCabecera$detallesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_RespuestasDetalle
+     */
+    select?: MatrizT_RespuestasDetalleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_RespuestasDetalleInclude<ExtArgs> | null
+    where?: MatrizT_RespuestasDetalleWhereInput
+    orderBy?: MatrizT_RespuestasDetalleOrderByWithRelationInput | MatrizT_RespuestasDetalleOrderByWithRelationInput[]
+    cursor?: MatrizT_RespuestasDetalleWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MatrizT_RespuestasDetalleScalarFieldEnum | MatrizT_RespuestasDetalleScalarFieldEnum[]
+  }
+
+  /**
+   * MatrizT_RespuestasCabecera without action
+   */
+  export type MatrizT_RespuestasCabeceraDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_RespuestasCabecera
+     */
+    select?: MatrizT_RespuestasCabeceraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_RespuestasCabeceraInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model MatrizT_RespuestasDetalle
+   */
+
+  export type AggregateMatrizT_RespuestasDetalle = {
+    _count: MatrizT_RespuestasDetalleCountAggregateOutputType | null
+    _min: MatrizT_RespuestasDetalleMinAggregateOutputType | null
+    _max: MatrizT_RespuestasDetalleMaxAggregateOutputType | null
+  }
+
+  export type MatrizT_RespuestasDetalleMinAggregateOutputType = {
+    id: string | null
+    respuestaCabeceraId: string | null
+    preguntaId: string | null
+    valor: string | null
+    adjuntoUrl: string | null
+  }
+
+  export type MatrizT_RespuestasDetalleMaxAggregateOutputType = {
+    id: string | null
+    respuestaCabeceraId: string | null
+    preguntaId: string | null
+    valor: string | null
+    adjuntoUrl: string | null
+  }
+
+  export type MatrizT_RespuestasDetalleCountAggregateOutputType = {
+    id: number
+    respuestaCabeceraId: number
+    preguntaId: number
+    valor: number
+    adjuntoUrl: number
+    _all: number
+  }
+
+
+  export type MatrizT_RespuestasDetalleMinAggregateInputType = {
+    id?: true
+    respuestaCabeceraId?: true
+    preguntaId?: true
+    valor?: true
+    adjuntoUrl?: true
+  }
+
+  export type MatrizT_RespuestasDetalleMaxAggregateInputType = {
+    id?: true
+    respuestaCabeceraId?: true
+    preguntaId?: true
+    valor?: true
+    adjuntoUrl?: true
+  }
+
+  export type MatrizT_RespuestasDetalleCountAggregateInputType = {
+    id?: true
+    respuestaCabeceraId?: true
+    preguntaId?: true
+    valor?: true
+    adjuntoUrl?: true
+    _all?: true
+  }
+
+  export type MatrizT_RespuestasDetalleAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MatrizT_RespuestasDetalle to aggregate.
+     */
+    where?: MatrizT_RespuestasDetalleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MatrizT_RespuestasDetalles to fetch.
+     */
+    orderBy?: MatrizT_RespuestasDetalleOrderByWithRelationInput | MatrizT_RespuestasDetalleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MatrizT_RespuestasDetalleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MatrizT_RespuestasDetalles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MatrizT_RespuestasDetalles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MatrizT_RespuestasDetalles
+    **/
+    _count?: true | MatrizT_RespuestasDetalleCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MatrizT_RespuestasDetalleMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MatrizT_RespuestasDetalleMaxAggregateInputType
+  }
+
+  export type GetMatrizT_RespuestasDetalleAggregateType<T extends MatrizT_RespuestasDetalleAggregateArgs> = {
+        [P in keyof T & keyof AggregateMatrizT_RespuestasDetalle]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMatrizT_RespuestasDetalle[P]>
+      : GetScalarType<T[P], AggregateMatrizT_RespuestasDetalle[P]>
+  }
+
+
+
+
+  export type MatrizT_RespuestasDetalleGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MatrizT_RespuestasDetalleWhereInput
+    orderBy?: MatrizT_RespuestasDetalleOrderByWithAggregationInput | MatrizT_RespuestasDetalleOrderByWithAggregationInput[]
+    by: MatrizT_RespuestasDetalleScalarFieldEnum[] | MatrizT_RespuestasDetalleScalarFieldEnum
+    having?: MatrizT_RespuestasDetalleScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MatrizT_RespuestasDetalleCountAggregateInputType | true
+    _min?: MatrizT_RespuestasDetalleMinAggregateInputType
+    _max?: MatrizT_RespuestasDetalleMaxAggregateInputType
+  }
+
+  export type MatrizT_RespuestasDetalleGroupByOutputType = {
+    id: string
+    respuestaCabeceraId: string
+    preguntaId: string
+    valor: string | null
+    adjuntoUrl: string | null
+    _count: MatrizT_RespuestasDetalleCountAggregateOutputType | null
+    _min: MatrizT_RespuestasDetalleMinAggregateOutputType | null
+    _max: MatrizT_RespuestasDetalleMaxAggregateOutputType | null
+  }
+
+  type GetMatrizT_RespuestasDetalleGroupByPayload<T extends MatrizT_RespuestasDetalleGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MatrizT_RespuestasDetalleGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MatrizT_RespuestasDetalleGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MatrizT_RespuestasDetalleGroupByOutputType[P]>
+            : GetScalarType<T[P], MatrizT_RespuestasDetalleGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MatrizT_RespuestasDetalleSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    respuestaCabeceraId?: boolean
+    preguntaId?: boolean
+    valor?: boolean
+    adjuntoUrl?: boolean
+    respuestaCabecera?: boolean | MatrizT_RespuestasCabeceraDefaultArgs<ExtArgs>
+    pregunta?: boolean | MatrizT_DetalleDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["matrizT_RespuestasDetalle"]>
+
+  export type MatrizT_RespuestasDetalleSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    respuestaCabeceraId?: boolean
+    preguntaId?: boolean
+    valor?: boolean
+    adjuntoUrl?: boolean
+    respuestaCabecera?: boolean | MatrizT_RespuestasCabeceraDefaultArgs<ExtArgs>
+    pregunta?: boolean | MatrizT_DetalleDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["matrizT_RespuestasDetalle"]>
+
+  export type MatrizT_RespuestasDetalleSelectScalar = {
+    id?: boolean
+    respuestaCabeceraId?: boolean
+    preguntaId?: boolean
+    valor?: boolean
+    adjuntoUrl?: boolean
+  }
+
+  export type MatrizT_RespuestasDetalleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    respuestaCabecera?: boolean | MatrizT_RespuestasCabeceraDefaultArgs<ExtArgs>
+    pregunta?: boolean | MatrizT_DetalleDefaultArgs<ExtArgs>
+  }
+  export type MatrizT_RespuestasDetalleIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    respuestaCabecera?: boolean | MatrizT_RespuestasCabeceraDefaultArgs<ExtArgs>
+    pregunta?: boolean | MatrizT_DetalleDefaultArgs<ExtArgs>
+  }
+
+  export type $MatrizT_RespuestasDetallePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MatrizT_RespuestasDetalle"
+    objects: {
+      respuestaCabecera: Prisma.$MatrizT_RespuestasCabeceraPayload<ExtArgs>
+      pregunta: Prisma.$MatrizT_DetallePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      respuestaCabeceraId: string
+      preguntaId: string
+      valor: string | null
+      adjuntoUrl: string | null
+    }, ExtArgs["result"]["matrizT_RespuestasDetalle"]>
+    composites: {}
+  }
+
+  type MatrizT_RespuestasDetalleGetPayload<S extends boolean | null | undefined | MatrizT_RespuestasDetalleDefaultArgs> = $Result.GetResult<Prisma.$MatrizT_RespuestasDetallePayload, S>
+
+  type MatrizT_RespuestasDetalleCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<MatrizT_RespuestasDetalleFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: MatrizT_RespuestasDetalleCountAggregateInputType | true
+    }
+
+  export interface MatrizT_RespuestasDetalleDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MatrizT_RespuestasDetalle'], meta: { name: 'MatrizT_RespuestasDetalle' } }
+    /**
+     * Find zero or one MatrizT_RespuestasDetalle that matches the filter.
+     * @param {MatrizT_RespuestasDetalleFindUniqueArgs} args - Arguments to find a MatrizT_RespuestasDetalle
+     * @example
+     * // Get one MatrizT_RespuestasDetalle
+     * const matrizT_RespuestasDetalle = await prisma.matrizT_RespuestasDetalle.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MatrizT_RespuestasDetalleFindUniqueArgs>(args: SelectSubset<T, MatrizT_RespuestasDetalleFindUniqueArgs<ExtArgs>>): Prisma__MatrizT_RespuestasDetalleClient<$Result.GetResult<Prisma.$MatrizT_RespuestasDetallePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one MatrizT_RespuestasDetalle that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {MatrizT_RespuestasDetalleFindUniqueOrThrowArgs} args - Arguments to find a MatrizT_RespuestasDetalle
+     * @example
+     * // Get one MatrizT_RespuestasDetalle
+     * const matrizT_RespuestasDetalle = await prisma.matrizT_RespuestasDetalle.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MatrizT_RespuestasDetalleFindUniqueOrThrowArgs>(args: SelectSubset<T, MatrizT_RespuestasDetalleFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MatrizT_RespuestasDetalleClient<$Result.GetResult<Prisma.$MatrizT_RespuestasDetallePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first MatrizT_RespuestasDetalle that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatrizT_RespuestasDetalleFindFirstArgs} args - Arguments to find a MatrizT_RespuestasDetalle
+     * @example
+     * // Get one MatrizT_RespuestasDetalle
+     * const matrizT_RespuestasDetalle = await prisma.matrizT_RespuestasDetalle.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MatrizT_RespuestasDetalleFindFirstArgs>(args?: SelectSubset<T, MatrizT_RespuestasDetalleFindFirstArgs<ExtArgs>>): Prisma__MatrizT_RespuestasDetalleClient<$Result.GetResult<Prisma.$MatrizT_RespuestasDetallePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first MatrizT_RespuestasDetalle that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatrizT_RespuestasDetalleFindFirstOrThrowArgs} args - Arguments to find a MatrizT_RespuestasDetalle
+     * @example
+     * // Get one MatrizT_RespuestasDetalle
+     * const matrizT_RespuestasDetalle = await prisma.matrizT_RespuestasDetalle.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MatrizT_RespuestasDetalleFindFirstOrThrowArgs>(args?: SelectSubset<T, MatrizT_RespuestasDetalleFindFirstOrThrowArgs<ExtArgs>>): Prisma__MatrizT_RespuestasDetalleClient<$Result.GetResult<Prisma.$MatrizT_RespuestasDetallePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more MatrizT_RespuestasDetalles that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatrizT_RespuestasDetalleFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MatrizT_RespuestasDetalles
+     * const matrizT_RespuestasDetalles = await prisma.matrizT_RespuestasDetalle.findMany()
+     * 
+     * // Get first 10 MatrizT_RespuestasDetalles
+     * const matrizT_RespuestasDetalles = await prisma.matrizT_RespuestasDetalle.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const matrizT_RespuestasDetalleWithIdOnly = await prisma.matrizT_RespuestasDetalle.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MatrizT_RespuestasDetalleFindManyArgs>(args?: SelectSubset<T, MatrizT_RespuestasDetalleFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MatrizT_RespuestasDetallePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a MatrizT_RespuestasDetalle.
+     * @param {MatrizT_RespuestasDetalleCreateArgs} args - Arguments to create a MatrizT_RespuestasDetalle.
+     * @example
+     * // Create one MatrizT_RespuestasDetalle
+     * const MatrizT_RespuestasDetalle = await prisma.matrizT_RespuestasDetalle.create({
+     *   data: {
+     *     // ... data to create a MatrizT_RespuestasDetalle
+     *   }
+     * })
+     * 
+     */
+    create<T extends MatrizT_RespuestasDetalleCreateArgs>(args: SelectSubset<T, MatrizT_RespuestasDetalleCreateArgs<ExtArgs>>): Prisma__MatrizT_RespuestasDetalleClient<$Result.GetResult<Prisma.$MatrizT_RespuestasDetallePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many MatrizT_RespuestasDetalles.
+     * @param {MatrizT_RespuestasDetalleCreateManyArgs} args - Arguments to create many MatrizT_RespuestasDetalles.
+     * @example
+     * // Create many MatrizT_RespuestasDetalles
+     * const matrizT_RespuestasDetalle = await prisma.matrizT_RespuestasDetalle.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MatrizT_RespuestasDetalleCreateManyArgs>(args?: SelectSubset<T, MatrizT_RespuestasDetalleCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many MatrizT_RespuestasDetalles and returns the data saved in the database.
+     * @param {MatrizT_RespuestasDetalleCreateManyAndReturnArgs} args - Arguments to create many MatrizT_RespuestasDetalles.
+     * @example
+     * // Create many MatrizT_RespuestasDetalles
+     * const matrizT_RespuestasDetalle = await prisma.matrizT_RespuestasDetalle.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many MatrizT_RespuestasDetalles and only return the `id`
+     * const matrizT_RespuestasDetalleWithIdOnly = await prisma.matrizT_RespuestasDetalle.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MatrizT_RespuestasDetalleCreateManyAndReturnArgs>(args?: SelectSubset<T, MatrizT_RespuestasDetalleCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MatrizT_RespuestasDetallePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a MatrizT_RespuestasDetalle.
+     * @param {MatrizT_RespuestasDetalleDeleteArgs} args - Arguments to delete one MatrizT_RespuestasDetalle.
+     * @example
+     * // Delete one MatrizT_RespuestasDetalle
+     * const MatrizT_RespuestasDetalle = await prisma.matrizT_RespuestasDetalle.delete({
+     *   where: {
+     *     // ... filter to delete one MatrizT_RespuestasDetalle
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MatrizT_RespuestasDetalleDeleteArgs>(args: SelectSubset<T, MatrizT_RespuestasDetalleDeleteArgs<ExtArgs>>): Prisma__MatrizT_RespuestasDetalleClient<$Result.GetResult<Prisma.$MatrizT_RespuestasDetallePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one MatrizT_RespuestasDetalle.
+     * @param {MatrizT_RespuestasDetalleUpdateArgs} args - Arguments to update one MatrizT_RespuestasDetalle.
+     * @example
+     * // Update one MatrizT_RespuestasDetalle
+     * const matrizT_RespuestasDetalle = await prisma.matrizT_RespuestasDetalle.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MatrizT_RespuestasDetalleUpdateArgs>(args: SelectSubset<T, MatrizT_RespuestasDetalleUpdateArgs<ExtArgs>>): Prisma__MatrizT_RespuestasDetalleClient<$Result.GetResult<Prisma.$MatrizT_RespuestasDetallePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more MatrizT_RespuestasDetalles.
+     * @param {MatrizT_RespuestasDetalleDeleteManyArgs} args - Arguments to filter MatrizT_RespuestasDetalles to delete.
+     * @example
+     * // Delete a few MatrizT_RespuestasDetalles
+     * const { count } = await prisma.matrizT_RespuestasDetalle.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MatrizT_RespuestasDetalleDeleteManyArgs>(args?: SelectSubset<T, MatrizT_RespuestasDetalleDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MatrizT_RespuestasDetalles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatrizT_RespuestasDetalleUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MatrizT_RespuestasDetalles
+     * const matrizT_RespuestasDetalle = await prisma.matrizT_RespuestasDetalle.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MatrizT_RespuestasDetalleUpdateManyArgs>(args: SelectSubset<T, MatrizT_RespuestasDetalleUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one MatrizT_RespuestasDetalle.
+     * @param {MatrizT_RespuestasDetalleUpsertArgs} args - Arguments to update or create a MatrizT_RespuestasDetalle.
+     * @example
+     * // Update or create a MatrizT_RespuestasDetalle
+     * const matrizT_RespuestasDetalle = await prisma.matrizT_RespuestasDetalle.upsert({
+     *   create: {
+     *     // ... data to create a MatrizT_RespuestasDetalle
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MatrizT_RespuestasDetalle we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MatrizT_RespuestasDetalleUpsertArgs>(args: SelectSubset<T, MatrizT_RespuestasDetalleUpsertArgs<ExtArgs>>): Prisma__MatrizT_RespuestasDetalleClient<$Result.GetResult<Prisma.$MatrizT_RespuestasDetallePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of MatrizT_RespuestasDetalles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatrizT_RespuestasDetalleCountArgs} args - Arguments to filter MatrizT_RespuestasDetalles to count.
+     * @example
+     * // Count the number of MatrizT_RespuestasDetalles
+     * const count = await prisma.matrizT_RespuestasDetalle.count({
+     *   where: {
+     *     // ... the filter for the MatrizT_RespuestasDetalles we want to count
+     *   }
+     * })
+    **/
+    count<T extends MatrizT_RespuestasDetalleCountArgs>(
+      args?: Subset<T, MatrizT_RespuestasDetalleCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MatrizT_RespuestasDetalleCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MatrizT_RespuestasDetalle.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatrizT_RespuestasDetalleAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MatrizT_RespuestasDetalleAggregateArgs>(args: Subset<T, MatrizT_RespuestasDetalleAggregateArgs>): Prisma.PrismaPromise<GetMatrizT_RespuestasDetalleAggregateType<T>>
+
+    /**
+     * Group by MatrizT_RespuestasDetalle.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MatrizT_RespuestasDetalleGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MatrizT_RespuestasDetalleGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MatrizT_RespuestasDetalleGroupByArgs['orderBy'] }
+        : { orderBy?: MatrizT_RespuestasDetalleGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MatrizT_RespuestasDetalleGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMatrizT_RespuestasDetalleGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MatrizT_RespuestasDetalle model
+   */
+  readonly fields: MatrizT_RespuestasDetalleFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MatrizT_RespuestasDetalle.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MatrizT_RespuestasDetalleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    respuestaCabecera<T extends MatrizT_RespuestasCabeceraDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MatrizT_RespuestasCabeceraDefaultArgs<ExtArgs>>): Prisma__MatrizT_RespuestasCabeceraClient<$Result.GetResult<Prisma.$MatrizT_RespuestasCabeceraPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    pregunta<T extends MatrizT_DetalleDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MatrizT_DetalleDefaultArgs<ExtArgs>>): Prisma__MatrizT_DetalleClient<$Result.GetResult<Prisma.$MatrizT_DetallePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MatrizT_RespuestasDetalle model
+   */ 
+  interface MatrizT_RespuestasDetalleFieldRefs {
+    readonly id: FieldRef<"MatrizT_RespuestasDetalle", 'String'>
+    readonly respuestaCabeceraId: FieldRef<"MatrizT_RespuestasDetalle", 'String'>
+    readonly preguntaId: FieldRef<"MatrizT_RespuestasDetalle", 'String'>
+    readonly valor: FieldRef<"MatrizT_RespuestasDetalle", 'String'>
+    readonly adjuntoUrl: FieldRef<"MatrizT_RespuestasDetalle", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MatrizT_RespuestasDetalle findUnique
+   */
+  export type MatrizT_RespuestasDetalleFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_RespuestasDetalle
+     */
+    select?: MatrizT_RespuestasDetalleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_RespuestasDetalleInclude<ExtArgs> | null
+    /**
+     * Filter, which MatrizT_RespuestasDetalle to fetch.
+     */
+    where: MatrizT_RespuestasDetalleWhereUniqueInput
+  }
+
+  /**
+   * MatrizT_RespuestasDetalle findUniqueOrThrow
+   */
+  export type MatrizT_RespuestasDetalleFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_RespuestasDetalle
+     */
+    select?: MatrizT_RespuestasDetalleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_RespuestasDetalleInclude<ExtArgs> | null
+    /**
+     * Filter, which MatrizT_RespuestasDetalle to fetch.
+     */
+    where: MatrizT_RespuestasDetalleWhereUniqueInput
+  }
+
+  /**
+   * MatrizT_RespuestasDetalle findFirst
+   */
+  export type MatrizT_RespuestasDetalleFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_RespuestasDetalle
+     */
+    select?: MatrizT_RespuestasDetalleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_RespuestasDetalleInclude<ExtArgs> | null
+    /**
+     * Filter, which MatrizT_RespuestasDetalle to fetch.
+     */
+    where?: MatrizT_RespuestasDetalleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MatrizT_RespuestasDetalles to fetch.
+     */
+    orderBy?: MatrizT_RespuestasDetalleOrderByWithRelationInput | MatrizT_RespuestasDetalleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MatrizT_RespuestasDetalles.
+     */
+    cursor?: MatrizT_RespuestasDetalleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MatrizT_RespuestasDetalles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MatrizT_RespuestasDetalles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MatrizT_RespuestasDetalles.
+     */
+    distinct?: MatrizT_RespuestasDetalleScalarFieldEnum | MatrizT_RespuestasDetalleScalarFieldEnum[]
+  }
+
+  /**
+   * MatrizT_RespuestasDetalle findFirstOrThrow
+   */
+  export type MatrizT_RespuestasDetalleFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_RespuestasDetalle
+     */
+    select?: MatrizT_RespuestasDetalleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_RespuestasDetalleInclude<ExtArgs> | null
+    /**
+     * Filter, which MatrizT_RespuestasDetalle to fetch.
+     */
+    where?: MatrizT_RespuestasDetalleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MatrizT_RespuestasDetalles to fetch.
+     */
+    orderBy?: MatrizT_RespuestasDetalleOrderByWithRelationInput | MatrizT_RespuestasDetalleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MatrizT_RespuestasDetalles.
+     */
+    cursor?: MatrizT_RespuestasDetalleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MatrizT_RespuestasDetalles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MatrizT_RespuestasDetalles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MatrizT_RespuestasDetalles.
+     */
+    distinct?: MatrizT_RespuestasDetalleScalarFieldEnum | MatrizT_RespuestasDetalleScalarFieldEnum[]
+  }
+
+  /**
+   * MatrizT_RespuestasDetalle findMany
+   */
+  export type MatrizT_RespuestasDetalleFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_RespuestasDetalle
+     */
+    select?: MatrizT_RespuestasDetalleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_RespuestasDetalleInclude<ExtArgs> | null
+    /**
+     * Filter, which MatrizT_RespuestasDetalles to fetch.
+     */
+    where?: MatrizT_RespuestasDetalleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MatrizT_RespuestasDetalles to fetch.
+     */
+    orderBy?: MatrizT_RespuestasDetalleOrderByWithRelationInput | MatrizT_RespuestasDetalleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MatrizT_RespuestasDetalles.
+     */
+    cursor?: MatrizT_RespuestasDetalleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MatrizT_RespuestasDetalles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MatrizT_RespuestasDetalles.
+     */
+    skip?: number
+    distinct?: MatrizT_RespuestasDetalleScalarFieldEnum | MatrizT_RespuestasDetalleScalarFieldEnum[]
+  }
+
+  /**
+   * MatrizT_RespuestasDetalle create
+   */
+  export type MatrizT_RespuestasDetalleCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_RespuestasDetalle
+     */
+    select?: MatrizT_RespuestasDetalleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_RespuestasDetalleInclude<ExtArgs> | null
+    /**
+     * The data needed to create a MatrizT_RespuestasDetalle.
+     */
+    data: XOR<MatrizT_RespuestasDetalleCreateInput, MatrizT_RespuestasDetalleUncheckedCreateInput>
+  }
+
+  /**
+   * MatrizT_RespuestasDetalle createMany
+   */
+  export type MatrizT_RespuestasDetalleCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MatrizT_RespuestasDetalles.
+     */
+    data: MatrizT_RespuestasDetalleCreateManyInput | MatrizT_RespuestasDetalleCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MatrizT_RespuestasDetalle createManyAndReturn
+   */
+  export type MatrizT_RespuestasDetalleCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_RespuestasDetalle
+     */
+    select?: MatrizT_RespuestasDetalleSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many MatrizT_RespuestasDetalles.
+     */
+    data: MatrizT_RespuestasDetalleCreateManyInput | MatrizT_RespuestasDetalleCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_RespuestasDetalleIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MatrizT_RespuestasDetalle update
+   */
+  export type MatrizT_RespuestasDetalleUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_RespuestasDetalle
+     */
+    select?: MatrizT_RespuestasDetalleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_RespuestasDetalleInclude<ExtArgs> | null
+    /**
+     * The data needed to update a MatrizT_RespuestasDetalle.
+     */
+    data: XOR<MatrizT_RespuestasDetalleUpdateInput, MatrizT_RespuestasDetalleUncheckedUpdateInput>
+    /**
+     * Choose, which MatrizT_RespuestasDetalle to update.
+     */
+    where: MatrizT_RespuestasDetalleWhereUniqueInput
+  }
+
+  /**
+   * MatrizT_RespuestasDetalle updateMany
+   */
+  export type MatrizT_RespuestasDetalleUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MatrizT_RespuestasDetalles.
+     */
+    data: XOR<MatrizT_RespuestasDetalleUpdateManyMutationInput, MatrizT_RespuestasDetalleUncheckedUpdateManyInput>
+    /**
+     * Filter which MatrizT_RespuestasDetalles to update
+     */
+    where?: MatrizT_RespuestasDetalleWhereInput
+  }
+
+  /**
+   * MatrizT_RespuestasDetalle upsert
+   */
+  export type MatrizT_RespuestasDetalleUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_RespuestasDetalle
+     */
+    select?: MatrizT_RespuestasDetalleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_RespuestasDetalleInclude<ExtArgs> | null
+    /**
+     * The filter to search for the MatrizT_RespuestasDetalle to update in case it exists.
+     */
+    where: MatrizT_RespuestasDetalleWhereUniqueInput
+    /**
+     * In case the MatrizT_RespuestasDetalle found by the `where` argument doesn't exist, create a new MatrizT_RespuestasDetalle with this data.
+     */
+    create: XOR<MatrizT_RespuestasDetalleCreateInput, MatrizT_RespuestasDetalleUncheckedCreateInput>
+    /**
+     * In case the MatrizT_RespuestasDetalle was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MatrizT_RespuestasDetalleUpdateInput, MatrizT_RespuestasDetalleUncheckedUpdateInput>
+  }
+
+  /**
+   * MatrizT_RespuestasDetalle delete
+   */
+  export type MatrizT_RespuestasDetalleDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_RespuestasDetalle
+     */
+    select?: MatrizT_RespuestasDetalleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_RespuestasDetalleInclude<ExtArgs> | null
+    /**
+     * Filter which MatrizT_RespuestasDetalle to delete.
+     */
+    where: MatrizT_RespuestasDetalleWhereUniqueInput
+  }
+
+  /**
+   * MatrizT_RespuestasDetalle deleteMany
+   */
+  export type MatrizT_RespuestasDetalleDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MatrizT_RespuestasDetalles to delete
+     */
+    where?: MatrizT_RespuestasDetalleWhereInput
+  }
+
+  /**
+   * MatrizT_RespuestasDetalle without action
+   */
+  export type MatrizT_RespuestasDetalleDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MatrizT_RespuestasDetalle
+     */
+    select?: MatrizT_RespuestasDetalleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatrizT_RespuestasDetalleInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -75329,6 +80038,72 @@ export namespace Prisma {
   export type Det_LeePdfEstandarPaeScalarFieldEnum = (typeof Det_LeePdfEstandarPaeScalarFieldEnum)[keyof typeof Det_LeePdfEstandarPaeScalarFieldEnum]
 
 
+  export const MatrizT_CabeceraScalarFieldEnum: {
+    id: 'id',
+    licId: 'licId',
+    anio: 'anio',
+    titulo: 'titulo',
+    estado: 'estado',
+    instrucciones: 'instrucciones',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type MatrizT_CabeceraScalarFieldEnum = (typeof MatrizT_CabeceraScalarFieldEnum)[keyof typeof MatrizT_CabeceraScalarFieldEnum]
+
+
+  export const MatrizT_DetalleScalarFieldEnum: {
+    id: 'id',
+    cabeceraId: 'cabeceraId',
+    preguntaNombre: 'preguntaNombre',
+    tipoRespuesta: 'tipoRespuesta',
+    obligatorio: 'obligatorio',
+    seccion: 'seccion',
+    orden: 'orden',
+    gravedad: 'gravedad',
+    probabilidad: 'probabilidad',
+    nivelRiesgo: 'nivelRiesgo',
+    justificacion: 'justificacion',
+    riesgoSignificativo: 'riesgoSignificativo',
+    recursoNecesario: 'recursoNecesario',
+    resultadoEsperado: 'resultadoEsperado',
+    respImplementacion: 'respImplementacion',
+    respSeguimiento: 'respSeguimiento',
+    evidenciaCumplimiento: 'evidenciaCumplimiento',
+    evidenciaEficacia: 'evidenciaEficacia'
+  };
+
+  export type MatrizT_DetalleScalarFieldEnum = (typeof MatrizT_DetalleScalarFieldEnum)[keyof typeof MatrizT_DetalleScalarFieldEnum]
+
+
+  export const MatrizT_RespuestasCabeceraScalarFieldEnum: {
+    id: 'id',
+    cabeceraId: 'cabeceraId',
+    usuario: 'usuario',
+    fechaIngreso: 'fechaIngreso',
+    supervisorNombre: 'supervisorNombre',
+    supervisorCorreo: 'supervisorCorreo',
+    licId: 'licId',
+    ut: 'ut',
+    rbd: 'rbd',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type MatrizT_RespuestasCabeceraScalarFieldEnum = (typeof MatrizT_RespuestasCabeceraScalarFieldEnum)[keyof typeof MatrizT_RespuestasCabeceraScalarFieldEnum]
+
+
+  export const MatrizT_RespuestasDetalleScalarFieldEnum: {
+    id: 'id',
+    respuestaCabeceraId: 'respuestaCabeceraId',
+    preguntaId: 'preguntaId',
+    valor: 'valor',
+    adjuntoUrl: 'adjuntoUrl'
+  };
+
+  export type MatrizT_RespuestasDetalleScalarFieldEnum = (typeof MatrizT_RespuestasDetalleScalarFieldEnum)[keyof typeof MatrizT_RespuestasDetalleScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -76320,6 +81095,7 @@ export namespace Prisma {
     aspectosEE?: AspectoEEListRelationFilter
     jefesZonales?: JefeZonalLicitacionListRelationFilter
     vehiculos?: VehiculoListRelationFilter
+    matrices?: MatrizT_CabeceraListRelationFilter
   }
 
   export type LicitacionOrderByWithRelationInput = {
@@ -76332,6 +81108,7 @@ export namespace Prisma {
     aspectosEE?: AspectoEEOrderByRelationAggregateInput
     jefesZonales?: JefeZonalLicitacionOrderByRelationAggregateInput
     vehiculos?: VehiculoOrderByRelationAggregateInput
+    matrices?: MatrizT_CabeceraOrderByRelationAggregateInput
   }
 
   export type LicitacionWhereUniqueInput = Prisma.AtLeast<{
@@ -76347,6 +81124,7 @@ export namespace Prisma {
     aspectosEE?: AspectoEEListRelationFilter
     jefesZonales?: JefeZonalLicitacionListRelationFilter
     vehiculos?: VehiculoListRelationFilter
+    matrices?: MatrizT_CabeceraListRelationFilter
   }, "licId">
 
   export type LicitacionOrderByWithAggregationInput = {
@@ -80841,6 +85619,357 @@ export namespace Prisma {
     Otros_Comentarios?: StringNullableWithAggregatesFilter<"Det_LeePdfEstandarPae"> | string | null
   }
 
+  export type MatrizT_CabeceraWhereInput = {
+    AND?: MatrizT_CabeceraWhereInput | MatrizT_CabeceraWhereInput[]
+    OR?: MatrizT_CabeceraWhereInput[]
+    NOT?: MatrizT_CabeceraWhereInput | MatrizT_CabeceraWhereInput[]
+    id?: StringFilter<"MatrizT_Cabecera"> | string
+    licId?: IntFilter<"MatrizT_Cabecera"> | number
+    anio?: IntFilter<"MatrizT_Cabecera"> | number
+    titulo?: StringFilter<"MatrizT_Cabecera"> | string
+    estado?: BoolFilter<"MatrizT_Cabecera"> | boolean
+    instrucciones?: StringNullableFilter<"MatrizT_Cabecera"> | string | null
+    createdAt?: DateTimeFilter<"MatrizT_Cabecera"> | Date | string
+    updatedAt?: DateTimeFilter<"MatrizT_Cabecera"> | Date | string
+    licitacion?: XOR<LicitacionRelationFilter, LicitacionWhereInput>
+    detalles?: MatrizT_DetalleListRelationFilter
+    respuestas?: MatrizT_RespuestasCabeceraListRelationFilter
+  }
+
+  export type MatrizT_CabeceraOrderByWithRelationInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    anio?: SortOrder
+    titulo?: SortOrder
+    estado?: SortOrder
+    instrucciones?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    licitacion?: LicitacionOrderByWithRelationInput
+    detalles?: MatrizT_DetalleOrderByRelationAggregateInput
+    respuestas?: MatrizT_RespuestasCabeceraOrderByRelationAggregateInput
+  }
+
+  export type MatrizT_CabeceraWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: MatrizT_CabeceraWhereInput | MatrizT_CabeceraWhereInput[]
+    OR?: MatrizT_CabeceraWhereInput[]
+    NOT?: MatrizT_CabeceraWhereInput | MatrizT_CabeceraWhereInput[]
+    licId?: IntFilter<"MatrizT_Cabecera"> | number
+    anio?: IntFilter<"MatrizT_Cabecera"> | number
+    titulo?: StringFilter<"MatrizT_Cabecera"> | string
+    estado?: BoolFilter<"MatrizT_Cabecera"> | boolean
+    instrucciones?: StringNullableFilter<"MatrizT_Cabecera"> | string | null
+    createdAt?: DateTimeFilter<"MatrizT_Cabecera"> | Date | string
+    updatedAt?: DateTimeFilter<"MatrizT_Cabecera"> | Date | string
+    licitacion?: XOR<LicitacionRelationFilter, LicitacionWhereInput>
+    detalles?: MatrizT_DetalleListRelationFilter
+    respuestas?: MatrizT_RespuestasCabeceraListRelationFilter
+  }, "id">
+
+  export type MatrizT_CabeceraOrderByWithAggregationInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    anio?: SortOrder
+    titulo?: SortOrder
+    estado?: SortOrder
+    instrucciones?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: MatrizT_CabeceraCountOrderByAggregateInput
+    _avg?: MatrizT_CabeceraAvgOrderByAggregateInput
+    _max?: MatrizT_CabeceraMaxOrderByAggregateInput
+    _min?: MatrizT_CabeceraMinOrderByAggregateInput
+    _sum?: MatrizT_CabeceraSumOrderByAggregateInput
+  }
+
+  export type MatrizT_CabeceraScalarWhereWithAggregatesInput = {
+    AND?: MatrizT_CabeceraScalarWhereWithAggregatesInput | MatrizT_CabeceraScalarWhereWithAggregatesInput[]
+    OR?: MatrizT_CabeceraScalarWhereWithAggregatesInput[]
+    NOT?: MatrizT_CabeceraScalarWhereWithAggregatesInput | MatrizT_CabeceraScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"MatrizT_Cabecera"> | string
+    licId?: IntWithAggregatesFilter<"MatrizT_Cabecera"> | number
+    anio?: IntWithAggregatesFilter<"MatrizT_Cabecera"> | number
+    titulo?: StringWithAggregatesFilter<"MatrizT_Cabecera"> | string
+    estado?: BoolWithAggregatesFilter<"MatrizT_Cabecera"> | boolean
+    instrucciones?: StringNullableWithAggregatesFilter<"MatrizT_Cabecera"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"MatrizT_Cabecera"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"MatrizT_Cabecera"> | Date | string
+  }
+
+  export type MatrizT_DetalleWhereInput = {
+    AND?: MatrizT_DetalleWhereInput | MatrizT_DetalleWhereInput[]
+    OR?: MatrizT_DetalleWhereInput[]
+    NOT?: MatrizT_DetalleWhereInput | MatrizT_DetalleWhereInput[]
+    id?: StringFilter<"MatrizT_Detalle"> | string
+    cabeceraId?: StringFilter<"MatrizT_Detalle"> | string
+    preguntaNombre?: StringFilter<"MatrizT_Detalle"> | string
+    tipoRespuesta?: StringFilter<"MatrizT_Detalle"> | string
+    obligatorio?: BoolFilter<"MatrizT_Detalle"> | boolean
+    seccion?: StringFilter<"MatrizT_Detalle"> | string
+    orden?: IntFilter<"MatrizT_Detalle"> | number
+    gravedad?: IntNullableFilter<"MatrizT_Detalle"> | number | null
+    probabilidad?: IntNullableFilter<"MatrizT_Detalle"> | number | null
+    nivelRiesgo?: IntNullableFilter<"MatrizT_Detalle"> | number | null
+    justificacion?: StringNullableFilter<"MatrizT_Detalle"> | string | null
+    riesgoSignificativo?: StringNullableFilter<"MatrizT_Detalle"> | string | null
+    recursoNecesario?: StringNullableFilter<"MatrizT_Detalle"> | string | null
+    resultadoEsperado?: StringNullableFilter<"MatrizT_Detalle"> | string | null
+    respImplementacion?: StringNullableFilter<"MatrizT_Detalle"> | string | null
+    respSeguimiento?: StringNullableFilter<"MatrizT_Detalle"> | string | null
+    evidenciaCumplimiento?: StringNullableFilter<"MatrizT_Detalle"> | string | null
+    evidenciaEficacia?: StringNullableFilter<"MatrizT_Detalle"> | string | null
+    cabecera?: XOR<MatrizT_CabeceraRelationFilter, MatrizT_CabeceraWhereInput>
+    respuestasDetalle?: MatrizT_RespuestasDetalleListRelationFilter
+  }
+
+  export type MatrizT_DetalleOrderByWithRelationInput = {
+    id?: SortOrder
+    cabeceraId?: SortOrder
+    preguntaNombre?: SortOrder
+    tipoRespuesta?: SortOrder
+    obligatorio?: SortOrder
+    seccion?: SortOrder
+    orden?: SortOrder
+    gravedad?: SortOrderInput | SortOrder
+    probabilidad?: SortOrderInput | SortOrder
+    nivelRiesgo?: SortOrderInput | SortOrder
+    justificacion?: SortOrderInput | SortOrder
+    riesgoSignificativo?: SortOrderInput | SortOrder
+    recursoNecesario?: SortOrderInput | SortOrder
+    resultadoEsperado?: SortOrderInput | SortOrder
+    respImplementacion?: SortOrderInput | SortOrder
+    respSeguimiento?: SortOrderInput | SortOrder
+    evidenciaCumplimiento?: SortOrderInput | SortOrder
+    evidenciaEficacia?: SortOrderInput | SortOrder
+    cabecera?: MatrizT_CabeceraOrderByWithRelationInput
+    respuestasDetalle?: MatrizT_RespuestasDetalleOrderByRelationAggregateInput
+  }
+
+  export type MatrizT_DetalleWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: MatrizT_DetalleWhereInput | MatrizT_DetalleWhereInput[]
+    OR?: MatrizT_DetalleWhereInput[]
+    NOT?: MatrizT_DetalleWhereInput | MatrizT_DetalleWhereInput[]
+    cabeceraId?: StringFilter<"MatrizT_Detalle"> | string
+    preguntaNombre?: StringFilter<"MatrizT_Detalle"> | string
+    tipoRespuesta?: StringFilter<"MatrizT_Detalle"> | string
+    obligatorio?: BoolFilter<"MatrizT_Detalle"> | boolean
+    seccion?: StringFilter<"MatrizT_Detalle"> | string
+    orden?: IntFilter<"MatrizT_Detalle"> | number
+    gravedad?: IntNullableFilter<"MatrizT_Detalle"> | number | null
+    probabilidad?: IntNullableFilter<"MatrizT_Detalle"> | number | null
+    nivelRiesgo?: IntNullableFilter<"MatrizT_Detalle"> | number | null
+    justificacion?: StringNullableFilter<"MatrizT_Detalle"> | string | null
+    riesgoSignificativo?: StringNullableFilter<"MatrizT_Detalle"> | string | null
+    recursoNecesario?: StringNullableFilter<"MatrizT_Detalle"> | string | null
+    resultadoEsperado?: StringNullableFilter<"MatrizT_Detalle"> | string | null
+    respImplementacion?: StringNullableFilter<"MatrizT_Detalle"> | string | null
+    respSeguimiento?: StringNullableFilter<"MatrizT_Detalle"> | string | null
+    evidenciaCumplimiento?: StringNullableFilter<"MatrizT_Detalle"> | string | null
+    evidenciaEficacia?: StringNullableFilter<"MatrizT_Detalle"> | string | null
+    cabecera?: XOR<MatrizT_CabeceraRelationFilter, MatrizT_CabeceraWhereInput>
+    respuestasDetalle?: MatrizT_RespuestasDetalleListRelationFilter
+  }, "id">
+
+  export type MatrizT_DetalleOrderByWithAggregationInput = {
+    id?: SortOrder
+    cabeceraId?: SortOrder
+    preguntaNombre?: SortOrder
+    tipoRespuesta?: SortOrder
+    obligatorio?: SortOrder
+    seccion?: SortOrder
+    orden?: SortOrder
+    gravedad?: SortOrderInput | SortOrder
+    probabilidad?: SortOrderInput | SortOrder
+    nivelRiesgo?: SortOrderInput | SortOrder
+    justificacion?: SortOrderInput | SortOrder
+    riesgoSignificativo?: SortOrderInput | SortOrder
+    recursoNecesario?: SortOrderInput | SortOrder
+    resultadoEsperado?: SortOrderInput | SortOrder
+    respImplementacion?: SortOrderInput | SortOrder
+    respSeguimiento?: SortOrderInput | SortOrder
+    evidenciaCumplimiento?: SortOrderInput | SortOrder
+    evidenciaEficacia?: SortOrderInput | SortOrder
+    _count?: MatrizT_DetalleCountOrderByAggregateInput
+    _avg?: MatrizT_DetalleAvgOrderByAggregateInput
+    _max?: MatrizT_DetalleMaxOrderByAggregateInput
+    _min?: MatrizT_DetalleMinOrderByAggregateInput
+    _sum?: MatrizT_DetalleSumOrderByAggregateInput
+  }
+
+  export type MatrizT_DetalleScalarWhereWithAggregatesInput = {
+    AND?: MatrizT_DetalleScalarWhereWithAggregatesInput | MatrizT_DetalleScalarWhereWithAggregatesInput[]
+    OR?: MatrizT_DetalleScalarWhereWithAggregatesInput[]
+    NOT?: MatrizT_DetalleScalarWhereWithAggregatesInput | MatrizT_DetalleScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"MatrizT_Detalle"> | string
+    cabeceraId?: StringWithAggregatesFilter<"MatrizT_Detalle"> | string
+    preguntaNombre?: StringWithAggregatesFilter<"MatrizT_Detalle"> | string
+    tipoRespuesta?: StringWithAggregatesFilter<"MatrizT_Detalle"> | string
+    obligatorio?: BoolWithAggregatesFilter<"MatrizT_Detalle"> | boolean
+    seccion?: StringWithAggregatesFilter<"MatrizT_Detalle"> | string
+    orden?: IntWithAggregatesFilter<"MatrizT_Detalle"> | number
+    gravedad?: IntNullableWithAggregatesFilter<"MatrizT_Detalle"> | number | null
+    probabilidad?: IntNullableWithAggregatesFilter<"MatrizT_Detalle"> | number | null
+    nivelRiesgo?: IntNullableWithAggregatesFilter<"MatrizT_Detalle"> | number | null
+    justificacion?: StringNullableWithAggregatesFilter<"MatrizT_Detalle"> | string | null
+    riesgoSignificativo?: StringNullableWithAggregatesFilter<"MatrizT_Detalle"> | string | null
+    recursoNecesario?: StringNullableWithAggregatesFilter<"MatrizT_Detalle"> | string | null
+    resultadoEsperado?: StringNullableWithAggregatesFilter<"MatrizT_Detalle"> | string | null
+    respImplementacion?: StringNullableWithAggregatesFilter<"MatrizT_Detalle"> | string | null
+    respSeguimiento?: StringNullableWithAggregatesFilter<"MatrizT_Detalle"> | string | null
+    evidenciaCumplimiento?: StringNullableWithAggregatesFilter<"MatrizT_Detalle"> | string | null
+    evidenciaEficacia?: StringNullableWithAggregatesFilter<"MatrizT_Detalle"> | string | null
+  }
+
+  export type MatrizT_RespuestasCabeceraWhereInput = {
+    AND?: MatrizT_RespuestasCabeceraWhereInput | MatrizT_RespuestasCabeceraWhereInput[]
+    OR?: MatrizT_RespuestasCabeceraWhereInput[]
+    NOT?: MatrizT_RespuestasCabeceraWhereInput | MatrizT_RespuestasCabeceraWhereInput[]
+    id?: StringFilter<"MatrizT_RespuestasCabecera"> | string
+    cabeceraId?: StringFilter<"MatrizT_RespuestasCabecera"> | string
+    usuario?: StringFilter<"MatrizT_RespuestasCabecera"> | string
+    fechaIngreso?: DateTimeFilter<"MatrizT_RespuestasCabecera"> | Date | string
+    supervisorNombre?: StringFilter<"MatrizT_RespuestasCabecera"> | string
+    supervisorCorreo?: StringFilter<"MatrizT_RespuestasCabecera"> | string
+    licId?: IntFilter<"MatrizT_RespuestasCabecera"> | number
+    ut?: IntFilter<"MatrizT_RespuestasCabecera"> | number
+    rbd?: IntFilter<"MatrizT_RespuestasCabecera"> | number
+    createdAt?: DateTimeFilter<"MatrizT_RespuestasCabecera"> | Date | string
+    updatedAt?: DateTimeFilter<"MatrizT_RespuestasCabecera"> | Date | string
+    cabecera?: XOR<MatrizT_CabeceraRelationFilter, MatrizT_CabeceraWhereInput>
+    detalles?: MatrizT_RespuestasDetalleListRelationFilter
+  }
+
+  export type MatrizT_RespuestasCabeceraOrderByWithRelationInput = {
+    id?: SortOrder
+    cabeceraId?: SortOrder
+    usuario?: SortOrder
+    fechaIngreso?: SortOrder
+    supervisorNombre?: SortOrder
+    supervisorCorreo?: SortOrder
+    licId?: SortOrder
+    ut?: SortOrder
+    rbd?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    cabecera?: MatrizT_CabeceraOrderByWithRelationInput
+    detalles?: MatrizT_RespuestasDetalleOrderByRelationAggregateInput
+  }
+
+  export type MatrizT_RespuestasCabeceraWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: MatrizT_RespuestasCabeceraWhereInput | MatrizT_RespuestasCabeceraWhereInput[]
+    OR?: MatrizT_RespuestasCabeceraWhereInput[]
+    NOT?: MatrizT_RespuestasCabeceraWhereInput | MatrizT_RespuestasCabeceraWhereInput[]
+    cabeceraId?: StringFilter<"MatrizT_RespuestasCabecera"> | string
+    usuario?: StringFilter<"MatrizT_RespuestasCabecera"> | string
+    fechaIngreso?: DateTimeFilter<"MatrizT_RespuestasCabecera"> | Date | string
+    supervisorNombre?: StringFilter<"MatrizT_RespuestasCabecera"> | string
+    supervisorCorreo?: StringFilter<"MatrizT_RespuestasCabecera"> | string
+    licId?: IntFilter<"MatrizT_RespuestasCabecera"> | number
+    ut?: IntFilter<"MatrizT_RespuestasCabecera"> | number
+    rbd?: IntFilter<"MatrizT_RespuestasCabecera"> | number
+    createdAt?: DateTimeFilter<"MatrizT_RespuestasCabecera"> | Date | string
+    updatedAt?: DateTimeFilter<"MatrizT_RespuestasCabecera"> | Date | string
+    cabecera?: XOR<MatrizT_CabeceraRelationFilter, MatrizT_CabeceraWhereInput>
+    detalles?: MatrizT_RespuestasDetalleListRelationFilter
+  }, "id">
+
+  export type MatrizT_RespuestasCabeceraOrderByWithAggregationInput = {
+    id?: SortOrder
+    cabeceraId?: SortOrder
+    usuario?: SortOrder
+    fechaIngreso?: SortOrder
+    supervisorNombre?: SortOrder
+    supervisorCorreo?: SortOrder
+    licId?: SortOrder
+    ut?: SortOrder
+    rbd?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: MatrizT_RespuestasCabeceraCountOrderByAggregateInput
+    _avg?: MatrizT_RespuestasCabeceraAvgOrderByAggregateInput
+    _max?: MatrizT_RespuestasCabeceraMaxOrderByAggregateInput
+    _min?: MatrizT_RespuestasCabeceraMinOrderByAggregateInput
+    _sum?: MatrizT_RespuestasCabeceraSumOrderByAggregateInput
+  }
+
+  export type MatrizT_RespuestasCabeceraScalarWhereWithAggregatesInput = {
+    AND?: MatrizT_RespuestasCabeceraScalarWhereWithAggregatesInput | MatrizT_RespuestasCabeceraScalarWhereWithAggregatesInput[]
+    OR?: MatrizT_RespuestasCabeceraScalarWhereWithAggregatesInput[]
+    NOT?: MatrizT_RespuestasCabeceraScalarWhereWithAggregatesInput | MatrizT_RespuestasCabeceraScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"MatrizT_RespuestasCabecera"> | string
+    cabeceraId?: StringWithAggregatesFilter<"MatrizT_RespuestasCabecera"> | string
+    usuario?: StringWithAggregatesFilter<"MatrizT_RespuestasCabecera"> | string
+    fechaIngreso?: DateTimeWithAggregatesFilter<"MatrizT_RespuestasCabecera"> | Date | string
+    supervisorNombre?: StringWithAggregatesFilter<"MatrizT_RespuestasCabecera"> | string
+    supervisorCorreo?: StringWithAggregatesFilter<"MatrizT_RespuestasCabecera"> | string
+    licId?: IntWithAggregatesFilter<"MatrizT_RespuestasCabecera"> | number
+    ut?: IntWithAggregatesFilter<"MatrizT_RespuestasCabecera"> | number
+    rbd?: IntWithAggregatesFilter<"MatrizT_RespuestasCabecera"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"MatrizT_RespuestasCabecera"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"MatrizT_RespuestasCabecera"> | Date | string
+  }
+
+  export type MatrizT_RespuestasDetalleWhereInput = {
+    AND?: MatrizT_RespuestasDetalleWhereInput | MatrizT_RespuestasDetalleWhereInput[]
+    OR?: MatrizT_RespuestasDetalleWhereInput[]
+    NOT?: MatrizT_RespuestasDetalleWhereInput | MatrizT_RespuestasDetalleWhereInput[]
+    id?: StringFilter<"MatrizT_RespuestasDetalle"> | string
+    respuestaCabeceraId?: StringFilter<"MatrizT_RespuestasDetalle"> | string
+    preguntaId?: StringFilter<"MatrizT_RespuestasDetalle"> | string
+    valor?: StringNullableFilter<"MatrizT_RespuestasDetalle"> | string | null
+    adjuntoUrl?: StringNullableFilter<"MatrizT_RespuestasDetalle"> | string | null
+    respuestaCabecera?: XOR<MatrizT_RespuestasCabeceraRelationFilter, MatrizT_RespuestasCabeceraWhereInput>
+    pregunta?: XOR<MatrizT_DetalleRelationFilter, MatrizT_DetalleWhereInput>
+  }
+
+  export type MatrizT_RespuestasDetalleOrderByWithRelationInput = {
+    id?: SortOrder
+    respuestaCabeceraId?: SortOrder
+    preguntaId?: SortOrder
+    valor?: SortOrderInput | SortOrder
+    adjuntoUrl?: SortOrderInput | SortOrder
+    respuestaCabecera?: MatrizT_RespuestasCabeceraOrderByWithRelationInput
+    pregunta?: MatrizT_DetalleOrderByWithRelationInput
+  }
+
+  export type MatrizT_RespuestasDetalleWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: MatrizT_RespuestasDetalleWhereInput | MatrizT_RespuestasDetalleWhereInput[]
+    OR?: MatrizT_RespuestasDetalleWhereInput[]
+    NOT?: MatrizT_RespuestasDetalleWhereInput | MatrizT_RespuestasDetalleWhereInput[]
+    respuestaCabeceraId?: StringFilter<"MatrizT_RespuestasDetalle"> | string
+    preguntaId?: StringFilter<"MatrizT_RespuestasDetalle"> | string
+    valor?: StringNullableFilter<"MatrizT_RespuestasDetalle"> | string | null
+    adjuntoUrl?: StringNullableFilter<"MatrizT_RespuestasDetalle"> | string | null
+    respuestaCabecera?: XOR<MatrizT_RespuestasCabeceraRelationFilter, MatrizT_RespuestasCabeceraWhereInput>
+    pregunta?: XOR<MatrizT_DetalleRelationFilter, MatrizT_DetalleWhereInput>
+  }, "id">
+
+  export type MatrizT_RespuestasDetalleOrderByWithAggregationInput = {
+    id?: SortOrder
+    respuestaCabeceraId?: SortOrder
+    preguntaId?: SortOrder
+    valor?: SortOrderInput | SortOrder
+    adjuntoUrl?: SortOrderInput | SortOrder
+    _count?: MatrizT_RespuestasDetalleCountOrderByAggregateInput
+    _max?: MatrizT_RespuestasDetalleMaxOrderByAggregateInput
+    _min?: MatrizT_RespuestasDetalleMinOrderByAggregateInput
+  }
+
+  export type MatrizT_RespuestasDetalleScalarWhereWithAggregatesInput = {
+    AND?: MatrizT_RespuestasDetalleScalarWhereWithAggregatesInput | MatrizT_RespuestasDetalleScalarWhereWithAggregatesInput[]
+    OR?: MatrizT_RespuestasDetalleScalarWhereWithAggregatesInput[]
+    NOT?: MatrizT_RespuestasDetalleScalarWhereWithAggregatesInput | MatrizT_RespuestasDetalleScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"MatrizT_RespuestasDetalle"> | string
+    respuestaCabeceraId?: StringWithAggregatesFilter<"MatrizT_RespuestasDetalle"> | string
+    preguntaId?: StringWithAggregatesFilter<"MatrizT_RespuestasDetalle"> | string
+    valor?: StringNullableWithAggregatesFilter<"MatrizT_RespuestasDetalle"> | string | null
+    adjuntoUrl?: StringNullableWithAggregatesFilter<"MatrizT_RespuestasDetalle"> | string | null
+  }
+
   export type RoleCreateInput = {
     id?: string
     name: string
@@ -81825,6 +86954,7 @@ export namespace Prisma {
     aspectosEE?: AspectoEECreateNestedManyWithoutLicitacionInput
     jefesZonales?: JefeZonalLicitacionCreateNestedManyWithoutLicitacionInput
     vehiculos?: VehiculoCreateNestedManyWithoutLicitacionInput
+    matrices?: MatrizT_CabeceraCreateNestedManyWithoutLicitacionInput
   }
 
   export type LicitacionUncheckedCreateInput = {
@@ -81837,6 +86967,7 @@ export namespace Prisma {
     aspectosEE?: AspectoEEUncheckedCreateNestedManyWithoutLicitacionInput
     jefesZonales?: JefeZonalLicitacionUncheckedCreateNestedManyWithoutLicitacionInput
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutLicitacionInput
+    matrices?: MatrizT_CabeceraUncheckedCreateNestedManyWithoutLicitacionInput
   }
 
   export type LicitacionUpdateInput = {
@@ -81848,6 +86979,7 @@ export namespace Prisma {
     aspectosEE?: AspectoEEUpdateManyWithoutLicitacionNestedInput
     jefesZonales?: JefeZonalLicitacionUpdateManyWithoutLicitacionNestedInput
     vehiculos?: VehiculoUpdateManyWithoutLicitacionNestedInput
+    matrices?: MatrizT_CabeceraUpdateManyWithoutLicitacionNestedInput
   }
 
   export type LicitacionUncheckedUpdateInput = {
@@ -81860,6 +86992,7 @@ export namespace Prisma {
     aspectosEE?: AspectoEEUncheckedUpdateManyWithoutLicitacionNestedInput
     jefesZonales?: JefeZonalLicitacionUncheckedUpdateManyWithoutLicitacionNestedInput
     vehiculos?: VehiculoUncheckedUpdateManyWithoutLicitacionNestedInput
+    matrices?: MatrizT_CabeceraUncheckedUpdateManyWithoutLicitacionNestedInput
   }
 
   export type LicitacionCreateManyInput = {
@@ -86918,6 +92051,395 @@ export namespace Prisma {
     Otros_Comentarios?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type MatrizT_CabeceraCreateInput = {
+    id?: string
+    anio: number
+    titulo: string
+    estado?: boolean
+    instrucciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    licitacion: LicitacionCreateNestedOneWithoutMatricesInput
+    detalles?: MatrizT_DetalleCreateNestedManyWithoutCabeceraInput
+    respuestas?: MatrizT_RespuestasCabeceraCreateNestedManyWithoutCabeceraInput
+  }
+
+  export type MatrizT_CabeceraUncheckedCreateInput = {
+    id?: string
+    licId: number
+    anio: number
+    titulo: string
+    estado?: boolean
+    instrucciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    detalles?: MatrizT_DetalleUncheckedCreateNestedManyWithoutCabeceraInput
+    respuestas?: MatrizT_RespuestasCabeceraUncheckedCreateNestedManyWithoutCabeceraInput
+  }
+
+  export type MatrizT_CabeceraUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    anio?: IntFieldUpdateOperationsInput | number
+    titulo?: StringFieldUpdateOperationsInput | string
+    estado?: BoolFieldUpdateOperationsInput | boolean
+    instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    licitacion?: LicitacionUpdateOneRequiredWithoutMatricesNestedInput
+    detalles?: MatrizT_DetalleUpdateManyWithoutCabeceraNestedInput
+    respuestas?: MatrizT_RespuestasCabeceraUpdateManyWithoutCabeceraNestedInput
+  }
+
+  export type MatrizT_CabeceraUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    anio?: IntFieldUpdateOperationsInput | number
+    titulo?: StringFieldUpdateOperationsInput | string
+    estado?: BoolFieldUpdateOperationsInput | boolean
+    instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    detalles?: MatrizT_DetalleUncheckedUpdateManyWithoutCabeceraNestedInput
+    respuestas?: MatrizT_RespuestasCabeceraUncheckedUpdateManyWithoutCabeceraNestedInput
+  }
+
+  export type MatrizT_CabeceraCreateManyInput = {
+    id?: string
+    licId: number
+    anio: number
+    titulo: string
+    estado?: boolean
+    instrucciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MatrizT_CabeceraUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    anio?: IntFieldUpdateOperationsInput | number
+    titulo?: StringFieldUpdateOperationsInput | string
+    estado?: BoolFieldUpdateOperationsInput | boolean
+    instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MatrizT_CabeceraUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    anio?: IntFieldUpdateOperationsInput | number
+    titulo?: StringFieldUpdateOperationsInput | string
+    estado?: BoolFieldUpdateOperationsInput | boolean
+    instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MatrizT_DetalleCreateInput = {
+    id?: string
+    preguntaNombre: string
+    tipoRespuesta: string
+    obligatorio?: boolean
+    seccion: string
+    orden?: number
+    gravedad?: number | null
+    probabilidad?: number | null
+    nivelRiesgo?: number | null
+    justificacion?: string | null
+    riesgoSignificativo?: string | null
+    recursoNecesario?: string | null
+    resultadoEsperado?: string | null
+    respImplementacion?: string | null
+    respSeguimiento?: string | null
+    evidenciaCumplimiento?: string | null
+    evidenciaEficacia?: string | null
+    cabecera: MatrizT_CabeceraCreateNestedOneWithoutDetallesInput
+    respuestasDetalle?: MatrizT_RespuestasDetalleCreateNestedManyWithoutPreguntaInput
+  }
+
+  export type MatrizT_DetalleUncheckedCreateInput = {
+    id?: string
+    cabeceraId: string
+    preguntaNombre: string
+    tipoRespuesta: string
+    obligatorio?: boolean
+    seccion: string
+    orden?: number
+    gravedad?: number | null
+    probabilidad?: number | null
+    nivelRiesgo?: number | null
+    justificacion?: string | null
+    riesgoSignificativo?: string | null
+    recursoNecesario?: string | null
+    resultadoEsperado?: string | null
+    respImplementacion?: string | null
+    respSeguimiento?: string | null
+    evidenciaCumplimiento?: string | null
+    evidenciaEficacia?: string | null
+    respuestasDetalle?: MatrizT_RespuestasDetalleUncheckedCreateNestedManyWithoutPreguntaInput
+  }
+
+  export type MatrizT_DetalleUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    preguntaNombre?: StringFieldUpdateOperationsInput | string
+    tipoRespuesta?: StringFieldUpdateOperationsInput | string
+    obligatorio?: BoolFieldUpdateOperationsInput | boolean
+    seccion?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    gravedad?: NullableIntFieldUpdateOperationsInput | number | null
+    probabilidad?: NullableIntFieldUpdateOperationsInput | number | null
+    nivelRiesgo?: NullableIntFieldUpdateOperationsInput | number | null
+    justificacion?: NullableStringFieldUpdateOperationsInput | string | null
+    riesgoSignificativo?: NullableStringFieldUpdateOperationsInput | string | null
+    recursoNecesario?: NullableStringFieldUpdateOperationsInput | string | null
+    resultadoEsperado?: NullableStringFieldUpdateOperationsInput | string | null
+    respImplementacion?: NullableStringFieldUpdateOperationsInput | string | null
+    respSeguimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenciaCumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenciaEficacia?: NullableStringFieldUpdateOperationsInput | string | null
+    cabecera?: MatrizT_CabeceraUpdateOneRequiredWithoutDetallesNestedInput
+    respuestasDetalle?: MatrizT_RespuestasDetalleUpdateManyWithoutPreguntaNestedInput
+  }
+
+  export type MatrizT_DetalleUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cabeceraId?: StringFieldUpdateOperationsInput | string
+    preguntaNombre?: StringFieldUpdateOperationsInput | string
+    tipoRespuesta?: StringFieldUpdateOperationsInput | string
+    obligatorio?: BoolFieldUpdateOperationsInput | boolean
+    seccion?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    gravedad?: NullableIntFieldUpdateOperationsInput | number | null
+    probabilidad?: NullableIntFieldUpdateOperationsInput | number | null
+    nivelRiesgo?: NullableIntFieldUpdateOperationsInput | number | null
+    justificacion?: NullableStringFieldUpdateOperationsInput | string | null
+    riesgoSignificativo?: NullableStringFieldUpdateOperationsInput | string | null
+    recursoNecesario?: NullableStringFieldUpdateOperationsInput | string | null
+    resultadoEsperado?: NullableStringFieldUpdateOperationsInput | string | null
+    respImplementacion?: NullableStringFieldUpdateOperationsInput | string | null
+    respSeguimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenciaCumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenciaEficacia?: NullableStringFieldUpdateOperationsInput | string | null
+    respuestasDetalle?: MatrizT_RespuestasDetalleUncheckedUpdateManyWithoutPreguntaNestedInput
+  }
+
+  export type MatrizT_DetalleCreateManyInput = {
+    id?: string
+    cabeceraId: string
+    preguntaNombre: string
+    tipoRespuesta: string
+    obligatorio?: boolean
+    seccion: string
+    orden?: number
+    gravedad?: number | null
+    probabilidad?: number | null
+    nivelRiesgo?: number | null
+    justificacion?: string | null
+    riesgoSignificativo?: string | null
+    recursoNecesario?: string | null
+    resultadoEsperado?: string | null
+    respImplementacion?: string | null
+    respSeguimiento?: string | null
+    evidenciaCumplimiento?: string | null
+    evidenciaEficacia?: string | null
+  }
+
+  export type MatrizT_DetalleUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    preguntaNombre?: StringFieldUpdateOperationsInput | string
+    tipoRespuesta?: StringFieldUpdateOperationsInput | string
+    obligatorio?: BoolFieldUpdateOperationsInput | boolean
+    seccion?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    gravedad?: NullableIntFieldUpdateOperationsInput | number | null
+    probabilidad?: NullableIntFieldUpdateOperationsInput | number | null
+    nivelRiesgo?: NullableIntFieldUpdateOperationsInput | number | null
+    justificacion?: NullableStringFieldUpdateOperationsInput | string | null
+    riesgoSignificativo?: NullableStringFieldUpdateOperationsInput | string | null
+    recursoNecesario?: NullableStringFieldUpdateOperationsInput | string | null
+    resultadoEsperado?: NullableStringFieldUpdateOperationsInput | string | null
+    respImplementacion?: NullableStringFieldUpdateOperationsInput | string | null
+    respSeguimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenciaCumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenciaEficacia?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type MatrizT_DetalleUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cabeceraId?: StringFieldUpdateOperationsInput | string
+    preguntaNombre?: StringFieldUpdateOperationsInput | string
+    tipoRespuesta?: StringFieldUpdateOperationsInput | string
+    obligatorio?: BoolFieldUpdateOperationsInput | boolean
+    seccion?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    gravedad?: NullableIntFieldUpdateOperationsInput | number | null
+    probabilidad?: NullableIntFieldUpdateOperationsInput | number | null
+    nivelRiesgo?: NullableIntFieldUpdateOperationsInput | number | null
+    justificacion?: NullableStringFieldUpdateOperationsInput | string | null
+    riesgoSignificativo?: NullableStringFieldUpdateOperationsInput | string | null
+    recursoNecesario?: NullableStringFieldUpdateOperationsInput | string | null
+    resultadoEsperado?: NullableStringFieldUpdateOperationsInput | string | null
+    respImplementacion?: NullableStringFieldUpdateOperationsInput | string | null
+    respSeguimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenciaCumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenciaEficacia?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type MatrizT_RespuestasCabeceraCreateInput = {
+    id?: string
+    usuario: string
+    fechaIngreso?: Date | string
+    supervisorNombre: string
+    supervisorCorreo: string
+    licId: number
+    ut: number
+    rbd: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cabecera: MatrizT_CabeceraCreateNestedOneWithoutRespuestasInput
+    detalles?: MatrizT_RespuestasDetalleCreateNestedManyWithoutRespuestaCabeceraInput
+  }
+
+  export type MatrizT_RespuestasCabeceraUncheckedCreateInput = {
+    id?: string
+    cabeceraId: string
+    usuario: string
+    fechaIngreso?: Date | string
+    supervisorNombre: string
+    supervisorCorreo: string
+    licId: number
+    ut: number
+    rbd: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    detalles?: MatrizT_RespuestasDetalleUncheckedCreateNestedManyWithoutRespuestaCabeceraInput
+  }
+
+  export type MatrizT_RespuestasCabeceraUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    usuario?: StringFieldUpdateOperationsInput | string
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    supervisorNombre?: StringFieldUpdateOperationsInput | string
+    supervisorCorreo?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    ut?: IntFieldUpdateOperationsInput | number
+    rbd?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cabecera?: MatrizT_CabeceraUpdateOneRequiredWithoutRespuestasNestedInput
+    detalles?: MatrizT_RespuestasDetalleUpdateManyWithoutRespuestaCabeceraNestedInput
+  }
+
+  export type MatrizT_RespuestasCabeceraUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cabeceraId?: StringFieldUpdateOperationsInput | string
+    usuario?: StringFieldUpdateOperationsInput | string
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    supervisorNombre?: StringFieldUpdateOperationsInput | string
+    supervisorCorreo?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    ut?: IntFieldUpdateOperationsInput | number
+    rbd?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    detalles?: MatrizT_RespuestasDetalleUncheckedUpdateManyWithoutRespuestaCabeceraNestedInput
+  }
+
+  export type MatrizT_RespuestasCabeceraCreateManyInput = {
+    id?: string
+    cabeceraId: string
+    usuario: string
+    fechaIngreso?: Date | string
+    supervisorNombre: string
+    supervisorCorreo: string
+    licId: number
+    ut: number
+    rbd: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MatrizT_RespuestasCabeceraUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    usuario?: StringFieldUpdateOperationsInput | string
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    supervisorNombre?: StringFieldUpdateOperationsInput | string
+    supervisorCorreo?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    ut?: IntFieldUpdateOperationsInput | number
+    rbd?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MatrizT_RespuestasCabeceraUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cabeceraId?: StringFieldUpdateOperationsInput | string
+    usuario?: StringFieldUpdateOperationsInput | string
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    supervisorNombre?: StringFieldUpdateOperationsInput | string
+    supervisorCorreo?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    ut?: IntFieldUpdateOperationsInput | number
+    rbd?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MatrizT_RespuestasDetalleCreateInput = {
+    id?: string
+    valor?: string | null
+    adjuntoUrl?: string | null
+    respuestaCabecera: MatrizT_RespuestasCabeceraCreateNestedOneWithoutDetallesInput
+    pregunta: MatrizT_DetalleCreateNestedOneWithoutRespuestasDetalleInput
+  }
+
+  export type MatrizT_RespuestasDetalleUncheckedCreateInput = {
+    id?: string
+    respuestaCabeceraId: string
+    preguntaId: string
+    valor?: string | null
+    adjuntoUrl?: string | null
+  }
+
+  export type MatrizT_RespuestasDetalleUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    valor?: NullableStringFieldUpdateOperationsInput | string | null
+    adjuntoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    respuestaCabecera?: MatrizT_RespuestasCabeceraUpdateOneRequiredWithoutDetallesNestedInput
+    pregunta?: MatrizT_DetalleUpdateOneRequiredWithoutRespuestasDetalleNestedInput
+  }
+
+  export type MatrizT_RespuestasDetalleUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    respuestaCabeceraId?: StringFieldUpdateOperationsInput | string
+    preguntaId?: StringFieldUpdateOperationsInput | string
+    valor?: NullableStringFieldUpdateOperationsInput | string | null
+    adjuntoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type MatrizT_RespuestasDetalleCreateManyInput = {
+    id?: string
+    respuestaCabeceraId: string
+    preguntaId: string
+    valor?: string | null
+    adjuntoUrl?: string | null
+  }
+
+  export type MatrizT_RespuestasDetalleUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    valor?: NullableStringFieldUpdateOperationsInput | string | null
+    adjuntoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type MatrizT_RespuestasDetalleUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    respuestaCabeceraId?: StringFieldUpdateOperationsInput | string
+    preguntaId?: StringFieldUpdateOperationsInput | string
+    valor?: NullableStringFieldUpdateOperationsInput | string | null
+    adjuntoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -87712,6 +93234,12 @@ export namespace Prisma {
     none?: VehiculoWhereInput
   }
 
+  export type MatrizT_CabeceraListRelationFilter = {
+    every?: MatrizT_CabeceraWhereInput
+    some?: MatrizT_CabeceraWhereInput
+    none?: MatrizT_CabeceraWhereInput
+  }
+
   export type UTOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -87725,6 +93253,10 @@ export namespace Prisma {
   }
 
   export type VehiculoOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type MatrizT_CabeceraOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -90768,6 +96300,249 @@ export namespace Prisma {
     Otros_Comentarios?: SortOrder
   }
 
+  export type MatrizT_DetalleListRelationFilter = {
+    every?: MatrizT_DetalleWhereInput
+    some?: MatrizT_DetalleWhereInput
+    none?: MatrizT_DetalleWhereInput
+  }
+
+  export type MatrizT_RespuestasCabeceraListRelationFilter = {
+    every?: MatrizT_RespuestasCabeceraWhereInput
+    some?: MatrizT_RespuestasCabeceraWhereInput
+    none?: MatrizT_RespuestasCabeceraWhereInput
+  }
+
+  export type MatrizT_DetalleOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type MatrizT_RespuestasCabeceraOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type MatrizT_CabeceraCountOrderByAggregateInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    anio?: SortOrder
+    titulo?: SortOrder
+    estado?: SortOrder
+    instrucciones?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MatrizT_CabeceraAvgOrderByAggregateInput = {
+    licId?: SortOrder
+    anio?: SortOrder
+  }
+
+  export type MatrizT_CabeceraMaxOrderByAggregateInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    anio?: SortOrder
+    titulo?: SortOrder
+    estado?: SortOrder
+    instrucciones?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MatrizT_CabeceraMinOrderByAggregateInput = {
+    id?: SortOrder
+    licId?: SortOrder
+    anio?: SortOrder
+    titulo?: SortOrder
+    estado?: SortOrder
+    instrucciones?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MatrizT_CabeceraSumOrderByAggregateInput = {
+    licId?: SortOrder
+    anio?: SortOrder
+  }
+
+  export type MatrizT_CabeceraRelationFilter = {
+    is?: MatrizT_CabeceraWhereInput
+    isNot?: MatrizT_CabeceraWhereInput
+  }
+
+  export type MatrizT_RespuestasDetalleListRelationFilter = {
+    every?: MatrizT_RespuestasDetalleWhereInput
+    some?: MatrizT_RespuestasDetalleWhereInput
+    none?: MatrizT_RespuestasDetalleWhereInput
+  }
+
+  export type MatrizT_RespuestasDetalleOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type MatrizT_DetalleCountOrderByAggregateInput = {
+    id?: SortOrder
+    cabeceraId?: SortOrder
+    preguntaNombre?: SortOrder
+    tipoRespuesta?: SortOrder
+    obligatorio?: SortOrder
+    seccion?: SortOrder
+    orden?: SortOrder
+    gravedad?: SortOrder
+    probabilidad?: SortOrder
+    nivelRiesgo?: SortOrder
+    justificacion?: SortOrder
+    riesgoSignificativo?: SortOrder
+    recursoNecesario?: SortOrder
+    resultadoEsperado?: SortOrder
+    respImplementacion?: SortOrder
+    respSeguimiento?: SortOrder
+    evidenciaCumplimiento?: SortOrder
+    evidenciaEficacia?: SortOrder
+  }
+
+  export type MatrizT_DetalleAvgOrderByAggregateInput = {
+    orden?: SortOrder
+    gravedad?: SortOrder
+    probabilidad?: SortOrder
+    nivelRiesgo?: SortOrder
+  }
+
+  export type MatrizT_DetalleMaxOrderByAggregateInput = {
+    id?: SortOrder
+    cabeceraId?: SortOrder
+    preguntaNombre?: SortOrder
+    tipoRespuesta?: SortOrder
+    obligatorio?: SortOrder
+    seccion?: SortOrder
+    orden?: SortOrder
+    gravedad?: SortOrder
+    probabilidad?: SortOrder
+    nivelRiesgo?: SortOrder
+    justificacion?: SortOrder
+    riesgoSignificativo?: SortOrder
+    recursoNecesario?: SortOrder
+    resultadoEsperado?: SortOrder
+    respImplementacion?: SortOrder
+    respSeguimiento?: SortOrder
+    evidenciaCumplimiento?: SortOrder
+    evidenciaEficacia?: SortOrder
+  }
+
+  export type MatrizT_DetalleMinOrderByAggregateInput = {
+    id?: SortOrder
+    cabeceraId?: SortOrder
+    preguntaNombre?: SortOrder
+    tipoRespuesta?: SortOrder
+    obligatorio?: SortOrder
+    seccion?: SortOrder
+    orden?: SortOrder
+    gravedad?: SortOrder
+    probabilidad?: SortOrder
+    nivelRiesgo?: SortOrder
+    justificacion?: SortOrder
+    riesgoSignificativo?: SortOrder
+    recursoNecesario?: SortOrder
+    resultadoEsperado?: SortOrder
+    respImplementacion?: SortOrder
+    respSeguimiento?: SortOrder
+    evidenciaCumplimiento?: SortOrder
+    evidenciaEficacia?: SortOrder
+  }
+
+  export type MatrizT_DetalleSumOrderByAggregateInput = {
+    orden?: SortOrder
+    gravedad?: SortOrder
+    probabilidad?: SortOrder
+    nivelRiesgo?: SortOrder
+  }
+
+  export type MatrizT_RespuestasCabeceraCountOrderByAggregateInput = {
+    id?: SortOrder
+    cabeceraId?: SortOrder
+    usuario?: SortOrder
+    fechaIngreso?: SortOrder
+    supervisorNombre?: SortOrder
+    supervisorCorreo?: SortOrder
+    licId?: SortOrder
+    ut?: SortOrder
+    rbd?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MatrizT_RespuestasCabeceraAvgOrderByAggregateInput = {
+    licId?: SortOrder
+    ut?: SortOrder
+    rbd?: SortOrder
+  }
+
+  export type MatrizT_RespuestasCabeceraMaxOrderByAggregateInput = {
+    id?: SortOrder
+    cabeceraId?: SortOrder
+    usuario?: SortOrder
+    fechaIngreso?: SortOrder
+    supervisorNombre?: SortOrder
+    supervisorCorreo?: SortOrder
+    licId?: SortOrder
+    ut?: SortOrder
+    rbd?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MatrizT_RespuestasCabeceraMinOrderByAggregateInput = {
+    id?: SortOrder
+    cabeceraId?: SortOrder
+    usuario?: SortOrder
+    fechaIngreso?: SortOrder
+    supervisorNombre?: SortOrder
+    supervisorCorreo?: SortOrder
+    licId?: SortOrder
+    ut?: SortOrder
+    rbd?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MatrizT_RespuestasCabeceraSumOrderByAggregateInput = {
+    licId?: SortOrder
+    ut?: SortOrder
+    rbd?: SortOrder
+  }
+
+  export type MatrizT_RespuestasCabeceraRelationFilter = {
+    is?: MatrizT_RespuestasCabeceraWhereInput
+    isNot?: MatrizT_RespuestasCabeceraWhereInput
+  }
+
+  export type MatrizT_DetalleRelationFilter = {
+    is?: MatrizT_DetalleWhereInput
+    isNot?: MatrizT_DetalleWhereInput
+  }
+
+  export type MatrizT_RespuestasDetalleCountOrderByAggregateInput = {
+    id?: SortOrder
+    respuestaCabeceraId?: SortOrder
+    preguntaId?: SortOrder
+    valor?: SortOrder
+    adjuntoUrl?: SortOrder
+  }
+
+  export type MatrizT_RespuestasDetalleMaxOrderByAggregateInput = {
+    id?: SortOrder
+    respuestaCabeceraId?: SortOrder
+    preguntaId?: SortOrder
+    valor?: SortOrder
+    adjuntoUrl?: SortOrder
+  }
+
+  export type MatrizT_RespuestasDetalleMinOrderByAggregateInput = {
+    id?: SortOrder
+    respuestaCabeceraId?: SortOrder
+    preguntaId?: SortOrder
+    valor?: SortOrder
+    adjuntoUrl?: SortOrder
+  }
+
   export type UserCreateNestedManyWithoutRoleInput = {
     create?: XOR<UserCreateWithoutRoleInput, UserUncheckedCreateWithoutRoleInput> | UserCreateWithoutRoleInput[] | UserUncheckedCreateWithoutRoleInput[]
     connectOrCreate?: UserCreateOrConnectWithoutRoleInput | UserCreateOrConnectWithoutRoleInput[]
@@ -91103,6 +96878,13 @@ export namespace Prisma {
     connect?: VehiculoWhereUniqueInput | VehiculoWhereUniqueInput[]
   }
 
+  export type MatrizT_CabeceraCreateNestedManyWithoutLicitacionInput = {
+    create?: XOR<MatrizT_CabeceraCreateWithoutLicitacionInput, MatrizT_CabeceraUncheckedCreateWithoutLicitacionInput> | MatrizT_CabeceraCreateWithoutLicitacionInput[] | MatrizT_CabeceraUncheckedCreateWithoutLicitacionInput[]
+    connectOrCreate?: MatrizT_CabeceraCreateOrConnectWithoutLicitacionInput | MatrizT_CabeceraCreateOrConnectWithoutLicitacionInput[]
+    createMany?: MatrizT_CabeceraCreateManyLicitacionInputEnvelope
+    connect?: MatrizT_CabeceraWhereUniqueInput | MatrizT_CabeceraWhereUniqueInput[]
+  }
+
   export type UTUncheckedCreateNestedManyWithoutLicitacionInput = {
     create?: XOR<UTCreateWithoutLicitacionInput, UTUncheckedCreateWithoutLicitacionInput> | UTCreateWithoutLicitacionInput[] | UTUncheckedCreateWithoutLicitacionInput[]
     connectOrCreate?: UTCreateOrConnectWithoutLicitacionInput | UTCreateOrConnectWithoutLicitacionInput[]
@@ -91129,6 +96911,13 @@ export namespace Prisma {
     connectOrCreate?: VehiculoCreateOrConnectWithoutLicitacionInput | VehiculoCreateOrConnectWithoutLicitacionInput[]
     createMany?: VehiculoCreateManyLicitacionInputEnvelope
     connect?: VehiculoWhereUniqueInput | VehiculoWhereUniqueInput[]
+  }
+
+  export type MatrizT_CabeceraUncheckedCreateNestedManyWithoutLicitacionInput = {
+    create?: XOR<MatrizT_CabeceraCreateWithoutLicitacionInput, MatrizT_CabeceraUncheckedCreateWithoutLicitacionInput> | MatrizT_CabeceraCreateWithoutLicitacionInput[] | MatrizT_CabeceraUncheckedCreateWithoutLicitacionInput[]
+    connectOrCreate?: MatrizT_CabeceraCreateOrConnectWithoutLicitacionInput | MatrizT_CabeceraCreateOrConnectWithoutLicitacionInput[]
+    createMany?: MatrizT_CabeceraCreateManyLicitacionInputEnvelope
+    connect?: MatrizT_CabeceraWhereUniqueInput | MatrizT_CabeceraWhereUniqueInput[]
   }
 
   export type UTUpdateManyWithoutLicitacionNestedInput = {
@@ -91187,6 +96976,20 @@ export namespace Prisma {
     deleteMany?: VehiculoScalarWhereInput | VehiculoScalarWhereInput[]
   }
 
+  export type MatrizT_CabeceraUpdateManyWithoutLicitacionNestedInput = {
+    create?: XOR<MatrizT_CabeceraCreateWithoutLicitacionInput, MatrizT_CabeceraUncheckedCreateWithoutLicitacionInput> | MatrizT_CabeceraCreateWithoutLicitacionInput[] | MatrizT_CabeceraUncheckedCreateWithoutLicitacionInput[]
+    connectOrCreate?: MatrizT_CabeceraCreateOrConnectWithoutLicitacionInput | MatrizT_CabeceraCreateOrConnectWithoutLicitacionInput[]
+    upsert?: MatrizT_CabeceraUpsertWithWhereUniqueWithoutLicitacionInput | MatrizT_CabeceraUpsertWithWhereUniqueWithoutLicitacionInput[]
+    createMany?: MatrizT_CabeceraCreateManyLicitacionInputEnvelope
+    set?: MatrizT_CabeceraWhereUniqueInput | MatrizT_CabeceraWhereUniqueInput[]
+    disconnect?: MatrizT_CabeceraWhereUniqueInput | MatrizT_CabeceraWhereUniqueInput[]
+    delete?: MatrizT_CabeceraWhereUniqueInput | MatrizT_CabeceraWhereUniqueInput[]
+    connect?: MatrizT_CabeceraWhereUniqueInput | MatrizT_CabeceraWhereUniqueInput[]
+    update?: MatrizT_CabeceraUpdateWithWhereUniqueWithoutLicitacionInput | MatrizT_CabeceraUpdateWithWhereUniqueWithoutLicitacionInput[]
+    updateMany?: MatrizT_CabeceraUpdateManyWithWhereWithoutLicitacionInput | MatrizT_CabeceraUpdateManyWithWhereWithoutLicitacionInput[]
+    deleteMany?: MatrizT_CabeceraScalarWhereInput | MatrizT_CabeceraScalarWhereInput[]
+  }
+
   export type UTUncheckedUpdateManyWithoutLicitacionNestedInput = {
     create?: XOR<UTCreateWithoutLicitacionInput, UTUncheckedCreateWithoutLicitacionInput> | UTCreateWithoutLicitacionInput[] | UTUncheckedCreateWithoutLicitacionInput[]
     connectOrCreate?: UTCreateOrConnectWithoutLicitacionInput | UTCreateOrConnectWithoutLicitacionInput[]
@@ -91241,6 +97044,20 @@ export namespace Prisma {
     update?: VehiculoUpdateWithWhereUniqueWithoutLicitacionInput | VehiculoUpdateWithWhereUniqueWithoutLicitacionInput[]
     updateMany?: VehiculoUpdateManyWithWhereWithoutLicitacionInput | VehiculoUpdateManyWithWhereWithoutLicitacionInput[]
     deleteMany?: VehiculoScalarWhereInput | VehiculoScalarWhereInput[]
+  }
+
+  export type MatrizT_CabeceraUncheckedUpdateManyWithoutLicitacionNestedInput = {
+    create?: XOR<MatrizT_CabeceraCreateWithoutLicitacionInput, MatrizT_CabeceraUncheckedCreateWithoutLicitacionInput> | MatrizT_CabeceraCreateWithoutLicitacionInput[] | MatrizT_CabeceraUncheckedCreateWithoutLicitacionInput[]
+    connectOrCreate?: MatrizT_CabeceraCreateOrConnectWithoutLicitacionInput | MatrizT_CabeceraCreateOrConnectWithoutLicitacionInput[]
+    upsert?: MatrizT_CabeceraUpsertWithWhereUniqueWithoutLicitacionInput | MatrizT_CabeceraUpsertWithWhereUniqueWithoutLicitacionInput[]
+    createMany?: MatrizT_CabeceraCreateManyLicitacionInputEnvelope
+    set?: MatrizT_CabeceraWhereUniqueInput | MatrizT_CabeceraWhereUniqueInput[]
+    disconnect?: MatrizT_CabeceraWhereUniqueInput | MatrizT_CabeceraWhereUniqueInput[]
+    delete?: MatrizT_CabeceraWhereUniqueInput | MatrizT_CabeceraWhereUniqueInput[]
+    connect?: MatrizT_CabeceraWhereUniqueInput | MatrizT_CabeceraWhereUniqueInput[]
+    update?: MatrizT_CabeceraUpdateWithWhereUniqueWithoutLicitacionInput | MatrizT_CabeceraUpdateWithWhereUniqueWithoutLicitacionInput[]
+    updateMany?: MatrizT_CabeceraUpdateManyWithWhereWithoutLicitacionInput | MatrizT_CabeceraUpdateManyWithWhereWithoutLicitacionInput[]
+    deleteMany?: MatrizT_CabeceraScalarWhereInput | MatrizT_CabeceraScalarWhereInput[]
   }
 
   export type LicitacionCreateNestedOneWithoutAspectosEEInput = {
@@ -93273,6 +99090,244 @@ export namespace Prisma {
     update?: XOR<XOR<Cab_LeePdfEstandarPaeUpdateToOneWithWhereWithoutDetallesInput, Cab_LeePdfEstandarPaeUpdateWithoutDetallesInput>, Cab_LeePdfEstandarPaeUncheckedUpdateWithoutDetallesInput>
   }
 
+  export type LicitacionCreateNestedOneWithoutMatricesInput = {
+    create?: XOR<LicitacionCreateWithoutMatricesInput, LicitacionUncheckedCreateWithoutMatricesInput>
+    connectOrCreate?: LicitacionCreateOrConnectWithoutMatricesInput
+    connect?: LicitacionWhereUniqueInput
+  }
+
+  export type MatrizT_DetalleCreateNestedManyWithoutCabeceraInput = {
+    create?: XOR<MatrizT_DetalleCreateWithoutCabeceraInput, MatrizT_DetalleUncheckedCreateWithoutCabeceraInput> | MatrizT_DetalleCreateWithoutCabeceraInput[] | MatrizT_DetalleUncheckedCreateWithoutCabeceraInput[]
+    connectOrCreate?: MatrizT_DetalleCreateOrConnectWithoutCabeceraInput | MatrizT_DetalleCreateOrConnectWithoutCabeceraInput[]
+    createMany?: MatrizT_DetalleCreateManyCabeceraInputEnvelope
+    connect?: MatrizT_DetalleWhereUniqueInput | MatrizT_DetalleWhereUniqueInput[]
+  }
+
+  export type MatrizT_RespuestasCabeceraCreateNestedManyWithoutCabeceraInput = {
+    create?: XOR<MatrizT_RespuestasCabeceraCreateWithoutCabeceraInput, MatrizT_RespuestasCabeceraUncheckedCreateWithoutCabeceraInput> | MatrizT_RespuestasCabeceraCreateWithoutCabeceraInput[] | MatrizT_RespuestasCabeceraUncheckedCreateWithoutCabeceraInput[]
+    connectOrCreate?: MatrizT_RespuestasCabeceraCreateOrConnectWithoutCabeceraInput | MatrizT_RespuestasCabeceraCreateOrConnectWithoutCabeceraInput[]
+    createMany?: MatrizT_RespuestasCabeceraCreateManyCabeceraInputEnvelope
+    connect?: MatrizT_RespuestasCabeceraWhereUniqueInput | MatrizT_RespuestasCabeceraWhereUniqueInput[]
+  }
+
+  export type MatrizT_DetalleUncheckedCreateNestedManyWithoutCabeceraInput = {
+    create?: XOR<MatrizT_DetalleCreateWithoutCabeceraInput, MatrizT_DetalleUncheckedCreateWithoutCabeceraInput> | MatrizT_DetalleCreateWithoutCabeceraInput[] | MatrizT_DetalleUncheckedCreateWithoutCabeceraInput[]
+    connectOrCreate?: MatrizT_DetalleCreateOrConnectWithoutCabeceraInput | MatrizT_DetalleCreateOrConnectWithoutCabeceraInput[]
+    createMany?: MatrizT_DetalleCreateManyCabeceraInputEnvelope
+    connect?: MatrizT_DetalleWhereUniqueInput | MatrizT_DetalleWhereUniqueInput[]
+  }
+
+  export type MatrizT_RespuestasCabeceraUncheckedCreateNestedManyWithoutCabeceraInput = {
+    create?: XOR<MatrizT_RespuestasCabeceraCreateWithoutCabeceraInput, MatrizT_RespuestasCabeceraUncheckedCreateWithoutCabeceraInput> | MatrizT_RespuestasCabeceraCreateWithoutCabeceraInput[] | MatrizT_RespuestasCabeceraUncheckedCreateWithoutCabeceraInput[]
+    connectOrCreate?: MatrizT_RespuestasCabeceraCreateOrConnectWithoutCabeceraInput | MatrizT_RespuestasCabeceraCreateOrConnectWithoutCabeceraInput[]
+    createMany?: MatrizT_RespuestasCabeceraCreateManyCabeceraInputEnvelope
+    connect?: MatrizT_RespuestasCabeceraWhereUniqueInput | MatrizT_RespuestasCabeceraWhereUniqueInput[]
+  }
+
+  export type LicitacionUpdateOneRequiredWithoutMatricesNestedInput = {
+    create?: XOR<LicitacionCreateWithoutMatricesInput, LicitacionUncheckedCreateWithoutMatricesInput>
+    connectOrCreate?: LicitacionCreateOrConnectWithoutMatricesInput
+    upsert?: LicitacionUpsertWithoutMatricesInput
+    connect?: LicitacionWhereUniqueInput
+    update?: XOR<XOR<LicitacionUpdateToOneWithWhereWithoutMatricesInput, LicitacionUpdateWithoutMatricesInput>, LicitacionUncheckedUpdateWithoutMatricesInput>
+  }
+
+  export type MatrizT_DetalleUpdateManyWithoutCabeceraNestedInput = {
+    create?: XOR<MatrizT_DetalleCreateWithoutCabeceraInput, MatrizT_DetalleUncheckedCreateWithoutCabeceraInput> | MatrizT_DetalleCreateWithoutCabeceraInput[] | MatrizT_DetalleUncheckedCreateWithoutCabeceraInput[]
+    connectOrCreate?: MatrizT_DetalleCreateOrConnectWithoutCabeceraInput | MatrizT_DetalleCreateOrConnectWithoutCabeceraInput[]
+    upsert?: MatrizT_DetalleUpsertWithWhereUniqueWithoutCabeceraInput | MatrizT_DetalleUpsertWithWhereUniqueWithoutCabeceraInput[]
+    createMany?: MatrizT_DetalleCreateManyCabeceraInputEnvelope
+    set?: MatrizT_DetalleWhereUniqueInput | MatrizT_DetalleWhereUniqueInput[]
+    disconnect?: MatrizT_DetalleWhereUniqueInput | MatrizT_DetalleWhereUniqueInput[]
+    delete?: MatrizT_DetalleWhereUniqueInput | MatrizT_DetalleWhereUniqueInput[]
+    connect?: MatrizT_DetalleWhereUniqueInput | MatrizT_DetalleWhereUniqueInput[]
+    update?: MatrizT_DetalleUpdateWithWhereUniqueWithoutCabeceraInput | MatrizT_DetalleUpdateWithWhereUniqueWithoutCabeceraInput[]
+    updateMany?: MatrizT_DetalleUpdateManyWithWhereWithoutCabeceraInput | MatrizT_DetalleUpdateManyWithWhereWithoutCabeceraInput[]
+    deleteMany?: MatrizT_DetalleScalarWhereInput | MatrizT_DetalleScalarWhereInput[]
+  }
+
+  export type MatrizT_RespuestasCabeceraUpdateManyWithoutCabeceraNestedInput = {
+    create?: XOR<MatrizT_RespuestasCabeceraCreateWithoutCabeceraInput, MatrizT_RespuestasCabeceraUncheckedCreateWithoutCabeceraInput> | MatrizT_RespuestasCabeceraCreateWithoutCabeceraInput[] | MatrizT_RespuestasCabeceraUncheckedCreateWithoutCabeceraInput[]
+    connectOrCreate?: MatrizT_RespuestasCabeceraCreateOrConnectWithoutCabeceraInput | MatrizT_RespuestasCabeceraCreateOrConnectWithoutCabeceraInput[]
+    upsert?: MatrizT_RespuestasCabeceraUpsertWithWhereUniqueWithoutCabeceraInput | MatrizT_RespuestasCabeceraUpsertWithWhereUniqueWithoutCabeceraInput[]
+    createMany?: MatrizT_RespuestasCabeceraCreateManyCabeceraInputEnvelope
+    set?: MatrizT_RespuestasCabeceraWhereUniqueInput | MatrizT_RespuestasCabeceraWhereUniqueInput[]
+    disconnect?: MatrizT_RespuestasCabeceraWhereUniqueInput | MatrizT_RespuestasCabeceraWhereUniqueInput[]
+    delete?: MatrizT_RespuestasCabeceraWhereUniqueInput | MatrizT_RespuestasCabeceraWhereUniqueInput[]
+    connect?: MatrizT_RespuestasCabeceraWhereUniqueInput | MatrizT_RespuestasCabeceraWhereUniqueInput[]
+    update?: MatrizT_RespuestasCabeceraUpdateWithWhereUniqueWithoutCabeceraInput | MatrizT_RespuestasCabeceraUpdateWithWhereUniqueWithoutCabeceraInput[]
+    updateMany?: MatrizT_RespuestasCabeceraUpdateManyWithWhereWithoutCabeceraInput | MatrizT_RespuestasCabeceraUpdateManyWithWhereWithoutCabeceraInput[]
+    deleteMany?: MatrizT_RespuestasCabeceraScalarWhereInput | MatrizT_RespuestasCabeceraScalarWhereInput[]
+  }
+
+  export type MatrizT_DetalleUncheckedUpdateManyWithoutCabeceraNestedInput = {
+    create?: XOR<MatrizT_DetalleCreateWithoutCabeceraInput, MatrizT_DetalleUncheckedCreateWithoutCabeceraInput> | MatrizT_DetalleCreateWithoutCabeceraInput[] | MatrizT_DetalleUncheckedCreateWithoutCabeceraInput[]
+    connectOrCreate?: MatrizT_DetalleCreateOrConnectWithoutCabeceraInput | MatrizT_DetalleCreateOrConnectWithoutCabeceraInput[]
+    upsert?: MatrizT_DetalleUpsertWithWhereUniqueWithoutCabeceraInput | MatrizT_DetalleUpsertWithWhereUniqueWithoutCabeceraInput[]
+    createMany?: MatrizT_DetalleCreateManyCabeceraInputEnvelope
+    set?: MatrizT_DetalleWhereUniqueInput | MatrizT_DetalleWhereUniqueInput[]
+    disconnect?: MatrizT_DetalleWhereUniqueInput | MatrizT_DetalleWhereUniqueInput[]
+    delete?: MatrizT_DetalleWhereUniqueInput | MatrizT_DetalleWhereUniqueInput[]
+    connect?: MatrizT_DetalleWhereUniqueInput | MatrizT_DetalleWhereUniqueInput[]
+    update?: MatrizT_DetalleUpdateWithWhereUniqueWithoutCabeceraInput | MatrizT_DetalleUpdateWithWhereUniqueWithoutCabeceraInput[]
+    updateMany?: MatrizT_DetalleUpdateManyWithWhereWithoutCabeceraInput | MatrizT_DetalleUpdateManyWithWhereWithoutCabeceraInput[]
+    deleteMany?: MatrizT_DetalleScalarWhereInput | MatrizT_DetalleScalarWhereInput[]
+  }
+
+  export type MatrizT_RespuestasCabeceraUncheckedUpdateManyWithoutCabeceraNestedInput = {
+    create?: XOR<MatrizT_RespuestasCabeceraCreateWithoutCabeceraInput, MatrizT_RespuestasCabeceraUncheckedCreateWithoutCabeceraInput> | MatrizT_RespuestasCabeceraCreateWithoutCabeceraInput[] | MatrizT_RespuestasCabeceraUncheckedCreateWithoutCabeceraInput[]
+    connectOrCreate?: MatrizT_RespuestasCabeceraCreateOrConnectWithoutCabeceraInput | MatrizT_RespuestasCabeceraCreateOrConnectWithoutCabeceraInput[]
+    upsert?: MatrizT_RespuestasCabeceraUpsertWithWhereUniqueWithoutCabeceraInput | MatrizT_RespuestasCabeceraUpsertWithWhereUniqueWithoutCabeceraInput[]
+    createMany?: MatrizT_RespuestasCabeceraCreateManyCabeceraInputEnvelope
+    set?: MatrizT_RespuestasCabeceraWhereUniqueInput | MatrizT_RespuestasCabeceraWhereUniqueInput[]
+    disconnect?: MatrizT_RespuestasCabeceraWhereUniqueInput | MatrizT_RespuestasCabeceraWhereUniqueInput[]
+    delete?: MatrizT_RespuestasCabeceraWhereUniqueInput | MatrizT_RespuestasCabeceraWhereUniqueInput[]
+    connect?: MatrizT_RespuestasCabeceraWhereUniqueInput | MatrizT_RespuestasCabeceraWhereUniqueInput[]
+    update?: MatrizT_RespuestasCabeceraUpdateWithWhereUniqueWithoutCabeceraInput | MatrizT_RespuestasCabeceraUpdateWithWhereUniqueWithoutCabeceraInput[]
+    updateMany?: MatrizT_RespuestasCabeceraUpdateManyWithWhereWithoutCabeceraInput | MatrizT_RespuestasCabeceraUpdateManyWithWhereWithoutCabeceraInput[]
+    deleteMany?: MatrizT_RespuestasCabeceraScalarWhereInput | MatrizT_RespuestasCabeceraScalarWhereInput[]
+  }
+
+  export type MatrizT_CabeceraCreateNestedOneWithoutDetallesInput = {
+    create?: XOR<MatrizT_CabeceraCreateWithoutDetallesInput, MatrizT_CabeceraUncheckedCreateWithoutDetallesInput>
+    connectOrCreate?: MatrizT_CabeceraCreateOrConnectWithoutDetallesInput
+    connect?: MatrizT_CabeceraWhereUniqueInput
+  }
+
+  export type MatrizT_RespuestasDetalleCreateNestedManyWithoutPreguntaInput = {
+    create?: XOR<MatrizT_RespuestasDetalleCreateWithoutPreguntaInput, MatrizT_RespuestasDetalleUncheckedCreateWithoutPreguntaInput> | MatrizT_RespuestasDetalleCreateWithoutPreguntaInput[] | MatrizT_RespuestasDetalleUncheckedCreateWithoutPreguntaInput[]
+    connectOrCreate?: MatrizT_RespuestasDetalleCreateOrConnectWithoutPreguntaInput | MatrizT_RespuestasDetalleCreateOrConnectWithoutPreguntaInput[]
+    createMany?: MatrizT_RespuestasDetalleCreateManyPreguntaInputEnvelope
+    connect?: MatrizT_RespuestasDetalleWhereUniqueInput | MatrizT_RespuestasDetalleWhereUniqueInput[]
+  }
+
+  export type MatrizT_RespuestasDetalleUncheckedCreateNestedManyWithoutPreguntaInput = {
+    create?: XOR<MatrizT_RespuestasDetalleCreateWithoutPreguntaInput, MatrizT_RespuestasDetalleUncheckedCreateWithoutPreguntaInput> | MatrizT_RespuestasDetalleCreateWithoutPreguntaInput[] | MatrizT_RespuestasDetalleUncheckedCreateWithoutPreguntaInput[]
+    connectOrCreate?: MatrizT_RespuestasDetalleCreateOrConnectWithoutPreguntaInput | MatrizT_RespuestasDetalleCreateOrConnectWithoutPreguntaInput[]
+    createMany?: MatrizT_RespuestasDetalleCreateManyPreguntaInputEnvelope
+    connect?: MatrizT_RespuestasDetalleWhereUniqueInput | MatrizT_RespuestasDetalleWhereUniqueInput[]
+  }
+
+  export type MatrizT_CabeceraUpdateOneRequiredWithoutDetallesNestedInput = {
+    create?: XOR<MatrizT_CabeceraCreateWithoutDetallesInput, MatrizT_CabeceraUncheckedCreateWithoutDetallesInput>
+    connectOrCreate?: MatrizT_CabeceraCreateOrConnectWithoutDetallesInput
+    upsert?: MatrizT_CabeceraUpsertWithoutDetallesInput
+    connect?: MatrizT_CabeceraWhereUniqueInput
+    update?: XOR<XOR<MatrizT_CabeceraUpdateToOneWithWhereWithoutDetallesInput, MatrizT_CabeceraUpdateWithoutDetallesInput>, MatrizT_CabeceraUncheckedUpdateWithoutDetallesInput>
+  }
+
+  export type MatrizT_RespuestasDetalleUpdateManyWithoutPreguntaNestedInput = {
+    create?: XOR<MatrizT_RespuestasDetalleCreateWithoutPreguntaInput, MatrizT_RespuestasDetalleUncheckedCreateWithoutPreguntaInput> | MatrizT_RespuestasDetalleCreateWithoutPreguntaInput[] | MatrizT_RespuestasDetalleUncheckedCreateWithoutPreguntaInput[]
+    connectOrCreate?: MatrizT_RespuestasDetalleCreateOrConnectWithoutPreguntaInput | MatrizT_RespuestasDetalleCreateOrConnectWithoutPreguntaInput[]
+    upsert?: MatrizT_RespuestasDetalleUpsertWithWhereUniqueWithoutPreguntaInput | MatrizT_RespuestasDetalleUpsertWithWhereUniqueWithoutPreguntaInput[]
+    createMany?: MatrizT_RespuestasDetalleCreateManyPreguntaInputEnvelope
+    set?: MatrizT_RespuestasDetalleWhereUniqueInput | MatrizT_RespuestasDetalleWhereUniqueInput[]
+    disconnect?: MatrizT_RespuestasDetalleWhereUniqueInput | MatrizT_RespuestasDetalleWhereUniqueInput[]
+    delete?: MatrizT_RespuestasDetalleWhereUniqueInput | MatrizT_RespuestasDetalleWhereUniqueInput[]
+    connect?: MatrizT_RespuestasDetalleWhereUniqueInput | MatrizT_RespuestasDetalleWhereUniqueInput[]
+    update?: MatrizT_RespuestasDetalleUpdateWithWhereUniqueWithoutPreguntaInput | MatrizT_RespuestasDetalleUpdateWithWhereUniqueWithoutPreguntaInput[]
+    updateMany?: MatrizT_RespuestasDetalleUpdateManyWithWhereWithoutPreguntaInput | MatrizT_RespuestasDetalleUpdateManyWithWhereWithoutPreguntaInput[]
+    deleteMany?: MatrizT_RespuestasDetalleScalarWhereInput | MatrizT_RespuestasDetalleScalarWhereInput[]
+  }
+
+  export type MatrizT_RespuestasDetalleUncheckedUpdateManyWithoutPreguntaNestedInput = {
+    create?: XOR<MatrizT_RespuestasDetalleCreateWithoutPreguntaInput, MatrizT_RespuestasDetalleUncheckedCreateWithoutPreguntaInput> | MatrizT_RespuestasDetalleCreateWithoutPreguntaInput[] | MatrizT_RespuestasDetalleUncheckedCreateWithoutPreguntaInput[]
+    connectOrCreate?: MatrizT_RespuestasDetalleCreateOrConnectWithoutPreguntaInput | MatrizT_RespuestasDetalleCreateOrConnectWithoutPreguntaInput[]
+    upsert?: MatrizT_RespuestasDetalleUpsertWithWhereUniqueWithoutPreguntaInput | MatrizT_RespuestasDetalleUpsertWithWhereUniqueWithoutPreguntaInput[]
+    createMany?: MatrizT_RespuestasDetalleCreateManyPreguntaInputEnvelope
+    set?: MatrizT_RespuestasDetalleWhereUniqueInput | MatrizT_RespuestasDetalleWhereUniqueInput[]
+    disconnect?: MatrizT_RespuestasDetalleWhereUniqueInput | MatrizT_RespuestasDetalleWhereUniqueInput[]
+    delete?: MatrizT_RespuestasDetalleWhereUniqueInput | MatrizT_RespuestasDetalleWhereUniqueInput[]
+    connect?: MatrizT_RespuestasDetalleWhereUniqueInput | MatrizT_RespuestasDetalleWhereUniqueInput[]
+    update?: MatrizT_RespuestasDetalleUpdateWithWhereUniqueWithoutPreguntaInput | MatrizT_RespuestasDetalleUpdateWithWhereUniqueWithoutPreguntaInput[]
+    updateMany?: MatrizT_RespuestasDetalleUpdateManyWithWhereWithoutPreguntaInput | MatrizT_RespuestasDetalleUpdateManyWithWhereWithoutPreguntaInput[]
+    deleteMany?: MatrizT_RespuestasDetalleScalarWhereInput | MatrizT_RespuestasDetalleScalarWhereInput[]
+  }
+
+  export type MatrizT_CabeceraCreateNestedOneWithoutRespuestasInput = {
+    create?: XOR<MatrizT_CabeceraCreateWithoutRespuestasInput, MatrizT_CabeceraUncheckedCreateWithoutRespuestasInput>
+    connectOrCreate?: MatrizT_CabeceraCreateOrConnectWithoutRespuestasInput
+    connect?: MatrizT_CabeceraWhereUniqueInput
+  }
+
+  export type MatrizT_RespuestasDetalleCreateNestedManyWithoutRespuestaCabeceraInput = {
+    create?: XOR<MatrizT_RespuestasDetalleCreateWithoutRespuestaCabeceraInput, MatrizT_RespuestasDetalleUncheckedCreateWithoutRespuestaCabeceraInput> | MatrizT_RespuestasDetalleCreateWithoutRespuestaCabeceraInput[] | MatrizT_RespuestasDetalleUncheckedCreateWithoutRespuestaCabeceraInput[]
+    connectOrCreate?: MatrizT_RespuestasDetalleCreateOrConnectWithoutRespuestaCabeceraInput | MatrizT_RespuestasDetalleCreateOrConnectWithoutRespuestaCabeceraInput[]
+    createMany?: MatrizT_RespuestasDetalleCreateManyRespuestaCabeceraInputEnvelope
+    connect?: MatrizT_RespuestasDetalleWhereUniqueInput | MatrizT_RespuestasDetalleWhereUniqueInput[]
+  }
+
+  export type MatrizT_RespuestasDetalleUncheckedCreateNestedManyWithoutRespuestaCabeceraInput = {
+    create?: XOR<MatrizT_RespuestasDetalleCreateWithoutRespuestaCabeceraInput, MatrizT_RespuestasDetalleUncheckedCreateWithoutRespuestaCabeceraInput> | MatrizT_RespuestasDetalleCreateWithoutRespuestaCabeceraInput[] | MatrizT_RespuestasDetalleUncheckedCreateWithoutRespuestaCabeceraInput[]
+    connectOrCreate?: MatrizT_RespuestasDetalleCreateOrConnectWithoutRespuestaCabeceraInput | MatrizT_RespuestasDetalleCreateOrConnectWithoutRespuestaCabeceraInput[]
+    createMany?: MatrizT_RespuestasDetalleCreateManyRespuestaCabeceraInputEnvelope
+    connect?: MatrizT_RespuestasDetalleWhereUniqueInput | MatrizT_RespuestasDetalleWhereUniqueInput[]
+  }
+
+  export type MatrizT_CabeceraUpdateOneRequiredWithoutRespuestasNestedInput = {
+    create?: XOR<MatrizT_CabeceraCreateWithoutRespuestasInput, MatrizT_CabeceraUncheckedCreateWithoutRespuestasInput>
+    connectOrCreate?: MatrizT_CabeceraCreateOrConnectWithoutRespuestasInput
+    upsert?: MatrizT_CabeceraUpsertWithoutRespuestasInput
+    connect?: MatrizT_CabeceraWhereUniqueInput
+    update?: XOR<XOR<MatrizT_CabeceraUpdateToOneWithWhereWithoutRespuestasInput, MatrizT_CabeceraUpdateWithoutRespuestasInput>, MatrizT_CabeceraUncheckedUpdateWithoutRespuestasInput>
+  }
+
+  export type MatrizT_RespuestasDetalleUpdateManyWithoutRespuestaCabeceraNestedInput = {
+    create?: XOR<MatrizT_RespuestasDetalleCreateWithoutRespuestaCabeceraInput, MatrizT_RespuestasDetalleUncheckedCreateWithoutRespuestaCabeceraInput> | MatrizT_RespuestasDetalleCreateWithoutRespuestaCabeceraInput[] | MatrizT_RespuestasDetalleUncheckedCreateWithoutRespuestaCabeceraInput[]
+    connectOrCreate?: MatrizT_RespuestasDetalleCreateOrConnectWithoutRespuestaCabeceraInput | MatrizT_RespuestasDetalleCreateOrConnectWithoutRespuestaCabeceraInput[]
+    upsert?: MatrizT_RespuestasDetalleUpsertWithWhereUniqueWithoutRespuestaCabeceraInput | MatrizT_RespuestasDetalleUpsertWithWhereUniqueWithoutRespuestaCabeceraInput[]
+    createMany?: MatrizT_RespuestasDetalleCreateManyRespuestaCabeceraInputEnvelope
+    set?: MatrizT_RespuestasDetalleWhereUniqueInput | MatrizT_RespuestasDetalleWhereUniqueInput[]
+    disconnect?: MatrizT_RespuestasDetalleWhereUniqueInput | MatrizT_RespuestasDetalleWhereUniqueInput[]
+    delete?: MatrizT_RespuestasDetalleWhereUniqueInput | MatrizT_RespuestasDetalleWhereUniqueInput[]
+    connect?: MatrizT_RespuestasDetalleWhereUniqueInput | MatrizT_RespuestasDetalleWhereUniqueInput[]
+    update?: MatrizT_RespuestasDetalleUpdateWithWhereUniqueWithoutRespuestaCabeceraInput | MatrizT_RespuestasDetalleUpdateWithWhereUniqueWithoutRespuestaCabeceraInput[]
+    updateMany?: MatrizT_RespuestasDetalleUpdateManyWithWhereWithoutRespuestaCabeceraInput | MatrizT_RespuestasDetalleUpdateManyWithWhereWithoutRespuestaCabeceraInput[]
+    deleteMany?: MatrizT_RespuestasDetalleScalarWhereInput | MatrizT_RespuestasDetalleScalarWhereInput[]
+  }
+
+  export type MatrizT_RespuestasDetalleUncheckedUpdateManyWithoutRespuestaCabeceraNestedInput = {
+    create?: XOR<MatrizT_RespuestasDetalleCreateWithoutRespuestaCabeceraInput, MatrizT_RespuestasDetalleUncheckedCreateWithoutRespuestaCabeceraInput> | MatrizT_RespuestasDetalleCreateWithoutRespuestaCabeceraInput[] | MatrizT_RespuestasDetalleUncheckedCreateWithoutRespuestaCabeceraInput[]
+    connectOrCreate?: MatrizT_RespuestasDetalleCreateOrConnectWithoutRespuestaCabeceraInput | MatrizT_RespuestasDetalleCreateOrConnectWithoutRespuestaCabeceraInput[]
+    upsert?: MatrizT_RespuestasDetalleUpsertWithWhereUniqueWithoutRespuestaCabeceraInput | MatrizT_RespuestasDetalleUpsertWithWhereUniqueWithoutRespuestaCabeceraInput[]
+    createMany?: MatrizT_RespuestasDetalleCreateManyRespuestaCabeceraInputEnvelope
+    set?: MatrizT_RespuestasDetalleWhereUniqueInput | MatrizT_RespuestasDetalleWhereUniqueInput[]
+    disconnect?: MatrizT_RespuestasDetalleWhereUniqueInput | MatrizT_RespuestasDetalleWhereUniqueInput[]
+    delete?: MatrizT_RespuestasDetalleWhereUniqueInput | MatrizT_RespuestasDetalleWhereUniqueInput[]
+    connect?: MatrizT_RespuestasDetalleWhereUniqueInput | MatrizT_RespuestasDetalleWhereUniqueInput[]
+    update?: MatrizT_RespuestasDetalleUpdateWithWhereUniqueWithoutRespuestaCabeceraInput | MatrizT_RespuestasDetalleUpdateWithWhereUniqueWithoutRespuestaCabeceraInput[]
+    updateMany?: MatrizT_RespuestasDetalleUpdateManyWithWhereWithoutRespuestaCabeceraInput | MatrizT_RespuestasDetalleUpdateManyWithWhereWithoutRespuestaCabeceraInput[]
+    deleteMany?: MatrizT_RespuestasDetalleScalarWhereInput | MatrizT_RespuestasDetalleScalarWhereInput[]
+  }
+
+  export type MatrizT_RespuestasCabeceraCreateNestedOneWithoutDetallesInput = {
+    create?: XOR<MatrizT_RespuestasCabeceraCreateWithoutDetallesInput, MatrizT_RespuestasCabeceraUncheckedCreateWithoutDetallesInput>
+    connectOrCreate?: MatrizT_RespuestasCabeceraCreateOrConnectWithoutDetallesInput
+    connect?: MatrizT_RespuestasCabeceraWhereUniqueInput
+  }
+
+  export type MatrizT_DetalleCreateNestedOneWithoutRespuestasDetalleInput = {
+    create?: XOR<MatrizT_DetalleCreateWithoutRespuestasDetalleInput, MatrizT_DetalleUncheckedCreateWithoutRespuestasDetalleInput>
+    connectOrCreate?: MatrizT_DetalleCreateOrConnectWithoutRespuestasDetalleInput
+    connect?: MatrizT_DetalleWhereUniqueInput
+  }
+
+  export type MatrizT_RespuestasCabeceraUpdateOneRequiredWithoutDetallesNestedInput = {
+    create?: XOR<MatrizT_RespuestasCabeceraCreateWithoutDetallesInput, MatrizT_RespuestasCabeceraUncheckedCreateWithoutDetallesInput>
+    connectOrCreate?: MatrizT_RespuestasCabeceraCreateOrConnectWithoutDetallesInput
+    upsert?: MatrizT_RespuestasCabeceraUpsertWithoutDetallesInput
+    connect?: MatrizT_RespuestasCabeceraWhereUniqueInput
+    update?: XOR<XOR<MatrizT_RespuestasCabeceraUpdateToOneWithWhereWithoutDetallesInput, MatrizT_RespuestasCabeceraUpdateWithoutDetallesInput>, MatrizT_RespuestasCabeceraUncheckedUpdateWithoutDetallesInput>
+  }
+
+  export type MatrizT_DetalleUpdateOneRequiredWithoutRespuestasDetalleNestedInput = {
+    create?: XOR<MatrizT_DetalleCreateWithoutRespuestasDetalleInput, MatrizT_DetalleUncheckedCreateWithoutRespuestasDetalleInput>
+    connectOrCreate?: MatrizT_DetalleCreateOrConnectWithoutRespuestasDetalleInput
+    upsert?: MatrizT_DetalleUpsertWithoutRespuestasDetalleInput
+    connect?: MatrizT_DetalleWhereUniqueInput
+    update?: XOR<XOR<MatrizT_DetalleUpdateToOneWithWhereWithoutRespuestasDetalleInput, MatrizT_DetalleUpdateWithoutRespuestasDetalleInput>, MatrizT_DetalleUncheckedUpdateWithoutRespuestasDetalleInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -94249,6 +100304,40 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type MatrizT_CabeceraCreateWithoutLicitacionInput = {
+    id?: string
+    anio: number
+    titulo: string
+    estado?: boolean
+    instrucciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    detalles?: MatrizT_DetalleCreateNestedManyWithoutCabeceraInput
+    respuestas?: MatrizT_RespuestasCabeceraCreateNestedManyWithoutCabeceraInput
+  }
+
+  export type MatrizT_CabeceraUncheckedCreateWithoutLicitacionInput = {
+    id?: string
+    anio: number
+    titulo: string
+    estado?: boolean
+    instrucciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    detalles?: MatrizT_DetalleUncheckedCreateNestedManyWithoutCabeceraInput
+    respuestas?: MatrizT_RespuestasCabeceraUncheckedCreateNestedManyWithoutCabeceraInput
+  }
+
+  export type MatrizT_CabeceraCreateOrConnectWithoutLicitacionInput = {
+    where: MatrizT_CabeceraWhereUniqueInput
+    create: XOR<MatrizT_CabeceraCreateWithoutLicitacionInput, MatrizT_CabeceraUncheckedCreateWithoutLicitacionInput>
+  }
+
+  export type MatrizT_CabeceraCreateManyLicitacionInputEnvelope = {
+    data: MatrizT_CabeceraCreateManyLicitacionInput | MatrizT_CabeceraCreateManyLicitacionInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UTUpsertWithWhereUniqueWithoutLicitacionInput = {
     where: UTWhereUniqueInput
     update: XOR<UTUpdateWithoutLicitacionInput, UTUncheckedUpdateWithoutLicitacionInput>
@@ -94363,6 +100452,36 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Vehiculo"> | Date | string
   }
 
+  export type MatrizT_CabeceraUpsertWithWhereUniqueWithoutLicitacionInput = {
+    where: MatrizT_CabeceraWhereUniqueInput
+    update: XOR<MatrizT_CabeceraUpdateWithoutLicitacionInput, MatrizT_CabeceraUncheckedUpdateWithoutLicitacionInput>
+    create: XOR<MatrizT_CabeceraCreateWithoutLicitacionInput, MatrizT_CabeceraUncheckedCreateWithoutLicitacionInput>
+  }
+
+  export type MatrizT_CabeceraUpdateWithWhereUniqueWithoutLicitacionInput = {
+    where: MatrizT_CabeceraWhereUniqueInput
+    data: XOR<MatrizT_CabeceraUpdateWithoutLicitacionInput, MatrizT_CabeceraUncheckedUpdateWithoutLicitacionInput>
+  }
+
+  export type MatrizT_CabeceraUpdateManyWithWhereWithoutLicitacionInput = {
+    where: MatrizT_CabeceraScalarWhereInput
+    data: XOR<MatrizT_CabeceraUpdateManyMutationInput, MatrizT_CabeceraUncheckedUpdateManyWithoutLicitacionInput>
+  }
+
+  export type MatrizT_CabeceraScalarWhereInput = {
+    AND?: MatrizT_CabeceraScalarWhereInput | MatrizT_CabeceraScalarWhereInput[]
+    OR?: MatrizT_CabeceraScalarWhereInput[]
+    NOT?: MatrizT_CabeceraScalarWhereInput | MatrizT_CabeceraScalarWhereInput[]
+    id?: StringFilter<"MatrizT_Cabecera"> | string
+    licId?: IntFilter<"MatrizT_Cabecera"> | number
+    anio?: IntFilter<"MatrizT_Cabecera"> | number
+    titulo?: StringFilter<"MatrizT_Cabecera"> | string
+    estado?: BoolFilter<"MatrizT_Cabecera"> | boolean
+    instrucciones?: StringNullableFilter<"MatrizT_Cabecera"> | string | null
+    createdAt?: DateTimeFilter<"MatrizT_Cabecera"> | Date | string
+    updatedAt?: DateTimeFilter<"MatrizT_Cabecera"> | Date | string
+  }
+
   export type LicitacionCreateWithoutAspectosEEInput = {
     licitacionHomologada?: string | null
     estado?: number
@@ -94371,6 +100490,7 @@ export namespace Prisma {
     uts?: UTCreateNestedManyWithoutLicitacionInput
     jefesZonales?: JefeZonalLicitacionCreateNestedManyWithoutLicitacionInput
     vehiculos?: VehiculoCreateNestedManyWithoutLicitacionInput
+    matrices?: MatrizT_CabeceraCreateNestedManyWithoutLicitacionInput
   }
 
   export type LicitacionUncheckedCreateWithoutAspectosEEInput = {
@@ -94382,6 +100502,7 @@ export namespace Prisma {
     uts?: UTUncheckedCreateNestedManyWithoutLicitacionInput
     jefesZonales?: JefeZonalLicitacionUncheckedCreateNestedManyWithoutLicitacionInput
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutLicitacionInput
+    matrices?: MatrizT_CabeceraUncheckedCreateNestedManyWithoutLicitacionInput
   }
 
   export type LicitacionCreateOrConnectWithoutAspectosEEInput = {
@@ -94408,6 +100529,7 @@ export namespace Prisma {
     uts?: UTUpdateManyWithoutLicitacionNestedInput
     jefesZonales?: JefeZonalLicitacionUpdateManyWithoutLicitacionNestedInput
     vehiculos?: VehiculoUpdateManyWithoutLicitacionNestedInput
+    matrices?: MatrizT_CabeceraUpdateManyWithoutLicitacionNestedInput
   }
 
   export type LicitacionUncheckedUpdateWithoutAspectosEEInput = {
@@ -94419,6 +100541,7 @@ export namespace Prisma {
     uts?: UTUncheckedUpdateManyWithoutLicitacionNestedInput
     jefesZonales?: JefeZonalLicitacionUncheckedUpdateManyWithoutLicitacionNestedInput
     vehiculos?: VehiculoUncheckedUpdateManyWithoutLicitacionNestedInput
+    matrices?: MatrizT_CabeceraUncheckedUpdateManyWithoutLicitacionNestedInput
   }
 
   export type ListaCorreoCreateWithoutSucursalInput = {
@@ -94941,6 +101064,7 @@ export namespace Prisma {
     aspectosEE?: AspectoEECreateNestedManyWithoutLicitacionInput
     jefesZonales?: JefeZonalLicitacionCreateNestedManyWithoutLicitacionInput
     vehiculos?: VehiculoCreateNestedManyWithoutLicitacionInput
+    matrices?: MatrizT_CabeceraCreateNestedManyWithoutLicitacionInput
   }
 
   export type LicitacionUncheckedCreateWithoutUtsInput = {
@@ -94952,6 +101076,7 @@ export namespace Prisma {
     aspectosEE?: AspectoEEUncheckedCreateNestedManyWithoutLicitacionInput
     jefesZonales?: JefeZonalLicitacionUncheckedCreateNestedManyWithoutLicitacionInput
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutLicitacionInput
+    matrices?: MatrizT_CabeceraUncheckedCreateNestedManyWithoutLicitacionInput
   }
 
   export type LicitacionCreateOrConnectWithoutUtsInput = {
@@ -95099,6 +101224,7 @@ export namespace Prisma {
     aspectosEE?: AspectoEEUpdateManyWithoutLicitacionNestedInput
     jefesZonales?: JefeZonalLicitacionUpdateManyWithoutLicitacionNestedInput
     vehiculos?: VehiculoUpdateManyWithoutLicitacionNestedInput
+    matrices?: MatrizT_CabeceraUpdateManyWithoutLicitacionNestedInput
   }
 
   export type LicitacionUncheckedUpdateWithoutUtsInput = {
@@ -95110,6 +101236,7 @@ export namespace Prisma {
     aspectosEE?: AspectoEEUncheckedUpdateManyWithoutLicitacionNestedInput
     jefesZonales?: JefeZonalLicitacionUncheckedUpdateManyWithoutLicitacionNestedInput
     vehiculos?: VehiculoUncheckedUpdateManyWithoutLicitacionNestedInput
+    matrices?: MatrizT_CabeceraUncheckedUpdateManyWithoutLicitacionNestedInput
   }
 
   export type SucursalUpsertWithoutUtsInput = {
@@ -96965,6 +103092,7 @@ export namespace Prisma {
     uts?: UTCreateNestedManyWithoutLicitacionInput
     aspectosEE?: AspectoEECreateNestedManyWithoutLicitacionInput
     jefesZonales?: JefeZonalLicitacionCreateNestedManyWithoutLicitacionInput
+    matrices?: MatrizT_CabeceraCreateNestedManyWithoutLicitacionInput
   }
 
   export type LicitacionUncheckedCreateWithoutVehiculosInput = {
@@ -96976,6 +103104,7 @@ export namespace Prisma {
     uts?: UTUncheckedCreateNestedManyWithoutLicitacionInput
     aspectosEE?: AspectoEEUncheckedCreateNestedManyWithoutLicitacionInput
     jefesZonales?: JefeZonalLicitacionUncheckedCreateNestedManyWithoutLicitacionInput
+    matrices?: MatrizT_CabeceraUncheckedCreateNestedManyWithoutLicitacionInput
   }
 
   export type LicitacionCreateOrConnectWithoutVehiculosInput = {
@@ -97156,6 +103285,7 @@ export namespace Prisma {
     uts?: UTUpdateManyWithoutLicitacionNestedInput
     aspectosEE?: AspectoEEUpdateManyWithoutLicitacionNestedInput
     jefesZonales?: JefeZonalLicitacionUpdateManyWithoutLicitacionNestedInput
+    matrices?: MatrizT_CabeceraUpdateManyWithoutLicitacionNestedInput
   }
 
   export type LicitacionUncheckedUpdateWithoutVehiculosInput = {
@@ -97167,6 +103297,7 @@ export namespace Prisma {
     uts?: UTUncheckedUpdateManyWithoutLicitacionNestedInput
     aspectosEE?: AspectoEEUncheckedUpdateManyWithoutLicitacionNestedInput
     jefesZonales?: JefeZonalLicitacionUncheckedUpdateManyWithoutLicitacionNestedInput
+    matrices?: MatrizT_CabeceraUncheckedUpdateManyWithoutLicitacionNestedInput
   }
 
   export type SupervisorVehiculoUpsertWithWhereUniqueWithoutVehiculoInput = {
@@ -97515,6 +103646,7 @@ export namespace Prisma {
     uts?: UTCreateNestedManyWithoutLicitacionInput
     aspectosEE?: AspectoEECreateNestedManyWithoutLicitacionInput
     vehiculos?: VehiculoCreateNestedManyWithoutLicitacionInput
+    matrices?: MatrizT_CabeceraCreateNestedManyWithoutLicitacionInput
   }
 
   export type LicitacionUncheckedCreateWithoutJefesZonalesInput = {
@@ -97526,6 +103658,7 @@ export namespace Prisma {
     uts?: UTUncheckedCreateNestedManyWithoutLicitacionInput
     aspectosEE?: AspectoEEUncheckedCreateNestedManyWithoutLicitacionInput
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutLicitacionInput
+    matrices?: MatrizT_CabeceraUncheckedCreateNestedManyWithoutLicitacionInput
   }
 
   export type LicitacionCreateOrConnectWithoutJefesZonalesInput = {
@@ -97591,6 +103724,7 @@ export namespace Prisma {
     uts?: UTUpdateManyWithoutLicitacionNestedInput
     aspectosEE?: AspectoEEUpdateManyWithoutLicitacionNestedInput
     vehiculos?: VehiculoUpdateManyWithoutLicitacionNestedInput
+    matrices?: MatrizT_CabeceraUpdateManyWithoutLicitacionNestedInput
   }
 
   export type LicitacionUncheckedUpdateWithoutJefesZonalesInput = {
@@ -97602,6 +103736,7 @@ export namespace Prisma {
     uts?: UTUncheckedUpdateManyWithoutLicitacionNestedInput
     aspectosEE?: AspectoEEUncheckedUpdateManyWithoutLicitacionNestedInput
     vehiculos?: VehiculoUncheckedUpdateManyWithoutLicitacionNestedInput
+    matrices?: MatrizT_CabeceraUncheckedUpdateManyWithoutLicitacionNestedInput
   }
 
   export type JefeZonalCreateWithoutSucursalesInput = {
@@ -98780,6 +104915,622 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type LicitacionCreateWithoutMatricesInput = {
+    licitacionHomologada?: string | null
+    estado?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    uts?: UTCreateNestedManyWithoutLicitacionInput
+    aspectosEE?: AspectoEECreateNestedManyWithoutLicitacionInput
+    jefesZonales?: JefeZonalLicitacionCreateNestedManyWithoutLicitacionInput
+    vehiculos?: VehiculoCreateNestedManyWithoutLicitacionInput
+  }
+
+  export type LicitacionUncheckedCreateWithoutMatricesInput = {
+    licId?: number
+    licitacionHomologada?: string | null
+    estado?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    uts?: UTUncheckedCreateNestedManyWithoutLicitacionInput
+    aspectosEE?: AspectoEEUncheckedCreateNestedManyWithoutLicitacionInput
+    jefesZonales?: JefeZonalLicitacionUncheckedCreateNestedManyWithoutLicitacionInput
+    vehiculos?: VehiculoUncheckedCreateNestedManyWithoutLicitacionInput
+  }
+
+  export type LicitacionCreateOrConnectWithoutMatricesInput = {
+    where: LicitacionWhereUniqueInput
+    create: XOR<LicitacionCreateWithoutMatricesInput, LicitacionUncheckedCreateWithoutMatricesInput>
+  }
+
+  export type MatrizT_DetalleCreateWithoutCabeceraInput = {
+    id?: string
+    preguntaNombre: string
+    tipoRespuesta: string
+    obligatorio?: boolean
+    seccion: string
+    orden?: number
+    gravedad?: number | null
+    probabilidad?: number | null
+    nivelRiesgo?: number | null
+    justificacion?: string | null
+    riesgoSignificativo?: string | null
+    recursoNecesario?: string | null
+    resultadoEsperado?: string | null
+    respImplementacion?: string | null
+    respSeguimiento?: string | null
+    evidenciaCumplimiento?: string | null
+    evidenciaEficacia?: string | null
+    respuestasDetalle?: MatrizT_RespuestasDetalleCreateNestedManyWithoutPreguntaInput
+  }
+
+  export type MatrizT_DetalleUncheckedCreateWithoutCabeceraInput = {
+    id?: string
+    preguntaNombre: string
+    tipoRespuesta: string
+    obligatorio?: boolean
+    seccion: string
+    orden?: number
+    gravedad?: number | null
+    probabilidad?: number | null
+    nivelRiesgo?: number | null
+    justificacion?: string | null
+    riesgoSignificativo?: string | null
+    recursoNecesario?: string | null
+    resultadoEsperado?: string | null
+    respImplementacion?: string | null
+    respSeguimiento?: string | null
+    evidenciaCumplimiento?: string | null
+    evidenciaEficacia?: string | null
+    respuestasDetalle?: MatrizT_RespuestasDetalleUncheckedCreateNestedManyWithoutPreguntaInput
+  }
+
+  export type MatrizT_DetalleCreateOrConnectWithoutCabeceraInput = {
+    where: MatrizT_DetalleWhereUniqueInput
+    create: XOR<MatrizT_DetalleCreateWithoutCabeceraInput, MatrizT_DetalleUncheckedCreateWithoutCabeceraInput>
+  }
+
+  export type MatrizT_DetalleCreateManyCabeceraInputEnvelope = {
+    data: MatrizT_DetalleCreateManyCabeceraInput | MatrizT_DetalleCreateManyCabeceraInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type MatrizT_RespuestasCabeceraCreateWithoutCabeceraInput = {
+    id?: string
+    usuario: string
+    fechaIngreso?: Date | string
+    supervisorNombre: string
+    supervisorCorreo: string
+    licId: number
+    ut: number
+    rbd: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    detalles?: MatrizT_RespuestasDetalleCreateNestedManyWithoutRespuestaCabeceraInput
+  }
+
+  export type MatrizT_RespuestasCabeceraUncheckedCreateWithoutCabeceraInput = {
+    id?: string
+    usuario: string
+    fechaIngreso?: Date | string
+    supervisorNombre: string
+    supervisorCorreo: string
+    licId: number
+    ut: number
+    rbd: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    detalles?: MatrizT_RespuestasDetalleUncheckedCreateNestedManyWithoutRespuestaCabeceraInput
+  }
+
+  export type MatrizT_RespuestasCabeceraCreateOrConnectWithoutCabeceraInput = {
+    where: MatrizT_RespuestasCabeceraWhereUniqueInput
+    create: XOR<MatrizT_RespuestasCabeceraCreateWithoutCabeceraInput, MatrizT_RespuestasCabeceraUncheckedCreateWithoutCabeceraInput>
+  }
+
+  export type MatrizT_RespuestasCabeceraCreateManyCabeceraInputEnvelope = {
+    data: MatrizT_RespuestasCabeceraCreateManyCabeceraInput | MatrizT_RespuestasCabeceraCreateManyCabeceraInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LicitacionUpsertWithoutMatricesInput = {
+    update: XOR<LicitacionUpdateWithoutMatricesInput, LicitacionUncheckedUpdateWithoutMatricesInput>
+    create: XOR<LicitacionCreateWithoutMatricesInput, LicitacionUncheckedCreateWithoutMatricesInput>
+    where?: LicitacionWhereInput
+  }
+
+  export type LicitacionUpdateToOneWithWhereWithoutMatricesInput = {
+    where?: LicitacionWhereInput
+    data: XOR<LicitacionUpdateWithoutMatricesInput, LicitacionUncheckedUpdateWithoutMatricesInput>
+  }
+
+  export type LicitacionUpdateWithoutMatricesInput = {
+    licitacionHomologada?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uts?: UTUpdateManyWithoutLicitacionNestedInput
+    aspectosEE?: AspectoEEUpdateManyWithoutLicitacionNestedInput
+    jefesZonales?: JefeZonalLicitacionUpdateManyWithoutLicitacionNestedInput
+    vehiculos?: VehiculoUpdateManyWithoutLicitacionNestedInput
+  }
+
+  export type LicitacionUncheckedUpdateWithoutMatricesInput = {
+    licId?: IntFieldUpdateOperationsInput | number
+    licitacionHomologada?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uts?: UTUncheckedUpdateManyWithoutLicitacionNestedInput
+    aspectosEE?: AspectoEEUncheckedUpdateManyWithoutLicitacionNestedInput
+    jefesZonales?: JefeZonalLicitacionUncheckedUpdateManyWithoutLicitacionNestedInput
+    vehiculos?: VehiculoUncheckedUpdateManyWithoutLicitacionNestedInput
+  }
+
+  export type MatrizT_DetalleUpsertWithWhereUniqueWithoutCabeceraInput = {
+    where: MatrizT_DetalleWhereUniqueInput
+    update: XOR<MatrizT_DetalleUpdateWithoutCabeceraInput, MatrizT_DetalleUncheckedUpdateWithoutCabeceraInput>
+    create: XOR<MatrizT_DetalleCreateWithoutCabeceraInput, MatrizT_DetalleUncheckedCreateWithoutCabeceraInput>
+  }
+
+  export type MatrizT_DetalleUpdateWithWhereUniqueWithoutCabeceraInput = {
+    where: MatrizT_DetalleWhereUniqueInput
+    data: XOR<MatrizT_DetalleUpdateWithoutCabeceraInput, MatrizT_DetalleUncheckedUpdateWithoutCabeceraInput>
+  }
+
+  export type MatrizT_DetalleUpdateManyWithWhereWithoutCabeceraInput = {
+    where: MatrizT_DetalleScalarWhereInput
+    data: XOR<MatrizT_DetalleUpdateManyMutationInput, MatrizT_DetalleUncheckedUpdateManyWithoutCabeceraInput>
+  }
+
+  export type MatrizT_DetalleScalarWhereInput = {
+    AND?: MatrizT_DetalleScalarWhereInput | MatrizT_DetalleScalarWhereInput[]
+    OR?: MatrizT_DetalleScalarWhereInput[]
+    NOT?: MatrizT_DetalleScalarWhereInput | MatrizT_DetalleScalarWhereInput[]
+    id?: StringFilter<"MatrizT_Detalle"> | string
+    cabeceraId?: StringFilter<"MatrizT_Detalle"> | string
+    preguntaNombre?: StringFilter<"MatrizT_Detalle"> | string
+    tipoRespuesta?: StringFilter<"MatrizT_Detalle"> | string
+    obligatorio?: BoolFilter<"MatrizT_Detalle"> | boolean
+    seccion?: StringFilter<"MatrizT_Detalle"> | string
+    orden?: IntFilter<"MatrizT_Detalle"> | number
+    gravedad?: IntNullableFilter<"MatrizT_Detalle"> | number | null
+    probabilidad?: IntNullableFilter<"MatrizT_Detalle"> | number | null
+    nivelRiesgo?: IntNullableFilter<"MatrizT_Detalle"> | number | null
+    justificacion?: StringNullableFilter<"MatrizT_Detalle"> | string | null
+    riesgoSignificativo?: StringNullableFilter<"MatrizT_Detalle"> | string | null
+    recursoNecesario?: StringNullableFilter<"MatrizT_Detalle"> | string | null
+    resultadoEsperado?: StringNullableFilter<"MatrizT_Detalle"> | string | null
+    respImplementacion?: StringNullableFilter<"MatrizT_Detalle"> | string | null
+    respSeguimiento?: StringNullableFilter<"MatrizT_Detalle"> | string | null
+    evidenciaCumplimiento?: StringNullableFilter<"MatrizT_Detalle"> | string | null
+    evidenciaEficacia?: StringNullableFilter<"MatrizT_Detalle"> | string | null
+  }
+
+  export type MatrizT_RespuestasCabeceraUpsertWithWhereUniqueWithoutCabeceraInput = {
+    where: MatrizT_RespuestasCabeceraWhereUniqueInput
+    update: XOR<MatrizT_RespuestasCabeceraUpdateWithoutCabeceraInput, MatrizT_RespuestasCabeceraUncheckedUpdateWithoutCabeceraInput>
+    create: XOR<MatrizT_RespuestasCabeceraCreateWithoutCabeceraInput, MatrizT_RespuestasCabeceraUncheckedCreateWithoutCabeceraInput>
+  }
+
+  export type MatrizT_RespuestasCabeceraUpdateWithWhereUniqueWithoutCabeceraInput = {
+    where: MatrizT_RespuestasCabeceraWhereUniqueInput
+    data: XOR<MatrizT_RespuestasCabeceraUpdateWithoutCabeceraInput, MatrizT_RespuestasCabeceraUncheckedUpdateWithoutCabeceraInput>
+  }
+
+  export type MatrizT_RespuestasCabeceraUpdateManyWithWhereWithoutCabeceraInput = {
+    where: MatrizT_RespuestasCabeceraScalarWhereInput
+    data: XOR<MatrizT_RespuestasCabeceraUpdateManyMutationInput, MatrizT_RespuestasCabeceraUncheckedUpdateManyWithoutCabeceraInput>
+  }
+
+  export type MatrizT_RespuestasCabeceraScalarWhereInput = {
+    AND?: MatrizT_RespuestasCabeceraScalarWhereInput | MatrizT_RespuestasCabeceraScalarWhereInput[]
+    OR?: MatrizT_RespuestasCabeceraScalarWhereInput[]
+    NOT?: MatrizT_RespuestasCabeceraScalarWhereInput | MatrizT_RespuestasCabeceraScalarWhereInput[]
+    id?: StringFilter<"MatrizT_RespuestasCabecera"> | string
+    cabeceraId?: StringFilter<"MatrizT_RespuestasCabecera"> | string
+    usuario?: StringFilter<"MatrizT_RespuestasCabecera"> | string
+    fechaIngreso?: DateTimeFilter<"MatrizT_RespuestasCabecera"> | Date | string
+    supervisorNombre?: StringFilter<"MatrizT_RespuestasCabecera"> | string
+    supervisorCorreo?: StringFilter<"MatrizT_RespuestasCabecera"> | string
+    licId?: IntFilter<"MatrizT_RespuestasCabecera"> | number
+    ut?: IntFilter<"MatrizT_RespuestasCabecera"> | number
+    rbd?: IntFilter<"MatrizT_RespuestasCabecera"> | number
+    createdAt?: DateTimeFilter<"MatrizT_RespuestasCabecera"> | Date | string
+    updatedAt?: DateTimeFilter<"MatrizT_RespuestasCabecera"> | Date | string
+  }
+
+  export type MatrizT_CabeceraCreateWithoutDetallesInput = {
+    id?: string
+    anio: number
+    titulo: string
+    estado?: boolean
+    instrucciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    licitacion: LicitacionCreateNestedOneWithoutMatricesInput
+    respuestas?: MatrizT_RespuestasCabeceraCreateNestedManyWithoutCabeceraInput
+  }
+
+  export type MatrizT_CabeceraUncheckedCreateWithoutDetallesInput = {
+    id?: string
+    licId: number
+    anio: number
+    titulo: string
+    estado?: boolean
+    instrucciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    respuestas?: MatrizT_RespuestasCabeceraUncheckedCreateNestedManyWithoutCabeceraInput
+  }
+
+  export type MatrizT_CabeceraCreateOrConnectWithoutDetallesInput = {
+    where: MatrizT_CabeceraWhereUniqueInput
+    create: XOR<MatrizT_CabeceraCreateWithoutDetallesInput, MatrizT_CabeceraUncheckedCreateWithoutDetallesInput>
+  }
+
+  export type MatrizT_RespuestasDetalleCreateWithoutPreguntaInput = {
+    id?: string
+    valor?: string | null
+    adjuntoUrl?: string | null
+    respuestaCabecera: MatrizT_RespuestasCabeceraCreateNestedOneWithoutDetallesInput
+  }
+
+  export type MatrizT_RespuestasDetalleUncheckedCreateWithoutPreguntaInput = {
+    id?: string
+    respuestaCabeceraId: string
+    valor?: string | null
+    adjuntoUrl?: string | null
+  }
+
+  export type MatrizT_RespuestasDetalleCreateOrConnectWithoutPreguntaInput = {
+    where: MatrizT_RespuestasDetalleWhereUniqueInput
+    create: XOR<MatrizT_RespuestasDetalleCreateWithoutPreguntaInput, MatrizT_RespuestasDetalleUncheckedCreateWithoutPreguntaInput>
+  }
+
+  export type MatrizT_RespuestasDetalleCreateManyPreguntaInputEnvelope = {
+    data: MatrizT_RespuestasDetalleCreateManyPreguntaInput | MatrizT_RespuestasDetalleCreateManyPreguntaInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type MatrizT_CabeceraUpsertWithoutDetallesInput = {
+    update: XOR<MatrizT_CabeceraUpdateWithoutDetallesInput, MatrizT_CabeceraUncheckedUpdateWithoutDetallesInput>
+    create: XOR<MatrizT_CabeceraCreateWithoutDetallesInput, MatrizT_CabeceraUncheckedCreateWithoutDetallesInput>
+    where?: MatrizT_CabeceraWhereInput
+  }
+
+  export type MatrizT_CabeceraUpdateToOneWithWhereWithoutDetallesInput = {
+    where?: MatrizT_CabeceraWhereInput
+    data: XOR<MatrizT_CabeceraUpdateWithoutDetallesInput, MatrizT_CabeceraUncheckedUpdateWithoutDetallesInput>
+  }
+
+  export type MatrizT_CabeceraUpdateWithoutDetallesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    anio?: IntFieldUpdateOperationsInput | number
+    titulo?: StringFieldUpdateOperationsInput | string
+    estado?: BoolFieldUpdateOperationsInput | boolean
+    instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    licitacion?: LicitacionUpdateOneRequiredWithoutMatricesNestedInput
+    respuestas?: MatrizT_RespuestasCabeceraUpdateManyWithoutCabeceraNestedInput
+  }
+
+  export type MatrizT_CabeceraUncheckedUpdateWithoutDetallesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    anio?: IntFieldUpdateOperationsInput | number
+    titulo?: StringFieldUpdateOperationsInput | string
+    estado?: BoolFieldUpdateOperationsInput | boolean
+    instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    respuestas?: MatrizT_RespuestasCabeceraUncheckedUpdateManyWithoutCabeceraNestedInput
+  }
+
+  export type MatrizT_RespuestasDetalleUpsertWithWhereUniqueWithoutPreguntaInput = {
+    where: MatrizT_RespuestasDetalleWhereUniqueInput
+    update: XOR<MatrizT_RespuestasDetalleUpdateWithoutPreguntaInput, MatrizT_RespuestasDetalleUncheckedUpdateWithoutPreguntaInput>
+    create: XOR<MatrizT_RespuestasDetalleCreateWithoutPreguntaInput, MatrizT_RespuestasDetalleUncheckedCreateWithoutPreguntaInput>
+  }
+
+  export type MatrizT_RespuestasDetalleUpdateWithWhereUniqueWithoutPreguntaInput = {
+    where: MatrizT_RespuestasDetalleWhereUniqueInput
+    data: XOR<MatrizT_RespuestasDetalleUpdateWithoutPreguntaInput, MatrizT_RespuestasDetalleUncheckedUpdateWithoutPreguntaInput>
+  }
+
+  export type MatrizT_RespuestasDetalleUpdateManyWithWhereWithoutPreguntaInput = {
+    where: MatrizT_RespuestasDetalleScalarWhereInput
+    data: XOR<MatrizT_RespuestasDetalleUpdateManyMutationInput, MatrizT_RespuestasDetalleUncheckedUpdateManyWithoutPreguntaInput>
+  }
+
+  export type MatrizT_RespuestasDetalleScalarWhereInput = {
+    AND?: MatrizT_RespuestasDetalleScalarWhereInput | MatrizT_RespuestasDetalleScalarWhereInput[]
+    OR?: MatrizT_RespuestasDetalleScalarWhereInput[]
+    NOT?: MatrizT_RespuestasDetalleScalarWhereInput | MatrizT_RespuestasDetalleScalarWhereInput[]
+    id?: StringFilter<"MatrizT_RespuestasDetalle"> | string
+    respuestaCabeceraId?: StringFilter<"MatrizT_RespuestasDetalle"> | string
+    preguntaId?: StringFilter<"MatrizT_RespuestasDetalle"> | string
+    valor?: StringNullableFilter<"MatrizT_RespuestasDetalle"> | string | null
+    adjuntoUrl?: StringNullableFilter<"MatrizT_RespuestasDetalle"> | string | null
+  }
+
+  export type MatrizT_CabeceraCreateWithoutRespuestasInput = {
+    id?: string
+    anio: number
+    titulo: string
+    estado?: boolean
+    instrucciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    licitacion: LicitacionCreateNestedOneWithoutMatricesInput
+    detalles?: MatrizT_DetalleCreateNestedManyWithoutCabeceraInput
+  }
+
+  export type MatrizT_CabeceraUncheckedCreateWithoutRespuestasInput = {
+    id?: string
+    licId: number
+    anio: number
+    titulo: string
+    estado?: boolean
+    instrucciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    detalles?: MatrizT_DetalleUncheckedCreateNestedManyWithoutCabeceraInput
+  }
+
+  export type MatrizT_CabeceraCreateOrConnectWithoutRespuestasInput = {
+    where: MatrizT_CabeceraWhereUniqueInput
+    create: XOR<MatrizT_CabeceraCreateWithoutRespuestasInput, MatrizT_CabeceraUncheckedCreateWithoutRespuestasInput>
+  }
+
+  export type MatrizT_RespuestasDetalleCreateWithoutRespuestaCabeceraInput = {
+    id?: string
+    valor?: string | null
+    adjuntoUrl?: string | null
+    pregunta: MatrizT_DetalleCreateNestedOneWithoutRespuestasDetalleInput
+  }
+
+  export type MatrizT_RespuestasDetalleUncheckedCreateWithoutRespuestaCabeceraInput = {
+    id?: string
+    preguntaId: string
+    valor?: string | null
+    adjuntoUrl?: string | null
+  }
+
+  export type MatrizT_RespuestasDetalleCreateOrConnectWithoutRespuestaCabeceraInput = {
+    where: MatrizT_RespuestasDetalleWhereUniqueInput
+    create: XOR<MatrizT_RespuestasDetalleCreateWithoutRespuestaCabeceraInput, MatrizT_RespuestasDetalleUncheckedCreateWithoutRespuestaCabeceraInput>
+  }
+
+  export type MatrizT_RespuestasDetalleCreateManyRespuestaCabeceraInputEnvelope = {
+    data: MatrizT_RespuestasDetalleCreateManyRespuestaCabeceraInput | MatrizT_RespuestasDetalleCreateManyRespuestaCabeceraInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type MatrizT_CabeceraUpsertWithoutRespuestasInput = {
+    update: XOR<MatrizT_CabeceraUpdateWithoutRespuestasInput, MatrizT_CabeceraUncheckedUpdateWithoutRespuestasInput>
+    create: XOR<MatrizT_CabeceraCreateWithoutRespuestasInput, MatrizT_CabeceraUncheckedCreateWithoutRespuestasInput>
+    where?: MatrizT_CabeceraWhereInput
+  }
+
+  export type MatrizT_CabeceraUpdateToOneWithWhereWithoutRespuestasInput = {
+    where?: MatrizT_CabeceraWhereInput
+    data: XOR<MatrizT_CabeceraUpdateWithoutRespuestasInput, MatrizT_CabeceraUncheckedUpdateWithoutRespuestasInput>
+  }
+
+  export type MatrizT_CabeceraUpdateWithoutRespuestasInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    anio?: IntFieldUpdateOperationsInput | number
+    titulo?: StringFieldUpdateOperationsInput | string
+    estado?: BoolFieldUpdateOperationsInput | boolean
+    instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    licitacion?: LicitacionUpdateOneRequiredWithoutMatricesNestedInput
+    detalles?: MatrizT_DetalleUpdateManyWithoutCabeceraNestedInput
+  }
+
+  export type MatrizT_CabeceraUncheckedUpdateWithoutRespuestasInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    anio?: IntFieldUpdateOperationsInput | number
+    titulo?: StringFieldUpdateOperationsInput | string
+    estado?: BoolFieldUpdateOperationsInput | boolean
+    instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    detalles?: MatrizT_DetalleUncheckedUpdateManyWithoutCabeceraNestedInput
+  }
+
+  export type MatrizT_RespuestasDetalleUpsertWithWhereUniqueWithoutRespuestaCabeceraInput = {
+    where: MatrizT_RespuestasDetalleWhereUniqueInput
+    update: XOR<MatrizT_RespuestasDetalleUpdateWithoutRespuestaCabeceraInput, MatrizT_RespuestasDetalleUncheckedUpdateWithoutRespuestaCabeceraInput>
+    create: XOR<MatrizT_RespuestasDetalleCreateWithoutRespuestaCabeceraInput, MatrizT_RespuestasDetalleUncheckedCreateWithoutRespuestaCabeceraInput>
+  }
+
+  export type MatrizT_RespuestasDetalleUpdateWithWhereUniqueWithoutRespuestaCabeceraInput = {
+    where: MatrizT_RespuestasDetalleWhereUniqueInput
+    data: XOR<MatrizT_RespuestasDetalleUpdateWithoutRespuestaCabeceraInput, MatrizT_RespuestasDetalleUncheckedUpdateWithoutRespuestaCabeceraInput>
+  }
+
+  export type MatrizT_RespuestasDetalleUpdateManyWithWhereWithoutRespuestaCabeceraInput = {
+    where: MatrizT_RespuestasDetalleScalarWhereInput
+    data: XOR<MatrizT_RespuestasDetalleUpdateManyMutationInput, MatrizT_RespuestasDetalleUncheckedUpdateManyWithoutRespuestaCabeceraInput>
+  }
+
+  export type MatrizT_RespuestasCabeceraCreateWithoutDetallesInput = {
+    id?: string
+    usuario: string
+    fechaIngreso?: Date | string
+    supervisorNombre: string
+    supervisorCorreo: string
+    licId: number
+    ut: number
+    rbd: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cabecera: MatrizT_CabeceraCreateNestedOneWithoutRespuestasInput
+  }
+
+  export type MatrizT_RespuestasCabeceraUncheckedCreateWithoutDetallesInput = {
+    id?: string
+    cabeceraId: string
+    usuario: string
+    fechaIngreso?: Date | string
+    supervisorNombre: string
+    supervisorCorreo: string
+    licId: number
+    ut: number
+    rbd: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MatrizT_RespuestasCabeceraCreateOrConnectWithoutDetallesInput = {
+    where: MatrizT_RespuestasCabeceraWhereUniqueInput
+    create: XOR<MatrizT_RespuestasCabeceraCreateWithoutDetallesInput, MatrizT_RespuestasCabeceraUncheckedCreateWithoutDetallesInput>
+  }
+
+  export type MatrizT_DetalleCreateWithoutRespuestasDetalleInput = {
+    id?: string
+    preguntaNombre: string
+    tipoRespuesta: string
+    obligatorio?: boolean
+    seccion: string
+    orden?: number
+    gravedad?: number | null
+    probabilidad?: number | null
+    nivelRiesgo?: number | null
+    justificacion?: string | null
+    riesgoSignificativo?: string | null
+    recursoNecesario?: string | null
+    resultadoEsperado?: string | null
+    respImplementacion?: string | null
+    respSeguimiento?: string | null
+    evidenciaCumplimiento?: string | null
+    evidenciaEficacia?: string | null
+    cabecera: MatrizT_CabeceraCreateNestedOneWithoutDetallesInput
+  }
+
+  export type MatrizT_DetalleUncheckedCreateWithoutRespuestasDetalleInput = {
+    id?: string
+    cabeceraId: string
+    preguntaNombre: string
+    tipoRespuesta: string
+    obligatorio?: boolean
+    seccion: string
+    orden?: number
+    gravedad?: number | null
+    probabilidad?: number | null
+    nivelRiesgo?: number | null
+    justificacion?: string | null
+    riesgoSignificativo?: string | null
+    recursoNecesario?: string | null
+    resultadoEsperado?: string | null
+    respImplementacion?: string | null
+    respSeguimiento?: string | null
+    evidenciaCumplimiento?: string | null
+    evidenciaEficacia?: string | null
+  }
+
+  export type MatrizT_DetalleCreateOrConnectWithoutRespuestasDetalleInput = {
+    where: MatrizT_DetalleWhereUniqueInput
+    create: XOR<MatrizT_DetalleCreateWithoutRespuestasDetalleInput, MatrizT_DetalleUncheckedCreateWithoutRespuestasDetalleInput>
+  }
+
+  export type MatrizT_RespuestasCabeceraUpsertWithoutDetallesInput = {
+    update: XOR<MatrizT_RespuestasCabeceraUpdateWithoutDetallesInput, MatrizT_RespuestasCabeceraUncheckedUpdateWithoutDetallesInput>
+    create: XOR<MatrizT_RespuestasCabeceraCreateWithoutDetallesInput, MatrizT_RespuestasCabeceraUncheckedCreateWithoutDetallesInput>
+    where?: MatrizT_RespuestasCabeceraWhereInput
+  }
+
+  export type MatrizT_RespuestasCabeceraUpdateToOneWithWhereWithoutDetallesInput = {
+    where?: MatrizT_RespuestasCabeceraWhereInput
+    data: XOR<MatrizT_RespuestasCabeceraUpdateWithoutDetallesInput, MatrizT_RespuestasCabeceraUncheckedUpdateWithoutDetallesInput>
+  }
+
+  export type MatrizT_RespuestasCabeceraUpdateWithoutDetallesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    usuario?: StringFieldUpdateOperationsInput | string
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    supervisorNombre?: StringFieldUpdateOperationsInput | string
+    supervisorCorreo?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    ut?: IntFieldUpdateOperationsInput | number
+    rbd?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cabecera?: MatrizT_CabeceraUpdateOneRequiredWithoutRespuestasNestedInput
+  }
+
+  export type MatrizT_RespuestasCabeceraUncheckedUpdateWithoutDetallesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cabeceraId?: StringFieldUpdateOperationsInput | string
+    usuario?: StringFieldUpdateOperationsInput | string
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    supervisorNombre?: StringFieldUpdateOperationsInput | string
+    supervisorCorreo?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    ut?: IntFieldUpdateOperationsInput | number
+    rbd?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MatrizT_DetalleUpsertWithoutRespuestasDetalleInput = {
+    update: XOR<MatrizT_DetalleUpdateWithoutRespuestasDetalleInput, MatrizT_DetalleUncheckedUpdateWithoutRespuestasDetalleInput>
+    create: XOR<MatrizT_DetalleCreateWithoutRespuestasDetalleInput, MatrizT_DetalleUncheckedCreateWithoutRespuestasDetalleInput>
+    where?: MatrizT_DetalleWhereInput
+  }
+
+  export type MatrizT_DetalleUpdateToOneWithWhereWithoutRespuestasDetalleInput = {
+    where?: MatrizT_DetalleWhereInput
+    data: XOR<MatrizT_DetalleUpdateWithoutRespuestasDetalleInput, MatrizT_DetalleUncheckedUpdateWithoutRespuestasDetalleInput>
+  }
+
+  export type MatrizT_DetalleUpdateWithoutRespuestasDetalleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    preguntaNombre?: StringFieldUpdateOperationsInput | string
+    tipoRespuesta?: StringFieldUpdateOperationsInput | string
+    obligatorio?: BoolFieldUpdateOperationsInput | boolean
+    seccion?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    gravedad?: NullableIntFieldUpdateOperationsInput | number | null
+    probabilidad?: NullableIntFieldUpdateOperationsInput | number | null
+    nivelRiesgo?: NullableIntFieldUpdateOperationsInput | number | null
+    justificacion?: NullableStringFieldUpdateOperationsInput | string | null
+    riesgoSignificativo?: NullableStringFieldUpdateOperationsInput | string | null
+    recursoNecesario?: NullableStringFieldUpdateOperationsInput | string | null
+    resultadoEsperado?: NullableStringFieldUpdateOperationsInput | string | null
+    respImplementacion?: NullableStringFieldUpdateOperationsInput | string | null
+    respSeguimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenciaCumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenciaEficacia?: NullableStringFieldUpdateOperationsInput | string | null
+    cabecera?: MatrizT_CabeceraUpdateOneRequiredWithoutDetallesNestedInput
+  }
+
+  export type MatrizT_DetalleUncheckedUpdateWithoutRespuestasDetalleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cabeceraId?: StringFieldUpdateOperationsInput | string
+    preguntaNombre?: StringFieldUpdateOperationsInput | string
+    tipoRespuesta?: StringFieldUpdateOperationsInput | string
+    obligatorio?: BoolFieldUpdateOperationsInput | boolean
+    seccion?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    gravedad?: NullableIntFieldUpdateOperationsInput | number | null
+    probabilidad?: NullableIntFieldUpdateOperationsInput | number | null
+    nivelRiesgo?: NullableIntFieldUpdateOperationsInput | number | null
+    justificacion?: NullableStringFieldUpdateOperationsInput | string | null
+    riesgoSignificativo?: NullableStringFieldUpdateOperationsInput | string | null
+    recursoNecesario?: NullableStringFieldUpdateOperationsInput | string | null
+    resultadoEsperado?: NullableStringFieldUpdateOperationsInput | string | null
+    respImplementacion?: NullableStringFieldUpdateOperationsInput | string | null
+    respSeguimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenciaCumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenciaEficacia?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type UserCreateManyRoleInput = {
     id?: string
     username: string
@@ -99026,6 +105777,16 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type MatrizT_CabeceraCreateManyLicitacionInput = {
+    id?: string
+    anio: number
+    titulo: string
+    estado?: boolean
+    instrucciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type UTUpdateWithoutLicitacionInput = {
     estado?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -99133,6 +105894,40 @@ export namespace Prisma {
     tipoVehiculoId?: StringFieldUpdateOperationsInput | string
     utIds?: NullableStringFieldUpdateOperationsInput | string | null
     vigente?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MatrizT_CabeceraUpdateWithoutLicitacionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    anio?: IntFieldUpdateOperationsInput | number
+    titulo?: StringFieldUpdateOperationsInput | string
+    estado?: BoolFieldUpdateOperationsInput | boolean
+    instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    detalles?: MatrizT_DetalleUpdateManyWithoutCabeceraNestedInput
+    respuestas?: MatrizT_RespuestasCabeceraUpdateManyWithoutCabeceraNestedInput
+  }
+
+  export type MatrizT_CabeceraUncheckedUpdateWithoutLicitacionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    anio?: IntFieldUpdateOperationsInput | number
+    titulo?: StringFieldUpdateOperationsInput | string
+    estado?: BoolFieldUpdateOperationsInput | boolean
+    instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    detalles?: MatrizT_DetalleUncheckedUpdateManyWithoutCabeceraNestedInput
+    respuestas?: MatrizT_RespuestasCabeceraUncheckedUpdateManyWithoutCabeceraNestedInput
+  }
+
+  export type MatrizT_CabeceraUncheckedUpdateManyWithoutLicitacionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    anio?: IntFieldUpdateOperationsInput | number
+    titulo?: StringFieldUpdateOperationsInput | string
+    estado?: BoolFieldUpdateOperationsInput | boolean
+    instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -100417,6 +107212,198 @@ export namespace Prisma {
     Otros_Comentarios?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type MatrizT_DetalleCreateManyCabeceraInput = {
+    id?: string
+    preguntaNombre: string
+    tipoRespuesta: string
+    obligatorio?: boolean
+    seccion: string
+    orden?: number
+    gravedad?: number | null
+    probabilidad?: number | null
+    nivelRiesgo?: number | null
+    justificacion?: string | null
+    riesgoSignificativo?: string | null
+    recursoNecesario?: string | null
+    resultadoEsperado?: string | null
+    respImplementacion?: string | null
+    respSeguimiento?: string | null
+    evidenciaCumplimiento?: string | null
+    evidenciaEficacia?: string | null
+  }
+
+  export type MatrizT_RespuestasCabeceraCreateManyCabeceraInput = {
+    id?: string
+    usuario: string
+    fechaIngreso?: Date | string
+    supervisorNombre: string
+    supervisorCorreo: string
+    licId: number
+    ut: number
+    rbd: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MatrizT_DetalleUpdateWithoutCabeceraInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    preguntaNombre?: StringFieldUpdateOperationsInput | string
+    tipoRespuesta?: StringFieldUpdateOperationsInput | string
+    obligatorio?: BoolFieldUpdateOperationsInput | boolean
+    seccion?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    gravedad?: NullableIntFieldUpdateOperationsInput | number | null
+    probabilidad?: NullableIntFieldUpdateOperationsInput | number | null
+    nivelRiesgo?: NullableIntFieldUpdateOperationsInput | number | null
+    justificacion?: NullableStringFieldUpdateOperationsInput | string | null
+    riesgoSignificativo?: NullableStringFieldUpdateOperationsInput | string | null
+    recursoNecesario?: NullableStringFieldUpdateOperationsInput | string | null
+    resultadoEsperado?: NullableStringFieldUpdateOperationsInput | string | null
+    respImplementacion?: NullableStringFieldUpdateOperationsInput | string | null
+    respSeguimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenciaCumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenciaEficacia?: NullableStringFieldUpdateOperationsInput | string | null
+    respuestasDetalle?: MatrizT_RespuestasDetalleUpdateManyWithoutPreguntaNestedInput
+  }
+
+  export type MatrizT_DetalleUncheckedUpdateWithoutCabeceraInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    preguntaNombre?: StringFieldUpdateOperationsInput | string
+    tipoRespuesta?: StringFieldUpdateOperationsInput | string
+    obligatorio?: BoolFieldUpdateOperationsInput | boolean
+    seccion?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    gravedad?: NullableIntFieldUpdateOperationsInput | number | null
+    probabilidad?: NullableIntFieldUpdateOperationsInput | number | null
+    nivelRiesgo?: NullableIntFieldUpdateOperationsInput | number | null
+    justificacion?: NullableStringFieldUpdateOperationsInput | string | null
+    riesgoSignificativo?: NullableStringFieldUpdateOperationsInput | string | null
+    recursoNecesario?: NullableStringFieldUpdateOperationsInput | string | null
+    resultadoEsperado?: NullableStringFieldUpdateOperationsInput | string | null
+    respImplementacion?: NullableStringFieldUpdateOperationsInput | string | null
+    respSeguimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenciaCumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenciaEficacia?: NullableStringFieldUpdateOperationsInput | string | null
+    respuestasDetalle?: MatrizT_RespuestasDetalleUncheckedUpdateManyWithoutPreguntaNestedInput
+  }
+
+  export type MatrizT_DetalleUncheckedUpdateManyWithoutCabeceraInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    preguntaNombre?: StringFieldUpdateOperationsInput | string
+    tipoRespuesta?: StringFieldUpdateOperationsInput | string
+    obligatorio?: BoolFieldUpdateOperationsInput | boolean
+    seccion?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    gravedad?: NullableIntFieldUpdateOperationsInput | number | null
+    probabilidad?: NullableIntFieldUpdateOperationsInput | number | null
+    nivelRiesgo?: NullableIntFieldUpdateOperationsInput | number | null
+    justificacion?: NullableStringFieldUpdateOperationsInput | string | null
+    riesgoSignificativo?: NullableStringFieldUpdateOperationsInput | string | null
+    recursoNecesario?: NullableStringFieldUpdateOperationsInput | string | null
+    resultadoEsperado?: NullableStringFieldUpdateOperationsInput | string | null
+    respImplementacion?: NullableStringFieldUpdateOperationsInput | string | null
+    respSeguimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenciaCumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    evidenciaEficacia?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type MatrizT_RespuestasCabeceraUpdateWithoutCabeceraInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    usuario?: StringFieldUpdateOperationsInput | string
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    supervisorNombre?: StringFieldUpdateOperationsInput | string
+    supervisorCorreo?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    ut?: IntFieldUpdateOperationsInput | number
+    rbd?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    detalles?: MatrizT_RespuestasDetalleUpdateManyWithoutRespuestaCabeceraNestedInput
+  }
+
+  export type MatrizT_RespuestasCabeceraUncheckedUpdateWithoutCabeceraInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    usuario?: StringFieldUpdateOperationsInput | string
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    supervisorNombre?: StringFieldUpdateOperationsInput | string
+    supervisorCorreo?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    ut?: IntFieldUpdateOperationsInput | number
+    rbd?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    detalles?: MatrizT_RespuestasDetalleUncheckedUpdateManyWithoutRespuestaCabeceraNestedInput
+  }
+
+  export type MatrizT_RespuestasCabeceraUncheckedUpdateManyWithoutCabeceraInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    usuario?: StringFieldUpdateOperationsInput | string
+    fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
+    supervisorNombre?: StringFieldUpdateOperationsInput | string
+    supervisorCorreo?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    ut?: IntFieldUpdateOperationsInput | number
+    rbd?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MatrizT_RespuestasDetalleCreateManyPreguntaInput = {
+    id?: string
+    respuestaCabeceraId: string
+    valor?: string | null
+    adjuntoUrl?: string | null
+  }
+
+  export type MatrizT_RespuestasDetalleUpdateWithoutPreguntaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    valor?: NullableStringFieldUpdateOperationsInput | string | null
+    adjuntoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    respuestaCabecera?: MatrizT_RespuestasCabeceraUpdateOneRequiredWithoutDetallesNestedInput
+  }
+
+  export type MatrizT_RespuestasDetalleUncheckedUpdateWithoutPreguntaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    respuestaCabeceraId?: StringFieldUpdateOperationsInput | string
+    valor?: NullableStringFieldUpdateOperationsInput | string | null
+    adjuntoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type MatrizT_RespuestasDetalleUncheckedUpdateManyWithoutPreguntaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    respuestaCabeceraId?: StringFieldUpdateOperationsInput | string
+    valor?: NullableStringFieldUpdateOperationsInput | string | null
+    adjuntoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type MatrizT_RespuestasDetalleCreateManyRespuestaCabeceraInput = {
+    id?: string
+    preguntaId: string
+    valor?: string | null
+    adjuntoUrl?: string | null
+  }
+
+  export type MatrizT_RespuestasDetalleUpdateWithoutRespuestaCabeceraInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    valor?: NullableStringFieldUpdateOperationsInput | string | null
+    adjuntoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    pregunta?: MatrizT_DetalleUpdateOneRequiredWithoutRespuestasDetalleNestedInput
+  }
+
+  export type MatrizT_RespuestasDetalleUncheckedUpdateWithoutRespuestaCabeceraInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    preguntaId?: StringFieldUpdateOperationsInput | string
+    valor?: NullableStringFieldUpdateOperationsInput | string | null
+    adjuntoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type MatrizT_RespuestasDetalleUncheckedUpdateManyWithoutRespuestaCabeceraInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    preguntaId?: StringFieldUpdateOperationsInput | string
+    valor?: NullableStringFieldUpdateOperationsInput | string | null
+    adjuntoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
 
 
   /**
@@ -100502,6 +107489,18 @@ export namespace Prisma {
      * @deprecated Use Cab_LeePdfEstandarPaeCountOutputTypeDefaultArgs instead
      */
     export type Cab_LeePdfEstandarPaeCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Cab_LeePdfEstandarPaeCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use MatrizT_CabeceraCountOutputTypeDefaultArgs instead
+     */
+    export type MatrizT_CabeceraCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = MatrizT_CabeceraCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use MatrizT_DetalleCountOutputTypeDefaultArgs instead
+     */
+    export type MatrizT_DetalleCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = MatrizT_DetalleCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use MatrizT_RespuestasCabeceraCountOutputTypeDefaultArgs instead
+     */
+    export type MatrizT_RespuestasCabeceraCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = MatrizT_RespuestasCabeceraCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use RoleDefaultArgs instead
      */
@@ -100766,6 +107765,22 @@ export namespace Prisma {
      * @deprecated Use Det_LeePdfEstandarPaeDefaultArgs instead
      */
     export type Det_LeePdfEstandarPaeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Det_LeePdfEstandarPaeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use MatrizT_CabeceraDefaultArgs instead
+     */
+    export type MatrizT_CabeceraArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = MatrizT_CabeceraDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use MatrizT_DetalleDefaultArgs instead
+     */
+    export type MatrizT_DetalleArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = MatrizT_DetalleDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use MatrizT_RespuestasCabeceraDefaultArgs instead
+     */
+    export type MatrizT_RespuestasCabeceraArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = MatrizT_RespuestasCabeceraDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use MatrizT_RespuestasDetalleDefaultArgs instead
+     */
+    export type MatrizT_RespuestasDetalleArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = MatrizT_RespuestasDetalleDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

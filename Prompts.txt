@@ -542,14 +542,138 @@ Como te comentaba la idea de que sea carga masiva es por lo mismo para no estar 
 La ventana también debe contar con la opción de editar cuenta, resetear contraseña, y asignación del o los RBD que debe ver, por ende los rbd que me debe mostrar son solos los rbd de la sucursal que tiene asociada la manipuladora o nuevo usuario, el listado de los rbd debes hacer que sea una búsqueda inteligente, o sea yo anoto un posible rbd o nombre y debe mostrarme una lista de los establecimiento que tengan coincidencias (esto es cuando yo quiera editar una cuenta), también debe contar con un botón de eliminar usuario (al presionar esto el usuario solo debe desaparecer de la pantalla ya que si lo borras se perdería el cruce de la información que el usuario ingreso en el tiempo),  un botón de "formato del Excel" en el cual me descargue el Excel con el formato para realizar cargas masiva.
 También debe contar con un botón de nueva manipuladora por si se quisiera ingresar un solo usuario.
 En la tabla que se mostrara la información debe contar con el orden al presionar cada titulo de las columnas (ascendentes y descendentes), no debe mostrar mas de 10 registros, por ende debe contar con botón siguiente/anterior.
-Esta tabla debe contar con fitros de: Sucursal, Nombre Completo, nombre usuario, RBD/establecimiento
+Esta tabla debe contar con filtros de: Sucursal, Nombre Completo, nombre usuario, RBD/establecimiento
 
 /*****************************************************************************************************************/
 
+necesito que me crees una nueva opción de menú en "Mantenedor" llamado "Matriz de Riesgo" (Recuerda que esta nueva opción debe estar en el mantenedor de roles y perfiles)
+Y dentro de la opción "Matriz de riesgo" mueve la opción  "Colegio activo" que esta en la opción "Matriz de riesgo/Matriz 2026"
+Luego crea una nueva opción llamada (dentro de Mantenedor/matriz de riesgo) "Nueva Matriz"
+Esta nueva pantalla debe contar con una lista desplegable de Licitación, caja de texto "Año", Caja de texto "Titulo" y un check de Estado (Vigente / No vigente).
+Aquí debe llenar una tabla con el o con todos las matrices creadas, y el campo titulo debe ser un link que te lleve al detalle de la creación de la matriz de riesgo (Ver primera imagen adjunta) esta tabla debe también tener las siguientes opciones:
+	* Editar
+	* Eliminar (Debe contar con una regla de que si ya se han contestado preguntas, esta matriz no se puede eliminar)
+	* Hacer una copia ( Esta opción debe permitir hacer una copia de todas las preguntas, opciones para que si es necesario crear una nueva matriz parta de una base ya creada)
+
+
+La segunda pantalla (Ver imagen 2 adjunta)debe ser bien parecida a la creación de un formulario (Ya el sistema cuenta con uno guiarte por este).
+En esta pantalla debe contar con Tab (Preguntas Matriz de riesgo / Calculo Matriz / Hoja B Estándar Pae).
+
+El programa por defecto debe tener las siguientes preguntas predeterminadas:
+* Fecha Ingreso (Sistema)
+* Nombre Supervisor (Usuario conectado)
+* Correo (Correo del supervisor conectado)
+* Licitación (Leer información de licitación)
+* UT (leer las ut de la tabla (y debe venir filtrada la información según la licitación que se selecciono anteriormente
+* RBD (leer información de la tabla de RBD de los colegios que están activo (Sacar información de la pantalla y tabla de "Colegios Activos")
+NOTA: Al ser predeterminadas no es necesario que las muestre en esta pantalla ( Solo se debe mostrar en la pantalla de llenado de la matriz que crearemos mas adelante)
+Al hacer click en Preguntas de Matriz de riesgo este debe mostrar un nuevo Tab (Patio de servicio (color amarillo claro) / Bodega (Color naranjo claro) / Cocina (Color (verde claro) / Baño (color celeste claro / Levantamiento General (Color azul claro))
+cada ventana (tab "Patio de servicio", "Bodega", "Cocina", "Baño", "Levantamiento General") debe contar con 3 campos los cuales son:
+Nombre de la pregunta --> caja de texto tipo String
+Tipo de Respuesta     --> lista desplegable con las siguientes opciones: * Si / No
+									 * Existe / No existe
+									 * Encuesta (al ser tipo encuesta debe mostrar estas opciones en el formulario: 
+											- Bueno / Cumple
+											- Malo requiere cambio o reparación / No Cumple
+											- No hay y requiere instalar 
+											- No hay y no requiere
+											- No existe
+											- No aplica)
+									 * Observación
+									 * Adjuntar documento
+Obligatorio --> check (Obligatorio / No Obligatorio
+
+Despues de estos campos debe contar con los siguientes icono 
+"+" (que sirvira para agregar una nueva pregunta)
+Fecha Arriba (Para Subir una pregunta (ordenar))
+Fecha Abajo (Para bajar una pregunta (ordenar))
+
+Al hacer click en el "Tab" --> "Calculo Matriz" (Ver imagen 3)
+debe mostrar un nuevo tab (con las mismas opciones  "Patio de servicio", "Bodega", "Cocina", "Baño", "Levantamiento General")
+Esta pantalla debe mostrar todas las preguntas creadas en la opcion de "Preguntas Matriz de Riesgo"
+y debe contar con los siguientes campos
+
+Pregunta --> string que trae preguntas creadas
+Gravedad --> Lista desplegable con las siguientes opciones: 1: Bajo
+							    2: Medio
+							    3: Alto
+Probabilidad --> Lista desplegable con las siguientes opciones: 1: Bajo
+							        2: Medio
+							        3: Alto
+Nivel de riesgo  --> Lista desplegable con las siguientes opciones: 1: Bajo riesgo: Resolver (eliminar o mitigar) en menos de 90 días
+								    2: Medio riesgo: Resolver (eliminar o mitigar) en menos de 60 días
+								    3: Alto riesgo: Resolver (eliminar o mitigar) en menos de 30 días
+
+Justificación de probabilidad --> caja de texto tipo string
+
+
+Al hacer click en el "Tab" --> "Hoja B Estandar Pae" (Ver imagen 4)
+debe mostrar un nuevo tab (con las mismas opciones  "Patio de servicio", "Bodega", "Cocina", "Baño", "Levantamiento General")
+Esta pantalla debe mostrar todas las preguntas creadas en la opcion de "Preguntas Matriz de Riesgo"
+y debe contar con los siguientes campos
+Pregunta --> string que trae preguntas creadas
+Para riesgos significativos describir las(s)… --> caja de texto tipo string
+Recurso necesario --> caja de texto tipo string
+Resultado Esperado--> caja de texto tipo string
+Resp. Implementación--> caja de texto tipo string
+Resp. Seguimiento--> caja de texto tipo string
+Evidencia Cumplimiento--> caja de texto tipo string
+Evidencia eficacia--> caja de texto tipo string
+
+Cada pantalla debe contar con un botón guardar, eliminar, editar
+El modelo de dato lo dejo a tu criterio. según mi punto de vista deberían ser mas de 2 tablas
+Favor a estas tablas ponle como iniciales MatrizT_Cabecera (si usas una tabla cabecera) MatrizT_Detalle (si usas una tabla detalle) y asi sucesivamente
+Las imágenes son solo referencial, asi que si crees que es necesario hacer cambios para que sea mas atractivo y de fácil de usar para el usuario favor realiza los cambios y me los comentas.
+
+/*****************************************************************************************************************/
+
+Requisito -->	Preguntas de la matriz de riesgos
+Cumple Si / NO	--> dependera de la respuesta que tenga "Nivel de riesgo" si el valor dice "No aplica" debe decir "Si" y si dice cualquer mensaje a "No aplica" es "No"
+Desviación	Si el valor de la columna anterior  "Cumple Si/no" es "Si", debe poner el valor "No aplica" y si es "No" debe poner "No cumple con la condición del item"
+Potencial impacto o en la inocuidad Si / No	Si el valor de la columna  "Cumple Si/no" es "Si", debe poner el valor "No aplica" y si es "No" debe poner "SI"
+Probabilidad de ocurrencia	Si el valor de la columna  "Cumple Si/no" es "Si", debe poner el valor "No aplica" y si es "No" debe rescatar el valor de "Calculo Matriz" valor de "Probabilidad"
+Justificación para la probabilidad de ocurrencia	Si el valor de la columna  "Cumple Si/no" es "Si", debe poner el valor "No aplica" y si es "No" debe rescatar el valor de "Calculo Matriz" valor de "Justificación de probabilidad"
+Gravedad de impacto	Si el valor de la columna  "Cumple Si/no" es "Si", debe poner el valor "No aplica" y si es "No" debe rescatar el valor de "Calculo Matriz" valor de "Gravedad"
+Nivel de riesgo	debe rescatar el valor de "Calculo Matriz" valor de "Nivel de riesgo" siempre y cuando la respuesta daba en el rbd sea distinto a "No Existe", si dice no existe en esta columna debe reemplazarlo por "No Aplica"
+Para riesgos significativos describir las(s) medida de control para evitar riesgos, y/o asumir riesgos y/o eliminar la fuente de riesgo y/o cambiar la probabilidad o las consecuencias, y/o compartir el riesgo, y/o aceptar la presencia del riesgo mediante decisión informada se debe detallar la medida definida:	Si el valor de la columna  "Cumple Si/no" es "Si", debe poner el valor "No aplica" y si es "No" debe rescatar el valor de "Hoja B Estandar Pae" el valor de "Para riesgos significativos describir la(s)..."
+Recursos Necesarios	Si el valor de la columna  "Cumple Si/no" es "Si", debe poner el valor "No aplica" y si es "No" debe rescatar el valor de "Hoja B Estandar Pae" el valor de "Recurso necesario"
+Resultados esperados	Si el valor de la columna  "Cumple Si/no" es "Si", debe poner el valor "No aplica" y si es "No" debe rescatar el valor de "Hoja B Estandar Pae" el valor de "Resultado Esperado"
+Responsable de la Implementación	Si el valor de la columna  "Cumple Si/no" es "Si", debe poner el valor "No aplica" y si es "No" debe rescatar el valor de "Hoja B Estandar Pae" el valor de "Resp. Implementación"
+Plazo de implementación	Si el valor de la columna  "Cumple Si/no" es "Si", debe dejar en blanco el campo y si es "No" debe rescatar el valor de la "fecha tope"
+Fecha de seguimiento	Si el valor de la columna  "Cumple Si/no" es "Si", debe dejar en blanco el campo y si es "No" debe rescatar el valor de la "fecha tope" y debe poner el ultimo dia del mes siguiente a esta fecha tope
+Responsable del seguimiento	Si el valor de la columna  "Cumple Si/no" es "Si", debe poner el valor "No aplica" y si es "No" debe rescatar el valor de "Hoja B Estandar Pae" el valor de "Resp. Seguimiento"
+Evidencia de cumplimiento	Si el valor de la columna  "Cumple Si/no" es "Si", debe poner el valor "No aplica" y si es "No" debe rescatar el valor de "Hoja B Estandar Pae" el valor de "Evidencia Cumplimiento"
+Evidencia de eficacia de las acciones tomadas	Si el valor de la columna  "Cumple Si/no" es "Si", debe poner el valor "No aplica" y si es "No" debe rescatar el valor de "Hoja B Estandar Pae" el valor de "Evidencia eficacia"
+
+
+/*****************************************************************************************************************/
+
+8336525-0, HECTOR JOSE, MARTINEZ, BECERRA
+https://inhabilidades.srcei.cl/ConsInhab/consultaInhabilidad.do
+
+
+NO registra inhabilidades para trabajar con menores de edad.
+Datos no coincide con el RUN ingresado.
+SI registra inhabilidades para trabajar con menores de edad.
 
 /*****************************************************************************************************************/
 /*****************************************************************************************************************/
 /*****************************************************************************************************************/
+/*****************************************************************************************************************/
+/*****************************************************************************************************************/
+/*****************************************************************************************************************/
+/*****************************************************************************************************************/
+/*****************************************************************************************************************/
+/*****************************************************************************************************************/
+/*****************************************************************************************************************/
+/*****************************************************************************************************************/
+/*****************************************************************************************************************/
+/*****************************************************************************************************************/
+/*****************************************************************************************************************/
+/*****************************************************************************************************************/
+/*****************************************************************************************************************/
+
+
 
 
 

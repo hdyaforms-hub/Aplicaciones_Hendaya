@@ -2,70 +2,75 @@
 
 import { useState, useMemo } from 'react'
 import { format, addDays, isAfter, isBefore, differenceInDays } from 'date-fns'
-import { SECCIONES, PREGUNTAS, RIESGO_OPCIONES } from '../evaluacion-detallada/questions'
-import { FIELD_MAPPING, PROBLEM_VALUES } from './mapping'
 import { saveMitigacionAction } from './actions'
 import { useRouter } from 'next/navigation'
 import MitigacionFileUploader from './MitigacionFileUploader'
 
+const PROBLEM_VALUES = ['NO', 'NO_EXISTE', 'MALO_NO_CUMPLE', 'NO_HAY_REQUIERE']
+
 export default function MitigacionClient({ 
-    initialMatrices, 
-    riskConfigs, 
+    initialEvaluaciones, 
     initialMitigaciones,
     cutoffDate 
 }: { 
-    initialMatrices: any[], 
-    riskConfigs: any[], 
+    initialEvaluaciones: any[], 
     initialMitigaciones: any[],
     cutoffDate: Date | string
 }) {
-    const [matrices] = useState(initialMatrices)
+    const [evaluaciones] = useState(initialEvaluaciones)
     const [mitigaciones, setMitigaciones] = useState(initialMitigaciones)
     const [semestre, setSemestre] = useState<1 | 2>(1)
-    const [selectedMatrizId, setSelectedMatrizId] = useState<string | null>(null)
+    const [selectedEvaluacionId, setSelectedEvaluacionId] = useState<string | null>(null)
     const [saving, setSaving] = useState<string | null>(null)
     const [selectedImage, setSelectedImage] = useState<string | null>(null)
     const router = useRouter()
 
     const cutoff = new Date(cutoffDate)
 
-    const filteredMatrices = useMemo(() => {
-        return matrices.filter(m => {
-            const evalDate = new Date(m.createdAt)
+    const filteredEvaluaciones = useMemo(() => {
+        return evaluaciones.filter(evaluacion => {
+            const evalDate = new Date(evaluacion.fechaIngreso)
             if (semestre === 1) return isBefore(evalDate, cutoff) || evalDate.getTime() === cutoff.getTime()
             return isAfter(evalDate, cutoff)
         })
-    }, [matrices, semestre, cutoff])
+    }, [evaluaciones, semestre, cutoff])
 
-    const getProblems = (matriz: any) => {
+    const getProblems = (evaluacion: any) => {
         const problems: any[] = []
-        PREGUNTAS.forEach(p => {
-            const fieldName = FIELD_MAPPING[p.id]
-            const responseValue = matriz[fieldName]
-            if (PROBLEM_VALUES.includes(responseValue)) {
-                const config = riskConfigs.find(c => c.preguntaId === p.id)
-                const mitigacion = mitigaciones.find(m => m.matrizId === matriz.id && m.preguntaId === p.id)
+        
+        // Match respuestas con detalles de la plantilla
+        const respuestasMap = new Map(evaluacion.detalles.map((d: any) => [d.preguntaId, d]))
+        const plantillaDetalles = evaluacion.cabecera?.detalles || []
+
+        plantillaDetalles.forEach((pregunta: any) => {
+            const respuesta = respuestasMap.get(pregunta.id)
+            if (respuesta && PROBLEM_VALUES.includes((respuesta as any).valor)) {
+                const mitigacion = mitigaciones.find(m => m.matrizId === evaluacion.id && m.preguntaId === pregunta.id)
                 
-                // Extraer días del nivel de riesgo
-                let days = 90
-                if (config?.nivelRiesgo.includes('30')) days = 30
-                else if (config?.nivelRiesgo.includes('60')) days = 60
+                // Extraer días del nivel de riesgo configurado en la pregunta
+                let days = 30
+                if (pregunta.nivelRiesgo === 1) days = 90
+                else if (pregunta.nivelRiesgo === 2) days = 60
+                else if (pregunta.nivelRiesgo === 3) days = 30
 
-                const deadline = addDays(new Date(matriz.createdAt), days)
+                const deadline = addDays(new Date(evaluacion.fechaIngreso), days)
+                const nivelStr = pregunta.nivelRiesgo === 1 ? 'Bajo (90d)' : pregunta.nivelRiesgo === 2 ? 'Medio (60d)' : pregunta.nivelRiesgo === 3 ? 'Alto (30d)' : 'No Configurado (30d)'
 
-                // Extraer fotos originales de la sección
+                // Extraer fotos originales de la respuesta
                 let originalPhotos: string[] = []
                 try {
-                    const adjKey = `adjuntos_${p.seccion}`
-                    if (matriz[adjKey]) {
-                        originalPhotos = JSON.parse(matriz[adjKey])
+                    if ((respuesta as any).adjuntoUrl) {
+                        const parsed = JSON.parse((respuesta as any).adjuntoUrl)
+                        originalPhotos = Array.isArray(parsed) ? parsed : [(respuesta as any).adjuntoUrl]
                     }
-                } catch(e) {}
+                } catch(e) {
+                    if ((respuesta as any).adjuntoUrl) originalPhotos = [(respuesta as any).adjuntoUrl]
+                }
 
                 problems.push({
-                    ...p,
-                    response: responseValue,
-                    nivelRiesgo: config?.nivelRiesgo || 'No configurado',
+                    ...pregunta,
+                    response: (respuesta as any).valor,
+                    nivelRiesgoStr: nivelStr,
                     deadline,
                     mitigacion: mitigacion || null,
                     originalPhotos
@@ -87,18 +92,25 @@ export default function MitigacionClient({
         setSaving(null)
         if (res.success) {
             router.refresh()
-            // Update local state is more complex, better to refresh or re-fetch
         } else {
             alert(res.error)
         }
     }
 
-    const selectedMatriz = matrices.find(m => m.id === selectedMatrizId)
-    const problemList = selectedMatriz ? getProblems(selectedMatriz) : []
+    const selectedEvaluacion = evaluaciones.find(e => e.id === selectedEvaluacionId)
+    const problemList = selectedEvaluacion ? getProblems(selectedEvaluacion) : []
+
+    const sectionColors: Record<string, string> = {
+        'PATIO_SERVICIO': 'bg-amber-100 text-amber-900 border-amber-300',
+        'BODEGA': 'bg-orange-100 text-orange-950 border-orange-300',
+        'COCINA': 'bg-emerald-100 text-emerald-950 border-emerald-300',
+        'BANO': 'bg-cyan-100 text-cyan-950 border-cyan-300',
+        'LEVANTAMIENTO_GENERAL': 'bg-blue-100 text-blue-950 border-blue-300'
+    }
 
     return (
         <>
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 pb-20">
             {/* Sidebar de Evaluaciones */}
             <div className="lg:col-span-4 space-y-4">
                 <div className="bg-white p-4 rounded-3xl shadow-sm border border-gray-100">
@@ -120,24 +132,25 @@ export default function MitigacionClient({
 
                 <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
                     <div className="p-4 bg-slate-50 border-b border-gray-100">
-                        <h3 className="font-bold text-slate-700 text-sm">Evaluaciones Matriz 2026</h3>
+                        <h3 className="font-bold text-slate-700 text-sm">Evaluaciones Matriz Riesgo</h3>
                     </div>
                     <div className="divide-y divide-gray-50 max-h-[600px] overflow-y-auto">
-                        {filteredMatrices.map(m => {
-                            const problems = getProblems(m)
+                        {filteredEvaluaciones.map(ev => {
+                            const problems = getProblems(ev)
                             const solved = problems.filter(p => p.mitigacion?.fechaSolucion).length
                             const pct = problems.length > 0 ? Math.round((solved / problems.length) * 100) : 100
                             
                             return (
                                 <div 
-                                    key={m.id} 
-                                    onClick={() => setSelectedMatrizId(m.id)}
-                                    className={`p-4 cursor-pointer transition-all hover:bg-slate-50 ${selectedMatrizId === m.id ? 'bg-cyan-50 border-l-4 border-cyan-500' : ''}`}
+                                    key={ev.id} 
+                                    onClick={() => setSelectedEvaluacionId(ev.id)}
+                                    className={`p-4 cursor-pointer transition-all hover:bg-slate-50 ${selectedEvaluacionId === ev.id ? 'bg-cyan-50 border-l-4 border-cyan-500' : ''}`}
                                 >
                                     <div className="flex justify-between items-start">
                                         <div>
-                                            <p className="font-black text-slate-900 text-sm">RBD: {m.rbd}</p>
-                                            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-tight">{format(new Date(m.createdAt), 'dd/MM/yyyy HH:mm')}</p>
+                                            <p className="font-black text-slate-900 text-sm">RBD: {ev.rbd}</p>
+                                            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-tight">{format(new Date(ev.fechaIngreso), 'dd/MM/yyyy HH:mm')}</p>
+                                            <p className="text-xs text-cyan-700 mt-1">{ev.cabecera?.titulo} ({ev.cabecera?.anio})</p>
                                         </div>
                                         <div className={`px-2 py-0.5 rounded text-[10px] font-black ${pct === 100 ? 'bg-emerald-100 text-emerald-700' : 'bg-orange-100 text-orange-700'}`}>
                                             {pct}% Avance
@@ -157,7 +170,7 @@ export default function MitigacionClient({
                                 </div>
                             )
                         })}
-                        {filteredMatrices.length === 0 && (
+                        {filteredEvaluaciones.length === 0 && (
                             <div className="p-8 text-center text-slate-400 text-sm font-medium">
                                 No hay evaluaciones en este periodo.
                             </div>
@@ -168,40 +181,39 @@ export default function MitigacionClient({
 
             {/* Panel de Detalle de Mitigación */}
             <div className="lg:col-span-8">
-                {selectedMatriz ? (
+                {selectedEvaluacion ? (
                     <div className="space-y-6">
                         <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
                             <h2 className="text-xl font-black text-slate-900">Hallazgos y Mitigación</h2>
-                            <p className="text-sm text-slate-500 font-medium mt-1">RBD {selectedMatriz.rbd} - {format(new Date(selectedMatriz.createdAt), 'dd MMMM yyyy')}</p>
+                            <p className="text-sm text-slate-500 font-medium mt-1">RBD {selectedEvaluacion.rbd} - {format(new Date(selectedEvaluacion.fechaIngreso), 'dd MMMM yyyy')}</p>
                         </div>
 
                         <div className="space-y-4">
                             {problemList.map((p, idx) => {
-                                const section = SECCIONES.find(s => s.id === p.seccion)
                                 const remaining = differenceInDays(p.deadline, new Date())
                                 const isExpired = remaining < 0 && !p.mitigacion?.fechaSolucion
                                 
                                 return (
                                     <div key={p.id} className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden flex flex-col">
-                                        <div className={`px-6 py-3 flex justify-between items-center ${section?.color || 'bg-slate-50'} bg-opacity-10`}>
-                                            <span className={`text-[10px] font-black uppercase tracking-widest ${section?.textColor || 'text-slate-500'}`}>
-                                                {section?.nombre}
+                                        <div className={`px-6 py-3 flex justify-between items-center bg-slate-50`}>
+                                            <span className={`text-[10px] font-black uppercase tracking-widest text-slate-600`}>
+                                                SECCIÓN: {p.seccion.replace('_', ' ')}
                                             </span>
                                             <div className="flex gap-2">
-                                                <span className={`px-2 py-0.5 rounded-full text-[10px] font-black border ${p.nivelRiesgo.includes('Bajo') ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : p.nivelRiesgo.includes('Medio') ? 'bg-yellow-50 text-yellow-700 border-yellow-100' : 'bg-red-50 text-red-700 border-red-100'}`}>
-                                                    {p.nivelRiesgo}
+                                                <span className={`px-2 py-0.5 rounded-full text-[10px] font-black border ${p.nivelRiesgo === 1 ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : p.nivelRiesgo === 2 ? 'bg-yellow-50 text-yellow-700 border-yellow-100' : 'bg-red-50 text-red-700 border-red-100'}`}>
+                                                    RIESGO: {p.nivelRiesgoStr}
                                                 </span>
                                             </div>
                                         </div>
                                         <div className="p-6">
-                                            <p className="text-slate-800 font-bold text-sm leading-relaxed">{p.text}</p>
-                                            <div className="mt-1 p-2 bg-slate-50 rounded-xl text-xs text-slate-500 border border-slate-100 italic">
-                                                Respuesta: <span className="font-bold text-slate-700">{p.response}</span>
+                                            <p className="text-slate-800 font-bold text-sm leading-relaxed">{p.preguntaNombre}</p>
+                                            <div className="mt-2 p-2 bg-slate-50 rounded-xl text-xs text-slate-500 border border-slate-100 italic">
+                                                Respuesta del usuario: <span className="font-bold text-slate-700">{p.response}</span>
                                             </div>
 
                                             {p.originalPhotos?.length > 0 && (
                                                 <div className="mt-4">
-                                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-tighter mb-2">Evidencia Original de la Sección</p>
+                                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-tighter mb-2">Evidencia Original</p>
                                                     <div className="flex flex-wrap gap-2">
                                                         {p.originalPhotos.map((photo: string, i: number) => (
                                                             <div 
@@ -225,7 +237,7 @@ export default function MitigacionClient({
                                                             <span className="text-xs font-bold text-slate-600">Fecha Tope</span>
                                                             <span className="text-xs font-black text-slate-900">{format(p.deadline, 'dd/MM/yyyy')}</span>
                                                         </div>
-                                                        <div className={`flex justify-between items-center p-3 rounded-2xl border ${isExpired ? 'bg-red-50 border-red-100 text-red-700' : 'bg-cyan-50 border-cyan-100 text-cyan-700'}`}>
+                                                        <div className={`flex justify-between items-center p-3 rounded-2xl border ${p.mitigacion?.fechaSolucion ? 'bg-emerald-50 border-emerald-100 text-emerald-700' : isExpired ? 'bg-red-50 border-red-100 text-red-700' : 'bg-cyan-50 border-cyan-100 text-cyan-700'}`}>
                                                             <span className="text-xs font-bold">Estado</span>
                                                             <span className="text-xs font-black">
                                                                 {p.mitigacion?.fechaSolucion ? 'RESUELTO' : isExpired ? `VENCIDO (${Math.abs(remaining)} días)` : `PENDIENTE (${remaining} días rest.)`}
@@ -243,7 +255,7 @@ export default function MitigacionClient({
                                                             <input 
                                                                 type="date"
                                                                 defaultValue={p.mitigacion?.fechaSolucion ? format(new Date(p.mitigacion.fechaSolucion), 'yyyy-MM-dd') : ''}
-                                                                onBlur={(e) => handleSave(selectedMatriz.id, p.id, e.target.value)}
+                                                                onBlur={(e) => handleSave(selectedEvaluacion.id, p.id, e.target.value, p.mitigacion?.adjuntos ? JSON.parse(p.mitigacion.adjuntos) : undefined)}
                                                                 className="w-full mt-1 bg-slate-50 border border-slate-200 rounded-2xl p-2.5 text-xs font-bold text-slate-900 focus:ring-2 focus:ring-cyan-500 outline-none"
                                                             />
                                                         </div>
@@ -251,7 +263,7 @@ export default function MitigacionClient({
                                                             <p className="text-[10px] font-bold text-slate-500 ml-1 mb-2">EVIDENCIAS (MÁX. 4)</p>
                                                             <MitigacionFileUploader 
                                                                 initialFiles={p.mitigacion?.adjuntos ? JSON.parse(p.mitigacion.adjuntos) : []}
-                                                                onUpload={(paths) => handleSave(selectedMatriz.id, p.id, p.mitigacion?.fechaSolucion ? format(new Date(p.mitigacion.fechaSolucion), 'yyyy-MM-dd') : '', paths)}
+                                                                onUpload={(paths) => handleSave(selectedEvaluacion.id, p.id, p.mitigacion?.fechaSolucion ? format(new Date(p.mitigacion.fechaSolucion), 'yyyy-MM-dd') : '', paths)}
                                                             />
                                                         </div>
                                                     </div>

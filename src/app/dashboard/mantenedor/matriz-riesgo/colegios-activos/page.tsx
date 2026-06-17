@@ -1,4 +1,4 @@
-import { getColegiosMatriz } from '../../actions'
+import { getColegiosMatriz } from '@/app/dashboard/matriz-riesgo/actions'
 import { getMatrizSemesterConfig } from './actions'
 import { getSession } from '@/lib/session'
 import { redirect } from 'next/navigation'

@@ -167,6 +167,7 @@ model Licitacion {
   aspectosEE           AspectoEE[]
   jefesZonales         JefeZonalLicitacion[]
   vehiculos            Vehiculo[]
+  matrices             MatrizT_Cabecera[]
 }
 
 model AspectoEE {
@@ -660,6 +661,7 @@ model CapCertificacionHeader {
   createdAt         DateTime                 @default(now())
   updatedAt         DateTime                 @updatedAt
   usuario           String?
+  motivoCambioAdmin String?
   detalles          CapCertificacionDetail[]
 }
 
@@ -992,4 +994,75 @@ model Det_LeePdfEstandarPae {
   Otros_Comentarios        String? @db.Text
 
   cabecera Cab_LeePdfEstandarPae @relation(fields: [cabeceraId], references: [id], onDelete: Cascade)
+}
+
+model MatrizT_Cabecera {
+  id            String   @id @default(uuid())
+  licId         Int
+  anio          Int
+  titulo        String
+  estado        Boolean  @default(true) // true = Vigente, false = No vigente
+  instrucciones String?  @db.Text
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  licitacion Licitacion                   @relation(fields: [licId], references: [licId])
+  detalles   MatrizT_Detalle[]
+  respuestas MatrizT_RespuestasCabecera[]
+}
+
+model MatrizT_Detalle {
+  id             String  @id @default(uuid())
+  cabeceraId     String
+  preguntaNombre String
+  tipoRespuesta  String // SI_NO, EXISTE_NO_EXISTE, ENCUESTA, OBSERVACION, ADJUNTAR
+  obligatorio    Boolean @default(false)
+  seccion        String // PATIO_SERVICIO, BODEGA, COCINA, BANO, LEVANTAMIENTO_GENERAL
+  orden          Int     @default(0)
+
+  // Calculo Matriz
+  gravedad      Int? // 1: Bajo, 2: Medio, 3: Alto
+  probabilidad  Int? // 1: Bajo, 2: Medio, 3: Alto
+  nivelRiesgo   Int? // 1: Bajo, 2: Medio, 3: Alto
+  justificacion String? @db.Text
+
+  // Hoja B Estándar Pae
+  riesgoSignificativo   String? @db.Text
+  recursoNecesario      String? @db.Text
+  resultadoEsperado     String? @db.Text
+  respImplementacion    String? @db.Text
+  respSeguimiento       String? @db.Text
+  evidenciaCumplimiento String? @db.Text
+  evidenciaEficacia     String? @db.Text
+
+  cabecera          MatrizT_Cabecera            @relation(fields: [cabeceraId], references: [id], onDelete: Cascade)
+  respuestasDetalle MatrizT_RespuestasDetalle[]
+}
+
+model MatrizT_RespuestasCabecera {
+  id               String   @id @default(uuid())
+  cabeceraId       String
+  usuario          String
+  fechaIngreso     DateTime @default(now())
+  supervisorNombre String
+  supervisorCorreo String
+  licId            Int
+  ut               Int
+  rbd              Int
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  cabecera MatrizT_Cabecera            @relation(fields: [cabeceraId], references: [id])
+  detalles MatrizT_RespuestasDetalle[]
+}
+
+model MatrizT_RespuestasDetalle {
+  id                  String  @id @default(uuid())
+  respuestaCabeceraId String
+  preguntaId          String
+  valor               String?
+  adjuntoUrl          String?
+
+  respuestaCabecera MatrizT_RespuestasCabecera @relation(fields: [respuestaCabeceraId], references: [id], onDelete: Cascade)
+  pregunta          MatrizT_Detalle            @relation(fields: [preguntaId], references: [id])
 }

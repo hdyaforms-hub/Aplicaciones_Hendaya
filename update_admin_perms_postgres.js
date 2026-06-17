@@ -22,7 +22,9 @@ async function main() {
     'manage_vehiculos',
     'manage_zonales',
     'manage_jefe_operacion',
-    'manage_supervisor'
+    'manage_supervisor',
+    'manage_nueva_matriz',
+    'manage_colegios_matriz'
   ]
   
   newPerms.forEach(p => {

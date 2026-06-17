@@ -10,21 +10,26 @@ export async function getAuditoriaData() {
     }
 
     try {
-        const matrices = await prisma.matrizRiesgo2026.findMany({
+        const respuestas = await prisma.matrizT_RespuestasCabecera.findMany({
             orderBy: { createdAt: 'desc' },
-            where: {
-                createdAt: {
-                    gte: new Date('2026-01-01'),
-                    lt: new Date('2027-01-01')
-                }
+            include: {
+                detalles: true
             }
         })
         
+        const cabecerasConfig = await prisma.matrizT_Cabecera.findMany({
+            where: { estado: true },
+            include: {
+                detalles: {
+                    orderBy: { orden: 'asc' }
+                }
+            }
+        })
+
         const colegios = await prisma.colegiosMatriz.findMany()
         const mitigaciones = await prisma.matrizMitigacion.findMany()
-        const riskConfigs = await prisma.matrizConfigPregunta.findMany()
 
-        return { success: true, matrices, colegios, mitigaciones, riskConfigs }
+        return { success: true, respuestas, cabecerasConfig, colegios, mitigaciones }
     } catch (e) {
         console.error(e)
         return { error: 'Error al cargar datos de auditoría.' }

@@ -2,8 +2,6 @@ import { getSession } from '@/lib/session'
 import { redirect } from 'next/navigation'
 import AuditoriaClient from './AuditoriaClient'
 import { getAuditoriaData } from './actions'
-import { SECCIONES, PREGUNTAS } from '../evaluacion-detallada/questions'
-import { FIELD_MAPPING, PROBLEM_VALUES } from '../mitigacion/mapping'
 
 export default async function AuditoriaPage() {
     const session = await getSession()
@@ -22,7 +20,7 @@ export default async function AuditoriaPage() {
                     Auditoría Externa
                 </h1>
                 <p className="text-gray-500 mt-2 text-lg">
-                    Vista global del cumplimiento y estado de mitigaciones de la Matriz de Riesgo 2026.
+                    Vista global del cumplimiento y estado de mitigaciones de la Matriz de Riesgo.
                 </p>
             </div>
 
@@ -32,14 +30,10 @@ export default async function AuditoriaPage() {
                 </div>
             ) : (
                 <AuditoriaClient 
-                    matrices={data.matrices || []} 
+                    respuestas={data.respuestas || []} 
+                    cabecerasConfig={data.cabecerasConfig || []}
                     colegios={data.colegios || []}
                     mitigaciones={data.mitigaciones || []}
-                    riskConfigs={data.riskConfigs || []}
-                    SECCIONES={SECCIONES}
-                    PREGUNTAS={PREGUNTAS}
-                    FIELD_MAPPING={FIELD_MAPPING}
-                    PROBLEM_VALUES={PROBLEM_VALUES}
                 />
             )}
         </div>

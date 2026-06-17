@@ -57,16 +57,24 @@ export default async function RolesPage() {
         { id: 'manage_calculos_ee', name: 'Cálculos de Elementos Esenciales', description: 'Permite calcular multas en base a elementos esenciales no conformes.', category: 'ÁREAS -> MULTAS' },
 
         { id: 'view_matriz_riesgo', name: 'Ver Matriz de Riesgo', description: 'Acceso al menú principal de matrices de riesgo.', category: 'MATRIZ DE RIESGO' },
+        { id: 'fill_nueva_matriz', name: 'Ingresar nueva Matriz', description: 'Responder encuestas basadas en plantillas dinámicas de matrices de riesgo.', category: 'MATRIZ DE RIESGO -> INGRESAR NUEVA MATRIZ' },
 
-        { id: 'manage_matriz_2026', name: 'Ingresar nueva Matriz', description: 'Permite el ingreso de nuevas matrices de riesgo para el año 2026.', category: 'MATRIZ DE RIESGO -> MATRIZ 2026' },
-        { id: 'manage_colegios_matriz', name: 'Colegios Activos', description: 'Gestionar colegios habilitados para la matriz de riesgo.', category: 'MATRIZ DE RIESGO -> MATRIZ 2026' },
+        { id: 'view_detalle_matriz', name: 'Ver Detalle Matriz', description: 'Permite visualizar el listado de respuestas de la matriz de riesgo.', category: 'MATRIZ DE RIESGO -> DETALLE MATRIZ' },
+        { id: 'edit_detalle_matriz', name: 'Editar Detalle Matriz', description: 'Permite modificar, eliminar y descargar respuestas de la matriz de riesgo.', category: 'MATRIZ DE RIESGO -> DETALLE MATRIZ' },
+        { id: 'view_inf_auditoria_mitigacion', name: 'Inf. Auditoria Mitigación', description: 'Permite visualizar y exportar a PDF el informe de auditoría de mitigación.', category: 'MATRIZ DE RIESGO -> DETALLE MATRIZ' },
+        { id: 'view_hoja_b_estandar_pae', name: 'Hoja B Estandar Pae', description: 'Permite visualizar y exportar a PDF el reporte de Hoja B Estándar PAE.', category: 'MATRIZ DE RIESGO -> DETALLE MATRIZ' },
+
+        { id: 'manage_matriz_2026', name: 'Ingresar nueva Matriz 2026', description: 'Permite el ingreso de nuevas matrices de riesgo para el año 2026.', category: 'MATRIZ DE RIESGO -> MATRIZ 2026' },
         { id: 'manage_evaluacion_detallada', name: 'Evaluación Detallada', description: 'Realizar evaluación técnica detallada por puntos críticos.', category: 'MATRIZ DE RIESGO -> MATRIZ 2026' },
-        { id: 'manage_mitigacion', name: 'Mitigación', description: 'Gestionar plazos y evidencias de solución para hallazgos de la matriz.', category: 'MATRIZ DE RIESGO -> MATRIZ 2026' },
-        { id: 'view_estado_avance', name: 'Estado de Avance', description: 'Visualizar el estado de avance de la matriz de riesgo 2026.', category: 'MATRIZ DE RIESGO -> MATRIZ 2026' },
-        { id: 'view_auditoria', name: 'Auditoría Externa', description: 'Vista global completa de hallazgos y evidencias para auditores.', category: 'MATRIZ DE RIESGO -> MATRIZ 2026' },
+        { id: 'manage_mitigacion', name: 'Mitigación', description: 'Gestionar plazos y evidencias de solución para hallazgos de la matriz.', category: 'MATRIZ DE RIESGO -> DETALLE MATRIZ' },
+        { id: 'view_estado_avance', name: 'Estado de Avance', description: 'Visualizar el estado de avance de la matriz de riesgo.', category: 'MATRIZ DE RIESGO -> DETALLE MATRIZ' },
+        { id: 'view_auditoria', name: 'Auditoría Externa', description: 'Vista global completa de hallazgos y evidencias para auditores.', category: 'MATRIZ DE RIESGO -> DETALLE MATRIZ' },
 
         { id: 'view_productos', name: 'Mantenedor de Productos', description: 'Acceso a mantenedor y carga masiva de Productos.', category: 'MANTENEDORES' },
         { id: 'manage_areas', name: 'Área', description: 'Creación y administración de áreas de la compañía.', category: 'MANTENEDORES' },
+
+        { id: 'manage_nueva_matriz', name: 'Nueva Matriz', description: 'Crear, copiar, editar y eliminar plantillas de matriz de riesgo.', category: 'MANTENEDORES -> MATRIZ DE RIESGO' },
+        { id: 'manage_colegios_matriz', name: 'Colegios Activos', description: 'Gestionar colegios habilitados para la matriz de riesgo.', category: 'MANTENEDORES -> MATRIZ DE RIESGO' },
 
         { id: 'view_pmpa', name: 'PMPA', description: 'Acceso a carga de Excel y listado PMPA.', category: 'MANTENEDORES -> OPERACIONES' },
         { id: 'view_colegios', name: 'Colegio', description: 'Acceso a mantenedor y carga masiva de Colegios.', category: 'MANTENEDORES -> OPERACIONES' },

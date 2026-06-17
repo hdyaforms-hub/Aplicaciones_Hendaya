@@ -19,7 +19,7 @@ export default async function MitigacionPage() {
                     Mitigación de Hallazgos
                 </h1>
                 <p className="text-gray-500 mt-2 text-lg">
-                    Gestione las soluciones y evidencias para los riesgos detectados en la Matriz 2026.
+                    Gestione las soluciones y evidencias para los hallazgos detectados en las evaluaciones de Matriz de Riesgo.
                 </p>
             </div>
 
@@ -29,8 +29,7 @@ export default async function MitigacionPage() {
                 </div>
             ) : (
                 <MitigacionClient 
-                    initialMatrices={data.matrices || []} 
-                    riskConfigs={data.riskConfigs || []}
+                    initialEvaluaciones={data.matrices || []} 
                     initialMitigaciones={data.mitigaciones || []}
                     cutoffDate={data.cutoffDate || new Date().toISOString()}
                 />

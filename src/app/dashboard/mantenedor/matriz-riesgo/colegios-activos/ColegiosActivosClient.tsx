@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { toggleColegioMatrizStatus } from '../../actions'
+import { toggleColegioMatrizStatus } from '@/app/dashboard/matriz-riesgo/actions'
 import { useRouter } from 'next/navigation'
 import { saveMatrizSemesterConfig } from './actions'
 import { format } from 'date-fns'

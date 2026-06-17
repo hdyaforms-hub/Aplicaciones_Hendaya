@@ -145,10 +145,45 @@ export default function EstadoAvanceClient({ initialReport }: { initialReport: a
         </div>
     )
 
+    const [activeTab, setActiveTab] = useState<number>(1)
+
     return (
-        <div className="space-y-12 pb-20">
-            {sem1.length > 0 && <TableSection title="Primer Semestre 2026" data={sem1} colorClass="text-blue-600" />}
-            {sem2.length > 0 && <TableSection title="Segundo Semestre 2026" data={sem2} colorClass="text-emerald-600" />}
+        <div className="space-y-6 pb-20">
+            {/* Tabs */}
+            {report.length > 0 && (
+                <div className="bg-white p-2 rounded-2xl shadow-sm border border-gray-100 flex gap-2 w-fit">
+                    <button 
+                        onClick={() => setActiveTab(1)}
+                        className={`px-6 py-2.5 rounded-xl text-sm font-black transition-all ${activeTab === 1 ? 'bg-cyan-50 text-cyan-700 shadow-sm' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'}`}
+                    >
+                        1er Semestre 2026
+                    </button>
+                    <button 
+                        onClick={() => setActiveTab(2)}
+                        className={`px-6 py-2.5 rounded-xl text-sm font-black transition-all ${activeTab === 2 ? 'bg-cyan-50 text-cyan-700 shadow-sm' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'}`}
+                    >
+                        2do Semestre 2026
+                    </button>
+                </div>
+            )}
+
+            {/* Content */}
+            {activeTab === 1 && sem1.length > 0 && <TableSection title="Primer Semestre 2026" data={sem1} colorClass="text-blue-600" />}
+            {activeTab === 2 && sem2.length > 0 && <TableSection title="Segundo Semestre 2026" data={sem2} colorClass="text-emerald-600" />}
+
+            {(activeTab === 1 && sem1.length === 0 && report.length > 0) && (
+                <div className="p-12 text-center flex flex-col items-center bg-white rounded-[32px] border border-gray-100 shadow-sm">
+                    <span className="text-4xl mb-4 text-slate-300">📅</span>
+                    <h3 className="text-lg font-bold text-slate-700">Sin datos para el 1er Semestre</h3>
+                </div>
+            )}
+            
+            {(activeTab === 2 && sem2.length === 0 && report.length > 0) && (
+                <div className="p-12 text-center flex flex-col items-center bg-white rounded-[32px] border border-gray-100 shadow-sm">
+                    <span className="text-4xl mb-4 text-slate-300">📅</span>
+                    <h3 className="text-lg font-bold text-slate-700">Sin datos para el 2do Semestre</h3>
+                </div>
+            )}
 
             {report.length === 0 && (
                 <div className="p-20 text-center flex flex-col items-center">

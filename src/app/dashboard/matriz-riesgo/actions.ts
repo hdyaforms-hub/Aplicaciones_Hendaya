@@ -8,7 +8,8 @@ import crypto from 'crypto'
 
 export async function searchColegiosMatriz(query: string) {
     const session = await getSession()
-    if (!session?.user?.role?.permissions.includes('manage_matriz_2026')) {
+    const perms = session?.user?.role?.permissions || []
+    if (!perms.includes('manage_matriz_2026') && !perms.includes('fill_nueva_matriz')) {
         return { error: 'No tienes permisos para esta acción.' }
     }
 
@@ -19,30 +20,46 @@ export async function searchColegiosMatriz(query: string) {
 
     try {
         let allowedUTs: number[] = []
+        let userRbds: number[] = []
         if (!isAdmin) {
             const dbUser = await (prisma.user as any).findUnique({
                 where: { id: session?.user?.id as string },
                 include: { sucursales: true }
             })
             const userSucursalNames = dbUser?.sucursales?.map((s: any) => s.nombre) || []
-            const uts = await prisma.uT.findMany({
-                where: { sucursal: { nombre: { in: userSucursalNames } } },
-                select: { codUT: true }
-            })
-            allowedUTs = uts.map(ut => ut.codUT)
+            userRbds = dbUser?.rbds || []
+            
+            if (userSucursalNames.length > 0) {
+                const uts = await prisma.uT.findMany({
+                    where: { sucursal: { nombre: { in: userSucursalNames } } },
+                    select: { codUT: true }
+                })
+                allowedUTs = uts.map(ut => ut.codUT)
+            }
         }
 
         const baseWhere: any = {
             isActive: true, // Solo colegios activos
             OR: [
                 ...(isNumeric ? [{ colRBD: Number(query) }] : []),
-                { nombreEstablecimiento: { contains: query } }
+                { nombreEstablecimiento: { contains: query, mode: 'insensitive' } }
             ]
         }
 
-        const finalWhere = isAdmin ? baseWhere : {
-            ...baseWhere,
-            colut: { in: allowedUTs }
+        let finalWhere: any = baseWhere
+        if (!isAdmin) {
+            const orConditions = []
+            if (allowedUTs.length > 0) orConditions.push({ colut: { in: allowedUTs } })
+            if (userRbds.length > 0) orConditions.push({ colRBD: { in: userRbds } })
+
+            if (orConditions.length > 0) {
+                finalWhere = {
+                    ...baseWhere,
+                    AND: [{ OR: orConditions }]
+                }
+            } else {
+                finalWhere = { ...baseWhere, id: 'NO_DATA' }
+            }
         }
 
         const colegios = await prisma.colegiosMatriz.findMany({

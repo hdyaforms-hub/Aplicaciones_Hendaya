@@ -971,6 +971,60 @@ exports.Prisma.Det_LeePdfEstandarPaeScalarFieldEnum = {
   Otros_Comentarios: 'Otros_Comentarios'
 };
 
+exports.Prisma.MatrizT_CabeceraScalarFieldEnum = {
+  id: 'id',
+  licId: 'licId',
+  anio: 'anio',
+  titulo: 'titulo',
+  estado: 'estado',
+  instrucciones: 'instrucciones',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.MatrizT_DetalleScalarFieldEnum = {
+  id: 'id',
+  cabeceraId: 'cabeceraId',
+  preguntaNombre: 'preguntaNombre',
+  tipoRespuesta: 'tipoRespuesta',
+  obligatorio: 'obligatorio',
+  seccion: 'seccion',
+  orden: 'orden',
+  gravedad: 'gravedad',
+  probabilidad: 'probabilidad',
+  nivelRiesgo: 'nivelRiesgo',
+  justificacion: 'justificacion',
+  riesgoSignificativo: 'riesgoSignificativo',
+  recursoNecesario: 'recursoNecesario',
+  resultadoEsperado: 'resultadoEsperado',
+  respImplementacion: 'respImplementacion',
+  respSeguimiento: 'respSeguimiento',
+  evidenciaCumplimiento: 'evidenciaCumplimiento',
+  evidenciaEficacia: 'evidenciaEficacia'
+};
+
+exports.Prisma.MatrizT_RespuestasCabeceraScalarFieldEnum = {
+  id: 'id',
+  cabeceraId: 'cabeceraId',
+  usuario: 'usuario',
+  fechaIngreso: 'fechaIngreso',
+  supervisorNombre: 'supervisorNombre',
+  supervisorCorreo: 'supervisorCorreo',
+  licId: 'licId',
+  ut: 'ut',
+  rbd: 'rbd',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.MatrizT_RespuestasDetalleScalarFieldEnum = {
+  id: 'id',
+  respuestaCabeceraId: 'respuestaCabeceraId',
+  preguntaId: 'preguntaId',
+  valor: 'valor',
+  adjuntoUrl: 'adjuntoUrl'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1053,7 +1107,11 @@ exports.Prisma.ModelName = {
   DistanciaCache: 'DistanciaCache',
   ConsumoApiGoogle: 'ConsumoApiGoogle',
   Cab_LeePdfEstandarPae: 'Cab_LeePdfEstandarPae',
-  Det_LeePdfEstandarPae: 'Det_LeePdfEstandarPae'
+  Det_LeePdfEstandarPae: 'Det_LeePdfEstandarPae',
+  MatrizT_Cabecera: 'MatrizT_Cabecera',
+  MatrizT_Detalle: 'MatrizT_Detalle',
+  MatrizT_RespuestasCabecera: 'MatrizT_RespuestasCabecera',
+  MatrizT_RespuestasDetalle: 'MatrizT_RespuestasDetalle'
 };
 
 /**
