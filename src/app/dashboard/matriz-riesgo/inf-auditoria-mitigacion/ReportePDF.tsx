@@ -8,9 +8,17 @@ export function ReportePDF({ data, divRef }: { data: any, divRef: React.RefObjec
     const { respuestaCabecera, colegio, mitigaciones } = data;
     const plantilla = respuestaCabecera.cabecera;
 
+    const PROBLEM_VALUES = [
+        'NO', 'NO_EXISTE', 'MALO_NO_CUMPLE', 'NO_HAY_REQUIERE',
+        'No Cumple', 'Malo requiere cambio o reparación / No Cumple', 'No hay y requiere instalar', 'Mal Estado'
+    ];
+
     const getEstadoPregunta = (pregunta: any, respuestaValor: string) => {
         if (!respuestaValor) return { texto: 'Sin respuesta', color: 'bg-[#f1f5f9]', claseTexto: 'text-[#1e293b]' }
-        if (respuestaValor === 'BUENO_CUMPLE' || respuestaValor === 'SI' || respuestaValor === 'EXISTE') {
+        
+        const isProblem = PROBLEM_VALUES.includes(respuestaValor)
+
+        if (!isProblem) {
             return { texto: 'Bueno / Cumple', color: 'bg-[#ffffff]', claseTexto: 'text-[#000000]' }
         }
         
@@ -79,7 +87,7 @@ export function ReportePDF({ data, divRef }: { data: any, divRef: React.RefObjec
                         {preguntas.map((p: any) => {
                             const respuesta = respuestaCabecera.detalles.find((r: any) => r.preguntaId === p.id)
                             const estadoInfo = getEstadoPregunta(p, respuesta?.valor)
-                            const esIncidencia = estadoInfo.texto.includes('riesgo')
+                            const isProblem = PROBLEM_VALUES.includes(respuesta?.valor)
                             const mitigacion = getMitigacionInfo(p.id)
                             
                             return (
@@ -89,10 +97,10 @@ export function ReportePDF({ data, divRef }: { data: any, divRef: React.RefObjec
                                         {estadoInfo.texto}
                                     </td>
                                     <td className="p-1 align-middle text-center" style={{ border: '1px solid #000000' }}>
-                                        {esIncidencia ? calculateFechaTope(respuestaCabecera.fechaIngreso, p.nivelRiesgo || p.gravedad || 3) : ''}
+                                        {isProblem ? calculateFechaTope(respuestaCabecera.fechaIngreso, p.nivelRiesgo || p.gravedad || 3) : ''}
                                     </td>
                                     <td className="p-1 align-middle text-center text-[9px]" style={{ border: '1px solid #000000' }}>
-                                        {esIncidencia && mitigacion && mitigacion.adjuntos && mitigacion.adjuntos !== '[]' ? 'Cuenta con documentación' : ''}
+                                        {isProblem && mitigacion && mitigacion.adjuntos && mitigacion.adjuntos !== '[]' ? 'Cuenta con documentación' : ''}
                                     </td>
                                 </tr>
                             )
@@ -122,8 +130,8 @@ export function ReportePDF({ data, divRef }: { data: any, divRef: React.RefObjec
         const respuesta = respuestaCabecera.detalles.find((r: any) => r.preguntaId === p.id)
         if (!respuesta) return;
 
-        const valor = respuesta.valor
-        if (valor === 'MALO_NO_CUMPLE' || valor === 'NO_HAY_REQUIERE') {
+        const isProblem = PROBLEM_VALUES.includes(respuesta.valor)
+        if (isProblem) {
             const nivel = p.nivelRiesgo || p.gravedad || 3;
             const mitigacion = getMitigacionInfo(p.id)
             const isSolucionado = mitigacion && mitigacion.fechaSolucion;

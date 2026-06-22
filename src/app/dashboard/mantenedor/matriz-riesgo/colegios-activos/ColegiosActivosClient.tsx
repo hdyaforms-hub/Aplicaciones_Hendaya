@@ -1,9 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { toggleColegioMatrizStatus } from '@/app/dashboard/matriz-riesgo/actions'
 import { useRouter } from 'next/navigation'
-import { saveMatrizSemesterConfig } from './actions'
+import { saveMatrizSemesterConfig, getMatrizSemesterConfig } from './actions'
 import { format } from 'date-fns'
 
 export default function ColegiosActivosClient({ initialColegios, initialSemesterConfig }: { initialColegios: any[], initialSemesterConfig: any }) {
@@ -11,9 +11,30 @@ export default function ColegiosActivosClient({ initialColegios, initialSemester
     const [loadingId, setLoadingId] = useState<string | null>(null)
     const [searchTerm, setSearchTerm] = useState('')
     const [sortConfig, setSortConfig] = useState<{ key: string, direction: 'asc' | 'desc' } | null>(null)
+    const currentYear = new Date().getFullYear()
+    const [selectedYear, setSelectedYear] = useState<number>(currentYear)
     const [semesterDate, setSemesterDate] = useState(initialSemesterConfig?.fechaFin1 ? format(new Date(initialSemesterConfig.fechaFin1), 'yyyy-MM-dd') : '')
     const [savingDate, setSavingDate] = useState(false)
+    const [loadingDate, setLoadingDate] = useState(false)
     const router = useRouter()
+
+    useEffect(() => {
+        async function fetchConfig() {
+            setLoadingDate(true)
+            const res = await getMatrizSemesterConfig(selectedYear)
+            if (res.success && res.config?.fechaFin1) {
+                setSemesterDate(format(new Date(res.config.fechaFin1), 'yyyy-MM-dd'))
+            } else {
+                setSemesterDate('')
+            }
+            setLoadingDate(false)
+        }
+        if (selectedYear !== 2026) {
+            fetchConfig()
+        } else {
+            setSemesterDate(initialSemesterConfig?.fechaFin1 ? format(new Date(initialSemesterConfig.fechaFin1), 'yyyy-MM-dd') : '')
+        }
+    }, [selectedYear, initialSemesterConfig])
 
     const handleToggle = async (id: string, currentStatus: boolean) => {
         setLoadingId(id)
@@ -32,7 +53,7 @@ export default function ColegiosActivosClient({ initialColegios, initialSemester
     const handleSaveSemesterDate = async () => {
         if (!semesterDate) return
         setSavingDate(true)
-        const res = await saveMatrizSemesterConfig({ anio: 2026, fechaFin1: semesterDate })
+        const res = await saveMatrizSemesterConfig({ anio: selectedYear, fechaFin1: semesterDate })
         setSavingDate(false)
         if (res.success) {
             router.refresh()
@@ -86,20 +107,33 @@ export default function ColegiosActivosClient({ initialColegios, initialSemester
                     <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
                         <span>🏫</span> Colegios Activos para Matriz
                     </h2>
-                    <p className="text-gray-500 mt-1">Habilite o deshabilite los colegios que participan en la Matriz de Riesgo 2026</p>
+                    <p className="text-gray-500 mt-1">Habilite o deshabilite los colegios que participan en la Matriz de Riesgo {selectedYear}</p>
                     <div className="mt-4 flex flex-col sm:flex-row items-start sm:items-center gap-3 bg-cyan-50 p-4 rounded-2xl border border-cyan-100">
                         <div>
-                            <p className="text-xs font-bold text-cyan-700 uppercase tracking-wider">Fecha término 1er Semestre (Matriz 2026)</p>
+                            <div className="flex items-center gap-3 mb-2">
+                                <p className="text-xs font-bold text-cyan-700 uppercase tracking-wider">Año de Configuración:</p>
+                                <select 
+                                    value={selectedYear}
+                                    onChange={(e) => setSelectedYear(parseInt(e.target.value))}
+                                    className="bg-white border border-cyan-200 rounded-lg p-1.5 text-sm text-black font-medium focus:ring-2 focus:ring-cyan-500 outline-none"
+                                >
+                                    {Array.from({ length: Math.max(5, currentYear + 5 - 2024 + 1) }, (_, i) => 2024 + i).map(y => (
+                                        <option key={y} value={y}>{y}</option>
+                                    ))}
+                                </select>
+                            </div>
+                            <p className="text-xs font-bold text-cyan-700 uppercase tracking-wider mt-3">Fecha término 1er Semestre (Matriz {selectedYear})</p>
                             <div className="flex items-center gap-2 mt-1">
                                 <input 
                                     type="date"
-                                    className="bg-white border border-cyan-200 rounded-lg p-2 text-sm text-black font-medium focus:ring-2 focus:ring-cyan-500 outline-none"
+                                    className="bg-white border border-cyan-200 rounded-lg p-2 text-sm text-black font-medium focus:ring-2 focus:ring-cyan-500 outline-none disabled:opacity-50"
                                     value={semesterDate}
                                     onChange={(e) => setSemesterDate(e.target.value)}
+                                    disabled={loadingDate}
                                 />
                                 <button 
                                     onClick={handleSaveSemesterDate}
-                                    disabled={savingDate || !semesterDate}
+                                    disabled={savingDate || !semesterDate || loadingDate}
                                     className="bg-cyan-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-cyan-700 transition-colors disabled:opacity-50"
                                 >
                                     {savingDate ? '...' : 'Actualizar'}

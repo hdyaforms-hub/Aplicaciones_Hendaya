@@ -20,6 +20,7 @@ export default async function RolesPage() {
 
     // Lista de permisos disponibles en el sistema
     const availablePermissions = [
+        { id: 'view_dashboard_home', name: 'Estadísticas de Inicio', description: 'Acceso visual a estadísticas globales y Estado PMPA en la pantalla de inicio.', category: 'TABLEROS' },
         { id: 'view_tablero', name: 'Tablero de Control', description: 'Acceso visual al reporte gráfico general.', category: 'TABLEROS' },
         { id: 'view_tablero_pan', name: 'Tablero Avance Pan', description: 'Acceso detallado al tablero de analítica de pan.', category: 'TABLEROS' },
         { id: 'view_tablero_gas', name: 'Tablero Avance Gas', description: 'Acceso detallado al tablero de analítica de gas.', category: 'TABLEROS' },

@@ -3,13 +3,17 @@ import { redirect } from 'next/navigation'
 import MitigacionClient from './MitigacionClient'
 import { getMitigacionData } from './actions'
 
-export default async function MitigacionPage() {
+export default async function MitigacionPage({ searchParams }: { searchParams: Promise<{ year?: string }> }) {
     const session = await getSession()
     if (!session?.user?.role?.permissions.includes('manage_mitigacion')) {
         redirect('/dashboard')
     }
 
-    const data = await getMitigacionData(1) // Default 1er semestre
+    const currentYear = new Date().getFullYear()
+    const resolvedParams = await searchParams
+    const selectedYear = resolvedParams.year ? parseInt(resolvedParams.year) : currentYear
+
+    const data = await getMitigacionData(selectedYear) // Fetch all year
 
     return (
         <div className="space-y-6">
@@ -23,17 +27,12 @@ export default async function MitigacionPage() {
                 </p>
             </div>
 
-            {data.error ? (
-                <div className="p-8 bg-red-50 text-red-700 rounded-3xl border border-red-100 font-bold">
-                    {data.error}
-                </div>
-            ) : (
-                <MitigacionClient 
-                    initialEvaluaciones={data.matrices || []} 
-                    initialMitigaciones={data.mitigaciones || []}
-                    cutoffDate={data.cutoffDate || new Date().toISOString()}
-                />
-            )}
+            <MitigacionClient 
+                initialEvaluaciones={data.matrices || []} 
+                initialMitigaciones={data.mitigaciones || []}
+                cutoffDate={data.cutoffDate || new Date().toISOString()}
+                error={data.error}
+            />
         </div>
     )
 }

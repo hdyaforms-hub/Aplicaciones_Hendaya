@@ -3,6 +3,7 @@
 import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { revalidatePath } from 'next/cache'
+import { endOfMonth } from 'date-fns'
 
 async function getUserFilters() {
     const session = await getSession();
@@ -24,30 +25,27 @@ async function getUserFilters() {
     return { isAdmin, userSucursales, allowedUTs, userRbds };
 }
 
-export async function getMitigacionData(semestre: 1 | 2 = 1) {
+export async function getMitigacionData(year: number = new Date().getFullYear()) {
     const session = await getSession()
     if (!session?.user?.role?.permissions.includes('manage_mitigacion')) {
         return { error: 'No tienes permisos para esta acción.' }
     }
 
     try {
-        const configSemestre = await prisma.matrizConfigSemestre.findUnique({ where: { anio: 2026 } })
-        if (!configSemestre) return { error: 'Debe configurar la fecha de fin del 1er semestre en Colegios Activos.' }
+        const configSemestre = await prisma.matrizConfigSemestre.findUnique({ where: { anio: year } })
+        if (!configSemestre) return { error: `Debe configurar la fecha de corte para el año ${year} en Colegios Activos.` }
 
         const cutoffDate = new Date(configSemestre.fechaFin1)
         
-        // Filtrar por semestre
-        const dateFilter = semestre === 1 
-            ? { lte: cutoffDate }
-            : { gt: cutoffDate }
+        const startDate = new Date(year, 2, 1); // 1 de Marzo
+        const endDate = endOfMonth(new Date(year + 1, 1)); // Fin de Febrero sgte año
 
         const { isAdmin, allowedUTs, userRbds } = await getUserFilters()
         
         const where: any = {
             fechaIngreso: {
-                ...dateFilter,
-                gte: new Date('2026-01-01'),
-                lt: new Date('2027-01-01')
+                gte: startDate,
+                lte: endDate
             }
         }
         
@@ -64,7 +62,7 @@ export async function getMitigacionData(semestre: 1 | 2 = 1) {
         }
 
         // Obtener respuestas (evaluaciones realizadas)
-        const matrices = await prisma.matrizT_RespuestasCabecera.findMany({
+        const matricesDb = await prisma.matrizT_RespuestasCabecera.findMany({
             where,
             include: {
                 cabecera: {
@@ -76,6 +74,19 @@ export async function getMitigacionData(semestre: 1 | 2 = 1) {
             },
             orderBy: { fechaIngreso: 'desc' }
         })
+
+        // Obtener nombres de colegios
+        const rbds = Array.from(new Set(matricesDb.map(m => m.rbd)))
+        const colegios = await prisma.colegiosMatriz.findMany({
+            where: { colRBD: { in: rbds } },
+            select: { colRBD: true, nombreEstablecimiento: true }
+        })
+        const colegiosMap = new Map(colegios.map(c => [c.colRBD, c.nombreEstablecimiento]))
+
+        const matrices = matricesDb.map(m => ({
+            ...m,
+            nombreColegio: colegiosMap.get(m.rbd) || `RBD ${m.rbd}`
+        }))
 
         // Mitigaciones ya guardadas
         const mitigaciones = await prisma.matrizMitigacion.findMany()

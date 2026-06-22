@@ -2,7 +2,7 @@
 
 import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
-import { isBefore, isAfter, startOfYear, endOfYear } from 'date-fns'
+import { isBefore, isAfter, endOfMonth } from 'date-fns'
 
 async function getUserFilters() {
     const session = await getSession();
@@ -31,15 +31,15 @@ const PROBLEM_VALUES = [
     'NO_HAY_REQUIERE'
 ]
 
-export async function getEstadoAvanceData() {
+export async function getEstadoAvanceData(year: number = new Date().getFullYear()) {
     const session = await getSession()
     if (!session?.user?.role?.permissions.includes('view_estado_avance')) {
         return { error: 'Sin permisos.' }
     }
 
     try {
-        const configSemestre = await prisma.matrizConfigSemestre.findUnique({ where: { anio: 2026 } })
-        if (!configSemestre) return { error: 'Debe configurar la fecha de corte en Colegios Activos.' }
+        const configSemestre = await prisma.matrizConfigSemestre.findUnique({ where: { anio: year } })
+        if (!configSemestre) return { error: `Debe configurar la fecha de corte para el año ${year} en Colegios Activos.` }
         
         const cutoff = new Date(configSemestre.fechaFin1)
         
@@ -61,10 +61,13 @@ export async function getEstadoAvanceData() {
         const adjudicados = await prisma.colegiosMatriz.findMany({ where: adjudicadosWhere })
         
         // 2. Obtener todas las matrices (evaluaciones) del nuevo sistema
+        const startDate = new Date(year, 2, 1); // 1 de Marzo del año actual
+        const endDate = endOfMonth(new Date(year + 1, 1)); // Último día de Febrero del año siguiente
+
         const matricesWhere: any = {
             fechaIngreso: {
-                gte: startOfYear(new Date('2026-01-01')),
-                lte: endOfYear(new Date('2026-12-31'))
+                gte: startDate,
+                lte: endDate
             }
         }
         if (!isAdmin) {

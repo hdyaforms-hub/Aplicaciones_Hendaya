@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { saveMatrixHeader, deleteMatrix, duplicateMatrix } from './actions'
+import { saveMatrixHeader, deleteMatrix, duplicateMatrix, toggleMatrixState } from './actions'
 
 type Licitacion = {
     licId: number
@@ -46,6 +46,14 @@ export default function NuevaMatrizDashboard({
     const [loading, setLoading] = useState(false)
     const [actionId, setActionId] = useState<string | null>(null)
     const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
+
+    // Duplicate Modal State
+    const [isDuplicateModalOpen, setIsDuplicateModalOpen] = useState(false)
+    const [matrizToDuplicate, setMatrizToDuplicate] = useState<Matriz | null>(null)
+    const [duplicateLicId, setDuplicateLicId] = useState<string>('')
+    const [duplicateTitulo, setDuplicateTitulo] = useState<string>('')
+    const [duplicateAnio, setDuplicateAnio] = useState<string>('')
+    const [duplicateEstado, setDuplicateEstado] = useState<boolean>(false)
 
     const handleReset = () => {
         setSelectedId(undefined)
@@ -126,13 +134,24 @@ export default function NuevaMatrizDashboard({
         }
     }
 
-    const handleDuplicate = async (matriz: Matriz) => {
-        if (!confirm(`¿Desea crear una copia de la matriz "${matriz.titulo}" con todas sus preguntas y configuraciones?`)) {
+    const handleDuplicateClick = (matriz: Matriz) => {
+        setMatrizToDuplicate(matriz)
+        setDuplicateLicId(matriz.licId.toString())
+        setDuplicateTitulo(`Copia de ${matriz.titulo}`)
+        setDuplicateAnio(matriz.anio.toString())
+        setDuplicateEstado(false) // Default to inactive
+        setIsDuplicateModalOpen(true)
+    }
+
+    const confirmDuplicate = async () => {
+        if (!matrizToDuplicate || !duplicateLicId || !duplicateTitulo || !duplicateAnio) {
+            alert('Por favor complete todos los campos.')
             return
         }
 
-        setActionId(matriz.id)
-        const res = await duplicateMatrix(matriz.id)
+        setActionId(matrizToDuplicate.id)
+        setIsDuplicateModalOpen(false)
+        const res = await duplicateMatrix(matrizToDuplicate.id, Number(duplicateLicId), duplicateTitulo, Number(duplicateAnio), duplicateEstado)
         setActionId(null)
 
         if (res.success && res.duplicatedId) {
@@ -140,6 +159,21 @@ export default function NuevaMatrizDashboard({
             router.push(`/dashboard/mantenedor/matriz-riesgo/nueva-matriz/${res.duplicatedId}`)
         } else {
             alert(res.error || 'Error al duplicar la matriz.')
+        }
+        setMatrizToDuplicate(null)
+    }
+
+    const handleToggleState = async (matriz: Matriz) => {
+        setActionId(matriz.id)
+        const newState = !matriz.estado
+        const res = await toggleMatrixState(matriz.id, newState)
+        setActionId(null)
+
+        if (res.success) {
+            setMatrices(prev => prev.map(m => m.id === matriz.id ? { ...m, estado: newState } : m))
+            router.refresh()
+        } else {
+            alert(res.error || 'Error al cambiar el estado.')
         }
     }
 
@@ -298,14 +332,19 @@ export default function NuevaMatrizDashboard({
                                         </Link>
                                     </td>
                                     <td className="px-6 py-4">
-                                        <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold ${
-                                            m.estado 
-                                                ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' 
-                                                : 'bg-slate-50 text-slate-500 border border-slate-100'
-                                        }`}>
-                                            <span className={`w-1.5 h-1.5 rounded-full ${m.estado ? 'bg-emerald-500' : 'bg-slate-400'}`}></span>
+                                        <button 
+                                            onClick={() => handleToggleState(m)}
+                                            disabled={actionId === m.id}
+                                            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-all ${
+                                                m.estado 
+                                                    ? 'bg-emerald-50 text-emerald-700 border border-emerald-100 hover:bg-emerald-100' 
+                                                    : 'bg-slate-50 text-slate-500 border border-slate-100 hover:bg-slate-100'
+                                            } ${actionId === m.id ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                            title="Clic para cambiar el estado"
+                                        >
+                                            <span className={`w-2 h-2 rounded-full shadow-inner ${m.estado ? 'bg-emerald-500 shadow-emerald-400/50' : 'bg-slate-400 shadow-slate-300/50'}`}></span>
                                             {m.estado ? 'Vigente' : 'No vigente'}
-                                        </span>
+                                        </button>
                                     </td>
                                     <td className="px-6 py-4 text-right">
                                         <div className="flex justify-end gap-2">
@@ -317,7 +356,7 @@ export default function NuevaMatrizDashboard({
                                                 Editar Cabecera
                                             </button>
                                             <button
-                                                onClick={() => handleDuplicate(m)}
+                                                onClick={() => handleDuplicateClick(m)}
                                                 disabled={actionId === m.id}
                                                 className="px-3 py-1.5 bg-sky-50 border border-sky-100 text-sky-700 rounded-lg text-xs font-bold hover:bg-sky-100 transition-all"
                                             >
@@ -345,6 +384,85 @@ export default function NuevaMatrizDashboard({
                     </table>
                 </div>
             </div>
+            {/* Duplicate Modal */}
+            {isDuplicateModalOpen && (
+                <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
+                    <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl animate-in zoom-in-95 duration-200">
+                        <h3 className="text-xl font-black text-slate-800 mb-2">Duplicar Matriz</h3>
+                        <p className="text-sm text-slate-500 mb-6">Se copiarán todas las preguntas y configuraciones de la matriz original.</p>
+                        
+                        <div className="space-y-4 mb-8">
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Licitación de destino</label>
+                                    <select
+                                        value={duplicateLicId}
+                                        onChange={(e) => setDuplicateLicId(e.target.value)}
+                                        className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-sky-500 outline-none text-slate-800 font-semibold text-sm"
+                                    >
+                                        <option value="">Seleccione...</option>
+                                        {licitaciones.map(l => (
+                                            <option key={l.licId} value={l.licId}>
+                                                {l.licitacionHomologada || `Licitación ${l.licId}`}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Año</label>
+                                    <input
+                                        type="number"
+                                        min="2020"
+                                        max="2050"
+                                        value={duplicateAnio}
+                                        onChange={(e) => setDuplicateAnio(e.target.value)}
+                                        className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-sky-500 outline-none text-slate-800 font-semibold text-sm"
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Nuevo Título</label>
+                                <input
+                                    type="text"
+                                    value={duplicateTitulo}
+                                    onChange={(e) => setDuplicateTitulo(e.target.value)}
+                                    className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-sky-500 outline-none text-slate-800 font-semibold text-sm"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Estado Inicial</label>
+                                <div className="flex items-center gap-3">
+                                    <button
+                                        type="button"
+                                        onClick={() => setDuplicateEstado(!duplicateEstado)}
+                                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${duplicateEstado ? 'bg-emerald-500' : 'bg-gray-200'}`}
+                                    >
+                                        <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${duplicateEstado ? 'translate-x-6' : 'translate-x-1'}`} />
+                                    </button>
+                                    <span className={`text-xs font-bold ${duplicateEstado ? 'text-emerald-700' : 'text-gray-400'}`}>
+                                        {duplicateEstado ? 'VIGENTE' : 'NO VIGENTE'}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="flex gap-3 justify-end">
+                            <button
+                                onClick={() => setIsDuplicateModalOpen(false)}
+                                className="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold text-sm transition-colors"
+                            >
+                                Cancelar
+                            </button>
+                            <button
+                                onClick={confirmDuplicate}
+                                className="px-5 py-2.5 bg-sky-600 hover:bg-sky-700 text-white rounded-xl font-bold text-sm transition-colors shadow-md shadow-sky-600/20"
+                            >
+                                Confirmar y Duplicar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

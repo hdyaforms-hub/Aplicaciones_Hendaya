@@ -3,13 +3,17 @@ import { redirect } from 'next/navigation'
 import EstadoAvanceClient from './EstadoAvanceClient'
 import { getEstadoAvanceData } from './actions'
 
-export default async function EstadoAvancePage() {
+export default async function EstadoAvancePage({ searchParams }: { searchParams: Promise<{ year?: string }> }) {
     const session = await getSession()
     if (!session?.user?.role?.permissions.includes('view_estado_avance')) {
         redirect('/dashboard')
     }
 
-    const data = await getEstadoAvanceData()
+    const currentYear = new Date().getFullYear()
+    const resolvedParams = await searchParams
+    const selectedYear = resolvedParams.year ? parseInt(resolvedParams.year) : currentYear
+
+    const data = await getEstadoAvanceData(selectedYear)
 
     return (
         <div className="space-y-6">
@@ -20,18 +24,12 @@ export default async function EstadoAvancePage() {
                         Estado de Avance
                     </h1>
                     <p className="text-gray-500 mt-2 text-lg">
-                        Reporte consolidado de auditorías y mitigación Matriz 2026.
+                        Reporte consolidado de auditorías y mitigación Matriz {selectedYear}.
                     </p>
                 </div>
             </div>
 
-            {data.error ? (
-                <div className="p-12 bg-red-50 text-red-700 rounded-3xl border border-red-100 font-bold text-center">
-                    {data.error}
-                </div>
-            ) : (
-                <EstadoAvanceClient initialReport={data.report || []} />
-            )}
+            <EstadoAvanceClient initialReport={data.report || []} error={data.error} />
         </div>
     )
 }

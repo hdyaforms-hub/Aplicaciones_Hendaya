@@ -3,13 +3,17 @@ import { redirect } from 'next/navigation'
 import AuditoriaClient from './AuditoriaClient'
 import { getAuditoriaData } from './actions'
 
-export default async function AuditoriaPage() {
+export default async function AuditoriaPage({ searchParams }: { searchParams: Promise<{ year?: string }> }) {
     const session = await getSession()
     if (!session?.user?.role?.permissions.includes('view_auditoria')) {
         redirect('/dashboard')
     }
 
-    const data = await getAuditoriaData()
+    const currentYear = new Date().getFullYear()
+    const resolvedParams = await searchParams
+    const selectedYear = resolvedParams.year ? parseInt(resolvedParams.year) : currentYear
+
+    const data = await getAuditoriaData(selectedYear)
 
     return (
         <div className="space-y-6">
@@ -24,18 +28,13 @@ export default async function AuditoriaPage() {
                 </p>
             </div>
 
-            {data.error ? (
-                <div className="p-8 bg-red-50 text-red-700 rounded-3xl border border-red-100 font-bold">
-                    {data.error}
-                </div>
-            ) : (
-                <AuditoriaClient 
-                    respuestas={data.respuestas || []} 
-                    cabecerasConfig={data.cabecerasConfig || []}
-                    colegios={data.colegios || []}
-                    mitigaciones={data.mitigaciones || []}
-                />
-            )}
+            <AuditoriaClient 
+                respuestas={data.respuestas || []} 
+                cabecerasConfig={data.cabecerasConfig || []}
+                colegios={data.colegios || []}
+                mitigaciones={data.mitigaciones || []}
+                error={data.error}
+            />
         </div>
     )
 }

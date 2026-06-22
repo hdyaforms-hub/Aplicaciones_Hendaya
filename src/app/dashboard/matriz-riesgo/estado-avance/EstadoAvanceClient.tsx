@@ -2,9 +2,18 @@
 
 import { useState } from 'react'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts'
+import { useRouter, useSearchParams } from 'next/navigation'
 
-export default function EstadoAvanceClient({ initialReport }: { initialReport: any[] }) {
-    const [report] = useState(initialReport)
+export default function EstadoAvanceClient({ initialReport, error }: { initialReport: any[], error?: string }) {
+    const router = useRouter()
+    const searchParams = useSearchParams()
+    const currentYear = new Date().getFullYear()
+    const selectedYear = searchParams.get('year') ? parseInt(searchParams.get('year')!) : currentYear
+    
+    // Generar años desde 2024 hasta 5 años en el futuro
+    const availableYears = Array.from({ length: Math.max(5, currentYear + 5 - 2024 + 1) }, (_, i) => 2024 + i)
+    
+    const report = initialReport
 
     const sem1 = report.filter(r => r.semestre === 1)
     const sem2 = report.filter(r => r.semestre === 2)
@@ -149,29 +158,49 @@ export default function EstadoAvanceClient({ initialReport }: { initialReport: a
 
     return (
         <div className="space-y-6 pb-20">
-            {/* Tabs */}
-            {report.length > 0 && (
-                <div className="bg-white p-2 rounded-2xl shadow-sm border border-gray-100 flex gap-2 w-fit">
-                    <button 
-                        onClick={() => setActiveTab(1)}
-                        className={`px-6 py-2.5 rounded-xl text-sm font-black transition-all ${activeTab === 1 ? 'bg-cyan-50 text-cyan-700 shadow-sm' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'}`}
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div className="flex items-center gap-3">
+                    <label className="text-sm font-bold text-slate-700">Año:</label>
+                    <select 
+                        value={selectedYear}
+                        onChange={(e) => router.push(`?year=${e.target.value}`)}
+                        className="p-2 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-cyan-500 font-medium outline-none"
                     >
-                        1er Semestre 2026
-                    </button>
-                    <button 
-                        onClick={() => setActiveTab(2)}
-                        className={`px-6 py-2.5 rounded-xl text-sm font-black transition-all ${activeTab === 2 ? 'bg-cyan-50 text-cyan-700 shadow-sm' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'}`}
-                    >
-                        2do Semestre 2026
-                    </button>
+                        {availableYears.map(y => (
+                            <option key={y} value={y}>{y}</option>
+                        ))}
+                    </select>
+                </div>
+                {report.length > 0 && !error && (
+                    <div className="bg-white p-2 rounded-2xl shadow-sm border border-gray-100 flex gap-2 w-fit">
+                        <button 
+                            onClick={() => setActiveTab(1)}
+                            className={`px-6 py-2.5 rounded-xl text-sm font-black transition-all ${activeTab === 1 ? 'bg-cyan-50 text-cyan-700 shadow-sm' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'}`}
+                        >
+                            1er Semestre {selectedYear}
+                        </button>
+                        <button 
+                            onClick={() => setActiveTab(2)}
+                            className={`px-6 py-2.5 rounded-xl text-sm font-black transition-all ${activeTab === 2 ? 'bg-cyan-50 text-cyan-700 shadow-sm' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'}`}
+                        >
+                            2do Semestre {selectedYear}
+                        </button>
+                    </div>
+                )}
+            </div>
+
+            {/* Error Message */}
+            {error && (
+                <div className="p-12 bg-red-50 text-red-700 rounded-3xl border border-red-100 font-bold text-center">
+                    {error}
                 </div>
             )}
 
             {/* Content */}
-            {activeTab === 1 && sem1.length > 0 && <TableSection title="Primer Semestre 2026" data={sem1} colorClass="text-blue-600" />}
-            {activeTab === 2 && sem2.length > 0 && <TableSection title="Segundo Semestre 2026" data={sem2} colorClass="text-emerald-600" />}
+            {!error && activeTab === 1 && sem1.length > 0 && <TableSection title={`Primer Semestre ${selectedYear}`} data={sem1} colorClass="text-blue-600" />}
+            {!error && activeTab === 2 && sem2.length > 0 && <TableSection title={`Segundo Semestre ${selectedYear}`} data={sem2} colorClass="text-emerald-600" />}
 
-            {(activeTab === 1 && sem1.length === 0 && report.length > 0) && (
+            {(!error && activeTab === 1 && sem1.length === 0 && report.length > 0) && (
                 <div className="p-12 text-center flex flex-col items-center bg-white rounded-[32px] border border-gray-100 shadow-sm">
                     <span className="text-4xl mb-4 text-slate-300">📅</span>
                     <h3 className="text-lg font-bold text-slate-700">Sin datos para el 1er Semestre</h3>
@@ -185,7 +214,7 @@ export default function EstadoAvanceClient({ initialReport }: { initialReport: a
                 </div>
             )}
 
-            {report.length === 0 && (
+            {(!error && report.length === 0) && (
                 <div className="p-20 text-center flex flex-col items-center">
                     <span className="text-6xl mb-4">📊</span>
                     <h3 className="text-xl font-black text-slate-900">Sin datos disponibles</h3>

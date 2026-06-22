@@ -1,9 +1,9 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { format, addDays, isAfter, isBefore, differenceInDays } from 'date-fns'
 import { saveMitigacionAction } from './actions'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import MitigacionFileUploader from './MitigacionFileUploader'
 
 const PROBLEM_VALUES = ['NO', 'NO_EXISTE', 'MALO_NO_CUMPLE', 'NO_HAY_REQUIERE']
@@ -11,29 +11,32 @@ const PROBLEM_VALUES = ['NO', 'NO_EXISTE', 'MALO_NO_CUMPLE', 'NO_HAY_REQUIERE']
 export default function MitigacionClient({ 
     initialEvaluaciones, 
     initialMitigaciones,
-    cutoffDate 
+    cutoffDate,
+    error
 }: { 
     initialEvaluaciones: any[], 
     initialMitigaciones: any[],
-    cutoffDate: Date | string
+    cutoffDate: Date | string,
+    error?: string
 }) {
-    const [evaluaciones] = useState(initialEvaluaciones)
-    const [mitigaciones, setMitigaciones] = useState(initialMitigaciones)
+    const evaluaciones = initialEvaluaciones
+    const mitigaciones = initialMitigaciones
     const [semestre, setSemestre] = useState<1 | 2>(1)
     const [selectedEvaluacionId, setSelectedEvaluacionId] = useState<string | null>(null)
     const [saving, setSaving] = useState<string | null>(null)
     const [selectedImage, setSelectedImage] = useState<string | null>(null)
+    const [filterStatus, setFilterStatus] = useState<'PENDIENTES' | 'FINALIZADAS'>('PENDIENTES')
+    const [searchQuery, setSearchQuery] = useState('')
+    const [showDropdown, setShowDropdown] = useState(false)
+    
     const router = useRouter()
+    const searchParams = useSearchParams()
+    
+    const currentYear = new Date().getFullYear()
+    const selectedYear = searchParams.get('year') ? parseInt(searchParams.get('year')!) : currentYear
+    const availableYears = Array.from({ length: Math.max(5, currentYear + 5 - 2024 + 1) }, (_, i) => 2024 + i)
 
     const cutoff = new Date(cutoffDate)
-
-    const filteredEvaluaciones = useMemo(() => {
-        return evaluaciones.filter(evaluacion => {
-            const evalDate = new Date(evaluacion.fechaIngreso)
-            if (semestre === 1) return isBefore(evalDate, cutoff) || evalDate.getTime() === cutoff.getTime()
-            return isAfter(evalDate, cutoff)
-        })
-    }, [evaluaciones, semestre, cutoff])
 
     const getProblems = (evaluacion: any) => {
         const problems: any[] = []
@@ -80,6 +83,41 @@ export default function MitigacionClient({
         return problems
     }
 
+    const isFinalizada = (ev: any) => {
+        const problems = getProblems(ev)
+        const solved = problems.filter(p => p.mitigacion?.fechaSolucion).length
+        return problems.length === 0 || solved === problems.length
+    }
+
+    const filteredEvaluaciones = useMemo(() => {
+        return evaluaciones.filter(evaluacion => {
+            const evalDate = new Date(evaluacion.fechaIngreso)
+            const inSemestre = semestre === 1 
+                ? (isBefore(evalDate, cutoff) || evalDate.getTime() === cutoff.getTime())
+                : isAfter(evalDate, cutoff)
+                
+            if (!inSemestre) return false
+
+            const matchSearch = evaluacion.rbd.toString().includes(searchQuery) || 
+                                (evaluacion.cabecera?.titulo || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                (evaluacion.nombreColegio || '').toLowerCase().includes(searchQuery.toLowerCase())
+            
+            if (searchQuery && !matchSearch) return false
+
+            const fin = isFinalizada(evaluacion)
+            if (filterStatus === 'PENDIENTES' && fin) return false
+            if (filterStatus === 'FINALIZADAS' && !fin) return false
+
+            return true
+        })
+    }, [evaluaciones, semestre, cutoff, searchQuery, filterStatus, mitigaciones])
+
+    useEffect(() => {
+        if (selectedEvaluacionId && !filteredEvaluaciones.some(e => e.id === selectedEvaluacionId)) {
+            setSelectedEvaluacionId(null)
+        }
+    }, [filteredEvaluaciones, selectedEvaluacionId])
+
     const handleSave = async (matrizId: string, preguntaId: string, fechaSolucion: string, adjuntos?: string[]) => {
         const key = `${matrizId}-${preguntaId}`
         setSaving(key)
@@ -113,7 +151,19 @@ export default function MitigacionClient({
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 pb-20">
             {/* Sidebar de Evaluaciones */}
             <div className="lg:col-span-4 space-y-4">
-                <div className="bg-white p-4 rounded-3xl shadow-sm border border-gray-100">
+                <div className="bg-white p-4 rounded-3xl shadow-sm border border-gray-100 flex flex-col gap-3">
+                    <div className="flex justify-between items-center">
+                        <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Año de Matriz:</p>
+                        <select 
+                            value={selectedYear}
+                            onChange={(e) => router.push(`?year=${e.target.value}`)}
+                            className="p-1.5 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-cyan-500 font-medium outline-none text-sm"
+                        >
+                            {availableYears.map(y => (
+                                <option key={y} value={y}>{y}</option>
+                            ))}
+                        </select>
+                    </div>
                     <div className="flex p-1 bg-slate-100 rounded-2xl">
                         <button 
                             onClick={() => setSemestre(1)}
@@ -128,8 +178,69 @@ export default function MitigacionClient({
                             2do Semestre
                         </button>
                     </div>
+                    <div className="relative">
+                        <input 
+                            type="text" 
+                            placeholder="Buscar RBD o Nombre..." 
+                            value={searchQuery}
+                            onChange={(e) => {
+                                setSearchQuery(e.target.value)
+                                setShowDropdown(true)
+                            }}
+                            onFocus={() => setShowDropdown(true)}
+                            onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
+                            className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-cyan-500"
+                        />
+                        {showDropdown && searchQuery && (
+                            <ul className="absolute z-10 w-full bg-white border border-gray-200 rounded-xl mt-1 max-h-60 overflow-y-auto shadow-lg">
+                                {Array.from(new Map(evaluaciones
+                                    .filter(ev => ev.rbd.toString().includes(searchQuery) || (ev.nombreColegio || '').toLowerCase().includes(searchQuery.toLowerCase()))
+                                    .map(ev => [ev.rbd, ev])
+                                ).values()).map((ev: any) => (
+                                    <li
+                                        key={ev.rbd}
+                                        onClick={() => {
+                                            setSearchQuery(ev.rbd.toString())
+                                            setShowDropdown(false)
+                                        }}
+                                        className="p-3 hover:bg-slate-50 cursor-pointer text-sm text-slate-700 border-b border-gray-100 last:border-0"
+                                    >
+                                        <span className="font-bold text-cyan-600 mr-2">{ev.rbd}</span>
+                                        {ev.nombreColegio || 'Sin Nombre'}
+                                    </li>
+                                ))}
+                                {Array.from(new Map(evaluaciones
+                                    .filter(ev => ev.rbd.toString().includes(searchQuery) || (ev.nombreColegio || '').toLowerCase().includes(searchQuery.toLowerCase()))
+                                    .map(ev => [ev.rbd, ev])
+                                ).values()).length === 0 && (
+                                    <li className="p-3 text-sm text-gray-500">No se encontraron resultados</li>
+                                )}
+                            </ul>
+                        )}
+                    </div>
+                    <div className="flex gap-2">
+                        <button 
+                            onClick={() => setFilterStatus('PENDIENTES')}
+                            className={`flex-1 py-1.5 text-xs font-bold rounded-lg border transition-all ${filterStatus === 'PENDIENTES' ? 'bg-orange-50 border-orange-200 text-orange-700' : 'bg-white border-slate-200 text-slate-400 hover:bg-slate-50'}`}
+                        >
+                            Pendientes
+                        </button>
+                        <button 
+                            onClick={() => setFilterStatus('FINALIZADAS')}
+                            className={`flex-1 py-1.5 text-xs font-bold rounded-lg border transition-all ${filterStatus === 'FINALIZADAS' ? 'bg-emerald-50 border-emerald-200 text-emerald-700' : 'bg-white border-slate-200 text-slate-400 hover:bg-slate-50'}`}
+                        >
+                            Finalizadas
+                        </button>
+                    </div>
                 </div>
 
+                {error && (
+                    <div className="p-4 bg-red-50 text-red-700 rounded-2xl border border-red-100 font-bold text-sm text-center">
+                        {error}
+                    </div>
+                )}
+
+                {!error && (
                 <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
                     <div className="p-4 bg-slate-50 border-b border-gray-100">
                         <h3 className="font-bold text-slate-700 text-sm">Evaluaciones Matriz Riesgo</h3>
@@ -148,9 +259,9 @@ export default function MitigacionClient({
                                 >
                                     <div className="flex justify-between items-start">
                                         <div>
-                                            <p className="font-black text-slate-900 text-sm">RBD: {ev.rbd}</p>
-                                            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-tight">{format(new Date(ev.fechaIngreso), 'dd/MM/yyyy HH:mm')}</p>
-                                            <p className="text-xs text-cyan-700 mt-1">{ev.cabecera?.titulo} ({ev.cabecera?.anio})</p>
+                                            <p className="font-black text-slate-900 text-sm">{ev.nombreColegio || `RBD: ${ev.rbd}`}</p>
+                                            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-tight mt-0.5">{format(new Date(ev.fechaIngreso), 'dd/MM/yyyy HH:mm')} - RBD: {ev.rbd}</p>
+                                            <p className="text-[11px] text-cyan-700 mt-1">{ev.cabecera?.titulo} ({ev.cabecera?.anio})</p>
                                         </div>
                                         <div className={`px-2 py-0.5 rounded text-[10px] font-black ${pct === 100 ? 'bg-emerald-100 text-emerald-700' : 'bg-orange-100 text-orange-700'}`}>
                                             {pct}% Avance
@@ -177,6 +288,7 @@ export default function MitigacionClient({
                         )}
                     </div>
                 </div>
+                )}
             </div>
 
             {/* Panel de Detalle de Mitigación */}
@@ -185,7 +297,7 @@ export default function MitigacionClient({
                     <div className="space-y-6">
                         <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
                             <h2 className="text-xl font-black text-slate-900">Hallazgos y Mitigación</h2>
-                            <p className="text-sm text-slate-500 font-medium mt-1">RBD {selectedEvaluacion.rbd} - {format(new Date(selectedEvaluacion.fechaIngreso), 'dd MMMM yyyy')}</p>
+                            <p className="text-sm text-slate-500 font-medium mt-1">{selectedEvaluacion.nombreColegio || `RBD ${selectedEvaluacion.rbd}`} - {format(new Date(selectedEvaluacion.fechaIngreso), 'dd MMMM yyyy')}</p>
                         </div>
 
                         <div className="space-y-4">

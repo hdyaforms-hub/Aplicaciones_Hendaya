@@ -66,7 +66,10 @@ export async function saveMatrixHeader(data: { id?: string, licId: number, anio:
                 where: { cabeceraId: data.id }
             })
             if (answersCount > 0) {
-                return { error: 'No se puede modificar esta matriz porque ya tiene respuestas contestadas.' }
+                const currentMatrix = await prisma.matrizT_Cabecera.findUnique({ where: { id: data.id } });
+                if (currentMatrix && (currentMatrix.licId !== Number(data.licId) || currentMatrix.anio !== Number(data.anio) || currentMatrix.titulo !== data.titulo)) {
+                    return { error: 'Esta matriz ya tiene respuestas. Solo puede modificar su Estado (Vigente/No Vigente), no su título ni licitación.' }
+                }
             }
 
             const matrix = await prisma.matrizT_Cabecera.update({
@@ -123,7 +126,26 @@ export async function deleteMatrix(id: string) {
     }
 }
 
-export async function duplicateMatrix(id: string) {
+export async function toggleMatrixState(id: string, newState: boolean) {
+    const session = await getSession()
+    if (!session?.user?.role?.permissions.includes('manage_nueva_matriz')) {
+        return { error: 'No tienes permisos para esta acción.' }
+    }
+
+    try {
+        await prisma.matrizT_Cabecera.update({
+            where: { id },
+            data: { estado: newState }
+        })
+        revalidatePath('/dashboard/mantenedor/matriz-riesgo/nueva-matriz')
+        return { success: true }
+    } catch (e) {
+        console.error(e)
+        return { error: 'Error al cambiar el estado de la matriz.' }
+    }
+}
+
+export async function duplicateMatrix(id: string, newLicId: number, newTitulo: string, newAnio: number, newEstado: boolean) {
     const session = await getSession()
     if (!session?.user?.role?.permissions.includes('manage_nueva_matriz')) {
         return { error: 'No tienes permisos para esta acción.' }
@@ -140,10 +162,10 @@ export async function duplicateMatrix(id: string) {
         // Create new header
         const duplicated = await prisma.matrizT_Cabecera.create({
             data: {
-                licId: source.licId,
-                anio: source.anio,
-                titulo: `Copia de ${source.titulo}`,
-                estado: false, // default to inactive copy
+                licId: newLicId,
+                anio: newAnio,
+                titulo: newTitulo,
+                estado: newEstado,
                 instrucciones: source.instrucciones
             }
         })

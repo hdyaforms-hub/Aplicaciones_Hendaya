@@ -3,14 +3,28 @@
 import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 
-export async function getAuditoriaData() {
+import { endOfMonth } from 'date-fns'
+
+export async function getAuditoriaData(year: number = new Date().getFullYear()) {
     const session = await getSession()
     if (!session?.user?.role?.permissions.includes('view_auditoria')) {
         return { error: 'No tienes permisos para acceder a esta área.' }
     }
 
     try {
+        const configSemestre = await prisma.matrizConfigSemestre.findUnique({ where: { anio: year } })
+        if (!configSemestre) return { error: `Debe configurar la fecha de corte para el año ${year} en Colegios Activos.` }
+
+        const startDate = new Date(year, 2, 1); // 1 de Marzo
+        const endDate = endOfMonth(new Date(year + 1, 1)); // Fin de Febrero sgte año
+
         const respuestas = await prisma.matrizT_RespuestasCabecera.findMany({
+            where: {
+                fechaIngreso: {
+                    gte: startDate,
+                    lte: endDate
+                }
+            },
             orderBy: { createdAt: 'desc' },
             include: {
                 detalles: true

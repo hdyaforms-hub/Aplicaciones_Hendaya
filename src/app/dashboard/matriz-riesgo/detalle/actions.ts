@@ -3,6 +3,7 @@
 import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { revalidatePath } from 'next/cache'
+import { endOfMonth } from 'date-fns'
 
 async function getUserFilters() {
     const session = await getSession();
@@ -111,13 +112,25 @@ export async function getRespuestasPaginadas(
     page: number = 1, 
     limit: number = 10,
     filters: { licId?: number, ut?: number, rbd?: number },
-    sort: { field: string, order: 'asc' | 'desc' }
+    sort: { field: string, order: 'asc' | 'desc' },
+    year: number = new Date().getFullYear()
 ) {
     try {
+        const configSemestre = await prisma.matrizConfigSemestre.findUnique({ where: { anio: year } })
+        if (!configSemestre) return { error: `Debe configurar la fecha de corte para el año ${year} en Colegios Activos.` }
+
+        const startDate = new Date(year, 2, 1);
+        const endDate = endOfMonth(new Date(year + 1, 1));
+
         const skip = (page - 1) * limit
         const { isAdmin, allowedUTs, userRbds } = await getUserFilters()
         
-        const where: any = {}
+        const where: any = {
+            fechaIngreso: {
+                gte: startDate,
+                lte: endDate
+            }
+        }
         if (filters.licId) where.licId = filters.licId
         if (filters.ut) where.ut = filters.ut
         if (filters.rbd) where.rbd = filters.rbd
@@ -208,10 +221,21 @@ export async function deleteRespuesta(id: string) {
     }
 }
 
-export async function getAllRespuestasExport() {
+export async function getAllRespuestasExport(year: number = new Date().getFullYear()) {
     try {
+        const configSemestre = await prisma.matrizConfigSemestre.findUnique({ where: { anio: year } })
+        if (!configSemestre) return { error: `Debe configurar la fecha de corte para el año ${year} en Colegios Activos.` }
+
+        const startDate = new Date(year, 2, 1);
+        const endDate = endOfMonth(new Date(year + 1, 1));
+
         const { isAdmin, allowedUTs, userRbds } = await getUserFilters()
-        const where: any = {}
+        const where: any = {
+            fechaIngreso: {
+                gte: startDate,
+                lte: endDate
+            }
+        }
         
         if (!isAdmin) {
             const orConditions = []

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react'
 import Link from 'next/link'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { getUtsPorLicitacion, searchColegios, getRespuestasPaginadas, deleteRespuesta, getAllRespuestasExport } from './actions'
 
 type Licitacion = {
@@ -19,6 +20,14 @@ export default function DetalleMatrizClient({ licitaciones, isAdmin }: { licitac
     const [colegiosResults, setColegiosResults] = useState<any[]>([])
     const [showDropdown, setShowDropdown] = useState(false)
     const [selectedRbd, setSelectedRbd] = useState<number | null>(null)
+    const [globalError, setGlobalError] = useState<string | null>(null)
+
+    const router = useRouter()
+    const searchParams = useSearchParams()
+    
+    const currentYear = new Date().getFullYear()
+    const selectedYear = searchParams.get('year') ? parseInt(searchParams.get('year')!) : currentYear
+    const availableYears = Array.from({ length: Math.max(5, currentYear + 5 - 2024 + 1) }, (_, i) => 2024 + i)
 
     // Table Data
     const [respuestas, setRespuestas] = useState<any[]>([])
@@ -32,6 +41,7 @@ export default function DetalleMatrizClient({ licitaciones, isAdmin }: { licitac
 
     const loadData = async () => {
         setLoading(true)
+        setGlobalError(null)
         const filters = {
             licId: licId ? Number(licId) : undefined,
             ut: utId ? Number(utId) : undefined,
@@ -39,8 +49,12 @@ export default function DetalleMatrizClient({ licitaciones, isAdmin }: { licitac
         }
         const sort = { field: sortField, order: sortOrder }
         
-        const res = await getRespuestasPaginadas(page, limit, filters, sort)
-        if (res.respuestas) {
+        const res = await getRespuestasPaginadas(page, limit, filters, sort, selectedYear)
+        if (res.error) {
+            setGlobalError(res.error)
+            setRespuestas([])
+            setTotal(0)
+        } else if (res.respuestas) {
             setRespuestas(res.respuestas)
             setTotal(res.total || 0)
         }
@@ -49,7 +63,7 @@ export default function DetalleMatrizClient({ licitaciones, isAdmin }: { licitac
 
     useEffect(() => {
         loadData()
-    }, [page, sortField, sortOrder, licId, utId, selectedRbd])
+    }, [page, sortField, sortOrder, licId, utId, selectedRbd, selectedYear])
 
     // Load UTs when Licitacion changes
     useEffect(() => {
@@ -128,8 +142,12 @@ export default function DetalleMatrizClient({ licitaciones, isAdmin }: { licitac
 
     const handleExport = async () => {
         setLoading(true)
-        const res = await getAllRespuestasExport()
+        const res = await getAllRespuestasExport(selectedYear)
         setLoading(false)
+        if (res.error) {
+            alert(res.error)
+            return
+        }
         if (res.data) {
             // Simple CSV Export
             const headers = Object.keys(res.data[0]).join(';')
@@ -150,21 +168,43 @@ export default function DetalleMatrizClient({ licitaciones, isAdmin }: { licitac
 
     return (
         <div className="space-y-6">
-            <div className="flex justify-between items-center bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <div className="flex justify-between items-center bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex-col md:flex-row gap-4">
                 <div>
                     <h1 className="text-2xl font-black tracking-tight text-slate-800">Detalle Matriz</h1>
                     <p className="text-sm text-slate-500 mt-1">Consulta y gestión de respuestas a matrices de riesgo.</p>
                 </div>
-                {isAdmin && (
-                    <button
-                        onClick={handleExport}
-                        className="px-4 py-2 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-xl text-sm font-bold shadow-md shadow-emerald-500/20 hover:shadow-lg transition-all"
-                    >
-                        ⬇️ Exportar Datos
-                    </button>
-                )}
+                <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-3">
+                        <p className="text-xs font-bold text-slate-500 uppercase">Año:</p>
+                        <select 
+                            value={selectedYear}
+                            onChange={(e) => router.push(`?year=${e.target.value}`)}
+                            className="p-1.5 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-cyan-500 font-medium outline-none text-sm"
+                        >
+                            {availableYears.map(y => (
+                                <option key={y} value={y}>{y}</option>
+                            ))}
+                        </select>
+                    </div>
+                    {isAdmin && (
+                        <button
+                            onClick={handleExport}
+                            className="px-4 py-2 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-xl text-sm font-bold shadow-md shadow-emerald-500/20 hover:shadow-lg transition-all"
+                        >
+                            ⬇️ Exportar Datos
+                        </button>
+                    )}
+                </div>
             </div>
 
+            {globalError && (
+                <div className="p-8 bg-red-50 text-red-700 rounded-3xl border border-red-100 font-bold text-center">
+                    {globalError}
+                </div>
+            )}
+
+            {!globalError && (
+            <>
             {/* Filters */}
             <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm space-y-4">
                 <h3 className="text-sm font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
@@ -345,6 +385,8 @@ export default function DetalleMatrizClient({ licitaciones, isAdmin }: { licitac
                     </div>
                 )}
             </div>
+            </>
+            )}
         </div>
     )
 }
