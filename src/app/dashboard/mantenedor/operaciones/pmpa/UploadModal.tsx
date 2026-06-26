@@ -27,11 +27,12 @@ export default function UploadModal() {
             const selectedMatch = e.target.files[0]
             if (
                 selectedMatch.name.endsWith('.xlsx') ||
-                selectedMatch.name.endsWith('.xls')
+                selectedMatch.name.endsWith('.xls') ||
+                selectedMatch.name.endsWith('.csv')
             ) {
                 setFile(selectedMatch)
             } else {
-                setError('Solo se permiten archivos Excel (.xlsx, .xls)')
+                setError('Solo se permiten archivos Excel o CSV (.xlsx, .xls, .csv)')
                 setFile(null)
             }
         }
@@ -83,12 +84,13 @@ export default function UploadModal() {
             }
 
             // Mapear los datos al objeto final
+            const isCsv = file?.name.toLowerCase().endsWith('.csv')
             const formattedData: PMPAData[] = normalizedData.map(row => {
                 return {
                     ano: Number(row['anho']) || 0,
                     mes: Number(row['mes']) || 0,
                     licitacion: Number(row['licitacion']) || 0,
-                    ute: Number(row['ute']) || 0,
+                    ute: isCsv ? (Number(row['regionute']) || 0) : (Number(row['ute']) || 0),
                     rbd: Number(row['rbd']) || 0,
                     programa: String(row['programa'] || '').substring(0, 50),
                     estrato: String(row['estrato'] || '').substring(0, 20),
@@ -204,11 +206,11 @@ export default function UploadModal() {
                                         Selecciona un archivo Excel
                                     </span>
                                     <span className="block text-xs text-gray-500 mb-4">
-                                        Formatos soportados: .xlsx, .xls
+                                        Formatos soportados: .xlsx, .xls, .csv
                                     </span>
                                     <input
                                         type="file"
-                                        accept=".xlsx, .xls"
+                                        accept=".xlsx, .xls, .csv"
                                         className="hidden"
                                         ref={fileInputRef}
                                         onChange={handleFileChange}

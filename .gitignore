@@ -51,7 +51,12 @@ next-env.d.ts
 /check_perms.js
 /update_admin.js
 /check_db_config.ts
+/test-*.js
+/curl_error.html
 
 # uploads
 /public/uploads
+
+# Prisma temporary query engine files
+src/generated/client/*.tmp*
 

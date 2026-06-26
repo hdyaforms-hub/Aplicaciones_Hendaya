@@ -44,6 +44,11 @@ const PANTALLAS: PantallaInfo[] = [
         id: 'RETORNO_PRODUCTOS',
         name: 'Retirada de productos',
         description: 'Se envía un aviso al crear una alerta de calidad o registrar un movimiento de sucursal.'
+    },
+    {
+        id: 'matriz-prestador',
+        name: 'Matriz de Riesgo - Prestador',
+        description: 'Se envía una alerta cuando se finaliza la matriz con desviaciones a cargo del Prestador.'
     }
 ]
 
@@ -97,6 +102,13 @@ const HELP_KEYWORDS: Record<string, { tag: string, desc: string }[]> = {
         { tag: '<Horas>', desc: 'Plazo de tiempo otorgado para la gestión.' },
         { tag: '<Sucursal>', desc: 'Nombre de la bodega/sucursal que reporta.' },
         { tag: '<Comentario>', desc: 'Texto del movimiento o novedad recién registrada.' },
+    ],
+    'Matriz de Riesgo - Prestador': [
+        { tag: '<RBD>', desc: 'RBD del establecimiento.' },
+        { tag: '<Colegio>', desc: 'Nombre del establecimiento.' },
+        { tag: '<Usuario>', desc: 'Nombre del auditor/supervisor que completó la matriz.' },
+        { tag: '<Sucursal>', desc: 'Nombre de la sucursal del establecimiento.' },
+        { tag: '<DetalleDesviaciones>', desc: 'Listado detallado de desviaciones y compromisos del Prestador.' }
     ]
 }
 

@@ -329,7 +329,14 @@ export default function DetalleMatrizClient({ licitaciones, isAdmin }: { licitac
                                         <td className="px-6 py-4 text-slate-500 text-xs">
                                             {new Date(r.fechaIngreso).toLocaleDateString()}
                                         </td>
-                                        <td className="px-6 py-4 text-slate-600 truncate max-w-[150px]" title={r.supervisorNombre}>{r.supervisorNombre}</td>
+                                         <td className="px-6 py-4 text-slate-600 max-w-[180px]" title={r.supervisorNombre}>
+                                             <div className="font-semibold text-slate-700 truncate">{r.supervisorNombre}</div>
+                                             {r.supervisorNombreOriginal && (
+                                                 <div className="text-[10px] text-slate-400 italic leading-tight truncate" title={`Creado originalmente por: ${r.supervisorNombreOriginal}`}>
+                                                     Orig: {r.supervisorNombreOriginal}
+                                                 </div>
+                                             )}
+                                         </td>
                                         <td className="px-6 py-4">
                                             <div className="flex items-center justify-center gap-2">
                                                 <Link 

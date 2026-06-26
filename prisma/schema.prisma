@@ -35,6 +35,7 @@ model User {
   sucursales   Sucursal[]       @relation("SucursalToUser")
   allowedForms FormDefinition[] @relation("UserForms")
   areas        Area[]           @relation("UserAreas")
+  delegaciones DelegacionVisualizacion[]
 }
 
 model PMPA {
@@ -50,6 +51,7 @@ model PMPA {
   servicioLic   String
   raceqJunaeb   Int
   servicio      String
+  institucion   String?  @default("JUNAEB")
   uploadedBy    String
   createdAt     DateTime @default(now())
 
@@ -200,6 +202,7 @@ model Sucursal {
   users                          User[]                           @relation("SucursalToUser")
   jefesZonales                   JefeZonalSucursal[]
   vehiculos                      Vehiculo[]
+  delegaciones                   DelegacionVisualizacion[]
 }
 
 model Presupuesto {
@@ -997,73 +1000,127 @@ model Det_LeePdfEstandarPae {
 }
 
 model MatrizT_Cabecera {
-  id          String             @id @default(uuid())
-  licId       Int
-  anio        Int
-  titulo      String
-  estado      Boolean            @default(true) // true = Vigente, false = No vigente
-  instrucciones String?          @db.Text
-  createdAt   DateTime           @default(now())
-  updatedAt   DateTime           @updatedAt
+  id            String                       @id @default(uuid())
+  licId         Int
+  anio          Int
+  titulo        String
+  estado        Boolean                      @default(true) // true = Vigente, false = No vigente
+  instrucciones String?                      @db.Text
+  createdAt     DateTime                     @default(now())
+  updatedAt     DateTime                     @updatedAt
 
-  licitacion  Licitacion         @relation(fields: [licId], references: [licId])
-  detalles    MatrizT_Detalle[]
-  respuestas  MatrizT_RespuestasCabecera[]
+  licitacion    Licitacion                   @relation(fields: [licId], references: [licId])
+  detalles      MatrizT_Detalle[]
+  respuestas    MatrizT_RespuestasCabecera[]
+  formatosCarta FormatoCartaSostenedor[]
 }
 
 model MatrizT_Detalle {
-  id                    String             @id @default(uuid())
+  id                    String                      @id @default(uuid())
   cabeceraId            String
   preguntaNombre        String
-  tipoRespuesta         String             // SI_NO, EXISTE_NO_EXISTE, ENCUESTA, OBSERVACION, ADJUNTAR
-  obligatorio           Boolean            @default(false)
-  seccion               String             // PATIO_SERVICIO, BODEGA, COCINA, BANO, LEVANTAMIENTO_GENERAL
-  orden                 Int                @default(0)
+  tipoRespuesta         String                      // SI_NO, EXISTE_NO_EXISTE, ENCUESTA, OBSERVACION, ADJUNTAR
+  obligatorio           Boolean                     @default(false)
+  seccion               String                      // PATIO_SERVICIO, BODEGA, COCINA, BANO, LEVANTAMIENTO_GENERAL
+  orden                 Int                         @default(0)
 
   // Calculo Matriz
-  gravedad              Int?               // 1: Bajo, 2: Medio, 3: Alto
-  probabilidad          Int?               // 1: Bajo, 2: Medio, 3: Alto
-  nivelRiesgo           Int?               // 1: Bajo, 2: Medio, 3: Alto
-  justificacion         String?            @db.Text
+  gravedad              Int?                        // 1: Bajo, 2: Medio, 3: Alto
+  probabilidad          Int?                        // 1: Bajo, 2: Medio, 3: Alto
+  nivelRiesgo           Int?                        // 1: Bajo, 2: Medio, 3: Alto
+  justificacion         String?                     @db.Text
 
   // Hoja B Estándar Pae
-  riesgoSignificativo   String?            @db.Text
-  recursoNecesario      String?            @db.Text
-  resultadoEsperado     String?            @db.Text
-  respImplementacion    String?            @db.Text
-  respSeguimiento       String?            @db.Text
-  evidenciaCumplimiento String?            @db.Text
-  evidenciaEficacia     String?            @db.Text
+  riesgoSignificativo   String?                     @db.Text
+  recursoNecesario      String?                     @db.Text
+  resultadoEsperado     String?                     @db.Text
+  respImplementacion    String?                     @db.Text
+  respSeguimiento       String?                     @db.Text
+  evidenciaCumplimiento String?                     @db.Text
+  evidenciaEficacia     String?                     @db.Text
+  compromisoSostenedor  String?                     @db.Text
 
-  cabecera              MatrizT_Cabecera   @relation(fields: [cabeceraId], references: [id], onDelete: Cascade)
+  cabecera              MatrizT_Cabecera            @relation(fields: [cabeceraId], references: [id], onDelete: Cascade)
   respuestasDetalle     MatrizT_RespuestasDetalle[]
 }
 
 model MatrizT_RespuestasCabecera {
-  id                    String             @id @default(uuid())
-  cabeceraId            String
-  usuario               String
-  fechaIngreso          DateTime           @default(now())
-  supervisorNombre      String
-  supervisorCorreo      String
-  licId                 Int
-  ut                    Int
-  rbd                   Int
-  createdAt             DateTime           @default(now())
-  updatedAt             DateTime           @updatedAt
+  id                       String                      @id @default(uuid())
+  cabeceraId               String
+  usuario                  String
+  fechaIngreso             DateTime                    @default(now())
+  supervisorNombre         String
+  supervisorCorreo         String
+  usuarioOriginal          String?
+  supervisorNombreOriginal String?
+  supervisorCorreoOriginal String?
+  fechaReemplazo           DateTime?
+  licId                    Int
+  ut                       Int
+  rbd                      Int
+  createdAt                DateTime                    @default(now())
+  updatedAt                DateTime                    @updatedAt
+  estado                   String                      @default("pendiente")
+  latIngreso               Float?
+  lngIngreso               Float?
+  latCierre                Float?
+  lngCierre                Float?
 
-  cabecera              MatrizT_Cabecera   @relation(fields: [cabeceraId], references: [id])
-  detalles              MatrizT_RespuestasDetalle[]
+  cabecera                 MatrizT_Cabecera            @relation(fields: [cabeceraId], references: [id])
+  detalles                 MatrizT_RespuestasDetalle[]
 }
 
 model MatrizT_RespuestasDetalle {
-  id                    String             @id @default(uuid())
-  respuestaCabeceraId   String
-  preguntaId            String
-  valor                 String?
-  adjuntoUrl            String?
+  id                  String                     @id @default(uuid())
+  respuestaCabeceraId String
+  preguntaId          String
+  valor               String?
+  adjuntoUrl          String?
 
-  respuestaCabecera     MatrizT_RespuestasCabecera @relation(fields: [respuestaCabeceraId], references: [id], onDelete: Cascade)
-  pregunta              MatrizT_Detalle            @relation(fields: [preguntaId], references: [id])
+  respuestaCabecera   MatrizT_RespuestasCabecera @relation(fields: [respuestaCabeceraId], references: [id], onDelete: Cascade)
+  pregunta            MatrizT_Detalle            @relation(fields: [preguntaId], references: [id])
 }
+
+model FormatoCartaSostenedor {
+  id           String           @id @default(uuid())
+  cabeceraId   String
+  nombre       String           // Ej: "Activos", "Licitación"
+  asuntoEmail  String           @db.Text
+  cuerpoEmail  String           @db.Text
+  cuerpoInicio String           @db.Text // Texto del encabezado de la carta PDF
+  cuerpoFin    String           @db.Text // Texto del pie de firma de la carta PDF
+  activo       Boolean          @default(true)
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
+  cabecera     MatrizT_Cabecera @relation(fields: [cabeceraId], references: [id], onDelete: Cascade)
+}
+
+
+model DelegacionVisualizacion {
+  id          String   @id @default(uuid())
+  userId      String
+  sucursalId  String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sucursal    Sucursal @relation(fields: [sucursalId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, sucursalId])
+}
+
+model MenuItemOrder {
+  id        String   @id @default(uuid())
+  parentKey String   // "" para nivel superior, o nombre de la opción padre (ej: "Matriz de riesgo")
+  itemKey   String   // Nombre del ítem de menú (ej: "Cerrar Matriz de Riesgo")
+  position  Int      // Índice de posición (0, 1, 2...)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([parentKey, itemKey])
+}
+
+
+
 

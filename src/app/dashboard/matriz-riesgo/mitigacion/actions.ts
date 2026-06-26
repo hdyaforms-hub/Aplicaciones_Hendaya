@@ -46,7 +46,8 @@ export async function getMitigacionData(year: number = new Date().getFullYear())
             fechaIngreso: {
                 gte: startDate,
                 lte: endDate
-            }
+            },
+            estado: { in: ['por supervisar', 'cerrado'] }
         }
         
         if (!isAdmin) {
@@ -55,7 +56,9 @@ export async function getMitigacionData(year: number = new Date().getFullYear())
             if (userRbds.length > 0) orConditions.push({ rbd: { in: userRbds } })
 
             if (orConditions.length > 0) {
-                where.OR = orConditions
+                where.AND = [
+                    { OR: orConditions }
+                ]
             } else {
                 where.id = 'NO_DATA'
             }
@@ -109,6 +112,18 @@ export async function saveMitigacionAction(data: {
         return { error: 'No tienes permisos.' }
     }
 
+    // Verify matrix is not closed
+    const matrix = await prisma.matrizT_RespuestasCabecera.findUnique({
+        where: { id: data.matrizId }
+    })
+    
+    if (!matrix) return { error: 'Evaluación no encontrada' }
+    
+    const isAdmin = session.user.role?.name === 'Administrador' || session.user.role?.name === 'admin'
+    if (matrix.estado === 'cerrado' && !isAdmin) {
+        return { error: 'La matriz se encuentra cerrada y no puede ser modificada.' }
+    }
+
     try {
         await prisma.matrizMitigacion.upsert({
             where: {
@@ -136,5 +151,47 @@ export async function saveMitigacionAction(data: {
     } catch (e) {
         console.error(e)
         return { error: 'Error al guardar mitigación.' }
+    }
+}
+
+export async function approveAndCloseMatrixAction(matrizId: string) {
+    const session = await getSession()
+    if (!session?.user?.role?.permissions.includes('manage_mitigacion')) {
+        return { error: 'No tienes permisos.' }
+    }
+
+    try {
+        await prisma.matrizT_RespuestasCabecera.update({
+            where: { id: matrizId },
+            data: { estado: 'cerrado' }
+        })
+
+        revalidatePath('/dashboard/matriz-riesgo/mitigacion')
+        return { success: true }
+    } catch (e) {
+        console.error(e)
+        return { error: 'Error al cerrar la matriz.' }
+    }
+}
+
+export async function deleteMatrixAction(matrizId: string) {
+    const session = await getSession()
+    if (!session?.user) return { error: 'No autorizado' }
+    
+    const isAdmin = session.user.role?.name === 'Administrador' || session.user.role?.name === 'admin'
+    if (!isAdmin) {
+        return { error: 'Solo los administradores pueden eliminar evaluaciones.' }
+    }
+
+    try {
+        await prisma.matrizT_RespuestasCabecera.delete({
+            where: { id: matrizId }
+        })
+
+        revalidatePath('/dashboard/matriz-riesgo/mitigacion')
+        return { success: true }
+    } catch (e) {
+        console.error(e)
+        return { error: 'Error al eliminar la evaluación.' }
     }
 }

@@ -363,6 +363,21 @@ export type MatrizT_RespuestasCabecera = $Result.DefaultSelection<Prisma.$Matriz
  * 
  */
 export type MatrizT_RespuestasDetalle = $Result.DefaultSelection<Prisma.$MatrizT_RespuestasDetallePayload>
+/**
+ * Model FormatoCartaSostenedor
+ * 
+ */
+export type FormatoCartaSostenedor = $Result.DefaultSelection<Prisma.$FormatoCartaSostenedorPayload>
+/**
+ * Model DelegacionVisualizacion
+ * 
+ */
+export type DelegacionVisualizacion = $Result.DefaultSelection<Prisma.$DelegacionVisualizacionPayload>
+/**
+ * Model MenuItemOrder
+ * 
+ */
+export type MenuItemOrder = $Result.DefaultSelection<Prisma.$MenuItemOrderPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -1186,6 +1201,36 @@ export class PrismaClient<
     * ```
     */
   get matrizT_RespuestasDetalle(): Prisma.MatrizT_RespuestasDetalleDelegate<ExtArgs>;
+
+  /**
+   * `prisma.formatoCartaSostenedor`: Exposes CRUD operations for the **FormatoCartaSostenedor** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FormatoCartaSostenedors
+    * const formatoCartaSostenedors = await prisma.formatoCartaSostenedor.findMany()
+    * ```
+    */
+  get formatoCartaSostenedor(): Prisma.FormatoCartaSostenedorDelegate<ExtArgs>;
+
+  /**
+   * `prisma.delegacionVisualizacion`: Exposes CRUD operations for the **DelegacionVisualizacion** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DelegacionVisualizacions
+    * const delegacionVisualizacions = await prisma.delegacionVisualizacion.findMany()
+    * ```
+    */
+  get delegacionVisualizacion(): Prisma.DelegacionVisualizacionDelegate<ExtArgs>;
+
+  /**
+   * `prisma.menuItemOrder`: Exposes CRUD operations for the **MenuItemOrder** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MenuItemOrders
+    * const menuItemOrders = await prisma.menuItemOrder.findMany()
+    * ```
+    */
+  get menuItemOrder(): Prisma.MenuItemOrderDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -1696,7 +1741,10 @@ export namespace Prisma {
     MatrizT_Cabecera: 'MatrizT_Cabecera',
     MatrizT_Detalle: 'MatrizT_Detalle',
     MatrizT_RespuestasCabecera: 'MatrizT_RespuestasCabecera',
-    MatrizT_RespuestasDetalle: 'MatrizT_RespuestasDetalle'
+    MatrizT_RespuestasDetalle: 'MatrizT_RespuestasDetalle',
+    FormatoCartaSostenedor: 'FormatoCartaSostenedor',
+    DelegacionVisualizacion: 'DelegacionVisualizacion',
+    MenuItemOrder: 'MenuItemOrder'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1712,7 +1760,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle"
+      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -6616,6 +6664,216 @@ export namespace Prisma {
           }
         }
       }
+      FormatoCartaSostenedor: {
+        payload: Prisma.$FormatoCartaSostenedorPayload<ExtArgs>
+        fields: Prisma.FormatoCartaSostenedorFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.FormatoCartaSostenedorFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormatoCartaSostenedorPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.FormatoCartaSostenedorFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormatoCartaSostenedorPayload>
+          }
+          findFirst: {
+            args: Prisma.FormatoCartaSostenedorFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormatoCartaSostenedorPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.FormatoCartaSostenedorFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormatoCartaSostenedorPayload>
+          }
+          findMany: {
+            args: Prisma.FormatoCartaSostenedorFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormatoCartaSostenedorPayload>[]
+          }
+          create: {
+            args: Prisma.FormatoCartaSostenedorCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormatoCartaSostenedorPayload>
+          }
+          createMany: {
+            args: Prisma.FormatoCartaSostenedorCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.FormatoCartaSostenedorCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormatoCartaSostenedorPayload>[]
+          }
+          delete: {
+            args: Prisma.FormatoCartaSostenedorDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormatoCartaSostenedorPayload>
+          }
+          update: {
+            args: Prisma.FormatoCartaSostenedorUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormatoCartaSostenedorPayload>
+          }
+          deleteMany: {
+            args: Prisma.FormatoCartaSostenedorDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.FormatoCartaSostenedorUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.FormatoCartaSostenedorUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FormatoCartaSostenedorPayload>
+          }
+          aggregate: {
+            args: Prisma.FormatoCartaSostenedorAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFormatoCartaSostenedor>
+          }
+          groupBy: {
+            args: Prisma.FormatoCartaSostenedorGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FormatoCartaSostenedorGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.FormatoCartaSostenedorCountArgs<ExtArgs>
+            result: $Utils.Optional<FormatoCartaSostenedorCountAggregateOutputType> | number
+          }
+        }
+      }
+      DelegacionVisualizacion: {
+        payload: Prisma.$DelegacionVisualizacionPayload<ExtArgs>
+        fields: Prisma.DelegacionVisualizacionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DelegacionVisualizacionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DelegacionVisualizacionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DelegacionVisualizacionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DelegacionVisualizacionPayload>
+          }
+          findFirst: {
+            args: Prisma.DelegacionVisualizacionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DelegacionVisualizacionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DelegacionVisualizacionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DelegacionVisualizacionPayload>
+          }
+          findMany: {
+            args: Prisma.DelegacionVisualizacionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DelegacionVisualizacionPayload>[]
+          }
+          create: {
+            args: Prisma.DelegacionVisualizacionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DelegacionVisualizacionPayload>
+          }
+          createMany: {
+            args: Prisma.DelegacionVisualizacionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DelegacionVisualizacionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DelegacionVisualizacionPayload>[]
+          }
+          delete: {
+            args: Prisma.DelegacionVisualizacionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DelegacionVisualizacionPayload>
+          }
+          update: {
+            args: Prisma.DelegacionVisualizacionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DelegacionVisualizacionPayload>
+          }
+          deleteMany: {
+            args: Prisma.DelegacionVisualizacionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DelegacionVisualizacionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.DelegacionVisualizacionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DelegacionVisualizacionPayload>
+          }
+          aggregate: {
+            args: Prisma.DelegacionVisualizacionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDelegacionVisualizacion>
+          }
+          groupBy: {
+            args: Prisma.DelegacionVisualizacionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DelegacionVisualizacionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DelegacionVisualizacionCountArgs<ExtArgs>
+            result: $Utils.Optional<DelegacionVisualizacionCountAggregateOutputType> | number
+          }
+        }
+      }
+      MenuItemOrder: {
+        payload: Prisma.$MenuItemOrderPayload<ExtArgs>
+        fields: Prisma.MenuItemOrderFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MenuItemOrderFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MenuItemOrderPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MenuItemOrderFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MenuItemOrderPayload>
+          }
+          findFirst: {
+            args: Prisma.MenuItemOrderFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MenuItemOrderPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MenuItemOrderFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MenuItemOrderPayload>
+          }
+          findMany: {
+            args: Prisma.MenuItemOrderFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MenuItemOrderPayload>[]
+          }
+          create: {
+            args: Prisma.MenuItemOrderCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MenuItemOrderPayload>
+          }
+          createMany: {
+            args: Prisma.MenuItemOrderCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MenuItemOrderCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MenuItemOrderPayload>[]
+          }
+          delete: {
+            args: Prisma.MenuItemOrderDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MenuItemOrderPayload>
+          }
+          update: {
+            args: Prisma.MenuItemOrderUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MenuItemOrderPayload>
+          }
+          deleteMany: {
+            args: Prisma.MenuItemOrderDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MenuItemOrderUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.MenuItemOrderUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MenuItemOrderPayload>
+          }
+          aggregate: {
+            args: Prisma.MenuItemOrderAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMenuItemOrder>
+          }
+          groupBy: {
+            args: Prisma.MenuItemOrderGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MenuItemOrderGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MenuItemOrderCountArgs<ExtArgs>
+            result: $Utils.Optional<MenuItemOrderCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -6811,12 +7069,14 @@ export namespace Prisma {
     sucursales: number
     allowedForms: number
     areas: number
+    delegaciones: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     sucursales?: boolean | UserCountOutputTypeCountSucursalesArgs
     allowedForms?: boolean | UserCountOutputTypeCountAllowedFormsArgs
     areas?: boolean | UserCountOutputTypeCountAreasArgs
+    delegaciones?: boolean | UserCountOutputTypeCountDelegacionesArgs
   }
 
   // Custom InputTypes
@@ -6849,6 +7109,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountAreasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AreaWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountDelegacionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DelegacionVisualizacionWhereInput
   }
 
 
@@ -6963,6 +7230,7 @@ export namespace Prisma {
     users: number
     jefesZonales: number
     vehiculos: number
+    delegaciones: number
   }
 
   export type SucursalCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6974,6 +7242,7 @@ export namespace Prisma {
     users?: boolean | SucursalCountOutputTypeCountUsersArgs
     jefesZonales?: boolean | SucursalCountOutputTypeCountJefesZonalesArgs
     vehiculos?: boolean | SucursalCountOutputTypeCountVehiculosArgs
+    delegaciones?: boolean | SucursalCountOutputTypeCountDelegacionesArgs
   }
 
   // Custom InputTypes
@@ -7041,6 +7310,13 @@ export namespace Prisma {
    */
   export type SucursalCountOutputTypeCountVehiculosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: VehiculoWhereInput
+  }
+
+  /**
+   * SucursalCountOutputType without action
+   */
+  export type SucursalCountOutputTypeCountDelegacionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DelegacionVisualizacionWhereInput
   }
 
 
@@ -7633,11 +7909,13 @@ export namespace Prisma {
   export type MatrizT_CabeceraCountOutputType = {
     detalles: number
     respuestas: number
+    formatosCarta: number
   }
 
   export type MatrizT_CabeceraCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     detalles?: boolean | MatrizT_CabeceraCountOutputTypeCountDetallesArgs
     respuestas?: boolean | MatrizT_CabeceraCountOutputTypeCountRespuestasArgs
+    formatosCarta?: boolean | MatrizT_CabeceraCountOutputTypeCountFormatosCartaArgs
   }
 
   // Custom InputTypes
@@ -7663,6 +7941,13 @@ export namespace Prisma {
    */
   export type MatrizT_CabeceraCountOutputTypeCountRespuestasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MatrizT_RespuestasCabeceraWhereInput
+  }
+
+  /**
+   * MatrizT_CabeceraCountOutputType without action
+   */
+  export type MatrizT_CabeceraCountOutputTypeCountFormatosCartaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FormatoCartaSostenedorWhereInput
   }
 
 
@@ -8946,6 +9231,7 @@ export namespace Prisma {
     sucursales?: boolean | User$sucursalesArgs<ExtArgs>
     allowedForms?: boolean | User$allowedFormsArgs<ExtArgs>
     areas?: boolean | User$areasArgs<ExtArgs>
+    delegaciones?: boolean | User$delegacionesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -8985,6 +9271,7 @@ export namespace Prisma {
     sucursales?: boolean | User$sucursalesArgs<ExtArgs>
     allowedForms?: boolean | User$allowedFormsArgs<ExtArgs>
     areas?: boolean | User$areasArgs<ExtArgs>
+    delegaciones?: boolean | User$delegacionesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8998,6 +9285,7 @@ export namespace Prisma {
       sucursales: Prisma.$SucursalPayload<ExtArgs>[]
       allowedForms: Prisma.$FormDefinitionPayload<ExtArgs>[]
       areas: Prisma.$AreaPayload<ExtArgs>[]
+      delegaciones: Prisma.$DelegacionVisualizacionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -9380,6 +9668,7 @@ export namespace Prisma {
     sucursales<T extends User$sucursalesArgs<ExtArgs> = {}>(args?: Subset<T, User$sucursalesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SucursalPayload<ExtArgs>, T, "findMany"> | Null>
     allowedForms<T extends User$allowedFormsArgs<ExtArgs> = {}>(args?: Subset<T, User$allowedFormsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormDefinitionPayload<ExtArgs>, T, "findMany"> | Null>
     areas<T extends User$areasArgs<ExtArgs> = {}>(args?: Subset<T, User$areasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AreaPayload<ExtArgs>, T, "findMany"> | Null>
+    delegaciones<T extends User$delegacionesArgs<ExtArgs> = {}>(args?: Subset<T, User$delegacionesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DelegacionVisualizacionPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9799,6 +10088,26 @@ export namespace Prisma {
   }
 
   /**
+   * User.delegaciones
+   */
+  export type User$delegacionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DelegacionVisualizacion
+     */
+    select?: DelegacionVisualizacionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DelegacionVisualizacionInclude<ExtArgs> | null
+    where?: DelegacionVisualizacionWhereInput
+    orderBy?: DelegacionVisualizacionOrderByWithRelationInput | DelegacionVisualizacionOrderByWithRelationInput[]
+    cursor?: DelegacionVisualizacionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DelegacionVisualizacionScalarFieldEnum | DelegacionVisualizacionScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9856,6 +10165,7 @@ export namespace Prisma {
     servicioLic: string | null
     raceqJunaeb: number | null
     servicio: string | null
+    institucion: string | null
     uploadedBy: string | null
     createdAt: Date | null
   }
@@ -9873,6 +10183,7 @@ export namespace Prisma {
     servicioLic: string | null
     raceqJunaeb: number | null
     servicio: string | null
+    institucion: string | null
     uploadedBy: string | null
     createdAt: Date | null
   }
@@ -9890,6 +10201,7 @@ export namespace Prisma {
     servicioLic: number
     raceqJunaeb: number
     servicio: number
+    institucion: number
     uploadedBy: number
     createdAt: number
     _all: number
@@ -9927,6 +10239,7 @@ export namespace Prisma {
     servicioLic?: true
     raceqJunaeb?: true
     servicio?: true
+    institucion?: true
     uploadedBy?: true
     createdAt?: true
   }
@@ -9944,6 +10257,7 @@ export namespace Prisma {
     servicioLic?: true
     raceqJunaeb?: true
     servicio?: true
+    institucion?: true
     uploadedBy?: true
     createdAt?: true
   }
@@ -9961,6 +10275,7 @@ export namespace Prisma {
     servicioLic?: true
     raceqJunaeb?: true
     servicio?: true
+    institucion?: true
     uploadedBy?: true
     createdAt?: true
     _all?: true
@@ -10065,6 +10380,7 @@ export namespace Prisma {
     servicioLic: string
     raceqJunaeb: number
     servicio: string
+    institucion: string | null
     uploadedBy: string
     createdAt: Date
     _count: PMPACountAggregateOutputType | null
@@ -10101,6 +10417,7 @@ export namespace Prisma {
     servicioLic?: boolean
     raceqJunaeb?: boolean
     servicio?: boolean
+    institucion?: boolean
     uploadedBy?: boolean
     createdAt?: boolean
     ut?: boolean | PMPA$utArgs<ExtArgs>
@@ -10119,6 +10436,7 @@ export namespace Prisma {
     servicioLic?: boolean
     raceqJunaeb?: boolean
     servicio?: boolean
+    institucion?: boolean
     uploadedBy?: boolean
     createdAt?: boolean
     ut?: boolean | PMPA$utArgs<ExtArgs>
@@ -10137,6 +10455,7 @@ export namespace Prisma {
     servicioLic?: boolean
     raceqJunaeb?: boolean
     servicio?: boolean
+    institucion?: boolean
     uploadedBy?: boolean
     createdAt?: boolean
   }
@@ -10166,6 +10485,7 @@ export namespace Prisma {
       servicioLic: string
       raceqJunaeb: number
       servicio: string
+      institucion: string | null
       uploadedBy: string
       createdAt: Date
     }, ExtArgs["result"]["pMPA"]>
@@ -10574,6 +10894,7 @@ export namespace Prisma {
     readonly servicioLic: FieldRef<"PMPA", 'String'>
     readonly raceqJunaeb: FieldRef<"PMPA", 'Int'>
     readonly servicio: FieldRef<"PMPA", 'String'>
+    readonly institucion: FieldRef<"PMPA", 'String'>
     readonly uploadedBy: FieldRef<"PMPA", 'String'>
     readonly createdAt: FieldRef<"PMPA", 'DateTime'>
   }
@@ -20933,6 +21254,7 @@ export namespace Prisma {
     users?: boolean | Sucursal$usersArgs<ExtArgs>
     jefesZonales?: boolean | Sucursal$jefesZonalesArgs<ExtArgs>
     vehiculos?: boolean | Sucursal$vehiculosArgs<ExtArgs>
+    delegaciones?: boolean | Sucursal$delegacionesArgs<ExtArgs>
     _count?: boolean | SucursalCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["sucursal"]>
 
@@ -20965,6 +21287,7 @@ export namespace Prisma {
     users?: boolean | Sucursal$usersArgs<ExtArgs>
     jefesZonales?: boolean | Sucursal$jefesZonalesArgs<ExtArgs>
     vehiculos?: boolean | Sucursal$vehiculosArgs<ExtArgs>
+    delegaciones?: boolean | Sucursal$delegacionesArgs<ExtArgs>
     _count?: boolean | SucursalCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type SucursalIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -20980,6 +21303,7 @@ export namespace Prisma {
       users: Prisma.$UserPayload<ExtArgs>[]
       jefesZonales: Prisma.$JefeZonalSucursalPayload<ExtArgs>[]
       vehiculos: Prisma.$VehiculoPayload<ExtArgs>[]
+      delegaciones: Prisma.$DelegacionVisualizacionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -21361,6 +21685,7 @@ export namespace Prisma {
     users<T extends Sucursal$usersArgs<ExtArgs> = {}>(args?: Subset<T, Sucursal$usersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany"> | Null>
     jefesZonales<T extends Sucursal$jefesZonalesArgs<ExtArgs> = {}>(args?: Subset<T, Sucursal$jefesZonalesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JefeZonalSucursalPayload<ExtArgs>, T, "findMany"> | Null>
     vehiculos<T extends Sucursal$vehiculosArgs<ExtArgs> = {}>(args?: Subset<T, Sucursal$vehiculosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VehiculoPayload<ExtArgs>, T, "findMany"> | Null>
+    delegaciones<T extends Sucursal$delegacionesArgs<ExtArgs> = {}>(args?: Subset<T, Sucursal$delegacionesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DelegacionVisualizacionPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -21868,6 +22193,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: VehiculoScalarFieldEnum | VehiculoScalarFieldEnum[]
+  }
+
+  /**
+   * Sucursal.delegaciones
+   */
+  export type Sucursal$delegacionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DelegacionVisualizacion
+     */
+    select?: DelegacionVisualizacionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DelegacionVisualizacionInclude<ExtArgs> | null
+    where?: DelegacionVisualizacionWhereInput
+    orderBy?: DelegacionVisualizacionOrderByWithRelationInput | DelegacionVisualizacionOrderByWithRelationInput[]
+    cursor?: DelegacionVisualizacionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DelegacionVisualizacionScalarFieldEnum | DelegacionVisualizacionScalarFieldEnum[]
   }
 
   /**
@@ -74976,6 +75321,7 @@ export namespace Prisma {
     licitacion?: boolean | LicitacionDefaultArgs<ExtArgs>
     detalles?: boolean | MatrizT_Cabecera$detallesArgs<ExtArgs>
     respuestas?: boolean | MatrizT_Cabecera$respuestasArgs<ExtArgs>
+    formatosCarta?: boolean | MatrizT_Cabecera$formatosCartaArgs<ExtArgs>
     _count?: boolean | MatrizT_CabeceraCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["matrizT_Cabecera"]>
 
@@ -75006,6 +75352,7 @@ export namespace Prisma {
     licitacion?: boolean | LicitacionDefaultArgs<ExtArgs>
     detalles?: boolean | MatrizT_Cabecera$detallesArgs<ExtArgs>
     respuestas?: boolean | MatrizT_Cabecera$respuestasArgs<ExtArgs>
+    formatosCarta?: boolean | MatrizT_Cabecera$formatosCartaArgs<ExtArgs>
     _count?: boolean | MatrizT_CabeceraCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type MatrizT_CabeceraIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -75018,6 +75365,7 @@ export namespace Prisma {
       licitacion: Prisma.$LicitacionPayload<ExtArgs>
       detalles: Prisma.$MatrizT_DetallePayload<ExtArgs>[]
       respuestas: Prisma.$MatrizT_RespuestasCabeceraPayload<ExtArgs>[]
+      formatosCarta: Prisma.$FormatoCartaSostenedorPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -75395,6 +75743,7 @@ export namespace Prisma {
     licitacion<T extends LicitacionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LicitacionDefaultArgs<ExtArgs>>): Prisma__LicitacionClient<$Result.GetResult<Prisma.$LicitacionPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     detalles<T extends MatrizT_Cabecera$detallesArgs<ExtArgs> = {}>(args?: Subset<T, MatrizT_Cabecera$detallesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MatrizT_DetallePayload<ExtArgs>, T, "findMany"> | Null>
     respuestas<T extends MatrizT_Cabecera$respuestasArgs<ExtArgs> = {}>(args?: Subset<T, MatrizT_Cabecera$respuestasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MatrizT_RespuestasCabeceraPayload<ExtArgs>, T, "findMany"> | Null>
+    formatosCarta<T extends MatrizT_Cabecera$formatosCartaArgs<ExtArgs> = {}>(args?: Subset<T, MatrizT_Cabecera$formatosCartaArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormatoCartaSostenedorPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -75790,6 +76139,26 @@ export namespace Prisma {
   }
 
   /**
+   * MatrizT_Cabecera.formatosCarta
+   */
+  export type MatrizT_Cabecera$formatosCartaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormatoCartaSostenedor
+     */
+    select?: FormatoCartaSostenedorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormatoCartaSostenedorInclude<ExtArgs> | null
+    where?: FormatoCartaSostenedorWhereInput
+    orderBy?: FormatoCartaSostenedorOrderByWithRelationInput | FormatoCartaSostenedorOrderByWithRelationInput[]
+    cursor?: FormatoCartaSostenedorWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FormatoCartaSostenedorScalarFieldEnum | FormatoCartaSostenedorScalarFieldEnum[]
+  }
+
+  /**
    * MatrizT_Cabecera without action
    */
   export type MatrizT_CabeceraDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -75849,6 +76218,7 @@ export namespace Prisma {
     respSeguimiento: string | null
     evidenciaCumplimiento: string | null
     evidenciaEficacia: string | null
+    compromisoSostenedor: string | null
   }
 
   export type MatrizT_DetalleMaxAggregateOutputType = {
@@ -75870,6 +76240,7 @@ export namespace Prisma {
     respSeguimiento: string | null
     evidenciaCumplimiento: string | null
     evidenciaEficacia: string | null
+    compromisoSostenedor: string | null
   }
 
   export type MatrizT_DetalleCountAggregateOutputType = {
@@ -75891,6 +76262,7 @@ export namespace Prisma {
     respSeguimiento: number
     evidenciaCumplimiento: number
     evidenciaEficacia: number
+    compromisoSostenedor: number
     _all: number
   }
 
@@ -75928,6 +76300,7 @@ export namespace Prisma {
     respSeguimiento?: true
     evidenciaCumplimiento?: true
     evidenciaEficacia?: true
+    compromisoSostenedor?: true
   }
 
   export type MatrizT_DetalleMaxAggregateInputType = {
@@ -75949,6 +76322,7 @@ export namespace Prisma {
     respSeguimiento?: true
     evidenciaCumplimiento?: true
     evidenciaEficacia?: true
+    compromisoSostenedor?: true
   }
 
   export type MatrizT_DetalleCountAggregateInputType = {
@@ -75970,6 +76344,7 @@ export namespace Prisma {
     respSeguimiento?: true
     evidenciaCumplimiento?: true
     evidenciaEficacia?: true
+    compromisoSostenedor?: true
     _all?: true
   }
 
@@ -76078,6 +76453,7 @@ export namespace Prisma {
     respSeguimiento: string | null
     evidenciaCumplimiento: string | null
     evidenciaEficacia: string | null
+    compromisoSostenedor: string | null
     _count: MatrizT_DetalleCountAggregateOutputType | null
     _avg: MatrizT_DetalleAvgAggregateOutputType | null
     _sum: MatrizT_DetalleSumAggregateOutputType | null
@@ -76118,6 +76494,7 @@ export namespace Prisma {
     respSeguimiento?: boolean
     evidenciaCumplimiento?: boolean
     evidenciaEficacia?: boolean
+    compromisoSostenedor?: boolean
     cabecera?: boolean | MatrizT_CabeceraDefaultArgs<ExtArgs>
     respuestasDetalle?: boolean | MatrizT_Detalle$respuestasDetalleArgs<ExtArgs>
     _count?: boolean | MatrizT_DetalleCountOutputTypeDefaultArgs<ExtArgs>
@@ -76142,6 +76519,7 @@ export namespace Prisma {
     respSeguimiento?: boolean
     evidenciaCumplimiento?: boolean
     evidenciaEficacia?: boolean
+    compromisoSostenedor?: boolean
     cabecera?: boolean | MatrizT_CabeceraDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["matrizT_Detalle"]>
 
@@ -76164,6 +76542,7 @@ export namespace Prisma {
     respSeguimiento?: boolean
     evidenciaCumplimiento?: boolean
     evidenciaEficacia?: boolean
+    compromisoSostenedor?: boolean
   }
 
   export type MatrizT_DetalleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -76200,6 +76579,7 @@ export namespace Prisma {
       respSeguimiento: string | null
       evidenciaCumplimiento: string | null
       evidenciaEficacia: string | null
+      compromisoSostenedor: string | null
     }, ExtArgs["result"]["matrizT_Detalle"]>
     composites: {}
   }
@@ -76613,6 +76993,7 @@ export namespace Prisma {
     readonly respSeguimiento: FieldRef<"MatrizT_Detalle", 'String'>
     readonly evidenciaCumplimiento: FieldRef<"MatrizT_Detalle", 'String'>
     readonly evidenciaEficacia: FieldRef<"MatrizT_Detalle", 'String'>
+    readonly compromisoSostenedor: FieldRef<"MatrizT_Detalle", 'String'>
   }
     
 
@@ -76981,12 +77362,20 @@ export namespace Prisma {
     licId: number | null
     ut: number | null
     rbd: number | null
+    latIngreso: number | null
+    lngIngreso: number | null
+    latCierre: number | null
+    lngCierre: number | null
   }
 
   export type MatrizT_RespuestasCabeceraSumAggregateOutputType = {
     licId: number | null
     ut: number | null
     rbd: number | null
+    latIngreso: number | null
+    lngIngreso: number | null
+    latCierre: number | null
+    lngCierre: number | null
   }
 
   export type MatrizT_RespuestasCabeceraMinAggregateOutputType = {
@@ -76996,11 +77385,20 @@ export namespace Prisma {
     fechaIngreso: Date | null
     supervisorNombre: string | null
     supervisorCorreo: string | null
+    usuarioOriginal: string | null
+    supervisorNombreOriginal: string | null
+    supervisorCorreoOriginal: string | null
+    fechaReemplazo: Date | null
     licId: number | null
     ut: number | null
     rbd: number | null
     createdAt: Date | null
     updatedAt: Date | null
+    estado: string | null
+    latIngreso: number | null
+    lngIngreso: number | null
+    latCierre: number | null
+    lngCierre: number | null
   }
 
   export type MatrizT_RespuestasCabeceraMaxAggregateOutputType = {
@@ -77010,11 +77408,20 @@ export namespace Prisma {
     fechaIngreso: Date | null
     supervisorNombre: string | null
     supervisorCorreo: string | null
+    usuarioOriginal: string | null
+    supervisorNombreOriginal: string | null
+    supervisorCorreoOriginal: string | null
+    fechaReemplazo: Date | null
     licId: number | null
     ut: number | null
     rbd: number | null
     createdAt: Date | null
     updatedAt: Date | null
+    estado: string | null
+    latIngreso: number | null
+    lngIngreso: number | null
+    latCierre: number | null
+    lngCierre: number | null
   }
 
   export type MatrizT_RespuestasCabeceraCountAggregateOutputType = {
@@ -77024,11 +77431,20 @@ export namespace Prisma {
     fechaIngreso: number
     supervisorNombre: number
     supervisorCorreo: number
+    usuarioOriginal: number
+    supervisorNombreOriginal: number
+    supervisorCorreoOriginal: number
+    fechaReemplazo: number
     licId: number
     ut: number
     rbd: number
     createdAt: number
     updatedAt: number
+    estado: number
+    latIngreso: number
+    lngIngreso: number
+    latCierre: number
+    lngCierre: number
     _all: number
   }
 
@@ -77037,12 +77453,20 @@ export namespace Prisma {
     licId?: true
     ut?: true
     rbd?: true
+    latIngreso?: true
+    lngIngreso?: true
+    latCierre?: true
+    lngCierre?: true
   }
 
   export type MatrizT_RespuestasCabeceraSumAggregateInputType = {
     licId?: true
     ut?: true
     rbd?: true
+    latIngreso?: true
+    lngIngreso?: true
+    latCierre?: true
+    lngCierre?: true
   }
 
   export type MatrizT_RespuestasCabeceraMinAggregateInputType = {
@@ -77052,11 +77476,20 @@ export namespace Prisma {
     fechaIngreso?: true
     supervisorNombre?: true
     supervisorCorreo?: true
+    usuarioOriginal?: true
+    supervisorNombreOriginal?: true
+    supervisorCorreoOriginal?: true
+    fechaReemplazo?: true
     licId?: true
     ut?: true
     rbd?: true
     createdAt?: true
     updatedAt?: true
+    estado?: true
+    latIngreso?: true
+    lngIngreso?: true
+    latCierre?: true
+    lngCierre?: true
   }
 
   export type MatrizT_RespuestasCabeceraMaxAggregateInputType = {
@@ -77066,11 +77499,20 @@ export namespace Prisma {
     fechaIngreso?: true
     supervisorNombre?: true
     supervisorCorreo?: true
+    usuarioOriginal?: true
+    supervisorNombreOriginal?: true
+    supervisorCorreoOriginal?: true
+    fechaReemplazo?: true
     licId?: true
     ut?: true
     rbd?: true
     createdAt?: true
     updatedAt?: true
+    estado?: true
+    latIngreso?: true
+    lngIngreso?: true
+    latCierre?: true
+    lngCierre?: true
   }
 
   export type MatrizT_RespuestasCabeceraCountAggregateInputType = {
@@ -77080,11 +77522,20 @@ export namespace Prisma {
     fechaIngreso?: true
     supervisorNombre?: true
     supervisorCorreo?: true
+    usuarioOriginal?: true
+    supervisorNombreOriginal?: true
+    supervisorCorreoOriginal?: true
+    fechaReemplazo?: true
     licId?: true
     ut?: true
     rbd?: true
     createdAt?: true
     updatedAt?: true
+    estado?: true
+    latIngreso?: true
+    lngIngreso?: true
+    latCierre?: true
+    lngCierre?: true
     _all?: true
   }
 
@@ -77181,11 +77632,20 @@ export namespace Prisma {
     fechaIngreso: Date
     supervisorNombre: string
     supervisorCorreo: string
+    usuarioOriginal: string | null
+    supervisorNombreOriginal: string | null
+    supervisorCorreoOriginal: string | null
+    fechaReemplazo: Date | null
     licId: number
     ut: number
     rbd: number
     createdAt: Date
     updatedAt: Date
+    estado: string
+    latIngreso: number | null
+    lngIngreso: number | null
+    latCierre: number | null
+    lngCierre: number | null
     _count: MatrizT_RespuestasCabeceraCountAggregateOutputType | null
     _avg: MatrizT_RespuestasCabeceraAvgAggregateOutputType | null
     _sum: MatrizT_RespuestasCabeceraSumAggregateOutputType | null
@@ -77214,11 +77674,20 @@ export namespace Prisma {
     fechaIngreso?: boolean
     supervisorNombre?: boolean
     supervisorCorreo?: boolean
+    usuarioOriginal?: boolean
+    supervisorNombreOriginal?: boolean
+    supervisorCorreoOriginal?: boolean
+    fechaReemplazo?: boolean
     licId?: boolean
     ut?: boolean
     rbd?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    estado?: boolean
+    latIngreso?: boolean
+    lngIngreso?: boolean
+    latCierre?: boolean
+    lngCierre?: boolean
     cabecera?: boolean | MatrizT_CabeceraDefaultArgs<ExtArgs>
     detalles?: boolean | MatrizT_RespuestasCabecera$detallesArgs<ExtArgs>
     _count?: boolean | MatrizT_RespuestasCabeceraCountOutputTypeDefaultArgs<ExtArgs>
@@ -77231,11 +77700,20 @@ export namespace Prisma {
     fechaIngreso?: boolean
     supervisorNombre?: boolean
     supervisorCorreo?: boolean
+    usuarioOriginal?: boolean
+    supervisorNombreOriginal?: boolean
+    supervisorCorreoOriginal?: boolean
+    fechaReemplazo?: boolean
     licId?: boolean
     ut?: boolean
     rbd?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    estado?: boolean
+    latIngreso?: boolean
+    lngIngreso?: boolean
+    latCierre?: boolean
+    lngCierre?: boolean
     cabecera?: boolean | MatrizT_CabeceraDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["matrizT_RespuestasCabecera"]>
 
@@ -77246,11 +77724,20 @@ export namespace Prisma {
     fechaIngreso?: boolean
     supervisorNombre?: boolean
     supervisorCorreo?: boolean
+    usuarioOriginal?: boolean
+    supervisorNombreOriginal?: boolean
+    supervisorCorreoOriginal?: boolean
+    fechaReemplazo?: boolean
     licId?: boolean
     ut?: boolean
     rbd?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    estado?: boolean
+    latIngreso?: boolean
+    lngIngreso?: boolean
+    latCierre?: boolean
+    lngCierre?: boolean
   }
 
   export type MatrizT_RespuestasCabeceraInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -77275,11 +77762,20 @@ export namespace Prisma {
       fechaIngreso: Date
       supervisorNombre: string
       supervisorCorreo: string
+      usuarioOriginal: string | null
+      supervisorNombreOriginal: string | null
+      supervisorCorreoOriginal: string | null
+      fechaReemplazo: Date | null
       licId: number
       ut: number
       rbd: number
       createdAt: Date
       updatedAt: Date
+      estado: string
+      latIngreso: number | null
+      lngIngreso: number | null
+      latCierre: number | null
+      lngCierre: number | null
     }, ExtArgs["result"]["matrizT_RespuestasCabecera"]>
     composites: {}
   }
@@ -77681,11 +78177,20 @@ export namespace Prisma {
     readonly fechaIngreso: FieldRef<"MatrizT_RespuestasCabecera", 'DateTime'>
     readonly supervisorNombre: FieldRef<"MatrizT_RespuestasCabecera", 'String'>
     readonly supervisorCorreo: FieldRef<"MatrizT_RespuestasCabecera", 'String'>
+    readonly usuarioOriginal: FieldRef<"MatrizT_RespuestasCabecera", 'String'>
+    readonly supervisorNombreOriginal: FieldRef<"MatrizT_RespuestasCabecera", 'String'>
+    readonly supervisorCorreoOriginal: FieldRef<"MatrizT_RespuestasCabecera", 'String'>
+    readonly fechaReemplazo: FieldRef<"MatrizT_RespuestasCabecera", 'DateTime'>
     readonly licId: FieldRef<"MatrizT_RespuestasCabecera", 'Int'>
     readonly ut: FieldRef<"MatrizT_RespuestasCabecera", 'Int'>
     readonly rbd: FieldRef<"MatrizT_RespuestasCabecera", 'Int'>
     readonly createdAt: FieldRef<"MatrizT_RespuestasCabecera", 'DateTime'>
     readonly updatedAt: FieldRef<"MatrizT_RespuestasCabecera", 'DateTime'>
+    readonly estado: FieldRef<"MatrizT_RespuestasCabecera", 'String'>
+    readonly latIngreso: FieldRef<"MatrizT_RespuestasCabecera", 'Float'>
+    readonly lngIngreso: FieldRef<"MatrizT_RespuestasCabecera", 'Float'>
+    readonly latCierre: FieldRef<"MatrizT_RespuestasCabecera", 'Float'>
+    readonly lngCierre: FieldRef<"MatrizT_RespuestasCabecera", 'Float'>
   }
     
 
@@ -78978,6 +79483,2862 @@ export namespace Prisma {
 
 
   /**
+   * Model FormatoCartaSostenedor
+   */
+
+  export type AggregateFormatoCartaSostenedor = {
+    _count: FormatoCartaSostenedorCountAggregateOutputType | null
+    _min: FormatoCartaSostenedorMinAggregateOutputType | null
+    _max: FormatoCartaSostenedorMaxAggregateOutputType | null
+  }
+
+  export type FormatoCartaSostenedorMinAggregateOutputType = {
+    id: string | null
+    cabeceraId: string | null
+    nombre: string | null
+    asuntoEmail: string | null
+    cuerpoEmail: string | null
+    cuerpoInicio: string | null
+    cuerpoFin: string | null
+    activo: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FormatoCartaSostenedorMaxAggregateOutputType = {
+    id: string | null
+    cabeceraId: string | null
+    nombre: string | null
+    asuntoEmail: string | null
+    cuerpoEmail: string | null
+    cuerpoInicio: string | null
+    cuerpoFin: string | null
+    activo: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FormatoCartaSostenedorCountAggregateOutputType = {
+    id: number
+    cabeceraId: number
+    nombre: number
+    asuntoEmail: number
+    cuerpoEmail: number
+    cuerpoInicio: number
+    cuerpoFin: number
+    activo: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type FormatoCartaSostenedorMinAggregateInputType = {
+    id?: true
+    cabeceraId?: true
+    nombre?: true
+    asuntoEmail?: true
+    cuerpoEmail?: true
+    cuerpoInicio?: true
+    cuerpoFin?: true
+    activo?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FormatoCartaSostenedorMaxAggregateInputType = {
+    id?: true
+    cabeceraId?: true
+    nombre?: true
+    asuntoEmail?: true
+    cuerpoEmail?: true
+    cuerpoInicio?: true
+    cuerpoFin?: true
+    activo?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FormatoCartaSostenedorCountAggregateInputType = {
+    id?: true
+    cabeceraId?: true
+    nombre?: true
+    asuntoEmail?: true
+    cuerpoEmail?: true
+    cuerpoInicio?: true
+    cuerpoFin?: true
+    activo?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type FormatoCartaSostenedorAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FormatoCartaSostenedor to aggregate.
+     */
+    where?: FormatoCartaSostenedorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FormatoCartaSostenedors to fetch.
+     */
+    orderBy?: FormatoCartaSostenedorOrderByWithRelationInput | FormatoCartaSostenedorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FormatoCartaSostenedorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FormatoCartaSostenedors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FormatoCartaSostenedors.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FormatoCartaSostenedors
+    **/
+    _count?: true | FormatoCartaSostenedorCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FormatoCartaSostenedorMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FormatoCartaSostenedorMaxAggregateInputType
+  }
+
+  export type GetFormatoCartaSostenedorAggregateType<T extends FormatoCartaSostenedorAggregateArgs> = {
+        [P in keyof T & keyof AggregateFormatoCartaSostenedor]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFormatoCartaSostenedor[P]>
+      : GetScalarType<T[P], AggregateFormatoCartaSostenedor[P]>
+  }
+
+
+
+
+  export type FormatoCartaSostenedorGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FormatoCartaSostenedorWhereInput
+    orderBy?: FormatoCartaSostenedorOrderByWithAggregationInput | FormatoCartaSostenedorOrderByWithAggregationInput[]
+    by: FormatoCartaSostenedorScalarFieldEnum[] | FormatoCartaSostenedorScalarFieldEnum
+    having?: FormatoCartaSostenedorScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FormatoCartaSostenedorCountAggregateInputType | true
+    _min?: FormatoCartaSostenedorMinAggregateInputType
+    _max?: FormatoCartaSostenedorMaxAggregateInputType
+  }
+
+  export type FormatoCartaSostenedorGroupByOutputType = {
+    id: string
+    cabeceraId: string
+    nombre: string
+    asuntoEmail: string
+    cuerpoEmail: string
+    cuerpoInicio: string
+    cuerpoFin: string
+    activo: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: FormatoCartaSostenedorCountAggregateOutputType | null
+    _min: FormatoCartaSostenedorMinAggregateOutputType | null
+    _max: FormatoCartaSostenedorMaxAggregateOutputType | null
+  }
+
+  type GetFormatoCartaSostenedorGroupByPayload<T extends FormatoCartaSostenedorGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<FormatoCartaSostenedorGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FormatoCartaSostenedorGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FormatoCartaSostenedorGroupByOutputType[P]>
+            : GetScalarType<T[P], FormatoCartaSostenedorGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FormatoCartaSostenedorSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cabeceraId?: boolean
+    nombre?: boolean
+    asuntoEmail?: boolean
+    cuerpoEmail?: boolean
+    cuerpoInicio?: boolean
+    cuerpoFin?: boolean
+    activo?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    cabecera?: boolean | MatrizT_CabeceraDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["formatoCartaSostenedor"]>
+
+  export type FormatoCartaSostenedorSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cabeceraId?: boolean
+    nombre?: boolean
+    asuntoEmail?: boolean
+    cuerpoEmail?: boolean
+    cuerpoInicio?: boolean
+    cuerpoFin?: boolean
+    activo?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    cabecera?: boolean | MatrizT_CabeceraDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["formatoCartaSostenedor"]>
+
+  export type FormatoCartaSostenedorSelectScalar = {
+    id?: boolean
+    cabeceraId?: boolean
+    nombre?: boolean
+    asuntoEmail?: boolean
+    cuerpoEmail?: boolean
+    cuerpoInicio?: boolean
+    cuerpoFin?: boolean
+    activo?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type FormatoCartaSostenedorInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    cabecera?: boolean | MatrizT_CabeceraDefaultArgs<ExtArgs>
+  }
+  export type FormatoCartaSostenedorIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    cabecera?: boolean | MatrizT_CabeceraDefaultArgs<ExtArgs>
+  }
+
+  export type $FormatoCartaSostenedorPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "FormatoCartaSostenedor"
+    objects: {
+      cabecera: Prisma.$MatrizT_CabeceraPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      cabeceraId: string
+      nombre: string
+      asuntoEmail: string
+      cuerpoEmail: string
+      cuerpoInicio: string
+      cuerpoFin: string
+      activo: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["formatoCartaSostenedor"]>
+    composites: {}
+  }
+
+  type FormatoCartaSostenedorGetPayload<S extends boolean | null | undefined | FormatoCartaSostenedorDefaultArgs> = $Result.GetResult<Prisma.$FormatoCartaSostenedorPayload, S>
+
+  type FormatoCartaSostenedorCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<FormatoCartaSostenedorFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: FormatoCartaSostenedorCountAggregateInputType | true
+    }
+
+  export interface FormatoCartaSostenedorDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['FormatoCartaSostenedor'], meta: { name: 'FormatoCartaSostenedor' } }
+    /**
+     * Find zero or one FormatoCartaSostenedor that matches the filter.
+     * @param {FormatoCartaSostenedorFindUniqueArgs} args - Arguments to find a FormatoCartaSostenedor
+     * @example
+     * // Get one FormatoCartaSostenedor
+     * const formatoCartaSostenedor = await prisma.formatoCartaSostenedor.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends FormatoCartaSostenedorFindUniqueArgs>(args: SelectSubset<T, FormatoCartaSostenedorFindUniqueArgs<ExtArgs>>): Prisma__FormatoCartaSostenedorClient<$Result.GetResult<Prisma.$FormatoCartaSostenedorPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one FormatoCartaSostenedor that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {FormatoCartaSostenedorFindUniqueOrThrowArgs} args - Arguments to find a FormatoCartaSostenedor
+     * @example
+     * // Get one FormatoCartaSostenedor
+     * const formatoCartaSostenedor = await prisma.formatoCartaSostenedor.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends FormatoCartaSostenedorFindUniqueOrThrowArgs>(args: SelectSubset<T, FormatoCartaSostenedorFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FormatoCartaSostenedorClient<$Result.GetResult<Prisma.$FormatoCartaSostenedorPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first FormatoCartaSostenedor that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormatoCartaSostenedorFindFirstArgs} args - Arguments to find a FormatoCartaSostenedor
+     * @example
+     * // Get one FormatoCartaSostenedor
+     * const formatoCartaSostenedor = await prisma.formatoCartaSostenedor.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends FormatoCartaSostenedorFindFirstArgs>(args?: SelectSubset<T, FormatoCartaSostenedorFindFirstArgs<ExtArgs>>): Prisma__FormatoCartaSostenedorClient<$Result.GetResult<Prisma.$FormatoCartaSostenedorPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first FormatoCartaSostenedor that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormatoCartaSostenedorFindFirstOrThrowArgs} args - Arguments to find a FormatoCartaSostenedor
+     * @example
+     * // Get one FormatoCartaSostenedor
+     * const formatoCartaSostenedor = await prisma.formatoCartaSostenedor.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends FormatoCartaSostenedorFindFirstOrThrowArgs>(args?: SelectSubset<T, FormatoCartaSostenedorFindFirstOrThrowArgs<ExtArgs>>): Prisma__FormatoCartaSostenedorClient<$Result.GetResult<Prisma.$FormatoCartaSostenedorPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more FormatoCartaSostenedors that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormatoCartaSostenedorFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FormatoCartaSostenedors
+     * const formatoCartaSostenedors = await prisma.formatoCartaSostenedor.findMany()
+     * 
+     * // Get first 10 FormatoCartaSostenedors
+     * const formatoCartaSostenedors = await prisma.formatoCartaSostenedor.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const formatoCartaSostenedorWithIdOnly = await prisma.formatoCartaSostenedor.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends FormatoCartaSostenedorFindManyArgs>(args?: SelectSubset<T, FormatoCartaSostenedorFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormatoCartaSostenedorPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a FormatoCartaSostenedor.
+     * @param {FormatoCartaSostenedorCreateArgs} args - Arguments to create a FormatoCartaSostenedor.
+     * @example
+     * // Create one FormatoCartaSostenedor
+     * const FormatoCartaSostenedor = await prisma.formatoCartaSostenedor.create({
+     *   data: {
+     *     // ... data to create a FormatoCartaSostenedor
+     *   }
+     * })
+     * 
+     */
+    create<T extends FormatoCartaSostenedorCreateArgs>(args: SelectSubset<T, FormatoCartaSostenedorCreateArgs<ExtArgs>>): Prisma__FormatoCartaSostenedorClient<$Result.GetResult<Prisma.$FormatoCartaSostenedorPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many FormatoCartaSostenedors.
+     * @param {FormatoCartaSostenedorCreateManyArgs} args - Arguments to create many FormatoCartaSostenedors.
+     * @example
+     * // Create many FormatoCartaSostenedors
+     * const formatoCartaSostenedor = await prisma.formatoCartaSostenedor.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends FormatoCartaSostenedorCreateManyArgs>(args?: SelectSubset<T, FormatoCartaSostenedorCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many FormatoCartaSostenedors and returns the data saved in the database.
+     * @param {FormatoCartaSostenedorCreateManyAndReturnArgs} args - Arguments to create many FormatoCartaSostenedors.
+     * @example
+     * // Create many FormatoCartaSostenedors
+     * const formatoCartaSostenedor = await prisma.formatoCartaSostenedor.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many FormatoCartaSostenedors and only return the `id`
+     * const formatoCartaSostenedorWithIdOnly = await prisma.formatoCartaSostenedor.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends FormatoCartaSostenedorCreateManyAndReturnArgs>(args?: SelectSubset<T, FormatoCartaSostenedorCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormatoCartaSostenedorPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a FormatoCartaSostenedor.
+     * @param {FormatoCartaSostenedorDeleteArgs} args - Arguments to delete one FormatoCartaSostenedor.
+     * @example
+     * // Delete one FormatoCartaSostenedor
+     * const FormatoCartaSostenedor = await prisma.formatoCartaSostenedor.delete({
+     *   where: {
+     *     // ... filter to delete one FormatoCartaSostenedor
+     *   }
+     * })
+     * 
+     */
+    delete<T extends FormatoCartaSostenedorDeleteArgs>(args: SelectSubset<T, FormatoCartaSostenedorDeleteArgs<ExtArgs>>): Prisma__FormatoCartaSostenedorClient<$Result.GetResult<Prisma.$FormatoCartaSostenedorPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one FormatoCartaSostenedor.
+     * @param {FormatoCartaSostenedorUpdateArgs} args - Arguments to update one FormatoCartaSostenedor.
+     * @example
+     * // Update one FormatoCartaSostenedor
+     * const formatoCartaSostenedor = await prisma.formatoCartaSostenedor.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends FormatoCartaSostenedorUpdateArgs>(args: SelectSubset<T, FormatoCartaSostenedorUpdateArgs<ExtArgs>>): Prisma__FormatoCartaSostenedorClient<$Result.GetResult<Prisma.$FormatoCartaSostenedorPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more FormatoCartaSostenedors.
+     * @param {FormatoCartaSostenedorDeleteManyArgs} args - Arguments to filter FormatoCartaSostenedors to delete.
+     * @example
+     * // Delete a few FormatoCartaSostenedors
+     * const { count } = await prisma.formatoCartaSostenedor.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends FormatoCartaSostenedorDeleteManyArgs>(args?: SelectSubset<T, FormatoCartaSostenedorDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FormatoCartaSostenedors.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormatoCartaSostenedorUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FormatoCartaSostenedors
+     * const formatoCartaSostenedor = await prisma.formatoCartaSostenedor.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends FormatoCartaSostenedorUpdateManyArgs>(args: SelectSubset<T, FormatoCartaSostenedorUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one FormatoCartaSostenedor.
+     * @param {FormatoCartaSostenedorUpsertArgs} args - Arguments to update or create a FormatoCartaSostenedor.
+     * @example
+     * // Update or create a FormatoCartaSostenedor
+     * const formatoCartaSostenedor = await prisma.formatoCartaSostenedor.upsert({
+     *   create: {
+     *     // ... data to create a FormatoCartaSostenedor
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FormatoCartaSostenedor we want to update
+     *   }
+     * })
+     */
+    upsert<T extends FormatoCartaSostenedorUpsertArgs>(args: SelectSubset<T, FormatoCartaSostenedorUpsertArgs<ExtArgs>>): Prisma__FormatoCartaSostenedorClient<$Result.GetResult<Prisma.$FormatoCartaSostenedorPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of FormatoCartaSostenedors.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormatoCartaSostenedorCountArgs} args - Arguments to filter FormatoCartaSostenedors to count.
+     * @example
+     * // Count the number of FormatoCartaSostenedors
+     * const count = await prisma.formatoCartaSostenedor.count({
+     *   where: {
+     *     // ... the filter for the FormatoCartaSostenedors we want to count
+     *   }
+     * })
+    **/
+    count<T extends FormatoCartaSostenedorCountArgs>(
+      args?: Subset<T, FormatoCartaSostenedorCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FormatoCartaSostenedorCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FormatoCartaSostenedor.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormatoCartaSostenedorAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FormatoCartaSostenedorAggregateArgs>(args: Subset<T, FormatoCartaSostenedorAggregateArgs>): Prisma.PrismaPromise<GetFormatoCartaSostenedorAggregateType<T>>
+
+    /**
+     * Group by FormatoCartaSostenedor.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FormatoCartaSostenedorGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FormatoCartaSostenedorGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FormatoCartaSostenedorGroupByArgs['orderBy'] }
+        : { orderBy?: FormatoCartaSostenedorGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FormatoCartaSostenedorGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFormatoCartaSostenedorGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the FormatoCartaSostenedor model
+   */
+  readonly fields: FormatoCartaSostenedorFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FormatoCartaSostenedor.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__FormatoCartaSostenedorClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    cabecera<T extends MatrizT_CabeceraDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MatrizT_CabeceraDefaultArgs<ExtArgs>>): Prisma__MatrizT_CabeceraClient<$Result.GetResult<Prisma.$MatrizT_CabeceraPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the FormatoCartaSostenedor model
+   */ 
+  interface FormatoCartaSostenedorFieldRefs {
+    readonly id: FieldRef<"FormatoCartaSostenedor", 'String'>
+    readonly cabeceraId: FieldRef<"FormatoCartaSostenedor", 'String'>
+    readonly nombre: FieldRef<"FormatoCartaSostenedor", 'String'>
+    readonly asuntoEmail: FieldRef<"FormatoCartaSostenedor", 'String'>
+    readonly cuerpoEmail: FieldRef<"FormatoCartaSostenedor", 'String'>
+    readonly cuerpoInicio: FieldRef<"FormatoCartaSostenedor", 'String'>
+    readonly cuerpoFin: FieldRef<"FormatoCartaSostenedor", 'String'>
+    readonly activo: FieldRef<"FormatoCartaSostenedor", 'Boolean'>
+    readonly createdAt: FieldRef<"FormatoCartaSostenedor", 'DateTime'>
+    readonly updatedAt: FieldRef<"FormatoCartaSostenedor", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * FormatoCartaSostenedor findUnique
+   */
+  export type FormatoCartaSostenedorFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormatoCartaSostenedor
+     */
+    select?: FormatoCartaSostenedorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormatoCartaSostenedorInclude<ExtArgs> | null
+    /**
+     * Filter, which FormatoCartaSostenedor to fetch.
+     */
+    where: FormatoCartaSostenedorWhereUniqueInput
+  }
+
+  /**
+   * FormatoCartaSostenedor findUniqueOrThrow
+   */
+  export type FormatoCartaSostenedorFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormatoCartaSostenedor
+     */
+    select?: FormatoCartaSostenedorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormatoCartaSostenedorInclude<ExtArgs> | null
+    /**
+     * Filter, which FormatoCartaSostenedor to fetch.
+     */
+    where: FormatoCartaSostenedorWhereUniqueInput
+  }
+
+  /**
+   * FormatoCartaSostenedor findFirst
+   */
+  export type FormatoCartaSostenedorFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormatoCartaSostenedor
+     */
+    select?: FormatoCartaSostenedorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormatoCartaSostenedorInclude<ExtArgs> | null
+    /**
+     * Filter, which FormatoCartaSostenedor to fetch.
+     */
+    where?: FormatoCartaSostenedorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FormatoCartaSostenedors to fetch.
+     */
+    orderBy?: FormatoCartaSostenedorOrderByWithRelationInput | FormatoCartaSostenedorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FormatoCartaSostenedors.
+     */
+    cursor?: FormatoCartaSostenedorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FormatoCartaSostenedors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FormatoCartaSostenedors.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FormatoCartaSostenedors.
+     */
+    distinct?: FormatoCartaSostenedorScalarFieldEnum | FormatoCartaSostenedorScalarFieldEnum[]
+  }
+
+  /**
+   * FormatoCartaSostenedor findFirstOrThrow
+   */
+  export type FormatoCartaSostenedorFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormatoCartaSostenedor
+     */
+    select?: FormatoCartaSostenedorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormatoCartaSostenedorInclude<ExtArgs> | null
+    /**
+     * Filter, which FormatoCartaSostenedor to fetch.
+     */
+    where?: FormatoCartaSostenedorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FormatoCartaSostenedors to fetch.
+     */
+    orderBy?: FormatoCartaSostenedorOrderByWithRelationInput | FormatoCartaSostenedorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FormatoCartaSostenedors.
+     */
+    cursor?: FormatoCartaSostenedorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FormatoCartaSostenedors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FormatoCartaSostenedors.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FormatoCartaSostenedors.
+     */
+    distinct?: FormatoCartaSostenedorScalarFieldEnum | FormatoCartaSostenedorScalarFieldEnum[]
+  }
+
+  /**
+   * FormatoCartaSostenedor findMany
+   */
+  export type FormatoCartaSostenedorFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormatoCartaSostenedor
+     */
+    select?: FormatoCartaSostenedorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormatoCartaSostenedorInclude<ExtArgs> | null
+    /**
+     * Filter, which FormatoCartaSostenedors to fetch.
+     */
+    where?: FormatoCartaSostenedorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FormatoCartaSostenedors to fetch.
+     */
+    orderBy?: FormatoCartaSostenedorOrderByWithRelationInput | FormatoCartaSostenedorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FormatoCartaSostenedors.
+     */
+    cursor?: FormatoCartaSostenedorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FormatoCartaSostenedors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FormatoCartaSostenedors.
+     */
+    skip?: number
+    distinct?: FormatoCartaSostenedorScalarFieldEnum | FormatoCartaSostenedorScalarFieldEnum[]
+  }
+
+  /**
+   * FormatoCartaSostenedor create
+   */
+  export type FormatoCartaSostenedorCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormatoCartaSostenedor
+     */
+    select?: FormatoCartaSostenedorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormatoCartaSostenedorInclude<ExtArgs> | null
+    /**
+     * The data needed to create a FormatoCartaSostenedor.
+     */
+    data: XOR<FormatoCartaSostenedorCreateInput, FormatoCartaSostenedorUncheckedCreateInput>
+  }
+
+  /**
+   * FormatoCartaSostenedor createMany
+   */
+  export type FormatoCartaSostenedorCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many FormatoCartaSostenedors.
+     */
+    data: FormatoCartaSostenedorCreateManyInput | FormatoCartaSostenedorCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * FormatoCartaSostenedor createManyAndReturn
+   */
+  export type FormatoCartaSostenedorCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormatoCartaSostenedor
+     */
+    select?: FormatoCartaSostenedorSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many FormatoCartaSostenedors.
+     */
+    data: FormatoCartaSostenedorCreateManyInput | FormatoCartaSostenedorCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormatoCartaSostenedorIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * FormatoCartaSostenedor update
+   */
+  export type FormatoCartaSostenedorUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormatoCartaSostenedor
+     */
+    select?: FormatoCartaSostenedorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormatoCartaSostenedorInclude<ExtArgs> | null
+    /**
+     * The data needed to update a FormatoCartaSostenedor.
+     */
+    data: XOR<FormatoCartaSostenedorUpdateInput, FormatoCartaSostenedorUncheckedUpdateInput>
+    /**
+     * Choose, which FormatoCartaSostenedor to update.
+     */
+    where: FormatoCartaSostenedorWhereUniqueInput
+  }
+
+  /**
+   * FormatoCartaSostenedor updateMany
+   */
+  export type FormatoCartaSostenedorUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update FormatoCartaSostenedors.
+     */
+    data: XOR<FormatoCartaSostenedorUpdateManyMutationInput, FormatoCartaSostenedorUncheckedUpdateManyInput>
+    /**
+     * Filter which FormatoCartaSostenedors to update
+     */
+    where?: FormatoCartaSostenedorWhereInput
+  }
+
+  /**
+   * FormatoCartaSostenedor upsert
+   */
+  export type FormatoCartaSostenedorUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormatoCartaSostenedor
+     */
+    select?: FormatoCartaSostenedorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormatoCartaSostenedorInclude<ExtArgs> | null
+    /**
+     * The filter to search for the FormatoCartaSostenedor to update in case it exists.
+     */
+    where: FormatoCartaSostenedorWhereUniqueInput
+    /**
+     * In case the FormatoCartaSostenedor found by the `where` argument doesn't exist, create a new FormatoCartaSostenedor with this data.
+     */
+    create: XOR<FormatoCartaSostenedorCreateInput, FormatoCartaSostenedorUncheckedCreateInput>
+    /**
+     * In case the FormatoCartaSostenedor was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FormatoCartaSostenedorUpdateInput, FormatoCartaSostenedorUncheckedUpdateInput>
+  }
+
+  /**
+   * FormatoCartaSostenedor delete
+   */
+  export type FormatoCartaSostenedorDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormatoCartaSostenedor
+     */
+    select?: FormatoCartaSostenedorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormatoCartaSostenedorInclude<ExtArgs> | null
+    /**
+     * Filter which FormatoCartaSostenedor to delete.
+     */
+    where: FormatoCartaSostenedorWhereUniqueInput
+  }
+
+  /**
+   * FormatoCartaSostenedor deleteMany
+   */
+  export type FormatoCartaSostenedorDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FormatoCartaSostenedors to delete
+     */
+    where?: FormatoCartaSostenedorWhereInput
+  }
+
+  /**
+   * FormatoCartaSostenedor without action
+   */
+  export type FormatoCartaSostenedorDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FormatoCartaSostenedor
+     */
+    select?: FormatoCartaSostenedorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FormatoCartaSostenedorInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model DelegacionVisualizacion
+   */
+
+  export type AggregateDelegacionVisualizacion = {
+    _count: DelegacionVisualizacionCountAggregateOutputType | null
+    _min: DelegacionVisualizacionMinAggregateOutputType | null
+    _max: DelegacionVisualizacionMaxAggregateOutputType | null
+  }
+
+  export type DelegacionVisualizacionMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    sucursalId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type DelegacionVisualizacionMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    sucursalId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type DelegacionVisualizacionCountAggregateOutputType = {
+    id: number
+    userId: number
+    sucursalId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type DelegacionVisualizacionMinAggregateInputType = {
+    id?: true
+    userId?: true
+    sucursalId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type DelegacionVisualizacionMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    sucursalId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type DelegacionVisualizacionCountAggregateInputType = {
+    id?: true
+    userId?: true
+    sucursalId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type DelegacionVisualizacionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DelegacionVisualizacion to aggregate.
+     */
+    where?: DelegacionVisualizacionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DelegacionVisualizacions to fetch.
+     */
+    orderBy?: DelegacionVisualizacionOrderByWithRelationInput | DelegacionVisualizacionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DelegacionVisualizacionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DelegacionVisualizacions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DelegacionVisualizacions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DelegacionVisualizacions
+    **/
+    _count?: true | DelegacionVisualizacionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DelegacionVisualizacionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DelegacionVisualizacionMaxAggregateInputType
+  }
+
+  export type GetDelegacionVisualizacionAggregateType<T extends DelegacionVisualizacionAggregateArgs> = {
+        [P in keyof T & keyof AggregateDelegacionVisualizacion]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDelegacionVisualizacion[P]>
+      : GetScalarType<T[P], AggregateDelegacionVisualizacion[P]>
+  }
+
+
+
+
+  export type DelegacionVisualizacionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DelegacionVisualizacionWhereInput
+    orderBy?: DelegacionVisualizacionOrderByWithAggregationInput | DelegacionVisualizacionOrderByWithAggregationInput[]
+    by: DelegacionVisualizacionScalarFieldEnum[] | DelegacionVisualizacionScalarFieldEnum
+    having?: DelegacionVisualizacionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DelegacionVisualizacionCountAggregateInputType | true
+    _min?: DelegacionVisualizacionMinAggregateInputType
+    _max?: DelegacionVisualizacionMaxAggregateInputType
+  }
+
+  export type DelegacionVisualizacionGroupByOutputType = {
+    id: string
+    userId: string
+    sucursalId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: DelegacionVisualizacionCountAggregateOutputType | null
+    _min: DelegacionVisualizacionMinAggregateOutputType | null
+    _max: DelegacionVisualizacionMaxAggregateOutputType | null
+  }
+
+  type GetDelegacionVisualizacionGroupByPayload<T extends DelegacionVisualizacionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DelegacionVisualizacionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DelegacionVisualizacionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DelegacionVisualizacionGroupByOutputType[P]>
+            : GetScalarType<T[P], DelegacionVisualizacionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DelegacionVisualizacionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    sucursalId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    sucursal?: boolean | SucursalDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["delegacionVisualizacion"]>
+
+  export type DelegacionVisualizacionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    sucursalId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    sucursal?: boolean | SucursalDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["delegacionVisualizacion"]>
+
+  export type DelegacionVisualizacionSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    sucursalId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type DelegacionVisualizacionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    sucursal?: boolean | SucursalDefaultArgs<ExtArgs>
+  }
+  export type DelegacionVisualizacionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    sucursal?: boolean | SucursalDefaultArgs<ExtArgs>
+  }
+
+  export type $DelegacionVisualizacionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DelegacionVisualizacion"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      sucursal: Prisma.$SucursalPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      sucursalId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["delegacionVisualizacion"]>
+    composites: {}
+  }
+
+  type DelegacionVisualizacionGetPayload<S extends boolean | null | undefined | DelegacionVisualizacionDefaultArgs> = $Result.GetResult<Prisma.$DelegacionVisualizacionPayload, S>
+
+  type DelegacionVisualizacionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<DelegacionVisualizacionFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: DelegacionVisualizacionCountAggregateInputType | true
+    }
+
+  export interface DelegacionVisualizacionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DelegacionVisualizacion'], meta: { name: 'DelegacionVisualizacion' } }
+    /**
+     * Find zero or one DelegacionVisualizacion that matches the filter.
+     * @param {DelegacionVisualizacionFindUniqueArgs} args - Arguments to find a DelegacionVisualizacion
+     * @example
+     * // Get one DelegacionVisualizacion
+     * const delegacionVisualizacion = await prisma.delegacionVisualizacion.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DelegacionVisualizacionFindUniqueArgs>(args: SelectSubset<T, DelegacionVisualizacionFindUniqueArgs<ExtArgs>>): Prisma__DelegacionVisualizacionClient<$Result.GetResult<Prisma.$DelegacionVisualizacionPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one DelegacionVisualizacion that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {DelegacionVisualizacionFindUniqueOrThrowArgs} args - Arguments to find a DelegacionVisualizacion
+     * @example
+     * // Get one DelegacionVisualizacion
+     * const delegacionVisualizacion = await prisma.delegacionVisualizacion.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DelegacionVisualizacionFindUniqueOrThrowArgs>(args: SelectSubset<T, DelegacionVisualizacionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DelegacionVisualizacionClient<$Result.GetResult<Prisma.$DelegacionVisualizacionPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first DelegacionVisualizacion that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DelegacionVisualizacionFindFirstArgs} args - Arguments to find a DelegacionVisualizacion
+     * @example
+     * // Get one DelegacionVisualizacion
+     * const delegacionVisualizacion = await prisma.delegacionVisualizacion.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DelegacionVisualizacionFindFirstArgs>(args?: SelectSubset<T, DelegacionVisualizacionFindFirstArgs<ExtArgs>>): Prisma__DelegacionVisualizacionClient<$Result.GetResult<Prisma.$DelegacionVisualizacionPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first DelegacionVisualizacion that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DelegacionVisualizacionFindFirstOrThrowArgs} args - Arguments to find a DelegacionVisualizacion
+     * @example
+     * // Get one DelegacionVisualizacion
+     * const delegacionVisualizacion = await prisma.delegacionVisualizacion.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DelegacionVisualizacionFindFirstOrThrowArgs>(args?: SelectSubset<T, DelegacionVisualizacionFindFirstOrThrowArgs<ExtArgs>>): Prisma__DelegacionVisualizacionClient<$Result.GetResult<Prisma.$DelegacionVisualizacionPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more DelegacionVisualizacions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DelegacionVisualizacionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DelegacionVisualizacions
+     * const delegacionVisualizacions = await prisma.delegacionVisualizacion.findMany()
+     * 
+     * // Get first 10 DelegacionVisualizacions
+     * const delegacionVisualizacions = await prisma.delegacionVisualizacion.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const delegacionVisualizacionWithIdOnly = await prisma.delegacionVisualizacion.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DelegacionVisualizacionFindManyArgs>(args?: SelectSubset<T, DelegacionVisualizacionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DelegacionVisualizacionPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a DelegacionVisualizacion.
+     * @param {DelegacionVisualizacionCreateArgs} args - Arguments to create a DelegacionVisualizacion.
+     * @example
+     * // Create one DelegacionVisualizacion
+     * const DelegacionVisualizacion = await prisma.delegacionVisualizacion.create({
+     *   data: {
+     *     // ... data to create a DelegacionVisualizacion
+     *   }
+     * })
+     * 
+     */
+    create<T extends DelegacionVisualizacionCreateArgs>(args: SelectSubset<T, DelegacionVisualizacionCreateArgs<ExtArgs>>): Prisma__DelegacionVisualizacionClient<$Result.GetResult<Prisma.$DelegacionVisualizacionPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many DelegacionVisualizacions.
+     * @param {DelegacionVisualizacionCreateManyArgs} args - Arguments to create many DelegacionVisualizacions.
+     * @example
+     * // Create many DelegacionVisualizacions
+     * const delegacionVisualizacion = await prisma.delegacionVisualizacion.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DelegacionVisualizacionCreateManyArgs>(args?: SelectSubset<T, DelegacionVisualizacionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DelegacionVisualizacions and returns the data saved in the database.
+     * @param {DelegacionVisualizacionCreateManyAndReturnArgs} args - Arguments to create many DelegacionVisualizacions.
+     * @example
+     * // Create many DelegacionVisualizacions
+     * const delegacionVisualizacion = await prisma.delegacionVisualizacion.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DelegacionVisualizacions and only return the `id`
+     * const delegacionVisualizacionWithIdOnly = await prisma.delegacionVisualizacion.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DelegacionVisualizacionCreateManyAndReturnArgs>(args?: SelectSubset<T, DelegacionVisualizacionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DelegacionVisualizacionPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a DelegacionVisualizacion.
+     * @param {DelegacionVisualizacionDeleteArgs} args - Arguments to delete one DelegacionVisualizacion.
+     * @example
+     * // Delete one DelegacionVisualizacion
+     * const DelegacionVisualizacion = await prisma.delegacionVisualizacion.delete({
+     *   where: {
+     *     // ... filter to delete one DelegacionVisualizacion
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DelegacionVisualizacionDeleteArgs>(args: SelectSubset<T, DelegacionVisualizacionDeleteArgs<ExtArgs>>): Prisma__DelegacionVisualizacionClient<$Result.GetResult<Prisma.$DelegacionVisualizacionPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one DelegacionVisualizacion.
+     * @param {DelegacionVisualizacionUpdateArgs} args - Arguments to update one DelegacionVisualizacion.
+     * @example
+     * // Update one DelegacionVisualizacion
+     * const delegacionVisualizacion = await prisma.delegacionVisualizacion.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DelegacionVisualizacionUpdateArgs>(args: SelectSubset<T, DelegacionVisualizacionUpdateArgs<ExtArgs>>): Prisma__DelegacionVisualizacionClient<$Result.GetResult<Prisma.$DelegacionVisualizacionPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more DelegacionVisualizacions.
+     * @param {DelegacionVisualizacionDeleteManyArgs} args - Arguments to filter DelegacionVisualizacions to delete.
+     * @example
+     * // Delete a few DelegacionVisualizacions
+     * const { count } = await prisma.delegacionVisualizacion.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DelegacionVisualizacionDeleteManyArgs>(args?: SelectSubset<T, DelegacionVisualizacionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DelegacionVisualizacions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DelegacionVisualizacionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DelegacionVisualizacions
+     * const delegacionVisualizacion = await prisma.delegacionVisualizacion.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DelegacionVisualizacionUpdateManyArgs>(args: SelectSubset<T, DelegacionVisualizacionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one DelegacionVisualizacion.
+     * @param {DelegacionVisualizacionUpsertArgs} args - Arguments to update or create a DelegacionVisualizacion.
+     * @example
+     * // Update or create a DelegacionVisualizacion
+     * const delegacionVisualizacion = await prisma.delegacionVisualizacion.upsert({
+     *   create: {
+     *     // ... data to create a DelegacionVisualizacion
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DelegacionVisualizacion we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DelegacionVisualizacionUpsertArgs>(args: SelectSubset<T, DelegacionVisualizacionUpsertArgs<ExtArgs>>): Prisma__DelegacionVisualizacionClient<$Result.GetResult<Prisma.$DelegacionVisualizacionPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of DelegacionVisualizacions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DelegacionVisualizacionCountArgs} args - Arguments to filter DelegacionVisualizacions to count.
+     * @example
+     * // Count the number of DelegacionVisualizacions
+     * const count = await prisma.delegacionVisualizacion.count({
+     *   where: {
+     *     // ... the filter for the DelegacionVisualizacions we want to count
+     *   }
+     * })
+    **/
+    count<T extends DelegacionVisualizacionCountArgs>(
+      args?: Subset<T, DelegacionVisualizacionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DelegacionVisualizacionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DelegacionVisualizacion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DelegacionVisualizacionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DelegacionVisualizacionAggregateArgs>(args: Subset<T, DelegacionVisualizacionAggregateArgs>): Prisma.PrismaPromise<GetDelegacionVisualizacionAggregateType<T>>
+
+    /**
+     * Group by DelegacionVisualizacion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DelegacionVisualizacionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DelegacionVisualizacionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DelegacionVisualizacionGroupByArgs['orderBy'] }
+        : { orderBy?: DelegacionVisualizacionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DelegacionVisualizacionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDelegacionVisualizacionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DelegacionVisualizacion model
+   */
+  readonly fields: DelegacionVisualizacionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DelegacionVisualizacion.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DelegacionVisualizacionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    sucursal<T extends SucursalDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SucursalDefaultArgs<ExtArgs>>): Prisma__SucursalClient<$Result.GetResult<Prisma.$SucursalPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DelegacionVisualizacion model
+   */ 
+  interface DelegacionVisualizacionFieldRefs {
+    readonly id: FieldRef<"DelegacionVisualizacion", 'String'>
+    readonly userId: FieldRef<"DelegacionVisualizacion", 'String'>
+    readonly sucursalId: FieldRef<"DelegacionVisualizacion", 'String'>
+    readonly createdAt: FieldRef<"DelegacionVisualizacion", 'DateTime'>
+    readonly updatedAt: FieldRef<"DelegacionVisualizacion", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DelegacionVisualizacion findUnique
+   */
+  export type DelegacionVisualizacionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DelegacionVisualizacion
+     */
+    select?: DelegacionVisualizacionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DelegacionVisualizacionInclude<ExtArgs> | null
+    /**
+     * Filter, which DelegacionVisualizacion to fetch.
+     */
+    where: DelegacionVisualizacionWhereUniqueInput
+  }
+
+  /**
+   * DelegacionVisualizacion findUniqueOrThrow
+   */
+  export type DelegacionVisualizacionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DelegacionVisualizacion
+     */
+    select?: DelegacionVisualizacionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DelegacionVisualizacionInclude<ExtArgs> | null
+    /**
+     * Filter, which DelegacionVisualizacion to fetch.
+     */
+    where: DelegacionVisualizacionWhereUniqueInput
+  }
+
+  /**
+   * DelegacionVisualizacion findFirst
+   */
+  export type DelegacionVisualizacionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DelegacionVisualizacion
+     */
+    select?: DelegacionVisualizacionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DelegacionVisualizacionInclude<ExtArgs> | null
+    /**
+     * Filter, which DelegacionVisualizacion to fetch.
+     */
+    where?: DelegacionVisualizacionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DelegacionVisualizacions to fetch.
+     */
+    orderBy?: DelegacionVisualizacionOrderByWithRelationInput | DelegacionVisualizacionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DelegacionVisualizacions.
+     */
+    cursor?: DelegacionVisualizacionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DelegacionVisualizacions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DelegacionVisualizacions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DelegacionVisualizacions.
+     */
+    distinct?: DelegacionVisualizacionScalarFieldEnum | DelegacionVisualizacionScalarFieldEnum[]
+  }
+
+  /**
+   * DelegacionVisualizacion findFirstOrThrow
+   */
+  export type DelegacionVisualizacionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DelegacionVisualizacion
+     */
+    select?: DelegacionVisualizacionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DelegacionVisualizacionInclude<ExtArgs> | null
+    /**
+     * Filter, which DelegacionVisualizacion to fetch.
+     */
+    where?: DelegacionVisualizacionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DelegacionVisualizacions to fetch.
+     */
+    orderBy?: DelegacionVisualizacionOrderByWithRelationInput | DelegacionVisualizacionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DelegacionVisualizacions.
+     */
+    cursor?: DelegacionVisualizacionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DelegacionVisualizacions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DelegacionVisualizacions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DelegacionVisualizacions.
+     */
+    distinct?: DelegacionVisualizacionScalarFieldEnum | DelegacionVisualizacionScalarFieldEnum[]
+  }
+
+  /**
+   * DelegacionVisualizacion findMany
+   */
+  export type DelegacionVisualizacionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DelegacionVisualizacion
+     */
+    select?: DelegacionVisualizacionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DelegacionVisualizacionInclude<ExtArgs> | null
+    /**
+     * Filter, which DelegacionVisualizacions to fetch.
+     */
+    where?: DelegacionVisualizacionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DelegacionVisualizacions to fetch.
+     */
+    orderBy?: DelegacionVisualizacionOrderByWithRelationInput | DelegacionVisualizacionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DelegacionVisualizacions.
+     */
+    cursor?: DelegacionVisualizacionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DelegacionVisualizacions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DelegacionVisualizacions.
+     */
+    skip?: number
+    distinct?: DelegacionVisualizacionScalarFieldEnum | DelegacionVisualizacionScalarFieldEnum[]
+  }
+
+  /**
+   * DelegacionVisualizacion create
+   */
+  export type DelegacionVisualizacionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DelegacionVisualizacion
+     */
+    select?: DelegacionVisualizacionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DelegacionVisualizacionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a DelegacionVisualizacion.
+     */
+    data: XOR<DelegacionVisualizacionCreateInput, DelegacionVisualizacionUncheckedCreateInput>
+  }
+
+  /**
+   * DelegacionVisualizacion createMany
+   */
+  export type DelegacionVisualizacionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DelegacionVisualizacions.
+     */
+    data: DelegacionVisualizacionCreateManyInput | DelegacionVisualizacionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DelegacionVisualizacion createManyAndReturn
+   */
+  export type DelegacionVisualizacionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DelegacionVisualizacion
+     */
+    select?: DelegacionVisualizacionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many DelegacionVisualizacions.
+     */
+    data: DelegacionVisualizacionCreateManyInput | DelegacionVisualizacionCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DelegacionVisualizacionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DelegacionVisualizacion update
+   */
+  export type DelegacionVisualizacionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DelegacionVisualizacion
+     */
+    select?: DelegacionVisualizacionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DelegacionVisualizacionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a DelegacionVisualizacion.
+     */
+    data: XOR<DelegacionVisualizacionUpdateInput, DelegacionVisualizacionUncheckedUpdateInput>
+    /**
+     * Choose, which DelegacionVisualizacion to update.
+     */
+    where: DelegacionVisualizacionWhereUniqueInput
+  }
+
+  /**
+   * DelegacionVisualizacion updateMany
+   */
+  export type DelegacionVisualizacionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DelegacionVisualizacions.
+     */
+    data: XOR<DelegacionVisualizacionUpdateManyMutationInput, DelegacionVisualizacionUncheckedUpdateManyInput>
+    /**
+     * Filter which DelegacionVisualizacions to update
+     */
+    where?: DelegacionVisualizacionWhereInput
+  }
+
+  /**
+   * DelegacionVisualizacion upsert
+   */
+  export type DelegacionVisualizacionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DelegacionVisualizacion
+     */
+    select?: DelegacionVisualizacionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DelegacionVisualizacionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the DelegacionVisualizacion to update in case it exists.
+     */
+    where: DelegacionVisualizacionWhereUniqueInput
+    /**
+     * In case the DelegacionVisualizacion found by the `where` argument doesn't exist, create a new DelegacionVisualizacion with this data.
+     */
+    create: XOR<DelegacionVisualizacionCreateInput, DelegacionVisualizacionUncheckedCreateInput>
+    /**
+     * In case the DelegacionVisualizacion was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DelegacionVisualizacionUpdateInput, DelegacionVisualizacionUncheckedUpdateInput>
+  }
+
+  /**
+   * DelegacionVisualizacion delete
+   */
+  export type DelegacionVisualizacionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DelegacionVisualizacion
+     */
+    select?: DelegacionVisualizacionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DelegacionVisualizacionInclude<ExtArgs> | null
+    /**
+     * Filter which DelegacionVisualizacion to delete.
+     */
+    where: DelegacionVisualizacionWhereUniqueInput
+  }
+
+  /**
+   * DelegacionVisualizacion deleteMany
+   */
+  export type DelegacionVisualizacionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DelegacionVisualizacions to delete
+     */
+    where?: DelegacionVisualizacionWhereInput
+  }
+
+  /**
+   * DelegacionVisualizacion without action
+   */
+  export type DelegacionVisualizacionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DelegacionVisualizacion
+     */
+    select?: DelegacionVisualizacionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DelegacionVisualizacionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model MenuItemOrder
+   */
+
+  export type AggregateMenuItemOrder = {
+    _count: MenuItemOrderCountAggregateOutputType | null
+    _avg: MenuItemOrderAvgAggregateOutputType | null
+    _sum: MenuItemOrderSumAggregateOutputType | null
+    _min: MenuItemOrderMinAggregateOutputType | null
+    _max: MenuItemOrderMaxAggregateOutputType | null
+  }
+
+  export type MenuItemOrderAvgAggregateOutputType = {
+    position: number | null
+  }
+
+  export type MenuItemOrderSumAggregateOutputType = {
+    position: number | null
+  }
+
+  export type MenuItemOrderMinAggregateOutputType = {
+    id: string | null
+    parentKey: string | null
+    itemKey: string | null
+    position: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MenuItemOrderMaxAggregateOutputType = {
+    id: string | null
+    parentKey: string | null
+    itemKey: string | null
+    position: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MenuItemOrderCountAggregateOutputType = {
+    id: number
+    parentKey: number
+    itemKey: number
+    position: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type MenuItemOrderAvgAggregateInputType = {
+    position?: true
+  }
+
+  export type MenuItemOrderSumAggregateInputType = {
+    position?: true
+  }
+
+  export type MenuItemOrderMinAggregateInputType = {
+    id?: true
+    parentKey?: true
+    itemKey?: true
+    position?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MenuItemOrderMaxAggregateInputType = {
+    id?: true
+    parentKey?: true
+    itemKey?: true
+    position?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MenuItemOrderCountAggregateInputType = {
+    id?: true
+    parentKey?: true
+    itemKey?: true
+    position?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type MenuItemOrderAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MenuItemOrder to aggregate.
+     */
+    where?: MenuItemOrderWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MenuItemOrders to fetch.
+     */
+    orderBy?: MenuItemOrderOrderByWithRelationInput | MenuItemOrderOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MenuItemOrderWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MenuItemOrders from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MenuItemOrders.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MenuItemOrders
+    **/
+    _count?: true | MenuItemOrderCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MenuItemOrderAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MenuItemOrderSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MenuItemOrderMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MenuItemOrderMaxAggregateInputType
+  }
+
+  export type GetMenuItemOrderAggregateType<T extends MenuItemOrderAggregateArgs> = {
+        [P in keyof T & keyof AggregateMenuItemOrder]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMenuItemOrder[P]>
+      : GetScalarType<T[P], AggregateMenuItemOrder[P]>
+  }
+
+
+
+
+  export type MenuItemOrderGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MenuItemOrderWhereInput
+    orderBy?: MenuItemOrderOrderByWithAggregationInput | MenuItemOrderOrderByWithAggregationInput[]
+    by: MenuItemOrderScalarFieldEnum[] | MenuItemOrderScalarFieldEnum
+    having?: MenuItemOrderScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MenuItemOrderCountAggregateInputType | true
+    _avg?: MenuItemOrderAvgAggregateInputType
+    _sum?: MenuItemOrderSumAggregateInputType
+    _min?: MenuItemOrderMinAggregateInputType
+    _max?: MenuItemOrderMaxAggregateInputType
+  }
+
+  export type MenuItemOrderGroupByOutputType = {
+    id: string
+    parentKey: string
+    itemKey: string
+    position: number
+    createdAt: Date
+    updatedAt: Date
+    _count: MenuItemOrderCountAggregateOutputType | null
+    _avg: MenuItemOrderAvgAggregateOutputType | null
+    _sum: MenuItemOrderSumAggregateOutputType | null
+    _min: MenuItemOrderMinAggregateOutputType | null
+    _max: MenuItemOrderMaxAggregateOutputType | null
+  }
+
+  type GetMenuItemOrderGroupByPayload<T extends MenuItemOrderGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MenuItemOrderGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MenuItemOrderGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MenuItemOrderGroupByOutputType[P]>
+            : GetScalarType<T[P], MenuItemOrderGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MenuItemOrderSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    parentKey?: boolean
+    itemKey?: boolean
+    position?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["menuItemOrder"]>
+
+  export type MenuItemOrderSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    parentKey?: boolean
+    itemKey?: boolean
+    position?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["menuItemOrder"]>
+
+  export type MenuItemOrderSelectScalar = {
+    id?: boolean
+    parentKey?: boolean
+    itemKey?: boolean
+    position?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type $MenuItemOrderPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MenuItemOrder"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      parentKey: string
+      itemKey: string
+      position: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["menuItemOrder"]>
+    composites: {}
+  }
+
+  type MenuItemOrderGetPayload<S extends boolean | null | undefined | MenuItemOrderDefaultArgs> = $Result.GetResult<Prisma.$MenuItemOrderPayload, S>
+
+  type MenuItemOrderCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<MenuItemOrderFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: MenuItemOrderCountAggregateInputType | true
+    }
+
+  export interface MenuItemOrderDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MenuItemOrder'], meta: { name: 'MenuItemOrder' } }
+    /**
+     * Find zero or one MenuItemOrder that matches the filter.
+     * @param {MenuItemOrderFindUniqueArgs} args - Arguments to find a MenuItemOrder
+     * @example
+     * // Get one MenuItemOrder
+     * const menuItemOrder = await prisma.menuItemOrder.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MenuItemOrderFindUniqueArgs>(args: SelectSubset<T, MenuItemOrderFindUniqueArgs<ExtArgs>>): Prisma__MenuItemOrderClient<$Result.GetResult<Prisma.$MenuItemOrderPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one MenuItemOrder that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {MenuItemOrderFindUniqueOrThrowArgs} args - Arguments to find a MenuItemOrder
+     * @example
+     * // Get one MenuItemOrder
+     * const menuItemOrder = await prisma.menuItemOrder.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MenuItemOrderFindUniqueOrThrowArgs>(args: SelectSubset<T, MenuItemOrderFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MenuItemOrderClient<$Result.GetResult<Prisma.$MenuItemOrderPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first MenuItemOrder that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MenuItemOrderFindFirstArgs} args - Arguments to find a MenuItemOrder
+     * @example
+     * // Get one MenuItemOrder
+     * const menuItemOrder = await prisma.menuItemOrder.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MenuItemOrderFindFirstArgs>(args?: SelectSubset<T, MenuItemOrderFindFirstArgs<ExtArgs>>): Prisma__MenuItemOrderClient<$Result.GetResult<Prisma.$MenuItemOrderPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first MenuItemOrder that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MenuItemOrderFindFirstOrThrowArgs} args - Arguments to find a MenuItemOrder
+     * @example
+     * // Get one MenuItemOrder
+     * const menuItemOrder = await prisma.menuItemOrder.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MenuItemOrderFindFirstOrThrowArgs>(args?: SelectSubset<T, MenuItemOrderFindFirstOrThrowArgs<ExtArgs>>): Prisma__MenuItemOrderClient<$Result.GetResult<Prisma.$MenuItemOrderPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more MenuItemOrders that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MenuItemOrderFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MenuItemOrders
+     * const menuItemOrders = await prisma.menuItemOrder.findMany()
+     * 
+     * // Get first 10 MenuItemOrders
+     * const menuItemOrders = await prisma.menuItemOrder.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const menuItemOrderWithIdOnly = await prisma.menuItemOrder.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MenuItemOrderFindManyArgs>(args?: SelectSubset<T, MenuItemOrderFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MenuItemOrderPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a MenuItemOrder.
+     * @param {MenuItemOrderCreateArgs} args - Arguments to create a MenuItemOrder.
+     * @example
+     * // Create one MenuItemOrder
+     * const MenuItemOrder = await prisma.menuItemOrder.create({
+     *   data: {
+     *     // ... data to create a MenuItemOrder
+     *   }
+     * })
+     * 
+     */
+    create<T extends MenuItemOrderCreateArgs>(args: SelectSubset<T, MenuItemOrderCreateArgs<ExtArgs>>): Prisma__MenuItemOrderClient<$Result.GetResult<Prisma.$MenuItemOrderPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many MenuItemOrders.
+     * @param {MenuItemOrderCreateManyArgs} args - Arguments to create many MenuItemOrders.
+     * @example
+     * // Create many MenuItemOrders
+     * const menuItemOrder = await prisma.menuItemOrder.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MenuItemOrderCreateManyArgs>(args?: SelectSubset<T, MenuItemOrderCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many MenuItemOrders and returns the data saved in the database.
+     * @param {MenuItemOrderCreateManyAndReturnArgs} args - Arguments to create many MenuItemOrders.
+     * @example
+     * // Create many MenuItemOrders
+     * const menuItemOrder = await prisma.menuItemOrder.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many MenuItemOrders and only return the `id`
+     * const menuItemOrderWithIdOnly = await prisma.menuItemOrder.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MenuItemOrderCreateManyAndReturnArgs>(args?: SelectSubset<T, MenuItemOrderCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MenuItemOrderPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a MenuItemOrder.
+     * @param {MenuItemOrderDeleteArgs} args - Arguments to delete one MenuItemOrder.
+     * @example
+     * // Delete one MenuItemOrder
+     * const MenuItemOrder = await prisma.menuItemOrder.delete({
+     *   where: {
+     *     // ... filter to delete one MenuItemOrder
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MenuItemOrderDeleteArgs>(args: SelectSubset<T, MenuItemOrderDeleteArgs<ExtArgs>>): Prisma__MenuItemOrderClient<$Result.GetResult<Prisma.$MenuItemOrderPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one MenuItemOrder.
+     * @param {MenuItemOrderUpdateArgs} args - Arguments to update one MenuItemOrder.
+     * @example
+     * // Update one MenuItemOrder
+     * const menuItemOrder = await prisma.menuItemOrder.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MenuItemOrderUpdateArgs>(args: SelectSubset<T, MenuItemOrderUpdateArgs<ExtArgs>>): Prisma__MenuItemOrderClient<$Result.GetResult<Prisma.$MenuItemOrderPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more MenuItemOrders.
+     * @param {MenuItemOrderDeleteManyArgs} args - Arguments to filter MenuItemOrders to delete.
+     * @example
+     * // Delete a few MenuItemOrders
+     * const { count } = await prisma.menuItemOrder.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MenuItemOrderDeleteManyArgs>(args?: SelectSubset<T, MenuItemOrderDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MenuItemOrders.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MenuItemOrderUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MenuItemOrders
+     * const menuItemOrder = await prisma.menuItemOrder.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MenuItemOrderUpdateManyArgs>(args: SelectSubset<T, MenuItemOrderUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one MenuItemOrder.
+     * @param {MenuItemOrderUpsertArgs} args - Arguments to update or create a MenuItemOrder.
+     * @example
+     * // Update or create a MenuItemOrder
+     * const menuItemOrder = await prisma.menuItemOrder.upsert({
+     *   create: {
+     *     // ... data to create a MenuItemOrder
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MenuItemOrder we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MenuItemOrderUpsertArgs>(args: SelectSubset<T, MenuItemOrderUpsertArgs<ExtArgs>>): Prisma__MenuItemOrderClient<$Result.GetResult<Prisma.$MenuItemOrderPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of MenuItemOrders.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MenuItemOrderCountArgs} args - Arguments to filter MenuItemOrders to count.
+     * @example
+     * // Count the number of MenuItemOrders
+     * const count = await prisma.menuItemOrder.count({
+     *   where: {
+     *     // ... the filter for the MenuItemOrders we want to count
+     *   }
+     * })
+    **/
+    count<T extends MenuItemOrderCountArgs>(
+      args?: Subset<T, MenuItemOrderCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MenuItemOrderCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MenuItemOrder.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MenuItemOrderAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MenuItemOrderAggregateArgs>(args: Subset<T, MenuItemOrderAggregateArgs>): Prisma.PrismaPromise<GetMenuItemOrderAggregateType<T>>
+
+    /**
+     * Group by MenuItemOrder.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MenuItemOrderGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MenuItemOrderGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MenuItemOrderGroupByArgs['orderBy'] }
+        : { orderBy?: MenuItemOrderGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MenuItemOrderGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMenuItemOrderGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MenuItemOrder model
+   */
+  readonly fields: MenuItemOrderFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MenuItemOrder.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MenuItemOrderClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MenuItemOrder model
+   */ 
+  interface MenuItemOrderFieldRefs {
+    readonly id: FieldRef<"MenuItemOrder", 'String'>
+    readonly parentKey: FieldRef<"MenuItemOrder", 'String'>
+    readonly itemKey: FieldRef<"MenuItemOrder", 'String'>
+    readonly position: FieldRef<"MenuItemOrder", 'Int'>
+    readonly createdAt: FieldRef<"MenuItemOrder", 'DateTime'>
+    readonly updatedAt: FieldRef<"MenuItemOrder", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MenuItemOrder findUnique
+   */
+  export type MenuItemOrderFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MenuItemOrder
+     */
+    select?: MenuItemOrderSelect<ExtArgs> | null
+    /**
+     * Filter, which MenuItemOrder to fetch.
+     */
+    where: MenuItemOrderWhereUniqueInput
+  }
+
+  /**
+   * MenuItemOrder findUniqueOrThrow
+   */
+  export type MenuItemOrderFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MenuItemOrder
+     */
+    select?: MenuItemOrderSelect<ExtArgs> | null
+    /**
+     * Filter, which MenuItemOrder to fetch.
+     */
+    where: MenuItemOrderWhereUniqueInput
+  }
+
+  /**
+   * MenuItemOrder findFirst
+   */
+  export type MenuItemOrderFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MenuItemOrder
+     */
+    select?: MenuItemOrderSelect<ExtArgs> | null
+    /**
+     * Filter, which MenuItemOrder to fetch.
+     */
+    where?: MenuItemOrderWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MenuItemOrders to fetch.
+     */
+    orderBy?: MenuItemOrderOrderByWithRelationInput | MenuItemOrderOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MenuItemOrders.
+     */
+    cursor?: MenuItemOrderWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MenuItemOrders from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MenuItemOrders.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MenuItemOrders.
+     */
+    distinct?: MenuItemOrderScalarFieldEnum | MenuItemOrderScalarFieldEnum[]
+  }
+
+  /**
+   * MenuItemOrder findFirstOrThrow
+   */
+  export type MenuItemOrderFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MenuItemOrder
+     */
+    select?: MenuItemOrderSelect<ExtArgs> | null
+    /**
+     * Filter, which MenuItemOrder to fetch.
+     */
+    where?: MenuItemOrderWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MenuItemOrders to fetch.
+     */
+    orderBy?: MenuItemOrderOrderByWithRelationInput | MenuItemOrderOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MenuItemOrders.
+     */
+    cursor?: MenuItemOrderWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MenuItemOrders from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MenuItemOrders.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MenuItemOrders.
+     */
+    distinct?: MenuItemOrderScalarFieldEnum | MenuItemOrderScalarFieldEnum[]
+  }
+
+  /**
+   * MenuItemOrder findMany
+   */
+  export type MenuItemOrderFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MenuItemOrder
+     */
+    select?: MenuItemOrderSelect<ExtArgs> | null
+    /**
+     * Filter, which MenuItemOrders to fetch.
+     */
+    where?: MenuItemOrderWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MenuItemOrders to fetch.
+     */
+    orderBy?: MenuItemOrderOrderByWithRelationInput | MenuItemOrderOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MenuItemOrders.
+     */
+    cursor?: MenuItemOrderWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MenuItemOrders from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MenuItemOrders.
+     */
+    skip?: number
+    distinct?: MenuItemOrderScalarFieldEnum | MenuItemOrderScalarFieldEnum[]
+  }
+
+  /**
+   * MenuItemOrder create
+   */
+  export type MenuItemOrderCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MenuItemOrder
+     */
+    select?: MenuItemOrderSelect<ExtArgs> | null
+    /**
+     * The data needed to create a MenuItemOrder.
+     */
+    data: XOR<MenuItemOrderCreateInput, MenuItemOrderUncheckedCreateInput>
+  }
+
+  /**
+   * MenuItemOrder createMany
+   */
+  export type MenuItemOrderCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MenuItemOrders.
+     */
+    data: MenuItemOrderCreateManyInput | MenuItemOrderCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MenuItemOrder createManyAndReturn
+   */
+  export type MenuItemOrderCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MenuItemOrder
+     */
+    select?: MenuItemOrderSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many MenuItemOrders.
+     */
+    data: MenuItemOrderCreateManyInput | MenuItemOrderCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MenuItemOrder update
+   */
+  export type MenuItemOrderUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MenuItemOrder
+     */
+    select?: MenuItemOrderSelect<ExtArgs> | null
+    /**
+     * The data needed to update a MenuItemOrder.
+     */
+    data: XOR<MenuItemOrderUpdateInput, MenuItemOrderUncheckedUpdateInput>
+    /**
+     * Choose, which MenuItemOrder to update.
+     */
+    where: MenuItemOrderWhereUniqueInput
+  }
+
+  /**
+   * MenuItemOrder updateMany
+   */
+  export type MenuItemOrderUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MenuItemOrders.
+     */
+    data: XOR<MenuItemOrderUpdateManyMutationInput, MenuItemOrderUncheckedUpdateManyInput>
+    /**
+     * Filter which MenuItemOrders to update
+     */
+    where?: MenuItemOrderWhereInput
+  }
+
+  /**
+   * MenuItemOrder upsert
+   */
+  export type MenuItemOrderUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MenuItemOrder
+     */
+    select?: MenuItemOrderSelect<ExtArgs> | null
+    /**
+     * The filter to search for the MenuItemOrder to update in case it exists.
+     */
+    where: MenuItemOrderWhereUniqueInput
+    /**
+     * In case the MenuItemOrder found by the `where` argument doesn't exist, create a new MenuItemOrder with this data.
+     */
+    create: XOR<MenuItemOrderCreateInput, MenuItemOrderUncheckedCreateInput>
+    /**
+     * In case the MenuItemOrder was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MenuItemOrderUpdateInput, MenuItemOrderUncheckedUpdateInput>
+  }
+
+  /**
+   * MenuItemOrder delete
+   */
+  export type MenuItemOrderDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MenuItemOrder
+     */
+    select?: MenuItemOrderSelect<ExtArgs> | null
+    /**
+     * Filter which MenuItemOrder to delete.
+     */
+    where: MenuItemOrderWhereUniqueInput
+  }
+
+  /**
+   * MenuItemOrder deleteMany
+   */
+  export type MenuItemOrderDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MenuItemOrders to delete
+     */
+    where?: MenuItemOrderWhereInput
+  }
+
+  /**
+   * MenuItemOrder without action
+   */
+  export type MenuItemOrderDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MenuItemOrder
+     */
+    select?: MenuItemOrderSelect<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -79034,6 +82395,7 @@ export namespace Prisma {
     servicioLic: 'servicioLic',
     raceqJunaeb: 'raceqJunaeb',
     servicio: 'servicio',
+    institucion: 'institucion',
     uploadedBy: 'uploadedBy',
     createdAt: 'createdAt'
   };
@@ -80070,7 +83432,8 @@ export namespace Prisma {
     respImplementacion: 'respImplementacion',
     respSeguimiento: 'respSeguimiento',
     evidenciaCumplimiento: 'evidenciaCumplimiento',
-    evidenciaEficacia: 'evidenciaEficacia'
+    evidenciaEficacia: 'evidenciaEficacia',
+    compromisoSostenedor: 'compromisoSostenedor'
   };
 
   export type MatrizT_DetalleScalarFieldEnum = (typeof MatrizT_DetalleScalarFieldEnum)[keyof typeof MatrizT_DetalleScalarFieldEnum]
@@ -80083,11 +83446,20 @@ export namespace Prisma {
     fechaIngreso: 'fechaIngreso',
     supervisorNombre: 'supervisorNombre',
     supervisorCorreo: 'supervisorCorreo',
+    usuarioOriginal: 'usuarioOriginal',
+    supervisorNombreOriginal: 'supervisorNombreOriginal',
+    supervisorCorreoOriginal: 'supervisorCorreoOriginal',
+    fechaReemplazo: 'fechaReemplazo',
     licId: 'licId',
     ut: 'ut',
     rbd: 'rbd',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    estado: 'estado',
+    latIngreso: 'latIngreso',
+    lngIngreso: 'lngIngreso',
+    latCierre: 'latCierre',
+    lngCierre: 'lngCierre'
   };
 
   export type MatrizT_RespuestasCabeceraScalarFieldEnum = (typeof MatrizT_RespuestasCabeceraScalarFieldEnum)[keyof typeof MatrizT_RespuestasCabeceraScalarFieldEnum]
@@ -80102,6 +83474,45 @@ export namespace Prisma {
   };
 
   export type MatrizT_RespuestasDetalleScalarFieldEnum = (typeof MatrizT_RespuestasDetalleScalarFieldEnum)[keyof typeof MatrizT_RespuestasDetalleScalarFieldEnum]
+
+
+  export const FormatoCartaSostenedorScalarFieldEnum: {
+    id: 'id',
+    cabeceraId: 'cabeceraId',
+    nombre: 'nombre',
+    asuntoEmail: 'asuntoEmail',
+    cuerpoEmail: 'cuerpoEmail',
+    cuerpoInicio: 'cuerpoInicio',
+    cuerpoFin: 'cuerpoFin',
+    activo: 'activo',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type FormatoCartaSostenedorScalarFieldEnum = (typeof FormatoCartaSostenedorScalarFieldEnum)[keyof typeof FormatoCartaSostenedorScalarFieldEnum]
+
+
+  export const DelegacionVisualizacionScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    sucursalId: 'sucursalId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type DelegacionVisualizacionScalarFieldEnum = (typeof DelegacionVisualizacionScalarFieldEnum)[keyof typeof DelegacionVisualizacionScalarFieldEnum]
+
+
+  export const MenuItemOrderScalarFieldEnum: {
+    id: 'id',
+    parentKey: 'parentKey',
+    itemKey: 'itemKey',
+    position: 'position',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type MenuItemOrderScalarFieldEnum = (typeof MenuItemOrderScalarFieldEnum)[keyof typeof MenuItemOrderScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -80307,6 +83718,7 @@ export namespace Prisma {
     sucursales?: SucursalListRelationFilter
     allowedForms?: FormDefinitionListRelationFilter
     areas?: AreaListRelationFilter
+    delegaciones?: DelegacionVisualizacionListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -80326,6 +83738,7 @@ export namespace Prisma {
     sucursales?: SucursalOrderByRelationAggregateInput
     allowedForms?: FormDefinitionOrderByRelationAggregateInput
     areas?: AreaOrderByRelationAggregateInput
+    delegaciones?: DelegacionVisualizacionOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -80348,6 +83761,7 @@ export namespace Prisma {
     sucursales?: SucursalListRelationFilter
     allowedForms?: FormDefinitionListRelationFilter
     areas?: AreaListRelationFilter
+    delegaciones?: DelegacionVisualizacionListRelationFilter
   }, "id" | "username" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -80404,6 +83818,7 @@ export namespace Prisma {
     servicioLic?: StringFilter<"PMPA"> | string
     raceqJunaeb?: IntFilter<"PMPA"> | number
     servicio?: StringFilter<"PMPA"> | string
+    institucion?: StringNullableFilter<"PMPA"> | string | null
     uploadedBy?: StringFilter<"PMPA"> | string
     createdAt?: DateTimeFilter<"PMPA"> | Date | string
     ut?: XOR<UTNullableRelationFilter, UTWhereInput> | null
@@ -80422,6 +83837,7 @@ export namespace Prisma {
     servicioLic?: SortOrder
     raceqJunaeb?: SortOrder
     servicio?: SortOrder
+    institucion?: SortOrderInput | SortOrder
     uploadedBy?: SortOrder
     createdAt?: SortOrder
     ut?: UTOrderByWithRelationInput
@@ -80443,6 +83859,7 @@ export namespace Prisma {
     servicioLic?: StringFilter<"PMPA"> | string
     raceqJunaeb?: IntFilter<"PMPA"> | number
     servicio?: StringFilter<"PMPA"> | string
+    institucion?: StringNullableFilter<"PMPA"> | string | null
     uploadedBy?: StringFilter<"PMPA"> | string
     createdAt?: DateTimeFilter<"PMPA"> | Date | string
     ut?: XOR<UTNullableRelationFilter, UTWhereInput> | null
@@ -80461,6 +83878,7 @@ export namespace Prisma {
     servicioLic?: SortOrder
     raceqJunaeb?: SortOrder
     servicio?: SortOrder
+    institucion?: SortOrderInput | SortOrder
     uploadedBy?: SortOrder
     createdAt?: SortOrder
     _count?: PMPACountOrderByAggregateInput
@@ -80486,6 +83904,7 @@ export namespace Prisma {
     servicioLic?: StringWithAggregatesFilter<"PMPA"> | string
     raceqJunaeb?: IntWithAggregatesFilter<"PMPA"> | number
     servicio?: StringWithAggregatesFilter<"PMPA"> | string
+    institucion?: StringNullableWithAggregatesFilter<"PMPA"> | string | null
     uploadedBy?: StringWithAggregatesFilter<"PMPA"> | string
     createdAt?: DateTimeWithAggregatesFilter<"PMPA"> | Date | string
   }
@@ -81243,6 +84662,7 @@ export namespace Prisma {
     users?: UserListRelationFilter
     jefesZonales?: JefeZonalSucursalListRelationFilter
     vehiculos?: VehiculoListRelationFilter
+    delegaciones?: DelegacionVisualizacionListRelationFilter
   }
 
   export type SucursalOrderByWithRelationInput = {
@@ -81261,6 +84681,7 @@ export namespace Prisma {
     users?: UserOrderByRelationAggregateInput
     jefesZonales?: JefeZonalSucursalOrderByRelationAggregateInput
     vehiculos?: VehiculoOrderByRelationAggregateInput
+    delegaciones?: DelegacionVisualizacionOrderByRelationAggregateInput
   }
 
   export type SucursalWhereUniqueInput = Prisma.AtLeast<{
@@ -81282,6 +84703,7 @@ export namespace Prisma {
     users?: UserListRelationFilter
     jefesZonales?: JefeZonalSucursalListRelationFilter
     vehiculos?: VehiculoListRelationFilter
+    delegaciones?: DelegacionVisualizacionListRelationFilter
   }, "id" | "nombre">
 
   export type SucursalOrderByWithAggregationInput = {
@@ -85634,6 +89056,7 @@ export namespace Prisma {
     licitacion?: XOR<LicitacionRelationFilter, LicitacionWhereInput>
     detalles?: MatrizT_DetalleListRelationFilter
     respuestas?: MatrizT_RespuestasCabeceraListRelationFilter
+    formatosCarta?: FormatoCartaSostenedorListRelationFilter
   }
 
   export type MatrizT_CabeceraOrderByWithRelationInput = {
@@ -85648,6 +89071,7 @@ export namespace Prisma {
     licitacion?: LicitacionOrderByWithRelationInput
     detalles?: MatrizT_DetalleOrderByRelationAggregateInput
     respuestas?: MatrizT_RespuestasCabeceraOrderByRelationAggregateInput
+    formatosCarta?: FormatoCartaSostenedorOrderByRelationAggregateInput
   }
 
   export type MatrizT_CabeceraWhereUniqueInput = Prisma.AtLeast<{
@@ -85665,6 +89089,7 @@ export namespace Prisma {
     licitacion?: XOR<LicitacionRelationFilter, LicitacionWhereInput>
     detalles?: MatrizT_DetalleListRelationFilter
     respuestas?: MatrizT_RespuestasCabeceraListRelationFilter
+    formatosCarta?: FormatoCartaSostenedorListRelationFilter
   }, "id">
 
   export type MatrizT_CabeceraOrderByWithAggregationInput = {
@@ -85719,6 +89144,7 @@ export namespace Prisma {
     respSeguimiento?: StringNullableFilter<"MatrizT_Detalle"> | string | null
     evidenciaCumplimiento?: StringNullableFilter<"MatrizT_Detalle"> | string | null
     evidenciaEficacia?: StringNullableFilter<"MatrizT_Detalle"> | string | null
+    compromisoSostenedor?: StringNullableFilter<"MatrizT_Detalle"> | string | null
     cabecera?: XOR<MatrizT_CabeceraRelationFilter, MatrizT_CabeceraWhereInput>
     respuestasDetalle?: MatrizT_RespuestasDetalleListRelationFilter
   }
@@ -85742,6 +89168,7 @@ export namespace Prisma {
     respSeguimiento?: SortOrderInput | SortOrder
     evidenciaCumplimiento?: SortOrderInput | SortOrder
     evidenciaEficacia?: SortOrderInput | SortOrder
+    compromisoSostenedor?: SortOrderInput | SortOrder
     cabecera?: MatrizT_CabeceraOrderByWithRelationInput
     respuestasDetalle?: MatrizT_RespuestasDetalleOrderByRelationAggregateInput
   }
@@ -85768,6 +89195,7 @@ export namespace Prisma {
     respSeguimiento?: StringNullableFilter<"MatrizT_Detalle"> | string | null
     evidenciaCumplimiento?: StringNullableFilter<"MatrizT_Detalle"> | string | null
     evidenciaEficacia?: StringNullableFilter<"MatrizT_Detalle"> | string | null
+    compromisoSostenedor?: StringNullableFilter<"MatrizT_Detalle"> | string | null
     cabecera?: XOR<MatrizT_CabeceraRelationFilter, MatrizT_CabeceraWhereInput>
     respuestasDetalle?: MatrizT_RespuestasDetalleListRelationFilter
   }, "id">
@@ -85791,6 +89219,7 @@ export namespace Prisma {
     respSeguimiento?: SortOrderInput | SortOrder
     evidenciaCumplimiento?: SortOrderInput | SortOrder
     evidenciaEficacia?: SortOrderInput | SortOrder
+    compromisoSostenedor?: SortOrderInput | SortOrder
     _count?: MatrizT_DetalleCountOrderByAggregateInput
     _avg?: MatrizT_DetalleAvgOrderByAggregateInput
     _max?: MatrizT_DetalleMaxOrderByAggregateInput
@@ -85820,6 +89249,7 @@ export namespace Prisma {
     respSeguimiento?: StringNullableWithAggregatesFilter<"MatrizT_Detalle"> | string | null
     evidenciaCumplimiento?: StringNullableWithAggregatesFilter<"MatrizT_Detalle"> | string | null
     evidenciaEficacia?: StringNullableWithAggregatesFilter<"MatrizT_Detalle"> | string | null
+    compromisoSostenedor?: StringNullableWithAggregatesFilter<"MatrizT_Detalle"> | string | null
   }
 
   export type MatrizT_RespuestasCabeceraWhereInput = {
@@ -85832,11 +89262,20 @@ export namespace Prisma {
     fechaIngreso?: DateTimeFilter<"MatrizT_RespuestasCabecera"> | Date | string
     supervisorNombre?: StringFilter<"MatrizT_RespuestasCabecera"> | string
     supervisorCorreo?: StringFilter<"MatrizT_RespuestasCabecera"> | string
+    usuarioOriginal?: StringNullableFilter<"MatrizT_RespuestasCabecera"> | string | null
+    supervisorNombreOriginal?: StringNullableFilter<"MatrizT_RespuestasCabecera"> | string | null
+    supervisorCorreoOriginal?: StringNullableFilter<"MatrizT_RespuestasCabecera"> | string | null
+    fechaReemplazo?: DateTimeNullableFilter<"MatrizT_RespuestasCabecera"> | Date | string | null
     licId?: IntFilter<"MatrizT_RespuestasCabecera"> | number
     ut?: IntFilter<"MatrizT_RespuestasCabecera"> | number
     rbd?: IntFilter<"MatrizT_RespuestasCabecera"> | number
     createdAt?: DateTimeFilter<"MatrizT_RespuestasCabecera"> | Date | string
     updatedAt?: DateTimeFilter<"MatrizT_RespuestasCabecera"> | Date | string
+    estado?: StringFilter<"MatrizT_RespuestasCabecera"> | string
+    latIngreso?: FloatNullableFilter<"MatrizT_RespuestasCabecera"> | number | null
+    lngIngreso?: FloatNullableFilter<"MatrizT_RespuestasCabecera"> | number | null
+    latCierre?: FloatNullableFilter<"MatrizT_RespuestasCabecera"> | number | null
+    lngCierre?: FloatNullableFilter<"MatrizT_RespuestasCabecera"> | number | null
     cabecera?: XOR<MatrizT_CabeceraRelationFilter, MatrizT_CabeceraWhereInput>
     detalles?: MatrizT_RespuestasDetalleListRelationFilter
   }
@@ -85848,11 +89287,20 @@ export namespace Prisma {
     fechaIngreso?: SortOrder
     supervisorNombre?: SortOrder
     supervisorCorreo?: SortOrder
+    usuarioOriginal?: SortOrderInput | SortOrder
+    supervisorNombreOriginal?: SortOrderInput | SortOrder
+    supervisorCorreoOriginal?: SortOrderInput | SortOrder
+    fechaReemplazo?: SortOrderInput | SortOrder
     licId?: SortOrder
     ut?: SortOrder
     rbd?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    estado?: SortOrder
+    latIngreso?: SortOrderInput | SortOrder
+    lngIngreso?: SortOrderInput | SortOrder
+    latCierre?: SortOrderInput | SortOrder
+    lngCierre?: SortOrderInput | SortOrder
     cabecera?: MatrizT_CabeceraOrderByWithRelationInput
     detalles?: MatrizT_RespuestasDetalleOrderByRelationAggregateInput
   }
@@ -85867,11 +89315,20 @@ export namespace Prisma {
     fechaIngreso?: DateTimeFilter<"MatrizT_RespuestasCabecera"> | Date | string
     supervisorNombre?: StringFilter<"MatrizT_RespuestasCabecera"> | string
     supervisorCorreo?: StringFilter<"MatrizT_RespuestasCabecera"> | string
+    usuarioOriginal?: StringNullableFilter<"MatrizT_RespuestasCabecera"> | string | null
+    supervisorNombreOriginal?: StringNullableFilter<"MatrizT_RespuestasCabecera"> | string | null
+    supervisorCorreoOriginal?: StringNullableFilter<"MatrizT_RespuestasCabecera"> | string | null
+    fechaReemplazo?: DateTimeNullableFilter<"MatrizT_RespuestasCabecera"> | Date | string | null
     licId?: IntFilter<"MatrizT_RespuestasCabecera"> | number
     ut?: IntFilter<"MatrizT_RespuestasCabecera"> | number
     rbd?: IntFilter<"MatrizT_RespuestasCabecera"> | number
     createdAt?: DateTimeFilter<"MatrizT_RespuestasCabecera"> | Date | string
     updatedAt?: DateTimeFilter<"MatrizT_RespuestasCabecera"> | Date | string
+    estado?: StringFilter<"MatrizT_RespuestasCabecera"> | string
+    latIngreso?: FloatNullableFilter<"MatrizT_RespuestasCabecera"> | number | null
+    lngIngreso?: FloatNullableFilter<"MatrizT_RespuestasCabecera"> | number | null
+    latCierre?: FloatNullableFilter<"MatrizT_RespuestasCabecera"> | number | null
+    lngCierre?: FloatNullableFilter<"MatrizT_RespuestasCabecera"> | number | null
     cabecera?: XOR<MatrizT_CabeceraRelationFilter, MatrizT_CabeceraWhereInput>
     detalles?: MatrizT_RespuestasDetalleListRelationFilter
   }, "id">
@@ -85883,11 +89340,20 @@ export namespace Prisma {
     fechaIngreso?: SortOrder
     supervisorNombre?: SortOrder
     supervisorCorreo?: SortOrder
+    usuarioOriginal?: SortOrderInput | SortOrder
+    supervisorNombreOriginal?: SortOrderInput | SortOrder
+    supervisorCorreoOriginal?: SortOrderInput | SortOrder
+    fechaReemplazo?: SortOrderInput | SortOrder
     licId?: SortOrder
     ut?: SortOrder
     rbd?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    estado?: SortOrder
+    latIngreso?: SortOrderInput | SortOrder
+    lngIngreso?: SortOrderInput | SortOrder
+    latCierre?: SortOrderInput | SortOrder
+    lngCierre?: SortOrderInput | SortOrder
     _count?: MatrizT_RespuestasCabeceraCountOrderByAggregateInput
     _avg?: MatrizT_RespuestasCabeceraAvgOrderByAggregateInput
     _max?: MatrizT_RespuestasCabeceraMaxOrderByAggregateInput
@@ -85905,11 +89371,20 @@ export namespace Prisma {
     fechaIngreso?: DateTimeWithAggregatesFilter<"MatrizT_RespuestasCabecera"> | Date | string
     supervisorNombre?: StringWithAggregatesFilter<"MatrizT_RespuestasCabecera"> | string
     supervisorCorreo?: StringWithAggregatesFilter<"MatrizT_RespuestasCabecera"> | string
+    usuarioOriginal?: StringNullableWithAggregatesFilter<"MatrizT_RespuestasCabecera"> | string | null
+    supervisorNombreOriginal?: StringNullableWithAggregatesFilter<"MatrizT_RespuestasCabecera"> | string | null
+    supervisorCorreoOriginal?: StringNullableWithAggregatesFilter<"MatrizT_RespuestasCabecera"> | string | null
+    fechaReemplazo?: DateTimeNullableWithAggregatesFilter<"MatrizT_RespuestasCabecera"> | Date | string | null
     licId?: IntWithAggregatesFilter<"MatrizT_RespuestasCabecera"> | number
     ut?: IntWithAggregatesFilter<"MatrizT_RespuestasCabecera"> | number
     rbd?: IntWithAggregatesFilter<"MatrizT_RespuestasCabecera"> | number
     createdAt?: DateTimeWithAggregatesFilter<"MatrizT_RespuestasCabecera"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"MatrizT_RespuestasCabecera"> | Date | string
+    estado?: StringWithAggregatesFilter<"MatrizT_RespuestasCabecera"> | string
+    latIngreso?: FloatNullableWithAggregatesFilter<"MatrizT_RespuestasCabecera"> | number | null
+    lngIngreso?: FloatNullableWithAggregatesFilter<"MatrizT_RespuestasCabecera"> | number | null
+    latCierre?: FloatNullableWithAggregatesFilter<"MatrizT_RespuestasCabecera"> | number | null
+    lngCierre?: FloatNullableWithAggregatesFilter<"MatrizT_RespuestasCabecera"> | number | null
   }
 
   export type MatrizT_RespuestasDetalleWhereInput = {
@@ -85968,6 +89443,205 @@ export namespace Prisma {
     preguntaId?: StringWithAggregatesFilter<"MatrizT_RespuestasDetalle"> | string
     valor?: StringNullableWithAggregatesFilter<"MatrizT_RespuestasDetalle"> | string | null
     adjuntoUrl?: StringNullableWithAggregatesFilter<"MatrizT_RespuestasDetalle"> | string | null
+  }
+
+  export type FormatoCartaSostenedorWhereInput = {
+    AND?: FormatoCartaSostenedorWhereInput | FormatoCartaSostenedorWhereInput[]
+    OR?: FormatoCartaSostenedorWhereInput[]
+    NOT?: FormatoCartaSostenedorWhereInput | FormatoCartaSostenedorWhereInput[]
+    id?: StringFilter<"FormatoCartaSostenedor"> | string
+    cabeceraId?: StringFilter<"FormatoCartaSostenedor"> | string
+    nombre?: StringFilter<"FormatoCartaSostenedor"> | string
+    asuntoEmail?: StringFilter<"FormatoCartaSostenedor"> | string
+    cuerpoEmail?: StringFilter<"FormatoCartaSostenedor"> | string
+    cuerpoInicio?: StringFilter<"FormatoCartaSostenedor"> | string
+    cuerpoFin?: StringFilter<"FormatoCartaSostenedor"> | string
+    activo?: BoolFilter<"FormatoCartaSostenedor"> | boolean
+    createdAt?: DateTimeFilter<"FormatoCartaSostenedor"> | Date | string
+    updatedAt?: DateTimeFilter<"FormatoCartaSostenedor"> | Date | string
+    cabecera?: XOR<MatrizT_CabeceraRelationFilter, MatrizT_CabeceraWhereInput>
+  }
+
+  export type FormatoCartaSostenedorOrderByWithRelationInput = {
+    id?: SortOrder
+    cabeceraId?: SortOrder
+    nombre?: SortOrder
+    asuntoEmail?: SortOrder
+    cuerpoEmail?: SortOrder
+    cuerpoInicio?: SortOrder
+    cuerpoFin?: SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    cabecera?: MatrizT_CabeceraOrderByWithRelationInput
+  }
+
+  export type FormatoCartaSostenedorWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: FormatoCartaSostenedorWhereInput | FormatoCartaSostenedorWhereInput[]
+    OR?: FormatoCartaSostenedorWhereInput[]
+    NOT?: FormatoCartaSostenedorWhereInput | FormatoCartaSostenedorWhereInput[]
+    cabeceraId?: StringFilter<"FormatoCartaSostenedor"> | string
+    nombre?: StringFilter<"FormatoCartaSostenedor"> | string
+    asuntoEmail?: StringFilter<"FormatoCartaSostenedor"> | string
+    cuerpoEmail?: StringFilter<"FormatoCartaSostenedor"> | string
+    cuerpoInicio?: StringFilter<"FormatoCartaSostenedor"> | string
+    cuerpoFin?: StringFilter<"FormatoCartaSostenedor"> | string
+    activo?: BoolFilter<"FormatoCartaSostenedor"> | boolean
+    createdAt?: DateTimeFilter<"FormatoCartaSostenedor"> | Date | string
+    updatedAt?: DateTimeFilter<"FormatoCartaSostenedor"> | Date | string
+    cabecera?: XOR<MatrizT_CabeceraRelationFilter, MatrizT_CabeceraWhereInput>
+  }, "id">
+
+  export type FormatoCartaSostenedorOrderByWithAggregationInput = {
+    id?: SortOrder
+    cabeceraId?: SortOrder
+    nombre?: SortOrder
+    asuntoEmail?: SortOrder
+    cuerpoEmail?: SortOrder
+    cuerpoInicio?: SortOrder
+    cuerpoFin?: SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: FormatoCartaSostenedorCountOrderByAggregateInput
+    _max?: FormatoCartaSostenedorMaxOrderByAggregateInput
+    _min?: FormatoCartaSostenedorMinOrderByAggregateInput
+  }
+
+  export type FormatoCartaSostenedorScalarWhereWithAggregatesInput = {
+    AND?: FormatoCartaSostenedorScalarWhereWithAggregatesInput | FormatoCartaSostenedorScalarWhereWithAggregatesInput[]
+    OR?: FormatoCartaSostenedorScalarWhereWithAggregatesInput[]
+    NOT?: FormatoCartaSostenedorScalarWhereWithAggregatesInput | FormatoCartaSostenedorScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"FormatoCartaSostenedor"> | string
+    cabeceraId?: StringWithAggregatesFilter<"FormatoCartaSostenedor"> | string
+    nombre?: StringWithAggregatesFilter<"FormatoCartaSostenedor"> | string
+    asuntoEmail?: StringWithAggregatesFilter<"FormatoCartaSostenedor"> | string
+    cuerpoEmail?: StringWithAggregatesFilter<"FormatoCartaSostenedor"> | string
+    cuerpoInicio?: StringWithAggregatesFilter<"FormatoCartaSostenedor"> | string
+    cuerpoFin?: StringWithAggregatesFilter<"FormatoCartaSostenedor"> | string
+    activo?: BoolWithAggregatesFilter<"FormatoCartaSostenedor"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"FormatoCartaSostenedor"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"FormatoCartaSostenedor"> | Date | string
+  }
+
+  export type DelegacionVisualizacionWhereInput = {
+    AND?: DelegacionVisualizacionWhereInput | DelegacionVisualizacionWhereInput[]
+    OR?: DelegacionVisualizacionWhereInput[]
+    NOT?: DelegacionVisualizacionWhereInput | DelegacionVisualizacionWhereInput[]
+    id?: StringFilter<"DelegacionVisualizacion"> | string
+    userId?: StringFilter<"DelegacionVisualizacion"> | string
+    sucursalId?: StringFilter<"DelegacionVisualizacion"> | string
+    createdAt?: DateTimeFilter<"DelegacionVisualizacion"> | Date | string
+    updatedAt?: DateTimeFilter<"DelegacionVisualizacion"> | Date | string
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    sucursal?: XOR<SucursalRelationFilter, SucursalWhereInput>
+  }
+
+  export type DelegacionVisualizacionOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    sucursalId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    sucursal?: SucursalOrderByWithRelationInput
+  }
+
+  export type DelegacionVisualizacionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_sucursalId?: DelegacionVisualizacionUserIdSucursalIdCompoundUniqueInput
+    AND?: DelegacionVisualizacionWhereInput | DelegacionVisualizacionWhereInput[]
+    OR?: DelegacionVisualizacionWhereInput[]
+    NOT?: DelegacionVisualizacionWhereInput | DelegacionVisualizacionWhereInput[]
+    userId?: StringFilter<"DelegacionVisualizacion"> | string
+    sucursalId?: StringFilter<"DelegacionVisualizacion"> | string
+    createdAt?: DateTimeFilter<"DelegacionVisualizacion"> | Date | string
+    updatedAt?: DateTimeFilter<"DelegacionVisualizacion"> | Date | string
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    sucursal?: XOR<SucursalRelationFilter, SucursalWhereInput>
+  }, "id" | "userId_sucursalId">
+
+  export type DelegacionVisualizacionOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    sucursalId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: DelegacionVisualizacionCountOrderByAggregateInput
+    _max?: DelegacionVisualizacionMaxOrderByAggregateInput
+    _min?: DelegacionVisualizacionMinOrderByAggregateInput
+  }
+
+  export type DelegacionVisualizacionScalarWhereWithAggregatesInput = {
+    AND?: DelegacionVisualizacionScalarWhereWithAggregatesInput | DelegacionVisualizacionScalarWhereWithAggregatesInput[]
+    OR?: DelegacionVisualizacionScalarWhereWithAggregatesInput[]
+    NOT?: DelegacionVisualizacionScalarWhereWithAggregatesInput | DelegacionVisualizacionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"DelegacionVisualizacion"> | string
+    userId?: StringWithAggregatesFilter<"DelegacionVisualizacion"> | string
+    sucursalId?: StringWithAggregatesFilter<"DelegacionVisualizacion"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"DelegacionVisualizacion"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"DelegacionVisualizacion"> | Date | string
+  }
+
+  export type MenuItemOrderWhereInput = {
+    AND?: MenuItemOrderWhereInput | MenuItemOrderWhereInput[]
+    OR?: MenuItemOrderWhereInput[]
+    NOT?: MenuItemOrderWhereInput | MenuItemOrderWhereInput[]
+    id?: StringFilter<"MenuItemOrder"> | string
+    parentKey?: StringFilter<"MenuItemOrder"> | string
+    itemKey?: StringFilter<"MenuItemOrder"> | string
+    position?: IntFilter<"MenuItemOrder"> | number
+    createdAt?: DateTimeFilter<"MenuItemOrder"> | Date | string
+    updatedAt?: DateTimeFilter<"MenuItemOrder"> | Date | string
+  }
+
+  export type MenuItemOrderOrderByWithRelationInput = {
+    id?: SortOrder
+    parentKey?: SortOrder
+    itemKey?: SortOrder
+    position?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MenuItemOrderWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    parentKey_itemKey?: MenuItemOrderParentKeyItemKeyCompoundUniqueInput
+    AND?: MenuItemOrderWhereInput | MenuItemOrderWhereInput[]
+    OR?: MenuItemOrderWhereInput[]
+    NOT?: MenuItemOrderWhereInput | MenuItemOrderWhereInput[]
+    parentKey?: StringFilter<"MenuItemOrder"> | string
+    itemKey?: StringFilter<"MenuItemOrder"> | string
+    position?: IntFilter<"MenuItemOrder"> | number
+    createdAt?: DateTimeFilter<"MenuItemOrder"> | Date | string
+    updatedAt?: DateTimeFilter<"MenuItemOrder"> | Date | string
+  }, "id" | "parentKey_itemKey">
+
+  export type MenuItemOrderOrderByWithAggregationInput = {
+    id?: SortOrder
+    parentKey?: SortOrder
+    itemKey?: SortOrder
+    position?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: MenuItemOrderCountOrderByAggregateInput
+    _avg?: MenuItemOrderAvgOrderByAggregateInput
+    _max?: MenuItemOrderMaxOrderByAggregateInput
+    _min?: MenuItemOrderMinOrderByAggregateInput
+    _sum?: MenuItemOrderSumOrderByAggregateInput
+  }
+
+  export type MenuItemOrderScalarWhereWithAggregatesInput = {
+    AND?: MenuItemOrderScalarWhereWithAggregatesInput | MenuItemOrderScalarWhereWithAggregatesInput[]
+    OR?: MenuItemOrderScalarWhereWithAggregatesInput[]
+    NOT?: MenuItemOrderScalarWhereWithAggregatesInput | MenuItemOrderScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"MenuItemOrder"> | string
+    parentKey?: StringWithAggregatesFilter<"MenuItemOrder"> | string
+    itemKey?: StringWithAggregatesFilter<"MenuItemOrder"> | string
+    position?: IntWithAggregatesFilter<"MenuItemOrder"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"MenuItemOrder"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"MenuItemOrder"> | Date | string
   }
 
   export type RoleCreateInput = {
@@ -86053,6 +89727,7 @@ export namespace Prisma {
     sucursales?: SucursalCreateNestedManyWithoutUsersInput
     allowedForms?: FormDefinitionCreateNestedManyWithoutAllowedUsersInput
     areas?: AreaCreateNestedManyWithoutUsersInput
+    delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -86071,6 +89746,7 @@ export namespace Prisma {
     sucursales?: SucursalUncheckedCreateNestedManyWithoutUsersInput
     allowedForms?: FormDefinitionUncheckedCreateNestedManyWithoutAllowedUsersInput
     areas?: AreaUncheckedCreateNestedManyWithoutUsersInput
+    delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -86089,6 +89765,7 @@ export namespace Prisma {
     sucursales?: SucursalUpdateManyWithoutUsersNestedInput
     allowedForms?: FormDefinitionUpdateManyWithoutAllowedUsersNestedInput
     areas?: AreaUpdateManyWithoutUsersNestedInput
+    delegaciones?: DelegacionVisualizacionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -86107,6 +89784,7 @@ export namespace Prisma {
     sucursales?: SucursalUncheckedUpdateManyWithoutUsersNestedInput
     allowedForms?: FormDefinitionUncheckedUpdateManyWithoutAllowedUsersNestedInput
     areas?: AreaUncheckedUpdateManyWithoutUsersNestedInput
+    delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -86165,6 +89843,7 @@ export namespace Prisma {
     servicioLic: string
     raceqJunaeb: number
     servicio: string
+    institucion?: string | null
     uploadedBy: string
     createdAt?: Date | string
     ut?: UTCreateNestedOneWithoutPmpasInput
@@ -86183,6 +89862,7 @@ export namespace Prisma {
     servicioLic: string
     raceqJunaeb: number
     servicio: string
+    institucion?: string | null
     uploadedBy: string
     createdAt?: Date | string
   }
@@ -86199,6 +89879,7 @@ export namespace Prisma {
     servicioLic?: StringFieldUpdateOperationsInput | string
     raceqJunaeb?: IntFieldUpdateOperationsInput | number
     servicio?: StringFieldUpdateOperationsInput | string
+    institucion?: NullableStringFieldUpdateOperationsInput | string | null
     uploadedBy?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     ut?: UTUpdateOneWithoutPmpasNestedInput
@@ -86217,6 +89898,7 @@ export namespace Prisma {
     servicioLic?: StringFieldUpdateOperationsInput | string
     raceqJunaeb?: IntFieldUpdateOperationsInput | number
     servicio?: StringFieldUpdateOperationsInput | string
+    institucion?: NullableStringFieldUpdateOperationsInput | string | null
     uploadedBy?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -86234,6 +89916,7 @@ export namespace Prisma {
     servicioLic: string
     raceqJunaeb: number
     servicio: string
+    institucion?: string | null
     uploadedBy: string
     createdAt?: Date | string
   }
@@ -86250,6 +89933,7 @@ export namespace Prisma {
     servicioLic?: StringFieldUpdateOperationsInput | string
     raceqJunaeb?: IntFieldUpdateOperationsInput | number
     servicio?: StringFieldUpdateOperationsInput | string
+    institucion?: NullableStringFieldUpdateOperationsInput | string | null
     uploadedBy?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -86267,6 +89951,7 @@ export namespace Prisma {
     servicioLic?: StringFieldUpdateOperationsInput | string
     raceqJunaeb?: IntFieldUpdateOperationsInput | number
     servicio?: StringFieldUpdateOperationsInput | string
+    institucion?: NullableStringFieldUpdateOperationsInput | string | null
     uploadedBy?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -87110,6 +90795,7 @@ export namespace Prisma {
     users?: UserCreateNestedManyWithoutSucursalesInput
     jefesZonales?: JefeZonalSucursalCreateNestedManyWithoutSucursalInput
     vehiculos?: VehiculoCreateNestedManyWithoutSucursalInput
+    delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalUncheckedCreateInput = {
@@ -87128,6 +90814,7 @@ export namespace Prisma {
     users?: UserUncheckedCreateNestedManyWithoutSucursalesInput
     jefesZonales?: JefeZonalSucursalUncheckedCreateNestedManyWithoutSucursalInput
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutSucursalInput
+    delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalUpdateInput = {
@@ -87146,6 +90833,7 @@ export namespace Prisma {
     users?: UserUpdateManyWithoutSucursalesNestedInput
     jefesZonales?: JefeZonalSucursalUpdateManyWithoutSucursalNestedInput
     vehiculos?: VehiculoUpdateManyWithoutSucursalNestedInput
+    delegaciones?: DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput
   }
 
   export type SucursalUncheckedUpdateInput = {
@@ -87164,6 +90852,7 @@ export namespace Prisma {
     users?: UserUncheckedUpdateManyWithoutSucursalesNestedInput
     jefesZonales?: JefeZonalSucursalUncheckedUpdateManyWithoutSucursalNestedInput
     vehiculos?: VehiculoUncheckedUpdateManyWithoutSucursalNestedInput
+    delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput
   }
 
   export type SucursalCreateManyInput = {
@@ -92062,6 +95751,7 @@ export namespace Prisma {
     licitacion: LicitacionCreateNestedOneWithoutMatricesInput
     detalles?: MatrizT_DetalleCreateNestedManyWithoutCabeceraInput
     respuestas?: MatrizT_RespuestasCabeceraCreateNestedManyWithoutCabeceraInput
+    formatosCarta?: FormatoCartaSostenedorCreateNestedManyWithoutCabeceraInput
   }
 
   export type MatrizT_CabeceraUncheckedCreateInput = {
@@ -92075,6 +95765,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     detalles?: MatrizT_DetalleUncheckedCreateNestedManyWithoutCabeceraInput
     respuestas?: MatrizT_RespuestasCabeceraUncheckedCreateNestedManyWithoutCabeceraInput
+    formatosCarta?: FormatoCartaSostenedorUncheckedCreateNestedManyWithoutCabeceraInput
   }
 
   export type MatrizT_CabeceraUpdateInput = {
@@ -92088,6 +95779,7 @@ export namespace Prisma {
     licitacion?: LicitacionUpdateOneRequiredWithoutMatricesNestedInput
     detalles?: MatrizT_DetalleUpdateManyWithoutCabeceraNestedInput
     respuestas?: MatrizT_RespuestasCabeceraUpdateManyWithoutCabeceraNestedInput
+    formatosCarta?: FormatoCartaSostenedorUpdateManyWithoutCabeceraNestedInput
   }
 
   export type MatrizT_CabeceraUncheckedUpdateInput = {
@@ -92101,6 +95793,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     detalles?: MatrizT_DetalleUncheckedUpdateManyWithoutCabeceraNestedInput
     respuestas?: MatrizT_RespuestasCabeceraUncheckedUpdateManyWithoutCabeceraNestedInput
+    formatosCarta?: FormatoCartaSostenedorUncheckedUpdateManyWithoutCabeceraNestedInput
   }
 
   export type MatrizT_CabeceraCreateManyInput = {
@@ -92153,6 +95846,7 @@ export namespace Prisma {
     respSeguimiento?: string | null
     evidenciaCumplimiento?: string | null
     evidenciaEficacia?: string | null
+    compromisoSostenedor?: string | null
     cabecera: MatrizT_CabeceraCreateNestedOneWithoutDetallesInput
     respuestasDetalle?: MatrizT_RespuestasDetalleCreateNestedManyWithoutPreguntaInput
   }
@@ -92176,6 +95870,7 @@ export namespace Prisma {
     respSeguimiento?: string | null
     evidenciaCumplimiento?: string | null
     evidenciaEficacia?: string | null
+    compromisoSostenedor?: string | null
     respuestasDetalle?: MatrizT_RespuestasDetalleUncheckedCreateNestedManyWithoutPreguntaInput
   }
 
@@ -92197,6 +95892,7 @@ export namespace Prisma {
     respSeguimiento?: NullableStringFieldUpdateOperationsInput | string | null
     evidenciaCumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
     evidenciaEficacia?: NullableStringFieldUpdateOperationsInput | string | null
+    compromisoSostenedor?: NullableStringFieldUpdateOperationsInput | string | null
     cabecera?: MatrizT_CabeceraUpdateOneRequiredWithoutDetallesNestedInput
     respuestasDetalle?: MatrizT_RespuestasDetalleUpdateManyWithoutPreguntaNestedInput
   }
@@ -92220,6 +95916,7 @@ export namespace Prisma {
     respSeguimiento?: NullableStringFieldUpdateOperationsInput | string | null
     evidenciaCumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
     evidenciaEficacia?: NullableStringFieldUpdateOperationsInput | string | null
+    compromisoSostenedor?: NullableStringFieldUpdateOperationsInput | string | null
     respuestasDetalle?: MatrizT_RespuestasDetalleUncheckedUpdateManyWithoutPreguntaNestedInput
   }
 
@@ -92242,6 +95939,7 @@ export namespace Prisma {
     respSeguimiento?: string | null
     evidenciaCumplimiento?: string | null
     evidenciaEficacia?: string | null
+    compromisoSostenedor?: string | null
   }
 
   export type MatrizT_DetalleUpdateManyMutationInput = {
@@ -92262,6 +95960,7 @@ export namespace Prisma {
     respSeguimiento?: NullableStringFieldUpdateOperationsInput | string | null
     evidenciaCumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
     evidenciaEficacia?: NullableStringFieldUpdateOperationsInput | string | null
+    compromisoSostenedor?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type MatrizT_DetalleUncheckedUpdateManyInput = {
@@ -92283,6 +95982,7 @@ export namespace Prisma {
     respSeguimiento?: NullableStringFieldUpdateOperationsInput | string | null
     evidenciaCumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
     evidenciaEficacia?: NullableStringFieldUpdateOperationsInput | string | null
+    compromisoSostenedor?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type MatrizT_RespuestasCabeceraCreateInput = {
@@ -92291,11 +95991,20 @@ export namespace Prisma {
     fechaIngreso?: Date | string
     supervisorNombre: string
     supervisorCorreo: string
+    usuarioOriginal?: string | null
+    supervisorNombreOriginal?: string | null
+    supervisorCorreoOriginal?: string | null
+    fechaReemplazo?: Date | string | null
     licId: number
     ut: number
     rbd: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    estado?: string
+    latIngreso?: number | null
+    lngIngreso?: number | null
+    latCierre?: number | null
+    lngCierre?: number | null
     cabecera: MatrizT_CabeceraCreateNestedOneWithoutRespuestasInput
     detalles?: MatrizT_RespuestasDetalleCreateNestedManyWithoutRespuestaCabeceraInput
   }
@@ -92307,11 +96016,20 @@ export namespace Prisma {
     fechaIngreso?: Date | string
     supervisorNombre: string
     supervisorCorreo: string
+    usuarioOriginal?: string | null
+    supervisorNombreOriginal?: string | null
+    supervisorCorreoOriginal?: string | null
+    fechaReemplazo?: Date | string | null
     licId: number
     ut: number
     rbd: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    estado?: string
+    latIngreso?: number | null
+    lngIngreso?: number | null
+    latCierre?: number | null
+    lngCierre?: number | null
     detalles?: MatrizT_RespuestasDetalleUncheckedCreateNestedManyWithoutRespuestaCabeceraInput
   }
 
@@ -92321,11 +96039,20 @@ export namespace Prisma {
     fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
     supervisorNombre?: StringFieldUpdateOperationsInput | string
     supervisorCorreo?: StringFieldUpdateOperationsInput | string
+    usuarioOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    supervisorNombreOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    supervisorCorreoOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaReemplazo?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     licId?: IntFieldUpdateOperationsInput | number
     ut?: IntFieldUpdateOperationsInput | number
     rbd?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    estado?: StringFieldUpdateOperationsInput | string
+    latIngreso?: NullableFloatFieldUpdateOperationsInput | number | null
+    lngIngreso?: NullableFloatFieldUpdateOperationsInput | number | null
+    latCierre?: NullableFloatFieldUpdateOperationsInput | number | null
+    lngCierre?: NullableFloatFieldUpdateOperationsInput | number | null
     cabecera?: MatrizT_CabeceraUpdateOneRequiredWithoutRespuestasNestedInput
     detalles?: MatrizT_RespuestasDetalleUpdateManyWithoutRespuestaCabeceraNestedInput
   }
@@ -92337,11 +96064,20 @@ export namespace Prisma {
     fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
     supervisorNombre?: StringFieldUpdateOperationsInput | string
     supervisorCorreo?: StringFieldUpdateOperationsInput | string
+    usuarioOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    supervisorNombreOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    supervisorCorreoOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaReemplazo?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     licId?: IntFieldUpdateOperationsInput | number
     ut?: IntFieldUpdateOperationsInput | number
     rbd?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    estado?: StringFieldUpdateOperationsInput | string
+    latIngreso?: NullableFloatFieldUpdateOperationsInput | number | null
+    lngIngreso?: NullableFloatFieldUpdateOperationsInput | number | null
+    latCierre?: NullableFloatFieldUpdateOperationsInput | number | null
+    lngCierre?: NullableFloatFieldUpdateOperationsInput | number | null
     detalles?: MatrizT_RespuestasDetalleUncheckedUpdateManyWithoutRespuestaCabeceraNestedInput
   }
 
@@ -92352,11 +96088,20 @@ export namespace Prisma {
     fechaIngreso?: Date | string
     supervisorNombre: string
     supervisorCorreo: string
+    usuarioOriginal?: string | null
+    supervisorNombreOriginal?: string | null
+    supervisorCorreoOriginal?: string | null
+    fechaReemplazo?: Date | string | null
     licId: number
     ut: number
     rbd: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    estado?: string
+    latIngreso?: number | null
+    lngIngreso?: number | null
+    latCierre?: number | null
+    lngCierre?: number | null
   }
 
   export type MatrizT_RespuestasCabeceraUpdateManyMutationInput = {
@@ -92365,11 +96110,20 @@ export namespace Prisma {
     fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
     supervisorNombre?: StringFieldUpdateOperationsInput | string
     supervisorCorreo?: StringFieldUpdateOperationsInput | string
+    usuarioOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    supervisorNombreOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    supervisorCorreoOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaReemplazo?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     licId?: IntFieldUpdateOperationsInput | number
     ut?: IntFieldUpdateOperationsInput | number
     rbd?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    estado?: StringFieldUpdateOperationsInput | string
+    latIngreso?: NullableFloatFieldUpdateOperationsInput | number | null
+    lngIngreso?: NullableFloatFieldUpdateOperationsInput | number | null
+    latCierre?: NullableFloatFieldUpdateOperationsInput | number | null
+    lngCierre?: NullableFloatFieldUpdateOperationsInput | number | null
   }
 
   export type MatrizT_RespuestasCabeceraUncheckedUpdateManyInput = {
@@ -92379,11 +96133,20 @@ export namespace Prisma {
     fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
     supervisorNombre?: StringFieldUpdateOperationsInput | string
     supervisorCorreo?: StringFieldUpdateOperationsInput | string
+    usuarioOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    supervisorNombreOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    supervisorCorreoOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaReemplazo?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     licId?: IntFieldUpdateOperationsInput | number
     ut?: IntFieldUpdateOperationsInput | number
     rbd?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    estado?: StringFieldUpdateOperationsInput | string
+    latIngreso?: NullableFloatFieldUpdateOperationsInput | number | null
+    lngIngreso?: NullableFloatFieldUpdateOperationsInput | number | null
+    latCierre?: NullableFloatFieldUpdateOperationsInput | number | null
+    lngCierre?: NullableFloatFieldUpdateOperationsInput | number | null
   }
 
   export type MatrizT_RespuestasDetalleCreateInput = {
@@ -92438,6 +96201,213 @@ export namespace Prisma {
     preguntaId?: StringFieldUpdateOperationsInput | string
     valor?: NullableStringFieldUpdateOperationsInput | string | null
     adjuntoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type FormatoCartaSostenedorCreateInput = {
+    id?: string
+    nombre: string
+    asuntoEmail: string
+    cuerpoEmail: string
+    cuerpoInicio: string
+    cuerpoFin: string
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cabecera: MatrizT_CabeceraCreateNestedOneWithoutFormatosCartaInput
+  }
+
+  export type FormatoCartaSostenedorUncheckedCreateInput = {
+    id?: string
+    cabeceraId: string
+    nombre: string
+    asuntoEmail: string
+    cuerpoEmail: string
+    cuerpoInicio: string
+    cuerpoFin: string
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FormatoCartaSostenedorUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    asuntoEmail?: StringFieldUpdateOperationsInput | string
+    cuerpoEmail?: StringFieldUpdateOperationsInput | string
+    cuerpoInicio?: StringFieldUpdateOperationsInput | string
+    cuerpoFin?: StringFieldUpdateOperationsInput | string
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cabecera?: MatrizT_CabeceraUpdateOneRequiredWithoutFormatosCartaNestedInput
+  }
+
+  export type FormatoCartaSostenedorUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cabeceraId?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    asuntoEmail?: StringFieldUpdateOperationsInput | string
+    cuerpoEmail?: StringFieldUpdateOperationsInput | string
+    cuerpoInicio?: StringFieldUpdateOperationsInput | string
+    cuerpoFin?: StringFieldUpdateOperationsInput | string
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormatoCartaSostenedorCreateManyInput = {
+    id?: string
+    cabeceraId: string
+    nombre: string
+    asuntoEmail: string
+    cuerpoEmail: string
+    cuerpoInicio: string
+    cuerpoFin: string
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FormatoCartaSostenedorUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    asuntoEmail?: StringFieldUpdateOperationsInput | string
+    cuerpoEmail?: StringFieldUpdateOperationsInput | string
+    cuerpoInicio?: StringFieldUpdateOperationsInput | string
+    cuerpoFin?: StringFieldUpdateOperationsInput | string
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormatoCartaSostenedorUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cabeceraId?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    asuntoEmail?: StringFieldUpdateOperationsInput | string
+    cuerpoEmail?: StringFieldUpdateOperationsInput | string
+    cuerpoInicio?: StringFieldUpdateOperationsInput | string
+    cuerpoFin?: StringFieldUpdateOperationsInput | string
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DelegacionVisualizacionCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutDelegacionesInput
+    sucursal: SucursalCreateNestedOneWithoutDelegacionesInput
+  }
+
+  export type DelegacionVisualizacionUncheckedCreateInput = {
+    id?: string
+    userId: string
+    sucursalId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DelegacionVisualizacionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutDelegacionesNestedInput
+    sucursal?: SucursalUpdateOneRequiredWithoutDelegacionesNestedInput
+  }
+
+  export type DelegacionVisualizacionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    sucursalId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DelegacionVisualizacionCreateManyInput = {
+    id?: string
+    userId: string
+    sucursalId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DelegacionVisualizacionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DelegacionVisualizacionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    sucursalId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MenuItemOrderCreateInput = {
+    id?: string
+    parentKey: string
+    itemKey: string
+    position: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MenuItemOrderUncheckedCreateInput = {
+    id?: string
+    parentKey: string
+    itemKey: string
+    position: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MenuItemOrderUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    parentKey?: StringFieldUpdateOperationsInput | string
+    itemKey?: StringFieldUpdateOperationsInput | string
+    position?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MenuItemOrderUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    parentKey?: StringFieldUpdateOperationsInput | string
+    itemKey?: StringFieldUpdateOperationsInput | string
+    position?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MenuItemOrderCreateManyInput = {
+    id?: string
+    parentKey: string
+    itemKey: string
+    position: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MenuItemOrderUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    parentKey?: StringFieldUpdateOperationsInput | string
+    itemKey?: StringFieldUpdateOperationsInput | string
+    position?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MenuItemOrderUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    parentKey?: StringFieldUpdateOperationsInput | string
+    itemKey?: StringFieldUpdateOperationsInput | string
+    position?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -92609,6 +96579,12 @@ export namespace Prisma {
     none?: AreaWhereInput
   }
 
+  export type DelegacionVisualizacionListRelationFilter = {
+    every?: DelegacionVisualizacionWhereInput
+    some?: DelegacionVisualizacionWhereInput
+    none?: DelegacionVisualizacionWhereInput
+  }
+
   export type SucursalOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -92618,6 +96594,10 @@ export namespace Prisma {
   }
 
   export type AreaOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DelegacionVisualizacionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -92709,6 +96689,7 @@ export namespace Prisma {
     servicioLic?: SortOrder
     raceqJunaeb?: SortOrder
     servicio?: SortOrder
+    institucion?: SortOrder
     uploadedBy?: SortOrder
     createdAt?: SortOrder
   }
@@ -92735,6 +96716,7 @@ export namespace Prisma {
     servicioLic?: SortOrder
     raceqJunaeb?: SortOrder
     servicio?: SortOrder
+    institucion?: SortOrder
     uploadedBy?: SortOrder
     createdAt?: SortOrder
   }
@@ -92752,6 +96734,7 @@ export namespace Prisma {
     servicioLic?: SortOrder
     raceqJunaeb?: SortOrder
     servicio?: SortOrder
+    institucion?: SortOrder
     uploadedBy?: SortOrder
     createdAt?: SortOrder
   }
@@ -96312,11 +100295,21 @@ export namespace Prisma {
     none?: MatrizT_RespuestasCabeceraWhereInput
   }
 
+  export type FormatoCartaSostenedorListRelationFilter = {
+    every?: FormatoCartaSostenedorWhereInput
+    some?: FormatoCartaSostenedorWhereInput
+    none?: FormatoCartaSostenedorWhereInput
+  }
+
   export type MatrizT_DetalleOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type MatrizT_RespuestasCabeceraOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FormatoCartaSostenedorOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -96397,6 +100390,7 @@ export namespace Prisma {
     respSeguimiento?: SortOrder
     evidenciaCumplimiento?: SortOrder
     evidenciaEficacia?: SortOrder
+    compromisoSostenedor?: SortOrder
   }
 
   export type MatrizT_DetalleAvgOrderByAggregateInput = {
@@ -96425,6 +100419,7 @@ export namespace Prisma {
     respSeguimiento?: SortOrder
     evidenciaCumplimiento?: SortOrder
     evidenciaEficacia?: SortOrder
+    compromisoSostenedor?: SortOrder
   }
 
   export type MatrizT_DetalleMinOrderByAggregateInput = {
@@ -96446,6 +100441,7 @@ export namespace Prisma {
     respSeguimiento?: SortOrder
     evidenciaCumplimiento?: SortOrder
     evidenciaEficacia?: SortOrder
+    compromisoSostenedor?: SortOrder
   }
 
   export type MatrizT_DetalleSumOrderByAggregateInput = {
@@ -96462,17 +100458,30 @@ export namespace Prisma {
     fechaIngreso?: SortOrder
     supervisorNombre?: SortOrder
     supervisorCorreo?: SortOrder
+    usuarioOriginal?: SortOrder
+    supervisorNombreOriginal?: SortOrder
+    supervisorCorreoOriginal?: SortOrder
+    fechaReemplazo?: SortOrder
     licId?: SortOrder
     ut?: SortOrder
     rbd?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    estado?: SortOrder
+    latIngreso?: SortOrder
+    lngIngreso?: SortOrder
+    latCierre?: SortOrder
+    lngCierre?: SortOrder
   }
 
   export type MatrizT_RespuestasCabeceraAvgOrderByAggregateInput = {
     licId?: SortOrder
     ut?: SortOrder
     rbd?: SortOrder
+    latIngreso?: SortOrder
+    lngIngreso?: SortOrder
+    latCierre?: SortOrder
+    lngCierre?: SortOrder
   }
 
   export type MatrizT_RespuestasCabeceraMaxOrderByAggregateInput = {
@@ -96482,11 +100491,20 @@ export namespace Prisma {
     fechaIngreso?: SortOrder
     supervisorNombre?: SortOrder
     supervisorCorreo?: SortOrder
+    usuarioOriginal?: SortOrder
+    supervisorNombreOriginal?: SortOrder
+    supervisorCorreoOriginal?: SortOrder
+    fechaReemplazo?: SortOrder
     licId?: SortOrder
     ut?: SortOrder
     rbd?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    estado?: SortOrder
+    latIngreso?: SortOrder
+    lngIngreso?: SortOrder
+    latCierre?: SortOrder
+    lngCierre?: SortOrder
   }
 
   export type MatrizT_RespuestasCabeceraMinOrderByAggregateInput = {
@@ -96496,17 +100514,30 @@ export namespace Prisma {
     fechaIngreso?: SortOrder
     supervisorNombre?: SortOrder
     supervisorCorreo?: SortOrder
+    usuarioOriginal?: SortOrder
+    supervisorNombreOriginal?: SortOrder
+    supervisorCorreoOriginal?: SortOrder
+    fechaReemplazo?: SortOrder
     licId?: SortOrder
     ut?: SortOrder
     rbd?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    estado?: SortOrder
+    latIngreso?: SortOrder
+    lngIngreso?: SortOrder
+    latCierre?: SortOrder
+    lngCierre?: SortOrder
   }
 
   export type MatrizT_RespuestasCabeceraSumOrderByAggregateInput = {
     licId?: SortOrder
     ut?: SortOrder
     rbd?: SortOrder
+    latIngreso?: SortOrder
+    lngIngreso?: SortOrder
+    latCierre?: SortOrder
+    lngCierre?: SortOrder
   }
 
   export type MatrizT_RespuestasCabeceraRelationFilter = {
@@ -96541,6 +100572,119 @@ export namespace Prisma {
     preguntaId?: SortOrder
     valor?: SortOrder
     adjuntoUrl?: SortOrder
+  }
+
+  export type FormatoCartaSostenedorCountOrderByAggregateInput = {
+    id?: SortOrder
+    cabeceraId?: SortOrder
+    nombre?: SortOrder
+    asuntoEmail?: SortOrder
+    cuerpoEmail?: SortOrder
+    cuerpoInicio?: SortOrder
+    cuerpoFin?: SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FormatoCartaSostenedorMaxOrderByAggregateInput = {
+    id?: SortOrder
+    cabeceraId?: SortOrder
+    nombre?: SortOrder
+    asuntoEmail?: SortOrder
+    cuerpoEmail?: SortOrder
+    cuerpoInicio?: SortOrder
+    cuerpoFin?: SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FormatoCartaSostenedorMinOrderByAggregateInput = {
+    id?: SortOrder
+    cabeceraId?: SortOrder
+    nombre?: SortOrder
+    asuntoEmail?: SortOrder
+    cuerpoEmail?: SortOrder
+    cuerpoInicio?: SortOrder
+    cuerpoFin?: SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type DelegacionVisualizacionUserIdSucursalIdCompoundUniqueInput = {
+    userId: string
+    sucursalId: string
+  }
+
+  export type DelegacionVisualizacionCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    sucursalId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DelegacionVisualizacionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    sucursalId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DelegacionVisualizacionMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    sucursalId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MenuItemOrderParentKeyItemKeyCompoundUniqueInput = {
+    parentKey: string
+    itemKey: string
+  }
+
+  export type MenuItemOrderCountOrderByAggregateInput = {
+    id?: SortOrder
+    parentKey?: SortOrder
+    itemKey?: SortOrder
+    position?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MenuItemOrderAvgOrderByAggregateInput = {
+    position?: SortOrder
+  }
+
+  export type MenuItemOrderMaxOrderByAggregateInput = {
+    id?: SortOrder
+    parentKey?: SortOrder
+    itemKey?: SortOrder
+    position?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MenuItemOrderMinOrderByAggregateInput = {
+    id?: SortOrder
+    parentKey?: SortOrder
+    itemKey?: SortOrder
+    position?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MenuItemOrderSumOrderByAggregateInput = {
+    position?: SortOrder
   }
 
   export type UserCreateNestedManyWithoutRoleInput = {
@@ -96625,6 +100769,13 @@ export namespace Prisma {
     connect?: AreaWhereUniqueInput | AreaWhereUniqueInput[]
   }
 
+  export type DelegacionVisualizacionCreateNestedManyWithoutUserInput = {
+    create?: XOR<DelegacionVisualizacionCreateWithoutUserInput, DelegacionVisualizacionUncheckedCreateWithoutUserInput> | DelegacionVisualizacionCreateWithoutUserInput[] | DelegacionVisualizacionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DelegacionVisualizacionCreateOrConnectWithoutUserInput | DelegacionVisualizacionCreateOrConnectWithoutUserInput[]
+    createMany?: DelegacionVisualizacionCreateManyUserInputEnvelope
+    connect?: DelegacionVisualizacionWhereUniqueInput | DelegacionVisualizacionWhereUniqueInput[]
+  }
+
   export type SucursalUncheckedCreateNestedManyWithoutUsersInput = {
     create?: XOR<SucursalCreateWithoutUsersInput, SucursalUncheckedCreateWithoutUsersInput> | SucursalCreateWithoutUsersInput[] | SucursalUncheckedCreateWithoutUsersInput[]
     connectOrCreate?: SucursalCreateOrConnectWithoutUsersInput | SucursalCreateOrConnectWithoutUsersInput[]
@@ -96641,6 +100792,13 @@ export namespace Prisma {
     create?: XOR<AreaCreateWithoutUsersInput, AreaUncheckedCreateWithoutUsersInput> | AreaCreateWithoutUsersInput[] | AreaUncheckedCreateWithoutUsersInput[]
     connectOrCreate?: AreaCreateOrConnectWithoutUsersInput | AreaCreateOrConnectWithoutUsersInput[]
     connect?: AreaWhereUniqueInput | AreaWhereUniqueInput[]
+  }
+
+  export type DelegacionVisualizacionUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<DelegacionVisualizacionCreateWithoutUserInput, DelegacionVisualizacionUncheckedCreateWithoutUserInput> | DelegacionVisualizacionCreateWithoutUserInput[] | DelegacionVisualizacionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DelegacionVisualizacionCreateOrConnectWithoutUserInput | DelegacionVisualizacionCreateOrConnectWithoutUserInput[]
+    createMany?: DelegacionVisualizacionCreateManyUserInputEnvelope
+    connect?: DelegacionVisualizacionWhereUniqueInput | DelegacionVisualizacionWhereUniqueInput[]
   }
 
   export type BoolFieldUpdateOperationsInput = {
@@ -96699,6 +100857,20 @@ export namespace Prisma {
     deleteMany?: AreaScalarWhereInput | AreaScalarWhereInput[]
   }
 
+  export type DelegacionVisualizacionUpdateManyWithoutUserNestedInput = {
+    create?: XOR<DelegacionVisualizacionCreateWithoutUserInput, DelegacionVisualizacionUncheckedCreateWithoutUserInput> | DelegacionVisualizacionCreateWithoutUserInput[] | DelegacionVisualizacionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DelegacionVisualizacionCreateOrConnectWithoutUserInput | DelegacionVisualizacionCreateOrConnectWithoutUserInput[]
+    upsert?: DelegacionVisualizacionUpsertWithWhereUniqueWithoutUserInput | DelegacionVisualizacionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: DelegacionVisualizacionCreateManyUserInputEnvelope
+    set?: DelegacionVisualizacionWhereUniqueInput | DelegacionVisualizacionWhereUniqueInput[]
+    disconnect?: DelegacionVisualizacionWhereUniqueInput | DelegacionVisualizacionWhereUniqueInput[]
+    delete?: DelegacionVisualizacionWhereUniqueInput | DelegacionVisualizacionWhereUniqueInput[]
+    connect?: DelegacionVisualizacionWhereUniqueInput | DelegacionVisualizacionWhereUniqueInput[]
+    update?: DelegacionVisualizacionUpdateWithWhereUniqueWithoutUserInput | DelegacionVisualizacionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: DelegacionVisualizacionUpdateManyWithWhereWithoutUserInput | DelegacionVisualizacionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: DelegacionVisualizacionScalarWhereInput | DelegacionVisualizacionScalarWhereInput[]
+  }
+
   export type SucursalUncheckedUpdateManyWithoutUsersNestedInput = {
     create?: XOR<SucursalCreateWithoutUsersInput, SucursalUncheckedCreateWithoutUsersInput> | SucursalCreateWithoutUsersInput[] | SucursalUncheckedCreateWithoutUsersInput[]
     connectOrCreate?: SucursalCreateOrConnectWithoutUsersInput | SucursalCreateOrConnectWithoutUsersInput[]
@@ -96736,6 +100908,20 @@ export namespace Prisma {
     update?: AreaUpdateWithWhereUniqueWithoutUsersInput | AreaUpdateWithWhereUniqueWithoutUsersInput[]
     updateMany?: AreaUpdateManyWithWhereWithoutUsersInput | AreaUpdateManyWithWhereWithoutUsersInput[]
     deleteMany?: AreaScalarWhereInput | AreaScalarWhereInput[]
+  }
+
+  export type DelegacionVisualizacionUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<DelegacionVisualizacionCreateWithoutUserInput, DelegacionVisualizacionUncheckedCreateWithoutUserInput> | DelegacionVisualizacionCreateWithoutUserInput[] | DelegacionVisualizacionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DelegacionVisualizacionCreateOrConnectWithoutUserInput | DelegacionVisualizacionCreateOrConnectWithoutUserInput[]
+    upsert?: DelegacionVisualizacionUpsertWithWhereUniqueWithoutUserInput | DelegacionVisualizacionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: DelegacionVisualizacionCreateManyUserInputEnvelope
+    set?: DelegacionVisualizacionWhereUniqueInput | DelegacionVisualizacionWhereUniqueInput[]
+    disconnect?: DelegacionVisualizacionWhereUniqueInput | DelegacionVisualizacionWhereUniqueInput[]
+    delete?: DelegacionVisualizacionWhereUniqueInput | DelegacionVisualizacionWhereUniqueInput[]
+    connect?: DelegacionVisualizacionWhereUniqueInput | DelegacionVisualizacionWhereUniqueInput[]
+    update?: DelegacionVisualizacionUpdateWithWhereUniqueWithoutUserInput | DelegacionVisualizacionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: DelegacionVisualizacionUpdateManyWithWhereWithoutUserInput | DelegacionVisualizacionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: DelegacionVisualizacionScalarWhereInput | DelegacionVisualizacionScalarWhereInput[]
   }
 
   export type UTCreateNestedOneWithoutPmpasInput = {
@@ -97129,6 +101315,13 @@ export namespace Prisma {
     connect?: VehiculoWhereUniqueInput | VehiculoWhereUniqueInput[]
   }
 
+  export type DelegacionVisualizacionCreateNestedManyWithoutSucursalInput = {
+    create?: XOR<DelegacionVisualizacionCreateWithoutSucursalInput, DelegacionVisualizacionUncheckedCreateWithoutSucursalInput> | DelegacionVisualizacionCreateWithoutSucursalInput[] | DelegacionVisualizacionUncheckedCreateWithoutSucursalInput[]
+    connectOrCreate?: DelegacionVisualizacionCreateOrConnectWithoutSucursalInput | DelegacionVisualizacionCreateOrConnectWithoutSucursalInput[]
+    createMany?: DelegacionVisualizacionCreateManySucursalInputEnvelope
+    connect?: DelegacionVisualizacionWhereUniqueInput | DelegacionVisualizacionWhereUniqueInput[]
+  }
+
   export type ListaCorreoUncheckedCreateNestedManyWithoutSucursalInput = {
     create?: XOR<ListaCorreoCreateWithoutSucursalInput, ListaCorreoUncheckedCreateWithoutSucursalInput> | ListaCorreoCreateWithoutSucursalInput[] | ListaCorreoUncheckedCreateWithoutSucursalInput[]
     connectOrCreate?: ListaCorreoCreateOrConnectWithoutSucursalInput | ListaCorreoCreateOrConnectWithoutSucursalInput[]
@@ -97182,6 +101375,13 @@ export namespace Prisma {
     connectOrCreate?: VehiculoCreateOrConnectWithoutSucursalInput | VehiculoCreateOrConnectWithoutSucursalInput[]
     createMany?: VehiculoCreateManySucursalInputEnvelope
     connect?: VehiculoWhereUniqueInput | VehiculoWhereUniqueInput[]
+  }
+
+  export type DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput = {
+    create?: XOR<DelegacionVisualizacionCreateWithoutSucursalInput, DelegacionVisualizacionUncheckedCreateWithoutSucursalInput> | DelegacionVisualizacionCreateWithoutSucursalInput[] | DelegacionVisualizacionUncheckedCreateWithoutSucursalInput[]
+    connectOrCreate?: DelegacionVisualizacionCreateOrConnectWithoutSucursalInput | DelegacionVisualizacionCreateOrConnectWithoutSucursalInput[]
+    createMany?: DelegacionVisualizacionCreateManySucursalInputEnvelope
+    connect?: DelegacionVisualizacionWhereUniqueInput | DelegacionVisualizacionWhereUniqueInput[]
   }
 
   export type ListaCorreoUpdateManyWithoutSucursalNestedInput = {
@@ -97295,6 +101495,20 @@ export namespace Prisma {
     deleteMany?: VehiculoScalarWhereInput | VehiculoScalarWhereInput[]
   }
 
+  export type DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput = {
+    create?: XOR<DelegacionVisualizacionCreateWithoutSucursalInput, DelegacionVisualizacionUncheckedCreateWithoutSucursalInput> | DelegacionVisualizacionCreateWithoutSucursalInput[] | DelegacionVisualizacionUncheckedCreateWithoutSucursalInput[]
+    connectOrCreate?: DelegacionVisualizacionCreateOrConnectWithoutSucursalInput | DelegacionVisualizacionCreateOrConnectWithoutSucursalInput[]
+    upsert?: DelegacionVisualizacionUpsertWithWhereUniqueWithoutSucursalInput | DelegacionVisualizacionUpsertWithWhereUniqueWithoutSucursalInput[]
+    createMany?: DelegacionVisualizacionCreateManySucursalInputEnvelope
+    set?: DelegacionVisualizacionWhereUniqueInput | DelegacionVisualizacionWhereUniqueInput[]
+    disconnect?: DelegacionVisualizacionWhereUniqueInput | DelegacionVisualizacionWhereUniqueInput[]
+    delete?: DelegacionVisualizacionWhereUniqueInput | DelegacionVisualizacionWhereUniqueInput[]
+    connect?: DelegacionVisualizacionWhereUniqueInput | DelegacionVisualizacionWhereUniqueInput[]
+    update?: DelegacionVisualizacionUpdateWithWhereUniqueWithoutSucursalInput | DelegacionVisualizacionUpdateWithWhereUniqueWithoutSucursalInput[]
+    updateMany?: DelegacionVisualizacionUpdateManyWithWhereWithoutSucursalInput | DelegacionVisualizacionUpdateManyWithWhereWithoutSucursalInput[]
+    deleteMany?: DelegacionVisualizacionScalarWhereInput | DelegacionVisualizacionScalarWhereInput[]
+  }
+
   export type ListaCorreoUncheckedUpdateManyWithoutSucursalNestedInput = {
     create?: XOR<ListaCorreoCreateWithoutSucursalInput, ListaCorreoUncheckedCreateWithoutSucursalInput> | ListaCorreoCreateWithoutSucursalInput[] | ListaCorreoUncheckedCreateWithoutSucursalInput[]
     connectOrCreate?: ListaCorreoCreateOrConnectWithoutSucursalInput | ListaCorreoCreateOrConnectWithoutSucursalInput[]
@@ -97404,6 +101618,20 @@ export namespace Prisma {
     update?: VehiculoUpdateWithWhereUniqueWithoutSucursalInput | VehiculoUpdateWithWhereUniqueWithoutSucursalInput[]
     updateMany?: VehiculoUpdateManyWithWhereWithoutSucursalInput | VehiculoUpdateManyWithWhereWithoutSucursalInput[]
     deleteMany?: VehiculoScalarWhereInput | VehiculoScalarWhereInput[]
+  }
+
+  export type DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput = {
+    create?: XOR<DelegacionVisualizacionCreateWithoutSucursalInput, DelegacionVisualizacionUncheckedCreateWithoutSucursalInput> | DelegacionVisualizacionCreateWithoutSucursalInput[] | DelegacionVisualizacionUncheckedCreateWithoutSucursalInput[]
+    connectOrCreate?: DelegacionVisualizacionCreateOrConnectWithoutSucursalInput | DelegacionVisualizacionCreateOrConnectWithoutSucursalInput[]
+    upsert?: DelegacionVisualizacionUpsertWithWhereUniqueWithoutSucursalInput | DelegacionVisualizacionUpsertWithWhereUniqueWithoutSucursalInput[]
+    createMany?: DelegacionVisualizacionCreateManySucursalInputEnvelope
+    set?: DelegacionVisualizacionWhereUniqueInput | DelegacionVisualizacionWhereUniqueInput[]
+    disconnect?: DelegacionVisualizacionWhereUniqueInput | DelegacionVisualizacionWhereUniqueInput[]
+    delete?: DelegacionVisualizacionWhereUniqueInput | DelegacionVisualizacionWhereUniqueInput[]
+    connect?: DelegacionVisualizacionWhereUniqueInput | DelegacionVisualizacionWhereUniqueInput[]
+    update?: DelegacionVisualizacionUpdateWithWhereUniqueWithoutSucursalInput | DelegacionVisualizacionUpdateWithWhereUniqueWithoutSucursalInput[]
+    updateMany?: DelegacionVisualizacionUpdateManyWithWhereWithoutSucursalInput | DelegacionVisualizacionUpdateManyWithWhereWithoutSucursalInput[]
+    deleteMany?: DelegacionVisualizacionScalarWhereInput | DelegacionVisualizacionScalarWhereInput[]
   }
 
   export type SucursalCreateNestedOneWithoutPresupuestosInput = {
@@ -99110,6 +103338,13 @@ export namespace Prisma {
     connect?: MatrizT_RespuestasCabeceraWhereUniqueInput | MatrizT_RespuestasCabeceraWhereUniqueInput[]
   }
 
+  export type FormatoCartaSostenedorCreateNestedManyWithoutCabeceraInput = {
+    create?: XOR<FormatoCartaSostenedorCreateWithoutCabeceraInput, FormatoCartaSostenedorUncheckedCreateWithoutCabeceraInput> | FormatoCartaSostenedorCreateWithoutCabeceraInput[] | FormatoCartaSostenedorUncheckedCreateWithoutCabeceraInput[]
+    connectOrCreate?: FormatoCartaSostenedorCreateOrConnectWithoutCabeceraInput | FormatoCartaSostenedorCreateOrConnectWithoutCabeceraInput[]
+    createMany?: FormatoCartaSostenedorCreateManyCabeceraInputEnvelope
+    connect?: FormatoCartaSostenedorWhereUniqueInput | FormatoCartaSostenedorWhereUniqueInput[]
+  }
+
   export type MatrizT_DetalleUncheckedCreateNestedManyWithoutCabeceraInput = {
     create?: XOR<MatrizT_DetalleCreateWithoutCabeceraInput, MatrizT_DetalleUncheckedCreateWithoutCabeceraInput> | MatrizT_DetalleCreateWithoutCabeceraInput[] | MatrizT_DetalleUncheckedCreateWithoutCabeceraInput[]
     connectOrCreate?: MatrizT_DetalleCreateOrConnectWithoutCabeceraInput | MatrizT_DetalleCreateOrConnectWithoutCabeceraInput[]
@@ -99122,6 +103357,13 @@ export namespace Prisma {
     connectOrCreate?: MatrizT_RespuestasCabeceraCreateOrConnectWithoutCabeceraInput | MatrizT_RespuestasCabeceraCreateOrConnectWithoutCabeceraInput[]
     createMany?: MatrizT_RespuestasCabeceraCreateManyCabeceraInputEnvelope
     connect?: MatrizT_RespuestasCabeceraWhereUniqueInput | MatrizT_RespuestasCabeceraWhereUniqueInput[]
+  }
+
+  export type FormatoCartaSostenedorUncheckedCreateNestedManyWithoutCabeceraInput = {
+    create?: XOR<FormatoCartaSostenedorCreateWithoutCabeceraInput, FormatoCartaSostenedorUncheckedCreateWithoutCabeceraInput> | FormatoCartaSostenedorCreateWithoutCabeceraInput[] | FormatoCartaSostenedorUncheckedCreateWithoutCabeceraInput[]
+    connectOrCreate?: FormatoCartaSostenedorCreateOrConnectWithoutCabeceraInput | FormatoCartaSostenedorCreateOrConnectWithoutCabeceraInput[]
+    createMany?: FormatoCartaSostenedorCreateManyCabeceraInputEnvelope
+    connect?: FormatoCartaSostenedorWhereUniqueInput | FormatoCartaSostenedorWhereUniqueInput[]
   }
 
   export type LicitacionUpdateOneRequiredWithoutMatricesNestedInput = {
@@ -99160,6 +103402,20 @@ export namespace Prisma {
     deleteMany?: MatrizT_RespuestasCabeceraScalarWhereInput | MatrizT_RespuestasCabeceraScalarWhereInput[]
   }
 
+  export type FormatoCartaSostenedorUpdateManyWithoutCabeceraNestedInput = {
+    create?: XOR<FormatoCartaSostenedorCreateWithoutCabeceraInput, FormatoCartaSostenedorUncheckedCreateWithoutCabeceraInput> | FormatoCartaSostenedorCreateWithoutCabeceraInput[] | FormatoCartaSostenedorUncheckedCreateWithoutCabeceraInput[]
+    connectOrCreate?: FormatoCartaSostenedorCreateOrConnectWithoutCabeceraInput | FormatoCartaSostenedorCreateOrConnectWithoutCabeceraInput[]
+    upsert?: FormatoCartaSostenedorUpsertWithWhereUniqueWithoutCabeceraInput | FormatoCartaSostenedorUpsertWithWhereUniqueWithoutCabeceraInput[]
+    createMany?: FormatoCartaSostenedorCreateManyCabeceraInputEnvelope
+    set?: FormatoCartaSostenedorWhereUniqueInput | FormatoCartaSostenedorWhereUniqueInput[]
+    disconnect?: FormatoCartaSostenedorWhereUniqueInput | FormatoCartaSostenedorWhereUniqueInput[]
+    delete?: FormatoCartaSostenedorWhereUniqueInput | FormatoCartaSostenedorWhereUniqueInput[]
+    connect?: FormatoCartaSostenedorWhereUniqueInput | FormatoCartaSostenedorWhereUniqueInput[]
+    update?: FormatoCartaSostenedorUpdateWithWhereUniqueWithoutCabeceraInput | FormatoCartaSostenedorUpdateWithWhereUniqueWithoutCabeceraInput[]
+    updateMany?: FormatoCartaSostenedorUpdateManyWithWhereWithoutCabeceraInput | FormatoCartaSostenedorUpdateManyWithWhereWithoutCabeceraInput[]
+    deleteMany?: FormatoCartaSostenedorScalarWhereInput | FormatoCartaSostenedorScalarWhereInput[]
+  }
+
   export type MatrizT_DetalleUncheckedUpdateManyWithoutCabeceraNestedInput = {
     create?: XOR<MatrizT_DetalleCreateWithoutCabeceraInput, MatrizT_DetalleUncheckedCreateWithoutCabeceraInput> | MatrizT_DetalleCreateWithoutCabeceraInput[] | MatrizT_DetalleUncheckedCreateWithoutCabeceraInput[]
     connectOrCreate?: MatrizT_DetalleCreateOrConnectWithoutCabeceraInput | MatrizT_DetalleCreateOrConnectWithoutCabeceraInput[]
@@ -99186,6 +103442,20 @@ export namespace Prisma {
     update?: MatrizT_RespuestasCabeceraUpdateWithWhereUniqueWithoutCabeceraInput | MatrizT_RespuestasCabeceraUpdateWithWhereUniqueWithoutCabeceraInput[]
     updateMany?: MatrizT_RespuestasCabeceraUpdateManyWithWhereWithoutCabeceraInput | MatrizT_RespuestasCabeceraUpdateManyWithWhereWithoutCabeceraInput[]
     deleteMany?: MatrizT_RespuestasCabeceraScalarWhereInput | MatrizT_RespuestasCabeceraScalarWhereInput[]
+  }
+
+  export type FormatoCartaSostenedorUncheckedUpdateManyWithoutCabeceraNestedInput = {
+    create?: XOR<FormatoCartaSostenedorCreateWithoutCabeceraInput, FormatoCartaSostenedorUncheckedCreateWithoutCabeceraInput> | FormatoCartaSostenedorCreateWithoutCabeceraInput[] | FormatoCartaSostenedorUncheckedCreateWithoutCabeceraInput[]
+    connectOrCreate?: FormatoCartaSostenedorCreateOrConnectWithoutCabeceraInput | FormatoCartaSostenedorCreateOrConnectWithoutCabeceraInput[]
+    upsert?: FormatoCartaSostenedorUpsertWithWhereUniqueWithoutCabeceraInput | FormatoCartaSostenedorUpsertWithWhereUniqueWithoutCabeceraInput[]
+    createMany?: FormatoCartaSostenedorCreateManyCabeceraInputEnvelope
+    set?: FormatoCartaSostenedorWhereUniqueInput | FormatoCartaSostenedorWhereUniqueInput[]
+    disconnect?: FormatoCartaSostenedorWhereUniqueInput | FormatoCartaSostenedorWhereUniqueInput[]
+    delete?: FormatoCartaSostenedorWhereUniqueInput | FormatoCartaSostenedorWhereUniqueInput[]
+    connect?: FormatoCartaSostenedorWhereUniqueInput | FormatoCartaSostenedorWhereUniqueInput[]
+    update?: FormatoCartaSostenedorUpdateWithWhereUniqueWithoutCabeceraInput | FormatoCartaSostenedorUpdateWithWhereUniqueWithoutCabeceraInput[]
+    updateMany?: FormatoCartaSostenedorUpdateManyWithWhereWithoutCabeceraInput | FormatoCartaSostenedorUpdateManyWithWhereWithoutCabeceraInput[]
+    deleteMany?: FormatoCartaSostenedorScalarWhereInput | FormatoCartaSostenedorScalarWhereInput[]
   }
 
   export type MatrizT_CabeceraCreateNestedOneWithoutDetallesInput = {
@@ -99326,6 +103596,48 @@ export namespace Prisma {
     upsert?: MatrizT_DetalleUpsertWithoutRespuestasDetalleInput
     connect?: MatrizT_DetalleWhereUniqueInput
     update?: XOR<XOR<MatrizT_DetalleUpdateToOneWithWhereWithoutRespuestasDetalleInput, MatrizT_DetalleUpdateWithoutRespuestasDetalleInput>, MatrizT_DetalleUncheckedUpdateWithoutRespuestasDetalleInput>
+  }
+
+  export type MatrizT_CabeceraCreateNestedOneWithoutFormatosCartaInput = {
+    create?: XOR<MatrizT_CabeceraCreateWithoutFormatosCartaInput, MatrizT_CabeceraUncheckedCreateWithoutFormatosCartaInput>
+    connectOrCreate?: MatrizT_CabeceraCreateOrConnectWithoutFormatosCartaInput
+    connect?: MatrizT_CabeceraWhereUniqueInput
+  }
+
+  export type MatrizT_CabeceraUpdateOneRequiredWithoutFormatosCartaNestedInput = {
+    create?: XOR<MatrizT_CabeceraCreateWithoutFormatosCartaInput, MatrizT_CabeceraUncheckedCreateWithoutFormatosCartaInput>
+    connectOrCreate?: MatrizT_CabeceraCreateOrConnectWithoutFormatosCartaInput
+    upsert?: MatrizT_CabeceraUpsertWithoutFormatosCartaInput
+    connect?: MatrizT_CabeceraWhereUniqueInput
+    update?: XOR<XOR<MatrizT_CabeceraUpdateToOneWithWhereWithoutFormatosCartaInput, MatrizT_CabeceraUpdateWithoutFormatosCartaInput>, MatrizT_CabeceraUncheckedUpdateWithoutFormatosCartaInput>
+  }
+
+  export type UserCreateNestedOneWithoutDelegacionesInput = {
+    create?: XOR<UserCreateWithoutDelegacionesInput, UserUncheckedCreateWithoutDelegacionesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDelegacionesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type SucursalCreateNestedOneWithoutDelegacionesInput = {
+    create?: XOR<SucursalCreateWithoutDelegacionesInput, SucursalUncheckedCreateWithoutDelegacionesInput>
+    connectOrCreate?: SucursalCreateOrConnectWithoutDelegacionesInput
+    connect?: SucursalWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutDelegacionesNestedInput = {
+    create?: XOR<UserCreateWithoutDelegacionesInput, UserUncheckedCreateWithoutDelegacionesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDelegacionesInput
+    upsert?: UserUpsertWithoutDelegacionesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutDelegacionesInput, UserUpdateWithoutDelegacionesInput>, UserUncheckedUpdateWithoutDelegacionesInput>
+  }
+
+  export type SucursalUpdateOneRequiredWithoutDelegacionesNestedInput = {
+    create?: XOR<SucursalCreateWithoutDelegacionesInput, SucursalUncheckedCreateWithoutDelegacionesInput>
+    connectOrCreate?: SucursalCreateOrConnectWithoutDelegacionesInput
+    upsert?: SucursalUpsertWithoutDelegacionesInput
+    connect?: SucursalWhereUniqueInput
+    update?: XOR<XOR<SucursalUpdateToOneWithWhereWithoutDelegacionesInput, SucursalUpdateWithoutDelegacionesInput>, SucursalUncheckedUpdateWithoutDelegacionesInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -99630,6 +103942,7 @@ export namespace Prisma {
     sucursales?: SucursalCreateNestedManyWithoutUsersInput
     allowedForms?: FormDefinitionCreateNestedManyWithoutAllowedUsersInput
     areas?: AreaCreateNestedManyWithoutUsersInput
+    delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutRoleInput = {
@@ -99647,6 +103960,7 @@ export namespace Prisma {
     sucursales?: SucursalUncheckedCreateNestedManyWithoutUsersInput
     allowedForms?: FormDefinitionUncheckedCreateNestedManyWithoutAllowedUsersInput
     areas?: AreaUncheckedCreateNestedManyWithoutUsersInput
+    delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutRoleInput = {
@@ -99731,6 +104045,7 @@ export namespace Prisma {
     uts?: UTCreateNestedManyWithoutSucursalInput
     jefesZonales?: JefeZonalSucursalCreateNestedManyWithoutSucursalInput
     vehiculos?: VehiculoCreateNestedManyWithoutSucursalInput
+    delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalUncheckedCreateWithoutUsersInput = {
@@ -99748,6 +104063,7 @@ export namespace Prisma {
     uts?: UTUncheckedCreateNestedManyWithoutSucursalInput
     jefesZonales?: JefeZonalSucursalUncheckedCreateNestedManyWithoutSucursalInput
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutSucursalInput
+    delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalCreateOrConnectWithoutUsersInput = {
@@ -99814,6 +104130,30 @@ export namespace Prisma {
   export type AreaCreateOrConnectWithoutUsersInput = {
     where: AreaWhereUniqueInput
     create: XOR<AreaCreateWithoutUsersInput, AreaUncheckedCreateWithoutUsersInput>
+  }
+
+  export type DelegacionVisualizacionCreateWithoutUserInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sucursal: SucursalCreateNestedOneWithoutDelegacionesInput
+  }
+
+  export type DelegacionVisualizacionUncheckedCreateWithoutUserInput = {
+    id?: string
+    sucursalId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DelegacionVisualizacionCreateOrConnectWithoutUserInput = {
+    where: DelegacionVisualizacionWhereUniqueInput
+    create: XOR<DelegacionVisualizacionCreateWithoutUserInput, DelegacionVisualizacionUncheckedCreateWithoutUserInput>
+  }
+
+  export type DelegacionVisualizacionCreateManyUserInputEnvelope = {
+    data: DelegacionVisualizacionCreateManyUserInput | DelegacionVisualizacionCreateManyUserInput[]
+    skipDuplicates?: boolean
   }
 
   export type RoleUpsertWithoutUsersInput = {
@@ -99935,6 +104275,33 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Area"> | Date | string
   }
 
+  export type DelegacionVisualizacionUpsertWithWhereUniqueWithoutUserInput = {
+    where: DelegacionVisualizacionWhereUniqueInput
+    update: XOR<DelegacionVisualizacionUpdateWithoutUserInput, DelegacionVisualizacionUncheckedUpdateWithoutUserInput>
+    create: XOR<DelegacionVisualizacionCreateWithoutUserInput, DelegacionVisualizacionUncheckedCreateWithoutUserInput>
+  }
+
+  export type DelegacionVisualizacionUpdateWithWhereUniqueWithoutUserInput = {
+    where: DelegacionVisualizacionWhereUniqueInput
+    data: XOR<DelegacionVisualizacionUpdateWithoutUserInput, DelegacionVisualizacionUncheckedUpdateWithoutUserInput>
+  }
+
+  export type DelegacionVisualizacionUpdateManyWithWhereWithoutUserInput = {
+    where: DelegacionVisualizacionScalarWhereInput
+    data: XOR<DelegacionVisualizacionUpdateManyMutationInput, DelegacionVisualizacionUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type DelegacionVisualizacionScalarWhereInput = {
+    AND?: DelegacionVisualizacionScalarWhereInput | DelegacionVisualizacionScalarWhereInput[]
+    OR?: DelegacionVisualizacionScalarWhereInput[]
+    NOT?: DelegacionVisualizacionScalarWhereInput | DelegacionVisualizacionScalarWhereInput[]
+    id?: StringFilter<"DelegacionVisualizacion"> | string
+    userId?: StringFilter<"DelegacionVisualizacion"> | string
+    sucursalId?: StringFilter<"DelegacionVisualizacion"> | string
+    createdAt?: DateTimeFilter<"DelegacionVisualizacion"> | Date | string
+    updatedAt?: DateTimeFilter<"DelegacionVisualizacion"> | Date | string
+  }
+
   export type UTCreateWithoutPmpasInput = {
     estado?: number
     createdAt?: Date | string
@@ -100004,6 +104371,7 @@ export namespace Prisma {
     users?: UserCreateNestedManyWithoutSucursalesInput
     jefesZonales?: JefeZonalSucursalCreateNestedManyWithoutSucursalInput
     vehiculos?: VehiculoCreateNestedManyWithoutSucursalInput
+    delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalUncheckedCreateWithoutListasCorreoInput = {
@@ -100021,6 +104389,7 @@ export namespace Prisma {
     users?: UserUncheckedCreateNestedManyWithoutSucursalesInput
     jefesZonales?: JefeZonalSucursalUncheckedCreateNestedManyWithoutSucursalInput
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutSucursalInput
+    delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalCreateOrConnectWithoutListasCorreoInput = {
@@ -100080,6 +104449,7 @@ export namespace Prisma {
     users?: UserUpdateManyWithoutSucursalesNestedInput
     jefesZonales?: JefeZonalSucursalUpdateManyWithoutSucursalNestedInput
     vehiculos?: VehiculoUpdateManyWithoutSucursalNestedInput
+    delegaciones?: DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput
   }
 
   export type SucursalUncheckedUpdateWithoutListasCorreoInput = {
@@ -100097,6 +104467,7 @@ export namespace Prisma {
     users?: UserUncheckedUpdateManyWithoutSucursalesNestedInput
     jefesZonales?: JefeZonalSucursalUncheckedUpdateManyWithoutSucursalNestedInput
     vehiculos?: VehiculoUncheckedUpdateManyWithoutSucursalNestedInput
+    delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput
   }
 
   export type NotificacionPantallaUpsertWithWhereUniqueWithoutListaCorreoInput = {
@@ -100314,6 +104685,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     detalles?: MatrizT_DetalleCreateNestedManyWithoutCabeceraInput
     respuestas?: MatrizT_RespuestasCabeceraCreateNestedManyWithoutCabeceraInput
+    formatosCarta?: FormatoCartaSostenedorCreateNestedManyWithoutCabeceraInput
   }
 
   export type MatrizT_CabeceraUncheckedCreateWithoutLicitacionInput = {
@@ -100326,6 +104698,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     detalles?: MatrizT_DetalleUncheckedCreateNestedManyWithoutCabeceraInput
     respuestas?: MatrizT_RespuestasCabeceraUncheckedCreateNestedManyWithoutCabeceraInput
+    formatosCarta?: FormatoCartaSostenedorUncheckedCreateNestedManyWithoutCabeceraInput
   }
 
   export type MatrizT_CabeceraCreateOrConnectWithoutLicitacionInput = {
@@ -100702,6 +105075,7 @@ export namespace Prisma {
     role: RoleCreateNestedOneWithoutUsersInput
     allowedForms?: FormDefinitionCreateNestedManyWithoutAllowedUsersInput
     areas?: AreaCreateNestedManyWithoutUsersInput
+    delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSucursalesInput = {
@@ -100719,6 +105093,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     allowedForms?: FormDefinitionUncheckedCreateNestedManyWithoutAllowedUsersInput
     areas?: AreaUncheckedCreateNestedManyWithoutUsersInput
+    delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSucursalesInput = {
@@ -100781,6 +105156,30 @@ export namespace Prisma {
 
   export type VehiculoCreateManySucursalInputEnvelope = {
     data: VehiculoCreateManySucursalInput | VehiculoCreateManySucursalInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DelegacionVisualizacionCreateWithoutSucursalInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutDelegacionesInput
+  }
+
+  export type DelegacionVisualizacionUncheckedCreateWithoutSucursalInput = {
+    id?: string
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DelegacionVisualizacionCreateOrConnectWithoutSucursalInput = {
+    where: DelegacionVisualizacionWhereUniqueInput
+    create: XOR<DelegacionVisualizacionCreateWithoutSucursalInput, DelegacionVisualizacionUncheckedCreateWithoutSucursalInput>
+  }
+
+  export type DelegacionVisualizacionCreateManySucursalInputEnvelope = {
+    data: DelegacionVisualizacionCreateManySucursalInput | DelegacionVisualizacionCreateManySucursalInput[]
     skipDuplicates?: boolean
   }
 
@@ -100972,6 +105371,22 @@ export namespace Prisma {
     data: XOR<VehiculoUpdateManyMutationInput, VehiculoUncheckedUpdateManyWithoutSucursalInput>
   }
 
+  export type DelegacionVisualizacionUpsertWithWhereUniqueWithoutSucursalInput = {
+    where: DelegacionVisualizacionWhereUniqueInput
+    update: XOR<DelegacionVisualizacionUpdateWithoutSucursalInput, DelegacionVisualizacionUncheckedUpdateWithoutSucursalInput>
+    create: XOR<DelegacionVisualizacionCreateWithoutSucursalInput, DelegacionVisualizacionUncheckedCreateWithoutSucursalInput>
+  }
+
+  export type DelegacionVisualizacionUpdateWithWhereUniqueWithoutSucursalInput = {
+    where: DelegacionVisualizacionWhereUniqueInput
+    data: XOR<DelegacionVisualizacionUpdateWithoutSucursalInput, DelegacionVisualizacionUncheckedUpdateWithoutSucursalInput>
+  }
+
+  export type DelegacionVisualizacionUpdateManyWithWhereWithoutSucursalInput = {
+    where: DelegacionVisualizacionScalarWhereInput
+    data: XOR<DelegacionVisualizacionUpdateManyMutationInput, DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalInput>
+  }
+
   export type SucursalCreateWithoutPresupuestosInput = {
     id?: string
     nombre: string
@@ -100987,6 +105402,7 @@ export namespace Prisma {
     users?: UserCreateNestedManyWithoutSucursalesInput
     jefesZonales?: JefeZonalSucursalCreateNestedManyWithoutSucursalInput
     vehiculos?: VehiculoCreateNestedManyWithoutSucursalInput
+    delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalUncheckedCreateWithoutPresupuestosInput = {
@@ -101004,6 +105420,7 @@ export namespace Prisma {
     users?: UserUncheckedCreateNestedManyWithoutSucursalesInput
     jefesZonales?: JefeZonalSucursalUncheckedCreateNestedManyWithoutSucursalInput
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutSucursalInput
+    delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalCreateOrConnectWithoutPresupuestosInput = {
@@ -101037,6 +105454,7 @@ export namespace Prisma {
     users?: UserUpdateManyWithoutSucursalesNestedInput
     jefesZonales?: JefeZonalSucursalUpdateManyWithoutSucursalNestedInput
     vehiculos?: VehiculoUpdateManyWithoutSucursalNestedInput
+    delegaciones?: DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput
   }
 
   export type SucursalUncheckedUpdateWithoutPresupuestosInput = {
@@ -101054,6 +105472,7 @@ export namespace Prisma {
     users?: UserUncheckedUpdateManyWithoutSucursalesNestedInput
     jefesZonales?: JefeZonalSucursalUncheckedUpdateManyWithoutSucursalNestedInput
     vehiculos?: VehiculoUncheckedUpdateManyWithoutSucursalNestedInput
+    delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput
   }
 
   export type LicitacionCreateWithoutUtsInput = {
@@ -101099,6 +105518,7 @@ export namespace Prisma {
     users?: UserCreateNestedManyWithoutSucursalesInput
     jefesZonales?: JefeZonalSucursalCreateNestedManyWithoutSucursalInput
     vehiculos?: VehiculoCreateNestedManyWithoutSucursalInput
+    delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalUncheckedCreateWithoutUtsInput = {
@@ -101116,6 +105536,7 @@ export namespace Prisma {
     users?: UserUncheckedCreateNestedManyWithoutSucursalesInput
     jefesZonales?: JefeZonalSucursalUncheckedCreateNestedManyWithoutSucursalInput
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutSucursalInput
+    delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalCreateOrConnectWithoutUtsInput = {
@@ -101135,6 +105556,7 @@ export namespace Prisma {
     servicioLic: string
     raceqJunaeb: number
     servicio: string
+    institucion?: string | null
     uploadedBy: string
     createdAt?: Date | string
   }
@@ -101151,6 +105573,7 @@ export namespace Prisma {
     servicioLic: string
     raceqJunaeb: number
     servicio: string
+    institucion?: string | null
     uploadedBy: string
     createdAt?: Date | string
   }
@@ -101265,6 +105688,7 @@ export namespace Prisma {
     users?: UserUpdateManyWithoutSucursalesNestedInput
     jefesZonales?: JefeZonalSucursalUpdateManyWithoutSucursalNestedInput
     vehiculos?: VehiculoUpdateManyWithoutSucursalNestedInput
+    delegaciones?: DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput
   }
 
   export type SucursalUncheckedUpdateWithoutUtsInput = {
@@ -101282,6 +105706,7 @@ export namespace Prisma {
     users?: UserUncheckedUpdateManyWithoutSucursalesNestedInput
     jefesZonales?: JefeZonalSucursalUncheckedUpdateManyWithoutSucursalNestedInput
     vehiculos?: VehiculoUncheckedUpdateManyWithoutSucursalNestedInput
+    delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput
   }
 
   export type PMPAUpsertWithWhereUniqueWithoutUtInput = {
@@ -101316,6 +105741,7 @@ export namespace Prisma {
     servicioLic?: StringFilter<"PMPA"> | string
     raceqJunaeb?: IntFilter<"PMPA"> | number
     servicio?: StringFilter<"PMPA"> | string
+    institucion?: StringNullableFilter<"PMPA"> | string | null
     uploadedBy?: StringFilter<"PMPA"> | string
     createdAt?: DateTimeFilter<"PMPA"> | Date | string
   }
@@ -101563,6 +105989,7 @@ export namespace Prisma {
     role: RoleCreateNestedOneWithoutUsersInput
     sucursales?: SucursalCreateNestedManyWithoutUsersInput
     areas?: AreaCreateNestedManyWithoutUsersInput
+    delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAllowedFormsInput = {
@@ -101580,6 +106007,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     sucursales?: SucursalUncheckedCreateNestedManyWithoutUsersInput
     areas?: AreaUncheckedCreateNestedManyWithoutUsersInput
+    delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAllowedFormsInput = {
@@ -101746,6 +106174,7 @@ export namespace Prisma {
     role: RoleCreateNestedOneWithoutUsersInput
     sucursales?: SucursalCreateNestedManyWithoutUsersInput
     allowedForms?: FormDefinitionCreateNestedManyWithoutAllowedUsersInput
+    delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAreasInput = {
@@ -101763,6 +106192,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     sucursales?: SucursalUncheckedCreateNestedManyWithoutUsersInput
     allowedForms?: FormDefinitionUncheckedCreateNestedManyWithoutAllowedUsersInput
+    delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAreasInput = {
@@ -102108,6 +106538,7 @@ export namespace Prisma {
     users?: UserCreateNestedManyWithoutSucursalesInput
     jefesZonales?: JefeZonalSucursalCreateNestedManyWithoutSucursalInput
     vehiculos?: VehiculoCreateNestedManyWithoutSucursalInput
+    delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalUncheckedCreateWithoutRetornoProductosSucursalEstadoInput = {
@@ -102125,6 +106556,7 @@ export namespace Prisma {
     users?: UserUncheckedCreateNestedManyWithoutSucursalesInput
     jefesZonales?: JefeZonalSucursalUncheckedCreateNestedManyWithoutSucursalInput
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutSucursalInput
+    delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalCreateOrConnectWithoutRetornoProductosSucursalEstadoInput = {
@@ -102201,6 +106633,7 @@ export namespace Prisma {
     users?: UserUpdateManyWithoutSucursalesNestedInput
     jefesZonales?: JefeZonalSucursalUpdateManyWithoutSucursalNestedInput
     vehiculos?: VehiculoUpdateManyWithoutSucursalNestedInput
+    delegaciones?: DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput
   }
 
   export type SucursalUncheckedUpdateWithoutRetornoProductosSucursalEstadoInput = {
@@ -102218,6 +106651,7 @@ export namespace Prisma {
     users?: UserUncheckedUpdateManyWithoutSucursalesNestedInput
     jefesZonales?: JefeZonalSucursalUncheckedUpdateManyWithoutSucursalNestedInput
     vehiculos?: VehiculoUncheckedUpdateManyWithoutSucursalNestedInput
+    delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput
   }
 
   export type RetornoProductosAlertaCreateWithoutMovimientosInput = {
@@ -102272,6 +106706,7 @@ export namespace Prisma {
     users?: UserCreateNestedManyWithoutSucursalesInput
     jefesZonales?: JefeZonalSucursalCreateNestedManyWithoutSucursalInput
     vehiculos?: VehiculoCreateNestedManyWithoutSucursalInput
+    delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalUncheckedCreateWithoutRetornoProductosMovimientoInput = {
@@ -102289,6 +106724,7 @@ export namespace Prisma {
     users?: UserUncheckedCreateNestedManyWithoutSucursalesInput
     jefesZonales?: JefeZonalSucursalUncheckedCreateNestedManyWithoutSucursalInput
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutSucursalInput
+    delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalCreateOrConnectWithoutRetornoProductosMovimientoInput = {
@@ -102365,6 +106801,7 @@ export namespace Prisma {
     users?: UserUpdateManyWithoutSucursalesNestedInput
     jefesZonales?: JefeZonalSucursalUpdateManyWithoutSucursalNestedInput
     vehiculos?: VehiculoUpdateManyWithoutSucursalNestedInput
+    delegaciones?: DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput
   }
 
   export type SucursalUncheckedUpdateWithoutRetornoProductosMovimientoInput = {
@@ -102382,6 +106819,7 @@ export namespace Prisma {
     users?: UserUncheckedUpdateManyWithoutSucursalesNestedInput
     jefesZonales?: JefeZonalSucursalUncheckedUpdateManyWithoutSucursalNestedInput
     vehiculos?: VehiculoUncheckedUpdateManyWithoutSucursalNestedInput
+    delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput
   }
 
   export type CapCertificacionDetailCreateWithoutHeaderInput = {
@@ -103041,6 +107479,7 @@ export namespace Prisma {
     uts?: UTCreateNestedManyWithoutSucursalInput
     users?: UserCreateNestedManyWithoutSucursalesInput
     jefesZonales?: JefeZonalSucursalCreateNestedManyWithoutSucursalInput
+    delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalUncheckedCreateWithoutVehiculosInput = {
@@ -103058,6 +107497,7 @@ export namespace Prisma {
     uts?: UTUncheckedCreateNestedManyWithoutSucursalInput
     users?: UserUncheckedCreateNestedManyWithoutSucursalesInput
     jefesZonales?: JefeZonalSucursalUncheckedCreateNestedManyWithoutSucursalInput
+    delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalCreateOrConnectWithoutVehiculosInput = {
@@ -103222,6 +107662,7 @@ export namespace Prisma {
     uts?: UTUpdateManyWithoutSucursalNestedInput
     users?: UserUpdateManyWithoutSucursalesNestedInput
     jefesZonales?: JefeZonalSucursalUpdateManyWithoutSucursalNestedInput
+    delegaciones?: DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput
   }
 
   export type SucursalUncheckedUpdateWithoutVehiculosInput = {
@@ -103239,6 +107680,7 @@ export namespace Prisma {
     uts?: UTUncheckedUpdateManyWithoutSucursalNestedInput
     users?: UserUncheckedUpdateManyWithoutSucursalesNestedInput
     jefesZonales?: JefeZonalSucursalUncheckedUpdateManyWithoutSucursalNestedInput
+    delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput
   }
 
   export type TipoVehiculoUpsertWithoutVehiculosInput = {
@@ -103787,6 +108229,7 @@ export namespace Prisma {
     uts?: UTCreateNestedManyWithoutSucursalInput
     users?: UserCreateNestedManyWithoutSucursalesInput
     vehiculos?: VehiculoCreateNestedManyWithoutSucursalInput
+    delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalUncheckedCreateWithoutJefesZonalesInput = {
@@ -103804,6 +108247,7 @@ export namespace Prisma {
     uts?: UTUncheckedCreateNestedManyWithoutSucursalInput
     users?: UserUncheckedCreateNestedManyWithoutSucursalesInput
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutSucursalInput
+    delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalCreateOrConnectWithoutJefesZonalesInput = {
@@ -103876,6 +108320,7 @@ export namespace Prisma {
     uts?: UTUpdateManyWithoutSucursalNestedInput
     users?: UserUpdateManyWithoutSucursalesNestedInput
     vehiculos?: VehiculoUpdateManyWithoutSucursalNestedInput
+    delegaciones?: DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput
   }
 
   export type SucursalUncheckedUpdateWithoutJefesZonalesInput = {
@@ -103893,6 +108338,7 @@ export namespace Prisma {
     uts?: UTUncheckedUpdateManyWithoutSucursalNestedInput
     users?: UserUncheckedUpdateManyWithoutSucursalesNestedInput
     vehiculos?: VehiculoUncheckedUpdateManyWithoutSucursalNestedInput
+    delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput
   }
 
   export type JefeZonalCreateWithoutVehiculosInput = {
@@ -104961,6 +109407,7 @@ export namespace Prisma {
     respSeguimiento?: string | null
     evidenciaCumplimiento?: string | null
     evidenciaEficacia?: string | null
+    compromisoSostenedor?: string | null
     respuestasDetalle?: MatrizT_RespuestasDetalleCreateNestedManyWithoutPreguntaInput
   }
 
@@ -104982,6 +109429,7 @@ export namespace Prisma {
     respSeguimiento?: string | null
     evidenciaCumplimiento?: string | null
     evidenciaEficacia?: string | null
+    compromisoSostenedor?: string | null
     respuestasDetalle?: MatrizT_RespuestasDetalleUncheckedCreateNestedManyWithoutPreguntaInput
   }
 
@@ -105001,11 +109449,20 @@ export namespace Prisma {
     fechaIngreso?: Date | string
     supervisorNombre: string
     supervisorCorreo: string
+    usuarioOriginal?: string | null
+    supervisorNombreOriginal?: string | null
+    supervisorCorreoOriginal?: string | null
+    fechaReemplazo?: Date | string | null
     licId: number
     ut: number
     rbd: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    estado?: string
+    latIngreso?: number | null
+    lngIngreso?: number | null
+    latCierre?: number | null
+    lngCierre?: number | null
     detalles?: MatrizT_RespuestasDetalleCreateNestedManyWithoutRespuestaCabeceraInput
   }
 
@@ -105015,11 +109472,20 @@ export namespace Prisma {
     fechaIngreso?: Date | string
     supervisorNombre: string
     supervisorCorreo: string
+    usuarioOriginal?: string | null
+    supervisorNombreOriginal?: string | null
+    supervisorCorreoOriginal?: string | null
+    fechaReemplazo?: Date | string | null
     licId: number
     ut: number
     rbd: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    estado?: string
+    latIngreso?: number | null
+    lngIngreso?: number | null
+    latCierre?: number | null
+    lngCierre?: number | null
     detalles?: MatrizT_RespuestasDetalleUncheckedCreateNestedManyWithoutRespuestaCabeceraInput
   }
 
@@ -105030,6 +109496,40 @@ export namespace Prisma {
 
   export type MatrizT_RespuestasCabeceraCreateManyCabeceraInputEnvelope = {
     data: MatrizT_RespuestasCabeceraCreateManyCabeceraInput | MatrizT_RespuestasCabeceraCreateManyCabeceraInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type FormatoCartaSostenedorCreateWithoutCabeceraInput = {
+    id?: string
+    nombre: string
+    asuntoEmail: string
+    cuerpoEmail: string
+    cuerpoInicio: string
+    cuerpoFin: string
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FormatoCartaSostenedorUncheckedCreateWithoutCabeceraInput = {
+    id?: string
+    nombre: string
+    asuntoEmail: string
+    cuerpoEmail: string
+    cuerpoInicio: string
+    cuerpoFin: string
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FormatoCartaSostenedorCreateOrConnectWithoutCabeceraInput = {
+    where: FormatoCartaSostenedorWhereUniqueInput
+    create: XOR<FormatoCartaSostenedorCreateWithoutCabeceraInput, FormatoCartaSostenedorUncheckedCreateWithoutCabeceraInput>
+  }
+
+  export type FormatoCartaSostenedorCreateManyCabeceraInputEnvelope = {
+    data: FormatoCartaSostenedorCreateManyCabeceraInput | FormatoCartaSostenedorCreateManyCabeceraInput[]
     skipDuplicates?: boolean
   }
 
@@ -105105,6 +109605,7 @@ export namespace Prisma {
     respSeguimiento?: StringNullableFilter<"MatrizT_Detalle"> | string | null
     evidenciaCumplimiento?: StringNullableFilter<"MatrizT_Detalle"> | string | null
     evidenciaEficacia?: StringNullableFilter<"MatrizT_Detalle"> | string | null
+    compromisoSostenedor?: StringNullableFilter<"MatrizT_Detalle"> | string | null
   }
 
   export type MatrizT_RespuestasCabeceraUpsertWithWhereUniqueWithoutCabeceraInput = {
@@ -105133,11 +109634,52 @@ export namespace Prisma {
     fechaIngreso?: DateTimeFilter<"MatrizT_RespuestasCabecera"> | Date | string
     supervisorNombre?: StringFilter<"MatrizT_RespuestasCabecera"> | string
     supervisorCorreo?: StringFilter<"MatrizT_RespuestasCabecera"> | string
+    usuarioOriginal?: StringNullableFilter<"MatrizT_RespuestasCabecera"> | string | null
+    supervisorNombreOriginal?: StringNullableFilter<"MatrizT_RespuestasCabecera"> | string | null
+    supervisorCorreoOriginal?: StringNullableFilter<"MatrizT_RespuestasCabecera"> | string | null
+    fechaReemplazo?: DateTimeNullableFilter<"MatrizT_RespuestasCabecera"> | Date | string | null
     licId?: IntFilter<"MatrizT_RespuestasCabecera"> | number
     ut?: IntFilter<"MatrizT_RespuestasCabecera"> | number
     rbd?: IntFilter<"MatrizT_RespuestasCabecera"> | number
     createdAt?: DateTimeFilter<"MatrizT_RespuestasCabecera"> | Date | string
     updatedAt?: DateTimeFilter<"MatrizT_RespuestasCabecera"> | Date | string
+    estado?: StringFilter<"MatrizT_RespuestasCabecera"> | string
+    latIngreso?: FloatNullableFilter<"MatrizT_RespuestasCabecera"> | number | null
+    lngIngreso?: FloatNullableFilter<"MatrizT_RespuestasCabecera"> | number | null
+    latCierre?: FloatNullableFilter<"MatrizT_RespuestasCabecera"> | number | null
+    lngCierre?: FloatNullableFilter<"MatrizT_RespuestasCabecera"> | number | null
+  }
+
+  export type FormatoCartaSostenedorUpsertWithWhereUniqueWithoutCabeceraInput = {
+    where: FormatoCartaSostenedorWhereUniqueInput
+    update: XOR<FormatoCartaSostenedorUpdateWithoutCabeceraInput, FormatoCartaSostenedorUncheckedUpdateWithoutCabeceraInput>
+    create: XOR<FormatoCartaSostenedorCreateWithoutCabeceraInput, FormatoCartaSostenedorUncheckedCreateWithoutCabeceraInput>
+  }
+
+  export type FormatoCartaSostenedorUpdateWithWhereUniqueWithoutCabeceraInput = {
+    where: FormatoCartaSostenedorWhereUniqueInput
+    data: XOR<FormatoCartaSostenedorUpdateWithoutCabeceraInput, FormatoCartaSostenedorUncheckedUpdateWithoutCabeceraInput>
+  }
+
+  export type FormatoCartaSostenedorUpdateManyWithWhereWithoutCabeceraInput = {
+    where: FormatoCartaSostenedorScalarWhereInput
+    data: XOR<FormatoCartaSostenedorUpdateManyMutationInput, FormatoCartaSostenedorUncheckedUpdateManyWithoutCabeceraInput>
+  }
+
+  export type FormatoCartaSostenedorScalarWhereInput = {
+    AND?: FormatoCartaSostenedorScalarWhereInput | FormatoCartaSostenedorScalarWhereInput[]
+    OR?: FormatoCartaSostenedorScalarWhereInput[]
+    NOT?: FormatoCartaSostenedorScalarWhereInput | FormatoCartaSostenedorScalarWhereInput[]
+    id?: StringFilter<"FormatoCartaSostenedor"> | string
+    cabeceraId?: StringFilter<"FormatoCartaSostenedor"> | string
+    nombre?: StringFilter<"FormatoCartaSostenedor"> | string
+    asuntoEmail?: StringFilter<"FormatoCartaSostenedor"> | string
+    cuerpoEmail?: StringFilter<"FormatoCartaSostenedor"> | string
+    cuerpoInicio?: StringFilter<"FormatoCartaSostenedor"> | string
+    cuerpoFin?: StringFilter<"FormatoCartaSostenedor"> | string
+    activo?: BoolFilter<"FormatoCartaSostenedor"> | boolean
+    createdAt?: DateTimeFilter<"FormatoCartaSostenedor"> | Date | string
+    updatedAt?: DateTimeFilter<"FormatoCartaSostenedor"> | Date | string
   }
 
   export type MatrizT_CabeceraCreateWithoutDetallesInput = {
@@ -105150,6 +109692,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     licitacion: LicitacionCreateNestedOneWithoutMatricesInput
     respuestas?: MatrizT_RespuestasCabeceraCreateNestedManyWithoutCabeceraInput
+    formatosCarta?: FormatoCartaSostenedorCreateNestedManyWithoutCabeceraInput
   }
 
   export type MatrizT_CabeceraUncheckedCreateWithoutDetallesInput = {
@@ -105162,6 +109705,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     respuestas?: MatrizT_RespuestasCabeceraUncheckedCreateNestedManyWithoutCabeceraInput
+    formatosCarta?: FormatoCartaSostenedorUncheckedCreateNestedManyWithoutCabeceraInput
   }
 
   export type MatrizT_CabeceraCreateOrConnectWithoutDetallesInput = {
@@ -105214,6 +109758,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     licitacion?: LicitacionUpdateOneRequiredWithoutMatricesNestedInput
     respuestas?: MatrizT_RespuestasCabeceraUpdateManyWithoutCabeceraNestedInput
+    formatosCarta?: FormatoCartaSostenedorUpdateManyWithoutCabeceraNestedInput
   }
 
   export type MatrizT_CabeceraUncheckedUpdateWithoutDetallesInput = {
@@ -105226,6 +109771,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     respuestas?: MatrizT_RespuestasCabeceraUncheckedUpdateManyWithoutCabeceraNestedInput
+    formatosCarta?: FormatoCartaSostenedorUncheckedUpdateManyWithoutCabeceraNestedInput
   }
 
   export type MatrizT_RespuestasDetalleUpsertWithWhereUniqueWithoutPreguntaInput = {
@@ -105265,6 +109811,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     licitacion: LicitacionCreateNestedOneWithoutMatricesInput
     detalles?: MatrizT_DetalleCreateNestedManyWithoutCabeceraInput
+    formatosCarta?: FormatoCartaSostenedorCreateNestedManyWithoutCabeceraInput
   }
 
   export type MatrizT_CabeceraUncheckedCreateWithoutRespuestasInput = {
@@ -105277,6 +109824,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     detalles?: MatrizT_DetalleUncheckedCreateNestedManyWithoutCabeceraInput
+    formatosCarta?: FormatoCartaSostenedorUncheckedCreateNestedManyWithoutCabeceraInput
   }
 
   export type MatrizT_CabeceraCreateOrConnectWithoutRespuestasInput = {
@@ -105329,6 +109877,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     licitacion?: LicitacionUpdateOneRequiredWithoutMatricesNestedInput
     detalles?: MatrizT_DetalleUpdateManyWithoutCabeceraNestedInput
+    formatosCarta?: FormatoCartaSostenedorUpdateManyWithoutCabeceraNestedInput
   }
 
   export type MatrizT_CabeceraUncheckedUpdateWithoutRespuestasInput = {
@@ -105341,6 +109890,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     detalles?: MatrizT_DetalleUncheckedUpdateManyWithoutCabeceraNestedInput
+    formatosCarta?: FormatoCartaSostenedorUncheckedUpdateManyWithoutCabeceraNestedInput
   }
 
   export type MatrizT_RespuestasDetalleUpsertWithWhereUniqueWithoutRespuestaCabeceraInput = {
@@ -105365,11 +109915,20 @@ export namespace Prisma {
     fechaIngreso?: Date | string
     supervisorNombre: string
     supervisorCorreo: string
+    usuarioOriginal?: string | null
+    supervisorNombreOriginal?: string | null
+    supervisorCorreoOriginal?: string | null
+    fechaReemplazo?: Date | string | null
     licId: number
     ut: number
     rbd: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    estado?: string
+    latIngreso?: number | null
+    lngIngreso?: number | null
+    latCierre?: number | null
+    lngCierre?: number | null
     cabecera: MatrizT_CabeceraCreateNestedOneWithoutRespuestasInput
   }
 
@@ -105380,11 +109939,20 @@ export namespace Prisma {
     fechaIngreso?: Date | string
     supervisorNombre: string
     supervisorCorreo: string
+    usuarioOriginal?: string | null
+    supervisorNombreOriginal?: string | null
+    supervisorCorreoOriginal?: string | null
+    fechaReemplazo?: Date | string | null
     licId: number
     ut: number
     rbd: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    estado?: string
+    latIngreso?: number | null
+    lngIngreso?: number | null
+    latCierre?: number | null
+    lngCierre?: number | null
   }
 
   export type MatrizT_RespuestasCabeceraCreateOrConnectWithoutDetallesInput = {
@@ -105410,6 +109978,7 @@ export namespace Prisma {
     respSeguimiento?: string | null
     evidenciaCumplimiento?: string | null
     evidenciaEficacia?: string | null
+    compromisoSostenedor?: string | null
     cabecera: MatrizT_CabeceraCreateNestedOneWithoutDetallesInput
   }
 
@@ -105432,6 +110001,7 @@ export namespace Prisma {
     respSeguimiento?: string | null
     evidenciaCumplimiento?: string | null
     evidenciaEficacia?: string | null
+    compromisoSostenedor?: string | null
   }
 
   export type MatrizT_DetalleCreateOrConnectWithoutRespuestasDetalleInput = {
@@ -105456,11 +110026,20 @@ export namespace Prisma {
     fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
     supervisorNombre?: StringFieldUpdateOperationsInput | string
     supervisorCorreo?: StringFieldUpdateOperationsInput | string
+    usuarioOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    supervisorNombreOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    supervisorCorreoOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaReemplazo?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     licId?: IntFieldUpdateOperationsInput | number
     ut?: IntFieldUpdateOperationsInput | number
     rbd?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    estado?: StringFieldUpdateOperationsInput | string
+    latIngreso?: NullableFloatFieldUpdateOperationsInput | number | null
+    lngIngreso?: NullableFloatFieldUpdateOperationsInput | number | null
+    latCierre?: NullableFloatFieldUpdateOperationsInput | number | null
+    lngCierre?: NullableFloatFieldUpdateOperationsInput | number | null
     cabecera?: MatrizT_CabeceraUpdateOneRequiredWithoutRespuestasNestedInput
   }
 
@@ -105471,11 +110050,20 @@ export namespace Prisma {
     fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
     supervisorNombre?: StringFieldUpdateOperationsInput | string
     supervisorCorreo?: StringFieldUpdateOperationsInput | string
+    usuarioOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    supervisorNombreOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    supervisorCorreoOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaReemplazo?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     licId?: IntFieldUpdateOperationsInput | number
     ut?: IntFieldUpdateOperationsInput | number
     rbd?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    estado?: StringFieldUpdateOperationsInput | string
+    latIngreso?: NullableFloatFieldUpdateOperationsInput | number | null
+    lngIngreso?: NullableFloatFieldUpdateOperationsInput | number | null
+    latCierre?: NullableFloatFieldUpdateOperationsInput | number | null
+    lngCierre?: NullableFloatFieldUpdateOperationsInput | number | null
   }
 
   export type MatrizT_DetalleUpsertWithoutRespuestasDetalleInput = {
@@ -105507,6 +110095,7 @@ export namespace Prisma {
     respSeguimiento?: NullableStringFieldUpdateOperationsInput | string | null
     evidenciaCumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
     evidenciaEficacia?: NullableStringFieldUpdateOperationsInput | string | null
+    compromisoSostenedor?: NullableStringFieldUpdateOperationsInput | string | null
     cabecera?: MatrizT_CabeceraUpdateOneRequiredWithoutDetallesNestedInput
   }
 
@@ -105529,6 +110118,251 @@ export namespace Prisma {
     respSeguimiento?: NullableStringFieldUpdateOperationsInput | string | null
     evidenciaCumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
     evidenciaEficacia?: NullableStringFieldUpdateOperationsInput | string | null
+    compromisoSostenedor?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type MatrizT_CabeceraCreateWithoutFormatosCartaInput = {
+    id?: string
+    anio: number
+    titulo: string
+    estado?: boolean
+    instrucciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    licitacion: LicitacionCreateNestedOneWithoutMatricesInput
+    detalles?: MatrizT_DetalleCreateNestedManyWithoutCabeceraInput
+    respuestas?: MatrizT_RespuestasCabeceraCreateNestedManyWithoutCabeceraInput
+  }
+
+  export type MatrizT_CabeceraUncheckedCreateWithoutFormatosCartaInput = {
+    id?: string
+    licId: number
+    anio: number
+    titulo: string
+    estado?: boolean
+    instrucciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    detalles?: MatrizT_DetalleUncheckedCreateNestedManyWithoutCabeceraInput
+    respuestas?: MatrizT_RespuestasCabeceraUncheckedCreateNestedManyWithoutCabeceraInput
+  }
+
+  export type MatrizT_CabeceraCreateOrConnectWithoutFormatosCartaInput = {
+    where: MatrizT_CabeceraWhereUniqueInput
+    create: XOR<MatrizT_CabeceraCreateWithoutFormatosCartaInput, MatrizT_CabeceraUncheckedCreateWithoutFormatosCartaInput>
+  }
+
+  export type MatrizT_CabeceraUpsertWithoutFormatosCartaInput = {
+    update: XOR<MatrizT_CabeceraUpdateWithoutFormatosCartaInput, MatrizT_CabeceraUncheckedUpdateWithoutFormatosCartaInput>
+    create: XOR<MatrizT_CabeceraCreateWithoutFormatosCartaInput, MatrizT_CabeceraUncheckedCreateWithoutFormatosCartaInput>
+    where?: MatrizT_CabeceraWhereInput
+  }
+
+  export type MatrizT_CabeceraUpdateToOneWithWhereWithoutFormatosCartaInput = {
+    where?: MatrizT_CabeceraWhereInput
+    data: XOR<MatrizT_CabeceraUpdateWithoutFormatosCartaInput, MatrizT_CabeceraUncheckedUpdateWithoutFormatosCartaInput>
+  }
+
+  export type MatrizT_CabeceraUpdateWithoutFormatosCartaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    anio?: IntFieldUpdateOperationsInput | number
+    titulo?: StringFieldUpdateOperationsInput | string
+    estado?: BoolFieldUpdateOperationsInput | boolean
+    instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    licitacion?: LicitacionUpdateOneRequiredWithoutMatricesNestedInput
+    detalles?: MatrizT_DetalleUpdateManyWithoutCabeceraNestedInput
+    respuestas?: MatrizT_RespuestasCabeceraUpdateManyWithoutCabeceraNestedInput
+  }
+
+  export type MatrizT_CabeceraUncheckedUpdateWithoutFormatosCartaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licId?: IntFieldUpdateOperationsInput | number
+    anio?: IntFieldUpdateOperationsInput | number
+    titulo?: StringFieldUpdateOperationsInput | string
+    estado?: BoolFieldUpdateOperationsInput | boolean
+    instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    detalles?: MatrizT_DetalleUncheckedUpdateManyWithoutCabeceraNestedInput
+    respuestas?: MatrizT_RespuestasCabeceraUncheckedUpdateManyWithoutCabeceraNestedInput
+  }
+
+  export type UserCreateWithoutDelegacionesInput = {
+    id?: string
+    username: string
+    email?: string | null
+    passwordHash: string
+    name?: string | null
+    isActive?: boolean
+    isDeleted?: boolean
+    mustChangePassword?: boolean
+    rbds?: UserCreaterbdsInput | number[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    role: RoleCreateNestedOneWithoutUsersInput
+    sucursales?: SucursalCreateNestedManyWithoutUsersInput
+    allowedForms?: FormDefinitionCreateNestedManyWithoutAllowedUsersInput
+    areas?: AreaCreateNestedManyWithoutUsersInput
+  }
+
+  export type UserUncheckedCreateWithoutDelegacionesInput = {
+    id?: string
+    username: string
+    email?: string | null
+    passwordHash: string
+    name?: string | null
+    roleId: string
+    isActive?: boolean
+    isDeleted?: boolean
+    mustChangePassword?: boolean
+    rbds?: UserCreaterbdsInput | number[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sucursales?: SucursalUncheckedCreateNestedManyWithoutUsersInput
+    allowedForms?: FormDefinitionUncheckedCreateNestedManyWithoutAllowedUsersInput
+    areas?: AreaUncheckedCreateNestedManyWithoutUsersInput
+  }
+
+  export type UserCreateOrConnectWithoutDelegacionesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutDelegacionesInput, UserUncheckedCreateWithoutDelegacionesInput>
+  }
+
+  export type SucursalCreateWithoutDelegacionesInput = {
+    id?: string
+    nombre: string
+    region?: string | null
+    comuna?: string | null
+    direccion?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    listasCorreo?: ListaCorreoCreateNestedManyWithoutSucursalInput
+    presupuestos?: PresupuestoCreateNestedManyWithoutSucursalInput
+    RetornoProductosMovimiento?: RetornoProductosMovimientoCreateNestedManyWithoutSucursalInput
+    RetornoProductosSucursalEstado?: RetornoProductosSucursalEstadoCreateNestedManyWithoutSucursalInput
+    uts?: UTCreateNestedManyWithoutSucursalInput
+    users?: UserCreateNestedManyWithoutSucursalesInput
+    jefesZonales?: JefeZonalSucursalCreateNestedManyWithoutSucursalInput
+    vehiculos?: VehiculoCreateNestedManyWithoutSucursalInput
+  }
+
+  export type SucursalUncheckedCreateWithoutDelegacionesInput = {
+    id?: string
+    nombre: string
+    region?: string | null
+    comuna?: string | null
+    direccion?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    listasCorreo?: ListaCorreoUncheckedCreateNestedManyWithoutSucursalInput
+    presupuestos?: PresupuestoUncheckedCreateNestedManyWithoutSucursalInput
+    RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedCreateNestedManyWithoutSucursalInput
+    RetornoProductosSucursalEstado?: RetornoProductosSucursalEstadoUncheckedCreateNestedManyWithoutSucursalInput
+    uts?: UTUncheckedCreateNestedManyWithoutSucursalInput
+    users?: UserUncheckedCreateNestedManyWithoutSucursalesInput
+    jefesZonales?: JefeZonalSucursalUncheckedCreateNestedManyWithoutSucursalInput
+    vehiculos?: VehiculoUncheckedCreateNestedManyWithoutSucursalInput
+  }
+
+  export type SucursalCreateOrConnectWithoutDelegacionesInput = {
+    where: SucursalWhereUniqueInput
+    create: XOR<SucursalCreateWithoutDelegacionesInput, SucursalUncheckedCreateWithoutDelegacionesInput>
+  }
+
+  export type UserUpsertWithoutDelegacionesInput = {
+    update: XOR<UserUpdateWithoutDelegacionesInput, UserUncheckedUpdateWithoutDelegacionesInput>
+    create: XOR<UserCreateWithoutDelegacionesInput, UserUncheckedCreateWithoutDelegacionesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutDelegacionesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutDelegacionesInput, UserUncheckedUpdateWithoutDelegacionesInput>
+  }
+
+  export type UserUpdateWithoutDelegacionesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
+    mustChangePassword?: BoolFieldUpdateOperationsInput | boolean
+    rbds?: UserUpdaterbdsInput | number[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: RoleUpdateOneRequiredWithoutUsersNestedInput
+    sucursales?: SucursalUpdateManyWithoutUsersNestedInput
+    allowedForms?: FormDefinitionUpdateManyWithoutAllowedUsersNestedInput
+    areas?: AreaUpdateManyWithoutUsersNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutDelegacionesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    roleId?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
+    mustChangePassword?: BoolFieldUpdateOperationsInput | boolean
+    rbds?: UserUpdaterbdsInput | number[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sucursales?: SucursalUncheckedUpdateManyWithoutUsersNestedInput
+    allowedForms?: FormDefinitionUncheckedUpdateManyWithoutAllowedUsersNestedInput
+    areas?: AreaUncheckedUpdateManyWithoutUsersNestedInput
+  }
+
+  export type SucursalUpsertWithoutDelegacionesInput = {
+    update: XOR<SucursalUpdateWithoutDelegacionesInput, SucursalUncheckedUpdateWithoutDelegacionesInput>
+    create: XOR<SucursalCreateWithoutDelegacionesInput, SucursalUncheckedCreateWithoutDelegacionesInput>
+    where?: SucursalWhereInput
+  }
+
+  export type SucursalUpdateToOneWithWhereWithoutDelegacionesInput = {
+    where?: SucursalWhereInput
+    data: XOR<SucursalUpdateWithoutDelegacionesInput, SucursalUncheckedUpdateWithoutDelegacionesInput>
+  }
+
+  export type SucursalUpdateWithoutDelegacionesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    listasCorreo?: ListaCorreoUpdateManyWithoutSucursalNestedInput
+    presupuestos?: PresupuestoUpdateManyWithoutSucursalNestedInput
+    RetornoProductosMovimiento?: RetornoProductosMovimientoUpdateManyWithoutSucursalNestedInput
+    RetornoProductosSucursalEstado?: RetornoProductosSucursalEstadoUpdateManyWithoutSucursalNestedInput
+    uts?: UTUpdateManyWithoutSucursalNestedInput
+    users?: UserUpdateManyWithoutSucursalesNestedInput
+    jefesZonales?: JefeZonalSucursalUpdateManyWithoutSucursalNestedInput
+    vehiculos?: VehiculoUpdateManyWithoutSucursalNestedInput
+  }
+
+  export type SucursalUncheckedUpdateWithoutDelegacionesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    listasCorreo?: ListaCorreoUncheckedUpdateManyWithoutSucursalNestedInput
+    presupuestos?: PresupuestoUncheckedUpdateManyWithoutSucursalNestedInput
+    RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedUpdateManyWithoutSucursalNestedInput
+    RetornoProductosSucursalEstado?: RetornoProductosSucursalEstadoUncheckedUpdateManyWithoutSucursalNestedInput
+    uts?: UTUncheckedUpdateManyWithoutSucursalNestedInput
+    users?: UserUncheckedUpdateManyWithoutSucursalesNestedInput
+    jefesZonales?: JefeZonalSucursalUncheckedUpdateManyWithoutSucursalNestedInput
+    vehiculos?: VehiculoUncheckedUpdateManyWithoutSucursalNestedInput
   }
 
   export type UserCreateManyRoleInput = {
@@ -105560,6 +110394,7 @@ export namespace Prisma {
     sucursales?: SucursalUpdateManyWithoutUsersNestedInput
     allowedForms?: FormDefinitionUpdateManyWithoutAllowedUsersNestedInput
     areas?: AreaUpdateManyWithoutUsersNestedInput
+    delegaciones?: DelegacionVisualizacionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRoleInput = {
@@ -105577,6 +110412,7 @@ export namespace Prisma {
     sucursales?: SucursalUncheckedUpdateManyWithoutUsersNestedInput
     allowedForms?: FormDefinitionUncheckedUpdateManyWithoutAllowedUsersNestedInput
     areas?: AreaUncheckedUpdateManyWithoutUsersNestedInput
+    delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutRoleInput = {
@@ -105591,6 +110427,13 @@ export namespace Prisma {
     rbds?: UserUpdaterbdsInput | number[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DelegacionVisualizacionCreateManyUserInput = {
+    id?: string
+    sucursalId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type SucursalUpdateWithoutUsersInput = {
@@ -105608,6 +110451,7 @@ export namespace Prisma {
     uts?: UTUpdateManyWithoutSucursalNestedInput
     jefesZonales?: JefeZonalSucursalUpdateManyWithoutSucursalNestedInput
     vehiculos?: VehiculoUpdateManyWithoutSucursalNestedInput
+    delegaciones?: DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput
   }
 
   export type SucursalUncheckedUpdateWithoutUsersInput = {
@@ -105625,6 +110469,7 @@ export namespace Prisma {
     uts?: UTUncheckedUpdateManyWithoutSucursalNestedInput
     jefesZonales?: JefeZonalSucursalUncheckedUpdateManyWithoutSucursalNestedInput
     vehiculos?: VehiculoUncheckedUpdateManyWithoutSucursalNestedInput
+    delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput
   }
 
   export type SucursalUncheckedUpdateManyWithoutUsersInput = {
@@ -105707,6 +110552,27 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     nombre?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DelegacionVisualizacionUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sucursal?: SucursalUpdateOneRequiredWithoutDelegacionesNestedInput
+  }
+
+  export type DelegacionVisualizacionUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sucursalId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DelegacionVisualizacionUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sucursalId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -105908,6 +110774,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     detalles?: MatrizT_DetalleUpdateManyWithoutCabeceraNestedInput
     respuestas?: MatrizT_RespuestasCabeceraUpdateManyWithoutCabeceraNestedInput
+    formatosCarta?: FormatoCartaSostenedorUpdateManyWithoutCabeceraNestedInput
   }
 
   export type MatrizT_CabeceraUncheckedUpdateWithoutLicitacionInput = {
@@ -105920,6 +110787,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     detalles?: MatrizT_DetalleUncheckedUpdateManyWithoutCabeceraNestedInput
     respuestas?: MatrizT_RespuestasCabeceraUncheckedUpdateManyWithoutCabeceraNestedInput
+    formatosCarta?: FormatoCartaSostenedorUncheckedUpdateManyWithoutCabeceraNestedInput
   }
 
   export type MatrizT_CabeceraUncheckedUpdateManyWithoutLicitacionInput = {
@@ -105988,6 +110856,13 @@ export namespace Prisma {
     licId?: number | null
     utIds?: string | null
     vigente?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DelegacionVisualizacionCreateManySucursalInput = {
+    id?: string
+    userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -106144,6 +111019,7 @@ export namespace Prisma {
     role?: RoleUpdateOneRequiredWithoutUsersNestedInput
     allowedForms?: FormDefinitionUpdateManyWithoutAllowedUsersNestedInput
     areas?: AreaUpdateManyWithoutUsersNestedInput
+    delegaciones?: DelegacionVisualizacionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSucursalesInput = {
@@ -106161,6 +111037,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     allowedForms?: FormDefinitionUncheckedUpdateManyWithoutAllowedUsersNestedInput
     areas?: AreaUncheckedUpdateManyWithoutUsersNestedInput
+    delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutSucursalesInput = {
@@ -106232,6 +111109,27 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type DelegacionVisualizacionUpdateWithoutSucursalInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutDelegacionesNestedInput
+  }
+
+  export type DelegacionVisualizacionUncheckedUpdateWithoutSucursalInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type PMPACreateManyUtInput = {
     id?: string
     ano: number
@@ -106244,6 +111142,7 @@ export namespace Prisma {
     servicioLic: string
     raceqJunaeb: number
     servicio: string
+    institucion?: string | null
     uploadedBy: string
     createdAt?: Date | string
   }
@@ -106272,6 +111171,7 @@ export namespace Prisma {
     servicioLic?: StringFieldUpdateOperationsInput | string
     raceqJunaeb?: IntFieldUpdateOperationsInput | number
     servicio?: StringFieldUpdateOperationsInput | string
+    institucion?: NullableStringFieldUpdateOperationsInput | string | null
     uploadedBy?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -106288,6 +111188,7 @@ export namespace Prisma {
     servicioLic?: StringFieldUpdateOperationsInput | string
     raceqJunaeb?: IntFieldUpdateOperationsInput | number
     servicio?: StringFieldUpdateOperationsInput | string
+    institucion?: NullableStringFieldUpdateOperationsInput | string | null
     uploadedBy?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -106304,6 +111205,7 @@ export namespace Prisma {
     servicioLic?: StringFieldUpdateOperationsInput | string
     raceqJunaeb?: IntFieldUpdateOperationsInput | number
     servicio?: StringFieldUpdateOperationsInput | string
+    institucion?: NullableStringFieldUpdateOperationsInput | string | null
     uploadedBy?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -106461,6 +111363,7 @@ export namespace Prisma {
     role?: RoleUpdateOneRequiredWithoutUsersNestedInput
     sucursales?: SucursalUpdateManyWithoutUsersNestedInput
     areas?: AreaUpdateManyWithoutUsersNestedInput
+    delegaciones?: DelegacionVisualizacionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAllowedFormsInput = {
@@ -106478,6 +111381,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sucursales?: SucursalUncheckedUpdateManyWithoutUsersNestedInput
     areas?: AreaUncheckedUpdateManyWithoutUsersNestedInput
+    delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutAllowedFormsInput = {
@@ -106572,6 +111476,7 @@ export namespace Prisma {
     role?: RoleUpdateOneRequiredWithoutUsersNestedInput
     sucursales?: SucursalUpdateManyWithoutUsersNestedInput
     allowedForms?: FormDefinitionUpdateManyWithoutAllowedUsersNestedInput
+    delegaciones?: DelegacionVisualizacionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAreasInput = {
@@ -106589,6 +111494,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sucursales?: SucursalUncheckedUpdateManyWithoutUsersNestedInput
     allowedForms?: FormDefinitionUncheckedUpdateManyWithoutAllowedUsersNestedInput
+    delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutAreasInput = {
@@ -107230,6 +112136,7 @@ export namespace Prisma {
     respSeguimiento?: string | null
     evidenciaCumplimiento?: string | null
     evidenciaEficacia?: string | null
+    compromisoSostenedor?: string | null
   }
 
   export type MatrizT_RespuestasCabeceraCreateManyCabeceraInput = {
@@ -107238,9 +112145,30 @@ export namespace Prisma {
     fechaIngreso?: Date | string
     supervisorNombre: string
     supervisorCorreo: string
+    usuarioOriginal?: string | null
+    supervisorNombreOriginal?: string | null
+    supervisorCorreoOriginal?: string | null
+    fechaReemplazo?: Date | string | null
     licId: number
     ut: number
     rbd: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    estado?: string
+    latIngreso?: number | null
+    lngIngreso?: number | null
+    latCierre?: number | null
+    lngCierre?: number | null
+  }
+
+  export type FormatoCartaSostenedorCreateManyCabeceraInput = {
+    id?: string
+    nombre: string
+    asuntoEmail: string
+    cuerpoEmail: string
+    cuerpoInicio: string
+    cuerpoFin: string
+    activo?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -107263,6 +112191,7 @@ export namespace Prisma {
     respSeguimiento?: NullableStringFieldUpdateOperationsInput | string | null
     evidenciaCumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
     evidenciaEficacia?: NullableStringFieldUpdateOperationsInput | string | null
+    compromisoSostenedor?: NullableStringFieldUpdateOperationsInput | string | null
     respuestasDetalle?: MatrizT_RespuestasDetalleUpdateManyWithoutPreguntaNestedInput
   }
 
@@ -107284,6 +112213,7 @@ export namespace Prisma {
     respSeguimiento?: NullableStringFieldUpdateOperationsInput | string | null
     evidenciaCumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
     evidenciaEficacia?: NullableStringFieldUpdateOperationsInput | string | null
+    compromisoSostenedor?: NullableStringFieldUpdateOperationsInput | string | null
     respuestasDetalle?: MatrizT_RespuestasDetalleUncheckedUpdateManyWithoutPreguntaNestedInput
   }
 
@@ -107305,6 +112235,7 @@ export namespace Prisma {
     respSeguimiento?: NullableStringFieldUpdateOperationsInput | string | null
     evidenciaCumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
     evidenciaEficacia?: NullableStringFieldUpdateOperationsInput | string | null
+    compromisoSostenedor?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type MatrizT_RespuestasCabeceraUpdateWithoutCabeceraInput = {
@@ -107313,11 +112244,20 @@ export namespace Prisma {
     fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
     supervisorNombre?: StringFieldUpdateOperationsInput | string
     supervisorCorreo?: StringFieldUpdateOperationsInput | string
+    usuarioOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    supervisorNombreOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    supervisorCorreoOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaReemplazo?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     licId?: IntFieldUpdateOperationsInput | number
     ut?: IntFieldUpdateOperationsInput | number
     rbd?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    estado?: StringFieldUpdateOperationsInput | string
+    latIngreso?: NullableFloatFieldUpdateOperationsInput | number | null
+    lngIngreso?: NullableFloatFieldUpdateOperationsInput | number | null
+    latCierre?: NullableFloatFieldUpdateOperationsInput | number | null
+    lngCierre?: NullableFloatFieldUpdateOperationsInput | number | null
     detalles?: MatrizT_RespuestasDetalleUpdateManyWithoutRespuestaCabeceraNestedInput
   }
 
@@ -107327,11 +112267,20 @@ export namespace Prisma {
     fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
     supervisorNombre?: StringFieldUpdateOperationsInput | string
     supervisorCorreo?: StringFieldUpdateOperationsInput | string
+    usuarioOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    supervisorNombreOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    supervisorCorreoOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaReemplazo?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     licId?: IntFieldUpdateOperationsInput | number
     ut?: IntFieldUpdateOperationsInput | number
     rbd?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    estado?: StringFieldUpdateOperationsInput | string
+    latIngreso?: NullableFloatFieldUpdateOperationsInput | number | null
+    lngIngreso?: NullableFloatFieldUpdateOperationsInput | number | null
+    latCierre?: NullableFloatFieldUpdateOperationsInput | number | null
+    lngCierre?: NullableFloatFieldUpdateOperationsInput | number | null
     detalles?: MatrizT_RespuestasDetalleUncheckedUpdateManyWithoutRespuestaCabeceraNestedInput
   }
 
@@ -107341,9 +112290,54 @@ export namespace Prisma {
     fechaIngreso?: DateTimeFieldUpdateOperationsInput | Date | string
     supervisorNombre?: StringFieldUpdateOperationsInput | string
     supervisorCorreo?: StringFieldUpdateOperationsInput | string
+    usuarioOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    supervisorNombreOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    supervisorCorreoOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaReemplazo?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     licId?: IntFieldUpdateOperationsInput | number
     ut?: IntFieldUpdateOperationsInput | number
     rbd?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    estado?: StringFieldUpdateOperationsInput | string
+    latIngreso?: NullableFloatFieldUpdateOperationsInput | number | null
+    lngIngreso?: NullableFloatFieldUpdateOperationsInput | number | null
+    latCierre?: NullableFloatFieldUpdateOperationsInput | number | null
+    lngCierre?: NullableFloatFieldUpdateOperationsInput | number | null
+  }
+
+  export type FormatoCartaSostenedorUpdateWithoutCabeceraInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    asuntoEmail?: StringFieldUpdateOperationsInput | string
+    cuerpoEmail?: StringFieldUpdateOperationsInput | string
+    cuerpoInicio?: StringFieldUpdateOperationsInput | string
+    cuerpoFin?: StringFieldUpdateOperationsInput | string
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormatoCartaSostenedorUncheckedUpdateWithoutCabeceraInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    asuntoEmail?: StringFieldUpdateOperationsInput | string
+    cuerpoEmail?: StringFieldUpdateOperationsInput | string
+    cuerpoInicio?: StringFieldUpdateOperationsInput | string
+    cuerpoFin?: StringFieldUpdateOperationsInput | string
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FormatoCartaSostenedorUncheckedUpdateManyWithoutCabeceraInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    asuntoEmail?: StringFieldUpdateOperationsInput | string
+    cuerpoEmail?: StringFieldUpdateOperationsInput | string
+    cuerpoInicio?: StringFieldUpdateOperationsInput | string
+    cuerpoFin?: StringFieldUpdateOperationsInput | string
+    activo?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -107781,6 +112775,18 @@ export namespace Prisma {
      * @deprecated Use MatrizT_RespuestasDetalleDefaultArgs instead
      */
     export type MatrizT_RespuestasDetalleArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = MatrizT_RespuestasDetalleDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use FormatoCartaSostenedorDefaultArgs instead
+     */
+    export type FormatoCartaSostenedorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = FormatoCartaSostenedorDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use DelegacionVisualizacionDefaultArgs instead
+     */
+    export type DelegacionVisualizacionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DelegacionVisualizacionDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use MenuItemOrderDefaultArgs instead
+     */
+    export type MenuItemOrderArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = MenuItemOrderDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

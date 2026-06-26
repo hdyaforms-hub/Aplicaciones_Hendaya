@@ -35,3 +35,22 @@ input::placeholder, textarea::placeholder {
   color: #666666 !important;
   font-weight: 400 !important;
 }
+
+/* Styling for Rich Text Content lists and typography */
+.rich-text-content ul, .rich-text-content ul[style*="list-style-type"] {
+  list-style-type: disc !important;
+  margin-left: 24px !important;
+  padding-left: 8px !important;
+  display: block !important;
+}
+.rich-text-content ol, .rich-text-content ol[style*="list-style-type"] {
+  list-style-type: decimal !important;
+  margin-left: 24px !important;
+  padding-left: 8px !important;
+  display: block !important;
+}
+.rich-text-content li {
+  margin-bottom: 4px !important;
+  display: list-item !important;
+}
+

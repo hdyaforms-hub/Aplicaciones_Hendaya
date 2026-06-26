@@ -43,7 +43,8 @@ export async function getMatrix(id: string) {
                 licitacion: true,
                 detalles: {
                     orderBy: { orden: 'asc' }
-                }
+                },
+                formatosCarta: true
             }
         })
         return { success: true, matrix }
@@ -189,11 +190,30 @@ export async function duplicateMatrix(id: string, newLicId: number, newTitulo: s
                 respImplementacion: d.respImplementacion,
                 respSeguimiento: d.respSeguimiento,
                 evidenciaCumplimiento: d.evidenciaCumplimiento,
-                evidenciaEficacia: d.evidenciaEficacia
+                evidenciaEficacia: d.evidenciaEficacia,
+                compromisoSostenedor: d.compromisoSostenedor
             }))
 
             await prisma.matrizT_Detalle.createMany({
                 data: newDetalles
+            })
+        }
+
+        // Copy FormatoCartaSostenedor
+        const sourceFormatos = await prisma.formatoCartaSostenedor.findMany({
+            where: { cabeceraId: id }
+        })
+        if (sourceFormatos && sourceFormatos.length > 0) {
+            await prisma.formatoCartaSostenedor.createMany({
+                data: sourceFormatos.map(f => ({
+                    cabeceraId: duplicated.id,
+                    nombre: f.nombre,
+                    asuntoEmail: f.asuntoEmail,
+                    cuerpoEmail: f.cuerpoEmail,
+                    cuerpoInicio: f.cuerpoInicio,
+                    cuerpoFin: f.cuerpoFin,
+                    activo: f.activo
+                }))
             })
         }
 
@@ -241,7 +261,8 @@ export async function saveMatrixTemplate(cabeceraId: string, details: any[], ins
                                 respImplementacion: d.respImplementacion || null,
                                 respSeguimiento: d.respSeguimiento || null,
                                 evidenciaCumplimiento: d.evidenciaCumplimiento || null,
-                                evidenciaEficacia: d.evidenciaEficacia || null
+                                evidenciaEficacia: d.evidenciaEficacia || null,
+                                compromisoSostenedor: d.compromisoSostenedor || null
                             }
                         })
                     }
@@ -272,7 +293,8 @@ export async function saveMatrixTemplate(cabeceraId: string, details: any[], ins
                     respImplementacion: d.respImplementacion || null,
                     respSeguimiento: d.respSeguimiento || null,
                     evidenciaCumplimiento: d.evidenciaCumplimiento || null,
-                    evidenciaEficacia: d.evidenciaEficacia || null
+                    evidenciaEficacia: d.evidenciaEficacia || null,
+                    compromisoSostenedor: d.compromisoSostenedor || null
                 }))
 
                 await prisma.matrizT_Detalle.createMany({
@@ -288,3 +310,36 @@ export async function saveMatrixTemplate(cabeceraId: string, details: any[], ins
         return { error: 'Error al guardar el detalle de la matriz.' }
     }
 }
+
+export async function saveFormatosCartaSostenedor(cabeceraId: string, formatos: any[]) {
+    const session = await getSession()
+    if (!session?.user?.role?.permissions.includes('manage_nueva_matriz')) {
+        return { error: 'No tienes permisos para esta acción.' }
+    }
+
+    try {
+        await prisma.$transaction([
+            prisma.formatoCartaSostenedor.deleteMany({
+                where: { cabeceraId }
+            }),
+            prisma.formatoCartaSostenedor.createMany({
+                data: formatos.map(f => ({
+                    cabeceraId,
+                    nombre: f.nombre,
+                    asuntoEmail: f.asuntoEmail,
+                    cuerpoEmail: f.cuerpoEmail,
+                    cuerpoInicio: f.cuerpoInicio,
+                    cuerpoFin: f.cuerpoFin,
+                    activo: f.activo !== false
+                }))
+            })
+        ])
+
+        revalidatePath(`/dashboard/mantenedor/matriz-riesgo/nueva-matriz/${cabeceraId}`)
+        return { success: true }
+    } catch (e) {
+        console.error(e)
+        return { error: 'Error al guardar los formatos de carta del sostenedor.' }
+    }
+}
+

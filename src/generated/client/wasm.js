@@ -159,6 +159,7 @@ exports.Prisma.PMPAScalarFieldEnum = {
   servicioLic: 'servicioLic',
   raceqJunaeb: 'raceqJunaeb',
   servicio: 'servicio',
+  institucion: 'institucion',
   uploadedBy: 'uploadedBy',
   createdAt: 'createdAt'
 };
@@ -1000,7 +1001,8 @@ exports.Prisma.MatrizT_DetalleScalarFieldEnum = {
   respImplementacion: 'respImplementacion',
   respSeguimiento: 'respSeguimiento',
   evidenciaCumplimiento: 'evidenciaCumplimiento',
-  evidenciaEficacia: 'evidenciaEficacia'
+  evidenciaEficacia: 'evidenciaEficacia',
+  compromisoSostenedor: 'compromisoSostenedor'
 };
 
 exports.Prisma.MatrizT_RespuestasCabeceraScalarFieldEnum = {
@@ -1010,11 +1012,20 @@ exports.Prisma.MatrizT_RespuestasCabeceraScalarFieldEnum = {
   fechaIngreso: 'fechaIngreso',
   supervisorNombre: 'supervisorNombre',
   supervisorCorreo: 'supervisorCorreo',
+  usuarioOriginal: 'usuarioOriginal',
+  supervisorNombreOriginal: 'supervisorNombreOriginal',
+  supervisorCorreoOriginal: 'supervisorCorreoOriginal',
+  fechaReemplazo: 'fechaReemplazo',
   licId: 'licId',
   ut: 'ut',
   rbd: 'rbd',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  estado: 'estado',
+  latIngreso: 'latIngreso',
+  lngIngreso: 'lngIngreso',
+  latCierre: 'latCierre',
+  lngCierre: 'lngCierre'
 };
 
 exports.Prisma.MatrizT_RespuestasDetalleScalarFieldEnum = {
@@ -1023,6 +1034,36 @@ exports.Prisma.MatrizT_RespuestasDetalleScalarFieldEnum = {
   preguntaId: 'preguntaId',
   valor: 'valor',
   adjuntoUrl: 'adjuntoUrl'
+};
+
+exports.Prisma.FormatoCartaSostenedorScalarFieldEnum = {
+  id: 'id',
+  cabeceraId: 'cabeceraId',
+  nombre: 'nombre',
+  asuntoEmail: 'asuntoEmail',
+  cuerpoEmail: 'cuerpoEmail',
+  cuerpoInicio: 'cuerpoInicio',
+  cuerpoFin: 'cuerpoFin',
+  activo: 'activo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.DelegacionVisualizacionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  sucursalId: 'sucursalId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.MenuItemOrderScalarFieldEnum = {
+  id: 'id',
+  parentKey: 'parentKey',
+  itemKey: 'itemKey',
+  position: 'position',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -1111,7 +1152,10 @@ exports.Prisma.ModelName = {
   MatrizT_Cabecera: 'MatrizT_Cabecera',
   MatrizT_Detalle: 'MatrizT_Detalle',
   MatrizT_RespuestasCabecera: 'MatrizT_RespuestasCabecera',
-  MatrizT_RespuestasDetalle: 'MatrizT_RespuestasDetalle'
+  MatrizT_RespuestasDetalle: 'MatrizT_RespuestasDetalle',
+  FormatoCartaSostenedor: 'FormatoCartaSostenedor',
+  DelegacionVisualizacion: 'DelegacionVisualizacion',
+  MenuItemOrder: 'MenuItemOrder'
 };
 
 /**

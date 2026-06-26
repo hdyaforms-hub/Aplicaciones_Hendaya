@@ -199,3 +199,39 @@ export async function updateRole(formData: FormData) {
         return { error: 'Fallo al actualizar el rol en la base de datos' }
     }
 }
+
+export async function copyRole(formData: FormData) {
+    const session = await getSession()
+    const permissions = session?.user?.role?.permissions || []
+
+    if (!permissions.includes('manage_roles')) {
+        return { error: 'No tienes permisos para crear roles' }
+    }
+
+    const sourceRoleId = formData.get('sourceRoleId') as string
+    const newName = formData.get('newName') as string
+
+    if (!sourceRoleId || !newName) return { error: 'Faltan campos obligatorios' }
+
+    try {
+        const sourceRole = await prisma.role.findUnique({ where: { id: sourceRoleId } })
+        if (!sourceRole) return { error: 'El rol de origen no existe' }
+
+        const existing = await prisma.role.findUnique({ where: { name: newName } })
+        if (existing) return { error: 'El nombre del nuevo rol ya existe' }
+
+        await prisma.role.create({
+            data: {
+                name: newName,
+                description: sourceRole.description ? `${sourceRole.description} (Copia)` : 'Copia de rol existente',
+                permissions: sourceRole.permissions,
+            }
+        })
+
+        revalidatePath('/dashboard/roles')
+        return { success: true }
+    } catch (error) {
+        console.error('Error copying role:', error)
+        return { error: 'Fallo al copiar el rol en la base de datos' }
+    }
+}

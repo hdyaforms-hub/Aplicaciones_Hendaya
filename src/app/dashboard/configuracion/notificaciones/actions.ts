@@ -160,6 +160,13 @@ export async function getMockDataForPreview(codigoPantalla: string) {
             Usuario: 'ELISA CASTILLO',
             Sucursal: 'COPIAPÓ',
             Comentario: 'Se revisó la bodega y no se encontró el producto solicitado.'
+        },
+        'matriz-prestador': {
+            RBD: '4567',
+            Colegio: 'COLEGIO DE PRUEBA PRESTADOR',
+            Usuario: 'JUAN PÉREZ (SUPERVISOR)',
+            Sucursal: 'SANTIAGO CENTRO',
+            DetalleDesviaciones: `1. Patio de servicio: ¿El basurero cuenta con tapa? -> Respuesta: No. Compromiso: Adquirir tapa o basurero nuevo.\n2. Bodega: ¿La bodega está libre de plagas? -> Respuesta: No. Compromiso: Coordinar desratización.`
         }
     }
     return mockData[codigoPantalla] || {}

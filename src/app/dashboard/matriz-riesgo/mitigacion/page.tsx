@@ -3,6 +3,10 @@ import { redirect } from 'next/navigation'
 import MitigacionClient from './MitigacionClient'
 import { getMitigacionData } from './actions'
 
+export const metadata = {
+    title: 'Cierre de Mitigación | AplicacionWeb',
+}
+
 export default async function MitigacionPage({ searchParams }: { searchParams: Promise<{ year?: string }> }) {
     const session = await getSession()
     if (!session?.user?.role?.permissions.includes('manage_mitigacion')) {
@@ -14,13 +18,14 @@ export default async function MitigacionPage({ searchParams }: { searchParams: P
     const selectedYear = resolvedParams.year ? parseInt(resolvedParams.year) : currentYear
 
     const data = await getMitigacionData(selectedYear) // Fetch all year
+    const isAdmin = session.user?.role?.name === 'Administrador' || session.user?.role?.name === 'admin'
 
     return (
         <div className="space-y-6">
             <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
                 <h1 className="text-3xl font-black text-slate-900 tracking-tight flex items-center gap-3">
                     <span className="p-2 bg-emerald-50 rounded-2xl text-emerald-600">🛠️</span>
-                    Mitigación de Hallazgos
+                    Cierre de Mitigación
                 </h1>
                 <p className="text-gray-500 mt-2 text-lg">
                     Gestione las soluciones y evidencias para los hallazgos detectados en las evaluaciones de Matriz de Riesgo.
@@ -32,6 +37,7 @@ export default async function MitigacionPage({ searchParams }: { searchParams: P
                 initialMitigaciones={data.mitigaciones || []}
                 cutoffDate={data.cutoffDate || new Date().toISOString()}
                 error={data.error}
+                isAdmin={isAdmin}
             />
         </div>
     )

@@ -272,7 +272,7 @@ export async function getAllRespuestasExport(year: number = new Date().getFullYe
                 RBD: r.rbd,
                 Establecimiento: colegioMap.get(r.rbd) || 'Desconocido',
                 Usuario: r.usuario,
-                Supervisor: r.supervisorNombre,
+                Supervisor: r.supervisorNombre + (r.supervisorNombreOriginal ? ` (Original: ${r.supervisorNombreOriginal})` : ''),
                 Fecha: r.fechaIngreso.toISOString().split('T')[0]
             }))
         }

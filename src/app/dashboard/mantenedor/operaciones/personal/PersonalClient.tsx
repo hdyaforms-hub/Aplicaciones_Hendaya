@@ -8,7 +8,8 @@ import * as XLSX from 'xlsx'
 import {
     createJefeZonal, updateJefeZonal, deleteJefeZonal,
     createJefeOperacion, updateJefeOperacion, deleteJefeOperacion,
-    createSupervisor, updateSupervisor, deleteSupervisor
+    createSupervisor, updateSupervisor, deleteSupervisor,
+    createUserFromHierarchy, replaceWorkerInHierarchy
 } from './actions'
 import {
     calculateSingleDistance,
@@ -29,6 +30,7 @@ interface PersonalClientProps {
     userPermissions: string[]
     initialDistanciasCache: any[]
     initialConsumoActual: { cantidad: number; tope: number; mes: number; anio: number }
+    registeredEmails: string[]
 }
 
 export default function PersonalClient({
@@ -41,7 +43,8 @@ export default function PersonalClient({
     colegios,
     userPermissions,
     initialDistanciasCache,
-    initialConsumoActual
+    initialConsumoActual,
+    registeredEmails
 }: PersonalClientProps) {
     const searchParams = useSearchParams()
     const router = useRouter()
@@ -64,7 +67,6 @@ export default function PersonalClient({
     }
 
     // Main States
-    // Main States
     const [distanciasCache, setDistanciasCache] = useState(initialDistanciasCache)
     const [consumoActual, setConsumoActual] = useState(initialConsumoActual)
     const [isCalculating, setIsCalculating] = useState(false)
@@ -82,6 +84,33 @@ export default function PersonalClient({
     const [showDownloadDropdown, setShowDownloadDropdown] = useState(false)
     const [selectedSupervisorForDetails, setSelectedSupervisorForDetails] = useState<any | null>(null)
     const [modalPage, setModalPage] = useState(1)
+
+    // Account Creation States
+    const [accountModalData, setAccountModalData] = useState<{
+        id: string,
+        nombre: string,
+        apellido: string,
+        correo: string,
+        rolAsignado: string,
+        sucursalIds: string[]
+        rbdIds?: number[]
+    } | null>(null)
+    const [isCreatingAccount, setIsCreatingAccount] = useState(false)
+
+    // Worker Replacement States
+    const [replaceModalData, setReplaceModalData] = useState<{
+        id: string,
+        nombre: string,
+        apellido: string,
+        correo: string,
+        rolAsignado: 'Jefe Zonal' | 'Jefe de Operación' | 'Supervisor',
+    } | null>(null)
+    const [newWorkerData, setNewWorkerData] = useState({
+        nombre: '',
+        apellido: '',
+        correo: ''
+    })
+    const [isReplacing, setIsReplacing] = useState(false)
 
     // Sort states: { col: string, dir: 'asc' | 'desc' }
     const [sortZonal, setSortZonal] = useState<{ col: string; dir: 'asc' | 'desc' }>({ col: 'nombre', dir: 'asc' })
@@ -215,6 +244,60 @@ export default function PersonalClient({
                 setFeedback(null)
                 window.location.reload()
             }, 1500)
+        }
+    }
+
+    // Account Creation handler
+    const handleCrearCuentaConfirm = async () => {
+        if (!accountModalData) return
+        setIsCreatingAccount(true)
+        try {
+            const res = await createUserFromHierarchy({
+                nombre: accountModalData.nombre,
+                apellido: accountModalData.apellido,
+                correo: accountModalData.correo,
+                rolAsignado: accountModalData.rolAsignado,
+                sucursalIds: accountModalData.sucursalIds,
+                rbdIds: accountModalData.rbdIds
+            })
+            if (res.success) {
+                triggerFeedback('success', `Cuenta creada con éxito. Usuario: ${res.username}`)
+            } else {
+                triggerFeedback('error', res.error || 'Ocurrió un error al crear la cuenta.')
+            }
+        } catch (err) {
+            triggerFeedback('error', 'Error de red al intentar crear la cuenta.')
+        } finally {
+            setIsCreatingAccount(false)
+            setAccountModalData(null)
+        }
+    }
+
+    const handleReplaceWorkerConfirm = async () => {
+        if (!replaceModalData) return
+        const { nombre, apellido, correo } = newWorkerData
+        if (!nombre.trim() || !apellido.trim() || !correo.trim()) {
+            alert('Todos los campos son obligatorios.')
+            return
+        }
+        setIsReplacing(true)
+        try {
+            const res = await replaceWorkerInHierarchy(
+                replaceModalData.id,
+                replaceModalData.rolAsignado,
+                { nombre, apellido, correo }
+            )
+            if (res.success) {
+                triggerFeedback('success', `Personal sustituido con éxito. Se creó la nueva cuenta: ${res.username}`)
+                setNewWorkerData({ nombre: '', apellido: '', correo: '' })
+            } else {
+                triggerFeedback('error', res.error || 'Ocurrió un error al realizar el reemplazo.')
+            }
+        } catch (err) {
+            triggerFeedback('error', 'Error de red al intentar realizar el reemplazo.')
+        } finally {
+            setIsReplacing(false)
+            setReplaceModalData(null)
         }
     }
 
@@ -1674,6 +1757,30 @@ export default function PersonalClient({
                                                 {userPermissions.includes('manage_zonales') && (
                                                     <td className="px-6 py-4 text-right">
                                                         <div className="flex justify-end gap-2">
+                                                            <button 
+                                                                onClick={() => setAccountModalData({
+                                                                    id: z.id,
+                                                                    nombre: z.nombre,
+                                                                    apellido: z.apellido,
+                                                                    correo: z.correo,
+                                                                    rolAsignado: 'Jefe Zonal',
+                                                                    sucursalIds: z.sucursales.map((s: any) => s.sucursalId)
+                                                                })}
+                                                                disabled={registeredEmails.includes(z.correo.toLowerCase())}
+                                                                title={registeredEmails.includes(z.correo.toLowerCase()) ? "Cuenta ya creada" : "Crear Cuenta"}
+                                                                className={`p-1.5 rounded-lg transition-colors ${registeredEmails.includes(z.correo.toLowerCase()) ? 'text-gray-300 cursor-not-allowed' : 'text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 cursor-pointer'}`}><span className="text-md">👤</span></button>
+                                                            {z.vigente && (
+                                                                <button 
+                                                                    onClick={() => setReplaceModalData({
+                                                                        id: z.id,
+                                                                        nombre: z.nombre,
+                                                                        apellido: z.apellido,
+                                                                        correo: z.correo,
+                                                                        rolAsignado: 'Jefe Zonal'
+                                                                    })}
+                                                                    title="Sustituir Personal / Traspasar Cargo"
+                                                                    className="p-1.5 text-gray-400 hover:text-amber-600 hover:bg-amber-50 rounded-lg cursor-pointer transition-colors"><span className="text-md">🔄</span></button>
+                                                            )}
                                                             <button onClick={() => handleEditZonal(z)} className="p-1.5 text-gray-400 hover:text-cyan-600 hover:bg-cyan-50 rounded-lg"><span className="text-md">✏️</span></button>
                                                             <button onClick={() => handleDeleteZonal(z.id)} className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg"><span className="text-md">🗑️</span></button>
                                                         </div>
@@ -1752,6 +1859,30 @@ export default function PersonalClient({
                                             {userPermissions.includes('manage_jefe_operacion') && (
                                                 <td className="px-6 py-4 text-right">
                                                     <div className="flex justify-end gap-2">
+                                                        <button 
+                                                            onClick={() => setAccountModalData({
+                                                                id: o.id,
+                                                                nombre: o.nombre,
+                                                                apellido: o.apellido,
+                                                                correo: o.correo,
+                                                                rolAsignado: 'Jefe de Operación',
+                                                                sucursalIds: o.jefeZonal.sucursales.map((s: any) => s.sucursalId)
+                                                            })}
+                                                            disabled={registeredEmails.includes(o.correo.toLowerCase())}
+                                                            title={registeredEmails.includes(o.correo.toLowerCase()) ? "Cuenta ya creada" : "Crear Cuenta"}
+                                                            className={`p-1.5 rounded-lg transition-colors ${registeredEmails.includes(o.correo.toLowerCase()) ? 'text-gray-300 cursor-not-allowed' : 'text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 cursor-pointer'}`}><span className="text-md">👤</span></button>
+                                                        {o.vigente && (
+                                                            <button 
+                                                                onClick={() => setReplaceModalData({
+                                                                    id: o.id,
+                                                                    nombre: o.nombre,
+                                                                    apellido: o.apellido,
+                                                                    correo: o.correo,
+                                                                    rolAsignado: 'Jefe de Operación'
+                                                                })}
+                                                                title="Sustituir Personal / Traspasar Cargo"
+                                                                className="p-1.5 text-gray-400 hover:text-amber-600 hover:bg-amber-50 rounded-lg cursor-pointer transition-colors"><span className="text-md">🔄</span></button>
+                                                        )}
                                                         <button onClick={() => handleEditOp(o)} className="p-1.5 text-gray-400 hover:text-cyan-600 hover:bg-cyan-50 rounded-lg"><span className="text-md">✏️</span></button>
                                                         <button onClick={() => handleDeleteOp(o.id)} className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg"><span className="text-md">🗑️</span></button>
                                                     </div>
@@ -1880,6 +2011,34 @@ export default function PersonalClient({
                                                 {userPermissions.includes('manage_supervisor') && (
                                                     <td className="px-6 py-4 text-right">
                                                         <div className="flex justify-end gap-2">
+                                                            <button 
+                                                                onClick={() => {
+                                                                    const zonal = s.jefeOperacion?.jefeZonal || s.jefeZonal
+                                                                    setAccountModalData({
+                                                                        id: s.id,
+                                                                        nombre: s.nombre,
+                                                                        apellido: s.apellido,
+                                                                        correo: s.correo,
+                                                                        rolAsignado: 'Supervisor',
+                                                                        sucursalIds: zonal?.sucursales?.map((su: any) => su.sucursalId) || [],
+                                                                        rbdIds: s.rbdsAuditar?.map((r: any) => r.rbd) || []
+                                                                    })
+                                                                }}
+                                                                disabled={registeredEmails.includes(s.correo.toLowerCase())}
+                                                                title={registeredEmails.includes(s.correo.toLowerCase()) ? "Cuenta ya creada" : "Crear Cuenta"}
+                                                                className={`p-1.5 rounded-lg transition-colors ${registeredEmails.includes(s.correo.toLowerCase()) ? 'text-gray-300 cursor-not-allowed' : 'text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 cursor-pointer'}`}><span className="text-md">👤</span></button>
+                                                            {s.vigente && (
+                                                                <button 
+                                                                    onClick={() => setReplaceModalData({
+                                                                        id: s.id,
+                                                                        nombre: s.nombre,
+                                                                        apellido: s.apellido,
+                                                                        correo: s.correo,
+                                                                        rolAsignado: 'Supervisor'
+                                                                    })}
+                                                                    title="Sustituir Personal / Traspasar Cargo"
+                                                                    className="p-1.5 text-gray-400 hover:text-amber-600 hover:bg-amber-50 rounded-lg cursor-pointer transition-colors"><span className="text-md">🔄</span></button>
+                                                            )}
                                                             <button onClick={() => handleEditSuper(s)} className="p-1.5 text-gray-400 hover:text-cyan-600 hover:bg-cyan-50 rounded-lg"><span className="text-md">✏️</span></button>
                                                             <button onClick={() => handleDeleteSuper(s.id)} className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg"><span className="text-md">🗑️</span></button>
                                                         </div>
@@ -2620,6 +2779,117 @@ export default function PersonalClient({
                     </>
                 )
             })()}
+
+            {/* MODAL REEMPLAZAR PERSONAL / SUSTITUIR CARGO */}
+            {replaceModalData && (
+                <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in duration-200">
+                    <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 max-w-md w-full overflow-hidden animate-in zoom-in-95 duration-200">
+                        <div className="px-6 py-4 border-b border-gray-100 bg-slate-50 flex justify-between items-center">
+                            <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+                                <span>🔄</span> Sustituir Personal / Traspasar Cargo
+                            </h3>
+                            <button onClick={() => setReplaceModalData(null)} className="text-gray-400 hover:text-gray-600 cursor-pointer">✕</button>
+                        </div>
+                        <div className="p-6 space-y-4">
+                            <p className="text-xs text-gray-500 leading-relaxed">
+                                Se desactivará la vigencia de <strong>{replaceModalData.nombre} {replaceModalData.apellido}</strong> ({replaceModalData.rolAsignado}) y su cuenta web asociada.
+                                El nuevo trabajador asumirá de forma inmediata todas sus dependencias (sucursales, vehículos, RBDs asignados y matrices de riesgo en curso).
+                            </p>
+                            <div className="space-y-3">
+                                <div>
+                                    <label className="block text-xs font-bold text-gray-500 mb-1">Nombre del Sucesor</label>
+                                    <input
+                                        type="text"
+                                        value={newWorkerData.nombre}
+                                        onChange={e => setNewWorkerData(prev => ({ ...prev, nombre: e.target.value }))}
+                                        placeholder="Ej. Juan"
+                                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-cyan-500 transition-colors"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-xs font-bold text-gray-500 mb-1">Apellido del Sucesor</label>
+                                    <input
+                                        type="text"
+                                        value={newWorkerData.apellido}
+                                        onChange={e => setNewWorkerData(prev => ({ ...prev, apellido: e.target.value }))}
+                                        placeholder="Ej. Perez"
+                                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-cyan-500 transition-colors"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-xs font-bold text-gray-500 mb-1">Correo Electrónico del Sucesor</label>
+                                    <input
+                                        type="email"
+                                        value={newWorkerData.correo}
+                                        onChange={e => setNewWorkerData(prev => ({ ...prev, correo: e.target.value }))}
+                                        placeholder="Ej. jperez@hendayasac.cl"
+                                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-cyan-500 transition-colors"
+                                    />
+                                </div>
+                            </div>
+                            <div className="bg-amber-50 p-4 rounded-xl border border-amber-100 text-xs text-amber-800 space-y-1.5 leading-relaxed">
+                                <p className="font-bold">⚠️ Importante:</p>
+                                <p>Se creará automáticamente la cuenta de usuario web para el nuevo trabajador con la clave temporal: <span className="font-mono bg-white px-1 py-0.5 rounded border border-amber-200">Henda.2026$</span>.</p>
+                            </div>
+                            <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
+                                <button
+                                    onClick={() => setReplaceModalData(null)}
+                                    className="px-4 py-2 text-sm font-bold text-gray-600 hover:bg-gray-100 rounded-xl transition-all cursor-pointer"
+                                >
+                                    Cancelar
+                                </button>
+                                <button
+                                    onClick={handleReplaceWorkerConfirm}
+                                    disabled={isReplacing}
+                                    className="bg-cyan-600 hover:bg-cyan-700 text-white px-6 py-2 text-sm font-bold rounded-xl shadow-md transition-all cursor-pointer disabled:opacity-50"
+                                >
+                                    {isReplacing ? 'Sustituyendo...' : 'Confirmar Reemplazo'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* MODAL CREAR CUENTA */}
+            {accountModalData && (
+                <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in duration-200">
+                    <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 max-w-md w-full overflow-hidden animate-in zoom-in-95 duration-200">
+                        <div className="px-6 py-4 border-b border-gray-100 bg-slate-50 flex justify-between items-center">
+                            <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+                                <span>👤</span> Crear Cuenta de Usuario
+                            </h3>
+                            <button onClick={() => setAccountModalData(null)} className="text-gray-400 hover:text-gray-600 cursor-pointer">✕</button>
+                        </div>
+                        <div className="p-6 space-y-4">
+                            <p className="text-sm text-gray-600">
+                                Estás a punto de crear una cuenta de sistema para <strong>{accountModalData.nombre} {accountModalData.apellido}</strong>.
+                            </p>
+                            <div className="bg-cyan-50 p-4 rounded-xl border border-cyan-100 space-y-2 text-sm text-cyan-800">
+                                <p><strong>Rol Asignado:</strong> {accountModalData.rolAsignado}</p>
+                                <p><strong>Área:</strong> OPERACIONES</p>
+                                <p><strong>Contraseña por defecto:</strong> <span className="font-mono bg-white px-1 py-0.5 rounded border border-cyan-200">Henda.2026$</span></p>
+                                <p className="text-xs mt-2 italic">* El nombre de usuario se generará automáticamente según sus nombres.</p>
+                            </div>
+                            <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
+                                <button
+                                    onClick={() => setAccountModalData(null)}
+                                    className="px-4 py-2 text-sm font-bold text-gray-600 hover:bg-gray-100 rounded-xl transition-all cursor-pointer"
+                                >
+                                    Cancelar
+                                </button>
+                                <button
+                                    onClick={handleCrearCuentaConfirm}
+                                    disabled={isCreatingAccount}
+                                    className="bg-cyan-600 hover:bg-cyan-700 text-white px-6 py-2 text-sm font-bold rounded-xl shadow-md transition-all cursor-pointer disabled:opacity-50"
+                                >
+                                    {isCreatingAccount ? 'Creando...' : 'Confirmar Creación'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

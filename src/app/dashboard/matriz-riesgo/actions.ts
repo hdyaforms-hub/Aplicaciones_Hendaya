@@ -68,7 +68,20 @@ export async function searchColegiosMatriz(query: string) {
             orderBy: { nombreEstablecimiento: 'asc' }
         })
 
-        return { colegios }
+        // Obtener la comuna de cada colegio buscando en la tabla Colegios por colRBD
+        const rbds = colegios.map(c => c.colRBD)
+        const dbColegios = await prisma.colegios.findMany({
+            where: { colRBD: { in: rbds } },
+            select: { colRBD: true, comuna: true }
+        })
+        const comunaMap = new Map(dbColegios.map(c => [c.colRBD, c.comuna]))
+
+        const colegiosWithComuna = colegios.map(c => ({
+            ...c,
+            comuna: comunaMap.get(c.colRBD) || ''
+        }))
+
+        return { colegios: colegiosWithComuna }
     } catch (e) {
         console.error(e)
         return { error: 'Error al buscar colegios.' }

@@ -3,6 +3,7 @@ import { getSession } from '@/lib/session'
 import { redirect } from 'next/navigation'
 import RoleForm from './RoleForm'
 import EditRoleForm from './EditRoleForm'
+import CopyRoleForm from './CopyRoleForm'
 import RolePermissionList from './RolePermissionList'
 
 export default async function RolesPage() {
@@ -67,7 +68,8 @@ export default async function RolesPage() {
 
         { id: 'manage_matriz_2026', name: 'Ingresar nueva Matriz 2026', description: 'Permite el ingreso de nuevas matrices de riesgo para el año 2026.', category: 'MATRIZ DE RIESGO -> MATRIZ 2026' },
         { id: 'manage_evaluacion_detallada', name: 'Evaluación Detallada', description: 'Realizar evaluación técnica detallada por puntos críticos.', category: 'MATRIZ DE RIESGO -> MATRIZ 2026' },
-        { id: 'manage_mitigacion', name: 'Mitigación', description: 'Gestionar plazos y evidencias de solución para hallazgos de la matriz.', category: 'MATRIZ DE RIESGO -> DETALLE MATRIZ' },
+        { id: 'manage_mitigacion', name: 'Cierre de Mitigación', description: 'Gestionar plazos y evidencias de solución para hallazgos de la matriz.', category: 'MATRIZ DE RIESGO -> DETALLE MATRIZ' },
+        { id: 'close_matriz_riesgo', name: 'Sol. desviación Matriz', description: 'Mitigar y enviar a supervisión las evaluaciones de matriz de riesgo asignadas.', category: 'MATRIZ DE RIESGO' },
         { id: 'view_estado_avance', name: 'Estado de Avance', description: 'Visualizar el estado de avance de la matriz de riesgo.', category: 'MATRIZ DE RIESGO -> DETALLE MATRIZ' },
         { id: 'view_auditoria', name: 'Auditoría Externa', description: 'Vista global completa de hallazgos y evidencias para auditores.', category: 'MATRIZ DE RIESGO -> DETALLE MATRIZ' },
 
@@ -104,6 +106,7 @@ export default async function RolesPage() {
 
         { id: 'manage_users', name: 'Gestionar Usuarios', description: 'Crear, editar o eliminar usuarios.', category: 'ADMINISTRACIÓN' },
         { id: 'manage_roles', name: 'Gestionar Roles', description: 'Administrar mantenedor de perfiles y permisos.', category: 'ADMINISTRACIÓN' },
+        { id: 'manage_menu_reorder', name: 'Reubicación de Aplicaciones', description: 'Permite reordenar la posición de los ítems de menú dentro de sus opciones padres.', category: 'ADMINISTRACIÓN' },
         { id: 'manage_correo', name: 'Configuración de Correo', description: 'Acciones sobre credenciales de correo (Office365).', category: 'ADMINISTRACIÓN' },
         { id: 'manage_listas', name: 'Listas de Distribución', description: 'Gestión de destinatarios y listas de correos.', category: 'ADMINISTRACIÓN' },
         { id: 'manage_notificaciones', name: 'Notificaciones por Pantalla', description: 'Asociar listas de distribución a notificaciones de la aplicación.', category: 'ADMINISTRACIÓN' },
@@ -153,6 +156,7 @@ export default async function RolesPage() {
                                         {role._count.users} Usuarios
                                     </div>
                                     <EditRoleForm role={role} availablePermissions={availablePermissions} />
+                                    <CopyRoleForm role={role} />
                                 </div>
                             </div>
 

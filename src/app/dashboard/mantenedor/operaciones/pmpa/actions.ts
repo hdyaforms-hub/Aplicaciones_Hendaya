@@ -29,16 +29,16 @@ export async function checkPMPAExists(data: PMPAData[]) {
         return { error: 'El archivo está vacío o tiene formato incorrecto' }
     }
 
-    // Buscamos si existe al menos un registro en la BD que coincida con el primer mes/año/ute
-    // (Asumiendo que los archivos vienen agrupados por esos criterios, o verificamos el primer row)
+    // Buscamos si existe al menos un registro en la BD que coincida con el primer mes/año/ute y ALGÚN RBD del archivo
     const firstRow = data[0]
+    const rbds = data.map(d => d.rbd)
 
-    // Simplificación de verificación: si existe algún registro del mismo año y mes que el primero del excel
     const existing = await prisma.pMPA.findFirst({
         where: {
             ano: firstRow.ano,
             mes: firstRow.mes,
-            ute: firstRow.ute
+            ute: firstRow.ute,
+            rbd: { in: rbds }
         }
     })
 
@@ -64,15 +64,28 @@ export async function uploadPMPAData(data: PMPAData[], overwrite: boolean) {
 
             for (const p of periodos) {
                 const [ano, mes, ute] = p.split('-')
+                const rbdsInPeriod = data
+                    .filter(d => d.ano === parseInt(ano) && d.mes === parseInt(mes) && d.ute === parseInt(ute))
+                    .map(d => d.rbd)
+
                 await prisma.pMPA.deleteMany({
                     where: {
                         ano: parseInt(ano),
                         mes: parseInt(mes),
-                        ute: parseInt(ute)
+                        ute: parseInt(ute),
+                        rbd: { in: rbdsInPeriod }
                     }
                 })
             }
         }
+
+        // Obtener instituciones de Colegios
+        const allRbds = [...new Set(data.map(d => d.rbd))]
+        const colegios = await prisma.colegios.findMany({
+            where: { colRBD: { in: allRbds } },
+            select: { colRBD: true, institucion: true }
+        })
+        const mapInstitucion = new Map(colegios.map(c => [c.colRBD, c.institucion]))
 
         // Mapear agregando el usuario que subió el registro
         const dataToInsert = data.map(d => ({
@@ -87,6 +100,7 @@ export async function uploadPMPAData(data: PMPAData[], overwrite: boolean) {
             servicioLic: String(d.servicioLic).trim(),
             raceqJunaeb: Number(d.raceqJunaeb),
             servicio: String(d.servicio).trim(),
+            institucion: mapInstitucion.get(d.rbd) || "S/D",
             uploadedBy: username
         }))
 

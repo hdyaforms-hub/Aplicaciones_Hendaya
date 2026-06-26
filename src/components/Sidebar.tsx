@@ -25,7 +25,7 @@ interface MenuItem {
     subItems?: MenuItem[]
 }
 
-export default function Sidebar({ user }: { user: User }) {
+export default function Sidebar({ user, menuOrders = [] }: { user: User, menuOrders?: any[] }) {
     const pathname = usePathname()
     const router = useRouter()
     const [isLoggingOut, setIsLoggingOut] = useState(false)
@@ -180,11 +180,12 @@ export default function Sidebar({ user }: { user: User }) {
         {
             name: 'Matriz de riesgo',
             icon: '📋',
-            requiredPermission: ['view_matriz_riesgo', 'fill_nueva_matriz', 'view_detalle_matriz', 'manage_matriz_2026', 'manage_evaluacion_detallada', 'manage_mitigacion', 'view_estado_avance', 'view_auditoria', 'view_inf_auditoria_mitigacion', 'view_hoja_b_estandar_pae'],
+            requiredPermission: ['view_matriz_riesgo', 'fill_nueva_matriz', 'view_detalle_matriz', 'manage_matriz_2026', 'manage_evaluacion_detallada', 'manage_mitigacion', 'close_matriz_riesgo', 'view_estado_avance', 'view_auditoria', 'view_inf_auditoria_mitigacion', 'view_hoja_b_estandar_pae'],
             subItems: [
                 { name: 'Ingresar nueva Matriz', href: '/dashboard/matriz-riesgo/ingresar', requiredPermission: 'fill_nueva_matriz' },
                 { name: 'Detalle Matriz', href: '/dashboard/matriz-riesgo/detalle', requiredPermission: 'view_detalle_matriz' },
-                { name: 'Mitigación', href: '/dashboard/matriz-riesgo/mitigacion', requiredPermission: 'manage_mitigacion' },
+                { name: 'Cierre de Mitigación', href: '/dashboard/matriz-riesgo/mitigacion', requiredPermission: 'manage_mitigacion' },
+                { name: 'Sol. desviación Matriz', href: '/dashboard/matriz-riesgo/cerrar-matriz', requiredPermission: 'close_matriz_riesgo' },
                 { name: 'Estado de Avance', href: '/dashboard/matriz-riesgo/estado-avance', requiredPermission: 'view_estado_avance' },
                 { name: 'Auditoría', href: '/dashboard/matriz-riesgo/auditoria', requiredPermission: 'view_auditoria' },
                 { name: 'Inf. Auditoria Mitigación', href: '/dashboard/matriz-riesgo/inf-auditoria-mitigacion', requiredPermission: 'view_inf_auditoria_mitigacion' },
@@ -287,10 +288,11 @@ export default function Sidebar({ user }: { user: User }) {
         {
             name: 'Configuración',
             icon: '🔧',
-            requiredPermission: ['manage_correo', 'manage_listas', 'manage_notificaciones', 'manage_users', 'manage_roles'],
+            requiredPermission: ['manage_correo', 'manage_listas', 'manage_notificaciones', 'manage_users', 'manage_roles', 'manage_menu_reorder'],
             subItems: [
                 { name: 'Gestión de Usuarios', href: '/dashboard/users', requiredPermission: 'manage_users' },
                 { name: 'Roles y Perfiles', href: '/dashboard/roles', requiredPermission: 'manage_roles' },
+                { name: 'Reubicación de Aplicaciones', href: '/dashboard/configuracion/reubicacion', requiredPermission: 'manage_menu_reorder' },
                 { name: 'Configuración de Correo', href: '/dashboard/configuracion/correo', requiredPermission: 'manage_correo' },
                 { name: 'Listas de Distribución', href: '/dashboard/configuracion/listas-correo', requiredPermission: 'manage_listas' },
                 { name: 'Notificaciones por Pantalla', href: '/dashboard/configuracion/notificaciones', requiredPermission: 'manage_notificaciones' }
@@ -337,7 +339,32 @@ export default function Sidebar({ user }: { user: User }) {
         })
     }
 
-    const visibleItems = filterMenuItems(menuItems)
+    const sortItems = (items: MenuItem[], parentName = ''): MenuItem[] => {
+        const sorted = [...items].map((item, idx) => ({ item, defaultIndex: idx }))
+        sorted.sort((a, b) => {
+            const orderA = menuOrders.find(o => o.parentKey === parentName && o.itemKey === a.item.name)?.position
+            const orderB = menuOrders.find(o => o.parentKey === parentName && o.itemKey === b.item.name)?.position
+            
+            if (orderA !== undefined && orderB !== undefined) {
+                return orderA - orderB
+            }
+            if (orderA !== undefined) return -1
+            if (orderB !== undefined) return 1
+            return a.defaultIndex - b.defaultIndex
+        })
+        
+        return sorted.map(({ item }) => {
+            if (item.subItems) {
+                return {
+                    ...item,
+                    subItems: sortItems(item.subItems, item.name)
+                }
+            }
+            return item
+        })
+    }
+
+    const visibleItems = sortItems(filterMenuItems(menuItems))
 
     // Recursive Sidebar Item Component
     const SidebarNavItem = ({ item, depth = 0, parentPath = '' }: { item: MenuItem, depth: number, parentPath: string }) => {

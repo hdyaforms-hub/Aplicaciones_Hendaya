@@ -7,7 +7,8 @@ import {
     getLicitaciones, 
     getSucursales, 
     getVehiculos, 
-    getColegios 
+    getColegios,
+    getRegisteredEmails 
 } from './actions'
 import { getDistanciasCache, getConsumoActual } from './googleMapsAction'
 import PersonalClient from './PersonalClient'
@@ -39,7 +40,8 @@ export default async function PersonalPage() {
         vehiculos,
         colegios,
         distanciasCache,
-        consumoActual
+        consumoActual,
+        registeredEmails
     ] = await Promise.all([
         getZonales(),
         getJefesOperacion(),
@@ -49,7 +51,8 @@ export default async function PersonalPage() {
         getVehiculos(),
         getColegios(),
         getDistanciasCache(),
-        getConsumoActual()
+        getConsumoActual(),
+        getRegisteredEmails()
     ])
 
     return (
@@ -64,6 +67,7 @@ export default async function PersonalPage() {
             userPermissions={permissions}
             initialDistanciasCache={distanciasCache}
             initialConsumoActual={consumoActual}
+            registeredEmails={registeredEmails}
         />
     )
 }
