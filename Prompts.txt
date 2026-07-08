@@ -662,7 +662,55 @@ Favor respeta la imagen base no me cambies el personaje ni el peinado ni la gorr
 
 
 /*****************************************************************************************************************/
+
+Necesito que actualices el modulo PMPA que esta dentro de matenedor/operaciones/pmpa, la idea es que lea otro formato (sin perder el formato que ya tiene predeterminado), el nuevo formato es de extencion csv y tiene mas columnas que el formato predeterminado, pero solo debe considerar los que detallo a continuación:
+
+Tipo  --> No considerar	
+Concesionario	--> No considerar
+CodConcesionario	--> No considerar
+NombreConcesionario	--> No considerar
+Anho	--> considerar --> el campo se llama Anho
+Mes	--> considerar --> el campo se llama Mes
+Licitacion	--> considerar --> el campo se llama Licitación
+LineaProducto	--> No considerar	
+Region	--> No considerar
+Provincia	--> No considerar
+NombreProvincia	--> No considerar
+Comuna	--> No considerar
+NombreComuna	--> No considerar
+UTE	--> considerar --> el campo se llama UTE
+RegionUTE	--> No considerar
+RBD	--> considerar --> el campo se llama RBD
+DV	--> No considerar
+NombreEstablecimiento	--> No considerar
+Direccion	--> No considerar
+Programa	--> considerar --> el campo se llama Programa
+Estrato		--> considerar --> el campo se llama Estrato
+Nivel		--> considerar --> el campo se llama Nivel
+ServicioLIC	--> considerar --> el campo se llama ServicioLIC
+RacEqJunaeb	--> considerar --> el campo se llama RacEqJunaeb
+TotalRaciones	--> No considerar
+Dias	--> No considerar
+Dependencia	--> No considerar
+Sector	--> No considerar
+Acceso	--> No considerar
+Matricula	--> No considerar
+servicio	--> considerar --> el campo se llama Servicio	
+EMPRESA	--> No considerar
+Fecha --> No considerar
+
+
 /*****************************************************************************************************************/
+
+use PowerAutomate  
+
+ Select count(*)
+ from  CertificacionesPdf2026 
+  where licitacion = 5323 
+    and [AnhO] = 2026
+    and Institucion = 'JUNJI'
+	and Mes = 5
+
 /*****************************************************************************************************************/
 /*****************************************************************************************************************/
 /*****************************************************************************************************************/

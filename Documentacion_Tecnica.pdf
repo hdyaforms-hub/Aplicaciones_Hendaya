@@ -1,0 +1,826 @@
+%PDF-1.3
+%ºß¬à
+3 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 4 0 R
+>>
+endobj
+4 0 obj
+<<
+/Length 5926
+>>
+stream
+0.5670000000000001 w
+0 G
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 785.1970866141732586 Td
+(# Documentación Técnica: Aplicaciones Hendaya) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 756.8506299212598378 Td
+(## 1. Introducción) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 742.6774015748030706 Td
+(El presente documento tiene como objetivo proporcionar la información técnica necesaria para comprender,) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 728.5041732283464171 Td
+(mantener y extender la plataforma "Aplicaciones Hendaya". Esta aplicación web gestiona múltiples procesos) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 714.3309448818897636 Td
+(internos y operativos, ofreciendo una estructura modular.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 685.9844881889763428 Td
+(## 2. Tecnologías y Lenguajes de Programación) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 671.8112598425196893 Td
+(El proyecto ha sido desarrollado utilizando un stack moderno basado en el ecosistema de JavaScript/TypeScript,) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 657.6380314960629221 Td
+(garantizando escalabilidad y un rendimiento óptimo.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 629.291574803149615 Td
+(### 2.1. Frontend y Core) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 615.1183464566928478 Td
+(- **Framework Principal:** Next.js \(versión 16.2\), haciendo uso del App Router.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 600.9451181102361943 Td
+(- **Librería de UI:** React \(versión 19\).) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 586.7718897637794271 Td
+(- **Lenguaje Base:** TypeScript, que proporciona tipado estático y mayor seguridad en el código.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 572.5986614173227736 Td
+(- **Estilos:** TailwindCSS v4, para un diseño responsive y utilitario.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 558.42543307086612 Td
+(- **Componentes de UI y Gráficos:** Recharts para la visualización de datos.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 530.0789763779526993 Td
+(### 2.2. Backend y Base de Datos) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 515.9057480314959321 Td
+(- **Base de Datos:** PostgreSQL \(indicado en el archivo Prisma schema\).) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 501.7325196850393354 Td
+(- **ORM \(Object-Relational Mapping\):** Prisma ORM v5, encargado de la gestión, migraciones y tipado estricto de) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 487.559291338582625 Td
+(la base de datos.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 473.3860629921259147 Td
+(- **Autenticación y Seguridad:** JWT \(JSON Web Tokens\) mediante la librería `jsonwebtoken` y `jose`, además de) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 459.2128346456692611 Td
+(`bcryptjs` para el cifrado de contraseñas.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 445.0396062992125508 Td
+(- **Envío de Correos:** Nodemailer.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 416.69314960629913 Td
+(### 2.3. Otras Herramientas y Dependencias) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 402.5199212598424765 Td
+(- **Generación y Manejo de Archivos:** ) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 388.3466929133857661 Td
+(  - `jspdf`, `pdf-parse`, `pdfjs-dist` y `html2canvas-pro` para la manipulación y exportación de PDFs.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 374.1734645669290558 Td
+(  - `exceljs`, `xlsx` para la generación y lectura de documentos de Excel.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 360.0002362204724022 Td
+(  - `archiver`, `adm-zip`, `jszip` para el manejo de archivos comprimidos \(.zip\).) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 345.8270078740156919 Td
+(- **Manejo de Fechas:** `date-fns`.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 331.6537795275589815 Td
+(- **Identificadores Únicos:** `uuid`.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 303.3073228346455608 Td
+(## 3. Repositorio y Entorno de Desarrollo) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 289.1340944881889072 Td
+(Para que otro desarrollador pueda tomar el control, realizar cambios o configurar un entorno local, debe seguir las) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 274.9608661417322537 Td
+(siguientes instrucciones y utilizar los enlaces proporcionados.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 246.614409448818833 Td
+(- **Repositorio de GitHub:** ) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 232.4411811023621794 Td
+(  `https://github.com/hdyaforms-hub/Aplicaciones_Hendaya.git`) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 218.2679527559054122 Td
+(- **Comandos de Clonación:**) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 204.0947244094487587 Td
+(  ```bash) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 189.9214960629919915 Td
+(  git clone https://github.com/hdyaforms-hub/Aplicaciones_Hendaya.git) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 175.748267716535338 Td
+(  cd Aplicaciones_Hendaya) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 161.5750393700786844 Td
+(  ```) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 147.4018110236219172 Td
+(- **Instalación de Dependencias:**) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 133.2285826771652637 Td
+(  ```bash) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 119.0553543307086102 Td
+(  npm install) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 104.882125984251843 Td
+(  ```) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 90.7088976377951894 Td
+(- **Ejecución en Entorno Local:**) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 76.5356692913385359 Td
+(  ```bash) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 62.3624409448817687 Td
+(  npm run dev) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 48.1892125984251152 Td
+(  ```) Tj
+ET
+endstream
+endobj
+5 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 6 0 R
+>>
+endobj
+6 0 obj
+<<
+/Length 5680
+>>
+stream
+0.5670000000000001 w
+0 G
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 785.1970866141732586 Td
+(  *\(El proyecto se levantará en el puerto 3001 por defecto\).*) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 756.8506299212598378 Td
+(## 4. Estructura de Módulos \(Directorio `src/app/dashboard`\)) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 742.6774015748030706 Td
+(La plataforma cuenta con un panel de administración \(`dashboard`\) que agrupa diversas funcionalidades mediante) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 728.5041732283464171 Td
+(módulos. A continuación, se detalla qué hace cada uno:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 700.15771653543311 Td
+(- **areas:** Gestión y administración de las diferentes áreas operativas de la empresa.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 685.9844881889763428 Td
+(- **ayuda:** Módulo de soporte, documentación o preguntas frecuentes para el usuario.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 671.8112598425196893 Td
+(- **calculadora:** Herramienta interna de cálculo, probablemente destinada al cálculo de raciones, porciones o) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 657.6380314960629221 Td
+(presupuestos.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 643.4648031496062686 Td
+(- **configuracion:** Ajustes generales del sistema, variables y parámetros globales.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 629.291574803149615 Td
+(- **formularios:** Motor para la definición, programación \(`FormSchedule`\) y envío \(`FormSubmission`\) de) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 615.1183464566928478 Td
+(formularios dinámicos.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 600.9451181102361943 Td
+(- **ingreso-raciones:** Módulo especializado para el registro y control de las raciones alimenticias ingresadas.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 586.7718897637794271 Td
+(- **mantenedor:** Panel para el mantenimiento de entidades maestras \(CRUDs generales de la base de datos\).) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 572.5986614173227736 Td
+(- **matriz-riesgo:** Gestión de la matriz de riesgos \(con entidades como `MatrizRiesgo2026`,) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 558.42543307086612 Td
+(`MatrizConfigPregunta`, `MatrizMitigacion`\), enfocado en la prevención y evaluación de riesgos.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 544.2522047244094665 Td
+(- **productos:** Catálogo de productos, control de inventario y alertas asociadas \(ej. retornos de productos\).) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 530.0789763779526993 Td
+(- **reports:** Generación y exportación de reportes operativos, cruces de información y auditorías.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 515.9057480314959321 Td
+(- **retiro-saldos:** Control de retiros y saldos, con cabecera y detalle para registrar transacciones de saldos.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 501.7325196850393354 Td
+(- **roles:** Administración de los roles de acceso del sistema \(RBAC\) y definición de permisos.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 487.559291338582625 Td
+(- **solicitud-gas:** Flujo y gestión de solicitudes y consumos de gas.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 473.3860629921259147 Td
+(- **solicitud-pan:** Flujo para la solicitud, distribución y control del pan.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 459.2128346456692611 Td
+(- **tablero:** Panel principal o Dashboard inicial donde se visualizan los KPIs \(Indicadores Clave de Rendimiento\) y) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 445.0396062992125508 Td
+(resúmenes.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 430.8663779527558404 Td
+(- **trabajos-preventivos:** Registro y seguimiento de las actividades de mantenimiento y trabajo preventivo en) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 416.69314960629913 Td
+(colegios o sucursales.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 402.5199212598424765 Td
+(- **users:** Módulo para la creación, edición, baja y gestión de los usuarios que acceden al sistema.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 374.1734645669290558 Td
+(## 5. Resumen de Modelos de Base de Datos Principales) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 360.0002362204724022 Td
+(La base de datos, orquestada por Prisma, incluye decenas de tablas altamente relacionales. Algunas de las más) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 345.8270078740156919 Td
+(relevantes son:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 331.6537795275589815 Td
+(- **Seguridad:** `User`, `Role`, `Area`, `Sucursal`.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 317.480551181102328 Td
+(- **Operaciones de Alimentación:** `IngRacion`, `SolicitudPan`, `Preparaciones`, `Minutas`, `Raciones`.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 303.3073228346455608 Td
+(- **Mantenimiento y Riesgos:** `MatrizRiesgo2026`, `TrabajoPreventivo`.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 289.1340944881889072 Td
+(- **Inventario y Recursos:** `Productos`, `SolicitudGas`, `Mat_ConsumoGas`.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 274.9608661417322537 Td
+(- **Comunicaciones:** `EmailConfig`, `ListaCorreo`, `PlantillaCorreo`, `NotificacionPantalla`.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 246.614409448818833 Td
+(Este documento sirve como un punto de partida técnico y arquitectónico para cualquier desarrollador que se integre) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+42.5196850393700814 232.4411811023621794 Td
+(al proyecto `Aplicaciones_Hendaya`.) Tj
+ET
+endstream
+endobj
+1 0 obj
+<</Type /Pages
+/Kids [3 0 R 5 0 R ]
+/Count 2
+>>
+endobj
+7 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+8 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica-Bold
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+9 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica-Oblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+10 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica-BoldOblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+11 0 obj
+<<
+/Type /Font
+/BaseFont /Courier
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+12 0 obj
+<<
+/Type /Font
+/BaseFont /Courier-Bold
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+13 0 obj
+<<
+/Type /Font
+/BaseFont /Courier-Oblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+14 0 obj
+<<
+/Type /Font
+/BaseFont /Courier-BoldOblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+15 0 obj
+<<
+/Type /Font
+/BaseFont /Times-Roman
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+16 0 obj
+<<
+/Type /Font
+/BaseFont /Times-Bold
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+17 0 obj
+<<
+/Type /Font
+/BaseFont /Times-Italic
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+18 0 obj
+<<
+/Type /Font
+/BaseFont /Times-BoldItalic
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+19 0 obj
+<<
+/Type /Font
+/BaseFont /ZapfDingbats
+/Subtype /Type1
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+20 0 obj
+<<
+/Type /Font
+/BaseFont /Symbol
+/Subtype /Type1
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+2 0 obj
+<<
+/ProcSet [/PDF /Text /ImageB /ImageC /ImageI]
+/Font <<
+/F1 7 0 R
+/F2 8 0 R
+/F3 9 0 R
+/F4 10 0 R
+/F5 11 0 R
+/F6 12 0 R
+/F7 13 0 R
+/F8 14 0 R
+/F9 15 0 R
+/F10 16 0 R
+/F11 17 0 R
+/F12 18 0 R
+/F13 19 0 R
+/F14 20 0 R
+>>
+/XObject <<
+>>
+>>
+endobj
+21 0 obj
+<<
+/Producer (jsPDF 4.2.1)
+/CreationDate (D:20260626135333-04'00')
+>>
+endobj
+22 0 obj
+<<
+/Type /Catalog
+/Pages 1 0 R
+/OpenAction [3 0 R /FitH null]
+/PageLayout /OneColumn
+>>
+endobj
+xref
+0 23
+0000000000 65535 f 
+0000011999 00000 n 
+0000013824 00000 n 
+0000000015 00000 n 
+0000000152 00000 n 
+0000006130 00000 n 
+0000006267 00000 n 
+0000012062 00000 n 
+0000012187 00000 n 
+0000012317 00000 n 
+0000012450 00000 n 
+0000012588 00000 n 
+0000012712 00000 n 
+0000012841 00000 n 
+0000012973 00000 n 
+0000013109 00000 n 
+0000013237 00000 n 
+0000013364 00000 n 
+0000013493 00000 n 
+0000013626 00000 n 
+0000013728 00000 n 
+0000014074 00000 n 
+0000014160 00000 n 
+trailer
+<<
+/Size 23
+/Root 22 0 R
+/Info 21 0 R
+/ID [ <77C39CF0942CE31C7AE5A7586B0D4C26> <77C39CF0942CE31C7AE5A7586B0D4C26> ]
+>>
+startxref
+14264
+%%EOF
