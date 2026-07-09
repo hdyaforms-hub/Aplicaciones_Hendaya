@@ -2,7 +2,12 @@
 
 import { useState } from 'react'
 import { copyRole } from '../actions'
-import { Role } from '@prisma/client'
+
+type Role = {
+  id: string
+  name: string
+  [key: string]: unknown
+}
 
 export default function CopyRoleForm({ role }: { role: Role }) {
     const [isOpen, setIsOpen] = useState(false)
