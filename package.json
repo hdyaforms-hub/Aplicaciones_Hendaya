@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "next dev -p 3001 --webpack",
     "build": "prisma generate && next build",
-    "start": "prisma migrate deploy && next start -p $PORT",
+    "start": "prisma db push --skip-generate && next start -p $PORT",
     "lint": "eslint"
   },
   "dependencies": {
