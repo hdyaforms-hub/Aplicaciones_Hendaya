@@ -114,8 +114,9 @@ export async function POST(req: NextRequest) {
 
 function executePython(scriptPath: string, args: string): Promise<any> {
     return new Promise((resolve, reject) => {
-        // Enclose paths in quotes to handle spaces
-        const command = `python "${scriptPath}" "${args}"`;
+        // Ejecutable configurable: 'python' en Windows local, 'python3' en Railway (via PYTHON_BIN)
+        const pythonBin = process.env.PYTHON_BIN || 'python';
+        const command = `${pythonBin} "${scriptPath}" "${args}"`;
         exec(command, { maxBuffer: 1024 * 1024 * 10 }, (error, stdout, stderr) => {
             if (error) {
                 console.error('Python execution error:', error);

@@ -46,8 +46,8 @@ export async function POST(request: Request) {
 
         // Llamar al script de python
         const pythonScript = join(process.cwd(), 'python_scripts', 'extract_elementos.py');
-        // Asegurar que usamos el comando 'python'
-        const pythonExecutable = 'python'; 
+        // Ejecutable de python configurable: 'python' en Windows local, 'python3' en Railway (via PYTHON_BIN)
+        const pythonExecutable = process.env.PYTHON_BIN || 'python';
         
         const { stdout, stderr } = await execFileAsync(pythonExecutable, [pythonScript, filePath], { maxBuffer: 1024 * 1024 * 10 });
         
