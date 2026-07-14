@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { getFoliosIncompletos, calculateAll, getSchoolSuggestions } from './actions'
+import { getFoliosIncompletos, calculateAll, getSchoolSuggestions, getAspectosDisponibles } from './actions'
 import CalculoModal from './CalculoModal'
 
 export default function CalculosEEPage() {
@@ -13,6 +13,8 @@ export default function CalculosEEPage() {
     const [folio, setFolio] = useState('')
     const [estadoCalculo, setEstadoCalculo] = useState('Todos')
     const [disponibilidad, setDisponibilidad] = useState('Todos')
+    const [aspecto, setAspecto] = useState('Todos')
+    const [aspectosList, setAspectosList] = useState<any[]>([])
     const [loading, setLoading] = useState(true)
     const [calculatingAll, setCalculatingAll] = useState(false)
     const [suggestions, setSuggestions] = useState<any[]>([])
@@ -33,7 +35,7 @@ export default function CalculosEEPage() {
         setLoading(true)
         try {
             const res = await getFoliosIncompletos({
-                search, mes, ano, licitacion, folio, estadoCalculo, disponibilidad
+                search, mes, ano, licitacion, folio, estadoCalculo, disponibilidad, aspecto
             })
             if (res.data) {
                 setRegistros(res.data)
@@ -46,16 +48,30 @@ export default function CalculosEEPage() {
     }
 
     useEffect(() => {
+        const loadAspectos = async () => {
+            try {
+                const res = await getAspectosDisponibles()
+                if (res.data) {
+                    setAspectosList(res.data)
+                }
+            } catch (e) {
+                console.error('Error loading aspectos list:', e)
+            }
+        }
+        loadAspectos()
+    }, [])
+
+    useEffect(() => {
         const timeoutId = setTimeout(() => {
             fetchRegistros()
         }, 500)
         return () => clearTimeout(timeoutId)
-    }, [search, mes, ano, licitacion, folio, estadoCalculo, disponibilidad])
+    }, [search, mes, ano, licitacion, folio, estadoCalculo, disponibilidad, aspecto])
 
     const handleCalculateAll = async () => {
         if (!confirm('¿Estás seguro de calcular todos los folios filtrados? Esto puede tardar un momento.')) return
         setCalculatingAll(true)
-        const res = await calculateAll({ search, mes, ano, licitacion, folio, estadoCalculo, disponibilidad })
+        const res = await calculateAll({ search, mes, ano, licitacion, folio, estadoCalculo, disponibilidad, aspecto })
         if (res.error) {
             alert(res.error)
         } else {
@@ -83,7 +99,7 @@ export default function CalculosEEPage() {
         acc[year].ncNoSolucionableCount += (curr.ncNoSolucionableCount || 0)
         acc[year].montoSolucionable += (curr.montoSolucionable || 0)
         acc[year].montoNoSolucionable += (curr.montoNoSolucionable || 0)
-        if (curr.missingFormula || curr.missingPmpa || curr.calculoEstado === 'PENDIENTE') acc[year].hasIssues = true
+        if (curr.missingFormula || curr.missingPmpa || curr.missingServicio || curr.calculoEstado === 'PENDIENTE') acc[year].hasIssues = true
         return acc
     }, {})
 
@@ -186,7 +202,7 @@ export default function CalculosEEPage() {
 
             {/* Filters */}
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-11 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-4">
                     <div className="lg:col-span-3 relative">
                         <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2">RBD/Establecimiento</label>
                         <div className="relative">
@@ -284,6 +300,21 @@ export default function CalculosEEPage() {
                             onChange={(e) => setAno(e.target.value)}
                             className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-gray-900 font-medium text-center"
                         />
+                    </div>
+                    <div className="lg:col-span-2">
+                        <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2">Aspecto</label>
+                        <select
+                            value={aspecto}
+                            onChange={(e) => setAspecto(e.target.value)}
+                            className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-gray-900 font-bold"
+                        >
+                            <option value="Todos">Todos los aspectos</option>
+                            {aspectosList.map((a: any) => (
+                                <option key={a.letra} value={a.letra}>
+                                    Aspecto {a.letra}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                     <div className="lg:col-span-2">
                         <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2">Estado Cálculo</label>
@@ -420,6 +451,16 @@ export default function CalculosEEPage() {
                                                 {reg.missingPmpa && (
                                                     <span className="px-1.5 py-0.5 bg-amber-50 text-amber-700 text-[9px] font-black rounded border border-amber-100 flex items-center gap-1">
                                                         ⚠️ SIN RACIONES
+                                                    </span>
+                                                )}
+                                                {reg.missingServicio && (
+                                                    <span className="px-1.5 py-0.5 bg-orange-50 text-orange-700 text-[9px] font-black rounded border border-orange-100 flex items-center gap-1">
+                                                        ⚠️ SIN SERVICIO
+                                                    </span>
+                                                )}
+                                                {reg.materiaPrimaWarning && (
+                                                    <span className="px-1.5 py-0.5 bg-red-50 text-red-700 text-[9px] font-black rounded border border-red-100 flex items-center gap-1">
+                                                        ⚠️ MATERIA PRIMA &gt; 10
                                                     </span>
                                                 )}
                                             </div>

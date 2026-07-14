@@ -24,7 +24,8 @@ export async function getFoliosIncompletos(params: {
     licitacion?: string, 
     folio?: string, 
     estadoCalculo?: string,
-    disponibilidad?: string
+    disponibilidad?: string,
+    aspecto?: string
 }) {
     if (!await checkPermission('manage_calculos_ee')) return { error: 'No tienes permisos.' }
 
@@ -34,6 +35,12 @@ export async function getFoliosIncompletos(params: {
                 some: {
                     nc: 'X'
                 }
+            }
+        }
+
+        if (params.aspecto && params.aspecto !== 'Todos' && params.aspecto.trim() !== '') {
+            whereClause.detalles.some.aspecto = {
+                startsWith: `${params.aspecto.toUpperCase()}.`
             }
         }
 
@@ -86,8 +93,13 @@ export async function getFoliosIncompletos(params: {
                 esServicioManual: true,
                 licId: true,
                 detalles: {
-                    where: { nc: 'X' },
-                    select: { id: true, aspecto: true }
+                    where: { 
+                        nc: 'X',
+                        ...(params.aspecto && params.aspecto !== 'Todos' && params.aspecto.trim() !== '' ? {
+                            aspecto: { startsWith: `${params.aspecto.toUpperCase()}.` }
+                        } : {})
+                    },
+                    select: { id: true, aspecto: true, observacionesOMedioDeVerificacion: true }
                 }
             },
             orderBy: { fechaSupervision: 'desc' }
@@ -161,6 +173,7 @@ export async function getFoliosIncompletos(params: {
             }
 
             // 2. Check PMPA
+            let missingServicio = !serviceCode
             let missingPmpa = false
             if (rbd && anho && mes && licId && serviceCode) {
                 const hasPmpa = pmpas.some(p => 
@@ -171,7 +184,8 @@ export async function getFoliosIncompletos(params: {
                     p.servicio === serviceCode
                 )
                 missingPmpa = !hasPmpa
-            } else {
+            } else if (!missingServicio) {
+                // Sólo marcamos falta de PMPA si hay servicio pero no se encontró la data
                 missingPmpa = true 
             }
 
@@ -203,6 +217,9 @@ export async function getFoliosIncompletos(params: {
             let montoNoSolucionable = 0
             if (calculo && (calculo as any).detalles) {
                 for (const d of (calculo as any).detalles) {
+                    if (params.aspecto && params.aspecto !== 'Todos' && params.aspecto.trim() !== '' && d.letraAspecto !== params.aspecto.toUpperCase()) {
+                        continue
+                    }
                     const asp = formulasForLic.find(form => form.letra === d.letraAspecto)
                     if (asp && asp.solucionable === 'Solucionable') {
                         montoSolucionable += d.montoMulta || 0
@@ -212,13 +229,58 @@ export async function getFoliosIncompletos(params: {
                 }
             }
 
+            let materiaPrimaWarning = false
+            if (f.detalles) {
+                for (const d of f.detalles) {
+                    const letraMatch = d.aspecto?.match(/^([A-Z])\./)
+                    const letra = letraMatch ? letraMatch[1] : null
+                    const asp = formulasForLic.find(form => form.letra === letra)
+                    if (asp && asp.formula && asp.formula.toUpperCase().includes('MATERIAPRIMA')) {
+                        const obsText = d.observacionesOMedioDeVerificacion
+                        if (obsText) {
+                            let finalVal = 0
+                            let foundInText = false
+                            const matchFrutas = obsText.match(/materias primas \(frutas y verduras\) afectadas:\s*(\d+)/i)
+                            if (matchFrutas) { finalVal += parseInt(matchFrutas[1], 10); foundInText = true }
+                            const matchNoFrutas = obsText.match(/materias primas afectadas que no son frutas y verduras:\s*(\d+)/i)
+                            if (matchNoFrutas) { finalVal += parseInt(matchNoFrutas[1], 10); foundInText = true }
+                            
+                            // Check if saved variable explicitly overrides this (only if not explicitly in text)
+                            if (!foundInText && calculo && (calculo as any).detalles) {
+                                const calcDet = (calculo as any).detalles.find((cd: any) => cd.letraAspecto === letra)
+                                if (calcDet && calcDet.variablesUsadas) {
+                                    try {
+                                        const vars = JSON.parse(calcDet.variablesUsadas)
+                                        if (vars['MATERIAPRIMA'] !== undefined) {
+                                            finalVal = Number(vars['MATERIAPRIMA'])
+                                        }
+                                    } catch (e) {}
+                                }
+                            }
+                            
+                            if (f.folio === '2024005562') {
+                                console.log(`DEBUG 2024005562 - Aspecto: ${letra}, obsText: ${obsText.substring(0, 50)}..., foundInText: ${foundInText}, finalVal: ${finalVal}`);
+                            }
+
+                            if (finalVal > 10) {
+                                materiaPrimaWarning = true
+                            }
+                        }
+                    }
+                }
+            }
+
             return {
                 ...f,
                 nombreEstablecimiento: school?.nombreEstablecimiento || 'Desconocido',
                 calculoEstado: calculo ? calculo.estadoCalculo : 'PENDIENTE',
-                montoCalculado: calculo ? calculo.montoTotalCalculado : 0,
+                montoCalculado: (params.aspecto && params.aspecto !== 'Todos' && params.aspecto.trim() !== '') 
+                    ? (montoSolucionable + montoNoSolucionable) 
+                    : (calculo ? calculo.montoTotalCalculado : 0),
+                missingServicio,
                 missingPmpa,
                 missingFormula,
+                materiaPrimaWarning,
                 ncCount: f.detalles?.length || 0,
                 ncSolucionableCount,
                 ncNoSolucionableCount,
@@ -235,9 +297,9 @@ export async function getFoliosIncompletos(params: {
         // Apply Availability filter
         if (params.disponibilidad && params.disponibilidad !== 'Todos') {
             if (params.disponibilidad === 'LISTO') {
-                result = result.filter(r => !r.missingFormula && !r.missingPmpa)
+                result = result.filter(r => !r.missingFormula && !r.missingPmpa && !r.missingServicio)
             } else if (params.disponibilidad === 'FALTANTE') {
-                result = result.filter(r => r.missingFormula || r.missingPmpa)
+                result = result.filter(r => r.missingFormula || r.missingPmpa || r.missingServicio)
             }
         }
 
@@ -252,7 +314,16 @@ export async function getFoliosIncompletos(params: {
     }
 }
 
-export async function calculateAll(params: { search?: string, mes?: string, ano?: string, licitacion?: string, folio?: string, estadoCalculo?: string, disponibilidad?: string }) {
+export async function calculateAll(params: { 
+    search?: string, 
+    mes?: string, 
+    ano?: string, 
+    licitacion?: string, 
+    folio?: string, 
+    estadoCalculo?: string, 
+    disponibilidad?: string,
+    aspecto?: string
+}) {
     if (!await checkPermission('manage_calculos_ee')) return { error: 'No tienes permisos.' }
     const session = await getSession()
     if (!session) return { error: 'No autorizado' }
@@ -260,6 +331,11 @@ export async function calculateAll(params: { search?: string, mes?: string, ano?
     try {
         // 1. Get ALL matching folios (without take limit)
         const whereClause: any = { detalles: { some: { nc: 'X' } } }
+        if (params.aspecto && params.aspecto !== 'Todos' && params.aspecto.trim() !== '') {
+            whereClause.detalles.some.aspecto = {
+                startsWith: `${params.aspecto.toUpperCase()}.`
+            }
+        }
         if (params.search) {
             whereClause.OR = [
                 { rbd: { equals: parseInt(params.search) || 0 } },
@@ -348,6 +424,99 @@ export async function calculateAll(params: { search?: string, mes?: string, ano?
                     console.error("Error loading existing in massive:", e)
                 }
 
+                // Try to automatically extract variables from observation if missing
+                for (const d of cab.detalles) {
+                    const letraMatch = d.aspecto?.match(/^([A-Z])\./)
+                    const letra = letraMatch ? letraMatch[1] : null
+                    const formula = formulasForLic.find(f => f.letra === letra)?.formula
+                    
+                    if (formula && d.observacionesOMedioDeVerificacion) {
+                        const obsText = d.observacionesOMedioDeVerificacion;
+                        const upperFormula = formula.toUpperCase();
+
+                        if (!savedVars['MANIPULADORA'] && upperFormula.includes('MANIPULADORA')) {
+                            const regex = /(?:manipuladora(?:s)?\s*faltante(?:s)?|cantidad.*?faltante(?:s)?).*?(\d+)/i;
+                            const matchRegex = obsText.match(regex);
+                            if (matchRegex) {
+                                savedVars['MANIPULADORA'] = matchRegex[1];
+                            } else {
+                                const matchLast = obsText.match(/(\d+)(?!.*\d)/);
+                                if (matchLast) {
+                                    savedVars['MANIPULADORA'] = matchLast[1];
+                                }
+                            }
+                        }
+
+                        if (upperFormula.includes('MANIPULADORAAFECTADA')) {
+                            const regex = /(?:manipuladora(?:s)?\s*afectada(?:s)?|cantidad.*?afectada(?:s)?).*?(\d+)/i;
+                            const matchRegex = obsText.match(regex);
+                            if (matchRegex) {
+                                let extractedVal = parseInt(matchRegex[1], 10);
+                                if (extractedVal === 0) extractedVal = 1;
+                                savedVars['MANIPULADORAAFECTADA'] = extractedVal.toString();
+                            } else if (!savedVars['MANIPULADORAAFECTADA']) {
+                                savedVars['MANIPULADORAAFECTADA'] = '1';
+                            }
+                        }
+
+                        if (!savedVars['ELEMENTOS'] && upperFormula.includes('ELEMENTOS')) {
+                            // Remove "Cantidad de manipuladoras afectadas: X" to exclude it from the count
+                            const textWithoutManipuladoras = obsText.replace(/cantidad\s+de\s+manipuladoras\s+afectadas\s*:\s*\d+/gi, '');
+                            // Count how many times ":" followed by a number > 0 appears
+                            const matches = textWithoutManipuladoras.match(/:\s*\d+/g);
+                            if (matches) {
+                                const validMatches = matches.filter(m => {
+                                    const numMatch = m.match(/\d+/);
+                                    return numMatch ? parseInt(numMatch[0], 10) > 0 : false;
+                                });
+                                savedVars['ELEMENTOS'] = validMatches.length.toString();
+                            }
+                        }
+
+                        if (upperFormula.includes('MATERIAPRIMA')) {
+                            let sumMateriaPrima = 0;
+                            let foundMateriaPrima = false;
+
+                            const matchFrutas = obsText.match(/materias primas \(frutas y verduras\) afectadas:\s*(\d+)/i);
+                            if (matchFrutas) {
+                                sumMateriaPrima += parseInt(matchFrutas[1], 10);
+                                foundMateriaPrima = true;
+                            }
+
+                            const matchNoFrutas = obsText.match(/materias primas afectadas que no son frutas y verduras:\s*(\d+)/i);
+                            if (matchNoFrutas) {
+                                sumMateriaPrima += parseInt(matchNoFrutas[1], 10);
+                                foundMateriaPrima = true;
+                            }
+
+                            if (foundMateriaPrima) {
+                                savedVars['MATERIAPRIMA'] = sumMateriaPrima.toString();
+                            }
+                        }
+
+                        if (!savedVars['INSTRUMENTO'] && upperFormula.includes('INSTRUMENTO')) {
+                            let totalInstrumentos = 0;
+                            let foundAny = false;
+                            
+                            const termometroMatch = obsText.match(/(?:term[oó]metro(?:s)?).*?(\d+)/i);
+                            if (termometroMatch) {
+                                totalInstrumentos += parseInt(termometroMatch[1], 10);
+                                foundAny = true;
+                            }
+                            
+                            const balanzaMatch = obsText.match(/(?:balanza(?:s)?).*?(\d+)/i);
+                            if (balanzaMatch) {
+                                totalInstrumentos += parseInt(balanzaMatch[1], 10);
+                                foundAny = true;
+                            }
+                            
+                            if (foundAny) {
+                                savedVars['INSTRUMENTO'] = totalInstrumentos.toString();
+                            }
+                        }
+                    }
+                }
+
                 // 2. Map PMPA levels for NIVELCONTROLADO lookup
                 const nivelesMap = pmpas.reduce((acc: any, curr) => {
                     if (!acc[curr.nivel]) acc[curr.nivel] = 0
@@ -357,7 +526,7 @@ export async function calculateAll(params: { search?: string, mes?: string, ano?
 
                 // 3. Track needed keywords to determine correct final state
                 const keywordsNeeded = new Set<string>()
-                const RESERVED_KEYWORDS = ['MATERIAPRIMA', 'INSTRUMENTO', 'MANIPULADORA', 'NIVELCONTROLADO', 'CANTSERVICIO', 'ELEMENTOS']
+                const RESERVED_KEYWORDS = ['MATERIAPRIMA', 'INSTRUMENTO', 'MANIPULADORA', 'MANIPULADORAAFECTADA', 'NIVELCONTROLADO', 'CANTSERVICIO', 'ELEMENTOS']
 
                 for (const d of cab.detalles) {
                     const letraMatch = d.aspecto?.match(/^([A-Z])\./)
@@ -402,9 +571,11 @@ export async function calculateAll(params: { search?: string, mes?: string, ano?
                             }
                         }
 
-                        const materiaPrimaVal = Number(savedVars['MATERIAPRIMA'] || 1)
+                        const materiaPrimaVal = savedVars['MATERIAPRIMA'] !== undefined && savedVars['MATERIAPRIMA'] !== '' ? Number(savedVars['MATERIAPRIMA']) : 1
                         const instrumentoVal = Number(savedVars['INSTRUMENTO'] || 1)
                         const manipuladoraVal = Number(savedVars['MANIPULADORA'] || 1)
+                        let manipuladoraAfectadaVal = Number(savedVars['MANIPULADORAAFECTADA'] || 1)
+                        if (manipuladoraAfectadaVal === 0) manipuladoraAfectadaVal = 1;
                         const cantServicioVal = Number(savedVars['CANTSERVICIO'] || 1)
                         const elementosVal = Number(savedVars['ELEMENTOS'] || 1)
 
@@ -414,6 +585,7 @@ export async function calculateAll(params: { search?: string, mes?: string, ano?
                             .replace(/NIVELCONTROLADO/g, nivelControladoVal.toString())
                             .replace(/MATERIAPRIMA/g, materiaPrimaVal.toString())
                             .replace(/INSTRUMENTO/g, instrumentoVal.toString())
+                            .replace(/MANIPULADORAAFECTADA/g, manipuladoraAfectadaVal.toString())
                             .replace(/MANIPULADORA/g, manipuladoraVal.toString())
                             .replace(/CANTSERVICIO/g, cantServicioVal.toString())
                             .replace(/ELEMENTOS/g, elementosVal.toString())
@@ -564,7 +736,7 @@ export async function getDetalleFolioParaCalculo(folio: string) {
 
         // Parse reserved keywords from formulas
         const keywordsNeeded = new Set<string>()
-        const RESERVED_KEYWORDS = ['MATERIAPRIMA', 'INSTRUMENTO', 'MANIPULADORA', 'NIVELCONTROLADO', 'CANTSERVICIO', 'ELEMENTOS']
+        const RESERVED_KEYWORDS = ['MATERIAPRIMA', 'INSTRUMENTO', 'MANIPULADORA', 'MANIPULADORAAFECTADA', 'NIVELCONTROLADO', 'CANTSERVICIO', 'ELEMENTOS']
         
         detallesConFormula.forEach(d => {
             if (d.formulaAsignada) {
@@ -593,6 +765,93 @@ export async function getDetalleFolioParaCalculo(folio: string) {
             }
         } catch (e) {
             console.error("Error loading saved variables:", e)
+        }
+
+        // Try to automatically extract variables from observation if missing
+        for (const d of detallesConFormula) {
+            if (d.formulaAsignada && d.observacionesOMedioDeVerificacion) {
+                const obsText = d.observacionesOMedioDeVerificacion;
+                const upperFormula = d.formulaAsignada.toUpperCase();
+
+                if (!savedVariables['MANIPULADORA'] && upperFormula.includes('MANIPULADORA')) {
+                    const regex = /(?:manipuladora(?:s)?\s*faltante(?:s)?|cantidad.*?faltante(?:s)?).*?(\d+)/i;
+                    const matchRegex = obsText.match(regex);
+                    if (matchRegex) {
+                        savedVariables['MANIPULADORA'] = matchRegex[1];
+                    } else {
+                        const matchLast = obsText.match(/(\d+)(?!.*\d)/);
+                        if (matchLast) {
+                            savedVariables['MANIPULADORA'] = matchLast[1];
+                        }
+                    }
+                }
+
+                if (upperFormula.includes('MANIPULADORAAFECTADA')) {
+                    const regex = /(?:manipuladora(?:s)?\s*afectada(?:s)?|cantidad.*?afectada(?:s)?).*?(\d+)/i;
+                    const matchRegex = obsText.match(regex);
+                    if (matchRegex) {
+                        let extractedVal = parseInt(matchRegex[1], 10);
+                        if (extractedVal === 0) extractedVal = 1;
+                        savedVariables['MANIPULADORAAFECTADA'] = extractedVal.toString();
+                    } else if (!savedVariables['MANIPULADORAAFECTADA']) {
+                        savedVariables['MANIPULADORAAFECTADA'] = '1';
+                    }
+                }
+
+                if (!savedVariables['ELEMENTOS'] && upperFormula.includes('ELEMENTOS')) {
+                    const textWithoutManipuladoras = obsText.replace(/cantidad\s+de\s+manipuladoras\s+afectadas\s*:\s*\d+/gi, '');
+                    const matches = textWithoutManipuladoras.match(/:\s*\d+/g);
+                    if (matches) {
+                        const validMatches = matches.filter(m => {
+                            const numMatch = m.match(/\d+/);
+                            return numMatch ? parseInt(numMatch[0], 10) > 0 : false;
+                        });
+                        savedVariables['ELEMENTOS'] = validMatches.length.toString();
+                    }
+                }
+
+                if (upperFormula.includes('MATERIAPRIMA')) {
+                    let sumMateriaPrima = 0;
+                    let foundMateriaPrima = false;
+
+                    const matchFrutas = obsText.match(/materias primas \(frutas y verduras\) afectadas:\s*(\d+)/i);
+                    if (matchFrutas) {
+                        sumMateriaPrima += parseInt(matchFrutas[1], 10);
+                        foundMateriaPrima = true;
+                    }
+
+                    const matchNoFrutas = obsText.match(/materias primas afectadas que no son frutas y verduras:\s*(\d+)/i);
+                    if (matchNoFrutas) {
+                        sumMateriaPrima += parseInt(matchNoFrutas[1], 10);
+                        foundMateriaPrima = true;
+                    }
+
+                    if (foundMateriaPrima) {
+                        savedVariables['MATERIAPRIMA'] = sumMateriaPrima.toString();
+                    }
+                }
+
+                if (!savedVariables['INSTRUMENTO'] && upperFormula.includes('INSTRUMENTO')) {
+                    let totalInstrumentos = 0;
+                    let foundAny = false;
+                    
+                    const termometroMatch = obsText.match(/(?:term[oó]metro(?:s)?).*?(\d+)/i);
+                    if (termometroMatch) {
+                        totalInstrumentos += parseInt(termometroMatch[1], 10);
+                        foundAny = true;
+                    }
+                    
+                    const balanzaMatch = obsText.match(/(?:balanza(?:s)?).*?(\d+)/i);
+                    if (balanzaMatch) {
+                        totalInstrumentos += parseInt(balanzaMatch[1], 10);
+                        foundAny = true;
+                    }
+                    
+                    if (foundAny) {
+                        savedVariables['INSTRUMENTO'] = totalInstrumentos.toString();
+                    }
+                }
+            }
         }
 
         const serviciosDisponibles = await prisma.multaServicio.findMany({
@@ -723,5 +982,38 @@ export async function getSchoolSuggestions(search: string) {
     } catch (error) {
         console.error('Error getSchoolSuggestions:', error)
         return { error: 'Error al buscar sugerencias.' }
+    }
+}
+
+export async function getAspectosDisponibles() {
+    if (!await checkPermission('manage_calculos_ee')) return { error: 'No tienes permisos.' }
+    try {
+        const aspectos = await prisma.aspectoEE.findMany({
+            select: {
+                letra: true,
+                descripcion: true
+            },
+            orderBy: {
+                letra: 'asc'
+            }
+        })
+        
+        // Deduplicate in JS
+        const uniqueMap = new Map<string, string>()
+        for (const a of aspectos) {
+            if (a.letra && !uniqueMap.has(a.letra.toUpperCase())) {
+                uniqueMap.set(a.letra.toUpperCase(), a.descripcion || '')
+            }
+        }
+        
+        const list = Array.from(uniqueMap.entries()).map(([letra, descripcion]) => ({
+            letra,
+            descripcion
+        })).sort((a, b) => a.letra.localeCompare(b.letra))
+        
+        return { data: list }
+    } catch (e: any) {
+        console.error('Error in getAspectosDisponibles:', e)
+        return { error: 'Error al obtener aspectos disponibles.' }
     }
 }

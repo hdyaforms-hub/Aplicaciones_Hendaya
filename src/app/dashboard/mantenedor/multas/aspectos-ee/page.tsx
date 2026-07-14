@@ -35,7 +35,7 @@ export default function AspectosEEPage() {
     const [isEdit, setIsEdit] = useState(false)
     const [formulaError, setFormulaError] = useState('')
 
-    const RESERVED_KEYWORDS = ['UTM', 'RACIONES', 'MATERIAPRIMA', 'INSTRUMENTO', 'MANIPULADORA', 'NIVELCONTROLADO', 'CANTSERVICIO', 'ELEMENTOS']
+    const RESERVED_KEYWORDS = ['UTM', 'RACIONES', 'MATERIAPRIMA', 'INSTRUMENTO', 'MANIPULADORA', 'MANIPULADORAAFECTADA', 'NIVELCONTROLADO', 'CANTSERVICIO', 'ELEMENTOS']
 
     const fetchData = async () => {
         setLoading(true)
@@ -110,6 +110,7 @@ export default function AspectosEEPage() {
             materiaPrima: Number(testCustomValues.MATERIAPRIMA || 0),
             instrumento: Number(testCustomValues.INSTRUMENTO || 0),
             manipuladora: Number(testCustomValues.MANIPULADORA || 0),
+            manipuladoraAfectada: Number(testCustomValues.MANIPULADORAAFECTADA || 0),
             nivelControlado: Number(testCustomValues.NIVELCONTROLADO || 0),
             cantServicio: Number(testCustomValues.CANTSERVICIO || 0),
             elementos: Number(testCustomValues.ELEMENTOS || 0)
@@ -128,7 +129,7 @@ export default function AspectosEEPage() {
         setLoadingLevels(false)
     }
 
-    const keywords = ['MATERIAPRIMA', 'INSTRUMENTO', 'MANIPULADORA', 'NIVELCONTROLADO', 'CANTSERVICIO', 'ELEMENTOS']
+    const keywords = ['MATERIAPRIMA', 'INSTRUMENTO', 'MANIPULADORA', 'MANIPULADORAAFECTADA', 'NIVELCONTROLADO', 'CANTSERVICIO', 'ELEMENTOS']
     const activeKeywords = keywords.filter(k => formData.formula.toUpperCase().includes(k))
 
     return (
@@ -191,6 +192,12 @@ export default function AspectosEEPage() {
                                     <h4 className="font-black text-cyan-700 text-sm tracking-widest uppercase mb-1">Manipuladora</h4>
                                     <p className="text-gray-600 text-sm leading-relaxed">
                                         Palabra reservada que habilitará un campo de entrada para registrar el nombre o RUT de la manipuladora observada.
+                                    </p>
+                                </div>
+                                <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                                    <h4 className="font-black text-cyan-700 text-sm tracking-widest uppercase mb-1">ManipuladoraAfectada</h4>
+                                    <p className="text-gray-600 text-sm leading-relaxed">
+                                        Palabra reservada que habilitará un campo de entrada para registrar la cantidad de manipuladoras afectadas.
                                     </p>
                                 </div>
                                 <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100">

@@ -68,23 +68,34 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
             }
             
             // Pre-populate with saved variables if any
-            if (res.savedVariables) {
-                const loadedValues = { ...res.savedVariables }
-                
-                // Backward compatibility: if NIVELCONTROLADO is stored as a number, map it back to the level label
-                const rawNivel = loadedValues['NIVELCONTROLADO']
-                if (rawNivel && !isNaN(Number(rawNivel))) {
-                    const racionesNum = Number(rawNivel)
-                    const matchingLevel = (res.pmpaNiveles || []).find(n => n.value === racionesNum)
-                    if (matchingLevel) {
-                        loadedValues['NIVELCONTROLADO'] = matchingLevel.label
-                    }
+            const loadedValues = res.savedVariables ? { ...res.savedVariables } : {}
+            
+            // Backward compatibility: if NIVELCONTROLADO is stored as a number, map it back to the level label
+            const rawNivel = loadedValues['NIVELCONTROLADO']
+            if (rawNivel && !isNaN(Number(rawNivel))) {
+                const racionesNum = Number(rawNivel)
+                const matchingLevel = (res.pmpaNiveles || []).find(n => n.value === racionesNum)
+                if (matchingLevel) {
+                    loadedValues['NIVELCONTROLADO'] = matchingLevel.label
                 }
-                
-                setCustomValues(loadedValues)
-            } else {
-                setCustomValues({})
             }
+            
+            // Apply defaults for numeric variables if they are needed but not present
+            if (res.keywordsNeeded) {
+                res.keywordsNeeded.forEach((k: string) => {
+                    if (['CANTSERVICIO', 'MANIPULADORAAFECTADA', 'MANIPULADORA', 'INSTRUMENTO', 'ELEMENTOS'].includes(k)) {
+                        if (!loadedValues[k] || loadedValues[k] === '0') {
+                            loadedValues[k] = '1'
+                        }
+                    } else if (k === 'MATERIAPRIMA') {
+                        if (!loadedValues[k]) {
+                            loadedValues[k] = '1'
+                        }
+                    }
+                })
+            }
+            
+            setCustomValues(loadedValues)
         }
         setLoading(false)
     }
@@ -102,9 +113,11 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
             // If user has not selected a level yet, default to total raciones as fallback
             const nivelControladoVal = selectedLevelObj ? selectedLevelObj.value : totalRaciones
             
-            const materiaPrimaVal = Number(customVals['MATERIAPRIMA'] || 1)
+            const materiaPrimaVal = customVals['MATERIAPRIMA'] !== undefined && customVals['MATERIAPRIMA'] !== '' ? Number(customVals['MATERIAPRIMA']) : 1
             const instrumentoVal = Number(customVals['INSTRUMENTO'] || 1)
             const manipuladoraVal = Number(customVals['MANIPULADORA'] || 1)
+            let manipuladoraAfectadaVal = Number(customVals['MANIPULADORAAFECTADA'] || 1)
+            if (manipuladoraAfectadaVal === 0) manipuladoraAfectadaVal = 1;
             const cantServicioVal = Number(customVals['CANTSERVICIO'] || 1)
             const elementosVal = Number(customVals['ELEMENTOS'] || 1)
 
@@ -114,6 +127,7 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
                 .replace(/NIVELCONTROLADO/g, nivelControladoVal.toString())
                 .replace(/MATERIAPRIMA/g, materiaPrimaVal.toString())
                 .replace(/INSTRUMENTO/g, instrumentoVal.toString())
+                .replace(/MANIPULADORAAFECTADA/g, manipuladoraAfectadaVal.toString())
                 .replace(/MANIPULADORA/g, manipuladoraVal.toString())
                 .replace(/CANTSERVICIO/g, cantServicioVal.toString())
                 .replace(/ELEMENTOS/g, elementosVal.toString())
@@ -381,7 +395,13 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
                                                     className="w-full px-3 py-2 rounded-lg border border-amber-200 focus:ring-2 focus:ring-amber-500 bg-white"
                                                     placeholder={`Ingrese valor para ${k}`}
                                                     value={customValues[k] || ''}
-                                                    onChange={e => setCustomValues(prev => ({ ...prev, [k]: e.target.value }))}
+                                                    onChange={e => {
+                                                        let val = e.target.value;
+                                                        if (['CANTSERVICIO', 'MANIPULADORAAFECTADA', 'MANIPULADORA', 'INSTRUMENTO', 'ELEMENTOS'].includes(k) && val === '0') {
+                                                            val = '1';
+                                                        }
+                                                        setCustomValues(prev => ({ ...prev, [k]: val }))
+                                                    }}
                                                 />
                                             )}
                                         </div>
@@ -465,7 +485,10 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
                                                                 {d.formulaAsignada.toUpperCase().includes('INSTRUMENTO') && (
                                                                     <span>🔧 INSTRUMENTO: {customValues['INSTRUMENTO'] || 1}</span>
                                                                 )}
-                                                                {d.formulaAsignada.toUpperCase().includes('MANIPULADORA') && (
+                                                                {/\bMANIPULADORAAFECTADA\b/.test(d.formulaAsignada.toUpperCase()) && (
+                                                                    <span>👩‍🍳 MANIPULADORA AFECTADA: {customValues['MANIPULADORAAFECTADA'] || 1}</span>
+                                                                )}
+                                                                {/\bMANIPULADORA\b/.test(d.formulaAsignada.toUpperCase()) && (
                                                                     <span>👩‍🍳 MANIPULADORA: {customValues['MANIPULADORA'] || 1}</span>
                                                                 )}
                                                                 {d.formulaAsignada.toUpperCase().includes('CANTSERVICIO') && (
