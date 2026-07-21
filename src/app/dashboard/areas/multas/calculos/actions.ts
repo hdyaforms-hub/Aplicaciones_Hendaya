@@ -16,6 +16,26 @@ async function checkPermission(permission: string) {
     return permissions.includes(permission)
 }
 
+export async function getSucursalesDisponibles() {
+    try {
+        const result = await prisma.colegiosMatriz.findMany({
+            select: { sucursal: true },
+            distinct: ['sucursal'],
+            where: {
+                sucursal: {
+                    not: null,
+                    not: ''
+                }
+            },
+            orderBy: { sucursal: 'asc' }
+        })
+        return { data: result.map(s => s.sucursal) }
+    } catch (e) {
+        console.error('Error fetching sucursales', e)
+        return { error: 'Error fetching sucursales' }
+    }
+}
+
 export async function getFoliosIncompletos(params: { 
     search?: string, 
     rbd?: string, 
@@ -25,7 +45,8 @@ export async function getFoliosIncompletos(params: {
     folio?: string, 
     estadoCalculo?: string,
     disponibilidad?: string,
-    aspecto?: string
+    aspecto?: string,
+    sucursal?: string
 }) {
     if (!await checkPermission('manage_calculos_ee')) return { error: 'No tienes permisos.' }
 
@@ -42,6 +63,16 @@ export async function getFoliosIncompletos(params: {
             whereClause.detalles.some.aspecto = {
                 startsWith: `${params.aspecto.toUpperCase()}.`
             }
+        }
+
+        // Sucursal logic
+        let sucursalRBDs: number[] | null = null
+        if (params.sucursal && params.sucursal !== 'Todas') {
+            const schoolsInSucursal = await prisma.colegiosMatriz.findMany({
+                where: { sucursal: params.sucursal },
+                select: { colRBD: true }
+            })
+            sucursalRBDs = schoolsInSucursal.map(s => s.colRBD)
         }
 
         // Search logic: RBD, Folio or School Name
@@ -76,6 +107,21 @@ export async function getFoliosIncompletos(params: {
 
         if (params.licitacion) whereClause.licitacion = { contains: params.licitacion }
         if (params.folio) whereClause.folio = { contains: params.folio }
+
+        // Apply sucursal constraint
+        if (sucursalRBDs !== null) {
+            if (whereClause.rbd && typeof whereClause.rbd === 'number') {
+                if (!sucursalRBDs.includes(whereClause.rbd)) {
+                    whereClause.rbd = -1 // Force no results
+                }
+            } else if (whereClause.OR) {
+                whereClause.AND = [
+                    { rbd: { in: sucursalRBDs } }
+                ]
+            } else {
+                whereClause.rbd = { in: sucursalRBDs }
+            }
+        }
 
         // Fetch the records
         let folios = await prisma.elementosEsenciales_Cab.findMany({

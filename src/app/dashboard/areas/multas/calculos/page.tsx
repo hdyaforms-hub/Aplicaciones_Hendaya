@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { getFoliosIncompletos, calculateAll, getSchoolSuggestions, getAspectosDisponibles } from './actions'
+import { getFoliosIncompletos, calculateAll, getSchoolSuggestions, getAspectosDisponibles, getSucursalesDisponibles } from './actions'
 import CalculoModal from './CalculoModal'
 
 export default function CalculosEEPage() {
@@ -15,6 +15,8 @@ export default function CalculosEEPage() {
     const [disponibilidad, setDisponibilidad] = useState('Todos')
     const [aspecto, setAspecto] = useState('Todos')
     const [aspectosList, setAspectosList] = useState<any[]>([])
+    const [sucursal, setSucursal] = useState('Todas')
+    const [sucursalesList, setSucursalesList] = useState<string[]>([])
     const [loading, setLoading] = useState(true)
     const [calculatingAll, setCalculatingAll] = useState(false)
     const [suggestions, setSuggestions] = useState<any[]>([])
@@ -35,7 +37,7 @@ export default function CalculosEEPage() {
         setLoading(true)
         try {
             const res = await getFoliosIncompletos({
-                search, mes, ano, licitacion, folio, estadoCalculo, disponibilidad, aspecto
+                search, mes, ano, licitacion, folio, estadoCalculo, disponibilidad, aspecto, sucursal
             })
             if (res.data) {
                 setRegistros(res.data)
@@ -48,17 +50,23 @@ export default function CalculosEEPage() {
     }
 
     useEffect(() => {
-        const loadAspectos = async () => {
+        const loadData = async () => {
             try {
-                const res = await getAspectosDisponibles()
-                if (res.data) {
-                    setAspectosList(res.data)
+                const [resAspectos, resSucursales] = await Promise.all([
+                    getAspectosDisponibles(),
+                    getSucursalesDisponibles()
+                ])
+                if (resAspectos.data) {
+                    setAspectosList(resAspectos.data)
+                }
+                if (resSucursales.data) {
+                    setSucursalesList(resSucursales.data)
                 }
             } catch (e) {
-                console.error('Error loading aspectos list:', e)
+                console.error('Error loading filter data:', e)
             }
         }
-        loadAspectos()
+        loadData()
     }, [])
 
     useEffect(() => {
@@ -66,12 +74,12 @@ export default function CalculosEEPage() {
             fetchRegistros()
         }, 500)
         return () => clearTimeout(timeoutId)
-    }, [search, mes, ano, licitacion, folio, estadoCalculo, disponibilidad, aspecto])
+    }, [search, mes, ano, licitacion, folio, estadoCalculo, disponibilidad, aspecto, sucursal])
 
     const handleCalculateAll = async () => {
         if (!confirm('¿Estás seguro de calcular todos los folios filtrados? Esto puede tardar un momento.')) return
         setCalculatingAll(true)
-        const res = await calculateAll({ search, mes, ano, licitacion, folio, estadoCalculo, disponibilidad, aspecto })
+        const res = await calculateAll({ search, mes, ano, licitacion, folio, estadoCalculo, disponibilidad, aspecto, sucursal })
         if (res.error) {
             alert(res.error)
         } else {
@@ -203,6 +211,21 @@ export default function CalculosEEPage() {
             {/* Filters */}
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-4">
+                    <div className="lg:col-span-2">
+                        <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2">Sucursal</label>
+                        <select
+                            value={sucursal}
+                            onChange={(e) => setSucursal(e.target.value)}
+                            className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-gray-900 font-bold"
+                        >
+                            <option value="Todas">Todas las sucursales</option>
+                            {sucursalesList.map((s) => (
+                                <option key={s} value={s}>
+                                    {s}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                     <div className="lg:col-span-3 relative">
                         <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2">RBD/Establecimiento</label>
                         <div className="relative">
