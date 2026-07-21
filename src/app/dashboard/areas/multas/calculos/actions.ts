@@ -22,10 +22,7 @@ export async function getSucursalesDisponibles() {
             select: { sucursal: true },
             distinct: ['sucursal'],
             where: {
-                sucursal: {
-                    not: null,
-                    not: ''
-                }
+                sucursal: { not: '' }
             },
             orderBy: { sucursal: 'asc' }
         })
@@ -368,7 +365,8 @@ export async function calculateAll(params: {
     folio?: string, 
     estadoCalculo?: string, 
     disponibilidad?: string,
-    aspecto?: string
+    aspecto?: string,
+    sucursal?: string
 }) {
     if (!await checkPermission('manage_calculos_ee')) return { error: 'No tienes permisos.' }
     const session = await getSession()
