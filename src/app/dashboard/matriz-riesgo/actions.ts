@@ -5,6 +5,7 @@ import { getSession } from '@/lib/session'
 import fs from 'fs/promises'
 import path from 'path'
 import crypto from 'crypto'
+import { uploadPath } from '@/lib/storage'
 
 export async function searchColegiosMatriz(query: string) {
     const session = await getSession()
@@ -158,7 +159,7 @@ export async function uploadMatrizFile(fileData: string, fileName: string, rbd: 
         if (!base64Content) return { error: 'Contenido de archivo inválido' }
 
         const buffer = Buffer.from(base64Content, 'base64')
-        const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'matriz-2026', String(rbd), section)
+        const uploadDir = uploadPath('matriz-2026', String(rbd), section)
         
         await fs.mkdir(uploadDir, { recursive: true })
         

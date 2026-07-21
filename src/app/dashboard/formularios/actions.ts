@@ -326,8 +326,9 @@ export async function uploadFile(formData: FormData) {
         const filename = `${Date.now()}-${file.name.replace(/\s+/g, '_')}`
         const path = require('path')
         const fs = require('fs')
+        const { UPLOADS_DIR } = require('@/lib/storage')
         
-        const uploadDir = path.join(process.cwd(), 'public', 'uploads')
+        const uploadDir = UPLOADS_DIR
         if (!fs.existsSync(uploadDir)) {
             fs.mkdirSync(uploadDir, { recursive: true })
         }

@@ -6,10 +6,11 @@ import { v4 as uuidv4 } from 'uuid'
 import fs from 'fs'
 import path from 'path'
 import { sendGenericaNotification } from '@/lib/notifications'
+import { uploadPath } from '@/lib/storage'
 
 // Ensure upload directory exists
 const encodePath = (p: string) => p
-const UPLOAD_DIR = path.join(process.cwd(), 'public', 'uploads', 'retorno-productos')
+const UPLOAD_DIR = uploadPath('retorno-productos')
 if (!fs.existsSync(UPLOAD_DIR)) {
     fs.mkdirSync(UPLOAD_DIR, { recursive: true })
 }
