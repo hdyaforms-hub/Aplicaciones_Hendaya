@@ -15,6 +15,7 @@ export default function ElementosEsencialesPage() {
     const [loading, setLoading] = useState(true)
     const [isUploadModalOpen, setIsUploadModalOpen] = useState(false)
     const [selectedIds, setSelectedIds] = useState<string[]>([])
+    const [isAdmin, setIsAdmin] = useState(false)
     
     // Autocomplete state
     const [searchInput, setSearchInput] = useState('')
@@ -63,6 +64,23 @@ export default function ElementosEsencialesPage() {
     useEffect(() => {
         fetchRegistros()
     }, [search, mes, ano, licitacion, folio, selectedRbd])
+
+    useEffect(() => {
+        const checkSession = async () => {
+            try {
+                const res = await fetch('/api/auth/me')
+                if (res.ok) {
+                    const data = await res.json()
+                    if (data.user?.user?.role?.name === 'Administrador') {
+                        setIsAdmin(true)
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching session:', error)
+            }
+        }
+        checkSession()
+    }, [])
 
     // Autocomplete effect
     useEffect(() => {
@@ -221,7 +239,7 @@ export default function ElementosEsencialesPage() {
                     >
                         <span>📊</span> Exportar a Excel
                     </button>
-                    {selectedIds.length > 0 && (
+                    {isAdmin && selectedIds.length > 0 && (
                         <button 
                             onClick={handleDeleteSelected}
                             className="px-4 py-1 bg-red-600 text-white rounded-xl shadow-sm shadow-red-600/20 font-semibold hover:bg-red-500 transition-all flex items-center gap-2 animate-in slide-in-from-right-4"
@@ -329,33 +347,35 @@ export default function ElementosEsencialesPage() {
                     <table className="w-full text-left text-sm text-gray-500">
                         <thead className="text-xs text-gray-700 uppercase bg-gray-50 border-b border-gray-100">
                             <tr>
-                                <th className="px-6 py-4 font-bold text-center">
-                                    <input 
-                                        type="checkbox" 
-                                        className="w-4 h-4 rounded border-gray-300 text-cyan-600 focus:ring-cyan-500"
-                                        checked={selectedIds.length === registros.length && registros.length > 0}
-                                        onChange={toggleSelectAll}
-                                    />
-                                </th>
+                                {isAdmin && (
+                                    <th className="px-6 py-4 font-bold text-center">
+                                        <input 
+                                            type="checkbox" 
+                                            className="w-4 h-4 rounded border-gray-300 text-cyan-600 focus:ring-cyan-500"
+                                            checked={selectedIds.length === registros.length && registros.length > 0}
+                                            onChange={toggleSelectAll}
+                                        />
+                                    </th>
+                                )}
                                 <th className="px-6 py-4 font-bold">Licitación</th>
                                 <th className="px-6 py-4 font-bold">Folio</th>
                                 <th className="px-6 py-4 font-bold">Fecha Supervisión</th>
                                 <th className="px-6 py-4 font-bold">RBD</th>
                                 <th className="px-6 py-4 font-bold">Establecimiento</th>
                                 <th className="px-6 py-4 font-bold">Archivo</th>
-                                <th className="px-6 py-4 font-bold text-center">Acciones</th>
+                                {isAdmin && <th className="px-6 py-4 font-bold text-center">Acciones</th>}
                             </tr>
                         </thead>
                         <tbody>
                             {loading ? (
                                 <tr>
-                                    <td colSpan={8} className="px-6 py-12 text-center text-gray-400">
+                                    <td colSpan={isAdmin ? 8 : 6} className="px-6 py-12 text-center text-gray-400">
                                         <span className="animate-pulse">Cargando registros...</span>
                                     </td>
                                 </tr>
                             ) : paginatedRegistros.length === 0 ? (
                                 <tr>
-                                    <td colSpan={8} className="px-6 py-12 text-center">
+                                    <td colSpan={isAdmin ? 8 : 6} className="px-6 py-12 text-center">
                                         <div className="flex flex-col items-center justify-center text-gray-400">
                                             <span className="text-4xl mb-2">📄</span>
                                             <p className="font-medium text-gray-500">No se encontraron registros</p>
@@ -370,14 +390,16 @@ export default function ElementosEsencialesPage() {
 
                                     return (
                                         <tr key={reg.id} className={`border-b border-gray-50 hover:bg-gray-50/50 transition-colors ${selectedIds.includes(reg.id) ? 'bg-cyan-50/30' : ''}`}>
-                                            <td className="px-4 py-1 text-center">
-                                                <input 
-                                                    type="checkbox" 
-                                                    className="w-3 h-3 rounded border-gray-300 text-cyan-600 focus:ring-cyan-500"
-                                                    checked={selectedIds.includes(reg.id)}
-                                                    onChange={() => toggleSelect(reg.id)}
-                                                />
-                                            </td>
+                                            {isAdmin && (
+                                                <td className="px-4 py-1 text-center">
+                                                    <input 
+                                                        type="checkbox" 
+                                                        className="w-3 h-3 rounded border-gray-300 text-cyan-600 focus:ring-cyan-500"
+                                                        checked={selectedIds.includes(reg.id)}
+                                                        onChange={() => toggleSelect(reg.id)}
+                                                    />
+                                                </td>
+                                            )}
                                             <td className="px-4 py-1 font-medium text-gray-900">{reg.licitacion || '-'}</td>
                                             <td className="px-4 py-1">
                                                 <button 
@@ -407,15 +429,17 @@ export default function ElementosEsencialesPage() {
                                                     </a>
                                                 ) : '-'}
                                             </td>
-                                            <td className="px-6 py-4 text-center">
-                                                <button
-                                                    onClick={() => handleDelete(reg.id)}
-                                                    className="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
-                                                    title="Eliminar registro y archivo"
-                                                >
-                                                    🗑️
-                                                </button>
-                                            </td>
+                                            {isAdmin && (
+                                                <td className="px-6 py-4 text-center">
+                                                    <button
+                                                        onClick={() => handleDelete(reg.id)}
+                                                        className="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
+                                                        title="Eliminar registro y archivo"
+                                                    >
+                                                        🗑️
+                                                    </button>
+                                                </td>
+                                            )}
                                         </tr>
                                     )
                                 })

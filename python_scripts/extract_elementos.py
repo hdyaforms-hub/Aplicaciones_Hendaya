@@ -103,13 +103,22 @@ def extract_data_from_pdf(pdf_path):
                         current_aspecto = None
                         for row in table[start_row:]:
                             if not any(row): continue
-                            if len(row) >= 5:
+                            
+                            # Asegurar que la fila tenga al menos 5 elementos
+                            row_list = list(row) + [''] * max(0, 5 - len(row))
+
+                            if len(row_list) >= 5:
                                 # Si la primera columna tiene un aspecto (A. , B. , etc)
-                                aspecto_val = str(row[0]).strip() if row[0] else ''
-                                obs_val = str(row[1]).strip() if row[1] else ''
-                                co_val = str(row[2]).strip() if row[2] else ''
-                                nc_val = str(row[3]).strip() if row[3] else ''
-                                na_val = str(row[4]).strip() if row[4] else ''
+                                aspecto_val = str(row_list[0]).strip() if row_list[0] else ''
+                                obs_val = str(row_list[1]).strip() if row_list[1] else ''
+
+                                # Si los nombres de columnas vienen invertidos en el PDF (Aspecto en col 2)
+                                if re.match(r'^[A-Z]\.', obs_val) and not re.match(r'^[A-Z]\.', aspecto_val):
+                                    aspecto_val, obs_val = obs_val, aspecto_val
+
+                                co_val = str(row_list[2]).strip() if row_list[2] else ''
+                                nc_val = str(row_list[3]).strip() if row_list[3] else ''
+                                na_val = str(row_list[4]).strip() if row_list[4] else ''
 
                                 if re.match(r'^[A-Z]\.', aspecto_val):
                                     # New Aspecto
@@ -123,11 +132,18 @@ def extract_data_from_pdf(pdf_path):
                                     detalles.append(current_aspecto)
                                 else:
                                     # Continuation of Observaciones
-                                    if current_aspecto and obs_val:
+                                    extra_text = []
+                                    if aspecto_val: extra_text.append(aspecto_val)
+                                    if obs_val: extra_text.append(obs_val)
+                                    
+                                    combined_extra = "\n".join(extra_text).strip()
+                                    
+                                    if current_aspecto and combined_extra:
                                         if current_aspecto['Observaciones o Medio de verificación']:
-                                            current_aspecto['Observaciones o Medio de verificación'] += '\n' + obs_val
+                                            current_aspecto['Observaciones o Medio de verificación'] += '\n' + combined_extra
                                         else:
-                                            current_aspecto['Observaciones o Medio de verificación'] = obs_val
+                                            current_aspecto['Observaciones o Medio de verificación'] = combined_extra
+                                            
                                     # Sometimes Aspecto is empty but CO, NC, NA are marked here (like the table structure shows)
                                     if current_aspecto:
                                         if 'X' in co_val: current_aspecto['CO'] = 'X'

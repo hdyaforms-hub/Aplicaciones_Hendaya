@@ -479,7 +479,7 @@ export async function calculateAll(params: {
                         const upperFormula = formula.toUpperCase();
 
                         if (!savedVars['MANIPULADORA'] && upperFormula.includes('MANIPULADORA')) {
-                            const regex = /(?:manipuladora(?:s)?\s*faltante(?:s)?|cantidad.*?faltante(?:s)?).*?(\d+)/i;
+                            const regex = /(?:manipuladora(?:s)?\s*faltante(?:s)?|cantidad[\s\S]*?faltante(?:s)?)[^\d]*(\d+)/i;
                             const matchRegex = obsText.match(regex);
                             if (matchRegex) {
                                 savedVars['MANIPULADORA'] = matchRegex[1];
@@ -492,7 +492,7 @@ export async function calculateAll(params: {
                         }
 
                         if (upperFormula.includes('MANIPULADORAAFECTADA')) {
-                            const regex = /(?:manipuladora(?:s)?\s*afectada(?:s)?|cantidad.*?afectada(?:s)?).*?(\d+)/i;
+                            const regex = /(?:manipuladora(?:s)?\s*afectada(?:s)?|cantidad[\s\S]*?afectada(?:s)?)[^\d]*(\d+)/i;
                             const matchRegex = obsText.match(regex);
                             if (matchRegex) {
                                 let extractedVal = parseInt(matchRegex[1], 10);
@@ -505,7 +505,7 @@ export async function calculateAll(params: {
 
                         if (!savedVars['ELEMENTOS'] && upperFormula.includes('ELEMENTOS')) {
                             // Remove "Cantidad de manipuladoras afectadas: X" to exclude it from the count
-                            const textWithoutManipuladoras = obsText.replace(/cantidad\s+de\s+manipuladoras\s+afectadas\s*:\s*\d+/gi, '');
+                            const textWithoutManipuladoras = obsText.replace(/cantidad[\s\S]*?manipuladoras[\s\S]*?afectadas[^\d]*\d+/gi, '');
                             // Count how many times ":" followed by a number > 0 appears
                             const matches = textWithoutManipuladoras.match(/:\s*\d+/g);
                             if (matches) {
@@ -521,13 +521,13 @@ export async function calculateAll(params: {
                             let sumMateriaPrima = 0;
                             let foundMateriaPrima = false;
 
-                            const matchFrutas = obsText.match(/materias primas \(frutas y verduras\) afectadas:\s*(\d+)/i);
+                            const matchFrutas = obsText.match(/materias primas \(frutas y verduras\) afectadas[^\d]*(\d+)/i);
                             if (matchFrutas) {
                                 sumMateriaPrima += parseInt(matchFrutas[1], 10);
                                 foundMateriaPrima = true;
                             }
 
-                            const matchNoFrutas = obsText.match(/materias primas afectadas que no son frutas y verduras:\s*(\d+)/i);
+                            const matchNoFrutas = obsText.match(/materias primas afectadas que no son frutas y verduras[^\d]*(\d+)/i);
                             if (matchNoFrutas) {
                                 sumMateriaPrima += parseInt(matchNoFrutas[1], 10);
                                 foundMateriaPrima = true;
@@ -542,13 +542,13 @@ export async function calculateAll(params: {
                             let totalInstrumentos = 0;
                             let foundAny = false;
                             
-                            const termometroMatch = obsText.match(/(?:term[oó]metro(?:s)?).*?(\d+)/i);
+                            const termometroMatch = obsText.match(/(?:term[oó]metro(?:s)?)[^\d]*(\d+)/i);
                             if (termometroMatch) {
                                 totalInstrumentos += parseInt(termometroMatch[1], 10);
                                 foundAny = true;
                             }
                             
-                            const balanzaMatch = obsText.match(/(?:balanza(?:s)?).*?(\d+)/i);
+                            const balanzaMatch = obsText.match(/(?:balanza(?:s)?)[^\d]*(\d+)/i);
                             if (balanzaMatch) {
                                 totalInstrumentos += parseInt(balanzaMatch[1], 10);
                                 foundAny = true;
@@ -818,7 +818,7 @@ export async function getDetalleFolioParaCalculo(folio: string) {
                 const upperFormula = d.formulaAsignada.toUpperCase();
 
                 if (!savedVariables['MANIPULADORA'] && upperFormula.includes('MANIPULADORA')) {
-                    const regex = /(?:manipuladora(?:s)?\s*faltante(?:s)?|cantidad.*?faltante(?:s)?).*?(\d+)/i;
+                    const regex = /(?:manipuladora(?:s)?\s*faltante(?:s)?|cantidad[\s\S]*?faltante(?:s)?)[^\d]*(\d+)/i;
                     const matchRegex = obsText.match(regex);
                     if (matchRegex) {
                         savedVariables['MANIPULADORA'] = matchRegex[1];
@@ -831,7 +831,7 @@ export async function getDetalleFolioParaCalculo(folio: string) {
                 }
 
                 if (upperFormula.includes('MANIPULADORAAFECTADA')) {
-                    const regex = /(?:manipuladora(?:s)?\s*afectada(?:s)?|cantidad.*?afectada(?:s)?).*?(\d+)/i;
+                    const regex = /(?:manipuladora(?:s)?\s*afectada(?:s)?|cantidad[\s\S]*?afectada(?:s)?)[^\d]*(\d+)/i;
                     const matchRegex = obsText.match(regex);
                     if (matchRegex) {
                         let extractedVal = parseInt(matchRegex[1], 10);
@@ -843,7 +843,7 @@ export async function getDetalleFolioParaCalculo(folio: string) {
                 }
 
                 if (!savedVariables['ELEMENTOS'] && upperFormula.includes('ELEMENTOS')) {
-                    const textWithoutManipuladoras = obsText.replace(/cantidad\s+de\s+manipuladoras\s+afectadas\s*:\s*\d+/gi, '');
+                    const textWithoutManipuladoras = obsText.replace(/cantidad[\s\S]*?manipuladoras[\s\S]*?afectadas[^\d]*\d+/gi, '');
                     const matches = textWithoutManipuladoras.match(/:\s*\d+/g);
                     if (matches) {
                         const validMatches = matches.filter(m => {
@@ -858,13 +858,13 @@ export async function getDetalleFolioParaCalculo(folio: string) {
                     let sumMateriaPrima = 0;
                     let foundMateriaPrima = false;
 
-                    const matchFrutas = obsText.match(/materias primas \(frutas y verduras\) afectadas:\s*(\d+)/i);
+                    const matchFrutas = obsText.match(/materias primas \(frutas y verduras\) afectadas[^\d]*(\d+)/i);
                     if (matchFrutas) {
                         sumMateriaPrima += parseInt(matchFrutas[1], 10);
                         foundMateriaPrima = true;
                     }
 
-                    const matchNoFrutas = obsText.match(/materias primas afectadas que no son frutas y verduras:\s*(\d+)/i);
+                    const matchNoFrutas = obsText.match(/materias primas afectadas que no son frutas y verduras[^\d]*(\d+)/i);
                     if (matchNoFrutas) {
                         sumMateriaPrima += parseInt(matchNoFrutas[1], 10);
                         foundMateriaPrima = true;
@@ -879,13 +879,13 @@ export async function getDetalleFolioParaCalculo(folio: string) {
                     let totalInstrumentos = 0;
                     let foundAny = false;
                     
-                    const termometroMatch = obsText.match(/(?:term[oó]metro(?:s)?).*?(\d+)/i);
+                    const termometroMatch = obsText.match(/(?:term[oó]metro(?:s)?)[^\d]*(\d+)/i);
                     if (termometroMatch) {
                         totalInstrumentos += parseInt(termometroMatch[1], 10);
                         foundAny = true;
                     }
                     
-                    const balanzaMatch = obsText.match(/(?:balanza(?:s)?).*?(\d+)/i);
+                    const balanzaMatch = obsText.match(/(?:balanza(?:s)?)[^\d]*(\d+)/i);
                     if (balanzaMatch) {
                         totalInstrumentos += parseInt(balanzaMatch[1], 10);
                         foundAny = true;
