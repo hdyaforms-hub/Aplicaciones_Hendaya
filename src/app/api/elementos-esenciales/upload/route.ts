@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma';
 import { getSession } from '@/lib/session';
 import { writeFile, mkdir } from 'fs/promises';
 import { join } from 'path';
+import { uploadPath } from '@/lib/storage';
 import { execFile } from 'child_process';
 import { promisify } from 'util';
 
@@ -32,7 +33,7 @@ export async function POST(request: Request) {
         const buffer = Buffer.from(bytes);
 
         // Directorio de subida
-        const uploadDir = join(process.cwd(), 'public', 'uploads', 'elementos-esenciales');
+        const uploadDir = uploadPath('elementos-esenciales');
         try {
             await mkdir(uploadDir, { recursive: true });
         } catch (e) {

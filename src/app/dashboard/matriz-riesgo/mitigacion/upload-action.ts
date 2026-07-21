@@ -3,6 +3,7 @@
 import { writeFile } from 'fs/promises'
 import { join } from 'path'
 import { v4 as uuidv4 } from 'uuid'
+import { uploadPath } from '@/lib/storage'
 
 export async function uploadMitigacionFiles(formData: FormData) {
     const files = formData.getAll('files') as File[]
@@ -10,7 +11,7 @@ export async function uploadMitigacionFiles(formData: FormData) {
     if (files.length > 4) return { error: 'Máximo 4 archivos por hallazgo.' }
 
     const paths: string[] = []
-    const uploadDir = join(process.cwd(), 'public', 'uploads', 'mitigacion')
+    const uploadDir = uploadPath('mitigacion')
 
     try {
         for (const file of files) {

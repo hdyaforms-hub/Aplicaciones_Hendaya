@@ -6,6 +6,7 @@ import { revalidatePath } from 'next/cache'
 import nodemailer from 'nodemailer'
 import path from 'path'
 import fs from 'fs'
+import { uploadPath } from '@/lib/storage'
 import crypto from 'crypto'
 
 const ENCRYPTION_KEY = crypto.createHash('sha256').update(String(process.env.SESSION_SECRET || 'super-secret-key-change-me')).digest('base64').substring(0, 32)
@@ -78,7 +79,7 @@ export async function saveTrabajoAction(formData: FormData) {
         const utInfo = await prisma.uT.findUnique({ where: { codUT: colegio.colut } })
 
         // Files Handling
-        const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'trabajos-preventivos')
+        const uploadDir = uploadPath('trabajos-preventivos')
         if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true })
 
         // 1. Documento Asociado (Required, 1)
