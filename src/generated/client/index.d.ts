@@ -51401,6 +51401,10 @@ export namespace Prisma {
     obsALosIncumplimiento: string | null
     nombreArchivo: string | null
     link: string | null
+    anulado: boolean | null
+    fechaAnulacion: Date | null
+    motivoAnulacion: string | null
+    usuarioAnulacion: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -51423,6 +51427,10 @@ export namespace Prisma {
     obsALosIncumplimiento: string | null
     nombreArchivo: string | null
     link: string | null
+    anulado: boolean | null
+    fechaAnulacion: Date | null
+    motivoAnulacion: string | null
+    usuarioAnulacion: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -51445,6 +51453,10 @@ export namespace Prisma {
     obsALosIncumplimiento: number
     nombreArchivo: number
     link: number
+    anulado: number
+    fechaAnulacion: number
+    motivoAnulacion: number
+    usuarioAnulacion: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -51479,6 +51491,10 @@ export namespace Prisma {
     obsALosIncumplimiento?: true
     nombreArchivo?: true
     link?: true
+    anulado?: true
+    fechaAnulacion?: true
+    motivoAnulacion?: true
+    usuarioAnulacion?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -51501,6 +51517,10 @@ export namespace Prisma {
     obsALosIncumplimiento?: true
     nombreArchivo?: true
     link?: true
+    anulado?: true
+    fechaAnulacion?: true
+    motivoAnulacion?: true
+    usuarioAnulacion?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -51523,6 +51543,10 @@ export namespace Prisma {
     obsALosIncumplimiento?: true
     nombreArchivo?: true
     link?: true
+    anulado?: true
+    fechaAnulacion?: true
+    motivoAnulacion?: true
+    usuarioAnulacion?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -51632,6 +51656,10 @@ export namespace Prisma {
     obsALosIncumplimiento: string | null
     nombreArchivo: string
     link: string | null
+    anulado: boolean
+    fechaAnulacion: Date | null
+    motivoAnulacion: string | null
+    usuarioAnulacion: string | null
     createdAt: Date
     updatedAt: Date
     _count: ElementosEsenciales_CabCountAggregateOutputType | null
@@ -51673,6 +51701,10 @@ export namespace Prisma {
     obsALosIncumplimiento?: boolean
     nombreArchivo?: boolean
     link?: boolean
+    anulado?: boolean
+    fechaAnulacion?: boolean
+    motivoAnulacion?: boolean
+    usuarioAnulacion?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     detalles?: boolean | ElementosEsenciales_Cab$detallesArgs<ExtArgs>
@@ -51697,6 +51729,10 @@ export namespace Prisma {
     obsALosIncumplimiento?: boolean
     nombreArchivo?: boolean
     link?: boolean
+    anulado?: boolean
+    fechaAnulacion?: boolean
+    motivoAnulacion?: boolean
+    usuarioAnulacion?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["elementosEsenciales_Cab"]>
@@ -51719,6 +51755,10 @@ export namespace Prisma {
     obsALosIncumplimiento?: boolean
     nombreArchivo?: boolean
     link?: boolean
+    anulado?: boolean
+    fechaAnulacion?: boolean
+    motivoAnulacion?: boolean
+    usuarioAnulacion?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
@@ -51752,6 +51792,10 @@ export namespace Prisma {
       obsALosIncumplimiento: string | null
       nombreArchivo: string
       link: string | null
+      anulado: boolean
+      fechaAnulacion: Date | null
+      motivoAnulacion: string | null
+      usuarioAnulacion: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["elementosEsenciales_Cab"]>
@@ -52165,6 +52209,10 @@ export namespace Prisma {
     readonly obsALosIncumplimiento: FieldRef<"ElementosEsenciales_Cab", 'String'>
     readonly nombreArchivo: FieldRef<"ElementosEsenciales_Cab", 'String'>
     readonly link: FieldRef<"ElementosEsenciales_Cab", 'String'>
+    readonly anulado: FieldRef<"ElementosEsenciales_Cab", 'Boolean'>
+    readonly fechaAnulacion: FieldRef<"ElementosEsenciales_Cab", 'DateTime'>
+    readonly motivoAnulacion: FieldRef<"ElementosEsenciales_Cab", 'String'>
+    readonly usuarioAnulacion: FieldRef<"ElementosEsenciales_Cab", 'String'>
     readonly createdAt: FieldRef<"ElementosEsenciales_Cab", 'DateTime'>
     readonly updatedAt: FieldRef<"ElementosEsenciales_Cab", 'DateTime'>
   }
@@ -83105,6 +83153,10 @@ export namespace Prisma {
     obsALosIncumplimiento: 'obsALosIncumplimiento',
     nombreArchivo: 'nombreArchivo',
     link: 'link',
+    anulado: 'anulado',
+    fechaAnulacion: 'fechaAnulacion',
+    motivoAnulacion: 'motivoAnulacion',
+    usuarioAnulacion: 'usuarioAnulacion',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -87415,6 +87467,10 @@ export namespace Prisma {
     obsALosIncumplimiento?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
     nombreArchivo?: StringFilter<"ElementosEsenciales_Cab"> | string
     link?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
+    anulado?: BoolFilter<"ElementosEsenciales_Cab"> | boolean
+    fechaAnulacion?: DateTimeNullableFilter<"ElementosEsenciales_Cab"> | Date | string | null
+    motivoAnulacion?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
+    usuarioAnulacion?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
     createdAt?: DateTimeFilter<"ElementosEsenciales_Cab"> | Date | string
     updatedAt?: DateTimeFilter<"ElementosEsenciales_Cab"> | Date | string
     detalles?: ElementosEsenciales_DetListRelationFilter
@@ -87438,6 +87494,10 @@ export namespace Prisma {
     obsALosIncumplimiento?: SortOrderInput | SortOrder
     nombreArchivo?: SortOrder
     link?: SortOrderInput | SortOrder
+    anulado?: SortOrder
+    fechaAnulacion?: SortOrderInput | SortOrder
+    motivoAnulacion?: SortOrderInput | SortOrder
+    usuarioAnulacion?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     detalles?: ElementosEsenciales_DetOrderByRelationAggregateInput
@@ -87464,6 +87524,10 @@ export namespace Prisma {
     obsALosIncumplimiento?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
     nombreArchivo?: StringFilter<"ElementosEsenciales_Cab"> | string
     link?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
+    anulado?: BoolFilter<"ElementosEsenciales_Cab"> | boolean
+    fechaAnulacion?: DateTimeNullableFilter<"ElementosEsenciales_Cab"> | Date | string | null
+    motivoAnulacion?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
+    usuarioAnulacion?: StringNullableFilter<"ElementosEsenciales_Cab"> | string | null
     createdAt?: DateTimeFilter<"ElementosEsenciales_Cab"> | Date | string
     updatedAt?: DateTimeFilter<"ElementosEsenciales_Cab"> | Date | string
     detalles?: ElementosEsenciales_DetListRelationFilter
@@ -87487,6 +87551,10 @@ export namespace Prisma {
     obsALosIncumplimiento?: SortOrderInput | SortOrder
     nombreArchivo?: SortOrder
     link?: SortOrderInput | SortOrder
+    anulado?: SortOrder
+    fechaAnulacion?: SortOrderInput | SortOrder
+    motivoAnulacion?: SortOrderInput | SortOrder
+    usuarioAnulacion?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ElementosEsenciales_CabCountOrderByAggregateInput
@@ -87517,6 +87585,10 @@ export namespace Prisma {
     obsALosIncumplimiento?: StringNullableWithAggregatesFilter<"ElementosEsenciales_Cab"> | string | null
     nombreArchivo?: StringWithAggregatesFilter<"ElementosEsenciales_Cab"> | string
     link?: StringNullableWithAggregatesFilter<"ElementosEsenciales_Cab"> | string | null
+    anulado?: BoolWithAggregatesFilter<"ElementosEsenciales_Cab"> | boolean
+    fechaAnulacion?: DateTimeNullableWithAggregatesFilter<"ElementosEsenciales_Cab"> | Date | string | null
+    motivoAnulacion?: StringNullableWithAggregatesFilter<"ElementosEsenciales_Cab"> | string | null
+    usuarioAnulacion?: StringNullableWithAggregatesFilter<"ElementosEsenciales_Cab"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"ElementosEsenciales_Cab"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"ElementosEsenciales_Cab"> | Date | string
   }
@@ -94020,6 +94092,10 @@ export namespace Prisma {
     obsALosIncumplimiento?: string | null
     nombreArchivo: string
     link?: string | null
+    anulado?: boolean
+    fechaAnulacion?: Date | string | null
+    motivoAnulacion?: string | null
+    usuarioAnulacion?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     detalles?: ElementosEsenciales_DetCreateNestedManyWithoutCabInput
@@ -94043,6 +94119,10 @@ export namespace Prisma {
     obsALosIncumplimiento?: string | null
     nombreArchivo: string
     link?: string | null
+    anulado?: boolean
+    fechaAnulacion?: Date | string | null
+    motivoAnulacion?: string | null
+    usuarioAnulacion?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     detalles?: ElementosEsenciales_DetUncheckedCreateNestedManyWithoutCabInput
@@ -94066,6 +94146,10 @@ export namespace Prisma {
     obsALosIncumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
     nombreArchivo?: StringFieldUpdateOperationsInput | string
     link?: NullableStringFieldUpdateOperationsInput | string | null
+    anulado?: BoolFieldUpdateOperationsInput | boolean
+    fechaAnulacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    motivoAnulacion?: NullableStringFieldUpdateOperationsInput | string | null
+    usuarioAnulacion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     detalles?: ElementosEsenciales_DetUpdateManyWithoutCabNestedInput
@@ -94089,6 +94173,10 @@ export namespace Prisma {
     obsALosIncumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
     nombreArchivo?: StringFieldUpdateOperationsInput | string
     link?: NullableStringFieldUpdateOperationsInput | string | null
+    anulado?: BoolFieldUpdateOperationsInput | boolean
+    fechaAnulacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    motivoAnulacion?: NullableStringFieldUpdateOperationsInput | string | null
+    usuarioAnulacion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     detalles?: ElementosEsenciales_DetUncheckedUpdateManyWithoutCabNestedInput
@@ -94112,6 +94200,10 @@ export namespace Prisma {
     obsALosIncumplimiento?: string | null
     nombreArchivo: string
     link?: string | null
+    anulado?: boolean
+    fechaAnulacion?: Date | string | null
+    motivoAnulacion?: string | null
+    usuarioAnulacion?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -94134,6 +94226,10 @@ export namespace Prisma {
     obsALosIncumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
     nombreArchivo?: StringFieldUpdateOperationsInput | string
     link?: NullableStringFieldUpdateOperationsInput | string | null
+    anulado?: BoolFieldUpdateOperationsInput | boolean
+    fechaAnulacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    motivoAnulacion?: NullableStringFieldUpdateOperationsInput | string | null
+    usuarioAnulacion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -94156,6 +94252,10 @@ export namespace Prisma {
     obsALosIncumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
     nombreArchivo?: StringFieldUpdateOperationsInput | string
     link?: NullableStringFieldUpdateOperationsInput | string | null
+    anulado?: BoolFieldUpdateOperationsInput | boolean
+    fechaAnulacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    motivoAnulacion?: NullableStringFieldUpdateOperationsInput | string | null
+    usuarioAnulacion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -99233,6 +99333,10 @@ export namespace Prisma {
     obsALosIncumplimiento?: SortOrder
     nombreArchivo?: SortOrder
     link?: SortOrder
+    anulado?: SortOrder
+    fechaAnulacion?: SortOrder
+    motivoAnulacion?: SortOrder
+    usuarioAnulacion?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -99260,6 +99364,10 @@ export namespace Prisma {
     obsALosIncumplimiento?: SortOrder
     nombreArchivo?: SortOrder
     link?: SortOrder
+    anulado?: SortOrder
+    fechaAnulacion?: SortOrder
+    motivoAnulacion?: SortOrder
+    usuarioAnulacion?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -99282,6 +99390,10 @@ export namespace Prisma {
     obsALosIncumplimiento?: SortOrder
     nombreArchivo?: SortOrder
     link?: SortOrder
+    anulado?: SortOrder
+    fechaAnulacion?: SortOrder
+    motivoAnulacion?: SortOrder
+    usuarioAnulacion?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -107034,6 +107146,10 @@ export namespace Prisma {
     obsALosIncumplimiento?: string | null
     nombreArchivo: string
     link?: string | null
+    anulado?: boolean
+    fechaAnulacion?: Date | string | null
+    motivoAnulacion?: string | null
+    usuarioAnulacion?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -107056,6 +107172,10 @@ export namespace Prisma {
     obsALosIncumplimiento?: string | null
     nombreArchivo: string
     link?: string | null
+    anulado?: boolean
+    fechaAnulacion?: Date | string | null
+    motivoAnulacion?: string | null
+    usuarioAnulacion?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -107094,6 +107214,10 @@ export namespace Prisma {
     obsALosIncumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
     nombreArchivo?: StringFieldUpdateOperationsInput | string
     link?: NullableStringFieldUpdateOperationsInput | string | null
+    anulado?: BoolFieldUpdateOperationsInput | boolean
+    fechaAnulacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    motivoAnulacion?: NullableStringFieldUpdateOperationsInput | string | null
+    usuarioAnulacion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -107116,6 +107240,10 @@ export namespace Prisma {
     obsALosIncumplimiento?: NullableStringFieldUpdateOperationsInput | string | null
     nombreArchivo?: StringFieldUpdateOperationsInput | string
     link?: NullableStringFieldUpdateOperationsInput | string | null
+    anulado?: BoolFieldUpdateOperationsInput | boolean
+    fechaAnulacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    motivoAnulacion?: NullableStringFieldUpdateOperationsInput | string | null
+    usuarioAnulacion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

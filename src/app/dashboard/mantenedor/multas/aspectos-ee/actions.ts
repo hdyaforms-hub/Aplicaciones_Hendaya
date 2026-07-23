@@ -96,7 +96,7 @@ export async function deleteAspectoEE(id: string) {
     }
 }
 
-export async function testFormula(folio: string, formula: string, customValues?: { materiaPrima?: number, instrumento?: number, manipuladora?: number, manipuladoraAfectada?: number, nivelControlado?: number, cantServicio?: number, elementos?: number }) {
+export async function testFormula(folio: string, formula: string, customValues?: { materiaPrima?: number, materiaPrimaTpmpap?: number, instrumento?: number, manipuladora?: number, manipuladoraAfectada?: number, nivelControlado?: number, cantServicio?: number, elementos?: number }) {
     if (!await checkPermission()) return { error: 'No tienes permisos.' }
 
     try {
@@ -169,6 +169,7 @@ export async function testFormula(folio: string, formula: string, customValues?:
             .replace(/UTM/g, utmValue.toString())
             .replace(/RACIONES/g, finalRaciones.toString())
             .replace(/NIVELCONTROLADO/g, finalNivelControlado.toString())
+            .replace(/MATERIAPRIMATPMPAP/g, (customValues?.materiaPrimaTpmpap ?? 1).toString())
             .replace(/MATERIAPRIMA/g, (customValues?.materiaPrima ?? 1).toString())
             .replace(/INSTRUMENTO/g, (customValues?.instrumento ?? 1).toString())
             .replace(/MANIPULADORAAFECTADA/g, manipuladoraAfectadaTest.toString())

@@ -697,6 +697,10 @@ model ElementosEsenciales_Cab {
   obsALosIncumplimiento     String?                   @db.Text
   nombreArchivo             String
   link                      String?
+  anulado                   Boolean                   @default(false)
+  fechaAnulacion            DateTime?
+  motivoAnulacion           String?                   @db.Text
+  usuarioAnulacion          String?
   createdAt                 DateTime                  @default(now())
   updatedAt                 DateTime                  @updatedAt
   detalles                  ElementosEsenciales_Det[]

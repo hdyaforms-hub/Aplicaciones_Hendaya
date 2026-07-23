@@ -1,17 +1,19 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { getFoliosIncompletos, calculateAll, getSchoolSuggestions, getAspectosDisponibles, getSucursalesDisponibles } from './actions'
+import { getFoliosIncompletos, calculateAll, getSchoolSuggestions, getAspectosDisponibles, getSucursalesDisponibles, reversarAnulacionFolio } from './actions'
 import CalculoModal from './CalculoModal'
+import AnularModal from './AnularModal'
 
 export default function CalculosEEPage() {
     const [registros, setRegistros] = useState<any[]>([])
     const [search, setSearch] = useState('')
     const [mes, setMes] = useState('Todos los meses')
-    const [ano, setAno] = useState('2024')
+    const [ano, setAno] = useState(new Date().getFullYear().toString())
     const [licitacion, setLicitacion] = useState('')
     const [folio, setFolio] = useState('')
     const [estadoCalculo, setEstadoCalculo] = useState('Todos')
+    const [estadoAnulacion, setEstadoAnulacion] = useState('No Anulados')
     const [disponibilidad, setDisponibilidad] = useState('Todos')
     const [aspecto, setAspecto] = useState('Todos')
     const [aspectosList, setAspectosList] = useState<any[]>([])
@@ -28,6 +30,7 @@ export default function CalculosEEPage() {
 
     // Modal state
     const [selectedFolio, setSelectedFolio] = useState<string | null>(null)
+    const [anularFolioId, setAnularFolioId] = useState<string | null>(null)
 
     // Sorting state
     const [sortColumn, setSortColumn] = useState<string>('fechaSupervision')
@@ -37,7 +40,7 @@ export default function CalculosEEPage() {
         setLoading(true)
         try {
             const res = await getFoliosIncompletos({
-                search, mes, ano, licitacion, folio, estadoCalculo, disponibilidad, aspecto, sucursal
+                search, mes, ano, licitacion, folio, estadoCalculo, disponibilidad, aspecto, sucursal, estadoAnulacion
             })
             if (res.data) {
                 setRegistros(res.data)
@@ -74,7 +77,7 @@ export default function CalculosEEPage() {
             fetchRegistros()
         }, 500)
         return () => clearTimeout(timeoutId)
-    }, [search, mes, ano, licitacion, folio, estadoCalculo, disponibilidad, aspecto, sucursal])
+    }, [search, mes, ano, licitacion, folio, estadoCalculo, disponibilidad, aspecto, sucursal, estadoAnulacion])
 
     const handleCalculateAll = async () => {
         if (!confirm('¿Estás seguro de calcular todos los folios filtrados? Esto puede tardar un momento.')) return
@@ -89,15 +92,16 @@ export default function CalculosEEPage() {
         setCalculatingAll(false)
     }
 
-    const totalCalculado = registros.reduce((acc, curr) => acc + (curr.montoCalculado || 0), 0)
-    const totalNcCount = registros.reduce((acc, curr) => acc + (curr.ncCount || 0), 0)
-    const totalNcSolucionableCount = registros.reduce((acc, curr) => acc + (curr.ncSolucionableCount || 0), 0)
-    const totalNcNoSolucionableCount = registros.reduce((acc, curr) => acc + (curr.ncNoSolucionableCount || 0), 0)
-    const totalMontoSolucionable = registros.reduce((acc, curr) => acc + (curr.montoSolucionable || 0), 0)
-    const totalMontoNoSolucionable = registros.reduce((acc, curr) => acc + (curr.montoNoSolucionable || 0), 0)
+    const registrosValidos = registros.filter(r => !r.anulado)
+    const totalCalculado = registrosValidos.reduce((acc, curr) => acc + (curr.montoCalculado || 0), 0)
+    const totalNcCount = registrosValidos.reduce((acc, curr) => acc + (curr.ncCount || 0), 0)
+    const totalNcSolucionableCount = registrosValidos.reduce((acc, curr) => acc + (curr.ncSolucionableCount || 0), 0)
+    const totalNcNoSolucionableCount = registrosValidos.reduce((acc, curr) => acc + (curr.ncNoSolucionableCount || 0), 0)
+    const totalMontoSolucionable = registrosValidos.reduce((acc, curr) => acc + (curr.montoSolucionable || 0), 0)
+    const totalMontoNoSolucionable = registrosValidos.reduce((acc, curr) => acc + (curr.montoNoSolucionable || 0), 0)
 
     // Detailed breakdown by year
-    const breakdown = registros.reduce((acc: any, curr) => {
+    const breakdown = registrosValidos.reduce((acc: any, curr) => {
         const date = curr.fechaSupervision ? new Date(curr.fechaSupervision) : null
         const year = date ? date.getFullYear() : 'S/F'
         if (!acc[year]) acc[year] = { total: 0, hasIssues: false, ncCount: 0, ncSolucionableCount: 0, ncNoSolucionableCount: 0, montoSolucionable: 0, montoNoSolucionable: 0 }
@@ -318,7 +322,7 @@ export default function CalculosEEPage() {
                         <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2">Año</label>
                         <input
                             type="text"
-                            placeholder="2024"
+                            placeholder={new Date().getFullYear().toString()}
                             value={ano}
                             onChange={(e) => setAno(e.target.value)}
                             className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-gray-900 font-medium text-center"
@@ -362,6 +366,18 @@ export default function CalculosEEPage() {
                             <option value="Todos">Todos</option>
                             <option value="LISTO">LISTOS PARA CALCULAR</option>
                             <option value="FALTANTE">CON DATOS FALTANTES</option>
+                        </select>
+                    </div>
+                    <div className="lg:col-span-2">
+                        <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2">Anulación</label>
+                        <select
+                            value={estadoAnulacion}
+                            onChange={(e) => setEstadoAnulacion(e.target.value)}
+                            className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-gray-900 font-bold"
+                        >
+                            <option value="Todos">Todos</option>
+                            <option value="No Anulados">No Anulados</option>
+                            <option value="Anulados">Anulados</option>
                         </select>
                     </div>
                 </div>
@@ -420,7 +436,22 @@ export default function CalculosEEPage() {
                                         <td className="px-6 py-4 text-slate-700 font-medium">{reg.licitacion}</td>
                                         <td className="px-6 py-4 text-slate-800 font-bold">
                                             <div className="flex items-center gap-1.5">
-                                                <span>{reg.folio}</span>
+                                                <div className="relative group/tooltip">
+                                                    <span className={reg.anulado ? "text-rose-600 line-through cursor-help decoration-2" : ""}>
+                                                        {reg.folio}
+                                                    </span>
+                                                    {reg.anulado && (
+                                                        <div className="absolute z-10 bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/tooltip:flex flex-col items-center">
+                                                            <div className="bg-gray-900 text-white text-[11px] rounded-lg py-2 px-3 shadow-xl w-64 text-center leading-relaxed">
+                                                                <p className="font-bold text-rose-400 mb-1 uppercase tracking-wider">Folio Anulado</p>
+                                                                <p className="mb-0.5"><span className="text-gray-400 font-medium">Fecha:</span> {new Date(reg.fechaAnulacion).toLocaleDateString()}</p>
+                                                                <p className="mb-0.5"><span className="text-gray-400 font-medium">Por:</span> {reg.usuarioAnulacion}</p>
+                                                                <p><span className="text-gray-400 font-medium">Motivo:</span> {reg.motivoAnulacion}</p>
+                                                            </div>
+                                                            <div className="w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px] border-t-gray-900"></div>
+                                                        </div>
+                                                    )}
+                                                </div>
                                                 {reg.esServicioManual && (
                                                     <span 
                                                         title={`Servicio seleccionado manualmente: ${reg.servicioManual}\nObs: ${reg.observacionManualServicio}`}
@@ -465,7 +496,8 @@ export default function CalculosEEPage() {
                                                 {reg.calculoEstado === 'CALCULADO' && <span className="px-2 py-1 bg-emerald-50 text-emerald-700 text-xs font-bold rounded border border-emerald-100">CALCULADO</span>}
                                                 {reg.calculoEstado === 'CALCULO_MASIVO' && <span className="px-2 py-1 bg-indigo-50 text-indigo-700 text-xs font-bold rounded border border-indigo-100">CÁLCULO MASIVO</span>}
                                                 {reg.calculoEstado === 'PENDIENTE' && <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs font-bold rounded border border-gray-200">PENDIENTE</span>}
-                                                
+                                                {reg.anulado && <span className="px-2 py-1 bg-rose-50 text-rose-700 text-xs font-bold rounded border border-rose-200" title={`Anulado el ${new Date(reg.fechaAnulacion).toLocaleDateString()} por ${reg.usuarioAnulacion}\nMotivo: ${reg.motivoAnulacion}`}>ANULADO</span>}
+
                                                 {reg.missingFormula && (
                                                     <span className="px-1.5 py-0.5 bg-red-50 text-red-600 text-[9px] font-black rounded border border-red-100 flex items-center gap-1">
                                                         ⚠️ SIN FORMULA
@@ -492,12 +524,36 @@ export default function CalculosEEPage() {
                                             ${(reg.montoCalculado || 0).toLocaleString(undefined, { maximumFractionDigits: 0 })}
                                         </td>
                                         <td className="px-6 py-4 text-center">
-                                            <button
-                                                onClick={() => setSelectedFolio(reg.folio)}
-                                                className="px-3 py-1.5 bg-gray-900 hover:bg-black text-white text-xs font-bold rounded-lg transition-colors"
-                                            >
-                                                Calcular
-                                            </button>
+                                            <div className="flex flex-col gap-2">
+                                                {reg.anulado ? (
+                                                    <button
+                                                        onClick={async () => {
+                                                            if(confirm('¿Seguro que deseas reversar la anulación de este folio?')) {
+                                                                await reversarAnulacionFolio(reg.folio)
+                                                                fetchRegistros()
+                                                            }
+                                                        }}
+                                                        className="px-3 py-1.5 bg-white hover:bg-gray-50 text-gray-700 border border-gray-300 text-xs font-bold rounded-lg transition-colors shadow-sm"
+                                                    >
+                                                        Reversar
+                                                    </button>
+                                                ) : (
+                                                    <>
+                                                        <button
+                                                            onClick={() => setSelectedFolio(reg.folio)}
+                                                            className="px-3 py-1.5 bg-gray-900 hover:bg-black text-white text-xs font-bold rounded-lg transition-colors shadow-sm"
+                                                        >
+                                                            Calcular
+                                                        </button>
+                                                        <button
+                                                            onClick={() => setAnularFolioId(reg.folio)}
+                                                            className="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-bold rounded-lg transition-colors"
+                                                        >
+                                                            Anular
+                                                        </button>
+                                                    </>
+                                                )}
+                                            </div>
                                         </td>
                                     </tr>
                                 ))
@@ -543,6 +599,18 @@ export default function CalculosEEPage() {
                     onCalculated={() => {
                         fetchRegistros()
                         setSelectedFolio(null)
+                    }}
+                />
+            )}
+
+            {anularFolioId && (
+                <AnularModal
+                    folio={anularFolioId}
+                    isOpen={!!anularFolioId}
+                    onClose={() => setAnularFolioId(null)}
+                    onAnulado={() => {
+                        fetchRegistros()
+                        setAnularFolioId(null)
                     }}
                 />
             )}

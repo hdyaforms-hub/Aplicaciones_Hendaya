@@ -35,7 +35,7 @@ export default function AspectosEEPage() {
     const [isEdit, setIsEdit] = useState(false)
     const [formulaError, setFormulaError] = useState('')
 
-    const RESERVED_KEYWORDS = ['UTM', 'RACIONES', 'MATERIAPRIMA', 'INSTRUMENTO', 'MANIPULADORA', 'MANIPULADORAAFECTADA', 'NIVELCONTROLADO', 'CANTSERVICIO', 'ELEMENTOS']
+    const RESERVED_KEYWORDS = ['UTM', 'RACIONES', 'MATERIAPRIMA', 'MATERIAPRIMATPMPAP', 'INSTRUMENTO', 'MANIPULADORA', 'MANIPULADORAAFECTADA', 'NIVELCONTROLADO', 'CANTSERVICIO', 'ELEMENTOS']
 
     const fetchData = async () => {
         setLoading(true)
@@ -113,7 +113,8 @@ export default function AspectosEEPage() {
             manipuladoraAfectada: Number(testCustomValues.MANIPULADORAAFECTADA || 0),
             nivelControlado: Number(testCustomValues.NIVELCONTROLADO || 0),
             cantServicio: Number(testCustomValues.CANTSERVICIO || 0),
-            elementos: Number(testCustomValues.ELEMENTOS || 0)
+            elementos: Number(testCustomValues.ELEMENTOS || 0),
+            materiaPrimaTpmpap: Number(testCustomValues.MATERIAPRIMATPMPAP || 0)
         })
         if (res.error) setTestError(res.error)
         else setTestResult(res.data)
@@ -129,7 +130,7 @@ export default function AspectosEEPage() {
         setLoadingLevels(false)
     }
 
-    const keywords = ['MATERIAPRIMA', 'INSTRUMENTO', 'MANIPULADORA', 'MANIPULADORAAFECTADA', 'NIVELCONTROLADO', 'CANTSERVICIO', 'ELEMENTOS']
+    const keywords = ['MATERIAPRIMA', 'MATERIAPRIMATPMPAP', 'INSTRUMENTO', 'MANIPULADORA', 'MANIPULADORAAFECTADA', 'NIVELCONTROLADO', 'CANTSERVICIO', 'ELEMENTOS']
     const activeKeywords = keywords.filter(k => formData.formula.toUpperCase().includes(k))
 
     return (
@@ -180,6 +181,12 @@ export default function AspectosEEPage() {
                                     <h4 className="font-black text-cyan-700 text-sm tracking-widest uppercase mb-1">MateriaPrima</h4>
                                     <p className="text-gray-600 text-sm leading-relaxed">
                                         Palabra reservada que habilitará un campo de entrada para que el usuario ingrese información sobre la materia prima durante la supervisión.
+                                    </p>
+                                </div>
+                                <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                                    <h4 className="font-black text-cyan-700 text-sm tracking-widest uppercase mb-1">MateriaPrimaTpmpap</h4>
+                                    <p className="text-gray-600 text-sm leading-relaxed">
+                                        Palabra reservada que habilitará un campo de entrada para que el usuario ingrese información sobre la materia prima según TPMPAP.
                                     </p>
                                 </div>
                                 <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100">

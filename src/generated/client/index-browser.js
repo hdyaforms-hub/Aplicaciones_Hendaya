@@ -749,6 +749,10 @@ exports.Prisma.ElementosEsenciales_CabScalarFieldEnum = {
   obsALosIncumplimiento: 'obsALosIncumplimiento',
   nombreArchivo: 'nombreArchivo',
   link: 'link',
+  anulado: 'anulado',
+  fechaAnulacion: 'fechaAnulacion',
+  motivoAnulacion: 'motivoAnulacion',
+  usuarioAnulacion: 'usuarioAnulacion',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

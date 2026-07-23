@@ -43,7 +43,8 @@ export async function getFoliosIncompletos(params: {
     estadoCalculo?: string,
     disponibilidad?: string,
     aspecto?: string,
-    sucursal?: string
+    sucursal?: string,
+    estadoAnulacion?: string
 }) {
     if (!await checkPermission('manage_calculos_ee')) return { error: 'No tienes permisos.' }
 
@@ -54,6 +55,15 @@ export async function getFoliosIncompletos(params: {
                     nc: 'X'
                 }
             }
+        }
+
+        if (params.estadoAnulacion === 'Anulados') {
+            whereClause.anulado = true
+        } else if (params.estadoAnulacion === 'Todos') {
+            // No filter on anulado
+        } else {
+            // Default or 'No Anulados'
+            whereClause.anulado = { not: true }
         }
 
         if (params.aspecto && params.aspecto !== 'Todos' && params.aspecto.trim() !== '') {
@@ -135,6 +145,10 @@ export async function getFoliosIncompletos(params: {
                 observacionManualServicio: true,
                 esServicioManual: true,
                 licId: true,
+                anulado: true,
+                fechaAnulacion: true,
+                motivoAnulacion: true,
+                usuarioAnulacion: true,
                 detalles: {
                     where: { 
                         nc: 'X',
@@ -491,7 +505,7 @@ export async function calculateAll(params: {
                             }
                         }
 
-                        if (upperFormula.includes('MANIPULADORAAFECTADA')) {
+                        if (!savedVars['MANIPULADORAAFECTADA'] && upperFormula.includes('MANIPULADORAAFECTADA')) {
                             const regex = /(?:manipuladora(?:s)?\s*afectada(?:s)?|cantidad[\s\S]*?afectada(?:s)?)[^\d]*(\d+)/i;
                             const matchRegex = obsText.match(regex);
                             if (matchRegex) {
@@ -517,24 +531,37 @@ export async function calculateAll(params: {
                             }
                         }
 
-                        if (upperFormula.includes('MATERIAPRIMA')) {
+                        if (!savedVars['MATERIAPRIMA'] && upperFormula.includes('MATERIAPRIMA')) {
                             let sumMateriaPrima = 0;
                             let foundMateriaPrima = false;
 
-                            const matchFrutas = obsText.match(/materias primas \(frutas y verduras\) afectadas[^\d]*(\d+)/i);
-                            if (matchFrutas) {
-                                sumMateriaPrima += parseInt(matchFrutas[1], 10);
+                            const matchFrutas = Array.from(obsText.matchAll(/Cantidad\s+de\s+materias\s+primas\s+\(frutas\s+y\s+verduras\)\s+afectadas:(?:[ \t]*|[\r\n]+\s*)(\d+)[ \t]*$/gim));
+                            for (const m of matchFrutas) {
+                                sumMateriaPrima += parseInt(m[1], 10);
                                 foundMateriaPrima = true;
                             }
 
-                            const matchNoFrutas = obsText.match(/materias primas afectadas que no son frutas y verduras[^\d]*(\d+)/i);
-                            if (matchNoFrutas) {
-                                sumMateriaPrima += parseInt(matchNoFrutas[1], 10);
+                            const matchNoFrutas = Array.from(obsText.matchAll(/Mencionar\s+las\s+materias\s+primas\s+afectadas\s+que\s+no\s+son\s+frutas\s+y\s+verduras,\s+y\s+su\s+defecto:(?:[ \t]*|[\r\n]+\s*)(\d+)[ \t]*$/gim));
+                            for (const m of matchNoFrutas) {
+                                sumMateriaPrima += parseInt(m[1], 10);
                                 foundMateriaPrima = true;
                             }
 
                             if (foundMateriaPrima) {
                                 savedVars['MATERIAPRIMA'] = sumMateriaPrima.toString();
+                            }
+                        }
+
+                        if (!savedVars['MATERIAPRIMATPMPAP'] && upperFormula.includes('MATERIAPRIMATPMPAP')) {
+                            const matchTpmpap = Array.from(obsText.matchAll(/Cantidad\s+de\s+la\s+materia\s+prima,\s+producto,\s+alimentos\s+y\/o\s+preparaciones\s+que\s+no\s+se\s+encuentra\s+en\s+su\s+TPMPAP[:.]?(?:[ \t]*|[\r\n]+\s*)(\d+)[ \t]*$/gim));
+                            let sumTpmpap = 0;
+                            let foundTpmpap = false;
+                            for (const m of matchTpmpap) {
+                                sumTpmpap += parseInt(m[1], 10);
+                                foundTpmpap = true;
+                            }
+                            if (foundTpmpap) {
+                                savedVars['MATERIAPRIMATPMPAP'] = sumTpmpap.toString();
                             }
                         }
 
@@ -558,6 +585,13 @@ export async function calculateAll(params: {
                                 savedVars['INSTRUMENTO'] = totalInstrumentos.toString();
                             }
                         }
+
+                        if (!savedVars['CANTSERVICIO'] && upperFormula.includes('CANTSERVICIO')) {
+                            const matchServicio = obsText.match(/(?:cantidad de )?servicio(?:s)? afectad(?:o|a)(?:s)?[^\d]*(\d+)/i);
+                            if (matchServicio) {
+                                savedVars['CANTSERVICIO'] = matchServicio[1];
+                            }
+                        }
                     }
                 }
 
@@ -570,7 +604,7 @@ export async function calculateAll(params: {
 
                 // 3. Track needed keywords to determine correct final state
                 const keywordsNeeded = new Set<string>()
-                const RESERVED_KEYWORDS = ['MATERIAPRIMA', 'INSTRUMENTO', 'MANIPULADORA', 'MANIPULADORAAFECTADA', 'NIVELCONTROLADO', 'CANTSERVICIO', 'ELEMENTOS']
+                const RESERVED_KEYWORDS = ['MATERIAPRIMA', 'MATERIAPRIMATPMPAP', 'INSTRUMENTO', 'MANIPULADORA', 'MANIPULADORAAFECTADA', 'NIVELCONTROLADO', 'CANTSERVICIO', 'ELEMENTOS']
 
                 for (const d of cab.detalles) {
                     const letraMatch = d.aspecto?.match(/^([A-Z])\./)
@@ -616,6 +650,7 @@ export async function calculateAll(params: {
                         }
 
                         const materiaPrimaVal = savedVars['MATERIAPRIMA'] !== undefined && savedVars['MATERIAPRIMA'] !== '' ? Number(savedVars['MATERIAPRIMA']) : 1
+                        const materiaPrimaTpmpapVal = savedVars['MATERIAPRIMATPMPAP'] !== undefined && savedVars['MATERIAPRIMATPMPAP'] !== '' ? Number(savedVars['MATERIAPRIMATPMPAP']) : 1
                         const instrumentoVal = Number(savedVars['INSTRUMENTO'] || 1)
                         const manipuladoraVal = Number(savedVars['MANIPULADORA'] || 1)
                         let manipuladoraAfectadaVal = Number(savedVars['MANIPULADORAAFECTADA'] || 1)
@@ -627,6 +662,7 @@ export async function calculateAll(params: {
                             .replace(/UTM/g, utmVal.toString())
                             .replace(/RACIONES/g, raciones.toString())
                             .replace(/NIVELCONTROLADO/g, nivelControladoVal.toString())
+                            .replace(/MATERIAPRIMATPMPAP/g, materiaPrimaTpmpapVal.toString())
                             .replace(/MATERIAPRIMA/g, materiaPrimaVal.toString())
                             .replace(/INSTRUMENTO/g, instrumentoVal.toString())
                             .replace(/MANIPULADORAAFECTADA/g, manipuladoraAfectadaVal.toString())
@@ -780,7 +816,7 @@ export async function getDetalleFolioParaCalculo(folio: string) {
 
         // Parse reserved keywords from formulas
         const keywordsNeeded = new Set<string>()
-        const RESERVED_KEYWORDS = ['MATERIAPRIMA', 'INSTRUMENTO', 'MANIPULADORA', 'MANIPULADORAAFECTADA', 'NIVELCONTROLADO', 'CANTSERVICIO', 'ELEMENTOS']
+        const RESERVED_KEYWORDS = ['MATERIAPRIMA', 'MATERIAPRIMATPMPAP', 'INSTRUMENTO', 'MANIPULADORA', 'MANIPULADORAAFECTADA', 'NIVELCONTROLADO', 'CANTSERVICIO', 'ELEMENTOS']
         
         detallesConFormula.forEach(d => {
             if (d.formulaAsignada) {
@@ -830,7 +866,7 @@ export async function getDetalleFolioParaCalculo(folio: string) {
                     }
                 }
 
-                if (upperFormula.includes('MANIPULADORAAFECTADA')) {
+                if (!savedVariables['MANIPULADORAAFECTADA'] && upperFormula.includes('MANIPULADORAAFECTADA')) {
                     const regex = /(?:manipuladora(?:s)?\s*afectada(?:s)?|cantidad[\s\S]*?afectada(?:s)?)[^\d]*(\d+)/i;
                     const matchRegex = obsText.match(regex);
                     if (matchRegex) {
@@ -854,26 +890,39 @@ export async function getDetalleFolioParaCalculo(folio: string) {
                     }
                 }
 
-                if (upperFormula.includes('MATERIAPRIMA')) {
-                    let sumMateriaPrima = 0;
-                    let foundMateriaPrima = false;
+                        if (!savedVariables['MATERIAPRIMA'] && upperFormula.includes('MATERIAPRIMA')) {
+                            let sumMateriaPrima = 0;
+                            let foundMateriaPrima = false;
 
-                    const matchFrutas = obsText.match(/materias primas \(frutas y verduras\) afectadas[^\d]*(\d+)/i);
-                    if (matchFrutas) {
-                        sumMateriaPrima += parseInt(matchFrutas[1], 10);
-                        foundMateriaPrima = true;
-                    }
+                            const matchFrutas = Array.from(obsText.matchAll(/Cantidad\s+de\s+materias\s+primas\s+\(frutas\s+y\s+verduras\)\s+afectadas:(?:[ \t]*|[\r\n]+\s*)(\d+)[ \t]*$/gim));
+                            for (const m of matchFrutas) {
+                                sumMateriaPrima += parseInt(m[1], 10);
+                                foundMateriaPrima = true;
+                            }
 
-                    const matchNoFrutas = obsText.match(/materias primas afectadas que no son frutas y verduras[^\d]*(\d+)/i);
-                    if (matchNoFrutas) {
-                        sumMateriaPrima += parseInt(matchNoFrutas[1], 10);
-                        foundMateriaPrima = true;
-                    }
+                            const matchNoFrutas = Array.from(obsText.matchAll(/Mencionar\s+las\s+materias\s+primas\s+afectadas\s+que\s+no\s+son\s+frutas\s+y\s+verduras,\s+y\s+su\s+defecto:(?:[ \t]*|[\r\n]+\s*)(\d+)[ \t]*$/gim));
+                            for (const m of matchNoFrutas) {
+                                sumMateriaPrima += parseInt(m[1], 10);
+                                foundMateriaPrima = true;
+                            }
 
-                    if (foundMateriaPrima) {
-                        savedVariables['MATERIAPRIMA'] = sumMateriaPrima.toString();
-                    }
-                }
+                            if (foundMateriaPrima) {
+                                savedVariables['MATERIAPRIMA'] = sumMateriaPrima.toString();
+                            }
+                        }
+
+                        if (!savedVariables['MATERIAPRIMATPMPAP'] && upperFormula.includes('MATERIAPRIMATPMPAP')) {
+                            const matchTpmpap = Array.from(obsText.matchAll(/Cantidad\s+de\s+la\s+materia\s+prima,\s+producto,\s+alimentos\s+y\/o\s+preparaciones\s+que\s+no\s+se\s+encuentra\s+en\s+su\s+TPMPAP[:.]?(?:[ \t]*|[\r\n]+\s*)(\d+)[ \t]*$/gim));
+                            let sumTpmpap = 0;
+                            let foundTpmpap = false;
+                            for (const m of matchTpmpap) {
+                                sumTpmpap += parseInt(m[1], 10);
+                                foundTpmpap = true;
+                            }
+                            if (foundTpmpap) {
+                                savedVariables['MATERIAPRIMATPMPAP'] = sumTpmpap.toString();
+                            }
+                        }
 
                 if (!savedVariables['INSTRUMENTO'] && upperFormula.includes('INSTRUMENTO')) {
                     let totalInstrumentos = 0;
@@ -893,6 +942,13 @@ export async function getDetalleFolioParaCalculo(folio: string) {
                     
                     if (foundAny) {
                         savedVariables['INSTRUMENTO'] = totalInstrumentos.toString();
+                    }
+                }
+
+                if (!savedVariables['CANTSERVICIO'] && upperFormula.includes('CANTSERVICIO')) {
+                    const matchServicio = obsText.match(/(?:cantidad de )?servicio(?:s)? afectad(?:o|a)(?:s)?[^\d]*(\d+)/i);
+                    if (matchServicio) {
+                        savedVariables['CANTSERVICIO'] = matchServicio[1];
                     }
                 }
             }
@@ -1059,5 +1115,47 @@ export async function getAspectosDisponibles() {
     } catch (e: any) {
         console.error('Error in getAspectosDisponibles:', e)
         return { error: 'Error al obtener aspectos disponibles.' }
+    }
+}
+
+export async function anularFolio(folio: string, motivo: string) {
+    if (!await checkPermission('manage_calculos_ee')) return { error: 'No tienes permisos.' }
+    const session = await getSession()
+    if (!session) return { error: 'No autorizado' }
+
+    try {
+        await prisma.elementosEsenciales_Cab.updateMany({
+            where: { folio },
+            data: {
+                anulado: true,
+                motivoAnulacion: motivo,
+                fechaAnulacion: new Date(),
+                usuarioAnulacion: session.user.username
+            }
+        })
+        return { success: true }
+    } catch (e: any) {
+        console.error('Error en anularFolio:', e)
+        return { error: 'Error al anular folio.' }
+    }
+}
+
+export async function reversarAnulacionFolio(folio: string) {
+    if (!await checkPermission('manage_calculos_ee')) return { error: 'No tienes permisos.' }
+    
+    try {
+        await prisma.elementosEsenciales_Cab.updateMany({
+            where: { folio },
+            data: {
+                anulado: false,
+                motivoAnulacion: null,
+                fechaAnulacion: null,
+                usuarioAnulacion: null
+            }
+        })
+        return { success: true }
+    } catch (e: any) {
+        console.error('Error en reversarAnulacionFolio:', e)
+        return { error: 'Error al reversar anulación.' }
     }
 }

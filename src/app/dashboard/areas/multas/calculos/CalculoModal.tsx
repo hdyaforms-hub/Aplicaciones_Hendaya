@@ -87,7 +87,7 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
                         if (!loadedValues[k] || loadedValues[k] === '0') {
                             loadedValues[k] = '1'
                         }
-                    } else if (k === 'MATERIAPRIMA') {
+                    } else if (k === 'MATERIAPRIMA' || k === 'MATERIAPRIMATPMPAP') {
                         if (!loadedValues[k]) {
                             loadedValues[k] = '1'
                         }
@@ -114,6 +114,7 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
             const nivelControladoVal = selectedLevelObj ? selectedLevelObj.value : totalRaciones
             
             const materiaPrimaVal = customVals['MATERIAPRIMA'] !== undefined && customVals['MATERIAPRIMA'] !== '' ? Number(customVals['MATERIAPRIMA']) : 1
+            const materiaPrimaTpmpapVal = customVals['MATERIAPRIMATPMPAP'] !== undefined && customVals['MATERIAPRIMATPMPAP'] !== '' ? Number(customVals['MATERIAPRIMATPMPAP']) : 1
             const instrumentoVal = Number(customVals['INSTRUMENTO'] || 1)
             const manipuladoraVal = Number(customVals['MANIPULADORA'] || 1)
             let manipuladoraAfectadaVal = Number(customVals['MANIPULADORAAFECTADA'] || 1)
@@ -125,6 +126,7 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
                 .replace(/UTM/g, utmVal.toString())
                 .replace(/RACIONES/g, totalRaciones.toString())
                 .replace(/NIVELCONTROLADO/g, nivelControladoVal.toString())
+                .replace(/MATERIAPRIMATPMPAP/g, materiaPrimaTpmpapVal.toString())
                 .replace(/MATERIAPRIMA/g, materiaPrimaVal.toString())
                 .replace(/INSTRUMENTO/g, instrumentoVal.toString())
                 .replace(/MANIPULADORAAFECTADA/g, manipuladoraAfectadaVal.toString())
@@ -479,7 +481,10 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
                                                                         <span className="text-amber-700 italic">⚖️ NIVEL CONTROLADO: Sin seleccionar (Raciones generales: {data?.racionesValue})</span>
                                                                     )
                                                                 })()}
-                                                                {d.formulaAsignada.toUpperCase().includes('MATERIAPRIMA') && (
+                                                                {/\bMATERIAPRIMATPMPAP\b/.test(d.formulaAsignada.toUpperCase()) && (
+                                                                    <span>📦 MATERIAPRIMATPMPAP: {customValues['MATERIAPRIMATPMPAP'] || 1}</span>
+                                                                )}
+                                                                {/\bMATERIAPRIMA\b/.test(d.formulaAsignada.toUpperCase()) && (
                                                                     <span>📦 MATERIAPRIMA: {customValues['MATERIAPRIMA'] || 1}</span>
                                                                 )}
                                                                 {d.formulaAsignada.toUpperCase().includes('INSTRUMENTO') && (
