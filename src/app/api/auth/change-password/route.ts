@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import bcrypt from 'bcryptjs'
-import { login, encrypt } from '@/lib/session'
+import { encrypt } from '@/lib/session'
 
 export async function POST(request: Request) {
     try {
@@ -55,8 +55,7 @@ export async function POST(request: Request) {
             }
         })
 
-        // Login the user
-        let permissions = []
+        let permissions: string[] = []
         try {
             permissions = JSON.parse(user.role.permissions)
         } catch (e) {
@@ -74,17 +73,18 @@ export async function POST(request: Request) {
             sucursales: user.sucursales?.map((s: any) => s.nombre) || [],
         }
 
+        // Crear el token JWT directamente sin depender de next/headers
         const expires = new Date(Date.now() + 24 * 60 * 60 * 1000)
         const sessionToken = await encrypt({ user: sessionData, expires })
-        await login(sessionData)
 
+        const isSecure = process.env.COOKIE_SECURE === 'true'
         const response = NextResponse.json(
             { message: 'Contraseña actualizada y sesión iniciada' },
             { status: 200 }
         )
         response.cookies.set('session', sessionToken, {
             httpOnly: true,
-            secure: process.env.COOKIE_SECURE === 'true',
+            secure: isSecure,
             sameSite: 'lax',
             path: '/',
             maxAge: 24 * 60 * 60,

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import bcrypt from 'bcryptjs'
-import { login, encrypt } from '@/lib/session'
+import { encrypt } from '@/lib/session'
 
 export async function POST(request: Request) {
     try {
@@ -15,7 +15,6 @@ export async function POST(request: Request) {
             )
         }
 
-        console.log(`CWD: ${process.cwd()}`)
         console.log(`Intentando login para usuario: ${username}`)
 
         const user = await prisma.user.findUnique({
@@ -31,7 +30,6 @@ export async function POST(request: Request) {
             )
         }
 
-        console.log(`Usuario encontrado. Verificando estado activo...`)
         if (!user.isActive) {
             console.log(`Usuario inactivo: ${username}`)
             return NextResponse.json(
@@ -40,7 +38,6 @@ export async function POST(request: Request) {
             )
         }
 
-        console.log(`Verificando password...`)
         const passwordMatch = await bcrypt.compare(password, user.passwordHash)
 
         if (!passwordMatch) {
@@ -51,11 +48,9 @@ export async function POST(request: Request) {
             )
         }
 
-        console.log(`Password correcto. Armando session data...`)
-        let permissions = []
+        let permissions: string[] = []
         try {
             permissions = JSON.parse(user.role.permissions)
-            console.log(`Permissions parsed: ${permissions.length} items`)
         } catch (e) {
             console.error(`Error parsing permissions:`, e)
         }
@@ -80,31 +75,31 @@ export async function POST(request: Request) {
             )
         }
 
-        console.log(`Creando sesión...`)
-        let sessionToken = ''
-        try {
-            sessionToken = await login(sessionData)
-            console.log(`Sesión creada exitosamente`)
-        } catch (e) {
-            console.error(`Error en await login(sessionData):`, e)
-            throw e
-        }
+        // Crear el token JWT directamente sin depender de next/headers
+        const expires = new Date(Date.now() + 24 * 60 * 60 * 1000)
+        const sessionToken = await encrypt({ user: sessionData, expires })
 
         console.log(`Login exitoso para: ${username}`)
+
         const response = NextResponse.json(
             { message: 'Login exitoso', user: sessionData },
             { status: 200 }
         )
+
+        // Adjuntar la cookie directamente a la respuesta HTTP
+        const isSecure = process.env.COOKIE_SECURE === 'true'
         response.cookies.set('session', sessionToken, {
             httpOnly: true,
-            secure: process.env.COOKIE_SECURE === 'true',
+            secure: isSecure,
             sameSite: 'lax',
             path: '/',
             maxAge: 24 * 60 * 60,
         })
+
         return response
+
     } catch (error: any) {
-        console.error('CRITICAL: Login error stack trace:', error.stack || error)
+        console.error('CRITICAL: Login error:', error.message)
         return NextResponse.json(
             { message: 'Ocurrió un error en el servidor: ' + error.message },
             { status: 500 }
