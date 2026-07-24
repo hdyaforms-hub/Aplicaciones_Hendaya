@@ -74,12 +74,22 @@ export async function POST(request: Request) {
             sucursales: user.sucursales?.map((s: any) => s.nombre) || [],
         }
 
+        const expires = new Date(Date.now() + 24 * 60 * 60 * 1000)
+        const sessionToken = await encrypt({ user: sessionData, expires })
         await login(sessionData)
 
-        return NextResponse.json(
+        const response = NextResponse.json(
             { message: 'Contraseña actualizada y sesión iniciada' },
             { status: 200 }
         )
+        response.cookies.set('session', sessionToken, {
+            httpOnly: true,
+            secure: process.env.COOKIE_SECURE === 'true',
+            sameSite: 'lax',
+            path: '/',
+            maxAge: 24 * 60 * 60,
+        })
+        return response
 
     } catch (error: any) {
         console.error('Change password error:', error)

@@ -81,7 +81,10 @@ export async function POST(request: Request) {
         }
 
         console.log(`Creando sesión...`)
+        let sessionToken = ''
         try {
+            const expires = new Date(Date.now() + 24 * 60 * 60 * 1000)
+            sessionToken = await encrypt({ user: sessionData, expires })
             await login(sessionData)
             console.log(`Sesión creada exitosamente`)
         } catch (e) {
@@ -90,10 +93,18 @@ export async function POST(request: Request) {
         }
 
         console.log(`Login exitoso para: ${username}`)
-        return NextResponse.json(
+        const response = NextResponse.json(
             { message: 'Login exitoso', user: sessionData },
             { status: 200 }
         )
+        response.cookies.set('session', sessionToken, {
+            httpOnly: true,
+            secure: process.env.COOKIE_SECURE === 'true',
+            sameSite: 'lax',
+            path: '/',
+            maxAge: 24 * 60 * 60,
+        })
+        return response
     } catch (error: any) {
         console.error('CRITICAL: Login error stack trace:', error.stack || error)
         return NextResponse.json(
