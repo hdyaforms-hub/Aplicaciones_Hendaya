@@ -72,11 +72,19 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
             
             // Backward compatibility: if NIVELCONTROLADO is stored as a number, map it back to the level label
             const rawNivel = loadedValues['NIVELCONTROLADO']
-            if (rawNivel && !isNaN(Number(rawNivel))) {
-                const racionesNum = Number(rawNivel)
-                const matchingLevel = (res.pmpaNiveles || []).find(n => n.value === racionesNum)
-                if (matchingLevel) {
-                    loadedValues['NIVELCONTROLADO'] = matchingLevel.label
+            if (rawNivel !== undefined && rawNivel !== '') {
+                if (rawNivel === '0' || rawNivel === 'No Aplica (0 Raciones)' || rawNivel === 'No Aplica') {
+                    loadedValues['NIVELCONTROLADO'] = 'No Aplica (0 Raciones)'
+                } else if (!isNaN(Number(rawNivel))) {
+                    const racionesNum = Number(rawNivel)
+                    if (racionesNum === 0) {
+                        loadedValues['NIVELCONTROLADO'] = 'No Aplica (0 Raciones)'
+                    } else {
+                        const matchingLevel = (res.pmpaNiveles || []).find(n => n.value === racionesNum)
+                        if (matchingLevel) {
+                            loadedValues['NIVELCONTROLADO'] = matchingLevel.label
+                        }
+                    }
                 }
             }
             
@@ -108,10 +116,17 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
             
             // Get NIVELCONTROLADO raciones based on selection
             const selectedLevelLabel = customVals['NIVELCONTROLADO'] || ''
-            const selectedLevelObj = pmpaNiveles.find(n => n.label === selectedLevelLabel)
-            
-            // If user has not selected a level yet, default to total raciones as fallback
-            const nivelControladoVal = selectedLevelObj ? selectedLevelObj.value : totalRaciones
+            let nivelControladoVal = totalRaciones
+            if (selectedLevelLabel === 'No Aplica (0 Raciones)' || selectedLevelLabel === 'No Aplica' || selectedLevelLabel === '0') {
+                nivelControladoVal = 0
+            } else {
+                const selectedLevelObj = pmpaNiveles.find(n => n.label === selectedLevelLabel)
+                if (selectedLevelObj) {
+                    nivelControladoVal = selectedLevelObj.value
+                } else if (selectedLevelLabel && !isNaN(Number(selectedLevelLabel))) {
+                    nivelControladoVal = Number(selectedLevelLabel)
+                }
+            }
             
             const materiaPrimaVal = customVals['MATERIAPRIMA'] !== undefined && customVals['MATERIAPRIMA'] !== '' ? Number(customVals['MATERIAPRIMA']) : 1
             const materiaPrimaTpmpapVal = customVals['MATERIAPRIMATPMPAP'] !== undefined && customVals['MATERIAPRIMATPMPAP'] !== '' ? Number(customVals['MATERIAPRIMATPMPAP']) : 1
@@ -381,6 +396,7 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
                                                     onChange={e => setCustomValues(prev => ({ ...prev, [k]: e.target.value }))}
                                                 >
                                                     <option value="" disabled>Seleccione nivel...</option>
+                                                    <option value="No Aplica (0 Raciones)">No Aplica (0 Raciones)</option>
                                                     {pmpaNiveles.length > 0 ? (
                                                         pmpaNiveles.map(n => (
                                                             <option key={n.label} value={n.label}>
@@ -474,9 +490,14 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
                                                                 )}
                                                                 {d.formulaAsignada.toUpperCase().includes('NIVELCONTROLADO') && (() => {
                                                                     const selectedLevelLabel = customValues['NIVELCONTROLADO'] || ''
+                                                                    if (selectedLevelLabel === 'No Aplica (0 Raciones)' || selectedLevelLabel === 'No Aplica' || selectedLevelLabel === '0') {
+                                                                        return <span>⚖️ NIVEL CONTROLADO: No Aplica (0 raciones)</span>
+                                                                    }
                                                                     const selectedLevelObj = pmpaNiveles.find(n => n.label === selectedLevelLabel)
                                                                     return selectedLevelObj ? (
                                                                         <span>⚖️ NIVEL CONTROLADO: {selectedLevelObj.label} ({selectedLevelObj.value} raciones)</span>
+                                                                    ) : selectedLevelLabel ? (
+                                                                        <span>⚖️ NIVEL CONTROLADO: {selectedLevelLabel}</span>
                                                                     ) : (
                                                                         <span className="text-amber-700 italic">⚖️ NIVEL CONTROLADO: Sin seleccionar (Raciones generales: {data?.racionesValue})</span>
                                                                     )

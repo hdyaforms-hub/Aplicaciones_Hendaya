@@ -639,7 +639,9 @@ export async function calculateAll(params: {
                         const selectedLevelLabel = savedVars['NIVELCONTROLADO'] || ''
                         let nivelControladoVal = raciones // default fallback
                         if (selectedLevelLabel) {
-                            if (!isNaN(Number(selectedLevelLabel))) {
+                            if (selectedLevelLabel === 'No Aplica (0 Raciones)' || selectedLevelLabel === 'No Aplica' || selectedLevelLabel === '0') {
+                                nivelControladoVal = 0
+                            } else if (!isNaN(Number(selectedLevelLabel))) {
                                 nivelControladoVal = Number(selectedLevelLabel)
                             } else {
                                 const matchedVal = nivelesMap[selectedLevelLabel]

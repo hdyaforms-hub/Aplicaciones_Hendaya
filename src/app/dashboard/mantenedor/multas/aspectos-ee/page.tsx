@@ -401,6 +401,7 @@ export default function AspectosEEPage() {
                                                     className="w-full px-3 py-1.5 rounded-lg border border-gray-200 text-xs bg-white"
                                                 >
                                                     <option value="">Seleccione Nivel...</option>
+                                                    <option value="0">No Aplica (0 Raciones)</option>
                                                     {pmpaLevels.map(l => (
                                                         <option key={l.nivel} value={l.raciones}>{l.nivel} ({l.raciones} rac)</option>
                                                     ))}
