@@ -42,7 +42,9 @@ export async function login(user: any) {
         secure: isSecure,
         sameSite: 'lax',
         path: '/',
+        maxAge: 24 * 60 * 60,
     })
+    return session
 }
 
 export async function logout() {

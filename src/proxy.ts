@@ -24,15 +24,19 @@ export async function proxy(req: NextRequest) {
     // 3. Descifrar la sesión
     const decodedSession = session ? await decrypt(session) : null
 
+    console.log(`[PROXY] Path: ${path} | Cookie present: ${!!session} | Decoded: ${!!decodedSession}`)
+
     // 4. Redirigir a login si no hay sesión y no es una ruta pública
     const isPublicRoute = publicRoutes.includes(path)
     
     if (!decodedSession && !isPublicRoute && path.startsWith('/dashboard')) {
+        console.log(`[PROXY] -> Redirecting to /login (unauthenticated access to ${path})`)
         return NextResponse.redirect(new URL('/login', req.nextUrl))
     }
 
     // 5. Redirigir a dashboard si ya hay sesión e intenta ir a login
     if (decodedSession && path === '/login') {
+        console.log(`[PROXY] -> Redirecting to /dashboard (authenticated access to /login)`)
         return NextResponse.redirect(new URL('/dashboard', req.nextUrl))
     }
 

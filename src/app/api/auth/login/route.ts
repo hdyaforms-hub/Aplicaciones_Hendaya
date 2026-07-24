@@ -83,9 +83,7 @@ export async function POST(request: Request) {
         console.log(`Creando sesión...`)
         let sessionToken = ''
         try {
-            const expires = new Date(Date.now() + 24 * 60 * 60 * 1000)
-            sessionToken = await encrypt({ user: sessionData, expires })
-            await login(sessionData)
+            sessionToken = await login(sessionData)
             console.log(`Sesión creada exitosamente`)
         } catch (e) {
             console.error(`Error en await login(sessionData):`, e)
