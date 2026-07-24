@@ -35,7 +35,7 @@ export default function LoginPage() {
                     setError('')
                 }
             } else if (res.ok) {
-                router.push('/dashboard')
+                window.location.href = '/dashboard'
             } else {
                 const data = await res.json()
                 setError(data.message || 'Error al iniciar sesión')
@@ -66,7 +66,7 @@ export default function LoginPage() {
             })
 
             if (res.ok) {
-                router.push('/dashboard')
+                window.location.href = '/dashboard'
             } else {
                 const data = await res.json()
                 setError(data.message || 'Error al cambiar la contraseña')

@@ -14,10 +14,6 @@ const nextConfig: NextConfig = {
         source: '/(.*)',
         headers: [
           {
-            key: 'Strict-Transport-Security', // Forzar HTTPS
-            value: 'max-age=31536000; includeSubDomains; preload',
-          },
-          {
             key: 'X-XSS-Protection', // Bloquear XSS
             value: '1; mode=block',
           },

@@ -5,6 +5,8 @@ import { NextRequest, NextResponse } from 'next/server'
 const secretKey = process.env.SESSION_SECRET || 'super-secret-key-change-me'
 const key = new TextEncoder().encode(secretKey)
 
+const isSecure = process.env.COOKIE_SECURE === 'true'
+
 export async function encrypt(payload: any) {
     console.log(`Encrypting payload...`)
     const res = await new SignJWT(payload)
@@ -37,7 +39,7 @@ export async function login(user: any) {
     const cookieStore = await cookies()
     cookieStore.set('session', session, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        secure: isSecure,
         sameSite: 'lax',
         path: '/',
     })
@@ -48,7 +50,7 @@ export async function logout() {
     cookieStore.set('session', '', {
         expires: new Date(0),
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        secure: isSecure,
         sameSite: 'lax',
         path: '/',
     })
@@ -77,7 +79,7 @@ export async function updateSession(request: NextRequest) {
         name: 'session',
         value: await encrypt(parsed),
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        secure: isSecure,
         sameSite: 'lax',
         path: '/',
     })
