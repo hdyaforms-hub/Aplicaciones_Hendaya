@@ -1,6 +1,7 @@
 import { getSession } from '@/lib/session'
 import { prisma } from '@/lib/prisma'
 import Sidebar from '@/components/Sidebar'
+import AuditNavigationTracker from '@/components/AuditNavigationTracker'
 import { redirect } from 'next/navigation'
 
 export default async function DashboardLayout({
@@ -30,6 +31,7 @@ export default async function DashboardLayout({
 
     return (
         <div className="min-h-screen bg-gray-50 flex">
+            <AuditNavigationTracker />
             {/* Sidebar Navigation */}
             <Sidebar user={user} menuOrders={menuOrders} />
 

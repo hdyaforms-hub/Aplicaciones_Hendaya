@@ -22,7 +22,7 @@ export default async function RolesPage() {
     // Lista de permisos disponibles en el sistema
     const availablePermissions = [
         { id: 'view_dashboard_home', name: 'Estadísticas de Inicio', description: 'Acceso visual a estadísticas globales y Estado PMPA en la pantalla de inicio.', category: 'TABLEROS' },
-        { id: 'view_tablero', name: 'Tablero de Control', description: 'Acceso visual al reporte gráfico general.', category: 'TABLEROS' },
+        { id: 'view_tablero', name: 'Tablero Avance PMPA', description: 'Acceso visual al tablero de reporte gráfico de Avance PMPA.', category: 'TABLEROS' },
         { id: 'view_tablero_pan', name: 'Tablero Avance Pan', description: 'Acceso detallado al tablero de analítica de pan.', category: 'TABLEROS' },
         { id: 'view_tablero_gas', name: 'Tablero Avance Gas', description: 'Acceso detallado al tablero de analítica de gas.', category: 'TABLEROS' },
         { id: 'view_tablero_retiro', name: 'Tablero Avance Retiro', description: 'Acceso detallado al tablero de analítica de retiro de saldos.', category: 'TABLEROS' },
@@ -30,6 +30,7 @@ export default async function RolesPage() {
         { id: 'view_tablero_multas_ee', name: 'Tablero Multas EE', description: 'Acceso visual al reporte gráfico de multas de elementos esenciales.', category: 'TABLEROS' },
         { id: 'view_tablero_organigrama', name: 'Tablero Organigrama por zonas', description: 'Visualización gráfica de la jerarquía operativa (Jefe Zonal -> Jefe de Operaciones -> Supervisor) por sucursal.', category: 'TABLEROS' },
         { id: 'view_tablero_distancias', name: 'Tablero de Kilometraje', description: 'Visualización detallada de distancias y tiempos de viaje de supervisores por sucursal.', category: 'TABLEROS' },
+        { id: 'view_tablero_auditoria', name: 'Tablero Auditoría', description: 'Visualización y exportación de auditoría de actividad de usuarios.', category: 'TABLEROS' },
         
         { id: 'view_ingreso_raciones', name: 'Ingreso de Raciones', description: 'Gestión y auditoría de raciones por colegio.', category: 'APLICACIONES' },
         { id: 'view_solicitud_pan', name: 'Solicitud de Pan', description: 'Acceso a la aplicación de Solicitud de Pan.', category: 'APLICACIONES' },
@@ -57,6 +58,7 @@ export default async function RolesPage() {
 
         { id: 'view_multas_areas', name: 'Menú Multas', description: 'Acceso al menú de Multas en Áreas.', category: 'ÁREAS -> MULTAS' },
         { id: 'manage_calculos_ee', name: 'Cálculos de Elementos Esenciales', description: 'Permite calcular multas en base a elementos esenciales no conformes.', category: 'ÁREAS -> MULTAS' },
+        { id: 'manage_descargos', name: 'Descargos de Actas', description: 'Gestionar descargos, resoluciones y no soluciones de aspectos de actas.', category: 'ÁREAS -> MULTAS' },
 
         { id: 'view_matriz_riesgo', name: 'Ver Matriz de Riesgo', description: 'Acceso al menú principal de matrices de riesgo.', category: 'MATRIZ DE RIESGO' },
         { id: 'fill_nueva_matriz', name: 'Ingresar nueva Matriz', description: 'Responder encuestas basadas en plantillas dinámicas de matrices de riesgo.', category: 'MATRIZ DE RIESGO -> INGRESAR NUEVA MATRIZ' },

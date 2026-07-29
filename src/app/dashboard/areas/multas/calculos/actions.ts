@@ -1135,6 +1135,9 @@ export async function anularFolio(folio: string, motivo: string) {
                 usuarioAnulacion: session.user.username
             }
         })
+        await prisma.descargos_Cab.deleteMany({
+            where: { folio }
+        })
         return { success: true }
     } catch (e: any) {
         console.error('Error en anularFolio:', e)

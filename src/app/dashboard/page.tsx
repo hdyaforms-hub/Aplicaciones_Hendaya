@@ -1,5 +1,6 @@
 import { getSession } from '@/lib/session'
 import { prisma } from '@/lib/prisma'
+import PMPASummaryAccordion from './PMPASummaryAccordion'
 
 export default async function DashboardPage() {
     const session = await getSession()
@@ -122,58 +123,11 @@ export default async function DashboardPage() {
                         </div>
 
                         <div className="p-6">
-                            {sortedYears.length > 0 ? (
-                                <div className="space-y-6">
-                                    {sortedYears.map((year) => {
-                                        const periods = groupedPmpaByYear[year]
-                                        return (
-                                            <div key={year} className="bg-white border border-gray-200/80 rounded-2xl shadow-sm overflow-hidden hover:shadow-md hover:border-gray-300/80 transition-all duration-200">
-                                                {/* Year Header */}
-                                                <div className="bg-slate-50/50 border-b border-gray-200/80 px-6 py-3.5 flex items-center justify-between">
-                                                    <div className="flex items-center gap-2">
-                                                        <div className="w-2.5 h-2.5 rounded-full bg-cyan-500" />
-                                                        <h4 className="text-base font-bold text-slate-800 tracking-tight">{year}</h4>
-                                                    </div>
-                                                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                                                        {periods.length} {periods.length === 1 ? 'Periodo' : 'Periodos'}
-                                                    </span>
-                                                </div>
-
-                                                {/* Period Rows */}
-                                                <div className="divide-y divide-gray-100">
-                                                    {periods.map((item, idx) => (
-                                                        <div key={idx} className="px-6 py-3 flex flex-col sm:flex-row sm:items-center gap-4 hover:bg-slate-50/40 transition-colors duration-150">
-                                                            {/* Month Badge */}
-                                                            <div className="sm:w-36 flex-shrink-0 flex items-center">
-                                                                <span className="inline-flex items-center gap-2 px-3 py-1 bg-cyan-50 text-cyan-700 rounded-lg text-xs font-bold border border-cyan-100/50 shadow-sm w-full sm:w-auto justify-center sm:justify-start">
-                                                                    <span className="text-xs">📅</span>
-                                                                    {monthNames[item.mes - 1]}
-                                                                </span>
-                                                            </div>
-
-                                                            {/* Territorial Units */}
-                                                            <div className="flex-1">
-                                                                <div className="flex flex-wrap gap-1.5 items-center">
-                                                                    {item.uts.map(ut => (
-                                                                        <span key={ut} className="px-2.5 py-1 bg-white border border-gray-200/60 hover:bg-cyan-600 hover:text-white hover:border-cyan-600 text-slate-600 rounded-lg text-xs font-bold shadow-sm transition-all duration-150 cursor-default">
-                                                                            UT {ut}
-                                                                        </span>
-                                                                    ))}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        )
-                                    })}
-                                </div>
-                            ) : (
-                                <div className="flex flex-col items-center justify-center py-12 text-center">
-                                    <span className="text-6xl mb-4 opacity-20">📭</span>
-                                    <p className="text-gray-400 font-bold uppercase tracking-widest text-sm">No hay registros PMPA cargados actualmente</p>
-                                </div>
-                            )}
+                            <PMPASummaryAccordion
+                                groupedPmpaByYear={groupedPmpaByYear}
+                                sortedYears={sortedYears}
+                                monthNames={monthNames}
+                            />
                         </div>
                     </div>
                 </>

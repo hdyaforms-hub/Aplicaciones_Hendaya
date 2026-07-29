@@ -9,16 +9,62 @@ export default async function MultasEEDashboardPage() {
         redirect('/dashboard')
     }
 
-    // Fetch initial data for filters from calculated fines
+    // Fetch non-annulled valid folios from ElementosEsenciales_Cab
+    const validOriginalCabs = await prisma.elementosEsenciales_Cab.findMany({
+        where: { anulado: { not: true } },
+        select: { folio: true }
+    })
+    const validFoliosSet = new Set(validOriginalCabs.map(c => c.folio).filter(Boolean))
+
+    // Fetch calculated fines
     const allCalculos = await prisma.multas_Elementos_Esenciales_Cab.findMany({
         select: {
             licitacion: true,
-            fechaSupervision: true
+            fechaSupervision: true,
+            folioOriginal: true
         }
     })
 
-    const availableLicitaciones = Array.from(new Set(allCalculos.map(c => c.licitacion).filter(Boolean))) as string[]
-    const availableAnos = Array.from(new Set(allCalculos.map(c => c.fechaSupervision?.getFullYear()).filter(Boolean))) as number[]
+    // Filter to only include active calculations matching valid imported folios
+    const activeCalculos = allCalculos.filter(c => c.folioOriginal && validFoliosSet.has(c.folioOriginal))
+
+    const availableLicitaciones = Array.from(new Set(activeCalculos.map(c => c.licitacion).filter(Boolean))) as string[]
+    const availableAnos = Array.from(new Set(activeCalculos.map(c => c.fechaSupervision?.getFullYear()).filter(Boolean))) as number[]
+
+    // Fetch distinct sucursales for filter
+    const sucursalesDb = await prisma.colegiosMatriz.findMany({
+        select: { sucursal: true },
+        distinct: ['sucursal'],
+        where: { sucursal: { not: '' } },
+        orderBy: { sucursal: 'asc' }
+    })
+    const availableSucursales = sucursalesDb.map(s => s.sucursal).filter(Boolean) as string[]
+
+    // Fetch active supervisores for filter
+    const supervisoresDb = await prisma.supervisor.findMany({
+        where: { vigente: true },
+        include: { rbdsAuditar: { select: { rbd: true } } },
+        orderBy: [{ nombre: 'asc' }, { apellido: 'asc' }]
+    })
+    const rbdSucursalMap = new Map<number, string>()
+    sucursalesDb.forEach(s => {
+        if (s.sucursal) {
+            // We also fetch colegiosMatriz mapping below for accurate sucursal labels
+        }
+    })
+    const colegiosMatrizDb = await prisma.colegiosMatriz.findMany({
+        select: { colRBD: true, sucursal: true }
+    })
+    colegiosMatrizDb.forEach(c => {
+        if (c.colRBD && c.sucursal) rbdSucursalMap.set(c.colRBD, c.sucursal)
+    })
+
+    const availableSupervisores = Array.from(new Set(supervisoresDb.map(s => {
+        const nombreBase = `${s.nombre} ${s.apellido}`.trim()
+        const sucursales = Array.from(new Set(s.rbdsAuditar.map(r => rbdSucursalMap.get(r.rbd)).filter((v): v is string => Boolean(v))))
+        const sucursalName = sucursales.length > 0 ? sucursales[0] : ''
+        return sucursalName ? `${nombreBase} (${sucursalName})` : nombreBase
+    }))).sort()
 
     return (
         <div className="space-y-6">
@@ -59,6 +105,8 @@ export default async function MultasEEDashboardPage() {
             <MultasEEDashboardClient 
                 availableLicitaciones={availableLicitaciones.sort()}
                 availableAnos={availableAnos.sort((a, b) => b - a)}
+                availableSucursales={availableSucursales}
+                availableSupervisores={availableSupervisores}
             />
         </div>
     )

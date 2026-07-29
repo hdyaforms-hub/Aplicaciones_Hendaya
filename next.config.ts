@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   // Permitir acceso desde la IP local de red en modo desarrollo
-  allowedDevOrigins: ['192.168.100.246'],
+  allowedDevOrigins: ['192.168.100.246', '172.16.54.169'],
   experimental: {
     serverActions: {
       bodySizeLimit: '50mb',

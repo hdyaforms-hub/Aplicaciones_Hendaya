@@ -137,13 +137,22 @@ export async function DELETE(request: Request) {
         const { unlink } = await import('fs/promises');
         const { join } = await import('path');
 
-        // Buscar los registros para obtener las rutas de archivos
+        // Buscar los registros para obtener las rutas de archivos y folios
         const actas = await prisma.elementosEsenciales_Cab.findMany({
             where: { id: { in: ids } },
-            select: { id: true, link: true }
+            select: { id: true, folio: true, link: true }
         });
 
-        // Eliminar de la DB
+        const folios = actas.map(a => a.folio).filter(Boolean) as string[];
+
+        // Eliminar multas asociadas a los folios
+        if (folios.length > 0) {
+            await prisma.multas_Elementos_Esenciales_Cab.deleteMany({
+                where: { folioOriginal: { in: folios } }
+            });
+        }
+
+        // Eliminar de la DB (Cascade borrará los detalles de ElementosEsenciales_Det)
         await prisma.elementosEsenciales_Cab.deleteMany({
             where: { id: { in: ids } }
         });

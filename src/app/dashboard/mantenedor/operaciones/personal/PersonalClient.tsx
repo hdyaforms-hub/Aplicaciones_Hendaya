@@ -77,10 +77,13 @@ export default function PersonalClient({
     const [loading, setLoading] = useState(false)
     const [feedback, setFeedback] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
     
-    // Search queries
+    // Search & Filter queries
     const [searchZonal, setSearchZonal] = useState('')
     const [searchOp, setSearchOp] = useState('')
     const [searchSuper, setSearchSuper] = useState('')
+    const [sucursalZonal, setSucursalZonal] = useState('')
+    const [sucursalOp, setSucursalOp] = useState('')
+    const [sucursalSuper, setSucursalSuper] = useState('')
     const [showDownloadDropdown, setShowDownloadDropdown] = useState(false)
     const [selectedSupervisorForDetails, setSelectedSupervisorForDetails] = useState<any | null>(null)
     const [modalPage, setModalPage] = useState(1)
@@ -123,18 +126,18 @@ export default function PersonalClient({
     const [pageSuper, setPageSuper] = useState(1)
     const itemsPerPage = 10
 
-    // Reset pagination on search or sort changes
+    // Reset pagination on search, filter or sort changes
     useEffect(() => {
         setPageZonal(1)
-    }, [searchZonal, sortZonal])
+    }, [searchZonal, sucursalZonal, sortZonal])
 
     useEffect(() => {
         setPageOp(1)
-    }, [searchOp, sortOp])
+    }, [searchOp, sucursalOp, sortOp])
 
     useEffect(() => {
         setPageSuper(1)
-    }, [searchSuper, sortSuper])
+    }, [searchSuper, sucursalSuper, sortSuper])
 
     // Distances Table States
     const [distSearchSupervisor, setDistSearchSupervisor] = useState('')
@@ -588,7 +591,9 @@ export default function PersonalClient({
     const sortedZonales = [...initialZonales]
         .filter(z => {
             const q = searchZonal.toLowerCase().trim()
-            return z.nombre.toLowerCase().includes(q) || z.apellido.toLowerCase().includes(q) || z.correo.toLowerCase().includes(q) || z.sucursales.some((s: any) => s.sucursal.nombre.toLowerCase().includes(q))
+            const matchSearch = !q || z.nombre.toLowerCase().includes(q) || z.apellido.toLowerCase().includes(q) || z.correo.toLowerCase().includes(q) || z.sucursales.some((s: any) => s.sucursal.nombre.toLowerCase().includes(q))
+            const matchSucursal = !sucursalZonal || z.sucursales.some((s: any) => s.sucursalId === sucursalZonal || s.sucursal.nombre === sucursalZonal)
+            return matchSearch && matchSucursal
         })
         .sort((a, b) => {
             const dir = sortZonal.dir === 'asc' ? 1 : -1
@@ -607,7 +612,9 @@ export default function PersonalClient({
     const sortedJefesOp = [...initialJefesOperacion]
         .filter(o => {
             const q = searchOp.toLowerCase().trim()
-            return o.nombre.toLowerCase().includes(q) || o.apellido.toLowerCase().includes(q) || o.correo.toLowerCase().includes(q) || o.jefeZonal.nombre.toLowerCase().includes(q)
+            const matchSearch = !q || o.nombre.toLowerCase().includes(q) || o.apellido.toLowerCase().includes(q) || o.correo.toLowerCase().includes(q) || o.jefeZonal.nombre.toLowerCase().includes(q)
+            const matchSucursal = !sucursalOp || o.jefeZonal?.sucursales?.some((s: any) => s.sucursalId === sucursalOp || s.sucursal.nombre === sucursalOp)
+            return matchSearch && matchSucursal
         })
         .sort((a, b) => {
             const dir = sortOp.dir === 'asc' ? 1 : -1
@@ -627,7 +634,9 @@ export default function PersonalClient({
             const q = searchSuper.toLowerCase().trim()
             const zonal = s.jefeOperacion?.jefeZonal || s.jefeZonal
             const hasSuc = zonal?.sucursales.some((su: any) => su.sucursal.nombre.toLowerCase().includes(q))
-            return s.nombre.toLowerCase().includes(q) || s.apellido.toLowerCase().includes(q) || s.correo.toLowerCase().includes(q) || hasSuc
+            const matchSearch = !q || s.nombre.toLowerCase().includes(q) || s.apellido.toLowerCase().includes(q) || s.correo.toLowerCase().includes(q) || hasSuc
+            const matchSucursal = !sucursalSuper || zonal?.sucursales?.some((su: any) => su.sucursalId === sucursalSuper || su.sucursal.nombre === sucursalSuper)
+            return matchSearch && matchSucursal
         })
         .sort((a, b) => {
             const dir = sortSuper.dir === 'asc' ? 1 : -1
@@ -1682,14 +1691,24 @@ export default function PersonalClient({
             {activeTab === 'zonales' && (
                 <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                     <div className="p-5 border-b border-gray-50 bg-gray-50/20 flex flex-col sm:flex-row gap-4 items-center justify-between">
-                        <div className="relative w-full sm:max-w-md">
-                            <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">🔍</span>
-                            <input
-                                title="Buscar zonal"
-                                type="text" value={searchZonal} onChange={(e) => setSearchZonal(e.target.value)}
-                                placeholder="Buscar jefe zonal por nombre, correo, sucursal..."
-                                className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-gray-200 outline-none text-sm bg-white focus:ring-1 focus:ring-cyan-500"
-                            />
+                        <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:max-w-xl">
+                            <div className="relative w-full">
+                                <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">🔍</span>
+                                <input
+                                    title="Buscar zonal"
+                                    type="text" value={searchZonal} onChange={(e) => setSearchZonal(e.target.value)}
+                                    placeholder="Buscar jefe zonal por nombre, correo..."
+                                    className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-gray-200 outline-none text-sm bg-white focus:ring-1 focus:ring-cyan-500"
+                                />
+                            </div>
+                            <select
+                                value={sucursalZonal}
+                                onChange={(e) => setSucursalZonal(e.target.value)}
+                                className="w-full sm:w-56 px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm bg-white font-semibold text-gray-700 outline-none focus:ring-1 focus:ring-cyan-500 cursor-pointer"
+                            >
+                                <option value="">Todas las sucursales</option>
+                                {sucursales.map((s: any) => <option key={s.id} value={s.id}>{s.nombre}</option>)}
+                            </select>
                         </div>
                     </div>
 
@@ -1800,14 +1819,24 @@ export default function PersonalClient({
             {activeTab === 'jefe-operacion' && (
                 <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                     <div className="p-5 border-b border-gray-50 bg-gray-50/20 flex flex-col sm:flex-row gap-4 items-center justify-between">
-                        <div className="relative w-full sm:max-w-md">
-                            <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">🔍</span>
-                            <input
-                                title="Buscar jefe operacion"
-                                type="text" value={searchOp} onChange={(e) => setSearchOp(e.target.value)}
-                                placeholder="Buscar jefe de operación por nombre, correo, zonal..."
-                                className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-gray-200 outline-none text-sm bg-white focus:ring-1 focus:ring-cyan-500"
-                            />
+                        <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:max-w-xl">
+                            <div className="relative w-full">
+                                <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">🔍</span>
+                                <input
+                                    title="Buscar jefe operacion"
+                                    type="text" value={searchOp} onChange={(e) => setSearchOp(e.target.value)}
+                                    placeholder="Buscar jefe de operación por nombre, correo..."
+                                    className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-gray-200 outline-none text-sm bg-white focus:ring-1 focus:ring-cyan-500"
+                                />
+                            </div>
+                            <select
+                                value={sucursalOp}
+                                onChange={(e) => setSucursalOp(e.target.value)}
+                                className="w-full sm:w-56 px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm bg-white font-semibold text-gray-700 outline-none focus:ring-1 focus:ring-cyan-500 cursor-pointer"
+                            >
+                                <option value="">Todas las sucursales</option>
+                                {sucursales.map((s: any) => <option key={s.id} value={s.id}>{s.nombre}</option>)}
+                            </select>
                         </div>
                     </div>
 
@@ -1901,14 +1930,24 @@ export default function PersonalClient({
             {activeTab === 'supervisor' && (
                 <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                     <div className="p-5 border-b border-gray-50 bg-gray-50/20 flex flex-col sm:flex-row gap-4 items-center justify-between">
-                        <div className="relative w-full sm:max-w-md">
-                            <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">🔍</span>
-                            <input
-                                title="Buscar supervisor"
-                                type="text" value={searchSuper} onChange={(e) => setSearchSuper(e.target.value)}
-                                placeholder="Buscar supervisor por nombre, correo..."
-                                className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-gray-200 outline-none text-sm bg-white focus:ring-1 focus:ring-cyan-500"
-                            />
+                        <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:max-w-xl">
+                            <div className="relative w-full">
+                                <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">🔍</span>
+                                <input
+                                    title="Buscar supervisor"
+                                    type="text" value={searchSuper} onChange={(e) => setSearchSuper(e.target.value)}
+                                    placeholder="Buscar supervisor por nombre, correo..."
+                                    className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-gray-200 outline-none text-sm bg-white focus:ring-1 focus:ring-cyan-500"
+                                />
+                            </div>
+                            <select
+                                value={sucursalSuper}
+                                onChange={(e) => setSucursalSuper(e.target.value)}
+                                className="w-full sm:w-56 px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm bg-white font-semibold text-gray-700 outline-none focus:ring-1 focus:ring-cyan-500 cursor-pointer"
+                            >
+                                <option value="">Todas las sucursales</option>
+                                {sucursales.map((s: any) => <option key={s.id} value={s.id}>{s.nombre}</option>)}
+                            </select>
                         </div>
 
                         {/* Download Dropdown */}
@@ -2065,7 +2104,7 @@ export default function PersonalClient({
                 let calculatedCount = 0
                 let errorCount = 0
 
-                sortedSupervisores.forEach(s => {
+                initialSupervisores.forEach(s => {
                     const zonal = s.jefeOperacion?.jefeZonal || s.jefeZonal
                     const firstSucursal = zonal?.sucursales?.[0]?.sucursal?.nombre || null
 
@@ -2100,7 +2139,7 @@ export default function PersonalClient({
                     let sucursalKm = 0
 
                     // Find supervisores in this sucursal
-                    sortedSupervisores.forEach(s => {
+                    initialSupervisores.forEach(s => {
                         const zonal = s.jefeOperacion?.jefeZonal || s.jefeZonal
                         const sucs = zonal?.sucursales || []
                         const isAssigned = sucs.some((su: any) => su.sucursal.nombre === sucursalName)

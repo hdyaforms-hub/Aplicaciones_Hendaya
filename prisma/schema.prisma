@@ -752,6 +752,33 @@ model Multas_Elementos_Esenciales_Det {
   cab              Multas_Elementos_Esenciales_Cab @relation(fields: [cabId], references: [id], onDelete: Cascade)
 }
 
+model Descargos_Cab {
+  id               String          @id @default(uuid())
+  folio            String          @unique
+  licitacion       String?
+  rbd              Int
+  fechaSupervision DateTime?
+  resolucion       Float           @default(0)
+  estado           String          @default("Abierto") // "Abierto" | "Cerrado"
+  usuarioModif     String?
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  detalles         Descargos_Det[]
+}
+
+model Descargos_Det {
+  id                       String        @id @default(uuid())
+  cabId                    String
+  letraAspecto             String
+  descripcion              String?       @db.Text
+  estadoAspecto            String        @default("Sin antecedente") // "Sin antecedente" | "Solucionado" | "No Solucionado"
+  fechaNoSolucionado       DateTime?
+  observacionNoSolucionado String?       @db.Text
+  createdAt                DateTime      @default(now())
+  updatedAt                DateTime      @updatedAt
+  cab                      Descargos_Cab @relation(fields: [cabId], references: [id], onDelete: Cascade)
+}
+
 model DescargaPaeLog {
   id            String   @id @default(uuid())
   ano           Int
@@ -1124,6 +1151,23 @@ model MenuItemOrder {
 
   @@unique([parentKey, itemKey])
 }
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  username  String
+  userId    String?
+  action    String
+  modulo    String
+  detalle   String   @db.Text
+  ip        String?
+  createdAt DateTime @default(now())
+
+  @@index([username])
+  @@index([createdAt])
+  @@index([modulo])
+  @@index([action])
+}
+
 
 
 

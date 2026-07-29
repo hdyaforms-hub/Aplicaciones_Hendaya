@@ -798,6 +798,31 @@ exports.Prisma.Multas_Elementos_Esenciales_DetScalarFieldEnum = {
   variablesUsadas: 'variablesUsadas'
 };
 
+exports.Prisma.Descargos_CabScalarFieldEnum = {
+  id: 'id',
+  folio: 'folio',
+  licitacion: 'licitacion',
+  rbd: 'rbd',
+  fechaSupervision: 'fechaSupervision',
+  resolucion: 'resolucion',
+  estado: 'estado',
+  usuarioModif: 'usuarioModif',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.Descargos_DetScalarFieldEnum = {
+  id: 'id',
+  cabId: 'cabId',
+  letraAspecto: 'letraAspecto',
+  descripcion: 'descripcion',
+  estadoAspecto: 'estadoAspecto',
+  fechaNoSolucionado: 'fechaNoSolucionado',
+  observacionNoSolucionado: 'observacionNoSolucionado',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.DescargaPaeLogScalarFieldEnum = {
   id: 'id',
   ano: 'ano',
@@ -1070,6 +1095,17 @@ exports.Prisma.MenuItemOrderScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.AuditLogScalarFieldEnum = {
+  id: 'id',
+  username: 'username',
+  userId: 'userId',
+  action: 'action',
+  modulo: 'modulo',
+  detalle: 'detalle',
+  ip: 'ip',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1134,6 +1170,8 @@ exports.Prisma.ModelName = {
   UTM: 'UTM',
   Multas_Elementos_Esenciales_Cab: 'Multas_Elementos_Esenciales_Cab',
   Multas_Elementos_Esenciales_Det: 'Multas_Elementos_Esenciales_Det',
+  Descargos_Cab: 'Descargos_Cab',
+  Descargos_Det: 'Descargos_Det',
   DescargaPaeLog: 'DescargaPaeLog',
   PaeOnlineCab: 'PaeOnlineCab',
   PaeOnlineDet: 'PaeOnlineDet',
@@ -1159,7 +1197,8 @@ exports.Prisma.ModelName = {
   MatrizT_RespuestasDetalle: 'MatrizT_RespuestasDetalle',
   FormatoCartaSostenedor: 'FormatoCartaSostenedor',
   DelegacionVisualizacion: 'DelegacionVisualizacion',
-  MenuItemOrder: 'MenuItemOrder'
+  MenuItemOrder: 'MenuItemOrder',
+  AuditLog: 'AuditLog'
 };
 
 /**

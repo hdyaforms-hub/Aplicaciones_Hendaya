@@ -25,8 +25,12 @@ export default function LoginPage() {
             const res = await fetch('/api/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password }),
+                body: JSON.stringify({ username: username.trim(), password }),
+                credentials: 'same-origin',
             })
+
+            console.log('[Login] Response status:', res.status)
+            console.log('[Login] Response ok:', res.ok)
 
             if (res.status === 202) {
                 const data = await res.json()
@@ -35,13 +39,16 @@ export default function LoginPage() {
                     setError('')
                 }
             } else if (res.ok) {
+                console.log('[Login] Login exitoso, redirigiendo a /dashboard...')
                 window.location.href = '/dashboard'
             } else {
                 const data = await res.json()
+                console.log('[Login] Error:', data)
                 setError(data.message || 'Error al iniciar sesión')
             }
-        } catch (err) {
-            setError('Error de conexión o fallo interno del servidor')
+        } catch (err: any) {
+            console.error('[Login] Error de red:', err)
+            setError('Error de conexión: ' + (err?.message || 'desconocido'))
         } finally {
             setLoading(false)
         }
@@ -102,7 +109,7 @@ export default function LoginPage() {
                 </div>
 
                 {!requirePasswordChange ? (
-                    <form onSubmit={handleLogin} className="space-y-6">
+                    <form onSubmit={handleLogin} className="space-y-6" translate="no" lang="es">
                         {error && (
                             <div className="p-4 rounded-xl bg-red-500/20 border border-red-500/50 text-red-100 text-sm animate-pulse">
                                 {error}
@@ -120,8 +127,9 @@ export default function LoginPage() {
                                 id="username"
                                 type="text"
                                 required
+                                autoComplete="username"
                                 className="w-full px-5 py-3 rounded-xl bg-black/20 border border-white/10 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-200"
-                                placeholder="Ej: admin"
+                                placeholder="Ej: laviles"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
                             />
@@ -138,6 +146,7 @@ export default function LoginPage() {
                                 id="password"
                                 type="password"
                                 required
+                                autoComplete="current-password"
                                 className="w-full px-5 py-3 rounded-xl bg-black/20 border border-white/10 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-200"
                                 placeholder="••••••••"
                                 value={password}
@@ -146,8 +155,14 @@ export default function LoginPage() {
                         </div>
 
                         <button
+                            id="btn-login-submit"
                             type="submit"
                             disabled={loading}
+                            onClick={(e) => {
+                                if (e.currentTarget.form) {
+                                    // fallback explícito en caso de conflicto con extensiones del navegador
+                                }
+                            }}
                             className={`w-full py-3 px-4 rounded-xl text-white font-medium text-lg bg-gradient-to-r from-cyan-500 to-sky-500 hover:from-cyan-400 hover:to-sky-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-900 shadow-lg shadow-cyan-500/30 transform transition-all duration-200 ${loading ? 'opacity-75 cursor-not-allowed scale-95' : 'hover:scale-[1.02] active:scale-95'
                                 }`}
                         >

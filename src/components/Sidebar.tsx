@@ -53,17 +53,23 @@ export default function Sidebar({ user, menuOrders = [] }: { user: User, menuOrd
         setExpandedMenus(prev => ({ ...prev, [name]: !prev[name] }))
     }
 
+    const rawPermissions: string[] = Array.isArray(user.role.permissions)
+        ? user.role.permissions
+        : (typeof user.role.permissions === 'string'
+            ? JSON.parse(user.role.permissions)
+            : [])
+
     const isAdmin = user.role.name === 'admin' || user.role.name === 'Administrador'
-    const permissions = isAdmin && !user.role.permissions.includes('view_tablero_distancias')
-        ? [...user.role.permissions, 'view_tablero_distancias']
-        : user.role.permissions
+    const permissions = isAdmin && !rawPermissions.includes('view_tablero_distancias')
+        ? [...rawPermissions, 'view_tablero_distancias']
+        : rawPermissions
 
     const menuItems: MenuItem[] = [
         { name: 'Inicio', href: '/dashboard', icon: '🏠', requiredPermission: null },
         {
             name: 'Tableros y Avances',
             icon: '📈',
-            requiredPermission: ['view_tablero', 'view_tablero_pan', 'view_tablero_gas', 'view_tablero_retiro', 'view_tablero_elementos', 'view_tablero_multas_ee', 'view_tablero_organigrama', 'view_tablero_distancias'],
+            requiredPermission: ['view_tablero', 'view_tablero_pan', 'view_tablero_gas', 'view_tablero_retiro', 'view_tablero_elementos', 'view_tablero_multas_ee', 'view_tablero_organigrama', 'view_tablero_distancias', 'view_tablero_auditoria'],
             subItems: [
                 { name: 'Avance PMPA', href: '/dashboard/tablero', requiredPermission: 'view_tablero' },
                 { name: 'Organigrama por zonas', href: '/dashboard/tablero/organigrama', requiredPermission: 'view_tablero_organigrama' },
@@ -72,7 +78,8 @@ export default function Sidebar({ user, menuOrders = [] }: { user: User, menuOrd
                 { name: 'Retiro de Saldos', href: '/dashboard/tablero/retiro-saldos', requiredPermission: 'view_tablero_retiro' },
                 { name: 'Carga de Elementos Esenciales', href: '/dashboard/tablero/elementos-esenciales', requiredPermission: 'view_tablero_elementos' },
                 { name: 'Multas EE', href: '/dashboard/tablero/multas-ee', requiredPermission: 'view_tablero_multas_ee' },
-                { name: 'Tablero de Kilometraje', href: '/dashboard/tablero/kilometraje', requiredPermission: 'view_tablero_distancias' }
+                { name: 'Tablero de Kilometraje', href: '/dashboard/tablero/kilometraje', requiredPermission: 'view_tablero_distancias' },
+                { name: 'Auditoría', href: '/dashboard/tablero/auditoria', requiredPermission: 'view_tablero_auditoria' }
             ]
         },
         {
@@ -171,6 +178,11 @@ export default function Sidebar({ user, menuOrders = [] }: { user: User, menuOrd
                             name: 'Cálculos de Elementos Esenciales',
                             href: '/dashboard/areas/multas/calculos',
                             requiredPermission: 'manage_calculos_ee'
+                        },
+                        {
+                            name: 'Descargos de actas',
+                            href: '/dashboard/areas/multas/descargos',
+                            requiredPermission: 'manage_descargos'
                         }
                     ]
                 }
@@ -472,13 +484,16 @@ export default function Sidebar({ user, menuOrders = [] }: { user: User, menuOrd
                             <span className="text-2xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-sky-400 ml-1">H</span>
                         )}
                     </div>
-                    {/* Desktop Collapse Toggle */}
+                    {/* Collapse Toggle Button */}
                     <button 
+                        type="button"
                         onClick={() => setIsCollapsed(!isCollapsed)}
-                        className="hidden lg:flex p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
-                        title={isCollapsed ? "Expandir menú" : "Ocultar menú"}
+                        className="flex items-center justify-center w-8 h-8 rounded-xl bg-slate-800/90 hover:bg-cyan-500/20 text-slate-300 hover:text-cyan-300 border border-slate-700/80 hover:border-cyan-500/40 transition-all cursor-pointer shadow-sm group"
+                        title={isCollapsed ? "Expandir menú lateral" : "Ocultar / Contraer menú lateral"}
                     >
-                        {isCollapsed ? '▶' : '◀'}
+                        <span className="text-xs font-black transition-transform group-hover:scale-125">
+                            {isCollapsed ? '▶' : '◀'}
+                        </span>
                     </button>
                 </div>
 

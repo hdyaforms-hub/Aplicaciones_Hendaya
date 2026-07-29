@@ -249,6 +249,16 @@ export type Multas_Elementos_Esenciales_Cab = $Result.DefaultSelection<Prisma.$M
  */
 export type Multas_Elementos_Esenciales_Det = $Result.DefaultSelection<Prisma.$Multas_Elementos_Esenciales_DetPayload>
 /**
+ * Model Descargos_Cab
+ * 
+ */
+export type Descargos_Cab = $Result.DefaultSelection<Prisma.$Descargos_CabPayload>
+/**
+ * Model Descargos_Det
+ * 
+ */
+export type Descargos_Det = $Result.DefaultSelection<Prisma.$Descargos_DetPayload>
+/**
  * Model DescargaPaeLog
  * 
  */
@@ -378,6 +388,11 @@ export type DelegacionVisualizacion = $Result.DefaultSelection<Prisma.$Delegacio
  * 
  */
 export type MenuItemOrder = $Result.DefaultSelection<Prisma.$MenuItemOrderPayload>
+/**
+ * Model AuditLog
+ * 
+ */
+export type AuditLog = $Result.DefaultSelection<Prisma.$AuditLogPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -973,6 +988,26 @@ export class PrismaClient<
   get multas_Elementos_Esenciales_Det(): Prisma.Multas_Elementos_Esenciales_DetDelegate<ExtArgs>;
 
   /**
+   * `prisma.descargos_Cab`: Exposes CRUD operations for the **Descargos_Cab** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Descargos_Cabs
+    * const descargos_Cabs = await prisma.descargos_Cab.findMany()
+    * ```
+    */
+  get descargos_Cab(): Prisma.Descargos_CabDelegate<ExtArgs>;
+
+  /**
+   * `prisma.descargos_Det`: Exposes CRUD operations for the **Descargos_Det** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Descargos_Dets
+    * const descargos_Dets = await prisma.descargos_Det.findMany()
+    * ```
+    */
+  get descargos_Det(): Prisma.Descargos_DetDelegate<ExtArgs>;
+
+  /**
    * `prisma.descargaPaeLog`: Exposes CRUD operations for the **DescargaPaeLog** model.
     * Example usage:
     * ```ts
@@ -1231,6 +1266,16 @@ export class PrismaClient<
     * ```
     */
   get menuItemOrder(): Prisma.MenuItemOrderDelegate<ExtArgs>;
+
+  /**
+   * `prisma.auditLog`: Exposes CRUD operations for the **AuditLog** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AuditLogs
+    * const auditLogs = await prisma.auditLog.findMany()
+    * ```
+    */
+  get auditLog(): Prisma.AuditLogDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -1719,6 +1764,8 @@ export namespace Prisma {
     UTM: 'UTM',
     Multas_Elementos_Esenciales_Cab: 'Multas_Elementos_Esenciales_Cab',
     Multas_Elementos_Esenciales_Det: 'Multas_Elementos_Esenciales_Det',
+    Descargos_Cab: 'Descargos_Cab',
+    Descargos_Det: 'Descargos_Det',
     DescargaPaeLog: 'DescargaPaeLog',
     PaeOnlineCab: 'PaeOnlineCab',
     PaeOnlineDet: 'PaeOnlineDet',
@@ -1744,7 +1791,8 @@ export namespace Prisma {
     MatrizT_RespuestasDetalle: 'MatrizT_RespuestasDetalle',
     FormatoCartaSostenedor: 'FormatoCartaSostenedor',
     DelegacionVisualizacion: 'DelegacionVisualizacion',
-    MenuItemOrder: 'MenuItemOrder'
+    MenuItemOrder: 'MenuItemOrder',
+    AuditLog: 'AuditLog'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1760,7 +1808,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder"
+      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -5054,6 +5102,146 @@ export namespace Prisma {
           }
         }
       }
+      Descargos_Cab: {
+        payload: Prisma.$Descargos_CabPayload<ExtArgs>
+        fields: Prisma.Descargos_CabFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Descargos_CabFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Descargos_CabPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Descargos_CabFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Descargos_CabPayload>
+          }
+          findFirst: {
+            args: Prisma.Descargos_CabFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Descargos_CabPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Descargos_CabFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Descargos_CabPayload>
+          }
+          findMany: {
+            args: Prisma.Descargos_CabFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Descargos_CabPayload>[]
+          }
+          create: {
+            args: Prisma.Descargos_CabCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Descargos_CabPayload>
+          }
+          createMany: {
+            args: Prisma.Descargos_CabCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Descargos_CabCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Descargos_CabPayload>[]
+          }
+          delete: {
+            args: Prisma.Descargos_CabDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Descargos_CabPayload>
+          }
+          update: {
+            args: Prisma.Descargos_CabUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Descargos_CabPayload>
+          }
+          deleteMany: {
+            args: Prisma.Descargos_CabDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Descargos_CabUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Descargos_CabUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Descargos_CabPayload>
+          }
+          aggregate: {
+            args: Prisma.Descargos_CabAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDescargos_Cab>
+          }
+          groupBy: {
+            args: Prisma.Descargos_CabGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Descargos_CabGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Descargos_CabCountArgs<ExtArgs>
+            result: $Utils.Optional<Descargos_CabCountAggregateOutputType> | number
+          }
+        }
+      }
+      Descargos_Det: {
+        payload: Prisma.$Descargos_DetPayload<ExtArgs>
+        fields: Prisma.Descargos_DetFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Descargos_DetFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Descargos_DetPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Descargos_DetFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Descargos_DetPayload>
+          }
+          findFirst: {
+            args: Prisma.Descargos_DetFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Descargos_DetPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Descargos_DetFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Descargos_DetPayload>
+          }
+          findMany: {
+            args: Prisma.Descargos_DetFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Descargos_DetPayload>[]
+          }
+          create: {
+            args: Prisma.Descargos_DetCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Descargos_DetPayload>
+          }
+          createMany: {
+            args: Prisma.Descargos_DetCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Descargos_DetCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Descargos_DetPayload>[]
+          }
+          delete: {
+            args: Prisma.Descargos_DetDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Descargos_DetPayload>
+          }
+          update: {
+            args: Prisma.Descargos_DetUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Descargos_DetPayload>
+          }
+          deleteMany: {
+            args: Prisma.Descargos_DetDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Descargos_DetUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Descargos_DetUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Descargos_DetPayload>
+          }
+          aggregate: {
+            args: Prisma.Descargos_DetAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDescargos_Det>
+          }
+          groupBy: {
+            args: Prisma.Descargos_DetGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Descargos_DetGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Descargos_DetCountArgs<ExtArgs>
+            result: $Utils.Optional<Descargos_DetCountAggregateOutputType> | number
+          }
+        }
+      }
       DescargaPaeLog: {
         payload: Prisma.$DescargaPaeLogPayload<ExtArgs>
         fields: Prisma.DescargaPaeLogFieldRefs
@@ -6874,6 +7062,76 @@ export namespace Prisma {
           }
         }
       }
+      AuditLog: {
+        payload: Prisma.$AuditLogPayload<ExtArgs>
+        fields: Prisma.AuditLogFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AuditLogFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuditLogPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AuditLogFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuditLogPayload>
+          }
+          findFirst: {
+            args: Prisma.AuditLogFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuditLogPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AuditLogFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuditLogPayload>
+          }
+          findMany: {
+            args: Prisma.AuditLogFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuditLogPayload>[]
+          }
+          create: {
+            args: Prisma.AuditLogCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuditLogPayload>
+          }
+          createMany: {
+            args: Prisma.AuditLogCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AuditLogCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuditLogPayload>[]
+          }
+          delete: {
+            args: Prisma.AuditLogDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuditLogPayload>
+          }
+          update: {
+            args: Prisma.AuditLogUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuditLogPayload>
+          }
+          deleteMany: {
+            args: Prisma.AuditLogDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AuditLogUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.AuditLogUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuditLogPayload>
+          }
+          aggregate: {
+            args: Prisma.AuditLogAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAuditLog>
+          }
+          groupBy: {
+            args: Prisma.AuditLogGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AuditLogGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AuditLogCountArgs<ExtArgs>
+            result: $Utils.Optional<AuditLogCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -7610,6 +7868,37 @@ export namespace Prisma {
    */
   export type Multas_Elementos_Esenciales_CabCountOutputTypeCountDetallesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: Multas_Elementos_Esenciales_DetWhereInput
+  }
+
+
+  /**
+   * Count Type Descargos_CabCountOutputType
+   */
+
+  export type Descargos_CabCountOutputType = {
+    detalles: number
+  }
+
+  export type Descargos_CabCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    detalles?: boolean | Descargos_CabCountOutputTypeCountDetallesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * Descargos_CabCountOutputType without action
+   */
+  export type Descargos_CabCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Descargos_CabCountOutputType
+     */
+    select?: Descargos_CabCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * Descargos_CabCountOutputType without action
+   */
+  export type Descargos_CabCountOutputTypeCountDetallesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Descargos_DetWhereInput
   }
 
 
@@ -56478,6 +56767,2033 @@ export namespace Prisma {
 
 
   /**
+   * Model Descargos_Cab
+   */
+
+  export type AggregateDescargos_Cab = {
+    _count: Descargos_CabCountAggregateOutputType | null
+    _avg: Descargos_CabAvgAggregateOutputType | null
+    _sum: Descargos_CabSumAggregateOutputType | null
+    _min: Descargos_CabMinAggregateOutputType | null
+    _max: Descargos_CabMaxAggregateOutputType | null
+  }
+
+  export type Descargos_CabAvgAggregateOutputType = {
+    rbd: number | null
+    resolucion: number | null
+  }
+
+  export type Descargos_CabSumAggregateOutputType = {
+    rbd: number | null
+    resolucion: number | null
+  }
+
+  export type Descargos_CabMinAggregateOutputType = {
+    id: string | null
+    folio: string | null
+    licitacion: string | null
+    rbd: number | null
+    fechaSupervision: Date | null
+    resolucion: number | null
+    estado: string | null
+    usuarioModif: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Descargos_CabMaxAggregateOutputType = {
+    id: string | null
+    folio: string | null
+    licitacion: string | null
+    rbd: number | null
+    fechaSupervision: Date | null
+    resolucion: number | null
+    estado: string | null
+    usuarioModif: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Descargos_CabCountAggregateOutputType = {
+    id: number
+    folio: number
+    licitacion: number
+    rbd: number
+    fechaSupervision: number
+    resolucion: number
+    estado: number
+    usuarioModif: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type Descargos_CabAvgAggregateInputType = {
+    rbd?: true
+    resolucion?: true
+  }
+
+  export type Descargos_CabSumAggregateInputType = {
+    rbd?: true
+    resolucion?: true
+  }
+
+  export type Descargos_CabMinAggregateInputType = {
+    id?: true
+    folio?: true
+    licitacion?: true
+    rbd?: true
+    fechaSupervision?: true
+    resolucion?: true
+    estado?: true
+    usuarioModif?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Descargos_CabMaxAggregateInputType = {
+    id?: true
+    folio?: true
+    licitacion?: true
+    rbd?: true
+    fechaSupervision?: true
+    resolucion?: true
+    estado?: true
+    usuarioModif?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Descargos_CabCountAggregateInputType = {
+    id?: true
+    folio?: true
+    licitacion?: true
+    rbd?: true
+    fechaSupervision?: true
+    resolucion?: true
+    estado?: true
+    usuarioModif?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type Descargos_CabAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Descargos_Cab to aggregate.
+     */
+    where?: Descargos_CabWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Descargos_Cabs to fetch.
+     */
+    orderBy?: Descargos_CabOrderByWithRelationInput | Descargos_CabOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Descargos_CabWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Descargos_Cabs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Descargos_Cabs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Descargos_Cabs
+    **/
+    _count?: true | Descargos_CabCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Descargos_CabAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Descargos_CabSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Descargos_CabMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Descargos_CabMaxAggregateInputType
+  }
+
+  export type GetDescargos_CabAggregateType<T extends Descargos_CabAggregateArgs> = {
+        [P in keyof T & keyof AggregateDescargos_Cab]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDescargos_Cab[P]>
+      : GetScalarType<T[P], AggregateDescargos_Cab[P]>
+  }
+
+
+
+
+  export type Descargos_CabGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Descargos_CabWhereInput
+    orderBy?: Descargos_CabOrderByWithAggregationInput | Descargos_CabOrderByWithAggregationInput[]
+    by: Descargos_CabScalarFieldEnum[] | Descargos_CabScalarFieldEnum
+    having?: Descargos_CabScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Descargos_CabCountAggregateInputType | true
+    _avg?: Descargos_CabAvgAggregateInputType
+    _sum?: Descargos_CabSumAggregateInputType
+    _min?: Descargos_CabMinAggregateInputType
+    _max?: Descargos_CabMaxAggregateInputType
+  }
+
+  export type Descargos_CabGroupByOutputType = {
+    id: string
+    folio: string
+    licitacion: string | null
+    rbd: number
+    fechaSupervision: Date | null
+    resolucion: number
+    estado: string
+    usuarioModif: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: Descargos_CabCountAggregateOutputType | null
+    _avg: Descargos_CabAvgAggregateOutputType | null
+    _sum: Descargos_CabSumAggregateOutputType | null
+    _min: Descargos_CabMinAggregateOutputType | null
+    _max: Descargos_CabMaxAggregateOutputType | null
+  }
+
+  type GetDescargos_CabGroupByPayload<T extends Descargos_CabGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Descargos_CabGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Descargos_CabGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Descargos_CabGroupByOutputType[P]>
+            : GetScalarType<T[P], Descargos_CabGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Descargos_CabSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    folio?: boolean
+    licitacion?: boolean
+    rbd?: boolean
+    fechaSupervision?: boolean
+    resolucion?: boolean
+    estado?: boolean
+    usuarioModif?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    detalles?: boolean | Descargos_Cab$detallesArgs<ExtArgs>
+    _count?: boolean | Descargos_CabCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["descargos_Cab"]>
+
+  export type Descargos_CabSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    folio?: boolean
+    licitacion?: boolean
+    rbd?: boolean
+    fechaSupervision?: boolean
+    resolucion?: boolean
+    estado?: boolean
+    usuarioModif?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["descargos_Cab"]>
+
+  export type Descargos_CabSelectScalar = {
+    id?: boolean
+    folio?: boolean
+    licitacion?: boolean
+    rbd?: boolean
+    fechaSupervision?: boolean
+    resolucion?: boolean
+    estado?: boolean
+    usuarioModif?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type Descargos_CabInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    detalles?: boolean | Descargos_Cab$detallesArgs<ExtArgs>
+    _count?: boolean | Descargos_CabCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type Descargos_CabIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $Descargos_CabPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Descargos_Cab"
+    objects: {
+      detalles: Prisma.$Descargos_DetPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      folio: string
+      licitacion: string | null
+      rbd: number
+      fechaSupervision: Date | null
+      resolucion: number
+      estado: string
+      usuarioModif: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["descargos_Cab"]>
+    composites: {}
+  }
+
+  type Descargos_CabGetPayload<S extends boolean | null | undefined | Descargos_CabDefaultArgs> = $Result.GetResult<Prisma.$Descargos_CabPayload, S>
+
+  type Descargos_CabCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Descargos_CabFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Descargos_CabCountAggregateInputType | true
+    }
+
+  export interface Descargos_CabDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Descargos_Cab'], meta: { name: 'Descargos_Cab' } }
+    /**
+     * Find zero or one Descargos_Cab that matches the filter.
+     * @param {Descargos_CabFindUniqueArgs} args - Arguments to find a Descargos_Cab
+     * @example
+     * // Get one Descargos_Cab
+     * const descargos_Cab = await prisma.descargos_Cab.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Descargos_CabFindUniqueArgs>(args: SelectSubset<T, Descargos_CabFindUniqueArgs<ExtArgs>>): Prisma__Descargos_CabClient<$Result.GetResult<Prisma.$Descargos_CabPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Descargos_Cab that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Descargos_CabFindUniqueOrThrowArgs} args - Arguments to find a Descargos_Cab
+     * @example
+     * // Get one Descargos_Cab
+     * const descargos_Cab = await prisma.descargos_Cab.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Descargos_CabFindUniqueOrThrowArgs>(args: SelectSubset<T, Descargos_CabFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Descargos_CabClient<$Result.GetResult<Prisma.$Descargos_CabPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Descargos_Cab that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Descargos_CabFindFirstArgs} args - Arguments to find a Descargos_Cab
+     * @example
+     * // Get one Descargos_Cab
+     * const descargos_Cab = await prisma.descargos_Cab.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Descargos_CabFindFirstArgs>(args?: SelectSubset<T, Descargos_CabFindFirstArgs<ExtArgs>>): Prisma__Descargos_CabClient<$Result.GetResult<Prisma.$Descargos_CabPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Descargos_Cab that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Descargos_CabFindFirstOrThrowArgs} args - Arguments to find a Descargos_Cab
+     * @example
+     * // Get one Descargos_Cab
+     * const descargos_Cab = await prisma.descargos_Cab.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Descargos_CabFindFirstOrThrowArgs>(args?: SelectSubset<T, Descargos_CabFindFirstOrThrowArgs<ExtArgs>>): Prisma__Descargos_CabClient<$Result.GetResult<Prisma.$Descargos_CabPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Descargos_Cabs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Descargos_CabFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Descargos_Cabs
+     * const descargos_Cabs = await prisma.descargos_Cab.findMany()
+     * 
+     * // Get first 10 Descargos_Cabs
+     * const descargos_Cabs = await prisma.descargos_Cab.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const descargos_CabWithIdOnly = await prisma.descargos_Cab.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Descargos_CabFindManyArgs>(args?: SelectSubset<T, Descargos_CabFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Descargos_CabPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Descargos_Cab.
+     * @param {Descargos_CabCreateArgs} args - Arguments to create a Descargos_Cab.
+     * @example
+     * // Create one Descargos_Cab
+     * const Descargos_Cab = await prisma.descargos_Cab.create({
+     *   data: {
+     *     // ... data to create a Descargos_Cab
+     *   }
+     * })
+     * 
+     */
+    create<T extends Descargos_CabCreateArgs>(args: SelectSubset<T, Descargos_CabCreateArgs<ExtArgs>>): Prisma__Descargos_CabClient<$Result.GetResult<Prisma.$Descargos_CabPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Descargos_Cabs.
+     * @param {Descargos_CabCreateManyArgs} args - Arguments to create many Descargos_Cabs.
+     * @example
+     * // Create many Descargos_Cabs
+     * const descargos_Cab = await prisma.descargos_Cab.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Descargos_CabCreateManyArgs>(args?: SelectSubset<T, Descargos_CabCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Descargos_Cabs and returns the data saved in the database.
+     * @param {Descargos_CabCreateManyAndReturnArgs} args - Arguments to create many Descargos_Cabs.
+     * @example
+     * // Create many Descargos_Cabs
+     * const descargos_Cab = await prisma.descargos_Cab.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Descargos_Cabs and only return the `id`
+     * const descargos_CabWithIdOnly = await prisma.descargos_Cab.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Descargos_CabCreateManyAndReturnArgs>(args?: SelectSubset<T, Descargos_CabCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Descargos_CabPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Descargos_Cab.
+     * @param {Descargos_CabDeleteArgs} args - Arguments to delete one Descargos_Cab.
+     * @example
+     * // Delete one Descargos_Cab
+     * const Descargos_Cab = await prisma.descargos_Cab.delete({
+     *   where: {
+     *     // ... filter to delete one Descargos_Cab
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Descargos_CabDeleteArgs>(args: SelectSubset<T, Descargos_CabDeleteArgs<ExtArgs>>): Prisma__Descargos_CabClient<$Result.GetResult<Prisma.$Descargos_CabPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Descargos_Cab.
+     * @param {Descargos_CabUpdateArgs} args - Arguments to update one Descargos_Cab.
+     * @example
+     * // Update one Descargos_Cab
+     * const descargos_Cab = await prisma.descargos_Cab.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Descargos_CabUpdateArgs>(args: SelectSubset<T, Descargos_CabUpdateArgs<ExtArgs>>): Prisma__Descargos_CabClient<$Result.GetResult<Prisma.$Descargos_CabPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Descargos_Cabs.
+     * @param {Descargos_CabDeleteManyArgs} args - Arguments to filter Descargos_Cabs to delete.
+     * @example
+     * // Delete a few Descargos_Cabs
+     * const { count } = await prisma.descargos_Cab.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Descargos_CabDeleteManyArgs>(args?: SelectSubset<T, Descargos_CabDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Descargos_Cabs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Descargos_CabUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Descargos_Cabs
+     * const descargos_Cab = await prisma.descargos_Cab.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Descargos_CabUpdateManyArgs>(args: SelectSubset<T, Descargos_CabUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Descargos_Cab.
+     * @param {Descargos_CabUpsertArgs} args - Arguments to update or create a Descargos_Cab.
+     * @example
+     * // Update or create a Descargos_Cab
+     * const descargos_Cab = await prisma.descargos_Cab.upsert({
+     *   create: {
+     *     // ... data to create a Descargos_Cab
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Descargos_Cab we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Descargos_CabUpsertArgs>(args: SelectSubset<T, Descargos_CabUpsertArgs<ExtArgs>>): Prisma__Descargos_CabClient<$Result.GetResult<Prisma.$Descargos_CabPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Descargos_Cabs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Descargos_CabCountArgs} args - Arguments to filter Descargos_Cabs to count.
+     * @example
+     * // Count the number of Descargos_Cabs
+     * const count = await prisma.descargos_Cab.count({
+     *   where: {
+     *     // ... the filter for the Descargos_Cabs we want to count
+     *   }
+     * })
+    **/
+    count<T extends Descargos_CabCountArgs>(
+      args?: Subset<T, Descargos_CabCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Descargos_CabCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Descargos_Cab.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Descargos_CabAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Descargos_CabAggregateArgs>(args: Subset<T, Descargos_CabAggregateArgs>): Prisma.PrismaPromise<GetDescargos_CabAggregateType<T>>
+
+    /**
+     * Group by Descargos_Cab.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Descargos_CabGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Descargos_CabGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Descargos_CabGroupByArgs['orderBy'] }
+        : { orderBy?: Descargos_CabGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Descargos_CabGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDescargos_CabGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Descargos_Cab model
+   */
+  readonly fields: Descargos_CabFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Descargos_Cab.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Descargos_CabClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    detalles<T extends Descargos_Cab$detallesArgs<ExtArgs> = {}>(args?: Subset<T, Descargos_Cab$detallesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Descargos_DetPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Descargos_Cab model
+   */ 
+  interface Descargos_CabFieldRefs {
+    readonly id: FieldRef<"Descargos_Cab", 'String'>
+    readonly folio: FieldRef<"Descargos_Cab", 'String'>
+    readonly licitacion: FieldRef<"Descargos_Cab", 'String'>
+    readonly rbd: FieldRef<"Descargos_Cab", 'Int'>
+    readonly fechaSupervision: FieldRef<"Descargos_Cab", 'DateTime'>
+    readonly resolucion: FieldRef<"Descargos_Cab", 'Float'>
+    readonly estado: FieldRef<"Descargos_Cab", 'String'>
+    readonly usuarioModif: FieldRef<"Descargos_Cab", 'String'>
+    readonly createdAt: FieldRef<"Descargos_Cab", 'DateTime'>
+    readonly updatedAt: FieldRef<"Descargos_Cab", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Descargos_Cab findUnique
+   */
+  export type Descargos_CabFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Descargos_Cab
+     */
+    select?: Descargos_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Descargos_CabInclude<ExtArgs> | null
+    /**
+     * Filter, which Descargos_Cab to fetch.
+     */
+    where: Descargos_CabWhereUniqueInput
+  }
+
+  /**
+   * Descargos_Cab findUniqueOrThrow
+   */
+  export type Descargos_CabFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Descargos_Cab
+     */
+    select?: Descargos_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Descargos_CabInclude<ExtArgs> | null
+    /**
+     * Filter, which Descargos_Cab to fetch.
+     */
+    where: Descargos_CabWhereUniqueInput
+  }
+
+  /**
+   * Descargos_Cab findFirst
+   */
+  export type Descargos_CabFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Descargos_Cab
+     */
+    select?: Descargos_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Descargos_CabInclude<ExtArgs> | null
+    /**
+     * Filter, which Descargos_Cab to fetch.
+     */
+    where?: Descargos_CabWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Descargos_Cabs to fetch.
+     */
+    orderBy?: Descargos_CabOrderByWithRelationInput | Descargos_CabOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Descargos_Cabs.
+     */
+    cursor?: Descargos_CabWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Descargos_Cabs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Descargos_Cabs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Descargos_Cabs.
+     */
+    distinct?: Descargos_CabScalarFieldEnum | Descargos_CabScalarFieldEnum[]
+  }
+
+  /**
+   * Descargos_Cab findFirstOrThrow
+   */
+  export type Descargos_CabFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Descargos_Cab
+     */
+    select?: Descargos_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Descargos_CabInclude<ExtArgs> | null
+    /**
+     * Filter, which Descargos_Cab to fetch.
+     */
+    where?: Descargos_CabWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Descargos_Cabs to fetch.
+     */
+    orderBy?: Descargos_CabOrderByWithRelationInput | Descargos_CabOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Descargos_Cabs.
+     */
+    cursor?: Descargos_CabWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Descargos_Cabs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Descargos_Cabs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Descargos_Cabs.
+     */
+    distinct?: Descargos_CabScalarFieldEnum | Descargos_CabScalarFieldEnum[]
+  }
+
+  /**
+   * Descargos_Cab findMany
+   */
+  export type Descargos_CabFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Descargos_Cab
+     */
+    select?: Descargos_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Descargos_CabInclude<ExtArgs> | null
+    /**
+     * Filter, which Descargos_Cabs to fetch.
+     */
+    where?: Descargos_CabWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Descargos_Cabs to fetch.
+     */
+    orderBy?: Descargos_CabOrderByWithRelationInput | Descargos_CabOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Descargos_Cabs.
+     */
+    cursor?: Descargos_CabWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Descargos_Cabs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Descargos_Cabs.
+     */
+    skip?: number
+    distinct?: Descargos_CabScalarFieldEnum | Descargos_CabScalarFieldEnum[]
+  }
+
+  /**
+   * Descargos_Cab create
+   */
+  export type Descargos_CabCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Descargos_Cab
+     */
+    select?: Descargos_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Descargos_CabInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Descargos_Cab.
+     */
+    data: XOR<Descargos_CabCreateInput, Descargos_CabUncheckedCreateInput>
+  }
+
+  /**
+   * Descargos_Cab createMany
+   */
+  export type Descargos_CabCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Descargos_Cabs.
+     */
+    data: Descargos_CabCreateManyInput | Descargos_CabCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Descargos_Cab createManyAndReturn
+   */
+  export type Descargos_CabCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Descargos_Cab
+     */
+    select?: Descargos_CabSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Descargos_Cabs.
+     */
+    data: Descargos_CabCreateManyInput | Descargos_CabCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Descargos_Cab update
+   */
+  export type Descargos_CabUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Descargos_Cab
+     */
+    select?: Descargos_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Descargos_CabInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Descargos_Cab.
+     */
+    data: XOR<Descargos_CabUpdateInput, Descargos_CabUncheckedUpdateInput>
+    /**
+     * Choose, which Descargos_Cab to update.
+     */
+    where: Descargos_CabWhereUniqueInput
+  }
+
+  /**
+   * Descargos_Cab updateMany
+   */
+  export type Descargos_CabUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Descargos_Cabs.
+     */
+    data: XOR<Descargos_CabUpdateManyMutationInput, Descargos_CabUncheckedUpdateManyInput>
+    /**
+     * Filter which Descargos_Cabs to update
+     */
+    where?: Descargos_CabWhereInput
+  }
+
+  /**
+   * Descargos_Cab upsert
+   */
+  export type Descargos_CabUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Descargos_Cab
+     */
+    select?: Descargos_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Descargos_CabInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Descargos_Cab to update in case it exists.
+     */
+    where: Descargos_CabWhereUniqueInput
+    /**
+     * In case the Descargos_Cab found by the `where` argument doesn't exist, create a new Descargos_Cab with this data.
+     */
+    create: XOR<Descargos_CabCreateInput, Descargos_CabUncheckedCreateInput>
+    /**
+     * In case the Descargos_Cab was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Descargos_CabUpdateInput, Descargos_CabUncheckedUpdateInput>
+  }
+
+  /**
+   * Descargos_Cab delete
+   */
+  export type Descargos_CabDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Descargos_Cab
+     */
+    select?: Descargos_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Descargos_CabInclude<ExtArgs> | null
+    /**
+     * Filter which Descargos_Cab to delete.
+     */
+    where: Descargos_CabWhereUniqueInput
+  }
+
+  /**
+   * Descargos_Cab deleteMany
+   */
+  export type Descargos_CabDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Descargos_Cabs to delete
+     */
+    where?: Descargos_CabWhereInput
+  }
+
+  /**
+   * Descargos_Cab.detalles
+   */
+  export type Descargos_Cab$detallesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Descargos_Det
+     */
+    select?: Descargos_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Descargos_DetInclude<ExtArgs> | null
+    where?: Descargos_DetWhereInput
+    orderBy?: Descargos_DetOrderByWithRelationInput | Descargos_DetOrderByWithRelationInput[]
+    cursor?: Descargos_DetWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Descargos_DetScalarFieldEnum | Descargos_DetScalarFieldEnum[]
+  }
+
+  /**
+   * Descargos_Cab without action
+   */
+  export type Descargos_CabDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Descargos_Cab
+     */
+    select?: Descargos_CabSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Descargos_CabInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Descargos_Det
+   */
+
+  export type AggregateDescargos_Det = {
+    _count: Descargos_DetCountAggregateOutputType | null
+    _min: Descargos_DetMinAggregateOutputType | null
+    _max: Descargos_DetMaxAggregateOutputType | null
+  }
+
+  export type Descargos_DetMinAggregateOutputType = {
+    id: string | null
+    cabId: string | null
+    letraAspecto: string | null
+    descripcion: string | null
+    estadoAspecto: string | null
+    fechaNoSolucionado: Date | null
+    observacionNoSolucionado: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Descargos_DetMaxAggregateOutputType = {
+    id: string | null
+    cabId: string | null
+    letraAspecto: string | null
+    descripcion: string | null
+    estadoAspecto: string | null
+    fechaNoSolucionado: Date | null
+    observacionNoSolucionado: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Descargos_DetCountAggregateOutputType = {
+    id: number
+    cabId: number
+    letraAspecto: number
+    descripcion: number
+    estadoAspecto: number
+    fechaNoSolucionado: number
+    observacionNoSolucionado: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type Descargos_DetMinAggregateInputType = {
+    id?: true
+    cabId?: true
+    letraAspecto?: true
+    descripcion?: true
+    estadoAspecto?: true
+    fechaNoSolucionado?: true
+    observacionNoSolucionado?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Descargos_DetMaxAggregateInputType = {
+    id?: true
+    cabId?: true
+    letraAspecto?: true
+    descripcion?: true
+    estadoAspecto?: true
+    fechaNoSolucionado?: true
+    observacionNoSolucionado?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Descargos_DetCountAggregateInputType = {
+    id?: true
+    cabId?: true
+    letraAspecto?: true
+    descripcion?: true
+    estadoAspecto?: true
+    fechaNoSolucionado?: true
+    observacionNoSolucionado?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type Descargos_DetAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Descargos_Det to aggregate.
+     */
+    where?: Descargos_DetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Descargos_Dets to fetch.
+     */
+    orderBy?: Descargos_DetOrderByWithRelationInput | Descargos_DetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Descargos_DetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Descargos_Dets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Descargos_Dets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Descargos_Dets
+    **/
+    _count?: true | Descargos_DetCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Descargos_DetMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Descargos_DetMaxAggregateInputType
+  }
+
+  export type GetDescargos_DetAggregateType<T extends Descargos_DetAggregateArgs> = {
+        [P in keyof T & keyof AggregateDescargos_Det]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDescargos_Det[P]>
+      : GetScalarType<T[P], AggregateDescargos_Det[P]>
+  }
+
+
+
+
+  export type Descargos_DetGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Descargos_DetWhereInput
+    orderBy?: Descargos_DetOrderByWithAggregationInput | Descargos_DetOrderByWithAggregationInput[]
+    by: Descargos_DetScalarFieldEnum[] | Descargos_DetScalarFieldEnum
+    having?: Descargos_DetScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Descargos_DetCountAggregateInputType | true
+    _min?: Descargos_DetMinAggregateInputType
+    _max?: Descargos_DetMaxAggregateInputType
+  }
+
+  export type Descargos_DetGroupByOutputType = {
+    id: string
+    cabId: string
+    letraAspecto: string
+    descripcion: string | null
+    estadoAspecto: string
+    fechaNoSolucionado: Date | null
+    observacionNoSolucionado: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: Descargos_DetCountAggregateOutputType | null
+    _min: Descargos_DetMinAggregateOutputType | null
+    _max: Descargos_DetMaxAggregateOutputType | null
+  }
+
+  type GetDescargos_DetGroupByPayload<T extends Descargos_DetGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Descargos_DetGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Descargos_DetGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Descargos_DetGroupByOutputType[P]>
+            : GetScalarType<T[P], Descargos_DetGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Descargos_DetSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cabId?: boolean
+    letraAspecto?: boolean
+    descripcion?: boolean
+    estadoAspecto?: boolean
+    fechaNoSolucionado?: boolean
+    observacionNoSolucionado?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    cab?: boolean | Descargos_CabDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["descargos_Det"]>
+
+  export type Descargos_DetSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cabId?: boolean
+    letraAspecto?: boolean
+    descripcion?: boolean
+    estadoAspecto?: boolean
+    fechaNoSolucionado?: boolean
+    observacionNoSolucionado?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    cab?: boolean | Descargos_CabDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["descargos_Det"]>
+
+  export type Descargos_DetSelectScalar = {
+    id?: boolean
+    cabId?: boolean
+    letraAspecto?: boolean
+    descripcion?: boolean
+    estadoAspecto?: boolean
+    fechaNoSolucionado?: boolean
+    observacionNoSolucionado?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type Descargos_DetInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    cab?: boolean | Descargos_CabDefaultArgs<ExtArgs>
+  }
+  export type Descargos_DetIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    cab?: boolean | Descargos_CabDefaultArgs<ExtArgs>
+  }
+
+  export type $Descargos_DetPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Descargos_Det"
+    objects: {
+      cab: Prisma.$Descargos_CabPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      cabId: string
+      letraAspecto: string
+      descripcion: string | null
+      estadoAspecto: string
+      fechaNoSolucionado: Date | null
+      observacionNoSolucionado: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["descargos_Det"]>
+    composites: {}
+  }
+
+  type Descargos_DetGetPayload<S extends boolean | null | undefined | Descargos_DetDefaultArgs> = $Result.GetResult<Prisma.$Descargos_DetPayload, S>
+
+  type Descargos_DetCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Descargos_DetFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Descargos_DetCountAggregateInputType | true
+    }
+
+  export interface Descargos_DetDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Descargos_Det'], meta: { name: 'Descargos_Det' } }
+    /**
+     * Find zero or one Descargos_Det that matches the filter.
+     * @param {Descargos_DetFindUniqueArgs} args - Arguments to find a Descargos_Det
+     * @example
+     * // Get one Descargos_Det
+     * const descargos_Det = await prisma.descargos_Det.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Descargos_DetFindUniqueArgs>(args: SelectSubset<T, Descargos_DetFindUniqueArgs<ExtArgs>>): Prisma__Descargos_DetClient<$Result.GetResult<Prisma.$Descargos_DetPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Descargos_Det that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Descargos_DetFindUniqueOrThrowArgs} args - Arguments to find a Descargos_Det
+     * @example
+     * // Get one Descargos_Det
+     * const descargos_Det = await prisma.descargos_Det.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Descargos_DetFindUniqueOrThrowArgs>(args: SelectSubset<T, Descargos_DetFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Descargos_DetClient<$Result.GetResult<Prisma.$Descargos_DetPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Descargos_Det that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Descargos_DetFindFirstArgs} args - Arguments to find a Descargos_Det
+     * @example
+     * // Get one Descargos_Det
+     * const descargos_Det = await prisma.descargos_Det.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Descargos_DetFindFirstArgs>(args?: SelectSubset<T, Descargos_DetFindFirstArgs<ExtArgs>>): Prisma__Descargos_DetClient<$Result.GetResult<Prisma.$Descargos_DetPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Descargos_Det that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Descargos_DetFindFirstOrThrowArgs} args - Arguments to find a Descargos_Det
+     * @example
+     * // Get one Descargos_Det
+     * const descargos_Det = await prisma.descargos_Det.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Descargos_DetFindFirstOrThrowArgs>(args?: SelectSubset<T, Descargos_DetFindFirstOrThrowArgs<ExtArgs>>): Prisma__Descargos_DetClient<$Result.GetResult<Prisma.$Descargos_DetPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Descargos_Dets that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Descargos_DetFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Descargos_Dets
+     * const descargos_Dets = await prisma.descargos_Det.findMany()
+     * 
+     * // Get first 10 Descargos_Dets
+     * const descargos_Dets = await prisma.descargos_Det.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const descargos_DetWithIdOnly = await prisma.descargos_Det.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Descargos_DetFindManyArgs>(args?: SelectSubset<T, Descargos_DetFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Descargos_DetPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Descargos_Det.
+     * @param {Descargos_DetCreateArgs} args - Arguments to create a Descargos_Det.
+     * @example
+     * // Create one Descargos_Det
+     * const Descargos_Det = await prisma.descargos_Det.create({
+     *   data: {
+     *     // ... data to create a Descargos_Det
+     *   }
+     * })
+     * 
+     */
+    create<T extends Descargos_DetCreateArgs>(args: SelectSubset<T, Descargos_DetCreateArgs<ExtArgs>>): Prisma__Descargos_DetClient<$Result.GetResult<Prisma.$Descargos_DetPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Descargos_Dets.
+     * @param {Descargos_DetCreateManyArgs} args - Arguments to create many Descargos_Dets.
+     * @example
+     * // Create many Descargos_Dets
+     * const descargos_Det = await prisma.descargos_Det.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Descargos_DetCreateManyArgs>(args?: SelectSubset<T, Descargos_DetCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Descargos_Dets and returns the data saved in the database.
+     * @param {Descargos_DetCreateManyAndReturnArgs} args - Arguments to create many Descargos_Dets.
+     * @example
+     * // Create many Descargos_Dets
+     * const descargos_Det = await prisma.descargos_Det.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Descargos_Dets and only return the `id`
+     * const descargos_DetWithIdOnly = await prisma.descargos_Det.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Descargos_DetCreateManyAndReturnArgs>(args?: SelectSubset<T, Descargos_DetCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Descargos_DetPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Descargos_Det.
+     * @param {Descargos_DetDeleteArgs} args - Arguments to delete one Descargos_Det.
+     * @example
+     * // Delete one Descargos_Det
+     * const Descargos_Det = await prisma.descargos_Det.delete({
+     *   where: {
+     *     // ... filter to delete one Descargos_Det
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Descargos_DetDeleteArgs>(args: SelectSubset<T, Descargos_DetDeleteArgs<ExtArgs>>): Prisma__Descargos_DetClient<$Result.GetResult<Prisma.$Descargos_DetPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Descargos_Det.
+     * @param {Descargos_DetUpdateArgs} args - Arguments to update one Descargos_Det.
+     * @example
+     * // Update one Descargos_Det
+     * const descargos_Det = await prisma.descargos_Det.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Descargos_DetUpdateArgs>(args: SelectSubset<T, Descargos_DetUpdateArgs<ExtArgs>>): Prisma__Descargos_DetClient<$Result.GetResult<Prisma.$Descargos_DetPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Descargos_Dets.
+     * @param {Descargos_DetDeleteManyArgs} args - Arguments to filter Descargos_Dets to delete.
+     * @example
+     * // Delete a few Descargos_Dets
+     * const { count } = await prisma.descargos_Det.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Descargos_DetDeleteManyArgs>(args?: SelectSubset<T, Descargos_DetDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Descargos_Dets.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Descargos_DetUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Descargos_Dets
+     * const descargos_Det = await prisma.descargos_Det.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Descargos_DetUpdateManyArgs>(args: SelectSubset<T, Descargos_DetUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Descargos_Det.
+     * @param {Descargos_DetUpsertArgs} args - Arguments to update or create a Descargos_Det.
+     * @example
+     * // Update or create a Descargos_Det
+     * const descargos_Det = await prisma.descargos_Det.upsert({
+     *   create: {
+     *     // ... data to create a Descargos_Det
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Descargos_Det we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Descargos_DetUpsertArgs>(args: SelectSubset<T, Descargos_DetUpsertArgs<ExtArgs>>): Prisma__Descargos_DetClient<$Result.GetResult<Prisma.$Descargos_DetPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Descargos_Dets.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Descargos_DetCountArgs} args - Arguments to filter Descargos_Dets to count.
+     * @example
+     * // Count the number of Descargos_Dets
+     * const count = await prisma.descargos_Det.count({
+     *   where: {
+     *     // ... the filter for the Descargos_Dets we want to count
+     *   }
+     * })
+    **/
+    count<T extends Descargos_DetCountArgs>(
+      args?: Subset<T, Descargos_DetCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Descargos_DetCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Descargos_Det.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Descargos_DetAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Descargos_DetAggregateArgs>(args: Subset<T, Descargos_DetAggregateArgs>): Prisma.PrismaPromise<GetDescargos_DetAggregateType<T>>
+
+    /**
+     * Group by Descargos_Det.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Descargos_DetGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Descargos_DetGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Descargos_DetGroupByArgs['orderBy'] }
+        : { orderBy?: Descargos_DetGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Descargos_DetGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDescargos_DetGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Descargos_Det model
+   */
+  readonly fields: Descargos_DetFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Descargos_Det.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Descargos_DetClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    cab<T extends Descargos_CabDefaultArgs<ExtArgs> = {}>(args?: Subset<T, Descargos_CabDefaultArgs<ExtArgs>>): Prisma__Descargos_CabClient<$Result.GetResult<Prisma.$Descargos_CabPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Descargos_Det model
+   */ 
+  interface Descargos_DetFieldRefs {
+    readonly id: FieldRef<"Descargos_Det", 'String'>
+    readonly cabId: FieldRef<"Descargos_Det", 'String'>
+    readonly letraAspecto: FieldRef<"Descargos_Det", 'String'>
+    readonly descripcion: FieldRef<"Descargos_Det", 'String'>
+    readonly estadoAspecto: FieldRef<"Descargos_Det", 'String'>
+    readonly fechaNoSolucionado: FieldRef<"Descargos_Det", 'DateTime'>
+    readonly observacionNoSolucionado: FieldRef<"Descargos_Det", 'String'>
+    readonly createdAt: FieldRef<"Descargos_Det", 'DateTime'>
+    readonly updatedAt: FieldRef<"Descargos_Det", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Descargos_Det findUnique
+   */
+  export type Descargos_DetFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Descargos_Det
+     */
+    select?: Descargos_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Descargos_DetInclude<ExtArgs> | null
+    /**
+     * Filter, which Descargos_Det to fetch.
+     */
+    where: Descargos_DetWhereUniqueInput
+  }
+
+  /**
+   * Descargos_Det findUniqueOrThrow
+   */
+  export type Descargos_DetFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Descargos_Det
+     */
+    select?: Descargos_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Descargos_DetInclude<ExtArgs> | null
+    /**
+     * Filter, which Descargos_Det to fetch.
+     */
+    where: Descargos_DetWhereUniqueInput
+  }
+
+  /**
+   * Descargos_Det findFirst
+   */
+  export type Descargos_DetFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Descargos_Det
+     */
+    select?: Descargos_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Descargos_DetInclude<ExtArgs> | null
+    /**
+     * Filter, which Descargos_Det to fetch.
+     */
+    where?: Descargos_DetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Descargos_Dets to fetch.
+     */
+    orderBy?: Descargos_DetOrderByWithRelationInput | Descargos_DetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Descargos_Dets.
+     */
+    cursor?: Descargos_DetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Descargos_Dets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Descargos_Dets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Descargos_Dets.
+     */
+    distinct?: Descargos_DetScalarFieldEnum | Descargos_DetScalarFieldEnum[]
+  }
+
+  /**
+   * Descargos_Det findFirstOrThrow
+   */
+  export type Descargos_DetFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Descargos_Det
+     */
+    select?: Descargos_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Descargos_DetInclude<ExtArgs> | null
+    /**
+     * Filter, which Descargos_Det to fetch.
+     */
+    where?: Descargos_DetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Descargos_Dets to fetch.
+     */
+    orderBy?: Descargos_DetOrderByWithRelationInput | Descargos_DetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Descargos_Dets.
+     */
+    cursor?: Descargos_DetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Descargos_Dets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Descargos_Dets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Descargos_Dets.
+     */
+    distinct?: Descargos_DetScalarFieldEnum | Descargos_DetScalarFieldEnum[]
+  }
+
+  /**
+   * Descargos_Det findMany
+   */
+  export type Descargos_DetFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Descargos_Det
+     */
+    select?: Descargos_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Descargos_DetInclude<ExtArgs> | null
+    /**
+     * Filter, which Descargos_Dets to fetch.
+     */
+    where?: Descargos_DetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Descargos_Dets to fetch.
+     */
+    orderBy?: Descargos_DetOrderByWithRelationInput | Descargos_DetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Descargos_Dets.
+     */
+    cursor?: Descargos_DetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Descargos_Dets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Descargos_Dets.
+     */
+    skip?: number
+    distinct?: Descargos_DetScalarFieldEnum | Descargos_DetScalarFieldEnum[]
+  }
+
+  /**
+   * Descargos_Det create
+   */
+  export type Descargos_DetCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Descargos_Det
+     */
+    select?: Descargos_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Descargos_DetInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Descargos_Det.
+     */
+    data: XOR<Descargos_DetCreateInput, Descargos_DetUncheckedCreateInput>
+  }
+
+  /**
+   * Descargos_Det createMany
+   */
+  export type Descargos_DetCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Descargos_Dets.
+     */
+    data: Descargos_DetCreateManyInput | Descargos_DetCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Descargos_Det createManyAndReturn
+   */
+  export type Descargos_DetCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Descargos_Det
+     */
+    select?: Descargos_DetSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Descargos_Dets.
+     */
+    data: Descargos_DetCreateManyInput | Descargos_DetCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Descargos_DetIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Descargos_Det update
+   */
+  export type Descargos_DetUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Descargos_Det
+     */
+    select?: Descargos_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Descargos_DetInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Descargos_Det.
+     */
+    data: XOR<Descargos_DetUpdateInput, Descargos_DetUncheckedUpdateInput>
+    /**
+     * Choose, which Descargos_Det to update.
+     */
+    where: Descargos_DetWhereUniqueInput
+  }
+
+  /**
+   * Descargos_Det updateMany
+   */
+  export type Descargos_DetUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Descargos_Dets.
+     */
+    data: XOR<Descargos_DetUpdateManyMutationInput, Descargos_DetUncheckedUpdateManyInput>
+    /**
+     * Filter which Descargos_Dets to update
+     */
+    where?: Descargos_DetWhereInput
+  }
+
+  /**
+   * Descargos_Det upsert
+   */
+  export type Descargos_DetUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Descargos_Det
+     */
+    select?: Descargos_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Descargos_DetInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Descargos_Det to update in case it exists.
+     */
+    where: Descargos_DetWhereUniqueInput
+    /**
+     * In case the Descargos_Det found by the `where` argument doesn't exist, create a new Descargos_Det with this data.
+     */
+    create: XOR<Descargos_DetCreateInput, Descargos_DetUncheckedCreateInput>
+    /**
+     * In case the Descargos_Det was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Descargos_DetUpdateInput, Descargos_DetUncheckedUpdateInput>
+  }
+
+  /**
+   * Descargos_Det delete
+   */
+  export type Descargos_DetDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Descargos_Det
+     */
+    select?: Descargos_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Descargos_DetInclude<ExtArgs> | null
+    /**
+     * Filter which Descargos_Det to delete.
+     */
+    where: Descargos_DetWhereUniqueInput
+  }
+
+  /**
+   * Descargos_Det deleteMany
+   */
+  export type Descargos_DetDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Descargos_Dets to delete
+     */
+    where?: Descargos_DetWhereInput
+  }
+
+  /**
+   * Descargos_Det without action
+   */
+  export type Descargos_DetDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Descargos_Det
+     */
+    select?: Descargos_DetSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Descargos_DetInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model DescargaPaeLog
    */
 
@@ -82387,6 +84703,920 @@ export namespace Prisma {
 
 
   /**
+   * Model AuditLog
+   */
+
+  export type AggregateAuditLog = {
+    _count: AuditLogCountAggregateOutputType | null
+    _min: AuditLogMinAggregateOutputType | null
+    _max: AuditLogMaxAggregateOutputType | null
+  }
+
+  export type AuditLogMinAggregateOutputType = {
+    id: string | null
+    username: string | null
+    userId: string | null
+    action: string | null
+    modulo: string | null
+    detalle: string | null
+    ip: string | null
+    createdAt: Date | null
+  }
+
+  export type AuditLogMaxAggregateOutputType = {
+    id: string | null
+    username: string | null
+    userId: string | null
+    action: string | null
+    modulo: string | null
+    detalle: string | null
+    ip: string | null
+    createdAt: Date | null
+  }
+
+  export type AuditLogCountAggregateOutputType = {
+    id: number
+    username: number
+    userId: number
+    action: number
+    modulo: number
+    detalle: number
+    ip: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type AuditLogMinAggregateInputType = {
+    id?: true
+    username?: true
+    userId?: true
+    action?: true
+    modulo?: true
+    detalle?: true
+    ip?: true
+    createdAt?: true
+  }
+
+  export type AuditLogMaxAggregateInputType = {
+    id?: true
+    username?: true
+    userId?: true
+    action?: true
+    modulo?: true
+    detalle?: true
+    ip?: true
+    createdAt?: true
+  }
+
+  export type AuditLogCountAggregateInputType = {
+    id?: true
+    username?: true
+    userId?: true
+    action?: true
+    modulo?: true
+    detalle?: true
+    ip?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type AuditLogAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AuditLog to aggregate.
+     */
+    where?: AuditLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AuditLogs to fetch.
+     */
+    orderBy?: AuditLogOrderByWithRelationInput | AuditLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AuditLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AuditLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AuditLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AuditLogs
+    **/
+    _count?: true | AuditLogCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AuditLogMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AuditLogMaxAggregateInputType
+  }
+
+  export type GetAuditLogAggregateType<T extends AuditLogAggregateArgs> = {
+        [P in keyof T & keyof AggregateAuditLog]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAuditLog[P]>
+      : GetScalarType<T[P], AggregateAuditLog[P]>
+  }
+
+
+
+
+  export type AuditLogGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AuditLogWhereInput
+    orderBy?: AuditLogOrderByWithAggregationInput | AuditLogOrderByWithAggregationInput[]
+    by: AuditLogScalarFieldEnum[] | AuditLogScalarFieldEnum
+    having?: AuditLogScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AuditLogCountAggregateInputType | true
+    _min?: AuditLogMinAggregateInputType
+    _max?: AuditLogMaxAggregateInputType
+  }
+
+  export type AuditLogGroupByOutputType = {
+    id: string
+    username: string
+    userId: string | null
+    action: string
+    modulo: string
+    detalle: string
+    ip: string | null
+    createdAt: Date
+    _count: AuditLogCountAggregateOutputType | null
+    _min: AuditLogMinAggregateOutputType | null
+    _max: AuditLogMaxAggregateOutputType | null
+  }
+
+  type GetAuditLogGroupByPayload<T extends AuditLogGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AuditLogGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AuditLogGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AuditLogGroupByOutputType[P]>
+            : GetScalarType<T[P], AuditLogGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AuditLogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    username?: boolean
+    userId?: boolean
+    action?: boolean
+    modulo?: boolean
+    detalle?: boolean
+    ip?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["auditLog"]>
+
+  export type AuditLogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    username?: boolean
+    userId?: boolean
+    action?: boolean
+    modulo?: boolean
+    detalle?: boolean
+    ip?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["auditLog"]>
+
+  export type AuditLogSelectScalar = {
+    id?: boolean
+    username?: boolean
+    userId?: boolean
+    action?: boolean
+    modulo?: boolean
+    detalle?: boolean
+    ip?: boolean
+    createdAt?: boolean
+  }
+
+
+  export type $AuditLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AuditLog"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      username: string
+      userId: string | null
+      action: string
+      modulo: string
+      detalle: string
+      ip: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["auditLog"]>
+    composites: {}
+  }
+
+  type AuditLogGetPayload<S extends boolean | null | undefined | AuditLogDefaultArgs> = $Result.GetResult<Prisma.$AuditLogPayload, S>
+
+  type AuditLogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<AuditLogFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: AuditLogCountAggregateInputType | true
+    }
+
+  export interface AuditLogDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AuditLog'], meta: { name: 'AuditLog' } }
+    /**
+     * Find zero or one AuditLog that matches the filter.
+     * @param {AuditLogFindUniqueArgs} args - Arguments to find a AuditLog
+     * @example
+     * // Get one AuditLog
+     * const auditLog = await prisma.auditLog.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AuditLogFindUniqueArgs>(args: SelectSubset<T, AuditLogFindUniqueArgs<ExtArgs>>): Prisma__AuditLogClient<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one AuditLog that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {AuditLogFindUniqueOrThrowArgs} args - Arguments to find a AuditLog
+     * @example
+     * // Get one AuditLog
+     * const auditLog = await prisma.auditLog.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AuditLogFindUniqueOrThrowArgs>(args: SelectSubset<T, AuditLogFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AuditLogClient<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first AuditLog that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuditLogFindFirstArgs} args - Arguments to find a AuditLog
+     * @example
+     * // Get one AuditLog
+     * const auditLog = await prisma.auditLog.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AuditLogFindFirstArgs>(args?: SelectSubset<T, AuditLogFindFirstArgs<ExtArgs>>): Prisma__AuditLogClient<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first AuditLog that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuditLogFindFirstOrThrowArgs} args - Arguments to find a AuditLog
+     * @example
+     * // Get one AuditLog
+     * const auditLog = await prisma.auditLog.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AuditLogFindFirstOrThrowArgs>(args?: SelectSubset<T, AuditLogFindFirstOrThrowArgs<ExtArgs>>): Prisma__AuditLogClient<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more AuditLogs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuditLogFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AuditLogs
+     * const auditLogs = await prisma.auditLog.findMany()
+     * 
+     * // Get first 10 AuditLogs
+     * const auditLogs = await prisma.auditLog.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const auditLogWithIdOnly = await prisma.auditLog.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AuditLogFindManyArgs>(args?: SelectSubset<T, AuditLogFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a AuditLog.
+     * @param {AuditLogCreateArgs} args - Arguments to create a AuditLog.
+     * @example
+     * // Create one AuditLog
+     * const AuditLog = await prisma.auditLog.create({
+     *   data: {
+     *     // ... data to create a AuditLog
+     *   }
+     * })
+     * 
+     */
+    create<T extends AuditLogCreateArgs>(args: SelectSubset<T, AuditLogCreateArgs<ExtArgs>>): Prisma__AuditLogClient<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many AuditLogs.
+     * @param {AuditLogCreateManyArgs} args - Arguments to create many AuditLogs.
+     * @example
+     * // Create many AuditLogs
+     * const auditLog = await prisma.auditLog.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AuditLogCreateManyArgs>(args?: SelectSubset<T, AuditLogCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AuditLogs and returns the data saved in the database.
+     * @param {AuditLogCreateManyAndReturnArgs} args - Arguments to create many AuditLogs.
+     * @example
+     * // Create many AuditLogs
+     * const auditLog = await prisma.auditLog.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AuditLogs and only return the `id`
+     * const auditLogWithIdOnly = await prisma.auditLog.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AuditLogCreateManyAndReturnArgs>(args?: SelectSubset<T, AuditLogCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a AuditLog.
+     * @param {AuditLogDeleteArgs} args - Arguments to delete one AuditLog.
+     * @example
+     * // Delete one AuditLog
+     * const AuditLog = await prisma.auditLog.delete({
+     *   where: {
+     *     // ... filter to delete one AuditLog
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AuditLogDeleteArgs>(args: SelectSubset<T, AuditLogDeleteArgs<ExtArgs>>): Prisma__AuditLogClient<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one AuditLog.
+     * @param {AuditLogUpdateArgs} args - Arguments to update one AuditLog.
+     * @example
+     * // Update one AuditLog
+     * const auditLog = await prisma.auditLog.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AuditLogUpdateArgs>(args: SelectSubset<T, AuditLogUpdateArgs<ExtArgs>>): Prisma__AuditLogClient<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more AuditLogs.
+     * @param {AuditLogDeleteManyArgs} args - Arguments to filter AuditLogs to delete.
+     * @example
+     * // Delete a few AuditLogs
+     * const { count } = await prisma.auditLog.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AuditLogDeleteManyArgs>(args?: SelectSubset<T, AuditLogDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AuditLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuditLogUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AuditLogs
+     * const auditLog = await prisma.auditLog.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AuditLogUpdateManyArgs>(args: SelectSubset<T, AuditLogUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one AuditLog.
+     * @param {AuditLogUpsertArgs} args - Arguments to update or create a AuditLog.
+     * @example
+     * // Update or create a AuditLog
+     * const auditLog = await prisma.auditLog.upsert({
+     *   create: {
+     *     // ... data to create a AuditLog
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AuditLog we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AuditLogUpsertArgs>(args: SelectSubset<T, AuditLogUpsertArgs<ExtArgs>>): Prisma__AuditLogClient<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of AuditLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuditLogCountArgs} args - Arguments to filter AuditLogs to count.
+     * @example
+     * // Count the number of AuditLogs
+     * const count = await prisma.auditLog.count({
+     *   where: {
+     *     // ... the filter for the AuditLogs we want to count
+     *   }
+     * })
+    **/
+    count<T extends AuditLogCountArgs>(
+      args?: Subset<T, AuditLogCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AuditLogCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AuditLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuditLogAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AuditLogAggregateArgs>(args: Subset<T, AuditLogAggregateArgs>): Prisma.PrismaPromise<GetAuditLogAggregateType<T>>
+
+    /**
+     * Group by AuditLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuditLogGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AuditLogGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AuditLogGroupByArgs['orderBy'] }
+        : { orderBy?: AuditLogGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AuditLogGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAuditLogGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AuditLog model
+   */
+  readonly fields: AuditLogFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AuditLog.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AuditLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AuditLog model
+   */ 
+  interface AuditLogFieldRefs {
+    readonly id: FieldRef<"AuditLog", 'String'>
+    readonly username: FieldRef<"AuditLog", 'String'>
+    readonly userId: FieldRef<"AuditLog", 'String'>
+    readonly action: FieldRef<"AuditLog", 'String'>
+    readonly modulo: FieldRef<"AuditLog", 'String'>
+    readonly detalle: FieldRef<"AuditLog", 'String'>
+    readonly ip: FieldRef<"AuditLog", 'String'>
+    readonly createdAt: FieldRef<"AuditLog", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AuditLog findUnique
+   */
+  export type AuditLogFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelect<ExtArgs> | null
+    /**
+     * Filter, which AuditLog to fetch.
+     */
+    where: AuditLogWhereUniqueInput
+  }
+
+  /**
+   * AuditLog findUniqueOrThrow
+   */
+  export type AuditLogFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelect<ExtArgs> | null
+    /**
+     * Filter, which AuditLog to fetch.
+     */
+    where: AuditLogWhereUniqueInput
+  }
+
+  /**
+   * AuditLog findFirst
+   */
+  export type AuditLogFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelect<ExtArgs> | null
+    /**
+     * Filter, which AuditLog to fetch.
+     */
+    where?: AuditLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AuditLogs to fetch.
+     */
+    orderBy?: AuditLogOrderByWithRelationInput | AuditLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AuditLogs.
+     */
+    cursor?: AuditLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AuditLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AuditLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AuditLogs.
+     */
+    distinct?: AuditLogScalarFieldEnum | AuditLogScalarFieldEnum[]
+  }
+
+  /**
+   * AuditLog findFirstOrThrow
+   */
+  export type AuditLogFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelect<ExtArgs> | null
+    /**
+     * Filter, which AuditLog to fetch.
+     */
+    where?: AuditLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AuditLogs to fetch.
+     */
+    orderBy?: AuditLogOrderByWithRelationInput | AuditLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AuditLogs.
+     */
+    cursor?: AuditLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AuditLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AuditLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AuditLogs.
+     */
+    distinct?: AuditLogScalarFieldEnum | AuditLogScalarFieldEnum[]
+  }
+
+  /**
+   * AuditLog findMany
+   */
+  export type AuditLogFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelect<ExtArgs> | null
+    /**
+     * Filter, which AuditLogs to fetch.
+     */
+    where?: AuditLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AuditLogs to fetch.
+     */
+    orderBy?: AuditLogOrderByWithRelationInput | AuditLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AuditLogs.
+     */
+    cursor?: AuditLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AuditLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AuditLogs.
+     */
+    skip?: number
+    distinct?: AuditLogScalarFieldEnum | AuditLogScalarFieldEnum[]
+  }
+
+  /**
+   * AuditLog create
+   */
+  export type AuditLogCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelect<ExtArgs> | null
+    /**
+     * The data needed to create a AuditLog.
+     */
+    data: XOR<AuditLogCreateInput, AuditLogUncheckedCreateInput>
+  }
+
+  /**
+   * AuditLog createMany
+   */
+  export type AuditLogCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AuditLogs.
+     */
+    data: AuditLogCreateManyInput | AuditLogCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AuditLog createManyAndReturn
+   */
+  export type AuditLogCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many AuditLogs.
+     */
+    data: AuditLogCreateManyInput | AuditLogCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AuditLog update
+   */
+  export type AuditLogUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelect<ExtArgs> | null
+    /**
+     * The data needed to update a AuditLog.
+     */
+    data: XOR<AuditLogUpdateInput, AuditLogUncheckedUpdateInput>
+    /**
+     * Choose, which AuditLog to update.
+     */
+    where: AuditLogWhereUniqueInput
+  }
+
+  /**
+   * AuditLog updateMany
+   */
+  export type AuditLogUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AuditLogs.
+     */
+    data: XOR<AuditLogUpdateManyMutationInput, AuditLogUncheckedUpdateManyInput>
+    /**
+     * Filter which AuditLogs to update
+     */
+    where?: AuditLogWhereInput
+  }
+
+  /**
+   * AuditLog upsert
+   */
+  export type AuditLogUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelect<ExtArgs> | null
+    /**
+     * The filter to search for the AuditLog to update in case it exists.
+     */
+    where: AuditLogWhereUniqueInput
+    /**
+     * In case the AuditLog found by the `where` argument doesn't exist, create a new AuditLog with this data.
+     */
+    create: XOR<AuditLogCreateInput, AuditLogUncheckedCreateInput>
+    /**
+     * In case the AuditLog was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AuditLogUpdateInput, AuditLogUncheckedUpdateInput>
+  }
+
+  /**
+   * AuditLog delete
+   */
+  export type AuditLogDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelect<ExtArgs> | null
+    /**
+     * Filter which AuditLog to delete.
+     */
+    where: AuditLogWhereUniqueInput
+  }
+
+  /**
+   * AuditLog deleteMany
+   */
+  export type AuditLogDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AuditLogs to delete
+     */
+    where?: AuditLogWhereInput
+  }
+
+  /**
+   * AuditLog without action
+   */
+  export type AuditLogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelect<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -83217,6 +86447,37 @@ export namespace Prisma {
   export type Multas_Elementos_Esenciales_DetScalarFieldEnum = (typeof Multas_Elementos_Esenciales_DetScalarFieldEnum)[keyof typeof Multas_Elementos_Esenciales_DetScalarFieldEnum]
 
 
+  export const Descargos_CabScalarFieldEnum: {
+    id: 'id',
+    folio: 'folio',
+    licitacion: 'licitacion',
+    rbd: 'rbd',
+    fechaSupervision: 'fechaSupervision',
+    resolucion: 'resolucion',
+    estado: 'estado',
+    usuarioModif: 'usuarioModif',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type Descargos_CabScalarFieldEnum = (typeof Descargos_CabScalarFieldEnum)[keyof typeof Descargos_CabScalarFieldEnum]
+
+
+  export const Descargos_DetScalarFieldEnum: {
+    id: 'id',
+    cabId: 'cabId',
+    letraAspecto: 'letraAspecto',
+    descripcion: 'descripcion',
+    estadoAspecto: 'estadoAspecto',
+    fechaNoSolucionado: 'fechaNoSolucionado',
+    observacionNoSolucionado: 'observacionNoSolucionado',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type Descargos_DetScalarFieldEnum = (typeof Descargos_DetScalarFieldEnum)[keyof typeof Descargos_DetScalarFieldEnum]
+
+
   export const DescargaPaeLogScalarFieldEnum: {
     id: 'id',
     ano: 'ano',
@@ -83565,6 +86826,20 @@ export namespace Prisma {
   };
 
   export type MenuItemOrderScalarFieldEnum = (typeof MenuItemOrderScalarFieldEnum)[keyof typeof MenuItemOrderScalarFieldEnum]
+
+
+  export const AuditLogScalarFieldEnum: {
+    id: 'id',
+    username: 'username',
+    userId: 'userId',
+    action: 'action',
+    modulo: 'modulo',
+    detalle: 'detalle',
+    ip: 'ip',
+    createdAt: 'createdAt'
+  };
+
+  export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -87862,6 +91137,163 @@ export namespace Prisma {
     variablesUsadas?: StringNullableWithAggregatesFilter<"Multas_Elementos_Esenciales_Det"> | string | null
   }
 
+  export type Descargos_CabWhereInput = {
+    AND?: Descargos_CabWhereInput | Descargos_CabWhereInput[]
+    OR?: Descargos_CabWhereInput[]
+    NOT?: Descargos_CabWhereInput | Descargos_CabWhereInput[]
+    id?: StringFilter<"Descargos_Cab"> | string
+    folio?: StringFilter<"Descargos_Cab"> | string
+    licitacion?: StringNullableFilter<"Descargos_Cab"> | string | null
+    rbd?: IntFilter<"Descargos_Cab"> | number
+    fechaSupervision?: DateTimeNullableFilter<"Descargos_Cab"> | Date | string | null
+    resolucion?: FloatFilter<"Descargos_Cab"> | number
+    estado?: StringFilter<"Descargos_Cab"> | string
+    usuarioModif?: StringNullableFilter<"Descargos_Cab"> | string | null
+    createdAt?: DateTimeFilter<"Descargos_Cab"> | Date | string
+    updatedAt?: DateTimeFilter<"Descargos_Cab"> | Date | string
+    detalles?: Descargos_DetListRelationFilter
+  }
+
+  export type Descargos_CabOrderByWithRelationInput = {
+    id?: SortOrder
+    folio?: SortOrder
+    licitacion?: SortOrderInput | SortOrder
+    rbd?: SortOrder
+    fechaSupervision?: SortOrderInput | SortOrder
+    resolucion?: SortOrder
+    estado?: SortOrder
+    usuarioModif?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    detalles?: Descargos_DetOrderByRelationAggregateInput
+  }
+
+  export type Descargos_CabWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    folio?: string
+    AND?: Descargos_CabWhereInput | Descargos_CabWhereInput[]
+    OR?: Descargos_CabWhereInput[]
+    NOT?: Descargos_CabWhereInput | Descargos_CabWhereInput[]
+    licitacion?: StringNullableFilter<"Descargos_Cab"> | string | null
+    rbd?: IntFilter<"Descargos_Cab"> | number
+    fechaSupervision?: DateTimeNullableFilter<"Descargos_Cab"> | Date | string | null
+    resolucion?: FloatFilter<"Descargos_Cab"> | number
+    estado?: StringFilter<"Descargos_Cab"> | string
+    usuarioModif?: StringNullableFilter<"Descargos_Cab"> | string | null
+    createdAt?: DateTimeFilter<"Descargos_Cab"> | Date | string
+    updatedAt?: DateTimeFilter<"Descargos_Cab"> | Date | string
+    detalles?: Descargos_DetListRelationFilter
+  }, "id" | "folio">
+
+  export type Descargos_CabOrderByWithAggregationInput = {
+    id?: SortOrder
+    folio?: SortOrder
+    licitacion?: SortOrderInput | SortOrder
+    rbd?: SortOrder
+    fechaSupervision?: SortOrderInput | SortOrder
+    resolucion?: SortOrder
+    estado?: SortOrder
+    usuarioModif?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: Descargos_CabCountOrderByAggregateInput
+    _avg?: Descargos_CabAvgOrderByAggregateInput
+    _max?: Descargos_CabMaxOrderByAggregateInput
+    _min?: Descargos_CabMinOrderByAggregateInput
+    _sum?: Descargos_CabSumOrderByAggregateInput
+  }
+
+  export type Descargos_CabScalarWhereWithAggregatesInput = {
+    AND?: Descargos_CabScalarWhereWithAggregatesInput | Descargos_CabScalarWhereWithAggregatesInput[]
+    OR?: Descargos_CabScalarWhereWithAggregatesInput[]
+    NOT?: Descargos_CabScalarWhereWithAggregatesInput | Descargos_CabScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Descargos_Cab"> | string
+    folio?: StringWithAggregatesFilter<"Descargos_Cab"> | string
+    licitacion?: StringNullableWithAggregatesFilter<"Descargos_Cab"> | string | null
+    rbd?: IntWithAggregatesFilter<"Descargos_Cab"> | number
+    fechaSupervision?: DateTimeNullableWithAggregatesFilter<"Descargos_Cab"> | Date | string | null
+    resolucion?: FloatWithAggregatesFilter<"Descargos_Cab"> | number
+    estado?: StringWithAggregatesFilter<"Descargos_Cab"> | string
+    usuarioModif?: StringNullableWithAggregatesFilter<"Descargos_Cab"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Descargos_Cab"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Descargos_Cab"> | Date | string
+  }
+
+  export type Descargos_DetWhereInput = {
+    AND?: Descargos_DetWhereInput | Descargos_DetWhereInput[]
+    OR?: Descargos_DetWhereInput[]
+    NOT?: Descargos_DetWhereInput | Descargos_DetWhereInput[]
+    id?: StringFilter<"Descargos_Det"> | string
+    cabId?: StringFilter<"Descargos_Det"> | string
+    letraAspecto?: StringFilter<"Descargos_Det"> | string
+    descripcion?: StringNullableFilter<"Descargos_Det"> | string | null
+    estadoAspecto?: StringFilter<"Descargos_Det"> | string
+    fechaNoSolucionado?: DateTimeNullableFilter<"Descargos_Det"> | Date | string | null
+    observacionNoSolucionado?: StringNullableFilter<"Descargos_Det"> | string | null
+    createdAt?: DateTimeFilter<"Descargos_Det"> | Date | string
+    updatedAt?: DateTimeFilter<"Descargos_Det"> | Date | string
+    cab?: XOR<Descargos_CabRelationFilter, Descargos_CabWhereInput>
+  }
+
+  export type Descargos_DetOrderByWithRelationInput = {
+    id?: SortOrder
+    cabId?: SortOrder
+    letraAspecto?: SortOrder
+    descripcion?: SortOrderInput | SortOrder
+    estadoAspecto?: SortOrder
+    fechaNoSolucionado?: SortOrderInput | SortOrder
+    observacionNoSolucionado?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    cab?: Descargos_CabOrderByWithRelationInput
+  }
+
+  export type Descargos_DetWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: Descargos_DetWhereInput | Descargos_DetWhereInput[]
+    OR?: Descargos_DetWhereInput[]
+    NOT?: Descargos_DetWhereInput | Descargos_DetWhereInput[]
+    cabId?: StringFilter<"Descargos_Det"> | string
+    letraAspecto?: StringFilter<"Descargos_Det"> | string
+    descripcion?: StringNullableFilter<"Descargos_Det"> | string | null
+    estadoAspecto?: StringFilter<"Descargos_Det"> | string
+    fechaNoSolucionado?: DateTimeNullableFilter<"Descargos_Det"> | Date | string | null
+    observacionNoSolucionado?: StringNullableFilter<"Descargos_Det"> | string | null
+    createdAt?: DateTimeFilter<"Descargos_Det"> | Date | string
+    updatedAt?: DateTimeFilter<"Descargos_Det"> | Date | string
+    cab?: XOR<Descargos_CabRelationFilter, Descargos_CabWhereInput>
+  }, "id">
+
+  export type Descargos_DetOrderByWithAggregationInput = {
+    id?: SortOrder
+    cabId?: SortOrder
+    letraAspecto?: SortOrder
+    descripcion?: SortOrderInput | SortOrder
+    estadoAspecto?: SortOrder
+    fechaNoSolucionado?: SortOrderInput | SortOrder
+    observacionNoSolucionado?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: Descargos_DetCountOrderByAggregateInput
+    _max?: Descargos_DetMaxOrderByAggregateInput
+    _min?: Descargos_DetMinOrderByAggregateInput
+  }
+
+  export type Descargos_DetScalarWhereWithAggregatesInput = {
+    AND?: Descargos_DetScalarWhereWithAggregatesInput | Descargos_DetScalarWhereWithAggregatesInput[]
+    OR?: Descargos_DetScalarWhereWithAggregatesInput[]
+    NOT?: Descargos_DetScalarWhereWithAggregatesInput | Descargos_DetScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Descargos_Det"> | string
+    cabId?: StringWithAggregatesFilter<"Descargos_Det"> | string
+    letraAspecto?: StringWithAggregatesFilter<"Descargos_Det"> | string
+    descripcion?: StringNullableWithAggregatesFilter<"Descargos_Det"> | string | null
+    estadoAspecto?: StringWithAggregatesFilter<"Descargos_Det"> | string
+    fechaNoSolucionado?: DateTimeNullableWithAggregatesFilter<"Descargos_Det"> | Date | string | null
+    observacionNoSolucionado?: StringNullableWithAggregatesFilter<"Descargos_Det"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Descargos_Det"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Descargos_Det"> | Date | string
+  }
+
   export type DescargaPaeLogWhereInput = {
     AND?: DescargaPaeLogWhereInput | DescargaPaeLogWhereInput[]
     OR?: DescargaPaeLogWhereInput[]
@@ -89714,6 +93146,73 @@ export namespace Prisma {
     position?: IntWithAggregatesFilter<"MenuItemOrder"> | number
     createdAt?: DateTimeWithAggregatesFilter<"MenuItemOrder"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"MenuItemOrder"> | Date | string
+  }
+
+  export type AuditLogWhereInput = {
+    AND?: AuditLogWhereInput | AuditLogWhereInput[]
+    OR?: AuditLogWhereInput[]
+    NOT?: AuditLogWhereInput | AuditLogWhereInput[]
+    id?: StringFilter<"AuditLog"> | string
+    username?: StringFilter<"AuditLog"> | string
+    userId?: StringNullableFilter<"AuditLog"> | string | null
+    action?: StringFilter<"AuditLog"> | string
+    modulo?: StringFilter<"AuditLog"> | string
+    detalle?: StringFilter<"AuditLog"> | string
+    ip?: StringNullableFilter<"AuditLog"> | string | null
+    createdAt?: DateTimeFilter<"AuditLog"> | Date | string
+  }
+
+  export type AuditLogOrderByWithRelationInput = {
+    id?: SortOrder
+    username?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    action?: SortOrder
+    modulo?: SortOrder
+    detalle?: SortOrder
+    ip?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AuditLogWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: AuditLogWhereInput | AuditLogWhereInput[]
+    OR?: AuditLogWhereInput[]
+    NOT?: AuditLogWhereInput | AuditLogWhereInput[]
+    username?: StringFilter<"AuditLog"> | string
+    userId?: StringNullableFilter<"AuditLog"> | string | null
+    action?: StringFilter<"AuditLog"> | string
+    modulo?: StringFilter<"AuditLog"> | string
+    detalle?: StringFilter<"AuditLog"> | string
+    ip?: StringNullableFilter<"AuditLog"> | string | null
+    createdAt?: DateTimeFilter<"AuditLog"> | Date | string
+  }, "id">
+
+  export type AuditLogOrderByWithAggregationInput = {
+    id?: SortOrder
+    username?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    action?: SortOrder
+    modulo?: SortOrder
+    detalle?: SortOrder
+    ip?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: AuditLogCountOrderByAggregateInput
+    _max?: AuditLogMaxOrderByAggregateInput
+    _min?: AuditLogMinOrderByAggregateInput
+  }
+
+  export type AuditLogScalarWhereWithAggregatesInput = {
+    AND?: AuditLogScalarWhereWithAggregatesInput | AuditLogScalarWhereWithAggregatesInput[]
+    OR?: AuditLogScalarWhereWithAggregatesInput[]
+    NOT?: AuditLogScalarWhereWithAggregatesInput | AuditLogScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AuditLog"> | string
+    username?: StringWithAggregatesFilter<"AuditLog"> | string
+    userId?: StringNullableWithAggregatesFilter<"AuditLog"> | string | null
+    action?: StringWithAggregatesFilter<"AuditLog"> | string
+    modulo?: StringWithAggregatesFilter<"AuditLog"> | string
+    detalle?: StringWithAggregatesFilter<"AuditLog"> | string
+    ip?: StringNullableWithAggregatesFilter<"AuditLog"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"AuditLog"> | Date | string
   }
 
   export type RoleCreateInput = {
@@ -94549,6 +98048,184 @@ export namespace Prisma {
     variablesUsadas?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type Descargos_CabCreateInput = {
+    id?: string
+    folio: string
+    licitacion?: string | null
+    rbd: number
+    fechaSupervision?: Date | string | null
+    resolucion?: number
+    estado?: string
+    usuarioModif?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    detalles?: Descargos_DetCreateNestedManyWithoutCabInput
+  }
+
+  export type Descargos_CabUncheckedCreateInput = {
+    id?: string
+    folio: string
+    licitacion?: string | null
+    rbd: number
+    fechaSupervision?: Date | string | null
+    resolucion?: number
+    estado?: string
+    usuarioModif?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    detalles?: Descargos_DetUncheckedCreateNestedManyWithoutCabInput
+  }
+
+  export type Descargos_CabUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folio?: StringFieldUpdateOperationsInput | string
+    licitacion?: NullableStringFieldUpdateOperationsInput | string | null
+    rbd?: IntFieldUpdateOperationsInput | number
+    fechaSupervision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolucion?: FloatFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    usuarioModif?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    detalles?: Descargos_DetUpdateManyWithoutCabNestedInput
+  }
+
+  export type Descargos_CabUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folio?: StringFieldUpdateOperationsInput | string
+    licitacion?: NullableStringFieldUpdateOperationsInput | string | null
+    rbd?: IntFieldUpdateOperationsInput | number
+    fechaSupervision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolucion?: FloatFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    usuarioModif?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    detalles?: Descargos_DetUncheckedUpdateManyWithoutCabNestedInput
+  }
+
+  export type Descargos_CabCreateManyInput = {
+    id?: string
+    folio: string
+    licitacion?: string | null
+    rbd: number
+    fechaSupervision?: Date | string | null
+    resolucion?: number
+    estado?: string
+    usuarioModif?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Descargos_CabUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folio?: StringFieldUpdateOperationsInput | string
+    licitacion?: NullableStringFieldUpdateOperationsInput | string | null
+    rbd?: IntFieldUpdateOperationsInput | number
+    fechaSupervision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolucion?: FloatFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    usuarioModif?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Descargos_CabUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folio?: StringFieldUpdateOperationsInput | string
+    licitacion?: NullableStringFieldUpdateOperationsInput | string | null
+    rbd?: IntFieldUpdateOperationsInput | number
+    fechaSupervision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolucion?: FloatFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    usuarioModif?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Descargos_DetCreateInput = {
+    id?: string
+    letraAspecto: string
+    descripcion?: string | null
+    estadoAspecto?: string
+    fechaNoSolucionado?: Date | string | null
+    observacionNoSolucionado?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cab: Descargos_CabCreateNestedOneWithoutDetallesInput
+  }
+
+  export type Descargos_DetUncheckedCreateInput = {
+    id?: string
+    cabId: string
+    letraAspecto: string
+    descripcion?: string | null
+    estadoAspecto?: string
+    fechaNoSolucionado?: Date | string | null
+    observacionNoSolucionado?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Descargos_DetUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    letraAspecto?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    estadoAspecto?: StringFieldUpdateOperationsInput | string
+    fechaNoSolucionado?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    observacionNoSolucionado?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cab?: Descargos_CabUpdateOneRequiredWithoutDetallesNestedInput
+  }
+
+  export type Descargos_DetUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cabId?: StringFieldUpdateOperationsInput | string
+    letraAspecto?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    estadoAspecto?: StringFieldUpdateOperationsInput | string
+    fechaNoSolucionado?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    observacionNoSolucionado?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Descargos_DetCreateManyInput = {
+    id?: string
+    cabId: string
+    letraAspecto: string
+    descripcion?: string | null
+    estadoAspecto?: string
+    fechaNoSolucionado?: Date | string | null
+    observacionNoSolucionado?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Descargos_DetUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    letraAspecto?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    estadoAspecto?: StringFieldUpdateOperationsInput | string
+    fechaNoSolucionado?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    observacionNoSolucionado?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Descargos_DetUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cabId?: StringFieldUpdateOperationsInput | string
+    letraAspecto?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    estadoAspecto?: StringFieldUpdateOperationsInput | string
+    fechaNoSolucionado?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    observacionNoSolucionado?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type DescargaPaeLogCreateInput = {
     id?: string
     ano: number
@@ -96508,6 +100185,83 @@ export namespace Prisma {
     position?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AuditLogCreateInput = {
+    id?: string
+    username: string
+    userId?: string | null
+    action: string
+    modulo: string
+    detalle: string
+    ip?: string | null
+    createdAt?: Date | string
+  }
+
+  export type AuditLogUncheckedCreateInput = {
+    id?: string
+    username: string
+    userId?: string | null
+    action: string
+    modulo: string
+    detalle: string
+    ip?: string | null
+    createdAt?: Date | string
+  }
+
+  export type AuditLogUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    modulo?: StringFieldUpdateOperationsInput | string
+    detalle?: StringFieldUpdateOperationsInput | string
+    ip?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AuditLogUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    modulo?: StringFieldUpdateOperationsInput | string
+    detalle?: StringFieldUpdateOperationsInput | string
+    ip?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AuditLogCreateManyInput = {
+    id?: string
+    username: string
+    userId?: string | null
+    action: string
+    modulo: string
+    detalle: string
+    ip?: string | null
+    createdAt?: Date | string
+  }
+
+  export type AuditLogUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    modulo?: StringFieldUpdateOperationsInput | string
+    detalle?: StringFieldUpdateOperationsInput | string
+    ip?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AuditLogUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    modulo?: StringFieldUpdateOperationsInput | string
+    detalle?: StringFieldUpdateOperationsInput | string
+    ip?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -99581,6 +103335,106 @@ export namespace Prisma {
     montoMulta?: SortOrder
   }
 
+  export type Descargos_DetListRelationFilter = {
+    every?: Descargos_DetWhereInput
+    some?: Descargos_DetWhereInput
+    none?: Descargos_DetWhereInput
+  }
+
+  export type Descargos_DetOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type Descargos_CabCountOrderByAggregateInput = {
+    id?: SortOrder
+    folio?: SortOrder
+    licitacion?: SortOrder
+    rbd?: SortOrder
+    fechaSupervision?: SortOrder
+    resolucion?: SortOrder
+    estado?: SortOrder
+    usuarioModif?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Descargos_CabAvgOrderByAggregateInput = {
+    rbd?: SortOrder
+    resolucion?: SortOrder
+  }
+
+  export type Descargos_CabMaxOrderByAggregateInput = {
+    id?: SortOrder
+    folio?: SortOrder
+    licitacion?: SortOrder
+    rbd?: SortOrder
+    fechaSupervision?: SortOrder
+    resolucion?: SortOrder
+    estado?: SortOrder
+    usuarioModif?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Descargos_CabMinOrderByAggregateInput = {
+    id?: SortOrder
+    folio?: SortOrder
+    licitacion?: SortOrder
+    rbd?: SortOrder
+    fechaSupervision?: SortOrder
+    resolucion?: SortOrder
+    estado?: SortOrder
+    usuarioModif?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Descargos_CabSumOrderByAggregateInput = {
+    rbd?: SortOrder
+    resolucion?: SortOrder
+  }
+
+  export type Descargos_CabRelationFilter = {
+    is?: Descargos_CabWhereInput
+    isNot?: Descargos_CabWhereInput
+  }
+
+  export type Descargos_DetCountOrderByAggregateInput = {
+    id?: SortOrder
+    cabId?: SortOrder
+    letraAspecto?: SortOrder
+    descripcion?: SortOrder
+    estadoAspecto?: SortOrder
+    fechaNoSolucionado?: SortOrder
+    observacionNoSolucionado?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Descargos_DetMaxOrderByAggregateInput = {
+    id?: SortOrder
+    cabId?: SortOrder
+    letraAspecto?: SortOrder
+    descripcion?: SortOrder
+    estadoAspecto?: SortOrder
+    fechaNoSolucionado?: SortOrder
+    observacionNoSolucionado?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Descargos_DetMinOrderByAggregateInput = {
+    id?: SortOrder
+    cabId?: SortOrder
+    letraAspecto?: SortOrder
+    descripcion?: SortOrder
+    estadoAspecto?: SortOrder
+    fechaNoSolucionado?: SortOrder
+    observacionNoSolucionado?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
   export type DescargaPaeLogCountOrderByAggregateInput = {
     id?: SortOrder
     ano?: SortOrder
@@ -100797,6 +104651,39 @@ export namespace Prisma {
 
   export type MenuItemOrderSumOrderByAggregateInput = {
     position?: SortOrder
+  }
+
+  export type AuditLogCountOrderByAggregateInput = {
+    id?: SortOrder
+    username?: SortOrder
+    userId?: SortOrder
+    action?: SortOrder
+    modulo?: SortOrder
+    detalle?: SortOrder
+    ip?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AuditLogMaxOrderByAggregateInput = {
+    id?: SortOrder
+    username?: SortOrder
+    userId?: SortOrder
+    action?: SortOrder
+    modulo?: SortOrder
+    detalle?: SortOrder
+    ip?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AuditLogMinOrderByAggregateInput = {
+    id?: SortOrder
+    username?: SortOrder
+    userId?: SortOrder
+    action?: SortOrder
+    modulo?: SortOrder
+    detalle?: SortOrder
+    ip?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type UserCreateNestedManyWithoutRoleInput = {
@@ -102510,6 +106397,62 @@ export namespace Prisma {
     upsert?: Multas_Elementos_Esenciales_CabUpsertWithoutDetallesInput
     connect?: Multas_Elementos_Esenciales_CabWhereUniqueInput
     update?: XOR<XOR<Multas_Elementos_Esenciales_CabUpdateToOneWithWhereWithoutDetallesInput, Multas_Elementos_Esenciales_CabUpdateWithoutDetallesInput>, Multas_Elementos_Esenciales_CabUncheckedUpdateWithoutDetallesInput>
+  }
+
+  export type Descargos_DetCreateNestedManyWithoutCabInput = {
+    create?: XOR<Descargos_DetCreateWithoutCabInput, Descargos_DetUncheckedCreateWithoutCabInput> | Descargos_DetCreateWithoutCabInput[] | Descargos_DetUncheckedCreateWithoutCabInput[]
+    connectOrCreate?: Descargos_DetCreateOrConnectWithoutCabInput | Descargos_DetCreateOrConnectWithoutCabInput[]
+    createMany?: Descargos_DetCreateManyCabInputEnvelope
+    connect?: Descargos_DetWhereUniqueInput | Descargos_DetWhereUniqueInput[]
+  }
+
+  export type Descargos_DetUncheckedCreateNestedManyWithoutCabInput = {
+    create?: XOR<Descargos_DetCreateWithoutCabInput, Descargos_DetUncheckedCreateWithoutCabInput> | Descargos_DetCreateWithoutCabInput[] | Descargos_DetUncheckedCreateWithoutCabInput[]
+    connectOrCreate?: Descargos_DetCreateOrConnectWithoutCabInput | Descargos_DetCreateOrConnectWithoutCabInput[]
+    createMany?: Descargos_DetCreateManyCabInputEnvelope
+    connect?: Descargos_DetWhereUniqueInput | Descargos_DetWhereUniqueInput[]
+  }
+
+  export type Descargos_DetUpdateManyWithoutCabNestedInput = {
+    create?: XOR<Descargos_DetCreateWithoutCabInput, Descargos_DetUncheckedCreateWithoutCabInput> | Descargos_DetCreateWithoutCabInput[] | Descargos_DetUncheckedCreateWithoutCabInput[]
+    connectOrCreate?: Descargos_DetCreateOrConnectWithoutCabInput | Descargos_DetCreateOrConnectWithoutCabInput[]
+    upsert?: Descargos_DetUpsertWithWhereUniqueWithoutCabInput | Descargos_DetUpsertWithWhereUniqueWithoutCabInput[]
+    createMany?: Descargos_DetCreateManyCabInputEnvelope
+    set?: Descargos_DetWhereUniqueInput | Descargos_DetWhereUniqueInput[]
+    disconnect?: Descargos_DetWhereUniqueInput | Descargos_DetWhereUniqueInput[]
+    delete?: Descargos_DetWhereUniqueInput | Descargos_DetWhereUniqueInput[]
+    connect?: Descargos_DetWhereUniqueInput | Descargos_DetWhereUniqueInput[]
+    update?: Descargos_DetUpdateWithWhereUniqueWithoutCabInput | Descargos_DetUpdateWithWhereUniqueWithoutCabInput[]
+    updateMany?: Descargos_DetUpdateManyWithWhereWithoutCabInput | Descargos_DetUpdateManyWithWhereWithoutCabInput[]
+    deleteMany?: Descargos_DetScalarWhereInput | Descargos_DetScalarWhereInput[]
+  }
+
+  export type Descargos_DetUncheckedUpdateManyWithoutCabNestedInput = {
+    create?: XOR<Descargos_DetCreateWithoutCabInput, Descargos_DetUncheckedCreateWithoutCabInput> | Descargos_DetCreateWithoutCabInput[] | Descargos_DetUncheckedCreateWithoutCabInput[]
+    connectOrCreate?: Descargos_DetCreateOrConnectWithoutCabInput | Descargos_DetCreateOrConnectWithoutCabInput[]
+    upsert?: Descargos_DetUpsertWithWhereUniqueWithoutCabInput | Descargos_DetUpsertWithWhereUniqueWithoutCabInput[]
+    createMany?: Descargos_DetCreateManyCabInputEnvelope
+    set?: Descargos_DetWhereUniqueInput | Descargos_DetWhereUniqueInput[]
+    disconnect?: Descargos_DetWhereUniqueInput | Descargos_DetWhereUniqueInput[]
+    delete?: Descargos_DetWhereUniqueInput | Descargos_DetWhereUniqueInput[]
+    connect?: Descargos_DetWhereUniqueInput | Descargos_DetWhereUniqueInput[]
+    update?: Descargos_DetUpdateWithWhereUniqueWithoutCabInput | Descargos_DetUpdateWithWhereUniqueWithoutCabInput[]
+    updateMany?: Descargos_DetUpdateManyWithWhereWithoutCabInput | Descargos_DetUpdateManyWithWhereWithoutCabInput[]
+    deleteMany?: Descargos_DetScalarWhereInput | Descargos_DetScalarWhereInput[]
+  }
+
+  export type Descargos_CabCreateNestedOneWithoutDetallesInput = {
+    create?: XOR<Descargos_CabCreateWithoutDetallesInput, Descargos_CabUncheckedCreateWithoutDetallesInput>
+    connectOrCreate?: Descargos_CabCreateOrConnectWithoutDetallesInput
+    connect?: Descargos_CabWhereUniqueInput
+  }
+
+  export type Descargos_CabUpdateOneRequiredWithoutDetallesNestedInput = {
+    create?: XOR<Descargos_CabCreateWithoutDetallesInput, Descargos_CabUncheckedCreateWithoutDetallesInput>
+    connectOrCreate?: Descargos_CabCreateOrConnectWithoutDetallesInput
+    upsert?: Descargos_CabUpsertWithoutDetallesInput
+    connect?: Descargos_CabWhereUniqueInput
+    update?: XOR<XOR<Descargos_CabUpdateToOneWithWhereWithoutDetallesInput, Descargos_CabUpdateWithoutDetallesInput>, Descargos_CabUncheckedUpdateWithoutDetallesInput>
   }
 
   export type PaeOnlineDetCreateNestedManyWithoutCabInput = {
@@ -107369,6 +111312,137 @@ export namespace Prisma {
     fechaCalculo?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type Descargos_DetCreateWithoutCabInput = {
+    id?: string
+    letraAspecto: string
+    descripcion?: string | null
+    estadoAspecto?: string
+    fechaNoSolucionado?: Date | string | null
+    observacionNoSolucionado?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Descargos_DetUncheckedCreateWithoutCabInput = {
+    id?: string
+    letraAspecto: string
+    descripcion?: string | null
+    estadoAspecto?: string
+    fechaNoSolucionado?: Date | string | null
+    observacionNoSolucionado?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Descargos_DetCreateOrConnectWithoutCabInput = {
+    where: Descargos_DetWhereUniqueInput
+    create: XOR<Descargos_DetCreateWithoutCabInput, Descargos_DetUncheckedCreateWithoutCabInput>
+  }
+
+  export type Descargos_DetCreateManyCabInputEnvelope = {
+    data: Descargos_DetCreateManyCabInput | Descargos_DetCreateManyCabInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type Descargos_DetUpsertWithWhereUniqueWithoutCabInput = {
+    where: Descargos_DetWhereUniqueInput
+    update: XOR<Descargos_DetUpdateWithoutCabInput, Descargos_DetUncheckedUpdateWithoutCabInput>
+    create: XOR<Descargos_DetCreateWithoutCabInput, Descargos_DetUncheckedCreateWithoutCabInput>
+  }
+
+  export type Descargos_DetUpdateWithWhereUniqueWithoutCabInput = {
+    where: Descargos_DetWhereUniqueInput
+    data: XOR<Descargos_DetUpdateWithoutCabInput, Descargos_DetUncheckedUpdateWithoutCabInput>
+  }
+
+  export type Descargos_DetUpdateManyWithWhereWithoutCabInput = {
+    where: Descargos_DetScalarWhereInput
+    data: XOR<Descargos_DetUpdateManyMutationInput, Descargos_DetUncheckedUpdateManyWithoutCabInput>
+  }
+
+  export type Descargos_DetScalarWhereInput = {
+    AND?: Descargos_DetScalarWhereInput | Descargos_DetScalarWhereInput[]
+    OR?: Descargos_DetScalarWhereInput[]
+    NOT?: Descargos_DetScalarWhereInput | Descargos_DetScalarWhereInput[]
+    id?: StringFilter<"Descargos_Det"> | string
+    cabId?: StringFilter<"Descargos_Det"> | string
+    letraAspecto?: StringFilter<"Descargos_Det"> | string
+    descripcion?: StringNullableFilter<"Descargos_Det"> | string | null
+    estadoAspecto?: StringFilter<"Descargos_Det"> | string
+    fechaNoSolucionado?: DateTimeNullableFilter<"Descargos_Det"> | Date | string | null
+    observacionNoSolucionado?: StringNullableFilter<"Descargos_Det"> | string | null
+    createdAt?: DateTimeFilter<"Descargos_Det"> | Date | string
+    updatedAt?: DateTimeFilter<"Descargos_Det"> | Date | string
+  }
+
+  export type Descargos_CabCreateWithoutDetallesInput = {
+    id?: string
+    folio: string
+    licitacion?: string | null
+    rbd: number
+    fechaSupervision?: Date | string | null
+    resolucion?: number
+    estado?: string
+    usuarioModif?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Descargos_CabUncheckedCreateWithoutDetallesInput = {
+    id?: string
+    folio: string
+    licitacion?: string | null
+    rbd: number
+    fechaSupervision?: Date | string | null
+    resolucion?: number
+    estado?: string
+    usuarioModif?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Descargos_CabCreateOrConnectWithoutDetallesInput = {
+    where: Descargos_CabWhereUniqueInput
+    create: XOR<Descargos_CabCreateWithoutDetallesInput, Descargos_CabUncheckedCreateWithoutDetallesInput>
+  }
+
+  export type Descargos_CabUpsertWithoutDetallesInput = {
+    update: XOR<Descargos_CabUpdateWithoutDetallesInput, Descargos_CabUncheckedUpdateWithoutDetallesInput>
+    create: XOR<Descargos_CabCreateWithoutDetallesInput, Descargos_CabUncheckedCreateWithoutDetallesInput>
+    where?: Descargos_CabWhereInput
+  }
+
+  export type Descargos_CabUpdateToOneWithWhereWithoutDetallesInput = {
+    where?: Descargos_CabWhereInput
+    data: XOR<Descargos_CabUpdateWithoutDetallesInput, Descargos_CabUncheckedUpdateWithoutDetallesInput>
+  }
+
+  export type Descargos_CabUpdateWithoutDetallesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folio?: StringFieldUpdateOperationsInput | string
+    licitacion?: NullableStringFieldUpdateOperationsInput | string | null
+    rbd?: IntFieldUpdateOperationsInput | number
+    fechaSupervision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolucion?: FloatFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    usuarioModif?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Descargos_CabUncheckedUpdateWithoutDetallesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    folio?: StringFieldUpdateOperationsInput | string
+    licitacion?: NullableStringFieldUpdateOperationsInput | string | null
+    rbd?: IntFieldUpdateOperationsInput | number
+    fechaSupervision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolucion?: FloatFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    usuarioModif?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type PaeOnlineDetCreateWithoutCabInput = {
     id?: string
     dia: number
@@ -111816,6 +115890,50 @@ export namespace Prisma {
     variablesUsadas?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type Descargos_DetCreateManyCabInput = {
+    id?: string
+    letraAspecto: string
+    descripcion?: string | null
+    estadoAspecto?: string
+    fechaNoSolucionado?: Date | string | null
+    observacionNoSolucionado?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Descargos_DetUpdateWithoutCabInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    letraAspecto?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    estadoAspecto?: StringFieldUpdateOperationsInput | string
+    fechaNoSolucionado?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    observacionNoSolucionado?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Descargos_DetUncheckedUpdateWithoutCabInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    letraAspecto?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    estadoAspecto?: StringFieldUpdateOperationsInput | string
+    fechaNoSolucionado?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    observacionNoSolucionado?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Descargos_DetUncheckedUpdateManyWithoutCabInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    letraAspecto?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    estadoAspecto?: StringFieldUpdateOperationsInput | string
+    fechaNoSolucionado?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    observacionNoSolucionado?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type PaeOnlineDetCreateManyCabInput = {
     id?: string
     dia: number
@@ -112584,6 +116702,10 @@ export namespace Prisma {
      */
     export type Multas_Elementos_Esenciales_CabCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Elementos_Esenciales_CabCountOutputTypeDefaultArgs<ExtArgs>
     /**
+     * @deprecated Use Descargos_CabCountOutputTypeDefaultArgs instead
+     */
+    export type Descargos_CabCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Descargos_CabCountOutputTypeDefaultArgs<ExtArgs>
+    /**
      * @deprecated Use PaeOnlineCabCountOutputTypeDefaultArgs instead
      */
     export type PaeOnlineCabCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PaeOnlineCabCountOutputTypeDefaultArgs<ExtArgs>
@@ -112812,6 +116934,14 @@ export namespace Prisma {
      */
     export type Multas_Elementos_Esenciales_DetArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Multas_Elementos_Esenciales_DetDefaultArgs<ExtArgs>
     /**
+     * @deprecated Use Descargos_CabDefaultArgs instead
+     */
+    export type Descargos_CabArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Descargos_CabDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Descargos_DetDefaultArgs instead
+     */
+    export type Descargos_DetArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Descargos_DetDefaultArgs<ExtArgs>
+    /**
      * @deprecated Use DescargaPaeLogDefaultArgs instead
      */
     export type DescargaPaeLogArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DescargaPaeLogDefaultArgs<ExtArgs>
@@ -112915,6 +117045,10 @@ export namespace Prisma {
      * @deprecated Use MenuItemOrderDefaultArgs instead
      */
     export type MenuItemOrderArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = MenuItemOrderDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use AuditLogDefaultArgs instead
+     */
+    export type AuditLogArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = AuditLogDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

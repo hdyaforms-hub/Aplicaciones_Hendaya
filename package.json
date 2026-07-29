@@ -6,7 +6,7 @@
     "node": ">=20.9.0"
   },
   "scripts": {
-    "dev": "next dev -p 3001 --webpack",
+    "dev": "next dev -H 0.0.0.0 -p 3001 --webpack",
     "build": "prisma generate && next build",
     "start": "prisma db push --skip-generate && next start -p $PORT",
     "lint": "eslint"

@@ -59,4 +59,5 @@ next-env.d.ts
 
 # Prisma temporary query engine files
 src/generated/client/*.tmp*
-
+# scratch
+/scratch

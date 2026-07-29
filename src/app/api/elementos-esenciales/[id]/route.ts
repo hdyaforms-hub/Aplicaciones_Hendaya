@@ -19,16 +19,24 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ i
 
         const { id } = await params
 
-        // Buscar el registro para obtener la ruta del archivo
+        // Buscar el registro para obtener la ruta del archivo y folio
         const acta = await prisma.elementosEsenciales_Cab.findUnique({
-            where: { id }
+            where: { id },
+            select: { id: true, folio: true, link: true }
         })
 
         if (!acta) {
             return NextResponse.json({ error: 'Registro no encontrado' }, { status: 404 })
         }
 
-        // Eliminar de la base de datos (Cascade borrará los detalles)
+        // Eliminar multas asociadas al folio si existe
+        if (acta.folio) {
+            await prisma.multas_Elementos_Esenciales_Cab.deleteMany({
+                where: { folioOriginal: acta.folio }
+            })
+        }
+
+        // Eliminar de la base de datos (Cascade borrará los detalles de ElementosEsenciales_Det)
         await prisma.elementosEsenciales_Cab.delete({
             where: { id }
         })
