@@ -15,34 +15,59 @@ export default async function DashboardPage() {
 
     // PMPA Load Status Logic
     const pmpaData = await prisma.pMPA.findMany({
-        select: { ano: true, mes: true, rbd: true },
-        distinct: ['ano', 'mes', 'rbd']
+        select: { ano: true, mes: true, rbd: true, ute: true, institucion: true },
+        distinct: ['ano', 'mes', 'rbd', 'institucion']
     })
 
     const rbdsFound = Array.from(new Set(pmpaData.map(p => p.rbd)))
     const colegiosMapData = await prisma.colegios.findMany({
         where: { colRBD: { in: rbdsFound } },
-        select: { colRBD: true, colut: true }
+        select: { colRBD: true, colut: true, institucion: true }
     })
 
-    const rbdToUt = new Map(colegiosMapData.map(c => [c.colRBD, c.colut]))
-    const groups: Record<string, { ano: number, mes: number, uts: Set<number> }> = {}
+    const rbdToColegio = new Map(colegiosMapData.map(c => [c.colRBD, { colut: c.colut, institucion: c.institucion }]))
+
+    type GroupEntry = {
+        ano: number
+        mes: number
+        utDetails: Map<number, { hasJunaeb: boolean; hasJunji: boolean }>
+    }
+
+    const groups: Record<string, GroupEntry> = {}
     
     for (const item of pmpaData) {
-        const ut = rbdToUt.get(item.rbd)
-        if (ut === undefined) continue
+        const col = rbdToColegio.get(item.rbd)
+        const ut = item.ute || col?.colut
+        if (ut === undefined || ut === null) continue
+
+        const instRaw = (item.institucion && item.institucion !== 'S/D' ? item.institucion : col?.institucion || '').toUpperCase().trim()
+        const isJunaeb = instRaw.includes('JUNAEB')
+        const isJunji = instRaw.includes('JUNJI')
+
         const key = `${item.ano}-${item.mes}`
         if (!groups[key]) {
-            groups[key] = { ano: item.ano, mes: item.mes, uts: new Set() }
+            groups[key] = { ano: item.ano, mes: item.mes, utDetails: new Map() }
         }
-        groups[key].uts.add(ut)
+
+        const currentUt = groups[key].utDetails.get(ut) || { hasJunaeb: false, hasJunji: false }
+        groups[key].utDetails.set(ut, {
+            hasJunaeb: currentUt.hasJunaeb || isJunaeb,
+            hasJunji: currentUt.hasJunji || isJunji
+        })
     }
 
     const sortedPmpaSummary = Object.values(groups)
         .sort((a, b) => b.ano !== a.ano ? b.ano - a.ano : b.mes - a.mes)
         .map(g => ({
-            ...g,
-            uts: Array.from(g.uts).sort((a, b) => a - b)
+            ano: g.ano,
+            mes: g.mes,
+            uts: Array.from(g.utDetails.entries())
+                .map(([code, details]) => ({
+                    code,
+                    hasJunaeb: details.hasJunaeb,
+                    hasJunji: details.hasJunji
+                }))
+                .sort((a, b) => a.code - b.code)
         }))
 
     // Group periods by Year for a cleaner, structured presentation
