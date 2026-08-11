@@ -1,18 +1,6 @@
 import { PrismaClient } from '../generated/client'
 import { getSession } from './session'
 
-const prismaClientSingleton = () => {
-    return new PrismaClient().$extends({
-        query: {
-            colegios: withRbdFilter('colRBD'),
-            pMPA: withRbdFilter('rbd'),
-            ingRacion: withRbdFilter('rbd'),
-            solicitudPan: withRbdFilter('rbd'),
-            solicitudGas: withRbdFilter('rbd'),
-            colegiosMatriz: withRbdFilter('rbd')
-        }
-    })
-}
 
 declare global {
     var prismaGlobal: undefined | ReturnType<typeof prismaClientSingleton>
@@ -27,10 +15,23 @@ async function getRoleBasedRbdFilter(): Promise<number[] | null> {
         const session = await getSession()
         if (!session || !session.user) return []
 
-        const roleName = session.user.role?.name?.toLowerCase() || ''
+        let userRbds: number[] = session.user.rbds || []
         
+        // Fetch fresh RBDs from DB to avoid stale session data
+        if (session.user.id) {
+            const dbUser = await rawPrisma.user.findUnique({
+                where: { id: session.user.id },
+                select: { rbds: true }
+            })
+            if (dbUser) {
+                userRbds = dbUser.rbds
+            }
+        }
+
+        const roleName = session.user.role?.name?.toLowerCase() || ''
+
         if (roleName.includes('admin') || roleName.includes('multas') || roleName.includes('gerencia')) return null
-        if (roleName.includes('supervisor')) return session.user.rbds || []
+        if (roleName.includes('supervisor') || userRbds.length > 0) return userRbds
         
         if (roleName.includes('jefe zonal') || roleName.includes('jefe de operacion') || roleName.includes('operaciones')) {
             const sucursales = session.user.sucursales || []
@@ -93,6 +94,17 @@ function withRbdFilter(rbdField: string) {
     }
 }
 
-export const prisma = globalThis.prismaGlobal ?? prismaClientSingleton()
+const prismaClientSingleton = () => {
+    return rawPrisma.$extends({
+        query: {
+            colegios: withRbdFilter('colRBD'),
+            pMPA: withRbdFilter('rbd'),
+            ingRacion: withRbdFilter('rbd'),
+            solicitudPan: withRbdFilter('rbd'),
+            solicitudGas: withRbdFilter('rbd'),
+            colegiosMatriz: withRbdFilter('rbd')
+        }
+    })
+}
 
-if (process.env.NODE_ENV !== 'production') globalThis.prismaGlobal = prisma
+export const prisma = prismaClientSingleton()

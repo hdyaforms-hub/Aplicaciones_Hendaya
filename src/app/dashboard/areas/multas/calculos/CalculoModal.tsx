@@ -28,6 +28,7 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
     const [selectedServicioManual, setSelectedServicioManual] = useState('')
     const [observacionManualServicio, setObservacionManualServicio] = useState('')
     const [guardandoServicioManual, setGuardandoServicioManual] = useState(false)
+    const [isEditServicioModalOpen, setIsEditServicioModalOpen] = useState(false)
 
     useEffect(() => {
         if (isOpen && folio) {
@@ -252,7 +253,8 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
     if (!isOpen) return null
 
     return (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        <>
+            <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-3xl p-6 sm:p-8 w-full max-w-4xl shadow-2xl relative max-h-[90vh] overflow-hidden flex flex-col">
                 <button
                     onClick={onClose}
@@ -299,7 +301,12 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
                                                 <button
                                                     type="button"
                                                     onClick={() => {
-                                                        setData((prev: any) => ({ ...prev, esServicioManual: false, servicio: '' }))
+                                                        const rawServManual = data?.servicioManual || ''
+                                                        const sMatch = rawServManual.match(/\(([A-Z])\)/)
+                                                        const code = sMatch ? sMatch[1] : ''
+                                                        setSelectedServicioManual(code)
+                                                        setObservacionManualServicio(data?.observacionManualServicio || '')
+                                                        setIsEditServicioModalOpen(true)
                                                     }}
                                                     className="text-[10px] text-indigo-600 hover:text-indigo-800 font-black underline mt-1.5 block flex items-center gap-1 cursor-pointer"
                                                 >
@@ -552,13 +559,32 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
                         )}
                     </div>
                     
-                    <div className="flex gap-3 w-full sm:w-auto">
+                    <div className="flex gap-3 w-full sm:w-auto flex-wrap">
                         <button
                             type="button"
                             onClick={() => window.open(data?.link || '', '_blank')}
                             className="px-5 py-2.5 w-full sm:w-auto rounded-xl text-cyan-700 bg-cyan-50 hover:bg-cyan-100 border border-cyan-100 font-bold transition-colors"
                         >
                             Ver PDF Original
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => {
+                                if (data?.esServicioManual) {
+                                    const rawServManual = data?.servicioManual || ''
+                                    const sMatch = rawServManual.match(/\(([A-Z])\)/)
+                                    const code = sMatch ? sMatch[1] : ''
+                                    setSelectedServicioManual(code)
+                                    setObservacionManualServicio(data?.observacionManualServicio || '')
+                                } else {
+                                    setSelectedServicioManual('')
+                                    setObservacionManualServicio('')
+                                }
+                                setIsEditServicioModalOpen(true)
+                            }}
+                            className="px-5 py-2.5 w-full sm:w-auto rounded-xl text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border border-indigo-100 font-bold transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                        >
+                            ✏️ Editar Servicio
                         </button>
                         <button
                             type="button"
@@ -572,12 +598,100 @@ export default function CalculoModal({ folio, isOpen, onClose, onCalculated }: C
                 </div>
 
             </div>
+        </div>
+
+            {/* Sub-modal Editar Servicio */}
+            {isEditServicioModalOpen && (
+                <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center z-[60] p-4">
+                    <div className="bg-white rounded-3xl p-6 sm:p-7 w-full max-w-md shadow-2xl border border-gray-100 space-y-5 animate-in fade-in zoom-in-95 duration-150">
+                        <div className="flex justify-between items-center border-b border-gray-100 pb-3">
+                            <h4 className="text-base font-black text-gray-900 flex items-center gap-2">
+                                <span>🍽️</span> Editar Servicio del Folio
+                            </h4>
+                            <button
+                                type="button"
+                                onClick={() => setIsEditServicioModalOpen(false)}
+                                className="text-gray-400 hover:text-gray-700 font-bold text-lg"
+                            >
+                                ✕
+                            </button>
+                        </div>
+
+                        <div className="space-y-4">
+                            <div className="p-3 bg-slate-50 rounded-xl border border-slate-100 text-xs space-y-1">
+                                <p className="text-gray-500 font-semibold">Folio: <span className="font-bold text-slate-800">{folio}</span></p>
+                                <p className="text-gray-500 font-semibold">Servicio Actual: <span className="font-bold text-indigo-700">{data?.esServicioManual ? `${data?.servicioManual} (Manual)` : (data?.servicio || 'Sin asignación')}</span></p>
+                            </div>
+
+                            <div className="space-y-1.5">
+                                <label className="block text-[11px] font-black text-gray-500 uppercase tracking-wider">
+                                    Seleccionar Nuevo Servicio (*):
+                                </label>
+                                <select
+                                    className="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500 bg-white text-xs font-bold text-gray-800 outline-none"
+                                    value={selectedServicioManual}
+                                    onChange={e => setSelectedServicioManual(e.target.value)}
+                                >
+                                    <option value="">-- Seleccionar Servicio del Mantenedor --</option>
+                                    {serviciosDisponibles.map(s => (
+                                        <option key={s.codigo} value={s.codigo}>
+                                            {s.nombre} ({s.codigo})
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            <div className="space-y-1.5">
+                                <label className="block text-[11px] font-black text-gray-500 uppercase tracking-wider">
+                                    Observación / Motivo del Cambio (*):
+                                </label>
+                                <textarea
+                                    rows={3}
+                                    className="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500 bg-white text-xs text-gray-700 font-medium leading-normal outline-none"
+                                    placeholder="Escriba el motivo por el cual se actualiza el servicio..."
+                                    value={observacionManualServicio}
+                                    onChange={e => setObservacionManualServicio(e.target.value)}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="flex justify-end gap-3 pt-2 border-t border-gray-100">
+                            <button
+                                type="button"
+                                onClick={() => setIsEditServicioModalOpen(false)}
+                                className="px-4 py-2 rounded-xl text-gray-600 bg-gray-100 hover:bg-gray-200 text-xs font-bold transition-all"
+                            >
+                                Cancelar
+                            </button>
+                            <button
+                                type="button"
+                                disabled={!selectedServicioManual || guardandoServicioManual}
+                                onClick={async () => {
+                                    setGuardandoServicioManual(true)
+                                    const obs = observacionManualServicio.trim() || 'Modificación manual de servicio desde módulo de cálculo'
+                                    const res = await guardarServicioManual(folio, selectedServicioManual, obs)
+                                    if (res.error) {
+                                        alert(res.error)
+                                    } else {
+                                        await fetchData()
+                                        setIsEditServicioModalOpen(false)
+                                    }
+                                    setGuardandoServicioManual(false)
+                                }}
+                                className="px-5 py-2 rounded-xl text-white bg-indigo-600 hover:bg-indigo-700 text-xs font-bold transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                {guardandoServicioManual ? 'Guardando...' : 'Guardar Servicio'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             <style jsx>{`
                 .custom-scrollbar::-webkit-scrollbar { width: 6px; }
                 .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
                 .custom-scrollbar::-webkit-scrollbar-thumb { background: #E2E8F0; border-radius: 10px; }
             `}</style>
-        </div>
+        </>
     )
 }

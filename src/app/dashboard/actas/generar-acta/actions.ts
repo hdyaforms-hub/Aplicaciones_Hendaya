@@ -99,11 +99,22 @@ export async function getColegiosForPlantilla(plantillaId: string) {
     try {
         const session = await getSession()
         if (!session || !session.user) return { success: false, error: 'No autenticado' }
-
         const isAdmin = session.user.role?.name === 'Administrador' || session.user.role?.name === 'admin'
         const userRoleName = session.user.role?.name || ''
         const userRoleId = session.user.role?.id || ''
-        const userRbds: number[] = session.user.rbds || []
+        
+        let userRbds: number[] = session.user.rbds || []
+        
+        // Fetch fresh RBDs directly from database to avoid stale session data
+        if (session.user.id) {
+            const dbUser = await prisma.user.findUnique({
+                where: { id: session.user.id },
+                select: { rbds: true }
+            })
+            if (dbUser) {
+                userRbds = dbUser.rbds
+            }
+        }
 
         const plantilla = await (prisma as any).actaSupervisionPlantilla.findUnique({
             where: { id: plantillaId }

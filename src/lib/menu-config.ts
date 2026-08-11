@@ -212,7 +212,8 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                 name: 'Actas de Supervisión',
                 requiredPermission: 'manage_actas_supervision',
                 subItems: [
-                    { name: 'Crear Acta', href: '/dashboard/mantenedor/actas-supervision/crear', requiredPermission: 'manage_actas_supervision' }
+                    { name: 'Crear Acta', href: '/dashboard/mantenedor/actas-supervision/crear', requiredPermission: 'manage_actas_supervision' },
+                    { name: 'Asociar RBD a usuario', href: '/dashboard/mantenedor/actas-supervision/asociar-rbd', requiredPermission: 'manage_actas_supervision' }
                 ]
             },
             {
