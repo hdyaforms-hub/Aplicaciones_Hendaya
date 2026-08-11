@@ -33,7 +33,7 @@ export default async function DescargarActasPage() {
     })
 
     // En "Descargar Actas", todos los usuarios con permiso pueden ver las actas de TODOS los usuarios
-    const respuestas = await (prisma as any).actaSupervisionRespuesta.findMany({
+    const respuestasRaw = await (prisma as any).actaSupervisionRespuesta.findMany({
         include: {
             plantilla: true
         },
@@ -41,6 +41,16 @@ export default async function DescargarActasPage() {
             createdAt: 'desc'
         }
     })
+
+    const colegios = await (prisma as any).colegios.findMany({
+        select: { colRBD: true, sucursal: true }
+    })
+    const colegiosMap = new Map(colegios.map((c: any) => [c.colRBD, c.sucursal]))
+
+    const respuestas = respuestasRaw.map((r: any) => ({
+        ...r,
+        sucursal: r.sucursal || colegiosMap.get(r.rbd) || null
+    }))
 
     const plantillas = await (prisma as any).actaSupervisionPlantilla.findMany({
         orderBy: { createdAt: 'desc' }

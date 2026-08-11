@@ -15,6 +15,7 @@ type ActaRespuesta = {
     rbd: number
     nombreEstablecimiento: string | null
     institucion: string | null
+    sucursal?: string | null
     estado: string
     usuario: string
     createdAt: Date
@@ -44,6 +45,7 @@ export default function DescargarActasClient({ initialRespuestas, plantillas, is
     const [filtroLicitacion, setFiltroLicitacion] = useState('')
     const [filtroNombre, setFiltroNombre] = useState('')
     const [filtroInstitucion, setFiltroInstitucion] = useState('')
+    const [filtroSucursal, setFiltroSucursal] = useState('')
     const [filtroAnio, setFiltroAnio] = useState('')
     const [filtroMes, setFiltroMes] = useState('')
     const [filtroEstado, setFiltroEstado] = useState('')
@@ -77,6 +79,14 @@ export default function DescargarActasClient({ initialRespuestas, plantillas, is
                 .flatMap(r => [r.institucion, r.plantilla?.instituciones])
                 .filter(Boolean)
                 .map(i => i!.trim())
+        )
+    ).sort()
+
+    const sucursalesOptions = Array.from(
+        new Set(
+            respuestas
+                .map(r => r.sucursal)
+                .filter(Boolean)
         )
     ).sort()
 
@@ -167,11 +177,12 @@ export default function DescargarActasClient({ initialRespuestas, plantillas, is
             r.institucion?.toLowerCase() === filtroInstitucion.toLowerCase() ||
             (r.plantilla?.instituciones && r.plantilla.instituciones.toLowerCase().includes(filtroInstitucion.toLowerCase()))
         ) : true
+        const matchSucursal = filtroSucursal ? (r.sucursal === filtroSucursal) : true
         const matchAnio = filtroAnio ? (r.createdAt && new Date(r.createdAt).getFullYear().toString() === filtroAnio) : true
         const matchMes = filtroMes ? (r.createdAt && new Date(r.createdAt).getMonth().toString() === filtroMes) : true
         const matchEstado = filtroEstado ? (r.estado === filtroEstado) : true
         const matchUsuario = filtroUsuario ? (r.usuario === filtroUsuario) : true
-        return matchLic && matchNombre && matchInst && matchAnio && matchMes && matchEstado && matchUsuario
+        return matchLic && matchNombre && matchInst && matchSucursal && matchAnio && matchMes && matchEstado && matchUsuario
     })
 
     // Ordenación local de la tabla
@@ -289,7 +300,7 @@ export default function DescargarActasClient({ initialRespuestas, plantillas, is
                 
                 <div className="flex flex-col lg:flex-row justify-between items-end gap-4">
                     {/* Filtros superiores */}
-                    <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-3 w-full">
+                    <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3 w-full">
                         {/* 1. Nombre de Acta */}
                         <div className="flex flex-col gap-1.5 w-full">
                             <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Nombre del Acta</label>
@@ -335,7 +346,22 @@ export default function DescargarActasClient({ initialRespuestas, plantillas, is
                             </select>
                         </div>
 
-                        {/* 4. Año */}
+                        {/* 4. Sucursal */}
+                        <div className="flex flex-col gap-1.5 w-full">
+                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Sucursal</label>
+                            <select
+                                value={filtroSucursal}
+                                onChange={(e) => { setFiltroSucursal(e.target.value); setCurrentPage(1); }}
+                                className="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs font-bold text-slate-800 focus:ring-2 focus:ring-cyan-500 bg-white outline-none cursor-pointer transition-all"
+                            >
+                                <option value="">Todas Sucursales</option>
+                                {sucursalesOptions.map((suc, i) => (
+                                    <option key={i} value={suc as string}>{suc}</option>
+                                ))}
+                            </select>
+                        </div>
+
+                        {/* 5. Año */}
                         <div className="flex flex-col gap-1.5 w-full">
                             <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Año Creación</label>
                             <select
@@ -350,7 +376,7 @@ export default function DescargarActasClient({ initialRespuestas, plantillas, is
                             </select>
                         </div>
 
-                        {/* 5. Mes */}
+                        {/* 6. Mes */}
                         <div className="flex flex-col gap-1.5 w-full">
                             <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Mes Creación</label>
                             <select
@@ -365,7 +391,7 @@ export default function DescargarActasClient({ initialRespuestas, plantillas, is
                             </select>
                         </div>
 
-                        {/* 6. Estado */}
+                        {/* 7. Estado */}
                         <div className="flex flex-col gap-1.5 w-full">
                             <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Estado</label>
                             <select
@@ -380,13 +406,13 @@ export default function DescargarActasClient({ initialRespuestas, plantillas, is
                             </select>
                         </div>
 
-                        {/* 7. NUEVO: Usuario Creador */}
+                        {/* 8. Usuario Creador */}
                         <div className="flex flex-col gap-1.5 w-full">
                             <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Usuario Creador</label>
                             <select
                                 value={filtroUsuario}
                                 onChange={(e) => { setFiltroUsuario(e.target.value); setCurrentPage(1); }}
-                                className="w-full px-3 py-2 rounded-xl border border-cyan-300 text-xs font-bold text-slate-800 focus:ring-2 focus:ring-cyan-500 bg-cyan-50/30 outline-none cursor-pointer transition-all"
+                                className="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs font-bold text-slate-800 focus:ring-2 focus:ring-cyan-500 bg-white outline-none cursor-pointer transition-all"
                             >
                                 <option value="">Todos los Usuarios</option>
                                 {usuariosOptions.map((user, i) => (
@@ -488,6 +514,9 @@ export default function DescargarActasClient({ initialRespuestas, plantillas, is
                                                     <span className="font-bold text-cyan-700">RBD #{acta.rbd}</span>
                                                     {acta.nombreEstablecimiento && (
                                                         <span className="block text-xs text-slate-500">{acta.nombreEstablecimiento}</span>
+                                                    )}
+                                                    {acta.sucursal && (
+                                                        <span className="inline-block mt-0.5 text-[9px] font-bold text-cyan-800 bg-cyan-50 px-1.5 py-0.5 rounded border border-cyan-100">{acta.sucursal}</span>
                                                     )}
                                                 </div>
                                             ) : 'Sin asignar'}
