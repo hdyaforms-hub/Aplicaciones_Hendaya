@@ -20,7 +20,7 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
     {
         name: 'Tableros y Avances',
         icon: '📈',
-        requiredPermission: ['view_tablero', 'view_tablero_pan', 'view_tablero_gas', 'view_tablero_retiro', 'view_tablero_elementos', 'view_tablero_multas_ee', 'view_tablero_organigrama', 'view_tablero_distancias', 'view_tablero_auditoria'],
+        requiredPermission: ['view_tablero', 'view_tablero_pan', 'view_tablero_gas', 'view_tablero_retiro', 'view_tablero_elementos', 'view_tablero_multas_ee', 'view_tablero_organigrama', 'view_tablero_distancias', 'view_tablero_actas', 'view_tablero_auditoria', 'view_tablero_verificador_temperaturas'],
         subItems: [
             { name: 'Avance PMPA', href: '/dashboard/tablero', requiredPermission: 'view_tablero' },
             { name: 'Organigrama por zonas', href: '/dashboard/tablero/organigrama', requiredPermission: 'view_tablero_organigrama' },
@@ -30,6 +30,8 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
             { name: 'Carga de Elementos Esenciales', href: '/dashboard/tablero/elementos-esenciales', requiredPermission: 'view_tablero_elementos' },
             { name: 'Multas EE', href: '/dashboard/tablero/multas-ee', requiredPermission: 'view_tablero_multas_ee' },
             { name: 'Tablero de Kilometraje', href: '/dashboard/tablero/kilometraje', requiredPermission: 'view_tablero_distancias' },
+            { name: 'Tablero Actas', href: '/dashboard/tablero/actas', requiredPermission: 'view_tablero_actas' },
+            { name: 'Verificador de temperaturas', href: '/dashboard/tablero/verificador-temperaturas', requiredPermission: 'view_tablero_verificador_temperaturas' },
             { name: 'Auditoría', href: '/dashboard/tablero/auditoria', requiredPermission: 'view_tablero_auditoria' }
         ]
     },
@@ -99,7 +101,9 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                 showCondition: (user: any) => {
                     const isAdmin = user.role.name === 'Administrador' || user.role.name === 'admin'
                     const hasCalidad = user.areas?.some((a: any) => a.nombre.toLowerCase().includes('calidad'))
-                    const hasPerm = user.role.permissions.includes('view_calidad') || user.role.permissions.includes('view_retorno_productos')
+                    const hasPerm = user.role.permissions.includes('view_calidad') || 
+                                   user.role.permissions.includes('view_retorno_productos') ||
+                                   user.role.permissions.includes('view_verificador_temperaturas')
                     return !!(isAdmin || hasCalidad || hasPerm)
                 },
                 subItems: [
@@ -113,6 +117,11 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                             const hasPerm = user.role.permissions.includes('view_retorno_productos')
                             return !!(isAdmin || hasCalidad || hasPerm)
                         }
+                    },
+                    {
+                        name: 'Verificador de Temperaturas',
+                        href: '/dashboard/areas/calidad/verificador-temperaturas',
+                        requiredPermission: 'view_verificador_temperaturas'
                     },
                     {
                         name: 'Subir Actas Estándar PAE',
@@ -175,6 +184,15 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
         ]
     },
     {
+        name: 'Actas',
+        icon: '📋',
+        requiredPermission: ['view_generar_actas', 'view_descargar_actas'],
+        subItems: [
+            { name: 'Generar Acta', href: '/dashboard/actas/generar-acta', requiredPermission: 'view_generar_actas' },
+            { name: 'Descargar Actas', href: '/dashboard/actas/descargar-actas', requiredPermission: 'view_descargar_actas' }
+        ]
+    },
+    {
         name: 'Reportes',
         icon: '📊',
         requiredPermission: ['view_reports', 'view_solicitud_pan_report', 'view_solicitud_gas_report', 'view_retiro_report'],
@@ -188,8 +206,15 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
     {
         name: 'Mantenedor',
         icon: '⚙️',
-        requiredPermission: ['view_colegios', 'view_productos', 'view_pmpa', 'view_consumo_gas', 'view_preparaciones', 'view_minutas', 'view_raciones', 'view_codigo_causa', 'manage_sucursales', 'manage_areas', 'manage_vehiculos', 'manage_zonales', 'manage_jefe_operacion', 'manage_supervisor', 'manage_manipuladoras_masiva', 'manage_colegios_matriz', 'manage_nueva_matriz'],
+        requiredPermission: ['view_colegios', 'view_productos', 'view_pmpa', 'view_consumo_gas', 'view_preparaciones', 'view_minutas', 'view_raciones', 'view_codigo_causa', 'manage_sucursales', 'manage_areas', 'manage_vehiculos', 'manage_zonales', 'manage_jefe_operacion', 'manage_supervisor', 'manage_manipuladoras_masiva', 'manage_colegios_matriz', 'manage_nueva_matriz', 'manage_actas_supervision'],
         subItems: [
+            {
+                name: 'Actas de Supervisión',
+                requiredPermission: 'manage_actas_supervision',
+                subItems: [
+                    { name: 'Crear Acta', href: '/dashboard/mantenedor/actas-supervision/crear', requiredPermission: 'manage_actas_supervision' }
+                ]
+            },
             {
                 name: 'Operaciones',
                 requiredPermission: ['view_pmpa', 'view_colegios', 'view_consumo_gas', 'manage_sucursales', 'manage_vehiculos', 'manage_zonales', 'manage_jefe_operacion', 'manage_supervisor'],

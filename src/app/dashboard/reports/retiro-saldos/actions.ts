@@ -37,7 +37,7 @@ export async function searchColegiosRetiroReport(query: string) {
                 ...whereClause,
                 OR: [
                     ...(isNumeric ? [{ colRBD: Number(query) }] : []),
-                    { nombreEstablecimiento: { contains: query } }
+                    { nombreEstablecimiento: { contains: query, mode: 'insensitive' } }
                 ]
             },
             take: 10

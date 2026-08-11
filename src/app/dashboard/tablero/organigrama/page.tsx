@@ -23,6 +23,7 @@ export default async function OrganigramaPage() {
             initialJefesOperacion={data.jefesOperacion}
             initialSupervisores={data.supervisores}
             colegios={data.colegios}
+            distancias={data.distancias}
         />
     )
 }

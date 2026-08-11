@@ -160,16 +160,17 @@ model MultaServicio {
 }
 
 model Licitacion {
-  licId                Int                   @id @default(autoincrement())
-  licitacionHomologada String?               @db.VarChar(20)
-  estado               Int                   @default(1)
-  createdAt            DateTime              @default(now())
-  updatedAt            DateTime              @updatedAt
+  licId                Int                        @id @default(autoincrement())
+  licitacionHomologada String?                    @db.VarChar(20)
+  estado               Int                        @default(1)
+  createdAt            DateTime                   @default(now())
+  updatedAt            DateTime                   @updatedAt
   uts                  UT[]
   aspectosEE           AspectoEE[]
   jefesZonales         JefeZonalLicitacion[]
   vehiculos            Vehiculo[]
   matrices             MatrizT_Cabecera[]
+  actasPlantillas      ActaSupervisionPlantilla[]
 }
 
 model AspectoEE {
@@ -752,6 +753,33 @@ model Multas_Elementos_Esenciales_Det {
   cab             Multas_Elementos_Esenciales_Cab @relation(fields: [cabId], references: [id], onDelete: Cascade)
 }
 
+model Descargos_Cab {
+  id               String          @id @default(uuid())
+  folio            String          @unique
+  licitacion       String?
+  rbd              Int
+  fechaSupervision DateTime?
+  resolucion       Float           @default(0)
+  estado           String          @default("Abierto") // "Abierto" | "Cerrado"
+  usuarioModif     String?
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  detalles         Descargos_Det[]
+}
+
+model Descargos_Det {
+  id                       String        @id @default(uuid())
+  cabId                    String
+  letraAspecto             String
+  descripcion              String?       @db.Text
+  estadoAspecto            String        @default("Sin antecedente") // "Sin antecedente" | "Solucionado" | "No Solucionado"
+  fechaNoSolucionado       DateTime?
+  observacionNoSolucionado String?       @db.Text
+  createdAt                DateTime      @default(now())
+  updatedAt                DateTime      @updatedAt
+  cab                      Descargos_Cab @relation(fields: [cabId], references: [id], onDelete: Cascade)
+}
+
 model DescargaPaeLog {
   id            String   @id @default(uuid())
   ano           Int
@@ -1122,4 +1150,185 @@ model MenuItemOrder {
   updatedAt DateTime @updatedAt
 
   @@unique([parentKey, itemKey])
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  username  String
+  userId    String?
+  action    String
+  modulo    String
+  detalle   String   @db.Text
+  ip        String?
+  createdAt DateTime @default(now())
+
+  @@index([username])
+  @@index([createdAt])
+  @@index([modulo])
+  @@index([action])
+}
+
+model ActaSupervisionPlantilla {
+  id                        String   @id @default(uuid())
+  nombre                    String
+  licitacionId              Int?
+  anio                      Int      @default(2026)
+  instituciones             String?  @db.Text
+  rolesPerfiles             String?  @db.Text
+  estado                    Boolean  @default(true)
+  logoUrl                   String?  @db.Text
+  instrucciones             String?  @db.Text
+  campos                    String   @db.Text
+  codigo                    String?
+  version                   String?
+  fecha                     String?
+  codigoAdicional           String?
+  mostrarCodigoAdicional    Boolean  @default(false)
+  correlativoAutomatico     Boolean  @default(false)
+  mostrarCodigoVersionFecha Boolean  @default(true)
+  createdBy                 String
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime @updatedAt
+
+  licitacion Licitacion?                @relation(fields: [licitacionId], references: [licId])
+  respuestas ActaSupervisionRespuesta[]
+}
+
+model ActaSupervisionRespuesta {
+  id                    String   @id @default(uuid())
+  plantillaId           String
+  licitacionId          Int?
+  anio                  Int?
+  rbd                   Int
+  nombreEstablecimiento String?
+  direccion             String?
+  ciudad                String?
+  institucion           String?
+  sucursal              String?
+  fechaCreacion         DateTime @default(now())
+  supervisorNombre      String?
+  supervisorRut         String?
+  respuestasData        String   @db.Text
+  estado                String   @default("Borrador")
+  usuario               String
+  correlativo           Int?
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  plantilla ActaSupervisionPlantilla @relation(fields: [plantillaId], references: [id], onDelete: Cascade)
+}
+
+model VTCamara {
+  idCamara          Int     @id @default(autoincrement()) @map("id_camara")
+  nombreCamara      String  @map("nombre_camara")
+  tipoCamara        String  @map("tipo_camara")
+  temperaturaMinima Float?  @default(0.0) @map("temperatura_minima")
+  temperaturaMaxima Float   @map("temperatura_maxima")
+  activo            Boolean @default(true)
+
+  configuraciones VTConfiguracionCamara[]
+
+  @@map("vt_camara")
+}
+
+model VTConfiguracionCamara {
+  idConfig           Int     @id @default(autoincrement()) @map("id_config")
+  idRegistroCabecera Int     @map("id_registro_cabecera")
+  idCamara           Int     @map("id_camara")
+  mes                Int
+  numeroCamaraMes    Int     @map("numero_camara_mes")
+  nombreCamara       String? @map("nombre_camara")
+  temperaturaMinima  Float?  @default(0.0) @map("temperatura_minima")
+  temperaturaMaxima  Float?  @map("temperatura_maxima")
+
+  registro VTRegistroCabecera @relation(fields: [idRegistroCabecera], references: [idRegistro], onDelete: Cascade)
+  camara   VTCamara           @relation(fields: [idCamara], references: [idCamara], onDelete: Cascade)
+
+  @@map("vt_configuracion_camara")
+}
+
+model VTRegistroCabecera {
+  idRegistro         Int       @id @default(autoincrement()) @map("id_registro")
+  tipoEntidad        String    @map("tipo_entidad")
+  idEntidad          String    @map("id_entidad")
+  nombreEntidad      String    @map("nombre_entidad")
+  anio               Int
+  fechaRegistro      DateTime? @map("fecha_registro")
+  monitorResponsable String    @map("monitor_responsable")
+  tipoCamara         String    @map("tipo_camara")
+  descripcionCamaras String?   @map("descripcion_camaras")
+  fechaCreacion      DateTime  @default(now()) @map("fecha_creacion")
+  usuarioCreacion    String    @map("usuario_creacion")
+
+  configuraciones         VTConfiguracionCamara[]
+  detalles                VTRegistroDetalle[]
+  verificacionesDiarias   VTVerificacionDiaria[]
+  verificacionesSemanales VTVerificacionSemanal[]
+
+  @@map("vt_registro_cabecera")
+}
+
+model VTRegistroDetalle {
+  idDetalle         Int      @id @default(autoincrement()) @map("id_detalle")
+  idRegistro        Int      @map("id_registro")
+  numeroCorrelativo Int      @map("numero_correlativo")
+  dia               Int      @default(1)
+  tipoProducto      String   @map("tipo_producto")
+  nombreProducto    String?  @map("nombre_producto")
+  mes               Int
+  numeroCamara      Int      @map("numero_camara")
+  temperatura       Float?
+  fechaRegistro     DateTime @default(now()) @map("fecha_registro")
+  usuarioRegistro   String   @map("usuario_registro")
+
+  registro VTRegistroCabecera @relation(fields: [idRegistro], references: [idRegistro], onDelete: Cascade)
+
+  @@map("vt_registro_detalle")
+}
+
+model VTProductoCatalogo {
+  idProducto     Int     @id @default(autoincrement()) @map("id_producto")
+  nombreProducto String  @map("nombre_producto")
+  activo         Boolean @default(true)
+
+  @@map("vt_producto_catalogo")
+}
+
+model VTVerificacionDiaria {
+  idVerificacion      Int      @id @default(autoincrement()) @map("id_verificacion")
+  idRegistro          Int      @map("id_registro")
+  mes                 Int
+  dia                 Int
+  fechaVerificacion   DateTime @default(now()) @map("fecha_verificacion")
+  firmadoPor          String   @map("firmado_por")
+  usuarioId           String?  @map("usuario_id")
+  firma               String?
+  firmado             Boolean  @default(true)
+  observaciones       String?
+  accionesCorrectivas String?  @map("acciones_correctivas")
+
+  registro VTRegistroCabecera @relation(fields: [idRegistro], references: [idRegistro], onDelete: Cascade)
+
+  @@unique([idRegistro, mes, dia])
+  @@map("vt_verificacion_diaria")
+}
+
+model VTVerificacionSemanal {
+  idVerificacionSemanal Int       @id @default(autoincrement()) @map("id_verificacion_semanal")
+  idRegistro            Int       @map("id_registro")
+  mes                   Int
+  semana                Int
+  firmadoJefeBodega     Boolean   @default(false) @map("firmado_jefe_bodega")
+  fechaFirmaJefeBodega  DateTime? @map("fecha_firma_jefe_bodega")
+  usuarioJefeBodega     String?   @map("usuario_jefe_bodega")
+  firmaJefeBodega       String?   @map("firma_jefe_bodega")
+  firmadoJefeZonal      Boolean   @default(false) @map("firmado_jefe_zonal")
+  fechaFirmaJefeZonal   DateTime? @map("fecha_firma_jefe_zonal")
+  usuarioJefeZonal      String?   @map("usuario_jefe_zonal")
+  firmaJefeZonal        String?   @map("firma_jefe_zonal")
+
+  registro VTRegistroCabecera @relation(fields: [idRegistro], references: [idRegistro], onDelete: Cascade)
+
+  @@unique([idRegistro, mes, semana])
+  @@map("vt_verificacion_semanal")
 }

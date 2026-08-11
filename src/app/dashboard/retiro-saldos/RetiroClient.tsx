@@ -3,8 +3,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
-import { searchColegiosGas } from '../solicitud-gas/actions' // Reuse existing search
-import { getNextRetiroFolio, searchProductosRetiro, saveRetiroSaldo } from './actions'
+import { getNextRetiroFolio, searchProductosRetiro, saveRetiroSaldo, searchColegiosRetiro } from './actions'
 
 interface Product {
     codigo: string
@@ -63,7 +62,7 @@ export default function RetiroClient({ userName, userSucursales }: RetiroSaldosC
         const delayDebounceFn = setTimeout(async () => {
             if (searchTerm.length >= 2 && !colegio) {
                 setIsSearching(true)
-                const res = await searchColegiosGas(searchTerm)
+                const res = await searchColegiosRetiro(searchTerm)
                 if (res.colegios) {
                     setResults(res.colegios)
                     setShowDropdown(true)

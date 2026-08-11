@@ -2,9 +2,7 @@ import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { redirect } from 'next/navigation'
 import RoleForm from './RoleForm'
-import EditRoleForm from './EditRoleForm'
-import CopyRoleForm from './CopyRoleForm'
-import RolePermissionList from './RolePermissionList'
+import RolesAccordionList from './RolesAccordionList'
 
 export default async function RolesPage() {
     const session = await getSession()
@@ -30,6 +28,8 @@ export default async function RolesPage() {
         { id: 'view_tablero_multas_ee', name: 'Tablero Multas EE', description: 'Acceso visual al reporte gráfico de multas de elementos esenciales.', category: 'TABLEROS' },
         { id: 'view_tablero_organigrama', name: 'Tablero Organigrama por zonas', description: 'Visualización gráfica de la jerarquía operativa (Jefe Zonal -> Jefe de Operaciones -> Supervisor) por sucursal.', category: 'TABLEROS' },
         { id: 'view_tablero_distancias', name: 'Tablero de Kilometraje', description: 'Visualización detallada de distancias y tiempos de viaje de supervisores por sucursal.', category: 'TABLEROS' },
+        { id: 'view_tablero_actas', name: 'Tablero Actas', description: 'Acceso visual al tablero gerencial y ejecutivo de analítica de actas.', category: 'TABLEROS' },
+        { id: 'view_tablero_verificador_temperaturas', name: 'Tablero Verificador de Temperaturas', description: 'Visualización gráfica de variaciones de temperaturas con límites máximos y mínimos.', category: 'TABLEROS' },
         { id: 'view_tablero_auditoria', name: 'Tablero Auditoría', description: 'Visualización y exportación de auditoría de actividad de usuarios.', category: 'TABLEROS' },
         
         { id: 'view_ingreso_raciones', name: 'Ingreso de Raciones', description: 'Gestión y auditoría de raciones por colegio.', category: 'APLICACIONES' },
@@ -55,6 +55,9 @@ export default async function RolesPage() {
         { id: 'view_retorno_productos', name: 'Retirada de productos', description: 'Acceso al dashboard de Retirada de productos.', category: 'ÁREAS -> CALIDAD' },
         { id: 'manage_retorno_productos', name: 'Crear Alerta de Calidad', description: 'Permite crear nuevas alertas de retirada de productos.', category: 'ÁREAS -> CALIDAD' },
         { id: 'view_calidad_subir_actas_estandar_pae', name: 'Subir Actas Estándar PAE', description: 'Acceso a la carga masiva y gestión de actas PDF del Estándar PAE.', category: 'ÁREAS -> CALIDAD' },
+        { id: 'view_verificador_temperaturas', name: 'Verificador de Temperaturas (Ver)', description: 'Acceso al módulo Verificador de Temperaturas de Productos.', category: 'ÁREAS -> CALIDAD' },
+        { id: 'manage_verificador_temperaturas', name: 'Verificador de Temperaturas (Gestionar)', description: 'Permite crear, editar y eliminar registros de temperaturas.', category: 'ÁREAS -> CALIDAD' },
+        { id: 'config_verificador_temperaturas', name: 'Verificador de Temperaturas (Configurar Cámaras)', description: 'Permite configurar cámaras y temperaturas máximas permitidas.', category: 'ÁREAS -> CALIDAD' },
 
         { id: 'view_multas_areas', name: 'Menú Multas', description: 'Acceso al menú de Multas en Áreas.', category: 'ÁREAS -> MULTAS' },
         { id: 'manage_calculos_ee', name: 'Cálculos de Elementos Esenciales', description: 'Permite calcular multas en base a elementos esenciales no conformes.', category: 'ÁREAS -> MULTAS' },
@@ -78,6 +81,7 @@ export default async function RolesPage() {
         { id: 'view_productos', name: 'Mantenedor de Productos', description: 'Acceso a mantenedor y carga masiva de Productos.', category: 'MANTENEDORES' },
         { id: 'manage_areas', name: 'Área', description: 'Creación y administración de áreas de la compañía.', category: 'MANTENEDORES' },
 
+        { id: 'manage_actas_supervision', name: 'Crear Acta de Supervisión', description: 'Crear, editar, copiar y administrar plantillas de Actas de Supervisión.', category: 'MANTENEDORES -> ACTAS DE SUPERVISIÓN' },
         { id: 'manage_nueva_matriz', name: 'Nueva Matriz', description: 'Crear, copiar, editar y eliminar plantillas de matriz de riesgo.', category: 'MANTENEDORES -> MATRIZ DE RIESGO' },
         { id: 'manage_colegios_matriz', name: 'Colegios Activos', description: 'Gestionar colegios habilitados para la matriz de riesgo.', category: 'MANTENEDORES -> MATRIZ DE RIESGO' },
 
@@ -118,6 +122,10 @@ export default async function RolesPage() {
         { id: 'fill_formularios', name: 'Completar Formulario', description: 'Acceso para el llenado y envío de respuestas (incluye modal PDF).', category: 'FORMULARIOS' },
         { id: 'view_respuestas', name: 'Respuestas de Formularios', description: 'Acceso a la visualización de respuestas históricas y descarga de PDFs.', category: 'FORMULARIOS' },
 
+        { id: 'view_generar_actas', name: 'Generar Acta', description: 'Permite visualizar el listado de actas iniciadas y crear nuevas a partir de plantillas.', category: 'ACTAS' },
+        { id: 'view_descargar_actas', name: 'Descargar Actas', description: 'Acceso a la vista de consulta, descarga individual y descarga masiva de PDFs de actas.', category: 'ACTAS' },
+        { id: 'manage_generar_actas', name: 'Eliminar Actas Generadas', description: 'Otorga el privilegio de eliminar respuestas de actas en progreso.', category: 'ACTAS' },
+
         { id: 'view_anexos', name: 'Ver Anexos', description: 'Acceso al directorio telefónico de la empresa.', category: 'AYUDA' },
         { id: 'manage_anexos', name: 'Gestionar Anexos', description: 'Acceso a crear, editar y subir de forma masiva los anexos.', category: 'AYUDA' },
     ]
@@ -135,56 +143,7 @@ export default async function RolesPage() {
                 <RoleForm availablePermissions={availablePermissions} />
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {roles.map((role) => {
-                    const rolePerms = JSON.parse(role.permissions) as string[]
-
-                    return (
-                        <div key={role.id} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-all group relative overflow-hidden">
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-sky-50 to-cyan-50 rounded-bl-full -z-10 opacity-70 transition-transform group-hover:scale-110" />
-
-                            <div className="flex justify-between items-start mb-4">
-                                <div>
-                                    <div className="flex items-center gap-3">
-                                        <h3 className="text-xl font-bold text-gray-900">{role.name}</h3>
-                                        <span className="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full font-bold border border-gray-200">
-                                            {rolePerms.filter(rp => availablePermissions.some(ap => ap.id === rp)).length} / {availablePermissions.length} aplicaciones asociadas
-                                        </span>
-                                    </div>
-                                    <p className="text-sm text-gray-500 mt-1">{role.description || 'Sin descripción principal.'}</p>
-                                </div>
-                                <div className="flex flex-col items-end gap-2">
-                                    <div className="bg-cyan-50 text-cyan-700 px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap border border-cyan-100">
-                                        {role._count.users} Usuarios
-                                    </div>
-                                    <EditRoleForm role={role} availablePermissions={availablePermissions} />
-                                    <CopyRoleForm role={role} />
-                                </div>
-                            </div>
-
-                            <div className="space-y-3 mt-6 border-t border-gray-50 pt-4">
-                                <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Permisos Habilitados</p>
-
-                                {rolePerms.length > 0 ? (
-                                    <RolePermissionList 
-                                        rolePerms={rolePerms} 
-                                        availablePermissions={availablePermissions} 
-                                    />
-                                ) : (
-                                    <p className="text-sm text-gray-400 italic">No tiene permisos operativos asignados.</p>
-                                )}
-                            </div>
-                        </div>
-                    )
-                })}
-
-                {roles.length === 0 && (
-                    <div className="col-span-full py-12 text-center bg-white rounded-2xl border border-dashed border-gray-300">
-                        <span className="text-4xl block mb-2">🤷‍♂️</span>
-                        <p className="text-gray-500 font-medium">No se encontraron roles creados.</p>
-                    </div>
-                )}
-            </div>
+            <RolesAccordionList roles={roles} availablePermissions={availablePermissions} />
         </div>
     )
 }

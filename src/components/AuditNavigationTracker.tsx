@@ -21,6 +21,8 @@ function getModuleInfoFromPath(path: string): { modulo: string; detalle: string 
         if (path.includes('/elementos-esenciales')) return { modulo: 'Tableros y Avances', detalle: 'Accedió a Tablero Carga de Elementos Esenciales' }
         if (path.includes('/multas-ee')) return { modulo: 'Tableros y Avances', detalle: 'Accedió a Tablero Multas EE' }
         if (path.includes('/kilometraje')) return { modulo: 'Tableros y Avances', detalle: 'Accedió a Tablero de Kilometraje' }
+        if (path.includes('/actas')) return { modulo: 'Tableros y Avances', detalle: 'Accedió a Tablero de Actas' }
+        if (path.includes('/verificador-temperaturas')) return { modulo: 'Tableros y Avances', detalle: 'Accedió a Tablero Verificador de Temperaturas' }
         return { modulo: 'Tableros y Avances', detalle: 'Accedió a Avance PMPA' }
     }
 
@@ -36,6 +38,7 @@ function getModuleInfoFromPath(path: string): { modulo: string; detalle: string 
     if (path.startsWith('/dashboard/areas/operaciones/cargar-pae')) return { modulo: 'Áreas -> Operaciones', detalle: 'Accedió a Cargar PaeOnline' }
     if (path.startsWith('/dashboard/areas/manipuladoras')) return { modulo: 'Áreas -> Manipuladoras', detalle: 'Accedió a Cálculo de Gramaje' }
     if (path.startsWith('/dashboard/areas/calidad/retorno-productos')) return { modulo: 'Áreas -> Calidad', detalle: 'Accedió a Retirada de Productos' }
+    if (path.startsWith('/dashboard/areas/calidad/verificador-temperaturas')) return { modulo: 'Áreas -> Calidad', detalle: 'Accedió a Verificador de Temperaturas de Productos' }
     if (path.startsWith('/dashboard/areas/calidad/subir-actas-pae')) return { modulo: 'Áreas -> Calidad', detalle: 'Accedió a Subir Actas Estándar PAE' }
     if (path.startsWith('/dashboard/areas/multas')) {
         if (path.includes('/descargos')) return { modulo: 'Áreas -> Multas', detalle: 'Accedió a Descargos de Actas' }

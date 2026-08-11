@@ -393,6 +393,51 @@ export type MenuItemOrder = $Result.DefaultSelection<Prisma.$MenuItemOrderPayloa
  * 
  */
 export type AuditLog = $Result.DefaultSelection<Prisma.$AuditLogPayload>
+/**
+ * Model ActaSupervisionPlantilla
+ * 
+ */
+export type ActaSupervisionPlantilla = $Result.DefaultSelection<Prisma.$ActaSupervisionPlantillaPayload>
+/**
+ * Model ActaSupervisionRespuesta
+ * 
+ */
+export type ActaSupervisionRespuesta = $Result.DefaultSelection<Prisma.$ActaSupervisionRespuestaPayload>
+/**
+ * Model VTCamara
+ * 
+ */
+export type VTCamara = $Result.DefaultSelection<Prisma.$VTCamaraPayload>
+/**
+ * Model VTConfiguracionCamara
+ * 
+ */
+export type VTConfiguracionCamara = $Result.DefaultSelection<Prisma.$VTConfiguracionCamaraPayload>
+/**
+ * Model VTRegistroCabecera
+ * 
+ */
+export type VTRegistroCabecera = $Result.DefaultSelection<Prisma.$VTRegistroCabeceraPayload>
+/**
+ * Model VTRegistroDetalle
+ * 
+ */
+export type VTRegistroDetalle = $Result.DefaultSelection<Prisma.$VTRegistroDetallePayload>
+/**
+ * Model VTProductoCatalogo
+ * 
+ */
+export type VTProductoCatalogo = $Result.DefaultSelection<Prisma.$VTProductoCatalogoPayload>
+/**
+ * Model VTVerificacionDiaria
+ * 
+ */
+export type VTVerificacionDiaria = $Result.DefaultSelection<Prisma.$VTVerificacionDiariaPayload>
+/**
+ * Model VTVerificacionSemanal
+ * 
+ */
+export type VTVerificacionSemanal = $Result.DefaultSelection<Prisma.$VTVerificacionSemanalPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -1276,6 +1321,96 @@ export class PrismaClient<
     * ```
     */
   get auditLog(): Prisma.AuditLogDelegate<ExtArgs>;
+
+  /**
+   * `prisma.actaSupervisionPlantilla`: Exposes CRUD operations for the **ActaSupervisionPlantilla** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ActaSupervisionPlantillas
+    * const actaSupervisionPlantillas = await prisma.actaSupervisionPlantilla.findMany()
+    * ```
+    */
+  get actaSupervisionPlantilla(): Prisma.ActaSupervisionPlantillaDelegate<ExtArgs>;
+
+  /**
+   * `prisma.actaSupervisionRespuesta`: Exposes CRUD operations for the **ActaSupervisionRespuesta** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ActaSupervisionRespuestas
+    * const actaSupervisionRespuestas = await prisma.actaSupervisionRespuesta.findMany()
+    * ```
+    */
+  get actaSupervisionRespuesta(): Prisma.ActaSupervisionRespuestaDelegate<ExtArgs>;
+
+  /**
+   * `prisma.vTCamara`: Exposes CRUD operations for the **VTCamara** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more VTCamaras
+    * const vTCamaras = await prisma.vTCamara.findMany()
+    * ```
+    */
+  get vTCamara(): Prisma.VTCamaraDelegate<ExtArgs>;
+
+  /**
+   * `prisma.vTConfiguracionCamara`: Exposes CRUD operations for the **VTConfiguracionCamara** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more VTConfiguracionCamaras
+    * const vTConfiguracionCamaras = await prisma.vTConfiguracionCamara.findMany()
+    * ```
+    */
+  get vTConfiguracionCamara(): Prisma.VTConfiguracionCamaraDelegate<ExtArgs>;
+
+  /**
+   * `prisma.vTRegistroCabecera`: Exposes CRUD operations for the **VTRegistroCabecera** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more VTRegistroCabeceras
+    * const vTRegistroCabeceras = await prisma.vTRegistroCabecera.findMany()
+    * ```
+    */
+  get vTRegistroCabecera(): Prisma.VTRegistroCabeceraDelegate<ExtArgs>;
+
+  /**
+   * `prisma.vTRegistroDetalle`: Exposes CRUD operations for the **VTRegistroDetalle** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more VTRegistroDetalles
+    * const vTRegistroDetalles = await prisma.vTRegistroDetalle.findMany()
+    * ```
+    */
+  get vTRegistroDetalle(): Prisma.VTRegistroDetalleDelegate<ExtArgs>;
+
+  /**
+   * `prisma.vTProductoCatalogo`: Exposes CRUD operations for the **VTProductoCatalogo** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more VTProductoCatalogos
+    * const vTProductoCatalogos = await prisma.vTProductoCatalogo.findMany()
+    * ```
+    */
+  get vTProductoCatalogo(): Prisma.VTProductoCatalogoDelegate<ExtArgs>;
+
+  /**
+   * `prisma.vTVerificacionDiaria`: Exposes CRUD operations for the **VTVerificacionDiaria** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more VTVerificacionDiarias
+    * const vTVerificacionDiarias = await prisma.vTVerificacionDiaria.findMany()
+    * ```
+    */
+  get vTVerificacionDiaria(): Prisma.VTVerificacionDiariaDelegate<ExtArgs>;
+
+  /**
+   * `prisma.vTVerificacionSemanal`: Exposes CRUD operations for the **VTVerificacionSemanal** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more VTVerificacionSemanals
+    * const vTVerificacionSemanals = await prisma.vTVerificacionSemanal.findMany()
+    * ```
+    */
+  get vTVerificacionSemanal(): Prisma.VTVerificacionSemanalDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -1792,7 +1927,16 @@ export namespace Prisma {
     FormatoCartaSostenedor: 'FormatoCartaSostenedor',
     DelegacionVisualizacion: 'DelegacionVisualizacion',
     MenuItemOrder: 'MenuItemOrder',
-    AuditLog: 'AuditLog'
+    AuditLog: 'AuditLog',
+    ActaSupervisionPlantilla: 'ActaSupervisionPlantilla',
+    ActaSupervisionRespuesta: 'ActaSupervisionRespuesta',
+    VTCamara: 'VTCamara',
+    VTConfiguracionCamara: 'VTConfiguracionCamara',
+    VTRegistroCabecera: 'VTRegistroCabecera',
+    VTRegistroDetalle: 'VTRegistroDetalle',
+    VTProductoCatalogo: 'VTProductoCatalogo',
+    VTVerificacionDiaria: 'VTVerificacionDiaria',
+    VTVerificacionSemanal: 'VTVerificacionSemanal'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1808,7 +1952,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog"
+      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -7132,6 +7276,636 @@ export namespace Prisma {
           }
         }
       }
+      ActaSupervisionPlantilla: {
+        payload: Prisma.$ActaSupervisionPlantillaPayload<ExtArgs>
+        fields: Prisma.ActaSupervisionPlantillaFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ActaSupervisionPlantillaFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActaSupervisionPlantillaPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ActaSupervisionPlantillaFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActaSupervisionPlantillaPayload>
+          }
+          findFirst: {
+            args: Prisma.ActaSupervisionPlantillaFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActaSupervisionPlantillaPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ActaSupervisionPlantillaFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActaSupervisionPlantillaPayload>
+          }
+          findMany: {
+            args: Prisma.ActaSupervisionPlantillaFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActaSupervisionPlantillaPayload>[]
+          }
+          create: {
+            args: Prisma.ActaSupervisionPlantillaCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActaSupervisionPlantillaPayload>
+          }
+          createMany: {
+            args: Prisma.ActaSupervisionPlantillaCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ActaSupervisionPlantillaCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActaSupervisionPlantillaPayload>[]
+          }
+          delete: {
+            args: Prisma.ActaSupervisionPlantillaDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActaSupervisionPlantillaPayload>
+          }
+          update: {
+            args: Prisma.ActaSupervisionPlantillaUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActaSupervisionPlantillaPayload>
+          }
+          deleteMany: {
+            args: Prisma.ActaSupervisionPlantillaDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ActaSupervisionPlantillaUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ActaSupervisionPlantillaUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActaSupervisionPlantillaPayload>
+          }
+          aggregate: {
+            args: Prisma.ActaSupervisionPlantillaAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateActaSupervisionPlantilla>
+          }
+          groupBy: {
+            args: Prisma.ActaSupervisionPlantillaGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ActaSupervisionPlantillaGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ActaSupervisionPlantillaCountArgs<ExtArgs>
+            result: $Utils.Optional<ActaSupervisionPlantillaCountAggregateOutputType> | number
+          }
+        }
+      }
+      ActaSupervisionRespuesta: {
+        payload: Prisma.$ActaSupervisionRespuestaPayload<ExtArgs>
+        fields: Prisma.ActaSupervisionRespuestaFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ActaSupervisionRespuestaFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActaSupervisionRespuestaPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ActaSupervisionRespuestaFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActaSupervisionRespuestaPayload>
+          }
+          findFirst: {
+            args: Prisma.ActaSupervisionRespuestaFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActaSupervisionRespuestaPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ActaSupervisionRespuestaFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActaSupervisionRespuestaPayload>
+          }
+          findMany: {
+            args: Prisma.ActaSupervisionRespuestaFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActaSupervisionRespuestaPayload>[]
+          }
+          create: {
+            args: Prisma.ActaSupervisionRespuestaCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActaSupervisionRespuestaPayload>
+          }
+          createMany: {
+            args: Prisma.ActaSupervisionRespuestaCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ActaSupervisionRespuestaCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActaSupervisionRespuestaPayload>[]
+          }
+          delete: {
+            args: Prisma.ActaSupervisionRespuestaDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActaSupervisionRespuestaPayload>
+          }
+          update: {
+            args: Prisma.ActaSupervisionRespuestaUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActaSupervisionRespuestaPayload>
+          }
+          deleteMany: {
+            args: Prisma.ActaSupervisionRespuestaDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ActaSupervisionRespuestaUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ActaSupervisionRespuestaUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActaSupervisionRespuestaPayload>
+          }
+          aggregate: {
+            args: Prisma.ActaSupervisionRespuestaAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateActaSupervisionRespuesta>
+          }
+          groupBy: {
+            args: Prisma.ActaSupervisionRespuestaGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ActaSupervisionRespuestaGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ActaSupervisionRespuestaCountArgs<ExtArgs>
+            result: $Utils.Optional<ActaSupervisionRespuestaCountAggregateOutputType> | number
+          }
+        }
+      }
+      VTCamara: {
+        payload: Prisma.$VTCamaraPayload<ExtArgs>
+        fields: Prisma.VTCamaraFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.VTCamaraFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTCamaraPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.VTCamaraFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTCamaraPayload>
+          }
+          findFirst: {
+            args: Prisma.VTCamaraFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTCamaraPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.VTCamaraFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTCamaraPayload>
+          }
+          findMany: {
+            args: Prisma.VTCamaraFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTCamaraPayload>[]
+          }
+          create: {
+            args: Prisma.VTCamaraCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTCamaraPayload>
+          }
+          createMany: {
+            args: Prisma.VTCamaraCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.VTCamaraCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTCamaraPayload>[]
+          }
+          delete: {
+            args: Prisma.VTCamaraDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTCamaraPayload>
+          }
+          update: {
+            args: Prisma.VTCamaraUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTCamaraPayload>
+          }
+          deleteMany: {
+            args: Prisma.VTCamaraDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.VTCamaraUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.VTCamaraUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTCamaraPayload>
+          }
+          aggregate: {
+            args: Prisma.VTCamaraAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateVTCamara>
+          }
+          groupBy: {
+            args: Prisma.VTCamaraGroupByArgs<ExtArgs>
+            result: $Utils.Optional<VTCamaraGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.VTCamaraCountArgs<ExtArgs>
+            result: $Utils.Optional<VTCamaraCountAggregateOutputType> | number
+          }
+        }
+      }
+      VTConfiguracionCamara: {
+        payload: Prisma.$VTConfiguracionCamaraPayload<ExtArgs>
+        fields: Prisma.VTConfiguracionCamaraFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.VTConfiguracionCamaraFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTConfiguracionCamaraPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.VTConfiguracionCamaraFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTConfiguracionCamaraPayload>
+          }
+          findFirst: {
+            args: Prisma.VTConfiguracionCamaraFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTConfiguracionCamaraPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.VTConfiguracionCamaraFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTConfiguracionCamaraPayload>
+          }
+          findMany: {
+            args: Prisma.VTConfiguracionCamaraFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTConfiguracionCamaraPayload>[]
+          }
+          create: {
+            args: Prisma.VTConfiguracionCamaraCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTConfiguracionCamaraPayload>
+          }
+          createMany: {
+            args: Prisma.VTConfiguracionCamaraCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.VTConfiguracionCamaraCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTConfiguracionCamaraPayload>[]
+          }
+          delete: {
+            args: Prisma.VTConfiguracionCamaraDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTConfiguracionCamaraPayload>
+          }
+          update: {
+            args: Prisma.VTConfiguracionCamaraUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTConfiguracionCamaraPayload>
+          }
+          deleteMany: {
+            args: Prisma.VTConfiguracionCamaraDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.VTConfiguracionCamaraUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.VTConfiguracionCamaraUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTConfiguracionCamaraPayload>
+          }
+          aggregate: {
+            args: Prisma.VTConfiguracionCamaraAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateVTConfiguracionCamara>
+          }
+          groupBy: {
+            args: Prisma.VTConfiguracionCamaraGroupByArgs<ExtArgs>
+            result: $Utils.Optional<VTConfiguracionCamaraGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.VTConfiguracionCamaraCountArgs<ExtArgs>
+            result: $Utils.Optional<VTConfiguracionCamaraCountAggregateOutputType> | number
+          }
+        }
+      }
+      VTRegistroCabecera: {
+        payload: Prisma.$VTRegistroCabeceraPayload<ExtArgs>
+        fields: Prisma.VTRegistroCabeceraFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.VTRegistroCabeceraFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTRegistroCabeceraPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.VTRegistroCabeceraFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTRegistroCabeceraPayload>
+          }
+          findFirst: {
+            args: Prisma.VTRegistroCabeceraFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTRegistroCabeceraPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.VTRegistroCabeceraFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTRegistroCabeceraPayload>
+          }
+          findMany: {
+            args: Prisma.VTRegistroCabeceraFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTRegistroCabeceraPayload>[]
+          }
+          create: {
+            args: Prisma.VTRegistroCabeceraCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTRegistroCabeceraPayload>
+          }
+          createMany: {
+            args: Prisma.VTRegistroCabeceraCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.VTRegistroCabeceraCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTRegistroCabeceraPayload>[]
+          }
+          delete: {
+            args: Prisma.VTRegistroCabeceraDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTRegistroCabeceraPayload>
+          }
+          update: {
+            args: Prisma.VTRegistroCabeceraUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTRegistroCabeceraPayload>
+          }
+          deleteMany: {
+            args: Prisma.VTRegistroCabeceraDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.VTRegistroCabeceraUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.VTRegistroCabeceraUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTRegistroCabeceraPayload>
+          }
+          aggregate: {
+            args: Prisma.VTRegistroCabeceraAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateVTRegistroCabecera>
+          }
+          groupBy: {
+            args: Prisma.VTRegistroCabeceraGroupByArgs<ExtArgs>
+            result: $Utils.Optional<VTRegistroCabeceraGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.VTRegistroCabeceraCountArgs<ExtArgs>
+            result: $Utils.Optional<VTRegistroCabeceraCountAggregateOutputType> | number
+          }
+        }
+      }
+      VTRegistroDetalle: {
+        payload: Prisma.$VTRegistroDetallePayload<ExtArgs>
+        fields: Prisma.VTRegistroDetalleFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.VTRegistroDetalleFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTRegistroDetallePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.VTRegistroDetalleFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTRegistroDetallePayload>
+          }
+          findFirst: {
+            args: Prisma.VTRegistroDetalleFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTRegistroDetallePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.VTRegistroDetalleFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTRegistroDetallePayload>
+          }
+          findMany: {
+            args: Prisma.VTRegistroDetalleFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTRegistroDetallePayload>[]
+          }
+          create: {
+            args: Prisma.VTRegistroDetalleCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTRegistroDetallePayload>
+          }
+          createMany: {
+            args: Prisma.VTRegistroDetalleCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.VTRegistroDetalleCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTRegistroDetallePayload>[]
+          }
+          delete: {
+            args: Prisma.VTRegistroDetalleDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTRegistroDetallePayload>
+          }
+          update: {
+            args: Prisma.VTRegistroDetalleUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTRegistroDetallePayload>
+          }
+          deleteMany: {
+            args: Prisma.VTRegistroDetalleDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.VTRegistroDetalleUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.VTRegistroDetalleUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTRegistroDetallePayload>
+          }
+          aggregate: {
+            args: Prisma.VTRegistroDetalleAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateVTRegistroDetalle>
+          }
+          groupBy: {
+            args: Prisma.VTRegistroDetalleGroupByArgs<ExtArgs>
+            result: $Utils.Optional<VTRegistroDetalleGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.VTRegistroDetalleCountArgs<ExtArgs>
+            result: $Utils.Optional<VTRegistroDetalleCountAggregateOutputType> | number
+          }
+        }
+      }
+      VTProductoCatalogo: {
+        payload: Prisma.$VTProductoCatalogoPayload<ExtArgs>
+        fields: Prisma.VTProductoCatalogoFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.VTProductoCatalogoFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTProductoCatalogoPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.VTProductoCatalogoFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTProductoCatalogoPayload>
+          }
+          findFirst: {
+            args: Prisma.VTProductoCatalogoFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTProductoCatalogoPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.VTProductoCatalogoFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTProductoCatalogoPayload>
+          }
+          findMany: {
+            args: Prisma.VTProductoCatalogoFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTProductoCatalogoPayload>[]
+          }
+          create: {
+            args: Prisma.VTProductoCatalogoCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTProductoCatalogoPayload>
+          }
+          createMany: {
+            args: Prisma.VTProductoCatalogoCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.VTProductoCatalogoCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTProductoCatalogoPayload>[]
+          }
+          delete: {
+            args: Prisma.VTProductoCatalogoDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTProductoCatalogoPayload>
+          }
+          update: {
+            args: Prisma.VTProductoCatalogoUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTProductoCatalogoPayload>
+          }
+          deleteMany: {
+            args: Prisma.VTProductoCatalogoDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.VTProductoCatalogoUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.VTProductoCatalogoUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTProductoCatalogoPayload>
+          }
+          aggregate: {
+            args: Prisma.VTProductoCatalogoAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateVTProductoCatalogo>
+          }
+          groupBy: {
+            args: Prisma.VTProductoCatalogoGroupByArgs<ExtArgs>
+            result: $Utils.Optional<VTProductoCatalogoGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.VTProductoCatalogoCountArgs<ExtArgs>
+            result: $Utils.Optional<VTProductoCatalogoCountAggregateOutputType> | number
+          }
+        }
+      }
+      VTVerificacionDiaria: {
+        payload: Prisma.$VTVerificacionDiariaPayload<ExtArgs>
+        fields: Prisma.VTVerificacionDiariaFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.VTVerificacionDiariaFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTVerificacionDiariaPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.VTVerificacionDiariaFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTVerificacionDiariaPayload>
+          }
+          findFirst: {
+            args: Prisma.VTVerificacionDiariaFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTVerificacionDiariaPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.VTVerificacionDiariaFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTVerificacionDiariaPayload>
+          }
+          findMany: {
+            args: Prisma.VTVerificacionDiariaFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTVerificacionDiariaPayload>[]
+          }
+          create: {
+            args: Prisma.VTVerificacionDiariaCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTVerificacionDiariaPayload>
+          }
+          createMany: {
+            args: Prisma.VTVerificacionDiariaCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.VTVerificacionDiariaCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTVerificacionDiariaPayload>[]
+          }
+          delete: {
+            args: Prisma.VTVerificacionDiariaDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTVerificacionDiariaPayload>
+          }
+          update: {
+            args: Prisma.VTVerificacionDiariaUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTVerificacionDiariaPayload>
+          }
+          deleteMany: {
+            args: Prisma.VTVerificacionDiariaDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.VTVerificacionDiariaUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.VTVerificacionDiariaUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTVerificacionDiariaPayload>
+          }
+          aggregate: {
+            args: Prisma.VTVerificacionDiariaAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateVTVerificacionDiaria>
+          }
+          groupBy: {
+            args: Prisma.VTVerificacionDiariaGroupByArgs<ExtArgs>
+            result: $Utils.Optional<VTVerificacionDiariaGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.VTVerificacionDiariaCountArgs<ExtArgs>
+            result: $Utils.Optional<VTVerificacionDiariaCountAggregateOutputType> | number
+          }
+        }
+      }
+      VTVerificacionSemanal: {
+        payload: Prisma.$VTVerificacionSemanalPayload<ExtArgs>
+        fields: Prisma.VTVerificacionSemanalFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.VTVerificacionSemanalFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTVerificacionSemanalPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.VTVerificacionSemanalFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTVerificacionSemanalPayload>
+          }
+          findFirst: {
+            args: Prisma.VTVerificacionSemanalFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTVerificacionSemanalPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.VTVerificacionSemanalFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTVerificacionSemanalPayload>
+          }
+          findMany: {
+            args: Prisma.VTVerificacionSemanalFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTVerificacionSemanalPayload>[]
+          }
+          create: {
+            args: Prisma.VTVerificacionSemanalCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTVerificacionSemanalPayload>
+          }
+          createMany: {
+            args: Prisma.VTVerificacionSemanalCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.VTVerificacionSemanalCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTVerificacionSemanalPayload>[]
+          }
+          delete: {
+            args: Prisma.VTVerificacionSemanalDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTVerificacionSemanalPayload>
+          }
+          update: {
+            args: Prisma.VTVerificacionSemanalUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTVerificacionSemanalPayload>
+          }
+          deleteMany: {
+            args: Prisma.VTVerificacionSemanalDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.VTVerificacionSemanalUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.VTVerificacionSemanalUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VTVerificacionSemanalPayload>
+          }
+          aggregate: {
+            args: Prisma.VTVerificacionSemanalAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateVTVerificacionSemanal>
+          }
+          groupBy: {
+            args: Prisma.VTVerificacionSemanalGroupByArgs<ExtArgs>
+            result: $Utils.Optional<VTVerificacionSemanalGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.VTVerificacionSemanalCountArgs<ExtArgs>
+            result: $Utils.Optional<VTVerificacionSemanalCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -7418,6 +8192,7 @@ export namespace Prisma {
     jefesZonales: number
     vehiculos: number
     matrices: number
+    actasPlantillas: number
   }
 
   export type LicitacionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7426,6 +8201,7 @@ export namespace Prisma {
     jefesZonales?: boolean | LicitacionCountOutputTypeCountJefesZonalesArgs
     vehiculos?: boolean | LicitacionCountOutputTypeCountVehiculosArgs
     matrices?: boolean | LicitacionCountOutputTypeCountMatricesArgs
+    actasPlantillas?: boolean | LicitacionCountOutputTypeCountActasPlantillasArgs
   }
 
   // Custom InputTypes
@@ -7472,6 +8248,13 @@ export namespace Prisma {
    */
   export type LicitacionCountOutputTypeCountMatricesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MatrizT_CabeceraWhereInput
+  }
+
+  /**
+   * LicitacionCountOutputType without action
+   */
+  export type LicitacionCountOutputTypeCountActasPlantillasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ActaSupervisionPlantillaWhereInput
   }
 
 
@@ -8299,6 +9082,126 @@ export namespace Prisma {
    */
   export type MatrizT_RespuestasCabeceraCountOutputTypeCountDetallesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MatrizT_RespuestasDetalleWhereInput
+  }
+
+
+  /**
+   * Count Type ActaSupervisionPlantillaCountOutputType
+   */
+
+  export type ActaSupervisionPlantillaCountOutputType = {
+    respuestas: number
+  }
+
+  export type ActaSupervisionPlantillaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    respuestas?: boolean | ActaSupervisionPlantillaCountOutputTypeCountRespuestasArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ActaSupervisionPlantillaCountOutputType without action
+   */
+  export type ActaSupervisionPlantillaCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActaSupervisionPlantillaCountOutputType
+     */
+    select?: ActaSupervisionPlantillaCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ActaSupervisionPlantillaCountOutputType without action
+   */
+  export type ActaSupervisionPlantillaCountOutputTypeCountRespuestasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ActaSupervisionRespuestaWhereInput
+  }
+
+
+  /**
+   * Count Type VTCamaraCountOutputType
+   */
+
+  export type VTCamaraCountOutputType = {
+    configuraciones: number
+  }
+
+  export type VTCamaraCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    configuraciones?: boolean | VTCamaraCountOutputTypeCountConfiguracionesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * VTCamaraCountOutputType without action
+   */
+  export type VTCamaraCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTCamaraCountOutputType
+     */
+    select?: VTCamaraCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * VTCamaraCountOutputType without action
+   */
+  export type VTCamaraCountOutputTypeCountConfiguracionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VTConfiguracionCamaraWhereInput
+  }
+
+
+  /**
+   * Count Type VTRegistroCabeceraCountOutputType
+   */
+
+  export type VTRegistroCabeceraCountOutputType = {
+    configuraciones: number
+    detalles: number
+    verificacionesDiarias: number
+    verificacionesSemanales: number
+  }
+
+  export type VTRegistroCabeceraCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    configuraciones?: boolean | VTRegistroCabeceraCountOutputTypeCountConfiguracionesArgs
+    detalles?: boolean | VTRegistroCabeceraCountOutputTypeCountDetallesArgs
+    verificacionesDiarias?: boolean | VTRegistroCabeceraCountOutputTypeCountVerificacionesDiariasArgs
+    verificacionesSemanales?: boolean | VTRegistroCabeceraCountOutputTypeCountVerificacionesSemanalesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * VTRegistroCabeceraCountOutputType without action
+   */
+  export type VTRegistroCabeceraCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTRegistroCabeceraCountOutputType
+     */
+    select?: VTRegistroCabeceraCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * VTRegistroCabeceraCountOutputType without action
+   */
+  export type VTRegistroCabeceraCountOutputTypeCountConfiguracionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VTConfiguracionCamaraWhereInput
+  }
+
+  /**
+   * VTRegistroCabeceraCountOutputType without action
+   */
+  export type VTRegistroCabeceraCountOutputTypeCountDetallesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VTRegistroDetalleWhereInput
+  }
+
+  /**
+   * VTRegistroCabeceraCountOutputType without action
+   */
+  export type VTRegistroCabeceraCountOutputTypeCountVerificacionesDiariasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VTVerificacionDiariaWhereInput
+  }
+
+  /**
+   * VTRegistroCabeceraCountOutputType without action
+   */
+  export type VTRegistroCabeceraCountOutputTypeCountVerificacionesSemanalesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VTVerificacionSemanalWhereInput
   }
 
 
@@ -19477,6 +20380,7 @@ export namespace Prisma {
     jefesZonales?: boolean | Licitacion$jefesZonalesArgs<ExtArgs>
     vehiculos?: boolean | Licitacion$vehiculosArgs<ExtArgs>
     matrices?: boolean | Licitacion$matricesArgs<ExtArgs>
+    actasPlantillas?: boolean | Licitacion$actasPlantillasArgs<ExtArgs>
     _count?: boolean | LicitacionCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["licitacion"]>
 
@@ -19502,6 +20406,7 @@ export namespace Prisma {
     jefesZonales?: boolean | Licitacion$jefesZonalesArgs<ExtArgs>
     vehiculos?: boolean | Licitacion$vehiculosArgs<ExtArgs>
     matrices?: boolean | Licitacion$matricesArgs<ExtArgs>
+    actasPlantillas?: boolean | Licitacion$actasPlantillasArgs<ExtArgs>
     _count?: boolean | LicitacionCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type LicitacionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -19514,6 +20419,7 @@ export namespace Prisma {
       jefesZonales: Prisma.$JefeZonalLicitacionPayload<ExtArgs>[]
       vehiculos: Prisma.$VehiculoPayload<ExtArgs>[]
       matrices: Prisma.$MatrizT_CabeceraPayload<ExtArgs>[]
+      actasPlantillas: Prisma.$ActaSupervisionPlantillaPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       licId: number
@@ -19890,6 +20796,7 @@ export namespace Prisma {
     jefesZonales<T extends Licitacion$jefesZonalesArgs<ExtArgs> = {}>(args?: Subset<T, Licitacion$jefesZonalesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JefeZonalLicitacionPayload<ExtArgs>, T, "findMany"> | Null>
     vehiculos<T extends Licitacion$vehiculosArgs<ExtArgs> = {}>(args?: Subset<T, Licitacion$vehiculosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VehiculoPayload<ExtArgs>, T, "findMany"> | Null>
     matrices<T extends Licitacion$matricesArgs<ExtArgs> = {}>(args?: Subset<T, Licitacion$matricesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MatrizT_CabeceraPayload<ExtArgs>, T, "findMany"> | Null>
+    actasPlantillas<T extends Licitacion$actasPlantillasArgs<ExtArgs> = {}>(args?: Subset<T, Licitacion$actasPlantillasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActaSupervisionPlantillaPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -20335,6 +21242,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: MatrizT_CabeceraScalarFieldEnum | MatrizT_CabeceraScalarFieldEnum[]
+  }
+
+  /**
+   * Licitacion.actasPlantillas
+   */
+  export type Licitacion$actasPlantillasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActaSupervisionPlantilla
+     */
+    select?: ActaSupervisionPlantillaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActaSupervisionPlantillaInclude<ExtArgs> | null
+    where?: ActaSupervisionPlantillaWhereInput
+    orderBy?: ActaSupervisionPlantillaOrderByWithRelationInput | ActaSupervisionPlantillaOrderByWithRelationInput[]
+    cursor?: ActaSupervisionPlantillaWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ActaSupervisionPlantillaScalarFieldEnum | ActaSupervisionPlantillaScalarFieldEnum[]
   }
 
   /**
@@ -85617,6 +86544,9575 @@ export namespace Prisma {
 
 
   /**
+   * Model ActaSupervisionPlantilla
+   */
+
+  export type AggregateActaSupervisionPlantilla = {
+    _count: ActaSupervisionPlantillaCountAggregateOutputType | null
+    _avg: ActaSupervisionPlantillaAvgAggregateOutputType | null
+    _sum: ActaSupervisionPlantillaSumAggregateOutputType | null
+    _min: ActaSupervisionPlantillaMinAggregateOutputType | null
+    _max: ActaSupervisionPlantillaMaxAggregateOutputType | null
+  }
+
+  export type ActaSupervisionPlantillaAvgAggregateOutputType = {
+    licitacionId: number | null
+    anio: number | null
+  }
+
+  export type ActaSupervisionPlantillaSumAggregateOutputType = {
+    licitacionId: number | null
+    anio: number | null
+  }
+
+  export type ActaSupervisionPlantillaMinAggregateOutputType = {
+    id: string | null
+    nombre: string | null
+    licitacionId: number | null
+    anio: number | null
+    instituciones: string | null
+    rolesPerfiles: string | null
+    estado: boolean | null
+    logoUrl: string | null
+    instrucciones: string | null
+    campos: string | null
+    codigo: string | null
+    version: string | null
+    fecha: string | null
+    codigoAdicional: string | null
+    mostrarCodigoAdicional: boolean | null
+    correlativoAutomatico: boolean | null
+    mostrarCodigoVersionFecha: boolean | null
+    createdBy: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ActaSupervisionPlantillaMaxAggregateOutputType = {
+    id: string | null
+    nombre: string | null
+    licitacionId: number | null
+    anio: number | null
+    instituciones: string | null
+    rolesPerfiles: string | null
+    estado: boolean | null
+    logoUrl: string | null
+    instrucciones: string | null
+    campos: string | null
+    codigo: string | null
+    version: string | null
+    fecha: string | null
+    codigoAdicional: string | null
+    mostrarCodigoAdicional: boolean | null
+    correlativoAutomatico: boolean | null
+    mostrarCodigoVersionFecha: boolean | null
+    createdBy: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ActaSupervisionPlantillaCountAggregateOutputType = {
+    id: number
+    nombre: number
+    licitacionId: number
+    anio: number
+    instituciones: number
+    rolesPerfiles: number
+    estado: number
+    logoUrl: number
+    instrucciones: number
+    campos: number
+    codigo: number
+    version: number
+    fecha: number
+    codigoAdicional: number
+    mostrarCodigoAdicional: number
+    correlativoAutomatico: number
+    mostrarCodigoVersionFecha: number
+    createdBy: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ActaSupervisionPlantillaAvgAggregateInputType = {
+    licitacionId?: true
+    anio?: true
+  }
+
+  export type ActaSupervisionPlantillaSumAggregateInputType = {
+    licitacionId?: true
+    anio?: true
+  }
+
+  export type ActaSupervisionPlantillaMinAggregateInputType = {
+    id?: true
+    nombre?: true
+    licitacionId?: true
+    anio?: true
+    instituciones?: true
+    rolesPerfiles?: true
+    estado?: true
+    logoUrl?: true
+    instrucciones?: true
+    campos?: true
+    codigo?: true
+    version?: true
+    fecha?: true
+    codigoAdicional?: true
+    mostrarCodigoAdicional?: true
+    correlativoAutomatico?: true
+    mostrarCodigoVersionFecha?: true
+    createdBy?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ActaSupervisionPlantillaMaxAggregateInputType = {
+    id?: true
+    nombre?: true
+    licitacionId?: true
+    anio?: true
+    instituciones?: true
+    rolesPerfiles?: true
+    estado?: true
+    logoUrl?: true
+    instrucciones?: true
+    campos?: true
+    codigo?: true
+    version?: true
+    fecha?: true
+    codigoAdicional?: true
+    mostrarCodigoAdicional?: true
+    correlativoAutomatico?: true
+    mostrarCodigoVersionFecha?: true
+    createdBy?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ActaSupervisionPlantillaCountAggregateInputType = {
+    id?: true
+    nombre?: true
+    licitacionId?: true
+    anio?: true
+    instituciones?: true
+    rolesPerfiles?: true
+    estado?: true
+    logoUrl?: true
+    instrucciones?: true
+    campos?: true
+    codigo?: true
+    version?: true
+    fecha?: true
+    codigoAdicional?: true
+    mostrarCodigoAdicional?: true
+    correlativoAutomatico?: true
+    mostrarCodigoVersionFecha?: true
+    createdBy?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ActaSupervisionPlantillaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ActaSupervisionPlantilla to aggregate.
+     */
+    where?: ActaSupervisionPlantillaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ActaSupervisionPlantillas to fetch.
+     */
+    orderBy?: ActaSupervisionPlantillaOrderByWithRelationInput | ActaSupervisionPlantillaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ActaSupervisionPlantillaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ActaSupervisionPlantillas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ActaSupervisionPlantillas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ActaSupervisionPlantillas
+    **/
+    _count?: true | ActaSupervisionPlantillaCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ActaSupervisionPlantillaAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ActaSupervisionPlantillaSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ActaSupervisionPlantillaMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ActaSupervisionPlantillaMaxAggregateInputType
+  }
+
+  export type GetActaSupervisionPlantillaAggregateType<T extends ActaSupervisionPlantillaAggregateArgs> = {
+        [P in keyof T & keyof AggregateActaSupervisionPlantilla]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateActaSupervisionPlantilla[P]>
+      : GetScalarType<T[P], AggregateActaSupervisionPlantilla[P]>
+  }
+
+
+
+
+  export type ActaSupervisionPlantillaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ActaSupervisionPlantillaWhereInput
+    orderBy?: ActaSupervisionPlantillaOrderByWithAggregationInput | ActaSupervisionPlantillaOrderByWithAggregationInput[]
+    by: ActaSupervisionPlantillaScalarFieldEnum[] | ActaSupervisionPlantillaScalarFieldEnum
+    having?: ActaSupervisionPlantillaScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ActaSupervisionPlantillaCountAggregateInputType | true
+    _avg?: ActaSupervisionPlantillaAvgAggregateInputType
+    _sum?: ActaSupervisionPlantillaSumAggregateInputType
+    _min?: ActaSupervisionPlantillaMinAggregateInputType
+    _max?: ActaSupervisionPlantillaMaxAggregateInputType
+  }
+
+  export type ActaSupervisionPlantillaGroupByOutputType = {
+    id: string
+    nombre: string
+    licitacionId: number | null
+    anio: number
+    instituciones: string | null
+    rolesPerfiles: string | null
+    estado: boolean
+    logoUrl: string | null
+    instrucciones: string | null
+    campos: string
+    codigo: string | null
+    version: string | null
+    fecha: string | null
+    codigoAdicional: string | null
+    mostrarCodigoAdicional: boolean
+    correlativoAutomatico: boolean
+    mostrarCodigoVersionFecha: boolean
+    createdBy: string
+    createdAt: Date
+    updatedAt: Date
+    _count: ActaSupervisionPlantillaCountAggregateOutputType | null
+    _avg: ActaSupervisionPlantillaAvgAggregateOutputType | null
+    _sum: ActaSupervisionPlantillaSumAggregateOutputType | null
+    _min: ActaSupervisionPlantillaMinAggregateOutputType | null
+    _max: ActaSupervisionPlantillaMaxAggregateOutputType | null
+  }
+
+  type GetActaSupervisionPlantillaGroupByPayload<T extends ActaSupervisionPlantillaGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ActaSupervisionPlantillaGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ActaSupervisionPlantillaGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ActaSupervisionPlantillaGroupByOutputType[P]>
+            : GetScalarType<T[P], ActaSupervisionPlantillaGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ActaSupervisionPlantillaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nombre?: boolean
+    licitacionId?: boolean
+    anio?: boolean
+    instituciones?: boolean
+    rolesPerfiles?: boolean
+    estado?: boolean
+    logoUrl?: boolean
+    instrucciones?: boolean
+    campos?: boolean
+    codigo?: boolean
+    version?: boolean
+    fecha?: boolean
+    codigoAdicional?: boolean
+    mostrarCodigoAdicional?: boolean
+    correlativoAutomatico?: boolean
+    mostrarCodigoVersionFecha?: boolean
+    createdBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    licitacion?: boolean | ActaSupervisionPlantilla$licitacionArgs<ExtArgs>
+    respuestas?: boolean | ActaSupervisionPlantilla$respuestasArgs<ExtArgs>
+    _count?: boolean | ActaSupervisionPlantillaCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["actaSupervisionPlantilla"]>
+
+  export type ActaSupervisionPlantillaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nombre?: boolean
+    licitacionId?: boolean
+    anio?: boolean
+    instituciones?: boolean
+    rolesPerfiles?: boolean
+    estado?: boolean
+    logoUrl?: boolean
+    instrucciones?: boolean
+    campos?: boolean
+    codigo?: boolean
+    version?: boolean
+    fecha?: boolean
+    codigoAdicional?: boolean
+    mostrarCodigoAdicional?: boolean
+    correlativoAutomatico?: boolean
+    mostrarCodigoVersionFecha?: boolean
+    createdBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    licitacion?: boolean | ActaSupervisionPlantilla$licitacionArgs<ExtArgs>
+  }, ExtArgs["result"]["actaSupervisionPlantilla"]>
+
+  export type ActaSupervisionPlantillaSelectScalar = {
+    id?: boolean
+    nombre?: boolean
+    licitacionId?: boolean
+    anio?: boolean
+    instituciones?: boolean
+    rolesPerfiles?: boolean
+    estado?: boolean
+    logoUrl?: boolean
+    instrucciones?: boolean
+    campos?: boolean
+    codigo?: boolean
+    version?: boolean
+    fecha?: boolean
+    codigoAdicional?: boolean
+    mostrarCodigoAdicional?: boolean
+    correlativoAutomatico?: boolean
+    mostrarCodigoVersionFecha?: boolean
+    createdBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ActaSupervisionPlantillaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    licitacion?: boolean | ActaSupervisionPlantilla$licitacionArgs<ExtArgs>
+    respuestas?: boolean | ActaSupervisionPlantilla$respuestasArgs<ExtArgs>
+    _count?: boolean | ActaSupervisionPlantillaCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type ActaSupervisionPlantillaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    licitacion?: boolean | ActaSupervisionPlantilla$licitacionArgs<ExtArgs>
+  }
+
+  export type $ActaSupervisionPlantillaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ActaSupervisionPlantilla"
+    objects: {
+      licitacion: Prisma.$LicitacionPayload<ExtArgs> | null
+      respuestas: Prisma.$ActaSupervisionRespuestaPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      nombre: string
+      licitacionId: number | null
+      anio: number
+      instituciones: string | null
+      rolesPerfiles: string | null
+      estado: boolean
+      logoUrl: string | null
+      instrucciones: string | null
+      campos: string
+      codigo: string | null
+      version: string | null
+      fecha: string | null
+      codigoAdicional: string | null
+      mostrarCodigoAdicional: boolean
+      correlativoAutomatico: boolean
+      mostrarCodigoVersionFecha: boolean
+      createdBy: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["actaSupervisionPlantilla"]>
+    composites: {}
+  }
+
+  type ActaSupervisionPlantillaGetPayload<S extends boolean | null | undefined | ActaSupervisionPlantillaDefaultArgs> = $Result.GetResult<Prisma.$ActaSupervisionPlantillaPayload, S>
+
+  type ActaSupervisionPlantillaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ActaSupervisionPlantillaFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ActaSupervisionPlantillaCountAggregateInputType | true
+    }
+
+  export interface ActaSupervisionPlantillaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ActaSupervisionPlantilla'], meta: { name: 'ActaSupervisionPlantilla' } }
+    /**
+     * Find zero or one ActaSupervisionPlantilla that matches the filter.
+     * @param {ActaSupervisionPlantillaFindUniqueArgs} args - Arguments to find a ActaSupervisionPlantilla
+     * @example
+     * // Get one ActaSupervisionPlantilla
+     * const actaSupervisionPlantilla = await prisma.actaSupervisionPlantilla.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ActaSupervisionPlantillaFindUniqueArgs>(args: SelectSubset<T, ActaSupervisionPlantillaFindUniqueArgs<ExtArgs>>): Prisma__ActaSupervisionPlantillaClient<$Result.GetResult<Prisma.$ActaSupervisionPlantillaPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one ActaSupervisionPlantilla that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {ActaSupervisionPlantillaFindUniqueOrThrowArgs} args - Arguments to find a ActaSupervisionPlantilla
+     * @example
+     * // Get one ActaSupervisionPlantilla
+     * const actaSupervisionPlantilla = await prisma.actaSupervisionPlantilla.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ActaSupervisionPlantillaFindUniqueOrThrowArgs>(args: SelectSubset<T, ActaSupervisionPlantillaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ActaSupervisionPlantillaClient<$Result.GetResult<Prisma.$ActaSupervisionPlantillaPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first ActaSupervisionPlantilla that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActaSupervisionPlantillaFindFirstArgs} args - Arguments to find a ActaSupervisionPlantilla
+     * @example
+     * // Get one ActaSupervisionPlantilla
+     * const actaSupervisionPlantilla = await prisma.actaSupervisionPlantilla.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ActaSupervisionPlantillaFindFirstArgs>(args?: SelectSubset<T, ActaSupervisionPlantillaFindFirstArgs<ExtArgs>>): Prisma__ActaSupervisionPlantillaClient<$Result.GetResult<Prisma.$ActaSupervisionPlantillaPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first ActaSupervisionPlantilla that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActaSupervisionPlantillaFindFirstOrThrowArgs} args - Arguments to find a ActaSupervisionPlantilla
+     * @example
+     * // Get one ActaSupervisionPlantilla
+     * const actaSupervisionPlantilla = await prisma.actaSupervisionPlantilla.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ActaSupervisionPlantillaFindFirstOrThrowArgs>(args?: SelectSubset<T, ActaSupervisionPlantillaFindFirstOrThrowArgs<ExtArgs>>): Prisma__ActaSupervisionPlantillaClient<$Result.GetResult<Prisma.$ActaSupervisionPlantillaPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more ActaSupervisionPlantillas that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActaSupervisionPlantillaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ActaSupervisionPlantillas
+     * const actaSupervisionPlantillas = await prisma.actaSupervisionPlantilla.findMany()
+     * 
+     * // Get first 10 ActaSupervisionPlantillas
+     * const actaSupervisionPlantillas = await prisma.actaSupervisionPlantilla.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const actaSupervisionPlantillaWithIdOnly = await prisma.actaSupervisionPlantilla.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ActaSupervisionPlantillaFindManyArgs>(args?: SelectSubset<T, ActaSupervisionPlantillaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActaSupervisionPlantillaPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a ActaSupervisionPlantilla.
+     * @param {ActaSupervisionPlantillaCreateArgs} args - Arguments to create a ActaSupervisionPlantilla.
+     * @example
+     * // Create one ActaSupervisionPlantilla
+     * const ActaSupervisionPlantilla = await prisma.actaSupervisionPlantilla.create({
+     *   data: {
+     *     // ... data to create a ActaSupervisionPlantilla
+     *   }
+     * })
+     * 
+     */
+    create<T extends ActaSupervisionPlantillaCreateArgs>(args: SelectSubset<T, ActaSupervisionPlantillaCreateArgs<ExtArgs>>): Prisma__ActaSupervisionPlantillaClient<$Result.GetResult<Prisma.$ActaSupervisionPlantillaPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many ActaSupervisionPlantillas.
+     * @param {ActaSupervisionPlantillaCreateManyArgs} args - Arguments to create many ActaSupervisionPlantillas.
+     * @example
+     * // Create many ActaSupervisionPlantillas
+     * const actaSupervisionPlantilla = await prisma.actaSupervisionPlantilla.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ActaSupervisionPlantillaCreateManyArgs>(args?: SelectSubset<T, ActaSupervisionPlantillaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ActaSupervisionPlantillas and returns the data saved in the database.
+     * @param {ActaSupervisionPlantillaCreateManyAndReturnArgs} args - Arguments to create many ActaSupervisionPlantillas.
+     * @example
+     * // Create many ActaSupervisionPlantillas
+     * const actaSupervisionPlantilla = await prisma.actaSupervisionPlantilla.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ActaSupervisionPlantillas and only return the `id`
+     * const actaSupervisionPlantillaWithIdOnly = await prisma.actaSupervisionPlantilla.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ActaSupervisionPlantillaCreateManyAndReturnArgs>(args?: SelectSubset<T, ActaSupervisionPlantillaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActaSupervisionPlantillaPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a ActaSupervisionPlantilla.
+     * @param {ActaSupervisionPlantillaDeleteArgs} args - Arguments to delete one ActaSupervisionPlantilla.
+     * @example
+     * // Delete one ActaSupervisionPlantilla
+     * const ActaSupervisionPlantilla = await prisma.actaSupervisionPlantilla.delete({
+     *   where: {
+     *     // ... filter to delete one ActaSupervisionPlantilla
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ActaSupervisionPlantillaDeleteArgs>(args: SelectSubset<T, ActaSupervisionPlantillaDeleteArgs<ExtArgs>>): Prisma__ActaSupervisionPlantillaClient<$Result.GetResult<Prisma.$ActaSupervisionPlantillaPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one ActaSupervisionPlantilla.
+     * @param {ActaSupervisionPlantillaUpdateArgs} args - Arguments to update one ActaSupervisionPlantilla.
+     * @example
+     * // Update one ActaSupervisionPlantilla
+     * const actaSupervisionPlantilla = await prisma.actaSupervisionPlantilla.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ActaSupervisionPlantillaUpdateArgs>(args: SelectSubset<T, ActaSupervisionPlantillaUpdateArgs<ExtArgs>>): Prisma__ActaSupervisionPlantillaClient<$Result.GetResult<Prisma.$ActaSupervisionPlantillaPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more ActaSupervisionPlantillas.
+     * @param {ActaSupervisionPlantillaDeleteManyArgs} args - Arguments to filter ActaSupervisionPlantillas to delete.
+     * @example
+     * // Delete a few ActaSupervisionPlantillas
+     * const { count } = await prisma.actaSupervisionPlantilla.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ActaSupervisionPlantillaDeleteManyArgs>(args?: SelectSubset<T, ActaSupervisionPlantillaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ActaSupervisionPlantillas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActaSupervisionPlantillaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ActaSupervisionPlantillas
+     * const actaSupervisionPlantilla = await prisma.actaSupervisionPlantilla.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ActaSupervisionPlantillaUpdateManyArgs>(args: SelectSubset<T, ActaSupervisionPlantillaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ActaSupervisionPlantilla.
+     * @param {ActaSupervisionPlantillaUpsertArgs} args - Arguments to update or create a ActaSupervisionPlantilla.
+     * @example
+     * // Update or create a ActaSupervisionPlantilla
+     * const actaSupervisionPlantilla = await prisma.actaSupervisionPlantilla.upsert({
+     *   create: {
+     *     // ... data to create a ActaSupervisionPlantilla
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ActaSupervisionPlantilla we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ActaSupervisionPlantillaUpsertArgs>(args: SelectSubset<T, ActaSupervisionPlantillaUpsertArgs<ExtArgs>>): Prisma__ActaSupervisionPlantillaClient<$Result.GetResult<Prisma.$ActaSupervisionPlantillaPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of ActaSupervisionPlantillas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActaSupervisionPlantillaCountArgs} args - Arguments to filter ActaSupervisionPlantillas to count.
+     * @example
+     * // Count the number of ActaSupervisionPlantillas
+     * const count = await prisma.actaSupervisionPlantilla.count({
+     *   where: {
+     *     // ... the filter for the ActaSupervisionPlantillas we want to count
+     *   }
+     * })
+    **/
+    count<T extends ActaSupervisionPlantillaCountArgs>(
+      args?: Subset<T, ActaSupervisionPlantillaCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ActaSupervisionPlantillaCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ActaSupervisionPlantilla.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActaSupervisionPlantillaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ActaSupervisionPlantillaAggregateArgs>(args: Subset<T, ActaSupervisionPlantillaAggregateArgs>): Prisma.PrismaPromise<GetActaSupervisionPlantillaAggregateType<T>>
+
+    /**
+     * Group by ActaSupervisionPlantilla.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActaSupervisionPlantillaGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ActaSupervisionPlantillaGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ActaSupervisionPlantillaGroupByArgs['orderBy'] }
+        : { orderBy?: ActaSupervisionPlantillaGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ActaSupervisionPlantillaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetActaSupervisionPlantillaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ActaSupervisionPlantilla model
+   */
+  readonly fields: ActaSupervisionPlantillaFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ActaSupervisionPlantilla.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ActaSupervisionPlantillaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    licitacion<T extends ActaSupervisionPlantilla$licitacionArgs<ExtArgs> = {}>(args?: Subset<T, ActaSupervisionPlantilla$licitacionArgs<ExtArgs>>): Prisma__LicitacionClient<$Result.GetResult<Prisma.$LicitacionPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    respuestas<T extends ActaSupervisionPlantilla$respuestasArgs<ExtArgs> = {}>(args?: Subset<T, ActaSupervisionPlantilla$respuestasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActaSupervisionRespuestaPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ActaSupervisionPlantilla model
+   */ 
+  interface ActaSupervisionPlantillaFieldRefs {
+    readonly id: FieldRef<"ActaSupervisionPlantilla", 'String'>
+    readonly nombre: FieldRef<"ActaSupervisionPlantilla", 'String'>
+    readonly licitacionId: FieldRef<"ActaSupervisionPlantilla", 'Int'>
+    readonly anio: FieldRef<"ActaSupervisionPlantilla", 'Int'>
+    readonly instituciones: FieldRef<"ActaSupervisionPlantilla", 'String'>
+    readonly rolesPerfiles: FieldRef<"ActaSupervisionPlantilla", 'String'>
+    readonly estado: FieldRef<"ActaSupervisionPlantilla", 'Boolean'>
+    readonly logoUrl: FieldRef<"ActaSupervisionPlantilla", 'String'>
+    readonly instrucciones: FieldRef<"ActaSupervisionPlantilla", 'String'>
+    readonly campos: FieldRef<"ActaSupervisionPlantilla", 'String'>
+    readonly codigo: FieldRef<"ActaSupervisionPlantilla", 'String'>
+    readonly version: FieldRef<"ActaSupervisionPlantilla", 'String'>
+    readonly fecha: FieldRef<"ActaSupervisionPlantilla", 'String'>
+    readonly codigoAdicional: FieldRef<"ActaSupervisionPlantilla", 'String'>
+    readonly mostrarCodigoAdicional: FieldRef<"ActaSupervisionPlantilla", 'Boolean'>
+    readonly correlativoAutomatico: FieldRef<"ActaSupervisionPlantilla", 'Boolean'>
+    readonly mostrarCodigoVersionFecha: FieldRef<"ActaSupervisionPlantilla", 'Boolean'>
+    readonly createdBy: FieldRef<"ActaSupervisionPlantilla", 'String'>
+    readonly createdAt: FieldRef<"ActaSupervisionPlantilla", 'DateTime'>
+    readonly updatedAt: FieldRef<"ActaSupervisionPlantilla", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ActaSupervisionPlantilla findUnique
+   */
+  export type ActaSupervisionPlantillaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActaSupervisionPlantilla
+     */
+    select?: ActaSupervisionPlantillaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActaSupervisionPlantillaInclude<ExtArgs> | null
+    /**
+     * Filter, which ActaSupervisionPlantilla to fetch.
+     */
+    where: ActaSupervisionPlantillaWhereUniqueInput
+  }
+
+  /**
+   * ActaSupervisionPlantilla findUniqueOrThrow
+   */
+  export type ActaSupervisionPlantillaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActaSupervisionPlantilla
+     */
+    select?: ActaSupervisionPlantillaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActaSupervisionPlantillaInclude<ExtArgs> | null
+    /**
+     * Filter, which ActaSupervisionPlantilla to fetch.
+     */
+    where: ActaSupervisionPlantillaWhereUniqueInput
+  }
+
+  /**
+   * ActaSupervisionPlantilla findFirst
+   */
+  export type ActaSupervisionPlantillaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActaSupervisionPlantilla
+     */
+    select?: ActaSupervisionPlantillaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActaSupervisionPlantillaInclude<ExtArgs> | null
+    /**
+     * Filter, which ActaSupervisionPlantilla to fetch.
+     */
+    where?: ActaSupervisionPlantillaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ActaSupervisionPlantillas to fetch.
+     */
+    orderBy?: ActaSupervisionPlantillaOrderByWithRelationInput | ActaSupervisionPlantillaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ActaSupervisionPlantillas.
+     */
+    cursor?: ActaSupervisionPlantillaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ActaSupervisionPlantillas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ActaSupervisionPlantillas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ActaSupervisionPlantillas.
+     */
+    distinct?: ActaSupervisionPlantillaScalarFieldEnum | ActaSupervisionPlantillaScalarFieldEnum[]
+  }
+
+  /**
+   * ActaSupervisionPlantilla findFirstOrThrow
+   */
+  export type ActaSupervisionPlantillaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActaSupervisionPlantilla
+     */
+    select?: ActaSupervisionPlantillaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActaSupervisionPlantillaInclude<ExtArgs> | null
+    /**
+     * Filter, which ActaSupervisionPlantilla to fetch.
+     */
+    where?: ActaSupervisionPlantillaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ActaSupervisionPlantillas to fetch.
+     */
+    orderBy?: ActaSupervisionPlantillaOrderByWithRelationInput | ActaSupervisionPlantillaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ActaSupervisionPlantillas.
+     */
+    cursor?: ActaSupervisionPlantillaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ActaSupervisionPlantillas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ActaSupervisionPlantillas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ActaSupervisionPlantillas.
+     */
+    distinct?: ActaSupervisionPlantillaScalarFieldEnum | ActaSupervisionPlantillaScalarFieldEnum[]
+  }
+
+  /**
+   * ActaSupervisionPlantilla findMany
+   */
+  export type ActaSupervisionPlantillaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActaSupervisionPlantilla
+     */
+    select?: ActaSupervisionPlantillaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActaSupervisionPlantillaInclude<ExtArgs> | null
+    /**
+     * Filter, which ActaSupervisionPlantillas to fetch.
+     */
+    where?: ActaSupervisionPlantillaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ActaSupervisionPlantillas to fetch.
+     */
+    orderBy?: ActaSupervisionPlantillaOrderByWithRelationInput | ActaSupervisionPlantillaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ActaSupervisionPlantillas.
+     */
+    cursor?: ActaSupervisionPlantillaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ActaSupervisionPlantillas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ActaSupervisionPlantillas.
+     */
+    skip?: number
+    distinct?: ActaSupervisionPlantillaScalarFieldEnum | ActaSupervisionPlantillaScalarFieldEnum[]
+  }
+
+  /**
+   * ActaSupervisionPlantilla create
+   */
+  export type ActaSupervisionPlantillaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActaSupervisionPlantilla
+     */
+    select?: ActaSupervisionPlantillaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActaSupervisionPlantillaInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ActaSupervisionPlantilla.
+     */
+    data: XOR<ActaSupervisionPlantillaCreateInput, ActaSupervisionPlantillaUncheckedCreateInput>
+  }
+
+  /**
+   * ActaSupervisionPlantilla createMany
+   */
+  export type ActaSupervisionPlantillaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ActaSupervisionPlantillas.
+     */
+    data: ActaSupervisionPlantillaCreateManyInput | ActaSupervisionPlantillaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ActaSupervisionPlantilla createManyAndReturn
+   */
+  export type ActaSupervisionPlantillaCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActaSupervisionPlantilla
+     */
+    select?: ActaSupervisionPlantillaSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many ActaSupervisionPlantillas.
+     */
+    data: ActaSupervisionPlantillaCreateManyInput | ActaSupervisionPlantillaCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActaSupervisionPlantillaIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ActaSupervisionPlantilla update
+   */
+  export type ActaSupervisionPlantillaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActaSupervisionPlantilla
+     */
+    select?: ActaSupervisionPlantillaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActaSupervisionPlantillaInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ActaSupervisionPlantilla.
+     */
+    data: XOR<ActaSupervisionPlantillaUpdateInput, ActaSupervisionPlantillaUncheckedUpdateInput>
+    /**
+     * Choose, which ActaSupervisionPlantilla to update.
+     */
+    where: ActaSupervisionPlantillaWhereUniqueInput
+  }
+
+  /**
+   * ActaSupervisionPlantilla updateMany
+   */
+  export type ActaSupervisionPlantillaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ActaSupervisionPlantillas.
+     */
+    data: XOR<ActaSupervisionPlantillaUpdateManyMutationInput, ActaSupervisionPlantillaUncheckedUpdateManyInput>
+    /**
+     * Filter which ActaSupervisionPlantillas to update
+     */
+    where?: ActaSupervisionPlantillaWhereInput
+  }
+
+  /**
+   * ActaSupervisionPlantilla upsert
+   */
+  export type ActaSupervisionPlantillaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActaSupervisionPlantilla
+     */
+    select?: ActaSupervisionPlantillaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActaSupervisionPlantillaInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ActaSupervisionPlantilla to update in case it exists.
+     */
+    where: ActaSupervisionPlantillaWhereUniqueInput
+    /**
+     * In case the ActaSupervisionPlantilla found by the `where` argument doesn't exist, create a new ActaSupervisionPlantilla with this data.
+     */
+    create: XOR<ActaSupervisionPlantillaCreateInput, ActaSupervisionPlantillaUncheckedCreateInput>
+    /**
+     * In case the ActaSupervisionPlantilla was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ActaSupervisionPlantillaUpdateInput, ActaSupervisionPlantillaUncheckedUpdateInput>
+  }
+
+  /**
+   * ActaSupervisionPlantilla delete
+   */
+  export type ActaSupervisionPlantillaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActaSupervisionPlantilla
+     */
+    select?: ActaSupervisionPlantillaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActaSupervisionPlantillaInclude<ExtArgs> | null
+    /**
+     * Filter which ActaSupervisionPlantilla to delete.
+     */
+    where: ActaSupervisionPlantillaWhereUniqueInput
+  }
+
+  /**
+   * ActaSupervisionPlantilla deleteMany
+   */
+  export type ActaSupervisionPlantillaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ActaSupervisionPlantillas to delete
+     */
+    where?: ActaSupervisionPlantillaWhereInput
+  }
+
+  /**
+   * ActaSupervisionPlantilla.licitacion
+   */
+  export type ActaSupervisionPlantilla$licitacionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Licitacion
+     */
+    select?: LicitacionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LicitacionInclude<ExtArgs> | null
+    where?: LicitacionWhereInput
+  }
+
+  /**
+   * ActaSupervisionPlantilla.respuestas
+   */
+  export type ActaSupervisionPlantilla$respuestasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActaSupervisionRespuesta
+     */
+    select?: ActaSupervisionRespuestaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActaSupervisionRespuestaInclude<ExtArgs> | null
+    where?: ActaSupervisionRespuestaWhereInput
+    orderBy?: ActaSupervisionRespuestaOrderByWithRelationInput | ActaSupervisionRespuestaOrderByWithRelationInput[]
+    cursor?: ActaSupervisionRespuestaWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ActaSupervisionRespuestaScalarFieldEnum | ActaSupervisionRespuestaScalarFieldEnum[]
+  }
+
+  /**
+   * ActaSupervisionPlantilla without action
+   */
+  export type ActaSupervisionPlantillaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActaSupervisionPlantilla
+     */
+    select?: ActaSupervisionPlantillaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActaSupervisionPlantillaInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ActaSupervisionRespuesta
+   */
+
+  export type AggregateActaSupervisionRespuesta = {
+    _count: ActaSupervisionRespuestaCountAggregateOutputType | null
+    _avg: ActaSupervisionRespuestaAvgAggregateOutputType | null
+    _sum: ActaSupervisionRespuestaSumAggregateOutputType | null
+    _min: ActaSupervisionRespuestaMinAggregateOutputType | null
+    _max: ActaSupervisionRespuestaMaxAggregateOutputType | null
+  }
+
+  export type ActaSupervisionRespuestaAvgAggregateOutputType = {
+    licitacionId: number | null
+    anio: number | null
+    rbd: number | null
+    correlativo: number | null
+  }
+
+  export type ActaSupervisionRespuestaSumAggregateOutputType = {
+    licitacionId: number | null
+    anio: number | null
+    rbd: number | null
+    correlativo: number | null
+  }
+
+  export type ActaSupervisionRespuestaMinAggregateOutputType = {
+    id: string | null
+    plantillaId: string | null
+    licitacionId: number | null
+    anio: number | null
+    rbd: number | null
+    nombreEstablecimiento: string | null
+    direccion: string | null
+    ciudad: string | null
+    institucion: string | null
+    sucursal: string | null
+    fechaCreacion: Date | null
+    supervisorNombre: string | null
+    supervisorRut: string | null
+    respuestasData: string | null
+    estado: string | null
+    usuario: string | null
+    correlativo: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ActaSupervisionRespuestaMaxAggregateOutputType = {
+    id: string | null
+    plantillaId: string | null
+    licitacionId: number | null
+    anio: number | null
+    rbd: number | null
+    nombreEstablecimiento: string | null
+    direccion: string | null
+    ciudad: string | null
+    institucion: string | null
+    sucursal: string | null
+    fechaCreacion: Date | null
+    supervisorNombre: string | null
+    supervisorRut: string | null
+    respuestasData: string | null
+    estado: string | null
+    usuario: string | null
+    correlativo: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ActaSupervisionRespuestaCountAggregateOutputType = {
+    id: number
+    plantillaId: number
+    licitacionId: number
+    anio: number
+    rbd: number
+    nombreEstablecimiento: number
+    direccion: number
+    ciudad: number
+    institucion: number
+    sucursal: number
+    fechaCreacion: number
+    supervisorNombre: number
+    supervisorRut: number
+    respuestasData: number
+    estado: number
+    usuario: number
+    correlativo: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ActaSupervisionRespuestaAvgAggregateInputType = {
+    licitacionId?: true
+    anio?: true
+    rbd?: true
+    correlativo?: true
+  }
+
+  export type ActaSupervisionRespuestaSumAggregateInputType = {
+    licitacionId?: true
+    anio?: true
+    rbd?: true
+    correlativo?: true
+  }
+
+  export type ActaSupervisionRespuestaMinAggregateInputType = {
+    id?: true
+    plantillaId?: true
+    licitacionId?: true
+    anio?: true
+    rbd?: true
+    nombreEstablecimiento?: true
+    direccion?: true
+    ciudad?: true
+    institucion?: true
+    sucursal?: true
+    fechaCreacion?: true
+    supervisorNombre?: true
+    supervisorRut?: true
+    respuestasData?: true
+    estado?: true
+    usuario?: true
+    correlativo?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ActaSupervisionRespuestaMaxAggregateInputType = {
+    id?: true
+    plantillaId?: true
+    licitacionId?: true
+    anio?: true
+    rbd?: true
+    nombreEstablecimiento?: true
+    direccion?: true
+    ciudad?: true
+    institucion?: true
+    sucursal?: true
+    fechaCreacion?: true
+    supervisorNombre?: true
+    supervisorRut?: true
+    respuestasData?: true
+    estado?: true
+    usuario?: true
+    correlativo?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ActaSupervisionRespuestaCountAggregateInputType = {
+    id?: true
+    plantillaId?: true
+    licitacionId?: true
+    anio?: true
+    rbd?: true
+    nombreEstablecimiento?: true
+    direccion?: true
+    ciudad?: true
+    institucion?: true
+    sucursal?: true
+    fechaCreacion?: true
+    supervisorNombre?: true
+    supervisorRut?: true
+    respuestasData?: true
+    estado?: true
+    usuario?: true
+    correlativo?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ActaSupervisionRespuestaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ActaSupervisionRespuesta to aggregate.
+     */
+    where?: ActaSupervisionRespuestaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ActaSupervisionRespuestas to fetch.
+     */
+    orderBy?: ActaSupervisionRespuestaOrderByWithRelationInput | ActaSupervisionRespuestaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ActaSupervisionRespuestaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ActaSupervisionRespuestas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ActaSupervisionRespuestas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ActaSupervisionRespuestas
+    **/
+    _count?: true | ActaSupervisionRespuestaCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ActaSupervisionRespuestaAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ActaSupervisionRespuestaSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ActaSupervisionRespuestaMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ActaSupervisionRespuestaMaxAggregateInputType
+  }
+
+  export type GetActaSupervisionRespuestaAggregateType<T extends ActaSupervisionRespuestaAggregateArgs> = {
+        [P in keyof T & keyof AggregateActaSupervisionRespuesta]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateActaSupervisionRespuesta[P]>
+      : GetScalarType<T[P], AggregateActaSupervisionRespuesta[P]>
+  }
+
+
+
+
+  export type ActaSupervisionRespuestaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ActaSupervisionRespuestaWhereInput
+    orderBy?: ActaSupervisionRespuestaOrderByWithAggregationInput | ActaSupervisionRespuestaOrderByWithAggregationInput[]
+    by: ActaSupervisionRespuestaScalarFieldEnum[] | ActaSupervisionRespuestaScalarFieldEnum
+    having?: ActaSupervisionRespuestaScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ActaSupervisionRespuestaCountAggregateInputType | true
+    _avg?: ActaSupervisionRespuestaAvgAggregateInputType
+    _sum?: ActaSupervisionRespuestaSumAggregateInputType
+    _min?: ActaSupervisionRespuestaMinAggregateInputType
+    _max?: ActaSupervisionRespuestaMaxAggregateInputType
+  }
+
+  export type ActaSupervisionRespuestaGroupByOutputType = {
+    id: string
+    plantillaId: string
+    licitacionId: number | null
+    anio: number | null
+    rbd: number
+    nombreEstablecimiento: string | null
+    direccion: string | null
+    ciudad: string | null
+    institucion: string | null
+    sucursal: string | null
+    fechaCreacion: Date
+    supervisorNombre: string | null
+    supervisorRut: string | null
+    respuestasData: string
+    estado: string
+    usuario: string
+    correlativo: number | null
+    createdAt: Date
+    updatedAt: Date
+    _count: ActaSupervisionRespuestaCountAggregateOutputType | null
+    _avg: ActaSupervisionRespuestaAvgAggregateOutputType | null
+    _sum: ActaSupervisionRespuestaSumAggregateOutputType | null
+    _min: ActaSupervisionRespuestaMinAggregateOutputType | null
+    _max: ActaSupervisionRespuestaMaxAggregateOutputType | null
+  }
+
+  type GetActaSupervisionRespuestaGroupByPayload<T extends ActaSupervisionRespuestaGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ActaSupervisionRespuestaGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ActaSupervisionRespuestaGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ActaSupervisionRespuestaGroupByOutputType[P]>
+            : GetScalarType<T[P], ActaSupervisionRespuestaGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ActaSupervisionRespuestaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    plantillaId?: boolean
+    licitacionId?: boolean
+    anio?: boolean
+    rbd?: boolean
+    nombreEstablecimiento?: boolean
+    direccion?: boolean
+    ciudad?: boolean
+    institucion?: boolean
+    sucursal?: boolean
+    fechaCreacion?: boolean
+    supervisorNombre?: boolean
+    supervisorRut?: boolean
+    respuestasData?: boolean
+    estado?: boolean
+    usuario?: boolean
+    correlativo?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    plantilla?: boolean | ActaSupervisionPlantillaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["actaSupervisionRespuesta"]>
+
+  export type ActaSupervisionRespuestaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    plantillaId?: boolean
+    licitacionId?: boolean
+    anio?: boolean
+    rbd?: boolean
+    nombreEstablecimiento?: boolean
+    direccion?: boolean
+    ciudad?: boolean
+    institucion?: boolean
+    sucursal?: boolean
+    fechaCreacion?: boolean
+    supervisorNombre?: boolean
+    supervisorRut?: boolean
+    respuestasData?: boolean
+    estado?: boolean
+    usuario?: boolean
+    correlativo?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    plantilla?: boolean | ActaSupervisionPlantillaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["actaSupervisionRespuesta"]>
+
+  export type ActaSupervisionRespuestaSelectScalar = {
+    id?: boolean
+    plantillaId?: boolean
+    licitacionId?: boolean
+    anio?: boolean
+    rbd?: boolean
+    nombreEstablecimiento?: boolean
+    direccion?: boolean
+    ciudad?: boolean
+    institucion?: boolean
+    sucursal?: boolean
+    fechaCreacion?: boolean
+    supervisorNombre?: boolean
+    supervisorRut?: boolean
+    respuestasData?: boolean
+    estado?: boolean
+    usuario?: boolean
+    correlativo?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ActaSupervisionRespuestaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    plantilla?: boolean | ActaSupervisionPlantillaDefaultArgs<ExtArgs>
+  }
+  export type ActaSupervisionRespuestaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    plantilla?: boolean | ActaSupervisionPlantillaDefaultArgs<ExtArgs>
+  }
+
+  export type $ActaSupervisionRespuestaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ActaSupervisionRespuesta"
+    objects: {
+      plantilla: Prisma.$ActaSupervisionPlantillaPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      plantillaId: string
+      licitacionId: number | null
+      anio: number | null
+      rbd: number
+      nombreEstablecimiento: string | null
+      direccion: string | null
+      ciudad: string | null
+      institucion: string | null
+      sucursal: string | null
+      fechaCreacion: Date
+      supervisorNombre: string | null
+      supervisorRut: string | null
+      respuestasData: string
+      estado: string
+      usuario: string
+      correlativo: number | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["actaSupervisionRespuesta"]>
+    composites: {}
+  }
+
+  type ActaSupervisionRespuestaGetPayload<S extends boolean | null | undefined | ActaSupervisionRespuestaDefaultArgs> = $Result.GetResult<Prisma.$ActaSupervisionRespuestaPayload, S>
+
+  type ActaSupervisionRespuestaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ActaSupervisionRespuestaFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ActaSupervisionRespuestaCountAggregateInputType | true
+    }
+
+  export interface ActaSupervisionRespuestaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ActaSupervisionRespuesta'], meta: { name: 'ActaSupervisionRespuesta' } }
+    /**
+     * Find zero or one ActaSupervisionRespuesta that matches the filter.
+     * @param {ActaSupervisionRespuestaFindUniqueArgs} args - Arguments to find a ActaSupervisionRespuesta
+     * @example
+     * // Get one ActaSupervisionRespuesta
+     * const actaSupervisionRespuesta = await prisma.actaSupervisionRespuesta.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ActaSupervisionRespuestaFindUniqueArgs>(args: SelectSubset<T, ActaSupervisionRespuestaFindUniqueArgs<ExtArgs>>): Prisma__ActaSupervisionRespuestaClient<$Result.GetResult<Prisma.$ActaSupervisionRespuestaPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one ActaSupervisionRespuesta that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {ActaSupervisionRespuestaFindUniqueOrThrowArgs} args - Arguments to find a ActaSupervisionRespuesta
+     * @example
+     * // Get one ActaSupervisionRespuesta
+     * const actaSupervisionRespuesta = await prisma.actaSupervisionRespuesta.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ActaSupervisionRespuestaFindUniqueOrThrowArgs>(args: SelectSubset<T, ActaSupervisionRespuestaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ActaSupervisionRespuestaClient<$Result.GetResult<Prisma.$ActaSupervisionRespuestaPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first ActaSupervisionRespuesta that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActaSupervisionRespuestaFindFirstArgs} args - Arguments to find a ActaSupervisionRespuesta
+     * @example
+     * // Get one ActaSupervisionRespuesta
+     * const actaSupervisionRespuesta = await prisma.actaSupervisionRespuesta.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ActaSupervisionRespuestaFindFirstArgs>(args?: SelectSubset<T, ActaSupervisionRespuestaFindFirstArgs<ExtArgs>>): Prisma__ActaSupervisionRespuestaClient<$Result.GetResult<Prisma.$ActaSupervisionRespuestaPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first ActaSupervisionRespuesta that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActaSupervisionRespuestaFindFirstOrThrowArgs} args - Arguments to find a ActaSupervisionRespuesta
+     * @example
+     * // Get one ActaSupervisionRespuesta
+     * const actaSupervisionRespuesta = await prisma.actaSupervisionRespuesta.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ActaSupervisionRespuestaFindFirstOrThrowArgs>(args?: SelectSubset<T, ActaSupervisionRespuestaFindFirstOrThrowArgs<ExtArgs>>): Prisma__ActaSupervisionRespuestaClient<$Result.GetResult<Prisma.$ActaSupervisionRespuestaPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more ActaSupervisionRespuestas that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActaSupervisionRespuestaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ActaSupervisionRespuestas
+     * const actaSupervisionRespuestas = await prisma.actaSupervisionRespuesta.findMany()
+     * 
+     * // Get first 10 ActaSupervisionRespuestas
+     * const actaSupervisionRespuestas = await prisma.actaSupervisionRespuesta.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const actaSupervisionRespuestaWithIdOnly = await prisma.actaSupervisionRespuesta.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ActaSupervisionRespuestaFindManyArgs>(args?: SelectSubset<T, ActaSupervisionRespuestaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActaSupervisionRespuestaPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a ActaSupervisionRespuesta.
+     * @param {ActaSupervisionRespuestaCreateArgs} args - Arguments to create a ActaSupervisionRespuesta.
+     * @example
+     * // Create one ActaSupervisionRespuesta
+     * const ActaSupervisionRespuesta = await prisma.actaSupervisionRespuesta.create({
+     *   data: {
+     *     // ... data to create a ActaSupervisionRespuesta
+     *   }
+     * })
+     * 
+     */
+    create<T extends ActaSupervisionRespuestaCreateArgs>(args: SelectSubset<T, ActaSupervisionRespuestaCreateArgs<ExtArgs>>): Prisma__ActaSupervisionRespuestaClient<$Result.GetResult<Prisma.$ActaSupervisionRespuestaPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many ActaSupervisionRespuestas.
+     * @param {ActaSupervisionRespuestaCreateManyArgs} args - Arguments to create many ActaSupervisionRespuestas.
+     * @example
+     * // Create many ActaSupervisionRespuestas
+     * const actaSupervisionRespuesta = await prisma.actaSupervisionRespuesta.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ActaSupervisionRespuestaCreateManyArgs>(args?: SelectSubset<T, ActaSupervisionRespuestaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ActaSupervisionRespuestas and returns the data saved in the database.
+     * @param {ActaSupervisionRespuestaCreateManyAndReturnArgs} args - Arguments to create many ActaSupervisionRespuestas.
+     * @example
+     * // Create many ActaSupervisionRespuestas
+     * const actaSupervisionRespuesta = await prisma.actaSupervisionRespuesta.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ActaSupervisionRespuestas and only return the `id`
+     * const actaSupervisionRespuestaWithIdOnly = await prisma.actaSupervisionRespuesta.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ActaSupervisionRespuestaCreateManyAndReturnArgs>(args?: SelectSubset<T, ActaSupervisionRespuestaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActaSupervisionRespuestaPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a ActaSupervisionRespuesta.
+     * @param {ActaSupervisionRespuestaDeleteArgs} args - Arguments to delete one ActaSupervisionRespuesta.
+     * @example
+     * // Delete one ActaSupervisionRespuesta
+     * const ActaSupervisionRespuesta = await prisma.actaSupervisionRespuesta.delete({
+     *   where: {
+     *     // ... filter to delete one ActaSupervisionRespuesta
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ActaSupervisionRespuestaDeleteArgs>(args: SelectSubset<T, ActaSupervisionRespuestaDeleteArgs<ExtArgs>>): Prisma__ActaSupervisionRespuestaClient<$Result.GetResult<Prisma.$ActaSupervisionRespuestaPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one ActaSupervisionRespuesta.
+     * @param {ActaSupervisionRespuestaUpdateArgs} args - Arguments to update one ActaSupervisionRespuesta.
+     * @example
+     * // Update one ActaSupervisionRespuesta
+     * const actaSupervisionRespuesta = await prisma.actaSupervisionRespuesta.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ActaSupervisionRespuestaUpdateArgs>(args: SelectSubset<T, ActaSupervisionRespuestaUpdateArgs<ExtArgs>>): Prisma__ActaSupervisionRespuestaClient<$Result.GetResult<Prisma.$ActaSupervisionRespuestaPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more ActaSupervisionRespuestas.
+     * @param {ActaSupervisionRespuestaDeleteManyArgs} args - Arguments to filter ActaSupervisionRespuestas to delete.
+     * @example
+     * // Delete a few ActaSupervisionRespuestas
+     * const { count } = await prisma.actaSupervisionRespuesta.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ActaSupervisionRespuestaDeleteManyArgs>(args?: SelectSubset<T, ActaSupervisionRespuestaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ActaSupervisionRespuestas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActaSupervisionRespuestaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ActaSupervisionRespuestas
+     * const actaSupervisionRespuesta = await prisma.actaSupervisionRespuesta.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ActaSupervisionRespuestaUpdateManyArgs>(args: SelectSubset<T, ActaSupervisionRespuestaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ActaSupervisionRespuesta.
+     * @param {ActaSupervisionRespuestaUpsertArgs} args - Arguments to update or create a ActaSupervisionRespuesta.
+     * @example
+     * // Update or create a ActaSupervisionRespuesta
+     * const actaSupervisionRespuesta = await prisma.actaSupervisionRespuesta.upsert({
+     *   create: {
+     *     // ... data to create a ActaSupervisionRespuesta
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ActaSupervisionRespuesta we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ActaSupervisionRespuestaUpsertArgs>(args: SelectSubset<T, ActaSupervisionRespuestaUpsertArgs<ExtArgs>>): Prisma__ActaSupervisionRespuestaClient<$Result.GetResult<Prisma.$ActaSupervisionRespuestaPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of ActaSupervisionRespuestas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActaSupervisionRespuestaCountArgs} args - Arguments to filter ActaSupervisionRespuestas to count.
+     * @example
+     * // Count the number of ActaSupervisionRespuestas
+     * const count = await prisma.actaSupervisionRespuesta.count({
+     *   where: {
+     *     // ... the filter for the ActaSupervisionRespuestas we want to count
+     *   }
+     * })
+    **/
+    count<T extends ActaSupervisionRespuestaCountArgs>(
+      args?: Subset<T, ActaSupervisionRespuestaCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ActaSupervisionRespuestaCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ActaSupervisionRespuesta.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActaSupervisionRespuestaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ActaSupervisionRespuestaAggregateArgs>(args: Subset<T, ActaSupervisionRespuestaAggregateArgs>): Prisma.PrismaPromise<GetActaSupervisionRespuestaAggregateType<T>>
+
+    /**
+     * Group by ActaSupervisionRespuesta.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActaSupervisionRespuestaGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ActaSupervisionRespuestaGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ActaSupervisionRespuestaGroupByArgs['orderBy'] }
+        : { orderBy?: ActaSupervisionRespuestaGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ActaSupervisionRespuestaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetActaSupervisionRespuestaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ActaSupervisionRespuesta model
+   */
+  readonly fields: ActaSupervisionRespuestaFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ActaSupervisionRespuesta.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ActaSupervisionRespuestaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    plantilla<T extends ActaSupervisionPlantillaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ActaSupervisionPlantillaDefaultArgs<ExtArgs>>): Prisma__ActaSupervisionPlantillaClient<$Result.GetResult<Prisma.$ActaSupervisionPlantillaPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ActaSupervisionRespuesta model
+   */ 
+  interface ActaSupervisionRespuestaFieldRefs {
+    readonly id: FieldRef<"ActaSupervisionRespuesta", 'String'>
+    readonly plantillaId: FieldRef<"ActaSupervisionRespuesta", 'String'>
+    readonly licitacionId: FieldRef<"ActaSupervisionRespuesta", 'Int'>
+    readonly anio: FieldRef<"ActaSupervisionRespuesta", 'Int'>
+    readonly rbd: FieldRef<"ActaSupervisionRespuesta", 'Int'>
+    readonly nombreEstablecimiento: FieldRef<"ActaSupervisionRespuesta", 'String'>
+    readonly direccion: FieldRef<"ActaSupervisionRespuesta", 'String'>
+    readonly ciudad: FieldRef<"ActaSupervisionRespuesta", 'String'>
+    readonly institucion: FieldRef<"ActaSupervisionRespuesta", 'String'>
+    readonly sucursal: FieldRef<"ActaSupervisionRespuesta", 'String'>
+    readonly fechaCreacion: FieldRef<"ActaSupervisionRespuesta", 'DateTime'>
+    readonly supervisorNombre: FieldRef<"ActaSupervisionRespuesta", 'String'>
+    readonly supervisorRut: FieldRef<"ActaSupervisionRespuesta", 'String'>
+    readonly respuestasData: FieldRef<"ActaSupervisionRespuesta", 'String'>
+    readonly estado: FieldRef<"ActaSupervisionRespuesta", 'String'>
+    readonly usuario: FieldRef<"ActaSupervisionRespuesta", 'String'>
+    readonly correlativo: FieldRef<"ActaSupervisionRespuesta", 'Int'>
+    readonly createdAt: FieldRef<"ActaSupervisionRespuesta", 'DateTime'>
+    readonly updatedAt: FieldRef<"ActaSupervisionRespuesta", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ActaSupervisionRespuesta findUnique
+   */
+  export type ActaSupervisionRespuestaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActaSupervisionRespuesta
+     */
+    select?: ActaSupervisionRespuestaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActaSupervisionRespuestaInclude<ExtArgs> | null
+    /**
+     * Filter, which ActaSupervisionRespuesta to fetch.
+     */
+    where: ActaSupervisionRespuestaWhereUniqueInput
+  }
+
+  /**
+   * ActaSupervisionRespuesta findUniqueOrThrow
+   */
+  export type ActaSupervisionRespuestaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActaSupervisionRespuesta
+     */
+    select?: ActaSupervisionRespuestaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActaSupervisionRespuestaInclude<ExtArgs> | null
+    /**
+     * Filter, which ActaSupervisionRespuesta to fetch.
+     */
+    where: ActaSupervisionRespuestaWhereUniqueInput
+  }
+
+  /**
+   * ActaSupervisionRespuesta findFirst
+   */
+  export type ActaSupervisionRespuestaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActaSupervisionRespuesta
+     */
+    select?: ActaSupervisionRespuestaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActaSupervisionRespuestaInclude<ExtArgs> | null
+    /**
+     * Filter, which ActaSupervisionRespuesta to fetch.
+     */
+    where?: ActaSupervisionRespuestaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ActaSupervisionRespuestas to fetch.
+     */
+    orderBy?: ActaSupervisionRespuestaOrderByWithRelationInput | ActaSupervisionRespuestaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ActaSupervisionRespuestas.
+     */
+    cursor?: ActaSupervisionRespuestaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ActaSupervisionRespuestas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ActaSupervisionRespuestas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ActaSupervisionRespuestas.
+     */
+    distinct?: ActaSupervisionRespuestaScalarFieldEnum | ActaSupervisionRespuestaScalarFieldEnum[]
+  }
+
+  /**
+   * ActaSupervisionRespuesta findFirstOrThrow
+   */
+  export type ActaSupervisionRespuestaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActaSupervisionRespuesta
+     */
+    select?: ActaSupervisionRespuestaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActaSupervisionRespuestaInclude<ExtArgs> | null
+    /**
+     * Filter, which ActaSupervisionRespuesta to fetch.
+     */
+    where?: ActaSupervisionRespuestaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ActaSupervisionRespuestas to fetch.
+     */
+    orderBy?: ActaSupervisionRespuestaOrderByWithRelationInput | ActaSupervisionRespuestaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ActaSupervisionRespuestas.
+     */
+    cursor?: ActaSupervisionRespuestaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ActaSupervisionRespuestas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ActaSupervisionRespuestas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ActaSupervisionRespuestas.
+     */
+    distinct?: ActaSupervisionRespuestaScalarFieldEnum | ActaSupervisionRespuestaScalarFieldEnum[]
+  }
+
+  /**
+   * ActaSupervisionRespuesta findMany
+   */
+  export type ActaSupervisionRespuestaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActaSupervisionRespuesta
+     */
+    select?: ActaSupervisionRespuestaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActaSupervisionRespuestaInclude<ExtArgs> | null
+    /**
+     * Filter, which ActaSupervisionRespuestas to fetch.
+     */
+    where?: ActaSupervisionRespuestaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ActaSupervisionRespuestas to fetch.
+     */
+    orderBy?: ActaSupervisionRespuestaOrderByWithRelationInput | ActaSupervisionRespuestaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ActaSupervisionRespuestas.
+     */
+    cursor?: ActaSupervisionRespuestaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ActaSupervisionRespuestas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ActaSupervisionRespuestas.
+     */
+    skip?: number
+    distinct?: ActaSupervisionRespuestaScalarFieldEnum | ActaSupervisionRespuestaScalarFieldEnum[]
+  }
+
+  /**
+   * ActaSupervisionRespuesta create
+   */
+  export type ActaSupervisionRespuestaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActaSupervisionRespuesta
+     */
+    select?: ActaSupervisionRespuestaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActaSupervisionRespuestaInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ActaSupervisionRespuesta.
+     */
+    data: XOR<ActaSupervisionRespuestaCreateInput, ActaSupervisionRespuestaUncheckedCreateInput>
+  }
+
+  /**
+   * ActaSupervisionRespuesta createMany
+   */
+  export type ActaSupervisionRespuestaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ActaSupervisionRespuestas.
+     */
+    data: ActaSupervisionRespuestaCreateManyInput | ActaSupervisionRespuestaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ActaSupervisionRespuesta createManyAndReturn
+   */
+  export type ActaSupervisionRespuestaCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActaSupervisionRespuesta
+     */
+    select?: ActaSupervisionRespuestaSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many ActaSupervisionRespuestas.
+     */
+    data: ActaSupervisionRespuestaCreateManyInput | ActaSupervisionRespuestaCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActaSupervisionRespuestaIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ActaSupervisionRespuesta update
+   */
+  export type ActaSupervisionRespuestaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActaSupervisionRespuesta
+     */
+    select?: ActaSupervisionRespuestaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActaSupervisionRespuestaInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ActaSupervisionRespuesta.
+     */
+    data: XOR<ActaSupervisionRespuestaUpdateInput, ActaSupervisionRespuestaUncheckedUpdateInput>
+    /**
+     * Choose, which ActaSupervisionRespuesta to update.
+     */
+    where: ActaSupervisionRespuestaWhereUniqueInput
+  }
+
+  /**
+   * ActaSupervisionRespuesta updateMany
+   */
+  export type ActaSupervisionRespuestaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ActaSupervisionRespuestas.
+     */
+    data: XOR<ActaSupervisionRespuestaUpdateManyMutationInput, ActaSupervisionRespuestaUncheckedUpdateManyInput>
+    /**
+     * Filter which ActaSupervisionRespuestas to update
+     */
+    where?: ActaSupervisionRespuestaWhereInput
+  }
+
+  /**
+   * ActaSupervisionRespuesta upsert
+   */
+  export type ActaSupervisionRespuestaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActaSupervisionRespuesta
+     */
+    select?: ActaSupervisionRespuestaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActaSupervisionRespuestaInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ActaSupervisionRespuesta to update in case it exists.
+     */
+    where: ActaSupervisionRespuestaWhereUniqueInput
+    /**
+     * In case the ActaSupervisionRespuesta found by the `where` argument doesn't exist, create a new ActaSupervisionRespuesta with this data.
+     */
+    create: XOR<ActaSupervisionRespuestaCreateInput, ActaSupervisionRespuestaUncheckedCreateInput>
+    /**
+     * In case the ActaSupervisionRespuesta was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ActaSupervisionRespuestaUpdateInput, ActaSupervisionRespuestaUncheckedUpdateInput>
+  }
+
+  /**
+   * ActaSupervisionRespuesta delete
+   */
+  export type ActaSupervisionRespuestaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActaSupervisionRespuesta
+     */
+    select?: ActaSupervisionRespuestaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActaSupervisionRespuestaInclude<ExtArgs> | null
+    /**
+     * Filter which ActaSupervisionRespuesta to delete.
+     */
+    where: ActaSupervisionRespuestaWhereUniqueInput
+  }
+
+  /**
+   * ActaSupervisionRespuesta deleteMany
+   */
+  export type ActaSupervisionRespuestaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ActaSupervisionRespuestas to delete
+     */
+    where?: ActaSupervisionRespuestaWhereInput
+  }
+
+  /**
+   * ActaSupervisionRespuesta without action
+   */
+  export type ActaSupervisionRespuestaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActaSupervisionRespuesta
+     */
+    select?: ActaSupervisionRespuestaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActaSupervisionRespuestaInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model VTCamara
+   */
+
+  export type AggregateVTCamara = {
+    _count: VTCamaraCountAggregateOutputType | null
+    _avg: VTCamaraAvgAggregateOutputType | null
+    _sum: VTCamaraSumAggregateOutputType | null
+    _min: VTCamaraMinAggregateOutputType | null
+    _max: VTCamaraMaxAggregateOutputType | null
+  }
+
+  export type VTCamaraAvgAggregateOutputType = {
+    idCamara: number | null
+    temperaturaMinima: number | null
+    temperaturaMaxima: number | null
+  }
+
+  export type VTCamaraSumAggregateOutputType = {
+    idCamara: number | null
+    temperaturaMinima: number | null
+    temperaturaMaxima: number | null
+  }
+
+  export type VTCamaraMinAggregateOutputType = {
+    idCamara: number | null
+    nombreCamara: string | null
+    tipoCamara: string | null
+    temperaturaMinima: number | null
+    temperaturaMaxima: number | null
+    activo: boolean | null
+  }
+
+  export type VTCamaraMaxAggregateOutputType = {
+    idCamara: number | null
+    nombreCamara: string | null
+    tipoCamara: string | null
+    temperaturaMinima: number | null
+    temperaturaMaxima: number | null
+    activo: boolean | null
+  }
+
+  export type VTCamaraCountAggregateOutputType = {
+    idCamara: number
+    nombreCamara: number
+    tipoCamara: number
+    temperaturaMinima: number
+    temperaturaMaxima: number
+    activo: number
+    _all: number
+  }
+
+
+  export type VTCamaraAvgAggregateInputType = {
+    idCamara?: true
+    temperaturaMinima?: true
+    temperaturaMaxima?: true
+  }
+
+  export type VTCamaraSumAggregateInputType = {
+    idCamara?: true
+    temperaturaMinima?: true
+    temperaturaMaxima?: true
+  }
+
+  export type VTCamaraMinAggregateInputType = {
+    idCamara?: true
+    nombreCamara?: true
+    tipoCamara?: true
+    temperaturaMinima?: true
+    temperaturaMaxima?: true
+    activo?: true
+  }
+
+  export type VTCamaraMaxAggregateInputType = {
+    idCamara?: true
+    nombreCamara?: true
+    tipoCamara?: true
+    temperaturaMinima?: true
+    temperaturaMaxima?: true
+    activo?: true
+  }
+
+  export type VTCamaraCountAggregateInputType = {
+    idCamara?: true
+    nombreCamara?: true
+    tipoCamara?: true
+    temperaturaMinima?: true
+    temperaturaMaxima?: true
+    activo?: true
+    _all?: true
+  }
+
+  export type VTCamaraAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VTCamara to aggregate.
+     */
+    where?: VTCamaraWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VTCamaras to fetch.
+     */
+    orderBy?: VTCamaraOrderByWithRelationInput | VTCamaraOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: VTCamaraWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VTCamaras from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VTCamaras.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned VTCamaras
+    **/
+    _count?: true | VTCamaraCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: VTCamaraAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: VTCamaraSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: VTCamaraMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: VTCamaraMaxAggregateInputType
+  }
+
+  export type GetVTCamaraAggregateType<T extends VTCamaraAggregateArgs> = {
+        [P in keyof T & keyof AggregateVTCamara]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateVTCamara[P]>
+      : GetScalarType<T[P], AggregateVTCamara[P]>
+  }
+
+
+
+
+  export type VTCamaraGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VTCamaraWhereInput
+    orderBy?: VTCamaraOrderByWithAggregationInput | VTCamaraOrderByWithAggregationInput[]
+    by: VTCamaraScalarFieldEnum[] | VTCamaraScalarFieldEnum
+    having?: VTCamaraScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: VTCamaraCountAggregateInputType | true
+    _avg?: VTCamaraAvgAggregateInputType
+    _sum?: VTCamaraSumAggregateInputType
+    _min?: VTCamaraMinAggregateInputType
+    _max?: VTCamaraMaxAggregateInputType
+  }
+
+  export type VTCamaraGroupByOutputType = {
+    idCamara: number
+    nombreCamara: string
+    tipoCamara: string
+    temperaturaMinima: number | null
+    temperaturaMaxima: number
+    activo: boolean
+    _count: VTCamaraCountAggregateOutputType | null
+    _avg: VTCamaraAvgAggregateOutputType | null
+    _sum: VTCamaraSumAggregateOutputType | null
+    _min: VTCamaraMinAggregateOutputType | null
+    _max: VTCamaraMaxAggregateOutputType | null
+  }
+
+  type GetVTCamaraGroupByPayload<T extends VTCamaraGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<VTCamaraGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof VTCamaraGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], VTCamaraGroupByOutputType[P]>
+            : GetScalarType<T[P], VTCamaraGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type VTCamaraSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    idCamara?: boolean
+    nombreCamara?: boolean
+    tipoCamara?: boolean
+    temperaturaMinima?: boolean
+    temperaturaMaxima?: boolean
+    activo?: boolean
+    configuraciones?: boolean | VTCamara$configuracionesArgs<ExtArgs>
+    _count?: boolean | VTCamaraCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["vTCamara"]>
+
+  export type VTCamaraSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    idCamara?: boolean
+    nombreCamara?: boolean
+    tipoCamara?: boolean
+    temperaturaMinima?: boolean
+    temperaturaMaxima?: boolean
+    activo?: boolean
+  }, ExtArgs["result"]["vTCamara"]>
+
+  export type VTCamaraSelectScalar = {
+    idCamara?: boolean
+    nombreCamara?: boolean
+    tipoCamara?: boolean
+    temperaturaMinima?: boolean
+    temperaturaMaxima?: boolean
+    activo?: boolean
+  }
+
+  export type VTCamaraInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    configuraciones?: boolean | VTCamara$configuracionesArgs<ExtArgs>
+    _count?: boolean | VTCamaraCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type VTCamaraIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $VTCamaraPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "VTCamara"
+    objects: {
+      configuraciones: Prisma.$VTConfiguracionCamaraPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      idCamara: number
+      nombreCamara: string
+      tipoCamara: string
+      temperaturaMinima: number | null
+      temperaturaMaxima: number
+      activo: boolean
+    }, ExtArgs["result"]["vTCamara"]>
+    composites: {}
+  }
+
+  type VTCamaraGetPayload<S extends boolean | null | undefined | VTCamaraDefaultArgs> = $Result.GetResult<Prisma.$VTCamaraPayload, S>
+
+  type VTCamaraCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<VTCamaraFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: VTCamaraCountAggregateInputType | true
+    }
+
+  export interface VTCamaraDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['VTCamara'], meta: { name: 'VTCamara' } }
+    /**
+     * Find zero or one VTCamara that matches the filter.
+     * @param {VTCamaraFindUniqueArgs} args - Arguments to find a VTCamara
+     * @example
+     * // Get one VTCamara
+     * const vTCamara = await prisma.vTCamara.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends VTCamaraFindUniqueArgs>(args: SelectSubset<T, VTCamaraFindUniqueArgs<ExtArgs>>): Prisma__VTCamaraClient<$Result.GetResult<Prisma.$VTCamaraPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one VTCamara that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {VTCamaraFindUniqueOrThrowArgs} args - Arguments to find a VTCamara
+     * @example
+     * // Get one VTCamara
+     * const vTCamara = await prisma.vTCamara.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends VTCamaraFindUniqueOrThrowArgs>(args: SelectSubset<T, VTCamaraFindUniqueOrThrowArgs<ExtArgs>>): Prisma__VTCamaraClient<$Result.GetResult<Prisma.$VTCamaraPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first VTCamara that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTCamaraFindFirstArgs} args - Arguments to find a VTCamara
+     * @example
+     * // Get one VTCamara
+     * const vTCamara = await prisma.vTCamara.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends VTCamaraFindFirstArgs>(args?: SelectSubset<T, VTCamaraFindFirstArgs<ExtArgs>>): Prisma__VTCamaraClient<$Result.GetResult<Prisma.$VTCamaraPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first VTCamara that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTCamaraFindFirstOrThrowArgs} args - Arguments to find a VTCamara
+     * @example
+     * // Get one VTCamara
+     * const vTCamara = await prisma.vTCamara.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends VTCamaraFindFirstOrThrowArgs>(args?: SelectSubset<T, VTCamaraFindFirstOrThrowArgs<ExtArgs>>): Prisma__VTCamaraClient<$Result.GetResult<Prisma.$VTCamaraPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more VTCamaras that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTCamaraFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all VTCamaras
+     * const vTCamaras = await prisma.vTCamara.findMany()
+     * 
+     * // Get first 10 VTCamaras
+     * const vTCamaras = await prisma.vTCamara.findMany({ take: 10 })
+     * 
+     * // Only select the `idCamara`
+     * const vTCamaraWithIdCamaraOnly = await prisma.vTCamara.findMany({ select: { idCamara: true } })
+     * 
+     */
+    findMany<T extends VTCamaraFindManyArgs>(args?: SelectSubset<T, VTCamaraFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VTCamaraPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a VTCamara.
+     * @param {VTCamaraCreateArgs} args - Arguments to create a VTCamara.
+     * @example
+     * // Create one VTCamara
+     * const VTCamara = await prisma.vTCamara.create({
+     *   data: {
+     *     // ... data to create a VTCamara
+     *   }
+     * })
+     * 
+     */
+    create<T extends VTCamaraCreateArgs>(args: SelectSubset<T, VTCamaraCreateArgs<ExtArgs>>): Prisma__VTCamaraClient<$Result.GetResult<Prisma.$VTCamaraPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many VTCamaras.
+     * @param {VTCamaraCreateManyArgs} args - Arguments to create many VTCamaras.
+     * @example
+     * // Create many VTCamaras
+     * const vTCamara = await prisma.vTCamara.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends VTCamaraCreateManyArgs>(args?: SelectSubset<T, VTCamaraCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many VTCamaras and returns the data saved in the database.
+     * @param {VTCamaraCreateManyAndReturnArgs} args - Arguments to create many VTCamaras.
+     * @example
+     * // Create many VTCamaras
+     * const vTCamara = await prisma.vTCamara.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many VTCamaras and only return the `idCamara`
+     * const vTCamaraWithIdCamaraOnly = await prisma.vTCamara.createManyAndReturn({ 
+     *   select: { idCamara: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends VTCamaraCreateManyAndReturnArgs>(args?: SelectSubset<T, VTCamaraCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VTCamaraPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a VTCamara.
+     * @param {VTCamaraDeleteArgs} args - Arguments to delete one VTCamara.
+     * @example
+     * // Delete one VTCamara
+     * const VTCamara = await prisma.vTCamara.delete({
+     *   where: {
+     *     // ... filter to delete one VTCamara
+     *   }
+     * })
+     * 
+     */
+    delete<T extends VTCamaraDeleteArgs>(args: SelectSubset<T, VTCamaraDeleteArgs<ExtArgs>>): Prisma__VTCamaraClient<$Result.GetResult<Prisma.$VTCamaraPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one VTCamara.
+     * @param {VTCamaraUpdateArgs} args - Arguments to update one VTCamara.
+     * @example
+     * // Update one VTCamara
+     * const vTCamara = await prisma.vTCamara.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends VTCamaraUpdateArgs>(args: SelectSubset<T, VTCamaraUpdateArgs<ExtArgs>>): Prisma__VTCamaraClient<$Result.GetResult<Prisma.$VTCamaraPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more VTCamaras.
+     * @param {VTCamaraDeleteManyArgs} args - Arguments to filter VTCamaras to delete.
+     * @example
+     * // Delete a few VTCamaras
+     * const { count } = await prisma.vTCamara.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends VTCamaraDeleteManyArgs>(args?: SelectSubset<T, VTCamaraDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more VTCamaras.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTCamaraUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many VTCamaras
+     * const vTCamara = await prisma.vTCamara.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends VTCamaraUpdateManyArgs>(args: SelectSubset<T, VTCamaraUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one VTCamara.
+     * @param {VTCamaraUpsertArgs} args - Arguments to update or create a VTCamara.
+     * @example
+     * // Update or create a VTCamara
+     * const vTCamara = await prisma.vTCamara.upsert({
+     *   create: {
+     *     // ... data to create a VTCamara
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the VTCamara we want to update
+     *   }
+     * })
+     */
+    upsert<T extends VTCamaraUpsertArgs>(args: SelectSubset<T, VTCamaraUpsertArgs<ExtArgs>>): Prisma__VTCamaraClient<$Result.GetResult<Prisma.$VTCamaraPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of VTCamaras.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTCamaraCountArgs} args - Arguments to filter VTCamaras to count.
+     * @example
+     * // Count the number of VTCamaras
+     * const count = await prisma.vTCamara.count({
+     *   where: {
+     *     // ... the filter for the VTCamaras we want to count
+     *   }
+     * })
+    **/
+    count<T extends VTCamaraCountArgs>(
+      args?: Subset<T, VTCamaraCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], VTCamaraCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a VTCamara.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTCamaraAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends VTCamaraAggregateArgs>(args: Subset<T, VTCamaraAggregateArgs>): Prisma.PrismaPromise<GetVTCamaraAggregateType<T>>
+
+    /**
+     * Group by VTCamara.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTCamaraGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends VTCamaraGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: VTCamaraGroupByArgs['orderBy'] }
+        : { orderBy?: VTCamaraGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, VTCamaraGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVTCamaraGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the VTCamara model
+   */
+  readonly fields: VTCamaraFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for VTCamara.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__VTCamaraClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    configuraciones<T extends VTCamara$configuracionesArgs<ExtArgs> = {}>(args?: Subset<T, VTCamara$configuracionesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VTConfiguracionCamaraPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the VTCamara model
+   */ 
+  interface VTCamaraFieldRefs {
+    readonly idCamara: FieldRef<"VTCamara", 'Int'>
+    readonly nombreCamara: FieldRef<"VTCamara", 'String'>
+    readonly tipoCamara: FieldRef<"VTCamara", 'String'>
+    readonly temperaturaMinima: FieldRef<"VTCamara", 'Float'>
+    readonly temperaturaMaxima: FieldRef<"VTCamara", 'Float'>
+    readonly activo: FieldRef<"VTCamara", 'Boolean'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * VTCamara findUnique
+   */
+  export type VTCamaraFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTCamara
+     */
+    select?: VTCamaraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTCamaraInclude<ExtArgs> | null
+    /**
+     * Filter, which VTCamara to fetch.
+     */
+    where: VTCamaraWhereUniqueInput
+  }
+
+  /**
+   * VTCamara findUniqueOrThrow
+   */
+  export type VTCamaraFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTCamara
+     */
+    select?: VTCamaraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTCamaraInclude<ExtArgs> | null
+    /**
+     * Filter, which VTCamara to fetch.
+     */
+    where: VTCamaraWhereUniqueInput
+  }
+
+  /**
+   * VTCamara findFirst
+   */
+  export type VTCamaraFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTCamara
+     */
+    select?: VTCamaraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTCamaraInclude<ExtArgs> | null
+    /**
+     * Filter, which VTCamara to fetch.
+     */
+    where?: VTCamaraWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VTCamaras to fetch.
+     */
+    orderBy?: VTCamaraOrderByWithRelationInput | VTCamaraOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VTCamaras.
+     */
+    cursor?: VTCamaraWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VTCamaras from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VTCamaras.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VTCamaras.
+     */
+    distinct?: VTCamaraScalarFieldEnum | VTCamaraScalarFieldEnum[]
+  }
+
+  /**
+   * VTCamara findFirstOrThrow
+   */
+  export type VTCamaraFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTCamara
+     */
+    select?: VTCamaraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTCamaraInclude<ExtArgs> | null
+    /**
+     * Filter, which VTCamara to fetch.
+     */
+    where?: VTCamaraWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VTCamaras to fetch.
+     */
+    orderBy?: VTCamaraOrderByWithRelationInput | VTCamaraOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VTCamaras.
+     */
+    cursor?: VTCamaraWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VTCamaras from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VTCamaras.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VTCamaras.
+     */
+    distinct?: VTCamaraScalarFieldEnum | VTCamaraScalarFieldEnum[]
+  }
+
+  /**
+   * VTCamara findMany
+   */
+  export type VTCamaraFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTCamara
+     */
+    select?: VTCamaraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTCamaraInclude<ExtArgs> | null
+    /**
+     * Filter, which VTCamaras to fetch.
+     */
+    where?: VTCamaraWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VTCamaras to fetch.
+     */
+    orderBy?: VTCamaraOrderByWithRelationInput | VTCamaraOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing VTCamaras.
+     */
+    cursor?: VTCamaraWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VTCamaras from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VTCamaras.
+     */
+    skip?: number
+    distinct?: VTCamaraScalarFieldEnum | VTCamaraScalarFieldEnum[]
+  }
+
+  /**
+   * VTCamara create
+   */
+  export type VTCamaraCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTCamara
+     */
+    select?: VTCamaraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTCamaraInclude<ExtArgs> | null
+    /**
+     * The data needed to create a VTCamara.
+     */
+    data: XOR<VTCamaraCreateInput, VTCamaraUncheckedCreateInput>
+  }
+
+  /**
+   * VTCamara createMany
+   */
+  export type VTCamaraCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many VTCamaras.
+     */
+    data: VTCamaraCreateManyInput | VTCamaraCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * VTCamara createManyAndReturn
+   */
+  export type VTCamaraCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTCamara
+     */
+    select?: VTCamaraSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many VTCamaras.
+     */
+    data: VTCamaraCreateManyInput | VTCamaraCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * VTCamara update
+   */
+  export type VTCamaraUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTCamara
+     */
+    select?: VTCamaraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTCamaraInclude<ExtArgs> | null
+    /**
+     * The data needed to update a VTCamara.
+     */
+    data: XOR<VTCamaraUpdateInput, VTCamaraUncheckedUpdateInput>
+    /**
+     * Choose, which VTCamara to update.
+     */
+    where: VTCamaraWhereUniqueInput
+  }
+
+  /**
+   * VTCamara updateMany
+   */
+  export type VTCamaraUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update VTCamaras.
+     */
+    data: XOR<VTCamaraUpdateManyMutationInput, VTCamaraUncheckedUpdateManyInput>
+    /**
+     * Filter which VTCamaras to update
+     */
+    where?: VTCamaraWhereInput
+  }
+
+  /**
+   * VTCamara upsert
+   */
+  export type VTCamaraUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTCamara
+     */
+    select?: VTCamaraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTCamaraInclude<ExtArgs> | null
+    /**
+     * The filter to search for the VTCamara to update in case it exists.
+     */
+    where: VTCamaraWhereUniqueInput
+    /**
+     * In case the VTCamara found by the `where` argument doesn't exist, create a new VTCamara with this data.
+     */
+    create: XOR<VTCamaraCreateInput, VTCamaraUncheckedCreateInput>
+    /**
+     * In case the VTCamara was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<VTCamaraUpdateInput, VTCamaraUncheckedUpdateInput>
+  }
+
+  /**
+   * VTCamara delete
+   */
+  export type VTCamaraDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTCamara
+     */
+    select?: VTCamaraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTCamaraInclude<ExtArgs> | null
+    /**
+     * Filter which VTCamara to delete.
+     */
+    where: VTCamaraWhereUniqueInput
+  }
+
+  /**
+   * VTCamara deleteMany
+   */
+  export type VTCamaraDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VTCamaras to delete
+     */
+    where?: VTCamaraWhereInput
+  }
+
+  /**
+   * VTCamara.configuraciones
+   */
+  export type VTCamara$configuracionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTConfiguracionCamara
+     */
+    select?: VTConfiguracionCamaraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTConfiguracionCamaraInclude<ExtArgs> | null
+    where?: VTConfiguracionCamaraWhereInput
+    orderBy?: VTConfiguracionCamaraOrderByWithRelationInput | VTConfiguracionCamaraOrderByWithRelationInput[]
+    cursor?: VTConfiguracionCamaraWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: VTConfiguracionCamaraScalarFieldEnum | VTConfiguracionCamaraScalarFieldEnum[]
+  }
+
+  /**
+   * VTCamara without action
+   */
+  export type VTCamaraDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTCamara
+     */
+    select?: VTCamaraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTCamaraInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model VTConfiguracionCamara
+   */
+
+  export type AggregateVTConfiguracionCamara = {
+    _count: VTConfiguracionCamaraCountAggregateOutputType | null
+    _avg: VTConfiguracionCamaraAvgAggregateOutputType | null
+    _sum: VTConfiguracionCamaraSumAggregateOutputType | null
+    _min: VTConfiguracionCamaraMinAggregateOutputType | null
+    _max: VTConfiguracionCamaraMaxAggregateOutputType | null
+  }
+
+  export type VTConfiguracionCamaraAvgAggregateOutputType = {
+    idConfig: number | null
+    idRegistroCabecera: number | null
+    idCamara: number | null
+    mes: number | null
+    numeroCamaraMes: number | null
+    temperaturaMinima: number | null
+    temperaturaMaxima: number | null
+  }
+
+  export type VTConfiguracionCamaraSumAggregateOutputType = {
+    idConfig: number | null
+    idRegistroCabecera: number | null
+    idCamara: number | null
+    mes: number | null
+    numeroCamaraMes: number | null
+    temperaturaMinima: number | null
+    temperaturaMaxima: number | null
+  }
+
+  export type VTConfiguracionCamaraMinAggregateOutputType = {
+    idConfig: number | null
+    idRegistroCabecera: number | null
+    idCamara: number | null
+    mes: number | null
+    numeroCamaraMes: number | null
+    nombreCamara: string | null
+    temperaturaMinima: number | null
+    temperaturaMaxima: number | null
+  }
+
+  export type VTConfiguracionCamaraMaxAggregateOutputType = {
+    idConfig: number | null
+    idRegistroCabecera: number | null
+    idCamara: number | null
+    mes: number | null
+    numeroCamaraMes: number | null
+    nombreCamara: string | null
+    temperaturaMinima: number | null
+    temperaturaMaxima: number | null
+  }
+
+  export type VTConfiguracionCamaraCountAggregateOutputType = {
+    idConfig: number
+    idRegistroCabecera: number
+    idCamara: number
+    mes: number
+    numeroCamaraMes: number
+    nombreCamara: number
+    temperaturaMinima: number
+    temperaturaMaxima: number
+    _all: number
+  }
+
+
+  export type VTConfiguracionCamaraAvgAggregateInputType = {
+    idConfig?: true
+    idRegistroCabecera?: true
+    idCamara?: true
+    mes?: true
+    numeroCamaraMes?: true
+    temperaturaMinima?: true
+    temperaturaMaxima?: true
+  }
+
+  export type VTConfiguracionCamaraSumAggregateInputType = {
+    idConfig?: true
+    idRegistroCabecera?: true
+    idCamara?: true
+    mes?: true
+    numeroCamaraMes?: true
+    temperaturaMinima?: true
+    temperaturaMaxima?: true
+  }
+
+  export type VTConfiguracionCamaraMinAggregateInputType = {
+    idConfig?: true
+    idRegistroCabecera?: true
+    idCamara?: true
+    mes?: true
+    numeroCamaraMes?: true
+    nombreCamara?: true
+    temperaturaMinima?: true
+    temperaturaMaxima?: true
+  }
+
+  export type VTConfiguracionCamaraMaxAggregateInputType = {
+    idConfig?: true
+    idRegistroCabecera?: true
+    idCamara?: true
+    mes?: true
+    numeroCamaraMes?: true
+    nombreCamara?: true
+    temperaturaMinima?: true
+    temperaturaMaxima?: true
+  }
+
+  export type VTConfiguracionCamaraCountAggregateInputType = {
+    idConfig?: true
+    idRegistroCabecera?: true
+    idCamara?: true
+    mes?: true
+    numeroCamaraMes?: true
+    nombreCamara?: true
+    temperaturaMinima?: true
+    temperaturaMaxima?: true
+    _all?: true
+  }
+
+  export type VTConfiguracionCamaraAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VTConfiguracionCamara to aggregate.
+     */
+    where?: VTConfiguracionCamaraWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VTConfiguracionCamaras to fetch.
+     */
+    orderBy?: VTConfiguracionCamaraOrderByWithRelationInput | VTConfiguracionCamaraOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: VTConfiguracionCamaraWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VTConfiguracionCamaras from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VTConfiguracionCamaras.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned VTConfiguracionCamaras
+    **/
+    _count?: true | VTConfiguracionCamaraCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: VTConfiguracionCamaraAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: VTConfiguracionCamaraSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: VTConfiguracionCamaraMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: VTConfiguracionCamaraMaxAggregateInputType
+  }
+
+  export type GetVTConfiguracionCamaraAggregateType<T extends VTConfiguracionCamaraAggregateArgs> = {
+        [P in keyof T & keyof AggregateVTConfiguracionCamara]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateVTConfiguracionCamara[P]>
+      : GetScalarType<T[P], AggregateVTConfiguracionCamara[P]>
+  }
+
+
+
+
+  export type VTConfiguracionCamaraGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VTConfiguracionCamaraWhereInput
+    orderBy?: VTConfiguracionCamaraOrderByWithAggregationInput | VTConfiguracionCamaraOrderByWithAggregationInput[]
+    by: VTConfiguracionCamaraScalarFieldEnum[] | VTConfiguracionCamaraScalarFieldEnum
+    having?: VTConfiguracionCamaraScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: VTConfiguracionCamaraCountAggregateInputType | true
+    _avg?: VTConfiguracionCamaraAvgAggregateInputType
+    _sum?: VTConfiguracionCamaraSumAggregateInputType
+    _min?: VTConfiguracionCamaraMinAggregateInputType
+    _max?: VTConfiguracionCamaraMaxAggregateInputType
+  }
+
+  export type VTConfiguracionCamaraGroupByOutputType = {
+    idConfig: number
+    idRegistroCabecera: number
+    idCamara: number
+    mes: number
+    numeroCamaraMes: number
+    nombreCamara: string | null
+    temperaturaMinima: number | null
+    temperaturaMaxima: number | null
+    _count: VTConfiguracionCamaraCountAggregateOutputType | null
+    _avg: VTConfiguracionCamaraAvgAggregateOutputType | null
+    _sum: VTConfiguracionCamaraSumAggregateOutputType | null
+    _min: VTConfiguracionCamaraMinAggregateOutputType | null
+    _max: VTConfiguracionCamaraMaxAggregateOutputType | null
+  }
+
+  type GetVTConfiguracionCamaraGroupByPayload<T extends VTConfiguracionCamaraGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<VTConfiguracionCamaraGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof VTConfiguracionCamaraGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], VTConfiguracionCamaraGroupByOutputType[P]>
+            : GetScalarType<T[P], VTConfiguracionCamaraGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type VTConfiguracionCamaraSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    idConfig?: boolean
+    idRegistroCabecera?: boolean
+    idCamara?: boolean
+    mes?: boolean
+    numeroCamaraMes?: boolean
+    nombreCamara?: boolean
+    temperaturaMinima?: boolean
+    temperaturaMaxima?: boolean
+    registro?: boolean | VTRegistroCabeceraDefaultArgs<ExtArgs>
+    camara?: boolean | VTCamaraDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["vTConfiguracionCamara"]>
+
+  export type VTConfiguracionCamaraSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    idConfig?: boolean
+    idRegistroCabecera?: boolean
+    idCamara?: boolean
+    mes?: boolean
+    numeroCamaraMes?: boolean
+    nombreCamara?: boolean
+    temperaturaMinima?: boolean
+    temperaturaMaxima?: boolean
+    registro?: boolean | VTRegistroCabeceraDefaultArgs<ExtArgs>
+    camara?: boolean | VTCamaraDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["vTConfiguracionCamara"]>
+
+  export type VTConfiguracionCamaraSelectScalar = {
+    idConfig?: boolean
+    idRegistroCabecera?: boolean
+    idCamara?: boolean
+    mes?: boolean
+    numeroCamaraMes?: boolean
+    nombreCamara?: boolean
+    temperaturaMinima?: boolean
+    temperaturaMaxima?: boolean
+  }
+
+  export type VTConfiguracionCamaraInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    registro?: boolean | VTRegistroCabeceraDefaultArgs<ExtArgs>
+    camara?: boolean | VTCamaraDefaultArgs<ExtArgs>
+  }
+  export type VTConfiguracionCamaraIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    registro?: boolean | VTRegistroCabeceraDefaultArgs<ExtArgs>
+    camara?: boolean | VTCamaraDefaultArgs<ExtArgs>
+  }
+
+  export type $VTConfiguracionCamaraPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "VTConfiguracionCamara"
+    objects: {
+      registro: Prisma.$VTRegistroCabeceraPayload<ExtArgs>
+      camara: Prisma.$VTCamaraPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      idConfig: number
+      idRegistroCabecera: number
+      idCamara: number
+      mes: number
+      numeroCamaraMes: number
+      nombreCamara: string | null
+      temperaturaMinima: number | null
+      temperaturaMaxima: number | null
+    }, ExtArgs["result"]["vTConfiguracionCamara"]>
+    composites: {}
+  }
+
+  type VTConfiguracionCamaraGetPayload<S extends boolean | null | undefined | VTConfiguracionCamaraDefaultArgs> = $Result.GetResult<Prisma.$VTConfiguracionCamaraPayload, S>
+
+  type VTConfiguracionCamaraCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<VTConfiguracionCamaraFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: VTConfiguracionCamaraCountAggregateInputType | true
+    }
+
+  export interface VTConfiguracionCamaraDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['VTConfiguracionCamara'], meta: { name: 'VTConfiguracionCamara' } }
+    /**
+     * Find zero or one VTConfiguracionCamara that matches the filter.
+     * @param {VTConfiguracionCamaraFindUniqueArgs} args - Arguments to find a VTConfiguracionCamara
+     * @example
+     * // Get one VTConfiguracionCamara
+     * const vTConfiguracionCamara = await prisma.vTConfiguracionCamara.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends VTConfiguracionCamaraFindUniqueArgs>(args: SelectSubset<T, VTConfiguracionCamaraFindUniqueArgs<ExtArgs>>): Prisma__VTConfiguracionCamaraClient<$Result.GetResult<Prisma.$VTConfiguracionCamaraPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one VTConfiguracionCamara that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {VTConfiguracionCamaraFindUniqueOrThrowArgs} args - Arguments to find a VTConfiguracionCamara
+     * @example
+     * // Get one VTConfiguracionCamara
+     * const vTConfiguracionCamara = await prisma.vTConfiguracionCamara.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends VTConfiguracionCamaraFindUniqueOrThrowArgs>(args: SelectSubset<T, VTConfiguracionCamaraFindUniqueOrThrowArgs<ExtArgs>>): Prisma__VTConfiguracionCamaraClient<$Result.GetResult<Prisma.$VTConfiguracionCamaraPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first VTConfiguracionCamara that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTConfiguracionCamaraFindFirstArgs} args - Arguments to find a VTConfiguracionCamara
+     * @example
+     * // Get one VTConfiguracionCamara
+     * const vTConfiguracionCamara = await prisma.vTConfiguracionCamara.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends VTConfiguracionCamaraFindFirstArgs>(args?: SelectSubset<T, VTConfiguracionCamaraFindFirstArgs<ExtArgs>>): Prisma__VTConfiguracionCamaraClient<$Result.GetResult<Prisma.$VTConfiguracionCamaraPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first VTConfiguracionCamara that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTConfiguracionCamaraFindFirstOrThrowArgs} args - Arguments to find a VTConfiguracionCamara
+     * @example
+     * // Get one VTConfiguracionCamara
+     * const vTConfiguracionCamara = await prisma.vTConfiguracionCamara.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends VTConfiguracionCamaraFindFirstOrThrowArgs>(args?: SelectSubset<T, VTConfiguracionCamaraFindFirstOrThrowArgs<ExtArgs>>): Prisma__VTConfiguracionCamaraClient<$Result.GetResult<Prisma.$VTConfiguracionCamaraPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more VTConfiguracionCamaras that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTConfiguracionCamaraFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all VTConfiguracionCamaras
+     * const vTConfiguracionCamaras = await prisma.vTConfiguracionCamara.findMany()
+     * 
+     * // Get first 10 VTConfiguracionCamaras
+     * const vTConfiguracionCamaras = await prisma.vTConfiguracionCamara.findMany({ take: 10 })
+     * 
+     * // Only select the `idConfig`
+     * const vTConfiguracionCamaraWithIdConfigOnly = await prisma.vTConfiguracionCamara.findMany({ select: { idConfig: true } })
+     * 
+     */
+    findMany<T extends VTConfiguracionCamaraFindManyArgs>(args?: SelectSubset<T, VTConfiguracionCamaraFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VTConfiguracionCamaraPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a VTConfiguracionCamara.
+     * @param {VTConfiguracionCamaraCreateArgs} args - Arguments to create a VTConfiguracionCamara.
+     * @example
+     * // Create one VTConfiguracionCamara
+     * const VTConfiguracionCamara = await prisma.vTConfiguracionCamara.create({
+     *   data: {
+     *     // ... data to create a VTConfiguracionCamara
+     *   }
+     * })
+     * 
+     */
+    create<T extends VTConfiguracionCamaraCreateArgs>(args: SelectSubset<T, VTConfiguracionCamaraCreateArgs<ExtArgs>>): Prisma__VTConfiguracionCamaraClient<$Result.GetResult<Prisma.$VTConfiguracionCamaraPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many VTConfiguracionCamaras.
+     * @param {VTConfiguracionCamaraCreateManyArgs} args - Arguments to create many VTConfiguracionCamaras.
+     * @example
+     * // Create many VTConfiguracionCamaras
+     * const vTConfiguracionCamara = await prisma.vTConfiguracionCamara.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends VTConfiguracionCamaraCreateManyArgs>(args?: SelectSubset<T, VTConfiguracionCamaraCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many VTConfiguracionCamaras and returns the data saved in the database.
+     * @param {VTConfiguracionCamaraCreateManyAndReturnArgs} args - Arguments to create many VTConfiguracionCamaras.
+     * @example
+     * // Create many VTConfiguracionCamaras
+     * const vTConfiguracionCamara = await prisma.vTConfiguracionCamara.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many VTConfiguracionCamaras and only return the `idConfig`
+     * const vTConfiguracionCamaraWithIdConfigOnly = await prisma.vTConfiguracionCamara.createManyAndReturn({ 
+     *   select: { idConfig: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends VTConfiguracionCamaraCreateManyAndReturnArgs>(args?: SelectSubset<T, VTConfiguracionCamaraCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VTConfiguracionCamaraPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a VTConfiguracionCamara.
+     * @param {VTConfiguracionCamaraDeleteArgs} args - Arguments to delete one VTConfiguracionCamara.
+     * @example
+     * // Delete one VTConfiguracionCamara
+     * const VTConfiguracionCamara = await prisma.vTConfiguracionCamara.delete({
+     *   where: {
+     *     // ... filter to delete one VTConfiguracionCamara
+     *   }
+     * })
+     * 
+     */
+    delete<T extends VTConfiguracionCamaraDeleteArgs>(args: SelectSubset<T, VTConfiguracionCamaraDeleteArgs<ExtArgs>>): Prisma__VTConfiguracionCamaraClient<$Result.GetResult<Prisma.$VTConfiguracionCamaraPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one VTConfiguracionCamara.
+     * @param {VTConfiguracionCamaraUpdateArgs} args - Arguments to update one VTConfiguracionCamara.
+     * @example
+     * // Update one VTConfiguracionCamara
+     * const vTConfiguracionCamara = await prisma.vTConfiguracionCamara.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends VTConfiguracionCamaraUpdateArgs>(args: SelectSubset<T, VTConfiguracionCamaraUpdateArgs<ExtArgs>>): Prisma__VTConfiguracionCamaraClient<$Result.GetResult<Prisma.$VTConfiguracionCamaraPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more VTConfiguracionCamaras.
+     * @param {VTConfiguracionCamaraDeleteManyArgs} args - Arguments to filter VTConfiguracionCamaras to delete.
+     * @example
+     * // Delete a few VTConfiguracionCamaras
+     * const { count } = await prisma.vTConfiguracionCamara.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends VTConfiguracionCamaraDeleteManyArgs>(args?: SelectSubset<T, VTConfiguracionCamaraDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more VTConfiguracionCamaras.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTConfiguracionCamaraUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many VTConfiguracionCamaras
+     * const vTConfiguracionCamara = await prisma.vTConfiguracionCamara.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends VTConfiguracionCamaraUpdateManyArgs>(args: SelectSubset<T, VTConfiguracionCamaraUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one VTConfiguracionCamara.
+     * @param {VTConfiguracionCamaraUpsertArgs} args - Arguments to update or create a VTConfiguracionCamara.
+     * @example
+     * // Update or create a VTConfiguracionCamara
+     * const vTConfiguracionCamara = await prisma.vTConfiguracionCamara.upsert({
+     *   create: {
+     *     // ... data to create a VTConfiguracionCamara
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the VTConfiguracionCamara we want to update
+     *   }
+     * })
+     */
+    upsert<T extends VTConfiguracionCamaraUpsertArgs>(args: SelectSubset<T, VTConfiguracionCamaraUpsertArgs<ExtArgs>>): Prisma__VTConfiguracionCamaraClient<$Result.GetResult<Prisma.$VTConfiguracionCamaraPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of VTConfiguracionCamaras.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTConfiguracionCamaraCountArgs} args - Arguments to filter VTConfiguracionCamaras to count.
+     * @example
+     * // Count the number of VTConfiguracionCamaras
+     * const count = await prisma.vTConfiguracionCamara.count({
+     *   where: {
+     *     // ... the filter for the VTConfiguracionCamaras we want to count
+     *   }
+     * })
+    **/
+    count<T extends VTConfiguracionCamaraCountArgs>(
+      args?: Subset<T, VTConfiguracionCamaraCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], VTConfiguracionCamaraCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a VTConfiguracionCamara.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTConfiguracionCamaraAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends VTConfiguracionCamaraAggregateArgs>(args: Subset<T, VTConfiguracionCamaraAggregateArgs>): Prisma.PrismaPromise<GetVTConfiguracionCamaraAggregateType<T>>
+
+    /**
+     * Group by VTConfiguracionCamara.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTConfiguracionCamaraGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends VTConfiguracionCamaraGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: VTConfiguracionCamaraGroupByArgs['orderBy'] }
+        : { orderBy?: VTConfiguracionCamaraGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, VTConfiguracionCamaraGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVTConfiguracionCamaraGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the VTConfiguracionCamara model
+   */
+  readonly fields: VTConfiguracionCamaraFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for VTConfiguracionCamara.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__VTConfiguracionCamaraClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    registro<T extends VTRegistroCabeceraDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VTRegistroCabeceraDefaultArgs<ExtArgs>>): Prisma__VTRegistroCabeceraClient<$Result.GetResult<Prisma.$VTRegistroCabeceraPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    camara<T extends VTCamaraDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VTCamaraDefaultArgs<ExtArgs>>): Prisma__VTCamaraClient<$Result.GetResult<Prisma.$VTCamaraPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the VTConfiguracionCamara model
+   */ 
+  interface VTConfiguracionCamaraFieldRefs {
+    readonly idConfig: FieldRef<"VTConfiguracionCamara", 'Int'>
+    readonly idRegistroCabecera: FieldRef<"VTConfiguracionCamara", 'Int'>
+    readonly idCamara: FieldRef<"VTConfiguracionCamara", 'Int'>
+    readonly mes: FieldRef<"VTConfiguracionCamara", 'Int'>
+    readonly numeroCamaraMes: FieldRef<"VTConfiguracionCamara", 'Int'>
+    readonly nombreCamara: FieldRef<"VTConfiguracionCamara", 'String'>
+    readonly temperaturaMinima: FieldRef<"VTConfiguracionCamara", 'Float'>
+    readonly temperaturaMaxima: FieldRef<"VTConfiguracionCamara", 'Float'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * VTConfiguracionCamara findUnique
+   */
+  export type VTConfiguracionCamaraFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTConfiguracionCamara
+     */
+    select?: VTConfiguracionCamaraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTConfiguracionCamaraInclude<ExtArgs> | null
+    /**
+     * Filter, which VTConfiguracionCamara to fetch.
+     */
+    where: VTConfiguracionCamaraWhereUniqueInput
+  }
+
+  /**
+   * VTConfiguracionCamara findUniqueOrThrow
+   */
+  export type VTConfiguracionCamaraFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTConfiguracionCamara
+     */
+    select?: VTConfiguracionCamaraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTConfiguracionCamaraInclude<ExtArgs> | null
+    /**
+     * Filter, which VTConfiguracionCamara to fetch.
+     */
+    where: VTConfiguracionCamaraWhereUniqueInput
+  }
+
+  /**
+   * VTConfiguracionCamara findFirst
+   */
+  export type VTConfiguracionCamaraFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTConfiguracionCamara
+     */
+    select?: VTConfiguracionCamaraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTConfiguracionCamaraInclude<ExtArgs> | null
+    /**
+     * Filter, which VTConfiguracionCamara to fetch.
+     */
+    where?: VTConfiguracionCamaraWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VTConfiguracionCamaras to fetch.
+     */
+    orderBy?: VTConfiguracionCamaraOrderByWithRelationInput | VTConfiguracionCamaraOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VTConfiguracionCamaras.
+     */
+    cursor?: VTConfiguracionCamaraWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VTConfiguracionCamaras from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VTConfiguracionCamaras.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VTConfiguracionCamaras.
+     */
+    distinct?: VTConfiguracionCamaraScalarFieldEnum | VTConfiguracionCamaraScalarFieldEnum[]
+  }
+
+  /**
+   * VTConfiguracionCamara findFirstOrThrow
+   */
+  export type VTConfiguracionCamaraFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTConfiguracionCamara
+     */
+    select?: VTConfiguracionCamaraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTConfiguracionCamaraInclude<ExtArgs> | null
+    /**
+     * Filter, which VTConfiguracionCamara to fetch.
+     */
+    where?: VTConfiguracionCamaraWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VTConfiguracionCamaras to fetch.
+     */
+    orderBy?: VTConfiguracionCamaraOrderByWithRelationInput | VTConfiguracionCamaraOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VTConfiguracionCamaras.
+     */
+    cursor?: VTConfiguracionCamaraWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VTConfiguracionCamaras from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VTConfiguracionCamaras.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VTConfiguracionCamaras.
+     */
+    distinct?: VTConfiguracionCamaraScalarFieldEnum | VTConfiguracionCamaraScalarFieldEnum[]
+  }
+
+  /**
+   * VTConfiguracionCamara findMany
+   */
+  export type VTConfiguracionCamaraFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTConfiguracionCamara
+     */
+    select?: VTConfiguracionCamaraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTConfiguracionCamaraInclude<ExtArgs> | null
+    /**
+     * Filter, which VTConfiguracionCamaras to fetch.
+     */
+    where?: VTConfiguracionCamaraWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VTConfiguracionCamaras to fetch.
+     */
+    orderBy?: VTConfiguracionCamaraOrderByWithRelationInput | VTConfiguracionCamaraOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing VTConfiguracionCamaras.
+     */
+    cursor?: VTConfiguracionCamaraWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VTConfiguracionCamaras from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VTConfiguracionCamaras.
+     */
+    skip?: number
+    distinct?: VTConfiguracionCamaraScalarFieldEnum | VTConfiguracionCamaraScalarFieldEnum[]
+  }
+
+  /**
+   * VTConfiguracionCamara create
+   */
+  export type VTConfiguracionCamaraCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTConfiguracionCamara
+     */
+    select?: VTConfiguracionCamaraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTConfiguracionCamaraInclude<ExtArgs> | null
+    /**
+     * The data needed to create a VTConfiguracionCamara.
+     */
+    data: XOR<VTConfiguracionCamaraCreateInput, VTConfiguracionCamaraUncheckedCreateInput>
+  }
+
+  /**
+   * VTConfiguracionCamara createMany
+   */
+  export type VTConfiguracionCamaraCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many VTConfiguracionCamaras.
+     */
+    data: VTConfiguracionCamaraCreateManyInput | VTConfiguracionCamaraCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * VTConfiguracionCamara createManyAndReturn
+   */
+  export type VTConfiguracionCamaraCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTConfiguracionCamara
+     */
+    select?: VTConfiguracionCamaraSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many VTConfiguracionCamaras.
+     */
+    data: VTConfiguracionCamaraCreateManyInput | VTConfiguracionCamaraCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTConfiguracionCamaraIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * VTConfiguracionCamara update
+   */
+  export type VTConfiguracionCamaraUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTConfiguracionCamara
+     */
+    select?: VTConfiguracionCamaraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTConfiguracionCamaraInclude<ExtArgs> | null
+    /**
+     * The data needed to update a VTConfiguracionCamara.
+     */
+    data: XOR<VTConfiguracionCamaraUpdateInput, VTConfiguracionCamaraUncheckedUpdateInput>
+    /**
+     * Choose, which VTConfiguracionCamara to update.
+     */
+    where: VTConfiguracionCamaraWhereUniqueInput
+  }
+
+  /**
+   * VTConfiguracionCamara updateMany
+   */
+  export type VTConfiguracionCamaraUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update VTConfiguracionCamaras.
+     */
+    data: XOR<VTConfiguracionCamaraUpdateManyMutationInput, VTConfiguracionCamaraUncheckedUpdateManyInput>
+    /**
+     * Filter which VTConfiguracionCamaras to update
+     */
+    where?: VTConfiguracionCamaraWhereInput
+  }
+
+  /**
+   * VTConfiguracionCamara upsert
+   */
+  export type VTConfiguracionCamaraUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTConfiguracionCamara
+     */
+    select?: VTConfiguracionCamaraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTConfiguracionCamaraInclude<ExtArgs> | null
+    /**
+     * The filter to search for the VTConfiguracionCamara to update in case it exists.
+     */
+    where: VTConfiguracionCamaraWhereUniqueInput
+    /**
+     * In case the VTConfiguracionCamara found by the `where` argument doesn't exist, create a new VTConfiguracionCamara with this data.
+     */
+    create: XOR<VTConfiguracionCamaraCreateInput, VTConfiguracionCamaraUncheckedCreateInput>
+    /**
+     * In case the VTConfiguracionCamara was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<VTConfiguracionCamaraUpdateInput, VTConfiguracionCamaraUncheckedUpdateInput>
+  }
+
+  /**
+   * VTConfiguracionCamara delete
+   */
+  export type VTConfiguracionCamaraDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTConfiguracionCamara
+     */
+    select?: VTConfiguracionCamaraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTConfiguracionCamaraInclude<ExtArgs> | null
+    /**
+     * Filter which VTConfiguracionCamara to delete.
+     */
+    where: VTConfiguracionCamaraWhereUniqueInput
+  }
+
+  /**
+   * VTConfiguracionCamara deleteMany
+   */
+  export type VTConfiguracionCamaraDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VTConfiguracionCamaras to delete
+     */
+    where?: VTConfiguracionCamaraWhereInput
+  }
+
+  /**
+   * VTConfiguracionCamara without action
+   */
+  export type VTConfiguracionCamaraDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTConfiguracionCamara
+     */
+    select?: VTConfiguracionCamaraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTConfiguracionCamaraInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model VTRegistroCabecera
+   */
+
+  export type AggregateVTRegistroCabecera = {
+    _count: VTRegistroCabeceraCountAggregateOutputType | null
+    _avg: VTRegistroCabeceraAvgAggregateOutputType | null
+    _sum: VTRegistroCabeceraSumAggregateOutputType | null
+    _min: VTRegistroCabeceraMinAggregateOutputType | null
+    _max: VTRegistroCabeceraMaxAggregateOutputType | null
+  }
+
+  export type VTRegistroCabeceraAvgAggregateOutputType = {
+    idRegistro: number | null
+    anio: number | null
+  }
+
+  export type VTRegistroCabeceraSumAggregateOutputType = {
+    idRegistro: number | null
+    anio: number | null
+  }
+
+  export type VTRegistroCabeceraMinAggregateOutputType = {
+    idRegistro: number | null
+    tipoEntidad: string | null
+    idEntidad: string | null
+    nombreEntidad: string | null
+    anio: number | null
+    fechaRegistro: Date | null
+    monitorResponsable: string | null
+    tipoCamara: string | null
+    descripcionCamaras: string | null
+    fechaCreacion: Date | null
+    usuarioCreacion: string | null
+  }
+
+  export type VTRegistroCabeceraMaxAggregateOutputType = {
+    idRegistro: number | null
+    tipoEntidad: string | null
+    idEntidad: string | null
+    nombreEntidad: string | null
+    anio: number | null
+    fechaRegistro: Date | null
+    monitorResponsable: string | null
+    tipoCamara: string | null
+    descripcionCamaras: string | null
+    fechaCreacion: Date | null
+    usuarioCreacion: string | null
+  }
+
+  export type VTRegistroCabeceraCountAggregateOutputType = {
+    idRegistro: number
+    tipoEntidad: number
+    idEntidad: number
+    nombreEntidad: number
+    anio: number
+    fechaRegistro: number
+    monitorResponsable: number
+    tipoCamara: number
+    descripcionCamaras: number
+    fechaCreacion: number
+    usuarioCreacion: number
+    _all: number
+  }
+
+
+  export type VTRegistroCabeceraAvgAggregateInputType = {
+    idRegistro?: true
+    anio?: true
+  }
+
+  export type VTRegistroCabeceraSumAggregateInputType = {
+    idRegistro?: true
+    anio?: true
+  }
+
+  export type VTRegistroCabeceraMinAggregateInputType = {
+    idRegistro?: true
+    tipoEntidad?: true
+    idEntidad?: true
+    nombreEntidad?: true
+    anio?: true
+    fechaRegistro?: true
+    monitorResponsable?: true
+    tipoCamara?: true
+    descripcionCamaras?: true
+    fechaCreacion?: true
+    usuarioCreacion?: true
+  }
+
+  export type VTRegistroCabeceraMaxAggregateInputType = {
+    idRegistro?: true
+    tipoEntidad?: true
+    idEntidad?: true
+    nombreEntidad?: true
+    anio?: true
+    fechaRegistro?: true
+    monitorResponsable?: true
+    tipoCamara?: true
+    descripcionCamaras?: true
+    fechaCreacion?: true
+    usuarioCreacion?: true
+  }
+
+  export type VTRegistroCabeceraCountAggregateInputType = {
+    idRegistro?: true
+    tipoEntidad?: true
+    idEntidad?: true
+    nombreEntidad?: true
+    anio?: true
+    fechaRegistro?: true
+    monitorResponsable?: true
+    tipoCamara?: true
+    descripcionCamaras?: true
+    fechaCreacion?: true
+    usuarioCreacion?: true
+    _all?: true
+  }
+
+  export type VTRegistroCabeceraAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VTRegistroCabecera to aggregate.
+     */
+    where?: VTRegistroCabeceraWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VTRegistroCabeceras to fetch.
+     */
+    orderBy?: VTRegistroCabeceraOrderByWithRelationInput | VTRegistroCabeceraOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: VTRegistroCabeceraWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VTRegistroCabeceras from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VTRegistroCabeceras.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned VTRegistroCabeceras
+    **/
+    _count?: true | VTRegistroCabeceraCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: VTRegistroCabeceraAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: VTRegistroCabeceraSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: VTRegistroCabeceraMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: VTRegistroCabeceraMaxAggregateInputType
+  }
+
+  export type GetVTRegistroCabeceraAggregateType<T extends VTRegistroCabeceraAggregateArgs> = {
+        [P in keyof T & keyof AggregateVTRegistroCabecera]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateVTRegistroCabecera[P]>
+      : GetScalarType<T[P], AggregateVTRegistroCabecera[P]>
+  }
+
+
+
+
+  export type VTRegistroCabeceraGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VTRegistroCabeceraWhereInput
+    orderBy?: VTRegistroCabeceraOrderByWithAggregationInput | VTRegistroCabeceraOrderByWithAggregationInput[]
+    by: VTRegistroCabeceraScalarFieldEnum[] | VTRegistroCabeceraScalarFieldEnum
+    having?: VTRegistroCabeceraScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: VTRegistroCabeceraCountAggregateInputType | true
+    _avg?: VTRegistroCabeceraAvgAggregateInputType
+    _sum?: VTRegistroCabeceraSumAggregateInputType
+    _min?: VTRegistroCabeceraMinAggregateInputType
+    _max?: VTRegistroCabeceraMaxAggregateInputType
+  }
+
+  export type VTRegistroCabeceraGroupByOutputType = {
+    idRegistro: number
+    tipoEntidad: string
+    idEntidad: string
+    nombreEntidad: string
+    anio: number
+    fechaRegistro: Date | null
+    monitorResponsable: string
+    tipoCamara: string
+    descripcionCamaras: string | null
+    fechaCreacion: Date
+    usuarioCreacion: string
+    _count: VTRegistroCabeceraCountAggregateOutputType | null
+    _avg: VTRegistroCabeceraAvgAggregateOutputType | null
+    _sum: VTRegistroCabeceraSumAggregateOutputType | null
+    _min: VTRegistroCabeceraMinAggregateOutputType | null
+    _max: VTRegistroCabeceraMaxAggregateOutputType | null
+  }
+
+  type GetVTRegistroCabeceraGroupByPayload<T extends VTRegistroCabeceraGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<VTRegistroCabeceraGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof VTRegistroCabeceraGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], VTRegistroCabeceraGroupByOutputType[P]>
+            : GetScalarType<T[P], VTRegistroCabeceraGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type VTRegistroCabeceraSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    idRegistro?: boolean
+    tipoEntidad?: boolean
+    idEntidad?: boolean
+    nombreEntidad?: boolean
+    anio?: boolean
+    fechaRegistro?: boolean
+    monitorResponsable?: boolean
+    tipoCamara?: boolean
+    descripcionCamaras?: boolean
+    fechaCreacion?: boolean
+    usuarioCreacion?: boolean
+    configuraciones?: boolean | VTRegistroCabecera$configuracionesArgs<ExtArgs>
+    detalles?: boolean | VTRegistroCabecera$detallesArgs<ExtArgs>
+    verificacionesDiarias?: boolean | VTRegistroCabecera$verificacionesDiariasArgs<ExtArgs>
+    verificacionesSemanales?: boolean | VTRegistroCabecera$verificacionesSemanalesArgs<ExtArgs>
+    _count?: boolean | VTRegistroCabeceraCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["vTRegistroCabecera"]>
+
+  export type VTRegistroCabeceraSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    idRegistro?: boolean
+    tipoEntidad?: boolean
+    idEntidad?: boolean
+    nombreEntidad?: boolean
+    anio?: boolean
+    fechaRegistro?: boolean
+    monitorResponsable?: boolean
+    tipoCamara?: boolean
+    descripcionCamaras?: boolean
+    fechaCreacion?: boolean
+    usuarioCreacion?: boolean
+  }, ExtArgs["result"]["vTRegistroCabecera"]>
+
+  export type VTRegistroCabeceraSelectScalar = {
+    idRegistro?: boolean
+    tipoEntidad?: boolean
+    idEntidad?: boolean
+    nombreEntidad?: boolean
+    anio?: boolean
+    fechaRegistro?: boolean
+    monitorResponsable?: boolean
+    tipoCamara?: boolean
+    descripcionCamaras?: boolean
+    fechaCreacion?: boolean
+    usuarioCreacion?: boolean
+  }
+
+  export type VTRegistroCabeceraInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    configuraciones?: boolean | VTRegistroCabecera$configuracionesArgs<ExtArgs>
+    detalles?: boolean | VTRegistroCabecera$detallesArgs<ExtArgs>
+    verificacionesDiarias?: boolean | VTRegistroCabecera$verificacionesDiariasArgs<ExtArgs>
+    verificacionesSemanales?: boolean | VTRegistroCabecera$verificacionesSemanalesArgs<ExtArgs>
+    _count?: boolean | VTRegistroCabeceraCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type VTRegistroCabeceraIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $VTRegistroCabeceraPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "VTRegistroCabecera"
+    objects: {
+      configuraciones: Prisma.$VTConfiguracionCamaraPayload<ExtArgs>[]
+      detalles: Prisma.$VTRegistroDetallePayload<ExtArgs>[]
+      verificacionesDiarias: Prisma.$VTVerificacionDiariaPayload<ExtArgs>[]
+      verificacionesSemanales: Prisma.$VTVerificacionSemanalPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      idRegistro: number
+      tipoEntidad: string
+      idEntidad: string
+      nombreEntidad: string
+      anio: number
+      fechaRegistro: Date | null
+      monitorResponsable: string
+      tipoCamara: string
+      descripcionCamaras: string | null
+      fechaCreacion: Date
+      usuarioCreacion: string
+    }, ExtArgs["result"]["vTRegistroCabecera"]>
+    composites: {}
+  }
+
+  type VTRegistroCabeceraGetPayload<S extends boolean | null | undefined | VTRegistroCabeceraDefaultArgs> = $Result.GetResult<Prisma.$VTRegistroCabeceraPayload, S>
+
+  type VTRegistroCabeceraCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<VTRegistroCabeceraFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: VTRegistroCabeceraCountAggregateInputType | true
+    }
+
+  export interface VTRegistroCabeceraDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['VTRegistroCabecera'], meta: { name: 'VTRegistroCabecera' } }
+    /**
+     * Find zero or one VTRegistroCabecera that matches the filter.
+     * @param {VTRegistroCabeceraFindUniqueArgs} args - Arguments to find a VTRegistroCabecera
+     * @example
+     * // Get one VTRegistroCabecera
+     * const vTRegistroCabecera = await prisma.vTRegistroCabecera.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends VTRegistroCabeceraFindUniqueArgs>(args: SelectSubset<T, VTRegistroCabeceraFindUniqueArgs<ExtArgs>>): Prisma__VTRegistroCabeceraClient<$Result.GetResult<Prisma.$VTRegistroCabeceraPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one VTRegistroCabecera that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {VTRegistroCabeceraFindUniqueOrThrowArgs} args - Arguments to find a VTRegistroCabecera
+     * @example
+     * // Get one VTRegistroCabecera
+     * const vTRegistroCabecera = await prisma.vTRegistroCabecera.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends VTRegistroCabeceraFindUniqueOrThrowArgs>(args: SelectSubset<T, VTRegistroCabeceraFindUniqueOrThrowArgs<ExtArgs>>): Prisma__VTRegistroCabeceraClient<$Result.GetResult<Prisma.$VTRegistroCabeceraPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first VTRegistroCabecera that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTRegistroCabeceraFindFirstArgs} args - Arguments to find a VTRegistroCabecera
+     * @example
+     * // Get one VTRegistroCabecera
+     * const vTRegistroCabecera = await prisma.vTRegistroCabecera.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends VTRegistroCabeceraFindFirstArgs>(args?: SelectSubset<T, VTRegistroCabeceraFindFirstArgs<ExtArgs>>): Prisma__VTRegistroCabeceraClient<$Result.GetResult<Prisma.$VTRegistroCabeceraPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first VTRegistroCabecera that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTRegistroCabeceraFindFirstOrThrowArgs} args - Arguments to find a VTRegistroCabecera
+     * @example
+     * // Get one VTRegistroCabecera
+     * const vTRegistroCabecera = await prisma.vTRegistroCabecera.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends VTRegistroCabeceraFindFirstOrThrowArgs>(args?: SelectSubset<T, VTRegistroCabeceraFindFirstOrThrowArgs<ExtArgs>>): Prisma__VTRegistroCabeceraClient<$Result.GetResult<Prisma.$VTRegistroCabeceraPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more VTRegistroCabeceras that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTRegistroCabeceraFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all VTRegistroCabeceras
+     * const vTRegistroCabeceras = await prisma.vTRegistroCabecera.findMany()
+     * 
+     * // Get first 10 VTRegistroCabeceras
+     * const vTRegistroCabeceras = await prisma.vTRegistroCabecera.findMany({ take: 10 })
+     * 
+     * // Only select the `idRegistro`
+     * const vTRegistroCabeceraWithIdRegistroOnly = await prisma.vTRegistroCabecera.findMany({ select: { idRegistro: true } })
+     * 
+     */
+    findMany<T extends VTRegistroCabeceraFindManyArgs>(args?: SelectSubset<T, VTRegistroCabeceraFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VTRegistroCabeceraPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a VTRegistroCabecera.
+     * @param {VTRegistroCabeceraCreateArgs} args - Arguments to create a VTRegistroCabecera.
+     * @example
+     * // Create one VTRegistroCabecera
+     * const VTRegistroCabecera = await prisma.vTRegistroCabecera.create({
+     *   data: {
+     *     // ... data to create a VTRegistroCabecera
+     *   }
+     * })
+     * 
+     */
+    create<T extends VTRegistroCabeceraCreateArgs>(args: SelectSubset<T, VTRegistroCabeceraCreateArgs<ExtArgs>>): Prisma__VTRegistroCabeceraClient<$Result.GetResult<Prisma.$VTRegistroCabeceraPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many VTRegistroCabeceras.
+     * @param {VTRegistroCabeceraCreateManyArgs} args - Arguments to create many VTRegistroCabeceras.
+     * @example
+     * // Create many VTRegistroCabeceras
+     * const vTRegistroCabecera = await prisma.vTRegistroCabecera.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends VTRegistroCabeceraCreateManyArgs>(args?: SelectSubset<T, VTRegistroCabeceraCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many VTRegistroCabeceras and returns the data saved in the database.
+     * @param {VTRegistroCabeceraCreateManyAndReturnArgs} args - Arguments to create many VTRegistroCabeceras.
+     * @example
+     * // Create many VTRegistroCabeceras
+     * const vTRegistroCabecera = await prisma.vTRegistroCabecera.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many VTRegistroCabeceras and only return the `idRegistro`
+     * const vTRegistroCabeceraWithIdRegistroOnly = await prisma.vTRegistroCabecera.createManyAndReturn({ 
+     *   select: { idRegistro: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends VTRegistroCabeceraCreateManyAndReturnArgs>(args?: SelectSubset<T, VTRegistroCabeceraCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VTRegistroCabeceraPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a VTRegistroCabecera.
+     * @param {VTRegistroCabeceraDeleteArgs} args - Arguments to delete one VTRegistroCabecera.
+     * @example
+     * // Delete one VTRegistroCabecera
+     * const VTRegistroCabecera = await prisma.vTRegistroCabecera.delete({
+     *   where: {
+     *     // ... filter to delete one VTRegistroCabecera
+     *   }
+     * })
+     * 
+     */
+    delete<T extends VTRegistroCabeceraDeleteArgs>(args: SelectSubset<T, VTRegistroCabeceraDeleteArgs<ExtArgs>>): Prisma__VTRegistroCabeceraClient<$Result.GetResult<Prisma.$VTRegistroCabeceraPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one VTRegistroCabecera.
+     * @param {VTRegistroCabeceraUpdateArgs} args - Arguments to update one VTRegistroCabecera.
+     * @example
+     * // Update one VTRegistroCabecera
+     * const vTRegistroCabecera = await prisma.vTRegistroCabecera.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends VTRegistroCabeceraUpdateArgs>(args: SelectSubset<T, VTRegistroCabeceraUpdateArgs<ExtArgs>>): Prisma__VTRegistroCabeceraClient<$Result.GetResult<Prisma.$VTRegistroCabeceraPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more VTRegistroCabeceras.
+     * @param {VTRegistroCabeceraDeleteManyArgs} args - Arguments to filter VTRegistroCabeceras to delete.
+     * @example
+     * // Delete a few VTRegistroCabeceras
+     * const { count } = await prisma.vTRegistroCabecera.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends VTRegistroCabeceraDeleteManyArgs>(args?: SelectSubset<T, VTRegistroCabeceraDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more VTRegistroCabeceras.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTRegistroCabeceraUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many VTRegistroCabeceras
+     * const vTRegistroCabecera = await prisma.vTRegistroCabecera.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends VTRegistroCabeceraUpdateManyArgs>(args: SelectSubset<T, VTRegistroCabeceraUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one VTRegistroCabecera.
+     * @param {VTRegistroCabeceraUpsertArgs} args - Arguments to update or create a VTRegistroCabecera.
+     * @example
+     * // Update or create a VTRegistroCabecera
+     * const vTRegistroCabecera = await prisma.vTRegistroCabecera.upsert({
+     *   create: {
+     *     // ... data to create a VTRegistroCabecera
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the VTRegistroCabecera we want to update
+     *   }
+     * })
+     */
+    upsert<T extends VTRegistroCabeceraUpsertArgs>(args: SelectSubset<T, VTRegistroCabeceraUpsertArgs<ExtArgs>>): Prisma__VTRegistroCabeceraClient<$Result.GetResult<Prisma.$VTRegistroCabeceraPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of VTRegistroCabeceras.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTRegistroCabeceraCountArgs} args - Arguments to filter VTRegistroCabeceras to count.
+     * @example
+     * // Count the number of VTRegistroCabeceras
+     * const count = await prisma.vTRegistroCabecera.count({
+     *   where: {
+     *     // ... the filter for the VTRegistroCabeceras we want to count
+     *   }
+     * })
+    **/
+    count<T extends VTRegistroCabeceraCountArgs>(
+      args?: Subset<T, VTRegistroCabeceraCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], VTRegistroCabeceraCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a VTRegistroCabecera.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTRegistroCabeceraAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends VTRegistroCabeceraAggregateArgs>(args: Subset<T, VTRegistroCabeceraAggregateArgs>): Prisma.PrismaPromise<GetVTRegistroCabeceraAggregateType<T>>
+
+    /**
+     * Group by VTRegistroCabecera.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTRegistroCabeceraGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends VTRegistroCabeceraGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: VTRegistroCabeceraGroupByArgs['orderBy'] }
+        : { orderBy?: VTRegistroCabeceraGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, VTRegistroCabeceraGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVTRegistroCabeceraGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the VTRegistroCabecera model
+   */
+  readonly fields: VTRegistroCabeceraFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for VTRegistroCabecera.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__VTRegistroCabeceraClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    configuraciones<T extends VTRegistroCabecera$configuracionesArgs<ExtArgs> = {}>(args?: Subset<T, VTRegistroCabecera$configuracionesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VTConfiguracionCamaraPayload<ExtArgs>, T, "findMany"> | Null>
+    detalles<T extends VTRegistroCabecera$detallesArgs<ExtArgs> = {}>(args?: Subset<T, VTRegistroCabecera$detallesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VTRegistroDetallePayload<ExtArgs>, T, "findMany"> | Null>
+    verificacionesDiarias<T extends VTRegistroCabecera$verificacionesDiariasArgs<ExtArgs> = {}>(args?: Subset<T, VTRegistroCabecera$verificacionesDiariasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VTVerificacionDiariaPayload<ExtArgs>, T, "findMany"> | Null>
+    verificacionesSemanales<T extends VTRegistroCabecera$verificacionesSemanalesArgs<ExtArgs> = {}>(args?: Subset<T, VTRegistroCabecera$verificacionesSemanalesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VTVerificacionSemanalPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the VTRegistroCabecera model
+   */ 
+  interface VTRegistroCabeceraFieldRefs {
+    readonly idRegistro: FieldRef<"VTRegistroCabecera", 'Int'>
+    readonly tipoEntidad: FieldRef<"VTRegistroCabecera", 'String'>
+    readonly idEntidad: FieldRef<"VTRegistroCabecera", 'String'>
+    readonly nombreEntidad: FieldRef<"VTRegistroCabecera", 'String'>
+    readonly anio: FieldRef<"VTRegistroCabecera", 'Int'>
+    readonly fechaRegistro: FieldRef<"VTRegistroCabecera", 'DateTime'>
+    readonly monitorResponsable: FieldRef<"VTRegistroCabecera", 'String'>
+    readonly tipoCamara: FieldRef<"VTRegistroCabecera", 'String'>
+    readonly descripcionCamaras: FieldRef<"VTRegistroCabecera", 'String'>
+    readonly fechaCreacion: FieldRef<"VTRegistroCabecera", 'DateTime'>
+    readonly usuarioCreacion: FieldRef<"VTRegistroCabecera", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * VTRegistroCabecera findUnique
+   */
+  export type VTRegistroCabeceraFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTRegistroCabecera
+     */
+    select?: VTRegistroCabeceraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTRegistroCabeceraInclude<ExtArgs> | null
+    /**
+     * Filter, which VTRegistroCabecera to fetch.
+     */
+    where: VTRegistroCabeceraWhereUniqueInput
+  }
+
+  /**
+   * VTRegistroCabecera findUniqueOrThrow
+   */
+  export type VTRegistroCabeceraFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTRegistroCabecera
+     */
+    select?: VTRegistroCabeceraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTRegistroCabeceraInclude<ExtArgs> | null
+    /**
+     * Filter, which VTRegistroCabecera to fetch.
+     */
+    where: VTRegistroCabeceraWhereUniqueInput
+  }
+
+  /**
+   * VTRegistroCabecera findFirst
+   */
+  export type VTRegistroCabeceraFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTRegistroCabecera
+     */
+    select?: VTRegistroCabeceraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTRegistroCabeceraInclude<ExtArgs> | null
+    /**
+     * Filter, which VTRegistroCabecera to fetch.
+     */
+    where?: VTRegistroCabeceraWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VTRegistroCabeceras to fetch.
+     */
+    orderBy?: VTRegistroCabeceraOrderByWithRelationInput | VTRegistroCabeceraOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VTRegistroCabeceras.
+     */
+    cursor?: VTRegistroCabeceraWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VTRegistroCabeceras from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VTRegistroCabeceras.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VTRegistroCabeceras.
+     */
+    distinct?: VTRegistroCabeceraScalarFieldEnum | VTRegistroCabeceraScalarFieldEnum[]
+  }
+
+  /**
+   * VTRegistroCabecera findFirstOrThrow
+   */
+  export type VTRegistroCabeceraFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTRegistroCabecera
+     */
+    select?: VTRegistroCabeceraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTRegistroCabeceraInclude<ExtArgs> | null
+    /**
+     * Filter, which VTRegistroCabecera to fetch.
+     */
+    where?: VTRegistroCabeceraWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VTRegistroCabeceras to fetch.
+     */
+    orderBy?: VTRegistroCabeceraOrderByWithRelationInput | VTRegistroCabeceraOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VTRegistroCabeceras.
+     */
+    cursor?: VTRegistroCabeceraWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VTRegistroCabeceras from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VTRegistroCabeceras.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VTRegistroCabeceras.
+     */
+    distinct?: VTRegistroCabeceraScalarFieldEnum | VTRegistroCabeceraScalarFieldEnum[]
+  }
+
+  /**
+   * VTRegistroCabecera findMany
+   */
+  export type VTRegistroCabeceraFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTRegistroCabecera
+     */
+    select?: VTRegistroCabeceraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTRegistroCabeceraInclude<ExtArgs> | null
+    /**
+     * Filter, which VTRegistroCabeceras to fetch.
+     */
+    where?: VTRegistroCabeceraWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VTRegistroCabeceras to fetch.
+     */
+    orderBy?: VTRegistroCabeceraOrderByWithRelationInput | VTRegistroCabeceraOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing VTRegistroCabeceras.
+     */
+    cursor?: VTRegistroCabeceraWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VTRegistroCabeceras from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VTRegistroCabeceras.
+     */
+    skip?: number
+    distinct?: VTRegistroCabeceraScalarFieldEnum | VTRegistroCabeceraScalarFieldEnum[]
+  }
+
+  /**
+   * VTRegistroCabecera create
+   */
+  export type VTRegistroCabeceraCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTRegistroCabecera
+     */
+    select?: VTRegistroCabeceraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTRegistroCabeceraInclude<ExtArgs> | null
+    /**
+     * The data needed to create a VTRegistroCabecera.
+     */
+    data: XOR<VTRegistroCabeceraCreateInput, VTRegistroCabeceraUncheckedCreateInput>
+  }
+
+  /**
+   * VTRegistroCabecera createMany
+   */
+  export type VTRegistroCabeceraCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many VTRegistroCabeceras.
+     */
+    data: VTRegistroCabeceraCreateManyInput | VTRegistroCabeceraCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * VTRegistroCabecera createManyAndReturn
+   */
+  export type VTRegistroCabeceraCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTRegistroCabecera
+     */
+    select?: VTRegistroCabeceraSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many VTRegistroCabeceras.
+     */
+    data: VTRegistroCabeceraCreateManyInput | VTRegistroCabeceraCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * VTRegistroCabecera update
+   */
+  export type VTRegistroCabeceraUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTRegistroCabecera
+     */
+    select?: VTRegistroCabeceraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTRegistroCabeceraInclude<ExtArgs> | null
+    /**
+     * The data needed to update a VTRegistroCabecera.
+     */
+    data: XOR<VTRegistroCabeceraUpdateInput, VTRegistroCabeceraUncheckedUpdateInput>
+    /**
+     * Choose, which VTRegistroCabecera to update.
+     */
+    where: VTRegistroCabeceraWhereUniqueInput
+  }
+
+  /**
+   * VTRegistroCabecera updateMany
+   */
+  export type VTRegistroCabeceraUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update VTRegistroCabeceras.
+     */
+    data: XOR<VTRegistroCabeceraUpdateManyMutationInput, VTRegistroCabeceraUncheckedUpdateManyInput>
+    /**
+     * Filter which VTRegistroCabeceras to update
+     */
+    where?: VTRegistroCabeceraWhereInput
+  }
+
+  /**
+   * VTRegistroCabecera upsert
+   */
+  export type VTRegistroCabeceraUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTRegistroCabecera
+     */
+    select?: VTRegistroCabeceraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTRegistroCabeceraInclude<ExtArgs> | null
+    /**
+     * The filter to search for the VTRegistroCabecera to update in case it exists.
+     */
+    where: VTRegistroCabeceraWhereUniqueInput
+    /**
+     * In case the VTRegistroCabecera found by the `where` argument doesn't exist, create a new VTRegistroCabecera with this data.
+     */
+    create: XOR<VTRegistroCabeceraCreateInput, VTRegistroCabeceraUncheckedCreateInput>
+    /**
+     * In case the VTRegistroCabecera was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<VTRegistroCabeceraUpdateInput, VTRegistroCabeceraUncheckedUpdateInput>
+  }
+
+  /**
+   * VTRegistroCabecera delete
+   */
+  export type VTRegistroCabeceraDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTRegistroCabecera
+     */
+    select?: VTRegistroCabeceraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTRegistroCabeceraInclude<ExtArgs> | null
+    /**
+     * Filter which VTRegistroCabecera to delete.
+     */
+    where: VTRegistroCabeceraWhereUniqueInput
+  }
+
+  /**
+   * VTRegistroCabecera deleteMany
+   */
+  export type VTRegistroCabeceraDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VTRegistroCabeceras to delete
+     */
+    where?: VTRegistroCabeceraWhereInput
+  }
+
+  /**
+   * VTRegistroCabecera.configuraciones
+   */
+  export type VTRegistroCabecera$configuracionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTConfiguracionCamara
+     */
+    select?: VTConfiguracionCamaraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTConfiguracionCamaraInclude<ExtArgs> | null
+    where?: VTConfiguracionCamaraWhereInput
+    orderBy?: VTConfiguracionCamaraOrderByWithRelationInput | VTConfiguracionCamaraOrderByWithRelationInput[]
+    cursor?: VTConfiguracionCamaraWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: VTConfiguracionCamaraScalarFieldEnum | VTConfiguracionCamaraScalarFieldEnum[]
+  }
+
+  /**
+   * VTRegistroCabecera.detalles
+   */
+  export type VTRegistroCabecera$detallesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTRegistroDetalle
+     */
+    select?: VTRegistroDetalleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTRegistroDetalleInclude<ExtArgs> | null
+    where?: VTRegistroDetalleWhereInput
+    orderBy?: VTRegistroDetalleOrderByWithRelationInput | VTRegistroDetalleOrderByWithRelationInput[]
+    cursor?: VTRegistroDetalleWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: VTRegistroDetalleScalarFieldEnum | VTRegistroDetalleScalarFieldEnum[]
+  }
+
+  /**
+   * VTRegistroCabecera.verificacionesDiarias
+   */
+  export type VTRegistroCabecera$verificacionesDiariasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTVerificacionDiaria
+     */
+    select?: VTVerificacionDiariaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTVerificacionDiariaInclude<ExtArgs> | null
+    where?: VTVerificacionDiariaWhereInput
+    orderBy?: VTVerificacionDiariaOrderByWithRelationInput | VTVerificacionDiariaOrderByWithRelationInput[]
+    cursor?: VTVerificacionDiariaWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: VTVerificacionDiariaScalarFieldEnum | VTVerificacionDiariaScalarFieldEnum[]
+  }
+
+  /**
+   * VTRegistroCabecera.verificacionesSemanales
+   */
+  export type VTRegistroCabecera$verificacionesSemanalesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTVerificacionSemanal
+     */
+    select?: VTVerificacionSemanalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTVerificacionSemanalInclude<ExtArgs> | null
+    where?: VTVerificacionSemanalWhereInput
+    orderBy?: VTVerificacionSemanalOrderByWithRelationInput | VTVerificacionSemanalOrderByWithRelationInput[]
+    cursor?: VTVerificacionSemanalWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: VTVerificacionSemanalScalarFieldEnum | VTVerificacionSemanalScalarFieldEnum[]
+  }
+
+  /**
+   * VTRegistroCabecera without action
+   */
+  export type VTRegistroCabeceraDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTRegistroCabecera
+     */
+    select?: VTRegistroCabeceraSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTRegistroCabeceraInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model VTRegistroDetalle
+   */
+
+  export type AggregateVTRegistroDetalle = {
+    _count: VTRegistroDetalleCountAggregateOutputType | null
+    _avg: VTRegistroDetalleAvgAggregateOutputType | null
+    _sum: VTRegistroDetalleSumAggregateOutputType | null
+    _min: VTRegistroDetalleMinAggregateOutputType | null
+    _max: VTRegistroDetalleMaxAggregateOutputType | null
+  }
+
+  export type VTRegistroDetalleAvgAggregateOutputType = {
+    idDetalle: number | null
+    idRegistro: number | null
+    numeroCorrelativo: number | null
+    dia: number | null
+    mes: number | null
+    numeroCamara: number | null
+    temperatura: number | null
+  }
+
+  export type VTRegistroDetalleSumAggregateOutputType = {
+    idDetalle: number | null
+    idRegistro: number | null
+    numeroCorrelativo: number | null
+    dia: number | null
+    mes: number | null
+    numeroCamara: number | null
+    temperatura: number | null
+  }
+
+  export type VTRegistroDetalleMinAggregateOutputType = {
+    idDetalle: number | null
+    idRegistro: number | null
+    numeroCorrelativo: number | null
+    dia: number | null
+    tipoProducto: string | null
+    nombreProducto: string | null
+    mes: number | null
+    numeroCamara: number | null
+    temperatura: number | null
+    fechaRegistro: Date | null
+    usuarioRegistro: string | null
+  }
+
+  export type VTRegistroDetalleMaxAggregateOutputType = {
+    idDetalle: number | null
+    idRegistro: number | null
+    numeroCorrelativo: number | null
+    dia: number | null
+    tipoProducto: string | null
+    nombreProducto: string | null
+    mes: number | null
+    numeroCamara: number | null
+    temperatura: number | null
+    fechaRegistro: Date | null
+    usuarioRegistro: string | null
+  }
+
+  export type VTRegistroDetalleCountAggregateOutputType = {
+    idDetalle: number
+    idRegistro: number
+    numeroCorrelativo: number
+    dia: number
+    tipoProducto: number
+    nombreProducto: number
+    mes: number
+    numeroCamara: number
+    temperatura: number
+    fechaRegistro: number
+    usuarioRegistro: number
+    _all: number
+  }
+
+
+  export type VTRegistroDetalleAvgAggregateInputType = {
+    idDetalle?: true
+    idRegistro?: true
+    numeroCorrelativo?: true
+    dia?: true
+    mes?: true
+    numeroCamara?: true
+    temperatura?: true
+  }
+
+  export type VTRegistroDetalleSumAggregateInputType = {
+    idDetalle?: true
+    idRegistro?: true
+    numeroCorrelativo?: true
+    dia?: true
+    mes?: true
+    numeroCamara?: true
+    temperatura?: true
+  }
+
+  export type VTRegistroDetalleMinAggregateInputType = {
+    idDetalle?: true
+    idRegistro?: true
+    numeroCorrelativo?: true
+    dia?: true
+    tipoProducto?: true
+    nombreProducto?: true
+    mes?: true
+    numeroCamara?: true
+    temperatura?: true
+    fechaRegistro?: true
+    usuarioRegistro?: true
+  }
+
+  export type VTRegistroDetalleMaxAggregateInputType = {
+    idDetalle?: true
+    idRegistro?: true
+    numeroCorrelativo?: true
+    dia?: true
+    tipoProducto?: true
+    nombreProducto?: true
+    mes?: true
+    numeroCamara?: true
+    temperatura?: true
+    fechaRegistro?: true
+    usuarioRegistro?: true
+  }
+
+  export type VTRegistroDetalleCountAggregateInputType = {
+    idDetalle?: true
+    idRegistro?: true
+    numeroCorrelativo?: true
+    dia?: true
+    tipoProducto?: true
+    nombreProducto?: true
+    mes?: true
+    numeroCamara?: true
+    temperatura?: true
+    fechaRegistro?: true
+    usuarioRegistro?: true
+    _all?: true
+  }
+
+  export type VTRegistroDetalleAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VTRegistroDetalle to aggregate.
+     */
+    where?: VTRegistroDetalleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VTRegistroDetalles to fetch.
+     */
+    orderBy?: VTRegistroDetalleOrderByWithRelationInput | VTRegistroDetalleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: VTRegistroDetalleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VTRegistroDetalles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VTRegistroDetalles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned VTRegistroDetalles
+    **/
+    _count?: true | VTRegistroDetalleCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: VTRegistroDetalleAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: VTRegistroDetalleSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: VTRegistroDetalleMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: VTRegistroDetalleMaxAggregateInputType
+  }
+
+  export type GetVTRegistroDetalleAggregateType<T extends VTRegistroDetalleAggregateArgs> = {
+        [P in keyof T & keyof AggregateVTRegistroDetalle]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateVTRegistroDetalle[P]>
+      : GetScalarType<T[P], AggregateVTRegistroDetalle[P]>
+  }
+
+
+
+
+  export type VTRegistroDetalleGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VTRegistroDetalleWhereInput
+    orderBy?: VTRegistroDetalleOrderByWithAggregationInput | VTRegistroDetalleOrderByWithAggregationInput[]
+    by: VTRegistroDetalleScalarFieldEnum[] | VTRegistroDetalleScalarFieldEnum
+    having?: VTRegistroDetalleScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: VTRegistroDetalleCountAggregateInputType | true
+    _avg?: VTRegistroDetalleAvgAggregateInputType
+    _sum?: VTRegistroDetalleSumAggregateInputType
+    _min?: VTRegistroDetalleMinAggregateInputType
+    _max?: VTRegistroDetalleMaxAggregateInputType
+  }
+
+  export type VTRegistroDetalleGroupByOutputType = {
+    idDetalle: number
+    idRegistro: number
+    numeroCorrelativo: number
+    dia: number
+    tipoProducto: string
+    nombreProducto: string | null
+    mes: number
+    numeroCamara: number
+    temperatura: number | null
+    fechaRegistro: Date
+    usuarioRegistro: string
+    _count: VTRegistroDetalleCountAggregateOutputType | null
+    _avg: VTRegistroDetalleAvgAggregateOutputType | null
+    _sum: VTRegistroDetalleSumAggregateOutputType | null
+    _min: VTRegistroDetalleMinAggregateOutputType | null
+    _max: VTRegistroDetalleMaxAggregateOutputType | null
+  }
+
+  type GetVTRegistroDetalleGroupByPayload<T extends VTRegistroDetalleGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<VTRegistroDetalleGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof VTRegistroDetalleGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], VTRegistroDetalleGroupByOutputType[P]>
+            : GetScalarType<T[P], VTRegistroDetalleGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type VTRegistroDetalleSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    idDetalle?: boolean
+    idRegistro?: boolean
+    numeroCorrelativo?: boolean
+    dia?: boolean
+    tipoProducto?: boolean
+    nombreProducto?: boolean
+    mes?: boolean
+    numeroCamara?: boolean
+    temperatura?: boolean
+    fechaRegistro?: boolean
+    usuarioRegistro?: boolean
+    registro?: boolean | VTRegistroCabeceraDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["vTRegistroDetalle"]>
+
+  export type VTRegistroDetalleSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    idDetalle?: boolean
+    idRegistro?: boolean
+    numeroCorrelativo?: boolean
+    dia?: boolean
+    tipoProducto?: boolean
+    nombreProducto?: boolean
+    mes?: boolean
+    numeroCamara?: boolean
+    temperatura?: boolean
+    fechaRegistro?: boolean
+    usuarioRegistro?: boolean
+    registro?: boolean | VTRegistroCabeceraDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["vTRegistroDetalle"]>
+
+  export type VTRegistroDetalleSelectScalar = {
+    idDetalle?: boolean
+    idRegistro?: boolean
+    numeroCorrelativo?: boolean
+    dia?: boolean
+    tipoProducto?: boolean
+    nombreProducto?: boolean
+    mes?: boolean
+    numeroCamara?: boolean
+    temperatura?: boolean
+    fechaRegistro?: boolean
+    usuarioRegistro?: boolean
+  }
+
+  export type VTRegistroDetalleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    registro?: boolean | VTRegistroCabeceraDefaultArgs<ExtArgs>
+  }
+  export type VTRegistroDetalleIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    registro?: boolean | VTRegistroCabeceraDefaultArgs<ExtArgs>
+  }
+
+  export type $VTRegistroDetallePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "VTRegistroDetalle"
+    objects: {
+      registro: Prisma.$VTRegistroCabeceraPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      idDetalle: number
+      idRegistro: number
+      numeroCorrelativo: number
+      dia: number
+      tipoProducto: string
+      nombreProducto: string | null
+      mes: number
+      numeroCamara: number
+      temperatura: number | null
+      fechaRegistro: Date
+      usuarioRegistro: string
+    }, ExtArgs["result"]["vTRegistroDetalle"]>
+    composites: {}
+  }
+
+  type VTRegistroDetalleGetPayload<S extends boolean | null | undefined | VTRegistroDetalleDefaultArgs> = $Result.GetResult<Prisma.$VTRegistroDetallePayload, S>
+
+  type VTRegistroDetalleCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<VTRegistroDetalleFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: VTRegistroDetalleCountAggregateInputType | true
+    }
+
+  export interface VTRegistroDetalleDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['VTRegistroDetalle'], meta: { name: 'VTRegistroDetalle' } }
+    /**
+     * Find zero or one VTRegistroDetalle that matches the filter.
+     * @param {VTRegistroDetalleFindUniqueArgs} args - Arguments to find a VTRegistroDetalle
+     * @example
+     * // Get one VTRegistroDetalle
+     * const vTRegistroDetalle = await prisma.vTRegistroDetalle.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends VTRegistroDetalleFindUniqueArgs>(args: SelectSubset<T, VTRegistroDetalleFindUniqueArgs<ExtArgs>>): Prisma__VTRegistroDetalleClient<$Result.GetResult<Prisma.$VTRegistroDetallePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one VTRegistroDetalle that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {VTRegistroDetalleFindUniqueOrThrowArgs} args - Arguments to find a VTRegistroDetalle
+     * @example
+     * // Get one VTRegistroDetalle
+     * const vTRegistroDetalle = await prisma.vTRegistroDetalle.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends VTRegistroDetalleFindUniqueOrThrowArgs>(args: SelectSubset<T, VTRegistroDetalleFindUniqueOrThrowArgs<ExtArgs>>): Prisma__VTRegistroDetalleClient<$Result.GetResult<Prisma.$VTRegistroDetallePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first VTRegistroDetalle that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTRegistroDetalleFindFirstArgs} args - Arguments to find a VTRegistroDetalle
+     * @example
+     * // Get one VTRegistroDetalle
+     * const vTRegistroDetalle = await prisma.vTRegistroDetalle.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends VTRegistroDetalleFindFirstArgs>(args?: SelectSubset<T, VTRegistroDetalleFindFirstArgs<ExtArgs>>): Prisma__VTRegistroDetalleClient<$Result.GetResult<Prisma.$VTRegistroDetallePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first VTRegistroDetalle that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTRegistroDetalleFindFirstOrThrowArgs} args - Arguments to find a VTRegistroDetalle
+     * @example
+     * // Get one VTRegistroDetalle
+     * const vTRegistroDetalle = await prisma.vTRegistroDetalle.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends VTRegistroDetalleFindFirstOrThrowArgs>(args?: SelectSubset<T, VTRegistroDetalleFindFirstOrThrowArgs<ExtArgs>>): Prisma__VTRegistroDetalleClient<$Result.GetResult<Prisma.$VTRegistroDetallePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more VTRegistroDetalles that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTRegistroDetalleFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all VTRegistroDetalles
+     * const vTRegistroDetalles = await prisma.vTRegistroDetalle.findMany()
+     * 
+     * // Get first 10 VTRegistroDetalles
+     * const vTRegistroDetalles = await prisma.vTRegistroDetalle.findMany({ take: 10 })
+     * 
+     * // Only select the `idDetalle`
+     * const vTRegistroDetalleWithIdDetalleOnly = await prisma.vTRegistroDetalle.findMany({ select: { idDetalle: true } })
+     * 
+     */
+    findMany<T extends VTRegistroDetalleFindManyArgs>(args?: SelectSubset<T, VTRegistroDetalleFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VTRegistroDetallePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a VTRegistroDetalle.
+     * @param {VTRegistroDetalleCreateArgs} args - Arguments to create a VTRegistroDetalle.
+     * @example
+     * // Create one VTRegistroDetalle
+     * const VTRegistroDetalle = await prisma.vTRegistroDetalle.create({
+     *   data: {
+     *     // ... data to create a VTRegistroDetalle
+     *   }
+     * })
+     * 
+     */
+    create<T extends VTRegistroDetalleCreateArgs>(args: SelectSubset<T, VTRegistroDetalleCreateArgs<ExtArgs>>): Prisma__VTRegistroDetalleClient<$Result.GetResult<Prisma.$VTRegistroDetallePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many VTRegistroDetalles.
+     * @param {VTRegistroDetalleCreateManyArgs} args - Arguments to create many VTRegistroDetalles.
+     * @example
+     * // Create many VTRegistroDetalles
+     * const vTRegistroDetalle = await prisma.vTRegistroDetalle.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends VTRegistroDetalleCreateManyArgs>(args?: SelectSubset<T, VTRegistroDetalleCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many VTRegistroDetalles and returns the data saved in the database.
+     * @param {VTRegistroDetalleCreateManyAndReturnArgs} args - Arguments to create many VTRegistroDetalles.
+     * @example
+     * // Create many VTRegistroDetalles
+     * const vTRegistroDetalle = await prisma.vTRegistroDetalle.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many VTRegistroDetalles and only return the `idDetalle`
+     * const vTRegistroDetalleWithIdDetalleOnly = await prisma.vTRegistroDetalle.createManyAndReturn({ 
+     *   select: { idDetalle: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends VTRegistroDetalleCreateManyAndReturnArgs>(args?: SelectSubset<T, VTRegistroDetalleCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VTRegistroDetallePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a VTRegistroDetalle.
+     * @param {VTRegistroDetalleDeleteArgs} args - Arguments to delete one VTRegistroDetalle.
+     * @example
+     * // Delete one VTRegistroDetalle
+     * const VTRegistroDetalle = await prisma.vTRegistroDetalle.delete({
+     *   where: {
+     *     // ... filter to delete one VTRegistroDetalle
+     *   }
+     * })
+     * 
+     */
+    delete<T extends VTRegistroDetalleDeleteArgs>(args: SelectSubset<T, VTRegistroDetalleDeleteArgs<ExtArgs>>): Prisma__VTRegistroDetalleClient<$Result.GetResult<Prisma.$VTRegistroDetallePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one VTRegistroDetalle.
+     * @param {VTRegistroDetalleUpdateArgs} args - Arguments to update one VTRegistroDetalle.
+     * @example
+     * // Update one VTRegistroDetalle
+     * const vTRegistroDetalle = await prisma.vTRegistroDetalle.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends VTRegistroDetalleUpdateArgs>(args: SelectSubset<T, VTRegistroDetalleUpdateArgs<ExtArgs>>): Prisma__VTRegistroDetalleClient<$Result.GetResult<Prisma.$VTRegistroDetallePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more VTRegistroDetalles.
+     * @param {VTRegistroDetalleDeleteManyArgs} args - Arguments to filter VTRegistroDetalles to delete.
+     * @example
+     * // Delete a few VTRegistroDetalles
+     * const { count } = await prisma.vTRegistroDetalle.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends VTRegistroDetalleDeleteManyArgs>(args?: SelectSubset<T, VTRegistroDetalleDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more VTRegistroDetalles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTRegistroDetalleUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many VTRegistroDetalles
+     * const vTRegistroDetalle = await prisma.vTRegistroDetalle.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends VTRegistroDetalleUpdateManyArgs>(args: SelectSubset<T, VTRegistroDetalleUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one VTRegistroDetalle.
+     * @param {VTRegistroDetalleUpsertArgs} args - Arguments to update or create a VTRegistroDetalle.
+     * @example
+     * // Update or create a VTRegistroDetalle
+     * const vTRegistroDetalle = await prisma.vTRegistroDetalle.upsert({
+     *   create: {
+     *     // ... data to create a VTRegistroDetalle
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the VTRegistroDetalle we want to update
+     *   }
+     * })
+     */
+    upsert<T extends VTRegistroDetalleUpsertArgs>(args: SelectSubset<T, VTRegistroDetalleUpsertArgs<ExtArgs>>): Prisma__VTRegistroDetalleClient<$Result.GetResult<Prisma.$VTRegistroDetallePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of VTRegistroDetalles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTRegistroDetalleCountArgs} args - Arguments to filter VTRegistroDetalles to count.
+     * @example
+     * // Count the number of VTRegistroDetalles
+     * const count = await prisma.vTRegistroDetalle.count({
+     *   where: {
+     *     // ... the filter for the VTRegistroDetalles we want to count
+     *   }
+     * })
+    **/
+    count<T extends VTRegistroDetalleCountArgs>(
+      args?: Subset<T, VTRegistroDetalleCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], VTRegistroDetalleCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a VTRegistroDetalle.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTRegistroDetalleAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends VTRegistroDetalleAggregateArgs>(args: Subset<T, VTRegistroDetalleAggregateArgs>): Prisma.PrismaPromise<GetVTRegistroDetalleAggregateType<T>>
+
+    /**
+     * Group by VTRegistroDetalle.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTRegistroDetalleGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends VTRegistroDetalleGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: VTRegistroDetalleGroupByArgs['orderBy'] }
+        : { orderBy?: VTRegistroDetalleGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, VTRegistroDetalleGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVTRegistroDetalleGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the VTRegistroDetalle model
+   */
+  readonly fields: VTRegistroDetalleFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for VTRegistroDetalle.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__VTRegistroDetalleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    registro<T extends VTRegistroCabeceraDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VTRegistroCabeceraDefaultArgs<ExtArgs>>): Prisma__VTRegistroCabeceraClient<$Result.GetResult<Prisma.$VTRegistroCabeceraPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the VTRegistroDetalle model
+   */ 
+  interface VTRegistroDetalleFieldRefs {
+    readonly idDetalle: FieldRef<"VTRegistroDetalle", 'Int'>
+    readonly idRegistro: FieldRef<"VTRegistroDetalle", 'Int'>
+    readonly numeroCorrelativo: FieldRef<"VTRegistroDetalle", 'Int'>
+    readonly dia: FieldRef<"VTRegistroDetalle", 'Int'>
+    readonly tipoProducto: FieldRef<"VTRegistroDetalle", 'String'>
+    readonly nombreProducto: FieldRef<"VTRegistroDetalle", 'String'>
+    readonly mes: FieldRef<"VTRegistroDetalle", 'Int'>
+    readonly numeroCamara: FieldRef<"VTRegistroDetalle", 'Int'>
+    readonly temperatura: FieldRef<"VTRegistroDetalle", 'Float'>
+    readonly fechaRegistro: FieldRef<"VTRegistroDetalle", 'DateTime'>
+    readonly usuarioRegistro: FieldRef<"VTRegistroDetalle", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * VTRegistroDetalle findUnique
+   */
+  export type VTRegistroDetalleFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTRegistroDetalle
+     */
+    select?: VTRegistroDetalleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTRegistroDetalleInclude<ExtArgs> | null
+    /**
+     * Filter, which VTRegistroDetalle to fetch.
+     */
+    where: VTRegistroDetalleWhereUniqueInput
+  }
+
+  /**
+   * VTRegistroDetalle findUniqueOrThrow
+   */
+  export type VTRegistroDetalleFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTRegistroDetalle
+     */
+    select?: VTRegistroDetalleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTRegistroDetalleInclude<ExtArgs> | null
+    /**
+     * Filter, which VTRegistroDetalle to fetch.
+     */
+    where: VTRegistroDetalleWhereUniqueInput
+  }
+
+  /**
+   * VTRegistroDetalle findFirst
+   */
+  export type VTRegistroDetalleFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTRegistroDetalle
+     */
+    select?: VTRegistroDetalleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTRegistroDetalleInclude<ExtArgs> | null
+    /**
+     * Filter, which VTRegistroDetalle to fetch.
+     */
+    where?: VTRegistroDetalleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VTRegistroDetalles to fetch.
+     */
+    orderBy?: VTRegistroDetalleOrderByWithRelationInput | VTRegistroDetalleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VTRegistroDetalles.
+     */
+    cursor?: VTRegistroDetalleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VTRegistroDetalles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VTRegistroDetalles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VTRegistroDetalles.
+     */
+    distinct?: VTRegistroDetalleScalarFieldEnum | VTRegistroDetalleScalarFieldEnum[]
+  }
+
+  /**
+   * VTRegistroDetalle findFirstOrThrow
+   */
+  export type VTRegistroDetalleFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTRegistroDetalle
+     */
+    select?: VTRegistroDetalleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTRegistroDetalleInclude<ExtArgs> | null
+    /**
+     * Filter, which VTRegistroDetalle to fetch.
+     */
+    where?: VTRegistroDetalleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VTRegistroDetalles to fetch.
+     */
+    orderBy?: VTRegistroDetalleOrderByWithRelationInput | VTRegistroDetalleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VTRegistroDetalles.
+     */
+    cursor?: VTRegistroDetalleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VTRegistroDetalles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VTRegistroDetalles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VTRegistroDetalles.
+     */
+    distinct?: VTRegistroDetalleScalarFieldEnum | VTRegistroDetalleScalarFieldEnum[]
+  }
+
+  /**
+   * VTRegistroDetalle findMany
+   */
+  export type VTRegistroDetalleFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTRegistroDetalle
+     */
+    select?: VTRegistroDetalleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTRegistroDetalleInclude<ExtArgs> | null
+    /**
+     * Filter, which VTRegistroDetalles to fetch.
+     */
+    where?: VTRegistroDetalleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VTRegistroDetalles to fetch.
+     */
+    orderBy?: VTRegistroDetalleOrderByWithRelationInput | VTRegistroDetalleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing VTRegistroDetalles.
+     */
+    cursor?: VTRegistroDetalleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VTRegistroDetalles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VTRegistroDetalles.
+     */
+    skip?: number
+    distinct?: VTRegistroDetalleScalarFieldEnum | VTRegistroDetalleScalarFieldEnum[]
+  }
+
+  /**
+   * VTRegistroDetalle create
+   */
+  export type VTRegistroDetalleCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTRegistroDetalle
+     */
+    select?: VTRegistroDetalleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTRegistroDetalleInclude<ExtArgs> | null
+    /**
+     * The data needed to create a VTRegistroDetalle.
+     */
+    data: XOR<VTRegistroDetalleCreateInput, VTRegistroDetalleUncheckedCreateInput>
+  }
+
+  /**
+   * VTRegistroDetalle createMany
+   */
+  export type VTRegistroDetalleCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many VTRegistroDetalles.
+     */
+    data: VTRegistroDetalleCreateManyInput | VTRegistroDetalleCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * VTRegistroDetalle createManyAndReturn
+   */
+  export type VTRegistroDetalleCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTRegistroDetalle
+     */
+    select?: VTRegistroDetalleSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many VTRegistroDetalles.
+     */
+    data: VTRegistroDetalleCreateManyInput | VTRegistroDetalleCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTRegistroDetalleIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * VTRegistroDetalle update
+   */
+  export type VTRegistroDetalleUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTRegistroDetalle
+     */
+    select?: VTRegistroDetalleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTRegistroDetalleInclude<ExtArgs> | null
+    /**
+     * The data needed to update a VTRegistroDetalle.
+     */
+    data: XOR<VTRegistroDetalleUpdateInput, VTRegistroDetalleUncheckedUpdateInput>
+    /**
+     * Choose, which VTRegistroDetalle to update.
+     */
+    where: VTRegistroDetalleWhereUniqueInput
+  }
+
+  /**
+   * VTRegistroDetalle updateMany
+   */
+  export type VTRegistroDetalleUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update VTRegistroDetalles.
+     */
+    data: XOR<VTRegistroDetalleUpdateManyMutationInput, VTRegistroDetalleUncheckedUpdateManyInput>
+    /**
+     * Filter which VTRegistroDetalles to update
+     */
+    where?: VTRegistroDetalleWhereInput
+  }
+
+  /**
+   * VTRegistroDetalle upsert
+   */
+  export type VTRegistroDetalleUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTRegistroDetalle
+     */
+    select?: VTRegistroDetalleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTRegistroDetalleInclude<ExtArgs> | null
+    /**
+     * The filter to search for the VTRegistroDetalle to update in case it exists.
+     */
+    where: VTRegistroDetalleWhereUniqueInput
+    /**
+     * In case the VTRegistroDetalle found by the `where` argument doesn't exist, create a new VTRegistroDetalle with this data.
+     */
+    create: XOR<VTRegistroDetalleCreateInput, VTRegistroDetalleUncheckedCreateInput>
+    /**
+     * In case the VTRegistroDetalle was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<VTRegistroDetalleUpdateInput, VTRegistroDetalleUncheckedUpdateInput>
+  }
+
+  /**
+   * VTRegistroDetalle delete
+   */
+  export type VTRegistroDetalleDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTRegistroDetalle
+     */
+    select?: VTRegistroDetalleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTRegistroDetalleInclude<ExtArgs> | null
+    /**
+     * Filter which VTRegistroDetalle to delete.
+     */
+    where: VTRegistroDetalleWhereUniqueInput
+  }
+
+  /**
+   * VTRegistroDetalle deleteMany
+   */
+  export type VTRegistroDetalleDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VTRegistroDetalles to delete
+     */
+    where?: VTRegistroDetalleWhereInput
+  }
+
+  /**
+   * VTRegistroDetalle without action
+   */
+  export type VTRegistroDetalleDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTRegistroDetalle
+     */
+    select?: VTRegistroDetalleSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTRegistroDetalleInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model VTProductoCatalogo
+   */
+
+  export type AggregateVTProductoCatalogo = {
+    _count: VTProductoCatalogoCountAggregateOutputType | null
+    _avg: VTProductoCatalogoAvgAggregateOutputType | null
+    _sum: VTProductoCatalogoSumAggregateOutputType | null
+    _min: VTProductoCatalogoMinAggregateOutputType | null
+    _max: VTProductoCatalogoMaxAggregateOutputType | null
+  }
+
+  export type VTProductoCatalogoAvgAggregateOutputType = {
+    idProducto: number | null
+  }
+
+  export type VTProductoCatalogoSumAggregateOutputType = {
+    idProducto: number | null
+  }
+
+  export type VTProductoCatalogoMinAggregateOutputType = {
+    idProducto: number | null
+    nombreProducto: string | null
+    activo: boolean | null
+  }
+
+  export type VTProductoCatalogoMaxAggregateOutputType = {
+    idProducto: number | null
+    nombreProducto: string | null
+    activo: boolean | null
+  }
+
+  export type VTProductoCatalogoCountAggregateOutputType = {
+    idProducto: number
+    nombreProducto: number
+    activo: number
+    _all: number
+  }
+
+
+  export type VTProductoCatalogoAvgAggregateInputType = {
+    idProducto?: true
+  }
+
+  export type VTProductoCatalogoSumAggregateInputType = {
+    idProducto?: true
+  }
+
+  export type VTProductoCatalogoMinAggregateInputType = {
+    idProducto?: true
+    nombreProducto?: true
+    activo?: true
+  }
+
+  export type VTProductoCatalogoMaxAggregateInputType = {
+    idProducto?: true
+    nombreProducto?: true
+    activo?: true
+  }
+
+  export type VTProductoCatalogoCountAggregateInputType = {
+    idProducto?: true
+    nombreProducto?: true
+    activo?: true
+    _all?: true
+  }
+
+  export type VTProductoCatalogoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VTProductoCatalogo to aggregate.
+     */
+    where?: VTProductoCatalogoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VTProductoCatalogos to fetch.
+     */
+    orderBy?: VTProductoCatalogoOrderByWithRelationInput | VTProductoCatalogoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: VTProductoCatalogoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VTProductoCatalogos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VTProductoCatalogos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned VTProductoCatalogos
+    **/
+    _count?: true | VTProductoCatalogoCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: VTProductoCatalogoAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: VTProductoCatalogoSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: VTProductoCatalogoMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: VTProductoCatalogoMaxAggregateInputType
+  }
+
+  export type GetVTProductoCatalogoAggregateType<T extends VTProductoCatalogoAggregateArgs> = {
+        [P in keyof T & keyof AggregateVTProductoCatalogo]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateVTProductoCatalogo[P]>
+      : GetScalarType<T[P], AggregateVTProductoCatalogo[P]>
+  }
+
+
+
+
+  export type VTProductoCatalogoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VTProductoCatalogoWhereInput
+    orderBy?: VTProductoCatalogoOrderByWithAggregationInput | VTProductoCatalogoOrderByWithAggregationInput[]
+    by: VTProductoCatalogoScalarFieldEnum[] | VTProductoCatalogoScalarFieldEnum
+    having?: VTProductoCatalogoScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: VTProductoCatalogoCountAggregateInputType | true
+    _avg?: VTProductoCatalogoAvgAggregateInputType
+    _sum?: VTProductoCatalogoSumAggregateInputType
+    _min?: VTProductoCatalogoMinAggregateInputType
+    _max?: VTProductoCatalogoMaxAggregateInputType
+  }
+
+  export type VTProductoCatalogoGroupByOutputType = {
+    idProducto: number
+    nombreProducto: string
+    activo: boolean
+    _count: VTProductoCatalogoCountAggregateOutputType | null
+    _avg: VTProductoCatalogoAvgAggregateOutputType | null
+    _sum: VTProductoCatalogoSumAggregateOutputType | null
+    _min: VTProductoCatalogoMinAggregateOutputType | null
+    _max: VTProductoCatalogoMaxAggregateOutputType | null
+  }
+
+  type GetVTProductoCatalogoGroupByPayload<T extends VTProductoCatalogoGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<VTProductoCatalogoGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof VTProductoCatalogoGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], VTProductoCatalogoGroupByOutputType[P]>
+            : GetScalarType<T[P], VTProductoCatalogoGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type VTProductoCatalogoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    idProducto?: boolean
+    nombreProducto?: boolean
+    activo?: boolean
+  }, ExtArgs["result"]["vTProductoCatalogo"]>
+
+  export type VTProductoCatalogoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    idProducto?: boolean
+    nombreProducto?: boolean
+    activo?: boolean
+  }, ExtArgs["result"]["vTProductoCatalogo"]>
+
+  export type VTProductoCatalogoSelectScalar = {
+    idProducto?: boolean
+    nombreProducto?: boolean
+    activo?: boolean
+  }
+
+
+  export type $VTProductoCatalogoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "VTProductoCatalogo"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      idProducto: number
+      nombreProducto: string
+      activo: boolean
+    }, ExtArgs["result"]["vTProductoCatalogo"]>
+    composites: {}
+  }
+
+  type VTProductoCatalogoGetPayload<S extends boolean | null | undefined | VTProductoCatalogoDefaultArgs> = $Result.GetResult<Prisma.$VTProductoCatalogoPayload, S>
+
+  type VTProductoCatalogoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<VTProductoCatalogoFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: VTProductoCatalogoCountAggregateInputType | true
+    }
+
+  export interface VTProductoCatalogoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['VTProductoCatalogo'], meta: { name: 'VTProductoCatalogo' } }
+    /**
+     * Find zero or one VTProductoCatalogo that matches the filter.
+     * @param {VTProductoCatalogoFindUniqueArgs} args - Arguments to find a VTProductoCatalogo
+     * @example
+     * // Get one VTProductoCatalogo
+     * const vTProductoCatalogo = await prisma.vTProductoCatalogo.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends VTProductoCatalogoFindUniqueArgs>(args: SelectSubset<T, VTProductoCatalogoFindUniqueArgs<ExtArgs>>): Prisma__VTProductoCatalogoClient<$Result.GetResult<Prisma.$VTProductoCatalogoPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one VTProductoCatalogo that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {VTProductoCatalogoFindUniqueOrThrowArgs} args - Arguments to find a VTProductoCatalogo
+     * @example
+     * // Get one VTProductoCatalogo
+     * const vTProductoCatalogo = await prisma.vTProductoCatalogo.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends VTProductoCatalogoFindUniqueOrThrowArgs>(args: SelectSubset<T, VTProductoCatalogoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__VTProductoCatalogoClient<$Result.GetResult<Prisma.$VTProductoCatalogoPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first VTProductoCatalogo that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTProductoCatalogoFindFirstArgs} args - Arguments to find a VTProductoCatalogo
+     * @example
+     * // Get one VTProductoCatalogo
+     * const vTProductoCatalogo = await prisma.vTProductoCatalogo.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends VTProductoCatalogoFindFirstArgs>(args?: SelectSubset<T, VTProductoCatalogoFindFirstArgs<ExtArgs>>): Prisma__VTProductoCatalogoClient<$Result.GetResult<Prisma.$VTProductoCatalogoPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first VTProductoCatalogo that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTProductoCatalogoFindFirstOrThrowArgs} args - Arguments to find a VTProductoCatalogo
+     * @example
+     * // Get one VTProductoCatalogo
+     * const vTProductoCatalogo = await prisma.vTProductoCatalogo.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends VTProductoCatalogoFindFirstOrThrowArgs>(args?: SelectSubset<T, VTProductoCatalogoFindFirstOrThrowArgs<ExtArgs>>): Prisma__VTProductoCatalogoClient<$Result.GetResult<Prisma.$VTProductoCatalogoPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more VTProductoCatalogos that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTProductoCatalogoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all VTProductoCatalogos
+     * const vTProductoCatalogos = await prisma.vTProductoCatalogo.findMany()
+     * 
+     * // Get first 10 VTProductoCatalogos
+     * const vTProductoCatalogos = await prisma.vTProductoCatalogo.findMany({ take: 10 })
+     * 
+     * // Only select the `idProducto`
+     * const vTProductoCatalogoWithIdProductoOnly = await prisma.vTProductoCatalogo.findMany({ select: { idProducto: true } })
+     * 
+     */
+    findMany<T extends VTProductoCatalogoFindManyArgs>(args?: SelectSubset<T, VTProductoCatalogoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VTProductoCatalogoPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a VTProductoCatalogo.
+     * @param {VTProductoCatalogoCreateArgs} args - Arguments to create a VTProductoCatalogo.
+     * @example
+     * // Create one VTProductoCatalogo
+     * const VTProductoCatalogo = await prisma.vTProductoCatalogo.create({
+     *   data: {
+     *     // ... data to create a VTProductoCatalogo
+     *   }
+     * })
+     * 
+     */
+    create<T extends VTProductoCatalogoCreateArgs>(args: SelectSubset<T, VTProductoCatalogoCreateArgs<ExtArgs>>): Prisma__VTProductoCatalogoClient<$Result.GetResult<Prisma.$VTProductoCatalogoPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many VTProductoCatalogos.
+     * @param {VTProductoCatalogoCreateManyArgs} args - Arguments to create many VTProductoCatalogos.
+     * @example
+     * // Create many VTProductoCatalogos
+     * const vTProductoCatalogo = await prisma.vTProductoCatalogo.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends VTProductoCatalogoCreateManyArgs>(args?: SelectSubset<T, VTProductoCatalogoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many VTProductoCatalogos and returns the data saved in the database.
+     * @param {VTProductoCatalogoCreateManyAndReturnArgs} args - Arguments to create many VTProductoCatalogos.
+     * @example
+     * // Create many VTProductoCatalogos
+     * const vTProductoCatalogo = await prisma.vTProductoCatalogo.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many VTProductoCatalogos and only return the `idProducto`
+     * const vTProductoCatalogoWithIdProductoOnly = await prisma.vTProductoCatalogo.createManyAndReturn({ 
+     *   select: { idProducto: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends VTProductoCatalogoCreateManyAndReturnArgs>(args?: SelectSubset<T, VTProductoCatalogoCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VTProductoCatalogoPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a VTProductoCatalogo.
+     * @param {VTProductoCatalogoDeleteArgs} args - Arguments to delete one VTProductoCatalogo.
+     * @example
+     * // Delete one VTProductoCatalogo
+     * const VTProductoCatalogo = await prisma.vTProductoCatalogo.delete({
+     *   where: {
+     *     // ... filter to delete one VTProductoCatalogo
+     *   }
+     * })
+     * 
+     */
+    delete<T extends VTProductoCatalogoDeleteArgs>(args: SelectSubset<T, VTProductoCatalogoDeleteArgs<ExtArgs>>): Prisma__VTProductoCatalogoClient<$Result.GetResult<Prisma.$VTProductoCatalogoPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one VTProductoCatalogo.
+     * @param {VTProductoCatalogoUpdateArgs} args - Arguments to update one VTProductoCatalogo.
+     * @example
+     * // Update one VTProductoCatalogo
+     * const vTProductoCatalogo = await prisma.vTProductoCatalogo.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends VTProductoCatalogoUpdateArgs>(args: SelectSubset<T, VTProductoCatalogoUpdateArgs<ExtArgs>>): Prisma__VTProductoCatalogoClient<$Result.GetResult<Prisma.$VTProductoCatalogoPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more VTProductoCatalogos.
+     * @param {VTProductoCatalogoDeleteManyArgs} args - Arguments to filter VTProductoCatalogos to delete.
+     * @example
+     * // Delete a few VTProductoCatalogos
+     * const { count } = await prisma.vTProductoCatalogo.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends VTProductoCatalogoDeleteManyArgs>(args?: SelectSubset<T, VTProductoCatalogoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more VTProductoCatalogos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTProductoCatalogoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many VTProductoCatalogos
+     * const vTProductoCatalogo = await prisma.vTProductoCatalogo.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends VTProductoCatalogoUpdateManyArgs>(args: SelectSubset<T, VTProductoCatalogoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one VTProductoCatalogo.
+     * @param {VTProductoCatalogoUpsertArgs} args - Arguments to update or create a VTProductoCatalogo.
+     * @example
+     * // Update or create a VTProductoCatalogo
+     * const vTProductoCatalogo = await prisma.vTProductoCatalogo.upsert({
+     *   create: {
+     *     // ... data to create a VTProductoCatalogo
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the VTProductoCatalogo we want to update
+     *   }
+     * })
+     */
+    upsert<T extends VTProductoCatalogoUpsertArgs>(args: SelectSubset<T, VTProductoCatalogoUpsertArgs<ExtArgs>>): Prisma__VTProductoCatalogoClient<$Result.GetResult<Prisma.$VTProductoCatalogoPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of VTProductoCatalogos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTProductoCatalogoCountArgs} args - Arguments to filter VTProductoCatalogos to count.
+     * @example
+     * // Count the number of VTProductoCatalogos
+     * const count = await prisma.vTProductoCatalogo.count({
+     *   where: {
+     *     // ... the filter for the VTProductoCatalogos we want to count
+     *   }
+     * })
+    **/
+    count<T extends VTProductoCatalogoCountArgs>(
+      args?: Subset<T, VTProductoCatalogoCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], VTProductoCatalogoCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a VTProductoCatalogo.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTProductoCatalogoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends VTProductoCatalogoAggregateArgs>(args: Subset<T, VTProductoCatalogoAggregateArgs>): Prisma.PrismaPromise<GetVTProductoCatalogoAggregateType<T>>
+
+    /**
+     * Group by VTProductoCatalogo.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTProductoCatalogoGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends VTProductoCatalogoGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: VTProductoCatalogoGroupByArgs['orderBy'] }
+        : { orderBy?: VTProductoCatalogoGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, VTProductoCatalogoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVTProductoCatalogoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the VTProductoCatalogo model
+   */
+  readonly fields: VTProductoCatalogoFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for VTProductoCatalogo.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__VTProductoCatalogoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the VTProductoCatalogo model
+   */ 
+  interface VTProductoCatalogoFieldRefs {
+    readonly idProducto: FieldRef<"VTProductoCatalogo", 'Int'>
+    readonly nombreProducto: FieldRef<"VTProductoCatalogo", 'String'>
+    readonly activo: FieldRef<"VTProductoCatalogo", 'Boolean'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * VTProductoCatalogo findUnique
+   */
+  export type VTProductoCatalogoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTProductoCatalogo
+     */
+    select?: VTProductoCatalogoSelect<ExtArgs> | null
+    /**
+     * Filter, which VTProductoCatalogo to fetch.
+     */
+    where: VTProductoCatalogoWhereUniqueInput
+  }
+
+  /**
+   * VTProductoCatalogo findUniqueOrThrow
+   */
+  export type VTProductoCatalogoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTProductoCatalogo
+     */
+    select?: VTProductoCatalogoSelect<ExtArgs> | null
+    /**
+     * Filter, which VTProductoCatalogo to fetch.
+     */
+    where: VTProductoCatalogoWhereUniqueInput
+  }
+
+  /**
+   * VTProductoCatalogo findFirst
+   */
+  export type VTProductoCatalogoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTProductoCatalogo
+     */
+    select?: VTProductoCatalogoSelect<ExtArgs> | null
+    /**
+     * Filter, which VTProductoCatalogo to fetch.
+     */
+    where?: VTProductoCatalogoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VTProductoCatalogos to fetch.
+     */
+    orderBy?: VTProductoCatalogoOrderByWithRelationInput | VTProductoCatalogoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VTProductoCatalogos.
+     */
+    cursor?: VTProductoCatalogoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VTProductoCatalogos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VTProductoCatalogos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VTProductoCatalogos.
+     */
+    distinct?: VTProductoCatalogoScalarFieldEnum | VTProductoCatalogoScalarFieldEnum[]
+  }
+
+  /**
+   * VTProductoCatalogo findFirstOrThrow
+   */
+  export type VTProductoCatalogoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTProductoCatalogo
+     */
+    select?: VTProductoCatalogoSelect<ExtArgs> | null
+    /**
+     * Filter, which VTProductoCatalogo to fetch.
+     */
+    where?: VTProductoCatalogoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VTProductoCatalogos to fetch.
+     */
+    orderBy?: VTProductoCatalogoOrderByWithRelationInput | VTProductoCatalogoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VTProductoCatalogos.
+     */
+    cursor?: VTProductoCatalogoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VTProductoCatalogos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VTProductoCatalogos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VTProductoCatalogos.
+     */
+    distinct?: VTProductoCatalogoScalarFieldEnum | VTProductoCatalogoScalarFieldEnum[]
+  }
+
+  /**
+   * VTProductoCatalogo findMany
+   */
+  export type VTProductoCatalogoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTProductoCatalogo
+     */
+    select?: VTProductoCatalogoSelect<ExtArgs> | null
+    /**
+     * Filter, which VTProductoCatalogos to fetch.
+     */
+    where?: VTProductoCatalogoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VTProductoCatalogos to fetch.
+     */
+    orderBy?: VTProductoCatalogoOrderByWithRelationInput | VTProductoCatalogoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing VTProductoCatalogos.
+     */
+    cursor?: VTProductoCatalogoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VTProductoCatalogos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VTProductoCatalogos.
+     */
+    skip?: number
+    distinct?: VTProductoCatalogoScalarFieldEnum | VTProductoCatalogoScalarFieldEnum[]
+  }
+
+  /**
+   * VTProductoCatalogo create
+   */
+  export type VTProductoCatalogoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTProductoCatalogo
+     */
+    select?: VTProductoCatalogoSelect<ExtArgs> | null
+    /**
+     * The data needed to create a VTProductoCatalogo.
+     */
+    data: XOR<VTProductoCatalogoCreateInput, VTProductoCatalogoUncheckedCreateInput>
+  }
+
+  /**
+   * VTProductoCatalogo createMany
+   */
+  export type VTProductoCatalogoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many VTProductoCatalogos.
+     */
+    data: VTProductoCatalogoCreateManyInput | VTProductoCatalogoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * VTProductoCatalogo createManyAndReturn
+   */
+  export type VTProductoCatalogoCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTProductoCatalogo
+     */
+    select?: VTProductoCatalogoSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many VTProductoCatalogos.
+     */
+    data: VTProductoCatalogoCreateManyInput | VTProductoCatalogoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * VTProductoCatalogo update
+   */
+  export type VTProductoCatalogoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTProductoCatalogo
+     */
+    select?: VTProductoCatalogoSelect<ExtArgs> | null
+    /**
+     * The data needed to update a VTProductoCatalogo.
+     */
+    data: XOR<VTProductoCatalogoUpdateInput, VTProductoCatalogoUncheckedUpdateInput>
+    /**
+     * Choose, which VTProductoCatalogo to update.
+     */
+    where: VTProductoCatalogoWhereUniqueInput
+  }
+
+  /**
+   * VTProductoCatalogo updateMany
+   */
+  export type VTProductoCatalogoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update VTProductoCatalogos.
+     */
+    data: XOR<VTProductoCatalogoUpdateManyMutationInput, VTProductoCatalogoUncheckedUpdateManyInput>
+    /**
+     * Filter which VTProductoCatalogos to update
+     */
+    where?: VTProductoCatalogoWhereInput
+  }
+
+  /**
+   * VTProductoCatalogo upsert
+   */
+  export type VTProductoCatalogoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTProductoCatalogo
+     */
+    select?: VTProductoCatalogoSelect<ExtArgs> | null
+    /**
+     * The filter to search for the VTProductoCatalogo to update in case it exists.
+     */
+    where: VTProductoCatalogoWhereUniqueInput
+    /**
+     * In case the VTProductoCatalogo found by the `where` argument doesn't exist, create a new VTProductoCatalogo with this data.
+     */
+    create: XOR<VTProductoCatalogoCreateInput, VTProductoCatalogoUncheckedCreateInput>
+    /**
+     * In case the VTProductoCatalogo was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<VTProductoCatalogoUpdateInput, VTProductoCatalogoUncheckedUpdateInput>
+  }
+
+  /**
+   * VTProductoCatalogo delete
+   */
+  export type VTProductoCatalogoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTProductoCatalogo
+     */
+    select?: VTProductoCatalogoSelect<ExtArgs> | null
+    /**
+     * Filter which VTProductoCatalogo to delete.
+     */
+    where: VTProductoCatalogoWhereUniqueInput
+  }
+
+  /**
+   * VTProductoCatalogo deleteMany
+   */
+  export type VTProductoCatalogoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VTProductoCatalogos to delete
+     */
+    where?: VTProductoCatalogoWhereInput
+  }
+
+  /**
+   * VTProductoCatalogo without action
+   */
+  export type VTProductoCatalogoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTProductoCatalogo
+     */
+    select?: VTProductoCatalogoSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * Model VTVerificacionDiaria
+   */
+
+  export type AggregateVTVerificacionDiaria = {
+    _count: VTVerificacionDiariaCountAggregateOutputType | null
+    _avg: VTVerificacionDiariaAvgAggregateOutputType | null
+    _sum: VTVerificacionDiariaSumAggregateOutputType | null
+    _min: VTVerificacionDiariaMinAggregateOutputType | null
+    _max: VTVerificacionDiariaMaxAggregateOutputType | null
+  }
+
+  export type VTVerificacionDiariaAvgAggregateOutputType = {
+    idVerificacion: number | null
+    idRegistro: number | null
+    mes: number | null
+    dia: number | null
+  }
+
+  export type VTVerificacionDiariaSumAggregateOutputType = {
+    idVerificacion: number | null
+    idRegistro: number | null
+    mes: number | null
+    dia: number | null
+  }
+
+  export type VTVerificacionDiariaMinAggregateOutputType = {
+    idVerificacion: number | null
+    idRegistro: number | null
+    mes: number | null
+    dia: number | null
+    fechaVerificacion: Date | null
+    firmadoPor: string | null
+    usuarioId: string | null
+    firma: string | null
+    firmado: boolean | null
+    observaciones: string | null
+    accionesCorrectivas: string | null
+  }
+
+  export type VTVerificacionDiariaMaxAggregateOutputType = {
+    idVerificacion: number | null
+    idRegistro: number | null
+    mes: number | null
+    dia: number | null
+    fechaVerificacion: Date | null
+    firmadoPor: string | null
+    usuarioId: string | null
+    firma: string | null
+    firmado: boolean | null
+    observaciones: string | null
+    accionesCorrectivas: string | null
+  }
+
+  export type VTVerificacionDiariaCountAggregateOutputType = {
+    idVerificacion: number
+    idRegistro: number
+    mes: number
+    dia: number
+    fechaVerificacion: number
+    firmadoPor: number
+    usuarioId: number
+    firma: number
+    firmado: number
+    observaciones: number
+    accionesCorrectivas: number
+    _all: number
+  }
+
+
+  export type VTVerificacionDiariaAvgAggregateInputType = {
+    idVerificacion?: true
+    idRegistro?: true
+    mes?: true
+    dia?: true
+  }
+
+  export type VTVerificacionDiariaSumAggregateInputType = {
+    idVerificacion?: true
+    idRegistro?: true
+    mes?: true
+    dia?: true
+  }
+
+  export type VTVerificacionDiariaMinAggregateInputType = {
+    idVerificacion?: true
+    idRegistro?: true
+    mes?: true
+    dia?: true
+    fechaVerificacion?: true
+    firmadoPor?: true
+    usuarioId?: true
+    firma?: true
+    firmado?: true
+    observaciones?: true
+    accionesCorrectivas?: true
+  }
+
+  export type VTVerificacionDiariaMaxAggregateInputType = {
+    idVerificacion?: true
+    idRegistro?: true
+    mes?: true
+    dia?: true
+    fechaVerificacion?: true
+    firmadoPor?: true
+    usuarioId?: true
+    firma?: true
+    firmado?: true
+    observaciones?: true
+    accionesCorrectivas?: true
+  }
+
+  export type VTVerificacionDiariaCountAggregateInputType = {
+    idVerificacion?: true
+    idRegistro?: true
+    mes?: true
+    dia?: true
+    fechaVerificacion?: true
+    firmadoPor?: true
+    usuarioId?: true
+    firma?: true
+    firmado?: true
+    observaciones?: true
+    accionesCorrectivas?: true
+    _all?: true
+  }
+
+  export type VTVerificacionDiariaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VTVerificacionDiaria to aggregate.
+     */
+    where?: VTVerificacionDiariaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VTVerificacionDiarias to fetch.
+     */
+    orderBy?: VTVerificacionDiariaOrderByWithRelationInput | VTVerificacionDiariaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: VTVerificacionDiariaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VTVerificacionDiarias from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VTVerificacionDiarias.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned VTVerificacionDiarias
+    **/
+    _count?: true | VTVerificacionDiariaCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: VTVerificacionDiariaAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: VTVerificacionDiariaSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: VTVerificacionDiariaMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: VTVerificacionDiariaMaxAggregateInputType
+  }
+
+  export type GetVTVerificacionDiariaAggregateType<T extends VTVerificacionDiariaAggregateArgs> = {
+        [P in keyof T & keyof AggregateVTVerificacionDiaria]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateVTVerificacionDiaria[P]>
+      : GetScalarType<T[P], AggregateVTVerificacionDiaria[P]>
+  }
+
+
+
+
+  export type VTVerificacionDiariaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VTVerificacionDiariaWhereInput
+    orderBy?: VTVerificacionDiariaOrderByWithAggregationInput | VTVerificacionDiariaOrderByWithAggregationInput[]
+    by: VTVerificacionDiariaScalarFieldEnum[] | VTVerificacionDiariaScalarFieldEnum
+    having?: VTVerificacionDiariaScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: VTVerificacionDiariaCountAggregateInputType | true
+    _avg?: VTVerificacionDiariaAvgAggregateInputType
+    _sum?: VTVerificacionDiariaSumAggregateInputType
+    _min?: VTVerificacionDiariaMinAggregateInputType
+    _max?: VTVerificacionDiariaMaxAggregateInputType
+  }
+
+  export type VTVerificacionDiariaGroupByOutputType = {
+    idVerificacion: number
+    idRegistro: number
+    mes: number
+    dia: number
+    fechaVerificacion: Date
+    firmadoPor: string
+    usuarioId: string | null
+    firma: string | null
+    firmado: boolean
+    observaciones: string | null
+    accionesCorrectivas: string | null
+    _count: VTVerificacionDiariaCountAggregateOutputType | null
+    _avg: VTVerificacionDiariaAvgAggregateOutputType | null
+    _sum: VTVerificacionDiariaSumAggregateOutputType | null
+    _min: VTVerificacionDiariaMinAggregateOutputType | null
+    _max: VTVerificacionDiariaMaxAggregateOutputType | null
+  }
+
+  type GetVTVerificacionDiariaGroupByPayload<T extends VTVerificacionDiariaGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<VTVerificacionDiariaGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof VTVerificacionDiariaGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], VTVerificacionDiariaGroupByOutputType[P]>
+            : GetScalarType<T[P], VTVerificacionDiariaGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type VTVerificacionDiariaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    idVerificacion?: boolean
+    idRegistro?: boolean
+    mes?: boolean
+    dia?: boolean
+    fechaVerificacion?: boolean
+    firmadoPor?: boolean
+    usuarioId?: boolean
+    firma?: boolean
+    firmado?: boolean
+    observaciones?: boolean
+    accionesCorrectivas?: boolean
+    registro?: boolean | VTRegistroCabeceraDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["vTVerificacionDiaria"]>
+
+  export type VTVerificacionDiariaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    idVerificacion?: boolean
+    idRegistro?: boolean
+    mes?: boolean
+    dia?: boolean
+    fechaVerificacion?: boolean
+    firmadoPor?: boolean
+    usuarioId?: boolean
+    firma?: boolean
+    firmado?: boolean
+    observaciones?: boolean
+    accionesCorrectivas?: boolean
+    registro?: boolean | VTRegistroCabeceraDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["vTVerificacionDiaria"]>
+
+  export type VTVerificacionDiariaSelectScalar = {
+    idVerificacion?: boolean
+    idRegistro?: boolean
+    mes?: boolean
+    dia?: boolean
+    fechaVerificacion?: boolean
+    firmadoPor?: boolean
+    usuarioId?: boolean
+    firma?: boolean
+    firmado?: boolean
+    observaciones?: boolean
+    accionesCorrectivas?: boolean
+  }
+
+  export type VTVerificacionDiariaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    registro?: boolean | VTRegistroCabeceraDefaultArgs<ExtArgs>
+  }
+  export type VTVerificacionDiariaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    registro?: boolean | VTRegistroCabeceraDefaultArgs<ExtArgs>
+  }
+
+  export type $VTVerificacionDiariaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "VTVerificacionDiaria"
+    objects: {
+      registro: Prisma.$VTRegistroCabeceraPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      idVerificacion: number
+      idRegistro: number
+      mes: number
+      dia: number
+      fechaVerificacion: Date
+      firmadoPor: string
+      usuarioId: string | null
+      firma: string | null
+      firmado: boolean
+      observaciones: string | null
+      accionesCorrectivas: string | null
+    }, ExtArgs["result"]["vTVerificacionDiaria"]>
+    composites: {}
+  }
+
+  type VTVerificacionDiariaGetPayload<S extends boolean | null | undefined | VTVerificacionDiariaDefaultArgs> = $Result.GetResult<Prisma.$VTVerificacionDiariaPayload, S>
+
+  type VTVerificacionDiariaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<VTVerificacionDiariaFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: VTVerificacionDiariaCountAggregateInputType | true
+    }
+
+  export interface VTVerificacionDiariaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['VTVerificacionDiaria'], meta: { name: 'VTVerificacionDiaria' } }
+    /**
+     * Find zero or one VTVerificacionDiaria that matches the filter.
+     * @param {VTVerificacionDiariaFindUniqueArgs} args - Arguments to find a VTVerificacionDiaria
+     * @example
+     * // Get one VTVerificacionDiaria
+     * const vTVerificacionDiaria = await prisma.vTVerificacionDiaria.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends VTVerificacionDiariaFindUniqueArgs>(args: SelectSubset<T, VTVerificacionDiariaFindUniqueArgs<ExtArgs>>): Prisma__VTVerificacionDiariaClient<$Result.GetResult<Prisma.$VTVerificacionDiariaPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one VTVerificacionDiaria that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {VTVerificacionDiariaFindUniqueOrThrowArgs} args - Arguments to find a VTVerificacionDiaria
+     * @example
+     * // Get one VTVerificacionDiaria
+     * const vTVerificacionDiaria = await prisma.vTVerificacionDiaria.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends VTVerificacionDiariaFindUniqueOrThrowArgs>(args: SelectSubset<T, VTVerificacionDiariaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__VTVerificacionDiariaClient<$Result.GetResult<Prisma.$VTVerificacionDiariaPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first VTVerificacionDiaria that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTVerificacionDiariaFindFirstArgs} args - Arguments to find a VTVerificacionDiaria
+     * @example
+     * // Get one VTVerificacionDiaria
+     * const vTVerificacionDiaria = await prisma.vTVerificacionDiaria.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends VTVerificacionDiariaFindFirstArgs>(args?: SelectSubset<T, VTVerificacionDiariaFindFirstArgs<ExtArgs>>): Prisma__VTVerificacionDiariaClient<$Result.GetResult<Prisma.$VTVerificacionDiariaPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first VTVerificacionDiaria that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTVerificacionDiariaFindFirstOrThrowArgs} args - Arguments to find a VTVerificacionDiaria
+     * @example
+     * // Get one VTVerificacionDiaria
+     * const vTVerificacionDiaria = await prisma.vTVerificacionDiaria.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends VTVerificacionDiariaFindFirstOrThrowArgs>(args?: SelectSubset<T, VTVerificacionDiariaFindFirstOrThrowArgs<ExtArgs>>): Prisma__VTVerificacionDiariaClient<$Result.GetResult<Prisma.$VTVerificacionDiariaPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more VTVerificacionDiarias that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTVerificacionDiariaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all VTVerificacionDiarias
+     * const vTVerificacionDiarias = await prisma.vTVerificacionDiaria.findMany()
+     * 
+     * // Get first 10 VTVerificacionDiarias
+     * const vTVerificacionDiarias = await prisma.vTVerificacionDiaria.findMany({ take: 10 })
+     * 
+     * // Only select the `idVerificacion`
+     * const vTVerificacionDiariaWithIdVerificacionOnly = await prisma.vTVerificacionDiaria.findMany({ select: { idVerificacion: true } })
+     * 
+     */
+    findMany<T extends VTVerificacionDiariaFindManyArgs>(args?: SelectSubset<T, VTVerificacionDiariaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VTVerificacionDiariaPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a VTVerificacionDiaria.
+     * @param {VTVerificacionDiariaCreateArgs} args - Arguments to create a VTVerificacionDiaria.
+     * @example
+     * // Create one VTVerificacionDiaria
+     * const VTVerificacionDiaria = await prisma.vTVerificacionDiaria.create({
+     *   data: {
+     *     // ... data to create a VTVerificacionDiaria
+     *   }
+     * })
+     * 
+     */
+    create<T extends VTVerificacionDiariaCreateArgs>(args: SelectSubset<T, VTVerificacionDiariaCreateArgs<ExtArgs>>): Prisma__VTVerificacionDiariaClient<$Result.GetResult<Prisma.$VTVerificacionDiariaPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many VTVerificacionDiarias.
+     * @param {VTVerificacionDiariaCreateManyArgs} args - Arguments to create many VTVerificacionDiarias.
+     * @example
+     * // Create many VTVerificacionDiarias
+     * const vTVerificacionDiaria = await prisma.vTVerificacionDiaria.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends VTVerificacionDiariaCreateManyArgs>(args?: SelectSubset<T, VTVerificacionDiariaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many VTVerificacionDiarias and returns the data saved in the database.
+     * @param {VTVerificacionDiariaCreateManyAndReturnArgs} args - Arguments to create many VTVerificacionDiarias.
+     * @example
+     * // Create many VTVerificacionDiarias
+     * const vTVerificacionDiaria = await prisma.vTVerificacionDiaria.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many VTVerificacionDiarias and only return the `idVerificacion`
+     * const vTVerificacionDiariaWithIdVerificacionOnly = await prisma.vTVerificacionDiaria.createManyAndReturn({ 
+     *   select: { idVerificacion: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends VTVerificacionDiariaCreateManyAndReturnArgs>(args?: SelectSubset<T, VTVerificacionDiariaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VTVerificacionDiariaPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a VTVerificacionDiaria.
+     * @param {VTVerificacionDiariaDeleteArgs} args - Arguments to delete one VTVerificacionDiaria.
+     * @example
+     * // Delete one VTVerificacionDiaria
+     * const VTVerificacionDiaria = await prisma.vTVerificacionDiaria.delete({
+     *   where: {
+     *     // ... filter to delete one VTVerificacionDiaria
+     *   }
+     * })
+     * 
+     */
+    delete<T extends VTVerificacionDiariaDeleteArgs>(args: SelectSubset<T, VTVerificacionDiariaDeleteArgs<ExtArgs>>): Prisma__VTVerificacionDiariaClient<$Result.GetResult<Prisma.$VTVerificacionDiariaPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one VTVerificacionDiaria.
+     * @param {VTVerificacionDiariaUpdateArgs} args - Arguments to update one VTVerificacionDiaria.
+     * @example
+     * // Update one VTVerificacionDiaria
+     * const vTVerificacionDiaria = await prisma.vTVerificacionDiaria.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends VTVerificacionDiariaUpdateArgs>(args: SelectSubset<T, VTVerificacionDiariaUpdateArgs<ExtArgs>>): Prisma__VTVerificacionDiariaClient<$Result.GetResult<Prisma.$VTVerificacionDiariaPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more VTVerificacionDiarias.
+     * @param {VTVerificacionDiariaDeleteManyArgs} args - Arguments to filter VTVerificacionDiarias to delete.
+     * @example
+     * // Delete a few VTVerificacionDiarias
+     * const { count } = await prisma.vTVerificacionDiaria.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends VTVerificacionDiariaDeleteManyArgs>(args?: SelectSubset<T, VTVerificacionDiariaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more VTVerificacionDiarias.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTVerificacionDiariaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many VTVerificacionDiarias
+     * const vTVerificacionDiaria = await prisma.vTVerificacionDiaria.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends VTVerificacionDiariaUpdateManyArgs>(args: SelectSubset<T, VTVerificacionDiariaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one VTVerificacionDiaria.
+     * @param {VTVerificacionDiariaUpsertArgs} args - Arguments to update or create a VTVerificacionDiaria.
+     * @example
+     * // Update or create a VTVerificacionDiaria
+     * const vTVerificacionDiaria = await prisma.vTVerificacionDiaria.upsert({
+     *   create: {
+     *     // ... data to create a VTVerificacionDiaria
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the VTVerificacionDiaria we want to update
+     *   }
+     * })
+     */
+    upsert<T extends VTVerificacionDiariaUpsertArgs>(args: SelectSubset<T, VTVerificacionDiariaUpsertArgs<ExtArgs>>): Prisma__VTVerificacionDiariaClient<$Result.GetResult<Prisma.$VTVerificacionDiariaPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of VTVerificacionDiarias.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTVerificacionDiariaCountArgs} args - Arguments to filter VTVerificacionDiarias to count.
+     * @example
+     * // Count the number of VTVerificacionDiarias
+     * const count = await prisma.vTVerificacionDiaria.count({
+     *   where: {
+     *     // ... the filter for the VTVerificacionDiarias we want to count
+     *   }
+     * })
+    **/
+    count<T extends VTVerificacionDiariaCountArgs>(
+      args?: Subset<T, VTVerificacionDiariaCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], VTVerificacionDiariaCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a VTVerificacionDiaria.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTVerificacionDiariaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends VTVerificacionDiariaAggregateArgs>(args: Subset<T, VTVerificacionDiariaAggregateArgs>): Prisma.PrismaPromise<GetVTVerificacionDiariaAggregateType<T>>
+
+    /**
+     * Group by VTVerificacionDiaria.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTVerificacionDiariaGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends VTVerificacionDiariaGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: VTVerificacionDiariaGroupByArgs['orderBy'] }
+        : { orderBy?: VTVerificacionDiariaGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, VTVerificacionDiariaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVTVerificacionDiariaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the VTVerificacionDiaria model
+   */
+  readonly fields: VTVerificacionDiariaFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for VTVerificacionDiaria.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__VTVerificacionDiariaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    registro<T extends VTRegistroCabeceraDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VTRegistroCabeceraDefaultArgs<ExtArgs>>): Prisma__VTRegistroCabeceraClient<$Result.GetResult<Prisma.$VTRegistroCabeceraPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the VTVerificacionDiaria model
+   */ 
+  interface VTVerificacionDiariaFieldRefs {
+    readonly idVerificacion: FieldRef<"VTVerificacionDiaria", 'Int'>
+    readonly idRegistro: FieldRef<"VTVerificacionDiaria", 'Int'>
+    readonly mes: FieldRef<"VTVerificacionDiaria", 'Int'>
+    readonly dia: FieldRef<"VTVerificacionDiaria", 'Int'>
+    readonly fechaVerificacion: FieldRef<"VTVerificacionDiaria", 'DateTime'>
+    readonly firmadoPor: FieldRef<"VTVerificacionDiaria", 'String'>
+    readonly usuarioId: FieldRef<"VTVerificacionDiaria", 'String'>
+    readonly firma: FieldRef<"VTVerificacionDiaria", 'String'>
+    readonly firmado: FieldRef<"VTVerificacionDiaria", 'Boolean'>
+    readonly observaciones: FieldRef<"VTVerificacionDiaria", 'String'>
+    readonly accionesCorrectivas: FieldRef<"VTVerificacionDiaria", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * VTVerificacionDiaria findUnique
+   */
+  export type VTVerificacionDiariaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTVerificacionDiaria
+     */
+    select?: VTVerificacionDiariaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTVerificacionDiariaInclude<ExtArgs> | null
+    /**
+     * Filter, which VTVerificacionDiaria to fetch.
+     */
+    where: VTVerificacionDiariaWhereUniqueInput
+  }
+
+  /**
+   * VTVerificacionDiaria findUniqueOrThrow
+   */
+  export type VTVerificacionDiariaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTVerificacionDiaria
+     */
+    select?: VTVerificacionDiariaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTVerificacionDiariaInclude<ExtArgs> | null
+    /**
+     * Filter, which VTVerificacionDiaria to fetch.
+     */
+    where: VTVerificacionDiariaWhereUniqueInput
+  }
+
+  /**
+   * VTVerificacionDiaria findFirst
+   */
+  export type VTVerificacionDiariaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTVerificacionDiaria
+     */
+    select?: VTVerificacionDiariaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTVerificacionDiariaInclude<ExtArgs> | null
+    /**
+     * Filter, which VTVerificacionDiaria to fetch.
+     */
+    where?: VTVerificacionDiariaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VTVerificacionDiarias to fetch.
+     */
+    orderBy?: VTVerificacionDiariaOrderByWithRelationInput | VTVerificacionDiariaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VTVerificacionDiarias.
+     */
+    cursor?: VTVerificacionDiariaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VTVerificacionDiarias from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VTVerificacionDiarias.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VTVerificacionDiarias.
+     */
+    distinct?: VTVerificacionDiariaScalarFieldEnum | VTVerificacionDiariaScalarFieldEnum[]
+  }
+
+  /**
+   * VTVerificacionDiaria findFirstOrThrow
+   */
+  export type VTVerificacionDiariaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTVerificacionDiaria
+     */
+    select?: VTVerificacionDiariaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTVerificacionDiariaInclude<ExtArgs> | null
+    /**
+     * Filter, which VTVerificacionDiaria to fetch.
+     */
+    where?: VTVerificacionDiariaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VTVerificacionDiarias to fetch.
+     */
+    orderBy?: VTVerificacionDiariaOrderByWithRelationInput | VTVerificacionDiariaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VTVerificacionDiarias.
+     */
+    cursor?: VTVerificacionDiariaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VTVerificacionDiarias from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VTVerificacionDiarias.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VTVerificacionDiarias.
+     */
+    distinct?: VTVerificacionDiariaScalarFieldEnum | VTVerificacionDiariaScalarFieldEnum[]
+  }
+
+  /**
+   * VTVerificacionDiaria findMany
+   */
+  export type VTVerificacionDiariaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTVerificacionDiaria
+     */
+    select?: VTVerificacionDiariaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTVerificacionDiariaInclude<ExtArgs> | null
+    /**
+     * Filter, which VTVerificacionDiarias to fetch.
+     */
+    where?: VTVerificacionDiariaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VTVerificacionDiarias to fetch.
+     */
+    orderBy?: VTVerificacionDiariaOrderByWithRelationInput | VTVerificacionDiariaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing VTVerificacionDiarias.
+     */
+    cursor?: VTVerificacionDiariaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VTVerificacionDiarias from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VTVerificacionDiarias.
+     */
+    skip?: number
+    distinct?: VTVerificacionDiariaScalarFieldEnum | VTVerificacionDiariaScalarFieldEnum[]
+  }
+
+  /**
+   * VTVerificacionDiaria create
+   */
+  export type VTVerificacionDiariaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTVerificacionDiaria
+     */
+    select?: VTVerificacionDiariaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTVerificacionDiariaInclude<ExtArgs> | null
+    /**
+     * The data needed to create a VTVerificacionDiaria.
+     */
+    data: XOR<VTVerificacionDiariaCreateInput, VTVerificacionDiariaUncheckedCreateInput>
+  }
+
+  /**
+   * VTVerificacionDiaria createMany
+   */
+  export type VTVerificacionDiariaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many VTVerificacionDiarias.
+     */
+    data: VTVerificacionDiariaCreateManyInput | VTVerificacionDiariaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * VTVerificacionDiaria createManyAndReturn
+   */
+  export type VTVerificacionDiariaCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTVerificacionDiaria
+     */
+    select?: VTVerificacionDiariaSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many VTVerificacionDiarias.
+     */
+    data: VTVerificacionDiariaCreateManyInput | VTVerificacionDiariaCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTVerificacionDiariaIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * VTVerificacionDiaria update
+   */
+  export type VTVerificacionDiariaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTVerificacionDiaria
+     */
+    select?: VTVerificacionDiariaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTVerificacionDiariaInclude<ExtArgs> | null
+    /**
+     * The data needed to update a VTVerificacionDiaria.
+     */
+    data: XOR<VTVerificacionDiariaUpdateInput, VTVerificacionDiariaUncheckedUpdateInput>
+    /**
+     * Choose, which VTVerificacionDiaria to update.
+     */
+    where: VTVerificacionDiariaWhereUniqueInput
+  }
+
+  /**
+   * VTVerificacionDiaria updateMany
+   */
+  export type VTVerificacionDiariaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update VTVerificacionDiarias.
+     */
+    data: XOR<VTVerificacionDiariaUpdateManyMutationInput, VTVerificacionDiariaUncheckedUpdateManyInput>
+    /**
+     * Filter which VTVerificacionDiarias to update
+     */
+    where?: VTVerificacionDiariaWhereInput
+  }
+
+  /**
+   * VTVerificacionDiaria upsert
+   */
+  export type VTVerificacionDiariaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTVerificacionDiaria
+     */
+    select?: VTVerificacionDiariaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTVerificacionDiariaInclude<ExtArgs> | null
+    /**
+     * The filter to search for the VTVerificacionDiaria to update in case it exists.
+     */
+    where: VTVerificacionDiariaWhereUniqueInput
+    /**
+     * In case the VTVerificacionDiaria found by the `where` argument doesn't exist, create a new VTVerificacionDiaria with this data.
+     */
+    create: XOR<VTVerificacionDiariaCreateInput, VTVerificacionDiariaUncheckedCreateInput>
+    /**
+     * In case the VTVerificacionDiaria was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<VTVerificacionDiariaUpdateInput, VTVerificacionDiariaUncheckedUpdateInput>
+  }
+
+  /**
+   * VTVerificacionDiaria delete
+   */
+  export type VTVerificacionDiariaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTVerificacionDiaria
+     */
+    select?: VTVerificacionDiariaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTVerificacionDiariaInclude<ExtArgs> | null
+    /**
+     * Filter which VTVerificacionDiaria to delete.
+     */
+    where: VTVerificacionDiariaWhereUniqueInput
+  }
+
+  /**
+   * VTVerificacionDiaria deleteMany
+   */
+  export type VTVerificacionDiariaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VTVerificacionDiarias to delete
+     */
+    where?: VTVerificacionDiariaWhereInput
+  }
+
+  /**
+   * VTVerificacionDiaria without action
+   */
+  export type VTVerificacionDiariaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTVerificacionDiaria
+     */
+    select?: VTVerificacionDiariaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTVerificacionDiariaInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model VTVerificacionSemanal
+   */
+
+  export type AggregateVTVerificacionSemanal = {
+    _count: VTVerificacionSemanalCountAggregateOutputType | null
+    _avg: VTVerificacionSemanalAvgAggregateOutputType | null
+    _sum: VTVerificacionSemanalSumAggregateOutputType | null
+    _min: VTVerificacionSemanalMinAggregateOutputType | null
+    _max: VTVerificacionSemanalMaxAggregateOutputType | null
+  }
+
+  export type VTVerificacionSemanalAvgAggregateOutputType = {
+    idVerificacionSemanal: number | null
+    idRegistro: number | null
+    mes: number | null
+    semana: number | null
+  }
+
+  export type VTVerificacionSemanalSumAggregateOutputType = {
+    idVerificacionSemanal: number | null
+    idRegistro: number | null
+    mes: number | null
+    semana: number | null
+  }
+
+  export type VTVerificacionSemanalMinAggregateOutputType = {
+    idVerificacionSemanal: number | null
+    idRegistro: number | null
+    mes: number | null
+    semana: number | null
+    firmadoJefeBodega: boolean | null
+    fechaFirmaJefeBodega: Date | null
+    usuarioJefeBodega: string | null
+    firmaJefeBodega: string | null
+    firmadoJefeZonal: boolean | null
+    fechaFirmaJefeZonal: Date | null
+    usuarioJefeZonal: string | null
+    firmaJefeZonal: string | null
+  }
+
+  export type VTVerificacionSemanalMaxAggregateOutputType = {
+    idVerificacionSemanal: number | null
+    idRegistro: number | null
+    mes: number | null
+    semana: number | null
+    firmadoJefeBodega: boolean | null
+    fechaFirmaJefeBodega: Date | null
+    usuarioJefeBodega: string | null
+    firmaJefeBodega: string | null
+    firmadoJefeZonal: boolean | null
+    fechaFirmaJefeZonal: Date | null
+    usuarioJefeZonal: string | null
+    firmaJefeZonal: string | null
+  }
+
+  export type VTVerificacionSemanalCountAggregateOutputType = {
+    idVerificacionSemanal: number
+    idRegistro: number
+    mes: number
+    semana: number
+    firmadoJefeBodega: number
+    fechaFirmaJefeBodega: number
+    usuarioJefeBodega: number
+    firmaJefeBodega: number
+    firmadoJefeZonal: number
+    fechaFirmaJefeZonal: number
+    usuarioJefeZonal: number
+    firmaJefeZonal: number
+    _all: number
+  }
+
+
+  export type VTVerificacionSemanalAvgAggregateInputType = {
+    idVerificacionSemanal?: true
+    idRegistro?: true
+    mes?: true
+    semana?: true
+  }
+
+  export type VTVerificacionSemanalSumAggregateInputType = {
+    idVerificacionSemanal?: true
+    idRegistro?: true
+    mes?: true
+    semana?: true
+  }
+
+  export type VTVerificacionSemanalMinAggregateInputType = {
+    idVerificacionSemanal?: true
+    idRegistro?: true
+    mes?: true
+    semana?: true
+    firmadoJefeBodega?: true
+    fechaFirmaJefeBodega?: true
+    usuarioJefeBodega?: true
+    firmaJefeBodega?: true
+    firmadoJefeZonal?: true
+    fechaFirmaJefeZonal?: true
+    usuarioJefeZonal?: true
+    firmaJefeZonal?: true
+  }
+
+  export type VTVerificacionSemanalMaxAggregateInputType = {
+    idVerificacionSemanal?: true
+    idRegistro?: true
+    mes?: true
+    semana?: true
+    firmadoJefeBodega?: true
+    fechaFirmaJefeBodega?: true
+    usuarioJefeBodega?: true
+    firmaJefeBodega?: true
+    firmadoJefeZonal?: true
+    fechaFirmaJefeZonal?: true
+    usuarioJefeZonal?: true
+    firmaJefeZonal?: true
+  }
+
+  export type VTVerificacionSemanalCountAggregateInputType = {
+    idVerificacionSemanal?: true
+    idRegistro?: true
+    mes?: true
+    semana?: true
+    firmadoJefeBodega?: true
+    fechaFirmaJefeBodega?: true
+    usuarioJefeBodega?: true
+    firmaJefeBodega?: true
+    firmadoJefeZonal?: true
+    fechaFirmaJefeZonal?: true
+    usuarioJefeZonal?: true
+    firmaJefeZonal?: true
+    _all?: true
+  }
+
+  export type VTVerificacionSemanalAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VTVerificacionSemanal to aggregate.
+     */
+    where?: VTVerificacionSemanalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VTVerificacionSemanals to fetch.
+     */
+    orderBy?: VTVerificacionSemanalOrderByWithRelationInput | VTVerificacionSemanalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: VTVerificacionSemanalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VTVerificacionSemanals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VTVerificacionSemanals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned VTVerificacionSemanals
+    **/
+    _count?: true | VTVerificacionSemanalCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: VTVerificacionSemanalAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: VTVerificacionSemanalSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: VTVerificacionSemanalMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: VTVerificacionSemanalMaxAggregateInputType
+  }
+
+  export type GetVTVerificacionSemanalAggregateType<T extends VTVerificacionSemanalAggregateArgs> = {
+        [P in keyof T & keyof AggregateVTVerificacionSemanal]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateVTVerificacionSemanal[P]>
+      : GetScalarType<T[P], AggregateVTVerificacionSemanal[P]>
+  }
+
+
+
+
+  export type VTVerificacionSemanalGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VTVerificacionSemanalWhereInput
+    orderBy?: VTVerificacionSemanalOrderByWithAggregationInput | VTVerificacionSemanalOrderByWithAggregationInput[]
+    by: VTVerificacionSemanalScalarFieldEnum[] | VTVerificacionSemanalScalarFieldEnum
+    having?: VTVerificacionSemanalScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: VTVerificacionSemanalCountAggregateInputType | true
+    _avg?: VTVerificacionSemanalAvgAggregateInputType
+    _sum?: VTVerificacionSemanalSumAggregateInputType
+    _min?: VTVerificacionSemanalMinAggregateInputType
+    _max?: VTVerificacionSemanalMaxAggregateInputType
+  }
+
+  export type VTVerificacionSemanalGroupByOutputType = {
+    idVerificacionSemanal: number
+    idRegistro: number
+    mes: number
+    semana: number
+    firmadoJefeBodega: boolean
+    fechaFirmaJefeBodega: Date | null
+    usuarioJefeBodega: string | null
+    firmaJefeBodega: string | null
+    firmadoJefeZonal: boolean
+    fechaFirmaJefeZonal: Date | null
+    usuarioJefeZonal: string | null
+    firmaJefeZonal: string | null
+    _count: VTVerificacionSemanalCountAggregateOutputType | null
+    _avg: VTVerificacionSemanalAvgAggregateOutputType | null
+    _sum: VTVerificacionSemanalSumAggregateOutputType | null
+    _min: VTVerificacionSemanalMinAggregateOutputType | null
+    _max: VTVerificacionSemanalMaxAggregateOutputType | null
+  }
+
+  type GetVTVerificacionSemanalGroupByPayload<T extends VTVerificacionSemanalGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<VTVerificacionSemanalGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof VTVerificacionSemanalGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], VTVerificacionSemanalGroupByOutputType[P]>
+            : GetScalarType<T[P], VTVerificacionSemanalGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type VTVerificacionSemanalSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    idVerificacionSemanal?: boolean
+    idRegistro?: boolean
+    mes?: boolean
+    semana?: boolean
+    firmadoJefeBodega?: boolean
+    fechaFirmaJefeBodega?: boolean
+    usuarioJefeBodega?: boolean
+    firmaJefeBodega?: boolean
+    firmadoJefeZonal?: boolean
+    fechaFirmaJefeZonal?: boolean
+    usuarioJefeZonal?: boolean
+    firmaJefeZonal?: boolean
+    registro?: boolean | VTRegistroCabeceraDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["vTVerificacionSemanal"]>
+
+  export type VTVerificacionSemanalSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    idVerificacionSemanal?: boolean
+    idRegistro?: boolean
+    mes?: boolean
+    semana?: boolean
+    firmadoJefeBodega?: boolean
+    fechaFirmaJefeBodega?: boolean
+    usuarioJefeBodega?: boolean
+    firmaJefeBodega?: boolean
+    firmadoJefeZonal?: boolean
+    fechaFirmaJefeZonal?: boolean
+    usuarioJefeZonal?: boolean
+    firmaJefeZonal?: boolean
+    registro?: boolean | VTRegistroCabeceraDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["vTVerificacionSemanal"]>
+
+  export type VTVerificacionSemanalSelectScalar = {
+    idVerificacionSemanal?: boolean
+    idRegistro?: boolean
+    mes?: boolean
+    semana?: boolean
+    firmadoJefeBodega?: boolean
+    fechaFirmaJefeBodega?: boolean
+    usuarioJefeBodega?: boolean
+    firmaJefeBodega?: boolean
+    firmadoJefeZonal?: boolean
+    fechaFirmaJefeZonal?: boolean
+    usuarioJefeZonal?: boolean
+    firmaJefeZonal?: boolean
+  }
+
+  export type VTVerificacionSemanalInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    registro?: boolean | VTRegistroCabeceraDefaultArgs<ExtArgs>
+  }
+  export type VTVerificacionSemanalIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    registro?: boolean | VTRegistroCabeceraDefaultArgs<ExtArgs>
+  }
+
+  export type $VTVerificacionSemanalPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "VTVerificacionSemanal"
+    objects: {
+      registro: Prisma.$VTRegistroCabeceraPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      idVerificacionSemanal: number
+      idRegistro: number
+      mes: number
+      semana: number
+      firmadoJefeBodega: boolean
+      fechaFirmaJefeBodega: Date | null
+      usuarioJefeBodega: string | null
+      firmaJefeBodega: string | null
+      firmadoJefeZonal: boolean
+      fechaFirmaJefeZonal: Date | null
+      usuarioJefeZonal: string | null
+      firmaJefeZonal: string | null
+    }, ExtArgs["result"]["vTVerificacionSemanal"]>
+    composites: {}
+  }
+
+  type VTVerificacionSemanalGetPayload<S extends boolean | null | undefined | VTVerificacionSemanalDefaultArgs> = $Result.GetResult<Prisma.$VTVerificacionSemanalPayload, S>
+
+  type VTVerificacionSemanalCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<VTVerificacionSemanalFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: VTVerificacionSemanalCountAggregateInputType | true
+    }
+
+  export interface VTVerificacionSemanalDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['VTVerificacionSemanal'], meta: { name: 'VTVerificacionSemanal' } }
+    /**
+     * Find zero or one VTVerificacionSemanal that matches the filter.
+     * @param {VTVerificacionSemanalFindUniqueArgs} args - Arguments to find a VTVerificacionSemanal
+     * @example
+     * // Get one VTVerificacionSemanal
+     * const vTVerificacionSemanal = await prisma.vTVerificacionSemanal.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends VTVerificacionSemanalFindUniqueArgs>(args: SelectSubset<T, VTVerificacionSemanalFindUniqueArgs<ExtArgs>>): Prisma__VTVerificacionSemanalClient<$Result.GetResult<Prisma.$VTVerificacionSemanalPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one VTVerificacionSemanal that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {VTVerificacionSemanalFindUniqueOrThrowArgs} args - Arguments to find a VTVerificacionSemanal
+     * @example
+     * // Get one VTVerificacionSemanal
+     * const vTVerificacionSemanal = await prisma.vTVerificacionSemanal.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends VTVerificacionSemanalFindUniqueOrThrowArgs>(args: SelectSubset<T, VTVerificacionSemanalFindUniqueOrThrowArgs<ExtArgs>>): Prisma__VTVerificacionSemanalClient<$Result.GetResult<Prisma.$VTVerificacionSemanalPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first VTVerificacionSemanal that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTVerificacionSemanalFindFirstArgs} args - Arguments to find a VTVerificacionSemanal
+     * @example
+     * // Get one VTVerificacionSemanal
+     * const vTVerificacionSemanal = await prisma.vTVerificacionSemanal.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends VTVerificacionSemanalFindFirstArgs>(args?: SelectSubset<T, VTVerificacionSemanalFindFirstArgs<ExtArgs>>): Prisma__VTVerificacionSemanalClient<$Result.GetResult<Prisma.$VTVerificacionSemanalPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first VTVerificacionSemanal that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTVerificacionSemanalFindFirstOrThrowArgs} args - Arguments to find a VTVerificacionSemanal
+     * @example
+     * // Get one VTVerificacionSemanal
+     * const vTVerificacionSemanal = await prisma.vTVerificacionSemanal.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends VTVerificacionSemanalFindFirstOrThrowArgs>(args?: SelectSubset<T, VTVerificacionSemanalFindFirstOrThrowArgs<ExtArgs>>): Prisma__VTVerificacionSemanalClient<$Result.GetResult<Prisma.$VTVerificacionSemanalPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more VTVerificacionSemanals that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTVerificacionSemanalFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all VTVerificacionSemanals
+     * const vTVerificacionSemanals = await prisma.vTVerificacionSemanal.findMany()
+     * 
+     * // Get first 10 VTVerificacionSemanals
+     * const vTVerificacionSemanals = await prisma.vTVerificacionSemanal.findMany({ take: 10 })
+     * 
+     * // Only select the `idVerificacionSemanal`
+     * const vTVerificacionSemanalWithIdVerificacionSemanalOnly = await prisma.vTVerificacionSemanal.findMany({ select: { idVerificacionSemanal: true } })
+     * 
+     */
+    findMany<T extends VTVerificacionSemanalFindManyArgs>(args?: SelectSubset<T, VTVerificacionSemanalFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VTVerificacionSemanalPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a VTVerificacionSemanal.
+     * @param {VTVerificacionSemanalCreateArgs} args - Arguments to create a VTVerificacionSemanal.
+     * @example
+     * // Create one VTVerificacionSemanal
+     * const VTVerificacionSemanal = await prisma.vTVerificacionSemanal.create({
+     *   data: {
+     *     // ... data to create a VTVerificacionSemanal
+     *   }
+     * })
+     * 
+     */
+    create<T extends VTVerificacionSemanalCreateArgs>(args: SelectSubset<T, VTVerificacionSemanalCreateArgs<ExtArgs>>): Prisma__VTVerificacionSemanalClient<$Result.GetResult<Prisma.$VTVerificacionSemanalPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many VTVerificacionSemanals.
+     * @param {VTVerificacionSemanalCreateManyArgs} args - Arguments to create many VTVerificacionSemanals.
+     * @example
+     * // Create many VTVerificacionSemanals
+     * const vTVerificacionSemanal = await prisma.vTVerificacionSemanal.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends VTVerificacionSemanalCreateManyArgs>(args?: SelectSubset<T, VTVerificacionSemanalCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many VTVerificacionSemanals and returns the data saved in the database.
+     * @param {VTVerificacionSemanalCreateManyAndReturnArgs} args - Arguments to create many VTVerificacionSemanals.
+     * @example
+     * // Create many VTVerificacionSemanals
+     * const vTVerificacionSemanal = await prisma.vTVerificacionSemanal.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many VTVerificacionSemanals and only return the `idVerificacionSemanal`
+     * const vTVerificacionSemanalWithIdVerificacionSemanalOnly = await prisma.vTVerificacionSemanal.createManyAndReturn({ 
+     *   select: { idVerificacionSemanal: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends VTVerificacionSemanalCreateManyAndReturnArgs>(args?: SelectSubset<T, VTVerificacionSemanalCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VTVerificacionSemanalPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a VTVerificacionSemanal.
+     * @param {VTVerificacionSemanalDeleteArgs} args - Arguments to delete one VTVerificacionSemanal.
+     * @example
+     * // Delete one VTVerificacionSemanal
+     * const VTVerificacionSemanal = await prisma.vTVerificacionSemanal.delete({
+     *   where: {
+     *     // ... filter to delete one VTVerificacionSemanal
+     *   }
+     * })
+     * 
+     */
+    delete<T extends VTVerificacionSemanalDeleteArgs>(args: SelectSubset<T, VTVerificacionSemanalDeleteArgs<ExtArgs>>): Prisma__VTVerificacionSemanalClient<$Result.GetResult<Prisma.$VTVerificacionSemanalPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one VTVerificacionSemanal.
+     * @param {VTVerificacionSemanalUpdateArgs} args - Arguments to update one VTVerificacionSemanal.
+     * @example
+     * // Update one VTVerificacionSemanal
+     * const vTVerificacionSemanal = await prisma.vTVerificacionSemanal.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends VTVerificacionSemanalUpdateArgs>(args: SelectSubset<T, VTVerificacionSemanalUpdateArgs<ExtArgs>>): Prisma__VTVerificacionSemanalClient<$Result.GetResult<Prisma.$VTVerificacionSemanalPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more VTVerificacionSemanals.
+     * @param {VTVerificacionSemanalDeleteManyArgs} args - Arguments to filter VTVerificacionSemanals to delete.
+     * @example
+     * // Delete a few VTVerificacionSemanals
+     * const { count } = await prisma.vTVerificacionSemanal.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends VTVerificacionSemanalDeleteManyArgs>(args?: SelectSubset<T, VTVerificacionSemanalDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more VTVerificacionSemanals.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTVerificacionSemanalUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many VTVerificacionSemanals
+     * const vTVerificacionSemanal = await prisma.vTVerificacionSemanal.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends VTVerificacionSemanalUpdateManyArgs>(args: SelectSubset<T, VTVerificacionSemanalUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one VTVerificacionSemanal.
+     * @param {VTVerificacionSemanalUpsertArgs} args - Arguments to update or create a VTVerificacionSemanal.
+     * @example
+     * // Update or create a VTVerificacionSemanal
+     * const vTVerificacionSemanal = await prisma.vTVerificacionSemanal.upsert({
+     *   create: {
+     *     // ... data to create a VTVerificacionSemanal
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the VTVerificacionSemanal we want to update
+     *   }
+     * })
+     */
+    upsert<T extends VTVerificacionSemanalUpsertArgs>(args: SelectSubset<T, VTVerificacionSemanalUpsertArgs<ExtArgs>>): Prisma__VTVerificacionSemanalClient<$Result.GetResult<Prisma.$VTVerificacionSemanalPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of VTVerificacionSemanals.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTVerificacionSemanalCountArgs} args - Arguments to filter VTVerificacionSemanals to count.
+     * @example
+     * // Count the number of VTVerificacionSemanals
+     * const count = await prisma.vTVerificacionSemanal.count({
+     *   where: {
+     *     // ... the filter for the VTVerificacionSemanals we want to count
+     *   }
+     * })
+    **/
+    count<T extends VTVerificacionSemanalCountArgs>(
+      args?: Subset<T, VTVerificacionSemanalCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], VTVerificacionSemanalCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a VTVerificacionSemanal.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTVerificacionSemanalAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends VTVerificacionSemanalAggregateArgs>(args: Subset<T, VTVerificacionSemanalAggregateArgs>): Prisma.PrismaPromise<GetVTVerificacionSemanalAggregateType<T>>
+
+    /**
+     * Group by VTVerificacionSemanal.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VTVerificacionSemanalGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends VTVerificacionSemanalGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: VTVerificacionSemanalGroupByArgs['orderBy'] }
+        : { orderBy?: VTVerificacionSemanalGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, VTVerificacionSemanalGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVTVerificacionSemanalGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the VTVerificacionSemanal model
+   */
+  readonly fields: VTVerificacionSemanalFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for VTVerificacionSemanal.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__VTVerificacionSemanalClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    registro<T extends VTRegistroCabeceraDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VTRegistroCabeceraDefaultArgs<ExtArgs>>): Prisma__VTRegistroCabeceraClient<$Result.GetResult<Prisma.$VTRegistroCabeceraPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the VTVerificacionSemanal model
+   */ 
+  interface VTVerificacionSemanalFieldRefs {
+    readonly idVerificacionSemanal: FieldRef<"VTVerificacionSemanal", 'Int'>
+    readonly idRegistro: FieldRef<"VTVerificacionSemanal", 'Int'>
+    readonly mes: FieldRef<"VTVerificacionSemanal", 'Int'>
+    readonly semana: FieldRef<"VTVerificacionSemanal", 'Int'>
+    readonly firmadoJefeBodega: FieldRef<"VTVerificacionSemanal", 'Boolean'>
+    readonly fechaFirmaJefeBodega: FieldRef<"VTVerificacionSemanal", 'DateTime'>
+    readonly usuarioJefeBodega: FieldRef<"VTVerificacionSemanal", 'String'>
+    readonly firmaJefeBodega: FieldRef<"VTVerificacionSemanal", 'String'>
+    readonly firmadoJefeZonal: FieldRef<"VTVerificacionSemanal", 'Boolean'>
+    readonly fechaFirmaJefeZonal: FieldRef<"VTVerificacionSemanal", 'DateTime'>
+    readonly usuarioJefeZonal: FieldRef<"VTVerificacionSemanal", 'String'>
+    readonly firmaJefeZonal: FieldRef<"VTVerificacionSemanal", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * VTVerificacionSemanal findUnique
+   */
+  export type VTVerificacionSemanalFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTVerificacionSemanal
+     */
+    select?: VTVerificacionSemanalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTVerificacionSemanalInclude<ExtArgs> | null
+    /**
+     * Filter, which VTVerificacionSemanal to fetch.
+     */
+    where: VTVerificacionSemanalWhereUniqueInput
+  }
+
+  /**
+   * VTVerificacionSemanal findUniqueOrThrow
+   */
+  export type VTVerificacionSemanalFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTVerificacionSemanal
+     */
+    select?: VTVerificacionSemanalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTVerificacionSemanalInclude<ExtArgs> | null
+    /**
+     * Filter, which VTVerificacionSemanal to fetch.
+     */
+    where: VTVerificacionSemanalWhereUniqueInput
+  }
+
+  /**
+   * VTVerificacionSemanal findFirst
+   */
+  export type VTVerificacionSemanalFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTVerificacionSemanal
+     */
+    select?: VTVerificacionSemanalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTVerificacionSemanalInclude<ExtArgs> | null
+    /**
+     * Filter, which VTVerificacionSemanal to fetch.
+     */
+    where?: VTVerificacionSemanalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VTVerificacionSemanals to fetch.
+     */
+    orderBy?: VTVerificacionSemanalOrderByWithRelationInput | VTVerificacionSemanalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VTVerificacionSemanals.
+     */
+    cursor?: VTVerificacionSemanalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VTVerificacionSemanals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VTVerificacionSemanals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VTVerificacionSemanals.
+     */
+    distinct?: VTVerificacionSemanalScalarFieldEnum | VTVerificacionSemanalScalarFieldEnum[]
+  }
+
+  /**
+   * VTVerificacionSemanal findFirstOrThrow
+   */
+  export type VTVerificacionSemanalFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTVerificacionSemanal
+     */
+    select?: VTVerificacionSemanalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTVerificacionSemanalInclude<ExtArgs> | null
+    /**
+     * Filter, which VTVerificacionSemanal to fetch.
+     */
+    where?: VTVerificacionSemanalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VTVerificacionSemanals to fetch.
+     */
+    orderBy?: VTVerificacionSemanalOrderByWithRelationInput | VTVerificacionSemanalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VTVerificacionSemanals.
+     */
+    cursor?: VTVerificacionSemanalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VTVerificacionSemanals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VTVerificacionSemanals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VTVerificacionSemanals.
+     */
+    distinct?: VTVerificacionSemanalScalarFieldEnum | VTVerificacionSemanalScalarFieldEnum[]
+  }
+
+  /**
+   * VTVerificacionSemanal findMany
+   */
+  export type VTVerificacionSemanalFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTVerificacionSemanal
+     */
+    select?: VTVerificacionSemanalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTVerificacionSemanalInclude<ExtArgs> | null
+    /**
+     * Filter, which VTVerificacionSemanals to fetch.
+     */
+    where?: VTVerificacionSemanalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VTVerificacionSemanals to fetch.
+     */
+    orderBy?: VTVerificacionSemanalOrderByWithRelationInput | VTVerificacionSemanalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing VTVerificacionSemanals.
+     */
+    cursor?: VTVerificacionSemanalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VTVerificacionSemanals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VTVerificacionSemanals.
+     */
+    skip?: number
+    distinct?: VTVerificacionSemanalScalarFieldEnum | VTVerificacionSemanalScalarFieldEnum[]
+  }
+
+  /**
+   * VTVerificacionSemanal create
+   */
+  export type VTVerificacionSemanalCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTVerificacionSemanal
+     */
+    select?: VTVerificacionSemanalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTVerificacionSemanalInclude<ExtArgs> | null
+    /**
+     * The data needed to create a VTVerificacionSemanal.
+     */
+    data: XOR<VTVerificacionSemanalCreateInput, VTVerificacionSemanalUncheckedCreateInput>
+  }
+
+  /**
+   * VTVerificacionSemanal createMany
+   */
+  export type VTVerificacionSemanalCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many VTVerificacionSemanals.
+     */
+    data: VTVerificacionSemanalCreateManyInput | VTVerificacionSemanalCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * VTVerificacionSemanal createManyAndReturn
+   */
+  export type VTVerificacionSemanalCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTVerificacionSemanal
+     */
+    select?: VTVerificacionSemanalSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many VTVerificacionSemanals.
+     */
+    data: VTVerificacionSemanalCreateManyInput | VTVerificacionSemanalCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTVerificacionSemanalIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * VTVerificacionSemanal update
+   */
+  export type VTVerificacionSemanalUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTVerificacionSemanal
+     */
+    select?: VTVerificacionSemanalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTVerificacionSemanalInclude<ExtArgs> | null
+    /**
+     * The data needed to update a VTVerificacionSemanal.
+     */
+    data: XOR<VTVerificacionSemanalUpdateInput, VTVerificacionSemanalUncheckedUpdateInput>
+    /**
+     * Choose, which VTVerificacionSemanal to update.
+     */
+    where: VTVerificacionSemanalWhereUniqueInput
+  }
+
+  /**
+   * VTVerificacionSemanal updateMany
+   */
+  export type VTVerificacionSemanalUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update VTVerificacionSemanals.
+     */
+    data: XOR<VTVerificacionSemanalUpdateManyMutationInput, VTVerificacionSemanalUncheckedUpdateManyInput>
+    /**
+     * Filter which VTVerificacionSemanals to update
+     */
+    where?: VTVerificacionSemanalWhereInput
+  }
+
+  /**
+   * VTVerificacionSemanal upsert
+   */
+  export type VTVerificacionSemanalUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTVerificacionSemanal
+     */
+    select?: VTVerificacionSemanalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTVerificacionSemanalInclude<ExtArgs> | null
+    /**
+     * The filter to search for the VTVerificacionSemanal to update in case it exists.
+     */
+    where: VTVerificacionSemanalWhereUniqueInput
+    /**
+     * In case the VTVerificacionSemanal found by the `where` argument doesn't exist, create a new VTVerificacionSemanal with this data.
+     */
+    create: XOR<VTVerificacionSemanalCreateInput, VTVerificacionSemanalUncheckedCreateInput>
+    /**
+     * In case the VTVerificacionSemanal was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<VTVerificacionSemanalUpdateInput, VTVerificacionSemanalUncheckedUpdateInput>
+  }
+
+  /**
+   * VTVerificacionSemanal delete
+   */
+  export type VTVerificacionSemanalDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTVerificacionSemanal
+     */
+    select?: VTVerificacionSemanalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTVerificacionSemanalInclude<ExtArgs> | null
+    /**
+     * Filter which VTVerificacionSemanal to delete.
+     */
+    where: VTVerificacionSemanalWhereUniqueInput
+  }
+
+  /**
+   * VTVerificacionSemanal deleteMany
+   */
+  export type VTVerificacionSemanalDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VTVerificacionSemanals to delete
+     */
+    where?: VTVerificacionSemanalWhereInput
+  }
+
+  /**
+   * VTVerificacionSemanal without action
+   */
+  export type VTVerificacionSemanalDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VTVerificacionSemanal
+     */
+    select?: VTVerificacionSemanalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VTVerificacionSemanalInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -86842,6 +97338,161 @@ export namespace Prisma {
   export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
 
 
+  export const ActaSupervisionPlantillaScalarFieldEnum: {
+    id: 'id',
+    nombre: 'nombre',
+    licitacionId: 'licitacionId',
+    anio: 'anio',
+    instituciones: 'instituciones',
+    rolesPerfiles: 'rolesPerfiles',
+    estado: 'estado',
+    logoUrl: 'logoUrl',
+    instrucciones: 'instrucciones',
+    campos: 'campos',
+    codigo: 'codigo',
+    version: 'version',
+    fecha: 'fecha',
+    codigoAdicional: 'codigoAdicional',
+    mostrarCodigoAdicional: 'mostrarCodigoAdicional',
+    correlativoAutomatico: 'correlativoAutomatico',
+    mostrarCodigoVersionFecha: 'mostrarCodigoVersionFecha',
+    createdBy: 'createdBy',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ActaSupervisionPlantillaScalarFieldEnum = (typeof ActaSupervisionPlantillaScalarFieldEnum)[keyof typeof ActaSupervisionPlantillaScalarFieldEnum]
+
+
+  export const ActaSupervisionRespuestaScalarFieldEnum: {
+    id: 'id',
+    plantillaId: 'plantillaId',
+    licitacionId: 'licitacionId',
+    anio: 'anio',
+    rbd: 'rbd',
+    nombreEstablecimiento: 'nombreEstablecimiento',
+    direccion: 'direccion',
+    ciudad: 'ciudad',
+    institucion: 'institucion',
+    sucursal: 'sucursal',
+    fechaCreacion: 'fechaCreacion',
+    supervisorNombre: 'supervisorNombre',
+    supervisorRut: 'supervisorRut',
+    respuestasData: 'respuestasData',
+    estado: 'estado',
+    usuario: 'usuario',
+    correlativo: 'correlativo',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ActaSupervisionRespuestaScalarFieldEnum = (typeof ActaSupervisionRespuestaScalarFieldEnum)[keyof typeof ActaSupervisionRespuestaScalarFieldEnum]
+
+
+  export const VTCamaraScalarFieldEnum: {
+    idCamara: 'idCamara',
+    nombreCamara: 'nombreCamara',
+    tipoCamara: 'tipoCamara',
+    temperaturaMinima: 'temperaturaMinima',
+    temperaturaMaxima: 'temperaturaMaxima',
+    activo: 'activo'
+  };
+
+  export type VTCamaraScalarFieldEnum = (typeof VTCamaraScalarFieldEnum)[keyof typeof VTCamaraScalarFieldEnum]
+
+
+  export const VTConfiguracionCamaraScalarFieldEnum: {
+    idConfig: 'idConfig',
+    idRegistroCabecera: 'idRegistroCabecera',
+    idCamara: 'idCamara',
+    mes: 'mes',
+    numeroCamaraMes: 'numeroCamaraMes',
+    nombreCamara: 'nombreCamara',
+    temperaturaMinima: 'temperaturaMinima',
+    temperaturaMaxima: 'temperaturaMaxima'
+  };
+
+  export type VTConfiguracionCamaraScalarFieldEnum = (typeof VTConfiguracionCamaraScalarFieldEnum)[keyof typeof VTConfiguracionCamaraScalarFieldEnum]
+
+
+  export const VTRegistroCabeceraScalarFieldEnum: {
+    idRegistro: 'idRegistro',
+    tipoEntidad: 'tipoEntidad',
+    idEntidad: 'idEntidad',
+    nombreEntidad: 'nombreEntidad',
+    anio: 'anio',
+    fechaRegistro: 'fechaRegistro',
+    monitorResponsable: 'monitorResponsable',
+    tipoCamara: 'tipoCamara',
+    descripcionCamaras: 'descripcionCamaras',
+    fechaCreacion: 'fechaCreacion',
+    usuarioCreacion: 'usuarioCreacion'
+  };
+
+  export type VTRegistroCabeceraScalarFieldEnum = (typeof VTRegistroCabeceraScalarFieldEnum)[keyof typeof VTRegistroCabeceraScalarFieldEnum]
+
+
+  export const VTRegistroDetalleScalarFieldEnum: {
+    idDetalle: 'idDetalle',
+    idRegistro: 'idRegistro',
+    numeroCorrelativo: 'numeroCorrelativo',
+    dia: 'dia',
+    tipoProducto: 'tipoProducto',
+    nombreProducto: 'nombreProducto',
+    mes: 'mes',
+    numeroCamara: 'numeroCamara',
+    temperatura: 'temperatura',
+    fechaRegistro: 'fechaRegistro',
+    usuarioRegistro: 'usuarioRegistro'
+  };
+
+  export type VTRegistroDetalleScalarFieldEnum = (typeof VTRegistroDetalleScalarFieldEnum)[keyof typeof VTRegistroDetalleScalarFieldEnum]
+
+
+  export const VTProductoCatalogoScalarFieldEnum: {
+    idProducto: 'idProducto',
+    nombreProducto: 'nombreProducto',
+    activo: 'activo'
+  };
+
+  export type VTProductoCatalogoScalarFieldEnum = (typeof VTProductoCatalogoScalarFieldEnum)[keyof typeof VTProductoCatalogoScalarFieldEnum]
+
+
+  export const VTVerificacionDiariaScalarFieldEnum: {
+    idVerificacion: 'idVerificacion',
+    idRegistro: 'idRegistro',
+    mes: 'mes',
+    dia: 'dia',
+    fechaVerificacion: 'fechaVerificacion',
+    firmadoPor: 'firmadoPor',
+    usuarioId: 'usuarioId',
+    firma: 'firma',
+    firmado: 'firmado',
+    observaciones: 'observaciones',
+    accionesCorrectivas: 'accionesCorrectivas'
+  };
+
+  export type VTVerificacionDiariaScalarFieldEnum = (typeof VTVerificacionDiariaScalarFieldEnum)[keyof typeof VTVerificacionDiariaScalarFieldEnum]
+
+
+  export const VTVerificacionSemanalScalarFieldEnum: {
+    idVerificacionSemanal: 'idVerificacionSemanal',
+    idRegistro: 'idRegistro',
+    mes: 'mes',
+    semana: 'semana',
+    firmadoJefeBodega: 'firmadoJefeBodega',
+    fechaFirmaJefeBodega: 'fechaFirmaJefeBodega',
+    usuarioJefeBodega: 'usuarioJefeBodega',
+    firmaJefeBodega: 'firmaJefeBodega',
+    firmadoJefeZonal: 'firmadoJefeZonal',
+    fechaFirmaJefeZonal: 'fechaFirmaJefeZonal',
+    usuarioJefeZonal: 'usuarioJefeZonal',
+    firmaJefeZonal: 'firmaJefeZonal'
+  };
+
+  export type VTVerificacionSemanalScalarFieldEnum = (typeof VTVerificacionSemanalScalarFieldEnum)[keyof typeof VTVerificacionSemanalScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -87842,6 +98493,7 @@ export namespace Prisma {
     jefesZonales?: JefeZonalLicitacionListRelationFilter
     vehiculos?: VehiculoListRelationFilter
     matrices?: MatrizT_CabeceraListRelationFilter
+    actasPlantillas?: ActaSupervisionPlantillaListRelationFilter
   }
 
   export type LicitacionOrderByWithRelationInput = {
@@ -87855,6 +98507,7 @@ export namespace Prisma {
     jefesZonales?: JefeZonalLicitacionOrderByRelationAggregateInput
     vehiculos?: VehiculoOrderByRelationAggregateInput
     matrices?: MatrizT_CabeceraOrderByRelationAggregateInput
+    actasPlantillas?: ActaSupervisionPlantillaOrderByRelationAggregateInput
   }
 
   export type LicitacionWhereUniqueInput = Prisma.AtLeast<{
@@ -87871,6 +98524,7 @@ export namespace Prisma {
     jefesZonales?: JefeZonalLicitacionListRelationFilter
     vehiculos?: VehiculoListRelationFilter
     matrices?: MatrizT_CabeceraListRelationFilter
+    actasPlantillas?: ActaSupervisionPlantillaListRelationFilter
   }, "licId">
 
   export type LicitacionOrderByWithAggregationInput = {
@@ -93215,6 +103869,813 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"AuditLog"> | Date | string
   }
 
+  export type ActaSupervisionPlantillaWhereInput = {
+    AND?: ActaSupervisionPlantillaWhereInput | ActaSupervisionPlantillaWhereInput[]
+    OR?: ActaSupervisionPlantillaWhereInput[]
+    NOT?: ActaSupervisionPlantillaWhereInput | ActaSupervisionPlantillaWhereInput[]
+    id?: StringFilter<"ActaSupervisionPlantilla"> | string
+    nombre?: StringFilter<"ActaSupervisionPlantilla"> | string
+    licitacionId?: IntNullableFilter<"ActaSupervisionPlantilla"> | number | null
+    anio?: IntFilter<"ActaSupervisionPlantilla"> | number
+    instituciones?: StringNullableFilter<"ActaSupervisionPlantilla"> | string | null
+    rolesPerfiles?: StringNullableFilter<"ActaSupervisionPlantilla"> | string | null
+    estado?: BoolFilter<"ActaSupervisionPlantilla"> | boolean
+    logoUrl?: StringNullableFilter<"ActaSupervisionPlantilla"> | string | null
+    instrucciones?: StringNullableFilter<"ActaSupervisionPlantilla"> | string | null
+    campos?: StringFilter<"ActaSupervisionPlantilla"> | string
+    codigo?: StringNullableFilter<"ActaSupervisionPlantilla"> | string | null
+    version?: StringNullableFilter<"ActaSupervisionPlantilla"> | string | null
+    fecha?: StringNullableFilter<"ActaSupervisionPlantilla"> | string | null
+    codigoAdicional?: StringNullableFilter<"ActaSupervisionPlantilla"> | string | null
+    mostrarCodigoAdicional?: BoolFilter<"ActaSupervisionPlantilla"> | boolean
+    correlativoAutomatico?: BoolFilter<"ActaSupervisionPlantilla"> | boolean
+    mostrarCodigoVersionFecha?: BoolFilter<"ActaSupervisionPlantilla"> | boolean
+    createdBy?: StringFilter<"ActaSupervisionPlantilla"> | string
+    createdAt?: DateTimeFilter<"ActaSupervisionPlantilla"> | Date | string
+    updatedAt?: DateTimeFilter<"ActaSupervisionPlantilla"> | Date | string
+    licitacion?: XOR<LicitacionNullableRelationFilter, LicitacionWhereInput> | null
+    respuestas?: ActaSupervisionRespuestaListRelationFilter
+  }
+
+  export type ActaSupervisionPlantillaOrderByWithRelationInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    licitacionId?: SortOrderInput | SortOrder
+    anio?: SortOrder
+    instituciones?: SortOrderInput | SortOrder
+    rolesPerfiles?: SortOrderInput | SortOrder
+    estado?: SortOrder
+    logoUrl?: SortOrderInput | SortOrder
+    instrucciones?: SortOrderInput | SortOrder
+    campos?: SortOrder
+    codigo?: SortOrderInput | SortOrder
+    version?: SortOrderInput | SortOrder
+    fecha?: SortOrderInput | SortOrder
+    codigoAdicional?: SortOrderInput | SortOrder
+    mostrarCodigoAdicional?: SortOrder
+    correlativoAutomatico?: SortOrder
+    mostrarCodigoVersionFecha?: SortOrder
+    createdBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    licitacion?: LicitacionOrderByWithRelationInput
+    respuestas?: ActaSupervisionRespuestaOrderByRelationAggregateInput
+  }
+
+  export type ActaSupervisionPlantillaWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ActaSupervisionPlantillaWhereInput | ActaSupervisionPlantillaWhereInput[]
+    OR?: ActaSupervisionPlantillaWhereInput[]
+    NOT?: ActaSupervisionPlantillaWhereInput | ActaSupervisionPlantillaWhereInput[]
+    nombre?: StringFilter<"ActaSupervisionPlantilla"> | string
+    licitacionId?: IntNullableFilter<"ActaSupervisionPlantilla"> | number | null
+    anio?: IntFilter<"ActaSupervisionPlantilla"> | number
+    instituciones?: StringNullableFilter<"ActaSupervisionPlantilla"> | string | null
+    rolesPerfiles?: StringNullableFilter<"ActaSupervisionPlantilla"> | string | null
+    estado?: BoolFilter<"ActaSupervisionPlantilla"> | boolean
+    logoUrl?: StringNullableFilter<"ActaSupervisionPlantilla"> | string | null
+    instrucciones?: StringNullableFilter<"ActaSupervisionPlantilla"> | string | null
+    campos?: StringFilter<"ActaSupervisionPlantilla"> | string
+    codigo?: StringNullableFilter<"ActaSupervisionPlantilla"> | string | null
+    version?: StringNullableFilter<"ActaSupervisionPlantilla"> | string | null
+    fecha?: StringNullableFilter<"ActaSupervisionPlantilla"> | string | null
+    codigoAdicional?: StringNullableFilter<"ActaSupervisionPlantilla"> | string | null
+    mostrarCodigoAdicional?: BoolFilter<"ActaSupervisionPlantilla"> | boolean
+    correlativoAutomatico?: BoolFilter<"ActaSupervisionPlantilla"> | boolean
+    mostrarCodigoVersionFecha?: BoolFilter<"ActaSupervisionPlantilla"> | boolean
+    createdBy?: StringFilter<"ActaSupervisionPlantilla"> | string
+    createdAt?: DateTimeFilter<"ActaSupervisionPlantilla"> | Date | string
+    updatedAt?: DateTimeFilter<"ActaSupervisionPlantilla"> | Date | string
+    licitacion?: XOR<LicitacionNullableRelationFilter, LicitacionWhereInput> | null
+    respuestas?: ActaSupervisionRespuestaListRelationFilter
+  }, "id">
+
+  export type ActaSupervisionPlantillaOrderByWithAggregationInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    licitacionId?: SortOrderInput | SortOrder
+    anio?: SortOrder
+    instituciones?: SortOrderInput | SortOrder
+    rolesPerfiles?: SortOrderInput | SortOrder
+    estado?: SortOrder
+    logoUrl?: SortOrderInput | SortOrder
+    instrucciones?: SortOrderInput | SortOrder
+    campos?: SortOrder
+    codigo?: SortOrderInput | SortOrder
+    version?: SortOrderInput | SortOrder
+    fecha?: SortOrderInput | SortOrder
+    codigoAdicional?: SortOrderInput | SortOrder
+    mostrarCodigoAdicional?: SortOrder
+    correlativoAutomatico?: SortOrder
+    mostrarCodigoVersionFecha?: SortOrder
+    createdBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ActaSupervisionPlantillaCountOrderByAggregateInput
+    _avg?: ActaSupervisionPlantillaAvgOrderByAggregateInput
+    _max?: ActaSupervisionPlantillaMaxOrderByAggregateInput
+    _min?: ActaSupervisionPlantillaMinOrderByAggregateInput
+    _sum?: ActaSupervisionPlantillaSumOrderByAggregateInput
+  }
+
+  export type ActaSupervisionPlantillaScalarWhereWithAggregatesInput = {
+    AND?: ActaSupervisionPlantillaScalarWhereWithAggregatesInput | ActaSupervisionPlantillaScalarWhereWithAggregatesInput[]
+    OR?: ActaSupervisionPlantillaScalarWhereWithAggregatesInput[]
+    NOT?: ActaSupervisionPlantillaScalarWhereWithAggregatesInput | ActaSupervisionPlantillaScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ActaSupervisionPlantilla"> | string
+    nombre?: StringWithAggregatesFilter<"ActaSupervisionPlantilla"> | string
+    licitacionId?: IntNullableWithAggregatesFilter<"ActaSupervisionPlantilla"> | number | null
+    anio?: IntWithAggregatesFilter<"ActaSupervisionPlantilla"> | number
+    instituciones?: StringNullableWithAggregatesFilter<"ActaSupervisionPlantilla"> | string | null
+    rolesPerfiles?: StringNullableWithAggregatesFilter<"ActaSupervisionPlantilla"> | string | null
+    estado?: BoolWithAggregatesFilter<"ActaSupervisionPlantilla"> | boolean
+    logoUrl?: StringNullableWithAggregatesFilter<"ActaSupervisionPlantilla"> | string | null
+    instrucciones?: StringNullableWithAggregatesFilter<"ActaSupervisionPlantilla"> | string | null
+    campos?: StringWithAggregatesFilter<"ActaSupervisionPlantilla"> | string
+    codigo?: StringNullableWithAggregatesFilter<"ActaSupervisionPlantilla"> | string | null
+    version?: StringNullableWithAggregatesFilter<"ActaSupervisionPlantilla"> | string | null
+    fecha?: StringNullableWithAggregatesFilter<"ActaSupervisionPlantilla"> | string | null
+    codigoAdicional?: StringNullableWithAggregatesFilter<"ActaSupervisionPlantilla"> | string | null
+    mostrarCodigoAdicional?: BoolWithAggregatesFilter<"ActaSupervisionPlantilla"> | boolean
+    correlativoAutomatico?: BoolWithAggregatesFilter<"ActaSupervisionPlantilla"> | boolean
+    mostrarCodigoVersionFecha?: BoolWithAggregatesFilter<"ActaSupervisionPlantilla"> | boolean
+    createdBy?: StringWithAggregatesFilter<"ActaSupervisionPlantilla"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"ActaSupervisionPlantilla"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ActaSupervisionPlantilla"> | Date | string
+  }
+
+  export type ActaSupervisionRespuestaWhereInput = {
+    AND?: ActaSupervisionRespuestaWhereInput | ActaSupervisionRespuestaWhereInput[]
+    OR?: ActaSupervisionRespuestaWhereInput[]
+    NOT?: ActaSupervisionRespuestaWhereInput | ActaSupervisionRespuestaWhereInput[]
+    id?: StringFilter<"ActaSupervisionRespuesta"> | string
+    plantillaId?: StringFilter<"ActaSupervisionRespuesta"> | string
+    licitacionId?: IntNullableFilter<"ActaSupervisionRespuesta"> | number | null
+    anio?: IntNullableFilter<"ActaSupervisionRespuesta"> | number | null
+    rbd?: IntFilter<"ActaSupervisionRespuesta"> | number
+    nombreEstablecimiento?: StringNullableFilter<"ActaSupervisionRespuesta"> | string | null
+    direccion?: StringNullableFilter<"ActaSupervisionRespuesta"> | string | null
+    ciudad?: StringNullableFilter<"ActaSupervisionRespuesta"> | string | null
+    institucion?: StringNullableFilter<"ActaSupervisionRespuesta"> | string | null
+    sucursal?: StringNullableFilter<"ActaSupervisionRespuesta"> | string | null
+    fechaCreacion?: DateTimeFilter<"ActaSupervisionRespuesta"> | Date | string
+    supervisorNombre?: StringNullableFilter<"ActaSupervisionRespuesta"> | string | null
+    supervisorRut?: StringNullableFilter<"ActaSupervisionRespuesta"> | string | null
+    respuestasData?: StringFilter<"ActaSupervisionRespuesta"> | string
+    estado?: StringFilter<"ActaSupervisionRespuesta"> | string
+    usuario?: StringFilter<"ActaSupervisionRespuesta"> | string
+    correlativo?: IntNullableFilter<"ActaSupervisionRespuesta"> | number | null
+    createdAt?: DateTimeFilter<"ActaSupervisionRespuesta"> | Date | string
+    updatedAt?: DateTimeFilter<"ActaSupervisionRespuesta"> | Date | string
+    plantilla?: XOR<ActaSupervisionPlantillaRelationFilter, ActaSupervisionPlantillaWhereInput>
+  }
+
+  export type ActaSupervisionRespuestaOrderByWithRelationInput = {
+    id?: SortOrder
+    plantillaId?: SortOrder
+    licitacionId?: SortOrderInput | SortOrder
+    anio?: SortOrderInput | SortOrder
+    rbd?: SortOrder
+    nombreEstablecimiento?: SortOrderInput | SortOrder
+    direccion?: SortOrderInput | SortOrder
+    ciudad?: SortOrderInput | SortOrder
+    institucion?: SortOrderInput | SortOrder
+    sucursal?: SortOrderInput | SortOrder
+    fechaCreacion?: SortOrder
+    supervisorNombre?: SortOrderInput | SortOrder
+    supervisorRut?: SortOrderInput | SortOrder
+    respuestasData?: SortOrder
+    estado?: SortOrder
+    usuario?: SortOrder
+    correlativo?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    plantilla?: ActaSupervisionPlantillaOrderByWithRelationInput
+  }
+
+  export type ActaSupervisionRespuestaWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ActaSupervisionRespuestaWhereInput | ActaSupervisionRespuestaWhereInput[]
+    OR?: ActaSupervisionRespuestaWhereInput[]
+    NOT?: ActaSupervisionRespuestaWhereInput | ActaSupervisionRespuestaWhereInput[]
+    plantillaId?: StringFilter<"ActaSupervisionRespuesta"> | string
+    licitacionId?: IntNullableFilter<"ActaSupervisionRespuesta"> | number | null
+    anio?: IntNullableFilter<"ActaSupervisionRespuesta"> | number | null
+    rbd?: IntFilter<"ActaSupervisionRespuesta"> | number
+    nombreEstablecimiento?: StringNullableFilter<"ActaSupervisionRespuesta"> | string | null
+    direccion?: StringNullableFilter<"ActaSupervisionRespuesta"> | string | null
+    ciudad?: StringNullableFilter<"ActaSupervisionRespuesta"> | string | null
+    institucion?: StringNullableFilter<"ActaSupervisionRespuesta"> | string | null
+    sucursal?: StringNullableFilter<"ActaSupervisionRespuesta"> | string | null
+    fechaCreacion?: DateTimeFilter<"ActaSupervisionRespuesta"> | Date | string
+    supervisorNombre?: StringNullableFilter<"ActaSupervisionRespuesta"> | string | null
+    supervisorRut?: StringNullableFilter<"ActaSupervisionRespuesta"> | string | null
+    respuestasData?: StringFilter<"ActaSupervisionRespuesta"> | string
+    estado?: StringFilter<"ActaSupervisionRespuesta"> | string
+    usuario?: StringFilter<"ActaSupervisionRespuesta"> | string
+    correlativo?: IntNullableFilter<"ActaSupervisionRespuesta"> | number | null
+    createdAt?: DateTimeFilter<"ActaSupervisionRespuesta"> | Date | string
+    updatedAt?: DateTimeFilter<"ActaSupervisionRespuesta"> | Date | string
+    plantilla?: XOR<ActaSupervisionPlantillaRelationFilter, ActaSupervisionPlantillaWhereInput>
+  }, "id">
+
+  export type ActaSupervisionRespuestaOrderByWithAggregationInput = {
+    id?: SortOrder
+    plantillaId?: SortOrder
+    licitacionId?: SortOrderInput | SortOrder
+    anio?: SortOrderInput | SortOrder
+    rbd?: SortOrder
+    nombreEstablecimiento?: SortOrderInput | SortOrder
+    direccion?: SortOrderInput | SortOrder
+    ciudad?: SortOrderInput | SortOrder
+    institucion?: SortOrderInput | SortOrder
+    sucursal?: SortOrderInput | SortOrder
+    fechaCreacion?: SortOrder
+    supervisorNombre?: SortOrderInput | SortOrder
+    supervisorRut?: SortOrderInput | SortOrder
+    respuestasData?: SortOrder
+    estado?: SortOrder
+    usuario?: SortOrder
+    correlativo?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ActaSupervisionRespuestaCountOrderByAggregateInput
+    _avg?: ActaSupervisionRespuestaAvgOrderByAggregateInput
+    _max?: ActaSupervisionRespuestaMaxOrderByAggregateInput
+    _min?: ActaSupervisionRespuestaMinOrderByAggregateInput
+    _sum?: ActaSupervisionRespuestaSumOrderByAggregateInput
+  }
+
+  export type ActaSupervisionRespuestaScalarWhereWithAggregatesInput = {
+    AND?: ActaSupervisionRespuestaScalarWhereWithAggregatesInput | ActaSupervisionRespuestaScalarWhereWithAggregatesInput[]
+    OR?: ActaSupervisionRespuestaScalarWhereWithAggregatesInput[]
+    NOT?: ActaSupervisionRespuestaScalarWhereWithAggregatesInput | ActaSupervisionRespuestaScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ActaSupervisionRespuesta"> | string
+    plantillaId?: StringWithAggregatesFilter<"ActaSupervisionRespuesta"> | string
+    licitacionId?: IntNullableWithAggregatesFilter<"ActaSupervisionRespuesta"> | number | null
+    anio?: IntNullableWithAggregatesFilter<"ActaSupervisionRespuesta"> | number | null
+    rbd?: IntWithAggregatesFilter<"ActaSupervisionRespuesta"> | number
+    nombreEstablecimiento?: StringNullableWithAggregatesFilter<"ActaSupervisionRespuesta"> | string | null
+    direccion?: StringNullableWithAggregatesFilter<"ActaSupervisionRespuesta"> | string | null
+    ciudad?: StringNullableWithAggregatesFilter<"ActaSupervisionRespuesta"> | string | null
+    institucion?: StringNullableWithAggregatesFilter<"ActaSupervisionRespuesta"> | string | null
+    sucursal?: StringNullableWithAggregatesFilter<"ActaSupervisionRespuesta"> | string | null
+    fechaCreacion?: DateTimeWithAggregatesFilter<"ActaSupervisionRespuesta"> | Date | string
+    supervisorNombre?: StringNullableWithAggregatesFilter<"ActaSupervisionRespuesta"> | string | null
+    supervisorRut?: StringNullableWithAggregatesFilter<"ActaSupervisionRespuesta"> | string | null
+    respuestasData?: StringWithAggregatesFilter<"ActaSupervisionRespuesta"> | string
+    estado?: StringWithAggregatesFilter<"ActaSupervisionRespuesta"> | string
+    usuario?: StringWithAggregatesFilter<"ActaSupervisionRespuesta"> | string
+    correlativo?: IntNullableWithAggregatesFilter<"ActaSupervisionRespuesta"> | number | null
+    createdAt?: DateTimeWithAggregatesFilter<"ActaSupervisionRespuesta"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ActaSupervisionRespuesta"> | Date | string
+  }
+
+  export type VTCamaraWhereInput = {
+    AND?: VTCamaraWhereInput | VTCamaraWhereInput[]
+    OR?: VTCamaraWhereInput[]
+    NOT?: VTCamaraWhereInput | VTCamaraWhereInput[]
+    idCamara?: IntFilter<"VTCamara"> | number
+    nombreCamara?: StringFilter<"VTCamara"> | string
+    tipoCamara?: StringFilter<"VTCamara"> | string
+    temperaturaMinima?: FloatNullableFilter<"VTCamara"> | number | null
+    temperaturaMaxima?: FloatFilter<"VTCamara"> | number
+    activo?: BoolFilter<"VTCamara"> | boolean
+    configuraciones?: VTConfiguracionCamaraListRelationFilter
+  }
+
+  export type VTCamaraOrderByWithRelationInput = {
+    idCamara?: SortOrder
+    nombreCamara?: SortOrder
+    tipoCamara?: SortOrder
+    temperaturaMinima?: SortOrderInput | SortOrder
+    temperaturaMaxima?: SortOrder
+    activo?: SortOrder
+    configuraciones?: VTConfiguracionCamaraOrderByRelationAggregateInput
+  }
+
+  export type VTCamaraWhereUniqueInput = Prisma.AtLeast<{
+    idCamara?: number
+    AND?: VTCamaraWhereInput | VTCamaraWhereInput[]
+    OR?: VTCamaraWhereInput[]
+    NOT?: VTCamaraWhereInput | VTCamaraWhereInput[]
+    nombreCamara?: StringFilter<"VTCamara"> | string
+    tipoCamara?: StringFilter<"VTCamara"> | string
+    temperaturaMinima?: FloatNullableFilter<"VTCamara"> | number | null
+    temperaturaMaxima?: FloatFilter<"VTCamara"> | number
+    activo?: BoolFilter<"VTCamara"> | boolean
+    configuraciones?: VTConfiguracionCamaraListRelationFilter
+  }, "idCamara">
+
+  export type VTCamaraOrderByWithAggregationInput = {
+    idCamara?: SortOrder
+    nombreCamara?: SortOrder
+    tipoCamara?: SortOrder
+    temperaturaMinima?: SortOrderInput | SortOrder
+    temperaturaMaxima?: SortOrder
+    activo?: SortOrder
+    _count?: VTCamaraCountOrderByAggregateInput
+    _avg?: VTCamaraAvgOrderByAggregateInput
+    _max?: VTCamaraMaxOrderByAggregateInput
+    _min?: VTCamaraMinOrderByAggregateInput
+    _sum?: VTCamaraSumOrderByAggregateInput
+  }
+
+  export type VTCamaraScalarWhereWithAggregatesInput = {
+    AND?: VTCamaraScalarWhereWithAggregatesInput | VTCamaraScalarWhereWithAggregatesInput[]
+    OR?: VTCamaraScalarWhereWithAggregatesInput[]
+    NOT?: VTCamaraScalarWhereWithAggregatesInput | VTCamaraScalarWhereWithAggregatesInput[]
+    idCamara?: IntWithAggregatesFilter<"VTCamara"> | number
+    nombreCamara?: StringWithAggregatesFilter<"VTCamara"> | string
+    tipoCamara?: StringWithAggregatesFilter<"VTCamara"> | string
+    temperaturaMinima?: FloatNullableWithAggregatesFilter<"VTCamara"> | number | null
+    temperaturaMaxima?: FloatWithAggregatesFilter<"VTCamara"> | number
+    activo?: BoolWithAggregatesFilter<"VTCamara"> | boolean
+  }
+
+  export type VTConfiguracionCamaraWhereInput = {
+    AND?: VTConfiguracionCamaraWhereInput | VTConfiguracionCamaraWhereInput[]
+    OR?: VTConfiguracionCamaraWhereInput[]
+    NOT?: VTConfiguracionCamaraWhereInput | VTConfiguracionCamaraWhereInput[]
+    idConfig?: IntFilter<"VTConfiguracionCamara"> | number
+    idRegistroCabecera?: IntFilter<"VTConfiguracionCamara"> | number
+    idCamara?: IntFilter<"VTConfiguracionCamara"> | number
+    mes?: IntFilter<"VTConfiguracionCamara"> | number
+    numeroCamaraMes?: IntFilter<"VTConfiguracionCamara"> | number
+    nombreCamara?: StringNullableFilter<"VTConfiguracionCamara"> | string | null
+    temperaturaMinima?: FloatNullableFilter<"VTConfiguracionCamara"> | number | null
+    temperaturaMaxima?: FloatNullableFilter<"VTConfiguracionCamara"> | number | null
+    registro?: XOR<VTRegistroCabeceraRelationFilter, VTRegistroCabeceraWhereInput>
+    camara?: XOR<VTCamaraRelationFilter, VTCamaraWhereInput>
+  }
+
+  export type VTConfiguracionCamaraOrderByWithRelationInput = {
+    idConfig?: SortOrder
+    idRegistroCabecera?: SortOrder
+    idCamara?: SortOrder
+    mes?: SortOrder
+    numeroCamaraMes?: SortOrder
+    nombreCamara?: SortOrderInput | SortOrder
+    temperaturaMinima?: SortOrderInput | SortOrder
+    temperaturaMaxima?: SortOrderInput | SortOrder
+    registro?: VTRegistroCabeceraOrderByWithRelationInput
+    camara?: VTCamaraOrderByWithRelationInput
+  }
+
+  export type VTConfiguracionCamaraWhereUniqueInput = Prisma.AtLeast<{
+    idConfig?: number
+    AND?: VTConfiguracionCamaraWhereInput | VTConfiguracionCamaraWhereInput[]
+    OR?: VTConfiguracionCamaraWhereInput[]
+    NOT?: VTConfiguracionCamaraWhereInput | VTConfiguracionCamaraWhereInput[]
+    idRegistroCabecera?: IntFilter<"VTConfiguracionCamara"> | number
+    idCamara?: IntFilter<"VTConfiguracionCamara"> | number
+    mes?: IntFilter<"VTConfiguracionCamara"> | number
+    numeroCamaraMes?: IntFilter<"VTConfiguracionCamara"> | number
+    nombreCamara?: StringNullableFilter<"VTConfiguracionCamara"> | string | null
+    temperaturaMinima?: FloatNullableFilter<"VTConfiguracionCamara"> | number | null
+    temperaturaMaxima?: FloatNullableFilter<"VTConfiguracionCamara"> | number | null
+    registro?: XOR<VTRegistroCabeceraRelationFilter, VTRegistroCabeceraWhereInput>
+    camara?: XOR<VTCamaraRelationFilter, VTCamaraWhereInput>
+  }, "idConfig">
+
+  export type VTConfiguracionCamaraOrderByWithAggregationInput = {
+    idConfig?: SortOrder
+    idRegistroCabecera?: SortOrder
+    idCamara?: SortOrder
+    mes?: SortOrder
+    numeroCamaraMes?: SortOrder
+    nombreCamara?: SortOrderInput | SortOrder
+    temperaturaMinima?: SortOrderInput | SortOrder
+    temperaturaMaxima?: SortOrderInput | SortOrder
+    _count?: VTConfiguracionCamaraCountOrderByAggregateInput
+    _avg?: VTConfiguracionCamaraAvgOrderByAggregateInput
+    _max?: VTConfiguracionCamaraMaxOrderByAggregateInput
+    _min?: VTConfiguracionCamaraMinOrderByAggregateInput
+    _sum?: VTConfiguracionCamaraSumOrderByAggregateInput
+  }
+
+  export type VTConfiguracionCamaraScalarWhereWithAggregatesInput = {
+    AND?: VTConfiguracionCamaraScalarWhereWithAggregatesInput | VTConfiguracionCamaraScalarWhereWithAggregatesInput[]
+    OR?: VTConfiguracionCamaraScalarWhereWithAggregatesInput[]
+    NOT?: VTConfiguracionCamaraScalarWhereWithAggregatesInput | VTConfiguracionCamaraScalarWhereWithAggregatesInput[]
+    idConfig?: IntWithAggregatesFilter<"VTConfiguracionCamara"> | number
+    idRegistroCabecera?: IntWithAggregatesFilter<"VTConfiguracionCamara"> | number
+    idCamara?: IntWithAggregatesFilter<"VTConfiguracionCamara"> | number
+    mes?: IntWithAggregatesFilter<"VTConfiguracionCamara"> | number
+    numeroCamaraMes?: IntWithAggregatesFilter<"VTConfiguracionCamara"> | number
+    nombreCamara?: StringNullableWithAggregatesFilter<"VTConfiguracionCamara"> | string | null
+    temperaturaMinima?: FloatNullableWithAggregatesFilter<"VTConfiguracionCamara"> | number | null
+    temperaturaMaxima?: FloatNullableWithAggregatesFilter<"VTConfiguracionCamara"> | number | null
+  }
+
+  export type VTRegistroCabeceraWhereInput = {
+    AND?: VTRegistroCabeceraWhereInput | VTRegistroCabeceraWhereInput[]
+    OR?: VTRegistroCabeceraWhereInput[]
+    NOT?: VTRegistroCabeceraWhereInput | VTRegistroCabeceraWhereInput[]
+    idRegistro?: IntFilter<"VTRegistroCabecera"> | number
+    tipoEntidad?: StringFilter<"VTRegistroCabecera"> | string
+    idEntidad?: StringFilter<"VTRegistroCabecera"> | string
+    nombreEntidad?: StringFilter<"VTRegistroCabecera"> | string
+    anio?: IntFilter<"VTRegistroCabecera"> | number
+    fechaRegistro?: DateTimeNullableFilter<"VTRegistroCabecera"> | Date | string | null
+    monitorResponsable?: StringFilter<"VTRegistroCabecera"> | string
+    tipoCamara?: StringFilter<"VTRegistroCabecera"> | string
+    descripcionCamaras?: StringNullableFilter<"VTRegistroCabecera"> | string | null
+    fechaCreacion?: DateTimeFilter<"VTRegistroCabecera"> | Date | string
+    usuarioCreacion?: StringFilter<"VTRegistroCabecera"> | string
+    configuraciones?: VTConfiguracionCamaraListRelationFilter
+    detalles?: VTRegistroDetalleListRelationFilter
+    verificacionesDiarias?: VTVerificacionDiariaListRelationFilter
+    verificacionesSemanales?: VTVerificacionSemanalListRelationFilter
+  }
+
+  export type VTRegistroCabeceraOrderByWithRelationInput = {
+    idRegistro?: SortOrder
+    tipoEntidad?: SortOrder
+    idEntidad?: SortOrder
+    nombreEntidad?: SortOrder
+    anio?: SortOrder
+    fechaRegistro?: SortOrderInput | SortOrder
+    monitorResponsable?: SortOrder
+    tipoCamara?: SortOrder
+    descripcionCamaras?: SortOrderInput | SortOrder
+    fechaCreacion?: SortOrder
+    usuarioCreacion?: SortOrder
+    configuraciones?: VTConfiguracionCamaraOrderByRelationAggregateInput
+    detalles?: VTRegistroDetalleOrderByRelationAggregateInput
+    verificacionesDiarias?: VTVerificacionDiariaOrderByRelationAggregateInput
+    verificacionesSemanales?: VTVerificacionSemanalOrderByRelationAggregateInput
+  }
+
+  export type VTRegistroCabeceraWhereUniqueInput = Prisma.AtLeast<{
+    idRegistro?: number
+    AND?: VTRegistroCabeceraWhereInput | VTRegistroCabeceraWhereInput[]
+    OR?: VTRegistroCabeceraWhereInput[]
+    NOT?: VTRegistroCabeceraWhereInput | VTRegistroCabeceraWhereInput[]
+    tipoEntidad?: StringFilter<"VTRegistroCabecera"> | string
+    idEntidad?: StringFilter<"VTRegistroCabecera"> | string
+    nombreEntidad?: StringFilter<"VTRegistroCabecera"> | string
+    anio?: IntFilter<"VTRegistroCabecera"> | number
+    fechaRegistro?: DateTimeNullableFilter<"VTRegistroCabecera"> | Date | string | null
+    monitorResponsable?: StringFilter<"VTRegistroCabecera"> | string
+    tipoCamara?: StringFilter<"VTRegistroCabecera"> | string
+    descripcionCamaras?: StringNullableFilter<"VTRegistroCabecera"> | string | null
+    fechaCreacion?: DateTimeFilter<"VTRegistroCabecera"> | Date | string
+    usuarioCreacion?: StringFilter<"VTRegistroCabecera"> | string
+    configuraciones?: VTConfiguracionCamaraListRelationFilter
+    detalles?: VTRegistroDetalleListRelationFilter
+    verificacionesDiarias?: VTVerificacionDiariaListRelationFilter
+    verificacionesSemanales?: VTVerificacionSemanalListRelationFilter
+  }, "idRegistro">
+
+  export type VTRegistroCabeceraOrderByWithAggregationInput = {
+    idRegistro?: SortOrder
+    tipoEntidad?: SortOrder
+    idEntidad?: SortOrder
+    nombreEntidad?: SortOrder
+    anio?: SortOrder
+    fechaRegistro?: SortOrderInput | SortOrder
+    monitorResponsable?: SortOrder
+    tipoCamara?: SortOrder
+    descripcionCamaras?: SortOrderInput | SortOrder
+    fechaCreacion?: SortOrder
+    usuarioCreacion?: SortOrder
+    _count?: VTRegistroCabeceraCountOrderByAggregateInput
+    _avg?: VTRegistroCabeceraAvgOrderByAggregateInput
+    _max?: VTRegistroCabeceraMaxOrderByAggregateInput
+    _min?: VTRegistroCabeceraMinOrderByAggregateInput
+    _sum?: VTRegistroCabeceraSumOrderByAggregateInput
+  }
+
+  export type VTRegistroCabeceraScalarWhereWithAggregatesInput = {
+    AND?: VTRegistroCabeceraScalarWhereWithAggregatesInput | VTRegistroCabeceraScalarWhereWithAggregatesInput[]
+    OR?: VTRegistroCabeceraScalarWhereWithAggregatesInput[]
+    NOT?: VTRegistroCabeceraScalarWhereWithAggregatesInput | VTRegistroCabeceraScalarWhereWithAggregatesInput[]
+    idRegistro?: IntWithAggregatesFilter<"VTRegistroCabecera"> | number
+    tipoEntidad?: StringWithAggregatesFilter<"VTRegistroCabecera"> | string
+    idEntidad?: StringWithAggregatesFilter<"VTRegistroCabecera"> | string
+    nombreEntidad?: StringWithAggregatesFilter<"VTRegistroCabecera"> | string
+    anio?: IntWithAggregatesFilter<"VTRegistroCabecera"> | number
+    fechaRegistro?: DateTimeNullableWithAggregatesFilter<"VTRegistroCabecera"> | Date | string | null
+    monitorResponsable?: StringWithAggregatesFilter<"VTRegistroCabecera"> | string
+    tipoCamara?: StringWithAggregatesFilter<"VTRegistroCabecera"> | string
+    descripcionCamaras?: StringNullableWithAggregatesFilter<"VTRegistroCabecera"> | string | null
+    fechaCreacion?: DateTimeWithAggregatesFilter<"VTRegistroCabecera"> | Date | string
+    usuarioCreacion?: StringWithAggregatesFilter<"VTRegistroCabecera"> | string
+  }
+
+  export type VTRegistroDetalleWhereInput = {
+    AND?: VTRegistroDetalleWhereInput | VTRegistroDetalleWhereInput[]
+    OR?: VTRegistroDetalleWhereInput[]
+    NOT?: VTRegistroDetalleWhereInput | VTRegistroDetalleWhereInput[]
+    idDetalle?: IntFilter<"VTRegistroDetalle"> | number
+    idRegistro?: IntFilter<"VTRegistroDetalle"> | number
+    numeroCorrelativo?: IntFilter<"VTRegistroDetalle"> | number
+    dia?: IntFilter<"VTRegistroDetalle"> | number
+    tipoProducto?: StringFilter<"VTRegistroDetalle"> | string
+    nombreProducto?: StringNullableFilter<"VTRegistroDetalle"> | string | null
+    mes?: IntFilter<"VTRegistroDetalle"> | number
+    numeroCamara?: IntFilter<"VTRegistroDetalle"> | number
+    temperatura?: FloatNullableFilter<"VTRegistroDetalle"> | number | null
+    fechaRegistro?: DateTimeFilter<"VTRegistroDetalle"> | Date | string
+    usuarioRegistro?: StringFilter<"VTRegistroDetalle"> | string
+    registro?: XOR<VTRegistroCabeceraRelationFilter, VTRegistroCabeceraWhereInput>
+  }
+
+  export type VTRegistroDetalleOrderByWithRelationInput = {
+    idDetalle?: SortOrder
+    idRegistro?: SortOrder
+    numeroCorrelativo?: SortOrder
+    dia?: SortOrder
+    tipoProducto?: SortOrder
+    nombreProducto?: SortOrderInput | SortOrder
+    mes?: SortOrder
+    numeroCamara?: SortOrder
+    temperatura?: SortOrderInput | SortOrder
+    fechaRegistro?: SortOrder
+    usuarioRegistro?: SortOrder
+    registro?: VTRegistroCabeceraOrderByWithRelationInput
+  }
+
+  export type VTRegistroDetalleWhereUniqueInput = Prisma.AtLeast<{
+    idDetalle?: number
+    AND?: VTRegistroDetalleWhereInput | VTRegistroDetalleWhereInput[]
+    OR?: VTRegistroDetalleWhereInput[]
+    NOT?: VTRegistroDetalleWhereInput | VTRegistroDetalleWhereInput[]
+    idRegistro?: IntFilter<"VTRegistroDetalle"> | number
+    numeroCorrelativo?: IntFilter<"VTRegistroDetalle"> | number
+    dia?: IntFilter<"VTRegistroDetalle"> | number
+    tipoProducto?: StringFilter<"VTRegistroDetalle"> | string
+    nombreProducto?: StringNullableFilter<"VTRegistroDetalle"> | string | null
+    mes?: IntFilter<"VTRegistroDetalle"> | number
+    numeroCamara?: IntFilter<"VTRegistroDetalle"> | number
+    temperatura?: FloatNullableFilter<"VTRegistroDetalle"> | number | null
+    fechaRegistro?: DateTimeFilter<"VTRegistroDetalle"> | Date | string
+    usuarioRegistro?: StringFilter<"VTRegistroDetalle"> | string
+    registro?: XOR<VTRegistroCabeceraRelationFilter, VTRegistroCabeceraWhereInput>
+  }, "idDetalle">
+
+  export type VTRegistroDetalleOrderByWithAggregationInput = {
+    idDetalle?: SortOrder
+    idRegistro?: SortOrder
+    numeroCorrelativo?: SortOrder
+    dia?: SortOrder
+    tipoProducto?: SortOrder
+    nombreProducto?: SortOrderInput | SortOrder
+    mes?: SortOrder
+    numeroCamara?: SortOrder
+    temperatura?: SortOrderInput | SortOrder
+    fechaRegistro?: SortOrder
+    usuarioRegistro?: SortOrder
+    _count?: VTRegistroDetalleCountOrderByAggregateInput
+    _avg?: VTRegistroDetalleAvgOrderByAggregateInput
+    _max?: VTRegistroDetalleMaxOrderByAggregateInput
+    _min?: VTRegistroDetalleMinOrderByAggregateInput
+    _sum?: VTRegistroDetalleSumOrderByAggregateInput
+  }
+
+  export type VTRegistroDetalleScalarWhereWithAggregatesInput = {
+    AND?: VTRegistroDetalleScalarWhereWithAggregatesInput | VTRegistroDetalleScalarWhereWithAggregatesInput[]
+    OR?: VTRegistroDetalleScalarWhereWithAggregatesInput[]
+    NOT?: VTRegistroDetalleScalarWhereWithAggregatesInput | VTRegistroDetalleScalarWhereWithAggregatesInput[]
+    idDetalle?: IntWithAggregatesFilter<"VTRegistroDetalle"> | number
+    idRegistro?: IntWithAggregatesFilter<"VTRegistroDetalle"> | number
+    numeroCorrelativo?: IntWithAggregatesFilter<"VTRegistroDetalle"> | number
+    dia?: IntWithAggregatesFilter<"VTRegistroDetalle"> | number
+    tipoProducto?: StringWithAggregatesFilter<"VTRegistroDetalle"> | string
+    nombreProducto?: StringNullableWithAggregatesFilter<"VTRegistroDetalle"> | string | null
+    mes?: IntWithAggregatesFilter<"VTRegistroDetalle"> | number
+    numeroCamara?: IntWithAggregatesFilter<"VTRegistroDetalle"> | number
+    temperatura?: FloatNullableWithAggregatesFilter<"VTRegistroDetalle"> | number | null
+    fechaRegistro?: DateTimeWithAggregatesFilter<"VTRegistroDetalle"> | Date | string
+    usuarioRegistro?: StringWithAggregatesFilter<"VTRegistroDetalle"> | string
+  }
+
+  export type VTProductoCatalogoWhereInput = {
+    AND?: VTProductoCatalogoWhereInput | VTProductoCatalogoWhereInput[]
+    OR?: VTProductoCatalogoWhereInput[]
+    NOT?: VTProductoCatalogoWhereInput | VTProductoCatalogoWhereInput[]
+    idProducto?: IntFilter<"VTProductoCatalogo"> | number
+    nombreProducto?: StringFilter<"VTProductoCatalogo"> | string
+    activo?: BoolFilter<"VTProductoCatalogo"> | boolean
+  }
+
+  export type VTProductoCatalogoOrderByWithRelationInput = {
+    idProducto?: SortOrder
+    nombreProducto?: SortOrder
+    activo?: SortOrder
+  }
+
+  export type VTProductoCatalogoWhereUniqueInput = Prisma.AtLeast<{
+    idProducto?: number
+    AND?: VTProductoCatalogoWhereInput | VTProductoCatalogoWhereInput[]
+    OR?: VTProductoCatalogoWhereInput[]
+    NOT?: VTProductoCatalogoWhereInput | VTProductoCatalogoWhereInput[]
+    nombreProducto?: StringFilter<"VTProductoCatalogo"> | string
+    activo?: BoolFilter<"VTProductoCatalogo"> | boolean
+  }, "idProducto">
+
+  export type VTProductoCatalogoOrderByWithAggregationInput = {
+    idProducto?: SortOrder
+    nombreProducto?: SortOrder
+    activo?: SortOrder
+    _count?: VTProductoCatalogoCountOrderByAggregateInput
+    _avg?: VTProductoCatalogoAvgOrderByAggregateInput
+    _max?: VTProductoCatalogoMaxOrderByAggregateInput
+    _min?: VTProductoCatalogoMinOrderByAggregateInput
+    _sum?: VTProductoCatalogoSumOrderByAggregateInput
+  }
+
+  export type VTProductoCatalogoScalarWhereWithAggregatesInput = {
+    AND?: VTProductoCatalogoScalarWhereWithAggregatesInput | VTProductoCatalogoScalarWhereWithAggregatesInput[]
+    OR?: VTProductoCatalogoScalarWhereWithAggregatesInput[]
+    NOT?: VTProductoCatalogoScalarWhereWithAggregatesInput | VTProductoCatalogoScalarWhereWithAggregatesInput[]
+    idProducto?: IntWithAggregatesFilter<"VTProductoCatalogo"> | number
+    nombreProducto?: StringWithAggregatesFilter<"VTProductoCatalogo"> | string
+    activo?: BoolWithAggregatesFilter<"VTProductoCatalogo"> | boolean
+  }
+
+  export type VTVerificacionDiariaWhereInput = {
+    AND?: VTVerificacionDiariaWhereInput | VTVerificacionDiariaWhereInput[]
+    OR?: VTVerificacionDiariaWhereInput[]
+    NOT?: VTVerificacionDiariaWhereInput | VTVerificacionDiariaWhereInput[]
+    idVerificacion?: IntFilter<"VTVerificacionDiaria"> | number
+    idRegistro?: IntFilter<"VTVerificacionDiaria"> | number
+    mes?: IntFilter<"VTVerificacionDiaria"> | number
+    dia?: IntFilter<"VTVerificacionDiaria"> | number
+    fechaVerificacion?: DateTimeFilter<"VTVerificacionDiaria"> | Date | string
+    firmadoPor?: StringFilter<"VTVerificacionDiaria"> | string
+    usuarioId?: StringNullableFilter<"VTVerificacionDiaria"> | string | null
+    firma?: StringNullableFilter<"VTVerificacionDiaria"> | string | null
+    firmado?: BoolFilter<"VTVerificacionDiaria"> | boolean
+    observaciones?: StringNullableFilter<"VTVerificacionDiaria"> | string | null
+    accionesCorrectivas?: StringNullableFilter<"VTVerificacionDiaria"> | string | null
+    registro?: XOR<VTRegistroCabeceraRelationFilter, VTRegistroCabeceraWhereInput>
+  }
+
+  export type VTVerificacionDiariaOrderByWithRelationInput = {
+    idVerificacion?: SortOrder
+    idRegistro?: SortOrder
+    mes?: SortOrder
+    dia?: SortOrder
+    fechaVerificacion?: SortOrder
+    firmadoPor?: SortOrder
+    usuarioId?: SortOrderInput | SortOrder
+    firma?: SortOrderInput | SortOrder
+    firmado?: SortOrder
+    observaciones?: SortOrderInput | SortOrder
+    accionesCorrectivas?: SortOrderInput | SortOrder
+    registro?: VTRegistroCabeceraOrderByWithRelationInput
+  }
+
+  export type VTVerificacionDiariaWhereUniqueInput = Prisma.AtLeast<{
+    idVerificacion?: number
+    idRegistro_mes_dia?: VTVerificacionDiariaIdRegistroMesDiaCompoundUniqueInput
+    AND?: VTVerificacionDiariaWhereInput | VTVerificacionDiariaWhereInput[]
+    OR?: VTVerificacionDiariaWhereInput[]
+    NOT?: VTVerificacionDiariaWhereInput | VTVerificacionDiariaWhereInput[]
+    idRegistro?: IntFilter<"VTVerificacionDiaria"> | number
+    mes?: IntFilter<"VTVerificacionDiaria"> | number
+    dia?: IntFilter<"VTVerificacionDiaria"> | number
+    fechaVerificacion?: DateTimeFilter<"VTVerificacionDiaria"> | Date | string
+    firmadoPor?: StringFilter<"VTVerificacionDiaria"> | string
+    usuarioId?: StringNullableFilter<"VTVerificacionDiaria"> | string | null
+    firma?: StringNullableFilter<"VTVerificacionDiaria"> | string | null
+    firmado?: BoolFilter<"VTVerificacionDiaria"> | boolean
+    observaciones?: StringNullableFilter<"VTVerificacionDiaria"> | string | null
+    accionesCorrectivas?: StringNullableFilter<"VTVerificacionDiaria"> | string | null
+    registro?: XOR<VTRegistroCabeceraRelationFilter, VTRegistroCabeceraWhereInput>
+  }, "idVerificacion" | "idRegistro_mes_dia">
+
+  export type VTVerificacionDiariaOrderByWithAggregationInput = {
+    idVerificacion?: SortOrder
+    idRegistro?: SortOrder
+    mes?: SortOrder
+    dia?: SortOrder
+    fechaVerificacion?: SortOrder
+    firmadoPor?: SortOrder
+    usuarioId?: SortOrderInput | SortOrder
+    firma?: SortOrderInput | SortOrder
+    firmado?: SortOrder
+    observaciones?: SortOrderInput | SortOrder
+    accionesCorrectivas?: SortOrderInput | SortOrder
+    _count?: VTVerificacionDiariaCountOrderByAggregateInput
+    _avg?: VTVerificacionDiariaAvgOrderByAggregateInput
+    _max?: VTVerificacionDiariaMaxOrderByAggregateInput
+    _min?: VTVerificacionDiariaMinOrderByAggregateInput
+    _sum?: VTVerificacionDiariaSumOrderByAggregateInput
+  }
+
+  export type VTVerificacionDiariaScalarWhereWithAggregatesInput = {
+    AND?: VTVerificacionDiariaScalarWhereWithAggregatesInput | VTVerificacionDiariaScalarWhereWithAggregatesInput[]
+    OR?: VTVerificacionDiariaScalarWhereWithAggregatesInput[]
+    NOT?: VTVerificacionDiariaScalarWhereWithAggregatesInput | VTVerificacionDiariaScalarWhereWithAggregatesInput[]
+    idVerificacion?: IntWithAggregatesFilter<"VTVerificacionDiaria"> | number
+    idRegistro?: IntWithAggregatesFilter<"VTVerificacionDiaria"> | number
+    mes?: IntWithAggregatesFilter<"VTVerificacionDiaria"> | number
+    dia?: IntWithAggregatesFilter<"VTVerificacionDiaria"> | number
+    fechaVerificacion?: DateTimeWithAggregatesFilter<"VTVerificacionDiaria"> | Date | string
+    firmadoPor?: StringWithAggregatesFilter<"VTVerificacionDiaria"> | string
+    usuarioId?: StringNullableWithAggregatesFilter<"VTVerificacionDiaria"> | string | null
+    firma?: StringNullableWithAggregatesFilter<"VTVerificacionDiaria"> | string | null
+    firmado?: BoolWithAggregatesFilter<"VTVerificacionDiaria"> | boolean
+    observaciones?: StringNullableWithAggregatesFilter<"VTVerificacionDiaria"> | string | null
+    accionesCorrectivas?: StringNullableWithAggregatesFilter<"VTVerificacionDiaria"> | string | null
+  }
+
+  export type VTVerificacionSemanalWhereInput = {
+    AND?: VTVerificacionSemanalWhereInput | VTVerificacionSemanalWhereInput[]
+    OR?: VTVerificacionSemanalWhereInput[]
+    NOT?: VTVerificacionSemanalWhereInput | VTVerificacionSemanalWhereInput[]
+    idVerificacionSemanal?: IntFilter<"VTVerificacionSemanal"> | number
+    idRegistro?: IntFilter<"VTVerificacionSemanal"> | number
+    mes?: IntFilter<"VTVerificacionSemanal"> | number
+    semana?: IntFilter<"VTVerificacionSemanal"> | number
+    firmadoJefeBodega?: BoolFilter<"VTVerificacionSemanal"> | boolean
+    fechaFirmaJefeBodega?: DateTimeNullableFilter<"VTVerificacionSemanal"> | Date | string | null
+    usuarioJefeBodega?: StringNullableFilter<"VTVerificacionSemanal"> | string | null
+    firmaJefeBodega?: StringNullableFilter<"VTVerificacionSemanal"> | string | null
+    firmadoJefeZonal?: BoolFilter<"VTVerificacionSemanal"> | boolean
+    fechaFirmaJefeZonal?: DateTimeNullableFilter<"VTVerificacionSemanal"> | Date | string | null
+    usuarioJefeZonal?: StringNullableFilter<"VTVerificacionSemanal"> | string | null
+    firmaJefeZonal?: StringNullableFilter<"VTVerificacionSemanal"> | string | null
+    registro?: XOR<VTRegistroCabeceraRelationFilter, VTRegistroCabeceraWhereInput>
+  }
+
+  export type VTVerificacionSemanalOrderByWithRelationInput = {
+    idVerificacionSemanal?: SortOrder
+    idRegistro?: SortOrder
+    mes?: SortOrder
+    semana?: SortOrder
+    firmadoJefeBodega?: SortOrder
+    fechaFirmaJefeBodega?: SortOrderInput | SortOrder
+    usuarioJefeBodega?: SortOrderInput | SortOrder
+    firmaJefeBodega?: SortOrderInput | SortOrder
+    firmadoJefeZonal?: SortOrder
+    fechaFirmaJefeZonal?: SortOrderInput | SortOrder
+    usuarioJefeZonal?: SortOrderInput | SortOrder
+    firmaJefeZonal?: SortOrderInput | SortOrder
+    registro?: VTRegistroCabeceraOrderByWithRelationInput
+  }
+
+  export type VTVerificacionSemanalWhereUniqueInput = Prisma.AtLeast<{
+    idVerificacionSemanal?: number
+    idRegistro_mes_semana?: VTVerificacionSemanalIdRegistroMesSemanaCompoundUniqueInput
+    AND?: VTVerificacionSemanalWhereInput | VTVerificacionSemanalWhereInput[]
+    OR?: VTVerificacionSemanalWhereInput[]
+    NOT?: VTVerificacionSemanalWhereInput | VTVerificacionSemanalWhereInput[]
+    idRegistro?: IntFilter<"VTVerificacionSemanal"> | number
+    mes?: IntFilter<"VTVerificacionSemanal"> | number
+    semana?: IntFilter<"VTVerificacionSemanal"> | number
+    firmadoJefeBodega?: BoolFilter<"VTVerificacionSemanal"> | boolean
+    fechaFirmaJefeBodega?: DateTimeNullableFilter<"VTVerificacionSemanal"> | Date | string | null
+    usuarioJefeBodega?: StringNullableFilter<"VTVerificacionSemanal"> | string | null
+    firmaJefeBodega?: StringNullableFilter<"VTVerificacionSemanal"> | string | null
+    firmadoJefeZonal?: BoolFilter<"VTVerificacionSemanal"> | boolean
+    fechaFirmaJefeZonal?: DateTimeNullableFilter<"VTVerificacionSemanal"> | Date | string | null
+    usuarioJefeZonal?: StringNullableFilter<"VTVerificacionSemanal"> | string | null
+    firmaJefeZonal?: StringNullableFilter<"VTVerificacionSemanal"> | string | null
+    registro?: XOR<VTRegistroCabeceraRelationFilter, VTRegistroCabeceraWhereInput>
+  }, "idVerificacionSemanal" | "idRegistro_mes_semana">
+
+  export type VTVerificacionSemanalOrderByWithAggregationInput = {
+    idVerificacionSemanal?: SortOrder
+    idRegistro?: SortOrder
+    mes?: SortOrder
+    semana?: SortOrder
+    firmadoJefeBodega?: SortOrder
+    fechaFirmaJefeBodega?: SortOrderInput | SortOrder
+    usuarioJefeBodega?: SortOrderInput | SortOrder
+    firmaJefeBodega?: SortOrderInput | SortOrder
+    firmadoJefeZonal?: SortOrder
+    fechaFirmaJefeZonal?: SortOrderInput | SortOrder
+    usuarioJefeZonal?: SortOrderInput | SortOrder
+    firmaJefeZonal?: SortOrderInput | SortOrder
+    _count?: VTVerificacionSemanalCountOrderByAggregateInput
+    _avg?: VTVerificacionSemanalAvgOrderByAggregateInput
+    _max?: VTVerificacionSemanalMaxOrderByAggregateInput
+    _min?: VTVerificacionSemanalMinOrderByAggregateInput
+    _sum?: VTVerificacionSemanalSumOrderByAggregateInput
+  }
+
+  export type VTVerificacionSemanalScalarWhereWithAggregatesInput = {
+    AND?: VTVerificacionSemanalScalarWhereWithAggregatesInput | VTVerificacionSemanalScalarWhereWithAggregatesInput[]
+    OR?: VTVerificacionSemanalScalarWhereWithAggregatesInput[]
+    NOT?: VTVerificacionSemanalScalarWhereWithAggregatesInput | VTVerificacionSemanalScalarWhereWithAggregatesInput[]
+    idVerificacionSemanal?: IntWithAggregatesFilter<"VTVerificacionSemanal"> | number
+    idRegistro?: IntWithAggregatesFilter<"VTVerificacionSemanal"> | number
+    mes?: IntWithAggregatesFilter<"VTVerificacionSemanal"> | number
+    semana?: IntWithAggregatesFilter<"VTVerificacionSemanal"> | number
+    firmadoJefeBodega?: BoolWithAggregatesFilter<"VTVerificacionSemanal"> | boolean
+    fechaFirmaJefeBodega?: DateTimeNullableWithAggregatesFilter<"VTVerificacionSemanal"> | Date | string | null
+    usuarioJefeBodega?: StringNullableWithAggregatesFilter<"VTVerificacionSemanal"> | string | null
+    firmaJefeBodega?: StringNullableWithAggregatesFilter<"VTVerificacionSemanal"> | string | null
+    firmadoJefeZonal?: BoolWithAggregatesFilter<"VTVerificacionSemanal"> | boolean
+    fechaFirmaJefeZonal?: DateTimeNullableWithAggregatesFilter<"VTVerificacionSemanal"> | Date | string | null
+    usuarioJefeZonal?: StringNullableWithAggregatesFilter<"VTVerificacionSemanal"> | string | null
+    firmaJefeZonal?: StringNullableWithAggregatesFilter<"VTVerificacionSemanal"> | string | null
+  }
+
   export type RoleCreateInput = {
     id?: string
     name: string
@@ -94211,6 +105672,7 @@ export namespace Prisma {
     jefesZonales?: JefeZonalLicitacionCreateNestedManyWithoutLicitacionInput
     vehiculos?: VehiculoCreateNestedManyWithoutLicitacionInput
     matrices?: MatrizT_CabeceraCreateNestedManyWithoutLicitacionInput
+    actasPlantillas?: ActaSupervisionPlantillaCreateNestedManyWithoutLicitacionInput
   }
 
   export type LicitacionUncheckedCreateInput = {
@@ -94224,6 +105686,7 @@ export namespace Prisma {
     jefesZonales?: JefeZonalLicitacionUncheckedCreateNestedManyWithoutLicitacionInput
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutLicitacionInput
     matrices?: MatrizT_CabeceraUncheckedCreateNestedManyWithoutLicitacionInput
+    actasPlantillas?: ActaSupervisionPlantillaUncheckedCreateNestedManyWithoutLicitacionInput
   }
 
   export type LicitacionUpdateInput = {
@@ -94236,6 +105699,7 @@ export namespace Prisma {
     jefesZonales?: JefeZonalLicitacionUpdateManyWithoutLicitacionNestedInput
     vehiculos?: VehiculoUpdateManyWithoutLicitacionNestedInput
     matrices?: MatrizT_CabeceraUpdateManyWithoutLicitacionNestedInput
+    actasPlantillas?: ActaSupervisionPlantillaUpdateManyWithoutLicitacionNestedInput
   }
 
   export type LicitacionUncheckedUpdateInput = {
@@ -94249,6 +105713,7 @@ export namespace Prisma {
     jefesZonales?: JefeZonalLicitacionUncheckedUpdateManyWithoutLicitacionNestedInput
     vehiculos?: VehiculoUncheckedUpdateManyWithoutLicitacionNestedInput
     matrices?: MatrizT_CabeceraUncheckedUpdateManyWithoutLicitacionNestedInput
+    actasPlantillas?: ActaSupervisionPlantillaUncheckedUpdateManyWithoutLicitacionNestedInput
   }
 
   export type LicitacionCreateManyInput = {
@@ -100264,6 +111729,898 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ActaSupervisionPlantillaCreateInput = {
+    id?: string
+    nombre: string
+    anio?: number
+    instituciones?: string | null
+    rolesPerfiles?: string | null
+    estado?: boolean
+    logoUrl?: string | null
+    instrucciones?: string | null
+    campos: string
+    codigo?: string | null
+    version?: string | null
+    fecha?: string | null
+    codigoAdicional?: string | null
+    mostrarCodigoAdicional?: boolean
+    correlativoAutomatico?: boolean
+    mostrarCodigoVersionFecha?: boolean
+    createdBy: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    licitacion?: LicitacionCreateNestedOneWithoutActasPlantillasInput
+    respuestas?: ActaSupervisionRespuestaCreateNestedManyWithoutPlantillaInput
+  }
+
+  export type ActaSupervisionPlantillaUncheckedCreateInput = {
+    id?: string
+    nombre: string
+    licitacionId?: number | null
+    anio?: number
+    instituciones?: string | null
+    rolesPerfiles?: string | null
+    estado?: boolean
+    logoUrl?: string | null
+    instrucciones?: string | null
+    campos: string
+    codigo?: string | null
+    version?: string | null
+    fecha?: string | null
+    codigoAdicional?: string | null
+    mostrarCodigoAdicional?: boolean
+    correlativoAutomatico?: boolean
+    mostrarCodigoVersionFecha?: boolean
+    createdBy: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    respuestas?: ActaSupervisionRespuestaUncheckedCreateNestedManyWithoutPlantillaInput
+  }
+
+  export type ActaSupervisionPlantillaUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    anio?: IntFieldUpdateOperationsInput | number
+    instituciones?: NullableStringFieldUpdateOperationsInput | string | null
+    rolesPerfiles?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: BoolFieldUpdateOperationsInput | boolean
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    campos?: StringFieldUpdateOperationsInput | string
+    codigo?: NullableStringFieldUpdateOperationsInput | string | null
+    version?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha?: NullableStringFieldUpdateOperationsInput | string | null
+    codigoAdicional?: NullableStringFieldUpdateOperationsInput | string | null
+    mostrarCodigoAdicional?: BoolFieldUpdateOperationsInput | boolean
+    correlativoAutomatico?: BoolFieldUpdateOperationsInput | boolean
+    mostrarCodigoVersionFecha?: BoolFieldUpdateOperationsInput | boolean
+    createdBy?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    licitacion?: LicitacionUpdateOneWithoutActasPlantillasNestedInput
+    respuestas?: ActaSupervisionRespuestaUpdateManyWithoutPlantillaNestedInput
+  }
+
+  export type ActaSupervisionPlantillaUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    licitacionId?: NullableIntFieldUpdateOperationsInput | number | null
+    anio?: IntFieldUpdateOperationsInput | number
+    instituciones?: NullableStringFieldUpdateOperationsInput | string | null
+    rolesPerfiles?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: BoolFieldUpdateOperationsInput | boolean
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    campos?: StringFieldUpdateOperationsInput | string
+    codigo?: NullableStringFieldUpdateOperationsInput | string | null
+    version?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha?: NullableStringFieldUpdateOperationsInput | string | null
+    codigoAdicional?: NullableStringFieldUpdateOperationsInput | string | null
+    mostrarCodigoAdicional?: BoolFieldUpdateOperationsInput | boolean
+    correlativoAutomatico?: BoolFieldUpdateOperationsInput | boolean
+    mostrarCodigoVersionFecha?: BoolFieldUpdateOperationsInput | boolean
+    createdBy?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    respuestas?: ActaSupervisionRespuestaUncheckedUpdateManyWithoutPlantillaNestedInput
+  }
+
+  export type ActaSupervisionPlantillaCreateManyInput = {
+    id?: string
+    nombre: string
+    licitacionId?: number | null
+    anio?: number
+    instituciones?: string | null
+    rolesPerfiles?: string | null
+    estado?: boolean
+    logoUrl?: string | null
+    instrucciones?: string | null
+    campos: string
+    codigo?: string | null
+    version?: string | null
+    fecha?: string | null
+    codigoAdicional?: string | null
+    mostrarCodigoAdicional?: boolean
+    correlativoAutomatico?: boolean
+    mostrarCodigoVersionFecha?: boolean
+    createdBy: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ActaSupervisionPlantillaUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    anio?: IntFieldUpdateOperationsInput | number
+    instituciones?: NullableStringFieldUpdateOperationsInput | string | null
+    rolesPerfiles?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: BoolFieldUpdateOperationsInput | boolean
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    campos?: StringFieldUpdateOperationsInput | string
+    codigo?: NullableStringFieldUpdateOperationsInput | string | null
+    version?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha?: NullableStringFieldUpdateOperationsInput | string | null
+    codigoAdicional?: NullableStringFieldUpdateOperationsInput | string | null
+    mostrarCodigoAdicional?: BoolFieldUpdateOperationsInput | boolean
+    correlativoAutomatico?: BoolFieldUpdateOperationsInput | boolean
+    mostrarCodigoVersionFecha?: BoolFieldUpdateOperationsInput | boolean
+    createdBy?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActaSupervisionPlantillaUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    licitacionId?: NullableIntFieldUpdateOperationsInput | number | null
+    anio?: IntFieldUpdateOperationsInput | number
+    instituciones?: NullableStringFieldUpdateOperationsInput | string | null
+    rolesPerfiles?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: BoolFieldUpdateOperationsInput | boolean
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    campos?: StringFieldUpdateOperationsInput | string
+    codigo?: NullableStringFieldUpdateOperationsInput | string | null
+    version?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha?: NullableStringFieldUpdateOperationsInput | string | null
+    codigoAdicional?: NullableStringFieldUpdateOperationsInput | string | null
+    mostrarCodigoAdicional?: BoolFieldUpdateOperationsInput | boolean
+    correlativoAutomatico?: BoolFieldUpdateOperationsInput | boolean
+    mostrarCodigoVersionFecha?: BoolFieldUpdateOperationsInput | boolean
+    createdBy?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActaSupervisionRespuestaCreateInput = {
+    id?: string
+    licitacionId?: number | null
+    anio?: number | null
+    rbd: number
+    nombreEstablecimiento?: string | null
+    direccion?: string | null
+    ciudad?: string | null
+    institucion?: string | null
+    sucursal?: string | null
+    fechaCreacion?: Date | string
+    supervisorNombre?: string | null
+    supervisorRut?: string | null
+    respuestasData: string
+    estado?: string
+    usuario: string
+    correlativo?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    plantilla: ActaSupervisionPlantillaCreateNestedOneWithoutRespuestasInput
+  }
+
+  export type ActaSupervisionRespuestaUncheckedCreateInput = {
+    id?: string
+    plantillaId: string
+    licitacionId?: number | null
+    anio?: number | null
+    rbd: number
+    nombreEstablecimiento?: string | null
+    direccion?: string | null
+    ciudad?: string | null
+    institucion?: string | null
+    sucursal?: string | null
+    fechaCreacion?: Date | string
+    supervisorNombre?: string | null
+    supervisorRut?: string | null
+    respuestasData: string
+    estado?: string
+    usuario: string
+    correlativo?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ActaSupervisionRespuestaUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licitacionId?: NullableIntFieldUpdateOperationsInput | number | null
+    anio?: NullableIntFieldUpdateOperationsInput | number | null
+    rbd?: IntFieldUpdateOperationsInput | number
+    nombreEstablecimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    ciudad?: NullableStringFieldUpdateOperationsInput | string | null
+    institucion?: NullableStringFieldUpdateOperationsInput | string | null
+    sucursal?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    supervisorNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    supervisorRut?: NullableStringFieldUpdateOperationsInput | string | null
+    respuestasData?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    usuario?: StringFieldUpdateOperationsInput | string
+    correlativo?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    plantilla?: ActaSupervisionPlantillaUpdateOneRequiredWithoutRespuestasNestedInput
+  }
+
+  export type ActaSupervisionRespuestaUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    plantillaId?: StringFieldUpdateOperationsInput | string
+    licitacionId?: NullableIntFieldUpdateOperationsInput | number | null
+    anio?: NullableIntFieldUpdateOperationsInput | number | null
+    rbd?: IntFieldUpdateOperationsInput | number
+    nombreEstablecimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    ciudad?: NullableStringFieldUpdateOperationsInput | string | null
+    institucion?: NullableStringFieldUpdateOperationsInput | string | null
+    sucursal?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    supervisorNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    supervisorRut?: NullableStringFieldUpdateOperationsInput | string | null
+    respuestasData?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    usuario?: StringFieldUpdateOperationsInput | string
+    correlativo?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActaSupervisionRespuestaCreateManyInput = {
+    id?: string
+    plantillaId: string
+    licitacionId?: number | null
+    anio?: number | null
+    rbd: number
+    nombreEstablecimiento?: string | null
+    direccion?: string | null
+    ciudad?: string | null
+    institucion?: string | null
+    sucursal?: string | null
+    fechaCreacion?: Date | string
+    supervisorNombre?: string | null
+    supervisorRut?: string | null
+    respuestasData: string
+    estado?: string
+    usuario: string
+    correlativo?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ActaSupervisionRespuestaUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licitacionId?: NullableIntFieldUpdateOperationsInput | number | null
+    anio?: NullableIntFieldUpdateOperationsInput | number | null
+    rbd?: IntFieldUpdateOperationsInput | number
+    nombreEstablecimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    ciudad?: NullableStringFieldUpdateOperationsInput | string | null
+    institucion?: NullableStringFieldUpdateOperationsInput | string | null
+    sucursal?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    supervisorNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    supervisorRut?: NullableStringFieldUpdateOperationsInput | string | null
+    respuestasData?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    usuario?: StringFieldUpdateOperationsInput | string
+    correlativo?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActaSupervisionRespuestaUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    plantillaId?: StringFieldUpdateOperationsInput | string
+    licitacionId?: NullableIntFieldUpdateOperationsInput | number | null
+    anio?: NullableIntFieldUpdateOperationsInput | number | null
+    rbd?: IntFieldUpdateOperationsInput | number
+    nombreEstablecimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    ciudad?: NullableStringFieldUpdateOperationsInput | string | null
+    institucion?: NullableStringFieldUpdateOperationsInput | string | null
+    sucursal?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    supervisorNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    supervisorRut?: NullableStringFieldUpdateOperationsInput | string | null
+    respuestasData?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    usuario?: StringFieldUpdateOperationsInput | string
+    correlativo?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VTCamaraCreateInput = {
+    nombreCamara: string
+    tipoCamara: string
+    temperaturaMinima?: number | null
+    temperaturaMaxima: number
+    activo?: boolean
+    configuraciones?: VTConfiguracionCamaraCreateNestedManyWithoutCamaraInput
+  }
+
+  export type VTCamaraUncheckedCreateInput = {
+    idCamara?: number
+    nombreCamara: string
+    tipoCamara: string
+    temperaturaMinima?: number | null
+    temperaturaMaxima: number
+    activo?: boolean
+    configuraciones?: VTConfiguracionCamaraUncheckedCreateNestedManyWithoutCamaraInput
+  }
+
+  export type VTCamaraUpdateInput = {
+    nombreCamara?: StringFieldUpdateOperationsInput | string
+    tipoCamara?: StringFieldUpdateOperationsInput | string
+    temperaturaMinima?: NullableFloatFieldUpdateOperationsInput | number | null
+    temperaturaMaxima?: FloatFieldUpdateOperationsInput | number
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    configuraciones?: VTConfiguracionCamaraUpdateManyWithoutCamaraNestedInput
+  }
+
+  export type VTCamaraUncheckedUpdateInput = {
+    idCamara?: IntFieldUpdateOperationsInput | number
+    nombreCamara?: StringFieldUpdateOperationsInput | string
+    tipoCamara?: StringFieldUpdateOperationsInput | string
+    temperaturaMinima?: NullableFloatFieldUpdateOperationsInput | number | null
+    temperaturaMaxima?: FloatFieldUpdateOperationsInput | number
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    configuraciones?: VTConfiguracionCamaraUncheckedUpdateManyWithoutCamaraNestedInput
+  }
+
+  export type VTCamaraCreateManyInput = {
+    idCamara?: number
+    nombreCamara: string
+    tipoCamara: string
+    temperaturaMinima?: number | null
+    temperaturaMaxima: number
+    activo?: boolean
+  }
+
+  export type VTCamaraUpdateManyMutationInput = {
+    nombreCamara?: StringFieldUpdateOperationsInput | string
+    tipoCamara?: StringFieldUpdateOperationsInput | string
+    temperaturaMinima?: NullableFloatFieldUpdateOperationsInput | number | null
+    temperaturaMaxima?: FloatFieldUpdateOperationsInput | number
+    activo?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type VTCamaraUncheckedUpdateManyInput = {
+    idCamara?: IntFieldUpdateOperationsInput | number
+    nombreCamara?: StringFieldUpdateOperationsInput | string
+    tipoCamara?: StringFieldUpdateOperationsInput | string
+    temperaturaMinima?: NullableFloatFieldUpdateOperationsInput | number | null
+    temperaturaMaxima?: FloatFieldUpdateOperationsInput | number
+    activo?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type VTConfiguracionCamaraCreateInput = {
+    mes: number
+    numeroCamaraMes: number
+    nombreCamara?: string | null
+    temperaturaMinima?: number | null
+    temperaturaMaxima?: number | null
+    registro: VTRegistroCabeceraCreateNestedOneWithoutConfiguracionesInput
+    camara: VTCamaraCreateNestedOneWithoutConfiguracionesInput
+  }
+
+  export type VTConfiguracionCamaraUncheckedCreateInput = {
+    idConfig?: number
+    idRegistroCabecera: number
+    idCamara: number
+    mes: number
+    numeroCamaraMes: number
+    nombreCamara?: string | null
+    temperaturaMinima?: number | null
+    temperaturaMaxima?: number | null
+  }
+
+  export type VTConfiguracionCamaraUpdateInput = {
+    mes?: IntFieldUpdateOperationsInput | number
+    numeroCamaraMes?: IntFieldUpdateOperationsInput | number
+    nombreCamara?: NullableStringFieldUpdateOperationsInput | string | null
+    temperaturaMinima?: NullableFloatFieldUpdateOperationsInput | number | null
+    temperaturaMaxima?: NullableFloatFieldUpdateOperationsInput | number | null
+    registro?: VTRegistroCabeceraUpdateOneRequiredWithoutConfiguracionesNestedInput
+    camara?: VTCamaraUpdateOneRequiredWithoutConfiguracionesNestedInput
+  }
+
+  export type VTConfiguracionCamaraUncheckedUpdateInput = {
+    idConfig?: IntFieldUpdateOperationsInput | number
+    idRegistroCabecera?: IntFieldUpdateOperationsInput | number
+    idCamara?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    numeroCamaraMes?: IntFieldUpdateOperationsInput | number
+    nombreCamara?: NullableStringFieldUpdateOperationsInput | string | null
+    temperaturaMinima?: NullableFloatFieldUpdateOperationsInput | number | null
+    temperaturaMaxima?: NullableFloatFieldUpdateOperationsInput | number | null
+  }
+
+  export type VTConfiguracionCamaraCreateManyInput = {
+    idConfig?: number
+    idRegistroCabecera: number
+    idCamara: number
+    mes: number
+    numeroCamaraMes: number
+    nombreCamara?: string | null
+    temperaturaMinima?: number | null
+    temperaturaMaxima?: number | null
+  }
+
+  export type VTConfiguracionCamaraUpdateManyMutationInput = {
+    mes?: IntFieldUpdateOperationsInput | number
+    numeroCamaraMes?: IntFieldUpdateOperationsInput | number
+    nombreCamara?: NullableStringFieldUpdateOperationsInput | string | null
+    temperaturaMinima?: NullableFloatFieldUpdateOperationsInput | number | null
+    temperaturaMaxima?: NullableFloatFieldUpdateOperationsInput | number | null
+  }
+
+  export type VTConfiguracionCamaraUncheckedUpdateManyInput = {
+    idConfig?: IntFieldUpdateOperationsInput | number
+    idRegistroCabecera?: IntFieldUpdateOperationsInput | number
+    idCamara?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    numeroCamaraMes?: IntFieldUpdateOperationsInput | number
+    nombreCamara?: NullableStringFieldUpdateOperationsInput | string | null
+    temperaturaMinima?: NullableFloatFieldUpdateOperationsInput | number | null
+    temperaturaMaxima?: NullableFloatFieldUpdateOperationsInput | number | null
+  }
+
+  export type VTRegistroCabeceraCreateInput = {
+    tipoEntidad: string
+    idEntidad: string
+    nombreEntidad: string
+    anio: number
+    fechaRegistro?: Date | string | null
+    monitorResponsable: string
+    tipoCamara: string
+    descripcionCamaras?: string | null
+    fechaCreacion?: Date | string
+    usuarioCreacion: string
+    configuraciones?: VTConfiguracionCamaraCreateNestedManyWithoutRegistroInput
+    detalles?: VTRegistroDetalleCreateNestedManyWithoutRegistroInput
+    verificacionesDiarias?: VTVerificacionDiariaCreateNestedManyWithoutRegistroInput
+    verificacionesSemanales?: VTVerificacionSemanalCreateNestedManyWithoutRegistroInput
+  }
+
+  export type VTRegistroCabeceraUncheckedCreateInput = {
+    idRegistro?: number
+    tipoEntidad: string
+    idEntidad: string
+    nombreEntidad: string
+    anio: number
+    fechaRegistro?: Date | string | null
+    monitorResponsable: string
+    tipoCamara: string
+    descripcionCamaras?: string | null
+    fechaCreacion?: Date | string
+    usuarioCreacion: string
+    configuraciones?: VTConfiguracionCamaraUncheckedCreateNestedManyWithoutRegistroInput
+    detalles?: VTRegistroDetalleUncheckedCreateNestedManyWithoutRegistroInput
+    verificacionesDiarias?: VTVerificacionDiariaUncheckedCreateNestedManyWithoutRegistroInput
+    verificacionesSemanales?: VTVerificacionSemanalUncheckedCreateNestedManyWithoutRegistroInput
+  }
+
+  export type VTRegistroCabeceraUpdateInput = {
+    tipoEntidad?: StringFieldUpdateOperationsInput | string
+    idEntidad?: StringFieldUpdateOperationsInput | string
+    nombreEntidad?: StringFieldUpdateOperationsInput | string
+    anio?: IntFieldUpdateOperationsInput | number
+    fechaRegistro?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    monitorResponsable?: StringFieldUpdateOperationsInput | string
+    tipoCamara?: StringFieldUpdateOperationsInput | string
+    descripcionCamaras?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuarioCreacion?: StringFieldUpdateOperationsInput | string
+    configuraciones?: VTConfiguracionCamaraUpdateManyWithoutRegistroNestedInput
+    detalles?: VTRegistroDetalleUpdateManyWithoutRegistroNestedInput
+    verificacionesDiarias?: VTVerificacionDiariaUpdateManyWithoutRegistroNestedInput
+    verificacionesSemanales?: VTVerificacionSemanalUpdateManyWithoutRegistroNestedInput
+  }
+
+  export type VTRegistroCabeceraUncheckedUpdateInput = {
+    idRegistro?: IntFieldUpdateOperationsInput | number
+    tipoEntidad?: StringFieldUpdateOperationsInput | string
+    idEntidad?: StringFieldUpdateOperationsInput | string
+    nombreEntidad?: StringFieldUpdateOperationsInput | string
+    anio?: IntFieldUpdateOperationsInput | number
+    fechaRegistro?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    monitorResponsable?: StringFieldUpdateOperationsInput | string
+    tipoCamara?: StringFieldUpdateOperationsInput | string
+    descripcionCamaras?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuarioCreacion?: StringFieldUpdateOperationsInput | string
+    configuraciones?: VTConfiguracionCamaraUncheckedUpdateManyWithoutRegistroNestedInput
+    detalles?: VTRegistroDetalleUncheckedUpdateManyWithoutRegistroNestedInput
+    verificacionesDiarias?: VTVerificacionDiariaUncheckedUpdateManyWithoutRegistroNestedInput
+    verificacionesSemanales?: VTVerificacionSemanalUncheckedUpdateManyWithoutRegistroNestedInput
+  }
+
+  export type VTRegistroCabeceraCreateManyInput = {
+    idRegistro?: number
+    tipoEntidad: string
+    idEntidad: string
+    nombreEntidad: string
+    anio: number
+    fechaRegistro?: Date | string | null
+    monitorResponsable: string
+    tipoCamara: string
+    descripcionCamaras?: string | null
+    fechaCreacion?: Date | string
+    usuarioCreacion: string
+  }
+
+  export type VTRegistroCabeceraUpdateManyMutationInput = {
+    tipoEntidad?: StringFieldUpdateOperationsInput | string
+    idEntidad?: StringFieldUpdateOperationsInput | string
+    nombreEntidad?: StringFieldUpdateOperationsInput | string
+    anio?: IntFieldUpdateOperationsInput | number
+    fechaRegistro?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    monitorResponsable?: StringFieldUpdateOperationsInput | string
+    tipoCamara?: StringFieldUpdateOperationsInput | string
+    descripcionCamaras?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuarioCreacion?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type VTRegistroCabeceraUncheckedUpdateManyInput = {
+    idRegistro?: IntFieldUpdateOperationsInput | number
+    tipoEntidad?: StringFieldUpdateOperationsInput | string
+    idEntidad?: StringFieldUpdateOperationsInput | string
+    nombreEntidad?: StringFieldUpdateOperationsInput | string
+    anio?: IntFieldUpdateOperationsInput | number
+    fechaRegistro?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    monitorResponsable?: StringFieldUpdateOperationsInput | string
+    tipoCamara?: StringFieldUpdateOperationsInput | string
+    descripcionCamaras?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuarioCreacion?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type VTRegistroDetalleCreateInput = {
+    numeroCorrelativo: number
+    dia?: number
+    tipoProducto: string
+    nombreProducto?: string | null
+    mes: number
+    numeroCamara: number
+    temperatura?: number | null
+    fechaRegistro?: Date | string
+    usuarioRegistro: string
+    registro: VTRegistroCabeceraCreateNestedOneWithoutDetallesInput
+  }
+
+  export type VTRegistroDetalleUncheckedCreateInput = {
+    idDetalle?: number
+    idRegistro: number
+    numeroCorrelativo: number
+    dia?: number
+    tipoProducto: string
+    nombreProducto?: string | null
+    mes: number
+    numeroCamara: number
+    temperatura?: number | null
+    fechaRegistro?: Date | string
+    usuarioRegistro: string
+  }
+
+  export type VTRegistroDetalleUpdateInput = {
+    numeroCorrelativo?: IntFieldUpdateOperationsInput | number
+    dia?: IntFieldUpdateOperationsInput | number
+    tipoProducto?: StringFieldUpdateOperationsInput | string
+    nombreProducto?: NullableStringFieldUpdateOperationsInput | string | null
+    mes?: IntFieldUpdateOperationsInput | number
+    numeroCamara?: IntFieldUpdateOperationsInput | number
+    temperatura?: NullableFloatFieldUpdateOperationsInput | number | null
+    fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuarioRegistro?: StringFieldUpdateOperationsInput | string
+    registro?: VTRegistroCabeceraUpdateOneRequiredWithoutDetallesNestedInput
+  }
+
+  export type VTRegistroDetalleUncheckedUpdateInput = {
+    idDetalle?: IntFieldUpdateOperationsInput | number
+    idRegistro?: IntFieldUpdateOperationsInput | number
+    numeroCorrelativo?: IntFieldUpdateOperationsInput | number
+    dia?: IntFieldUpdateOperationsInput | number
+    tipoProducto?: StringFieldUpdateOperationsInput | string
+    nombreProducto?: NullableStringFieldUpdateOperationsInput | string | null
+    mes?: IntFieldUpdateOperationsInput | number
+    numeroCamara?: IntFieldUpdateOperationsInput | number
+    temperatura?: NullableFloatFieldUpdateOperationsInput | number | null
+    fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuarioRegistro?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type VTRegistroDetalleCreateManyInput = {
+    idDetalle?: number
+    idRegistro: number
+    numeroCorrelativo: number
+    dia?: number
+    tipoProducto: string
+    nombreProducto?: string | null
+    mes: number
+    numeroCamara: number
+    temperatura?: number | null
+    fechaRegistro?: Date | string
+    usuarioRegistro: string
+  }
+
+  export type VTRegistroDetalleUpdateManyMutationInput = {
+    numeroCorrelativo?: IntFieldUpdateOperationsInput | number
+    dia?: IntFieldUpdateOperationsInput | number
+    tipoProducto?: StringFieldUpdateOperationsInput | string
+    nombreProducto?: NullableStringFieldUpdateOperationsInput | string | null
+    mes?: IntFieldUpdateOperationsInput | number
+    numeroCamara?: IntFieldUpdateOperationsInput | number
+    temperatura?: NullableFloatFieldUpdateOperationsInput | number | null
+    fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuarioRegistro?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type VTRegistroDetalleUncheckedUpdateManyInput = {
+    idDetalle?: IntFieldUpdateOperationsInput | number
+    idRegistro?: IntFieldUpdateOperationsInput | number
+    numeroCorrelativo?: IntFieldUpdateOperationsInput | number
+    dia?: IntFieldUpdateOperationsInput | number
+    tipoProducto?: StringFieldUpdateOperationsInput | string
+    nombreProducto?: NullableStringFieldUpdateOperationsInput | string | null
+    mes?: IntFieldUpdateOperationsInput | number
+    numeroCamara?: IntFieldUpdateOperationsInput | number
+    temperatura?: NullableFloatFieldUpdateOperationsInput | number | null
+    fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuarioRegistro?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type VTProductoCatalogoCreateInput = {
+    nombreProducto: string
+    activo?: boolean
+  }
+
+  export type VTProductoCatalogoUncheckedCreateInput = {
+    idProducto?: number
+    nombreProducto: string
+    activo?: boolean
+  }
+
+  export type VTProductoCatalogoUpdateInput = {
+    nombreProducto?: StringFieldUpdateOperationsInput | string
+    activo?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type VTProductoCatalogoUncheckedUpdateInput = {
+    idProducto?: IntFieldUpdateOperationsInput | number
+    nombreProducto?: StringFieldUpdateOperationsInput | string
+    activo?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type VTProductoCatalogoCreateManyInput = {
+    idProducto?: number
+    nombreProducto: string
+    activo?: boolean
+  }
+
+  export type VTProductoCatalogoUpdateManyMutationInput = {
+    nombreProducto?: StringFieldUpdateOperationsInput | string
+    activo?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type VTProductoCatalogoUncheckedUpdateManyInput = {
+    idProducto?: IntFieldUpdateOperationsInput | number
+    nombreProducto?: StringFieldUpdateOperationsInput | string
+    activo?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type VTVerificacionDiariaCreateInput = {
+    mes: number
+    dia: number
+    fechaVerificacion?: Date | string
+    firmadoPor: string
+    usuarioId?: string | null
+    firma?: string | null
+    firmado?: boolean
+    observaciones?: string | null
+    accionesCorrectivas?: string | null
+    registro: VTRegistroCabeceraCreateNestedOneWithoutVerificacionesDiariasInput
+  }
+
+  export type VTVerificacionDiariaUncheckedCreateInput = {
+    idVerificacion?: number
+    idRegistro: number
+    mes: number
+    dia: number
+    fechaVerificacion?: Date | string
+    firmadoPor: string
+    usuarioId?: string | null
+    firma?: string | null
+    firmado?: boolean
+    observaciones?: string | null
+    accionesCorrectivas?: string | null
+  }
+
+  export type VTVerificacionDiariaUpdateInput = {
+    mes?: IntFieldUpdateOperationsInput | number
+    dia?: IntFieldUpdateOperationsInput | number
+    fechaVerificacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    firmadoPor?: StringFieldUpdateOperationsInput | string
+    usuarioId?: NullableStringFieldUpdateOperationsInput | string | null
+    firma?: NullableStringFieldUpdateOperationsInput | string | null
+    firmado?: BoolFieldUpdateOperationsInput | boolean
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    accionesCorrectivas?: NullableStringFieldUpdateOperationsInput | string | null
+    registro?: VTRegistroCabeceraUpdateOneRequiredWithoutVerificacionesDiariasNestedInput
+  }
+
+  export type VTVerificacionDiariaUncheckedUpdateInput = {
+    idVerificacion?: IntFieldUpdateOperationsInput | number
+    idRegistro?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    dia?: IntFieldUpdateOperationsInput | number
+    fechaVerificacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    firmadoPor?: StringFieldUpdateOperationsInput | string
+    usuarioId?: NullableStringFieldUpdateOperationsInput | string | null
+    firma?: NullableStringFieldUpdateOperationsInput | string | null
+    firmado?: BoolFieldUpdateOperationsInput | boolean
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    accionesCorrectivas?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type VTVerificacionDiariaCreateManyInput = {
+    idVerificacion?: number
+    idRegistro: number
+    mes: number
+    dia: number
+    fechaVerificacion?: Date | string
+    firmadoPor: string
+    usuarioId?: string | null
+    firma?: string | null
+    firmado?: boolean
+    observaciones?: string | null
+    accionesCorrectivas?: string | null
+  }
+
+  export type VTVerificacionDiariaUpdateManyMutationInput = {
+    mes?: IntFieldUpdateOperationsInput | number
+    dia?: IntFieldUpdateOperationsInput | number
+    fechaVerificacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    firmadoPor?: StringFieldUpdateOperationsInput | string
+    usuarioId?: NullableStringFieldUpdateOperationsInput | string | null
+    firma?: NullableStringFieldUpdateOperationsInput | string | null
+    firmado?: BoolFieldUpdateOperationsInput | boolean
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    accionesCorrectivas?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type VTVerificacionDiariaUncheckedUpdateManyInput = {
+    idVerificacion?: IntFieldUpdateOperationsInput | number
+    idRegistro?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    dia?: IntFieldUpdateOperationsInput | number
+    fechaVerificacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    firmadoPor?: StringFieldUpdateOperationsInput | string
+    usuarioId?: NullableStringFieldUpdateOperationsInput | string | null
+    firma?: NullableStringFieldUpdateOperationsInput | string | null
+    firmado?: BoolFieldUpdateOperationsInput | boolean
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    accionesCorrectivas?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type VTVerificacionSemanalCreateInput = {
+    mes: number
+    semana: number
+    firmadoJefeBodega?: boolean
+    fechaFirmaJefeBodega?: Date | string | null
+    usuarioJefeBodega?: string | null
+    firmaJefeBodega?: string | null
+    firmadoJefeZonal?: boolean
+    fechaFirmaJefeZonal?: Date | string | null
+    usuarioJefeZonal?: string | null
+    firmaJefeZonal?: string | null
+    registro: VTRegistroCabeceraCreateNestedOneWithoutVerificacionesSemanalesInput
+  }
+
+  export type VTVerificacionSemanalUncheckedCreateInput = {
+    idVerificacionSemanal?: number
+    idRegistro: number
+    mes: number
+    semana: number
+    firmadoJefeBodega?: boolean
+    fechaFirmaJefeBodega?: Date | string | null
+    usuarioJefeBodega?: string | null
+    firmaJefeBodega?: string | null
+    firmadoJefeZonal?: boolean
+    fechaFirmaJefeZonal?: Date | string | null
+    usuarioJefeZonal?: string | null
+    firmaJefeZonal?: string | null
+  }
+
+  export type VTVerificacionSemanalUpdateInput = {
+    mes?: IntFieldUpdateOperationsInput | number
+    semana?: IntFieldUpdateOperationsInput | number
+    firmadoJefeBodega?: BoolFieldUpdateOperationsInput | boolean
+    fechaFirmaJefeBodega?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    usuarioJefeBodega?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaJefeBodega?: NullableStringFieldUpdateOperationsInput | string | null
+    firmadoJefeZonal?: BoolFieldUpdateOperationsInput | boolean
+    fechaFirmaJefeZonal?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    usuarioJefeZonal?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaJefeZonal?: NullableStringFieldUpdateOperationsInput | string | null
+    registro?: VTRegistroCabeceraUpdateOneRequiredWithoutVerificacionesSemanalesNestedInput
+  }
+
+  export type VTVerificacionSemanalUncheckedUpdateInput = {
+    idVerificacionSemanal?: IntFieldUpdateOperationsInput | number
+    idRegistro?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    semana?: IntFieldUpdateOperationsInput | number
+    firmadoJefeBodega?: BoolFieldUpdateOperationsInput | boolean
+    fechaFirmaJefeBodega?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    usuarioJefeBodega?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaJefeBodega?: NullableStringFieldUpdateOperationsInput | string | null
+    firmadoJefeZonal?: BoolFieldUpdateOperationsInput | boolean
+    fechaFirmaJefeZonal?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    usuarioJefeZonal?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaJefeZonal?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type VTVerificacionSemanalCreateManyInput = {
+    idVerificacionSemanal?: number
+    idRegistro: number
+    mes: number
+    semana: number
+    firmadoJefeBodega?: boolean
+    fechaFirmaJefeBodega?: Date | string | null
+    usuarioJefeBodega?: string | null
+    firmaJefeBodega?: string | null
+    firmadoJefeZonal?: boolean
+    fechaFirmaJefeZonal?: Date | string | null
+    usuarioJefeZonal?: string | null
+    firmaJefeZonal?: string | null
+  }
+
+  export type VTVerificacionSemanalUpdateManyMutationInput = {
+    mes?: IntFieldUpdateOperationsInput | number
+    semana?: IntFieldUpdateOperationsInput | number
+    firmadoJefeBodega?: BoolFieldUpdateOperationsInput | boolean
+    fechaFirmaJefeBodega?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    usuarioJefeBodega?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaJefeBodega?: NullableStringFieldUpdateOperationsInput | string | null
+    firmadoJefeZonal?: BoolFieldUpdateOperationsInput | boolean
+    fechaFirmaJefeZonal?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    usuarioJefeZonal?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaJefeZonal?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type VTVerificacionSemanalUncheckedUpdateManyInput = {
+    idVerificacionSemanal?: IntFieldUpdateOperationsInput | number
+    idRegistro?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    semana?: IntFieldUpdateOperationsInput | number
+    firmadoJefeBodega?: BoolFieldUpdateOperationsInput | boolean
+    fechaFirmaJefeBodega?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    usuarioJefeBodega?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaJefeBodega?: NullableStringFieldUpdateOperationsInput | string | null
+    firmadoJefeZonal?: BoolFieldUpdateOperationsInput | boolean
+    fechaFirmaJefeZonal?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    usuarioJefeZonal?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaJefeZonal?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -101077,6 +113434,12 @@ export namespace Prisma {
     none?: MatrizT_CabeceraWhereInput
   }
 
+  export type ActaSupervisionPlantillaListRelationFilter = {
+    every?: ActaSupervisionPlantillaWhereInput
+    some?: ActaSupervisionPlantillaWhereInput
+    none?: ActaSupervisionPlantillaWhereInput
+  }
+
   export type UTOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -101094,6 +113457,10 @@ export namespace Prisma {
   }
 
   export type MatrizT_CabeceraOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ActaSupervisionPlantillaOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -104686,6 +117053,589 @@ export namespace Prisma {
     createdAt?: SortOrder
   }
 
+  export type ActaSupervisionRespuestaListRelationFilter = {
+    every?: ActaSupervisionRespuestaWhereInput
+    some?: ActaSupervisionRespuestaWhereInput
+    none?: ActaSupervisionRespuestaWhereInput
+  }
+
+  export type ActaSupervisionRespuestaOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ActaSupervisionPlantillaCountOrderByAggregateInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    licitacionId?: SortOrder
+    anio?: SortOrder
+    instituciones?: SortOrder
+    rolesPerfiles?: SortOrder
+    estado?: SortOrder
+    logoUrl?: SortOrder
+    instrucciones?: SortOrder
+    campos?: SortOrder
+    codigo?: SortOrder
+    version?: SortOrder
+    fecha?: SortOrder
+    codigoAdicional?: SortOrder
+    mostrarCodigoAdicional?: SortOrder
+    correlativoAutomatico?: SortOrder
+    mostrarCodigoVersionFecha?: SortOrder
+    createdBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ActaSupervisionPlantillaAvgOrderByAggregateInput = {
+    licitacionId?: SortOrder
+    anio?: SortOrder
+  }
+
+  export type ActaSupervisionPlantillaMaxOrderByAggregateInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    licitacionId?: SortOrder
+    anio?: SortOrder
+    instituciones?: SortOrder
+    rolesPerfiles?: SortOrder
+    estado?: SortOrder
+    logoUrl?: SortOrder
+    instrucciones?: SortOrder
+    campos?: SortOrder
+    codigo?: SortOrder
+    version?: SortOrder
+    fecha?: SortOrder
+    codigoAdicional?: SortOrder
+    mostrarCodigoAdicional?: SortOrder
+    correlativoAutomatico?: SortOrder
+    mostrarCodigoVersionFecha?: SortOrder
+    createdBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ActaSupervisionPlantillaMinOrderByAggregateInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    licitacionId?: SortOrder
+    anio?: SortOrder
+    instituciones?: SortOrder
+    rolesPerfiles?: SortOrder
+    estado?: SortOrder
+    logoUrl?: SortOrder
+    instrucciones?: SortOrder
+    campos?: SortOrder
+    codigo?: SortOrder
+    version?: SortOrder
+    fecha?: SortOrder
+    codigoAdicional?: SortOrder
+    mostrarCodigoAdicional?: SortOrder
+    correlativoAutomatico?: SortOrder
+    mostrarCodigoVersionFecha?: SortOrder
+    createdBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ActaSupervisionPlantillaSumOrderByAggregateInput = {
+    licitacionId?: SortOrder
+    anio?: SortOrder
+  }
+
+  export type ActaSupervisionPlantillaRelationFilter = {
+    is?: ActaSupervisionPlantillaWhereInput
+    isNot?: ActaSupervisionPlantillaWhereInput
+  }
+
+  export type ActaSupervisionRespuestaCountOrderByAggregateInput = {
+    id?: SortOrder
+    plantillaId?: SortOrder
+    licitacionId?: SortOrder
+    anio?: SortOrder
+    rbd?: SortOrder
+    nombreEstablecimiento?: SortOrder
+    direccion?: SortOrder
+    ciudad?: SortOrder
+    institucion?: SortOrder
+    sucursal?: SortOrder
+    fechaCreacion?: SortOrder
+    supervisorNombre?: SortOrder
+    supervisorRut?: SortOrder
+    respuestasData?: SortOrder
+    estado?: SortOrder
+    usuario?: SortOrder
+    correlativo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ActaSupervisionRespuestaAvgOrderByAggregateInput = {
+    licitacionId?: SortOrder
+    anio?: SortOrder
+    rbd?: SortOrder
+    correlativo?: SortOrder
+  }
+
+  export type ActaSupervisionRespuestaMaxOrderByAggregateInput = {
+    id?: SortOrder
+    plantillaId?: SortOrder
+    licitacionId?: SortOrder
+    anio?: SortOrder
+    rbd?: SortOrder
+    nombreEstablecimiento?: SortOrder
+    direccion?: SortOrder
+    ciudad?: SortOrder
+    institucion?: SortOrder
+    sucursal?: SortOrder
+    fechaCreacion?: SortOrder
+    supervisorNombre?: SortOrder
+    supervisorRut?: SortOrder
+    respuestasData?: SortOrder
+    estado?: SortOrder
+    usuario?: SortOrder
+    correlativo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ActaSupervisionRespuestaMinOrderByAggregateInput = {
+    id?: SortOrder
+    plantillaId?: SortOrder
+    licitacionId?: SortOrder
+    anio?: SortOrder
+    rbd?: SortOrder
+    nombreEstablecimiento?: SortOrder
+    direccion?: SortOrder
+    ciudad?: SortOrder
+    institucion?: SortOrder
+    sucursal?: SortOrder
+    fechaCreacion?: SortOrder
+    supervisorNombre?: SortOrder
+    supervisorRut?: SortOrder
+    respuestasData?: SortOrder
+    estado?: SortOrder
+    usuario?: SortOrder
+    correlativo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ActaSupervisionRespuestaSumOrderByAggregateInput = {
+    licitacionId?: SortOrder
+    anio?: SortOrder
+    rbd?: SortOrder
+    correlativo?: SortOrder
+  }
+
+  export type VTConfiguracionCamaraListRelationFilter = {
+    every?: VTConfiguracionCamaraWhereInput
+    some?: VTConfiguracionCamaraWhereInput
+    none?: VTConfiguracionCamaraWhereInput
+  }
+
+  export type VTConfiguracionCamaraOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type VTCamaraCountOrderByAggregateInput = {
+    idCamara?: SortOrder
+    nombreCamara?: SortOrder
+    tipoCamara?: SortOrder
+    temperaturaMinima?: SortOrder
+    temperaturaMaxima?: SortOrder
+    activo?: SortOrder
+  }
+
+  export type VTCamaraAvgOrderByAggregateInput = {
+    idCamara?: SortOrder
+    temperaturaMinima?: SortOrder
+    temperaturaMaxima?: SortOrder
+  }
+
+  export type VTCamaraMaxOrderByAggregateInput = {
+    idCamara?: SortOrder
+    nombreCamara?: SortOrder
+    tipoCamara?: SortOrder
+    temperaturaMinima?: SortOrder
+    temperaturaMaxima?: SortOrder
+    activo?: SortOrder
+  }
+
+  export type VTCamaraMinOrderByAggregateInput = {
+    idCamara?: SortOrder
+    nombreCamara?: SortOrder
+    tipoCamara?: SortOrder
+    temperaturaMinima?: SortOrder
+    temperaturaMaxima?: SortOrder
+    activo?: SortOrder
+  }
+
+  export type VTCamaraSumOrderByAggregateInput = {
+    idCamara?: SortOrder
+    temperaturaMinima?: SortOrder
+    temperaturaMaxima?: SortOrder
+  }
+
+  export type VTRegistroCabeceraRelationFilter = {
+    is?: VTRegistroCabeceraWhereInput
+    isNot?: VTRegistroCabeceraWhereInput
+  }
+
+  export type VTCamaraRelationFilter = {
+    is?: VTCamaraWhereInput
+    isNot?: VTCamaraWhereInput
+  }
+
+  export type VTConfiguracionCamaraCountOrderByAggregateInput = {
+    idConfig?: SortOrder
+    idRegistroCabecera?: SortOrder
+    idCamara?: SortOrder
+    mes?: SortOrder
+    numeroCamaraMes?: SortOrder
+    nombreCamara?: SortOrder
+    temperaturaMinima?: SortOrder
+    temperaturaMaxima?: SortOrder
+  }
+
+  export type VTConfiguracionCamaraAvgOrderByAggregateInput = {
+    idConfig?: SortOrder
+    idRegistroCabecera?: SortOrder
+    idCamara?: SortOrder
+    mes?: SortOrder
+    numeroCamaraMes?: SortOrder
+    temperaturaMinima?: SortOrder
+    temperaturaMaxima?: SortOrder
+  }
+
+  export type VTConfiguracionCamaraMaxOrderByAggregateInput = {
+    idConfig?: SortOrder
+    idRegistroCabecera?: SortOrder
+    idCamara?: SortOrder
+    mes?: SortOrder
+    numeroCamaraMes?: SortOrder
+    nombreCamara?: SortOrder
+    temperaturaMinima?: SortOrder
+    temperaturaMaxima?: SortOrder
+  }
+
+  export type VTConfiguracionCamaraMinOrderByAggregateInput = {
+    idConfig?: SortOrder
+    idRegistroCabecera?: SortOrder
+    idCamara?: SortOrder
+    mes?: SortOrder
+    numeroCamaraMes?: SortOrder
+    nombreCamara?: SortOrder
+    temperaturaMinima?: SortOrder
+    temperaturaMaxima?: SortOrder
+  }
+
+  export type VTConfiguracionCamaraSumOrderByAggregateInput = {
+    idConfig?: SortOrder
+    idRegistroCabecera?: SortOrder
+    idCamara?: SortOrder
+    mes?: SortOrder
+    numeroCamaraMes?: SortOrder
+    temperaturaMinima?: SortOrder
+    temperaturaMaxima?: SortOrder
+  }
+
+  export type VTRegistroDetalleListRelationFilter = {
+    every?: VTRegistroDetalleWhereInput
+    some?: VTRegistroDetalleWhereInput
+    none?: VTRegistroDetalleWhereInput
+  }
+
+  export type VTVerificacionDiariaListRelationFilter = {
+    every?: VTVerificacionDiariaWhereInput
+    some?: VTVerificacionDiariaWhereInput
+    none?: VTVerificacionDiariaWhereInput
+  }
+
+  export type VTVerificacionSemanalListRelationFilter = {
+    every?: VTVerificacionSemanalWhereInput
+    some?: VTVerificacionSemanalWhereInput
+    none?: VTVerificacionSemanalWhereInput
+  }
+
+  export type VTRegistroDetalleOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type VTVerificacionDiariaOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type VTVerificacionSemanalOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type VTRegistroCabeceraCountOrderByAggregateInput = {
+    idRegistro?: SortOrder
+    tipoEntidad?: SortOrder
+    idEntidad?: SortOrder
+    nombreEntidad?: SortOrder
+    anio?: SortOrder
+    fechaRegistro?: SortOrder
+    monitorResponsable?: SortOrder
+    tipoCamara?: SortOrder
+    descripcionCamaras?: SortOrder
+    fechaCreacion?: SortOrder
+    usuarioCreacion?: SortOrder
+  }
+
+  export type VTRegistroCabeceraAvgOrderByAggregateInput = {
+    idRegistro?: SortOrder
+    anio?: SortOrder
+  }
+
+  export type VTRegistroCabeceraMaxOrderByAggregateInput = {
+    idRegistro?: SortOrder
+    tipoEntidad?: SortOrder
+    idEntidad?: SortOrder
+    nombreEntidad?: SortOrder
+    anio?: SortOrder
+    fechaRegistro?: SortOrder
+    monitorResponsable?: SortOrder
+    tipoCamara?: SortOrder
+    descripcionCamaras?: SortOrder
+    fechaCreacion?: SortOrder
+    usuarioCreacion?: SortOrder
+  }
+
+  export type VTRegistroCabeceraMinOrderByAggregateInput = {
+    idRegistro?: SortOrder
+    tipoEntidad?: SortOrder
+    idEntidad?: SortOrder
+    nombreEntidad?: SortOrder
+    anio?: SortOrder
+    fechaRegistro?: SortOrder
+    monitorResponsable?: SortOrder
+    tipoCamara?: SortOrder
+    descripcionCamaras?: SortOrder
+    fechaCreacion?: SortOrder
+    usuarioCreacion?: SortOrder
+  }
+
+  export type VTRegistroCabeceraSumOrderByAggregateInput = {
+    idRegistro?: SortOrder
+    anio?: SortOrder
+  }
+
+  export type VTRegistroDetalleCountOrderByAggregateInput = {
+    idDetalle?: SortOrder
+    idRegistro?: SortOrder
+    numeroCorrelativo?: SortOrder
+    dia?: SortOrder
+    tipoProducto?: SortOrder
+    nombreProducto?: SortOrder
+    mes?: SortOrder
+    numeroCamara?: SortOrder
+    temperatura?: SortOrder
+    fechaRegistro?: SortOrder
+    usuarioRegistro?: SortOrder
+  }
+
+  export type VTRegistroDetalleAvgOrderByAggregateInput = {
+    idDetalle?: SortOrder
+    idRegistro?: SortOrder
+    numeroCorrelativo?: SortOrder
+    dia?: SortOrder
+    mes?: SortOrder
+    numeroCamara?: SortOrder
+    temperatura?: SortOrder
+  }
+
+  export type VTRegistroDetalleMaxOrderByAggregateInput = {
+    idDetalle?: SortOrder
+    idRegistro?: SortOrder
+    numeroCorrelativo?: SortOrder
+    dia?: SortOrder
+    tipoProducto?: SortOrder
+    nombreProducto?: SortOrder
+    mes?: SortOrder
+    numeroCamara?: SortOrder
+    temperatura?: SortOrder
+    fechaRegistro?: SortOrder
+    usuarioRegistro?: SortOrder
+  }
+
+  export type VTRegistroDetalleMinOrderByAggregateInput = {
+    idDetalle?: SortOrder
+    idRegistro?: SortOrder
+    numeroCorrelativo?: SortOrder
+    dia?: SortOrder
+    tipoProducto?: SortOrder
+    nombreProducto?: SortOrder
+    mes?: SortOrder
+    numeroCamara?: SortOrder
+    temperatura?: SortOrder
+    fechaRegistro?: SortOrder
+    usuarioRegistro?: SortOrder
+  }
+
+  export type VTRegistroDetalleSumOrderByAggregateInput = {
+    idDetalle?: SortOrder
+    idRegistro?: SortOrder
+    numeroCorrelativo?: SortOrder
+    dia?: SortOrder
+    mes?: SortOrder
+    numeroCamara?: SortOrder
+    temperatura?: SortOrder
+  }
+
+  export type VTProductoCatalogoCountOrderByAggregateInput = {
+    idProducto?: SortOrder
+    nombreProducto?: SortOrder
+    activo?: SortOrder
+  }
+
+  export type VTProductoCatalogoAvgOrderByAggregateInput = {
+    idProducto?: SortOrder
+  }
+
+  export type VTProductoCatalogoMaxOrderByAggregateInput = {
+    idProducto?: SortOrder
+    nombreProducto?: SortOrder
+    activo?: SortOrder
+  }
+
+  export type VTProductoCatalogoMinOrderByAggregateInput = {
+    idProducto?: SortOrder
+    nombreProducto?: SortOrder
+    activo?: SortOrder
+  }
+
+  export type VTProductoCatalogoSumOrderByAggregateInput = {
+    idProducto?: SortOrder
+  }
+
+  export type VTVerificacionDiariaIdRegistroMesDiaCompoundUniqueInput = {
+    idRegistro: number
+    mes: number
+    dia: number
+  }
+
+  export type VTVerificacionDiariaCountOrderByAggregateInput = {
+    idVerificacion?: SortOrder
+    idRegistro?: SortOrder
+    mes?: SortOrder
+    dia?: SortOrder
+    fechaVerificacion?: SortOrder
+    firmadoPor?: SortOrder
+    usuarioId?: SortOrder
+    firma?: SortOrder
+    firmado?: SortOrder
+    observaciones?: SortOrder
+    accionesCorrectivas?: SortOrder
+  }
+
+  export type VTVerificacionDiariaAvgOrderByAggregateInput = {
+    idVerificacion?: SortOrder
+    idRegistro?: SortOrder
+    mes?: SortOrder
+    dia?: SortOrder
+  }
+
+  export type VTVerificacionDiariaMaxOrderByAggregateInput = {
+    idVerificacion?: SortOrder
+    idRegistro?: SortOrder
+    mes?: SortOrder
+    dia?: SortOrder
+    fechaVerificacion?: SortOrder
+    firmadoPor?: SortOrder
+    usuarioId?: SortOrder
+    firma?: SortOrder
+    firmado?: SortOrder
+    observaciones?: SortOrder
+    accionesCorrectivas?: SortOrder
+  }
+
+  export type VTVerificacionDiariaMinOrderByAggregateInput = {
+    idVerificacion?: SortOrder
+    idRegistro?: SortOrder
+    mes?: SortOrder
+    dia?: SortOrder
+    fechaVerificacion?: SortOrder
+    firmadoPor?: SortOrder
+    usuarioId?: SortOrder
+    firma?: SortOrder
+    firmado?: SortOrder
+    observaciones?: SortOrder
+    accionesCorrectivas?: SortOrder
+  }
+
+  export type VTVerificacionDiariaSumOrderByAggregateInput = {
+    idVerificacion?: SortOrder
+    idRegistro?: SortOrder
+    mes?: SortOrder
+    dia?: SortOrder
+  }
+
+  export type VTVerificacionSemanalIdRegistroMesSemanaCompoundUniqueInput = {
+    idRegistro: number
+    mes: number
+    semana: number
+  }
+
+  export type VTVerificacionSemanalCountOrderByAggregateInput = {
+    idVerificacionSemanal?: SortOrder
+    idRegistro?: SortOrder
+    mes?: SortOrder
+    semana?: SortOrder
+    firmadoJefeBodega?: SortOrder
+    fechaFirmaJefeBodega?: SortOrder
+    usuarioJefeBodega?: SortOrder
+    firmaJefeBodega?: SortOrder
+    firmadoJefeZonal?: SortOrder
+    fechaFirmaJefeZonal?: SortOrder
+    usuarioJefeZonal?: SortOrder
+    firmaJefeZonal?: SortOrder
+  }
+
+  export type VTVerificacionSemanalAvgOrderByAggregateInput = {
+    idVerificacionSemanal?: SortOrder
+    idRegistro?: SortOrder
+    mes?: SortOrder
+    semana?: SortOrder
+  }
+
+  export type VTVerificacionSemanalMaxOrderByAggregateInput = {
+    idVerificacionSemanal?: SortOrder
+    idRegistro?: SortOrder
+    mes?: SortOrder
+    semana?: SortOrder
+    firmadoJefeBodega?: SortOrder
+    fechaFirmaJefeBodega?: SortOrder
+    usuarioJefeBodega?: SortOrder
+    firmaJefeBodega?: SortOrder
+    firmadoJefeZonal?: SortOrder
+    fechaFirmaJefeZonal?: SortOrder
+    usuarioJefeZonal?: SortOrder
+    firmaJefeZonal?: SortOrder
+  }
+
+  export type VTVerificacionSemanalMinOrderByAggregateInput = {
+    idVerificacionSemanal?: SortOrder
+    idRegistro?: SortOrder
+    mes?: SortOrder
+    semana?: SortOrder
+    firmadoJefeBodega?: SortOrder
+    fechaFirmaJefeBodega?: SortOrder
+    usuarioJefeBodega?: SortOrder
+    firmaJefeBodega?: SortOrder
+    firmadoJefeZonal?: SortOrder
+    fechaFirmaJefeZonal?: SortOrder
+    usuarioJefeZonal?: SortOrder
+    firmaJefeZonal?: SortOrder
+  }
+
+  export type VTVerificacionSemanalSumOrderByAggregateInput = {
+    idVerificacionSemanal?: SortOrder
+    idRegistro?: SortOrder
+    mes?: SortOrder
+    semana?: SortOrder
+  }
+
   export type UserCreateNestedManyWithoutRoleInput = {
     create?: XOR<UserCreateWithoutRoleInput, UserUncheckedCreateWithoutRoleInput> | UserCreateWithoutRoleInput[] | UserUncheckedCreateWithoutRoleInput[]
     connectOrCreate?: UserCreateOrConnectWithoutRoleInput | UserCreateOrConnectWithoutRoleInput[]
@@ -105070,6 +118020,13 @@ export namespace Prisma {
     connect?: MatrizT_CabeceraWhereUniqueInput | MatrizT_CabeceraWhereUniqueInput[]
   }
 
+  export type ActaSupervisionPlantillaCreateNestedManyWithoutLicitacionInput = {
+    create?: XOR<ActaSupervisionPlantillaCreateWithoutLicitacionInput, ActaSupervisionPlantillaUncheckedCreateWithoutLicitacionInput> | ActaSupervisionPlantillaCreateWithoutLicitacionInput[] | ActaSupervisionPlantillaUncheckedCreateWithoutLicitacionInput[]
+    connectOrCreate?: ActaSupervisionPlantillaCreateOrConnectWithoutLicitacionInput | ActaSupervisionPlantillaCreateOrConnectWithoutLicitacionInput[]
+    createMany?: ActaSupervisionPlantillaCreateManyLicitacionInputEnvelope
+    connect?: ActaSupervisionPlantillaWhereUniqueInput | ActaSupervisionPlantillaWhereUniqueInput[]
+  }
+
   export type UTUncheckedCreateNestedManyWithoutLicitacionInput = {
     create?: XOR<UTCreateWithoutLicitacionInput, UTUncheckedCreateWithoutLicitacionInput> | UTCreateWithoutLicitacionInput[] | UTUncheckedCreateWithoutLicitacionInput[]
     connectOrCreate?: UTCreateOrConnectWithoutLicitacionInput | UTCreateOrConnectWithoutLicitacionInput[]
@@ -105103,6 +118060,13 @@ export namespace Prisma {
     connectOrCreate?: MatrizT_CabeceraCreateOrConnectWithoutLicitacionInput | MatrizT_CabeceraCreateOrConnectWithoutLicitacionInput[]
     createMany?: MatrizT_CabeceraCreateManyLicitacionInputEnvelope
     connect?: MatrizT_CabeceraWhereUniqueInput | MatrizT_CabeceraWhereUniqueInput[]
+  }
+
+  export type ActaSupervisionPlantillaUncheckedCreateNestedManyWithoutLicitacionInput = {
+    create?: XOR<ActaSupervisionPlantillaCreateWithoutLicitacionInput, ActaSupervisionPlantillaUncheckedCreateWithoutLicitacionInput> | ActaSupervisionPlantillaCreateWithoutLicitacionInput[] | ActaSupervisionPlantillaUncheckedCreateWithoutLicitacionInput[]
+    connectOrCreate?: ActaSupervisionPlantillaCreateOrConnectWithoutLicitacionInput | ActaSupervisionPlantillaCreateOrConnectWithoutLicitacionInput[]
+    createMany?: ActaSupervisionPlantillaCreateManyLicitacionInputEnvelope
+    connect?: ActaSupervisionPlantillaWhereUniqueInput | ActaSupervisionPlantillaWhereUniqueInput[]
   }
 
   export type UTUpdateManyWithoutLicitacionNestedInput = {
@@ -105175,6 +118139,20 @@ export namespace Prisma {
     deleteMany?: MatrizT_CabeceraScalarWhereInput | MatrizT_CabeceraScalarWhereInput[]
   }
 
+  export type ActaSupervisionPlantillaUpdateManyWithoutLicitacionNestedInput = {
+    create?: XOR<ActaSupervisionPlantillaCreateWithoutLicitacionInput, ActaSupervisionPlantillaUncheckedCreateWithoutLicitacionInput> | ActaSupervisionPlantillaCreateWithoutLicitacionInput[] | ActaSupervisionPlantillaUncheckedCreateWithoutLicitacionInput[]
+    connectOrCreate?: ActaSupervisionPlantillaCreateOrConnectWithoutLicitacionInput | ActaSupervisionPlantillaCreateOrConnectWithoutLicitacionInput[]
+    upsert?: ActaSupervisionPlantillaUpsertWithWhereUniqueWithoutLicitacionInput | ActaSupervisionPlantillaUpsertWithWhereUniqueWithoutLicitacionInput[]
+    createMany?: ActaSupervisionPlantillaCreateManyLicitacionInputEnvelope
+    set?: ActaSupervisionPlantillaWhereUniqueInput | ActaSupervisionPlantillaWhereUniqueInput[]
+    disconnect?: ActaSupervisionPlantillaWhereUniqueInput | ActaSupervisionPlantillaWhereUniqueInput[]
+    delete?: ActaSupervisionPlantillaWhereUniqueInput | ActaSupervisionPlantillaWhereUniqueInput[]
+    connect?: ActaSupervisionPlantillaWhereUniqueInput | ActaSupervisionPlantillaWhereUniqueInput[]
+    update?: ActaSupervisionPlantillaUpdateWithWhereUniqueWithoutLicitacionInput | ActaSupervisionPlantillaUpdateWithWhereUniqueWithoutLicitacionInput[]
+    updateMany?: ActaSupervisionPlantillaUpdateManyWithWhereWithoutLicitacionInput | ActaSupervisionPlantillaUpdateManyWithWhereWithoutLicitacionInput[]
+    deleteMany?: ActaSupervisionPlantillaScalarWhereInput | ActaSupervisionPlantillaScalarWhereInput[]
+  }
+
   export type UTUncheckedUpdateManyWithoutLicitacionNestedInput = {
     create?: XOR<UTCreateWithoutLicitacionInput, UTUncheckedCreateWithoutLicitacionInput> | UTCreateWithoutLicitacionInput[] | UTUncheckedCreateWithoutLicitacionInput[]
     connectOrCreate?: UTCreateOrConnectWithoutLicitacionInput | UTCreateOrConnectWithoutLicitacionInput[]
@@ -105243,6 +118221,20 @@ export namespace Prisma {
     update?: MatrizT_CabeceraUpdateWithWhereUniqueWithoutLicitacionInput | MatrizT_CabeceraUpdateWithWhereUniqueWithoutLicitacionInput[]
     updateMany?: MatrizT_CabeceraUpdateManyWithWhereWithoutLicitacionInput | MatrizT_CabeceraUpdateManyWithWhereWithoutLicitacionInput[]
     deleteMany?: MatrizT_CabeceraScalarWhereInput | MatrizT_CabeceraScalarWhereInput[]
+  }
+
+  export type ActaSupervisionPlantillaUncheckedUpdateManyWithoutLicitacionNestedInput = {
+    create?: XOR<ActaSupervisionPlantillaCreateWithoutLicitacionInput, ActaSupervisionPlantillaUncheckedCreateWithoutLicitacionInput> | ActaSupervisionPlantillaCreateWithoutLicitacionInput[] | ActaSupervisionPlantillaUncheckedCreateWithoutLicitacionInput[]
+    connectOrCreate?: ActaSupervisionPlantillaCreateOrConnectWithoutLicitacionInput | ActaSupervisionPlantillaCreateOrConnectWithoutLicitacionInput[]
+    upsert?: ActaSupervisionPlantillaUpsertWithWhereUniqueWithoutLicitacionInput | ActaSupervisionPlantillaUpsertWithWhereUniqueWithoutLicitacionInput[]
+    createMany?: ActaSupervisionPlantillaCreateManyLicitacionInputEnvelope
+    set?: ActaSupervisionPlantillaWhereUniqueInput | ActaSupervisionPlantillaWhereUniqueInput[]
+    disconnect?: ActaSupervisionPlantillaWhereUniqueInput | ActaSupervisionPlantillaWhereUniqueInput[]
+    delete?: ActaSupervisionPlantillaWhereUniqueInput | ActaSupervisionPlantillaWhereUniqueInput[]
+    connect?: ActaSupervisionPlantillaWhereUniqueInput | ActaSupervisionPlantillaWhereUniqueInput[]
+    update?: ActaSupervisionPlantillaUpdateWithWhereUniqueWithoutLicitacionInput | ActaSupervisionPlantillaUpdateWithWhereUniqueWithoutLicitacionInput[]
+    updateMany?: ActaSupervisionPlantillaUpdateManyWithWhereWithoutLicitacionInput | ActaSupervisionPlantillaUpdateManyWithWhereWithoutLicitacionInput[]
+    deleteMany?: ActaSupervisionPlantillaScalarWhereInput | ActaSupervisionPlantillaScalarWhereInput[]
   }
 
   export type LicitacionCreateNestedOneWithoutAspectosEEInput = {
@@ -107695,6 +120687,358 @@ export namespace Prisma {
     update?: XOR<XOR<SucursalUpdateToOneWithWhereWithoutDelegacionesInput, SucursalUpdateWithoutDelegacionesInput>, SucursalUncheckedUpdateWithoutDelegacionesInput>
   }
 
+  export type LicitacionCreateNestedOneWithoutActasPlantillasInput = {
+    create?: XOR<LicitacionCreateWithoutActasPlantillasInput, LicitacionUncheckedCreateWithoutActasPlantillasInput>
+    connectOrCreate?: LicitacionCreateOrConnectWithoutActasPlantillasInput
+    connect?: LicitacionWhereUniqueInput
+  }
+
+  export type ActaSupervisionRespuestaCreateNestedManyWithoutPlantillaInput = {
+    create?: XOR<ActaSupervisionRespuestaCreateWithoutPlantillaInput, ActaSupervisionRespuestaUncheckedCreateWithoutPlantillaInput> | ActaSupervisionRespuestaCreateWithoutPlantillaInput[] | ActaSupervisionRespuestaUncheckedCreateWithoutPlantillaInput[]
+    connectOrCreate?: ActaSupervisionRespuestaCreateOrConnectWithoutPlantillaInput | ActaSupervisionRespuestaCreateOrConnectWithoutPlantillaInput[]
+    createMany?: ActaSupervisionRespuestaCreateManyPlantillaInputEnvelope
+    connect?: ActaSupervisionRespuestaWhereUniqueInput | ActaSupervisionRespuestaWhereUniqueInput[]
+  }
+
+  export type ActaSupervisionRespuestaUncheckedCreateNestedManyWithoutPlantillaInput = {
+    create?: XOR<ActaSupervisionRespuestaCreateWithoutPlantillaInput, ActaSupervisionRespuestaUncheckedCreateWithoutPlantillaInput> | ActaSupervisionRespuestaCreateWithoutPlantillaInput[] | ActaSupervisionRespuestaUncheckedCreateWithoutPlantillaInput[]
+    connectOrCreate?: ActaSupervisionRespuestaCreateOrConnectWithoutPlantillaInput | ActaSupervisionRespuestaCreateOrConnectWithoutPlantillaInput[]
+    createMany?: ActaSupervisionRespuestaCreateManyPlantillaInputEnvelope
+    connect?: ActaSupervisionRespuestaWhereUniqueInput | ActaSupervisionRespuestaWhereUniqueInput[]
+  }
+
+  export type LicitacionUpdateOneWithoutActasPlantillasNestedInput = {
+    create?: XOR<LicitacionCreateWithoutActasPlantillasInput, LicitacionUncheckedCreateWithoutActasPlantillasInput>
+    connectOrCreate?: LicitacionCreateOrConnectWithoutActasPlantillasInput
+    upsert?: LicitacionUpsertWithoutActasPlantillasInput
+    disconnect?: LicitacionWhereInput | boolean
+    delete?: LicitacionWhereInput | boolean
+    connect?: LicitacionWhereUniqueInput
+    update?: XOR<XOR<LicitacionUpdateToOneWithWhereWithoutActasPlantillasInput, LicitacionUpdateWithoutActasPlantillasInput>, LicitacionUncheckedUpdateWithoutActasPlantillasInput>
+  }
+
+  export type ActaSupervisionRespuestaUpdateManyWithoutPlantillaNestedInput = {
+    create?: XOR<ActaSupervisionRespuestaCreateWithoutPlantillaInput, ActaSupervisionRespuestaUncheckedCreateWithoutPlantillaInput> | ActaSupervisionRespuestaCreateWithoutPlantillaInput[] | ActaSupervisionRespuestaUncheckedCreateWithoutPlantillaInput[]
+    connectOrCreate?: ActaSupervisionRespuestaCreateOrConnectWithoutPlantillaInput | ActaSupervisionRespuestaCreateOrConnectWithoutPlantillaInput[]
+    upsert?: ActaSupervisionRespuestaUpsertWithWhereUniqueWithoutPlantillaInput | ActaSupervisionRespuestaUpsertWithWhereUniqueWithoutPlantillaInput[]
+    createMany?: ActaSupervisionRespuestaCreateManyPlantillaInputEnvelope
+    set?: ActaSupervisionRespuestaWhereUniqueInput | ActaSupervisionRespuestaWhereUniqueInput[]
+    disconnect?: ActaSupervisionRespuestaWhereUniqueInput | ActaSupervisionRespuestaWhereUniqueInput[]
+    delete?: ActaSupervisionRespuestaWhereUniqueInput | ActaSupervisionRespuestaWhereUniqueInput[]
+    connect?: ActaSupervisionRespuestaWhereUniqueInput | ActaSupervisionRespuestaWhereUniqueInput[]
+    update?: ActaSupervisionRespuestaUpdateWithWhereUniqueWithoutPlantillaInput | ActaSupervisionRespuestaUpdateWithWhereUniqueWithoutPlantillaInput[]
+    updateMany?: ActaSupervisionRespuestaUpdateManyWithWhereWithoutPlantillaInput | ActaSupervisionRespuestaUpdateManyWithWhereWithoutPlantillaInput[]
+    deleteMany?: ActaSupervisionRespuestaScalarWhereInput | ActaSupervisionRespuestaScalarWhereInput[]
+  }
+
+  export type ActaSupervisionRespuestaUncheckedUpdateManyWithoutPlantillaNestedInput = {
+    create?: XOR<ActaSupervisionRespuestaCreateWithoutPlantillaInput, ActaSupervisionRespuestaUncheckedCreateWithoutPlantillaInput> | ActaSupervisionRespuestaCreateWithoutPlantillaInput[] | ActaSupervisionRespuestaUncheckedCreateWithoutPlantillaInput[]
+    connectOrCreate?: ActaSupervisionRespuestaCreateOrConnectWithoutPlantillaInput | ActaSupervisionRespuestaCreateOrConnectWithoutPlantillaInput[]
+    upsert?: ActaSupervisionRespuestaUpsertWithWhereUniqueWithoutPlantillaInput | ActaSupervisionRespuestaUpsertWithWhereUniqueWithoutPlantillaInput[]
+    createMany?: ActaSupervisionRespuestaCreateManyPlantillaInputEnvelope
+    set?: ActaSupervisionRespuestaWhereUniqueInput | ActaSupervisionRespuestaWhereUniqueInput[]
+    disconnect?: ActaSupervisionRespuestaWhereUniqueInput | ActaSupervisionRespuestaWhereUniqueInput[]
+    delete?: ActaSupervisionRespuestaWhereUniqueInput | ActaSupervisionRespuestaWhereUniqueInput[]
+    connect?: ActaSupervisionRespuestaWhereUniqueInput | ActaSupervisionRespuestaWhereUniqueInput[]
+    update?: ActaSupervisionRespuestaUpdateWithWhereUniqueWithoutPlantillaInput | ActaSupervisionRespuestaUpdateWithWhereUniqueWithoutPlantillaInput[]
+    updateMany?: ActaSupervisionRespuestaUpdateManyWithWhereWithoutPlantillaInput | ActaSupervisionRespuestaUpdateManyWithWhereWithoutPlantillaInput[]
+    deleteMany?: ActaSupervisionRespuestaScalarWhereInput | ActaSupervisionRespuestaScalarWhereInput[]
+  }
+
+  export type ActaSupervisionPlantillaCreateNestedOneWithoutRespuestasInput = {
+    create?: XOR<ActaSupervisionPlantillaCreateWithoutRespuestasInput, ActaSupervisionPlantillaUncheckedCreateWithoutRespuestasInput>
+    connectOrCreate?: ActaSupervisionPlantillaCreateOrConnectWithoutRespuestasInput
+    connect?: ActaSupervisionPlantillaWhereUniqueInput
+  }
+
+  export type ActaSupervisionPlantillaUpdateOneRequiredWithoutRespuestasNestedInput = {
+    create?: XOR<ActaSupervisionPlantillaCreateWithoutRespuestasInput, ActaSupervisionPlantillaUncheckedCreateWithoutRespuestasInput>
+    connectOrCreate?: ActaSupervisionPlantillaCreateOrConnectWithoutRespuestasInput
+    upsert?: ActaSupervisionPlantillaUpsertWithoutRespuestasInput
+    connect?: ActaSupervisionPlantillaWhereUniqueInput
+    update?: XOR<XOR<ActaSupervisionPlantillaUpdateToOneWithWhereWithoutRespuestasInput, ActaSupervisionPlantillaUpdateWithoutRespuestasInput>, ActaSupervisionPlantillaUncheckedUpdateWithoutRespuestasInput>
+  }
+
+  export type VTConfiguracionCamaraCreateNestedManyWithoutCamaraInput = {
+    create?: XOR<VTConfiguracionCamaraCreateWithoutCamaraInput, VTConfiguracionCamaraUncheckedCreateWithoutCamaraInput> | VTConfiguracionCamaraCreateWithoutCamaraInput[] | VTConfiguracionCamaraUncheckedCreateWithoutCamaraInput[]
+    connectOrCreate?: VTConfiguracionCamaraCreateOrConnectWithoutCamaraInput | VTConfiguracionCamaraCreateOrConnectWithoutCamaraInput[]
+    createMany?: VTConfiguracionCamaraCreateManyCamaraInputEnvelope
+    connect?: VTConfiguracionCamaraWhereUniqueInput | VTConfiguracionCamaraWhereUniqueInput[]
+  }
+
+  export type VTConfiguracionCamaraUncheckedCreateNestedManyWithoutCamaraInput = {
+    create?: XOR<VTConfiguracionCamaraCreateWithoutCamaraInput, VTConfiguracionCamaraUncheckedCreateWithoutCamaraInput> | VTConfiguracionCamaraCreateWithoutCamaraInput[] | VTConfiguracionCamaraUncheckedCreateWithoutCamaraInput[]
+    connectOrCreate?: VTConfiguracionCamaraCreateOrConnectWithoutCamaraInput | VTConfiguracionCamaraCreateOrConnectWithoutCamaraInput[]
+    createMany?: VTConfiguracionCamaraCreateManyCamaraInputEnvelope
+    connect?: VTConfiguracionCamaraWhereUniqueInput | VTConfiguracionCamaraWhereUniqueInput[]
+  }
+
+  export type VTConfiguracionCamaraUpdateManyWithoutCamaraNestedInput = {
+    create?: XOR<VTConfiguracionCamaraCreateWithoutCamaraInput, VTConfiguracionCamaraUncheckedCreateWithoutCamaraInput> | VTConfiguracionCamaraCreateWithoutCamaraInput[] | VTConfiguracionCamaraUncheckedCreateWithoutCamaraInput[]
+    connectOrCreate?: VTConfiguracionCamaraCreateOrConnectWithoutCamaraInput | VTConfiguracionCamaraCreateOrConnectWithoutCamaraInput[]
+    upsert?: VTConfiguracionCamaraUpsertWithWhereUniqueWithoutCamaraInput | VTConfiguracionCamaraUpsertWithWhereUniqueWithoutCamaraInput[]
+    createMany?: VTConfiguracionCamaraCreateManyCamaraInputEnvelope
+    set?: VTConfiguracionCamaraWhereUniqueInput | VTConfiguracionCamaraWhereUniqueInput[]
+    disconnect?: VTConfiguracionCamaraWhereUniqueInput | VTConfiguracionCamaraWhereUniqueInput[]
+    delete?: VTConfiguracionCamaraWhereUniqueInput | VTConfiguracionCamaraWhereUniqueInput[]
+    connect?: VTConfiguracionCamaraWhereUniqueInput | VTConfiguracionCamaraWhereUniqueInput[]
+    update?: VTConfiguracionCamaraUpdateWithWhereUniqueWithoutCamaraInput | VTConfiguracionCamaraUpdateWithWhereUniqueWithoutCamaraInput[]
+    updateMany?: VTConfiguracionCamaraUpdateManyWithWhereWithoutCamaraInput | VTConfiguracionCamaraUpdateManyWithWhereWithoutCamaraInput[]
+    deleteMany?: VTConfiguracionCamaraScalarWhereInput | VTConfiguracionCamaraScalarWhereInput[]
+  }
+
+  export type VTConfiguracionCamaraUncheckedUpdateManyWithoutCamaraNestedInput = {
+    create?: XOR<VTConfiguracionCamaraCreateWithoutCamaraInput, VTConfiguracionCamaraUncheckedCreateWithoutCamaraInput> | VTConfiguracionCamaraCreateWithoutCamaraInput[] | VTConfiguracionCamaraUncheckedCreateWithoutCamaraInput[]
+    connectOrCreate?: VTConfiguracionCamaraCreateOrConnectWithoutCamaraInput | VTConfiguracionCamaraCreateOrConnectWithoutCamaraInput[]
+    upsert?: VTConfiguracionCamaraUpsertWithWhereUniqueWithoutCamaraInput | VTConfiguracionCamaraUpsertWithWhereUniqueWithoutCamaraInput[]
+    createMany?: VTConfiguracionCamaraCreateManyCamaraInputEnvelope
+    set?: VTConfiguracionCamaraWhereUniqueInput | VTConfiguracionCamaraWhereUniqueInput[]
+    disconnect?: VTConfiguracionCamaraWhereUniqueInput | VTConfiguracionCamaraWhereUniqueInput[]
+    delete?: VTConfiguracionCamaraWhereUniqueInput | VTConfiguracionCamaraWhereUniqueInput[]
+    connect?: VTConfiguracionCamaraWhereUniqueInput | VTConfiguracionCamaraWhereUniqueInput[]
+    update?: VTConfiguracionCamaraUpdateWithWhereUniqueWithoutCamaraInput | VTConfiguracionCamaraUpdateWithWhereUniqueWithoutCamaraInput[]
+    updateMany?: VTConfiguracionCamaraUpdateManyWithWhereWithoutCamaraInput | VTConfiguracionCamaraUpdateManyWithWhereWithoutCamaraInput[]
+    deleteMany?: VTConfiguracionCamaraScalarWhereInput | VTConfiguracionCamaraScalarWhereInput[]
+  }
+
+  export type VTRegistroCabeceraCreateNestedOneWithoutConfiguracionesInput = {
+    create?: XOR<VTRegistroCabeceraCreateWithoutConfiguracionesInput, VTRegistroCabeceraUncheckedCreateWithoutConfiguracionesInput>
+    connectOrCreate?: VTRegistroCabeceraCreateOrConnectWithoutConfiguracionesInput
+    connect?: VTRegistroCabeceraWhereUniqueInput
+  }
+
+  export type VTCamaraCreateNestedOneWithoutConfiguracionesInput = {
+    create?: XOR<VTCamaraCreateWithoutConfiguracionesInput, VTCamaraUncheckedCreateWithoutConfiguracionesInput>
+    connectOrCreate?: VTCamaraCreateOrConnectWithoutConfiguracionesInput
+    connect?: VTCamaraWhereUniqueInput
+  }
+
+  export type VTRegistroCabeceraUpdateOneRequiredWithoutConfiguracionesNestedInput = {
+    create?: XOR<VTRegistroCabeceraCreateWithoutConfiguracionesInput, VTRegistroCabeceraUncheckedCreateWithoutConfiguracionesInput>
+    connectOrCreate?: VTRegistroCabeceraCreateOrConnectWithoutConfiguracionesInput
+    upsert?: VTRegistroCabeceraUpsertWithoutConfiguracionesInput
+    connect?: VTRegistroCabeceraWhereUniqueInput
+    update?: XOR<XOR<VTRegistroCabeceraUpdateToOneWithWhereWithoutConfiguracionesInput, VTRegistroCabeceraUpdateWithoutConfiguracionesInput>, VTRegistroCabeceraUncheckedUpdateWithoutConfiguracionesInput>
+  }
+
+  export type VTCamaraUpdateOneRequiredWithoutConfiguracionesNestedInput = {
+    create?: XOR<VTCamaraCreateWithoutConfiguracionesInput, VTCamaraUncheckedCreateWithoutConfiguracionesInput>
+    connectOrCreate?: VTCamaraCreateOrConnectWithoutConfiguracionesInput
+    upsert?: VTCamaraUpsertWithoutConfiguracionesInput
+    connect?: VTCamaraWhereUniqueInput
+    update?: XOR<XOR<VTCamaraUpdateToOneWithWhereWithoutConfiguracionesInput, VTCamaraUpdateWithoutConfiguracionesInput>, VTCamaraUncheckedUpdateWithoutConfiguracionesInput>
+  }
+
+  export type VTConfiguracionCamaraCreateNestedManyWithoutRegistroInput = {
+    create?: XOR<VTConfiguracionCamaraCreateWithoutRegistroInput, VTConfiguracionCamaraUncheckedCreateWithoutRegistroInput> | VTConfiguracionCamaraCreateWithoutRegistroInput[] | VTConfiguracionCamaraUncheckedCreateWithoutRegistroInput[]
+    connectOrCreate?: VTConfiguracionCamaraCreateOrConnectWithoutRegistroInput | VTConfiguracionCamaraCreateOrConnectWithoutRegistroInput[]
+    createMany?: VTConfiguracionCamaraCreateManyRegistroInputEnvelope
+    connect?: VTConfiguracionCamaraWhereUniqueInput | VTConfiguracionCamaraWhereUniqueInput[]
+  }
+
+  export type VTRegistroDetalleCreateNestedManyWithoutRegistroInput = {
+    create?: XOR<VTRegistroDetalleCreateWithoutRegistroInput, VTRegistroDetalleUncheckedCreateWithoutRegistroInput> | VTRegistroDetalleCreateWithoutRegistroInput[] | VTRegistroDetalleUncheckedCreateWithoutRegistroInput[]
+    connectOrCreate?: VTRegistroDetalleCreateOrConnectWithoutRegistroInput | VTRegistroDetalleCreateOrConnectWithoutRegistroInput[]
+    createMany?: VTRegistroDetalleCreateManyRegistroInputEnvelope
+    connect?: VTRegistroDetalleWhereUniqueInput | VTRegistroDetalleWhereUniqueInput[]
+  }
+
+  export type VTVerificacionDiariaCreateNestedManyWithoutRegistroInput = {
+    create?: XOR<VTVerificacionDiariaCreateWithoutRegistroInput, VTVerificacionDiariaUncheckedCreateWithoutRegistroInput> | VTVerificacionDiariaCreateWithoutRegistroInput[] | VTVerificacionDiariaUncheckedCreateWithoutRegistroInput[]
+    connectOrCreate?: VTVerificacionDiariaCreateOrConnectWithoutRegistroInput | VTVerificacionDiariaCreateOrConnectWithoutRegistroInput[]
+    createMany?: VTVerificacionDiariaCreateManyRegistroInputEnvelope
+    connect?: VTVerificacionDiariaWhereUniqueInput | VTVerificacionDiariaWhereUniqueInput[]
+  }
+
+  export type VTVerificacionSemanalCreateNestedManyWithoutRegistroInput = {
+    create?: XOR<VTVerificacionSemanalCreateWithoutRegistroInput, VTVerificacionSemanalUncheckedCreateWithoutRegistroInput> | VTVerificacionSemanalCreateWithoutRegistroInput[] | VTVerificacionSemanalUncheckedCreateWithoutRegistroInput[]
+    connectOrCreate?: VTVerificacionSemanalCreateOrConnectWithoutRegistroInput | VTVerificacionSemanalCreateOrConnectWithoutRegistroInput[]
+    createMany?: VTVerificacionSemanalCreateManyRegistroInputEnvelope
+    connect?: VTVerificacionSemanalWhereUniqueInput | VTVerificacionSemanalWhereUniqueInput[]
+  }
+
+  export type VTConfiguracionCamaraUncheckedCreateNestedManyWithoutRegistroInput = {
+    create?: XOR<VTConfiguracionCamaraCreateWithoutRegistroInput, VTConfiguracionCamaraUncheckedCreateWithoutRegistroInput> | VTConfiguracionCamaraCreateWithoutRegistroInput[] | VTConfiguracionCamaraUncheckedCreateWithoutRegistroInput[]
+    connectOrCreate?: VTConfiguracionCamaraCreateOrConnectWithoutRegistroInput | VTConfiguracionCamaraCreateOrConnectWithoutRegistroInput[]
+    createMany?: VTConfiguracionCamaraCreateManyRegistroInputEnvelope
+    connect?: VTConfiguracionCamaraWhereUniqueInput | VTConfiguracionCamaraWhereUniqueInput[]
+  }
+
+  export type VTRegistroDetalleUncheckedCreateNestedManyWithoutRegistroInput = {
+    create?: XOR<VTRegistroDetalleCreateWithoutRegistroInput, VTRegistroDetalleUncheckedCreateWithoutRegistroInput> | VTRegistroDetalleCreateWithoutRegistroInput[] | VTRegistroDetalleUncheckedCreateWithoutRegistroInput[]
+    connectOrCreate?: VTRegistroDetalleCreateOrConnectWithoutRegistroInput | VTRegistroDetalleCreateOrConnectWithoutRegistroInput[]
+    createMany?: VTRegistroDetalleCreateManyRegistroInputEnvelope
+    connect?: VTRegistroDetalleWhereUniqueInput | VTRegistroDetalleWhereUniqueInput[]
+  }
+
+  export type VTVerificacionDiariaUncheckedCreateNestedManyWithoutRegistroInput = {
+    create?: XOR<VTVerificacionDiariaCreateWithoutRegistroInput, VTVerificacionDiariaUncheckedCreateWithoutRegistroInput> | VTVerificacionDiariaCreateWithoutRegistroInput[] | VTVerificacionDiariaUncheckedCreateWithoutRegistroInput[]
+    connectOrCreate?: VTVerificacionDiariaCreateOrConnectWithoutRegistroInput | VTVerificacionDiariaCreateOrConnectWithoutRegistroInput[]
+    createMany?: VTVerificacionDiariaCreateManyRegistroInputEnvelope
+    connect?: VTVerificacionDiariaWhereUniqueInput | VTVerificacionDiariaWhereUniqueInput[]
+  }
+
+  export type VTVerificacionSemanalUncheckedCreateNestedManyWithoutRegistroInput = {
+    create?: XOR<VTVerificacionSemanalCreateWithoutRegistroInput, VTVerificacionSemanalUncheckedCreateWithoutRegistroInput> | VTVerificacionSemanalCreateWithoutRegistroInput[] | VTVerificacionSemanalUncheckedCreateWithoutRegistroInput[]
+    connectOrCreate?: VTVerificacionSemanalCreateOrConnectWithoutRegistroInput | VTVerificacionSemanalCreateOrConnectWithoutRegistroInput[]
+    createMany?: VTVerificacionSemanalCreateManyRegistroInputEnvelope
+    connect?: VTVerificacionSemanalWhereUniqueInput | VTVerificacionSemanalWhereUniqueInput[]
+  }
+
+  export type VTConfiguracionCamaraUpdateManyWithoutRegistroNestedInput = {
+    create?: XOR<VTConfiguracionCamaraCreateWithoutRegistroInput, VTConfiguracionCamaraUncheckedCreateWithoutRegistroInput> | VTConfiguracionCamaraCreateWithoutRegistroInput[] | VTConfiguracionCamaraUncheckedCreateWithoutRegistroInput[]
+    connectOrCreate?: VTConfiguracionCamaraCreateOrConnectWithoutRegistroInput | VTConfiguracionCamaraCreateOrConnectWithoutRegistroInput[]
+    upsert?: VTConfiguracionCamaraUpsertWithWhereUniqueWithoutRegistroInput | VTConfiguracionCamaraUpsertWithWhereUniqueWithoutRegistroInput[]
+    createMany?: VTConfiguracionCamaraCreateManyRegistroInputEnvelope
+    set?: VTConfiguracionCamaraWhereUniqueInput | VTConfiguracionCamaraWhereUniqueInput[]
+    disconnect?: VTConfiguracionCamaraWhereUniqueInput | VTConfiguracionCamaraWhereUniqueInput[]
+    delete?: VTConfiguracionCamaraWhereUniqueInput | VTConfiguracionCamaraWhereUniqueInput[]
+    connect?: VTConfiguracionCamaraWhereUniqueInput | VTConfiguracionCamaraWhereUniqueInput[]
+    update?: VTConfiguracionCamaraUpdateWithWhereUniqueWithoutRegistroInput | VTConfiguracionCamaraUpdateWithWhereUniqueWithoutRegistroInput[]
+    updateMany?: VTConfiguracionCamaraUpdateManyWithWhereWithoutRegistroInput | VTConfiguracionCamaraUpdateManyWithWhereWithoutRegistroInput[]
+    deleteMany?: VTConfiguracionCamaraScalarWhereInput | VTConfiguracionCamaraScalarWhereInput[]
+  }
+
+  export type VTRegistroDetalleUpdateManyWithoutRegistroNestedInput = {
+    create?: XOR<VTRegistroDetalleCreateWithoutRegistroInput, VTRegistroDetalleUncheckedCreateWithoutRegistroInput> | VTRegistroDetalleCreateWithoutRegistroInput[] | VTRegistroDetalleUncheckedCreateWithoutRegistroInput[]
+    connectOrCreate?: VTRegistroDetalleCreateOrConnectWithoutRegistroInput | VTRegistroDetalleCreateOrConnectWithoutRegistroInput[]
+    upsert?: VTRegistroDetalleUpsertWithWhereUniqueWithoutRegistroInput | VTRegistroDetalleUpsertWithWhereUniqueWithoutRegistroInput[]
+    createMany?: VTRegistroDetalleCreateManyRegistroInputEnvelope
+    set?: VTRegistroDetalleWhereUniqueInput | VTRegistroDetalleWhereUniqueInput[]
+    disconnect?: VTRegistroDetalleWhereUniqueInput | VTRegistroDetalleWhereUniqueInput[]
+    delete?: VTRegistroDetalleWhereUniqueInput | VTRegistroDetalleWhereUniqueInput[]
+    connect?: VTRegistroDetalleWhereUniqueInput | VTRegistroDetalleWhereUniqueInput[]
+    update?: VTRegistroDetalleUpdateWithWhereUniqueWithoutRegistroInput | VTRegistroDetalleUpdateWithWhereUniqueWithoutRegistroInput[]
+    updateMany?: VTRegistroDetalleUpdateManyWithWhereWithoutRegistroInput | VTRegistroDetalleUpdateManyWithWhereWithoutRegistroInput[]
+    deleteMany?: VTRegistroDetalleScalarWhereInput | VTRegistroDetalleScalarWhereInput[]
+  }
+
+  export type VTVerificacionDiariaUpdateManyWithoutRegistroNestedInput = {
+    create?: XOR<VTVerificacionDiariaCreateWithoutRegistroInput, VTVerificacionDiariaUncheckedCreateWithoutRegistroInput> | VTVerificacionDiariaCreateWithoutRegistroInput[] | VTVerificacionDiariaUncheckedCreateWithoutRegistroInput[]
+    connectOrCreate?: VTVerificacionDiariaCreateOrConnectWithoutRegistroInput | VTVerificacionDiariaCreateOrConnectWithoutRegistroInput[]
+    upsert?: VTVerificacionDiariaUpsertWithWhereUniqueWithoutRegistroInput | VTVerificacionDiariaUpsertWithWhereUniqueWithoutRegistroInput[]
+    createMany?: VTVerificacionDiariaCreateManyRegistroInputEnvelope
+    set?: VTVerificacionDiariaWhereUniqueInput | VTVerificacionDiariaWhereUniqueInput[]
+    disconnect?: VTVerificacionDiariaWhereUniqueInput | VTVerificacionDiariaWhereUniqueInput[]
+    delete?: VTVerificacionDiariaWhereUniqueInput | VTVerificacionDiariaWhereUniqueInput[]
+    connect?: VTVerificacionDiariaWhereUniqueInput | VTVerificacionDiariaWhereUniqueInput[]
+    update?: VTVerificacionDiariaUpdateWithWhereUniqueWithoutRegistroInput | VTVerificacionDiariaUpdateWithWhereUniqueWithoutRegistroInput[]
+    updateMany?: VTVerificacionDiariaUpdateManyWithWhereWithoutRegistroInput | VTVerificacionDiariaUpdateManyWithWhereWithoutRegistroInput[]
+    deleteMany?: VTVerificacionDiariaScalarWhereInput | VTVerificacionDiariaScalarWhereInput[]
+  }
+
+  export type VTVerificacionSemanalUpdateManyWithoutRegistroNestedInput = {
+    create?: XOR<VTVerificacionSemanalCreateWithoutRegistroInput, VTVerificacionSemanalUncheckedCreateWithoutRegistroInput> | VTVerificacionSemanalCreateWithoutRegistroInput[] | VTVerificacionSemanalUncheckedCreateWithoutRegistroInput[]
+    connectOrCreate?: VTVerificacionSemanalCreateOrConnectWithoutRegistroInput | VTVerificacionSemanalCreateOrConnectWithoutRegistroInput[]
+    upsert?: VTVerificacionSemanalUpsertWithWhereUniqueWithoutRegistroInput | VTVerificacionSemanalUpsertWithWhereUniqueWithoutRegistroInput[]
+    createMany?: VTVerificacionSemanalCreateManyRegistroInputEnvelope
+    set?: VTVerificacionSemanalWhereUniqueInput | VTVerificacionSemanalWhereUniqueInput[]
+    disconnect?: VTVerificacionSemanalWhereUniqueInput | VTVerificacionSemanalWhereUniqueInput[]
+    delete?: VTVerificacionSemanalWhereUniqueInput | VTVerificacionSemanalWhereUniqueInput[]
+    connect?: VTVerificacionSemanalWhereUniqueInput | VTVerificacionSemanalWhereUniqueInput[]
+    update?: VTVerificacionSemanalUpdateWithWhereUniqueWithoutRegistroInput | VTVerificacionSemanalUpdateWithWhereUniqueWithoutRegistroInput[]
+    updateMany?: VTVerificacionSemanalUpdateManyWithWhereWithoutRegistroInput | VTVerificacionSemanalUpdateManyWithWhereWithoutRegistroInput[]
+    deleteMany?: VTVerificacionSemanalScalarWhereInput | VTVerificacionSemanalScalarWhereInput[]
+  }
+
+  export type VTConfiguracionCamaraUncheckedUpdateManyWithoutRegistroNestedInput = {
+    create?: XOR<VTConfiguracionCamaraCreateWithoutRegistroInput, VTConfiguracionCamaraUncheckedCreateWithoutRegistroInput> | VTConfiguracionCamaraCreateWithoutRegistroInput[] | VTConfiguracionCamaraUncheckedCreateWithoutRegistroInput[]
+    connectOrCreate?: VTConfiguracionCamaraCreateOrConnectWithoutRegistroInput | VTConfiguracionCamaraCreateOrConnectWithoutRegistroInput[]
+    upsert?: VTConfiguracionCamaraUpsertWithWhereUniqueWithoutRegistroInput | VTConfiguracionCamaraUpsertWithWhereUniqueWithoutRegistroInput[]
+    createMany?: VTConfiguracionCamaraCreateManyRegistroInputEnvelope
+    set?: VTConfiguracionCamaraWhereUniqueInput | VTConfiguracionCamaraWhereUniqueInput[]
+    disconnect?: VTConfiguracionCamaraWhereUniqueInput | VTConfiguracionCamaraWhereUniqueInput[]
+    delete?: VTConfiguracionCamaraWhereUniqueInput | VTConfiguracionCamaraWhereUniqueInput[]
+    connect?: VTConfiguracionCamaraWhereUniqueInput | VTConfiguracionCamaraWhereUniqueInput[]
+    update?: VTConfiguracionCamaraUpdateWithWhereUniqueWithoutRegistroInput | VTConfiguracionCamaraUpdateWithWhereUniqueWithoutRegistroInput[]
+    updateMany?: VTConfiguracionCamaraUpdateManyWithWhereWithoutRegistroInput | VTConfiguracionCamaraUpdateManyWithWhereWithoutRegistroInput[]
+    deleteMany?: VTConfiguracionCamaraScalarWhereInput | VTConfiguracionCamaraScalarWhereInput[]
+  }
+
+  export type VTRegistroDetalleUncheckedUpdateManyWithoutRegistroNestedInput = {
+    create?: XOR<VTRegistroDetalleCreateWithoutRegistroInput, VTRegistroDetalleUncheckedCreateWithoutRegistroInput> | VTRegistroDetalleCreateWithoutRegistroInput[] | VTRegistroDetalleUncheckedCreateWithoutRegistroInput[]
+    connectOrCreate?: VTRegistroDetalleCreateOrConnectWithoutRegistroInput | VTRegistroDetalleCreateOrConnectWithoutRegistroInput[]
+    upsert?: VTRegistroDetalleUpsertWithWhereUniqueWithoutRegistroInput | VTRegistroDetalleUpsertWithWhereUniqueWithoutRegistroInput[]
+    createMany?: VTRegistroDetalleCreateManyRegistroInputEnvelope
+    set?: VTRegistroDetalleWhereUniqueInput | VTRegistroDetalleWhereUniqueInput[]
+    disconnect?: VTRegistroDetalleWhereUniqueInput | VTRegistroDetalleWhereUniqueInput[]
+    delete?: VTRegistroDetalleWhereUniqueInput | VTRegistroDetalleWhereUniqueInput[]
+    connect?: VTRegistroDetalleWhereUniqueInput | VTRegistroDetalleWhereUniqueInput[]
+    update?: VTRegistroDetalleUpdateWithWhereUniqueWithoutRegistroInput | VTRegistroDetalleUpdateWithWhereUniqueWithoutRegistroInput[]
+    updateMany?: VTRegistroDetalleUpdateManyWithWhereWithoutRegistroInput | VTRegistroDetalleUpdateManyWithWhereWithoutRegistroInput[]
+    deleteMany?: VTRegistroDetalleScalarWhereInput | VTRegistroDetalleScalarWhereInput[]
+  }
+
+  export type VTVerificacionDiariaUncheckedUpdateManyWithoutRegistroNestedInput = {
+    create?: XOR<VTVerificacionDiariaCreateWithoutRegistroInput, VTVerificacionDiariaUncheckedCreateWithoutRegistroInput> | VTVerificacionDiariaCreateWithoutRegistroInput[] | VTVerificacionDiariaUncheckedCreateWithoutRegistroInput[]
+    connectOrCreate?: VTVerificacionDiariaCreateOrConnectWithoutRegistroInput | VTVerificacionDiariaCreateOrConnectWithoutRegistroInput[]
+    upsert?: VTVerificacionDiariaUpsertWithWhereUniqueWithoutRegistroInput | VTVerificacionDiariaUpsertWithWhereUniqueWithoutRegistroInput[]
+    createMany?: VTVerificacionDiariaCreateManyRegistroInputEnvelope
+    set?: VTVerificacionDiariaWhereUniqueInput | VTVerificacionDiariaWhereUniqueInput[]
+    disconnect?: VTVerificacionDiariaWhereUniqueInput | VTVerificacionDiariaWhereUniqueInput[]
+    delete?: VTVerificacionDiariaWhereUniqueInput | VTVerificacionDiariaWhereUniqueInput[]
+    connect?: VTVerificacionDiariaWhereUniqueInput | VTVerificacionDiariaWhereUniqueInput[]
+    update?: VTVerificacionDiariaUpdateWithWhereUniqueWithoutRegistroInput | VTVerificacionDiariaUpdateWithWhereUniqueWithoutRegistroInput[]
+    updateMany?: VTVerificacionDiariaUpdateManyWithWhereWithoutRegistroInput | VTVerificacionDiariaUpdateManyWithWhereWithoutRegistroInput[]
+    deleteMany?: VTVerificacionDiariaScalarWhereInput | VTVerificacionDiariaScalarWhereInput[]
+  }
+
+  export type VTVerificacionSemanalUncheckedUpdateManyWithoutRegistroNestedInput = {
+    create?: XOR<VTVerificacionSemanalCreateWithoutRegistroInput, VTVerificacionSemanalUncheckedCreateWithoutRegistroInput> | VTVerificacionSemanalCreateWithoutRegistroInput[] | VTVerificacionSemanalUncheckedCreateWithoutRegistroInput[]
+    connectOrCreate?: VTVerificacionSemanalCreateOrConnectWithoutRegistroInput | VTVerificacionSemanalCreateOrConnectWithoutRegistroInput[]
+    upsert?: VTVerificacionSemanalUpsertWithWhereUniqueWithoutRegistroInput | VTVerificacionSemanalUpsertWithWhereUniqueWithoutRegistroInput[]
+    createMany?: VTVerificacionSemanalCreateManyRegistroInputEnvelope
+    set?: VTVerificacionSemanalWhereUniqueInput | VTVerificacionSemanalWhereUniqueInput[]
+    disconnect?: VTVerificacionSemanalWhereUniqueInput | VTVerificacionSemanalWhereUniqueInput[]
+    delete?: VTVerificacionSemanalWhereUniqueInput | VTVerificacionSemanalWhereUniqueInput[]
+    connect?: VTVerificacionSemanalWhereUniqueInput | VTVerificacionSemanalWhereUniqueInput[]
+    update?: VTVerificacionSemanalUpdateWithWhereUniqueWithoutRegistroInput | VTVerificacionSemanalUpdateWithWhereUniqueWithoutRegistroInput[]
+    updateMany?: VTVerificacionSemanalUpdateManyWithWhereWithoutRegistroInput | VTVerificacionSemanalUpdateManyWithWhereWithoutRegistroInput[]
+    deleteMany?: VTVerificacionSemanalScalarWhereInput | VTVerificacionSemanalScalarWhereInput[]
+  }
+
+  export type VTRegistroCabeceraCreateNestedOneWithoutDetallesInput = {
+    create?: XOR<VTRegistroCabeceraCreateWithoutDetallesInput, VTRegistroCabeceraUncheckedCreateWithoutDetallesInput>
+    connectOrCreate?: VTRegistroCabeceraCreateOrConnectWithoutDetallesInput
+    connect?: VTRegistroCabeceraWhereUniqueInput
+  }
+
+  export type VTRegistroCabeceraUpdateOneRequiredWithoutDetallesNestedInput = {
+    create?: XOR<VTRegistroCabeceraCreateWithoutDetallesInput, VTRegistroCabeceraUncheckedCreateWithoutDetallesInput>
+    connectOrCreate?: VTRegistroCabeceraCreateOrConnectWithoutDetallesInput
+    upsert?: VTRegistroCabeceraUpsertWithoutDetallesInput
+    connect?: VTRegistroCabeceraWhereUniqueInput
+    update?: XOR<XOR<VTRegistroCabeceraUpdateToOneWithWhereWithoutDetallesInput, VTRegistroCabeceraUpdateWithoutDetallesInput>, VTRegistroCabeceraUncheckedUpdateWithoutDetallesInput>
+  }
+
+  export type VTRegistroCabeceraCreateNestedOneWithoutVerificacionesDiariasInput = {
+    create?: XOR<VTRegistroCabeceraCreateWithoutVerificacionesDiariasInput, VTRegistroCabeceraUncheckedCreateWithoutVerificacionesDiariasInput>
+    connectOrCreate?: VTRegistroCabeceraCreateOrConnectWithoutVerificacionesDiariasInput
+    connect?: VTRegistroCabeceraWhereUniqueInput
+  }
+
+  export type VTRegistroCabeceraUpdateOneRequiredWithoutVerificacionesDiariasNestedInput = {
+    create?: XOR<VTRegistroCabeceraCreateWithoutVerificacionesDiariasInput, VTRegistroCabeceraUncheckedCreateWithoutVerificacionesDiariasInput>
+    connectOrCreate?: VTRegistroCabeceraCreateOrConnectWithoutVerificacionesDiariasInput
+    upsert?: VTRegistroCabeceraUpsertWithoutVerificacionesDiariasInput
+    connect?: VTRegistroCabeceraWhereUniqueInput
+    update?: XOR<XOR<VTRegistroCabeceraUpdateToOneWithWhereWithoutVerificacionesDiariasInput, VTRegistroCabeceraUpdateWithoutVerificacionesDiariasInput>, VTRegistroCabeceraUncheckedUpdateWithoutVerificacionesDiariasInput>
+  }
+
+  export type VTRegistroCabeceraCreateNestedOneWithoutVerificacionesSemanalesInput = {
+    create?: XOR<VTRegistroCabeceraCreateWithoutVerificacionesSemanalesInput, VTRegistroCabeceraUncheckedCreateWithoutVerificacionesSemanalesInput>
+    connectOrCreate?: VTRegistroCabeceraCreateOrConnectWithoutVerificacionesSemanalesInput
+    connect?: VTRegistroCabeceraWhereUniqueInput
+  }
+
+  export type VTRegistroCabeceraUpdateOneRequiredWithoutVerificacionesSemanalesNestedInput = {
+    create?: XOR<VTRegistroCabeceraCreateWithoutVerificacionesSemanalesInput, VTRegistroCabeceraUncheckedCreateWithoutVerificacionesSemanalesInput>
+    connectOrCreate?: VTRegistroCabeceraCreateOrConnectWithoutVerificacionesSemanalesInput
+    upsert?: VTRegistroCabeceraUpsertWithoutVerificacionesSemanalesInput
+    connect?: VTRegistroCabeceraWhereUniqueInput
+    update?: XOR<XOR<VTRegistroCabeceraUpdateToOneWithWhereWithoutVerificacionesSemanalesInput, VTRegistroCabeceraUpdateWithoutVerificacionesSemanalesInput>, VTRegistroCabeceraUncheckedUpdateWithoutVerificacionesSemanalesInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -108766,6 +122110,62 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ActaSupervisionPlantillaCreateWithoutLicitacionInput = {
+    id?: string
+    nombre: string
+    anio?: number
+    instituciones?: string | null
+    rolesPerfiles?: string | null
+    estado?: boolean
+    logoUrl?: string | null
+    instrucciones?: string | null
+    campos: string
+    codigo?: string | null
+    version?: string | null
+    fecha?: string | null
+    codigoAdicional?: string | null
+    mostrarCodigoAdicional?: boolean
+    correlativoAutomatico?: boolean
+    mostrarCodigoVersionFecha?: boolean
+    createdBy: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    respuestas?: ActaSupervisionRespuestaCreateNestedManyWithoutPlantillaInput
+  }
+
+  export type ActaSupervisionPlantillaUncheckedCreateWithoutLicitacionInput = {
+    id?: string
+    nombre: string
+    anio?: number
+    instituciones?: string | null
+    rolesPerfiles?: string | null
+    estado?: boolean
+    logoUrl?: string | null
+    instrucciones?: string | null
+    campos: string
+    codigo?: string | null
+    version?: string | null
+    fecha?: string | null
+    codigoAdicional?: string | null
+    mostrarCodigoAdicional?: boolean
+    correlativoAutomatico?: boolean
+    mostrarCodigoVersionFecha?: boolean
+    createdBy: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    respuestas?: ActaSupervisionRespuestaUncheckedCreateNestedManyWithoutPlantillaInput
+  }
+
+  export type ActaSupervisionPlantillaCreateOrConnectWithoutLicitacionInput = {
+    where: ActaSupervisionPlantillaWhereUniqueInput
+    create: XOR<ActaSupervisionPlantillaCreateWithoutLicitacionInput, ActaSupervisionPlantillaUncheckedCreateWithoutLicitacionInput>
+  }
+
+  export type ActaSupervisionPlantillaCreateManyLicitacionInputEnvelope = {
+    data: ActaSupervisionPlantillaCreateManyLicitacionInput | ActaSupervisionPlantillaCreateManyLicitacionInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UTUpsertWithWhereUniqueWithoutLicitacionInput = {
     where: UTWhereUniqueInput
     update: XOR<UTUpdateWithoutLicitacionInput, UTUncheckedUpdateWithoutLicitacionInput>
@@ -108910,6 +122310,48 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"MatrizT_Cabecera"> | Date | string
   }
 
+  export type ActaSupervisionPlantillaUpsertWithWhereUniqueWithoutLicitacionInput = {
+    where: ActaSupervisionPlantillaWhereUniqueInput
+    update: XOR<ActaSupervisionPlantillaUpdateWithoutLicitacionInput, ActaSupervisionPlantillaUncheckedUpdateWithoutLicitacionInput>
+    create: XOR<ActaSupervisionPlantillaCreateWithoutLicitacionInput, ActaSupervisionPlantillaUncheckedCreateWithoutLicitacionInput>
+  }
+
+  export type ActaSupervisionPlantillaUpdateWithWhereUniqueWithoutLicitacionInput = {
+    where: ActaSupervisionPlantillaWhereUniqueInput
+    data: XOR<ActaSupervisionPlantillaUpdateWithoutLicitacionInput, ActaSupervisionPlantillaUncheckedUpdateWithoutLicitacionInput>
+  }
+
+  export type ActaSupervisionPlantillaUpdateManyWithWhereWithoutLicitacionInput = {
+    where: ActaSupervisionPlantillaScalarWhereInput
+    data: XOR<ActaSupervisionPlantillaUpdateManyMutationInput, ActaSupervisionPlantillaUncheckedUpdateManyWithoutLicitacionInput>
+  }
+
+  export type ActaSupervisionPlantillaScalarWhereInput = {
+    AND?: ActaSupervisionPlantillaScalarWhereInput | ActaSupervisionPlantillaScalarWhereInput[]
+    OR?: ActaSupervisionPlantillaScalarWhereInput[]
+    NOT?: ActaSupervisionPlantillaScalarWhereInput | ActaSupervisionPlantillaScalarWhereInput[]
+    id?: StringFilter<"ActaSupervisionPlantilla"> | string
+    nombre?: StringFilter<"ActaSupervisionPlantilla"> | string
+    licitacionId?: IntNullableFilter<"ActaSupervisionPlantilla"> | number | null
+    anio?: IntFilter<"ActaSupervisionPlantilla"> | number
+    instituciones?: StringNullableFilter<"ActaSupervisionPlantilla"> | string | null
+    rolesPerfiles?: StringNullableFilter<"ActaSupervisionPlantilla"> | string | null
+    estado?: BoolFilter<"ActaSupervisionPlantilla"> | boolean
+    logoUrl?: StringNullableFilter<"ActaSupervisionPlantilla"> | string | null
+    instrucciones?: StringNullableFilter<"ActaSupervisionPlantilla"> | string | null
+    campos?: StringFilter<"ActaSupervisionPlantilla"> | string
+    codigo?: StringNullableFilter<"ActaSupervisionPlantilla"> | string | null
+    version?: StringNullableFilter<"ActaSupervisionPlantilla"> | string | null
+    fecha?: StringNullableFilter<"ActaSupervisionPlantilla"> | string | null
+    codigoAdicional?: StringNullableFilter<"ActaSupervisionPlantilla"> | string | null
+    mostrarCodigoAdicional?: BoolFilter<"ActaSupervisionPlantilla"> | boolean
+    correlativoAutomatico?: BoolFilter<"ActaSupervisionPlantilla"> | boolean
+    mostrarCodigoVersionFecha?: BoolFilter<"ActaSupervisionPlantilla"> | boolean
+    createdBy?: StringFilter<"ActaSupervisionPlantilla"> | string
+    createdAt?: DateTimeFilter<"ActaSupervisionPlantilla"> | Date | string
+    updatedAt?: DateTimeFilter<"ActaSupervisionPlantilla"> | Date | string
+  }
+
   export type LicitacionCreateWithoutAspectosEEInput = {
     licitacionHomologada?: string | null
     estado?: number
@@ -108919,6 +122361,7 @@ export namespace Prisma {
     jefesZonales?: JefeZonalLicitacionCreateNestedManyWithoutLicitacionInput
     vehiculos?: VehiculoCreateNestedManyWithoutLicitacionInput
     matrices?: MatrizT_CabeceraCreateNestedManyWithoutLicitacionInput
+    actasPlantillas?: ActaSupervisionPlantillaCreateNestedManyWithoutLicitacionInput
   }
 
   export type LicitacionUncheckedCreateWithoutAspectosEEInput = {
@@ -108931,6 +122374,7 @@ export namespace Prisma {
     jefesZonales?: JefeZonalLicitacionUncheckedCreateNestedManyWithoutLicitacionInput
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutLicitacionInput
     matrices?: MatrizT_CabeceraUncheckedCreateNestedManyWithoutLicitacionInput
+    actasPlantillas?: ActaSupervisionPlantillaUncheckedCreateNestedManyWithoutLicitacionInput
   }
 
   export type LicitacionCreateOrConnectWithoutAspectosEEInput = {
@@ -108958,6 +122402,7 @@ export namespace Prisma {
     jefesZonales?: JefeZonalLicitacionUpdateManyWithoutLicitacionNestedInput
     vehiculos?: VehiculoUpdateManyWithoutLicitacionNestedInput
     matrices?: MatrizT_CabeceraUpdateManyWithoutLicitacionNestedInput
+    actasPlantillas?: ActaSupervisionPlantillaUpdateManyWithoutLicitacionNestedInput
   }
 
   export type LicitacionUncheckedUpdateWithoutAspectosEEInput = {
@@ -108970,6 +122415,7 @@ export namespace Prisma {
     jefesZonales?: JefeZonalLicitacionUncheckedUpdateManyWithoutLicitacionNestedInput
     vehiculos?: VehiculoUncheckedUpdateManyWithoutLicitacionNestedInput
     matrices?: MatrizT_CabeceraUncheckedUpdateManyWithoutLicitacionNestedInput
+    actasPlantillas?: ActaSupervisionPlantillaUncheckedUpdateManyWithoutLicitacionNestedInput
   }
 
   export type ListaCorreoCreateWithoutSucursalInput = {
@@ -109539,6 +122985,7 @@ export namespace Prisma {
     jefesZonales?: JefeZonalLicitacionCreateNestedManyWithoutLicitacionInput
     vehiculos?: VehiculoCreateNestedManyWithoutLicitacionInput
     matrices?: MatrizT_CabeceraCreateNestedManyWithoutLicitacionInput
+    actasPlantillas?: ActaSupervisionPlantillaCreateNestedManyWithoutLicitacionInput
   }
 
   export type LicitacionUncheckedCreateWithoutUtsInput = {
@@ -109551,6 +122998,7 @@ export namespace Prisma {
     jefesZonales?: JefeZonalLicitacionUncheckedCreateNestedManyWithoutLicitacionInput
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutLicitacionInput
     matrices?: MatrizT_CabeceraUncheckedCreateNestedManyWithoutLicitacionInput
+    actasPlantillas?: ActaSupervisionPlantillaUncheckedCreateNestedManyWithoutLicitacionInput
   }
 
   export type LicitacionCreateOrConnectWithoutUtsInput = {
@@ -109703,6 +123151,7 @@ export namespace Prisma {
     jefesZonales?: JefeZonalLicitacionUpdateManyWithoutLicitacionNestedInput
     vehiculos?: VehiculoUpdateManyWithoutLicitacionNestedInput
     matrices?: MatrizT_CabeceraUpdateManyWithoutLicitacionNestedInput
+    actasPlantillas?: ActaSupervisionPlantillaUpdateManyWithoutLicitacionNestedInput
   }
 
   export type LicitacionUncheckedUpdateWithoutUtsInput = {
@@ -109715,6 +123164,7 @@ export namespace Prisma {
     jefesZonales?: JefeZonalLicitacionUncheckedUpdateManyWithoutLicitacionNestedInput
     vehiculos?: VehiculoUncheckedUpdateManyWithoutLicitacionNestedInput
     matrices?: MatrizT_CabeceraUncheckedUpdateManyWithoutLicitacionNestedInput
+    actasPlantillas?: ActaSupervisionPlantillaUncheckedUpdateManyWithoutLicitacionNestedInput
   }
 
   export type SucursalUpsertWithoutUtsInput = {
@@ -111735,6 +125185,7 @@ export namespace Prisma {
     aspectosEE?: AspectoEECreateNestedManyWithoutLicitacionInput
     jefesZonales?: JefeZonalLicitacionCreateNestedManyWithoutLicitacionInput
     matrices?: MatrizT_CabeceraCreateNestedManyWithoutLicitacionInput
+    actasPlantillas?: ActaSupervisionPlantillaCreateNestedManyWithoutLicitacionInput
   }
 
   export type LicitacionUncheckedCreateWithoutVehiculosInput = {
@@ -111747,6 +125198,7 @@ export namespace Prisma {
     aspectosEE?: AspectoEEUncheckedCreateNestedManyWithoutLicitacionInput
     jefesZonales?: JefeZonalLicitacionUncheckedCreateNestedManyWithoutLicitacionInput
     matrices?: MatrizT_CabeceraUncheckedCreateNestedManyWithoutLicitacionInput
+    actasPlantillas?: ActaSupervisionPlantillaUncheckedCreateNestedManyWithoutLicitacionInput
   }
 
   export type LicitacionCreateOrConnectWithoutVehiculosInput = {
@@ -111930,6 +125382,7 @@ export namespace Prisma {
     aspectosEE?: AspectoEEUpdateManyWithoutLicitacionNestedInput
     jefesZonales?: JefeZonalLicitacionUpdateManyWithoutLicitacionNestedInput
     matrices?: MatrizT_CabeceraUpdateManyWithoutLicitacionNestedInput
+    actasPlantillas?: ActaSupervisionPlantillaUpdateManyWithoutLicitacionNestedInput
   }
 
   export type LicitacionUncheckedUpdateWithoutVehiculosInput = {
@@ -111942,6 +125395,7 @@ export namespace Prisma {
     aspectosEE?: AspectoEEUncheckedUpdateManyWithoutLicitacionNestedInput
     jefesZonales?: JefeZonalLicitacionUncheckedUpdateManyWithoutLicitacionNestedInput
     matrices?: MatrizT_CabeceraUncheckedUpdateManyWithoutLicitacionNestedInput
+    actasPlantillas?: ActaSupervisionPlantillaUncheckedUpdateManyWithoutLicitacionNestedInput
   }
 
   export type SupervisorVehiculoUpsertWithWhereUniqueWithoutVehiculoInput = {
@@ -112291,6 +125745,7 @@ export namespace Prisma {
     aspectosEE?: AspectoEECreateNestedManyWithoutLicitacionInput
     vehiculos?: VehiculoCreateNestedManyWithoutLicitacionInput
     matrices?: MatrizT_CabeceraCreateNestedManyWithoutLicitacionInput
+    actasPlantillas?: ActaSupervisionPlantillaCreateNestedManyWithoutLicitacionInput
   }
 
   export type LicitacionUncheckedCreateWithoutJefesZonalesInput = {
@@ -112303,6 +125758,7 @@ export namespace Prisma {
     aspectosEE?: AspectoEEUncheckedCreateNestedManyWithoutLicitacionInput
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutLicitacionInput
     matrices?: MatrizT_CabeceraUncheckedCreateNestedManyWithoutLicitacionInput
+    actasPlantillas?: ActaSupervisionPlantillaUncheckedCreateNestedManyWithoutLicitacionInput
   }
 
   export type LicitacionCreateOrConnectWithoutJefesZonalesInput = {
@@ -112369,6 +125825,7 @@ export namespace Prisma {
     aspectosEE?: AspectoEEUpdateManyWithoutLicitacionNestedInput
     vehiculos?: VehiculoUpdateManyWithoutLicitacionNestedInput
     matrices?: MatrizT_CabeceraUpdateManyWithoutLicitacionNestedInput
+    actasPlantillas?: ActaSupervisionPlantillaUpdateManyWithoutLicitacionNestedInput
   }
 
   export type LicitacionUncheckedUpdateWithoutJefesZonalesInput = {
@@ -112381,6 +125838,7 @@ export namespace Prisma {
     aspectosEE?: AspectoEEUncheckedUpdateManyWithoutLicitacionNestedInput
     vehiculos?: VehiculoUncheckedUpdateManyWithoutLicitacionNestedInput
     matrices?: MatrizT_CabeceraUncheckedUpdateManyWithoutLicitacionNestedInput
+    actasPlantillas?: ActaSupervisionPlantillaUncheckedUpdateManyWithoutLicitacionNestedInput
   }
 
   export type JefeZonalCreateWithoutSucursalesInput = {
@@ -113572,6 +127030,7 @@ export namespace Prisma {
     aspectosEE?: AspectoEECreateNestedManyWithoutLicitacionInput
     jefesZonales?: JefeZonalLicitacionCreateNestedManyWithoutLicitacionInput
     vehiculos?: VehiculoCreateNestedManyWithoutLicitacionInput
+    actasPlantillas?: ActaSupervisionPlantillaCreateNestedManyWithoutLicitacionInput
   }
 
   export type LicitacionUncheckedCreateWithoutMatricesInput = {
@@ -113584,6 +127043,7 @@ export namespace Prisma {
     aspectosEE?: AspectoEEUncheckedCreateNestedManyWithoutLicitacionInput
     jefesZonales?: JefeZonalLicitacionUncheckedCreateNestedManyWithoutLicitacionInput
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutLicitacionInput
+    actasPlantillas?: ActaSupervisionPlantillaUncheckedCreateNestedManyWithoutLicitacionInput
   }
 
   export type LicitacionCreateOrConnectWithoutMatricesInput = {
@@ -113755,6 +127215,7 @@ export namespace Prisma {
     aspectosEE?: AspectoEEUpdateManyWithoutLicitacionNestedInput
     jefesZonales?: JefeZonalLicitacionUpdateManyWithoutLicitacionNestedInput
     vehiculos?: VehiculoUpdateManyWithoutLicitacionNestedInput
+    actasPlantillas?: ActaSupervisionPlantillaUpdateManyWithoutLicitacionNestedInput
   }
 
   export type LicitacionUncheckedUpdateWithoutMatricesInput = {
@@ -113767,6 +127228,7 @@ export namespace Prisma {
     aspectosEE?: AspectoEEUncheckedUpdateManyWithoutLicitacionNestedInput
     jefesZonales?: JefeZonalLicitacionUncheckedUpdateManyWithoutLicitacionNestedInput
     vehiculos?: VehiculoUncheckedUpdateManyWithoutLicitacionNestedInput
+    actasPlantillas?: ActaSupervisionPlantillaUncheckedUpdateManyWithoutLicitacionNestedInput
   }
 
   export type MatrizT_DetalleUpsertWithWhereUniqueWithoutCabeceraInput = {
@@ -114567,6 +128029,962 @@ export namespace Prisma {
     vehiculos?: VehiculoUncheckedUpdateManyWithoutSucursalNestedInput
   }
 
+  export type LicitacionCreateWithoutActasPlantillasInput = {
+    licitacionHomologada?: string | null
+    estado?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    uts?: UTCreateNestedManyWithoutLicitacionInput
+    aspectosEE?: AspectoEECreateNestedManyWithoutLicitacionInput
+    jefesZonales?: JefeZonalLicitacionCreateNestedManyWithoutLicitacionInput
+    vehiculos?: VehiculoCreateNestedManyWithoutLicitacionInput
+    matrices?: MatrizT_CabeceraCreateNestedManyWithoutLicitacionInput
+  }
+
+  export type LicitacionUncheckedCreateWithoutActasPlantillasInput = {
+    licId?: number
+    licitacionHomologada?: string | null
+    estado?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    uts?: UTUncheckedCreateNestedManyWithoutLicitacionInput
+    aspectosEE?: AspectoEEUncheckedCreateNestedManyWithoutLicitacionInput
+    jefesZonales?: JefeZonalLicitacionUncheckedCreateNestedManyWithoutLicitacionInput
+    vehiculos?: VehiculoUncheckedCreateNestedManyWithoutLicitacionInput
+    matrices?: MatrizT_CabeceraUncheckedCreateNestedManyWithoutLicitacionInput
+  }
+
+  export type LicitacionCreateOrConnectWithoutActasPlantillasInput = {
+    where: LicitacionWhereUniqueInput
+    create: XOR<LicitacionCreateWithoutActasPlantillasInput, LicitacionUncheckedCreateWithoutActasPlantillasInput>
+  }
+
+  export type ActaSupervisionRespuestaCreateWithoutPlantillaInput = {
+    id?: string
+    licitacionId?: number | null
+    anio?: number | null
+    rbd: number
+    nombreEstablecimiento?: string | null
+    direccion?: string | null
+    ciudad?: string | null
+    institucion?: string | null
+    sucursal?: string | null
+    fechaCreacion?: Date | string
+    supervisorNombre?: string | null
+    supervisorRut?: string | null
+    respuestasData: string
+    estado?: string
+    usuario: string
+    correlativo?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ActaSupervisionRespuestaUncheckedCreateWithoutPlantillaInput = {
+    id?: string
+    licitacionId?: number | null
+    anio?: number | null
+    rbd: number
+    nombreEstablecimiento?: string | null
+    direccion?: string | null
+    ciudad?: string | null
+    institucion?: string | null
+    sucursal?: string | null
+    fechaCreacion?: Date | string
+    supervisorNombre?: string | null
+    supervisorRut?: string | null
+    respuestasData: string
+    estado?: string
+    usuario: string
+    correlativo?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ActaSupervisionRespuestaCreateOrConnectWithoutPlantillaInput = {
+    where: ActaSupervisionRespuestaWhereUniqueInput
+    create: XOR<ActaSupervisionRespuestaCreateWithoutPlantillaInput, ActaSupervisionRespuestaUncheckedCreateWithoutPlantillaInput>
+  }
+
+  export type ActaSupervisionRespuestaCreateManyPlantillaInputEnvelope = {
+    data: ActaSupervisionRespuestaCreateManyPlantillaInput | ActaSupervisionRespuestaCreateManyPlantillaInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LicitacionUpsertWithoutActasPlantillasInput = {
+    update: XOR<LicitacionUpdateWithoutActasPlantillasInput, LicitacionUncheckedUpdateWithoutActasPlantillasInput>
+    create: XOR<LicitacionCreateWithoutActasPlantillasInput, LicitacionUncheckedCreateWithoutActasPlantillasInput>
+    where?: LicitacionWhereInput
+  }
+
+  export type LicitacionUpdateToOneWithWhereWithoutActasPlantillasInput = {
+    where?: LicitacionWhereInput
+    data: XOR<LicitacionUpdateWithoutActasPlantillasInput, LicitacionUncheckedUpdateWithoutActasPlantillasInput>
+  }
+
+  export type LicitacionUpdateWithoutActasPlantillasInput = {
+    licitacionHomologada?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uts?: UTUpdateManyWithoutLicitacionNestedInput
+    aspectosEE?: AspectoEEUpdateManyWithoutLicitacionNestedInput
+    jefesZonales?: JefeZonalLicitacionUpdateManyWithoutLicitacionNestedInput
+    vehiculos?: VehiculoUpdateManyWithoutLicitacionNestedInput
+    matrices?: MatrizT_CabeceraUpdateManyWithoutLicitacionNestedInput
+  }
+
+  export type LicitacionUncheckedUpdateWithoutActasPlantillasInput = {
+    licId?: IntFieldUpdateOperationsInput | number
+    licitacionHomologada?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uts?: UTUncheckedUpdateManyWithoutLicitacionNestedInput
+    aspectosEE?: AspectoEEUncheckedUpdateManyWithoutLicitacionNestedInput
+    jefesZonales?: JefeZonalLicitacionUncheckedUpdateManyWithoutLicitacionNestedInput
+    vehiculos?: VehiculoUncheckedUpdateManyWithoutLicitacionNestedInput
+    matrices?: MatrizT_CabeceraUncheckedUpdateManyWithoutLicitacionNestedInput
+  }
+
+  export type ActaSupervisionRespuestaUpsertWithWhereUniqueWithoutPlantillaInput = {
+    where: ActaSupervisionRespuestaWhereUniqueInput
+    update: XOR<ActaSupervisionRespuestaUpdateWithoutPlantillaInput, ActaSupervisionRespuestaUncheckedUpdateWithoutPlantillaInput>
+    create: XOR<ActaSupervisionRespuestaCreateWithoutPlantillaInput, ActaSupervisionRespuestaUncheckedCreateWithoutPlantillaInput>
+  }
+
+  export type ActaSupervisionRespuestaUpdateWithWhereUniqueWithoutPlantillaInput = {
+    where: ActaSupervisionRespuestaWhereUniqueInput
+    data: XOR<ActaSupervisionRespuestaUpdateWithoutPlantillaInput, ActaSupervisionRespuestaUncheckedUpdateWithoutPlantillaInput>
+  }
+
+  export type ActaSupervisionRespuestaUpdateManyWithWhereWithoutPlantillaInput = {
+    where: ActaSupervisionRespuestaScalarWhereInput
+    data: XOR<ActaSupervisionRespuestaUpdateManyMutationInput, ActaSupervisionRespuestaUncheckedUpdateManyWithoutPlantillaInput>
+  }
+
+  export type ActaSupervisionRespuestaScalarWhereInput = {
+    AND?: ActaSupervisionRespuestaScalarWhereInput | ActaSupervisionRespuestaScalarWhereInput[]
+    OR?: ActaSupervisionRespuestaScalarWhereInput[]
+    NOT?: ActaSupervisionRespuestaScalarWhereInput | ActaSupervisionRespuestaScalarWhereInput[]
+    id?: StringFilter<"ActaSupervisionRespuesta"> | string
+    plantillaId?: StringFilter<"ActaSupervisionRespuesta"> | string
+    licitacionId?: IntNullableFilter<"ActaSupervisionRespuesta"> | number | null
+    anio?: IntNullableFilter<"ActaSupervisionRespuesta"> | number | null
+    rbd?: IntFilter<"ActaSupervisionRespuesta"> | number
+    nombreEstablecimiento?: StringNullableFilter<"ActaSupervisionRespuesta"> | string | null
+    direccion?: StringNullableFilter<"ActaSupervisionRespuesta"> | string | null
+    ciudad?: StringNullableFilter<"ActaSupervisionRespuesta"> | string | null
+    institucion?: StringNullableFilter<"ActaSupervisionRespuesta"> | string | null
+    sucursal?: StringNullableFilter<"ActaSupervisionRespuesta"> | string | null
+    fechaCreacion?: DateTimeFilter<"ActaSupervisionRespuesta"> | Date | string
+    supervisorNombre?: StringNullableFilter<"ActaSupervisionRespuesta"> | string | null
+    supervisorRut?: StringNullableFilter<"ActaSupervisionRespuesta"> | string | null
+    respuestasData?: StringFilter<"ActaSupervisionRespuesta"> | string
+    estado?: StringFilter<"ActaSupervisionRespuesta"> | string
+    usuario?: StringFilter<"ActaSupervisionRespuesta"> | string
+    correlativo?: IntNullableFilter<"ActaSupervisionRespuesta"> | number | null
+    createdAt?: DateTimeFilter<"ActaSupervisionRespuesta"> | Date | string
+    updatedAt?: DateTimeFilter<"ActaSupervisionRespuesta"> | Date | string
+  }
+
+  export type ActaSupervisionPlantillaCreateWithoutRespuestasInput = {
+    id?: string
+    nombre: string
+    anio?: number
+    instituciones?: string | null
+    rolesPerfiles?: string | null
+    estado?: boolean
+    logoUrl?: string | null
+    instrucciones?: string | null
+    campos: string
+    codigo?: string | null
+    version?: string | null
+    fecha?: string | null
+    codigoAdicional?: string | null
+    mostrarCodigoAdicional?: boolean
+    correlativoAutomatico?: boolean
+    mostrarCodigoVersionFecha?: boolean
+    createdBy: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    licitacion?: LicitacionCreateNestedOneWithoutActasPlantillasInput
+  }
+
+  export type ActaSupervisionPlantillaUncheckedCreateWithoutRespuestasInput = {
+    id?: string
+    nombre: string
+    licitacionId?: number | null
+    anio?: number
+    instituciones?: string | null
+    rolesPerfiles?: string | null
+    estado?: boolean
+    logoUrl?: string | null
+    instrucciones?: string | null
+    campos: string
+    codigo?: string | null
+    version?: string | null
+    fecha?: string | null
+    codigoAdicional?: string | null
+    mostrarCodigoAdicional?: boolean
+    correlativoAutomatico?: boolean
+    mostrarCodigoVersionFecha?: boolean
+    createdBy: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ActaSupervisionPlantillaCreateOrConnectWithoutRespuestasInput = {
+    where: ActaSupervisionPlantillaWhereUniqueInput
+    create: XOR<ActaSupervisionPlantillaCreateWithoutRespuestasInput, ActaSupervisionPlantillaUncheckedCreateWithoutRespuestasInput>
+  }
+
+  export type ActaSupervisionPlantillaUpsertWithoutRespuestasInput = {
+    update: XOR<ActaSupervisionPlantillaUpdateWithoutRespuestasInput, ActaSupervisionPlantillaUncheckedUpdateWithoutRespuestasInput>
+    create: XOR<ActaSupervisionPlantillaCreateWithoutRespuestasInput, ActaSupervisionPlantillaUncheckedCreateWithoutRespuestasInput>
+    where?: ActaSupervisionPlantillaWhereInput
+  }
+
+  export type ActaSupervisionPlantillaUpdateToOneWithWhereWithoutRespuestasInput = {
+    where?: ActaSupervisionPlantillaWhereInput
+    data: XOR<ActaSupervisionPlantillaUpdateWithoutRespuestasInput, ActaSupervisionPlantillaUncheckedUpdateWithoutRespuestasInput>
+  }
+
+  export type ActaSupervisionPlantillaUpdateWithoutRespuestasInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    anio?: IntFieldUpdateOperationsInput | number
+    instituciones?: NullableStringFieldUpdateOperationsInput | string | null
+    rolesPerfiles?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: BoolFieldUpdateOperationsInput | boolean
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    campos?: StringFieldUpdateOperationsInput | string
+    codigo?: NullableStringFieldUpdateOperationsInput | string | null
+    version?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha?: NullableStringFieldUpdateOperationsInput | string | null
+    codigoAdicional?: NullableStringFieldUpdateOperationsInput | string | null
+    mostrarCodigoAdicional?: BoolFieldUpdateOperationsInput | boolean
+    correlativoAutomatico?: BoolFieldUpdateOperationsInput | boolean
+    mostrarCodigoVersionFecha?: BoolFieldUpdateOperationsInput | boolean
+    createdBy?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    licitacion?: LicitacionUpdateOneWithoutActasPlantillasNestedInput
+  }
+
+  export type ActaSupervisionPlantillaUncheckedUpdateWithoutRespuestasInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    licitacionId?: NullableIntFieldUpdateOperationsInput | number | null
+    anio?: IntFieldUpdateOperationsInput | number
+    instituciones?: NullableStringFieldUpdateOperationsInput | string | null
+    rolesPerfiles?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: BoolFieldUpdateOperationsInput | boolean
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    campos?: StringFieldUpdateOperationsInput | string
+    codigo?: NullableStringFieldUpdateOperationsInput | string | null
+    version?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha?: NullableStringFieldUpdateOperationsInput | string | null
+    codigoAdicional?: NullableStringFieldUpdateOperationsInput | string | null
+    mostrarCodigoAdicional?: BoolFieldUpdateOperationsInput | boolean
+    correlativoAutomatico?: BoolFieldUpdateOperationsInput | boolean
+    mostrarCodigoVersionFecha?: BoolFieldUpdateOperationsInput | boolean
+    createdBy?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VTConfiguracionCamaraCreateWithoutCamaraInput = {
+    mes: number
+    numeroCamaraMes: number
+    nombreCamara?: string | null
+    temperaturaMinima?: number | null
+    temperaturaMaxima?: number | null
+    registro: VTRegistroCabeceraCreateNestedOneWithoutConfiguracionesInput
+  }
+
+  export type VTConfiguracionCamaraUncheckedCreateWithoutCamaraInput = {
+    idConfig?: number
+    idRegistroCabecera: number
+    mes: number
+    numeroCamaraMes: number
+    nombreCamara?: string | null
+    temperaturaMinima?: number | null
+    temperaturaMaxima?: number | null
+  }
+
+  export type VTConfiguracionCamaraCreateOrConnectWithoutCamaraInput = {
+    where: VTConfiguracionCamaraWhereUniqueInput
+    create: XOR<VTConfiguracionCamaraCreateWithoutCamaraInput, VTConfiguracionCamaraUncheckedCreateWithoutCamaraInput>
+  }
+
+  export type VTConfiguracionCamaraCreateManyCamaraInputEnvelope = {
+    data: VTConfiguracionCamaraCreateManyCamaraInput | VTConfiguracionCamaraCreateManyCamaraInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type VTConfiguracionCamaraUpsertWithWhereUniqueWithoutCamaraInput = {
+    where: VTConfiguracionCamaraWhereUniqueInput
+    update: XOR<VTConfiguracionCamaraUpdateWithoutCamaraInput, VTConfiguracionCamaraUncheckedUpdateWithoutCamaraInput>
+    create: XOR<VTConfiguracionCamaraCreateWithoutCamaraInput, VTConfiguracionCamaraUncheckedCreateWithoutCamaraInput>
+  }
+
+  export type VTConfiguracionCamaraUpdateWithWhereUniqueWithoutCamaraInput = {
+    where: VTConfiguracionCamaraWhereUniqueInput
+    data: XOR<VTConfiguracionCamaraUpdateWithoutCamaraInput, VTConfiguracionCamaraUncheckedUpdateWithoutCamaraInput>
+  }
+
+  export type VTConfiguracionCamaraUpdateManyWithWhereWithoutCamaraInput = {
+    where: VTConfiguracionCamaraScalarWhereInput
+    data: XOR<VTConfiguracionCamaraUpdateManyMutationInput, VTConfiguracionCamaraUncheckedUpdateManyWithoutCamaraInput>
+  }
+
+  export type VTConfiguracionCamaraScalarWhereInput = {
+    AND?: VTConfiguracionCamaraScalarWhereInput | VTConfiguracionCamaraScalarWhereInput[]
+    OR?: VTConfiguracionCamaraScalarWhereInput[]
+    NOT?: VTConfiguracionCamaraScalarWhereInput | VTConfiguracionCamaraScalarWhereInput[]
+    idConfig?: IntFilter<"VTConfiguracionCamara"> | number
+    idRegistroCabecera?: IntFilter<"VTConfiguracionCamara"> | number
+    idCamara?: IntFilter<"VTConfiguracionCamara"> | number
+    mes?: IntFilter<"VTConfiguracionCamara"> | number
+    numeroCamaraMes?: IntFilter<"VTConfiguracionCamara"> | number
+    nombreCamara?: StringNullableFilter<"VTConfiguracionCamara"> | string | null
+    temperaturaMinima?: FloatNullableFilter<"VTConfiguracionCamara"> | number | null
+    temperaturaMaxima?: FloatNullableFilter<"VTConfiguracionCamara"> | number | null
+  }
+
+  export type VTRegistroCabeceraCreateWithoutConfiguracionesInput = {
+    tipoEntidad: string
+    idEntidad: string
+    nombreEntidad: string
+    anio: number
+    fechaRegistro?: Date | string | null
+    monitorResponsable: string
+    tipoCamara: string
+    descripcionCamaras?: string | null
+    fechaCreacion?: Date | string
+    usuarioCreacion: string
+    detalles?: VTRegistroDetalleCreateNestedManyWithoutRegistroInput
+    verificacionesDiarias?: VTVerificacionDiariaCreateNestedManyWithoutRegistroInput
+    verificacionesSemanales?: VTVerificacionSemanalCreateNestedManyWithoutRegistroInput
+  }
+
+  export type VTRegistroCabeceraUncheckedCreateWithoutConfiguracionesInput = {
+    idRegistro?: number
+    tipoEntidad: string
+    idEntidad: string
+    nombreEntidad: string
+    anio: number
+    fechaRegistro?: Date | string | null
+    monitorResponsable: string
+    tipoCamara: string
+    descripcionCamaras?: string | null
+    fechaCreacion?: Date | string
+    usuarioCreacion: string
+    detalles?: VTRegistroDetalleUncheckedCreateNestedManyWithoutRegistroInput
+    verificacionesDiarias?: VTVerificacionDiariaUncheckedCreateNestedManyWithoutRegistroInput
+    verificacionesSemanales?: VTVerificacionSemanalUncheckedCreateNestedManyWithoutRegistroInput
+  }
+
+  export type VTRegistroCabeceraCreateOrConnectWithoutConfiguracionesInput = {
+    where: VTRegistroCabeceraWhereUniqueInput
+    create: XOR<VTRegistroCabeceraCreateWithoutConfiguracionesInput, VTRegistroCabeceraUncheckedCreateWithoutConfiguracionesInput>
+  }
+
+  export type VTCamaraCreateWithoutConfiguracionesInput = {
+    nombreCamara: string
+    tipoCamara: string
+    temperaturaMinima?: number | null
+    temperaturaMaxima: number
+    activo?: boolean
+  }
+
+  export type VTCamaraUncheckedCreateWithoutConfiguracionesInput = {
+    idCamara?: number
+    nombreCamara: string
+    tipoCamara: string
+    temperaturaMinima?: number | null
+    temperaturaMaxima: number
+    activo?: boolean
+  }
+
+  export type VTCamaraCreateOrConnectWithoutConfiguracionesInput = {
+    where: VTCamaraWhereUniqueInput
+    create: XOR<VTCamaraCreateWithoutConfiguracionesInput, VTCamaraUncheckedCreateWithoutConfiguracionesInput>
+  }
+
+  export type VTRegistroCabeceraUpsertWithoutConfiguracionesInput = {
+    update: XOR<VTRegistroCabeceraUpdateWithoutConfiguracionesInput, VTRegistroCabeceraUncheckedUpdateWithoutConfiguracionesInput>
+    create: XOR<VTRegistroCabeceraCreateWithoutConfiguracionesInput, VTRegistroCabeceraUncheckedCreateWithoutConfiguracionesInput>
+    where?: VTRegistroCabeceraWhereInput
+  }
+
+  export type VTRegistroCabeceraUpdateToOneWithWhereWithoutConfiguracionesInput = {
+    where?: VTRegistroCabeceraWhereInput
+    data: XOR<VTRegistroCabeceraUpdateWithoutConfiguracionesInput, VTRegistroCabeceraUncheckedUpdateWithoutConfiguracionesInput>
+  }
+
+  export type VTRegistroCabeceraUpdateWithoutConfiguracionesInput = {
+    tipoEntidad?: StringFieldUpdateOperationsInput | string
+    idEntidad?: StringFieldUpdateOperationsInput | string
+    nombreEntidad?: StringFieldUpdateOperationsInput | string
+    anio?: IntFieldUpdateOperationsInput | number
+    fechaRegistro?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    monitorResponsable?: StringFieldUpdateOperationsInput | string
+    tipoCamara?: StringFieldUpdateOperationsInput | string
+    descripcionCamaras?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuarioCreacion?: StringFieldUpdateOperationsInput | string
+    detalles?: VTRegistroDetalleUpdateManyWithoutRegistroNestedInput
+    verificacionesDiarias?: VTVerificacionDiariaUpdateManyWithoutRegistroNestedInput
+    verificacionesSemanales?: VTVerificacionSemanalUpdateManyWithoutRegistroNestedInput
+  }
+
+  export type VTRegistroCabeceraUncheckedUpdateWithoutConfiguracionesInput = {
+    idRegistro?: IntFieldUpdateOperationsInput | number
+    tipoEntidad?: StringFieldUpdateOperationsInput | string
+    idEntidad?: StringFieldUpdateOperationsInput | string
+    nombreEntidad?: StringFieldUpdateOperationsInput | string
+    anio?: IntFieldUpdateOperationsInput | number
+    fechaRegistro?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    monitorResponsable?: StringFieldUpdateOperationsInput | string
+    tipoCamara?: StringFieldUpdateOperationsInput | string
+    descripcionCamaras?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuarioCreacion?: StringFieldUpdateOperationsInput | string
+    detalles?: VTRegistroDetalleUncheckedUpdateManyWithoutRegistroNestedInput
+    verificacionesDiarias?: VTVerificacionDiariaUncheckedUpdateManyWithoutRegistroNestedInput
+    verificacionesSemanales?: VTVerificacionSemanalUncheckedUpdateManyWithoutRegistroNestedInput
+  }
+
+  export type VTCamaraUpsertWithoutConfiguracionesInput = {
+    update: XOR<VTCamaraUpdateWithoutConfiguracionesInput, VTCamaraUncheckedUpdateWithoutConfiguracionesInput>
+    create: XOR<VTCamaraCreateWithoutConfiguracionesInput, VTCamaraUncheckedCreateWithoutConfiguracionesInput>
+    where?: VTCamaraWhereInput
+  }
+
+  export type VTCamaraUpdateToOneWithWhereWithoutConfiguracionesInput = {
+    where?: VTCamaraWhereInput
+    data: XOR<VTCamaraUpdateWithoutConfiguracionesInput, VTCamaraUncheckedUpdateWithoutConfiguracionesInput>
+  }
+
+  export type VTCamaraUpdateWithoutConfiguracionesInput = {
+    nombreCamara?: StringFieldUpdateOperationsInput | string
+    tipoCamara?: StringFieldUpdateOperationsInput | string
+    temperaturaMinima?: NullableFloatFieldUpdateOperationsInput | number | null
+    temperaturaMaxima?: FloatFieldUpdateOperationsInput | number
+    activo?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type VTCamaraUncheckedUpdateWithoutConfiguracionesInput = {
+    idCamara?: IntFieldUpdateOperationsInput | number
+    nombreCamara?: StringFieldUpdateOperationsInput | string
+    tipoCamara?: StringFieldUpdateOperationsInput | string
+    temperaturaMinima?: NullableFloatFieldUpdateOperationsInput | number | null
+    temperaturaMaxima?: FloatFieldUpdateOperationsInput | number
+    activo?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type VTConfiguracionCamaraCreateWithoutRegistroInput = {
+    mes: number
+    numeroCamaraMes: number
+    nombreCamara?: string | null
+    temperaturaMinima?: number | null
+    temperaturaMaxima?: number | null
+    camara: VTCamaraCreateNestedOneWithoutConfiguracionesInput
+  }
+
+  export type VTConfiguracionCamaraUncheckedCreateWithoutRegistroInput = {
+    idConfig?: number
+    idCamara: number
+    mes: number
+    numeroCamaraMes: number
+    nombreCamara?: string | null
+    temperaturaMinima?: number | null
+    temperaturaMaxima?: number | null
+  }
+
+  export type VTConfiguracionCamaraCreateOrConnectWithoutRegistroInput = {
+    where: VTConfiguracionCamaraWhereUniqueInput
+    create: XOR<VTConfiguracionCamaraCreateWithoutRegistroInput, VTConfiguracionCamaraUncheckedCreateWithoutRegistroInput>
+  }
+
+  export type VTConfiguracionCamaraCreateManyRegistroInputEnvelope = {
+    data: VTConfiguracionCamaraCreateManyRegistroInput | VTConfiguracionCamaraCreateManyRegistroInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type VTRegistroDetalleCreateWithoutRegistroInput = {
+    numeroCorrelativo: number
+    dia?: number
+    tipoProducto: string
+    nombreProducto?: string | null
+    mes: number
+    numeroCamara: number
+    temperatura?: number | null
+    fechaRegistro?: Date | string
+    usuarioRegistro: string
+  }
+
+  export type VTRegistroDetalleUncheckedCreateWithoutRegistroInput = {
+    idDetalle?: number
+    numeroCorrelativo: number
+    dia?: number
+    tipoProducto: string
+    nombreProducto?: string | null
+    mes: number
+    numeroCamara: number
+    temperatura?: number | null
+    fechaRegistro?: Date | string
+    usuarioRegistro: string
+  }
+
+  export type VTRegistroDetalleCreateOrConnectWithoutRegistroInput = {
+    where: VTRegistroDetalleWhereUniqueInput
+    create: XOR<VTRegistroDetalleCreateWithoutRegistroInput, VTRegistroDetalleUncheckedCreateWithoutRegistroInput>
+  }
+
+  export type VTRegistroDetalleCreateManyRegistroInputEnvelope = {
+    data: VTRegistroDetalleCreateManyRegistroInput | VTRegistroDetalleCreateManyRegistroInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type VTVerificacionDiariaCreateWithoutRegistroInput = {
+    mes: number
+    dia: number
+    fechaVerificacion?: Date | string
+    firmadoPor: string
+    usuarioId?: string | null
+    firma?: string | null
+    firmado?: boolean
+    observaciones?: string | null
+    accionesCorrectivas?: string | null
+  }
+
+  export type VTVerificacionDiariaUncheckedCreateWithoutRegistroInput = {
+    idVerificacion?: number
+    mes: number
+    dia: number
+    fechaVerificacion?: Date | string
+    firmadoPor: string
+    usuarioId?: string | null
+    firma?: string | null
+    firmado?: boolean
+    observaciones?: string | null
+    accionesCorrectivas?: string | null
+  }
+
+  export type VTVerificacionDiariaCreateOrConnectWithoutRegistroInput = {
+    where: VTVerificacionDiariaWhereUniqueInput
+    create: XOR<VTVerificacionDiariaCreateWithoutRegistroInput, VTVerificacionDiariaUncheckedCreateWithoutRegistroInput>
+  }
+
+  export type VTVerificacionDiariaCreateManyRegistroInputEnvelope = {
+    data: VTVerificacionDiariaCreateManyRegistroInput | VTVerificacionDiariaCreateManyRegistroInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type VTVerificacionSemanalCreateWithoutRegistroInput = {
+    mes: number
+    semana: number
+    firmadoJefeBodega?: boolean
+    fechaFirmaJefeBodega?: Date | string | null
+    usuarioJefeBodega?: string | null
+    firmaJefeBodega?: string | null
+    firmadoJefeZonal?: boolean
+    fechaFirmaJefeZonal?: Date | string | null
+    usuarioJefeZonal?: string | null
+    firmaJefeZonal?: string | null
+  }
+
+  export type VTVerificacionSemanalUncheckedCreateWithoutRegistroInput = {
+    idVerificacionSemanal?: number
+    mes: number
+    semana: number
+    firmadoJefeBodega?: boolean
+    fechaFirmaJefeBodega?: Date | string | null
+    usuarioJefeBodega?: string | null
+    firmaJefeBodega?: string | null
+    firmadoJefeZonal?: boolean
+    fechaFirmaJefeZonal?: Date | string | null
+    usuarioJefeZonal?: string | null
+    firmaJefeZonal?: string | null
+  }
+
+  export type VTVerificacionSemanalCreateOrConnectWithoutRegistroInput = {
+    where: VTVerificacionSemanalWhereUniqueInput
+    create: XOR<VTVerificacionSemanalCreateWithoutRegistroInput, VTVerificacionSemanalUncheckedCreateWithoutRegistroInput>
+  }
+
+  export type VTVerificacionSemanalCreateManyRegistroInputEnvelope = {
+    data: VTVerificacionSemanalCreateManyRegistroInput | VTVerificacionSemanalCreateManyRegistroInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type VTConfiguracionCamaraUpsertWithWhereUniqueWithoutRegistroInput = {
+    where: VTConfiguracionCamaraWhereUniqueInput
+    update: XOR<VTConfiguracionCamaraUpdateWithoutRegistroInput, VTConfiguracionCamaraUncheckedUpdateWithoutRegistroInput>
+    create: XOR<VTConfiguracionCamaraCreateWithoutRegistroInput, VTConfiguracionCamaraUncheckedCreateWithoutRegistroInput>
+  }
+
+  export type VTConfiguracionCamaraUpdateWithWhereUniqueWithoutRegistroInput = {
+    where: VTConfiguracionCamaraWhereUniqueInput
+    data: XOR<VTConfiguracionCamaraUpdateWithoutRegistroInput, VTConfiguracionCamaraUncheckedUpdateWithoutRegistroInput>
+  }
+
+  export type VTConfiguracionCamaraUpdateManyWithWhereWithoutRegistroInput = {
+    where: VTConfiguracionCamaraScalarWhereInput
+    data: XOR<VTConfiguracionCamaraUpdateManyMutationInput, VTConfiguracionCamaraUncheckedUpdateManyWithoutRegistroInput>
+  }
+
+  export type VTRegistroDetalleUpsertWithWhereUniqueWithoutRegistroInput = {
+    where: VTRegistroDetalleWhereUniqueInput
+    update: XOR<VTRegistroDetalleUpdateWithoutRegistroInput, VTRegistroDetalleUncheckedUpdateWithoutRegistroInput>
+    create: XOR<VTRegistroDetalleCreateWithoutRegistroInput, VTRegistroDetalleUncheckedCreateWithoutRegistroInput>
+  }
+
+  export type VTRegistroDetalleUpdateWithWhereUniqueWithoutRegistroInput = {
+    where: VTRegistroDetalleWhereUniqueInput
+    data: XOR<VTRegistroDetalleUpdateWithoutRegistroInput, VTRegistroDetalleUncheckedUpdateWithoutRegistroInput>
+  }
+
+  export type VTRegistroDetalleUpdateManyWithWhereWithoutRegistroInput = {
+    where: VTRegistroDetalleScalarWhereInput
+    data: XOR<VTRegistroDetalleUpdateManyMutationInput, VTRegistroDetalleUncheckedUpdateManyWithoutRegistroInput>
+  }
+
+  export type VTRegistroDetalleScalarWhereInput = {
+    AND?: VTRegistroDetalleScalarWhereInput | VTRegistroDetalleScalarWhereInput[]
+    OR?: VTRegistroDetalleScalarWhereInput[]
+    NOT?: VTRegistroDetalleScalarWhereInput | VTRegistroDetalleScalarWhereInput[]
+    idDetalle?: IntFilter<"VTRegistroDetalle"> | number
+    idRegistro?: IntFilter<"VTRegistroDetalle"> | number
+    numeroCorrelativo?: IntFilter<"VTRegistroDetalle"> | number
+    dia?: IntFilter<"VTRegistroDetalle"> | number
+    tipoProducto?: StringFilter<"VTRegistroDetalle"> | string
+    nombreProducto?: StringNullableFilter<"VTRegistroDetalle"> | string | null
+    mes?: IntFilter<"VTRegistroDetalle"> | number
+    numeroCamara?: IntFilter<"VTRegistroDetalle"> | number
+    temperatura?: FloatNullableFilter<"VTRegistroDetalle"> | number | null
+    fechaRegistro?: DateTimeFilter<"VTRegistroDetalle"> | Date | string
+    usuarioRegistro?: StringFilter<"VTRegistroDetalle"> | string
+  }
+
+  export type VTVerificacionDiariaUpsertWithWhereUniqueWithoutRegistroInput = {
+    where: VTVerificacionDiariaWhereUniqueInput
+    update: XOR<VTVerificacionDiariaUpdateWithoutRegistroInput, VTVerificacionDiariaUncheckedUpdateWithoutRegistroInput>
+    create: XOR<VTVerificacionDiariaCreateWithoutRegistroInput, VTVerificacionDiariaUncheckedCreateWithoutRegistroInput>
+  }
+
+  export type VTVerificacionDiariaUpdateWithWhereUniqueWithoutRegistroInput = {
+    where: VTVerificacionDiariaWhereUniqueInput
+    data: XOR<VTVerificacionDiariaUpdateWithoutRegistroInput, VTVerificacionDiariaUncheckedUpdateWithoutRegistroInput>
+  }
+
+  export type VTVerificacionDiariaUpdateManyWithWhereWithoutRegistroInput = {
+    where: VTVerificacionDiariaScalarWhereInput
+    data: XOR<VTVerificacionDiariaUpdateManyMutationInput, VTVerificacionDiariaUncheckedUpdateManyWithoutRegistroInput>
+  }
+
+  export type VTVerificacionDiariaScalarWhereInput = {
+    AND?: VTVerificacionDiariaScalarWhereInput | VTVerificacionDiariaScalarWhereInput[]
+    OR?: VTVerificacionDiariaScalarWhereInput[]
+    NOT?: VTVerificacionDiariaScalarWhereInput | VTVerificacionDiariaScalarWhereInput[]
+    idVerificacion?: IntFilter<"VTVerificacionDiaria"> | number
+    idRegistro?: IntFilter<"VTVerificacionDiaria"> | number
+    mes?: IntFilter<"VTVerificacionDiaria"> | number
+    dia?: IntFilter<"VTVerificacionDiaria"> | number
+    fechaVerificacion?: DateTimeFilter<"VTVerificacionDiaria"> | Date | string
+    firmadoPor?: StringFilter<"VTVerificacionDiaria"> | string
+    usuarioId?: StringNullableFilter<"VTVerificacionDiaria"> | string | null
+    firma?: StringNullableFilter<"VTVerificacionDiaria"> | string | null
+    firmado?: BoolFilter<"VTVerificacionDiaria"> | boolean
+    observaciones?: StringNullableFilter<"VTVerificacionDiaria"> | string | null
+    accionesCorrectivas?: StringNullableFilter<"VTVerificacionDiaria"> | string | null
+  }
+
+  export type VTVerificacionSemanalUpsertWithWhereUniqueWithoutRegistroInput = {
+    where: VTVerificacionSemanalWhereUniqueInput
+    update: XOR<VTVerificacionSemanalUpdateWithoutRegistroInput, VTVerificacionSemanalUncheckedUpdateWithoutRegistroInput>
+    create: XOR<VTVerificacionSemanalCreateWithoutRegistroInput, VTVerificacionSemanalUncheckedCreateWithoutRegistroInput>
+  }
+
+  export type VTVerificacionSemanalUpdateWithWhereUniqueWithoutRegistroInput = {
+    where: VTVerificacionSemanalWhereUniqueInput
+    data: XOR<VTVerificacionSemanalUpdateWithoutRegistroInput, VTVerificacionSemanalUncheckedUpdateWithoutRegistroInput>
+  }
+
+  export type VTVerificacionSemanalUpdateManyWithWhereWithoutRegistroInput = {
+    where: VTVerificacionSemanalScalarWhereInput
+    data: XOR<VTVerificacionSemanalUpdateManyMutationInput, VTVerificacionSemanalUncheckedUpdateManyWithoutRegistroInput>
+  }
+
+  export type VTVerificacionSemanalScalarWhereInput = {
+    AND?: VTVerificacionSemanalScalarWhereInput | VTVerificacionSemanalScalarWhereInput[]
+    OR?: VTVerificacionSemanalScalarWhereInput[]
+    NOT?: VTVerificacionSemanalScalarWhereInput | VTVerificacionSemanalScalarWhereInput[]
+    idVerificacionSemanal?: IntFilter<"VTVerificacionSemanal"> | number
+    idRegistro?: IntFilter<"VTVerificacionSemanal"> | number
+    mes?: IntFilter<"VTVerificacionSemanal"> | number
+    semana?: IntFilter<"VTVerificacionSemanal"> | number
+    firmadoJefeBodega?: BoolFilter<"VTVerificacionSemanal"> | boolean
+    fechaFirmaJefeBodega?: DateTimeNullableFilter<"VTVerificacionSemanal"> | Date | string | null
+    usuarioJefeBodega?: StringNullableFilter<"VTVerificacionSemanal"> | string | null
+    firmaJefeBodega?: StringNullableFilter<"VTVerificacionSemanal"> | string | null
+    firmadoJefeZonal?: BoolFilter<"VTVerificacionSemanal"> | boolean
+    fechaFirmaJefeZonal?: DateTimeNullableFilter<"VTVerificacionSemanal"> | Date | string | null
+    usuarioJefeZonal?: StringNullableFilter<"VTVerificacionSemanal"> | string | null
+    firmaJefeZonal?: StringNullableFilter<"VTVerificacionSemanal"> | string | null
+  }
+
+  export type VTRegistroCabeceraCreateWithoutDetallesInput = {
+    tipoEntidad: string
+    idEntidad: string
+    nombreEntidad: string
+    anio: number
+    fechaRegistro?: Date | string | null
+    monitorResponsable: string
+    tipoCamara: string
+    descripcionCamaras?: string | null
+    fechaCreacion?: Date | string
+    usuarioCreacion: string
+    configuraciones?: VTConfiguracionCamaraCreateNestedManyWithoutRegistroInput
+    verificacionesDiarias?: VTVerificacionDiariaCreateNestedManyWithoutRegistroInput
+    verificacionesSemanales?: VTVerificacionSemanalCreateNestedManyWithoutRegistroInput
+  }
+
+  export type VTRegistroCabeceraUncheckedCreateWithoutDetallesInput = {
+    idRegistro?: number
+    tipoEntidad: string
+    idEntidad: string
+    nombreEntidad: string
+    anio: number
+    fechaRegistro?: Date | string | null
+    monitorResponsable: string
+    tipoCamara: string
+    descripcionCamaras?: string | null
+    fechaCreacion?: Date | string
+    usuarioCreacion: string
+    configuraciones?: VTConfiguracionCamaraUncheckedCreateNestedManyWithoutRegistroInput
+    verificacionesDiarias?: VTVerificacionDiariaUncheckedCreateNestedManyWithoutRegistroInput
+    verificacionesSemanales?: VTVerificacionSemanalUncheckedCreateNestedManyWithoutRegistroInput
+  }
+
+  export type VTRegistroCabeceraCreateOrConnectWithoutDetallesInput = {
+    where: VTRegistroCabeceraWhereUniqueInput
+    create: XOR<VTRegistroCabeceraCreateWithoutDetallesInput, VTRegistroCabeceraUncheckedCreateWithoutDetallesInput>
+  }
+
+  export type VTRegistroCabeceraUpsertWithoutDetallesInput = {
+    update: XOR<VTRegistroCabeceraUpdateWithoutDetallesInput, VTRegistroCabeceraUncheckedUpdateWithoutDetallesInput>
+    create: XOR<VTRegistroCabeceraCreateWithoutDetallesInput, VTRegistroCabeceraUncheckedCreateWithoutDetallesInput>
+    where?: VTRegistroCabeceraWhereInput
+  }
+
+  export type VTRegistroCabeceraUpdateToOneWithWhereWithoutDetallesInput = {
+    where?: VTRegistroCabeceraWhereInput
+    data: XOR<VTRegistroCabeceraUpdateWithoutDetallesInput, VTRegistroCabeceraUncheckedUpdateWithoutDetallesInput>
+  }
+
+  export type VTRegistroCabeceraUpdateWithoutDetallesInput = {
+    tipoEntidad?: StringFieldUpdateOperationsInput | string
+    idEntidad?: StringFieldUpdateOperationsInput | string
+    nombreEntidad?: StringFieldUpdateOperationsInput | string
+    anio?: IntFieldUpdateOperationsInput | number
+    fechaRegistro?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    monitorResponsable?: StringFieldUpdateOperationsInput | string
+    tipoCamara?: StringFieldUpdateOperationsInput | string
+    descripcionCamaras?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuarioCreacion?: StringFieldUpdateOperationsInput | string
+    configuraciones?: VTConfiguracionCamaraUpdateManyWithoutRegistroNestedInput
+    verificacionesDiarias?: VTVerificacionDiariaUpdateManyWithoutRegistroNestedInput
+    verificacionesSemanales?: VTVerificacionSemanalUpdateManyWithoutRegistroNestedInput
+  }
+
+  export type VTRegistroCabeceraUncheckedUpdateWithoutDetallesInput = {
+    idRegistro?: IntFieldUpdateOperationsInput | number
+    tipoEntidad?: StringFieldUpdateOperationsInput | string
+    idEntidad?: StringFieldUpdateOperationsInput | string
+    nombreEntidad?: StringFieldUpdateOperationsInput | string
+    anio?: IntFieldUpdateOperationsInput | number
+    fechaRegistro?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    monitorResponsable?: StringFieldUpdateOperationsInput | string
+    tipoCamara?: StringFieldUpdateOperationsInput | string
+    descripcionCamaras?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuarioCreacion?: StringFieldUpdateOperationsInput | string
+    configuraciones?: VTConfiguracionCamaraUncheckedUpdateManyWithoutRegistroNestedInput
+    verificacionesDiarias?: VTVerificacionDiariaUncheckedUpdateManyWithoutRegistroNestedInput
+    verificacionesSemanales?: VTVerificacionSemanalUncheckedUpdateManyWithoutRegistroNestedInput
+  }
+
+  export type VTRegistroCabeceraCreateWithoutVerificacionesDiariasInput = {
+    tipoEntidad: string
+    idEntidad: string
+    nombreEntidad: string
+    anio: number
+    fechaRegistro?: Date | string | null
+    monitorResponsable: string
+    tipoCamara: string
+    descripcionCamaras?: string | null
+    fechaCreacion?: Date | string
+    usuarioCreacion: string
+    configuraciones?: VTConfiguracionCamaraCreateNestedManyWithoutRegistroInput
+    detalles?: VTRegistroDetalleCreateNestedManyWithoutRegistroInput
+    verificacionesSemanales?: VTVerificacionSemanalCreateNestedManyWithoutRegistroInput
+  }
+
+  export type VTRegistroCabeceraUncheckedCreateWithoutVerificacionesDiariasInput = {
+    idRegistro?: number
+    tipoEntidad: string
+    idEntidad: string
+    nombreEntidad: string
+    anio: number
+    fechaRegistro?: Date | string | null
+    monitorResponsable: string
+    tipoCamara: string
+    descripcionCamaras?: string | null
+    fechaCreacion?: Date | string
+    usuarioCreacion: string
+    configuraciones?: VTConfiguracionCamaraUncheckedCreateNestedManyWithoutRegistroInput
+    detalles?: VTRegistroDetalleUncheckedCreateNestedManyWithoutRegistroInput
+    verificacionesSemanales?: VTVerificacionSemanalUncheckedCreateNestedManyWithoutRegistroInput
+  }
+
+  export type VTRegistroCabeceraCreateOrConnectWithoutVerificacionesDiariasInput = {
+    where: VTRegistroCabeceraWhereUniqueInput
+    create: XOR<VTRegistroCabeceraCreateWithoutVerificacionesDiariasInput, VTRegistroCabeceraUncheckedCreateWithoutVerificacionesDiariasInput>
+  }
+
+  export type VTRegistroCabeceraUpsertWithoutVerificacionesDiariasInput = {
+    update: XOR<VTRegistroCabeceraUpdateWithoutVerificacionesDiariasInput, VTRegistroCabeceraUncheckedUpdateWithoutVerificacionesDiariasInput>
+    create: XOR<VTRegistroCabeceraCreateWithoutVerificacionesDiariasInput, VTRegistroCabeceraUncheckedCreateWithoutVerificacionesDiariasInput>
+    where?: VTRegistroCabeceraWhereInput
+  }
+
+  export type VTRegistroCabeceraUpdateToOneWithWhereWithoutVerificacionesDiariasInput = {
+    where?: VTRegistroCabeceraWhereInput
+    data: XOR<VTRegistroCabeceraUpdateWithoutVerificacionesDiariasInput, VTRegistroCabeceraUncheckedUpdateWithoutVerificacionesDiariasInput>
+  }
+
+  export type VTRegistroCabeceraUpdateWithoutVerificacionesDiariasInput = {
+    tipoEntidad?: StringFieldUpdateOperationsInput | string
+    idEntidad?: StringFieldUpdateOperationsInput | string
+    nombreEntidad?: StringFieldUpdateOperationsInput | string
+    anio?: IntFieldUpdateOperationsInput | number
+    fechaRegistro?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    monitorResponsable?: StringFieldUpdateOperationsInput | string
+    tipoCamara?: StringFieldUpdateOperationsInput | string
+    descripcionCamaras?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuarioCreacion?: StringFieldUpdateOperationsInput | string
+    configuraciones?: VTConfiguracionCamaraUpdateManyWithoutRegistroNestedInput
+    detalles?: VTRegistroDetalleUpdateManyWithoutRegistroNestedInput
+    verificacionesSemanales?: VTVerificacionSemanalUpdateManyWithoutRegistroNestedInput
+  }
+
+  export type VTRegistroCabeceraUncheckedUpdateWithoutVerificacionesDiariasInput = {
+    idRegistro?: IntFieldUpdateOperationsInput | number
+    tipoEntidad?: StringFieldUpdateOperationsInput | string
+    idEntidad?: StringFieldUpdateOperationsInput | string
+    nombreEntidad?: StringFieldUpdateOperationsInput | string
+    anio?: IntFieldUpdateOperationsInput | number
+    fechaRegistro?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    monitorResponsable?: StringFieldUpdateOperationsInput | string
+    tipoCamara?: StringFieldUpdateOperationsInput | string
+    descripcionCamaras?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuarioCreacion?: StringFieldUpdateOperationsInput | string
+    configuraciones?: VTConfiguracionCamaraUncheckedUpdateManyWithoutRegistroNestedInput
+    detalles?: VTRegistroDetalleUncheckedUpdateManyWithoutRegistroNestedInput
+    verificacionesSemanales?: VTVerificacionSemanalUncheckedUpdateManyWithoutRegistroNestedInput
+  }
+
+  export type VTRegistroCabeceraCreateWithoutVerificacionesSemanalesInput = {
+    tipoEntidad: string
+    idEntidad: string
+    nombreEntidad: string
+    anio: number
+    fechaRegistro?: Date | string | null
+    monitorResponsable: string
+    tipoCamara: string
+    descripcionCamaras?: string | null
+    fechaCreacion?: Date | string
+    usuarioCreacion: string
+    configuraciones?: VTConfiguracionCamaraCreateNestedManyWithoutRegistroInput
+    detalles?: VTRegistroDetalleCreateNestedManyWithoutRegistroInput
+    verificacionesDiarias?: VTVerificacionDiariaCreateNestedManyWithoutRegistroInput
+  }
+
+  export type VTRegistroCabeceraUncheckedCreateWithoutVerificacionesSemanalesInput = {
+    idRegistro?: number
+    tipoEntidad: string
+    idEntidad: string
+    nombreEntidad: string
+    anio: number
+    fechaRegistro?: Date | string | null
+    monitorResponsable: string
+    tipoCamara: string
+    descripcionCamaras?: string | null
+    fechaCreacion?: Date | string
+    usuarioCreacion: string
+    configuraciones?: VTConfiguracionCamaraUncheckedCreateNestedManyWithoutRegistroInput
+    detalles?: VTRegistroDetalleUncheckedCreateNestedManyWithoutRegistroInput
+    verificacionesDiarias?: VTVerificacionDiariaUncheckedCreateNestedManyWithoutRegistroInput
+  }
+
+  export type VTRegistroCabeceraCreateOrConnectWithoutVerificacionesSemanalesInput = {
+    where: VTRegistroCabeceraWhereUniqueInput
+    create: XOR<VTRegistroCabeceraCreateWithoutVerificacionesSemanalesInput, VTRegistroCabeceraUncheckedCreateWithoutVerificacionesSemanalesInput>
+  }
+
+  export type VTRegistroCabeceraUpsertWithoutVerificacionesSemanalesInput = {
+    update: XOR<VTRegistroCabeceraUpdateWithoutVerificacionesSemanalesInput, VTRegistroCabeceraUncheckedUpdateWithoutVerificacionesSemanalesInput>
+    create: XOR<VTRegistroCabeceraCreateWithoutVerificacionesSemanalesInput, VTRegistroCabeceraUncheckedCreateWithoutVerificacionesSemanalesInput>
+    where?: VTRegistroCabeceraWhereInput
+  }
+
+  export type VTRegistroCabeceraUpdateToOneWithWhereWithoutVerificacionesSemanalesInput = {
+    where?: VTRegistroCabeceraWhereInput
+    data: XOR<VTRegistroCabeceraUpdateWithoutVerificacionesSemanalesInput, VTRegistroCabeceraUncheckedUpdateWithoutVerificacionesSemanalesInput>
+  }
+
+  export type VTRegistroCabeceraUpdateWithoutVerificacionesSemanalesInput = {
+    tipoEntidad?: StringFieldUpdateOperationsInput | string
+    idEntidad?: StringFieldUpdateOperationsInput | string
+    nombreEntidad?: StringFieldUpdateOperationsInput | string
+    anio?: IntFieldUpdateOperationsInput | number
+    fechaRegistro?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    monitorResponsable?: StringFieldUpdateOperationsInput | string
+    tipoCamara?: StringFieldUpdateOperationsInput | string
+    descripcionCamaras?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuarioCreacion?: StringFieldUpdateOperationsInput | string
+    configuraciones?: VTConfiguracionCamaraUpdateManyWithoutRegistroNestedInput
+    detalles?: VTRegistroDetalleUpdateManyWithoutRegistroNestedInput
+    verificacionesDiarias?: VTVerificacionDiariaUpdateManyWithoutRegistroNestedInput
+  }
+
+  export type VTRegistroCabeceraUncheckedUpdateWithoutVerificacionesSemanalesInput = {
+    idRegistro?: IntFieldUpdateOperationsInput | number
+    tipoEntidad?: StringFieldUpdateOperationsInput | string
+    idEntidad?: StringFieldUpdateOperationsInput | string
+    nombreEntidad?: StringFieldUpdateOperationsInput | string
+    anio?: IntFieldUpdateOperationsInput | number
+    fechaRegistro?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    monitorResponsable?: StringFieldUpdateOperationsInput | string
+    tipoCamara?: StringFieldUpdateOperationsInput | string
+    descripcionCamaras?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuarioCreacion?: StringFieldUpdateOperationsInput | string
+    configuraciones?: VTConfiguracionCamaraUncheckedUpdateManyWithoutRegistroNestedInput
+    detalles?: VTRegistroDetalleUncheckedUpdateManyWithoutRegistroNestedInput
+    verificacionesDiarias?: VTVerificacionDiariaUncheckedUpdateManyWithoutRegistroNestedInput
+  }
+
   export type UserCreateManyRoleInput = {
     id?: string
     username: string
@@ -114855,6 +129273,28 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type ActaSupervisionPlantillaCreateManyLicitacionInput = {
+    id?: string
+    nombre: string
+    anio?: number
+    instituciones?: string | null
+    rolesPerfiles?: string | null
+    estado?: boolean
+    logoUrl?: string | null
+    instrucciones?: string | null
+    campos: string
+    codigo?: string | null
+    version?: string | null
+    fecha?: string | null
+    codigoAdicional?: string | null
+    mostrarCodigoAdicional?: boolean
+    correlativoAutomatico?: boolean
+    mostrarCodigoVersionFecha?: boolean
+    createdBy: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type UTUpdateWithoutLicitacionInput = {
     estado?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -114998,6 +129438,74 @@ export namespace Prisma {
     titulo?: StringFieldUpdateOperationsInput | string
     estado?: BoolFieldUpdateOperationsInput | boolean
     instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActaSupervisionPlantillaUpdateWithoutLicitacionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    anio?: IntFieldUpdateOperationsInput | number
+    instituciones?: NullableStringFieldUpdateOperationsInput | string | null
+    rolesPerfiles?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: BoolFieldUpdateOperationsInput | boolean
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    campos?: StringFieldUpdateOperationsInput | string
+    codigo?: NullableStringFieldUpdateOperationsInput | string | null
+    version?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha?: NullableStringFieldUpdateOperationsInput | string | null
+    codigoAdicional?: NullableStringFieldUpdateOperationsInput | string | null
+    mostrarCodigoAdicional?: BoolFieldUpdateOperationsInput | boolean
+    correlativoAutomatico?: BoolFieldUpdateOperationsInput | boolean
+    mostrarCodigoVersionFecha?: BoolFieldUpdateOperationsInput | boolean
+    createdBy?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    respuestas?: ActaSupervisionRespuestaUpdateManyWithoutPlantillaNestedInput
+  }
+
+  export type ActaSupervisionPlantillaUncheckedUpdateWithoutLicitacionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    anio?: IntFieldUpdateOperationsInput | number
+    instituciones?: NullableStringFieldUpdateOperationsInput | string | null
+    rolesPerfiles?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: BoolFieldUpdateOperationsInput | boolean
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    campos?: StringFieldUpdateOperationsInput | string
+    codigo?: NullableStringFieldUpdateOperationsInput | string | null
+    version?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha?: NullableStringFieldUpdateOperationsInput | string | null
+    codigoAdicional?: NullableStringFieldUpdateOperationsInput | string | null
+    mostrarCodigoAdicional?: BoolFieldUpdateOperationsInput | boolean
+    correlativoAutomatico?: BoolFieldUpdateOperationsInput | boolean
+    mostrarCodigoVersionFecha?: BoolFieldUpdateOperationsInput | boolean
+    createdBy?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    respuestas?: ActaSupervisionRespuestaUncheckedUpdateManyWithoutPlantillaNestedInput
+  }
+
+  export type ActaSupervisionPlantillaUncheckedUpdateManyWithoutLicitacionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    anio?: IntFieldUpdateOperationsInput | number
+    instituciones?: NullableStringFieldUpdateOperationsInput | string | null
+    rolesPerfiles?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: BoolFieldUpdateOperationsInput | boolean
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    campos?: StringFieldUpdateOperationsInput | string
+    codigo?: NullableStringFieldUpdateOperationsInput | string | null
+    version?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha?: NullableStringFieldUpdateOperationsInput | string | null
+    codigoAdicional?: NullableStringFieldUpdateOperationsInput | string | null
+    mostrarCodigoAdicional?: BoolFieldUpdateOperationsInput | boolean
+    correlativoAutomatico?: BoolFieldUpdateOperationsInput | boolean
+    mostrarCodigoVersionFecha?: BoolFieldUpdateOperationsInput | boolean
+    createdBy?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -116644,6 +131152,325 @@ export namespace Prisma {
     adjuntoUrl?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type ActaSupervisionRespuestaCreateManyPlantillaInput = {
+    id?: string
+    licitacionId?: number | null
+    anio?: number | null
+    rbd: number
+    nombreEstablecimiento?: string | null
+    direccion?: string | null
+    ciudad?: string | null
+    institucion?: string | null
+    sucursal?: string | null
+    fechaCreacion?: Date | string
+    supervisorNombre?: string | null
+    supervisorRut?: string | null
+    respuestasData: string
+    estado?: string
+    usuario: string
+    correlativo?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ActaSupervisionRespuestaUpdateWithoutPlantillaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licitacionId?: NullableIntFieldUpdateOperationsInput | number | null
+    anio?: NullableIntFieldUpdateOperationsInput | number | null
+    rbd?: IntFieldUpdateOperationsInput | number
+    nombreEstablecimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    ciudad?: NullableStringFieldUpdateOperationsInput | string | null
+    institucion?: NullableStringFieldUpdateOperationsInput | string | null
+    sucursal?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    supervisorNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    supervisorRut?: NullableStringFieldUpdateOperationsInput | string | null
+    respuestasData?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    usuario?: StringFieldUpdateOperationsInput | string
+    correlativo?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActaSupervisionRespuestaUncheckedUpdateWithoutPlantillaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licitacionId?: NullableIntFieldUpdateOperationsInput | number | null
+    anio?: NullableIntFieldUpdateOperationsInput | number | null
+    rbd?: IntFieldUpdateOperationsInput | number
+    nombreEstablecimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    ciudad?: NullableStringFieldUpdateOperationsInput | string | null
+    institucion?: NullableStringFieldUpdateOperationsInput | string | null
+    sucursal?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    supervisorNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    supervisorRut?: NullableStringFieldUpdateOperationsInput | string | null
+    respuestasData?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    usuario?: StringFieldUpdateOperationsInput | string
+    correlativo?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActaSupervisionRespuestaUncheckedUpdateManyWithoutPlantillaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licitacionId?: NullableIntFieldUpdateOperationsInput | number | null
+    anio?: NullableIntFieldUpdateOperationsInput | number | null
+    rbd?: IntFieldUpdateOperationsInput | number
+    nombreEstablecimiento?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    ciudad?: NullableStringFieldUpdateOperationsInput | string | null
+    institucion?: NullableStringFieldUpdateOperationsInput | string | null
+    sucursal?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    supervisorNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    supervisorRut?: NullableStringFieldUpdateOperationsInput | string | null
+    respuestasData?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    usuario?: StringFieldUpdateOperationsInput | string
+    correlativo?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VTConfiguracionCamaraCreateManyCamaraInput = {
+    idConfig?: number
+    idRegistroCabecera: number
+    mes: number
+    numeroCamaraMes: number
+    nombreCamara?: string | null
+    temperaturaMinima?: number | null
+    temperaturaMaxima?: number | null
+  }
+
+  export type VTConfiguracionCamaraUpdateWithoutCamaraInput = {
+    mes?: IntFieldUpdateOperationsInput | number
+    numeroCamaraMes?: IntFieldUpdateOperationsInput | number
+    nombreCamara?: NullableStringFieldUpdateOperationsInput | string | null
+    temperaturaMinima?: NullableFloatFieldUpdateOperationsInput | number | null
+    temperaturaMaxima?: NullableFloatFieldUpdateOperationsInput | number | null
+    registro?: VTRegistroCabeceraUpdateOneRequiredWithoutConfiguracionesNestedInput
+  }
+
+  export type VTConfiguracionCamaraUncheckedUpdateWithoutCamaraInput = {
+    idConfig?: IntFieldUpdateOperationsInput | number
+    idRegistroCabecera?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    numeroCamaraMes?: IntFieldUpdateOperationsInput | number
+    nombreCamara?: NullableStringFieldUpdateOperationsInput | string | null
+    temperaturaMinima?: NullableFloatFieldUpdateOperationsInput | number | null
+    temperaturaMaxima?: NullableFloatFieldUpdateOperationsInput | number | null
+  }
+
+  export type VTConfiguracionCamaraUncheckedUpdateManyWithoutCamaraInput = {
+    idConfig?: IntFieldUpdateOperationsInput | number
+    idRegistroCabecera?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    numeroCamaraMes?: IntFieldUpdateOperationsInput | number
+    nombreCamara?: NullableStringFieldUpdateOperationsInput | string | null
+    temperaturaMinima?: NullableFloatFieldUpdateOperationsInput | number | null
+    temperaturaMaxima?: NullableFloatFieldUpdateOperationsInput | number | null
+  }
+
+  export type VTConfiguracionCamaraCreateManyRegistroInput = {
+    idConfig?: number
+    idCamara: number
+    mes: number
+    numeroCamaraMes: number
+    nombreCamara?: string | null
+    temperaturaMinima?: number | null
+    temperaturaMaxima?: number | null
+  }
+
+  export type VTRegistroDetalleCreateManyRegistroInput = {
+    idDetalle?: number
+    numeroCorrelativo: number
+    dia?: number
+    tipoProducto: string
+    nombreProducto?: string | null
+    mes: number
+    numeroCamara: number
+    temperatura?: number | null
+    fechaRegistro?: Date | string
+    usuarioRegistro: string
+  }
+
+  export type VTVerificacionDiariaCreateManyRegistroInput = {
+    idVerificacion?: number
+    mes: number
+    dia: number
+    fechaVerificacion?: Date | string
+    firmadoPor: string
+    usuarioId?: string | null
+    firma?: string | null
+    firmado?: boolean
+    observaciones?: string | null
+    accionesCorrectivas?: string | null
+  }
+
+  export type VTVerificacionSemanalCreateManyRegistroInput = {
+    idVerificacionSemanal?: number
+    mes: number
+    semana: number
+    firmadoJefeBodega?: boolean
+    fechaFirmaJefeBodega?: Date | string | null
+    usuarioJefeBodega?: string | null
+    firmaJefeBodega?: string | null
+    firmadoJefeZonal?: boolean
+    fechaFirmaJefeZonal?: Date | string | null
+    usuarioJefeZonal?: string | null
+    firmaJefeZonal?: string | null
+  }
+
+  export type VTConfiguracionCamaraUpdateWithoutRegistroInput = {
+    mes?: IntFieldUpdateOperationsInput | number
+    numeroCamaraMes?: IntFieldUpdateOperationsInput | number
+    nombreCamara?: NullableStringFieldUpdateOperationsInput | string | null
+    temperaturaMinima?: NullableFloatFieldUpdateOperationsInput | number | null
+    temperaturaMaxima?: NullableFloatFieldUpdateOperationsInput | number | null
+    camara?: VTCamaraUpdateOneRequiredWithoutConfiguracionesNestedInput
+  }
+
+  export type VTConfiguracionCamaraUncheckedUpdateWithoutRegistroInput = {
+    idConfig?: IntFieldUpdateOperationsInput | number
+    idCamara?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    numeroCamaraMes?: IntFieldUpdateOperationsInput | number
+    nombreCamara?: NullableStringFieldUpdateOperationsInput | string | null
+    temperaturaMinima?: NullableFloatFieldUpdateOperationsInput | number | null
+    temperaturaMaxima?: NullableFloatFieldUpdateOperationsInput | number | null
+  }
+
+  export type VTConfiguracionCamaraUncheckedUpdateManyWithoutRegistroInput = {
+    idConfig?: IntFieldUpdateOperationsInput | number
+    idCamara?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    numeroCamaraMes?: IntFieldUpdateOperationsInput | number
+    nombreCamara?: NullableStringFieldUpdateOperationsInput | string | null
+    temperaturaMinima?: NullableFloatFieldUpdateOperationsInput | number | null
+    temperaturaMaxima?: NullableFloatFieldUpdateOperationsInput | number | null
+  }
+
+  export type VTRegistroDetalleUpdateWithoutRegistroInput = {
+    numeroCorrelativo?: IntFieldUpdateOperationsInput | number
+    dia?: IntFieldUpdateOperationsInput | number
+    tipoProducto?: StringFieldUpdateOperationsInput | string
+    nombreProducto?: NullableStringFieldUpdateOperationsInput | string | null
+    mes?: IntFieldUpdateOperationsInput | number
+    numeroCamara?: IntFieldUpdateOperationsInput | number
+    temperatura?: NullableFloatFieldUpdateOperationsInput | number | null
+    fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuarioRegistro?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type VTRegistroDetalleUncheckedUpdateWithoutRegistroInput = {
+    idDetalle?: IntFieldUpdateOperationsInput | number
+    numeroCorrelativo?: IntFieldUpdateOperationsInput | number
+    dia?: IntFieldUpdateOperationsInput | number
+    tipoProducto?: StringFieldUpdateOperationsInput | string
+    nombreProducto?: NullableStringFieldUpdateOperationsInput | string | null
+    mes?: IntFieldUpdateOperationsInput | number
+    numeroCamara?: IntFieldUpdateOperationsInput | number
+    temperatura?: NullableFloatFieldUpdateOperationsInput | number | null
+    fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuarioRegistro?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type VTRegistroDetalleUncheckedUpdateManyWithoutRegistroInput = {
+    idDetalle?: IntFieldUpdateOperationsInput | number
+    numeroCorrelativo?: IntFieldUpdateOperationsInput | number
+    dia?: IntFieldUpdateOperationsInput | number
+    tipoProducto?: StringFieldUpdateOperationsInput | string
+    nombreProducto?: NullableStringFieldUpdateOperationsInput | string | null
+    mes?: IntFieldUpdateOperationsInput | number
+    numeroCamara?: IntFieldUpdateOperationsInput | number
+    temperatura?: NullableFloatFieldUpdateOperationsInput | number | null
+    fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuarioRegistro?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type VTVerificacionDiariaUpdateWithoutRegistroInput = {
+    mes?: IntFieldUpdateOperationsInput | number
+    dia?: IntFieldUpdateOperationsInput | number
+    fechaVerificacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    firmadoPor?: StringFieldUpdateOperationsInput | string
+    usuarioId?: NullableStringFieldUpdateOperationsInput | string | null
+    firma?: NullableStringFieldUpdateOperationsInput | string | null
+    firmado?: BoolFieldUpdateOperationsInput | boolean
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    accionesCorrectivas?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type VTVerificacionDiariaUncheckedUpdateWithoutRegistroInput = {
+    idVerificacion?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    dia?: IntFieldUpdateOperationsInput | number
+    fechaVerificacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    firmadoPor?: StringFieldUpdateOperationsInput | string
+    usuarioId?: NullableStringFieldUpdateOperationsInput | string | null
+    firma?: NullableStringFieldUpdateOperationsInput | string | null
+    firmado?: BoolFieldUpdateOperationsInput | boolean
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    accionesCorrectivas?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type VTVerificacionDiariaUncheckedUpdateManyWithoutRegistroInput = {
+    idVerificacion?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    dia?: IntFieldUpdateOperationsInput | number
+    fechaVerificacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    firmadoPor?: StringFieldUpdateOperationsInput | string
+    usuarioId?: NullableStringFieldUpdateOperationsInput | string | null
+    firma?: NullableStringFieldUpdateOperationsInput | string | null
+    firmado?: BoolFieldUpdateOperationsInput | boolean
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    accionesCorrectivas?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type VTVerificacionSemanalUpdateWithoutRegistroInput = {
+    mes?: IntFieldUpdateOperationsInput | number
+    semana?: IntFieldUpdateOperationsInput | number
+    firmadoJefeBodega?: BoolFieldUpdateOperationsInput | boolean
+    fechaFirmaJefeBodega?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    usuarioJefeBodega?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaJefeBodega?: NullableStringFieldUpdateOperationsInput | string | null
+    firmadoJefeZonal?: BoolFieldUpdateOperationsInput | boolean
+    fechaFirmaJefeZonal?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    usuarioJefeZonal?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaJefeZonal?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type VTVerificacionSemanalUncheckedUpdateWithoutRegistroInput = {
+    idVerificacionSemanal?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    semana?: IntFieldUpdateOperationsInput | number
+    firmadoJefeBodega?: BoolFieldUpdateOperationsInput | boolean
+    fechaFirmaJefeBodega?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    usuarioJefeBodega?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaJefeBodega?: NullableStringFieldUpdateOperationsInput | string | null
+    firmadoJefeZonal?: BoolFieldUpdateOperationsInput | boolean
+    fechaFirmaJefeZonal?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    usuarioJefeZonal?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaJefeZonal?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type VTVerificacionSemanalUncheckedUpdateManyWithoutRegistroInput = {
+    idVerificacionSemanal?: IntFieldUpdateOperationsInput | number
+    mes?: IntFieldUpdateOperationsInput | number
+    semana?: IntFieldUpdateOperationsInput | number
+    firmadoJefeBodega?: BoolFieldUpdateOperationsInput | boolean
+    fechaFirmaJefeBodega?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    usuarioJefeBodega?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaJefeBodega?: NullableStringFieldUpdateOperationsInput | string | null
+    firmadoJefeZonal?: BoolFieldUpdateOperationsInput | boolean
+    fechaFirmaJefeZonal?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    usuarioJefeZonal?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaJefeZonal?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
 
 
   /**
@@ -116745,6 +131572,18 @@ export namespace Prisma {
      * @deprecated Use MatrizT_RespuestasCabeceraCountOutputTypeDefaultArgs instead
      */
     export type MatrizT_RespuestasCabeceraCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = MatrizT_RespuestasCabeceraCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ActaSupervisionPlantillaCountOutputTypeDefaultArgs instead
+     */
+    export type ActaSupervisionPlantillaCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ActaSupervisionPlantillaCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use VTCamaraCountOutputTypeDefaultArgs instead
+     */
+    export type VTCamaraCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = VTCamaraCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use VTRegistroCabeceraCountOutputTypeDefaultArgs instead
+     */
+    export type VTRegistroCabeceraCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = VTRegistroCabeceraCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use RoleDefaultArgs instead
      */
@@ -117049,6 +131888,42 @@ export namespace Prisma {
      * @deprecated Use AuditLogDefaultArgs instead
      */
     export type AuditLogArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = AuditLogDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ActaSupervisionPlantillaDefaultArgs instead
+     */
+    export type ActaSupervisionPlantillaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ActaSupervisionPlantillaDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ActaSupervisionRespuestaDefaultArgs instead
+     */
+    export type ActaSupervisionRespuestaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ActaSupervisionRespuestaDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use VTCamaraDefaultArgs instead
+     */
+    export type VTCamaraArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = VTCamaraDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use VTConfiguracionCamaraDefaultArgs instead
+     */
+    export type VTConfiguracionCamaraArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = VTConfiguracionCamaraDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use VTRegistroCabeceraDefaultArgs instead
+     */
+    export type VTRegistroCabeceraArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = VTRegistroCabeceraDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use VTRegistroDetalleDefaultArgs instead
+     */
+    export type VTRegistroDetalleArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = VTRegistroDetalleDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use VTProductoCatalogoDefaultArgs instead
+     */
+    export type VTProductoCatalogoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = VTProductoCatalogoDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use VTVerificacionDiariaDefaultArgs instead
+     */
+    export type VTVerificacionDiariaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = VTVerificacionDiariaDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use VTVerificacionSemanalDefaultArgs instead
+     */
+    export type VTVerificacionSemanalArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = VTVerificacionSemanalDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

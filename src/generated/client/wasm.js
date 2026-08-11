@@ -1106,6 +1106,134 @@ exports.Prisma.AuditLogScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.ActaSupervisionPlantillaScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  licitacionId: 'licitacionId',
+  anio: 'anio',
+  instituciones: 'instituciones',
+  rolesPerfiles: 'rolesPerfiles',
+  estado: 'estado',
+  logoUrl: 'logoUrl',
+  instrucciones: 'instrucciones',
+  campos: 'campos',
+  codigo: 'codigo',
+  version: 'version',
+  fecha: 'fecha',
+  codigoAdicional: 'codigoAdicional',
+  mostrarCodigoAdicional: 'mostrarCodigoAdicional',
+  correlativoAutomatico: 'correlativoAutomatico',
+  mostrarCodigoVersionFecha: 'mostrarCodigoVersionFecha',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ActaSupervisionRespuestaScalarFieldEnum = {
+  id: 'id',
+  plantillaId: 'plantillaId',
+  licitacionId: 'licitacionId',
+  anio: 'anio',
+  rbd: 'rbd',
+  nombreEstablecimiento: 'nombreEstablecimiento',
+  direccion: 'direccion',
+  ciudad: 'ciudad',
+  institucion: 'institucion',
+  sucursal: 'sucursal',
+  fechaCreacion: 'fechaCreacion',
+  supervisorNombre: 'supervisorNombre',
+  supervisorRut: 'supervisorRut',
+  respuestasData: 'respuestasData',
+  estado: 'estado',
+  usuario: 'usuario',
+  correlativo: 'correlativo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.VTCamaraScalarFieldEnum = {
+  idCamara: 'idCamara',
+  nombreCamara: 'nombreCamara',
+  tipoCamara: 'tipoCamara',
+  temperaturaMinima: 'temperaturaMinima',
+  temperaturaMaxima: 'temperaturaMaxima',
+  activo: 'activo'
+};
+
+exports.Prisma.VTConfiguracionCamaraScalarFieldEnum = {
+  idConfig: 'idConfig',
+  idRegistroCabecera: 'idRegistroCabecera',
+  idCamara: 'idCamara',
+  mes: 'mes',
+  numeroCamaraMes: 'numeroCamaraMes',
+  nombreCamara: 'nombreCamara',
+  temperaturaMinima: 'temperaturaMinima',
+  temperaturaMaxima: 'temperaturaMaxima'
+};
+
+exports.Prisma.VTRegistroCabeceraScalarFieldEnum = {
+  idRegistro: 'idRegistro',
+  tipoEntidad: 'tipoEntidad',
+  idEntidad: 'idEntidad',
+  nombreEntidad: 'nombreEntidad',
+  anio: 'anio',
+  fechaRegistro: 'fechaRegistro',
+  monitorResponsable: 'monitorResponsable',
+  tipoCamara: 'tipoCamara',
+  descripcionCamaras: 'descripcionCamaras',
+  fechaCreacion: 'fechaCreacion',
+  usuarioCreacion: 'usuarioCreacion'
+};
+
+exports.Prisma.VTRegistroDetalleScalarFieldEnum = {
+  idDetalle: 'idDetalle',
+  idRegistro: 'idRegistro',
+  numeroCorrelativo: 'numeroCorrelativo',
+  dia: 'dia',
+  tipoProducto: 'tipoProducto',
+  nombreProducto: 'nombreProducto',
+  mes: 'mes',
+  numeroCamara: 'numeroCamara',
+  temperatura: 'temperatura',
+  fechaRegistro: 'fechaRegistro',
+  usuarioRegistro: 'usuarioRegistro'
+};
+
+exports.Prisma.VTProductoCatalogoScalarFieldEnum = {
+  idProducto: 'idProducto',
+  nombreProducto: 'nombreProducto',
+  activo: 'activo'
+};
+
+exports.Prisma.VTVerificacionDiariaScalarFieldEnum = {
+  idVerificacion: 'idVerificacion',
+  idRegistro: 'idRegistro',
+  mes: 'mes',
+  dia: 'dia',
+  fechaVerificacion: 'fechaVerificacion',
+  firmadoPor: 'firmadoPor',
+  usuarioId: 'usuarioId',
+  firma: 'firma',
+  firmado: 'firmado',
+  observaciones: 'observaciones',
+  accionesCorrectivas: 'accionesCorrectivas'
+};
+
+exports.Prisma.VTVerificacionSemanalScalarFieldEnum = {
+  idVerificacionSemanal: 'idVerificacionSemanal',
+  idRegistro: 'idRegistro',
+  mes: 'mes',
+  semana: 'semana',
+  firmadoJefeBodega: 'firmadoJefeBodega',
+  fechaFirmaJefeBodega: 'fechaFirmaJefeBodega',
+  usuarioJefeBodega: 'usuarioJefeBodega',
+  firmaJefeBodega: 'firmaJefeBodega',
+  firmadoJefeZonal: 'firmadoJefeZonal',
+  fechaFirmaJefeZonal: 'fechaFirmaJefeZonal',
+  usuarioJefeZonal: 'usuarioJefeZonal',
+  firmaJefeZonal: 'firmaJefeZonal'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1198,7 +1326,16 @@ exports.Prisma.ModelName = {
   FormatoCartaSostenedor: 'FormatoCartaSostenedor',
   DelegacionVisualizacion: 'DelegacionVisualizacion',
   MenuItemOrder: 'MenuItemOrder',
-  AuditLog: 'AuditLog'
+  AuditLog: 'AuditLog',
+  ActaSupervisionPlantilla: 'ActaSupervisionPlantilla',
+  ActaSupervisionRespuesta: 'ActaSupervisionRespuesta',
+  VTCamara: 'VTCamara',
+  VTConfiguracionCamara: 'VTConfiguracionCamara',
+  VTRegistroCabecera: 'VTRegistroCabecera',
+  VTRegistroDetalle: 'VTRegistroDetalle',
+  VTProductoCatalogo: 'VTProductoCatalogo',
+  VTVerificacionDiaria: 'VTVerificacionDiaria',
+  VTVerificacionSemanal: 'VTVerificacionSemanal'
 };
 
 /**

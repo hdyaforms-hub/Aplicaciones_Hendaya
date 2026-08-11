@@ -112,7 +112,7 @@ export async function searchColegiosReport(query: string) {
         const baseWhere: any = {
             OR: [
                 ...(isNumeric ? [{ colRBD: Number(query) }] : []),
-                { nombreEstablecimiento: { contains: query } }
+                { nombreEstablecimiento: { contains: query, mode: 'insensitive' } }
             ]
         }
 

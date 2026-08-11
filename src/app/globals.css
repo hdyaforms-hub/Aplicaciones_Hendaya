@@ -31,8 +31,18 @@ input, select, textarea {
   font-weight: 700 !important; /* Bold as requested */
 }
 
+input.header-title-input,
+input.dark-input, select.dark-input, textarea.dark-input {
+  color: #ffffff !important;
+}
+
 input::placeholder, textarea::placeholder {
   color: #666666 !important;
+  font-weight: 400 !important;
+}
+
+input.dark-input::placeholder, textarea.dark-input::placeholder {
+  color: #94a3b8 !important;
   font-weight: 400 !important;
 }
 

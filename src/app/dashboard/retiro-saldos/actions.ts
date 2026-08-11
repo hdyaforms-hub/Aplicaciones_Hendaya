@@ -36,12 +36,67 @@ export async function searchProductosRetiro(query: string, tipoOperacion: string
         where: {
             tipoProducto: tipoNum,
             OR: [
-                { nombre: { contains: query } },
-                { codigo: { contains: query } }
+                { nombre: { contains: query, mode: 'insensitive' } },
+                { codigo: { contains: query, mode: 'insensitive' } }
             ]
         },
-        take: 10
+        take: 15
     })
+}
+
+/**
+ * Searches for colegios/RBD for Retiro de Saldos
+ */
+export async function searchColegiosRetiro(query: string) {
+    const session = await getSession()
+    const permissions = session?.user?.role?.permissions || []
+    const roleName = session?.user?.role?.name || ''
+    const isAdmin = roleName === 'Administrador' || permissions.includes('manage_sucursales')
+
+    if (!permissions.includes('view_retiro_saldos') && !permissions.includes('view_solicitud_gas') && !isAdmin) {
+        return { error: 'No tienes permisos para buscar' }
+    }
+
+    if (!query || query.trim() === '') {
+        return { colegios: [] }
+    }
+
+    const trimmedQuery = query.trim()
+    const isNumeric = !isNaN(Number(trimmedQuery))
+
+    try {
+        const dbUser = await (prisma.user as any).findUnique({
+            where: { id: session?.user?.id as string },
+            include: { sucursales: true }
+        })
+        const userSucursales = dbUser?.sucursales?.map((s: any) => s.nombre) || []
+
+        let whereClause: any = {}
+        if (!isAdmin) {
+            const uts = await prisma.uT.findMany({
+                where: { sucursal: { nombre: { in: userSucursales } } },
+                select: { codUT: true }
+            })
+            const allowedUTs = uts.map(ut => ut.codUT)
+            whereClause.colut = { in: allowedUTs }
+        }
+
+        const colegios = await prisma.colegios.findMany({
+            where: {
+                ...whereClause,
+                OR: [
+                    ...(isNumeric ? [{ colRBD: Number(trimmedQuery) }] : []),
+                    { nombreEstablecimiento: { contains: trimmedQuery, mode: 'insensitive' } }
+                ]
+            },
+            take: 15
+        })
+
+        return { colegios }
+    } catch (e) {
+        console.error("Error searching colegios retiro:", e)
+        return { error: 'Error en la búsqueda' }
+    }
 }
 
 import nodemailer from 'nodemailer'

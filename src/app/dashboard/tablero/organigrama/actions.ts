@@ -15,7 +15,7 @@ export async function getSucursalesList() {
 
 export async function getOrganigramaData() {
     try {
-        const [zonales, jefesOperacion, supervisores, colegios] = await Promise.all([
+        const [zonales, jefesOperacion, supervisores, colegios, distancias] = await Promise.all([
             // 1. Fetch Jefes Zonales (Active Only)
             prisma.jefeZonal.findMany({
                 where: { vigente: true },
@@ -52,14 +52,24 @@ export async function getOrganigramaData() {
                 orderBy: { nombre: 'asc' }
             }),
 
-            // 4. Fetch Colegios to map RBD to Name and Sucursal string
+            // 4. Fetch Colegios to map RBD to Name, Institution and Sucursal
             prisma.colegios.findMany({
                 select: {
                     colRBD: true,
                     nombreEstablecimiento: true,
+                    institucion: true,
                     sucursal: true
                 },
                 distinct: ['colRBD']
+            }),
+
+            // 5. Fetch distancias cache (bodega → RBD)
+            prisma.distanciaCache.findMany({
+                select: {
+                    sucursal: true,
+                    rbd: true,
+                    distanciaKm: true
+                }
             })
         ])
 
@@ -67,7 +77,8 @@ export async function getOrganigramaData() {
             zonales,
             jefesOperacion,
             supervisores,
-            colegios
+            colegios,
+            distancias
         }
     } catch (e) {
         console.error(e)
@@ -75,7 +86,8 @@ export async function getOrganigramaData() {
             zonales: [],
             jefesOperacion: [],
             supervisores: [],
-            colegios: []
+            colegios: [],
+            distancias: []
         }
     }
 }

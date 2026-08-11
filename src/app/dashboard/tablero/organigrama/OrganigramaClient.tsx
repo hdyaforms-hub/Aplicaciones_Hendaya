@@ -8,6 +8,7 @@ interface OrganigramaClientProps {
     initialJefesOperacion: any[]
     initialSupervisores: any[]
     colegios: any[]
+    distancias: any[]
 }
 
 export default function OrganigramaClient({
@@ -15,7 +16,8 @@ export default function OrganigramaClient({
     initialZonales,
     initialJefesOperacion,
     initialSupervisores,
-    colegios
+    colegios,
+    distancias
 }: OrganigramaClientProps) {
     const [selectedSucId, setSelectedSucId] = useState(sucursales[0]?.id || '')
     const [hoveredSuperId, setHoveredSuperId] = useState<string | null>(null)
@@ -55,6 +57,28 @@ export default function OrganigramaClient({
     const getRbdName = (rbd: number) => {
         const col = colegios.find(c => c.colRBD === rbd)
         return col ? col.nombreEstablecimiento : 'Establecimiento no identificado'
+    }
+
+    const getRbdInstitucion = (rbd: number) => {
+        const col = colegios.find(c => c.colRBD === rbd)
+        return col ? col.institucion : ''
+    }
+
+    const getKmsFromBodega = (rbd: number) => {
+        const sucursal = selectedSucursal?.nombre
+        if (!sucursal) return null
+        const dist = distancias.find((d: any) => d.sucursal === sucursal && d.rbd === rbd)
+        return dist ? dist.distanciaKm : null
+    }
+
+    // Agrupa RBDs del supervisor por institución
+    const getInstitucionesSupervisor = (sup: any) => {
+        const map = new Map<string, number>()
+        for (const r of sup.rbdsAuditar) {
+            const inst = getRbdInstitucion(r.rbd) || 'Sin institución'
+            map.set(inst, (map.get(inst) ?? 0) + 1)
+        }
+        return Array.from(map.entries()).map(([nombre, cantidad]) => ({ nombre, cantidad }))
     }
 
     const hasAnyPersonnel = activeZonales.length > 0
@@ -372,6 +396,25 @@ export default function OrganigramaClient({
                                     <div className="text-[11px] text-slate-500 italic px-1">Sin RBDs asignados.</div>
                                 )}
                             </div>
+
+                            {/* Instituciones del supervisor */}
+                            {sup.rbdsAuditar.length > 0 && (
+                                <div className="space-y-1">
+                                    <h5 className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
+                                        <span>🏛️</span> Instituciones ({getInstitucionesSupervisor(sup).length})
+                                    </h5>
+                                    <div className="space-y-1">
+                                        {getInstitucionesSupervisor(sup).map((inst) => (
+                                            <div key={inst.nombre} className="flex justify-between items-center bg-slate-800/40 px-2.5 py-1 rounded text-xs border border-slate-800">
+                                                <span className="text-slate-200 font-medium truncate">{inst.nombre}</span>
+                                                <span className="shrink-0 ml-2 px-1.5 py-0.5 bg-cyan-500/20 text-cyan-300 font-bold rounded border border-cyan-500/30 text-[10px]">
+                                                    {inst.cantidad} RBD{inst.cantidad !== 1 ? 's' : ''}
+                                                </span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     )
                 })()
@@ -457,20 +500,64 @@ export default function OrganigramaClient({
                                     )}
                                 </div>
 
-                                {selectedSupervisor.rbdsAuditar.length > 0 ? (
-                                    <div className="space-y-2 max-h-72 overflow-y-auto pr-1">
-                                        {modalFilteredRbds.map((r: any) => (
-                                            <div key={r.rbd} className="bg-slate-800/50 p-3 rounded-xl border border-slate-700/60 flex items-center justify-between gap-3 hover:bg-slate-800 transition-colors">
-                                                <div className="flex items-center gap-2.5 min-w-0">
-                                                    <span className="px-2.5 py-1 bg-cyan-500/20 text-cyan-300 font-mono font-bold text-xs rounded-lg shrink-0 border border-cyan-500/30">
-                                                        RBD {r.rbd}
-                                                    </span>
-                                                    <span className="text-xs text-slate-200 font-medium truncate">
-                                                        {getRbdName(r.rbd)}
+                                {/* Instituciones del supervisor */}
+                                {selectedSupervisor.rbdsAuditar.length > 0 && (
+                                    <div className="space-y-1.5">
+                                        <h6 className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
+                                            <span>🏛️</span> Instituciones Asociadas
+                                        </h6>
+                                        <div className="grid grid-cols-1 gap-1.5">
+                                            {getInstitucionesSupervisor(selectedSupervisor).map((inst) => (
+                                                <div key={inst.nombre} className="flex justify-between items-center bg-slate-800/60 px-3 py-2 rounded-lg border border-slate-700/50">
+                                                    <span className="text-xs text-slate-200 font-medium truncate">{inst.nombre}</span>
+                                                    <span className="shrink-0 ml-2 px-2 py-0.5 bg-indigo-500/20 text-indigo-300 font-bold rounded-lg border border-indigo-500/30 text-[10px]">
+                                                        {inst.cantidad} RBD{inst.cantidad !== 1 ? 's' : ''}
                                                     </span>
                                                 </div>
-                                            </div>
-                                        ))}
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {selectedSupervisor.rbdsAuditar.length > 0 ? (
+                                    <div className="space-y-2 max-h-72 overflow-y-auto pr-1">
+                                        {modalFilteredRbds.map((r: any) => {
+                                            const kms = getKmsFromBodega(r.rbd)
+                                            const institucion = getRbdInstitucion(r.rbd)
+                                            return (
+                                                <div key={r.rbd} className="bg-slate-800/50 p-3 rounded-xl border border-slate-700/60 hover:bg-slate-800 transition-colors space-y-1.5">
+                                                    {/* Institución */}
+                                                    {institucion && (
+                                                        <div className="flex items-center gap-1.5">
+                                                            <span className="text-[9px] font-black uppercase tracking-wider text-indigo-400">🏛️ {institucion}</span>
+                                                        </div>
+                                                    )}
+                                                    {/* RBD + Nombre + Kms */}
+                                                    <div className="flex items-center justify-between gap-3">
+                                                        <div className="flex items-center gap-2.5 min-w-0">
+                                                            <span className="px-2.5 py-1 bg-cyan-500/20 text-cyan-300 font-mono font-bold text-xs rounded-lg shrink-0 border border-cyan-500/30">
+                                                                RBD {r.rbd}
+                                                            </span>
+                                                            <span className="text-xs text-slate-200 font-medium truncate">
+                                                                {getRbdName(r.rbd)}
+                                                            </span>
+                                                        </div>
+                                                        {/* Kms Aproximados */}
+                                                        {kms !== null ? (
+                                                            <div className="shrink-0 flex flex-col items-end">
+                                                                <span className="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Kms Aproximados</span>
+                                                                <span className="text-xs font-extrabold text-emerald-400">{kms.toFixed(1)} km</span>
+                                                            </div>
+                                                        ) : (
+                                                            <div className="shrink-0 flex flex-col items-end">
+                                                                <span className="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Kms Aproximados</span>
+                                                                <span className="text-[10px] text-slate-500 italic">N/D</span>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            )
+                                        })}
                                         {modalFilteredRbds.length === 0 && (
                                             <div className="text-xs text-slate-400 text-center py-6 italic bg-slate-800/20 rounded-xl">
                                                 No se encontraron RBDs que coincidan con la búsqueda.
