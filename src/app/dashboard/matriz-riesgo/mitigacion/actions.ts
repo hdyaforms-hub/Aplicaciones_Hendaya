@@ -1,6 +1,6 @@
 'use server'
 
-import { prisma } from '@/lib/prisma'
+import { prisma, rawPrisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { revalidatePath } from 'next/cache'
 import { endOfMonth } from 'date-fns'
@@ -11,7 +11,18 @@ async function getUserFilters() {
 
     const isAdmin = session.user.role?.name === 'Administrador' || session.user.role?.name === 'admin';
     const userSucursales = session.user.sucursales || [];
-    const userRbds = session.user.rbds || [];
+    let userRbds: number[] = session.user.rbds || [];
+
+    if (session.user.id) {
+        const dbUser = await rawPrisma.user.findUnique({
+            where: { id: session.user.id },
+            select: { rbds: true }
+        })
+        if (dbUser) {
+            userRbds = dbUser.rbds
+        }
+    }
+
     let allowedUTs: number[] = [];
 
     if (!isAdmin && userSucursales.length > 0) {

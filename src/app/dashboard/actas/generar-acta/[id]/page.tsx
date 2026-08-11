@@ -1,5 +1,5 @@
 import { getSession } from '@/lib/session'
-import { prisma } from '@/lib/prisma'
+import { prisma, rawPrisma } from '@/lib/prisma'
 import { redirect } from 'next/navigation'
 import LlenarActaClient from './LlenarActaClient'
 
@@ -48,6 +48,31 @@ export default async function LlenarActaPage({ params }: { params: Promise<{ id:
             where: { id: actaRespuesta.id },
             data: { correlativo: corrVal }
         }).catch(() => {})
+    }
+
+    if (actaRespuesta.rbd) {
+        const colegio = await (rawPrisma as any).colegios.findFirst({
+            where: { colRBD: Number(actaRespuesta.rbd) }
+        })
+        if (colegio) {
+            if (!actaRespuesta.nombreEstablecimiento || actaRespuesta.nombreEstablecimiento !== colegio.nombreEstablecimiento) {
+                actaRespuesta.nombreEstablecimiento = colegio.nombreEstablecimiento
+                actaRespuesta.direccion = colegio.direccionEstablecimiento
+                actaRespuesta.ciudad = colegio.comuna
+                actaRespuesta.institucion = colegio.institucion
+                actaRespuesta.sucursal = colegio.sucursal
+                await (rawPrisma as any).actaSupervisionRespuesta.update({
+                    where: { id: actaRespuesta.id },
+                    data: {
+                        nombreEstablecimiento: colegio.nombreEstablecimiento,
+                        direccion: colegio.direccionEstablecimiento,
+                        ciudad: colegio.comuna,
+                        institucion: colegio.institucion,
+                        sucursal: colegio.sucursal
+                    }
+                }).catch(() => {})
+            }
+        }
     }
 
     return (

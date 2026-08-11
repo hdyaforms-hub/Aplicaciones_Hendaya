@@ -1,7 +1,7 @@
 'use server'
 
 import { getSession } from '@/lib/session'
-import { prisma } from '@/lib/prisma'
+import { prisma, rawPrisma } from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
 import { logAuditAction } from '@/lib/audit'
 import nodemailer from 'nodemailer'
@@ -89,6 +89,31 @@ export async function getActaFullData(id: string) {
             return { success: false, error: 'No tienes permisos para visualizar este tipo de acta según tu perfil' }
         }
 
+        if (acta.rbd) {
+            const colegio = await (rawPrisma as any).colegios.findFirst({
+                where: { colRBD: Number(acta.rbd) }
+            })
+            if (colegio) {
+                if (!acta.nombreEstablecimiento || acta.nombreEstablecimiento !== colegio.nombreEstablecimiento) {
+                    acta.nombreEstablecimiento = colegio.nombreEstablecimiento
+                    acta.direccion = colegio.direccionEstablecimiento
+                    acta.ciudad = colegio.comuna
+                    acta.institucion = colegio.institucion
+                    acta.sucursal = colegio.sucursal
+                    await (rawPrisma as any).actaSupervisionRespuesta.update({
+                        where: { id: acta.id },
+                        data: {
+                            nombreEstablecimiento: colegio.nombreEstablecimiento,
+                            direccion: colegio.direccionEstablecimiento,
+                            ciudad: colegio.comuna,
+                            institucion: colegio.institucion,
+                            sucursal: colegio.sucursal
+                        }
+                    }).catch(() => {})
+                }
+            }
+        }
+
         return { success: true, data: acta }
     } catch (error: any) {
         return { success: false, error: error.message || 'Error al obtener datos del acta' }
@@ -151,7 +176,7 @@ export async function getColegiosForPlantilla(plantillaId: string) {
             whereCondition.colRBD = { in: userRbds }
         }
 
-        const allColegios = await (prisma as any).colegios.findMany({
+        const allColegios = await (rawPrisma as any).colegios.findMany({
             where: whereCondition,
             orderBy: { colRBD: 'asc' }
         })
@@ -197,8 +222,8 @@ export async function createActaResponse(plantillaId: string, colRBD: number) {
             return { success: false, error: 'No tienes permisos para generar actas de este tipo según tu perfil' }
         }
 
-        // Obtenemos los datos del colegio para autocompletar la cabecera
-        const colegio = await (prisma as any).colegios.findFirst({
+        // Obtenemos los datos del colegio para autocompletar la cabecera usando rawPrisma
+        const colegio = await (rawPrisma as any).colegios.findFirst({
             where: { colRBD: Number(colRBD) }
         })
 

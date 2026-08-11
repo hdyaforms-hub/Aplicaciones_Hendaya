@@ -74,7 +74,6 @@ export async function POST(request: Request) {
                 permissions: permissions,
             },
             sucursales: user.sucursales?.map((s: any) => s.nombre) || [],
-            rbds: user.rbds || [],
         }
 
         if (user.mustChangePassword) {

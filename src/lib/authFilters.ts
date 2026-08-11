@@ -16,7 +16,17 @@ export async function getRoleBasedRbdFilter(): Promise<number[] | null> {
         return null // null means "no filter, allow all"
     }
 
-    // Supervisor: direct RBDs
+    // Supervisor / user direct RBDs
+    if (session.user.id) {
+        const dbUser = await rawPrisma.user.findUnique({
+            where: { id: session.user.id },
+            select: { rbds: true }
+        })
+        if (dbUser && dbUser.rbds.length > 0) {
+            return dbUser.rbds
+        }
+    }
+
     if (roleName.includes('supervisor')) {
         return session.user.rbds || []
     }
