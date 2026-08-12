@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { fetchAuditLogsAction, fetchAuditUsersAction, fetchAllAuditLogsForExport } from './actions'
-import Link from 'next/link'
 
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
@@ -266,13 +265,6 @@ export default function AuditoriaPage() {
 
                     {/* Botones de Descarga */}
                     <div className="flex flex-wrap items-center gap-3 shrink-0">
-                        <Link
-                            href="/dashboard/mantenedor/actas-supervision/asociar-rbd"
-                            className="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-bold shadow-lg shadow-slate-800/30 transition-all flex items-center gap-2 text-sm"
-                        >
-                            <span>🏫</span> Asociar RBD a Usuario
-                        </Link>
-
                         <button
                             onClick={handleExportPDF}
                             disabled={exporting || totalRecords === 0}

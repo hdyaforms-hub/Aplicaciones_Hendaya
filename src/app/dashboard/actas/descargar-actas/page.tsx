@@ -1,5 +1,5 @@
 import { getSession } from '@/lib/session'
-import { prisma } from '@/lib/prisma'
+import { prisma, rawPrisma } from '@/lib/prisma'
 import { redirect } from 'next/navigation'
 import { logAuditAction } from '@/lib/audit'
 import DescargarActasClient from './DescargarActasClient'
@@ -32,7 +32,33 @@ export default async function DescargarActasPage() {
         detalle: 'Acceso a la vista de consulta y descarga masiva de actas'
     })
 
-    // En "Descargar Actas", todos los usuarios con permiso pueden ver las actas de TODOS los usuarios
+    let userRbds: number[] = session.user?.rbds || []
+    let userSucursales: string[] = session.user?.sucursales || []
+    let userRoleName = session.user?.role?.name || ''
+    let userRoleId = session.user?.role?.id || ''
+    const username = session.user?.username || ''
+
+    if (!isAdmin && session.user?.id) {
+        const dbUser = await rawPrisma.user.findUnique({
+            where: { id: session.user.id },
+            include: {
+                sucursales: true,
+                delegaciones: { include: { sucursal: true } },
+                role: true
+            }
+        })
+        if (dbUser) {
+            userRbds = dbUser.rbds || []
+            const userAssignedSucursales = dbUser.sucursales?.map((s: any) => s.nombre) || []
+            const userDelegatedSucursales = dbUser.delegaciones?.map((d: any) => d.sucursal?.nombre).filter(Boolean) as string[] || []
+            userSucursales = Array.from(new Set([...userAssignedSucursales, ...userDelegatedSucursales, ...(session.user.sucursales || [])]))
+            if (dbUser.role) {
+                userRoleName = dbUser.role.name
+                userRoleId = dbUser.role.id
+            }
+        }
+    }
+
     const respuestasRaw = await (prisma as any).actaSupervisionRespuesta.findMany({
         include: {
             plantilla: true
@@ -47,10 +73,38 @@ export default async function DescargarActasPage() {
     })
     const colegiosMap = new Map(colegios.map((c: any) => [c.colRBD, c.sucursal]))
 
-    const respuestas = respuestasRaw.map((r: any) => ({
+    const respuestasEnriquecidas = respuestasRaw.map((r: any) => ({
         ...r,
         sucursal: r.sucursal || colegiosMap.get(r.rbd) || null
     }))
+
+    let respuestas = respuestasEnriquecidas
+
+    if (!isAdmin) {
+        respuestas = respuestasEnriquecidas.filter((r: any) => {
+            // Permiso por plantilla (roles/perfiles)
+            if (r.plantilla?.rolesPerfiles) {
+                try {
+                    const allowed: string[] = JSON.parse(r.plantilla.rolesPerfiles)
+                    if (Array.isArray(allowed) && allowed.length > 0) {
+                        const allowedRole = allowed.includes(userRoleName) || allowed.includes(userRoleId)
+                        if (!allowedRole) return false
+                    }
+                } catch {}
+            }
+
+            // Permiso por asociación al perfil de usuario (creador, RBD asignado o Sucursal autorizada)
+            const isOwner = r.usuario === username
+            const matchesRbd = userRbds.includes(Number(r.rbd))
+            const rbdSucursal = colegiosMap.get(Number(r.rbd))
+            const matchesSucursal = Boolean(
+                (r.sucursal && userSucursales.includes(String(r.sucursal))) ||
+                (rbdSucursal && userSucursales.includes(String(rbdSucursal)))
+            )
+
+            return isOwner || matchesRbd || matchesSucursal
+        })
+    }
 
     const plantillas = await (prisma as any).actaSupervisionPlantilla.findMany({
         orderBy: { createdAt: 'desc' }
