@@ -57,6 +57,12 @@ function getModuleInfoFromPath(path: string): { modulo: string; detalle: string 
         if (path.includes('/ingresar')) return { modulo: 'Matriz de Riesgo', detalle: 'Accedió a Ingresar nueva Matriz' }
         if (path.includes('/detalle')) return { modulo: 'Matriz de Riesgo', detalle: 'Accedió a Detalle Matriz' }
         if (path.includes('/mitigacion')) return { modulo: 'Matriz de Riesgo', detalle: 'Accedió a Cierre de Mitigación' }
+        if (path.includes('/cerrar-matriz')) return { modulo: 'Matriz de Riesgo', detalle: 'Accedió a Sol. desviación Matriz' }
+        if (path.includes('/historico')) return { modulo: 'Matriz de Riesgo', detalle: 'Accedió a Histórico de Matrices' }
+        if (path.includes('/estado-avance')) return { modulo: 'Matriz de Riesgo', detalle: 'Accedió a Estado de Avance' }
+        if (path.includes('/auditoria')) return { modulo: 'Matriz de Riesgo', detalle: 'Accedió a Auditoría Externa' }
+        if (path.includes('/inf-auditoria-mitigacion')) return { modulo: 'Matriz de Riesgo', detalle: 'Accedió a Inf. Auditoria Mitigación' }
+        if (path.includes('/hoja-b-estandar-pae')) return { modulo: 'Matriz de Riesgo', detalle: 'Accedió a Hoja B Estandar Pae' }
         if (path.includes('/matriz-2026')) return { modulo: 'Matriz de Riesgo', detalle: 'Accedió a Matriz 2026' }
         return { modulo: 'Matriz de Riesgo', detalle: 'Accedió a Matriz de Riesgo' }
     }

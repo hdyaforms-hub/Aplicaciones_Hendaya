@@ -313,10 +313,15 @@ export default function RespuestaEditorClient({ respuestaCabecera, colegioNombre
                 <div className="p-6 space-y-6">
                     {currentQuestions.map((q: any, idx: number) => (
                         <div key={q.id} className="p-4 bg-slate-50 rounded-xl border border-gray-100">
-                            <label className="block text-sm font-bold text-slate-700 mb-2">
+                            <label className="block text-sm font-bold text-slate-700 mb-1">
                                 {idx + 1}. {q.preguntaNombre}
                                 {q.obligatorio && <span className="text-red-500 ml-1" title="Obligatorio">*</span>}
                             </label>
+                            {q.justificacion && (
+                                <div className="mb-3 p-2.5 bg-amber-50/80 border border-amber-200/70 rounded-xl text-xs text-amber-900 font-medium leading-relaxed">
+                                    <span className="font-bold text-amber-950">💬 Observación / Instrucción:</span> {q.justificacion}
+                                </div>
+                            )}
                             {renderQuestionInput(q)}
                         </div>
                     ))}

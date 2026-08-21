@@ -486,106 +486,73 @@ export default function MatrizResponderClient({ matrix, uts, colegios, sessionUs
         <div className="space-y-6">
             {/* Geolocation Status Banner */}
             {geoStatus === 'active' && (
-                <div className="bg-emerald-50 border border-emerald-100 rounded-3xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-in fade-in duration-300">
-                    <div className="flex items-center gap-3">
-                        <div className="relative flex h-3 w-3 shrink-0">
+                <div className="bg-emerald-50/80 border border-emerald-200/60 rounded-2xl px-3.5 py-2 flex items-center justify-between gap-2 mb-5 animate-in fade-in duration-200 text-xs">
+                    <div className="flex items-center gap-2 min-w-0">
+                        <span className="relative flex h-2.5 w-2.5 shrink-0">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
-                        </div>
-                        <div>
-                            <p className="text-sm font-bold text-emerald-950 flex items-center gap-1.5">
-                                📍 Compartiendo Geolocalización
-                            </p>
-                            <p className="text-xs text-emerald-800 mt-0.5 font-medium">
-                                Su ubicación está siendo compartida activamente para el registro seguro de la auditoría.
-                            </p>
-                        </div>
+                            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                        </span>
+                        <span className="font-bold text-emerald-950 truncate">📍 Ubicación activa:</span>
+                        <span className="text-emerald-800 hidden sm:inline truncate">Registrando coordenadas para la auditoría</span>
                     </div>
                     {geoCoords && (
-                        <div className="bg-white/80 backdrop-blur-sm border border-emerald-200/50 px-3 py-1 rounded-2xl text-[10px] font-black text-emerald-900 tracking-wider shrink-0 self-start sm:self-center">
-                            LAT: {geoCoords.lat.toFixed(6)} | LNG: {geoCoords.lng.toFixed(6)}
-                        </div>
+                        <span className="bg-white border border-emerald-200/60 px-2 py-0.5 rounded-lg text-[10px] font-bold text-emerald-900 shrink-0">
+                            LAT: {geoCoords.lat.toFixed(5)} | LNG: {geoCoords.lng.toFixed(5)}
+                        </span>
                     )}
                 </div>
             )}
             {geoStatus === 'denied' && (
-                <div className="bg-red-50 border border-red-200 rounded-3xl p-4 animate-in fade-in duration-300 space-y-3">
-                    <div className="flex items-start gap-3">
-                        <span className="text-red-500 text-lg shrink-0 mt-0.5">🔒</span>
-                        <div className="flex-1">
-                            <p className="text-sm font-black text-red-900">
-                                Geolocalización bloqueada para este sitio
-                            </p>
-                            <p className="text-xs text-red-700 mt-1 font-medium leading-relaxed">
-                                El navegador tiene bloqueado el acceso a la ubicación <b>para esta página</b>. Siga estos pasos para activarla:
-                            </p>
-                            <ol className="mt-2 space-y-1 text-xs text-red-800 font-medium list-decimal list-inside leading-relaxed">
-                                <li>Haga clic en el ícono 🔒 (candado) a la izquierda de la URL en el navegador</li>
-                                <li>Seleccione <b>"Permisos del sitio"</b> o <b>"Configuración del sitio"</b></li>
-                                <li>En <b>"Ubicación"</b>, cambie de <b>"Bloquear"</b> a <b>"Permitir"</b></li>
-                                <li>Recargue la página y vuelva a ingresar</li>
-                            </ol>
-                        </div>
-                    </div>
-                    <div className="flex justify-end">
-                        <button
-                            type="button"
-                            onClick={() => requestGeoPosition(true)}
-                            disabled={geoRetrying}
-                            className="px-4 py-2 bg-red-600 hover:bg-red-700 disabled:bg-red-300 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-2"
-                        >
-                            {geoRetrying ? <><span className="animate-spin">↻</span> Verificando...</> : '🔄 Reintentar'}
-                        </button>
-                    </div>
-                </div>
-            )}
-            {geoStatus === 'unavailable' && (
-                <div className="bg-amber-50 border border-amber-200 rounded-3xl p-4 flex items-center justify-between gap-3 animate-in fade-in duration-300">
-                    <div className="flex items-center gap-3">
-                        <span className="text-amber-500 text-lg shrink-0">⚠️</span>
-                        <div>
-                            <p className="text-sm font-bold text-amber-950">
-                                No se pudo obtener la ubicación
-                            </p>
-                            <p className="text-xs text-amber-800 mt-0.5 font-medium">
-                                El servicio de ubicación tardó demasiado o no está disponible. Verifique que la ubicación esté activada en su dispositivo.
-                            </p>
-                        </div>
+                <div className="bg-red-50/90 border border-red-200 rounded-2xl px-3.5 py-2 flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-5 animate-in fade-in duration-200 text-xs">
+                    <div className="flex items-center gap-2 min-w-0">
+                        <span className="text-red-500 text-sm shrink-0">🔒</span>
+                        <p className="text-red-900 leading-tight">
+                            <span className="font-bold">Ubicación bloqueada:</span>{' '}
+                            <span className="text-red-700">Haga clic en el candado 🔒 de la barra de dirección, active <b>"Ubicación: Permitir"</b> y recargue.</span>
+                        </p>
                     </div>
                     <button
                         type="button"
                         onClick={() => requestGeoPosition(true)}
                         disabled={geoRetrying}
-                        className="shrink-0 px-4 py-2 bg-amber-600 hover:bg-amber-700 disabled:bg-amber-300 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-2"
+                        className="px-2.5 py-1 bg-red-600 hover:bg-red-700 disabled:bg-red-300 text-white rounded-lg text-[11px] font-bold transition-all flex items-center gap-1 shrink-0 self-end sm:self-center cursor-pointer shadow-xs"
                     >
-                        {geoRetrying ? <><span className="animate-spin">↻</span> Verificando...</> : '🔄 Reintentar'}
+                        {geoRetrying ? <><span className="animate-spin text-[10px]">↻</span> Verificando...</> : '🔄 Reintentar'}
+                    </button>
+                </div>
+            )}
+            {geoStatus === 'unavailable' && (
+                <div className="bg-amber-50/90 border border-amber-200 rounded-2xl px-3.5 py-2 flex items-center justify-between gap-2 mb-5 animate-in fade-in duration-200 text-xs">
+                    <div className="flex items-center gap-2 min-w-0">
+                        <span className="text-amber-500 text-sm shrink-0">⚠️</span>
+                        <p className="text-amber-900 leading-tight truncate">
+                            <span className="font-bold">Ubicación no disponible:</span> <span className="text-amber-800">Verifique el GPS o conexión de su dispositivo.</span>
+                        </p>
+                    </div>
+                    <button
+                        type="button"
+                        onClick={() => requestGeoPosition(true)}
+                        disabled={geoRetrying}
+                        className="px-2.5 py-1 bg-amber-600 hover:bg-amber-700 disabled:bg-amber-300 text-white rounded-lg text-[11px] font-bold transition-all flex items-center gap-1 shrink-0 cursor-pointer shadow-xs"
+                    >
+                        {geoRetrying ? <><span className="animate-spin text-[10px]">↻</span> Verificando...</> : '🔄 Reintentar'}
                     </button>
                 </div>
             )}
             {geoStatus === 'checking' && (
-                <div className="bg-slate-50 border border-slate-100 rounded-3xl p-4 flex items-center gap-3 animate-in fade-in duration-300">
+                <div className="bg-slate-50 border border-slate-200/80 rounded-2xl px-3.5 py-2 flex items-center gap-2 mb-5 animate-in fade-in duration-200 text-xs">
                     <span className="animate-spin text-slate-500 text-xs shrink-0">🔄</span>
-                    <div>
-                        <p className="text-sm font-bold text-slate-900">
-                            Verificando geolocalización...
-                        </p>
-                        <p className="text-xs text-slate-500 mt-0.5 font-medium">
-                            Si aparece un diálogo del navegador solicitando permiso, por favor seleccione <b>Permitir</b>.
-                        </p>
-                    </div>
+                    <p className="text-slate-700 truncate">
+                        <span className="font-bold">Verificando geolocalización...</span> (Si aparece un diálogo, seleccione <b>Permitir</b>)
+                    </p>
                 </div>
             )}
             {geoStatus === 'unsupported' && (
-                <div className="bg-slate-50 border border-slate-100 rounded-3xl p-4 flex items-center gap-3 animate-in fade-in duration-300">
-                    <span className="text-slate-500 shrink-0">🚫</span>
-                    <div>
-                        <p className="text-sm font-bold text-slate-900">
-                            Geolocalización no soportada
-                        </p>
-                        <p className="text-xs text-slate-500 mt-0.5 font-medium">
-                            Su navegador o dispositivo actual no permite el uso de ubicación.
-                        </p>
-                    </div>
+                <div className="bg-slate-50 border border-slate-200/80 rounded-2xl px-3.5 py-2 flex items-center gap-2 mb-5 animate-in fade-in duration-200 text-xs">
+                    <span className="text-slate-400 text-sm shrink-0">🚫</span>
+                    <p className="text-slate-600 truncate">
+                        <span className="font-bold">Geolocalización no soportada:</span> Su navegador o dispositivo actual no permite ubicación.
+                    </p>
                 </div>
             )}
 
@@ -683,6 +650,11 @@ export default function MatrizResponderClient({ matrix, uts, colegios, sessionUs
                                         {q.preguntaNombre}
                                         {q.obligatorio && <span className="text-red-500">*</span>}
                                     </p>
+                                    {q.justificacion && (
+                                        <div className="mt-1.5 p-2.5 bg-amber-50/80 border border-amber-200/70 rounded-xl text-xs text-amber-900 font-medium leading-relaxed">
+                                            <span className="font-bold text-amber-950">💬 Observación / Instrucción:</span> {q.justificacion}
+                                        </div>
+                                    )}
                                 </div>
                                 <div className="w-full md:w-64 shrink-0">
                                     {renderQuestionInput(q)}

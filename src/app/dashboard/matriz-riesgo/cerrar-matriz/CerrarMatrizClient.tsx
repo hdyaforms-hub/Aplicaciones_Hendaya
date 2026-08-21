@@ -40,7 +40,8 @@ export default function CerrarMatrizClient({
     const [searchQuery, setSearchQuery] = useState('')
     const [showDropdown, setShowDropdown] = useState(false)
     const [selectedSucursal, setSelectedSucursal] = useState<string>('')
-    const [rbdModal, setRbdModal] = useState<{ supervisor: any, filter: 'all' | 'completo' | 'pendiente' } | null>(null)
+    const [onlyVigentes, setOnlyVigentes] = useState<boolean>(true)
+    const [rbdModal, setRbdModal] = useState<{ supervisor: any, filter: 'all' | 'completo' | 'pendiente' | 'repetido', semester: 1 | 2 | 'all' } | null>(null)
     const [rbdModalSearch, setRbdModalSearch] = useState('')
     
     const router = useRouter()
@@ -141,6 +142,9 @@ export default function CerrarMatrizClient({
                 
             if (!inSemestre) return false
 
+            // Filter out inactive/no-vigente matrix templates if toggled
+            if (onlyVigentes && evaluacion.cabecera?.estado === false) return false
+
             const matchSearch = evaluacion.rbd.toString().includes(searchQuery) || 
                                 (evaluacion.cabecera?.titulo || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
                                 (evaluacion.nombreColegio || '').toLowerCase().includes(searchQuery.toLowerCase())
@@ -153,7 +157,7 @@ export default function CerrarMatrizClient({
 
             return true
         })
-    }, [evaluaciones, semestre, cutoff, searchQuery, filterStatus])
+    }, [evaluaciones, semestre, cutoff, searchQuery, filterStatus, onlyVigentes])
 
     useEffect(() => {
         if (selectedEvaluacionId && !filteredEvaluaciones.some(e => e.id === selectedEvaluacionId)) {
@@ -253,106 +257,73 @@ export default function CerrarMatrizClient({
         <>
             {/* Geolocation Status Banner */}
             {geoStatus === 'active' && (
-                <div className="bg-emerald-50 border border-emerald-100 rounded-3xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 animate-in fade-in duration-300">
-                    <div className="flex items-center gap-3">
-                        <div className="relative flex h-3 w-3 shrink-0">
+                <div className="bg-emerald-50/80 border border-emerald-200/60 rounded-2xl px-3.5 py-2 flex items-center justify-between gap-2 mb-5 animate-in fade-in duration-200 text-xs">
+                    <div className="flex items-center gap-2 min-w-0">
+                        <span className="relative flex h-2.5 w-2.5 shrink-0">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
-                        </div>
-                        <div>
-                            <p className="text-sm font-bold text-emerald-950 flex items-center gap-1.5">
-                                📍 Compartiendo Geolocalización
-                            </p>
-                            <p className="text-xs text-emerald-800 mt-0.5 font-medium">
-                                Su ubicación está siendo compartida activamente para el registro seguro del cierre de la matriz.
-                            </p>
-                        </div>
+                            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                        </span>
+                        <span className="font-bold text-emerald-950 truncate">📍 Ubicación activa:</span>
+                        <span className="text-emerald-800 hidden sm:inline truncate">Registrando coordenadas para la auditoría</span>
                     </div>
                     {geoCoords && (
-                        <div className="bg-white/80 backdrop-blur-sm border border-emerald-200/50 px-3 py-1 rounded-2xl text-[10px] font-black text-emerald-900 tracking-wider shrink-0 self-start sm:self-center">
-                            LAT: {geoCoords.lat.toFixed(6)} | LNG: {geoCoords.lng.toFixed(6)}
-                        </div>
+                        <span className="bg-white border border-emerald-200/60 px-2 py-0.5 rounded-lg text-[10px] font-bold text-emerald-900 shrink-0">
+                            LAT: {geoCoords.lat.toFixed(5)} | LNG: {geoCoords.lng.toFixed(5)}
+                        </span>
                     )}
                 </div>
             )}
             {geoStatus === 'denied' && (
-                <div className="bg-red-50 border border-red-200 rounded-3xl p-4 mb-6 animate-in fade-in duration-300 space-y-3">
-                    <div className="flex items-start gap-3">
-                        <span className="text-red-500 text-lg shrink-0 mt-0.5">🔒</span>
-                        <div className="flex-1">
-                            <p className="text-sm font-black text-red-900">
-                                Geolocalización bloqueada para este sitio
-                            </p>
-                            <p className="text-xs text-red-700 mt-1 font-medium leading-relaxed">
-                                El navegador tiene bloqueado el acceso a la ubicación <b>para esta página</b>. Siga estos pasos para activarla:
-                            </p>
-                            <ol className="mt-2 space-y-1 text-xs text-red-800 font-medium list-decimal list-inside leading-relaxed">
-                                <li>Haga clic en el ícono 🔒 (candado) a la izquierda de la URL en el navegador</li>
-                                <li>Seleccione <b>"Permisos del sitio"</b> o <b>"Configuración del sitio"</b></li>
-                                <li>En <b>"Ubicación"</b>, cambie de <b>"Bloquear"</b> a <b>"Permitir"</b></li>
-                                <li>Recargue la página y vuelva a ingresar</li>
-                            </ol>
-                        </div>
-                    </div>
-                    <div className="flex justify-end">
-                        <button
-                            type="button"
-                            onClick={() => requestGeoPosition(true)}
-                            disabled={geoRetrying}
-                            className="px-4 py-2 bg-red-600 hover:bg-red-700 disabled:bg-red-300 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-2"
-                        >
-                            {geoRetrying ? <><span className="animate-spin">↻</span> Verificando...</> : '🔄 Reintentar'}
-                        </button>
-                    </div>
-                </div>
-            )}
-            {geoStatus === 'unavailable' && (
-                <div className="bg-amber-50 border border-amber-200 rounded-3xl p-4 flex items-center justify-between gap-3 mb-6 animate-in fade-in duration-300">
-                    <div className="flex items-center gap-3">
-                        <span className="text-amber-500 text-lg shrink-0">⚠️</span>
-                        <div>
-                            <p className="text-sm font-bold text-amber-950">
-                                No se pudo obtener la ubicación
-                            </p>
-                            <p className="text-xs text-amber-800 mt-0.5 font-medium">
-                                El servicio de ubicación tardó demasiado o no está disponible.
-                            </p>
-                        </div>
+                <div className="bg-red-50/90 border border-red-200 rounded-2xl px-3.5 py-2 flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-5 animate-in fade-in duration-200 text-xs">
+                    <div className="flex items-center gap-2 min-w-0">
+                        <span className="text-red-500 text-sm shrink-0">🔒</span>
+                        <p className="text-red-900 leading-tight">
+                            <span className="font-bold">Ubicación bloqueada:</span>{' '}
+                            <span className="text-red-700">Haga clic en el candado 🔒 de la barra de dirección, active <b>"Ubicación: Permitir"</b> y recargue.</span>
+                        </p>
                     </div>
                     <button
                         type="button"
                         onClick={() => requestGeoPosition(true)}
                         disabled={geoRetrying}
-                        className="shrink-0 px-4 py-2 bg-amber-600 hover:bg-amber-700 disabled:bg-amber-300 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-2"
+                        className="px-2.5 py-1 bg-red-600 hover:bg-red-700 disabled:bg-red-300 text-white rounded-lg text-[11px] font-bold transition-all flex items-center gap-1 shrink-0 self-end sm:self-center cursor-pointer shadow-xs"
                     >
-                        {geoRetrying ? <><span className="animate-spin">↻</span> Verificando...</> : '🔄 Reintentar'}
+                        {geoRetrying ? <><span className="animate-spin text-[10px]">↻</span> Verificando...</> : '🔄 Reintentar'}
+                    </button>
+                </div>
+            )}
+            {geoStatus === 'unavailable' && (
+                <div className="bg-amber-50/90 border border-amber-200 rounded-2xl px-3.5 py-2 flex items-center justify-between gap-2 mb-5 animate-in fade-in duration-200 text-xs">
+                    <div className="flex items-center gap-2 min-w-0">
+                        <span className="text-amber-500 text-sm shrink-0">⚠️</span>
+                        <p className="text-amber-900 leading-tight truncate">
+                            <span className="font-bold">Ubicación no disponible:</span> <span className="text-amber-800">Verifique el GPS o conexión de su dispositivo.</span>
+                        </p>
+                    </div>
+                    <button
+                        type="button"
+                        onClick={() => requestGeoPosition(true)}
+                        disabled={geoRetrying}
+                        className="px-2.5 py-1 bg-amber-600 hover:bg-amber-700 disabled:bg-amber-300 text-white rounded-lg text-[11px] font-bold transition-all flex items-center gap-1 shrink-0 cursor-pointer shadow-xs"
+                    >
+                        {geoRetrying ? <><span className="animate-spin text-[10px]">↻</span> Verificando...</> : '🔄 Reintentar'}
                     </button>
                 </div>
             )}
             {geoStatus === 'checking' && (
-                <div className="bg-slate-50 border border-slate-100 rounded-3xl p-4 flex items-center gap-3 mb-6 animate-in fade-in duration-300">
+                <div className="bg-slate-50 border border-slate-200/80 rounded-2xl px-3.5 py-2 flex items-center gap-2 mb-5 animate-in fade-in duration-200 text-xs">
                     <span className="animate-spin text-slate-500 text-xs shrink-0">🔄</span>
-                    <div>
-                        <p className="text-sm font-bold text-slate-900">
-                            Verificando geolocalización...
-                        </p>
-                        <p className="text-xs text-slate-500 mt-0.5 font-medium">
-                            Si aparece un diálogo del navegador solicitando permiso, seleccione <b>Permitir</b>.
-                        </p>
-                    </div>
+                    <p className="text-slate-700 truncate">
+                        <span className="font-bold">Verificando geolocalización...</span> (Si aparece un diálogo, seleccione <b>Permitir</b>)
+                    </p>
                 </div>
             )}
             {geoStatus === 'unsupported' && (
-                <div className="bg-slate-50 border border-slate-100 rounded-3xl p-4 flex items-center gap-3 mb-6 animate-in fade-in duration-300">
-                    <span className="text-slate-500 shrink-0">🚫</span>
-                    <div>
-                        <p className="text-sm font-bold text-slate-900">
-                            Geolocalización no soportada
-                        </p>
-                        <p className="text-xs text-slate-500 mt-0.5 font-medium">
-                            Su navegador o dispositivo actual no permite el uso de ubicación.
-                        </p>
-                    </div>
+                <div className="bg-slate-50 border border-slate-200/80 rounded-2xl px-3.5 py-2 flex items-center gap-2 mb-5 animate-in fade-in duration-200 text-xs">
+                    <span className="text-slate-400 text-sm shrink-0">🚫</span>
+                    <p className="text-slate-600 truncate">
+                        <span className="font-bold">Geolocalización no soportada:</span> Su navegador o dispositivo actual no permite ubicación.
+                    </p>
                 </div>
             )}
 
@@ -364,26 +335,84 @@ export default function CerrarMatrizClient({
 
                 {/* Supervisor Progress */}
                 {myProgress && (
-                    <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                        <div className="flex justify-between items-center mb-2">
-                            <span className="text-sm font-bold text-slate-700">Mi Avance General (Semestre {semestre})</span>
-                            <span className="text-xs font-black text-cyan-700 bg-cyan-50 px-2.5 py-1 rounded-lg">{myProgress.pct}% Completado</span>
-                        </div>
-                        <div className="w-full bg-slate-200 h-3 rounded-full overflow-hidden mb-2">
-                            <div className="h-full bg-gradient-to-r from-cyan-500 to-sky-500 rounded-full transition-all duration-500" style={{ width: `${myProgress.pct}%` }}></div>
-                        </div>
-                        <div className="grid grid-cols-3 gap-2 text-xs font-bold text-slate-500 text-center">
-                            <div className="bg-white p-2 rounded-xl border border-slate-100">
-                                <span className="text-slate-400 block text-[10px] uppercase">Asignados</span>
-                                <span className="text-base text-slate-800">{myProgress.total}</span>
+                    <div className="bg-slate-50 p-5 rounded-2xl border border-slate-100 mb-6 space-y-4">
+                        <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b border-slate-200/70 pb-3">
+                            <div>
+                                <h3 className="text-sm font-black text-slate-900">Mi Avance General por Semestre</h3>
+                                <p className="text-xs text-slate-500">Avance de auditorías en tus {myProgress.total} establecimientos asignados (1 por semestre)</p>
                             </div>
-                            <div className="bg-white p-2 rounded-xl border border-slate-100">
-                                <span className="text-emerald-500 block text-[10px] uppercase">Supervisados/Listos</span>
-                                <span className="text-base text-emerald-600">{myProgress.completed}</span>
+                            {myProgress.totalRepeated > 0 && (
+                                <span className="text-xs font-black px-3 py-1 rounded-full bg-amber-100 text-amber-800 border border-amber-200 shrink-0">
+                                    🔁 {myProgress.totalRepeated} matrices repetidas en el año
+                                </span>
+                            )}
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {/* 1er Semestre */}
+                            <div className="bg-white p-4 rounded-xl border border-slate-200/80 space-y-3 shadow-xs">
+                                <div className="flex justify-between items-center">
+                                    <span className="text-xs font-black text-slate-800 uppercase tracking-wider">1° Semestre</span>
+                                    <span className={`text-xs font-black px-2.5 py-1 rounded-lg ${
+                                        myProgress.s1?.pct === 100 && myProgress.total > 0 ? 'bg-emerald-100 text-emerald-800' : 'bg-cyan-50 text-cyan-700'
+                                    }`}>
+                                        {myProgress.s1?.pct || 0}% Completado
+                                    </span>
+                                </div>
+                                <div className="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
+                                    <div className="h-full bg-gradient-to-r from-cyan-500 to-sky-500 rounded-full transition-all duration-500" style={{ width: `${myProgress.s1?.pct || 0}%` }}></div>
+                                </div>
+                                <div className="grid grid-cols-4 gap-2 text-xs font-bold text-slate-500 text-center">
+                                    <div className="bg-slate-50 p-2 rounded-xl border border-slate-100">
+                                        <span className="text-slate-400 block text-[9px] uppercase">Asignados</span>
+                                        <span className="text-sm text-slate-800">{myProgress.total}</span>
+                                    </div>
+                                    <div className="bg-slate-50 p-2 rounded-xl border border-slate-100">
+                                        <span className="text-emerald-500 block text-[9px] uppercase">Listos</span>
+                                        <span className="text-sm text-emerald-600">{myProgress.s1?.completed || 0}</span>
+                                    </div>
+                                    <div className="bg-slate-50 p-2 rounded-xl border border-slate-100">
+                                        <span className="text-orange-500 block text-[9px] uppercase">Pendientes</span>
+                                        <span className="text-sm text-orange-600">{myProgress.s1?.pending || 0}</span>
+                                    </div>
+                                    <div className="bg-slate-50 p-2 rounded-xl border border-slate-100">
+                                        <span className="text-amber-500 block text-[9px] uppercase">Repetidas</span>
+                                        <span className="text-sm text-amber-600">{myProgress.s1?.repeated || 0}</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="bg-white p-2 rounded-xl border border-slate-100">
-                                <span className="text-orange-500 block text-[10px] uppercase">Pendientes</span>
-                                <span className="text-base text-orange-600">{myProgress.pending}</span>
+
+                            {/* 2do Semestre */}
+                            <div className="bg-white p-4 rounded-xl border border-slate-200/80 space-y-3 shadow-xs">
+                                <div className="flex justify-between items-center">
+                                    <span className="text-xs font-black text-slate-800 uppercase tracking-wider">2° Semestre</span>
+                                    <span className={`text-xs font-black px-2.5 py-1 rounded-lg ${
+                                        myProgress.s2?.pct === 100 && myProgress.total > 0 ? 'bg-emerald-100 text-emerald-800' : 'bg-cyan-50 text-cyan-700'
+                                    }`}>
+                                        {myProgress.s2?.pct || 0}% Completado
+                                    </span>
+                                </div>
+                                <div className="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
+                                    <div className="h-full bg-gradient-to-r from-cyan-500 to-sky-500 rounded-full transition-all duration-500" style={{ width: `${myProgress.s2?.pct || 0}%` }}></div>
+                                </div>
+                                <div className="grid grid-cols-4 gap-2 text-xs font-bold text-slate-500 text-center">
+                                    <div className="bg-slate-50 p-2 rounded-xl border border-slate-100">
+                                        <span className="text-slate-400 block text-[9px] uppercase">Asignados</span>
+                                        <span className="text-sm text-slate-800">{myProgress.total}</span>
+                                    </div>
+                                    <div className="bg-slate-50 p-2 rounded-xl border border-slate-100">
+                                        <span className="text-emerald-500 block text-[9px] uppercase">Listos</span>
+                                        <span className="text-sm text-emerald-600">{myProgress.s2?.completed || 0}</span>
+                                    </div>
+                                    <div className="bg-slate-50 p-2 rounded-xl border border-slate-100">
+                                        <span className="text-orange-500 block text-[9px] uppercase">Pendientes</span>
+                                        <span className="text-sm text-orange-600">{myProgress.s2?.pending || 0}</span>
+                                    </div>
+                                    <div className="bg-slate-50 p-2 rounded-xl border border-slate-100">
+                                        <span className="text-amber-500 block text-[9px] uppercase">Repetidas</span>
+                                        <span className="text-sm text-amber-600">{myProgress.s2?.repeated || 0}</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -393,7 +422,10 @@ export default function CerrarMatrizClient({
                 {(isAdmin || delegatedSucursales.length > 0) && (
                     <div className="space-y-4">
                         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-100 pb-3">
-                            <p className="text-sm font-bold text-slate-500">Visualización de Supervisores</p>
+                            <div>
+                                <p className="text-sm font-bold text-slate-700">Visualización de Supervisores</p>
+                                <p className="text-[11px] text-slate-400">Progreso independiente para 1° y 2° semestre con detección de matrices repetidas</p>
+                            </div>
                             <div className="flex items-center gap-2">
                                 <label className="text-xs font-bold text-slate-400">Sucursal:</label>
                                 <select 
@@ -412,46 +444,101 @@ export default function CerrarMatrizClient({
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-60 overflow-y-auto">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-96 overflow-y-auto">
                             {filteredSupervisors.map(sup => (
-                                <div key={sup.id} className="bg-slate-50 border border-slate-100 rounded-2xl p-4 flex flex-col justify-between">
+                                <div key={sup.id} className="bg-slate-50 border border-slate-100 rounded-2xl p-4 flex flex-col justify-between gap-3 transition-all hover:shadow-xs">
                                     <div>
                                         <div className="flex justify-between items-start">
-                                            <p className="font-bold text-slate-800 text-sm truncate max-w-[150px]">{sup.name}</p>
-                                            <span className="text-[10px] font-black px-1.5 py-0.5 rounded bg-cyan-100 text-cyan-800">{sup.pct}%</span>
+                                            <div>
+                                                <p className="font-extrabold text-slate-900 text-sm truncate max-w-[170px]" title={sup.name}>{sup.name}</p>
+                                                <p className="text-[10px] text-slate-400 font-medium truncate mt-0.5">{sup.sucursales.join(', ') || 'Sin sucursal'}</p>
+                                            </div>
+                                            <div className="flex items-center gap-1.5 shrink-0">
+                                                {sup.totalRepeated > 0 && (
+                                                    <span className="text-[9px] font-black px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-200" title={`${sup.totalRepeated} matrices repetidas en el año`}>
+                                                        🔁 {sup.totalRepeated} rep.
+                                                    </span>
+                                                )}
+                                                <span className="text-[10px] font-bold text-slate-500 bg-white px-2 py-0.5 rounded-lg border border-slate-200">
+                                                    Total: {sup.totalRbd}
+                                                </span>
+                                            </div>
                                         </div>
-                                        <p className="text-[10px] text-slate-400 truncate mt-0.5">{sup.sucursales.join(', ')}</p>
                                     </div>
-                                    <div className="mt-3">
-                                        <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden mb-2">
-                                            <div className="h-full bg-cyan-500 rounded-full" style={{ width: `${sup.pct}%` }}></div>
+
+                                    {/* Línea 1: Semestre 1 */}
+                                    <div className="bg-white p-2.5 rounded-xl border border-slate-200/80 space-y-1.5">
+                                        <div className="flex justify-between items-center text-[10px]">
+                                            <span className="font-extrabold text-slate-700">1° Semestre</span>
+                                            <div className="flex items-center gap-2">
+                                                <span className="text-slate-500 font-medium">
+                                                    <strong className="text-emerald-600">{sup.s1?.completed || 0}</strong>/{sup.totalRbd} comp.
+                                                </span>
+                                                {sup.s1?.repeated > 0 && (
+                                                    <span className="text-amber-600 font-bold" title={`${sup.s1.repeated} matrices repetidas en S1`}>
+                                                        🔁 {sup.s1.repeated}
+                                                    </span>
+                                                )}
+                                                <span className={`font-black px-1.5 py-0.5 rounded text-[10px] ${
+                                                    sup.totalRbd === 0 ? 'bg-slate-100 text-slate-400' :
+                                                    sup.s1?.pct === 100 ? 'bg-emerald-100 text-emerald-800' :
+                                                    'bg-cyan-100 text-cyan-800'
+                                                }`}>
+                                                    {sup.s1?.pct || 0}%
+                                                </span>
+                                            </div>
                                         </div>
-                                        <div className="flex justify-between text-[10px] font-bold text-slate-500">
-                                            <button
-                                                type="button"
-                                                onClick={() => { setRbdModal({ supervisor: sup, filter: 'completo' }); setRbdModalSearch('') }}
-                                                className="hover:text-emerald-600 hover:underline transition-colors cursor-pointer"
-                                                title="Ver RBDs completos"
-                                            >
-                                                Completo: {sup.completedRbd}
-                                            </button>
-                                            <button
-                                                type="button"
-                                                onClick={() => { setRbdModal({ supervisor: sup, filter: 'pendiente' }); setRbdModalSearch('') }}
-                                                className="hover:text-orange-500 hover:underline transition-colors cursor-pointer"
-                                                title="Ver RBDs pendientes"
-                                            >
-                                                Pendiente: {sup.pendingRbd}
-                                            </button>
-                                            <button
-                                                type="button"
-                                                onClick={() => { setRbdModal({ supervisor: sup, filter: 'all' }); setRbdModalSearch('') }}
-                                                className="hover:text-cyan-600 hover:underline transition-colors cursor-pointer"
-                                                title="Ver todos los RBDs"
-                                            >
-                                                Total: {sup.totalRbd}
-                                            </button>
+                                        <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                                            <div 
+                                                className={`h-full rounded-full transition-all duration-500 ${
+                                                    sup.s1?.pct === 100 && sup.totalRbd > 0 ? 'bg-emerald-500' : 'bg-cyan-500'
+                                                }`} 
+                                                style={{ width: `${sup.s1?.pct || 0}%` }}
+                                            />
                                         </div>
+                                    </div>
+
+                                    {/* Línea 2: Semestre 2 */}
+                                    <div className="bg-white p-2.5 rounded-xl border border-slate-200/80 space-y-1.5">
+                                        <div className="flex justify-between items-center text-[10px]">
+                                            <span className="font-extrabold text-slate-700">2° Semestre</span>
+                                            <div className="flex items-center gap-2">
+                                                <span className="text-slate-500 font-medium">
+                                                    <strong className="text-emerald-600">{sup.s2?.completed || 0}</strong>/{sup.totalRbd} comp.
+                                                </span>
+                                                {sup.s2?.repeated > 0 && (
+                                                    <span className="text-amber-600 font-bold" title={`${sup.s2.repeated} matrices repetidas en S2`}>
+                                                        🔁 {sup.s2.repeated}
+                                                    </span>
+                                                )}
+                                                <span className={`font-black px-1.5 py-0.5 rounded text-[10px] ${
+                                                    sup.totalRbd === 0 ? 'bg-slate-100 text-slate-400' :
+                                                    sup.s2?.pct === 100 ? 'bg-emerald-100 text-emerald-800' :
+                                                    'bg-cyan-100 text-cyan-800'
+                                                }`}>
+                                                    {sup.s2?.pct || 0}%
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                                            <div 
+                                                className={`h-full rounded-full transition-all duration-500 ${
+                                                    sup.s2?.pct === 100 && sup.totalRbd > 0 ? 'bg-emerald-500' : 'bg-cyan-500'
+                                                }`} 
+                                                style={{ width: `${sup.s2?.pct || 0}%` }}
+                                            />
+                                        </div>
+                                    </div>
+
+                                    {/* Footer button */}
+                                    <div className="pt-1">
+                                        <button
+                                            type="button"
+                                            onClick={() => { setRbdModal({ supervisor: sup, filter: 'all', semester: 'all' }); setRbdModalSearch('') }}
+                                            className="w-full py-1.5 bg-slate-200/60 hover:bg-cyan-50 hover:text-cyan-700 text-slate-600 rounded-xl text-[10px] font-extrabold transition-all flex items-center justify-center gap-1 cursor-pointer"
+                                        >
+                                            <span>🔍</span> Ver Detalle de RBDs ({sup.totalRbd})
+                                        </button>
                                     </div>
                                 </div>
                             ))}
@@ -548,6 +635,24 @@ export default function CerrarMatrizClient({
                                 Listos / Finalizadas
                             </button>
                         </div>
+
+                        {/* Filtro de Vigencia de Plantilla */}
+                        <div className="flex items-center justify-between pt-1 border-t border-slate-100">
+                            <label className="flex items-center gap-2 text-xs font-bold text-slate-600 cursor-pointer select-none">
+                                <input 
+                                    type="checkbox" 
+                                    checked={onlyVigentes} 
+                                    onChange={(e) => setOnlyVigentes(e.target.checked)}
+                                    className="rounded border-slate-300 text-cyan-600 focus:ring-cyan-500 w-4 h-4 cursor-pointer"
+                                />
+                                <span>Solo plantillas vigentes</span>
+                            </label>
+                            {!onlyVigentes && (
+                                <span className="text-[10px] font-bold text-rose-600 bg-rose-50 px-1.5 py-0.5 rounded">
+                                    Incluye no vigentes
+                                </span>
+                            )}
+                        </div>
                     </div>
 
                     {error && (
@@ -566,18 +671,32 @@ export default function CerrarMatrizClient({
                                     const problems = getProblems(ev)
                                     const solved = problems.filter(p => p.mitigacion?.fechaSolucion).length
                                     const pct = problems.length > 0 ? Math.round((solved / problems.length) * 100) : 100
+                                    const isNonVigente = ev.cabecera?.estado === false
                                     
                                     return (
                                         <div 
                                             key={ev.id} 
                                             onClick={() => setSelectedEvaluacionId(ev.id)}
-                                            className={`p-4 cursor-pointer transition-all hover:bg-slate-50 ${selectedEvaluacionId === ev.id ? 'bg-cyan-50 border-l-4 border-cyan-500' : ''}`}
+                                            className={`p-4 cursor-pointer transition-all hover:bg-slate-50 ${
+                                                selectedEvaluacionId === ev.id 
+                                                    ? 'bg-cyan-50 border-l-4 border-cyan-500' 
+                                                    : isNonVigente 
+                                                    ? 'bg-rose-50/20' 
+                                                    : ''
+                                            }`}
                                         >
                                             <div className="flex justify-between items-start">
                                                 <div>
                                                     <p className="font-black text-slate-900 text-sm">{ev.nombreColegio || `RBD: ${ev.rbd}`}</p>
                                                     <p className="text-[10px] text-slate-500 font-bold uppercase tracking-tight mt-0.5">{format(new Date(ev.fechaIngreso), 'dd/MM/yyyy HH:mm')} - RBD: {ev.rbd}</p>
-                                                    <p className="text-[11px] text-cyan-700 mt-1">{ev.cabecera?.titulo}</p>
+                                                    <div className="flex items-center gap-1.5 flex-wrap mt-0.5">
+                                                        <p className="text-[11px] text-cyan-700 truncate">{ev.cabecera?.titulo}</p>
+                                                        {isNonVigente && (
+                                                            <span className="bg-rose-100 text-rose-800 border border-rose-200 text-[9px] font-black px-1.5 py-0.2 rounded uppercase tracking-wide shrink-0" title="Esta plantilla de matriz ya no está vigente">
+                                                                ⛔ No Vigente
+                                                            </span>
+                                                        )}
+                                                    </div>
                                                 </div>
                                                 <div className={`px-2 py-0.5 rounded text-[10px] font-black ${isFinalizada(ev) ? 'bg-emerald-100 text-emerald-700' : 'bg-orange-100 text-orange-700'}`}>
                                                     {ev.estado.toUpperCase()}
@@ -611,6 +730,19 @@ export default function CerrarMatrizClient({
                 <div className="lg:col-span-8">
                     {selectedEvaluacion ? (
                         <div className="space-y-6">
+                            {/* Alerta de Matriz No Vigente */}
+                            {selectedEvaluacion.cabecera?.estado === false && (
+                                <div className="bg-rose-50 border border-rose-200 rounded-3xl p-4 flex items-start gap-3 animate-in fade-in duration-200">
+                                    <span className="text-xl shrink-0 mt-0.5">⛔</span>
+                                    <div>
+                                        <p className="font-extrabold text-sm text-rose-950">Plantilla de Matriz No Vigente</p>
+                                        <p className="text-xs text-rose-800 mt-0.5 leading-relaxed font-medium">
+                                            Esta evaluación corresponde a la plantilla <b>"{selectedEvaluacion.cabecera?.titulo}"</b> que actualmente se encuentra <b>Desactivada / No Vigente</b> en el mantenedor.
+                                        </p>
+                                    </div>
+                                </div>
+                            )}
+
                             <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                                 <div>
                                     <h2 className="text-xl font-black text-slate-900">Hallazgos y Mitigación</h2>
@@ -810,99 +942,216 @@ export default function CerrarMatrizClient({
                         onClick={e => e.stopPropagation()}
                     >
                         {/* Header */}
-                        <div className="px-6 pt-6 pb-4 border-b border-slate-100 shrink-0">
+                        <div className="px-6 pt-6 pb-4 border-b border-slate-100 shrink-0 space-y-3">
                             <div className="flex justify-between items-start">
                                 <div>
-                                    <h3 className="text-base font-black text-slate-900">
-                                        📋 {rbdModal.supervisor.name}
+                                    <h3 className="text-base font-black text-slate-900 flex items-center gap-2">
+                                        <span>📋</span> {rbdModal.supervisor.name}
                                     </h3>
                                     <p className="text-xs text-slate-500 mt-0.5 font-medium">
-                                        {rbdModal.supervisor.sucursales.join(', ')}
+                                        {rbdModal.supervisor.sucursales.join(', ')} • {rbdModal.supervisor.totalRbd} establecimientos asignados
                                     </p>
                                 </div>
                                 <button
                                     type="button"
                                     onClick={() => setRbdModal(null)}
-                                    className="w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors font-bold text-xs shrink-0"
+                                    className="w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors font-bold text-xs shrink-0 cursor-pointer"
                                 >
                                     ✕
                                 </button>
                             </div>
-                            {/* Summary counters */}
-                            <div className="flex gap-3 mt-4">
+
+                            {/* Selector de Semestre para el Modal */}
+                            <div className="flex bg-slate-100 p-1 rounded-xl">
                                 <button
                                     type="button"
-                                    onClick={() => setRbdModal(prev => prev ? { ...prev, filter: 'all' } : null)}
-                                    className={`flex-1 py-2 rounded-xl text-xs font-black transition-all border ${rbdModal.filter === 'all' ? 'bg-slate-900 text-white border-slate-900' : 'bg-slate-50 text-slate-600 border-slate-200 hover:border-slate-400'}`}
+                                    onClick={() => setRbdModal(prev => prev ? { ...prev, semester: 'all' } : null)}
+                                    className={`flex-1 py-1.5 rounded-lg text-xs font-black transition-all ${
+                                        rbdModal.semester === 'all' ? 'bg-white shadow-xs text-slate-900' : 'text-slate-500 hover:text-slate-800'
+                                    }`}
                                 >
-                                    Total: {rbdModal.supervisor.totalRbd}
+                                    Ambos Semestres
                                 </button>
                                 <button
                                     type="button"
-                                    onClick={() => setRbdModal(prev => prev ? { ...prev, filter: 'completo' } : null)}
-                                    className={`flex-1 py-2 rounded-xl text-xs font-black transition-all border ${rbdModal.filter === 'completo' ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:border-emerald-400'}`}
+                                    onClick={() => setRbdModal(prev => prev ? { ...prev, semester: 1 } : null)}
+                                    className={`flex-1 py-1.5 rounded-lg text-xs font-black transition-all ${
+                                        rbdModal.semester === 1 ? 'bg-white shadow-xs text-cyan-700' : 'text-slate-500 hover:text-slate-800'
+                                    }`}
                                 >
-                                    ✅ Completo: {rbdModal.supervisor.completedRbd}
+                                    1° Semestre ({rbdModal.supervisor.s1?.completed || 0}/{rbdModal.supervisor.totalRbd})
                                 </button>
                                 <button
                                     type="button"
-                                    onClick={() => setRbdModal(prev => prev ? { ...prev, filter: 'pendiente' } : null)}
-                                    className={`flex-1 py-2 rounded-xl text-xs font-black transition-all border ${rbdModal.filter === 'pendiente' ? 'bg-orange-500 text-white border-orange-500' : 'bg-orange-50 text-orange-700 border-orange-200 hover:border-orange-400'}`}
+                                    onClick={() => setRbdModal(prev => prev ? { ...prev, semester: 2 } : null)}
+                                    className={`flex-1 py-1.5 rounded-lg text-xs font-black transition-all ${
+                                        rbdModal.semester === 2 ? 'bg-white shadow-xs text-cyan-700' : 'text-slate-500 hover:text-slate-800'
+                                    }`}
                                 >
-                                    ⏳ Pendiente: {rbdModal.supervisor.pendingRbd}
+                                    2° Semestre ({rbdModal.supervisor.s2?.completed || 0}/{rbdModal.supervisor.totalRbd})
                                 </button>
                             </div>
+
+                            {/* Summary counters based on selected semester */}
+                            {(() => {
+                                const sem = rbdModal.semester
+                                const total = rbdModal.supervisor.totalRbd
+                                const comp = sem === 1 ? (rbdModal.supervisor.s1?.completed || 0) :
+                                             sem === 2 ? (rbdModal.supervisor.s2?.completed || 0) :
+                                             (rbdModal.supervisor.s1?.completed || 0) + (rbdModal.supervisor.s2?.completed || 0)
+                                const pend = sem === 1 ? (rbdModal.supervisor.s1?.pending || 0) :
+                                             sem === 2 ? (rbdModal.supervisor.s2?.pending || 0) :
+                                             (rbdModal.supervisor.s1?.pending || 0) + (rbdModal.supervisor.s2?.pending || 0)
+                                const rep = sem === 1 ? (rbdModal.supervisor.s1?.repeated || 0) :
+                                            sem === 2 ? (rbdModal.supervisor.s2?.repeated || 0) :
+                                            (rbdModal.supervisor.totalRepeated || 0)
+
+                                return (
+                                    <div className="flex gap-2">
+                                        <button
+                                            type="button"
+                                            onClick={() => setRbdModal(prev => prev ? { ...prev, filter: 'all' } : null)}
+                                            className={`flex-1 py-1.5 rounded-xl text-xs font-black transition-all border ${rbdModal.filter === 'all' ? 'bg-slate-900 text-white border-slate-900' : 'bg-slate-50 text-slate-600 border-slate-200 hover:border-slate-400'}`}
+                                        >
+                                            Total ({total})
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => setRbdModal(prev => prev ? { ...prev, filter: 'completo' } : null)}
+                                            className={`flex-1 py-1.5 rounded-xl text-xs font-black transition-all border ${rbdModal.filter === 'completo' ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:border-emerald-400'}`}
+                                        >
+                                            ✅ Completos ({comp})
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => setRbdModal(prev => prev ? { ...prev, filter: 'pendiente' } : null)}
+                                            className={`flex-1 py-1.5 rounded-xl text-xs font-black transition-all border ${rbdModal.filter === 'pendiente' ? 'bg-orange-500 text-white border-orange-500' : 'bg-orange-50 text-orange-700 border-orange-200 hover:border-orange-400'}`}
+                                        >
+                                            ⏳ Pendientes ({pend})
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => setRbdModal(prev => prev ? { ...prev, filter: 'repetido' } : null)}
+                                            className={`flex-1 py-1.5 rounded-xl text-xs font-black transition-all border ${rbdModal.filter === 'repetido' ? 'bg-amber-600 text-white border-amber-600' : 'bg-amber-50 text-amber-800 border-amber-200 hover:border-amber-400'}`}
+                                        >
+                                            🔁 Repetidos ({rep})
+                                        </button>
+                                    </div>
+                                )
+                            })()}
+
                             {/* Search */}
-                            <div className="mt-3">
+                            <div>
                                 <input
                                     type="text"
                                     value={rbdModalSearch}
                                     onChange={e => setRbdModalSearch(e.target.value)}
-                                    placeholder="Buscar por nombre o RBD..."
+                                    placeholder="Buscar establecimiento por nombre o RBD..."
                                     className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 placeholder-slate-400 outline-none focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-400 transition-all"
                                 />
                             </div>
                         </div>
 
                         {/* RBD List */}
-                        <div className="flex-1 overflow-y-auto px-6 py-4 space-y-2 custom-scrollbar">
+                        <div className="flex-1 overflow-y-auto px-6 py-4 space-y-2.5 custom-scrollbar">
                             {(() => {
-                                const rbdList: Array<{ rbd: number, nombre: string, estado: string }> = rbdModal.supervisor.rbdList || []
+                                const rbdList: Array<{
+                                    rbd: number
+                                    nombre: string
+                                    s1Status: string
+                                    s1Count: number
+                                    s2Status: string
+                                    s2Count: number
+                                    totalEvals: number
+                                    hasRepeated: boolean
+                                }> = rbdModal.supervisor.rbdList || []
+
                                 const filtered = rbdList.filter(item => {
-                                    const matchFilter = rbdModal.filter === 'all' || item.estado === rbdModal.filter
+                                    const sem = rbdModal.semester
+                                    let matchStatus = true
+
+                                    if (rbdModal.filter === 'completo') {
+                                        if (sem === 1) matchStatus = item.s1Status === 'completo'
+                                        else if (sem === 2) matchStatus = item.s2Status === 'completo'
+                                        else matchStatus = item.s1Status === 'completo' && item.s2Status === 'completo'
+                                    } else if (rbdModal.filter === 'pendiente') {
+                                        if (sem === 1) matchStatus = item.s1Status === 'pendiente'
+                                        else if (sem === 2) matchStatus = item.s2Status === 'pendiente'
+                                        else matchStatus = item.s1Status === 'pendiente' || item.s2Status === 'pendiente'
+                                    } else if (rbdModal.filter === 'repetido') {
+                                        if (sem === 1) matchStatus = item.s1Count > 1
+                                        else if (sem === 2) matchStatus = item.s2Count > 1
+                                        else matchStatus = item.hasRepeated
+                                    }
+
                                     const matchSearch = rbdModalSearch === '' ||
                                         item.nombre.toLowerCase().includes(rbdModalSearch.toLowerCase()) ||
                                         String(item.rbd).includes(rbdModalSearch)
-                                    return matchFilter && matchSearch
+
+                                    return matchStatus && matchSearch
                                 })
+
                                 if (filtered.length === 0) {
                                     return (
                                         <div className="text-center py-10 text-slate-400">
                                             <p className="text-2xl mb-2">🔍</p>
-                                            <p className="text-xs font-bold">No hay establecimientos que coincidan</p>
+                                            <p className="text-xs font-bold">No hay establecimientos con los filtros seleccionados</p>
                                         </div>
                                     )
                                 }
-                                return filtered.map((item, idx) => (
+
+                                return filtered.map((item) => (
                                     <div
                                         key={item.rbd}
-                                        className={`flex items-center justify-between px-4 py-3 rounded-2xl border transition-colors ${
-                                            item.estado === 'completo'
-                                                ? 'bg-emerald-50 border-emerald-100'
-                                                : 'bg-orange-50 border-orange-100'
-                                        }`}
+                                        className="flex flex-col sm:flex-row sm:items-center justify-between p-3 rounded-2xl border border-slate-200 bg-white hover:border-slate-300 transition-all gap-2"
                                     >
                                         <div className="flex-1 min-w-0">
                                             <p className="text-xs font-bold text-slate-800 truncate">{item.nombre}</p>
-                                            <p className="text-[10px] text-slate-500 font-medium mt-0.5">RBD: {item.rbd}</p>
+                                            <p className="text-[10px] text-slate-500 font-medium mt-0.5">
+                                                RBD: <span className="font-bold text-slate-700">{item.rbd}</span> • Total Auditorías: <span className="font-bold text-slate-700">{item.totalEvals}</span>
+                                            </p>
                                         </div>
-                                        <span className={`shrink-0 ml-3 px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-wide ${
-                                            item.estado === 'completo'
-                                                ? 'bg-emerald-100 text-emerald-800'
-                                                : 'bg-orange-100 text-orange-800'
-                                        }`}>
-                                            {item.estado === 'completo' ? '✅ Completo' : '⏳ Pendiente'}
-                                        </span>
+
+                                        {/* Status badges for both semesters */}
+                                        <div className="flex items-center gap-1.5 shrink-0 flex-wrap">
+                                            {/* S1 Badge */}
+                                            <div className={`flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-bold border ${
+                                                item.s1Status === 'completo'
+                                                    ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                                                    : 'bg-orange-50 text-orange-800 border-orange-200'
+                                            }`}>
+                                                <span>1S:</span>
+                                                {item.s1Status === 'completo' ? (
+                                                    <span>✅ Listo {item.s1Count > 1 && `(x${item.s1Count})`}</span>
+                                                ) : (
+                                                    <span>⏳ Pend.</span>
+                                                )}
+                                                {item.s1Count > 1 && (
+                                                    <span className="text-amber-700 bg-amber-100 px-1 rounded text-[9px]" title={`${item.s1Count} auditorías en 1° Semestre`}>
+                                                        🔁 Rep
+                                                    </span>
+                                                )}
+                                            </div>
+
+                                            {/* S2 Badge */}
+                                            <div className={`flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-bold border ${
+                                                item.s2Status === 'completo'
+                                                    ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                                                    : 'bg-orange-50 text-orange-800 border-orange-200'
+                                            }`}>
+                                                <span>2S:</span>
+                                                {item.s2Status === 'completo' ? (
+                                                    <span>✅ Listo {item.s2Count > 1 && `(x${item.s2Count})`}</span>
+                                                ) : (
+                                                    <span>⏳ Pend.</span>
+                                                )}
+                                                {item.s2Count > 1 && (
+                                                    <span className="text-amber-700 bg-amber-100 px-1 rounded text-[9px]" title={`${item.s2Count} auditorías en 2° Semestre`}>
+                                                        🔁 Rep
+                                                    </span>
+                                                )}
+                                            </div>
+                                        </div>
                                     </div>
                                 ))
                             })()}
@@ -913,7 +1162,7 @@ export default function CerrarMatrizClient({
                             <button
                                 type="button"
                                 onClick={() => setRbdModal(null)}
-                                className="px-5 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition-colors"
+                                className="px-5 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition-colors cursor-pointer"
                             >
                                 Cerrar
                             </button>

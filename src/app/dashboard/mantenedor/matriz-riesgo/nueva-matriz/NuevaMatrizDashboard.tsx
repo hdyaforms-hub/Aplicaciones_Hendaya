@@ -1,9 +1,17 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { saveMatrixHeader, deleteMatrix, duplicateMatrix, toggleMatrixState } from './actions'
+import { 
+    saveMatrixHeader, 
+    deleteMatrix, 
+    duplicateMatrix, 
+    toggleMatrixState,
+    exportMatrixTemplate,
+    checkMatrixTitleExists,
+    importMatrixTemplate
+} from './actions'
 
 type Licitacion = {
     licId: number
@@ -35,6 +43,7 @@ export default function NuevaMatrizDashboard({
     const router = useRouter()
     const [matrices, setMatrices] = useState<Matriz[]>(initialMatrices)
     const [licitaciones] = useState<Licitacion[]>(initialLicitaciones)
+    const fileInputRef = useRef<HTMLInputElement>(null)
 
     // Form states
     const [selectedId, setSelectedId] = useState<string | undefined>(undefined)
@@ -54,6 +63,16 @@ export default function NuevaMatrizDashboard({
     const [duplicateTitulo, setDuplicateTitulo] = useState<string>('')
     const [duplicateAnio, setDuplicateAnio] = useState<string>('')
     const [duplicateEstado, setDuplicateEstado] = useState<boolean>(false)
+
+    // Import Modal State
+    const [isImportModalOpen, setIsImportModalOpen] = useState(false)
+    const [importLoading, setImportLoading] = useState(false)
+    const [importStep, setImportStep] = useState<'upload' | 'conflict' | 'confirm'>('upload')
+    const [importData, setImportData] = useState<any | null>(null)
+    const [importTitle, setImportTitle] = useState<string>('')
+    const [importLicId, setImportLicId] = useState<string>('')
+    const [importAnio, setImportAnio] = useState<string>('')
+    const [conflictInfo, setConflictInfo] = useState<any | null>(null)
 
     const handleReset = () => {
         setSelectedId(undefined)
@@ -177,17 +196,166 @@ export default function NuevaMatrizDashboard({
         }
     }
 
+    // Export Function
+    const handleExport = async (matriz: Matriz) => {
+        setActionId(matriz.id)
+        try {
+            const res = await exportMatrixTemplate(matriz.id)
+            if (res.success && res.exportData) {
+                const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(res.exportData, null, 2))
+                const downloadAnchor = document.createElement('a')
+                const cleanTitle = matriz.titulo.replace(/[^a-zA-Z0-9_-]/g, '_')
+                downloadAnchor.setAttribute("href", dataStr)
+                downloadAnchor.setAttribute("download", `Matriz_${cleanTitle}_${matriz.anio || 2026}.json`)
+                document.body.appendChild(downloadAnchor)
+                downloadAnchor.click()
+                downloadAnchor.remove()
+                setMessage({ type: 'success', text: `Plantilla "${matriz.titulo}" exportada exitosamente.` })
+            } else {
+                alert(res.error || 'Error al exportar la plantilla.')
+            }
+        } catch (err: any) {
+            alert('Error al exportar: ' + err.message)
+        } finally {
+            setActionId(null)
+        }
+    }
+
+    // Import Flow
+    const handleOpenImportModal = () => {
+        setImportStep('upload')
+        setImportData(null)
+        setImportTitle('')
+        setImportLicId(licitaciones[0]?.licId ? licitaciones[0].licId.toString() : '')
+        setImportAnio(new Date().getFullYear().toString())
+        setConflictInfo(null)
+        setIsImportModalOpen(true)
+        if (fileInputRef.current) {
+            fileInputRef.current.value = ''
+        }
+    }
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0]
+        if (!file) return
+        processJsonFile(file)
+    }
+
+    const processJsonFile = (file: File) => {
+        setImportLoading(true)
+        const reader = new FileReader()
+        reader.onload = async (event) => {
+            try {
+                const text = event.target?.result as string
+                const json = JSON.parse(text)
+
+                // Normalize data structure
+                let rawCabecera = json.cabecera || json
+                let rawDetalles = json.detalles || []
+                let rawFormatos = json.formatosCarta || []
+
+                if (!rawCabecera.titulo) {
+                    alert('El archivo JSON no contiene un formato de matriz válido (falta el título).')
+                    setImportLoading(false)
+                    return
+                }
+
+                const initialTitle = rawCabecera.titulo.trim()
+                const initialAnio = rawCabecera.anio ? rawCabecera.anio.toString() : new Date().getFullYear().toString()
+                const initialLicId = rawCabecera.licId ? rawCabecera.licId.toString() : (licitaciones[0]?.licId?.toString() || '')
+
+                setImportData({
+                    ...rawCabecera,
+                    detalles: rawDetalles,
+                    formatosCarta: rawFormatos
+                })
+                setImportAnio(initialAnio)
+                setImportLicId(initialLicId)
+
+                // Check if title exists in target environment
+                const checkRes = await checkMatrixTitleExists(initialTitle)
+                if (checkRes.exists && checkRes.existing) {
+                    setConflictInfo(checkRes.existing)
+                    setImportTitle(`Copia de ${initialTitle}`)
+                    setImportStep('conflict')
+                } else {
+                    setImportTitle(initialTitle)
+                    setImportStep('confirm')
+                }
+            } catch (err: any) {
+                console.error(err)
+                alert('Error al leer el archivo JSON: ' + (err.message || 'Formato inválido'))
+            } finally {
+                setImportLoading(false)
+            }
+        }
+        reader.onerror = () => {
+            alert('Error al cargar el archivo')
+            setImportLoading(false)
+        }
+        reader.readAsText(file)
+    }
+
+    const handleExecuteImport = async () => {
+        if (!importTitle.trim()) {
+            alert('Por favor especifique un nombre para la matriz.')
+            return
+        }
+
+        setImportLoading(true)
+        try {
+            const res = await importMatrixTemplate({
+                titulo: importTitle.trim(),
+                licId: Number(importLicId) || undefined,
+                anio: Number(importAnio) || undefined,
+                estado: true,
+                instrucciones: importData?.instrucciones,
+                detalles: importData?.detalles || [],
+                formatosCarta: importData?.formatosCarta || []
+            })
+
+            if (res.success) {
+                setIsImportModalOpen(false)
+                setMessage({
+                    type: 'success',
+                    text: `¡Matriz "${res.titulo}" importada con éxito con ${res.questionsCount} preguntas!`
+                })
+                router.refresh()
+                setTimeout(() => window.location.reload(), 1000)
+            } else {
+                alert(res.error || 'Error al importar matriz.')
+            }
+        } catch (err: any) {
+            alert('Error durante la importación: ' + err.message)
+        } finally {
+            setImportLoading(false)
+        }
+    }
+
     return (
         <div className="space-y-8">
             {/* Header Title */}
             <div className="bg-gradient-to-r from-slate-900 to-indigo-950 p-8 rounded-3xl text-white shadow-lg relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl -z-1" />
-                <h1 className="text-3xl font-black tracking-tight flex items-center gap-3">
-                    <span>🛡️</span> Matriz de Riesgo - Constructor de Plantillas
-                </h1>
-                <p className="text-slate-300 mt-2 text-sm max-w-2xl">
-                    Configure las cabeceras de sus matrices de riesgo. Luego haga clic en el título de la matriz para construir y ordenar sus preguntas, ponderaciones de riesgo y hoja de estándar PAE.
-                </p>
+                <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                    <div>
+                        <h1 className="text-3xl font-black tracking-tight flex items-center gap-3">
+                            <span>🛡️</span> Matriz de Riesgo - Constructor de Plantillas
+                        </h1>
+                        <p className="text-slate-300 mt-2 text-sm max-w-2xl">
+                            Configure las cabeceras de sus matrices de riesgo o exporte e importe plantillas completas entre entornos (Desarrollo y Producción).
+                        </p>
+                    </div>
+                    <div className="flex items-center gap-3 shrink-0">
+                        <button
+                            type="button"
+                            onClick={handleOpenImportModal}
+                            className="px-5 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white rounded-2xl text-xs font-black uppercase tracking-wider transition-all shadow-lg shadow-emerald-500/25 flex items-center gap-2 cursor-pointer"
+                        >
+                            <span>📥</span> IMPORTAR PLANTILLA
+                        </button>
+                    </div>
+                </div>
             </div>
 
             {/* Form & Actions */}
@@ -298,9 +466,18 @@ export default function NuevaMatrizDashboard({
             <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
                 <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
                     <h3 className="text-md font-bold text-slate-800 uppercase tracking-wide">Matrices Registradas</h3>
-                    <span className="text-xs bg-slate-200 px-3 py-1 rounded-full text-slate-600 font-bold">
-                        {matrices.length} plantillas
-                    </span>
+                    <div className="flex items-center gap-3">
+                        <button
+                            type="button"
+                            onClick={handleOpenImportModal}
+                            className="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer"
+                        >
+                            <span>📥</span> Importar
+                        </button>
+                        <span className="text-xs bg-slate-200 px-3 py-1 rounded-full text-slate-600 font-bold">
+                            {matrices.length} plantillas
+                        </span>
+                    </div>
                 </div>
                 <div className="overflow-x-auto">
                     <table className="w-full text-left text-sm whitespace-nowrap">
@@ -349,23 +526,31 @@ export default function NuevaMatrizDashboard({
                                     <td className="px-6 py-4 text-right">
                                         <div className="flex justify-end gap-2">
                                             <button
+                                                onClick={() => handleExport(m)}
+                                                disabled={actionId === m.id}
+                                                className="px-3 py-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-lg text-xs font-bold hover:bg-emerald-100 transition-all flex items-center gap-1 cursor-pointer"
+                                                title="Exportar archivo JSON de esta matriz"
+                                            >
+                                                <span>📤</span> Exportar
+                                            </button>
+                                            <button
                                                 onClick={() => handleEditHeaderClick(m)}
                                                 disabled={actionId === m.id}
-                                                className="px-3 py-1.5 bg-white border border-gray-200 text-slate-700 rounded-lg text-xs font-bold hover:bg-slate-50 hover:border-slate-300 transition-all"
+                                                className="px-3 py-1.5 bg-white border border-gray-200 text-slate-700 rounded-lg text-xs font-bold hover:bg-slate-50 hover:border-slate-300 transition-all cursor-pointer"
                                             >
                                                 Editar Cabecera
                                             </button>
                                             <button
                                                 onClick={() => handleDuplicateClick(m)}
                                                 disabled={actionId === m.id}
-                                                className="px-3 py-1.5 bg-sky-50 border border-sky-100 text-sky-700 rounded-lg text-xs font-bold hover:bg-sky-100 transition-all"
+                                                className="px-3 py-1.5 bg-sky-50 border border-sky-100 text-sky-700 rounded-lg text-xs font-bold hover:bg-sky-100 transition-all cursor-pointer"
                                             >
                                                 Hacer una copia
                                             </button>
                                             <button
                                                 onClick={() => handleDelete(m)}
                                                 disabled={actionId === m.id}
-                                                className="px-3 py-1.5 bg-red-50 border border-red-100 text-red-600 rounded-lg text-xs font-bold hover:bg-red-100 transition-all"
+                                                className="px-3 py-1.5 bg-red-50 border border-red-100 text-red-600 rounded-lg text-xs font-bold hover:bg-red-100 transition-all cursor-pointer"
                                             >
                                                 Eliminar
                                             </button>
@@ -376,7 +561,7 @@ export default function NuevaMatrizDashboard({
                             {matrices.length === 0 && (
                                 <tr>
                                     <td colSpan={5} className="px-6 py-12 text-center text-gray-400 font-medium">
-                                        No se han registrado matrices aún. Use el formulario superior para crear una.
+                                        No se han registrado matrices aún. Use el formulario superior para crear una o importe un archivo existente.
                                     </td>
                                 </tr>
                             )}
@@ -384,6 +569,7 @@ export default function NuevaMatrizDashboard({
                     </table>
                 </div>
             </div>
+
             {/* Duplicate Modal */}
             {isDuplicateModalOpen && (
                 <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
@@ -449,17 +635,247 @@ export default function NuevaMatrizDashboard({
                         <div className="flex gap-3 justify-end">
                             <button
                                 onClick={() => setIsDuplicateModalOpen(false)}
-                                className="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold text-sm transition-colors"
+                                className="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold text-sm transition-colors cursor-pointer"
                             >
                                 Cancelar
                             </button>
                             <button
                                 onClick={confirmDuplicate}
-                                className="px-5 py-2.5 bg-sky-600 hover:bg-sky-700 text-white rounded-xl font-bold text-sm transition-colors shadow-md shadow-sky-600/20"
+                                className="px-5 py-2.5 bg-sky-600 hover:bg-sky-700 text-white rounded-xl font-bold text-sm transition-colors shadow-md shadow-sky-600/20 cursor-pointer"
                             >
                                 Confirmar y Duplicar
                             </button>
                         </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Import Modal */}
+            {isImportModalOpen && (
+                <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+                    <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl animate-in zoom-in-95 duration-200 border border-gray-100">
+                        {/* Hidden file input */}
+                        <input
+                            ref={fileInputRef}
+                            type="file"
+                            accept=".json"
+                            onChange={handleFileChange}
+                            className="hidden"
+                        />
+
+                        {/* STEP 1: Upload */}
+                        {importStep === 'upload' && (
+                            <div>
+                                <div className="flex items-center gap-3 mb-3">
+                                    <span className="p-2.5 bg-emerald-50 text-emerald-600 rounded-2xl text-xl">📥</span>
+                                    <div>
+                                        <h3 className="text-xl font-black text-slate-900">Importar Matriz de Riesgo</h3>
+                                        <p className="text-xs text-slate-500">Seleccione el archivo JSON exportado desde su ambiente de desarrollo u otro entorno.</p>
+                                    </div>
+                                </div>
+
+                                <div
+                                    onClick={() => fileInputRef.current?.click()}
+                                    className="mt-6 border-2 border-dashed border-slate-200 hover:border-emerald-500 bg-slate-50/50 hover:bg-emerald-50/30 rounded-2xl p-8 text-center cursor-pointer transition-all flex flex-col items-center justify-center gap-3"
+                                >
+                                    <div className="w-14 h-14 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center text-2xl shadow-sm">
+                                        📁
+                                    </div>
+                                    <div>
+                                        <p className="font-extrabold text-slate-800 text-sm">Haga clic aquí para seleccionar el archivo .json</p>
+                                        <p className="text-xs text-slate-400 mt-1">Formato admitido: JSON de Matriz de Riesgo</p>
+                                    </div>
+                                </div>
+
+                                {importLoading && (
+                                    <div className="mt-4 p-3 bg-emerald-50 text-emerald-800 text-xs font-bold rounded-xl flex items-center justify-center gap-2">
+                                        <span className="animate-spin">⏳</span> Procesando y validando archivo...
+                                    </div>
+                                )}
+
+                                <div className="mt-6 flex justify-end">
+                                    <button
+                                        type="button"
+                                        onClick={() => setIsImportModalOpen(false)}
+                                        className="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold text-xs transition-colors cursor-pointer"
+                                    >
+                                        Cancelar
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* STEP 2: Conflict (Matrix Already Exists) */}
+                        {importStep === 'conflict' && conflictInfo && (
+                            <div className="space-y-5">
+                                <div className="flex items-center gap-3">
+                                    <span className="p-2.5 bg-amber-50 text-amber-600 rounded-2xl text-xl">⚠️</span>
+                                    <div>
+                                        <h3 className="text-xl font-black text-slate-900">La matriz ya existe</h3>
+                                        <p className="text-xs text-slate-500">Se detectó una coincidencia en el entorno actual.</p>
+                                    </div>
+                                </div>
+
+                                <div className="p-4 bg-amber-50/80 border border-amber-200 rounded-2xl text-xs space-y-2">
+                                    <p className="font-extrabold text-amber-900">
+                                        Ya existe una matriz registrada con el título <span className="underline">«{conflictInfo.titulo}»</span> (Año: {conflictInfo.anio}).
+                                    </p>
+                                    <p className="text-amber-800">
+                                        ¿Desea crear una <strong>copia</strong> de este formulario con un nuevo nombre para no sobrescribir ni duplicar títulos?
+                                    </p>
+                                </div>
+
+                                <div className="space-y-4 pt-1">
+                                    <div>
+                                        <label className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">
+                                            Nombre que le daremos al nuevo formulario *
+                                        </label>
+                                        <input
+                                            type="text"
+                                            value={importTitle}
+                                            onChange={(e) => setImportTitle(e.target.value)}
+                                            placeholder="Ej: Copia de Segundo Semestre / 2026"
+                                            className="w-full p-3 bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none text-slate-900 font-bold text-sm"
+                                            required
+                                        />
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <div>
+                                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Licitación Destino</label>
+                                            <select
+                                                value={importLicId}
+                                                onChange={(e) => setImportLicId(e.target.value)}
+                                                className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 outline-none focus:ring-2 focus:ring-emerald-500"
+                                            >
+                                                {licitaciones.map(l => (
+                                                    <option key={l.licId} value={l.licId}>
+                                                        {l.licitacionHomologada || `Licitación ${l.licId}`}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Año</label>
+                                            <input
+                                                type="number"
+                                                value={importAnio}
+                                                onChange={(e) => setImportAnio(e.target.value)}
+                                                className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 outline-none focus:ring-2 focus:ring-emerald-500"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-between text-xs text-slate-600">
+                                        <span>Preguntas a importar:</span>
+                                        <strong className="text-emerald-700 font-black">{importData?.detalles?.length || 0} ítems</strong>
+                                    </div>
+                                </div>
+
+                                <div className="flex gap-3 justify-end pt-2">
+                                    <button
+                                        type="button"
+                                        onClick={() => setIsImportModalOpen(false)}
+                                        className="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold text-xs transition-colors cursor-pointer"
+                                    >
+                                        Cancelar
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={handleExecuteImport}
+                                        disabled={importLoading || !importTitle.trim()}
+                                        className="px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white rounded-xl font-black text-xs uppercase tracking-wider transition-all shadow-md shadow-emerald-600/20 disabled:opacity-50 cursor-pointer flex items-center gap-2"
+                                    >
+                                        {importLoading ? <span className="animate-spin">⏳</span> : <span>✅</span>}
+                                        {importLoading ? 'Importando...' : 'SÍ, CREAR COPIA E IMPORTAR'}
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* STEP 3: Confirm (New Matrix, No Conflict) */}
+                        {importStep === 'confirm' && (
+                            <div className="space-y-5">
+                                <div className="flex items-center gap-3">
+                                    <span className="p-2.5 bg-emerald-50 text-emerald-600 rounded-2xl text-xl">✨</span>
+                                    <div>
+                                        <h3 className="text-xl font-black text-slate-900">Listo para Importar</h3>
+                                        <p className="text-xs text-slate-500">El formulario no existe actualmente en este ambiente.</p>
+                                    </div>
+                                </div>
+
+                                <div className="space-y-4">
+                                    <div>
+                                        <label className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">
+                                            Título de la Matriz *
+                                        </label>
+                                        <input
+                                            type="text"
+                                            value={importTitle}
+                                            onChange={(e) => setImportTitle(e.target.value)}
+                                            className="w-full p-3 bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none text-slate-900 font-bold text-sm"
+                                            required
+                                        />
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <div>
+                                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Licitación Destino</label>
+                                            <select
+                                                value={importLicId}
+                                                onChange={(e) => setImportLicId(e.target.value)}
+                                                className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 outline-none focus:ring-2 focus:ring-emerald-500"
+                                            >
+                                                {licitaciones.map(l => (
+                                                    <option key={l.licId} value={l.licId}>
+                                                        {l.licitacionHomologada || `Licitación ${l.licId}`}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Año</label>
+                                            <input
+                                                type="number"
+                                                value={importAnio}
+                                                onChange={(e) => setImportAnio(e.target.value)}
+                                                className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 outline-none focus:ring-2 focus:ring-emerald-500"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="p-4 bg-emerald-50/50 border border-emerald-100 rounded-2xl space-y-2 text-xs">
+                                        <div className="flex justify-between text-slate-700">
+                                            <span>Preguntas y ponderaciones:</span>
+                                            <strong className="text-emerald-700 font-black">{importData?.detalles?.length || 0} preguntas</strong>
+                                        </div>
+                                        <div className="flex justify-between text-slate-700">
+                                            <span>Formatos de Carta Sostenedor:</span>
+                                            <strong className="text-emerald-700 font-black">{importData?.formatosCarta?.length || 0} formatos</strong>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="flex gap-3 justify-end pt-2">
+                                    <button
+                                        type="button"
+                                        onClick={() => setIsImportModalOpen(false)}
+                                        className="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold text-xs transition-colors cursor-pointer"
+                                    >
+                                        Cancelar
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={handleExecuteImport}
+                                        disabled={importLoading || !importTitle.trim()}
+                                        className="px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white rounded-xl font-black text-xs uppercase tracking-wider transition-all shadow-md shadow-emerald-600/20 disabled:opacity-50 cursor-pointer flex items-center gap-2"
+                                    >
+                                        {importLoading ? <span className="animate-spin">⏳</span> : <span>📥</span>}
+                                        {importLoading ? 'Importando...' : 'CONFIRMAR E IMPORTAR'}
+                                    </button>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             )}

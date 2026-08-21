@@ -2,7 +2,16 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
-import { ActaField, saveActaPlantilla, duplicateActaPlantilla, deleteActaPlantilla, toggleActaState } from '../actions'
+import { 
+    ActaField, 
+    saveActaPlantilla, 
+    duplicateActaPlantilla, 
+    deleteActaPlantilla, 
+    toggleActaState,
+    exportActaPlantillaData,
+    checkActaNombreExists,
+    importActaPlantillaData
+} from '../actions'
 
 interface Props {
     initialPlantilla?: any
@@ -82,6 +91,28 @@ export default function CrearActaClient({ initialPlantilla, initialPlantillas, l
     const [message, setMessage] = useState({ type: '', text: '' })
     const [previewMode, setPreviewMode] = useState(false)
     const [previewModalPlantilla, setPreviewModalPlantilla] = useState<any | null>(null)
+
+    // Estado para Modal de Importación de Actas
+    const [importModal, setImportModal] = useState<{
+        open: boolean
+        loading: boolean
+        step: 'upload' | 'conflict' | 'confirm'
+        data: any | null
+        nombre: string
+        licitacionId: string | number
+        anio: number
+        conflictInfo: any | null
+    }>({
+        open: false,
+        loading: false,
+        step: 'upload',
+        data: null,
+        nombre: '',
+        licitacionId: '',
+        anio: new Date().getFullYear(),
+        conflictInfo: null
+    })
+    const importFileInputRef = useRef<HTMLInputElement>(null)
 
     // Agregar campo con generador de ID seguro para HTTP/HTTPS
     const addField = (afterIndex?: number) => {
@@ -379,6 +410,203 @@ export default function CrearActaClient({ initialPlantilla, initialPlantillas, l
         }
     }
 
+    // Export Functionality
+    const handleExportActa = async (item?: any) => {
+        try {
+            if (item && item.id) {
+                setLoadingId(item.id)
+                const res = await exportActaPlantillaData(item.id)
+                setLoadingId(null)
+                if (res.success && res.exportData) {
+                    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(res.exportData, null, 2))
+                    const downloadAnchor = document.createElement('a')
+                    const cleanName = (item.nombre || 'Acta').replace(/[^a-zA-Z0-9_-]/g, '_')
+                    downloadAnchor.setAttribute("href", dataStr)
+                    downloadAnchor.setAttribute("download", `Acta_${cleanName}_${item.anio || 2026}.json`)
+                    document.body.appendChild(downloadAnchor)
+                    downloadAnchor.click()
+                    downloadAnchor.remove()
+                    setMessage({ type: 'success', text: `Plantilla "${item.nombre}" exportada exitosamente.` })
+                } else {
+                    alert(res.error || 'Error al exportar acta')
+                }
+            } else {
+                // Export from current builder state
+                const exportData = {
+                    exportVersion: '1.0',
+                    moduleType: 'ACTA_SUPERVISION_PLANTILLA',
+                    exportedAt: new Date().toISOString(),
+                    plantilla: {
+                        nombre: nombre.trim() || 'Formulario de Acta',
+                        licitacionId: licitacionId ? Number(licitacionId) : null,
+                        anio: Number(anio) || 2026,
+                        instituciones: selectedInstituciones,
+                        rolesPerfiles: selectedRoles,
+                        estado,
+                        logoUrl: conLogo ? 'true' : 'false',
+                        instrucciones: instrucciones || null,
+                        codigo: codigo || null,
+                        version: version || null,
+                        fecha: fecha || null,
+                        codigoAdicional: codigoAdicional || null,
+                        mostrarCodigoAdicional,
+                        correlativoAutomatico,
+                        mostrarCodigoVersionFecha,
+                        campos: fields
+                    }
+                }
+                const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportData, null, 2))
+                const downloadAnchor = document.createElement('a')
+                const cleanName = (nombre.trim() || 'Acta').replace(/[^a-zA-Z0-9_-]/g, '_')
+                downloadAnchor.setAttribute("href", dataStr)
+                downloadAnchor.setAttribute("download", `Acta_${cleanName}_${anio || 2026}.json`)
+                document.body.appendChild(downloadAnchor)
+                downloadAnchor.click()
+                downloadAnchor.remove()
+                setMessage({ type: 'success', text: `Formulario "${nombre || 'Acta'}" exportado exitosamente.` })
+            }
+        } catch (err: any) {
+            alert('Error al exportar: ' + err.message)
+        }
+    }
+
+    // Import Functionality
+    const handleOpenImportModal = () => {
+        setImportModal({
+            open: true,
+            loading: false,
+            step: 'upload',
+            data: null,
+            nombre: '',
+            licitacionId: licitaciones[0]?.licId || '',
+            anio: new Date().getFullYear(),
+            conflictInfo: null
+        })
+        if (importFileInputRef.current) {
+            importFileInputRef.current.value = ''
+        }
+    }
+
+    const handleImportFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0]
+        if (!file) return
+        processImportJsonFile(file)
+    }
+
+    const processImportJsonFile = (file: File) => {
+        setImportModal(prev => ({ ...prev, loading: true }))
+        const reader = new FileReader()
+        reader.onload = async (event) => {
+            try {
+                const text = event.target?.result as string
+                const json = JSON.parse(text)
+
+                // Normalize data
+                const rawPlantilla = json.plantilla || json
+                let parsedCampos: ActaField[] = []
+                if (Array.isArray(rawPlantilla.campos)) {
+                    parsedCampos = rawPlantilla.campos
+                } else if (typeof rawPlantilla.campos === 'string') {
+                    try {
+                        parsedCampos = JSON.parse(rawPlantilla.campos)
+                    } catch {
+                        parsedCampos = []
+                    }
+                }
+
+                const targetNombre = (rawPlantilla.nombre || '').trim()
+                if (!targetNombre) {
+                    alert('El archivo no contiene un nombre de formulario de acta válido.')
+                    setImportModal(prev => ({ ...prev, loading: false }))
+                    return
+                }
+
+                const initialLicId = rawPlantilla.licitacionId || (licitaciones[0]?.licId || '')
+                const initialAnio = Number(rawPlantilla.anio) || new Date().getFullYear()
+
+                // Check if name already exists
+                const check = await checkActaNombreExists(targetNombre)
+                if (check.exists && check.existing) {
+                    setImportModal({
+                        open: true,
+                        loading: false,
+                        step: 'conflict',
+                        data: { ...rawPlantilla, campos: parsedCampos },
+                        nombre: `(Copia) ${targetNombre}`,
+                        licitacionId: initialLicId,
+                        anio: initialAnio,
+                        conflictInfo: check.existing
+                    })
+                } else {
+                    setImportModal({
+                        open: true,
+                        loading: false,
+                        step: 'confirm',
+                        data: { ...rawPlantilla, campos: parsedCampos },
+                        nombre: targetNombre,
+                        licitacionId: initialLicId,
+                        anio: initialAnio,
+                        conflictInfo: null
+                    })
+                }
+            } catch (err: any) {
+                alert('Error al leer el archivo JSON: ' + (err.message || 'Formato no válido'))
+                setImportModal(prev => ({ ...prev, loading: false }))
+            }
+        }
+        reader.onerror = () => {
+            alert('Error al leer el archivo')
+            setImportModal(prev => ({ ...prev, loading: false }))
+        }
+        reader.readAsText(file)
+    }
+
+    const handleConfirmImportActa = async () => {
+        if (!importModal.nombre.trim()) {
+            alert('Por favor ingrese el nombre para el acta.')
+            return
+        }
+
+        setImportModal(prev => ({ ...prev, loading: true }))
+        try {
+            const pData = importModal.data || {}
+            const res = await importActaPlantillaData({
+                nombre: importModal.nombre.trim(),
+                licitacionId: importModal.licitacionId ? Number(importModal.licitacionId) : null,
+                anio: Number(importModal.anio) || new Date().getFullYear(),
+                instituciones: pData.instituciones,
+                rolesPerfiles: pData.rolesPerfiles,
+                estado: pData.estado !== false,
+                logoUrl: pData.logoUrl,
+                instrucciones: pData.instrucciones,
+                codigo: pData.codigo,
+                version: pData.version,
+                fecha: pData.fecha,
+                codigoAdicional: pData.codigoAdicional,
+                mostrarCodigoAdicional: pData.mostrarCodigoAdicional,
+                correlativoAutomatico: pData.correlativoAutomatico,
+                mostrarCodigoVersionFecha: pData.mostrarCodigoVersionFecha,
+                campos: pData.campos || []
+            })
+
+            if (res.success) {
+                setImportModal(prev => ({ ...prev, open: false, loading: false }))
+                setMessage({
+                    type: 'success',
+                    text: `¡Acta "${res.nombre}" importada exitosamente con ${res.fieldsCount} campos!`
+                })
+                router.refresh()
+                setTimeout(() => window.location.reload(), 1000)
+            } else {
+                alert(res.error || 'Error al importar la plantilla de acta')
+                setImportModal(prev => ({ ...prev, loading: false }))
+            }
+        } catch (err: any) {
+            alert('Error durante la importación: ' + err.message)
+            setImportModal(prev => ({ ...prev, loading: false }))
+        }
+    }
+
     return (
         <div className="max-w-6xl mx-auto pb-24 space-y-8 animate-in fade-in duration-300">
             {/* Header bar */}
@@ -415,20 +643,29 @@ export default function CrearActaClient({ initialPlantilla, initialPlantillas, l
                         </h1>
                         <p className="text-slate-400 text-sm mt-1">
                             {viewMode === 'table' 
-                                ? 'Administra las cabeceras creadas, edita parámetros, duplica o diseña nuevos formularios.' 
+                                ? 'Administra las cabeceras creadas, exporta/importa formularios entre entornos, duplica o diseña nuevos formularios.' 
                                 : 'Diseña formularios dinámicos institucionales con firma digital, evaluaciones y tablas.'}
                         </p>
                     </div>
 
                     <div className="flex items-center gap-3 shrink-0">
                         {viewMode === 'table' ? (
-                            <button
-                                type="button"
-                                onClick={handleCreateNew}
-                                className="px-6 py-2.5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white rounded-xl text-xs font-black uppercase tracking-wider transition-all shadow-lg shadow-cyan-500/25 flex items-center gap-2 cursor-pointer"
-                            >
-                                <span>➕</span> CREAR NUEVA CABECERA
-                            </button>
+                            <div className="flex items-center gap-3">
+                                <button
+                                    type="button"
+                                    onClick={handleOpenImportModal}
+                                    className="px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white rounded-xl text-xs font-black uppercase tracking-wider transition-all shadow-lg shadow-emerald-500/25 flex items-center gap-2 cursor-pointer"
+                                >
+                                    <span>📥</span> IMPORTAR ACTA
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={handleCreateNew}
+                                    className="px-6 py-2.5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white rounded-xl text-xs font-black uppercase tracking-wider transition-all shadow-lg shadow-cyan-500/25 flex items-center gap-2 cursor-pointer"
+                                >
+                                    <span>➕</span> CREAR NUEVA CABECERA
+                                </button>
+                            </div>
                         ) : (
                             <>
                                 {isAutoSaving ? (
@@ -441,6 +678,22 @@ export default function CrearActaClient({ initialPlantilla, initialPlantillas, l
                                     </span>
                                 ) : null}
 
+                                <button
+                                    type="button"
+                                    onClick={() => handleExportActa()}
+                                    className="px-3.5 py-2 rounded-xl text-xs font-bold transition-all border border-emerald-500/30 bg-emerald-950/40 text-emerald-300 hover:bg-emerald-900/50 flex items-center gap-1.5 cursor-pointer"
+                                    title="Exportar archivo JSON de este formulario"
+                                >
+                                    <span>📤</span> Exportar
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={handleOpenImportModal}
+                                    className="px-3.5 py-2 rounded-xl text-xs font-bold transition-all border border-cyan-500/30 bg-cyan-950/40 text-cyan-300 hover:bg-cyan-900/50 flex items-center gap-1.5 cursor-pointer"
+                                    title="Importar formulario desde archivo JSON"
+                                >
+                                    <span>📥</span> Importar
+                                </button>
                                 <button
                                     type="button"
                                     onClick={() => setPreviewMode(!previewMode)}
@@ -639,6 +892,15 @@ export default function CrearActaClient({ initialPlantilla, initialPlantillas, l
                                                         </button>
                                                         <button
                                                             type="button"
+                                                            onClick={() => handleExportActa(p)}
+                                                            disabled={loadingId === p.id}
+                                                            className="p-1.5 bg-slate-100 hover:bg-emerald-100 text-slate-700 hover:text-emerald-700 rounded-lg text-xs transition-colors cursor-pointer"
+                                                            title="Exportar archivo JSON del Acta"
+                                                        >
+                                                            📤
+                                                        </button>
+                                                        <button
+                                                            type="button"
                                                             onClick={() => handleDelete(p.id, p.nombre, respuestasCount)}
                                                             disabled={loadingId === p.id || respuestasCount > 0}
                                                             className={`p-1.5 rounded-lg text-xs transition-colors ${
@@ -728,6 +990,265 @@ export default function CrearActaClient({ initialPlantilla, initialPlantillas, l
                                 {loadingId === duplicateModal.item?.id ? '⏳ Duplicando...' : '📋 Confirmar y Duplicar'}
                             </button>
                         </div>
+                    </div>
+                </div>
+            )}
+
+            {/* MODAL PARA IMPORTAR FORMULARIO DE ACTA */}
+            {importModal.open && (
+                <div className="fixed inset-0 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in duration-200">
+                    <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl border border-gray-100 space-y-6 animate-in zoom-in-95 duration-200">
+                        {/* Selector de Archivo Oculto */}
+                        <input
+                            ref={importFileInputRef}
+                            type="file"
+                            accept=".json"
+                            onChange={handleImportFileChange}
+                            className="hidden"
+                        />
+
+                        {/* PASO 1: Subida de archivo JSON */}
+                        {importModal.step === 'upload' && (
+                            <div>
+                                <div className="flex items-center justify-between border-b border-gray-100 pb-4 mb-4">
+                                    <div className="flex items-center gap-3">
+                                        <span className="text-2xl p-2.5 bg-emerald-50 text-emerald-600 rounded-2xl">📥</span>
+                                        <div>
+                                            <h3 className="text-lg font-black text-slate-900">Importar Formulario de Acta</h3>
+                                            <p className="text-xs text-gray-500">Carga un acta diseñada en desarrollo u otro entorno</p>
+                                        </div>
+                                    </div>
+                                    <button
+                                        type="button"
+                                        onClick={() => setImportModal(prev => ({ ...prev, open: false }))}
+                                        className="text-gray-400 hover:text-slate-700 text-lg font-bold p-1 rounded-lg"
+                                    >
+                                        ✕
+                                    </button>
+                                </div>
+
+                                <div
+                                    onClick={() => importFileInputRef.current?.click()}
+                                    className="border-2 border-dashed border-slate-200 hover:border-emerald-500 bg-slate-50/50 hover:bg-emerald-50/30 rounded-2xl p-8 text-center cursor-pointer transition-all flex flex-col items-center justify-center gap-3"
+                                >
+                                    <div className="w-14 h-14 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center text-2xl shadow-sm">
+                                        📋
+                                    </div>
+                                    <div>
+                                        <p className="font-extrabold text-slate-800 text-sm">Haga clic aquí para seleccionar el archivo .json</p>
+                                        <p className="text-xs text-slate-400 mt-1">Formato: JSON de Acta de Supervisión</p>
+                                    </div>
+                                </div>
+
+                                {importModal.loading && (
+                                    <div className="mt-4 p-3 bg-emerald-50 text-emerald-800 text-xs font-bold rounded-xl flex items-center justify-center gap-2">
+                                        <span className="animate-spin">⏳</span> Leyendo y validando archivo...
+                                    </div>
+                                )}
+
+                                <div className="mt-6 flex justify-end">
+                                    <button
+                                        type="button"
+                                        onClick={() => setImportModal(prev => ({ ...prev, open: false }))}
+                                        className="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold text-xs transition-colors cursor-pointer"
+                                    >
+                                        Cancelar
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* PASO 2: Conflicto - El Acta ya existe */}
+                        {importModal.step === 'conflict' && importModal.conflictInfo && (
+                            <div className="space-y-5">
+                                <div className="flex items-center justify-between border-b border-gray-100 pb-4">
+                                    <div className="flex items-center gap-3">
+                                        <span className="text-2xl p-2 bg-amber-50 text-amber-600 rounded-2xl">⚠️</span>
+                                        <div>
+                                            <h3 className="text-lg font-black text-slate-900">El formulario ya existe</h3>
+                                            <p className="text-xs text-gray-500">Ya existe un acta registrada con este mismo nombre</p>
+                                        </div>
+                                    </div>
+                                    <button
+                                        type="button"
+                                        onClick={() => setImportModal(prev => ({ ...prev, open: false }))}
+                                        className="text-gray-400 hover:text-slate-700 text-lg font-bold p-1 rounded-lg"
+                                    >
+                                        ✕
+                                    </button>
+                                </div>
+
+                                <div className="p-4 bg-amber-50/80 border border-amber-200 rounded-2xl text-xs space-y-1.5">
+                                    <p className="font-black text-amber-900">
+                                        Ya existe un formulario de acta con el nombre <span className="underline">«{importModal.conflictInfo.nombre}»</span>.
+                                    </p>
+                                    <p className="text-amber-800">
+                                        ¿Desea crear una <strong>copia</strong> para este nuevo formulario importado?
+                                    </p>
+                                </div>
+
+                                <div className="space-y-4">
+                                    <div className="space-y-1.5">
+                                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                                            Nombre que le daremos al nuevo formulario <span className="text-rose-500">*</span>
+                                        </label>
+                                        <input
+                                            type="text"
+                                            value={importModal.nombre}
+                                            onChange={(e) => setImportModal({ ...importModal, nombre: e.target.value })}
+                                            placeholder="Ej: (Copia) Acta de Supervisión 2026"
+                                            className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none text-slate-900 font-bold text-sm"
+                                            required
+                                        />
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <div>
+                                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Licitación</label>
+                                            <select
+                                                value={importModal.licitacionId}
+                                                onChange={(e) => setImportModal({ ...importModal, licitacionId: e.target.value })}
+                                                className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 outline-none focus:ring-2 focus:ring-emerald-500"
+                                            >
+                                                <option value="">Sin Licitación fija</option>
+                                                {licitaciones.map(l => (
+                                                    <option key={l.licId} value={l.licId}>
+                                                        {l.licitacionHomologada || `Licitación ${l.licId}`}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Año</label>
+                                            <input
+                                                type="number"
+                                                value={importModal.anio}
+                                                onChange={(e) => setImportModal({ ...importModal, anio: Number(e.target.value) || 2026 })}
+                                                className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 outline-none focus:ring-2 focus:ring-emerald-500"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-between text-xs text-slate-600">
+                                        <span>Campos y secciones a importar:</span>
+                                        <strong className="text-emerald-700 font-black">{importModal.data?.campos?.length || 0} campos</strong>
+                                    </div>
+                                </div>
+
+                                <div className="flex gap-3 justify-end pt-2 border-t border-gray-100">
+                                    <button
+                                        type="button"
+                                        onClick={() => setImportModal(prev => ({ ...prev, open: false }))}
+                                        className="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold text-xs transition-colors cursor-pointer"
+                                    >
+                                        Cancelar
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={handleConfirmImportActa}
+                                        disabled={importModal.loading || !importModal.nombre.trim()}
+                                        className="px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white rounded-xl font-black text-xs uppercase tracking-wider transition-all shadow-md shadow-emerald-600/20 disabled:opacity-50 cursor-pointer flex items-center gap-2"
+                                    >
+                                        {importModal.loading ? <span className="animate-spin">⏳</span> : <span>✅</span>}
+                                        {importModal.loading ? 'Importando...' : 'SÍ, CREAR COPIA E IMPORTAR'}
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* PASO 3: Confirmación - El Acta no existe, carga directa */}
+                        {importModal.step === 'confirm' && (
+                            <div className="space-y-5">
+                                <div className="flex items-center justify-between border-b border-gray-100 pb-4">
+                                    <div className="flex items-center gap-3">
+                                        <span className="text-2xl p-2 bg-emerald-50 text-emerald-600 rounded-2xl">✨</span>
+                                        <div>
+                                            <h3 className="text-lg font-black text-slate-900">Listo para Importar Acta</h3>
+                                            <p className="text-xs text-gray-500">El formulario no existe actualmente en este ambiente</p>
+                                        </div>
+                                    </div>
+                                    <button
+                                        type="button"
+                                        onClick={() => setImportModal(prev => ({ ...prev, open: false }))}
+                                        className="text-gray-400 hover:text-slate-700 text-lg font-bold p-1 rounded-lg"
+                                    >
+                                        ✕
+                                    </button>
+                                </div>
+
+                                <div className="space-y-4">
+                                    <div className="space-y-1.5">
+                                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                                            Nombre del Acta <span className="text-rose-500">*</span>
+                                        </label>
+                                        <input
+                                            type="text"
+                                            value={importModal.nombre}
+                                            onChange={(e) => setImportModal({ ...importModal, nombre: e.target.value })}
+                                            className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none text-slate-900 font-bold text-sm"
+                                            required
+                                        />
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <div>
+                                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Licitación</label>
+                                            <select
+                                                value={importModal.licitacionId}
+                                                onChange={(e) => setImportModal({ ...importModal, licitacionId: e.target.value })}
+                                                className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 outline-none focus:ring-2 focus:ring-emerald-500"
+                                            >
+                                                <option value="">Sin Licitación fija</option>
+                                                {licitaciones.map(l => (
+                                                    <option key={l.licId} value={l.licId}>
+                                                        {l.licitacionHomologada || `Licitación ${l.licId}`}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Año</label>
+                                            <input
+                                                type="number"
+                                                value={importModal.anio}
+                                                onChange={(e) => setImportModal({ ...importModal, anio: Number(e.target.value) || 2026 })}
+                                                className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 outline-none focus:ring-2 focus:ring-emerald-500"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="p-4 bg-emerald-50/50 border border-emerald-100 rounded-2xl space-y-2 text-xs">
+                                        <div className="flex justify-between text-slate-700">
+                                            <span>Campos del formulario:</span>
+                                            <strong className="text-emerald-700 font-black">{importModal.data?.campos?.length || 0} campos</strong>
+                                        </div>
+                                        <div className="flex justify-between text-slate-700">
+                                            <span>Código / Versión:</span>
+                                            <strong className="text-slate-800 font-bold">{importModal.data?.codigo || 'N/A'} (v{importModal.data?.version || '1.0'})</strong>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="flex gap-3 justify-end pt-2 border-t border-gray-100">
+                                    <button
+                                        type="button"
+                                        onClick={() => setImportModal(prev => ({ ...prev, open: false }))}
+                                        className="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold text-xs transition-colors cursor-pointer"
+                                    >
+                                        Cancelar
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={handleConfirmImportActa}
+                                        disabled={importModal.loading || !importModal.nombre.trim()}
+                                        className="px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white rounded-xl font-black text-xs uppercase tracking-wider transition-all shadow-md shadow-emerald-600/20 disabled:opacity-50 cursor-pointer flex items-center gap-2"
+                                    >
+                                        {importModal.loading ? <span className="animate-spin">⏳</span> : <span>📥</span>}
+                                        {importModal.loading ? 'Importando...' : 'CONFIRMAR E IMPORTAR'}
+                                    </button>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             )}

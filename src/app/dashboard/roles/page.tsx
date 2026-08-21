@@ -88,6 +88,7 @@ export default async function RolesPage() {
         { id: 'manage_evaluacion_detallada', name: 'Evaluación Detallada', description: 'Realizar evaluación técnica detallada por puntos críticos.', category: 'MATRIZ DE RIESGO -> MATRIZ 2026' },
         { id: 'manage_mitigacion', name: 'Cierre de Mitigación', description: 'Gestionar plazos y evidencias de solución para hallazgos de la matriz.', category: 'MATRIZ DE RIESGO -> DETALLE MATRIZ' },
         { id: 'close_matriz_riesgo', name: 'Sol. desviación Matriz', description: 'Mitigar y enviar a supervisión las evaluaciones de matriz de riesgo asignadas.', category: 'MATRIZ DE RIESGO' },
+        { id: 'view_historico_matriz', name: 'Histórico de Matrices', description: 'Consultar la historia completa de matrices de riesgo, trazabilidad cronológica de hallazgos y evidencias de mitigación.', category: 'MATRIZ DE RIESGO' },
         { id: 'view_estado_avance', name: 'Estado de Avance', description: 'Visualizar el estado de avance de la matriz de riesgo.', category: 'MATRIZ DE RIESGO -> DETALLE MATRIZ' },
         { id: 'view_auditoria', name: 'Auditoría Externa', description: 'Vista global completa de hallazgos y evidencias para auditores.', category: 'MATRIZ DE RIESGO -> DETALLE MATRIZ' },
  

@@ -343,3 +343,206 @@ export async function saveFormatosCartaSostenedor(cabeceraId: string, formatos: 
     }
 }
 
+export async function exportMatrixTemplate(id: string) {
+    const session = await getSession()
+    if (!session?.user?.role?.permissions.includes('manage_nueva_matriz')) {
+        return { error: 'No tienes permisos para esta acción.' }
+    }
+
+    try {
+        const matrix = await prisma.matrizT_Cabecera.findUnique({
+            where: { id },
+            include: {
+                licitacion: true,
+                detalles: {
+                    orderBy: { orden: 'asc' }
+                },
+                formatosCarta: true
+            }
+        })
+
+        if (!matrix) {
+            return { error: 'Matriz no encontrada.' }
+        }
+
+        const exportData = {
+            exportVersion: '1.0',
+            moduleType: 'MATRIZ_RIESGO_PLANTILLA',
+            exportedAt: new Date().toISOString(),
+            cabecera: {
+                titulo: matrix.titulo,
+                anio: matrix.anio,
+                licId: matrix.licId,
+                licitacionHomologada: matrix.licitacion?.licitacionHomologada,
+                estado: matrix.estado,
+                instrucciones: matrix.instrucciones
+            },
+            detalles: (matrix.detalles || []).map(d => ({
+                preguntaNombre: d.preguntaNombre,
+                tipoRespuesta: d.tipoRespuesta,
+                obligatorio: d.obligatorio,
+                seccion: d.seccion,
+                orden: d.orden,
+                gravedad: d.gravedad,
+                probabilidad: d.probabilidad,
+                nivelRiesgo: d.nivelRiesgo,
+                justificacion: d.justificacion,
+                riesgoSignificativo: d.riesgoSignificativo,
+                recursoNecesario: d.recursoNecesario,
+                resultadoEsperado: d.resultadoEsperado,
+                respImplementacion: d.respImplementacion,
+                respSeguimiento: d.respSeguimiento,
+                evidenciaCumplimiento: d.evidenciaCumplimiento,
+                evidenciaEficacia: d.evidenciaEficacia,
+                compromisoSostenedor: d.compromisoSostenedor
+            })),
+            formatosCarta: (matrix.formatosCarta || []).map(f => ({
+                nombre: f.nombre,
+                asuntoEmail: f.asuntoEmail,
+                cuerpoEmail: f.cuerpoEmail,
+                cuerpoInicio: f.cuerpoInicio,
+                cuerpoFin: f.cuerpoFin,
+                activo: f.activo
+            }))
+        }
+
+        return { success: true, exportData }
+    } catch (e) {
+        console.error('Error al exportar matriz:', e)
+        return { error: 'Error al exportar la plantilla de matriz.' }
+    }
+}
+
+export async function checkMatrixTitleExists(titulo: string) {
+    try {
+        const trimmed = titulo.trim()
+        const existing = await prisma.matrizT_Cabecera.findFirst({
+            where: {
+                titulo: {
+                    equals: trimmed
+                }
+            },
+            select: { id: true, titulo: true, anio: true, licId: true }
+        })
+
+        return { exists: !!existing, existing }
+    } catch (e) {
+        console.error('Error al verificar título de matriz:', e)
+        return { exists: false, error: 'Error al verificar existencia.' }
+    }
+}
+
+export async function importMatrixTemplate(data: {
+    titulo: string
+    licId?: number
+    anio?: number
+    estado?: boolean
+    instrucciones?: string | null
+    detalles?: any[]
+    formatosCarta?: any[]
+}) {
+    const session = await getSession()
+    if (!session?.user?.role?.permissions.includes('manage_nueva_matriz')) {
+        return { error: 'No tienes permisos para esta acción.' }
+    }
+
+    try {
+        if (!data.titulo || !data.titulo.trim()) {
+            return { error: 'El título de la matriz es obligatorio.' }
+        }
+
+        // Validate or resolve licId
+        let targetLicId = Number(data.licId)
+        if (!targetLicId) {
+            const firstLic = await prisma.licitacion.findFirst({
+                where: { estado: 1 },
+                orderBy: { licId: 'asc' }
+            })
+            if (!firstLic) {
+                return { error: 'No se encontraron licitaciones disponibles en este ambiente para asociar la matriz.' }
+            }
+            targetLicId = firstLic.licId
+        } else {
+            const licExists = await prisma.licitacion.findUnique({
+                where: { licId: targetLicId }
+            })
+            if (!licExists) {
+                const firstLic = await prisma.licitacion.findFirst({
+                    where: { estado: 1 },
+                    orderBy: { licId: 'asc' }
+                })
+                if (firstLic) {
+                    targetLicId = firstLic.licId
+                }
+            }
+        }
+
+        const anioFinal = Number(data.anio) || new Date().getFullYear()
+
+        // Create Header
+        const createdHeader = await prisma.matrizT_Cabecera.create({
+            data: {
+                titulo: data.titulo.trim(),
+                licId: targetLicId,
+                anio: anioFinal,
+                estado: data.estado !== false,
+                instrucciones: data.instrucciones || null
+            }
+        })
+
+        // Create Details
+        if (data.detalles && Array.isArray(data.detalles) && data.detalles.length > 0) {
+            const newDetalles = data.detalles.map((d: any, index: number) => ({
+                cabeceraId: createdHeader.id,
+                preguntaNombre: d.preguntaNombre || `Pregunta ${index + 1}`,
+                tipoRespuesta: d.tipoRespuesta || 'SI_NO',
+                obligatorio: d.obligatorio === true,
+                seccion: d.seccion || 'LEVANTAMIENTO_GENERAL',
+                orden: typeof d.orden === 'number' ? d.orden : index,
+                gravedad: d.gravedad !== undefined && d.gravedad !== null ? Number(d.gravedad) : null,
+                probabilidad: d.probabilidad !== undefined && d.probabilidad !== null ? Number(d.probabilidad) : null,
+                nivelRiesgo: d.nivelRiesgo !== undefined && d.nivelRiesgo !== null ? Number(d.nivelRiesgo) : null,
+                justificacion: d.justificacion || null,
+                riesgoSignificativo: d.riesgoSignificativo || null,
+                recursoNecesario: d.recursoNecesario || null,
+                resultadoEsperado: d.resultadoEsperado || null,
+                respImplementacion: d.respImplementacion || null,
+                respSeguimiento: d.respSeguimiento || null,
+                evidenciaCumplimiento: d.evidenciaCumplimiento || null,
+                evidenciaEficacia: d.evidenciaEficacia || null,
+                compromisoSostenedor: d.compromisoSostenedor || null
+            }))
+
+            await prisma.matrizT_Detalle.createMany({
+                data: newDetalles
+            })
+        }
+
+        // Create FormatoCartaSostenedor if available
+        if (data.formatosCarta && Array.isArray(data.formatosCarta) && data.formatosCarta.length > 0) {
+            await prisma.formatoCartaSostenedor.createMany({
+                data: data.formatosCarta.map((f: any) => ({
+                    cabeceraId: createdHeader.id,
+                    nombre: f.nombre || 'Formato Estándar',
+                    asuntoEmail: f.asuntoEmail || '',
+                    cuerpoEmail: f.cuerpoEmail || '',
+                    cuerpoInicio: f.cuerpoInicio || '',
+                    cuerpoFin: f.cuerpoFin || '',
+                    activo: f.activo !== false
+                }))
+            })
+        }
+
+        revalidatePath('/dashboard/mantenedor/matriz-riesgo/nueva-matriz')
+        return {
+            success: true,
+            newId: createdHeader.id,
+            titulo: createdHeader.titulo,
+            questionsCount: data.detalles?.length || 0
+        }
+    } catch (e: any) {
+        console.error('Error al importar matriz:', e)
+        return { error: e.message || 'Error al importar la matriz en la base de datos.' }
+    }
+}
+

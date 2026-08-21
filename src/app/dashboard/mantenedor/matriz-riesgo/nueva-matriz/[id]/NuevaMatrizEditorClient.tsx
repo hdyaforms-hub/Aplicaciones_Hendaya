@@ -1,10 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import jsPDF from 'jspdf'
-import { saveMatrixTemplate, deleteMatrix, saveFormatosCartaSostenedor } from '../actions'
+import { saveMatrixTemplate, deleteMatrix, saveFormatosCartaSostenedor, exportMatrixTemplate } from '../actions'
 
 type Licitacion = {
     licId: number
@@ -20,6 +20,7 @@ type MatrizDetalle = {
     obligatorio: boolean
     seccion: string
     orden: number
+    conObservacion?: boolean
     gravedad: number | null
     probabilidad: number | null
     nivelRiesgo: number | null
@@ -53,7 +54,7 @@ interface NuevaMatrizEditorClientProps {
 
 // Categories definitions
 const CATEGORIES = [
-    { id: 'PATIO_SERVICIO', label: 'Patio de servicio', colorName: 'yellow', activeTabClass: 'bg-amber-100 text-amber-900 border-amber-300 ring-2 ring-amber-200/50', bgClass: 'bg-amber-50/30 border-amber-200/70', bulletColor: 'bg-amber-500', badgeClass: 'bg-amber-100 text-amber-905 border-amber-200 text-amber-800', borderClass: 'border-l-amber-500' },
+    { id: 'PATIO_SERVICIO', label: 'Patio de servicio', colorName: 'yellow', activeTabClass: 'bg-amber-100 text-amber-900 border-amber-300 ring-2 ring-amber-200/50', bgClass: 'bg-amber-50/30 border-amber-200/70', bulletColor: 'bg-amber-500', badgeClass: 'bg-amber-100 text-amber-900 border-amber-200 text-amber-800', borderClass: 'border-l-amber-500' },
     { id: 'BODEGA', label: 'Bodega', colorName: 'orange', activeTabClass: 'bg-orange-100 text-orange-950 border-orange-300 ring-2 ring-orange-200/50', bgClass: 'bg-orange-50/30 border-orange-200/70', bulletColor: 'bg-orange-500', badgeClass: 'bg-orange-100 text-orange-950 border-orange-200 text-orange-850', borderClass: 'border-l-orange-500' },
     { id: 'COCINA', label: 'Cocina', colorName: 'green', activeTabClass: 'bg-emerald-100 text-emerald-950 border-emerald-300 ring-2 ring-emerald-200/50', bgClass: 'bg-emerald-50/30 border-emerald-200/70', bulletColor: 'bg-emerald-500', badgeClass: 'bg-emerald-100 text-emerald-950 border-emerald-200 text-emerald-800', borderClass: 'border-l-emerald-500' },
     { id: 'BANO', label: 'Baño', colorName: 'celeste', activeTabClass: 'bg-cyan-100 text-cyan-950 border-cyan-300 ring-2 ring-cyan-200/50', bgClass: 'bg-cyan-50/30 border-cyan-200/70', bulletColor: 'bg-cyan-500', badgeClass: 'bg-cyan-100 text-cyan-950 border-cyan-200 text-cyan-800', borderClass: 'border-l-cyan-500' },
@@ -122,6 +123,25 @@ export default function NuevaMatrizEditorClient({
     // States for letter preview
     const [showPreviewModal, setShowPreviewModal] = useState(false)
     const [showHelpTags, setShowHelpTags] = useState(false)
+
+    // Menu states for adding questions (Standard vs With Observations)
+    const [showAddMenu, setShowAddMenu] = useState(false)
+    const [showBottomAddMenu, setShowBottomAddMenu] = useState(false)
+    const addMenuRef = useRef<HTMLDivElement>(null)
+    const addBottomMenuRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (addMenuRef.current && !addMenuRef.current.contains(event.target as Node)) {
+                setShowAddMenu(false)
+            }
+            if (addBottomMenuRef.current && !addBottomMenuRef.current.contains(event.target as Node)) {
+                setShowBottomAddMenu(false)
+            }
+        }
+        document.addEventListener('mousedown', handleClickOutside)
+        return () => document.removeEventListener('mousedown', handleClickOutside)
+    }, [])
 
     const handleDownloadMockPDF = () => {
         const doc = new jsPDF({
@@ -236,6 +256,7 @@ export default function NuevaMatrizEditorClient({
             obligatorio: d.obligatorio,
             seccion: d.seccion,
             orden: d.orden,
+            conObservacion: !!(d.justificacion && d.justificacion.trim() !== ''),
             gravedad: d.gravedad || '',
             probabilidad: d.probabilidad || '',
             nivelRiesgo: d.nivelRiesgo || '',
@@ -300,8 +321,9 @@ export default function NuevaMatrizEditorClient({
         !['OBSERVACION', 'ADJUNTAR', 'NUMERICO'].includes(q.tipoRespuesta)
     )
 
-    // Add a new question
-    const handleAddQuestion = () => {
+    // Add a new question (standard or with observations)
+    const handleAddQuestion = (type: 'estandar' | 'con_observaciones' = 'estandar') => {
+        setShowAddMenu(false)
         const newQuestion = {
             id: `temp-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
             preguntaNombre: '',
@@ -309,6 +331,7 @@ export default function NuevaMatrizEditorClient({
             obligatorio: true,
             seccion: activeCategory,
             orden: questions.filter(q => q.seccion === activeCategory).length,
+            conObservacion: type === 'con_observaciones',
             gravedad: '',
             probabilidad: '',
             nivelRiesgo: '',
@@ -430,17 +453,48 @@ export default function NuevaMatrizEditorClient({
         }
     }
 
+    const handleExport = async () => {
+        try {
+            const res = await exportMatrixTemplate(matrix.id)
+            if (res.success && res.exportData) {
+                const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(res.exportData, null, 2))
+                const downloadAnchor = document.createElement('a')
+                const cleanTitle = matrix.titulo.replace(/[^a-zA-Z0-9_-]/g, '_')
+                downloadAnchor.setAttribute("href", dataStr)
+                downloadAnchor.setAttribute("download", `Matriz_${cleanTitle}_${matrix.anio || 2026}.json`)
+                document.body.appendChild(downloadAnchor)
+                downloadAnchor.click()
+                downloadAnchor.remove()
+                setMessage({ type: 'success', text: `Plantilla "${matrix.titulo}" exportada exitosamente.` })
+            } else {
+                alert(res.error || 'Error al exportar la plantilla.')
+            }
+        } catch (err: any) {
+            alert('Error al exportar: ' + err.message)
+        }
+    }
+
     return (
         <div className="space-y-6 pb-20">
             {/* Top Navigation Row */}
-            <div className="flex justify-between items-center bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
-                <Link
-                    href="/dashboard/mantenedor/matriz-riesgo/nueva-matriz"
-                    className="flex items-center gap-2 text-slate-500 hover:text-slate-900 transition-colors text-sm font-bold"
-                >
-                    <span>⬅️</span> Volver al listado
-                </Link>
-                <div className="text-right">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+                <div className="flex items-center gap-3">
+                    <Link
+                        href="/dashboard/mantenedor/matriz-riesgo/nueva-matriz"
+                        className="flex items-center gap-2 text-slate-500 hover:text-slate-900 transition-colors text-sm font-bold"
+                    >
+                        <span>⬅️</span> Volver al listado
+                    </Link>
+                    <button
+                        type="button"
+                        onClick={handleExport}
+                        className="px-3.5 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
+                        title="Exportar archivo JSON completo de esta matriz"
+                    >
+                        <span>📤</span> Exportar Plantilla
+                    </button>
+                </div>
+                <div className="text-left sm:text-right">
                     <span className="text-[10px] uppercase font-black tracking-widest text-slate-400">Plantilla seleccionada</span>
                     <h2 className="text-sm font-black text-slate-900 leading-tight">
                         {matrix.titulo} ({matrix.anio})
@@ -537,16 +591,60 @@ export default function NuevaMatrizEditorClient({
                 {/* 1. PREGUNTAS TAMP/FORM BUILDER */}
                 {activeMainTab === 'preguntas' && (
                     <div className="space-y-6">
-                        <div className="flex justify-between items-center">
+                        <div className="flex justify-between items-center relative">
                             <h3 className="text-sm font-black text-slate-800 uppercase tracking-wider">
                                 Preguntas en {currentCategoryInfo.label}
                             </h3>
-                            <button
-                                onClick={handleAddQuestion}
-                                className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-1.5"
-                            >
-                                <span>+</span> Agregar Pregunta
-                            </button>
+
+                            {/* Dropdown Agregar Pregunta Superior */}
+                            <div className="relative" ref={addMenuRef}>
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setShowAddMenu(!showAddMenu)
+                                        setShowBottomAddMenu(false)
+                                    }}
+                                    className="px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-2 cursor-pointer"
+                                >
+                                    <span>+</span> Agregar Pregunta <span className="text-[10px] text-slate-400">▼</span>
+                                </button>
+
+                                {showAddMenu && (
+                                    <div className="absolute right-0 mt-2 w-80 bg-white rounded-2xl shadow-2xl border border-slate-200 p-2 z-40 animate-in fade-in zoom-in-95 duration-150 space-y-1.5">
+                                        <button
+                                            type="button"
+                                            onClick={() => handleAddQuestion('estandar')}
+                                            className="w-full text-left p-3 rounded-xl hover:bg-slate-50 transition-colors flex items-start gap-3 cursor-pointer group border border-transparent hover:border-slate-100"
+                                        >
+                                            <span className="p-2.5 bg-cyan-50 text-cyan-700 rounded-xl text-lg group-hover:bg-cyan-100 transition-colors shrink-0">
+                                                📋
+                                            </span>
+                                            <div>
+                                                <p className="font-black text-xs text-slate-900 group-hover:text-cyan-700">Pregunta Estándar</p>
+                                                <p className="text-[10px] text-slate-500 font-medium leading-relaxed mt-0.5">
+                                                    Pregunta simple con tipo de respuesta y requerimiento (como en la imagen).
+                                                </p>
+                                            </div>
+                                        </button>
+
+                                        <button
+                                            type="button"
+                                            onClick={() => handleAddQuestion('con_observaciones')}
+                                            className="w-full text-left p-3 rounded-xl hover:bg-amber-50/70 transition-colors flex items-start gap-3 cursor-pointer group border border-transparent hover:border-amber-100"
+                                        >
+                                            <span className="p-2.5 bg-amber-50 text-amber-700 rounded-xl text-lg group-hover:bg-amber-100 transition-colors shrink-0">
+                                                📝
+                                            </span>
+                                            <div>
+                                                <p className="font-black text-xs text-slate-900 group-hover:text-amber-700">Pregunta con Observaciones</p>
+                                                <p className="text-[10px] text-slate-500 font-medium leading-relaxed mt-0.5">
+                                                    Incluye un campo adicional para observaciones o información detallada.
+                                                </p>
+                                            </div>
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
                         </div>
 
                         {/* Instructional Note box */}
@@ -566,102 +664,198 @@ export default function NuevaMatrizEditorClient({
                             </div>
                         ) : (
                             <div className="space-y-4">
-                                {categoryQuestions.map((q, index) => (
-                                    <div 
-                                        key={q.id} 
-                                        className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex flex-col md:flex-row items-start md:items-center gap-4 transition-all hover:shadow-md animate-in fade-in slide-in-from-top-2 duration-200"
-                                    >
-                                        <span className="text-xs bg-slate-100 text-slate-500 px-2.5 py-1 rounded-full font-black min-w-[28px] text-center">
-                                            {index + 1}
-                                        </span>
+                                {categoryQuestions.map((q, index) => {
+                                    const hasObservation = q.conObservacion || (q.justificacion !== null && q.justificacion !== undefined && q.justificacion.trim() !== '')
+                                    return (
+                                        <div 
+                                            key={q.id} 
+                                            className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex flex-col gap-3 transition-all hover:shadow-md animate-in fade-in slide-in-from-top-2 duration-200"
+                                        >
+                                            <div className="flex flex-col md:flex-row items-start md:items-center gap-4 w-full">
+                                                <span className="text-xs bg-slate-100 text-slate-500 px-2.5 py-1 rounded-full font-black min-w-[28px] text-center">
+                                                    {index + 1}
+                                                </span>
 
-                                        {/* Question name */}
-                                        <div className="flex-1 w-full space-y-1">
-                                            <label className="block text-[10px] font-bold text-slate-400 uppercase pl-0.5">Nombre de la pregunta</label>
-                                            <input
-                                                type="text"
-                                                className="w-full p-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none text-black font-semibold text-sm bg-slate-50/50 focus:bg-white"
-                                                placeholder="Ej: ¿El basurero del patio cuenta con tapa?"
-                                                value={q.preguntaNombre}
-                                                onChange={(e) => handleQuestionChange(q.id, 'preguntaNombre', e.target.value)}
-                                            />
+                                                {/* Question name */}
+                                                <div className="flex-1 w-full space-y-1">
+                                                    <label className="block text-[10px] font-bold text-slate-400 uppercase pl-0.5 flex items-center justify-between">
+                                                        <span>Nombre de la pregunta</span>
+                                                        {hasObservation && (
+                                                            <span className="text-[9px] font-bold text-amber-700 bg-amber-50 border border-amber-200/70 px-2 py-0.5 rounded-full">
+                                                                📝 Con Observaciones
+                                                            </span>
+                                                        )}
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        className="w-full p-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none text-black font-semibold text-sm bg-slate-50/50 focus:bg-white"
+                                                        placeholder="Ej: ¿El basurero del patio cuenta con tapa?"
+                                                        value={q.preguntaNombre}
+                                                        onChange={(e) => handleQuestionChange(q.id, 'preguntaNombre', e.target.value)}
+                                                    />
+                                                </div>
+
+                                                {/* Response type dropdown */}
+                                                <div className="w-full md:w-60 space-y-1">
+                                                    <label className="block text-[10px] font-bold text-slate-400 uppercase pl-0.5">Tipo de Respuesta</label>
+                                                    <select
+                                                        className="w-full p-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none text-black font-semibold text-sm bg-white"
+                                                        value={q.tipoRespuesta}
+                                                        onChange={(e) => handleQuestionChange(q.id, 'tipoRespuesta', e.target.value)}
+                                                    >
+                                                        <option value="SI_NO">Si / No</option>
+                                                        <option value="EXISTE_NO_EXISTE">Existe / No existe</option>
+                                                        <option value="ENCUESTA">Encuesta (Predefinida)</option>
+                                                        <option value="OBSERVACION">Observación</option>
+                                                        <option value="ADJUNTAR">Adjuntar documento</option>
+                                                        <option value="NUMERICO">Numérico</option>
+                                                    </select>
+                                                </div>
+
+                                                {/* Obligatorio switch */}
+                                                <div className="w-full md:w-36 space-y-2 shrink-0">
+                                                    <label className="block text-[10px] font-bold text-slate-400 uppercase pl-0.5">Requerido</label>
+                                                    <div className="flex items-center gap-2 h-9">
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => handleQuestionChange(q.id, 'obligatorio', !q.obligatorio)}
+                                                            className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors focus:outline-none ${q.obligatorio ? 'bg-cyan-600' : 'bg-gray-200'}`}
+                                                        >
+                                                            <span className={`inline-block h-3.5 w-3.5 transform rounded-full bg-white transition-transform ${q.obligatorio ? 'translate-x-4.5' : 'translate-x-1'}`} />
+                                                        </button>
+                                                        <span className={`text-[10px] font-black tracking-tight ${q.obligatorio ? 'text-cyan-700' : 'text-gray-400'}`}>
+                                                            {q.obligatorio ? 'OBLIGATORIO' : 'OPCIONAL'}
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                {/* Sort and Delete Controls */}
+                                                <div className="flex items-center gap-2 shrink-0 w-full md:w-auto justify-end border-t md:border-0 pt-3 md:pt-0 mt-2 md:mt-0">
+                                                    {/* Toggle observation */}
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => handleQuestionChange(q.id, 'conObservacion', !hasObservation)}
+                                                        className={`p-2 rounded-lg text-xs font-bold transition-all ${
+                                                            hasObservation 
+                                                                ? 'bg-amber-100 text-amber-800 hover:bg-amber-200 border border-amber-200' 
+                                                                : 'bg-slate-100 text-slate-400 hover:bg-slate-200 hover:text-slate-700'
+                                                        }`}
+                                                        title={hasObservation ? "Ocultar campo de observaciones" : "Agregar campo de observaciones a esta pregunta"}
+                                                    >
+                                                        💬
+                                                    </button>
+                                                    {/* Reorder Up */}
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => handleMoveUp(index)}
+                                                        disabled={index === 0}
+                                                        className="p-2 bg-slate-100 hover:bg-slate-200 rounded-lg disabled:opacity-30 transition-colors"
+                                                        title="Subir orden"
+                                                    >
+                                                        ⬆️
+                                                    </button>
+                                                    {/* Reorder Down */}
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => handleMoveDown(index)}
+                                                        disabled={index === categoryQuestions.length - 1}
+                                                        className="p-2 bg-slate-100 hover:bg-slate-200 rounded-lg disabled:opacity-30 transition-colors"
+                                                        title="Bajar orden"
+                                                    >
+                                                        ⬇️
+                                                    </button>
+                                                    {/* Delete */}
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => handleRemoveQuestion(q.id)}
+                                                        className="p-2 bg-red-50 hover:bg-red-100 text-red-500 rounded-lg transition-colors border border-red-100"
+                                                        title="Eliminar pregunta"
+                                                    >
+                                                        ✕
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            {/* Dedicated Observation Field */}
+                                            {hasObservation && (
+                                                <div className="w-full pt-3 border-t border-dashed border-amber-200/80 space-y-1 animate-in fade-in slide-in-from-top-1 duration-150">
+                                                    <div className="flex items-center justify-between">
+                                                        <label className="block text-[10px] font-bold text-amber-800 uppercase tracking-wider flex items-center gap-1.5">
+                                                            <span>💬</span> Campo de Observaciones / Mayor Información
+                                                        </label>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => {
+                                                                handleQuestionChange(q.id, 'conObservacion', false)
+                                                                handleQuestionChange(q.id, 'justificacion', '')
+                                                            }}
+                                                            className="text-[10px] text-slate-400 hover:text-rose-600 font-bold transition-colors cursor-pointer"
+                                                        >
+                                                            ✕ Quitar campo de observaciones
+                                                        </button>
+                                                    </div>
+                                                    <textarea
+                                                        className="w-full p-2.5 border border-amber-200 bg-amber-50/30 hover:bg-white focus:bg-white rounded-xl focus:ring-2 focus:ring-amber-500 outline-none text-slate-800 font-medium text-xs resize-y min-h-[55px] placeholder:text-amber-400/80"
+                                                        placeholder="Ingrese aquí las observaciones, consideraciones o detalle de la información que se requiere..."
+                                                        value={q.justificacion || ''}
+                                                        onChange={(e) => handleQuestionChange(q.id, 'justificacion', e.target.value)}
+                                                    />
+                                                </div>
+                                            )}
                                         </div>
+                                    )
+                                })}
 
-                                        {/* Response type dropdown */}
-                                        <div className="w-full md:w-60 space-y-1">
-                                            <label className="block text-[10px] font-bold text-slate-400 uppercase pl-0.5">Tipo de Respuesta</label>
-                                            <select
-                                                className="w-full p-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none text-black font-semibold text-sm bg-white"
-                                                value={q.tipoRespuesta}
-                                                onChange={(e) => handleQuestionChange(q.id, 'tipoRespuesta', e.target.value)}
-                                            >
-                                                <option value="SI_NO">Si / No</option>
-                                                <option value="EXISTE_NO_EXISTE">Existe / No existe</option>
-                                                <option value="ENCUESTA">Encuesta (Predefinida)</option>
-                                                <option value="OBSERVACION">Observación</option>
-                                                <option value="ADJUNTAR">Adjuntar documento</option>
-                                                <option value="NUMERICO">Numérico</option>
-                                            </select>
-                                        </div>
+                                {/* Dropdown Agregar Pregunta Inferior */}
+                                <div className="flex justify-end pt-2 relative" ref={addBottomMenuRef}>
+                                    <div className="relative">
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setShowBottomAddMenu(!showBottomAddMenu)
+                                                setShowAddMenu(false)
+                                            }}
+                                            className="px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-2 cursor-pointer"
+                                        >
+                                            <span>+</span> Agregar Pregunta <span className="text-[10px] text-slate-400">▲</span>
+                                        </button>
 
-                                        {/* Obligatorio switch */}
-                                        <div className="w-full md:w-36 space-y-2 shrink-0">
-                                            <label className="block text-[10px] font-bold text-slate-400 uppercase pl-0.5">Requerido</label>
-                                            <div className="flex items-center gap-2 h-9">
+                                        {showBottomAddMenu && (
+                                            <div className="absolute right-0 bottom-full mb-2 w-80 bg-white rounded-2xl shadow-2xl border border-slate-200 p-2 z-40 animate-in fade-in zoom-in-95 duration-150 space-y-1.5">
                                                 <button
                                                     type="button"
-                                                    onClick={() => handleQuestionChange(q.id, 'obligatorio', !q.obligatorio)}
-                                                    className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors focus:outline-none ${q.obligatorio ? 'bg-cyan-600' : 'bg-gray-200'}`}
+                                                    onClick={() => handleAddQuestion('estandar')}
+                                                    className="w-full text-left p-3 rounded-xl hover:bg-slate-50 transition-colors flex items-start gap-3 cursor-pointer group border border-transparent hover:border-slate-100"
                                                 >
-                                                    <span className={`inline-block h-3.5 w-3.5 transform rounded-full bg-white transition-transform ${q.obligatorio ? 'translate-x-4.5' : 'translate-x-1'}`} />
+                                                    <span className="p-2.5 bg-cyan-50 text-cyan-700 rounded-xl text-lg group-hover:bg-cyan-100 transition-colors shrink-0">
+                                                        📋
+                                                    </span>
+                                                    <div>
+                                                        <p className="font-black text-xs text-slate-900 group-hover:text-cyan-700">Pregunta Estándar</p>
+                                                        <p className="text-[10px] text-slate-500 font-medium leading-relaxed mt-0.5">
+                                                            Pregunta simple con tipo de respuesta y requerimiento (como en la imagen).
+                                                        </p>
+                                                    </div>
                                                 </button>
-                                                <span className={`text-[10px] font-black tracking-tight ${q.obligatorio ? 'text-cyan-700' : 'text-gray-400'}`}>
-                                                    {q.obligatorio ? 'OBLIGATORIO' : 'OPCIONAL'}
-                                                </span>
-                                            </div>
-                                        </div>
 
-                                        {/* Sort and Delete Controls */}
-                                        <div className="flex items-center gap-2 shrink-0 w-full md:w-auto justify-end border-t md:border-0 pt-3 md:pt-0 mt-2 md:mt-0">
-                                            {/* Reorder Up */}
-                                            <button
-                                                type="button"
-                                                onClick={() => handleMoveUp(index)}
-                                                disabled={index === 0}
-                                                className="p-2 bg-slate-100 hover:bg-slate-200 rounded-lg disabled:opacity-30 transition-colors"
-                                                title="Subir orden"
-                                            >
-                                                ⬆️
-                                            </button>
-                                            {/* Reorder Down */}
-                                            <button
-                                                type="button"
-                                                onClick={() => handleMoveDown(index)}
-                                                disabled={index === categoryQuestions.length - 1}
-                                                className="p-2 bg-slate-100 hover:bg-slate-200 rounded-lg disabled:opacity-30 transition-colors"
-                                                title="Bajar orden"
-                                            >
-                                                ⬇️
-                                            </button>
-                                            {/* Delete */}
-                                            <button
-                                                type="button"
-                                                onClick={() => handleRemoveQuestion(q.id)}
-                                                className="p-2 bg-red-50 hover:bg-red-100 text-red-500 rounded-lg transition-colors border border-red-100"
-                                                title="Eliminar pregunta"
-                                            >
-                                                ✕
-                                            </button>
-                                        </div>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => handleAddQuestion('con_observaciones')}
+                                                    className="w-full text-left p-3 rounded-xl hover:bg-amber-50/70 transition-colors flex items-start gap-3 cursor-pointer group border border-transparent hover:border-amber-100"
+                                                >
+                                                    <span className="p-2.5 bg-amber-50 text-amber-700 rounded-xl text-lg group-hover:bg-amber-100 transition-colors shrink-0">
+                                                        📝
+                                                    </span>
+                                                    <div>
+                                                        <p className="font-black text-xs text-slate-900 group-hover:text-amber-700">Pregunta con Observaciones</p>
+                                                        <p className="text-[10px] text-slate-500 font-medium leading-relaxed mt-0.5">
+                                                            Incluye un campo adicional para observaciones o información detallada.
+                                                        </p>
+                                                    </div>
+                                                </button>
+                                            </div>
+                                        )}
                                     </div>
-                                ))}
-                                <div className="flex justify-end pt-2">
-                                    <button
-                                        onClick={handleAddQuestion}
-                                        className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-1.5"
-                                    >
-                                        <span>+</span> Agregar Pregunta
-                                    </button>
                                 </div>
                             </div>
                         )}
@@ -1432,8 +1626,6 @@ export default function NuevaMatrizEditorClient({
         </div>
     )
 }
-
-import { useRef, useEffect } from 'react'
 
 function RichTextEditor({
     value,

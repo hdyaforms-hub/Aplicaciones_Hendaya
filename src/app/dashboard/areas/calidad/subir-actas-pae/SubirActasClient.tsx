@@ -216,8 +216,16 @@ export default function SubirActasClient() {
     ]
 
     const SortIcon = ({ column }: { column: string }) => {
-        if (orderBy !== column) return <span className="text-gray-300 ml-1 opacity-0 group-hover:opacity-100">↕</span>
-        return <span className="text-cyan-500 ml-1">{orderDir === 'asc' ? '↑' : '↓'}</span>
+        const isActive = orderBy === column
+        return (
+            <span className={`inline-flex items-center ml-1.5 px-1.5 py-0.5 rounded text-[10px] font-black transition-all ${
+                isActive 
+                    ? 'bg-cyan-100 text-cyan-800 border border-cyan-300 shadow-2xs' 
+                    : 'text-slate-300 group-hover:text-slate-600 opacity-60 group-hover:opacity-100'
+            }`}>
+                {isActive ? (orderDir === 'asc' ? '▲ Asc' : '▼ Desc') : '↕'}
+            </span>
+        )
     }
 
     // Single card stats logic (if one RBD is heavily filtered)
@@ -301,128 +309,176 @@ export default function SubirActasClient() {
             </div>
 
             {/* Dashboard Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* 1. Detalle del Establecimiento */}
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-center">
                     {singleRecord ? (
                         <div className="space-y-2">
-                            <p className="text-sm text-gray-500 font-semibold uppercase">Detalle del Establecimiento</p>
+                            <p className="text-xs text-gray-400 font-bold uppercase tracking-wider">Detalle del Establecimiento</p>
                             <div className="grid grid-cols-2 gap-2 text-sm">
-                                <span className="text-gray-500">RBD:</span> <span className="font-medium text-gray-900">{singleRecord.RBD}</span>
-                                <span className="text-gray-500">Fecha:</span> <span className="font-medium text-gray-900">{singleRecord.Fecha_Supervision ? new Date(singleRecord.Fecha_Supervision).toLocaleDateString('es-CL') : ''}</span>
-                                <span className="text-gray-500">Establecimiento:</span> <span className="font-medium text-gray-900 col-span-2">{singleRecord.Nombre_Num_establecimiento}</span>
+                                <span className="text-gray-500 font-medium">RBD:</span> <span className="font-bold text-cyan-700">{singleRecord.RBD}</span>
+                                <span className="text-gray-500 font-medium">Fecha:</span> <span className="font-semibold text-gray-900">{singleRecord.Fecha_Supervision ? new Date(singleRecord.Fecha_Supervision).toLocaleDateString('es-CL') : ''}</span>
+                                <span className="text-gray-500 font-medium col-span-2">Establecimiento:</span>
+                                <span className="font-bold text-gray-900 col-span-2 text-xs leading-snug">{singleRecord.Nombre_Num_establecimiento}</span>
                             </div>
                         </div>
                     ) : (
-                        <div className="text-center text-gray-400">
+                        <div className="text-center text-gray-400 py-2">
                             <p className="mb-2 text-3xl">🏫</p>
-                            <p className="text-sm">Filtre por un RBD específico para ver sus detalles</p>
+                            <p className="text-xs font-semibold text-slate-500">Detalle Establecimiento</p>
+                            <p className="text-[11px] text-slate-400 mt-1">Filtre por un RBD específico para ver sus datos</p>
                         </div>
                     )}
                 </div>
-                
-                <div className="flex flex-col gap-4">
-                    {/* UT summary */}
-                    {Object.keys(utCounts).length > 0 && (
-                        <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 max-h-32 overflow-y-auto text-sm">
-                            <h3 className="font-semibold text-gray-800 mb-2 border-b border-gray-100 pb-2">Registros por UT</h3>
-                            <div className="grid grid-cols-2 gap-2">
-                                {Object.entries(utCounts).sort((a,b) => b[1] - a[1]).map(([ut, count]) => (
-                                    <div key={ut} className="flex justify-between items-center bg-gray-50 px-3 py-1.5 rounded-lg border border-gray-100">
-                                        <span className="font-medium text-gray-700">UT: {ut}</span>
-                                        <span className="text-cyan-600 font-bold bg-cyan-50 px-2 py-0.5 rounded-md text-xs">{count} {count === 1 ? 'registro' : 'registros'}</span>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    )}
 
-                    <div className="bg-gradient-to-br from-cyan-500 to-sky-600 p-6 rounded-2xl shadow-sm text-white flex flex-col justify-center items-center relative overflow-hidden flex-1">
+                {/* 2. Nueva Cerámica: Cantidad de Registros Cargados */}
+                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between relative overflow-hidden">
+                    <div className="absolute top-2 right-2 p-4 opacity-5 text-7xl select-none">📋</div>
+                    <div>
+                        <div className="flex items-center justify-between">
+                            <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Actas Cargadas</p>
+                            <span className="p-1.5 bg-cyan-50 text-cyan-600 rounded-xl text-xs font-black">
+                                {Object.keys(utCounts).length} UTs
+                            </span>
+                        </div>
+                        <p className="text-4xl font-black text-slate-900 mt-2">
+                            {total}
+                        </p>
+                        <p className="text-xs text-slate-500 font-medium mt-1">
+                            {total === 1 ? 'Registro cargado' : 'Registros cargados'} en el sistema
+                        </p>
+                    </div>
+                    <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
+                        <span>Filtros aplicados</span>
+                        <span className="font-bold text-slate-600">{records.length} visibles (Pág. {page})</span>
+                    </div>
+                </div>
+
+                {/* 3. Promedio % Cumplimiento Final */}
+                <div className="bg-gradient-to-br from-cyan-500 to-sky-600 p-6 rounded-2xl shadow-sm text-white flex flex-col justify-center items-center relative overflow-hidden">
                     <div className="absolute top-0 right-0 p-8 opacity-10 text-8xl">📊</div>
-                    <p className="text-cyan-100 font-medium uppercase tracking-wider text-sm mb-2 z-10">Promedio % Cumplimiento Final</p>
-                    <p className="text-5xl font-black z-10">
+                    <p className="text-cyan-100 font-semibold uppercase tracking-wider text-xs mb-1 z-10">Promedio % Cumplimiento</p>
+                    <p className="text-4xl sm:text-5xl font-black z-10">
                         {averageCompliance !== null ? `${averageCompliance.toFixed(2)}%` : '---'}
                     </p>
-                    <p className="text-cyan-100 text-xs mt-2 z-10">Basado en los filtros actuales ({total} actas)</p>
-                </div>
+                    <p className="text-cyan-100 text-[11px] mt-1.5 z-10">Basado en {total} actas auditadas</p>
                 </div>
             </div>
+
+            {/* UT Summary - Ordenado por UT */}
+            {Object.keys(utCounts).length > 0 && (
+                <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 text-sm">
+                    <div className="flex justify-between items-center mb-3 border-b border-gray-100 pb-2">
+                        <h3 className="font-bold text-slate-800 text-xs uppercase tracking-wider flex items-center gap-1.5">
+                            <span>🏢</span> Registros por UT ({Object.keys(utCounts).length} UTs)
+                        </h3>
+                        <span className="text-[11px] text-slate-400 font-medium">Ordenado por N° de UT</span>
+                    </div>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 max-h-48 overflow-y-auto pr-1">
+                        {Object.entries(utCounts)
+                            .sort((a, b) => Number(a[0]) - Number(b[0]) || a[0].localeCompare(b[0], undefined, { numeric: true }))
+                            .map(([ut, count]) => (
+                                <div key={ut} className="flex justify-between items-center bg-slate-50 hover:bg-cyan-50/50 transition-all px-3 py-2 rounded-xl border border-slate-100">
+                                    <span className="font-bold text-slate-700 text-xs">UT {ut}</span>
+                                    <span className="text-cyan-700 font-black bg-cyan-100/70 px-2 py-0.5 rounded-lg text-xs">
+                                        {count}
+                                    </span>
+                                </div>
+                            ))}
+                    </div>
+                </div>
+            )}
 
             {/* Table */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                         <thead>
-                            <tr className="bg-gray-50 border-b border-gray-100 text-sm text-gray-500 font-semibold">
-                                <th className="px-6 py-4 cursor-pointer group hover:text-gray-900 transition-colors" onClick={() => handleSort('Folio')}>
+                            <tr className="bg-gray-50/80 border-b border-gray-100 text-xs text-gray-500 font-bold uppercase tracking-wider">
+                                <th className="px-6 py-4 cursor-pointer group hover:bg-cyan-50/50 hover:text-cyan-900 transition-colors" onClick={() => handleSort('Folio')}>
                                     Folio <SortIcon column="Folio" />
                                 </th>
-                                <th className="px-6 py-4 cursor-pointer group hover:text-gray-900 transition-colors" onClick={() => handleSort('RBD')}>
+                                <th className="px-6 py-4 cursor-pointer group hover:bg-cyan-50/50 hover:text-cyan-900 transition-colors" onClick={() => handleSort('NombreArchivoPdf')}>
+                                    Origen / Tipo <SortIcon column="NombreArchivoPdf" />
+                                </th>
+                                <th className="px-6 py-4 cursor-pointer group hover:bg-cyan-50/50 hover:text-cyan-900 transition-colors" onClick={() => handleSort('RBD')}>
                                     RBD <SortIcon column="RBD" />
                                 </th>
-                                <th className="px-6 py-4 cursor-pointer group hover:text-gray-900 transition-colors" onClick={() => handleSort('Nombre_Num_establecimiento')}>
-                                    Nombre Establecimiento <SortIcon column="Nombre_Num_establecimiento" />
+                                <th className="px-6 py-4 cursor-pointer group hover:bg-cyan-50/50 hover:text-cyan-900 transition-colors" onClick={() => handleSort('Nombre_Num_establecimiento')}>
+                                    Establecimiento <SortIcon column="Nombre_Num_establecimiento" />
                                 </th>
-                                <th className="px-6 py-4 cursor-pointer group hover:text-gray-900 transition-colors" onClick={() => handleSort('Licitacion')}>
+                                <th className="px-6 py-4 cursor-pointer group hover:bg-cyan-50/50 hover:text-cyan-900 transition-colors" onClick={() => handleSort('Licitacion')}>
                                     Licitación <SortIcon column="Licitacion" />
                                 </th>
-                                <th className="px-6 py-4 cursor-pointer group hover:text-gray-900 transition-colors" onClick={() => handleSort('Fecha_Supervision')}>
+                                <th className="px-6 py-4 cursor-pointer group hover:bg-cyan-50/50 hover:text-cyan-900 transition-colors" onClick={() => handleSort('Fecha_Supervision')}>
                                     Fecha <SortIcon column="Fecha_Supervision" />
                                 </th>
-                                <th className="px-6 py-4 cursor-pointer group hover:text-gray-900 transition-colors" onClick={() => handleSort('Porcentaje_cumplimiento_final')}>
+                                <th className="px-6 py-4 cursor-pointer group hover:bg-cyan-50/50 hover:text-cyan-900 transition-colors" onClick={() => handleSort('Porcentaje_cumplimiento_final')}>
                                     % Cumplimiento <SortIcon column="Porcentaje_cumplimiento_final" />
                                 </th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-50">
+                        <tbody className="divide-y divide-gray-50 text-sm">
                             {isLoading ? (
                                 <tr>
-                                    <td colSpan={6} className="px-6 py-12 text-center text-gray-400">
+                                    <td colSpan={7} className="px-6 py-12 text-center text-gray-400">
                                         <div className="animate-spin inline-block w-6 h-6 border-2 border-current border-t-transparent text-cyan-600 rounded-full mb-2"></div>
-                                        <p>Cargando datos...</p>
+                                        <p className="font-bold text-xs">Cargando datos...</p>
                                     </td>
                                 </tr>
                             ) : records.length === 0 ? (
                                 <tr>
-                                    <td colSpan={6} className="px-6 py-12 text-center text-gray-400">
-                                        <p>No se encontraron actas con los filtros aplicados.</p>
+                                    <td colSpan={7} className="px-6 py-12 text-center text-gray-400">
+                                        <p className="font-bold text-sm">No se encontraron actas con los filtros aplicados.</p>
                                     </td>
                                 </tr>
                             ) : (
-                                records.map((record) => (
-                                    <tr key={record.id} className="hover:bg-cyan-50/50 transition-colors cursor-pointer group" onClick={() => setSelectedRecord(record)}>
-                                        <td className="px-6 py-4 font-medium text-cyan-600 group-hover:text-cyan-700">
-                                            {record.Folio}
-                                            {record.NombreArchivoPdf === 'Ingreso Manual' && (
-                                                <span title="Ingresado Manualmente" className="ml-2 text-lg">✋</span>
-                                            )}
-                                        </td>
-                                        <td className="px-6 py-4 font-medium text-gray-900">
-                                            {record.RBD}
-                                        </td>
-                                        <td className="px-6 py-4 text-gray-600 text-sm max-w-[200px] truncate">
-                                            {record.Nombre_Num_establecimiento}
-                                        </td>
-                                        <td className="px-6 py-4 text-gray-600">
-                                            {record.Licitacion}
-                                        </td>
-                                        <td className="px-6 py-4 text-gray-600 text-sm">
-                                            {record.Fecha_Supervision ? new Date(record.Fecha_Supervision).toLocaleDateString('es-CL') : '-'}
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <div className="flex items-center gap-2">
-                                                <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
-                                                    <div 
-                                                        className={`h-full rounded-full ${record.Porcentaje_cumplimiento_final && record.Porcentaje_cumplimiento_final >= 90 ? 'bg-green-500' : record.Porcentaje_cumplimiento_final && record.Porcentaje_cumplimiento_final >= 70 ? 'bg-yellow-500' : 'bg-red-500'}`}
-                                                        style={{ width: `${record.Porcentaje_cumplimiento_final || 0}%` }}
-                                                    ></div>
+                                records.map((record) => {
+                                    const isManual = record.NombreArchivoPdf === 'Ingreso Manual'
+                                    return (
+                                        <tr key={record.id} className="hover:bg-cyan-50/50 transition-colors cursor-pointer group" onClick={() => setSelectedRecord(record)}>
+                                            <td className="px-6 py-4 font-black text-cyan-700 group-hover:text-cyan-800">
+                                                {record.Folio}
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                {isManual ? (
+                                                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl text-xs font-black bg-indigo-50 text-indigo-700 border border-indigo-200">
+                                                        <span>✍️</span> Manual
+                                                    </span>
+                                                ) : (
+                                                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl text-xs font-black bg-sky-50 text-sky-700 border border-sky-200" title={record.NombreArchivoPdf}>
+                                                        <span>📄</span> PDF
+                                                    </span>
+                                                )}
+                                            </td>
+                                            <td className="px-6 py-4 font-bold text-gray-900">
+                                                {record.RBD}
+                                            </td>
+                                            <td className="px-6 py-4 text-gray-700 text-xs font-semibold max-w-[220px] truncate" title={record.Nombre_Num_establecimiento || ''}>
+                                                {record.Nombre_Num_establecimiento}
+                                            </td>
+                                            <td className="px-6 py-4 text-gray-600 text-xs font-bold">
+                                                {record.Licitacion ? `Lic. ${record.Licitacion}` : '-'}
+                                            </td>
+                                            <td className="px-6 py-4 text-gray-600 text-xs font-medium">
+                                                {record.Fecha_Supervision ? new Date(record.Fecha_Supervision).toLocaleDateString('es-CL') : '-'}
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <div className="flex items-center gap-2">
+                                                    <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden min-w-[60px]">
+                                                        <div 
+                                                            className={`h-full rounded-full transition-all ${record.Porcentaje_cumplimiento_final && record.Porcentaje_cumplimiento_final >= 90 ? 'bg-emerald-500' : record.Porcentaje_cumplimiento_final && record.Porcentaje_cumplimiento_final >= 70 ? 'bg-amber-500' : 'bg-rose-500'}`}
+                                                            style={{ width: `${record.Porcentaje_cumplimiento_final || 0}%` }}
+                                                        ></div>
+                                                    </div>
+                                                    <span className="font-extrabold text-gray-800 text-xs w-12 text-right">
+                                                        {record.Porcentaje_cumplimiento_final !== null && record.Porcentaje_cumplimiento_final !== undefined ? `${record.Porcentaje_cumplimiento_final}%` : '-'}
+                                                    </span>
                                                 </div>
-                                                <span className="font-semibold text-gray-700 text-sm w-12">
-                                                    {record.Porcentaje_cumplimiento_final}%
-                                                </span>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                ))
+                                            </td>
+                                        </tr>
+                                    )
+                                })
                             )}
                         </tbody>
                     </table>

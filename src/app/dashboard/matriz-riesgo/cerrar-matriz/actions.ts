@@ -131,27 +131,52 @@ export async function getCerrarMatrizData(year: number = new Date().getFullYear(
                 include: { sucursales: true }
             })
 
-            // Calculate progress for each supervisor
+            // Calculate progress for each supervisor for BOTH semesters
             supervisorProgressList = supervisors.map(sup => {
-                // Filter assigned RBDs that are active
                 const supActiveRbdIds = sup.rbds.filter(rbd => activeColegiosMap.has(rbd))
-                
-                // Evaluations for these RBDs in this semester
-                const supEvaluations = matricesDb.filter(m => supActiveRbdIds.includes(m.rbd))
-
-                // Finished evaluations are those in status 'por supervisar' or 'cerrado'
-                const completedRbds = supEvaluations.filter(e => e.estado === 'por supervisar' || e.estado === 'cerrado').map(e => e.rbd)
-                const completed = completedRbds.length
                 const total = supActiveRbdIds.length
+                
+                // All completed evaluations for these assigned RBDs with VIGENTE template
+                const supEvaluations = matricesDb.filter(m => 
+                    supActiveRbdIds.includes(m.rbd) && 
+                    (m.estado === 'por supervisar' || m.estado === 'cerrado') &&
+                    m.cabecera?.estado !== false
+                )
 
-                // Build detail list of each RBD with status
+                // Evaluations in Semestre 1 (fechaIngreso <= cutoffDate)
+                const evalsS1 = supEvaluations.filter(m => new Date(m.fechaIngreso) <= cutoffDate)
+                const s1RbdCountMap = new Map<number, number>()
+                evalsS1.forEach(e => {
+                    s1RbdCountMap.set(e.rbd, (s1RbdCountMap.get(e.rbd) || 0) + 1)
+                })
+                const uniqueCompletedS1 = Array.from(s1RbdCountMap.keys()).length
+                const repeatedS1 = Math.max(0, evalsS1.length - uniqueCompletedS1)
+                const pctS1 = total > 0 ? Math.round((uniqueCompletedS1 / total) * 100) : 0
+
+                // Evaluations in Semestre 2 (fechaIngreso > cutoffDate)
+                const evalsS2 = supEvaluations.filter(m => new Date(m.fechaIngreso) > cutoffDate)
+                const s2RbdCountMap = new Map<number, number>()
+                evalsS2.forEach(e => {
+                    s2RbdCountMap.set(e.rbd, (s2RbdCountMap.get(e.rbd) || 0) + 1)
+                })
+                const uniqueCompletedS2 = Array.from(s2RbdCountMap.keys()).length
+                const repeatedS2 = Math.max(0, evalsS2.length - uniqueCompletedS2)
+                const pctS2 = total > 0 ? Math.round((uniqueCompletedS2 / total) * 100) : 0
+
+                // Build detail list of each RBD with status per semester
                 const rbdList = supActiveRbdIds.map(rbd => {
                     const colegio = activeColegiosMap.get(rbd)
-                    const isComplete = completedRbds.includes(rbd)
+                    const countS1 = s1RbdCountMap.get(rbd) || 0
+                    const countS2 = s2RbdCountMap.get(rbd) || 0
                     return {
                         rbd,
                         nombre: colegio?.nombreEstablecimiento || `RBD ${rbd}`,
-                        estado: isComplete ? 'completo' : 'pendiente'
+                        s1Status: countS1 > 0 ? 'completo' : 'pendiente',
+                        s1Count: countS1,
+                        s2Status: countS2 > 0 ? 'completo' : 'pendiente',
+                        s2Count: countS2,
+                        totalEvals: countS1 + countS2,
+                        hasRepeated: countS1 > 1 || countS2 > 1
                     }
                 }).sort((a, b) => a.nombre.localeCompare(b.nombre))
 
@@ -161,9 +186,21 @@ export async function getCerrarMatrizData(year: number = new Date().getFullYear(
                     name: sup.name || sup.username,
                     sucursales: sup.sucursales.map(s => s.nombre),
                     totalRbd: total,
-                    completedRbd: completed,
-                    pendingRbd: Math.max(0, total - completed),
-                    pct: total > 0 ? Math.round((completed / total) * 100) : 100,
+                    s1: {
+                        completed: uniqueCompletedS1,
+                        pending: Math.max(0, total - uniqueCompletedS1),
+                        pct: pctS1,
+                        repeated: repeatedS1,
+                        totalEvals: evalsS1.length
+                    },
+                    s2: {
+                        completed: uniqueCompletedS2,
+                        pending: Math.max(0, total - uniqueCompletedS2),
+                        pct: pctS2,
+                        repeated: repeatedS2,
+                        totalEvals: evalsS2.length
+                    },
+                    totalRepeated: repeatedS1 + repeatedS2,
                     rbdList
                 }
             })
@@ -180,14 +217,44 @@ export async function getCerrarMatrizData(year: number = new Date().getFullYear(
         let myProgress = null
         if (!isAdmin) {
             const activeMyRbds = (userRbds as number[]).filter((rbd: number) => activeColegiosMap.has(rbd))
-            const myEvaluations = matricesDb.filter(m => activeMyRbds.includes(m.rbd))
-            const completed = myEvaluations.filter(e => e.estado === 'por supervisar' || e.estado === 'cerrado').length
             const total = activeMyRbds.length
+            const myEvaluations = matricesDb.filter(m => 
+                activeMyRbds.includes(m.rbd) && 
+                (m.estado === 'por supervisar' || m.estado === 'cerrado') &&
+                m.cabecera?.estado !== false
+            )
+
+            const evalsS1 = myEvaluations.filter(m => new Date(m.fechaIngreso) <= cutoffDate)
+            const s1CountMap = new Map<number, number>()
+            evalsS1.forEach(e => s1CountMap.set(e.rbd, (s1CountMap.get(e.rbd) || 0) + 1))
+            const completedS1 = Array.from(s1CountMap.keys()).length
+            const repeatedS1 = Math.max(0, evalsS1.length - completedS1)
+            const pctS1 = total > 0 ? Math.round((completedS1 / total) * 100) : 0
+
+            const evalsS2 = myEvaluations.filter(m => new Date(m.fechaIngreso) > cutoffDate)
+            const s2CountMap = new Map<number, number>()
+            evalsS2.forEach(e => s2CountMap.set(e.rbd, (s2CountMap.get(e.rbd) || 0) + 1))
+            const completedS2 = Array.from(s2CountMap.keys()).length
+            const repeatedS2 = Math.max(0, evalsS2.length - completedS2)
+            const pctS2 = total > 0 ? Math.round((completedS2 / total) * 100) : 0
+
             myProgress = {
                 total,
-                completed,
-                pending: Math.max(0, total - completed),
-                pct: total > 0 ? Math.round((completed / total) * 100) : 100
+                s1: {
+                    completed: completedS1,
+                    pending: Math.max(0, total - completedS1),
+                    pct: pctS1,
+                    repeated: repeatedS1,
+                    totalEvals: evalsS1.length
+                },
+                s2: {
+                    completed: completedS2,
+                    pending: Math.max(0, total - completedS2),
+                    pct: pctS2,
+                    repeated: repeatedS2,
+                    totalEvals: evalsS2.length
+                },
+                totalRepeated: repeatedS1 + repeatedS2
             }
         }
 

@@ -152,12 +152,13 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
     {
         name: 'Matriz de riesgo',
         icon: '📋',
-        requiredPermission: ['view_matriz_riesgo', 'fill_nueva_matriz', 'view_detalle_matriz', 'manage_matriz_2026', 'manage_evaluacion_detallada', 'manage_mitigacion', 'close_matriz_riesgo', 'view_estado_avance', 'view_auditoria', 'view_inf_auditoria_mitigacion', 'view_hoja_b_estandar_pae'],
+        requiredPermission: ['view_matriz_riesgo', 'fill_nueva_matriz', 'view_detalle_matriz', 'manage_matriz_2026', 'manage_evaluacion_detallada', 'manage_mitigacion', 'close_matriz_riesgo', 'view_historico_matriz', 'view_estado_avance', 'view_auditoria', 'view_inf_auditoria_mitigacion', 'view_hoja_b_estandar_pae'],
         subItems: [
             { name: 'Ingresar nueva Matriz', href: '/dashboard/matriz-riesgo/ingresar', requiredPermission: 'fill_nueva_matriz' },
             { name: 'Detalle Matriz', href: '/dashboard/matriz-riesgo/detalle', requiredPermission: 'view_detalle_matriz' },
             { name: 'Cierre de Mitigación', href: '/dashboard/matriz-riesgo/mitigacion', requiredPermission: 'manage_mitigacion' },
             { name: 'Sol. desviación Matriz', href: '/dashboard/matriz-riesgo/cerrar-matriz', requiredPermission: 'close_matriz_riesgo' },
+            { name: 'Histórico de Matrices', href: '/dashboard/matriz-riesgo/historico', requiredPermission: 'view_historico_matriz' },
             { name: 'Estado de Avance', href: '/dashboard/matriz-riesgo/estado-avance', requiredPermission: 'view_estado_avance' },
             { name: 'Auditoría', href: '/dashboard/matriz-riesgo/auditoria', requiredPermission: 'view_auditoria' },
             { name: 'Inf. Auditoria Mitigación', href: '/dashboard/matriz-riesgo/inf-auditoria-mitigacion', requiredPermission: 'view_inf_auditoria_mitigacion' },

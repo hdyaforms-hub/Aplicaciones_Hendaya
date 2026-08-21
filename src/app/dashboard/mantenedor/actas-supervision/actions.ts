@@ -400,3 +400,176 @@ export async function toggleActaState(id: string, estado: boolean) {
         return { success: false, error: error.message || 'Error al cambiar estado' }
     }
 }
+
+export async function exportActaPlantillaData(id: string) {
+    try {
+        const session = await getSession()
+        const permissions = session?.user?.role?.permissions || []
+        const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
+
+        if (!isAdmin && !permissions.includes('manage_actas_supervision')) {
+            return { success: false, error: 'Sin permisos para exportar actas' }
+        }
+
+        const plantilla = await rawPrisma.actaSupervisionPlantilla.findUnique({
+            where: { id },
+            include: { licitacion: true }
+        })
+
+        if (!plantilla) {
+            return { success: false, error: 'Plantilla no encontrada' }
+        }
+
+        let parsedCampos: ActaField[] = []
+        try {
+            parsedCampos = JSON.parse(plantilla.campos || '[]')
+        } catch {
+            parsedCampos = []
+        }
+
+        const exportData = {
+            exportVersion: '1.0',
+            moduleType: 'ACTA_SUPERVISION_PLANTILLA',
+            exportedAt: new Date().toISOString(),
+            plantilla: {
+                nombre: plantilla.nombre,
+                licitacionId: plantilla.licitacionId,
+                licitacionHomologada: plantilla.licitacion?.licitacionHomologada || null,
+                anio: plantilla.anio,
+                instituciones: plantilla.instituciones,
+                rolesPerfiles: plantilla.rolesPerfiles,
+                estado: plantilla.estado,
+                logoUrl: plantilla.logoUrl,
+                instrucciones: plantilla.instrucciones,
+                codigo: plantilla.codigo,
+                version: plantilla.version,
+                fecha: plantilla.fecha,
+                codigoAdicional: plantilla.codigoAdicional,
+                mostrarCodigoAdicional: plantilla.mostrarCodigoAdicional,
+                correlativoAutomatico: plantilla.correlativoAutomatico,
+                mostrarCodigoVersionFecha: plantilla.mostrarCodigoVersionFecha,
+                campos: parsedCampos
+            }
+        }
+
+        return { success: true, exportData }
+    } catch (error: any) {
+        console.error('Error al exportar plantilla de acta:', error)
+        return { success: false, error: error.message || 'Error al exportar' }
+    }
+}
+
+export async function checkActaNombreExists(nombre: string) {
+    try {
+        const trimmed = nombre.trim()
+        const existing = await rawPrisma.actaSupervisionPlantilla.findFirst({
+            where: {
+                nombre: {
+                    equals: trimmed
+                }
+            },
+            select: { id: true, nombre: true, anio: true, licitacionId: true }
+        })
+
+        return { exists: !!existing, existing }
+    } catch (error: any) {
+        console.error('Error al verificar nombre de acta:', error)
+        return { exists: false, error: error.message || 'Error al verificar' }
+    }
+}
+
+export async function importActaPlantillaData(data: {
+    nombre: string
+    licitacionId?: number | null
+    anio?: number
+    instituciones?: any
+    rolesPerfiles?: any
+    estado?: boolean
+    logoUrl?: string | null
+    instrucciones?: string | null
+    codigo?: string | null
+    version?: string | null
+    fecha?: string | null
+    codigoAdicional?: string | null
+    mostrarCodigoAdicional?: boolean
+    correlativoAutomatico?: boolean
+    mostrarCodigoVersionFecha?: boolean
+    campos: ActaField[]
+}) {
+    try {
+        const session = await getSession()
+        const permissions = session?.user?.role?.permissions || []
+        const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
+
+        if (!isAdmin && !permissions.includes('manage_actas_supervision')) {
+            return { success: false, error: 'No tienes permisos para importar Actas de Supervisión' }
+        }
+
+        if (!data.nombre || !data.nombre.trim()) {
+            return { success: false, error: 'El nombre del acta es obligatorio' }
+        }
+
+        const username = session?.user?.username || 'desconocido'
+        const userId = session?.user?.id || null
+
+        // Check if licitacionId exists in DB if provided
+        let targetLicId: number | null = null
+        if (data.licitacionId) {
+            const licExists = await prisma.licitacion.findUnique({
+                where: { licId: Number(data.licitacionId) }
+            })
+            if (licExists) {
+                targetLicId = Number(data.licitacionId)
+            }
+        }
+
+        const camposJson = JSON.stringify(data.campos || [])
+        const institucionesStr = typeof data.instituciones === 'string'
+            ? data.instituciones
+            : (Array.isArray(data.instituciones) ? JSON.stringify(data.instituciones) : '[]')
+        const rolesPerfilesStr = typeof data.rolesPerfiles === 'string'
+            ? data.rolesPerfiles
+            : (Array.isArray(data.rolesPerfiles) ? JSON.stringify(data.rolesPerfiles) : '[]')
+
+        const created = await rawPrisma.actaSupervisionPlantilla.create({
+            data: {
+                nombre: data.nombre.trim(),
+                licitacion: targetLicId ? { connect: { licId: targetLicId } } : undefined,
+                anio: Number(data.anio) || new Date().getFullYear(),
+                instituciones: institucionesStr,
+                rolesPerfiles: rolesPerfilesStr,
+                estado: data.estado !== false,
+                logoUrl: data.logoUrl || null,
+                instrucciones: data.instrucciones || null,
+                codigo: data.codigo || null,
+                version: data.version || null,
+                fecha: data.fecha || null,
+                codigoAdicional: data.codigoAdicional || null,
+                mostrarCodigoAdicional: data.mostrarCodigoAdicional ?? false,
+                correlativoAutomatico: data.correlativoAutomatico ?? false,
+                mostrarCodigoVersionFecha: data.mostrarCodigoVersionFecha ?? true,
+                campos: camposJson,
+                createdBy: username
+            }
+        })
+
+        await logAuditAction({
+            username,
+            userId,
+            action: 'IMPORTAR_PLANTILLA_ACTA',
+            modulo: 'MANTENEDOR -> ACTAS DE SUPERVISIÓN',
+            detalle: `Se importó la plantilla de acta "${created.nombre}" con ${data.campos?.length || 0} campos (ID: ${created.id})`
+        })
+
+        revalidatePath('/dashboard/mantenedor/actas-supervision/crear')
+        return {
+            success: true,
+            id: created.id,
+            nombre: created.nombre,
+            fieldsCount: data.campos?.length || 0
+        }
+    } catch (error: any) {
+        console.error('Error al importar plantilla de acta:', error)
+        return { success: false, error: error.message || 'Error al importar la plantilla de acta' }
+    }
+}
