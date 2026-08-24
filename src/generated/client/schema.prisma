@@ -1455,17 +1455,18 @@ model CollabKanbanColumn {
 }
 
 model CollabNote {
-  id        String   @id @default(uuid())
-  title     String?
-  content   String   @db.Text
-  color     String   @default("yellow") // yellow, pink, cyan, green, purple, orange
-  isPinned  Boolean  @default(false)
-  rotation  Int      @default(0) // Grados de rotación visual (-3 a 3)
-  tags      String? // JSON array
-  isPublic  Boolean  @default(false)
-  createdBy String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         String   @id @default(uuid())
+  title      String?
+  content    String   @db.Text
+  color      String   @default("yellow") // yellow, pink, cyan, green, purple, orange
+  isPinned   Boolean  @default(false)
+  rotation   Int      @default(0) // Grados de rotación visual (-3 a 3)
+  tags       String? // JSON array
+  isPublic   Boolean  @default(false)
+  sharedWith String?  @db.Text // JSON array de usernames específicos
+  createdBy  String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
   @@map("collab_notes")
 }
@@ -1481,29 +1482,73 @@ model CollabGanttChart {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  items CollabGanttItem[]
+  items     CollabGanttItem[]
+  baselines CollabGanttBaseline[]
 
   @@map("collab_gantt_charts")
 }
 
 model CollabGanttItem {
+  id            String    @id @default(uuid())
+  ganttId       String
+  taskId        String? // Enlace a CollabTask para sync bidireccional
+  parentId      String? // Jerarquía WBS (Tarea Padre)
+  isMilestone   Boolean   @default(false) // Hito (duración 0 días, renderizado como rombo ◆)
+  title         String
+  startDate     DateTime
+  endDate       DateTime
+  progress      Int       @default(0) // 0 - 100
+  color         String?   @default("cyan")
+  assignedTo    String?
+  collaborators String?   @db.Text // JSON array de colaboradores adicionales
+  dependencies  String?   @db.Text // JSON array: [{"predecessorId":"id","type":"FS"|"SS"|"FF"|"SF","lag":0}]
+  earlyStart    DateTime?
+  earlyFinish   DateTime?
+  lateStart     DateTime?
+  lateFinish    DateTime?
+  totalFloat    Int?      @default(0) // Holgura (Slack) en días
+  isCritical    Boolean   @default(false) // Flag de Ruta Crítica (CPM)
+  order         Int       @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  gantt           CollabGanttChart          @relation(fields: [ganttId], references: [id], onDelete: Cascade)
+  parent          CollabGanttItem?          @relation("GanttHierarchy", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  children        CollabGanttItem[]         @relation("GanttHierarchy")
+  baselineEntries CollabGanttBaselineItem[]
+
+  @@map("collab_gantt_items")
+}
+
+model CollabGanttBaseline {
+  id        String   @id @default(uuid())
+  ganttId   String
+  name      String   @default("Línea Base")
+  createdBy String
+  createdAt DateTime @default(now())
+
+  gantt CollabGanttChart          @relation(fields: [ganttId], references: [id], onDelete: Cascade)
+  items CollabGanttBaselineItem[]
+
+  @@map("collab_gantt_baselines")
+}
+
+model CollabGanttBaselineItem {
   id           String   @id @default(uuid())
-  ganttId      String
-  taskId       String? // Enlace a CollabTask para sync bidireccional
+  baselineId   String
+  itemId       String
   title        String
   startDate    DateTime
   endDate      DateTime
-  progress     Int      @default(0) // 0 - 100
-  color        String?  @default("cyan")
-  assignedTo   String?
-  dependencies String? // JSON array de item IDs (Finish-to-Start)
-  order        Int      @default(0)
+  durationDays Int      @default(1)
+  progress     Int      @default(0)
   createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
 
-  gantt CollabGanttChart @relation(fields: [ganttId], references: [id], onDelete: Cascade)
+  baseline CollabGanttBaseline @relation(fields: [baselineId], references: [id], onDelete: Cascade)
+  item     CollabGanttItem     @relation(fields: [itemId], references: [id], onDelete: Cascade)
 
-  @@map("collab_gantt_items")
+  @@unique([baselineId, itemId])
+  @@map("collab_gantt_baseline_items")
 }
 
 model CollabProjectActivityLog {
@@ -1642,4 +1687,56 @@ model CollabKudo {
   @@index([toUsername, createdAt])
   @@index([fromUsername, createdAt])
   @@map("collab_kudos")
+}
+
+// ============================================================================
+// GESTOR DOCUMENTAL (MICROSOFT ONEDRIVE / GRAPH API INTEGRATION)
+// ============================================================================
+
+// Configuración global del gestor documental (una sola fila con credenciales cifradas)
+model ConfiguracionDocumental {
+  id                String   @id @default(cuid())
+  tenantId          String // AZURE_TENANT_ID cifrado
+  clientId          String // AZURE_CLIENT_ID cifrado
+  clientSecret      String // AZURE_CLIENT_SECRET cifrado
+  onedriveUserEmail String // Email del usuario dueño del OneDrive
+  rootFolderId      String? // ID de la carpeta raíz en OneDrive
+  rootFolderName    String? // Nombre visible de la carpeta raíz
+  activo            Boolean  @default(true)
+  creadoEn          DateTime @default(now())
+  actualizadoEn     DateTime @updatedAt
+
+  @@map("configuracion_documental")
+}
+
+// Carpetas del gestor (reflejo de la estructura en OneDrive)
+model CarpetaDocumental {
+  id            String                 @id @default(cuid())
+  onedriveId    String                 @unique // ID real en OneDrive (opaco para usuarios)
+  nombre        String
+  descripcion   String?
+  parentId      String? // ID interno de la carpeta padre (null = raíz)
+  rutaCompleta  String // Ej: "Calidad/Manuales/2026"
+  icono         String                 @default("📁")
+  orden         Int                    @default(0)
+  activa        Boolean                @default(true)
+  creadoEn      DateTime               @default(now())
+  actualizadoEn DateTime               @updatedAt
+  privilegios   PrivilegioDocumental[]
+
+  @@map("carpeta_documental")
+}
+
+// Privilegios por carpeta (qué roles o usuarios pueden ver cada carpeta)
+model PrivilegioDocumental {
+  id           String            @id @default(cuid())
+  carpetaId    String
+  carpeta      CarpetaDocumental @relation(fields: [carpetaId], references: [id], onDelete: Cascade)
+  tipo         String // 'rol' | 'usuario'
+  referenciaId String // ID del rol o ID del usuario
+  permiso      String // 'ver' | 'descargar' | 'subir' | 'administrar'
+  creadoEn     DateTime          @default(now())
+
+  @@unique([carpetaId, tipo, referenciaId, permiso])
+  @@map("privilegio_documental")
 }

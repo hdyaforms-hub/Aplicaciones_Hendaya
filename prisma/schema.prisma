@@ -1689,4 +1689,57 @@ model CollabKudo {
   @@map("collab_kudos")
 }
 
+// ============================================================================
+// GESTOR DOCUMENTAL (MICROSOFT ONEDRIVE / GRAPH API INTEGRATION)
+// ============================================================================
+
+// Configuración global del gestor documental (una sola fila con credenciales cifradas)
+model ConfiguracionDocumental {
+  id                String   @id @default(cuid())
+  tenantId          String   // AZURE_TENANT_ID cifrado
+  clientId          String   // AZURE_CLIENT_ID cifrado
+  clientSecret      String   // AZURE_CLIENT_SECRET cifrado
+  onedriveUserEmail String   // Email del usuario dueño del OneDrive
+  rootFolderId      String?  // ID de la carpeta raíz en OneDrive
+  rootFolderName    String?  // Nombre visible de la carpeta raíz
+  activo            Boolean  @default(true)
+  creadoEn          DateTime @default(now())
+  actualizadoEn     DateTime @updatedAt
+
+  @@map("configuracion_documental")
+}
+
+// Carpetas del gestor (reflejo de la estructura en OneDrive)
+model CarpetaDocumental {
+  id              String                 @id @default(cuid())
+  onedriveId      String                 @unique // ID real en OneDrive (opaco para usuarios)
+  nombre          String
+  descripcion     String?
+  parentId        String?                // ID interno de la carpeta padre (null = raíz)
+  rutaCompleta    String                 // Ej: "Calidad/Manuales/2026"
+  icono           String                 @default("📁")
+  orden           Int                    @default(0)
+  activa          Boolean                @default(true)
+  creadoEn        DateTime               @default(now())
+  actualizadoEn   DateTime               @updatedAt
+  privilegios     PrivilegioDocumental[]
+
+  @@map("carpeta_documental")
+}
+
+// Privilegios por carpeta (qué roles o usuarios pueden ver cada carpeta)
+model PrivilegioDocumental {
+  id           String            @id @default(cuid())
+  carpetaId    String
+  carpeta      CarpetaDocumental @relation(fields: [carpetaId], references: [id], onDelete: Cascade)
+  tipo         String            // 'rol' | 'usuario'
+  referenciaId String            // ID del rol o ID del usuario
+  permiso      String            // 'ver' | 'descargar' | 'subir' | 'administrar'
+  creadoEn     DateTime          @default(now())
+
+  @@unique([carpetaId, tipo, referenciaId, permiso])
+  @@map("privilegio_documental")
+}
+
+
 

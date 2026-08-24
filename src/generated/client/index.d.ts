@@ -538,6 +538,21 @@ export type CollabPollVote = $Result.DefaultSelection<Prisma.$CollabPollVotePayl
  * 
  */
 export type CollabKudo = $Result.DefaultSelection<Prisma.$CollabKudoPayload>
+/**
+ * Model ConfiguracionDocumental
+ * 
+ */
+export type ConfiguracionDocumental = $Result.DefaultSelection<Prisma.$ConfiguracionDocumentalPayload>
+/**
+ * Model CarpetaDocumental
+ * 
+ */
+export type CarpetaDocumental = $Result.DefaultSelection<Prisma.$CarpetaDocumentalPayload>
+/**
+ * Model PrivilegioDocumental
+ * 
+ */
+export type PrivilegioDocumental = $Result.DefaultSelection<Prisma.$PrivilegioDocumentalPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -1711,6 +1726,36 @@ export class PrismaClient<
     * ```
     */
   get collabKudo(): Prisma.CollabKudoDelegate<ExtArgs>;
+
+  /**
+   * `prisma.configuracionDocumental`: Exposes CRUD operations for the **ConfiguracionDocumental** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ConfiguracionDocumentals
+    * const configuracionDocumentals = await prisma.configuracionDocumental.findMany()
+    * ```
+    */
+  get configuracionDocumental(): Prisma.ConfiguracionDocumentalDelegate<ExtArgs>;
+
+  /**
+   * `prisma.carpetaDocumental`: Exposes CRUD operations for the **CarpetaDocumental** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CarpetaDocumentals
+    * const carpetaDocumentals = await prisma.carpetaDocumental.findMany()
+    * ```
+    */
+  get carpetaDocumental(): Prisma.CarpetaDocumentalDelegate<ExtArgs>;
+
+  /**
+   * `prisma.privilegioDocumental`: Exposes CRUD operations for the **PrivilegioDocumental** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PrivilegioDocumentals
+    * const privilegioDocumentals = await prisma.privilegioDocumental.findMany()
+    * ```
+    */
+  get privilegioDocumental(): Prisma.PrivilegioDocumentalDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -2256,7 +2301,10 @@ export namespace Prisma {
     CollabMessageReaction: 'CollabMessageReaction',
     CollabPoll: 'CollabPoll',
     CollabPollVote: 'CollabPollVote',
-    CollabKudo: 'CollabKudo'
+    CollabKudo: 'CollabKudo',
+    ConfiguracionDocumental: 'ConfiguracionDocumental',
+    CarpetaDocumental: 'CarpetaDocumental',
+    PrivilegioDocumental: 'PrivilegioDocumental'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -2272,7 +2320,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo"
+      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -9626,6 +9674,216 @@ export namespace Prisma {
           }
         }
       }
+      ConfiguracionDocumental: {
+        payload: Prisma.$ConfiguracionDocumentalPayload<ExtArgs>
+        fields: Prisma.ConfiguracionDocumentalFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ConfiguracionDocumentalFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConfiguracionDocumentalPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ConfiguracionDocumentalFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConfiguracionDocumentalPayload>
+          }
+          findFirst: {
+            args: Prisma.ConfiguracionDocumentalFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConfiguracionDocumentalPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ConfiguracionDocumentalFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConfiguracionDocumentalPayload>
+          }
+          findMany: {
+            args: Prisma.ConfiguracionDocumentalFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConfiguracionDocumentalPayload>[]
+          }
+          create: {
+            args: Prisma.ConfiguracionDocumentalCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConfiguracionDocumentalPayload>
+          }
+          createMany: {
+            args: Prisma.ConfiguracionDocumentalCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ConfiguracionDocumentalCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConfiguracionDocumentalPayload>[]
+          }
+          delete: {
+            args: Prisma.ConfiguracionDocumentalDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConfiguracionDocumentalPayload>
+          }
+          update: {
+            args: Prisma.ConfiguracionDocumentalUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConfiguracionDocumentalPayload>
+          }
+          deleteMany: {
+            args: Prisma.ConfiguracionDocumentalDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ConfiguracionDocumentalUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ConfiguracionDocumentalUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConfiguracionDocumentalPayload>
+          }
+          aggregate: {
+            args: Prisma.ConfiguracionDocumentalAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateConfiguracionDocumental>
+          }
+          groupBy: {
+            args: Prisma.ConfiguracionDocumentalGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ConfiguracionDocumentalGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ConfiguracionDocumentalCountArgs<ExtArgs>
+            result: $Utils.Optional<ConfiguracionDocumentalCountAggregateOutputType> | number
+          }
+        }
+      }
+      CarpetaDocumental: {
+        payload: Prisma.$CarpetaDocumentalPayload<ExtArgs>
+        fields: Prisma.CarpetaDocumentalFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CarpetaDocumentalFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarpetaDocumentalPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CarpetaDocumentalFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarpetaDocumentalPayload>
+          }
+          findFirst: {
+            args: Prisma.CarpetaDocumentalFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarpetaDocumentalPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CarpetaDocumentalFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarpetaDocumentalPayload>
+          }
+          findMany: {
+            args: Prisma.CarpetaDocumentalFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarpetaDocumentalPayload>[]
+          }
+          create: {
+            args: Prisma.CarpetaDocumentalCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarpetaDocumentalPayload>
+          }
+          createMany: {
+            args: Prisma.CarpetaDocumentalCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CarpetaDocumentalCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarpetaDocumentalPayload>[]
+          }
+          delete: {
+            args: Prisma.CarpetaDocumentalDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarpetaDocumentalPayload>
+          }
+          update: {
+            args: Prisma.CarpetaDocumentalUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarpetaDocumentalPayload>
+          }
+          deleteMany: {
+            args: Prisma.CarpetaDocumentalDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CarpetaDocumentalUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.CarpetaDocumentalUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarpetaDocumentalPayload>
+          }
+          aggregate: {
+            args: Prisma.CarpetaDocumentalAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCarpetaDocumental>
+          }
+          groupBy: {
+            args: Prisma.CarpetaDocumentalGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CarpetaDocumentalGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CarpetaDocumentalCountArgs<ExtArgs>
+            result: $Utils.Optional<CarpetaDocumentalCountAggregateOutputType> | number
+          }
+        }
+      }
+      PrivilegioDocumental: {
+        payload: Prisma.$PrivilegioDocumentalPayload<ExtArgs>
+        fields: Prisma.PrivilegioDocumentalFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PrivilegioDocumentalFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrivilegioDocumentalPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PrivilegioDocumentalFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrivilegioDocumentalPayload>
+          }
+          findFirst: {
+            args: Prisma.PrivilegioDocumentalFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrivilegioDocumentalPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PrivilegioDocumentalFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrivilegioDocumentalPayload>
+          }
+          findMany: {
+            args: Prisma.PrivilegioDocumentalFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrivilegioDocumentalPayload>[]
+          }
+          create: {
+            args: Prisma.PrivilegioDocumentalCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrivilegioDocumentalPayload>
+          }
+          createMany: {
+            args: Prisma.PrivilegioDocumentalCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PrivilegioDocumentalCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrivilegioDocumentalPayload>[]
+          }
+          delete: {
+            args: Prisma.PrivilegioDocumentalDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrivilegioDocumentalPayload>
+          }
+          update: {
+            args: Prisma.PrivilegioDocumentalUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrivilegioDocumentalPayload>
+          }
+          deleteMany: {
+            args: Prisma.PrivilegioDocumentalDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PrivilegioDocumentalUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.PrivilegioDocumentalUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrivilegioDocumentalPayload>
+          }
+          aggregate: {
+            args: Prisma.PrivilegioDocumentalAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePrivilegioDocumental>
+          }
+          groupBy: {
+            args: Prisma.PrivilegioDocumentalGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PrivilegioDocumentalGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PrivilegioDocumentalCountArgs<ExtArgs>
+            result: $Utils.Optional<PrivilegioDocumentalCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -11224,6 +11482,37 @@ export namespace Prisma {
    */
   export type CollabPollCountOutputTypeCountVotesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CollabPollVoteWhereInput
+  }
+
+
+  /**
+   * Count Type CarpetaDocumentalCountOutputType
+   */
+
+  export type CarpetaDocumentalCountOutputType = {
+    privilegios: number
+  }
+
+  export type CarpetaDocumentalCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    privilegios?: boolean | CarpetaDocumentalCountOutputTypeCountPrivilegiosArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * CarpetaDocumentalCountOutputType without action
+   */
+  export type CarpetaDocumentalCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarpetaDocumentalCountOutputType
+     */
+    select?: CarpetaDocumentalCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * CarpetaDocumentalCountOutputType without action
+   */
+  export type CarpetaDocumentalCountOutputTypeCountPrivilegiosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PrivilegioDocumentalWhereInput
   }
 
 
@@ -118303,6 +118592,2943 @@ export namespace Prisma {
 
 
   /**
+   * Model ConfiguracionDocumental
+   */
+
+  export type AggregateConfiguracionDocumental = {
+    _count: ConfiguracionDocumentalCountAggregateOutputType | null
+    _min: ConfiguracionDocumentalMinAggregateOutputType | null
+    _max: ConfiguracionDocumentalMaxAggregateOutputType | null
+  }
+
+  export type ConfiguracionDocumentalMinAggregateOutputType = {
+    id: string | null
+    tenantId: string | null
+    clientId: string | null
+    clientSecret: string | null
+    onedriveUserEmail: string | null
+    rootFolderId: string | null
+    rootFolderName: string | null
+    activo: boolean | null
+    creadoEn: Date | null
+    actualizadoEn: Date | null
+  }
+
+  export type ConfiguracionDocumentalMaxAggregateOutputType = {
+    id: string | null
+    tenantId: string | null
+    clientId: string | null
+    clientSecret: string | null
+    onedriveUserEmail: string | null
+    rootFolderId: string | null
+    rootFolderName: string | null
+    activo: boolean | null
+    creadoEn: Date | null
+    actualizadoEn: Date | null
+  }
+
+  export type ConfiguracionDocumentalCountAggregateOutputType = {
+    id: number
+    tenantId: number
+    clientId: number
+    clientSecret: number
+    onedriveUserEmail: number
+    rootFolderId: number
+    rootFolderName: number
+    activo: number
+    creadoEn: number
+    actualizadoEn: number
+    _all: number
+  }
+
+
+  export type ConfiguracionDocumentalMinAggregateInputType = {
+    id?: true
+    tenantId?: true
+    clientId?: true
+    clientSecret?: true
+    onedriveUserEmail?: true
+    rootFolderId?: true
+    rootFolderName?: true
+    activo?: true
+    creadoEn?: true
+    actualizadoEn?: true
+  }
+
+  export type ConfiguracionDocumentalMaxAggregateInputType = {
+    id?: true
+    tenantId?: true
+    clientId?: true
+    clientSecret?: true
+    onedriveUserEmail?: true
+    rootFolderId?: true
+    rootFolderName?: true
+    activo?: true
+    creadoEn?: true
+    actualizadoEn?: true
+  }
+
+  export type ConfiguracionDocumentalCountAggregateInputType = {
+    id?: true
+    tenantId?: true
+    clientId?: true
+    clientSecret?: true
+    onedriveUserEmail?: true
+    rootFolderId?: true
+    rootFolderName?: true
+    activo?: true
+    creadoEn?: true
+    actualizadoEn?: true
+    _all?: true
+  }
+
+  export type ConfiguracionDocumentalAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ConfiguracionDocumental to aggregate.
+     */
+    where?: ConfiguracionDocumentalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ConfiguracionDocumentals to fetch.
+     */
+    orderBy?: ConfiguracionDocumentalOrderByWithRelationInput | ConfiguracionDocumentalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ConfiguracionDocumentalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ConfiguracionDocumentals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ConfiguracionDocumentals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ConfiguracionDocumentals
+    **/
+    _count?: true | ConfiguracionDocumentalCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ConfiguracionDocumentalMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ConfiguracionDocumentalMaxAggregateInputType
+  }
+
+  export type GetConfiguracionDocumentalAggregateType<T extends ConfiguracionDocumentalAggregateArgs> = {
+        [P in keyof T & keyof AggregateConfiguracionDocumental]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateConfiguracionDocumental[P]>
+      : GetScalarType<T[P], AggregateConfiguracionDocumental[P]>
+  }
+
+
+
+
+  export type ConfiguracionDocumentalGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ConfiguracionDocumentalWhereInput
+    orderBy?: ConfiguracionDocumentalOrderByWithAggregationInput | ConfiguracionDocumentalOrderByWithAggregationInput[]
+    by: ConfiguracionDocumentalScalarFieldEnum[] | ConfiguracionDocumentalScalarFieldEnum
+    having?: ConfiguracionDocumentalScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ConfiguracionDocumentalCountAggregateInputType | true
+    _min?: ConfiguracionDocumentalMinAggregateInputType
+    _max?: ConfiguracionDocumentalMaxAggregateInputType
+  }
+
+  export type ConfiguracionDocumentalGroupByOutputType = {
+    id: string
+    tenantId: string
+    clientId: string
+    clientSecret: string
+    onedriveUserEmail: string
+    rootFolderId: string | null
+    rootFolderName: string | null
+    activo: boolean
+    creadoEn: Date
+    actualizadoEn: Date
+    _count: ConfiguracionDocumentalCountAggregateOutputType | null
+    _min: ConfiguracionDocumentalMinAggregateOutputType | null
+    _max: ConfiguracionDocumentalMaxAggregateOutputType | null
+  }
+
+  type GetConfiguracionDocumentalGroupByPayload<T extends ConfiguracionDocumentalGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ConfiguracionDocumentalGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ConfiguracionDocumentalGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ConfiguracionDocumentalGroupByOutputType[P]>
+            : GetScalarType<T[P], ConfiguracionDocumentalGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ConfiguracionDocumentalSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    clientId?: boolean
+    clientSecret?: boolean
+    onedriveUserEmail?: boolean
+    rootFolderId?: boolean
+    rootFolderName?: boolean
+    activo?: boolean
+    creadoEn?: boolean
+    actualizadoEn?: boolean
+  }, ExtArgs["result"]["configuracionDocumental"]>
+
+  export type ConfiguracionDocumentalSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    clientId?: boolean
+    clientSecret?: boolean
+    onedriveUserEmail?: boolean
+    rootFolderId?: boolean
+    rootFolderName?: boolean
+    activo?: boolean
+    creadoEn?: boolean
+    actualizadoEn?: boolean
+  }, ExtArgs["result"]["configuracionDocumental"]>
+
+  export type ConfiguracionDocumentalSelectScalar = {
+    id?: boolean
+    tenantId?: boolean
+    clientId?: boolean
+    clientSecret?: boolean
+    onedriveUserEmail?: boolean
+    rootFolderId?: boolean
+    rootFolderName?: boolean
+    activo?: boolean
+    creadoEn?: boolean
+    actualizadoEn?: boolean
+  }
+
+
+  export type $ConfiguracionDocumentalPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ConfiguracionDocumental"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      tenantId: string
+      clientId: string
+      clientSecret: string
+      onedriveUserEmail: string
+      rootFolderId: string | null
+      rootFolderName: string | null
+      activo: boolean
+      creadoEn: Date
+      actualizadoEn: Date
+    }, ExtArgs["result"]["configuracionDocumental"]>
+    composites: {}
+  }
+
+  type ConfiguracionDocumentalGetPayload<S extends boolean | null | undefined | ConfiguracionDocumentalDefaultArgs> = $Result.GetResult<Prisma.$ConfiguracionDocumentalPayload, S>
+
+  type ConfiguracionDocumentalCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ConfiguracionDocumentalFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ConfiguracionDocumentalCountAggregateInputType | true
+    }
+
+  export interface ConfiguracionDocumentalDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ConfiguracionDocumental'], meta: { name: 'ConfiguracionDocumental' } }
+    /**
+     * Find zero or one ConfiguracionDocumental that matches the filter.
+     * @param {ConfiguracionDocumentalFindUniqueArgs} args - Arguments to find a ConfiguracionDocumental
+     * @example
+     * // Get one ConfiguracionDocumental
+     * const configuracionDocumental = await prisma.configuracionDocumental.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ConfiguracionDocumentalFindUniqueArgs>(args: SelectSubset<T, ConfiguracionDocumentalFindUniqueArgs<ExtArgs>>): Prisma__ConfiguracionDocumentalClient<$Result.GetResult<Prisma.$ConfiguracionDocumentalPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one ConfiguracionDocumental that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {ConfiguracionDocumentalFindUniqueOrThrowArgs} args - Arguments to find a ConfiguracionDocumental
+     * @example
+     * // Get one ConfiguracionDocumental
+     * const configuracionDocumental = await prisma.configuracionDocumental.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ConfiguracionDocumentalFindUniqueOrThrowArgs>(args: SelectSubset<T, ConfiguracionDocumentalFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ConfiguracionDocumentalClient<$Result.GetResult<Prisma.$ConfiguracionDocumentalPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first ConfiguracionDocumental that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConfiguracionDocumentalFindFirstArgs} args - Arguments to find a ConfiguracionDocumental
+     * @example
+     * // Get one ConfiguracionDocumental
+     * const configuracionDocumental = await prisma.configuracionDocumental.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ConfiguracionDocumentalFindFirstArgs>(args?: SelectSubset<T, ConfiguracionDocumentalFindFirstArgs<ExtArgs>>): Prisma__ConfiguracionDocumentalClient<$Result.GetResult<Prisma.$ConfiguracionDocumentalPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first ConfiguracionDocumental that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConfiguracionDocumentalFindFirstOrThrowArgs} args - Arguments to find a ConfiguracionDocumental
+     * @example
+     * // Get one ConfiguracionDocumental
+     * const configuracionDocumental = await prisma.configuracionDocumental.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ConfiguracionDocumentalFindFirstOrThrowArgs>(args?: SelectSubset<T, ConfiguracionDocumentalFindFirstOrThrowArgs<ExtArgs>>): Prisma__ConfiguracionDocumentalClient<$Result.GetResult<Prisma.$ConfiguracionDocumentalPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more ConfiguracionDocumentals that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConfiguracionDocumentalFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ConfiguracionDocumentals
+     * const configuracionDocumentals = await prisma.configuracionDocumental.findMany()
+     * 
+     * // Get first 10 ConfiguracionDocumentals
+     * const configuracionDocumentals = await prisma.configuracionDocumental.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const configuracionDocumentalWithIdOnly = await prisma.configuracionDocumental.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ConfiguracionDocumentalFindManyArgs>(args?: SelectSubset<T, ConfiguracionDocumentalFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConfiguracionDocumentalPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a ConfiguracionDocumental.
+     * @param {ConfiguracionDocumentalCreateArgs} args - Arguments to create a ConfiguracionDocumental.
+     * @example
+     * // Create one ConfiguracionDocumental
+     * const ConfiguracionDocumental = await prisma.configuracionDocumental.create({
+     *   data: {
+     *     // ... data to create a ConfiguracionDocumental
+     *   }
+     * })
+     * 
+     */
+    create<T extends ConfiguracionDocumentalCreateArgs>(args: SelectSubset<T, ConfiguracionDocumentalCreateArgs<ExtArgs>>): Prisma__ConfiguracionDocumentalClient<$Result.GetResult<Prisma.$ConfiguracionDocumentalPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many ConfiguracionDocumentals.
+     * @param {ConfiguracionDocumentalCreateManyArgs} args - Arguments to create many ConfiguracionDocumentals.
+     * @example
+     * // Create many ConfiguracionDocumentals
+     * const configuracionDocumental = await prisma.configuracionDocumental.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ConfiguracionDocumentalCreateManyArgs>(args?: SelectSubset<T, ConfiguracionDocumentalCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ConfiguracionDocumentals and returns the data saved in the database.
+     * @param {ConfiguracionDocumentalCreateManyAndReturnArgs} args - Arguments to create many ConfiguracionDocumentals.
+     * @example
+     * // Create many ConfiguracionDocumentals
+     * const configuracionDocumental = await prisma.configuracionDocumental.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ConfiguracionDocumentals and only return the `id`
+     * const configuracionDocumentalWithIdOnly = await prisma.configuracionDocumental.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ConfiguracionDocumentalCreateManyAndReturnArgs>(args?: SelectSubset<T, ConfiguracionDocumentalCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConfiguracionDocumentalPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a ConfiguracionDocumental.
+     * @param {ConfiguracionDocumentalDeleteArgs} args - Arguments to delete one ConfiguracionDocumental.
+     * @example
+     * // Delete one ConfiguracionDocumental
+     * const ConfiguracionDocumental = await prisma.configuracionDocumental.delete({
+     *   where: {
+     *     // ... filter to delete one ConfiguracionDocumental
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ConfiguracionDocumentalDeleteArgs>(args: SelectSubset<T, ConfiguracionDocumentalDeleteArgs<ExtArgs>>): Prisma__ConfiguracionDocumentalClient<$Result.GetResult<Prisma.$ConfiguracionDocumentalPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one ConfiguracionDocumental.
+     * @param {ConfiguracionDocumentalUpdateArgs} args - Arguments to update one ConfiguracionDocumental.
+     * @example
+     * // Update one ConfiguracionDocumental
+     * const configuracionDocumental = await prisma.configuracionDocumental.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ConfiguracionDocumentalUpdateArgs>(args: SelectSubset<T, ConfiguracionDocumentalUpdateArgs<ExtArgs>>): Prisma__ConfiguracionDocumentalClient<$Result.GetResult<Prisma.$ConfiguracionDocumentalPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more ConfiguracionDocumentals.
+     * @param {ConfiguracionDocumentalDeleteManyArgs} args - Arguments to filter ConfiguracionDocumentals to delete.
+     * @example
+     * // Delete a few ConfiguracionDocumentals
+     * const { count } = await prisma.configuracionDocumental.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ConfiguracionDocumentalDeleteManyArgs>(args?: SelectSubset<T, ConfiguracionDocumentalDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ConfiguracionDocumentals.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConfiguracionDocumentalUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ConfiguracionDocumentals
+     * const configuracionDocumental = await prisma.configuracionDocumental.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ConfiguracionDocumentalUpdateManyArgs>(args: SelectSubset<T, ConfiguracionDocumentalUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ConfiguracionDocumental.
+     * @param {ConfiguracionDocumentalUpsertArgs} args - Arguments to update or create a ConfiguracionDocumental.
+     * @example
+     * // Update or create a ConfiguracionDocumental
+     * const configuracionDocumental = await prisma.configuracionDocumental.upsert({
+     *   create: {
+     *     // ... data to create a ConfiguracionDocumental
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ConfiguracionDocumental we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ConfiguracionDocumentalUpsertArgs>(args: SelectSubset<T, ConfiguracionDocumentalUpsertArgs<ExtArgs>>): Prisma__ConfiguracionDocumentalClient<$Result.GetResult<Prisma.$ConfiguracionDocumentalPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of ConfiguracionDocumentals.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConfiguracionDocumentalCountArgs} args - Arguments to filter ConfiguracionDocumentals to count.
+     * @example
+     * // Count the number of ConfiguracionDocumentals
+     * const count = await prisma.configuracionDocumental.count({
+     *   where: {
+     *     // ... the filter for the ConfiguracionDocumentals we want to count
+     *   }
+     * })
+    **/
+    count<T extends ConfiguracionDocumentalCountArgs>(
+      args?: Subset<T, ConfiguracionDocumentalCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ConfiguracionDocumentalCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ConfiguracionDocumental.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConfiguracionDocumentalAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ConfiguracionDocumentalAggregateArgs>(args: Subset<T, ConfiguracionDocumentalAggregateArgs>): Prisma.PrismaPromise<GetConfiguracionDocumentalAggregateType<T>>
+
+    /**
+     * Group by ConfiguracionDocumental.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConfiguracionDocumentalGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ConfiguracionDocumentalGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ConfiguracionDocumentalGroupByArgs['orderBy'] }
+        : { orderBy?: ConfiguracionDocumentalGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ConfiguracionDocumentalGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetConfiguracionDocumentalGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ConfiguracionDocumental model
+   */
+  readonly fields: ConfiguracionDocumentalFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ConfiguracionDocumental.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ConfiguracionDocumentalClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ConfiguracionDocumental model
+   */ 
+  interface ConfiguracionDocumentalFieldRefs {
+    readonly id: FieldRef<"ConfiguracionDocumental", 'String'>
+    readonly tenantId: FieldRef<"ConfiguracionDocumental", 'String'>
+    readonly clientId: FieldRef<"ConfiguracionDocumental", 'String'>
+    readonly clientSecret: FieldRef<"ConfiguracionDocumental", 'String'>
+    readonly onedriveUserEmail: FieldRef<"ConfiguracionDocumental", 'String'>
+    readonly rootFolderId: FieldRef<"ConfiguracionDocumental", 'String'>
+    readonly rootFolderName: FieldRef<"ConfiguracionDocumental", 'String'>
+    readonly activo: FieldRef<"ConfiguracionDocumental", 'Boolean'>
+    readonly creadoEn: FieldRef<"ConfiguracionDocumental", 'DateTime'>
+    readonly actualizadoEn: FieldRef<"ConfiguracionDocumental", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ConfiguracionDocumental findUnique
+   */
+  export type ConfiguracionDocumentalFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConfiguracionDocumental
+     */
+    select?: ConfiguracionDocumentalSelect<ExtArgs> | null
+    /**
+     * Filter, which ConfiguracionDocumental to fetch.
+     */
+    where: ConfiguracionDocumentalWhereUniqueInput
+  }
+
+  /**
+   * ConfiguracionDocumental findUniqueOrThrow
+   */
+  export type ConfiguracionDocumentalFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConfiguracionDocumental
+     */
+    select?: ConfiguracionDocumentalSelect<ExtArgs> | null
+    /**
+     * Filter, which ConfiguracionDocumental to fetch.
+     */
+    where: ConfiguracionDocumentalWhereUniqueInput
+  }
+
+  /**
+   * ConfiguracionDocumental findFirst
+   */
+  export type ConfiguracionDocumentalFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConfiguracionDocumental
+     */
+    select?: ConfiguracionDocumentalSelect<ExtArgs> | null
+    /**
+     * Filter, which ConfiguracionDocumental to fetch.
+     */
+    where?: ConfiguracionDocumentalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ConfiguracionDocumentals to fetch.
+     */
+    orderBy?: ConfiguracionDocumentalOrderByWithRelationInput | ConfiguracionDocumentalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ConfiguracionDocumentals.
+     */
+    cursor?: ConfiguracionDocumentalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ConfiguracionDocumentals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ConfiguracionDocumentals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ConfiguracionDocumentals.
+     */
+    distinct?: ConfiguracionDocumentalScalarFieldEnum | ConfiguracionDocumentalScalarFieldEnum[]
+  }
+
+  /**
+   * ConfiguracionDocumental findFirstOrThrow
+   */
+  export type ConfiguracionDocumentalFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConfiguracionDocumental
+     */
+    select?: ConfiguracionDocumentalSelect<ExtArgs> | null
+    /**
+     * Filter, which ConfiguracionDocumental to fetch.
+     */
+    where?: ConfiguracionDocumentalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ConfiguracionDocumentals to fetch.
+     */
+    orderBy?: ConfiguracionDocumentalOrderByWithRelationInput | ConfiguracionDocumentalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ConfiguracionDocumentals.
+     */
+    cursor?: ConfiguracionDocumentalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ConfiguracionDocumentals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ConfiguracionDocumentals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ConfiguracionDocumentals.
+     */
+    distinct?: ConfiguracionDocumentalScalarFieldEnum | ConfiguracionDocumentalScalarFieldEnum[]
+  }
+
+  /**
+   * ConfiguracionDocumental findMany
+   */
+  export type ConfiguracionDocumentalFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConfiguracionDocumental
+     */
+    select?: ConfiguracionDocumentalSelect<ExtArgs> | null
+    /**
+     * Filter, which ConfiguracionDocumentals to fetch.
+     */
+    where?: ConfiguracionDocumentalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ConfiguracionDocumentals to fetch.
+     */
+    orderBy?: ConfiguracionDocumentalOrderByWithRelationInput | ConfiguracionDocumentalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ConfiguracionDocumentals.
+     */
+    cursor?: ConfiguracionDocumentalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ConfiguracionDocumentals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ConfiguracionDocumentals.
+     */
+    skip?: number
+    distinct?: ConfiguracionDocumentalScalarFieldEnum | ConfiguracionDocumentalScalarFieldEnum[]
+  }
+
+  /**
+   * ConfiguracionDocumental create
+   */
+  export type ConfiguracionDocumentalCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConfiguracionDocumental
+     */
+    select?: ConfiguracionDocumentalSelect<ExtArgs> | null
+    /**
+     * The data needed to create a ConfiguracionDocumental.
+     */
+    data: XOR<ConfiguracionDocumentalCreateInput, ConfiguracionDocumentalUncheckedCreateInput>
+  }
+
+  /**
+   * ConfiguracionDocumental createMany
+   */
+  export type ConfiguracionDocumentalCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ConfiguracionDocumentals.
+     */
+    data: ConfiguracionDocumentalCreateManyInput | ConfiguracionDocumentalCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ConfiguracionDocumental createManyAndReturn
+   */
+  export type ConfiguracionDocumentalCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConfiguracionDocumental
+     */
+    select?: ConfiguracionDocumentalSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many ConfiguracionDocumentals.
+     */
+    data: ConfiguracionDocumentalCreateManyInput | ConfiguracionDocumentalCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ConfiguracionDocumental update
+   */
+  export type ConfiguracionDocumentalUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConfiguracionDocumental
+     */
+    select?: ConfiguracionDocumentalSelect<ExtArgs> | null
+    /**
+     * The data needed to update a ConfiguracionDocumental.
+     */
+    data: XOR<ConfiguracionDocumentalUpdateInput, ConfiguracionDocumentalUncheckedUpdateInput>
+    /**
+     * Choose, which ConfiguracionDocumental to update.
+     */
+    where: ConfiguracionDocumentalWhereUniqueInput
+  }
+
+  /**
+   * ConfiguracionDocumental updateMany
+   */
+  export type ConfiguracionDocumentalUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ConfiguracionDocumentals.
+     */
+    data: XOR<ConfiguracionDocumentalUpdateManyMutationInput, ConfiguracionDocumentalUncheckedUpdateManyInput>
+    /**
+     * Filter which ConfiguracionDocumentals to update
+     */
+    where?: ConfiguracionDocumentalWhereInput
+  }
+
+  /**
+   * ConfiguracionDocumental upsert
+   */
+  export type ConfiguracionDocumentalUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConfiguracionDocumental
+     */
+    select?: ConfiguracionDocumentalSelect<ExtArgs> | null
+    /**
+     * The filter to search for the ConfiguracionDocumental to update in case it exists.
+     */
+    where: ConfiguracionDocumentalWhereUniqueInput
+    /**
+     * In case the ConfiguracionDocumental found by the `where` argument doesn't exist, create a new ConfiguracionDocumental with this data.
+     */
+    create: XOR<ConfiguracionDocumentalCreateInput, ConfiguracionDocumentalUncheckedCreateInput>
+    /**
+     * In case the ConfiguracionDocumental was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ConfiguracionDocumentalUpdateInput, ConfiguracionDocumentalUncheckedUpdateInput>
+  }
+
+  /**
+   * ConfiguracionDocumental delete
+   */
+  export type ConfiguracionDocumentalDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConfiguracionDocumental
+     */
+    select?: ConfiguracionDocumentalSelect<ExtArgs> | null
+    /**
+     * Filter which ConfiguracionDocumental to delete.
+     */
+    where: ConfiguracionDocumentalWhereUniqueInput
+  }
+
+  /**
+   * ConfiguracionDocumental deleteMany
+   */
+  export type ConfiguracionDocumentalDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ConfiguracionDocumentals to delete
+     */
+    where?: ConfiguracionDocumentalWhereInput
+  }
+
+  /**
+   * ConfiguracionDocumental without action
+   */
+  export type ConfiguracionDocumentalDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConfiguracionDocumental
+     */
+    select?: ConfiguracionDocumentalSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * Model CarpetaDocumental
+   */
+
+  export type AggregateCarpetaDocumental = {
+    _count: CarpetaDocumentalCountAggregateOutputType | null
+    _avg: CarpetaDocumentalAvgAggregateOutputType | null
+    _sum: CarpetaDocumentalSumAggregateOutputType | null
+    _min: CarpetaDocumentalMinAggregateOutputType | null
+    _max: CarpetaDocumentalMaxAggregateOutputType | null
+  }
+
+  export type CarpetaDocumentalAvgAggregateOutputType = {
+    orden: number | null
+  }
+
+  export type CarpetaDocumentalSumAggregateOutputType = {
+    orden: number | null
+  }
+
+  export type CarpetaDocumentalMinAggregateOutputType = {
+    id: string | null
+    onedriveId: string | null
+    nombre: string | null
+    descripcion: string | null
+    parentId: string | null
+    rutaCompleta: string | null
+    icono: string | null
+    orden: number | null
+    activa: boolean | null
+    creadoEn: Date | null
+    actualizadoEn: Date | null
+  }
+
+  export type CarpetaDocumentalMaxAggregateOutputType = {
+    id: string | null
+    onedriveId: string | null
+    nombre: string | null
+    descripcion: string | null
+    parentId: string | null
+    rutaCompleta: string | null
+    icono: string | null
+    orden: number | null
+    activa: boolean | null
+    creadoEn: Date | null
+    actualizadoEn: Date | null
+  }
+
+  export type CarpetaDocumentalCountAggregateOutputType = {
+    id: number
+    onedriveId: number
+    nombre: number
+    descripcion: number
+    parentId: number
+    rutaCompleta: number
+    icono: number
+    orden: number
+    activa: number
+    creadoEn: number
+    actualizadoEn: number
+    _all: number
+  }
+
+
+  export type CarpetaDocumentalAvgAggregateInputType = {
+    orden?: true
+  }
+
+  export type CarpetaDocumentalSumAggregateInputType = {
+    orden?: true
+  }
+
+  export type CarpetaDocumentalMinAggregateInputType = {
+    id?: true
+    onedriveId?: true
+    nombre?: true
+    descripcion?: true
+    parentId?: true
+    rutaCompleta?: true
+    icono?: true
+    orden?: true
+    activa?: true
+    creadoEn?: true
+    actualizadoEn?: true
+  }
+
+  export type CarpetaDocumentalMaxAggregateInputType = {
+    id?: true
+    onedriveId?: true
+    nombre?: true
+    descripcion?: true
+    parentId?: true
+    rutaCompleta?: true
+    icono?: true
+    orden?: true
+    activa?: true
+    creadoEn?: true
+    actualizadoEn?: true
+  }
+
+  export type CarpetaDocumentalCountAggregateInputType = {
+    id?: true
+    onedriveId?: true
+    nombre?: true
+    descripcion?: true
+    parentId?: true
+    rutaCompleta?: true
+    icono?: true
+    orden?: true
+    activa?: true
+    creadoEn?: true
+    actualizadoEn?: true
+    _all?: true
+  }
+
+  export type CarpetaDocumentalAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CarpetaDocumental to aggregate.
+     */
+    where?: CarpetaDocumentalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CarpetaDocumentals to fetch.
+     */
+    orderBy?: CarpetaDocumentalOrderByWithRelationInput | CarpetaDocumentalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CarpetaDocumentalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CarpetaDocumentals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CarpetaDocumentals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CarpetaDocumentals
+    **/
+    _count?: true | CarpetaDocumentalCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CarpetaDocumentalAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CarpetaDocumentalSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CarpetaDocumentalMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CarpetaDocumentalMaxAggregateInputType
+  }
+
+  export type GetCarpetaDocumentalAggregateType<T extends CarpetaDocumentalAggregateArgs> = {
+        [P in keyof T & keyof AggregateCarpetaDocumental]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCarpetaDocumental[P]>
+      : GetScalarType<T[P], AggregateCarpetaDocumental[P]>
+  }
+
+
+
+
+  export type CarpetaDocumentalGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CarpetaDocumentalWhereInput
+    orderBy?: CarpetaDocumentalOrderByWithAggregationInput | CarpetaDocumentalOrderByWithAggregationInput[]
+    by: CarpetaDocumentalScalarFieldEnum[] | CarpetaDocumentalScalarFieldEnum
+    having?: CarpetaDocumentalScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CarpetaDocumentalCountAggregateInputType | true
+    _avg?: CarpetaDocumentalAvgAggregateInputType
+    _sum?: CarpetaDocumentalSumAggregateInputType
+    _min?: CarpetaDocumentalMinAggregateInputType
+    _max?: CarpetaDocumentalMaxAggregateInputType
+  }
+
+  export type CarpetaDocumentalGroupByOutputType = {
+    id: string
+    onedriveId: string
+    nombre: string
+    descripcion: string | null
+    parentId: string | null
+    rutaCompleta: string
+    icono: string
+    orden: number
+    activa: boolean
+    creadoEn: Date
+    actualizadoEn: Date
+    _count: CarpetaDocumentalCountAggregateOutputType | null
+    _avg: CarpetaDocumentalAvgAggregateOutputType | null
+    _sum: CarpetaDocumentalSumAggregateOutputType | null
+    _min: CarpetaDocumentalMinAggregateOutputType | null
+    _max: CarpetaDocumentalMaxAggregateOutputType | null
+  }
+
+  type GetCarpetaDocumentalGroupByPayload<T extends CarpetaDocumentalGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CarpetaDocumentalGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CarpetaDocumentalGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CarpetaDocumentalGroupByOutputType[P]>
+            : GetScalarType<T[P], CarpetaDocumentalGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CarpetaDocumentalSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    onedriveId?: boolean
+    nombre?: boolean
+    descripcion?: boolean
+    parentId?: boolean
+    rutaCompleta?: boolean
+    icono?: boolean
+    orden?: boolean
+    activa?: boolean
+    creadoEn?: boolean
+    actualizadoEn?: boolean
+    privilegios?: boolean | CarpetaDocumental$privilegiosArgs<ExtArgs>
+    _count?: boolean | CarpetaDocumentalCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["carpetaDocumental"]>
+
+  export type CarpetaDocumentalSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    onedriveId?: boolean
+    nombre?: boolean
+    descripcion?: boolean
+    parentId?: boolean
+    rutaCompleta?: boolean
+    icono?: boolean
+    orden?: boolean
+    activa?: boolean
+    creadoEn?: boolean
+    actualizadoEn?: boolean
+  }, ExtArgs["result"]["carpetaDocumental"]>
+
+  export type CarpetaDocumentalSelectScalar = {
+    id?: boolean
+    onedriveId?: boolean
+    nombre?: boolean
+    descripcion?: boolean
+    parentId?: boolean
+    rutaCompleta?: boolean
+    icono?: boolean
+    orden?: boolean
+    activa?: boolean
+    creadoEn?: boolean
+    actualizadoEn?: boolean
+  }
+
+  export type CarpetaDocumentalInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    privilegios?: boolean | CarpetaDocumental$privilegiosArgs<ExtArgs>
+    _count?: boolean | CarpetaDocumentalCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type CarpetaDocumentalIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $CarpetaDocumentalPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CarpetaDocumental"
+    objects: {
+      privilegios: Prisma.$PrivilegioDocumentalPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      onedriveId: string
+      nombre: string
+      descripcion: string | null
+      parentId: string | null
+      rutaCompleta: string
+      icono: string
+      orden: number
+      activa: boolean
+      creadoEn: Date
+      actualizadoEn: Date
+    }, ExtArgs["result"]["carpetaDocumental"]>
+    composites: {}
+  }
+
+  type CarpetaDocumentalGetPayload<S extends boolean | null | undefined | CarpetaDocumentalDefaultArgs> = $Result.GetResult<Prisma.$CarpetaDocumentalPayload, S>
+
+  type CarpetaDocumentalCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<CarpetaDocumentalFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: CarpetaDocumentalCountAggregateInputType | true
+    }
+
+  export interface CarpetaDocumentalDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CarpetaDocumental'], meta: { name: 'CarpetaDocumental' } }
+    /**
+     * Find zero or one CarpetaDocumental that matches the filter.
+     * @param {CarpetaDocumentalFindUniqueArgs} args - Arguments to find a CarpetaDocumental
+     * @example
+     * // Get one CarpetaDocumental
+     * const carpetaDocumental = await prisma.carpetaDocumental.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CarpetaDocumentalFindUniqueArgs>(args: SelectSubset<T, CarpetaDocumentalFindUniqueArgs<ExtArgs>>): Prisma__CarpetaDocumentalClient<$Result.GetResult<Prisma.$CarpetaDocumentalPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one CarpetaDocumental that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {CarpetaDocumentalFindUniqueOrThrowArgs} args - Arguments to find a CarpetaDocumental
+     * @example
+     * // Get one CarpetaDocumental
+     * const carpetaDocumental = await prisma.carpetaDocumental.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CarpetaDocumentalFindUniqueOrThrowArgs>(args: SelectSubset<T, CarpetaDocumentalFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CarpetaDocumentalClient<$Result.GetResult<Prisma.$CarpetaDocumentalPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first CarpetaDocumental that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CarpetaDocumentalFindFirstArgs} args - Arguments to find a CarpetaDocumental
+     * @example
+     * // Get one CarpetaDocumental
+     * const carpetaDocumental = await prisma.carpetaDocumental.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CarpetaDocumentalFindFirstArgs>(args?: SelectSubset<T, CarpetaDocumentalFindFirstArgs<ExtArgs>>): Prisma__CarpetaDocumentalClient<$Result.GetResult<Prisma.$CarpetaDocumentalPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first CarpetaDocumental that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CarpetaDocumentalFindFirstOrThrowArgs} args - Arguments to find a CarpetaDocumental
+     * @example
+     * // Get one CarpetaDocumental
+     * const carpetaDocumental = await prisma.carpetaDocumental.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CarpetaDocumentalFindFirstOrThrowArgs>(args?: SelectSubset<T, CarpetaDocumentalFindFirstOrThrowArgs<ExtArgs>>): Prisma__CarpetaDocumentalClient<$Result.GetResult<Prisma.$CarpetaDocumentalPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more CarpetaDocumentals that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CarpetaDocumentalFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CarpetaDocumentals
+     * const carpetaDocumentals = await prisma.carpetaDocumental.findMany()
+     * 
+     * // Get first 10 CarpetaDocumentals
+     * const carpetaDocumentals = await prisma.carpetaDocumental.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const carpetaDocumentalWithIdOnly = await prisma.carpetaDocumental.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CarpetaDocumentalFindManyArgs>(args?: SelectSubset<T, CarpetaDocumentalFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CarpetaDocumentalPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a CarpetaDocumental.
+     * @param {CarpetaDocumentalCreateArgs} args - Arguments to create a CarpetaDocumental.
+     * @example
+     * // Create one CarpetaDocumental
+     * const CarpetaDocumental = await prisma.carpetaDocumental.create({
+     *   data: {
+     *     // ... data to create a CarpetaDocumental
+     *   }
+     * })
+     * 
+     */
+    create<T extends CarpetaDocumentalCreateArgs>(args: SelectSubset<T, CarpetaDocumentalCreateArgs<ExtArgs>>): Prisma__CarpetaDocumentalClient<$Result.GetResult<Prisma.$CarpetaDocumentalPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many CarpetaDocumentals.
+     * @param {CarpetaDocumentalCreateManyArgs} args - Arguments to create many CarpetaDocumentals.
+     * @example
+     * // Create many CarpetaDocumentals
+     * const carpetaDocumental = await prisma.carpetaDocumental.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CarpetaDocumentalCreateManyArgs>(args?: SelectSubset<T, CarpetaDocumentalCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CarpetaDocumentals and returns the data saved in the database.
+     * @param {CarpetaDocumentalCreateManyAndReturnArgs} args - Arguments to create many CarpetaDocumentals.
+     * @example
+     * // Create many CarpetaDocumentals
+     * const carpetaDocumental = await prisma.carpetaDocumental.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CarpetaDocumentals and only return the `id`
+     * const carpetaDocumentalWithIdOnly = await prisma.carpetaDocumental.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CarpetaDocumentalCreateManyAndReturnArgs>(args?: SelectSubset<T, CarpetaDocumentalCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CarpetaDocumentalPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a CarpetaDocumental.
+     * @param {CarpetaDocumentalDeleteArgs} args - Arguments to delete one CarpetaDocumental.
+     * @example
+     * // Delete one CarpetaDocumental
+     * const CarpetaDocumental = await prisma.carpetaDocumental.delete({
+     *   where: {
+     *     // ... filter to delete one CarpetaDocumental
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CarpetaDocumentalDeleteArgs>(args: SelectSubset<T, CarpetaDocumentalDeleteArgs<ExtArgs>>): Prisma__CarpetaDocumentalClient<$Result.GetResult<Prisma.$CarpetaDocumentalPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one CarpetaDocumental.
+     * @param {CarpetaDocumentalUpdateArgs} args - Arguments to update one CarpetaDocumental.
+     * @example
+     * // Update one CarpetaDocumental
+     * const carpetaDocumental = await prisma.carpetaDocumental.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CarpetaDocumentalUpdateArgs>(args: SelectSubset<T, CarpetaDocumentalUpdateArgs<ExtArgs>>): Prisma__CarpetaDocumentalClient<$Result.GetResult<Prisma.$CarpetaDocumentalPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more CarpetaDocumentals.
+     * @param {CarpetaDocumentalDeleteManyArgs} args - Arguments to filter CarpetaDocumentals to delete.
+     * @example
+     * // Delete a few CarpetaDocumentals
+     * const { count } = await prisma.carpetaDocumental.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CarpetaDocumentalDeleteManyArgs>(args?: SelectSubset<T, CarpetaDocumentalDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CarpetaDocumentals.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CarpetaDocumentalUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CarpetaDocumentals
+     * const carpetaDocumental = await prisma.carpetaDocumental.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CarpetaDocumentalUpdateManyArgs>(args: SelectSubset<T, CarpetaDocumentalUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one CarpetaDocumental.
+     * @param {CarpetaDocumentalUpsertArgs} args - Arguments to update or create a CarpetaDocumental.
+     * @example
+     * // Update or create a CarpetaDocumental
+     * const carpetaDocumental = await prisma.carpetaDocumental.upsert({
+     *   create: {
+     *     // ... data to create a CarpetaDocumental
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CarpetaDocumental we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CarpetaDocumentalUpsertArgs>(args: SelectSubset<T, CarpetaDocumentalUpsertArgs<ExtArgs>>): Prisma__CarpetaDocumentalClient<$Result.GetResult<Prisma.$CarpetaDocumentalPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of CarpetaDocumentals.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CarpetaDocumentalCountArgs} args - Arguments to filter CarpetaDocumentals to count.
+     * @example
+     * // Count the number of CarpetaDocumentals
+     * const count = await prisma.carpetaDocumental.count({
+     *   where: {
+     *     // ... the filter for the CarpetaDocumentals we want to count
+     *   }
+     * })
+    **/
+    count<T extends CarpetaDocumentalCountArgs>(
+      args?: Subset<T, CarpetaDocumentalCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CarpetaDocumentalCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CarpetaDocumental.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CarpetaDocumentalAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CarpetaDocumentalAggregateArgs>(args: Subset<T, CarpetaDocumentalAggregateArgs>): Prisma.PrismaPromise<GetCarpetaDocumentalAggregateType<T>>
+
+    /**
+     * Group by CarpetaDocumental.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CarpetaDocumentalGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CarpetaDocumentalGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CarpetaDocumentalGroupByArgs['orderBy'] }
+        : { orderBy?: CarpetaDocumentalGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CarpetaDocumentalGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCarpetaDocumentalGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CarpetaDocumental model
+   */
+  readonly fields: CarpetaDocumentalFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CarpetaDocumental.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CarpetaDocumentalClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    privilegios<T extends CarpetaDocumental$privilegiosArgs<ExtArgs> = {}>(args?: Subset<T, CarpetaDocumental$privilegiosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PrivilegioDocumentalPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CarpetaDocumental model
+   */ 
+  interface CarpetaDocumentalFieldRefs {
+    readonly id: FieldRef<"CarpetaDocumental", 'String'>
+    readonly onedriveId: FieldRef<"CarpetaDocumental", 'String'>
+    readonly nombre: FieldRef<"CarpetaDocumental", 'String'>
+    readonly descripcion: FieldRef<"CarpetaDocumental", 'String'>
+    readonly parentId: FieldRef<"CarpetaDocumental", 'String'>
+    readonly rutaCompleta: FieldRef<"CarpetaDocumental", 'String'>
+    readonly icono: FieldRef<"CarpetaDocumental", 'String'>
+    readonly orden: FieldRef<"CarpetaDocumental", 'Int'>
+    readonly activa: FieldRef<"CarpetaDocumental", 'Boolean'>
+    readonly creadoEn: FieldRef<"CarpetaDocumental", 'DateTime'>
+    readonly actualizadoEn: FieldRef<"CarpetaDocumental", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CarpetaDocumental findUnique
+   */
+  export type CarpetaDocumentalFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarpetaDocumental
+     */
+    select?: CarpetaDocumentalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpetaDocumentalInclude<ExtArgs> | null
+    /**
+     * Filter, which CarpetaDocumental to fetch.
+     */
+    where: CarpetaDocumentalWhereUniqueInput
+  }
+
+  /**
+   * CarpetaDocumental findUniqueOrThrow
+   */
+  export type CarpetaDocumentalFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarpetaDocumental
+     */
+    select?: CarpetaDocumentalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpetaDocumentalInclude<ExtArgs> | null
+    /**
+     * Filter, which CarpetaDocumental to fetch.
+     */
+    where: CarpetaDocumentalWhereUniqueInput
+  }
+
+  /**
+   * CarpetaDocumental findFirst
+   */
+  export type CarpetaDocumentalFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarpetaDocumental
+     */
+    select?: CarpetaDocumentalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpetaDocumentalInclude<ExtArgs> | null
+    /**
+     * Filter, which CarpetaDocumental to fetch.
+     */
+    where?: CarpetaDocumentalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CarpetaDocumentals to fetch.
+     */
+    orderBy?: CarpetaDocumentalOrderByWithRelationInput | CarpetaDocumentalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CarpetaDocumentals.
+     */
+    cursor?: CarpetaDocumentalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CarpetaDocumentals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CarpetaDocumentals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CarpetaDocumentals.
+     */
+    distinct?: CarpetaDocumentalScalarFieldEnum | CarpetaDocumentalScalarFieldEnum[]
+  }
+
+  /**
+   * CarpetaDocumental findFirstOrThrow
+   */
+  export type CarpetaDocumentalFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarpetaDocumental
+     */
+    select?: CarpetaDocumentalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpetaDocumentalInclude<ExtArgs> | null
+    /**
+     * Filter, which CarpetaDocumental to fetch.
+     */
+    where?: CarpetaDocumentalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CarpetaDocumentals to fetch.
+     */
+    orderBy?: CarpetaDocumentalOrderByWithRelationInput | CarpetaDocumentalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CarpetaDocumentals.
+     */
+    cursor?: CarpetaDocumentalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CarpetaDocumentals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CarpetaDocumentals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CarpetaDocumentals.
+     */
+    distinct?: CarpetaDocumentalScalarFieldEnum | CarpetaDocumentalScalarFieldEnum[]
+  }
+
+  /**
+   * CarpetaDocumental findMany
+   */
+  export type CarpetaDocumentalFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarpetaDocumental
+     */
+    select?: CarpetaDocumentalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpetaDocumentalInclude<ExtArgs> | null
+    /**
+     * Filter, which CarpetaDocumentals to fetch.
+     */
+    where?: CarpetaDocumentalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CarpetaDocumentals to fetch.
+     */
+    orderBy?: CarpetaDocumentalOrderByWithRelationInput | CarpetaDocumentalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CarpetaDocumentals.
+     */
+    cursor?: CarpetaDocumentalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CarpetaDocumentals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CarpetaDocumentals.
+     */
+    skip?: number
+    distinct?: CarpetaDocumentalScalarFieldEnum | CarpetaDocumentalScalarFieldEnum[]
+  }
+
+  /**
+   * CarpetaDocumental create
+   */
+  export type CarpetaDocumentalCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarpetaDocumental
+     */
+    select?: CarpetaDocumentalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpetaDocumentalInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CarpetaDocumental.
+     */
+    data: XOR<CarpetaDocumentalCreateInput, CarpetaDocumentalUncheckedCreateInput>
+  }
+
+  /**
+   * CarpetaDocumental createMany
+   */
+  export type CarpetaDocumentalCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CarpetaDocumentals.
+     */
+    data: CarpetaDocumentalCreateManyInput | CarpetaDocumentalCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CarpetaDocumental createManyAndReturn
+   */
+  export type CarpetaDocumentalCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarpetaDocumental
+     */
+    select?: CarpetaDocumentalSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many CarpetaDocumentals.
+     */
+    data: CarpetaDocumentalCreateManyInput | CarpetaDocumentalCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CarpetaDocumental update
+   */
+  export type CarpetaDocumentalUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarpetaDocumental
+     */
+    select?: CarpetaDocumentalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpetaDocumentalInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CarpetaDocumental.
+     */
+    data: XOR<CarpetaDocumentalUpdateInput, CarpetaDocumentalUncheckedUpdateInput>
+    /**
+     * Choose, which CarpetaDocumental to update.
+     */
+    where: CarpetaDocumentalWhereUniqueInput
+  }
+
+  /**
+   * CarpetaDocumental updateMany
+   */
+  export type CarpetaDocumentalUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CarpetaDocumentals.
+     */
+    data: XOR<CarpetaDocumentalUpdateManyMutationInput, CarpetaDocumentalUncheckedUpdateManyInput>
+    /**
+     * Filter which CarpetaDocumentals to update
+     */
+    where?: CarpetaDocumentalWhereInput
+  }
+
+  /**
+   * CarpetaDocumental upsert
+   */
+  export type CarpetaDocumentalUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarpetaDocumental
+     */
+    select?: CarpetaDocumentalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpetaDocumentalInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CarpetaDocumental to update in case it exists.
+     */
+    where: CarpetaDocumentalWhereUniqueInput
+    /**
+     * In case the CarpetaDocumental found by the `where` argument doesn't exist, create a new CarpetaDocumental with this data.
+     */
+    create: XOR<CarpetaDocumentalCreateInput, CarpetaDocumentalUncheckedCreateInput>
+    /**
+     * In case the CarpetaDocumental was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CarpetaDocumentalUpdateInput, CarpetaDocumentalUncheckedUpdateInput>
+  }
+
+  /**
+   * CarpetaDocumental delete
+   */
+  export type CarpetaDocumentalDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarpetaDocumental
+     */
+    select?: CarpetaDocumentalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpetaDocumentalInclude<ExtArgs> | null
+    /**
+     * Filter which CarpetaDocumental to delete.
+     */
+    where: CarpetaDocumentalWhereUniqueInput
+  }
+
+  /**
+   * CarpetaDocumental deleteMany
+   */
+  export type CarpetaDocumentalDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CarpetaDocumentals to delete
+     */
+    where?: CarpetaDocumentalWhereInput
+  }
+
+  /**
+   * CarpetaDocumental.privilegios
+   */
+  export type CarpetaDocumental$privilegiosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrivilegioDocumental
+     */
+    select?: PrivilegioDocumentalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrivilegioDocumentalInclude<ExtArgs> | null
+    where?: PrivilegioDocumentalWhereInput
+    orderBy?: PrivilegioDocumentalOrderByWithRelationInput | PrivilegioDocumentalOrderByWithRelationInput[]
+    cursor?: PrivilegioDocumentalWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PrivilegioDocumentalScalarFieldEnum | PrivilegioDocumentalScalarFieldEnum[]
+  }
+
+  /**
+   * CarpetaDocumental without action
+   */
+  export type CarpetaDocumentalDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarpetaDocumental
+     */
+    select?: CarpetaDocumentalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpetaDocumentalInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model PrivilegioDocumental
+   */
+
+  export type AggregatePrivilegioDocumental = {
+    _count: PrivilegioDocumentalCountAggregateOutputType | null
+    _min: PrivilegioDocumentalMinAggregateOutputType | null
+    _max: PrivilegioDocumentalMaxAggregateOutputType | null
+  }
+
+  export type PrivilegioDocumentalMinAggregateOutputType = {
+    id: string | null
+    carpetaId: string | null
+    tipo: string | null
+    referenciaId: string | null
+    permiso: string | null
+    creadoEn: Date | null
+  }
+
+  export type PrivilegioDocumentalMaxAggregateOutputType = {
+    id: string | null
+    carpetaId: string | null
+    tipo: string | null
+    referenciaId: string | null
+    permiso: string | null
+    creadoEn: Date | null
+  }
+
+  export type PrivilegioDocumentalCountAggregateOutputType = {
+    id: number
+    carpetaId: number
+    tipo: number
+    referenciaId: number
+    permiso: number
+    creadoEn: number
+    _all: number
+  }
+
+
+  export type PrivilegioDocumentalMinAggregateInputType = {
+    id?: true
+    carpetaId?: true
+    tipo?: true
+    referenciaId?: true
+    permiso?: true
+    creadoEn?: true
+  }
+
+  export type PrivilegioDocumentalMaxAggregateInputType = {
+    id?: true
+    carpetaId?: true
+    tipo?: true
+    referenciaId?: true
+    permiso?: true
+    creadoEn?: true
+  }
+
+  export type PrivilegioDocumentalCountAggregateInputType = {
+    id?: true
+    carpetaId?: true
+    tipo?: true
+    referenciaId?: true
+    permiso?: true
+    creadoEn?: true
+    _all?: true
+  }
+
+  export type PrivilegioDocumentalAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PrivilegioDocumental to aggregate.
+     */
+    where?: PrivilegioDocumentalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PrivilegioDocumentals to fetch.
+     */
+    orderBy?: PrivilegioDocumentalOrderByWithRelationInput | PrivilegioDocumentalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PrivilegioDocumentalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PrivilegioDocumentals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PrivilegioDocumentals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PrivilegioDocumentals
+    **/
+    _count?: true | PrivilegioDocumentalCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PrivilegioDocumentalMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PrivilegioDocumentalMaxAggregateInputType
+  }
+
+  export type GetPrivilegioDocumentalAggregateType<T extends PrivilegioDocumentalAggregateArgs> = {
+        [P in keyof T & keyof AggregatePrivilegioDocumental]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePrivilegioDocumental[P]>
+      : GetScalarType<T[P], AggregatePrivilegioDocumental[P]>
+  }
+
+
+
+
+  export type PrivilegioDocumentalGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PrivilegioDocumentalWhereInput
+    orderBy?: PrivilegioDocumentalOrderByWithAggregationInput | PrivilegioDocumentalOrderByWithAggregationInput[]
+    by: PrivilegioDocumentalScalarFieldEnum[] | PrivilegioDocumentalScalarFieldEnum
+    having?: PrivilegioDocumentalScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PrivilegioDocumentalCountAggregateInputType | true
+    _min?: PrivilegioDocumentalMinAggregateInputType
+    _max?: PrivilegioDocumentalMaxAggregateInputType
+  }
+
+  export type PrivilegioDocumentalGroupByOutputType = {
+    id: string
+    carpetaId: string
+    tipo: string
+    referenciaId: string
+    permiso: string
+    creadoEn: Date
+    _count: PrivilegioDocumentalCountAggregateOutputType | null
+    _min: PrivilegioDocumentalMinAggregateOutputType | null
+    _max: PrivilegioDocumentalMaxAggregateOutputType | null
+  }
+
+  type GetPrivilegioDocumentalGroupByPayload<T extends PrivilegioDocumentalGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PrivilegioDocumentalGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PrivilegioDocumentalGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PrivilegioDocumentalGroupByOutputType[P]>
+            : GetScalarType<T[P], PrivilegioDocumentalGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PrivilegioDocumentalSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    carpetaId?: boolean
+    tipo?: boolean
+    referenciaId?: boolean
+    permiso?: boolean
+    creadoEn?: boolean
+    carpeta?: boolean | CarpetaDocumentalDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["privilegioDocumental"]>
+
+  export type PrivilegioDocumentalSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    carpetaId?: boolean
+    tipo?: boolean
+    referenciaId?: boolean
+    permiso?: boolean
+    creadoEn?: boolean
+    carpeta?: boolean | CarpetaDocumentalDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["privilegioDocumental"]>
+
+  export type PrivilegioDocumentalSelectScalar = {
+    id?: boolean
+    carpetaId?: boolean
+    tipo?: boolean
+    referenciaId?: boolean
+    permiso?: boolean
+    creadoEn?: boolean
+  }
+
+  export type PrivilegioDocumentalInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    carpeta?: boolean | CarpetaDocumentalDefaultArgs<ExtArgs>
+  }
+  export type PrivilegioDocumentalIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    carpeta?: boolean | CarpetaDocumentalDefaultArgs<ExtArgs>
+  }
+
+  export type $PrivilegioDocumentalPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PrivilegioDocumental"
+    objects: {
+      carpeta: Prisma.$CarpetaDocumentalPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      carpetaId: string
+      tipo: string
+      referenciaId: string
+      permiso: string
+      creadoEn: Date
+    }, ExtArgs["result"]["privilegioDocumental"]>
+    composites: {}
+  }
+
+  type PrivilegioDocumentalGetPayload<S extends boolean | null | undefined | PrivilegioDocumentalDefaultArgs> = $Result.GetResult<Prisma.$PrivilegioDocumentalPayload, S>
+
+  type PrivilegioDocumentalCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<PrivilegioDocumentalFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: PrivilegioDocumentalCountAggregateInputType | true
+    }
+
+  export interface PrivilegioDocumentalDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PrivilegioDocumental'], meta: { name: 'PrivilegioDocumental' } }
+    /**
+     * Find zero or one PrivilegioDocumental that matches the filter.
+     * @param {PrivilegioDocumentalFindUniqueArgs} args - Arguments to find a PrivilegioDocumental
+     * @example
+     * // Get one PrivilegioDocumental
+     * const privilegioDocumental = await prisma.privilegioDocumental.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PrivilegioDocumentalFindUniqueArgs>(args: SelectSubset<T, PrivilegioDocumentalFindUniqueArgs<ExtArgs>>): Prisma__PrivilegioDocumentalClient<$Result.GetResult<Prisma.$PrivilegioDocumentalPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one PrivilegioDocumental that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {PrivilegioDocumentalFindUniqueOrThrowArgs} args - Arguments to find a PrivilegioDocumental
+     * @example
+     * // Get one PrivilegioDocumental
+     * const privilegioDocumental = await prisma.privilegioDocumental.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PrivilegioDocumentalFindUniqueOrThrowArgs>(args: SelectSubset<T, PrivilegioDocumentalFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PrivilegioDocumentalClient<$Result.GetResult<Prisma.$PrivilegioDocumentalPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first PrivilegioDocumental that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PrivilegioDocumentalFindFirstArgs} args - Arguments to find a PrivilegioDocumental
+     * @example
+     * // Get one PrivilegioDocumental
+     * const privilegioDocumental = await prisma.privilegioDocumental.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PrivilegioDocumentalFindFirstArgs>(args?: SelectSubset<T, PrivilegioDocumentalFindFirstArgs<ExtArgs>>): Prisma__PrivilegioDocumentalClient<$Result.GetResult<Prisma.$PrivilegioDocumentalPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first PrivilegioDocumental that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PrivilegioDocumentalFindFirstOrThrowArgs} args - Arguments to find a PrivilegioDocumental
+     * @example
+     * // Get one PrivilegioDocumental
+     * const privilegioDocumental = await prisma.privilegioDocumental.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PrivilegioDocumentalFindFirstOrThrowArgs>(args?: SelectSubset<T, PrivilegioDocumentalFindFirstOrThrowArgs<ExtArgs>>): Prisma__PrivilegioDocumentalClient<$Result.GetResult<Prisma.$PrivilegioDocumentalPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more PrivilegioDocumentals that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PrivilegioDocumentalFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PrivilegioDocumentals
+     * const privilegioDocumentals = await prisma.privilegioDocumental.findMany()
+     * 
+     * // Get first 10 PrivilegioDocumentals
+     * const privilegioDocumentals = await prisma.privilegioDocumental.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const privilegioDocumentalWithIdOnly = await prisma.privilegioDocumental.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PrivilegioDocumentalFindManyArgs>(args?: SelectSubset<T, PrivilegioDocumentalFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PrivilegioDocumentalPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a PrivilegioDocumental.
+     * @param {PrivilegioDocumentalCreateArgs} args - Arguments to create a PrivilegioDocumental.
+     * @example
+     * // Create one PrivilegioDocumental
+     * const PrivilegioDocumental = await prisma.privilegioDocumental.create({
+     *   data: {
+     *     // ... data to create a PrivilegioDocumental
+     *   }
+     * })
+     * 
+     */
+    create<T extends PrivilegioDocumentalCreateArgs>(args: SelectSubset<T, PrivilegioDocumentalCreateArgs<ExtArgs>>): Prisma__PrivilegioDocumentalClient<$Result.GetResult<Prisma.$PrivilegioDocumentalPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many PrivilegioDocumentals.
+     * @param {PrivilegioDocumentalCreateManyArgs} args - Arguments to create many PrivilegioDocumentals.
+     * @example
+     * // Create many PrivilegioDocumentals
+     * const privilegioDocumental = await prisma.privilegioDocumental.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PrivilegioDocumentalCreateManyArgs>(args?: SelectSubset<T, PrivilegioDocumentalCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PrivilegioDocumentals and returns the data saved in the database.
+     * @param {PrivilegioDocumentalCreateManyAndReturnArgs} args - Arguments to create many PrivilegioDocumentals.
+     * @example
+     * // Create many PrivilegioDocumentals
+     * const privilegioDocumental = await prisma.privilegioDocumental.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PrivilegioDocumentals and only return the `id`
+     * const privilegioDocumentalWithIdOnly = await prisma.privilegioDocumental.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PrivilegioDocumentalCreateManyAndReturnArgs>(args?: SelectSubset<T, PrivilegioDocumentalCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PrivilegioDocumentalPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a PrivilegioDocumental.
+     * @param {PrivilegioDocumentalDeleteArgs} args - Arguments to delete one PrivilegioDocumental.
+     * @example
+     * // Delete one PrivilegioDocumental
+     * const PrivilegioDocumental = await prisma.privilegioDocumental.delete({
+     *   where: {
+     *     // ... filter to delete one PrivilegioDocumental
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PrivilegioDocumentalDeleteArgs>(args: SelectSubset<T, PrivilegioDocumentalDeleteArgs<ExtArgs>>): Prisma__PrivilegioDocumentalClient<$Result.GetResult<Prisma.$PrivilegioDocumentalPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one PrivilegioDocumental.
+     * @param {PrivilegioDocumentalUpdateArgs} args - Arguments to update one PrivilegioDocumental.
+     * @example
+     * // Update one PrivilegioDocumental
+     * const privilegioDocumental = await prisma.privilegioDocumental.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PrivilegioDocumentalUpdateArgs>(args: SelectSubset<T, PrivilegioDocumentalUpdateArgs<ExtArgs>>): Prisma__PrivilegioDocumentalClient<$Result.GetResult<Prisma.$PrivilegioDocumentalPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more PrivilegioDocumentals.
+     * @param {PrivilegioDocumentalDeleteManyArgs} args - Arguments to filter PrivilegioDocumentals to delete.
+     * @example
+     * // Delete a few PrivilegioDocumentals
+     * const { count } = await prisma.privilegioDocumental.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PrivilegioDocumentalDeleteManyArgs>(args?: SelectSubset<T, PrivilegioDocumentalDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PrivilegioDocumentals.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PrivilegioDocumentalUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PrivilegioDocumentals
+     * const privilegioDocumental = await prisma.privilegioDocumental.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PrivilegioDocumentalUpdateManyArgs>(args: SelectSubset<T, PrivilegioDocumentalUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one PrivilegioDocumental.
+     * @param {PrivilegioDocumentalUpsertArgs} args - Arguments to update or create a PrivilegioDocumental.
+     * @example
+     * // Update or create a PrivilegioDocumental
+     * const privilegioDocumental = await prisma.privilegioDocumental.upsert({
+     *   create: {
+     *     // ... data to create a PrivilegioDocumental
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PrivilegioDocumental we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PrivilegioDocumentalUpsertArgs>(args: SelectSubset<T, PrivilegioDocumentalUpsertArgs<ExtArgs>>): Prisma__PrivilegioDocumentalClient<$Result.GetResult<Prisma.$PrivilegioDocumentalPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of PrivilegioDocumentals.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PrivilegioDocumentalCountArgs} args - Arguments to filter PrivilegioDocumentals to count.
+     * @example
+     * // Count the number of PrivilegioDocumentals
+     * const count = await prisma.privilegioDocumental.count({
+     *   where: {
+     *     // ... the filter for the PrivilegioDocumentals we want to count
+     *   }
+     * })
+    **/
+    count<T extends PrivilegioDocumentalCountArgs>(
+      args?: Subset<T, PrivilegioDocumentalCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PrivilegioDocumentalCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PrivilegioDocumental.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PrivilegioDocumentalAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PrivilegioDocumentalAggregateArgs>(args: Subset<T, PrivilegioDocumentalAggregateArgs>): Prisma.PrismaPromise<GetPrivilegioDocumentalAggregateType<T>>
+
+    /**
+     * Group by PrivilegioDocumental.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PrivilegioDocumentalGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PrivilegioDocumentalGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PrivilegioDocumentalGroupByArgs['orderBy'] }
+        : { orderBy?: PrivilegioDocumentalGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PrivilegioDocumentalGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPrivilegioDocumentalGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PrivilegioDocumental model
+   */
+  readonly fields: PrivilegioDocumentalFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PrivilegioDocumental.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PrivilegioDocumentalClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    carpeta<T extends CarpetaDocumentalDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CarpetaDocumentalDefaultArgs<ExtArgs>>): Prisma__CarpetaDocumentalClient<$Result.GetResult<Prisma.$CarpetaDocumentalPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PrivilegioDocumental model
+   */ 
+  interface PrivilegioDocumentalFieldRefs {
+    readonly id: FieldRef<"PrivilegioDocumental", 'String'>
+    readonly carpetaId: FieldRef<"PrivilegioDocumental", 'String'>
+    readonly tipo: FieldRef<"PrivilegioDocumental", 'String'>
+    readonly referenciaId: FieldRef<"PrivilegioDocumental", 'String'>
+    readonly permiso: FieldRef<"PrivilegioDocumental", 'String'>
+    readonly creadoEn: FieldRef<"PrivilegioDocumental", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PrivilegioDocumental findUnique
+   */
+  export type PrivilegioDocumentalFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrivilegioDocumental
+     */
+    select?: PrivilegioDocumentalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrivilegioDocumentalInclude<ExtArgs> | null
+    /**
+     * Filter, which PrivilegioDocumental to fetch.
+     */
+    where: PrivilegioDocumentalWhereUniqueInput
+  }
+
+  /**
+   * PrivilegioDocumental findUniqueOrThrow
+   */
+  export type PrivilegioDocumentalFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrivilegioDocumental
+     */
+    select?: PrivilegioDocumentalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrivilegioDocumentalInclude<ExtArgs> | null
+    /**
+     * Filter, which PrivilegioDocumental to fetch.
+     */
+    where: PrivilegioDocumentalWhereUniqueInput
+  }
+
+  /**
+   * PrivilegioDocumental findFirst
+   */
+  export type PrivilegioDocumentalFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrivilegioDocumental
+     */
+    select?: PrivilegioDocumentalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrivilegioDocumentalInclude<ExtArgs> | null
+    /**
+     * Filter, which PrivilegioDocumental to fetch.
+     */
+    where?: PrivilegioDocumentalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PrivilegioDocumentals to fetch.
+     */
+    orderBy?: PrivilegioDocumentalOrderByWithRelationInput | PrivilegioDocumentalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PrivilegioDocumentals.
+     */
+    cursor?: PrivilegioDocumentalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PrivilegioDocumentals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PrivilegioDocumentals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PrivilegioDocumentals.
+     */
+    distinct?: PrivilegioDocumentalScalarFieldEnum | PrivilegioDocumentalScalarFieldEnum[]
+  }
+
+  /**
+   * PrivilegioDocumental findFirstOrThrow
+   */
+  export type PrivilegioDocumentalFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrivilegioDocumental
+     */
+    select?: PrivilegioDocumentalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrivilegioDocumentalInclude<ExtArgs> | null
+    /**
+     * Filter, which PrivilegioDocumental to fetch.
+     */
+    where?: PrivilegioDocumentalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PrivilegioDocumentals to fetch.
+     */
+    orderBy?: PrivilegioDocumentalOrderByWithRelationInput | PrivilegioDocumentalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PrivilegioDocumentals.
+     */
+    cursor?: PrivilegioDocumentalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PrivilegioDocumentals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PrivilegioDocumentals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PrivilegioDocumentals.
+     */
+    distinct?: PrivilegioDocumentalScalarFieldEnum | PrivilegioDocumentalScalarFieldEnum[]
+  }
+
+  /**
+   * PrivilegioDocumental findMany
+   */
+  export type PrivilegioDocumentalFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrivilegioDocumental
+     */
+    select?: PrivilegioDocumentalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrivilegioDocumentalInclude<ExtArgs> | null
+    /**
+     * Filter, which PrivilegioDocumentals to fetch.
+     */
+    where?: PrivilegioDocumentalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PrivilegioDocumentals to fetch.
+     */
+    orderBy?: PrivilegioDocumentalOrderByWithRelationInput | PrivilegioDocumentalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PrivilegioDocumentals.
+     */
+    cursor?: PrivilegioDocumentalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PrivilegioDocumentals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PrivilegioDocumentals.
+     */
+    skip?: number
+    distinct?: PrivilegioDocumentalScalarFieldEnum | PrivilegioDocumentalScalarFieldEnum[]
+  }
+
+  /**
+   * PrivilegioDocumental create
+   */
+  export type PrivilegioDocumentalCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrivilegioDocumental
+     */
+    select?: PrivilegioDocumentalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrivilegioDocumentalInclude<ExtArgs> | null
+    /**
+     * The data needed to create a PrivilegioDocumental.
+     */
+    data: XOR<PrivilegioDocumentalCreateInput, PrivilegioDocumentalUncheckedCreateInput>
+  }
+
+  /**
+   * PrivilegioDocumental createMany
+   */
+  export type PrivilegioDocumentalCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PrivilegioDocumentals.
+     */
+    data: PrivilegioDocumentalCreateManyInput | PrivilegioDocumentalCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PrivilegioDocumental createManyAndReturn
+   */
+  export type PrivilegioDocumentalCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrivilegioDocumental
+     */
+    select?: PrivilegioDocumentalSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many PrivilegioDocumentals.
+     */
+    data: PrivilegioDocumentalCreateManyInput | PrivilegioDocumentalCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrivilegioDocumentalIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PrivilegioDocumental update
+   */
+  export type PrivilegioDocumentalUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrivilegioDocumental
+     */
+    select?: PrivilegioDocumentalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrivilegioDocumentalInclude<ExtArgs> | null
+    /**
+     * The data needed to update a PrivilegioDocumental.
+     */
+    data: XOR<PrivilegioDocumentalUpdateInput, PrivilegioDocumentalUncheckedUpdateInput>
+    /**
+     * Choose, which PrivilegioDocumental to update.
+     */
+    where: PrivilegioDocumentalWhereUniqueInput
+  }
+
+  /**
+   * PrivilegioDocumental updateMany
+   */
+  export type PrivilegioDocumentalUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PrivilegioDocumentals.
+     */
+    data: XOR<PrivilegioDocumentalUpdateManyMutationInput, PrivilegioDocumentalUncheckedUpdateManyInput>
+    /**
+     * Filter which PrivilegioDocumentals to update
+     */
+    where?: PrivilegioDocumentalWhereInput
+  }
+
+  /**
+   * PrivilegioDocumental upsert
+   */
+  export type PrivilegioDocumentalUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrivilegioDocumental
+     */
+    select?: PrivilegioDocumentalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrivilegioDocumentalInclude<ExtArgs> | null
+    /**
+     * The filter to search for the PrivilegioDocumental to update in case it exists.
+     */
+    where: PrivilegioDocumentalWhereUniqueInput
+    /**
+     * In case the PrivilegioDocumental found by the `where` argument doesn't exist, create a new PrivilegioDocumental with this data.
+     */
+    create: XOR<PrivilegioDocumentalCreateInput, PrivilegioDocumentalUncheckedCreateInput>
+    /**
+     * In case the PrivilegioDocumental was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PrivilegioDocumentalUpdateInput, PrivilegioDocumentalUncheckedUpdateInput>
+  }
+
+  /**
+   * PrivilegioDocumental delete
+   */
+  export type PrivilegioDocumentalDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrivilegioDocumental
+     */
+    select?: PrivilegioDocumentalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrivilegioDocumentalInclude<ExtArgs> | null
+    /**
+     * Filter which PrivilegioDocumental to delete.
+     */
+    where: PrivilegioDocumentalWhereUniqueInput
+  }
+
+  /**
+   * PrivilegioDocumental deleteMany
+   */
+  export type PrivilegioDocumentalDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PrivilegioDocumentals to delete
+     */
+    where?: PrivilegioDocumentalWhereInput
+  }
+
+  /**
+   * PrivilegioDocumental without action
+   */
+  export type PrivilegioDocumentalDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrivilegioDocumental
+     */
+    select?: PrivilegioDocumentalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrivilegioDocumentalInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -119999,6 +123225,51 @@ export namespace Prisma {
   };
 
   export type CollabKudoScalarFieldEnum = (typeof CollabKudoScalarFieldEnum)[keyof typeof CollabKudoScalarFieldEnum]
+
+
+  export const ConfiguracionDocumentalScalarFieldEnum: {
+    id: 'id',
+    tenantId: 'tenantId',
+    clientId: 'clientId',
+    clientSecret: 'clientSecret',
+    onedriveUserEmail: 'onedriveUserEmail',
+    rootFolderId: 'rootFolderId',
+    rootFolderName: 'rootFolderName',
+    activo: 'activo',
+    creadoEn: 'creadoEn',
+    actualizadoEn: 'actualizadoEn'
+  };
+
+  export type ConfiguracionDocumentalScalarFieldEnum = (typeof ConfiguracionDocumentalScalarFieldEnum)[keyof typeof ConfiguracionDocumentalScalarFieldEnum]
+
+
+  export const CarpetaDocumentalScalarFieldEnum: {
+    id: 'id',
+    onedriveId: 'onedriveId',
+    nombre: 'nombre',
+    descripcion: 'descripcion',
+    parentId: 'parentId',
+    rutaCompleta: 'rutaCompleta',
+    icono: 'icono',
+    orden: 'orden',
+    activa: 'activa',
+    creadoEn: 'creadoEn',
+    actualizadoEn: 'actualizadoEn'
+  };
+
+  export type CarpetaDocumentalScalarFieldEnum = (typeof CarpetaDocumentalScalarFieldEnum)[keyof typeof CarpetaDocumentalScalarFieldEnum]
+
+
+  export const PrivilegioDocumentalScalarFieldEnum: {
+    id: 'id',
+    carpetaId: 'carpetaId',
+    tipo: 'tipo',
+    referenciaId: 'referenciaId',
+    permiso: 'permiso',
+    creadoEn: 'creadoEn'
+  };
+
+  export type PrivilegioDocumentalScalarFieldEnum = (typeof PrivilegioDocumentalScalarFieldEnum)[keyof typeof PrivilegioDocumentalScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -128812,6 +132083,231 @@ export namespace Prisma {
     category?: StringWithAggregatesFilter<"CollabKudo"> | string
     badgeIcon?: StringWithAggregatesFilter<"CollabKudo"> | string
     createdAt?: DateTimeWithAggregatesFilter<"CollabKudo"> | Date | string
+  }
+
+  export type ConfiguracionDocumentalWhereInput = {
+    AND?: ConfiguracionDocumentalWhereInput | ConfiguracionDocumentalWhereInput[]
+    OR?: ConfiguracionDocumentalWhereInput[]
+    NOT?: ConfiguracionDocumentalWhereInput | ConfiguracionDocumentalWhereInput[]
+    id?: StringFilter<"ConfiguracionDocumental"> | string
+    tenantId?: StringFilter<"ConfiguracionDocumental"> | string
+    clientId?: StringFilter<"ConfiguracionDocumental"> | string
+    clientSecret?: StringFilter<"ConfiguracionDocumental"> | string
+    onedriveUserEmail?: StringFilter<"ConfiguracionDocumental"> | string
+    rootFolderId?: StringNullableFilter<"ConfiguracionDocumental"> | string | null
+    rootFolderName?: StringNullableFilter<"ConfiguracionDocumental"> | string | null
+    activo?: BoolFilter<"ConfiguracionDocumental"> | boolean
+    creadoEn?: DateTimeFilter<"ConfiguracionDocumental"> | Date | string
+    actualizadoEn?: DateTimeFilter<"ConfiguracionDocumental"> | Date | string
+  }
+
+  export type ConfiguracionDocumentalOrderByWithRelationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    clientId?: SortOrder
+    clientSecret?: SortOrder
+    onedriveUserEmail?: SortOrder
+    rootFolderId?: SortOrderInput | SortOrder
+    rootFolderName?: SortOrderInput | SortOrder
+    activo?: SortOrder
+    creadoEn?: SortOrder
+    actualizadoEn?: SortOrder
+  }
+
+  export type ConfiguracionDocumentalWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ConfiguracionDocumentalWhereInput | ConfiguracionDocumentalWhereInput[]
+    OR?: ConfiguracionDocumentalWhereInput[]
+    NOT?: ConfiguracionDocumentalWhereInput | ConfiguracionDocumentalWhereInput[]
+    tenantId?: StringFilter<"ConfiguracionDocumental"> | string
+    clientId?: StringFilter<"ConfiguracionDocumental"> | string
+    clientSecret?: StringFilter<"ConfiguracionDocumental"> | string
+    onedriveUserEmail?: StringFilter<"ConfiguracionDocumental"> | string
+    rootFolderId?: StringNullableFilter<"ConfiguracionDocumental"> | string | null
+    rootFolderName?: StringNullableFilter<"ConfiguracionDocumental"> | string | null
+    activo?: BoolFilter<"ConfiguracionDocumental"> | boolean
+    creadoEn?: DateTimeFilter<"ConfiguracionDocumental"> | Date | string
+    actualizadoEn?: DateTimeFilter<"ConfiguracionDocumental"> | Date | string
+  }, "id">
+
+  export type ConfiguracionDocumentalOrderByWithAggregationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    clientId?: SortOrder
+    clientSecret?: SortOrder
+    onedriveUserEmail?: SortOrder
+    rootFolderId?: SortOrderInput | SortOrder
+    rootFolderName?: SortOrderInput | SortOrder
+    activo?: SortOrder
+    creadoEn?: SortOrder
+    actualizadoEn?: SortOrder
+    _count?: ConfiguracionDocumentalCountOrderByAggregateInput
+    _max?: ConfiguracionDocumentalMaxOrderByAggregateInput
+    _min?: ConfiguracionDocumentalMinOrderByAggregateInput
+  }
+
+  export type ConfiguracionDocumentalScalarWhereWithAggregatesInput = {
+    AND?: ConfiguracionDocumentalScalarWhereWithAggregatesInput | ConfiguracionDocumentalScalarWhereWithAggregatesInput[]
+    OR?: ConfiguracionDocumentalScalarWhereWithAggregatesInput[]
+    NOT?: ConfiguracionDocumentalScalarWhereWithAggregatesInput | ConfiguracionDocumentalScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ConfiguracionDocumental"> | string
+    tenantId?: StringWithAggregatesFilter<"ConfiguracionDocumental"> | string
+    clientId?: StringWithAggregatesFilter<"ConfiguracionDocumental"> | string
+    clientSecret?: StringWithAggregatesFilter<"ConfiguracionDocumental"> | string
+    onedriveUserEmail?: StringWithAggregatesFilter<"ConfiguracionDocumental"> | string
+    rootFolderId?: StringNullableWithAggregatesFilter<"ConfiguracionDocumental"> | string | null
+    rootFolderName?: StringNullableWithAggregatesFilter<"ConfiguracionDocumental"> | string | null
+    activo?: BoolWithAggregatesFilter<"ConfiguracionDocumental"> | boolean
+    creadoEn?: DateTimeWithAggregatesFilter<"ConfiguracionDocumental"> | Date | string
+    actualizadoEn?: DateTimeWithAggregatesFilter<"ConfiguracionDocumental"> | Date | string
+  }
+
+  export type CarpetaDocumentalWhereInput = {
+    AND?: CarpetaDocumentalWhereInput | CarpetaDocumentalWhereInput[]
+    OR?: CarpetaDocumentalWhereInput[]
+    NOT?: CarpetaDocumentalWhereInput | CarpetaDocumentalWhereInput[]
+    id?: StringFilter<"CarpetaDocumental"> | string
+    onedriveId?: StringFilter<"CarpetaDocumental"> | string
+    nombre?: StringFilter<"CarpetaDocumental"> | string
+    descripcion?: StringNullableFilter<"CarpetaDocumental"> | string | null
+    parentId?: StringNullableFilter<"CarpetaDocumental"> | string | null
+    rutaCompleta?: StringFilter<"CarpetaDocumental"> | string
+    icono?: StringFilter<"CarpetaDocumental"> | string
+    orden?: IntFilter<"CarpetaDocumental"> | number
+    activa?: BoolFilter<"CarpetaDocumental"> | boolean
+    creadoEn?: DateTimeFilter<"CarpetaDocumental"> | Date | string
+    actualizadoEn?: DateTimeFilter<"CarpetaDocumental"> | Date | string
+    privilegios?: PrivilegioDocumentalListRelationFilter
+  }
+
+  export type CarpetaDocumentalOrderByWithRelationInput = {
+    id?: SortOrder
+    onedriveId?: SortOrder
+    nombre?: SortOrder
+    descripcion?: SortOrderInput | SortOrder
+    parentId?: SortOrderInput | SortOrder
+    rutaCompleta?: SortOrder
+    icono?: SortOrder
+    orden?: SortOrder
+    activa?: SortOrder
+    creadoEn?: SortOrder
+    actualizadoEn?: SortOrder
+    privilegios?: PrivilegioDocumentalOrderByRelationAggregateInput
+  }
+
+  export type CarpetaDocumentalWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    onedriveId?: string
+    AND?: CarpetaDocumentalWhereInput | CarpetaDocumentalWhereInput[]
+    OR?: CarpetaDocumentalWhereInput[]
+    NOT?: CarpetaDocumentalWhereInput | CarpetaDocumentalWhereInput[]
+    nombre?: StringFilter<"CarpetaDocumental"> | string
+    descripcion?: StringNullableFilter<"CarpetaDocumental"> | string | null
+    parentId?: StringNullableFilter<"CarpetaDocumental"> | string | null
+    rutaCompleta?: StringFilter<"CarpetaDocumental"> | string
+    icono?: StringFilter<"CarpetaDocumental"> | string
+    orden?: IntFilter<"CarpetaDocumental"> | number
+    activa?: BoolFilter<"CarpetaDocumental"> | boolean
+    creadoEn?: DateTimeFilter<"CarpetaDocumental"> | Date | string
+    actualizadoEn?: DateTimeFilter<"CarpetaDocumental"> | Date | string
+    privilegios?: PrivilegioDocumentalListRelationFilter
+  }, "id" | "onedriveId">
+
+  export type CarpetaDocumentalOrderByWithAggregationInput = {
+    id?: SortOrder
+    onedriveId?: SortOrder
+    nombre?: SortOrder
+    descripcion?: SortOrderInput | SortOrder
+    parentId?: SortOrderInput | SortOrder
+    rutaCompleta?: SortOrder
+    icono?: SortOrder
+    orden?: SortOrder
+    activa?: SortOrder
+    creadoEn?: SortOrder
+    actualizadoEn?: SortOrder
+    _count?: CarpetaDocumentalCountOrderByAggregateInput
+    _avg?: CarpetaDocumentalAvgOrderByAggregateInput
+    _max?: CarpetaDocumentalMaxOrderByAggregateInput
+    _min?: CarpetaDocumentalMinOrderByAggregateInput
+    _sum?: CarpetaDocumentalSumOrderByAggregateInput
+  }
+
+  export type CarpetaDocumentalScalarWhereWithAggregatesInput = {
+    AND?: CarpetaDocumentalScalarWhereWithAggregatesInput | CarpetaDocumentalScalarWhereWithAggregatesInput[]
+    OR?: CarpetaDocumentalScalarWhereWithAggregatesInput[]
+    NOT?: CarpetaDocumentalScalarWhereWithAggregatesInput | CarpetaDocumentalScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"CarpetaDocumental"> | string
+    onedriveId?: StringWithAggregatesFilter<"CarpetaDocumental"> | string
+    nombre?: StringWithAggregatesFilter<"CarpetaDocumental"> | string
+    descripcion?: StringNullableWithAggregatesFilter<"CarpetaDocumental"> | string | null
+    parentId?: StringNullableWithAggregatesFilter<"CarpetaDocumental"> | string | null
+    rutaCompleta?: StringWithAggregatesFilter<"CarpetaDocumental"> | string
+    icono?: StringWithAggregatesFilter<"CarpetaDocumental"> | string
+    orden?: IntWithAggregatesFilter<"CarpetaDocumental"> | number
+    activa?: BoolWithAggregatesFilter<"CarpetaDocumental"> | boolean
+    creadoEn?: DateTimeWithAggregatesFilter<"CarpetaDocumental"> | Date | string
+    actualizadoEn?: DateTimeWithAggregatesFilter<"CarpetaDocumental"> | Date | string
+  }
+
+  export type PrivilegioDocumentalWhereInput = {
+    AND?: PrivilegioDocumentalWhereInput | PrivilegioDocumentalWhereInput[]
+    OR?: PrivilegioDocumentalWhereInput[]
+    NOT?: PrivilegioDocumentalWhereInput | PrivilegioDocumentalWhereInput[]
+    id?: StringFilter<"PrivilegioDocumental"> | string
+    carpetaId?: StringFilter<"PrivilegioDocumental"> | string
+    tipo?: StringFilter<"PrivilegioDocumental"> | string
+    referenciaId?: StringFilter<"PrivilegioDocumental"> | string
+    permiso?: StringFilter<"PrivilegioDocumental"> | string
+    creadoEn?: DateTimeFilter<"PrivilegioDocumental"> | Date | string
+    carpeta?: XOR<CarpetaDocumentalRelationFilter, CarpetaDocumentalWhereInput>
+  }
+
+  export type PrivilegioDocumentalOrderByWithRelationInput = {
+    id?: SortOrder
+    carpetaId?: SortOrder
+    tipo?: SortOrder
+    referenciaId?: SortOrder
+    permiso?: SortOrder
+    creadoEn?: SortOrder
+    carpeta?: CarpetaDocumentalOrderByWithRelationInput
+  }
+
+  export type PrivilegioDocumentalWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    carpetaId_tipo_referenciaId_permiso?: PrivilegioDocumentalCarpetaIdTipoReferenciaIdPermisoCompoundUniqueInput
+    AND?: PrivilegioDocumentalWhereInput | PrivilegioDocumentalWhereInput[]
+    OR?: PrivilegioDocumentalWhereInput[]
+    NOT?: PrivilegioDocumentalWhereInput | PrivilegioDocumentalWhereInput[]
+    carpetaId?: StringFilter<"PrivilegioDocumental"> | string
+    tipo?: StringFilter<"PrivilegioDocumental"> | string
+    referenciaId?: StringFilter<"PrivilegioDocumental"> | string
+    permiso?: StringFilter<"PrivilegioDocumental"> | string
+    creadoEn?: DateTimeFilter<"PrivilegioDocumental"> | Date | string
+    carpeta?: XOR<CarpetaDocumentalRelationFilter, CarpetaDocumentalWhereInput>
+  }, "id" | "carpetaId_tipo_referenciaId_permiso">
+
+  export type PrivilegioDocumentalOrderByWithAggregationInput = {
+    id?: SortOrder
+    carpetaId?: SortOrder
+    tipo?: SortOrder
+    referenciaId?: SortOrder
+    permiso?: SortOrder
+    creadoEn?: SortOrder
+    _count?: PrivilegioDocumentalCountOrderByAggregateInput
+    _max?: PrivilegioDocumentalMaxOrderByAggregateInput
+    _min?: PrivilegioDocumentalMinOrderByAggregateInput
+  }
+
+  export type PrivilegioDocumentalScalarWhereWithAggregatesInput = {
+    AND?: PrivilegioDocumentalScalarWhereWithAggregatesInput | PrivilegioDocumentalScalarWhereWithAggregatesInput[]
+    OR?: PrivilegioDocumentalScalarWhereWithAggregatesInput[]
+    NOT?: PrivilegioDocumentalScalarWhereWithAggregatesInput | PrivilegioDocumentalScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"PrivilegioDocumental"> | string
+    carpetaId?: StringWithAggregatesFilter<"PrivilegioDocumental"> | string
+    tipo?: StringWithAggregatesFilter<"PrivilegioDocumental"> | string
+    referenciaId?: StringWithAggregatesFilter<"PrivilegioDocumental"> | string
+    permiso?: StringWithAggregatesFilter<"PrivilegioDocumental"> | string
+    creadoEn?: DateTimeWithAggregatesFilter<"PrivilegioDocumental"> | Date | string
   }
 
   export type RoleCreateInput = {
@@ -138607,6 +142103,261 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ConfiguracionDocumentalCreateInput = {
+    id?: string
+    tenantId: string
+    clientId: string
+    clientSecret: string
+    onedriveUserEmail: string
+    rootFolderId?: string | null
+    rootFolderName?: string | null
+    activo?: boolean
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+  }
+
+  export type ConfiguracionDocumentalUncheckedCreateInput = {
+    id?: string
+    tenantId: string
+    clientId: string
+    clientSecret: string
+    onedriveUserEmail: string
+    rootFolderId?: string | null
+    rootFolderName?: string | null
+    activo?: boolean
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+  }
+
+  export type ConfiguracionDocumentalUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    clientId?: StringFieldUpdateOperationsInput | string
+    clientSecret?: StringFieldUpdateOperationsInput | string
+    onedriveUserEmail?: StringFieldUpdateOperationsInput | string
+    rootFolderId?: NullableStringFieldUpdateOperationsInput | string | null
+    rootFolderName?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ConfiguracionDocumentalUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    clientId?: StringFieldUpdateOperationsInput | string
+    clientSecret?: StringFieldUpdateOperationsInput | string
+    onedriveUserEmail?: StringFieldUpdateOperationsInput | string
+    rootFolderId?: NullableStringFieldUpdateOperationsInput | string | null
+    rootFolderName?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ConfiguracionDocumentalCreateManyInput = {
+    id?: string
+    tenantId: string
+    clientId: string
+    clientSecret: string
+    onedriveUserEmail: string
+    rootFolderId?: string | null
+    rootFolderName?: string | null
+    activo?: boolean
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+  }
+
+  export type ConfiguracionDocumentalUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    clientId?: StringFieldUpdateOperationsInput | string
+    clientSecret?: StringFieldUpdateOperationsInput | string
+    onedriveUserEmail?: StringFieldUpdateOperationsInput | string
+    rootFolderId?: NullableStringFieldUpdateOperationsInput | string | null
+    rootFolderName?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ConfiguracionDocumentalUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    clientId?: StringFieldUpdateOperationsInput | string
+    clientSecret?: StringFieldUpdateOperationsInput | string
+    onedriveUserEmail?: StringFieldUpdateOperationsInput | string
+    rootFolderId?: NullableStringFieldUpdateOperationsInput | string | null
+    rootFolderName?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CarpetaDocumentalCreateInput = {
+    id?: string
+    onedriveId: string
+    nombre: string
+    descripcion?: string | null
+    parentId?: string | null
+    rutaCompleta: string
+    icono?: string
+    orden?: number
+    activa?: boolean
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+    privilegios?: PrivilegioDocumentalCreateNestedManyWithoutCarpetaInput
+  }
+
+  export type CarpetaDocumentalUncheckedCreateInput = {
+    id?: string
+    onedriveId: string
+    nombre: string
+    descripcion?: string | null
+    parentId?: string | null
+    rutaCompleta: string
+    icono?: string
+    orden?: number
+    activa?: boolean
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+    privilegios?: PrivilegioDocumentalUncheckedCreateNestedManyWithoutCarpetaInput
+  }
+
+  export type CarpetaDocumentalUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    onedriveId?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    rutaCompleta?: StringFieldUpdateOperationsInput | string
+    icono?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    privilegios?: PrivilegioDocumentalUpdateManyWithoutCarpetaNestedInput
+  }
+
+  export type CarpetaDocumentalUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    onedriveId?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    rutaCompleta?: StringFieldUpdateOperationsInput | string
+    icono?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    privilegios?: PrivilegioDocumentalUncheckedUpdateManyWithoutCarpetaNestedInput
+  }
+
+  export type CarpetaDocumentalCreateManyInput = {
+    id?: string
+    onedriveId: string
+    nombre: string
+    descripcion?: string | null
+    parentId?: string | null
+    rutaCompleta: string
+    icono?: string
+    orden?: number
+    activa?: boolean
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+  }
+
+  export type CarpetaDocumentalUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    onedriveId?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    rutaCompleta?: StringFieldUpdateOperationsInput | string
+    icono?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CarpetaDocumentalUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    onedriveId?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    rutaCompleta?: StringFieldUpdateOperationsInput | string
+    icono?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PrivilegioDocumentalCreateInput = {
+    id?: string
+    tipo: string
+    referenciaId: string
+    permiso: string
+    creadoEn?: Date | string
+    carpeta: CarpetaDocumentalCreateNestedOneWithoutPrivilegiosInput
+  }
+
+  export type PrivilegioDocumentalUncheckedCreateInput = {
+    id?: string
+    carpetaId: string
+    tipo: string
+    referenciaId: string
+    permiso: string
+    creadoEn?: Date | string
+  }
+
+  export type PrivilegioDocumentalUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    referenciaId?: StringFieldUpdateOperationsInput | string
+    permiso?: StringFieldUpdateOperationsInput | string
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    carpeta?: CarpetaDocumentalUpdateOneRequiredWithoutPrivilegiosNestedInput
+  }
+
+  export type PrivilegioDocumentalUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    carpetaId?: StringFieldUpdateOperationsInput | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    referenciaId?: StringFieldUpdateOperationsInput | string
+    permiso?: StringFieldUpdateOperationsInput | string
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PrivilegioDocumentalCreateManyInput = {
+    id?: string
+    carpetaId: string
+    tipo: string
+    referenciaId: string
+    permiso: string
+    creadoEn?: Date | string
+  }
+
+  export type PrivilegioDocumentalUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    referenciaId?: StringFieldUpdateOperationsInput | string
+    permiso?: StringFieldUpdateOperationsInput | string
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PrivilegioDocumentalUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    carpetaId?: StringFieldUpdateOperationsInput | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    referenciaId?: StringFieldUpdateOperationsInput | string
+    permiso?: StringFieldUpdateOperationsInput | string
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -144647,6 +148398,144 @@ export namespace Prisma {
     createdAt?: SortOrder
   }
 
+  export type ConfiguracionDocumentalCountOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    clientId?: SortOrder
+    clientSecret?: SortOrder
+    onedriveUserEmail?: SortOrder
+    rootFolderId?: SortOrder
+    rootFolderName?: SortOrder
+    activo?: SortOrder
+    creadoEn?: SortOrder
+    actualizadoEn?: SortOrder
+  }
+
+  export type ConfiguracionDocumentalMaxOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    clientId?: SortOrder
+    clientSecret?: SortOrder
+    onedriveUserEmail?: SortOrder
+    rootFolderId?: SortOrder
+    rootFolderName?: SortOrder
+    activo?: SortOrder
+    creadoEn?: SortOrder
+    actualizadoEn?: SortOrder
+  }
+
+  export type ConfiguracionDocumentalMinOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    clientId?: SortOrder
+    clientSecret?: SortOrder
+    onedriveUserEmail?: SortOrder
+    rootFolderId?: SortOrder
+    rootFolderName?: SortOrder
+    activo?: SortOrder
+    creadoEn?: SortOrder
+    actualizadoEn?: SortOrder
+  }
+
+  export type PrivilegioDocumentalListRelationFilter = {
+    every?: PrivilegioDocumentalWhereInput
+    some?: PrivilegioDocumentalWhereInput
+    none?: PrivilegioDocumentalWhereInput
+  }
+
+  export type PrivilegioDocumentalOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CarpetaDocumentalCountOrderByAggregateInput = {
+    id?: SortOrder
+    onedriveId?: SortOrder
+    nombre?: SortOrder
+    descripcion?: SortOrder
+    parentId?: SortOrder
+    rutaCompleta?: SortOrder
+    icono?: SortOrder
+    orden?: SortOrder
+    activa?: SortOrder
+    creadoEn?: SortOrder
+    actualizadoEn?: SortOrder
+  }
+
+  export type CarpetaDocumentalAvgOrderByAggregateInput = {
+    orden?: SortOrder
+  }
+
+  export type CarpetaDocumentalMaxOrderByAggregateInput = {
+    id?: SortOrder
+    onedriveId?: SortOrder
+    nombre?: SortOrder
+    descripcion?: SortOrder
+    parentId?: SortOrder
+    rutaCompleta?: SortOrder
+    icono?: SortOrder
+    orden?: SortOrder
+    activa?: SortOrder
+    creadoEn?: SortOrder
+    actualizadoEn?: SortOrder
+  }
+
+  export type CarpetaDocumentalMinOrderByAggregateInput = {
+    id?: SortOrder
+    onedriveId?: SortOrder
+    nombre?: SortOrder
+    descripcion?: SortOrder
+    parentId?: SortOrder
+    rutaCompleta?: SortOrder
+    icono?: SortOrder
+    orden?: SortOrder
+    activa?: SortOrder
+    creadoEn?: SortOrder
+    actualizadoEn?: SortOrder
+  }
+
+  export type CarpetaDocumentalSumOrderByAggregateInput = {
+    orden?: SortOrder
+  }
+
+  export type CarpetaDocumentalRelationFilter = {
+    is?: CarpetaDocumentalWhereInput
+    isNot?: CarpetaDocumentalWhereInput
+  }
+
+  export type PrivilegioDocumentalCarpetaIdTipoReferenciaIdPermisoCompoundUniqueInput = {
+    carpetaId: string
+    tipo: string
+    referenciaId: string
+    permiso: string
+  }
+
+  export type PrivilegioDocumentalCountOrderByAggregateInput = {
+    id?: SortOrder
+    carpetaId?: SortOrder
+    tipo?: SortOrder
+    referenciaId?: SortOrder
+    permiso?: SortOrder
+    creadoEn?: SortOrder
+  }
+
+  export type PrivilegioDocumentalMaxOrderByAggregateInput = {
+    id?: SortOrder
+    carpetaId?: SortOrder
+    tipo?: SortOrder
+    referenciaId?: SortOrder
+    permiso?: SortOrder
+    creadoEn?: SortOrder
+  }
+
+  export type PrivilegioDocumentalMinOrderByAggregateInput = {
+    id?: SortOrder
+    carpetaId?: SortOrder
+    tipo?: SortOrder
+    referenciaId?: SortOrder
+    permiso?: SortOrder
+    creadoEn?: SortOrder
+  }
+
   export type UserCreateNestedManyWithoutRoleInput = {
     create?: XOR<UserCreateWithoutRoleInput, UserUncheckedCreateWithoutRoleInput> | UserCreateWithoutRoleInput[] | UserUncheckedCreateWithoutRoleInput[]
     connectOrCreate?: UserCreateOrConnectWithoutRoleInput | UserCreateOrConnectWithoutRoleInput[]
@@ -148840,6 +152729,62 @@ export namespace Prisma {
     upsert?: CollabPollUpsertWithoutVotesInput
     connect?: CollabPollWhereUniqueInput
     update?: XOR<XOR<CollabPollUpdateToOneWithWhereWithoutVotesInput, CollabPollUpdateWithoutVotesInput>, CollabPollUncheckedUpdateWithoutVotesInput>
+  }
+
+  export type PrivilegioDocumentalCreateNestedManyWithoutCarpetaInput = {
+    create?: XOR<PrivilegioDocumentalCreateWithoutCarpetaInput, PrivilegioDocumentalUncheckedCreateWithoutCarpetaInput> | PrivilegioDocumentalCreateWithoutCarpetaInput[] | PrivilegioDocumentalUncheckedCreateWithoutCarpetaInput[]
+    connectOrCreate?: PrivilegioDocumentalCreateOrConnectWithoutCarpetaInput | PrivilegioDocumentalCreateOrConnectWithoutCarpetaInput[]
+    createMany?: PrivilegioDocumentalCreateManyCarpetaInputEnvelope
+    connect?: PrivilegioDocumentalWhereUniqueInput | PrivilegioDocumentalWhereUniqueInput[]
+  }
+
+  export type PrivilegioDocumentalUncheckedCreateNestedManyWithoutCarpetaInput = {
+    create?: XOR<PrivilegioDocumentalCreateWithoutCarpetaInput, PrivilegioDocumentalUncheckedCreateWithoutCarpetaInput> | PrivilegioDocumentalCreateWithoutCarpetaInput[] | PrivilegioDocumentalUncheckedCreateWithoutCarpetaInput[]
+    connectOrCreate?: PrivilegioDocumentalCreateOrConnectWithoutCarpetaInput | PrivilegioDocumentalCreateOrConnectWithoutCarpetaInput[]
+    createMany?: PrivilegioDocumentalCreateManyCarpetaInputEnvelope
+    connect?: PrivilegioDocumentalWhereUniqueInput | PrivilegioDocumentalWhereUniqueInput[]
+  }
+
+  export type PrivilegioDocumentalUpdateManyWithoutCarpetaNestedInput = {
+    create?: XOR<PrivilegioDocumentalCreateWithoutCarpetaInput, PrivilegioDocumentalUncheckedCreateWithoutCarpetaInput> | PrivilegioDocumentalCreateWithoutCarpetaInput[] | PrivilegioDocumentalUncheckedCreateWithoutCarpetaInput[]
+    connectOrCreate?: PrivilegioDocumentalCreateOrConnectWithoutCarpetaInput | PrivilegioDocumentalCreateOrConnectWithoutCarpetaInput[]
+    upsert?: PrivilegioDocumentalUpsertWithWhereUniqueWithoutCarpetaInput | PrivilegioDocumentalUpsertWithWhereUniqueWithoutCarpetaInput[]
+    createMany?: PrivilegioDocumentalCreateManyCarpetaInputEnvelope
+    set?: PrivilegioDocumentalWhereUniqueInput | PrivilegioDocumentalWhereUniqueInput[]
+    disconnect?: PrivilegioDocumentalWhereUniqueInput | PrivilegioDocumentalWhereUniqueInput[]
+    delete?: PrivilegioDocumentalWhereUniqueInput | PrivilegioDocumentalWhereUniqueInput[]
+    connect?: PrivilegioDocumentalWhereUniqueInput | PrivilegioDocumentalWhereUniqueInput[]
+    update?: PrivilegioDocumentalUpdateWithWhereUniqueWithoutCarpetaInput | PrivilegioDocumentalUpdateWithWhereUniqueWithoutCarpetaInput[]
+    updateMany?: PrivilegioDocumentalUpdateManyWithWhereWithoutCarpetaInput | PrivilegioDocumentalUpdateManyWithWhereWithoutCarpetaInput[]
+    deleteMany?: PrivilegioDocumentalScalarWhereInput | PrivilegioDocumentalScalarWhereInput[]
+  }
+
+  export type PrivilegioDocumentalUncheckedUpdateManyWithoutCarpetaNestedInput = {
+    create?: XOR<PrivilegioDocumentalCreateWithoutCarpetaInput, PrivilegioDocumentalUncheckedCreateWithoutCarpetaInput> | PrivilegioDocumentalCreateWithoutCarpetaInput[] | PrivilegioDocumentalUncheckedCreateWithoutCarpetaInput[]
+    connectOrCreate?: PrivilegioDocumentalCreateOrConnectWithoutCarpetaInput | PrivilegioDocumentalCreateOrConnectWithoutCarpetaInput[]
+    upsert?: PrivilegioDocumentalUpsertWithWhereUniqueWithoutCarpetaInput | PrivilegioDocumentalUpsertWithWhereUniqueWithoutCarpetaInput[]
+    createMany?: PrivilegioDocumentalCreateManyCarpetaInputEnvelope
+    set?: PrivilegioDocumentalWhereUniqueInput | PrivilegioDocumentalWhereUniqueInput[]
+    disconnect?: PrivilegioDocumentalWhereUniqueInput | PrivilegioDocumentalWhereUniqueInput[]
+    delete?: PrivilegioDocumentalWhereUniqueInput | PrivilegioDocumentalWhereUniqueInput[]
+    connect?: PrivilegioDocumentalWhereUniqueInput | PrivilegioDocumentalWhereUniqueInput[]
+    update?: PrivilegioDocumentalUpdateWithWhereUniqueWithoutCarpetaInput | PrivilegioDocumentalUpdateWithWhereUniqueWithoutCarpetaInput[]
+    updateMany?: PrivilegioDocumentalUpdateManyWithWhereWithoutCarpetaInput | PrivilegioDocumentalUpdateManyWithWhereWithoutCarpetaInput[]
+    deleteMany?: PrivilegioDocumentalScalarWhereInput | PrivilegioDocumentalScalarWhereInput[]
+  }
+
+  export type CarpetaDocumentalCreateNestedOneWithoutPrivilegiosInput = {
+    create?: XOR<CarpetaDocumentalCreateWithoutPrivilegiosInput, CarpetaDocumentalUncheckedCreateWithoutPrivilegiosInput>
+    connectOrCreate?: CarpetaDocumentalCreateOrConnectWithoutPrivilegiosInput
+    connect?: CarpetaDocumentalWhereUniqueInput
+  }
+
+  export type CarpetaDocumentalUpdateOneRequiredWithoutPrivilegiosNestedInput = {
+    create?: XOR<CarpetaDocumentalCreateWithoutPrivilegiosInput, CarpetaDocumentalUncheckedCreateWithoutPrivilegiosInput>
+    connectOrCreate?: CarpetaDocumentalCreateOrConnectWithoutPrivilegiosInput
+    upsert?: CarpetaDocumentalUpsertWithoutPrivilegiosInput
+    connect?: CarpetaDocumentalWhereUniqueInput
+    update?: XOR<XOR<CarpetaDocumentalUpdateToOneWithWhereWithoutPrivilegiosInput, CarpetaDocumentalUpdateWithoutPrivilegiosInput>, CarpetaDocumentalUncheckedUpdateWithoutPrivilegiosInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -158849,6 +162794,132 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type PrivilegioDocumentalCreateWithoutCarpetaInput = {
+    id?: string
+    tipo: string
+    referenciaId: string
+    permiso: string
+    creadoEn?: Date | string
+  }
+
+  export type PrivilegioDocumentalUncheckedCreateWithoutCarpetaInput = {
+    id?: string
+    tipo: string
+    referenciaId: string
+    permiso: string
+    creadoEn?: Date | string
+  }
+
+  export type PrivilegioDocumentalCreateOrConnectWithoutCarpetaInput = {
+    where: PrivilegioDocumentalWhereUniqueInput
+    create: XOR<PrivilegioDocumentalCreateWithoutCarpetaInput, PrivilegioDocumentalUncheckedCreateWithoutCarpetaInput>
+  }
+
+  export type PrivilegioDocumentalCreateManyCarpetaInputEnvelope = {
+    data: PrivilegioDocumentalCreateManyCarpetaInput | PrivilegioDocumentalCreateManyCarpetaInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PrivilegioDocumentalUpsertWithWhereUniqueWithoutCarpetaInput = {
+    where: PrivilegioDocumentalWhereUniqueInput
+    update: XOR<PrivilegioDocumentalUpdateWithoutCarpetaInput, PrivilegioDocumentalUncheckedUpdateWithoutCarpetaInput>
+    create: XOR<PrivilegioDocumentalCreateWithoutCarpetaInput, PrivilegioDocumentalUncheckedCreateWithoutCarpetaInput>
+  }
+
+  export type PrivilegioDocumentalUpdateWithWhereUniqueWithoutCarpetaInput = {
+    where: PrivilegioDocumentalWhereUniqueInput
+    data: XOR<PrivilegioDocumentalUpdateWithoutCarpetaInput, PrivilegioDocumentalUncheckedUpdateWithoutCarpetaInput>
+  }
+
+  export type PrivilegioDocumentalUpdateManyWithWhereWithoutCarpetaInput = {
+    where: PrivilegioDocumentalScalarWhereInput
+    data: XOR<PrivilegioDocumentalUpdateManyMutationInput, PrivilegioDocumentalUncheckedUpdateManyWithoutCarpetaInput>
+  }
+
+  export type PrivilegioDocumentalScalarWhereInput = {
+    AND?: PrivilegioDocumentalScalarWhereInput | PrivilegioDocumentalScalarWhereInput[]
+    OR?: PrivilegioDocumentalScalarWhereInput[]
+    NOT?: PrivilegioDocumentalScalarWhereInput | PrivilegioDocumentalScalarWhereInput[]
+    id?: StringFilter<"PrivilegioDocumental"> | string
+    carpetaId?: StringFilter<"PrivilegioDocumental"> | string
+    tipo?: StringFilter<"PrivilegioDocumental"> | string
+    referenciaId?: StringFilter<"PrivilegioDocumental"> | string
+    permiso?: StringFilter<"PrivilegioDocumental"> | string
+    creadoEn?: DateTimeFilter<"PrivilegioDocumental"> | Date | string
+  }
+
+  export type CarpetaDocumentalCreateWithoutPrivilegiosInput = {
+    id?: string
+    onedriveId: string
+    nombre: string
+    descripcion?: string | null
+    parentId?: string | null
+    rutaCompleta: string
+    icono?: string
+    orden?: number
+    activa?: boolean
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+  }
+
+  export type CarpetaDocumentalUncheckedCreateWithoutPrivilegiosInput = {
+    id?: string
+    onedriveId: string
+    nombre: string
+    descripcion?: string | null
+    parentId?: string | null
+    rutaCompleta: string
+    icono?: string
+    orden?: number
+    activa?: boolean
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+  }
+
+  export type CarpetaDocumentalCreateOrConnectWithoutPrivilegiosInput = {
+    where: CarpetaDocumentalWhereUniqueInput
+    create: XOR<CarpetaDocumentalCreateWithoutPrivilegiosInput, CarpetaDocumentalUncheckedCreateWithoutPrivilegiosInput>
+  }
+
+  export type CarpetaDocumentalUpsertWithoutPrivilegiosInput = {
+    update: XOR<CarpetaDocumentalUpdateWithoutPrivilegiosInput, CarpetaDocumentalUncheckedUpdateWithoutPrivilegiosInput>
+    create: XOR<CarpetaDocumentalCreateWithoutPrivilegiosInput, CarpetaDocumentalUncheckedCreateWithoutPrivilegiosInput>
+    where?: CarpetaDocumentalWhereInput
+  }
+
+  export type CarpetaDocumentalUpdateToOneWithWhereWithoutPrivilegiosInput = {
+    where?: CarpetaDocumentalWhereInput
+    data: XOR<CarpetaDocumentalUpdateWithoutPrivilegiosInput, CarpetaDocumentalUncheckedUpdateWithoutPrivilegiosInput>
+  }
+
+  export type CarpetaDocumentalUpdateWithoutPrivilegiosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    onedriveId?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    rutaCompleta?: StringFieldUpdateOperationsInput | string
+    icono?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CarpetaDocumentalUncheckedUpdateWithoutPrivilegiosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    onedriveId?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    rutaCompleta?: StringFieldUpdateOperationsInput | string
+    icono?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type UserCreateManyRoleInput = {
     id?: string
     username: string
@@ -162082,6 +166153,38 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type PrivilegioDocumentalCreateManyCarpetaInput = {
+    id?: string
+    tipo: string
+    referenciaId: string
+    permiso: string
+    creadoEn?: Date | string
+  }
+
+  export type PrivilegioDocumentalUpdateWithoutCarpetaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    referenciaId?: StringFieldUpdateOperationsInput | string
+    permiso?: StringFieldUpdateOperationsInput | string
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PrivilegioDocumentalUncheckedUpdateWithoutCarpetaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    referenciaId?: StringFieldUpdateOperationsInput | string
+    permiso?: StringFieldUpdateOperationsInput | string
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PrivilegioDocumentalUncheckedUpdateManyWithoutCarpetaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    referenciaId?: StringFieldUpdateOperationsInput | string
+    permiso?: StringFieldUpdateOperationsInput | string
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
 
 
   /**
@@ -162227,6 +166330,10 @@ export namespace Prisma {
      * @deprecated Use CollabPollCountOutputTypeDefaultArgs instead
      */
     export type CollabPollCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = CollabPollCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use CarpetaDocumentalCountOutputTypeDefaultArgs instead
+     */
+    export type CarpetaDocumentalCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = CarpetaDocumentalCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use RoleDefaultArgs instead
      */
@@ -162647,6 +166754,18 @@ export namespace Prisma {
      * @deprecated Use CollabKudoDefaultArgs instead
      */
     export type CollabKudoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = CollabKudoDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ConfiguracionDocumentalDefaultArgs instead
+     */
+    export type ConfiguracionDocumentalArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ConfiguracionDocumentalDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use CarpetaDocumentalDefaultArgs instead
+     */
+    export type CarpetaDocumentalArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = CarpetaDocumentalDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use PrivilegioDocumentalDefaultArgs instead
+     */
+    export type PrivilegioDocumentalArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PrivilegioDocumentalDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

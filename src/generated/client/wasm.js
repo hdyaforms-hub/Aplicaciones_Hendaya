@@ -1492,6 +1492,42 @@ exports.Prisma.CollabKudoScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.ConfiguracionDocumentalScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  clientId: 'clientId',
+  clientSecret: 'clientSecret',
+  onedriveUserEmail: 'onedriveUserEmail',
+  rootFolderId: 'rootFolderId',
+  rootFolderName: 'rootFolderName',
+  activo: 'activo',
+  creadoEn: 'creadoEn',
+  actualizadoEn: 'actualizadoEn'
+};
+
+exports.Prisma.CarpetaDocumentalScalarFieldEnum = {
+  id: 'id',
+  onedriveId: 'onedriveId',
+  nombre: 'nombre',
+  descripcion: 'descripcion',
+  parentId: 'parentId',
+  rutaCompleta: 'rutaCompleta',
+  icono: 'icono',
+  orden: 'orden',
+  activa: 'activa',
+  creadoEn: 'creadoEn',
+  actualizadoEn: 'actualizadoEn'
+};
+
+exports.Prisma.PrivilegioDocumentalScalarFieldEnum = {
+  id: 'id',
+  carpetaId: 'carpetaId',
+  tipo: 'tipo',
+  referenciaId: 'referenciaId',
+  permiso: 'permiso',
+  creadoEn: 'creadoEn'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1613,7 +1649,10 @@ exports.Prisma.ModelName = {
   CollabMessageReaction: 'CollabMessageReaction',
   CollabPoll: 'CollabPoll',
   CollabPollVote: 'CollabPollVote',
-  CollabKudo: 'CollabKudo'
+  CollabKudo: 'CollabKudo',
+  ConfiguracionDocumental: 'ConfiguracionDocumental',
+  CarpetaDocumental: 'CarpetaDocumental',
+  PrivilegioDocumental: 'PrivilegioDocumental'
 };
 
 /**

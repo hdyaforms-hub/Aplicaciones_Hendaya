@@ -144,6 +144,11 @@ export default async function RolesPage() {
         { id: 'view_anexos', name: 'Ver Anexos', description: 'Acceso al directorio telefónico de la empresa.', category: 'AYUDA' },
         { id: 'manage_anexos', name: 'Gestionar Anexos', description: 'Acceso a crear, editar y subir de forma masiva los anexos.', category: 'AYUDA' },
         { id: 'view_conversacion', name: 'Conversación y Colaboración', description: 'Acceso a mensajería cifrada, gestión de tareas estilo Trello, citas/calendario y proyectos colaborativos.', category: 'AYUDA' },
+
+        { id: 'view_documentos', name: 'Gestor Documental (Vista Usuario)', description: 'Permite explorar, previsualizar y descargar documentos según permisos asignados.', category: 'GESTOR DOCUMENTAL' },
+        { id: 'manage_doc_configuracion', name: 'Configuración OneDrive', description: 'Permite configurar y vincular las credenciales de Microsoft Graph API / Azure.', category: 'GESTOR DOCUMENTAL' },
+        { id: 'manage_doc_carpetas', name: 'Administrar Carpetas y Documentos', description: 'Permite crear carpetas, subir archivos y gestionar la estructura en OneDrive.', category: 'GESTOR DOCUMENTAL' },
+        { id: 'manage_doc_privilegios', name: 'Privilegios de Acceso Documental', description: 'Permite otorgar y revocar permisos de visualización, descarga, subida y administración por carpeta.', category: 'GESTOR DOCUMENTAL' },
     ]
  
     return (

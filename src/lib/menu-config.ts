@@ -47,6 +47,12 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
         ]
     },
     {
+        name: 'Gestor Documental',
+        icon: '🗂️',
+        href: '/dashboard/documentos',
+        requiredPermission: 'view_documentos'
+    },
+    {
         name: 'Áreas',
         icon: '🏢',
         requiredPermission: 'view_areas',
@@ -207,8 +213,17 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
     {
         name: 'Mantenedor',
         icon: '⚙️',
-        requiredPermission: ['view_colegios', 'view_productos', 'view_pmpa', 'view_consumo_gas', 'view_preparaciones', 'view_minutas', 'view_raciones', 'view_codigo_causa', 'manage_sucursales', 'manage_areas', 'manage_vehiculos', 'manage_zonales', 'manage_jefe_operacion', 'manage_supervisor', 'manage_manipuladoras_masiva', 'manage_colegios_matriz', 'manage_nueva_matriz', 'manage_actas_supervision'],
+        requiredPermission: ['view_colegios', 'view_productos', 'view_pmpa', 'view_consumo_gas', 'view_preparaciones', 'view_minutas', 'view_raciones', 'view_codigo_causa', 'manage_sucursales', 'manage_areas', 'manage_vehiculos', 'manage_zonales', 'manage_jefe_operacion', 'manage_supervisor', 'manage_manipuladoras_masiva', 'manage_colegios_matriz', 'manage_nueva_matriz', 'manage_actas_supervision', 'manage_doc_configuracion', 'manage_doc_carpetas', 'manage_doc_privilegios'],
         subItems: [
+            {
+                name: 'Gestor Documental',
+                requiredPermission: ['manage_doc_configuracion', 'manage_doc_carpetas', 'manage_doc_privilegios'],
+                subItems: [
+                    { name: 'Configuración', href: '/dashboard/mantenedor/gestor-documental/configuracion', requiredPermission: 'manage_doc_configuracion' },
+                    { name: 'Carpetas y Documentos', href: '/dashboard/mantenedor/gestor-documental/carpetas', requiredPermission: 'manage_doc_carpetas' },
+                    { name: 'Privilegios de Acceso', href: '/dashboard/mantenedor/gestor-documental/privilegios', requiredPermission: 'manage_doc_privilegios' }
+                ]
+            },
             {
                 name: 'Actas de Supervisión',
                 requiredPermission: 'manage_actas_supervision',

@@ -1,0 +1,184 @@
+import { NextRequest, NextResponse } from 'next/server'
+import { getSession } from '@/lib/session'
+import { rawPrisma } from '@/lib/prisma'
+import { isGlobalDocAdmin, normalizeUserPermissions } from '@/lib/doc-permissions'
+import { logAuditAction } from '@/lib/audit'
+import { PrivilegioUI, NivelPermiso, TipoPrivilegio } from '@/types/documentos'
+
+export async function GET(request: NextRequest) {
+    try {
+        const session = await getSession()
+        if (!session?.user) {
+            return NextResponse.json({ message: 'No autenticado' }, { status: 401 })
+        }
+
+        const permissions = normalizeUserPermissions(session.user.role?.permissions)
+        const canManage = isGlobalDocAdmin(session.user) || permissions.includes('manage_doc_privilegios')
+
+        if (!canManage) {
+            return NextResponse.json({ message: 'Acceso no autorizado' }, { status: 403 })
+        }
+
+        const { searchParams } = new URL(request.url)
+        const carpetaId = searchParams.get('carpetaId')
+
+        const where: any = {}
+        if (carpetaId) {
+            where.carpetaId = carpetaId
+        }
+
+        const [privilegios, roles, users] = await Promise.all([
+            rawPrisma.privilegioDocumental.findMany({
+                where,
+                include: {
+                    carpeta: {
+                        select: { nombre: true }
+                    }
+                },
+                orderBy: { creadoEn: 'desc' }
+            }),
+            rawPrisma.role.findMany({
+                select: { id: true, name: true }
+            }),
+            rawPrisma.user.findMany({
+                where: { isDeleted: false },
+                select: { id: true, name: true, username: true }
+            })
+        ])
+
+        const roleMap = new Map(roles.map(r => [r.id, r.name]))
+        const userMap = new Map(users.map(u => [u.id, u.name ? `${u.name} (@${u.username})` : `@${u.username}`]))
+
+        const uiPrivilegios: PrivilegioUI[] = privilegios.map(p => {
+            const referenciaNombre = p.tipo === 'rol'
+                ? (roleMap.get(p.referenciaId) || `Rol #${p.referenciaId}`)
+                : (userMap.get(p.referenciaId) || `Usuario #${p.referenciaId}`)
+
+            return {
+                id: p.id,
+                carpetaId: p.carpetaId,
+                carpetaNombre: p.carpeta?.nombre || 'Carpeta',
+                tipo: p.tipo as TipoPrivilegio,
+                referenciaId: p.referenciaId,
+                referenciaNombre,
+                permiso: p.permiso as NivelPermiso,
+                creadoEn: p.creadoEn.toISOString()
+            }
+        })
+
+        return NextResponse.json({
+            privilegios: uiPrivilegios,
+            roles: roles.map(r => ({ id: r.id, name: r.name })),
+            usuarios: users.map(u => ({ id: u.id, name: u.name || u.username, username: u.username }))
+        })
+    } catch (error: any) {
+        console.error('Error al obtener privilegios:', error?.message)
+        return NextResponse.json({ message: 'Error interno al consultar privilegios' }, { status: 500 })
+    }
+}
+
+export async function POST(request: NextRequest) {
+    try {
+        const session = await getSession()
+        if (!session?.user) {
+            return NextResponse.json({ message: 'No autenticado' }, { status: 401 })
+        }
+
+        const permissions = normalizeUserPermissions(session.user.role?.permissions)
+        const canManage = isGlobalDocAdmin(session.user) || permissions.includes('manage_doc_privilegios')
+
+        if (!canManage) {
+            return NextResponse.json({ message: 'Acceso no autorizado' }, { status: 403 })
+        }
+
+        const body = await request.json()
+        const { carpetaId, tipo, referenciaId, permiso } = body
+
+        if (!carpetaId || !tipo || !referenciaId || !permiso) {
+            return NextResponse.json({ message: 'Todos los campos son requeridos' }, { status: 400 })
+        }
+
+        // Crear o actualizar privilegio
+        const priv = await rawPrisma.privilegioDocumental.upsert({
+            where: {
+                carpetaId_tipo_referenciaId_permiso: {
+                    carpetaId,
+                    tipo,
+                    referenciaId,
+                    permiso
+                }
+            },
+            create: {
+                carpetaId,
+                tipo,
+                referenciaId,
+                permiso
+            },
+            update: {
+                permiso
+            }
+        })
+
+        // Auditoría
+        await logAuditAction({
+            username: session.user.username,
+            userId: session.user.id,
+            action: 'ASIGNAR_PRIVILEGIO_DOCUMENTAL',
+            modulo: 'GESTOR_DOCUMENTAL',
+            detalle: `Asignó permiso "${permiso}" de tipo "${tipo}" (Ref: ${referenciaId}) en la carpeta ID ${carpetaId}`
+        })
+
+        return NextResponse.json({ success: true, privilegio: priv })
+    } catch (error: any) {
+        console.error('Error al asignar privilegio:', error?.message)
+        return NextResponse.json({ message: error?.message || 'Error al asignar privilegio' }, { status: 500 })
+    }
+}
+
+export async function DELETE(request: NextRequest) {
+    try {
+        const session = await getSession()
+        if (!session?.user) {
+            return NextResponse.json({ message: 'No autenticado' }, { status: 401 })
+        }
+
+        const permissions = normalizeUserPermissions(session.user.role?.permissions)
+        const canManage = isGlobalDocAdmin(session.user) || permissions.includes('manage_doc_privilegios')
+
+        if (!canManage) {
+            return NextResponse.json({ message: 'Acceso no autorizado' }, { status: 403 })
+        }
+
+        const { searchParams } = new URL(request.url)
+        const id = searchParams.get('id')
+
+        if (!id) {
+            return NextResponse.json({ message: 'ID del privilegio requerido' }, { status: 400 })
+        }
+
+        const priv = await rawPrisma.privilegioDocumental.findUnique({
+            where: { id }
+        })
+
+        if (!priv) {
+            return NextResponse.json({ message: 'Privilegio no encontrado' }, { status: 404 })
+        }
+
+        await rawPrisma.privilegioDocumental.delete({
+            where: { id }
+        })
+
+        await logAuditAction({
+            username: session.user.username,
+            userId: session.user.id,
+            action: 'REVOCAR_PRIVILEGIO_DOCUMENTAL',
+            modulo: 'GESTOR_DOCUMENTAL',
+            detalle: `Revocó permiso "${priv.permiso}" de tipo "${priv.tipo}" en la carpeta ID ${priv.carpetaId}`
+        })
+
+        return NextResponse.json({ success: true, message: 'Privilegio revocado exitosamente' })
+    } catch (error: any) {
+        console.error('Error al revocar privilegio:', error?.message)
+        return NextResponse.json({ message: error?.message || 'Error al revocar privilegio' }, { status: 500 })
+    }
+}
