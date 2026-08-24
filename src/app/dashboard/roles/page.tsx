@@ -143,6 +143,7 @@ export default async function RolesPage() {
  
         { id: 'view_anexos', name: 'Ver Anexos', description: 'Acceso al directorio telefónico de la empresa.', category: 'AYUDA' },
         { id: 'manage_anexos', name: 'Gestionar Anexos', description: 'Acceso a crear, editar y subir de forma masiva los anexos.', category: 'AYUDA' },
+        { id: 'view_conversacion', name: 'Conversación y Colaboración', description: 'Acceso a mensajería cifrada, gestión de tareas estilo Trello, citas/calendario y proyectos colaborativos.', category: 'AYUDA' },
     ]
  
     return (

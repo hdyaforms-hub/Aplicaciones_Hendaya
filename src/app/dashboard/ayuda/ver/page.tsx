@@ -23,14 +23,7 @@ export default async function VerAnexosPage({
     }).then(rows => rows.map(r => r.sucursal))
 
     return (
-        <div className="space-y-6 max-w-5xl mx-auto">
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-                    <span>📖</span> Ver Anexos
-                </h2>
-                <p className="text-gray-500 mt-1">Busca información de contacto y anexos rápidamente</p>
-            </div>
-
+        <div className="space-y-6 max-w-7xl mx-auto pb-12">
             <VerAnexosClient 
                 initialAnexos={JSON.parse(JSON.stringify(anexos))} 
                 sucursales={sucursales}

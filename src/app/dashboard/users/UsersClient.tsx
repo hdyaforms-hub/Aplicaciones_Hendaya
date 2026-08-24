@@ -11,6 +11,7 @@ interface UserWithRelations {
     name: string | null
     roleId: string
     isActive: boolean
+    canReceiveCollab?: boolean
     isDeleted: boolean
     createdAt: Date | string
     role: {
@@ -248,15 +249,26 @@ export default function UsersClient({ initialUsers, roles, sucursales, areas }: 
                                                 </td>
                                                 <td className="px-6 py-4 font-medium text-slate-800">{u.name || '-'}</td>
                                                 <td className="px-6 py-4">
-                                                    {u.isActive ? (
-                                                        <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
-                                                            Vigente
-                                                        </span>
-                                                    ) : (
-                                                        <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold bg-rose-100 text-rose-800 border border-rose-200">
-                                                            No Vigente
-                                                        </span>
-                                                    )}
+                                                    <div className="flex flex-col gap-1 items-start">
+                                                        {u.isActive ? (
+                                                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
+                                                                Vigente
+                                                            </span>
+                                                        ) : (
+                                                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-rose-100 text-rose-800 border border-rose-200">
+                                                                No Vigente
+                                                            </span>
+                                                        )}
+                                                        {u.canReceiveCollab ? (
+                                                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold bg-cyan-50 text-cyan-700 border border-cyan-200" title="Habilitado para recibir mensajes y tareas">
+                                                                <span>💬</span> Conversación Activo
+                                                            </span>
+                                                        ) : (
+                                                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-medium bg-slate-100 text-slate-400 border border-slate-200" title="Deshabilitado en módulo Conversación">
+                                                                <span>💬</span> Conversación Inactivo
+                                                            </span>
+                                                        )}
+                                                    </div>
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     <div className="max-w-[200px] truncate text-gray-500" title={u.sucursales.map((s: any) => s.nombre).join(', ')}>

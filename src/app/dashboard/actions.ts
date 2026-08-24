@@ -19,6 +19,7 @@ export async function createUser(formData: FormData) {
     const password = formData.get('password') as string
     const roleId = formData.get('roleId') as string
     const isActive = formData.get('isActive') !== 'false'
+    const canReceiveCollab = formData.get('canReceiveCollab') === 'true' // Por defecto false
     const sucursales = formData.getAll('sucursales') as string[]
     const areas = formData.getAll('areas') as string[]
 
@@ -45,6 +46,7 @@ export async function createUser(formData: FormData) {
                 passwordHash,
                 roleId,
                 isActive,
+                canReceiveCollab,
                 sucursales: {
                     connect: sucursales.map(id => ({ id }))
                 },
@@ -75,6 +77,7 @@ export async function updateUser(formData: FormData) {
     const password = formData.get('password') as string
     const roleId = formData.get('roleId') as string
     const isActive = formData.get('isActive') !== 'false'
+    const canReceiveCollab = formData.get('canReceiveCollab') === 'true'
     const sucursales = formData.getAll('sucursales') as string[]
     const areas = formData.getAll('areas') as string[]
     const resetPassword = formData.get('resetPassword') === 'on'
@@ -94,6 +97,7 @@ export async function updateUser(formData: FormData) {
             email: email || null,
             roleId,
             isActive,
+            canReceiveCollab,
             sucursales: {
                 set: [], // Clear existing
                 connect: sucursales.map(sId => ({ id: sId }))

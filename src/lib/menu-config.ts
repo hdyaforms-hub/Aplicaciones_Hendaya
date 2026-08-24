@@ -291,8 +291,9 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
     {
         name: 'Ayuda',
         icon: '❓',
-        requiredPermission: ['manage_anexos', 'view_anexos'],
+        requiredPermission: ['manage_anexos', 'view_anexos', 'view_conversacion'],
         subItems: [
+            { name: 'Conversación', href: '/dashboard/ayuda/conversacion', requiredPermission: 'view_conversacion' },
             { name: 'Agregar Anexos', href: '/dashboard/ayuda/agregar', requiredPermission: 'manage_anexos' },
             { name: 'Ver Anexos', href: '/dashboard/ayuda/ver', requiredPermission: 'view_anexos' }
         ]

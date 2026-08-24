@@ -28,6 +28,7 @@ model User {
   isActive           Boolean                   @default(true)
   isDeleted          Boolean                   @default(false)
   mustChangePassword Boolean                   @default(false)
+  canReceiveCollab   Boolean                   @default(false) // Habilitar recepción de información/conversación
   rbds               Int[]                     @default([])
   createdAt          DateTime                  @default(now())
   updatedAt          DateTime                  @updatedAt
@@ -1331,4 +1332,314 @@ model VTVerificacionSemanal {
 
   @@unique([idRegistro, mes, semana])
   @@map("vt_verificacion_semanal")
+}
+
+// ==========================================
+// MÓDULO COLABORACIÓN Y CONVERSACIÓN (AYUDA)
+// ==========================================
+
+model CollabConversation {
+  id            String    @id @default(uuid())
+  type          String    @default("direct") // "direct" | "group" | "project"
+  title         String?
+  projectId     String?
+  participants  String    @db.Text // JSON array: ["username1", "username2"]
+  lastMessage   String?   @db.Text // Texto/payload cifrado
+  lastMessageAt DateTime?
+  isEncrypted   Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  messages CollabMessage[]
+
+  @@map("collab_conversations")
+}
+
+model CollabMessage {
+  id              String   @id @default(uuid())
+  conversationId  String
+  senderUsername  String
+  senderName      String?
+  content         String   @db.Text // Cifrado E2E en cliente/servidor
+  isEncrypted     Boolean  @default(true)
+  isDecision      Boolean  @default(false) // Marcado como decisión formal
+  decisionSummary String?  @db.Text
+  attachments     String?  @db.Text // JSON array de adjuntos
+  readBy          String?  @db.Text // JSON array de usernames que lo leyeron
+  createdAt       DateTime @default(now())
+
+  conversation CollabConversation      @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  reactions    CollabMessageReaction[]
+  polls        CollabPoll[]
+
+  @@map("collab_messages")
+}
+
+model CollabProject {
+  id          String    @id @default(uuid())
+  title       String
+  description String?   @db.Text
+  status      String    @default("EN_PROGRESO") // "PLANIFICADO" | "EN_PROGRESO" | "PAUSADO" | "COMPLETADO"
+  priority    String    @default("MEDIA") // "BAJA" | "MEDIA" | "ALTA" | "URGENTE"
+  startDate   DateTime?
+  endDate     DateTime?
+  createdBy   String
+  members     String    @db.Text // JSON array: ["username1", "username2"]
+  color       String?   @default("cyan")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  tasks        CollabTask[]
+  appointments CollabAppointment[]
+  activities   CollabProjectActivityLog[]
+  whiteboards  CollabWhiteboard[]
+
+  @@map("collab_projects")
+}
+
+model CollabTask {
+  id              String    @id @default(uuid())
+  projectId       String?
+  sourceMessageId String?
+  title           String
+  description     String?   @db.Text
+  status          String    @default("PENDIENTE") // "PENDIENTE" | "EN_PROGRESO" | "REVISION" | "COMPLETADA"
+  priority        String    @default("MEDIA") // "BAJA" | "MEDIA" | "ALTA" | "URGENTE"
+  columnOrder     Int       @default(0)
+  dueDate         DateTime?
+  assignedTo      String? // username
+  tags            String? // JSON array: ["Frontend", "Urgente"]
+  checklists      String?   @db.Text // JSON array de sub-tareas: [{id, text, done}]
+  attachments     String?   @db.Text // JSON array
+  createdBy       String
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  project CollabProject? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+
+  @@map("collab_tasks")
+}
+
+model CollabAppointment {
+  id           String   @id @default(uuid())
+  projectId    String?
+  sourceNoteId String?
+  title        String
+  description  String?  @db.Text
+  startDate    DateTime
+  endDate      DateTime
+  location     String?
+  meetLink     String?
+  participants String   @db.Text // JSON array de usernames
+  status       String   @default("PROGRAMADA") // "PROGRAMADA" | "CONFIRMADA" | "REALIZADA" | "CANCELADA"
+  createdBy    String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  project CollabProject? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+
+  @@map("collab_appointments")
+}
+
+model CollabKanbanColumn {
+  id        String   @id @default(uuid())
+  name      String
+  statusKey String
+  color     String?  @default("slate") // slate, cyan, indigo, amber, emerald, rose, purple
+  order     Int      @default(0)
+  projectId String?
+  createdBy String
+  createdAt DateTime @default(now())
+
+  @@map("collab_kanban_columns")
+}
+
+model CollabNote {
+  id        String   @id @default(uuid())
+  title     String?
+  content   String   @db.Text
+  color     String   @default("yellow") // yellow, pink, cyan, green, purple, orange
+  isPinned  Boolean  @default(false)
+  rotation  Int      @default(0) // Grados de rotación visual (-3 a 3)
+  tags      String? // JSON array
+  isPublic  Boolean  @default(false)
+  createdBy String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("collab_notes")
+}
+
+model CollabGanttChart {
+  id          String   @id @default(uuid())
+  title       String
+  description String?  @db.Text
+  projectId   String?
+  createdBy   String
+  isShared    Boolean  @default(true) // Compartido en modo lectura
+  sharedWith  String?  @db.Text // JSON array de usernames o "ALL"
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  items CollabGanttItem[]
+
+  @@map("collab_gantt_charts")
+}
+
+model CollabGanttItem {
+  id           String   @id @default(uuid())
+  ganttId      String
+  taskId       String? // Enlace a CollabTask para sync bidireccional
+  title        String
+  startDate    DateTime
+  endDate      DateTime
+  progress     Int      @default(0) // 0 - 100
+  color        String?  @default("cyan")
+  assignedTo   String?
+  dependencies String? // JSON array de item IDs (Finish-to-Start)
+  order        Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  gantt CollabGanttChart @relation(fields: [ganttId], references: [id], onDelete: Cascade)
+
+  @@map("collab_gantt_items")
+}
+
+model CollabProjectActivityLog {
+  id           String   @id @default(uuid())
+  projectId    String
+  type         String // "CHAT" | "TASK" | "GANTT" | "DECISION" | "WHITEBOARD" | "NOTE"
+  title        String
+  description  String?  @db.Text
+  metadata     String?  @db.Text // JSON metadata extra
+  username     String
+  userFullName String?
+  createdAt    DateTime @default(now())
+
+  project CollabProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId, createdAt])
+  @@index([type])
+  @@map("collab_project_activity_logs")
+}
+
+model CollabMention {
+  id                String    @id @default(uuid())
+  sourceType        String // "chat" | "task" | "note" | "kudo" | "decision"
+  sourceId          String
+  projectId         String?
+  mentionedUsername String
+  authorUsername    String
+  authorName        String?
+  previewText       String    @db.Text
+  readAt            DateTime?
+  createdAt         DateTime  @default(now())
+
+  @@index([mentionedUsername, readAt])
+  @@index([createdAt])
+  @@map("collab_mentions")
+}
+
+model CollabWhiteboard {
+  id        String   @id @default(uuid())
+  projectId String
+  title     String   @default("Pizarra Principal")
+  createdBy String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  project  CollabProject             @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  elements CollabWhiteboardElement[]
+
+  @@map("collab_whiteboards")
+}
+
+model CollabWhiteboardElement {
+  id        String   @id @default(uuid())
+  boardId   String
+  type      String // "rect" | "circle" | "note" | "text" | "arrow" | "draw"
+  data      String   @db.Text // JSON con coordenadas, dimensiones, contenido, colores, etc.
+  updatedBy String
+  updatedAt DateTime @updatedAt
+
+  board CollabWhiteboard @relation(fields: [boardId], references: [id], onDelete: Cascade)
+
+  @@map("collab_whiteboard_elements")
+}
+
+model CollabPresence {
+  id       String   @id @default(uuid())
+  room     String // "project:id" | "task:id" | "note:id" | "gantt:id" | "whiteboard:id"
+  username String
+  fullName String?
+  color    String   @default("#06b6d4")
+  lastSeen DateTime @default(now())
+
+  @@unique([room, username])
+  @@index([room, lastSeen])
+  @@map("collab_presence")
+}
+
+model CollabMessageReaction {
+  id        String   @id @default(uuid())
+  messageId String
+  username  String
+  fullName  String?
+  emoji     String // "👍", "❤️", "🚀", "🎉", "👀", "✅"
+  createdAt DateTime @default(now())
+
+  message CollabMessage @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+  @@unique([messageId, username, emoji])
+  @@map("collab_message_reactions")
+}
+
+model CollabPoll {
+  id             String    @id @default(uuid())
+  conversationId String
+  messageId      String?
+  question       String
+  options        String    @db.Text // JSON array: [{"id": 0, "text": "Opción A"}, ...]
+  allowMultiple  Boolean   @default(false)
+  isAnonymous    Boolean   @default(false)
+  expiresAt      DateTime?
+  createdBy      String
+  createdAt      DateTime  @default(now())
+
+  message CollabMessage?   @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  votes   CollabPollVote[]
+
+  @@map("collab_polls")
+}
+
+model CollabPollVote {
+  id          String   @id @default(uuid())
+  pollId      String
+  username    String
+  fullName    String?
+  optionIndex Int
+  createdAt   DateTime @default(now())
+
+  poll CollabPoll @relation(fields: [pollId], references: [id], onDelete: Cascade)
+
+  @@unique([pollId, username, optionIndex])
+  @@map("collab_poll_votes")
+}
+
+model CollabKudo {
+  id           String   @id @default(uuid())
+  fromUsername String
+  fromName     String
+  toUsername   String
+  toName       String
+  projectId    String?
+  message      String   @db.Text
+  category     String   @default("EQUIPO") // "EQUIPO" | "INNOVACION" | "CALIDAD" | "LIDERAZGO" | "AGILIDAD"
+  badgeIcon    String   @default("🏆")
+  createdAt    DateTime @default(now())
+
+  @@index([toUsername, createdAt])
+  @@index([fromUsername, createdAt])
+  @@map("collab_kudos")
 }

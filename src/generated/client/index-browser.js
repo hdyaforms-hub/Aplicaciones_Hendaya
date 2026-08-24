@@ -141,6 +141,7 @@ exports.Prisma.UserScalarFieldEnum = {
   isActive: 'isActive',
   isDeleted: 'isDeleted',
   mustChangePassword: 'mustChangePassword',
+  canReceiveCollab: 'canReceiveCollab',
   rbds: 'rbds',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -1234,6 +1235,263 @@ exports.Prisma.VTVerificacionSemanalScalarFieldEnum = {
   firmaJefeZonal: 'firmaJefeZonal'
 };
 
+exports.Prisma.CollabConversationScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  title: 'title',
+  projectId: 'projectId',
+  participants: 'participants',
+  lastMessage: 'lastMessage',
+  lastMessageAt: 'lastMessageAt',
+  isEncrypted: 'isEncrypted',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CollabMessageScalarFieldEnum = {
+  id: 'id',
+  conversationId: 'conversationId',
+  senderUsername: 'senderUsername',
+  senderName: 'senderName',
+  content: 'content',
+  isEncrypted: 'isEncrypted',
+  isDecision: 'isDecision',
+  decisionSummary: 'decisionSummary',
+  attachments: 'attachments',
+  readBy: 'readBy',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.CollabProjectScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  status: 'status',
+  priority: 'priority',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  createdBy: 'createdBy',
+  members: 'members',
+  color: 'color',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CollabTaskScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  sourceMessageId: 'sourceMessageId',
+  title: 'title',
+  description: 'description',
+  status: 'status',
+  priority: 'priority',
+  columnOrder: 'columnOrder',
+  dueDate: 'dueDate',
+  assignedTo: 'assignedTo',
+  tags: 'tags',
+  checklists: 'checklists',
+  attachments: 'attachments',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CollabAppointmentScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  sourceNoteId: 'sourceNoteId',
+  title: 'title',
+  description: 'description',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  location: 'location',
+  meetLink: 'meetLink',
+  participants: 'participants',
+  status: 'status',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CollabKanbanColumnScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  statusKey: 'statusKey',
+  color: 'color',
+  order: 'order',
+  projectId: 'projectId',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.CollabNoteScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  content: 'content',
+  color: 'color',
+  isPinned: 'isPinned',
+  rotation: 'rotation',
+  tags: 'tags',
+  isPublic: 'isPublic',
+  sharedWith: 'sharedWith',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CollabGanttChartScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  projectId: 'projectId',
+  createdBy: 'createdBy',
+  isShared: 'isShared',
+  sharedWith: 'sharedWith',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CollabGanttItemScalarFieldEnum = {
+  id: 'id',
+  ganttId: 'ganttId',
+  taskId: 'taskId',
+  parentId: 'parentId',
+  isMilestone: 'isMilestone',
+  title: 'title',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  progress: 'progress',
+  color: 'color',
+  assignedTo: 'assignedTo',
+  collaborators: 'collaborators',
+  dependencies: 'dependencies',
+  earlyStart: 'earlyStart',
+  earlyFinish: 'earlyFinish',
+  lateStart: 'lateStart',
+  lateFinish: 'lateFinish',
+  totalFloat: 'totalFloat',
+  isCritical: 'isCritical',
+  order: 'order',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CollabGanttBaselineScalarFieldEnum = {
+  id: 'id',
+  ganttId: 'ganttId',
+  name: 'name',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.CollabGanttBaselineItemScalarFieldEnum = {
+  id: 'id',
+  baselineId: 'baselineId',
+  itemId: 'itemId',
+  title: 'title',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  durationDays: 'durationDays',
+  progress: 'progress',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.CollabProjectActivityLogScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  type: 'type',
+  title: 'title',
+  description: 'description',
+  metadata: 'metadata',
+  username: 'username',
+  userFullName: 'userFullName',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.CollabMentionScalarFieldEnum = {
+  id: 'id',
+  sourceType: 'sourceType',
+  sourceId: 'sourceId',
+  projectId: 'projectId',
+  mentionedUsername: 'mentionedUsername',
+  authorUsername: 'authorUsername',
+  authorName: 'authorName',
+  previewText: 'previewText',
+  readAt: 'readAt',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.CollabWhiteboardScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  title: 'title',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CollabWhiteboardElementScalarFieldEnum = {
+  id: 'id',
+  boardId: 'boardId',
+  type: 'type',
+  data: 'data',
+  updatedBy: 'updatedBy',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CollabPresenceScalarFieldEnum = {
+  id: 'id',
+  room: 'room',
+  username: 'username',
+  fullName: 'fullName',
+  color: 'color',
+  lastSeen: 'lastSeen'
+};
+
+exports.Prisma.CollabMessageReactionScalarFieldEnum = {
+  id: 'id',
+  messageId: 'messageId',
+  username: 'username',
+  fullName: 'fullName',
+  emoji: 'emoji',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.CollabPollScalarFieldEnum = {
+  id: 'id',
+  conversationId: 'conversationId',
+  messageId: 'messageId',
+  question: 'question',
+  options: 'options',
+  allowMultiple: 'allowMultiple',
+  isAnonymous: 'isAnonymous',
+  expiresAt: 'expiresAt',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.CollabPollVoteScalarFieldEnum = {
+  id: 'id',
+  pollId: 'pollId',
+  username: 'username',
+  fullName: 'fullName',
+  optionIndex: 'optionIndex',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.CollabKudoScalarFieldEnum = {
+  id: 'id',
+  fromUsername: 'fromUsername',
+  fromName: 'fromName',
+  toUsername: 'toUsername',
+  toName: 'toName',
+  projectId: 'projectId',
+  message: 'message',
+  category: 'category',
+  badgeIcon: 'badgeIcon',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1335,7 +1593,27 @@ exports.Prisma.ModelName = {
   VTRegistroDetalle: 'VTRegistroDetalle',
   VTProductoCatalogo: 'VTProductoCatalogo',
   VTVerificacionDiaria: 'VTVerificacionDiaria',
-  VTVerificacionSemanal: 'VTVerificacionSemanal'
+  VTVerificacionSemanal: 'VTVerificacionSemanal',
+  CollabConversation: 'CollabConversation',
+  CollabMessage: 'CollabMessage',
+  CollabProject: 'CollabProject',
+  CollabTask: 'CollabTask',
+  CollabAppointment: 'CollabAppointment',
+  CollabKanbanColumn: 'CollabKanbanColumn',
+  CollabNote: 'CollabNote',
+  CollabGanttChart: 'CollabGanttChart',
+  CollabGanttItem: 'CollabGanttItem',
+  CollabGanttBaseline: 'CollabGanttBaseline',
+  CollabGanttBaselineItem: 'CollabGanttBaselineItem',
+  CollabProjectActivityLog: 'CollabProjectActivityLog',
+  CollabMention: 'CollabMention',
+  CollabWhiteboard: 'CollabWhiteboard',
+  CollabWhiteboardElement: 'CollabWhiteboardElement',
+  CollabPresence: 'CollabPresence',
+  CollabMessageReaction: 'CollabMessageReaction',
+  CollabPoll: 'CollabPoll',
+  CollabPollVote: 'CollabPollVote',
+  CollabKudo: 'CollabKudo'
 };
 
 /**
