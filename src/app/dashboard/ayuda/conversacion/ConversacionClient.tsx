@@ -36,6 +36,7 @@ import MentionsNotificationCenter from './MentionsNotificationCenter'
 import MentionInput from './MentionInput'
 import StackedPresenceAvatars from './StackedPresenceAvatars'
 import PollCard from './PollCard'
+import RecipientCombinator from './RecipientCombinator'
 
 interface UserItem {
     id: string
@@ -2053,128 +2054,97 @@ export default function ConversacionClient({
             {/* Modal: Nuevo Chat Directo / Grupal */}
             {showNewChatModal && (
                 <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-                    <div className="bg-white rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-                        <div className="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+                    <div className="bg-white rounded-3xl w-full max-w-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 flex flex-col max-h-[90vh]">
+                        {/* Header Fijo */}
+                        <div className="p-5 sm:p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/80 shrink-0">
                             <div>
-                                <h3 className="text-lg font-black text-slate-900">Iniciar Conversación</h3>
-                                <p className="text-xs text-slate-500">Selecciona un colega o crea un grupo de trabajo.</p>
+                                <h3 className="text-lg font-black text-slate-900">Iniciar Conversación o Crear Grupo</h3>
+                                <p className="text-xs text-slate-500">Segmenta por sucursal y rol para armar grupos específicos o inicia un chat individual.</p>
                             </div>
-                            <button onClick={() => setShowNewChatModal(false)} className="text-slate-400 hover:text-slate-600 text-lg">✕</button>
+                            <button
+                                onClick={() => setShowNewChatModal(false)}
+                                className="w-8 h-8 flex items-center justify-center rounded-full bg-slate-200 hover:bg-slate-300 text-slate-600 transition-colors cursor-pointer"
+                            >
+                                ✕
+                            </button>
                         </div>
 
-                        <div className="p-6 space-y-4 max-h-[450px] overflow-y-auto">
-                            {/* Opción Crear Grupo */}
-                            <div className="p-4 bg-cyan-50/50 rounded-2xl border border-cyan-100 space-y-3">
-                                <p className="text-xs font-black text-cyan-900 uppercase">Crear Chat Grupal</p>
+                        {/* Contenido con Scroll */}
+                        <div className="p-5 sm:p-6 space-y-5 overflow-y-auto flex-1">
+                            {/* Segmentador Avanzado de Destinatarios */}
+                            <RecipientCombinator
+                                users={users}
+                                currentUsername={initialUser.username}
+                                selectedUsernames={selectedGroupMembers}
+                                onSelectionChange={(newSelected, suggestedTitle) => {
+                                    setSelectedGroupMembers(newSelected)
+                                    if (suggestedTitle && (!groupTitle || groupTitle.startsWith('Grupo') || groupTitle.startsWith('Equipo'))) {
+                                        setGroupTitle(suggestedTitle)
+                                    }
+                                }}
+                                title="Segmentador de Audiencia (Sucursal + Rol)"
+                                subtitle="Selecciona una o más sucursales y uno o más roles para armar grupos de trabajo al instante (ej: Supervisores de CD Copiapó)."
+                            />
+
+                            {/* Sección Nombre del Grupo y Botón Crear */}
+                            <div className="p-4 bg-gradient-to-br from-cyan-50 to-sky-50 rounded-2xl border border-cyan-200 space-y-3">
+                                <div className="flex justify-between items-center">
+                                    <label className="text-xs font-black text-cyan-950 uppercase tracking-wider">
+                                        Nombre del Grupo de Trabajo:
+                                    </label>
+                                    <span className="text-[11px] font-bold text-cyan-800">
+                                        {selectedGroupMembers.length} participantes seleccionados
+                                    </span>
+                                </div>
                                 <input
                                     type="text"
-                                    placeholder="Nombre del grupo (ej: Equipo Supervisores Zonal)"
+                                    placeholder="Ej: Supervisores - CD Copiapó y CD Metro"
                                     value={groupTitle}
                                     onChange={e => setGroupTitle(e.target.value)}
-                                    className="w-full px-3 py-2 bg-white rounded-xl border border-cyan-200 text-xs outline-none"
+                                    className="w-full px-3.5 py-2.5 bg-white rounded-xl border border-cyan-200 text-xs font-medium text-slate-800 outline-none focus:ring-2 focus:ring-cyan-500 shadow-2xs"
                                 />
 
-                                {/* Selector Rápido de Miembros por Rol */}
-                                <div className="space-y-1.5 pt-1">
-                                    <span className="text-[10px] font-black text-cyan-900 uppercase tracking-wider block">Añadir miembros por Rol:</span>
-                                    <div className="flex flex-wrap gap-1.5">
-                                        {Array.from(new Set(users.map(u => u.role).filter(Boolean))).map(role => {
-                                            const roleUsers = users.filter(u => u.username !== initialUser.username && (u.role === role || u.role?.toLowerCase() === role.toLowerCase()))
-                                            if (roleUsers.length === 0) return null
-                                            const allSelected = roleUsers.every(u => selectedGroupMembers.includes(u.username))
+                                {selectedGroupMembers.length > 0 && (
+                                    <div className="flex flex-wrap gap-1 max-h-24 overflow-y-auto p-2 bg-white/70 rounded-xl border border-cyan-100">
+                                        {selectedGroupMembers.map(m => {
+                                            const memberObj = users.find(u => u.username === m)
                                             return (
-                                                <button
-                                                    key={role}
-                                                    type="button"
-                                                    onClick={() => {
-                                                        const usernames = roleUsers.map(u => u.username)
-                                                        if (allSelected) {
-                                                            setSelectedGroupMembers(prev => prev.filter(u => !usernames.includes(u)))
-                                                        } else {
-                                                            setSelectedGroupMembers(prev => Array.from(new Set([...prev, ...usernames])))
-                                                            if (!groupTitle.trim()) {
-                                                                setGroupTitle(`Grupo ${role}`)
-                                                            }
-                                                        }
-                                                    }}
-                                                    className={`px-2.5 py-1 rounded-xl text-[11px] font-bold border transition-all flex items-center gap-1 cursor-pointer ${
-                                                        allSelected
-                                                            ? 'bg-cyan-700 text-white border-cyan-700 shadow-xs'
-                                                            : 'bg-white text-cyan-800 border-cyan-200 hover:bg-cyan-100/70'
-                                                    }`}
-                                                >
-                                                    <span>{allSelected ? '✓' : '➕'}</span>
-                                                    <span className="capitalize">{role} ({roleUsers.length})</span>
-                                                </button>
+                                                <span key={m} className="px-2.5 py-1 bg-cyan-100 text-cyan-900 rounded-lg text-[10px] font-bold flex items-center gap-1.5 shadow-2xs">
+                                                    <span>👤</span>
+                                                    <span>{memberObj?.name || `@${m}`}</span>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setSelectedGroupMembers(prev => prev.filter(x => x !== m))}
+                                                        className="hover:text-rose-600 font-bold ml-1"
+                                                    >
+                                                        ✕
+                                                    </button>
+                                                </span>
                                             )
                                         })}
                                     </div>
-                                </div>
-
-                                {selectedGroupMembers.length > 0 && (
-                                    <div className="flex flex-wrap gap-1 pt-1">
-                                        {selectedGroupMembers.map(m => (
-                                            <span key={m} className="px-2 py-0.5 bg-cyan-200 text-cyan-800 rounded-lg text-[10px] font-bold flex items-center gap-1">
-                                                @{m}
-                                                <button onClick={() => setSelectedGroupMembers(prev => prev.filter(x => x !== m))}>✕</button>
-                                            </span>
-                                        ))}
-                                    </div>
                                 )}
+
                                 <button
+                                    type="button"
                                     onClick={handleCreateGroup}
                                     disabled={!groupTitle.trim() || selectedGroupMembers.length === 0 || creatingGroup}
-                                    className="w-full py-2 bg-cyan-600 hover:bg-cyan-700 disabled:opacity-50 text-white font-bold rounded-xl text-xs shadow-sm cursor-pointer"
+                                    className="w-full py-2.5 bg-gradient-to-r from-cyan-600 to-sky-600 hover:from-cyan-700 hover:to-sky-700 disabled:opacity-50 text-white font-bold rounded-xl text-xs shadow-md shadow-cyan-500/20 transition-all cursor-pointer"
                                 >
-                                    Crear Grupo ({selectedGroupMembers.length} miembros seleccionados)
+                                    {creatingGroup ? 'Creando grupo...' : `✨ Crear Grupo con ${selectedGroupMembers.length} Participantes`}
                                 </button>
                             </div>
+                        </div>
 
-                            {/* Lista de Usuarios Disponibles */}
-                            <p className="text-xs font-black text-slate-400 uppercase tracking-wider">O selecciona un usuario para chat 1 a 1:</p>
-                            <div className="space-y-2">
-                                {users.filter(u => u.username !== initialUser.username).map(user => {
-                                    const isSelectedForGroup = selectedGroupMembers.includes(user.username)
-                                    return (
-                                        <div key={user.id} className="flex items-center justify-between p-3 rounded-2xl bg-slate-50 hover:bg-slate-100 transition-colors">
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-8 h-8 rounded-xl bg-slate-800 text-white font-bold text-xs flex items-center justify-center">
-                                                    {user.name.charAt(0).toUpperCase()}
-                                                </div>
-                                                <div>
-                                                    <p className="text-xs font-bold text-slate-900">{user.name}</p>
-                                                    <p className="text-[10px] text-slate-400">@{user.username} • {user.role}</p>
-                                                </div>
-                                            </div>
-
-                                            <div className="flex items-center gap-2">
-                                                <button
-                                                    onClick={() => {
-                                                        if (isSelectedForGroup) {
-                                                            setSelectedGroupMembers(prev => prev.filter(x => x !== user.username))
-                                                        } else {
-                                                            setSelectedGroupMembers(prev => [...prev, user.username])
-                                                        }
-                                                    }}
-                                                    className={`px-2.5 py-1 rounded-lg text-xs font-bold border transition-colors ${
-                                                        isSelectedForGroup
-                                                            ? 'bg-cyan-600 text-white border-cyan-600'
-                                                            : 'bg-white text-slate-600 border-slate-200'
-                                                    }`}
-                                                >
-                                                    {isSelectedForGroup ? '✓ Agregado' : '+ Grupo'}
-                                                </button>
-                                                <button
-                                                    onClick={() => handleStartDirectChat(user.username)}
-                                                    className="px-3 py-1 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg text-xs font-bold"
-                                                >
-                                                    Chatear
-                                                </button>
-                                            </div>
-                                        </div>
-                                    )
-                                })}
-                            </div>
+                        {/* Footer Fijo */}
+                        <div className="p-4 border-t border-slate-100 bg-slate-50/80 flex justify-end gap-3 shrink-0">
+                            <button
+                                type="button"
+                                onClick={() => setShowNewChatModal(false)}
+                                className="px-5 py-2 rounded-xl text-slate-600 bg-slate-200 hover:bg-slate-300 font-bold text-xs transition-colors cursor-pointer"
+                            >
+                                Cerrar
+                            </button>
                         </div>
                     </div>
                 </div>

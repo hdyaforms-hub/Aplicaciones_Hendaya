@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import { createCollabNote, updateCollabNote, deleteCollabNote } from './actions'
+import RecipientCombinator, { CombinatorUser } from './RecipientCombinator'
 
 export interface NoteItem {
     id: string
@@ -19,11 +20,12 @@ export interface NoteItem {
     updatedAt: string
 }
 
-interface UserSummary {
+export interface UserSummary {
     id?: string
     username: string
     name: string
     role?: string
+    sucursales?: string[]
 }
 
 interface NotesViewProps {
@@ -56,7 +58,7 @@ export default function NotesView({ initialNotes, currentUsername, users = [], o
     const [content, setContent] = useState('')
     const [selectedColor, setSelectedColor] = useState('yellow')
     const [isPinned, setIsPinned] = useState(false)
-    const [privacyMode, setPrivacyMode] = useState<'private' | 'role' | 'specific' | 'public'>('private')
+    const [privacyMode, setPrivacyMode] = useState<'private' | 'segmented' | 'public'>('private')
     const [selectedSharedUsers, setSelectedSharedUsers] = useState<string[]>([])
     const [userSearchTerm, setUserSearchTerm] = useState('')
     const [tagInput, setTagInput] = useState('')
@@ -120,8 +122,7 @@ export default function NotesView({ initialNotes, currentUsername, users = [], o
             setPrivacyMode('public')
             setSelectedSharedUsers([])
         } else if (note.sharedWith && note.sharedWith.length > 0) {
-            const hasRoles = note.sharedWith.some(s => s.toUpperCase().startsWith('ROLE:'))
-            setPrivacyMode(hasRoles ? 'role' : 'specific')
+            setPrivacyMode('segmented')
             setSelectedSharedUsers(note.sharedWith)
         } else {
             setPrivacyMode('private')
@@ -148,26 +149,13 @@ export default function NotesView({ initialNotes, currentUsername, users = [], o
         setTags(tags.filter(t => t !== tagToRemove))
     }
 
-    const toggleUserShare = (username: string) => {
-        setSelectedSharedUsers(prev =>
-            prev.includes(username) ? prev.filter(u => u !== username) : [...prev, username]
-        )
-    }
-
-    const toggleRoleShare = (roleName: string) => {
-        const roleKey = `ROLE:${roleName}`
-        setSelectedSharedUsers(prev =>
-            prev.includes(roleKey) ? prev.filter(r => r !== roleKey) : [...prev, roleKey]
-        )
-    }
-
     const handleSave = async (e: React.FormEvent) => {
         e.preventDefault()
         if (!content.trim()) return
 
         setIsSaving(true)
         const isPublicVal = privacyMode === 'public'
-        const sharedWithVal = privacyMode === 'specific' ? selectedSharedUsers : []
+        const sharedWithVal = privacyMode === 'segmented' ? selectedSharedUsers : []
 
         if (editingNote) {
             const res = await updateCollabNote(editingNote.id, {
@@ -410,25 +398,12 @@ export default function NotesView({ initialNotes, currentUsername, users = [], o
                                                     🌐 Pública
                                                 </span>
                                             ) : note.sharedWith && note.sharedWith.length > 0 ? (
-                                                <div className="flex items-center gap-1 flex-wrap justify-end">
-                                                    {note.sharedWith.filter(s => s.toUpperCase().startsWith('ROLE:')).map(r => (
-                                                        <span
-                                                            key={r}
-                                                            className="text-[10px] font-black px-1.5 py-0.5 bg-indigo-100 text-indigo-900 rounded-md border border-indigo-300 flex-shrink-0"
-                                                            title={`Compartida con todos los usuarios con rol ${r.slice(5)}`}
-                                                        >
-                                                            🛡️ Rol: {r.slice(5)}
-                                                        </span>
-                                                    ))}
-                                                    {note.sharedWith.filter(s => !s.toUpperCase().startsWith('ROLE:')).length > 0 && (
-                                                        <span
-                                                            className="text-[10px] font-bold px-1.5 py-0.5 bg-purple-100 text-purple-900 rounded-md border border-purple-300 flex-shrink-0"
-                                                            title={`Compartida con: ${note.sharedWith.filter(s => !s.toUpperCase().startsWith('ROLE:')).map(u => '@' + u).join(', ')}`}
-                                                        >
-                                                            👥 {note.sharedWith.filter(s => !s.toUpperCase().startsWith('ROLE:')).length} {note.sharedWith.filter(s => !s.toUpperCase().startsWith('ROLE:')).length === 1 ? 'colega' : 'colegas'}
-                                                        </span>
-                                                    )}
-                                                </div>
+                                                <span
+                                                    className="text-[10px] font-black px-1.5 py-0.5 bg-indigo-100 text-indigo-900 rounded-md border border-indigo-300 flex-shrink-0"
+                                                    title={`Compartida con: ${note.sharedWith.map(u => u.startsWith('ROLE:') ? u.slice(5) : '@' + u).join(', ')}`}
+                                                >
+                                                    🎯 {note.sharedWith.length} {note.sharedWith.length === 1 ? 'destinatario' : 'destinatarios'}
+                                                </span>
                                             ) : (
                                                 <span className="text-[10px] font-bold px-1.5 py-0.5 bg-white/70 rounded-md text-slate-500 border border-slate-200 flex-shrink-0" title="Solo tú puedes verla">
                                                     🔒 Solo tú
@@ -516,325 +491,205 @@ export default function NotesView({ initialNotes, currentUsername, users = [], o
             {/* Modal: Crear / Editar Nota */}
             {isCreateOpen && (
                 <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-                    <div className="bg-white rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-                        <div className="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+                    <div className="bg-white rounded-3xl w-full max-w-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 flex flex-col max-h-[90vh]">
+                        {/* Cabecera Fija */}
+                        <div className="p-5 sm:p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/80 shrink-0">
                             <div>
                                 <h3 className="text-lg font-black text-slate-900">
                                     {editingNote ? 'Editar Nota Adhesiva' : 'Nueva Nota Post-it'}
                                 </h3>
-                                <p className="text-xs text-slate-500">Captura ideas, recordatorios y notas compartidas.</p>
+                                <p className="text-xs text-slate-500">Captura ideas, recordatorios y notas compartidas con segmentación inteligente.</p>
                             </div>
-                            <button onClick={() => setIsCreateOpen(false)} className="text-slate-400 hover:text-slate-600 text-lg">✕</button>
+                            <button
+                                onClick={() => setIsCreateOpen(false)}
+                                className="w-8 h-8 flex items-center justify-center rounded-full bg-slate-200 hover:bg-slate-300 text-slate-600 transition-colors cursor-pointer"
+                            >
+                                ✕
+                            </button>
                         </div>
 
-                        <form onSubmit={handleSave} className="p-6 space-y-4 max-h-[80vh] overflow-y-auto">
-                            {/* Color Selector */}
-                            <div>
-                                <label className="block text-xs font-bold text-slate-700 mb-2">Color del Post-it</label>
-                                <div className="grid grid-cols-6 gap-2">
-                                    {NOTE_COLORS.map(c => (
-                                        <button
-                                            key={c.id}
-                                            type="button"
-                                            onClick={() => setSelectedColor(c.id)}
-                                            className={`h-9 rounded-xl border-2 transition-all ${c.bg} ${c.border} ${
-                                                selectedColor === c.id ? 'ring-2 ring-slate-800 scale-105 shadow-sm' : 'opacity-80 hover:opacity-100'
-                                            }`}
-                                            title={c.label}
-                                        />
-                                    ))}
-                                </div>
-                            </div>
-
-                            {/* Title */}
-                            <div>
-                                <label className="block text-xs font-bold text-slate-700 mb-1">Título (Opcional)</label>
-                                <input
-                                    type="text"
-                                    placeholder="Ej: Recordatorio Auditoría JUNAEB"
-                                    value={title}
-                                    onChange={e => setTitle(e.target.value)}
-                                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-amber-300 outline-none"
-                                />
-                            </div>
-
-                            {/* Content */}
-                            <div>
-                                <label className="block text-xs font-bold text-slate-700 mb-1">Contenido de la Nota *</label>
-                                <textarea
-                                    rows={4}
-                                    required
-                                    placeholder="Escribe tu nota aquí..."
-                                    value={content}
-                                    onChange={e => setContent(e.target.value)}
-                                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-amber-300 outline-none"
-                                />
-                            </div>
-
-                            {/* Tags */}
-                            <div>
-                                <label className="block text-xs font-bold text-slate-700 mb-1">Etiquetas (Presiona Enter para añadir)</label>
-                                <div className="flex gap-2">
-                                    <input
-                                        type="text"
-                                        placeholder="Ej: Calidad, Urgente, Minuta"
-                                        value={tagInput}
-                                        onChange={e => setTagInput(e.target.value)}
-                                        onKeyDown={handleAddTag}
-                                        className="flex-1 px-4 py-2 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-amber-300 outline-none"
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() => {
-                                            const cleaned = tagInput.trim().replace(/^#/, '')
-                                            if (cleaned && !tags.includes(cleaned)) {
-                                                setTags([...tags, cleaned])
-                                                setTagInput('')
-                                            }
-                                        }}
-                                        className="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs"
-                                    >
-                                        + Tag
-                                    </button>
-                                </div>
-                                {tags.length > 0 && (
-                                    <div className="flex flex-wrap gap-1 mt-2">
-                                        {tags.map(t => (
-                                             <span key={t} className="inline-flex items-center gap-1 px-2.5 py-1 bg-amber-100 text-amber-900 rounded-lg text-xs font-bold">
-                                                #{t}
-                                                <button type="button" onClick={() => handleRemoveTag(t)} className="hover:text-rose-600">×</button>
-                                            </span>
+                        {/* Formulario con Scroll Interno */}
+                        <form onSubmit={handleSave} className="flex flex-col flex-1 overflow-hidden">
+                            <div className="p-5 sm:p-6 space-y-4 overflow-y-auto flex-1">
+                                {/* Selector de Color */}
+                                <div>
+                                    <label className="block text-xs font-bold text-slate-700 mb-2">Color del Post-it</label>
+                                    <div className="grid grid-cols-6 gap-2">
+                                        {NOTE_COLORS.map(c => (
+                                            <button
+                                                key={c.id}
+                                                type="button"
+                                                onClick={() => setSelectedColor(c.id)}
+                                                className={`h-9 rounded-xl border-2 transition-all ${c.bg} ${c.border} ${
+                                                    selectedColor === c.id ? 'ring-2 ring-slate-800 scale-105 shadow-sm' : 'opacity-80 hover:opacity-100'
+                                                }`}
+                                                title={c.label}
+                                            />
                                         ))}
                                     </div>
-                                )}
-                            </div>
-
-                            {/* Fijar chincheta */}
-                            <div>
-                                <label className="flex items-center gap-2 p-2.5 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer">
-                                    <input
-                                        type="checkbox"
-                                        checked={isPinned}
-                                        onChange={e => setIsPinned(e.target.checked)}
-                                        className="w-4 h-4 text-amber-500 rounded border-slate-300 focus:ring-amber-400"
-                                    />
-                                    <span className="text-xs font-bold text-slate-700">📌 Fijar al inicio del muro</span>
-                                </label>
-                            </div>
-
-                            {/* ========================================================= */}
-                            {/* OPCIONES DE PRIVACIDAD, ROL Y COMPARTIR                   */}
-                            {/* ========================================================= */}
-                            <div className="space-y-2 pt-2 border-t border-slate-100">
-                                <label className="block text-xs font-black text-slate-800 uppercase tracking-wider">
-                                    ¿Con quién deseas compartir esta nota?
-                                </label>
-
-                                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                                    <button
-                                        type="button"
-                                        onClick={() => {
-                                            setPrivacyMode('private')
-                                            setSelectedSharedUsers([])
-                                        }}
-                                        className={`p-2.5 rounded-2xl border text-center transition-all flex flex-col items-center gap-1 cursor-pointer ${
-                                            privacyMode === 'private'
-                                                ? 'bg-amber-50 border-amber-400 ring-2 ring-amber-300/50 shadow-xs'
-                                                : 'bg-slate-50 border-slate-200 hover:bg-slate-100'
-                                        }`}
-                                    >
-                                        <span className="text-base">🔒</span>
-                                        <span className="text-xs font-bold text-slate-800">Solo Yo</span>
-                                        <span className="text-[9px] text-slate-400">Privada</span>
-                                    </button>
-
-                                    <button
-                                        type="button"
-                                        onClick={() => setPrivacyMode('role')}
-                                        className={`p-2.5 rounded-2xl border text-center transition-all flex flex-col items-center gap-1 cursor-pointer ${
-                                            privacyMode === 'role'
-                                                ? 'bg-indigo-50 border-indigo-400 ring-2 ring-indigo-300/50 shadow-xs'
-                                                : 'bg-slate-50 border-slate-200 hover:bg-slate-100'
-                                        }`}
-                                    >
-                                        <span className="text-base">🛡️</span>
-                                        <span className="text-xs font-bold text-slate-800">Por Rol</span>
-                                        <span className="text-[9px] text-indigo-600 font-bold">
-                                            {selectedSharedUsers.filter(s => s.toUpperCase().startsWith('ROLE:')).length > 0
-                                                ? `${selectedSharedUsers.filter(s => s.toUpperCase().startsWith('ROLE:')).length} roles`
-                                                : 'Supervisores, etc.'}
-                                        </span>
-                                    </button>
-
-                                    <button
-                                        type="button"
-                                        onClick={() => setPrivacyMode('specific')}
-                                        className={`p-2.5 rounded-2xl border text-center transition-all flex flex-col items-center gap-1 cursor-pointer ${
-                                            privacyMode === 'specific'
-                                                ? 'bg-purple-50 border-purple-400 ring-2 ring-purple-300/50 shadow-xs'
-                                                : 'bg-slate-50 border-slate-200 hover:bg-slate-100'
-                                        }`}
-                                    >
-                                        <span className="text-base">👥</span>
-                                        <span className="text-xs font-bold text-slate-800">Usuarios</span>
-                                        <span className="text-[9px] text-purple-600 font-bold">
-                                            {selectedSharedUsers.filter(s => !s.toUpperCase().startsWith('ROLE:')).length > 0
-                                                ? `${selectedSharedUsers.filter(s => !s.toUpperCase().startsWith('ROLE:')).length} elegidos`
-                                                : 'Específicos'}
-                                        </span>
-                                    </button>
-
-                                    <button
-                                        type="button"
-                                        onClick={() => {
-                                            setPrivacyMode('public')
-                                            setSelectedSharedUsers([])
-                                        }}
-                                        className={`p-2.5 rounded-2xl border text-center transition-all flex flex-col items-center gap-1 cursor-pointer ${
-                                            privacyMode === 'public'
-                                                ? 'bg-emerald-50 border-emerald-400 ring-2 ring-emerald-300/50 shadow-xs'
-                                                : 'bg-slate-50 border-slate-200 hover:bg-slate-100'
-                                        }`}
-                                    >
-                                        <span className="text-base">🌐</span>
-                                        <span className="text-xs font-bold text-slate-800">Pública</span>
-                                        <span className="text-[9px] text-slate-400">Todo el equipo</span>
-                                    </button>
                                 </div>
 
-                                {/* Desplegable / Selector por Rol */}
-                                {privacyMode === 'role' && (
-                                    <div className="p-3.5 bg-indigo-50/60 rounded-2xl border border-indigo-200 space-y-2.5 mt-2">
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-xs font-bold text-indigo-950">
-                                                Selecciona los roles que tendrán acceso:
-                                            </span>
-                                            {selectedSharedUsers.some(s => s.toUpperCase().startsWith('ROLE:')) && (
-                                                <button
-                                                    type="button"
-                                                    onClick={() => setSelectedSharedUsers(prev => prev.filter(s => !s.toUpperCase().startsWith('ROLE:')))}
-                                                    className="text-[10px] text-indigo-600 hover:underline font-bold cursor-pointer"
-                                                >
-                                                    Desmarcar roles
-                                                </button>
-                                            )}
-                                        </div>
+                                {/* Título */}
+                                <div>
+                                    <label className="block text-xs font-bold text-slate-700 mb-1">Título (Opcional)</label>
+                                    <input
+                                        type="text"
+                                        placeholder="Ej: Recordatorio Auditoría JUNAEB"
+                                        value={title}
+                                        onChange={e => setTitle(e.target.value)}
+                                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-amber-300 outline-none"
+                                    />
+                                </div>
 
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-44 overflow-y-auto pr-1">
-                                            {availableRoles.length === 0 ? (
-                                                <p className="text-[11px] text-slate-400 text-center py-2 col-span-full">No hay roles registrados.</p>
-                                            ) : (
-                                                availableRoles.map(role => {
-                                                    const isChecked = selectedSharedUsers.includes(`ROLE:${role}`)
-                                                    const count = users.filter(u => u.role === role || u.role?.toLowerCase() === role.toLowerCase()).length
-                                                    return (
-                                                        <div
-                                                            key={role}
-                                                            onClick={() => toggleRoleShare(role)}
-                                                            className={`p-2.5 rounded-xl border cursor-pointer transition-all flex items-center justify-between ${
-                                                                isChecked
-                                                                    ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
-                                                                    : 'bg-white text-slate-800 border-indigo-200/80 hover:bg-indigo-100/50'
-                                                            }`}
-                                                        >
-                                                            <div className="flex items-center gap-2 min-w-0">
-                                                                <span className="text-sm">{isChecked ? '🛡️' : '📁'}</span>
-                                                                <div className="min-w-0">
-                                                                    <p className="text-xs font-bold truncate capitalize">{role}</p>
-                                                                    <p className={`text-[10px] ${isChecked ? 'text-indigo-100' : 'text-slate-400'}`}>
-                                                                        {count} {count === 1 ? 'usuario' : 'usuarios'}
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                            <input
-                                                                type="checkbox"
-                                                                checked={isChecked}
-                                                                onChange={() => {}}
-                                                                className="w-4 h-4 rounded text-indigo-600"
-                                                            />
-                                                        </div>
-                                                    )
-                                                })
-                                            )}
-                                        </div>
-                                    </div>
-                                )}
+                                {/* Contenido */}
+                                <div>
+                                    <label className="block text-xs font-bold text-slate-700 mb-1">Contenido de la Nota *</label>
+                                    <textarea
+                                        rows={4}
+                                        required
+                                        placeholder="Escribe lo que necesitas recordar o comunicar..."
+                                        value={content}
+                                        onChange={e => setContent(e.target.value)}
+                                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-amber-300 outline-none resize-none leading-relaxed"
+                                    />
+                                </div>
 
-                                {/* Desplegable / Selector de Usuarios Específicos */}
-                                {privacyMode === 'specific' && (
-                                    <div className="p-3 bg-purple-50/50 rounded-2xl border border-purple-200 space-y-2 mt-2">
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-xs font-bold text-purple-950">
-                                                Selecciona los usuarios ({selectedSharedUsers.filter(s => !s.toUpperCase().startsWith('ROLE:')).length} elegidos):
-                                            </span>
-                                            {selectedSharedUsers.some(s => !s.toUpperCase().startsWith('ROLE:')) && (
-                                                <button
-                                                    type="button"
-                                                    onClick={() => setSelectedSharedUsers(prev => prev.filter(s => s.toUpperCase().startsWith('ROLE:')))}
-                                                    className="text-[10px] text-purple-600 hover:underline font-bold cursor-pointer"
-                                                >
-                                                    Limpiar
-                                                </button>
-                                            )}
-                                        </div>
-
+                                {/* Etiquetas */}
+                                <div>
+                                    <label className="block text-xs font-bold text-slate-700 mb-1">Etiquetas / Tags</label>
+                                    <div className="flex gap-2">
                                         <input
                                             type="text"
-                                            value={userSearchTerm}
-                                            onChange={e => setUserSearchTerm(e.target.value)}
-                                            placeholder="Buscar usuario o colega..."
-                                            className="w-full px-3 py-1.5 bg-white border border-purple-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-purple-300"
+                                            placeholder="Escribe un tag y presiona Enter..."
+                                            value={tagInput}
+                                            onChange={e => setTagInput(e.target.value)}
+                                            onKeyDown={handleAddTag}
+                                            className="flex-1 px-3 py-2 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-amber-300 outline-none"
                                         />
-
-                                        <div className="max-h-36 overflow-y-auto space-y-1 pr-1">
-                                            {filteredShareUsers.length === 0 ? (
-                                                <p className="text-[11px] text-slate-400 text-center py-2">No se encontraron usuarios.</p>
-                                            ) : (
-                                                filteredShareUsers.map(u => {
-                                                    const isChecked = selectedSharedUsers.includes(u.username)
-                                                    return (
-                                                        <label
-                                                            key={u.username}
-                                                            className={`flex items-center justify-between p-2 rounded-xl border cursor-pointer transition-colors ${
-                                                                isChecked
-                                                                    ? 'bg-purple-100/80 border-purple-300 text-purple-950'
-                                                                    : 'bg-white border-slate-200 hover:bg-slate-50 text-slate-700'
-                                                            }`}
-                                                        >
-                                                            <div className="flex items-center gap-2 min-w-0">
-                                                                <div className="w-6 h-6 rounded-full bg-purple-600 text-white font-black text-[10px] flex items-center justify-center flex-shrink-0">
-                                                                    {u.name.charAt(0).toUpperCase()}
-                                                                </div>
-                                                                <div className="min-w-0">
-                                                                    <p className="text-xs font-bold truncate">{u.name}</p>
-                                                                    <p className="text-[10px] text-slate-400">@{u.username} • {u.role}</p>
-                                                                </div>
-                                                            </div>
-
-                                                            <input
-                                                                type="checkbox"
-                                                                checked={isChecked}
-                                                                onChange={() => toggleUserShare(u.username)}
-                                                                className="w-4 h-4 text-purple-600 rounded border-slate-300 focus:ring-purple-400 cursor-pointer"
-                                                            />
-                                                        </label>
-                                                    )
-                                                })
-                                            )}
-                                        </div>
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                const cleaned = tagInput.trim().replace(/^#/, '')
+                                                if (cleaned && !tags.includes(cleaned)) {
+                                                    setTags([...tags, cleaned])
+                                                    setTagInput('')
+                                                }
+                                            }}
+                                            className="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs cursor-pointer"
+                                        >
+                                            + Tag
+                                        </button>
                                     </div>
-                                )}
+                                    {tags.length > 0 && (
+                                        <div className="flex flex-wrap gap-1 mt-2">
+                                            {tags.map(t => (
+                                                <span key={t} className="inline-flex items-center gap-1 px-2.5 py-1 bg-amber-100 text-amber-900 rounded-lg text-xs font-bold">
+                                                    #{t}
+                                                    <button type="button" onClick={() => handleRemoveTag(t)} className="hover:text-rose-600">×</button>
+                                                </span>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Fijar chincheta */}
+                                <div>
+                                    <label className="flex items-center gap-2 p-2.5 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer">
+                                        <input
+                                            type="checkbox"
+                                            checked={isPinned}
+                                            onChange={e => setIsPinned(e.target.checked)}
+                                            className="w-4 h-4 text-amber-500 rounded border-slate-300 focus:ring-amber-400"
+                                        />
+                                        <span className="text-xs font-bold text-slate-700">📌 Fijar al inicio del muro</span>
+                                    </label>
+                                </div>
+
+                                {/* ========================================================= */}
+                                {/* OPCIONES DE PRIVACIDAD Y SEGMENTACIÓN                     */}
+                                {/* ========================================================= */}
+                                <div className="space-y-3 pt-2 border-t border-slate-100">
+                                    <label className="block text-xs font-black text-slate-800 uppercase tracking-wider">
+                                        ¿Con quién deseas compartir esta nota?
+                                    </label>
+
+                                    <div className="grid grid-cols-3 gap-2">
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setPrivacyMode('private')
+                                                setSelectedSharedUsers([])
+                                            }}
+                                            className={`p-3 rounded-2xl border text-center transition-all flex flex-col items-center gap-1 cursor-pointer ${
+                                                privacyMode === 'private'
+                                                    ? 'bg-amber-50 border-amber-400 ring-2 ring-amber-300/50 shadow-xs'
+                                                    : 'bg-slate-50 border-slate-200 hover:bg-slate-100'
+                                            }`}
+                                        >
+                                            <span className="text-base">🔒</span>
+                                            <span className="text-xs font-bold text-slate-800">Solo Yo</span>
+                                            <span className="text-[9px] text-slate-400">Privada</span>
+                                        </button>
+
+                                        <button
+                                            type="button"
+                                            onClick={() => setPrivacyMode('segmented')}
+                                            className={`p-3 rounded-2xl border text-center transition-all flex flex-col items-center gap-1 cursor-pointer ${
+                                                privacyMode === 'segmented'
+                                                    ? 'bg-indigo-50 border-indigo-400 ring-2 ring-indigo-300/50 shadow-xs'
+                                                    : 'bg-slate-50 border-slate-200 hover:bg-slate-100'
+                                            }`}
+                                        >
+                                            <span className="text-base">🎯</span>
+                                            <span className="text-xs font-bold text-slate-800">Segmentada</span>
+                                            <span className="text-[9px] text-indigo-600 font-bold">
+                                                {selectedSharedUsers.length > 0
+                                                    ? `${selectedSharedUsers.length} destinatarios`
+                                                    : 'Sucursal + Rol'}
+                                            </span>
+                                        </button>
+
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setPrivacyMode('public')
+                                                setSelectedSharedUsers([])
+                                            }}
+                                            className={`p-3 rounded-2xl border text-center transition-all flex flex-col items-center gap-1 cursor-pointer ${
+                                                privacyMode === 'public'
+                                                    ? 'bg-emerald-50 border-emerald-400 ring-2 ring-emerald-300/50 shadow-xs'
+                                                    : 'bg-slate-50 border-slate-200 hover:bg-slate-100'
+                                            }`}
+                                        >
+                                            <span className="text-base">🌐</span>
+                                            <span className="text-xs font-bold text-slate-800">Pública</span>
+                                            <span className="text-[9px] text-slate-400">Toda la empresa</span>
+                                        </button>
+                                    </div>
+
+                                    {/* Segmentador Avanzado Integrado */}
+                                    {privacyMode === 'segmented' && (
+                                        <RecipientCombinator
+                                            users={users}
+                                            currentUsername={currentUsername}
+                                            selectedUsernames={selectedSharedUsers}
+                                            onSelectionChange={(newSelected) => setSelectedSharedUsers(newSelected)}
+                                            title="Segmentador de Audiencia (Sucursal + Rol + Colegas)"
+                                            subtitle="Filtra por sucursales y roles para compartir esta nota solo con las personas que necesitas (ej: Supervisores de CD Copiapó)."
+                                        />
+                                    )}
+                                </div>
                             </div>
 
-                            {/* Actions */}
-                            <div className="flex items-center justify-between gap-3 pt-4 border-t border-slate-100">
+                            {/* Botonera Fija */}
+                            <div className="p-4 sm:p-5 border-t border-slate-100 bg-slate-50/80 flex items-center justify-between gap-3 shrink-0">
                                 {editingNote ? (
                                     <button
                                         type="button"
                                         onClick={() => handleDelete(editingNote.id)}
-                                        className="px-4 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl font-bold text-sm transition-colors cursor-pointer"
+                                        className="px-4 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl font-bold text-xs transition-colors cursor-pointer"
                                     >
-                                        Eliminar
+                                        🗑️ Eliminar Nota
                                     </button>
                                 ) : (
                                     <span />
@@ -843,14 +698,14 @@ export default function NotesView({ initialNotes, currentUsername, users = [], o
                                     <button
                                         type="button"
                                         onClick={() => setIsCreateOpen(false)}
-                                        className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl font-bold text-sm transition-colors cursor-pointer"
+                                        className="px-5 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-600 rounded-xl font-bold text-xs transition-colors cursor-pointer"
                                     >
                                         Cancelar
                                     </button>
                                     <button
                                         type="submit"
                                         disabled={isSaving || !content.trim()}
-                                        className="px-6 py-2.5 bg-amber-500 hover:bg-amber-600 disabled:opacity-50 text-white rounded-xl font-black text-sm shadow-md transition-all cursor-pointer"
+                                        className="px-6 py-2.5 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 disabled:opacity-50 text-white rounded-xl font-black text-xs shadow-md shadow-amber-500/20 transition-all cursor-pointer"
                                     >
                                         {isSaving ? 'Guardando...' : (editingNote ? 'Guardar Cambios' : 'Pegar en el Muro ✨')}
                                     </button>
