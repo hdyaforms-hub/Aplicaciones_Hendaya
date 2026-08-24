@@ -7,6 +7,8 @@ import {
     sendChatMessage,
     createOrGetDirectConversation,
     createGroupConversation,
+    updateGroupConversation,
+    deleteGroupConversation,
     getTasksData,
     createCollabTask,
     updateCollabTaskStatus,
@@ -214,6 +216,13 @@ export default function ConversacionClient({
     const [selectedGroupMembers, setSelectedGroupMembers] = useState<string[]>([])
     const [groupTitle, setGroupTitle] = useState('')
     const [creatingGroup, setCreatingGroup] = useState(false)
+
+    // Estado Edición de Grupo
+    const [showEditGroupModal, setShowEditGroupModal] = useState(false)
+    const [editingGroupConv, setEditingGroupConv] = useState<ConversationItem | null>(null)
+    const [editGroupTitle, setEditGroupTitle] = useState('')
+    const [editGroupMembers, setEditGroupMembers] = useState<string[]>([])
+    const [updatingGroup, setUpdatingGroup] = useState(false)
 
     // Estado Tareas (Trello Kanban) & Columnas Personalizadas
     const [tasks, setTasks] = useState<TaskItem[]>(initialTasks)
@@ -526,6 +535,51 @@ export default function ConversacionClient({
             setSelectedGroupMembers([])
         }
         setCreatingGroup(false)
+    }
+
+    // Abrir Modal de Edición de Grupo
+    const handleOpenEditGroup = (conv: ConversationItem) => {
+        setEditingGroupConv(conv)
+        setEditGroupTitle(conv.title || '')
+        setEditGroupMembers(conv.participants || [])
+        setShowEditGroupModal(true)
+    }
+
+    // Guardar Cambios del Grupo
+    const handleSaveEditGroup = async () => {
+        if (!editingGroupConv || !editGroupTitle.trim() || editGroupMembers.length === 0 || updatingGroup) return
+        setUpdatingGroup(true)
+        const res = await updateGroupConversation({
+            conversationId: editingGroupConv.id,
+            title: editGroupTitle,
+            participants: editGroupMembers
+        })
+        if (res.success && res.conversation) {
+            setConversations(prev => prev.map(c => c.id === editingGroupConv.id ? {
+                ...c,
+                title: res.conversation!.title,
+                participants: res.conversation!.participants
+            } : c))
+            setShowEditGroupModal(false)
+            loadMessages(editingGroupConv.id, true)
+        }
+        setUpdatingGroup(false)
+    }
+
+    // Eliminar Grupo
+    const handleDeleteGroup = async () => {
+        if (!editingGroupConv || !confirm(`¿Estás seguro de eliminar el grupo "${editingGroupConv.title}"? Esta acción no se puede deshacer.`)) return
+        setUpdatingGroup(true)
+        const res = await deleteGroupConversation(editingGroupConv.id)
+        if (res.success) {
+            setConversations(prev => prev.filter(c => c.id !== editingGroupConv.id))
+            setShowEditGroupModal(false)
+            if (activeConvId === editingGroupConv.id) {
+                const remaining = conversations.filter(c => c.id !== editingGroupConv.id)
+                setActiveConvId(remaining.length > 0 ? remaining[0].id : null)
+            }
+        }
+        setUpdatingGroup(false)
     }
 
     // Conversión rápida de Mensaje de Chat a Tarea Trello
@@ -1149,21 +1203,47 @@ export default function ConversacionClient({
                             <>
                                 {/* Cabecera de Conversación */}
                                 <div className="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-2xl bg-cyan-600 text-white flex items-center justify-center font-bold text-sm">
+                                    <div className="flex items-center gap-3 min-w-0">
+                                        <div className={`w-10 h-10 rounded-2xl flex items-center justify-center font-bold text-sm text-white shrink-0 ${
+                                            activeConversation.type === 'project'
+                                                ? 'bg-gradient-to-tr from-indigo-600 to-purple-600'
+                                                : (activeConversation.type === 'group'
+                                                    ? 'bg-gradient-to-tr from-amber-500 to-orange-500'
+                                                    : 'bg-gradient-to-tr from-cyan-600 to-sky-600')
+                                        }`}>
                                             {activeConversation.type === 'project' ? '🚀' : (activeConversation.type === 'group' ? '👥' : '👤')}
                                         </div>
-                                        <div>
-                                            <h3 className="font-black text-slate-900 text-sm">
-                                                {activeConversation.type === 'direct'
-                                                    ? (users.find(u => u.username === activeConversation.participants.find(p => p !== initialUser.username))?.name || 'Colega')
-                                                    : (activeConversation.title || 'Grupo')}
+                                        <div className="min-w-0">
+                                            <h3 className="font-black text-slate-900 text-sm flex items-center gap-2 truncate">
+                                                <span>
+                                                    {activeConversation.type === 'direct'
+                                                        ? (users.find(u => u.username === activeConversation.participants.find(p => p !== initialUser.username))?.name || 'Colega')
+                                                        : (activeConversation.title || 'Grupo')}
+                                                </span>
+                                                {activeConversation.type !== 'direct' && (
+                                                    <span className="px-1.5 py-0.5 bg-amber-100 text-amber-900 text-[10px] font-extrabold rounded-md uppercase tracking-wider shrink-0">
+                                                        Grupo
+                                                    </span>
+                                                )}
                                             </h3>
-                                            <p className="text-[10px] text-slate-400">
+                                            <p className="text-[10px] text-slate-400 truncate">
                                                 {activeConversation.participants.length} participante(s) • Cifrado AES-256
                                             </p>
                                         </div>
                                     </div>
+
+                                    {/* Botón Editar Grupo para chats grupales o de proyecto */}
+                                    {activeConversation.type !== 'direct' && (
+                                        <button
+                                            type="button"
+                                            onClick={() => handleOpenEditGroup(activeConversation)}
+                                            className="px-3 py-1.5 bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 hover:text-cyan-700 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-2xs cursor-pointer shrink-0"
+                                            title="Editar nombre y participantes del grupo"
+                                        >
+                                            <span>⚙️</span>
+                                            <span>Editar Grupo</span>
+                                        </button>
+                                    )}
                                 </div>
 
                                 {/* Mensajes con Auto-scroll */}
@@ -2145,6 +2225,125 @@ export default function ConversacionClient({
                             >
                                 Cerrar
                             </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Modal: Editar Grupo de Trabajo */}
+            {showEditGroupModal && editingGroupConv && (
+                <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+                    <div className="bg-white rounded-3xl w-full max-w-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 flex flex-col max-h-[90vh]">
+                        {/* Header Fijo */}
+                        <div className="p-5 sm:p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/80 shrink-0">
+                            <div>
+                                <h3 className="text-lg font-black text-slate-900 flex items-center gap-2">
+                                    <span>⚙️</span>
+                                    <span>Editar Grupo: {editingGroupConv.title || 'Grupo'}</span>
+                                </h3>
+                                <p className="text-xs text-slate-500">
+                                    Modifica el nombre o ajusta los integrantes por sucursal, rol o usuario individual.
+                                </p>
+                            </div>
+                            <button
+                                onClick={() => setShowEditGroupModal(false)}
+                                className="w-8 h-8 flex items-center justify-center rounded-full bg-slate-200 hover:bg-slate-300 text-slate-600 transition-colors cursor-pointer"
+                            >
+                                ✕
+                            </button>
+                        </div>
+
+                        {/* Contenido con Scroll */}
+                        <div className="p-5 sm:p-6 space-y-5 overflow-y-auto flex-1">
+                            {/* Nombre del Grupo */}
+                            <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+                                <label className="block text-xs font-black text-slate-800 uppercase tracking-wider">
+                                    Nombre del Grupo:
+                                </label>
+                                <input
+                                    type="text"
+                                    value={editGroupTitle}
+                                    onChange={e => setEditGroupTitle(e.target.value)}
+                                    placeholder="Ej: Supervisores - CD Copiapó"
+                                    className="w-full px-3.5 py-2.5 bg-white rounded-xl border border-slate-200 text-xs font-bold text-slate-900 outline-none focus:ring-2 focus:ring-cyan-500 shadow-2xs"
+                                />
+                            </div>
+
+                            {/* Segmentador Avanzado de Destinatarios */}
+                            <RecipientCombinator
+                                users={users}
+                                currentUsername={initialUser.username}
+                                selectedUsernames={editGroupMembers}
+                                onSelectionChange={(newSelected, suggestedTitle) => {
+                                    setEditGroupMembers(newSelected)
+                                    if (suggestedTitle && !editGroupTitle.trim()) {
+                                        setEditGroupTitle(suggestedTitle)
+                                    }
+                                }}
+                                title="Integrantes del Grupo (Sucursal + Rol)"
+                                subtitle="Selecciona o desmarca sucursales y roles para añadir o quitar participantes del grupo."
+                            />
+
+                            {/* Resumen de Miembros Actuales */}
+                            {editGroupMembers.length > 0 && (
+                                <div className="space-y-2">
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-[11px] font-black text-slate-700 uppercase tracking-wider">
+                                            Participantes Actuales ({editGroupMembers.length}):
+                                        </span>
+                                    </div>
+                                    <div className="flex flex-wrap gap-1.5 max-h-28 overflow-y-auto p-2 bg-slate-50 rounded-xl border border-slate-200">
+                                        {editGroupMembers.map(m => {
+                                            const memberObj = users.find(u => u.username === m)
+                                            return (
+                                                <span key={m} className="px-2.5 py-1 bg-white text-slate-800 rounded-lg text-[10px] font-bold flex items-center gap-1.5 border border-slate-200 shadow-2xs">
+                                                    <span>👤</span>
+                                                    <span>{memberObj?.name || `@${m}`}</span>
+                                                    {m !== initialUser.username && (
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => setEditGroupMembers(prev => prev.filter(x => x !== m))}
+                                                            className="hover:text-rose-600 font-bold ml-1 cursor-pointer"
+                                                            title="Quitar del grupo"
+                                                        >
+                                                            ✕
+                                                        </button>
+                                                    )}
+                                                </span>
+                                            )
+                                        })}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Footer Fijo con Acciones */}
+                        <div className="p-4 sm:p-5 border-t border-slate-100 bg-slate-50/80 flex items-center justify-between gap-3 shrink-0">
+                            <button
+                                type="button"
+                                onClick={handleDeleteGroup}
+                                disabled={updatingGroup}
+                                className="px-4 py-2 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl font-bold text-xs transition-colors cursor-pointer"
+                            >
+                                🗑️ Eliminar Grupo
+                            </button>
+                            <div className="flex items-center gap-2">
+                                <button
+                                    type="button"
+                                    onClick={() => setShowEditGroupModal(false)}
+                                    className="px-5 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-600 rounded-xl font-bold text-xs transition-colors cursor-pointer"
+                                >
+                                    Cancelar
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={handleSaveEditGroup}
+                                    disabled={!editGroupTitle.trim() || editGroupMembers.length === 0 || updatingGroup}
+                                    className="px-6 py-2.5 bg-gradient-to-r from-cyan-600 to-sky-600 hover:from-cyan-700 hover:to-sky-700 disabled:opacity-50 text-white font-bold rounded-xl text-xs shadow-md shadow-cyan-500/20 transition-all cursor-pointer"
+                                >
+                                    {updatingGroup ? 'Guardando...' : 'Guardar Cambios 💾'}
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

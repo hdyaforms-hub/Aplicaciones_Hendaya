@@ -414,6 +414,77 @@ export async function createGroupConversation(data: {
     }
 }
 
+export async function updateGroupConversation(data: {
+    conversationId: string
+    title: string
+    participants: string[]
+}) {
+    const user = await getAuthUser()
+    if (!user) return { error: 'No autenticado' }
+
+    if (!data.title.trim()) return { error: 'El nombre del grupo es requerido.' }
+
+    const members = Array.from(new Set([user.username, ...data.participants]))
+
+    try {
+        const existing = await rawPrisma.collabConversation.findUnique({
+            where: { id: data.conversationId }
+        })
+        if (!existing) return { error: 'Conversación no encontrada.' }
+
+        const updated = await rawPrisma.collabConversation.update({
+            where: { id: data.conversationId },
+            data: {
+                title: data.title.trim(),
+                participants: JSON.stringify(members)
+            }
+        })
+
+        // Mensaje de sistema informativo
+        try {
+            await rawPrisma.collabMessage.create({
+                data: {
+                    conversationId: data.conversationId,
+                    senderUsername: 'sistema',
+                    senderName: 'Sistema Hendaya',
+                    content: encryptMessage(`ℹ️ @${user.username} actualizó el grupo: "${data.title.trim()}" (${members.length} integrantes).`),
+                    isEncrypted: true
+                }
+            })
+        } catch {}
+
+        return {
+            success: true,
+            conversation: {
+                id: updated.id,
+                type: updated.type,
+                title: updated.title,
+                projectId: updated.projectId,
+                participants: members,
+                updatedAt: updated.updatedAt.toISOString()
+            }
+        }
+    } catch (e: any) {
+        console.error('Error al actualizar grupo de conversación:', e)
+        return { error: 'Error al actualizar grupo.' }
+    }
+}
+
+export async function deleteGroupConversation(conversationId: string) {
+    const user = await getAuthUser()
+    if (!user) return { error: 'No autenticado' }
+
+    try {
+        await rawPrisma.collabConversation.delete({
+            where: { id: conversationId }
+        })
+        return { success: true }
+    } catch (e: any) {
+        console.error('Error al eliminar conversación grupal:', e)
+        return { error: 'Error al eliminar la conversación.' }
+    }
+}
+
 // ==========================================
 // 2. GESTIÓN DE TAREAS ESTILO TRELLO (KANBAN)
 // ==========================================
