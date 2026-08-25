@@ -141,12 +141,34 @@ export async function getDecryptedConfig(): Promise<ConfiguracionDecrypted | nul
 
         if (envTenantId && envClientId && envThumbprint && envUserEmail) {
             let privateKeyPem = ''
-            const resolvedPath = path.isAbsolute(envKeyPath)
-                ? envKeyPath
-                : path.join(process.cwd(), envKeyPath)
 
-            if (fs.existsSync(resolvedPath)) {
-                privateKeyPem = fs.readFileSync(resolvedPath, 'utf8')
+            // 1.1 Si la llave privada viene directamente en variable de entorno (ideal para Railway / Vercel)
+            if (process.env.AZURE_CERT_PRIVATE_KEY) {
+                const rawKey = process.env.AZURE_CERT_PRIVATE_KEY.trim()
+                if (rawKey.includes('-----BEGIN')) {
+                    privateKeyPem = rawKey.replace(/\\n/g, '\n')
+                } else {
+                    try {
+                        privateKeyPem = Buffer.from(rawKey, 'base64').toString('utf8')
+                    } catch {
+                        privateKeyPem = rawKey
+                    }
+                }
+            } else if (process.env.AZURE_CERT_PRIVATE_KEY_BASE64) {
+                try {
+                    privateKeyPem = Buffer.from(process.env.AZURE_CERT_PRIVATE_KEY_BASE64, 'base64').toString('utf8')
+                } catch {}
+            }
+
+            // 1.2 Si no viene en env var, buscar archivo físico en disco
+            if (!privateKeyPem) {
+                const resolvedPath = path.isAbsolute(envKeyPath)
+                    ? envKeyPath
+                    : path.join(process.cwd(), envKeyPath)
+
+                if (fs.existsSync(resolvedPath)) {
+                    privateKeyPem = fs.readFileSync(resolvedPath, 'utf8')
+                }
             }
 
             // Consultar datos opcionales de carpeta raíz en BD
@@ -443,19 +465,69 @@ export async function testConnection(): Promise<{
 }
 
 /**
- * Lista las carpetas en la raíz del OneDrive del usuario (para selector de carpeta raíz).
+ * Guarda exclusivamente la carpeta raíz seleccionada para el gestor documental.
  */
-export async function listOneDriveRootFolders(): Promise<DriveItem[]> {
+export async function saveRootFolder(rootFolderId: string | null, rootFolderName: string | null): Promise<boolean> {
+    try {
+        const existing = await rawPrisma.configuracionDocumental.findFirst({
+            orderBy: { creadoEn: 'desc' }
+        })
+        if (existing) {
+            await rawPrisma.configuracionDocumental.update({
+                where: { id: existing.id },
+                data: {
+                    rootFolderId: rootFolderId || null,
+                    rootFolderName: rootFolderName || null,
+                    activo: true
+                }
+            })
+        } else {
+            await rawPrisma.configuracionDocumental.create({
+                data: {
+                    tenantId: 'env',
+                    clientId: 'env',
+                    clientSecret: 'env',
+                    onedriveUserEmail: process.env.ONEDRIVE_USER_EMAIL || '',
+                    rootFolderId: rootFolderId || null,
+                    rootFolderName: rootFolderName || null,
+                    activo: true
+                }
+            })
+        }
+        return true
+    } catch (error) {
+        console.error('Error al guardar carpeta raíz:', error)
+        return false
+    }
+}
+
+/**
+ * Lista las carpetas en cualquier nivel del OneDrive (raíz o dentro de otra carpeta).
+ */
+export async function listOneDriveFolders(folderId?: string | null): Promise<DriveItem[]> {
     const { config } = await getAccessToken()
     const userEmail = encodeURIComponent(config.onedriveUserEmail)
+    const targetId = (!folderId || folderId === 'root') ? 'root' : folderId
 
-    const res = await graphFetch(`/users/${userEmail}/drive/root/children?$filter=folder ne null&$top=100`)
+    const endpoint = targetId === 'root'
+        ? `/users/${userEmail}/drive/root/children?$filter=folder ne null&$top=200&$orderby=name asc`
+        : `/users/${userEmail}/drive/items/${targetId}/children?$filter=folder ne null&$top=200&$orderby=name asc`
+
+    const res = await graphFetch(endpoint)
     if (!res.ok) {
-        throw new Error(`Error al listar carpetas raíz de OneDrive: ${res.statusText}`)
+        const err = await res.json().catch(() => ({}))
+        throw new Error(`Error al listar subcarpetas de OneDrive: ${err.error?.message || res.statusText}`)
     }
 
     const data = await res.json()
     return data.value || []
+}
+
+/**
+ * Lista las carpetas en la raíz del OneDrive del usuario (para selector de carpeta raíz).
+ */
+export async function listOneDriveRootFolders(): Promise<DriveItem[]> {
+    return listOneDriveFolders('root')
 }
 
 /**
