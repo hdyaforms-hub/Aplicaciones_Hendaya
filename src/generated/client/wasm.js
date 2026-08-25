@@ -227,6 +227,13 @@ exports.Prisma.EmailConfigScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ConfiguracionGlobalScalarFieldEnum = {
+  id: 'id',
+  sessionTimeoutMin: 'sessionTimeoutMin',
+  updatedBy: 'updatedBy',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.ListaCorreoScalarFieldEnum = {
   id: 'id',
   nombre: 'nombre',
@@ -1552,6 +1559,7 @@ exports.Prisma.ModelName = {
   IngRacion: 'IngRacion',
   Productos: 'Productos',
   EmailConfig: 'EmailConfig',
+  ConfiguracionGlobal: 'ConfiguracionGlobal',
   ListaCorreo: 'ListaCorreo',
   NotificacionPantalla: 'NotificacionPantalla',
   PlantillaCorreo: 'PlantillaCorreo',

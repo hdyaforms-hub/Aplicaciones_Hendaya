@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
 export default function LoginPage() {
@@ -9,6 +9,16 @@ export default function LoginPage() {
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
+    const [timeoutAlert, setTimeoutAlert] = useState(false)
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const params = new URLSearchParams(window.location.search)
+            if (params.get('reason') === 'timeout') {
+                setTimeoutAlert(true)
+            }
+        }
+    }, [])
 
     // Nuevos estados para el cambio de clave
     const [requirePasswordChange, setRequirePasswordChange] = useState(false)
@@ -110,6 +120,13 @@ export default function LoginPage() {
 
                 {!requirePasswordChange ? (
                     <form onSubmit={handleLogin} className="space-y-6" translate="no" lang="es">
+                        {timeoutAlert && (
+                            <div className="p-4 rounded-xl bg-amber-500/20 border border-amber-500/50 text-amber-200 text-xs font-semibold flex items-center gap-2.5 shadow-sm animate-in fade-in">
+                                <span className="text-base">⏱️</span>
+                                <span className="flex-1">Tu sesión se cerró automáticamente por inactividad. Por favor, vuelve a iniciar sesión.</span>
+                            </div>
+                        )}
+
                         {error && (
                             <div className="p-4 rounded-xl bg-red-500/20 border border-red-500/50 text-red-100 text-sm animate-pulse">
                                 {error}

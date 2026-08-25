@@ -1,8 +1,10 @@
 import { getSession } from '@/lib/session'
 import { prisma } from '@/lib/prisma'
+import { getGlobalConfig } from '@/lib/global-config'
 import Sidebar from '@/components/Sidebar'
 import AuditNavigationTracker from '@/components/AuditNavigationTracker'
 import NotificationBalloon from '@/components/NotificationBalloon'
+import SessionTimeoutManager from '@/components/SessionTimeoutManager'
 import { redirect } from 'next/navigation'
 
 export default async function DashboardLayout({
@@ -29,9 +31,11 @@ export default async function DashboardLayout({
 
     const user = userData as any
     const menuOrders = await prisma.menuItemOrder.findMany()
+    const globalConfig = await getGlobalConfig()
 
     return (
         <div className="min-h-screen bg-gray-50 flex">
+            <SessionTimeoutManager timeoutMinutes={globalConfig.sessionTimeoutMin} />
             <AuditNavigationTracker />
             <NotificationBalloon />
             {/* Sidebar Navigation */}

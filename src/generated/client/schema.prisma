@@ -122,6 +122,13 @@ model EmailConfig {
   updatedAt DateTime @updatedAt
 }
 
+model ConfiguracionGlobal {
+  id                String   @id @default("global")
+  sessionTimeoutMin Int      @default(30) // Duración de sesión por inactividad en minutos
+  updatedBy         String?
+  updatedAt         DateTime @updatedAt
+}
+
 model ListaCorreo {
   id             String                 @id @default(uuid())
   nombre         String                 @unique

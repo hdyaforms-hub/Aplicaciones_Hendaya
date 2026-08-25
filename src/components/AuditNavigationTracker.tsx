@@ -76,9 +76,16 @@ function getModuleInfoFromPath(path: string): { modulo: string; detalle: string 
     }
 
     // Configuración & Administración
-    if (path.startsWith('/dashboard/users')) return { modulo: 'Administración', detalle: 'Accedió a Gestión de Usuarios' }
-    if (path.startsWith('/dashboard/roles')) return { modulo: 'Administración', detalle: 'Accedió a Roles y Perfiles' }
-    if (path.startsWith('/dashboard/configuracion')) return { modulo: 'Administración', detalle: `Accedió a Configuración (${path.replace('/dashboard/configuracion/', '')})` }
+    if (path.startsWith('/dashboard/users')) return { modulo: 'Configuración', detalle: 'Accedió a Gestión de Usuarios' }
+    if (path.startsWith('/dashboard/roles')) return { modulo: 'Configuración', detalle: 'Accedió a Roles y Perfiles' }
+    if (path.startsWith('/dashboard/configuracion')) {
+        if (path.includes('/global')) return { modulo: 'Configuración', detalle: 'Accedió a Configuración Global del Sistema' }
+        if (path.includes('/reubicacion')) return { modulo: 'Configuración', detalle: 'Accedió a Reubicación de Aplicaciones' }
+        if (path.includes('/correo')) return { modulo: 'Configuración', detalle: 'Accedió a Configuración de Correo' }
+        if (path.includes('/listas-correo')) return { modulo: 'Configuración', detalle: 'Accedió a Listas de Distribución' }
+        if (path.includes('/notificaciones')) return { modulo: 'Configuración', detalle: 'Accedió a Notificaciones por Pantalla' }
+        return { modulo: 'Configuración', detalle: `Accedió a Configuración (${path.replace('/dashboard/configuracion/', '')})` }
+    }
 
     // Reportes
     if (path.startsWith('/dashboard/reports')) return { modulo: 'Reportes', detalle: `Accedió a Reportes (${path.replace('/dashboard/reports/', '')})` }

@@ -125,6 +125,7 @@ export default async function RolesPage() {
         { id: 'view_solicitud_gas_report', name: 'Reporte Solicitud de Gas', description: 'Acceso al informe histórico de solicitudes de gas.', category: 'REPORTES' },
         { id: 'view_retiro_report', name: 'Reporte Retiro de Saldos', description: 'Acceso al informe histórico de retiro de saldos.', category: 'REPORTES' },
  
+        { id: 'manage_global_config', name: 'Configuración Global', description: 'Permite configurar parámetros globales del sistema como la duración y cierre automático de sesión.', category: 'ADMINISTRACIÓN' },
         { id: 'manage_users', name: 'Gestionar Usuarios', description: 'Crear, editar o eliminar usuarios.', category: 'ADMINISTRACIÓN' },
         { id: 'manage_roles', name: 'Gestionar Roles', description: 'Administrar mantenedor de perfiles y permisos.', category: 'ADMINISTRACIÓN' },
         { id: 'manage_menu_reorder', name: 'Reubicación de Aplicaciones', description: 'Permite reordenar la posición de los ítems de menú dentro de sus opciones padres.', category: 'ADMINISTRACIÓN' },

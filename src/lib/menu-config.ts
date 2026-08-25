@@ -293,8 +293,9 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
     {
         name: 'Configuración',
         icon: '🔧',
-        requiredPermission: ['manage_correo', 'manage_listas', 'manage_notificaciones', 'manage_users', 'manage_roles', 'manage_menu_reorder'],
+        requiredPermission: ['manage_global_config', 'manage_correo', 'manage_listas', 'manage_notificaciones', 'manage_users', 'manage_roles', 'manage_menu_reorder'],
         subItems: [
+            { name: 'Global', href: '/dashboard/configuracion/global', requiredPermission: 'manage_global_config' },
             { name: 'Gestión de Usuarios', href: '/dashboard/users', requiredPermission: 'manage_users' },
             { name: 'Roles y Perfiles', href: '/dashboard/roles', requiredPermission: 'manage_roles' },
             { name: 'Reubicación de Aplicaciones', href: '/dashboard/configuracion/reubicacion', requiredPermission: 'manage_menu_reorder' },
