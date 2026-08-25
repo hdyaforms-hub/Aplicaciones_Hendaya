@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
             where.carpetaId = carpetaId
         }
 
-        const [privilegios, roles, users] = await Promise.all([
+        const [privilegios, roles, users, sucursales, licitaciones, colegiosRaw] = await Promise.all([
             rawPrisma.privilegioDocumental.findMany({
                 where,
                 include: {
@@ -38,38 +38,74 @@ export async function GET(request: NextRequest) {
                 orderBy: { creadoEn: 'desc' }
             }),
             rawPrisma.role.findMany({
-                select: { id: true, name: true }
+                select: { id: true, name: true },
+                orderBy: { name: 'asc' }
             }),
             rawPrisma.user.findMany({
                 where: { isDeleted: false },
-                select: { id: true, name: true, username: true }
+                select: { id: true, name: true, username: true },
+                orderBy: { name: 'asc' }
+            }),
+            rawPrisma.sucursal.findMany({
+                select: { id: true, nombre: true },
+                orderBy: { nombre: 'asc' }
+            }),
+            rawPrisma.licitacion.findMany({
+                select: { licId: true, licitacionHomologada: true },
+                orderBy: { licId: 'asc' }
+            }),
+            rawPrisma.colegios.findMany({
+                select: { colRBD: true, nombreEstablecimiento: true, sucursal: true },
+                orderBy: { colRBD: 'asc' }
             })
         ])
 
+        const uniqueColegiosMap = new Map<number, { rbd: number; nombre: string }>()
+        for (const c of colegiosRaw) {
+            if (!uniqueColegiosMap.has(c.colRBD)) {
+                uniqueColegiosMap.set(c.colRBD, {
+                    rbd: c.colRBD,
+                    nombre: `${c.colRBD} - ${c.nombreEstablecimiento}${c.sucursal ? ` (${c.sucursal})` : ''}`
+                })
+            }
+        }
+        const colegios = Array.from(uniqueColegiosMap.values())
+
         const roleMap = new Map(roles.map(r => [r.id, r.name]))
         const userMap = new Map(users.map(u => [u.id, u.name ? `${u.name} (@${u.username})` : `@${u.username}`]))
+        const sucursalMap = new Map(sucursales.map(s => [s.id, `Sucursal ${s.nombre}`]))
+        const licitacionMap = new Map(licitaciones.map(l => [String(l.licId), l.licitacionHomologada ? `Licitación ${l.licitacionHomologada} (#${l.licId})` : `Licitación #${l.licId}`]))
+        const colegioMap = new Map(colegios.map(c => [String(c.rbd), c.nombre]))
 
-        const uiPrivilegios: PrivilegioUI[] = privilegios.map(p => {
-            const referenciaNombre = p.tipo === 'rol'
-                ? (roleMap.get(p.referenciaId) || `Rol #${p.referenciaId}`)
-                : (userMap.get(p.referenciaId) || `Usuario #${p.referenciaId}`)
-
-            return {
-                id: p.id,
-                carpetaId: p.carpetaId,
-                carpetaNombre: p.carpeta?.nombre || 'Carpeta',
-                tipo: p.tipo as TipoPrivilegio,
-                referenciaId: p.referenciaId,
-                referenciaNombre,
-                permiso: p.permiso as NivelPermiso,
-                creadoEn: p.creadoEn.toISOString()
+        const getReferenciaNombre = (pTipo: string, refId: string) => {
+            switch (pTipo) {
+                case 'rol': return roleMap.get(refId) || `Rol #${refId}`
+                case 'usuario': return userMap.get(refId) || `Usuario #${refId}`
+                case 'sucursal': return sucursalMap.get(refId) || `Sucursal #${refId}`
+                case 'licitacion': return licitacionMap.get(refId) || `Licitación #${refId}`
+                case 'rbd': return colegioMap.get(refId) || `RBD #${refId}`
+                default: return refId
             }
-        })
+        }
+
+        const uiPrivilegios: PrivilegioUI[] = privilegios.map(p => ({
+            id: p.id,
+            carpetaId: p.carpetaId,
+            carpetaNombre: p.carpeta?.nombre || 'Carpeta',
+            tipo: p.tipo as TipoPrivilegio,
+            referenciaId: p.referenciaId,
+            referenciaNombre: getReferenciaNombre(p.tipo, p.referenciaId),
+            permiso: p.permiso as NivelPermiso,
+            creadoEn: p.creadoEn.toISOString()
+        }))
 
         return NextResponse.json({
             privilegios: uiPrivilegios,
             roles: roles.map(r => ({ id: r.id, name: r.name })),
-            usuarios: users.map(u => ({ id: u.id, name: u.name || u.username, username: u.username }))
+            usuarios: users.map(u => ({ id: u.id, name: u.name || u.username, username: u.username })),
+            sucursales: sucursales.map(s => ({ id: s.id, nombre: s.nombre })),
+            licitaciones: licitaciones.map(l => ({ id: String(l.licId), nombre: l.licitacionHomologada ? `${l.licitacionHomologada} (#${l.licId})` : `Licitación #${l.licId}` })),
+            colegios: colegios
         })
     } catch (error: any) {
         console.error('Error al obtener privilegios:', error?.message)

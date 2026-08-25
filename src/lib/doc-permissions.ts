@@ -4,6 +4,7 @@ import { NivelPermiso } from '@/types/documentos'
 const PERMISSION_WEIGHTS: Record<NivelPermiso, number> = {
     ver: 1,
     descargar: 2,
+    ver_descargar: 2,
     subir: 3,
     administrar: 4
 }
@@ -40,6 +41,59 @@ export function isGlobalDocAdmin(user: any): boolean {
 }
 
 /**
+ * Construye las condiciones OR de búsqueda de privilegios para un usuario,
+ * evaluando Usuario, Rol, Sucursales, Licitaciones y RBDs asignados.
+ */
+export async function getUserPrivilegeConditions(userId: string, userRoleId?: string): Promise<any[]> {
+    const matchConditions: any[] = [
+        { tipo: 'usuario', referenciaId: userId }
+    ]
+
+    if (userRoleId) {
+        matchConditions.push({ tipo: 'rol', referenciaId: userRoleId })
+    }
+
+    if (userId) {
+        try {
+            const dbUser = await rawPrisma.user.findUnique({
+                where: { id: userId },
+                select: {
+                    roleId: true,
+                    rbds: true,
+                    sucursales: { select: { id: true } },
+                    licitaciones: { select: { licId: true } }
+                }
+            })
+
+            if (dbUser) {
+                if (dbUser.roleId && !userRoleId) {
+                    matchConditions.push({ tipo: 'rol', referenciaId: dbUser.roleId })
+                }
+
+                const sucursalIds = dbUser.sucursales.map(s => s.id)
+                if (sucursalIds.length > 0) {
+                    matchConditions.push({ tipo: 'sucursal', referenciaId: { in: sucursalIds } })
+                }
+
+                const licitacionIds = dbUser.licitaciones.map(l => String(l.licId))
+                if (licitacionIds.length > 0) {
+                    matchConditions.push({ tipo: 'licitacion', referenciaId: { in: licitacionIds } })
+                }
+
+                const rbds = dbUser.rbds || []
+                if (rbds.length > 0) {
+                    matchConditions.push({ tipo: 'rbd', referenciaId: { in: rbds.map(String) } })
+                }
+            }
+        } catch (e) {
+            console.error('Error al obtener relaciones de usuario para permisos documentales:', e)
+        }
+    }
+
+    return matchConditions
+}
+
+/**
  * Verifica si un usuario tiene un nivel de permiso específico sobre una carpeta documental.
  */
 export async function canUserAccessFolder(
@@ -56,13 +110,7 @@ export async function canUserAccessFolder(
         return true
     }
 
-    // Buscar privilegios asociados a la carpeta para este usuario o su rol
-    const matchConditions: any[] = [
-        { tipo: 'usuario', referenciaId: userId }
-    ]
-    if (userRoleId) {
-        matchConditions.push({ tipo: 'rol', referenciaId: userRoleId })
-    }
+    const matchConditions = await getUserPrivilegeConditions(userId, userRoleId)
 
     const privilegios = await rawPrisma.privilegioDocumental.findMany({
         where: {
@@ -115,12 +163,7 @@ export async function getUserFolderPermissions(
     const userId = user.id
     const userRoleId = user.roleId || user.role?.id
 
-    const matchConditions: any[] = [
-        { tipo: 'usuario', referenciaId: userId }
-    ]
-    if (userRoleId) {
-        matchConditions.push({ tipo: 'rol', referenciaId: userRoleId })
-    }
+    const matchConditions = await getUserPrivilegeConditions(userId, userRoleId)
 
     const privilegios = await rawPrisma.privilegioDocumental.findMany({
         where: {
@@ -165,12 +208,7 @@ export async function getFolderIdsForUser(user: any): Promise<string[]> {
     const userId = user.id
     const userRoleId = user.roleId || user.role?.id
 
-    const matchConditions: any[] = [
-        { tipo: 'usuario', referenciaId: userId }
-    ]
-    if (userRoleId) {
-        matchConditions.push({ tipo: 'rol', referenciaId: userRoleId })
-    }
+    const matchConditions = await getUserPrivilegeConditions(userId, userRoleId)
 
     const privilegios = await rawPrisma.privilegioDocumental.findMany({
         where: {

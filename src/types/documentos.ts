@@ -55,8 +55,8 @@ export interface DriveItemVersion {
     }
 }
 
-export type NivelPermiso = 'ver' | 'descargar' | 'subir' | 'administrar'
-export type TipoPrivilegio = 'rol' | 'usuario'
+export type NivelPermiso = 'ver' | 'descargar' | 'ver_descargar' | 'subir' | 'administrar'
+export type TipoPrivilegio = 'rol' | 'usuario' | 'sucursal' | 'licitacion' | 'rbd'
 
 export interface PrivilegioUI {
     id: string
@@ -64,7 +64,7 @@ export interface PrivilegioUI {
     carpetaNombre?: string
     tipo: TipoPrivilegio
     referenciaId: string
-    referenciaNombre: string  // Nombre legible del Rol o Usuario
+    referenciaNombre: string  // Nombre legible del Rol, Usuario, Sucursal, Licitación o Colegio
     permiso: NivelPermiso
     creadoEn?: string
 }
