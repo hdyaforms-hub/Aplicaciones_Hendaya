@@ -37,7 +37,7 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
     },
     {
         name: 'Aplicaciones',
-        icon: '📁',
+        icon: '📱',
         requiredPermission: ['view_ingreso_raciones', 'view_solicitud_pan', 'view_solicitud_gas', 'view_retiro_saldos'],
         subItems: [
             { name: 'Ingreso de Raciones', href: '/dashboard/ingreso-raciones', requiredPermission: 'view_ingreso_raciones' },
@@ -48,7 +48,7 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
     },
     {
         name: 'Gestor Documental',
-        icon: '🗂️',
+        icon: '🗄️',
         href: '/dashboard/documentos',
         requiredPermission: 'view_documentos'
     },
@@ -157,7 +157,7 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
 
     {
         name: 'Matriz de riesgo',
-        icon: '📋',
+        icon: '🛡️',
         requiredPermission: ['view_matriz_riesgo', 'fill_nueva_matriz', 'view_detalle_matriz', 'manage_matriz_2026', 'manage_evaluacion_detallada', 'manage_mitigacion', 'close_matriz_riesgo', 'view_historico_matriz', 'view_estado_avance', 'view_auditoria', 'view_inf_auditoria_mitigacion', 'view_hoja_b_estandar_pae'],
         subItems: [
             { name: 'Ingresar nueva Matriz', href: '/dashboard/matriz-riesgo/ingresar', requiredPermission: 'fill_nueva_matriz' },
@@ -192,7 +192,7 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
     },
     {
         name: 'Actas',
-        icon: '📋',
+        icon: '📜',
         requiredPermission: ['view_generar_actas', 'view_descargar_actas'],
         subItems: [
             { name: 'Generar Acta', href: '/dashboard/actas/generar-acta', requiredPermission: 'view_generar_actas' },
