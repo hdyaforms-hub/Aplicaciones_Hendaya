@@ -52,6 +52,7 @@ next-env.d.ts
 /update_admin.js
 /check_db_config.ts
 /test-*.js
+/test-*.mjs
 /curl_error.html
 
 # uploads
@@ -61,3 +62,6 @@ next-env.d.ts
 src/generated/client/*.tmp*
 # scratch
 /scratch
+
+# certs
+certs/

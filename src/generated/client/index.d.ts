@@ -10079,6 +10079,7 @@ export namespace Prisma {
     sucursales: number
     allowedForms: number
     areas: number
+    licitaciones: number
     delegaciones: number
   }
 
@@ -10086,6 +10087,7 @@ export namespace Prisma {
     sucursales?: boolean | UserCountOutputTypeCountSucursalesArgs
     allowedForms?: boolean | UserCountOutputTypeCountAllowedFormsArgs
     areas?: boolean | UserCountOutputTypeCountAreasArgs
+    licitaciones?: boolean | UserCountOutputTypeCountLicitacionesArgs
     delegaciones?: boolean | UserCountOutputTypeCountDelegacionesArgs
   }
 
@@ -10119,6 +10121,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountAreasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AreaWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountLicitacionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LicitacionWhereInput
   }
 
   /**
@@ -10171,6 +10180,7 @@ export namespace Prisma {
     vehiculos: number
     matrices: number
     actasPlantillas: number
+    users: number
   }
 
   export type LicitacionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -10180,6 +10190,7 @@ export namespace Prisma {
     vehiculos?: boolean | LicitacionCountOutputTypeCountVehiculosArgs
     matrices?: boolean | LicitacionCountOutputTypeCountMatricesArgs
     actasPlantillas?: boolean | LicitacionCountOutputTypeCountActasPlantillasArgs
+    users?: boolean | LicitacionCountOutputTypeCountUsersArgs
   }
 
   // Custom InputTypes
@@ -10233,6 +10244,13 @@ export namespace Prisma {
    */
   export type LicitacionCountOutputTypeCountActasPlantillasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ActaSupervisionPlantillaWhereInput
+  }
+
+  /**
+   * LicitacionCountOutputType without action
+   */
+  export type LicitacionCountOutputTypeCountUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWhereInput
   }
 
 
@@ -12742,6 +12760,7 @@ export namespace Prisma {
     sucursales?: boolean | User$sucursalesArgs<ExtArgs>
     allowedForms?: boolean | User$allowedFormsArgs<ExtArgs>
     areas?: boolean | User$areasArgs<ExtArgs>
+    licitaciones?: boolean | User$licitacionesArgs<ExtArgs>
     delegaciones?: boolean | User$delegacionesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
@@ -12784,6 +12803,7 @@ export namespace Prisma {
     sucursales?: boolean | User$sucursalesArgs<ExtArgs>
     allowedForms?: boolean | User$allowedFormsArgs<ExtArgs>
     areas?: boolean | User$areasArgs<ExtArgs>
+    licitaciones?: boolean | User$licitacionesArgs<ExtArgs>
     delegaciones?: boolean | User$delegacionesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -12798,6 +12818,7 @@ export namespace Prisma {
       sucursales: Prisma.$SucursalPayload<ExtArgs>[]
       allowedForms: Prisma.$FormDefinitionPayload<ExtArgs>[]
       areas: Prisma.$AreaPayload<ExtArgs>[]
+      licitaciones: Prisma.$LicitacionPayload<ExtArgs>[]
       delegaciones: Prisma.$DelegacionVisualizacionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -13182,6 +13203,7 @@ export namespace Prisma {
     sucursales<T extends User$sucursalesArgs<ExtArgs> = {}>(args?: Subset<T, User$sucursalesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SucursalPayload<ExtArgs>, T, "findMany"> | Null>
     allowedForms<T extends User$allowedFormsArgs<ExtArgs> = {}>(args?: Subset<T, User$allowedFormsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormDefinitionPayload<ExtArgs>, T, "findMany"> | Null>
     areas<T extends User$areasArgs<ExtArgs> = {}>(args?: Subset<T, User$areasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AreaPayload<ExtArgs>, T, "findMany"> | Null>
+    licitaciones<T extends User$licitacionesArgs<ExtArgs> = {}>(args?: Subset<T, User$licitacionesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LicitacionPayload<ExtArgs>, T, "findMany"> | Null>
     delegaciones<T extends User$delegacionesArgs<ExtArgs> = {}>(args?: Subset<T, User$delegacionesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DelegacionVisualizacionPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -13600,6 +13622,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: AreaScalarFieldEnum | AreaScalarFieldEnum[]
+  }
+
+  /**
+   * User.licitaciones
+   */
+  export type User$licitacionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Licitacion
+     */
+    select?: LicitacionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LicitacionInclude<ExtArgs> | null
+    where?: LicitacionWhereInput
+    orderBy?: LicitacionOrderByWithRelationInput | LicitacionOrderByWithRelationInput[]
+    cursor?: LicitacionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LicitacionScalarFieldEnum | LicitacionScalarFieldEnum[]
   }
 
   /**
@@ -22704,6 +22746,7 @@ export namespace Prisma {
     vehiculos?: boolean | Licitacion$vehiculosArgs<ExtArgs>
     matrices?: boolean | Licitacion$matricesArgs<ExtArgs>
     actasPlantillas?: boolean | Licitacion$actasPlantillasArgs<ExtArgs>
+    users?: boolean | Licitacion$usersArgs<ExtArgs>
     _count?: boolean | LicitacionCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["licitacion"]>
 
@@ -22730,6 +22773,7 @@ export namespace Prisma {
     vehiculos?: boolean | Licitacion$vehiculosArgs<ExtArgs>
     matrices?: boolean | Licitacion$matricesArgs<ExtArgs>
     actasPlantillas?: boolean | Licitacion$actasPlantillasArgs<ExtArgs>
+    users?: boolean | Licitacion$usersArgs<ExtArgs>
     _count?: boolean | LicitacionCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type LicitacionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -22743,6 +22787,7 @@ export namespace Prisma {
       vehiculos: Prisma.$VehiculoPayload<ExtArgs>[]
       matrices: Prisma.$MatrizT_CabeceraPayload<ExtArgs>[]
       actasPlantillas: Prisma.$ActaSupervisionPlantillaPayload<ExtArgs>[]
+      users: Prisma.$UserPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       licId: number
@@ -23120,6 +23165,7 @@ export namespace Prisma {
     vehiculos<T extends Licitacion$vehiculosArgs<ExtArgs> = {}>(args?: Subset<T, Licitacion$vehiculosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VehiculoPayload<ExtArgs>, T, "findMany"> | Null>
     matrices<T extends Licitacion$matricesArgs<ExtArgs> = {}>(args?: Subset<T, Licitacion$matricesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MatrizT_CabeceraPayload<ExtArgs>, T, "findMany"> | Null>
     actasPlantillas<T extends Licitacion$actasPlantillasArgs<ExtArgs> = {}>(args?: Subset<T, Licitacion$actasPlantillasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActaSupervisionPlantillaPayload<ExtArgs>, T, "findMany"> | Null>
+    users<T extends Licitacion$usersArgs<ExtArgs> = {}>(args?: Subset<T, Licitacion$usersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -23585,6 +23631,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ActaSupervisionPlantillaScalarFieldEnum | ActaSupervisionPlantillaScalarFieldEnum[]
+  }
+
+  /**
+   * Licitacion.users
+   */
+  export type Licitacion$usersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    cursor?: UserWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
   /**
@@ -123476,6 +123542,7 @@ export namespace Prisma {
     sucursales?: SucursalListRelationFilter
     allowedForms?: FormDefinitionListRelationFilter
     areas?: AreaListRelationFilter
+    licitaciones?: LicitacionListRelationFilter
     delegaciones?: DelegacionVisualizacionListRelationFilter
   }
 
@@ -123497,6 +123564,7 @@ export namespace Prisma {
     sucursales?: SucursalOrderByRelationAggregateInput
     allowedForms?: FormDefinitionOrderByRelationAggregateInput
     areas?: AreaOrderByRelationAggregateInput
+    licitaciones?: LicitacionOrderByRelationAggregateInput
     delegaciones?: DelegacionVisualizacionOrderByRelationAggregateInput
   }
 
@@ -123521,6 +123589,7 @@ export namespace Prisma {
     sucursales?: SucursalListRelationFilter
     allowedForms?: FormDefinitionListRelationFilter
     areas?: AreaListRelationFilter
+    licitaciones?: LicitacionListRelationFilter
     delegaciones?: DelegacionVisualizacionListRelationFilter
   }, "id" | "username" | "email">
 
@@ -124278,6 +124347,7 @@ export namespace Prisma {
     vehiculos?: VehiculoListRelationFilter
     matrices?: MatrizT_CabeceraListRelationFilter
     actasPlantillas?: ActaSupervisionPlantillaListRelationFilter
+    users?: UserListRelationFilter
   }
 
   export type LicitacionOrderByWithRelationInput = {
@@ -124292,6 +124362,7 @@ export namespace Prisma {
     vehiculos?: VehiculoOrderByRelationAggregateInput
     matrices?: MatrizT_CabeceraOrderByRelationAggregateInput
     actasPlantillas?: ActaSupervisionPlantillaOrderByRelationAggregateInput
+    users?: UserOrderByRelationAggregateInput
   }
 
   export type LicitacionWhereUniqueInput = Prisma.AtLeast<{
@@ -124309,6 +124380,7 @@ export namespace Prisma {
     vehiculos?: VehiculoListRelationFilter
     matrices?: MatrizT_CabeceraListRelationFilter
     actasPlantillas?: ActaSupervisionPlantillaListRelationFilter
+    users?: UserListRelationFilter
   }, "licId">
 
   export type LicitacionOrderByWithAggregationInput = {
@@ -132394,6 +132466,7 @@ export namespace Prisma {
     sucursales?: SucursalCreateNestedManyWithoutUsersInput
     allowedForms?: FormDefinitionCreateNestedManyWithoutAllowedUsersInput
     areas?: AreaCreateNestedManyWithoutUsersInput
+    licitaciones?: LicitacionCreateNestedManyWithoutUsersInput
     delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutUserInput
   }
 
@@ -132414,6 +132487,7 @@ export namespace Prisma {
     sucursales?: SucursalUncheckedCreateNestedManyWithoutUsersInput
     allowedForms?: FormDefinitionUncheckedCreateNestedManyWithoutAllowedUsersInput
     areas?: AreaUncheckedCreateNestedManyWithoutUsersInput
+    licitaciones?: LicitacionUncheckedCreateNestedManyWithoutUsersInput
     delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -132434,6 +132508,7 @@ export namespace Prisma {
     sucursales?: SucursalUpdateManyWithoutUsersNestedInput
     allowedForms?: FormDefinitionUpdateManyWithoutAllowedUsersNestedInput
     areas?: AreaUpdateManyWithoutUsersNestedInput
+    licitaciones?: LicitacionUpdateManyWithoutUsersNestedInput
     delegaciones?: DelegacionVisualizacionUpdateManyWithoutUserNestedInput
   }
 
@@ -132454,6 +132529,7 @@ export namespace Prisma {
     sucursales?: SucursalUncheckedUpdateManyWithoutUsersNestedInput
     allowedForms?: FormDefinitionUncheckedUpdateManyWithoutAllowedUsersNestedInput
     areas?: AreaUncheckedUpdateManyWithoutUsersNestedInput
+    licitaciones?: LicitacionUncheckedUpdateManyWithoutUsersNestedInput
     delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -133314,6 +133390,7 @@ export namespace Prisma {
     vehiculos?: VehiculoCreateNestedManyWithoutLicitacionInput
     matrices?: MatrizT_CabeceraCreateNestedManyWithoutLicitacionInput
     actasPlantillas?: ActaSupervisionPlantillaCreateNestedManyWithoutLicitacionInput
+    users?: UserCreateNestedManyWithoutLicitacionesInput
   }
 
   export type LicitacionUncheckedCreateInput = {
@@ -133328,6 +133405,7 @@ export namespace Prisma {
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutLicitacionInput
     matrices?: MatrizT_CabeceraUncheckedCreateNestedManyWithoutLicitacionInput
     actasPlantillas?: ActaSupervisionPlantillaUncheckedCreateNestedManyWithoutLicitacionInput
+    users?: UserUncheckedCreateNestedManyWithoutLicitacionesInput
   }
 
   export type LicitacionUpdateInput = {
@@ -133341,6 +133419,7 @@ export namespace Prisma {
     vehiculos?: VehiculoUpdateManyWithoutLicitacionNestedInput
     matrices?: MatrizT_CabeceraUpdateManyWithoutLicitacionNestedInput
     actasPlantillas?: ActaSupervisionPlantillaUpdateManyWithoutLicitacionNestedInput
+    users?: UserUpdateManyWithoutLicitacionesNestedInput
   }
 
   export type LicitacionUncheckedUpdateInput = {
@@ -133355,6 +133434,7 @@ export namespace Prisma {
     vehiculos?: VehiculoUncheckedUpdateManyWithoutLicitacionNestedInput
     matrices?: MatrizT_CabeceraUncheckedUpdateManyWithoutLicitacionNestedInput
     actasPlantillas?: ActaSupervisionPlantillaUncheckedUpdateManyWithoutLicitacionNestedInput
+    users?: UserUncheckedUpdateManyWithoutLicitacionesNestedInput
   }
 
   export type LicitacionCreateManyInput = {
@@ -142527,6 +142607,12 @@ export namespace Prisma {
     none?: AreaWhereInput
   }
 
+  export type LicitacionListRelationFilter = {
+    every?: LicitacionWhereInput
+    some?: LicitacionWhereInput
+    none?: LicitacionWhereInput
+  }
+
   export type DelegacionVisualizacionListRelationFilter = {
     every?: DelegacionVisualizacionWhereInput
     some?: DelegacionVisualizacionWhereInput
@@ -142542,6 +142628,10 @@ export namespace Prisma {
   }
 
   export type AreaOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type LicitacionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -148618,6 +148708,12 @@ export namespace Prisma {
     connect?: AreaWhereUniqueInput | AreaWhereUniqueInput[]
   }
 
+  export type LicitacionCreateNestedManyWithoutUsersInput = {
+    create?: XOR<LicitacionCreateWithoutUsersInput, LicitacionUncheckedCreateWithoutUsersInput> | LicitacionCreateWithoutUsersInput[] | LicitacionUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: LicitacionCreateOrConnectWithoutUsersInput | LicitacionCreateOrConnectWithoutUsersInput[]
+    connect?: LicitacionWhereUniqueInput | LicitacionWhereUniqueInput[]
+  }
+
   export type DelegacionVisualizacionCreateNestedManyWithoutUserInput = {
     create?: XOR<DelegacionVisualizacionCreateWithoutUserInput, DelegacionVisualizacionUncheckedCreateWithoutUserInput> | DelegacionVisualizacionCreateWithoutUserInput[] | DelegacionVisualizacionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: DelegacionVisualizacionCreateOrConnectWithoutUserInput | DelegacionVisualizacionCreateOrConnectWithoutUserInput[]
@@ -148641,6 +148737,12 @@ export namespace Prisma {
     create?: XOR<AreaCreateWithoutUsersInput, AreaUncheckedCreateWithoutUsersInput> | AreaCreateWithoutUsersInput[] | AreaUncheckedCreateWithoutUsersInput[]
     connectOrCreate?: AreaCreateOrConnectWithoutUsersInput | AreaCreateOrConnectWithoutUsersInput[]
     connect?: AreaWhereUniqueInput | AreaWhereUniqueInput[]
+  }
+
+  export type LicitacionUncheckedCreateNestedManyWithoutUsersInput = {
+    create?: XOR<LicitacionCreateWithoutUsersInput, LicitacionUncheckedCreateWithoutUsersInput> | LicitacionCreateWithoutUsersInput[] | LicitacionUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: LicitacionCreateOrConnectWithoutUsersInput | LicitacionCreateOrConnectWithoutUsersInput[]
+    connect?: LicitacionWhereUniqueInput | LicitacionWhereUniqueInput[]
   }
 
   export type DelegacionVisualizacionUncheckedCreateNestedManyWithoutUserInput = {
@@ -148706,6 +148808,19 @@ export namespace Prisma {
     deleteMany?: AreaScalarWhereInput | AreaScalarWhereInput[]
   }
 
+  export type LicitacionUpdateManyWithoutUsersNestedInput = {
+    create?: XOR<LicitacionCreateWithoutUsersInput, LicitacionUncheckedCreateWithoutUsersInput> | LicitacionCreateWithoutUsersInput[] | LicitacionUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: LicitacionCreateOrConnectWithoutUsersInput | LicitacionCreateOrConnectWithoutUsersInput[]
+    upsert?: LicitacionUpsertWithWhereUniqueWithoutUsersInput | LicitacionUpsertWithWhereUniqueWithoutUsersInput[]
+    set?: LicitacionWhereUniqueInput | LicitacionWhereUniqueInput[]
+    disconnect?: LicitacionWhereUniqueInput | LicitacionWhereUniqueInput[]
+    delete?: LicitacionWhereUniqueInput | LicitacionWhereUniqueInput[]
+    connect?: LicitacionWhereUniqueInput | LicitacionWhereUniqueInput[]
+    update?: LicitacionUpdateWithWhereUniqueWithoutUsersInput | LicitacionUpdateWithWhereUniqueWithoutUsersInput[]
+    updateMany?: LicitacionUpdateManyWithWhereWithoutUsersInput | LicitacionUpdateManyWithWhereWithoutUsersInput[]
+    deleteMany?: LicitacionScalarWhereInput | LicitacionScalarWhereInput[]
+  }
+
   export type DelegacionVisualizacionUpdateManyWithoutUserNestedInput = {
     create?: XOR<DelegacionVisualizacionCreateWithoutUserInput, DelegacionVisualizacionUncheckedCreateWithoutUserInput> | DelegacionVisualizacionCreateWithoutUserInput[] | DelegacionVisualizacionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: DelegacionVisualizacionCreateOrConnectWithoutUserInput | DelegacionVisualizacionCreateOrConnectWithoutUserInput[]
@@ -148757,6 +148872,19 @@ export namespace Prisma {
     update?: AreaUpdateWithWhereUniqueWithoutUsersInput | AreaUpdateWithWhereUniqueWithoutUsersInput[]
     updateMany?: AreaUpdateManyWithWhereWithoutUsersInput | AreaUpdateManyWithWhereWithoutUsersInput[]
     deleteMany?: AreaScalarWhereInput | AreaScalarWhereInput[]
+  }
+
+  export type LicitacionUncheckedUpdateManyWithoutUsersNestedInput = {
+    create?: XOR<LicitacionCreateWithoutUsersInput, LicitacionUncheckedCreateWithoutUsersInput> | LicitacionCreateWithoutUsersInput[] | LicitacionUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: LicitacionCreateOrConnectWithoutUsersInput | LicitacionCreateOrConnectWithoutUsersInput[]
+    upsert?: LicitacionUpsertWithWhereUniqueWithoutUsersInput | LicitacionUpsertWithWhereUniqueWithoutUsersInput[]
+    set?: LicitacionWhereUniqueInput | LicitacionWhereUniqueInput[]
+    disconnect?: LicitacionWhereUniqueInput | LicitacionWhereUniqueInput[]
+    delete?: LicitacionWhereUniqueInput | LicitacionWhereUniqueInput[]
+    connect?: LicitacionWhereUniqueInput | LicitacionWhereUniqueInput[]
+    update?: LicitacionUpdateWithWhereUniqueWithoutUsersInput | LicitacionUpdateWithWhereUniqueWithoutUsersInput[]
+    updateMany?: LicitacionUpdateManyWithWhereWithoutUsersInput | LicitacionUpdateManyWithWhereWithoutUsersInput[]
+    deleteMany?: LicitacionScalarWhereInput | LicitacionScalarWhereInput[]
   }
 
   export type DelegacionVisualizacionUncheckedUpdateManyWithoutUserNestedInput = {
@@ -148927,6 +149055,12 @@ export namespace Prisma {
     connect?: ActaSupervisionPlantillaWhereUniqueInput | ActaSupervisionPlantillaWhereUniqueInput[]
   }
 
+  export type UserCreateNestedManyWithoutLicitacionesInput = {
+    create?: XOR<UserCreateWithoutLicitacionesInput, UserUncheckedCreateWithoutLicitacionesInput> | UserCreateWithoutLicitacionesInput[] | UserUncheckedCreateWithoutLicitacionesInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutLicitacionesInput | UserCreateOrConnectWithoutLicitacionesInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  }
+
   export type UTUncheckedCreateNestedManyWithoutLicitacionInput = {
     create?: XOR<UTCreateWithoutLicitacionInput, UTUncheckedCreateWithoutLicitacionInput> | UTCreateWithoutLicitacionInput[] | UTUncheckedCreateWithoutLicitacionInput[]
     connectOrCreate?: UTCreateOrConnectWithoutLicitacionInput | UTCreateOrConnectWithoutLicitacionInput[]
@@ -148967,6 +149101,12 @@ export namespace Prisma {
     connectOrCreate?: ActaSupervisionPlantillaCreateOrConnectWithoutLicitacionInput | ActaSupervisionPlantillaCreateOrConnectWithoutLicitacionInput[]
     createMany?: ActaSupervisionPlantillaCreateManyLicitacionInputEnvelope
     connect?: ActaSupervisionPlantillaWhereUniqueInput | ActaSupervisionPlantillaWhereUniqueInput[]
+  }
+
+  export type UserUncheckedCreateNestedManyWithoutLicitacionesInput = {
+    create?: XOR<UserCreateWithoutLicitacionesInput, UserUncheckedCreateWithoutLicitacionesInput> | UserCreateWithoutLicitacionesInput[] | UserUncheckedCreateWithoutLicitacionesInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutLicitacionesInput | UserCreateOrConnectWithoutLicitacionesInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
   }
 
   export type UTUpdateManyWithoutLicitacionNestedInput = {
@@ -149053,6 +149193,19 @@ export namespace Prisma {
     deleteMany?: ActaSupervisionPlantillaScalarWhereInput | ActaSupervisionPlantillaScalarWhereInput[]
   }
 
+  export type UserUpdateManyWithoutLicitacionesNestedInput = {
+    create?: XOR<UserCreateWithoutLicitacionesInput, UserUncheckedCreateWithoutLicitacionesInput> | UserCreateWithoutLicitacionesInput[] | UserUncheckedCreateWithoutLicitacionesInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutLicitacionesInput | UserCreateOrConnectWithoutLicitacionesInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutLicitacionesInput | UserUpsertWithWhereUniqueWithoutLicitacionesInput[]
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutLicitacionesInput | UserUpdateWithWhereUniqueWithoutLicitacionesInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutLicitacionesInput | UserUpdateManyWithWhereWithoutLicitacionesInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
+  }
+
   export type UTUncheckedUpdateManyWithoutLicitacionNestedInput = {
     create?: XOR<UTCreateWithoutLicitacionInput, UTUncheckedCreateWithoutLicitacionInput> | UTCreateWithoutLicitacionInput[] | UTUncheckedCreateWithoutLicitacionInput[]
     connectOrCreate?: UTCreateOrConnectWithoutLicitacionInput | UTCreateOrConnectWithoutLicitacionInput[]
@@ -149135,6 +149288,19 @@ export namespace Prisma {
     update?: ActaSupervisionPlantillaUpdateWithWhereUniqueWithoutLicitacionInput | ActaSupervisionPlantillaUpdateWithWhereUniqueWithoutLicitacionInput[]
     updateMany?: ActaSupervisionPlantillaUpdateManyWithWhereWithoutLicitacionInput | ActaSupervisionPlantillaUpdateManyWithWhereWithoutLicitacionInput[]
     deleteMany?: ActaSupervisionPlantillaScalarWhereInput | ActaSupervisionPlantillaScalarWhereInput[]
+  }
+
+  export type UserUncheckedUpdateManyWithoutLicitacionesNestedInput = {
+    create?: XOR<UserCreateWithoutLicitacionesInput, UserUncheckedCreateWithoutLicitacionesInput> | UserCreateWithoutLicitacionesInput[] | UserUncheckedCreateWithoutLicitacionesInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutLicitacionesInput | UserCreateOrConnectWithoutLicitacionesInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutLicitacionesInput | UserUpsertWithWhereUniqueWithoutLicitacionesInput[]
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutLicitacionesInput | UserUpdateWithWhereUniqueWithoutLicitacionesInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutLicitacionesInput | UserUpdateManyWithWhereWithoutLicitacionesInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
   }
 
   export type LicitacionCreateNestedOneWithoutAspectosEEInput = {
@@ -153090,6 +153256,7 @@ export namespace Prisma {
     sucursales?: SucursalCreateNestedManyWithoutUsersInput
     allowedForms?: FormDefinitionCreateNestedManyWithoutAllowedUsersInput
     areas?: AreaCreateNestedManyWithoutUsersInput
+    licitaciones?: LicitacionCreateNestedManyWithoutUsersInput
     delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutUserInput
   }
 
@@ -153109,6 +153276,7 @@ export namespace Prisma {
     sucursales?: SucursalUncheckedCreateNestedManyWithoutUsersInput
     allowedForms?: FormDefinitionUncheckedCreateNestedManyWithoutAllowedUsersInput
     areas?: AreaUncheckedCreateNestedManyWithoutUsersInput
+    licitaciones?: LicitacionUncheckedCreateNestedManyWithoutUsersInput
     delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -153282,6 +153450,38 @@ export namespace Prisma {
     create: XOR<AreaCreateWithoutUsersInput, AreaUncheckedCreateWithoutUsersInput>
   }
 
+  export type LicitacionCreateWithoutUsersInput = {
+    licitacionHomologada?: string | null
+    estado?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    uts?: UTCreateNestedManyWithoutLicitacionInput
+    aspectosEE?: AspectoEECreateNestedManyWithoutLicitacionInput
+    jefesZonales?: JefeZonalLicitacionCreateNestedManyWithoutLicitacionInput
+    vehiculos?: VehiculoCreateNestedManyWithoutLicitacionInput
+    matrices?: MatrizT_CabeceraCreateNestedManyWithoutLicitacionInput
+    actasPlantillas?: ActaSupervisionPlantillaCreateNestedManyWithoutLicitacionInput
+  }
+
+  export type LicitacionUncheckedCreateWithoutUsersInput = {
+    licId?: number
+    licitacionHomologada?: string | null
+    estado?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    uts?: UTUncheckedCreateNestedManyWithoutLicitacionInput
+    aspectosEE?: AspectoEEUncheckedCreateNestedManyWithoutLicitacionInput
+    jefesZonales?: JefeZonalLicitacionUncheckedCreateNestedManyWithoutLicitacionInput
+    vehiculos?: VehiculoUncheckedCreateNestedManyWithoutLicitacionInput
+    matrices?: MatrizT_CabeceraUncheckedCreateNestedManyWithoutLicitacionInput
+    actasPlantillas?: ActaSupervisionPlantillaUncheckedCreateNestedManyWithoutLicitacionInput
+  }
+
+  export type LicitacionCreateOrConnectWithoutUsersInput = {
+    where: LicitacionWhereUniqueInput
+    create: XOR<LicitacionCreateWithoutUsersInput, LicitacionUncheckedCreateWithoutUsersInput>
+  }
+
   export type DelegacionVisualizacionCreateWithoutUserInput = {
     id?: string
     createdAt?: Date | string
@@ -153423,6 +153623,33 @@ export namespace Prisma {
     isActive?: BoolFilter<"Area"> | boolean
     createdAt?: DateTimeFilter<"Area"> | Date | string
     updatedAt?: DateTimeFilter<"Area"> | Date | string
+  }
+
+  export type LicitacionUpsertWithWhereUniqueWithoutUsersInput = {
+    where: LicitacionWhereUniqueInput
+    update: XOR<LicitacionUpdateWithoutUsersInput, LicitacionUncheckedUpdateWithoutUsersInput>
+    create: XOR<LicitacionCreateWithoutUsersInput, LicitacionUncheckedCreateWithoutUsersInput>
+  }
+
+  export type LicitacionUpdateWithWhereUniqueWithoutUsersInput = {
+    where: LicitacionWhereUniqueInput
+    data: XOR<LicitacionUpdateWithoutUsersInput, LicitacionUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type LicitacionUpdateManyWithWhereWithoutUsersInput = {
+    where: LicitacionScalarWhereInput
+    data: XOR<LicitacionUpdateManyMutationInput, LicitacionUncheckedUpdateManyWithoutUsersInput>
+  }
+
+  export type LicitacionScalarWhereInput = {
+    AND?: LicitacionScalarWhereInput | LicitacionScalarWhereInput[]
+    OR?: LicitacionScalarWhereInput[]
+    NOT?: LicitacionScalarWhereInput | LicitacionScalarWhereInput[]
+    licId?: IntFilter<"Licitacion"> | number
+    licitacionHomologada?: StringNullableFilter<"Licitacion"> | string | null
+    estado?: IntFilter<"Licitacion"> | number
+    createdAt?: DateTimeFilter<"Licitacion"> | Date | string
+    updatedAt?: DateTimeFilter<"Licitacion"> | Date | string
   }
 
   export type DelegacionVisualizacionUpsertWithWhereUniqueWithoutUserInput = {
@@ -153917,6 +154144,51 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type UserCreateWithoutLicitacionesInput = {
+    id?: string
+    username: string
+    email?: string | null
+    passwordHash: string
+    name?: string | null
+    isActive?: boolean
+    isDeleted?: boolean
+    mustChangePassword?: boolean
+    canReceiveCollab?: boolean
+    rbds?: UserCreaterbdsInput | number[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    role: RoleCreateNestedOneWithoutUsersInput
+    sucursales?: SucursalCreateNestedManyWithoutUsersInput
+    allowedForms?: FormDefinitionCreateNestedManyWithoutAllowedUsersInput
+    areas?: AreaCreateNestedManyWithoutUsersInput
+    delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutLicitacionesInput = {
+    id?: string
+    username: string
+    email?: string | null
+    passwordHash: string
+    name?: string | null
+    roleId: string
+    isActive?: boolean
+    isDeleted?: boolean
+    mustChangePassword?: boolean
+    canReceiveCollab?: boolean
+    rbds?: UserCreaterbdsInput | number[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sucursales?: SucursalUncheckedCreateNestedManyWithoutUsersInput
+    allowedForms?: FormDefinitionUncheckedCreateNestedManyWithoutAllowedUsersInput
+    areas?: AreaUncheckedCreateNestedManyWithoutUsersInput
+    delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutLicitacionesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutLicitacionesInput, UserUncheckedCreateWithoutLicitacionesInput>
+  }
+
   export type UTUpsertWithWhereUniqueWithoutLicitacionInput = {
     where: UTWhereUniqueInput
     update: XOR<UTUpdateWithoutLicitacionInput, UTUncheckedUpdateWithoutLicitacionInput>
@@ -154103,6 +154375,22 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"ActaSupervisionPlantilla"> | Date | string
   }
 
+  export type UserUpsertWithWhereUniqueWithoutLicitacionesInput = {
+    where: UserWhereUniqueInput
+    update: XOR<UserUpdateWithoutLicitacionesInput, UserUncheckedUpdateWithoutLicitacionesInput>
+    create: XOR<UserCreateWithoutLicitacionesInput, UserUncheckedCreateWithoutLicitacionesInput>
+  }
+
+  export type UserUpdateWithWhereUniqueWithoutLicitacionesInput = {
+    where: UserWhereUniqueInput
+    data: XOR<UserUpdateWithoutLicitacionesInput, UserUncheckedUpdateWithoutLicitacionesInput>
+  }
+
+  export type UserUpdateManyWithWhereWithoutLicitacionesInput = {
+    where: UserScalarWhereInput
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyWithoutLicitacionesInput>
+  }
+
   export type LicitacionCreateWithoutAspectosEEInput = {
     licitacionHomologada?: string | null
     estado?: number
@@ -154113,6 +154401,7 @@ export namespace Prisma {
     vehiculos?: VehiculoCreateNestedManyWithoutLicitacionInput
     matrices?: MatrizT_CabeceraCreateNestedManyWithoutLicitacionInput
     actasPlantillas?: ActaSupervisionPlantillaCreateNestedManyWithoutLicitacionInput
+    users?: UserCreateNestedManyWithoutLicitacionesInput
   }
 
   export type LicitacionUncheckedCreateWithoutAspectosEEInput = {
@@ -154126,6 +154415,7 @@ export namespace Prisma {
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutLicitacionInput
     matrices?: MatrizT_CabeceraUncheckedCreateNestedManyWithoutLicitacionInput
     actasPlantillas?: ActaSupervisionPlantillaUncheckedCreateNestedManyWithoutLicitacionInput
+    users?: UserUncheckedCreateNestedManyWithoutLicitacionesInput
   }
 
   export type LicitacionCreateOrConnectWithoutAspectosEEInput = {
@@ -154154,6 +154444,7 @@ export namespace Prisma {
     vehiculos?: VehiculoUpdateManyWithoutLicitacionNestedInput
     matrices?: MatrizT_CabeceraUpdateManyWithoutLicitacionNestedInput
     actasPlantillas?: ActaSupervisionPlantillaUpdateManyWithoutLicitacionNestedInput
+    users?: UserUpdateManyWithoutLicitacionesNestedInput
   }
 
   export type LicitacionUncheckedUpdateWithoutAspectosEEInput = {
@@ -154167,6 +154458,7 @@ export namespace Prisma {
     vehiculos?: VehiculoUncheckedUpdateManyWithoutLicitacionNestedInput
     matrices?: MatrizT_CabeceraUncheckedUpdateManyWithoutLicitacionNestedInput
     actasPlantillas?: ActaSupervisionPlantillaUncheckedUpdateManyWithoutLicitacionNestedInput
+    users?: UserUncheckedUpdateManyWithoutLicitacionesNestedInput
   }
 
   export type ListaCorreoCreateWithoutSucursalInput = {
@@ -154328,6 +154620,7 @@ export namespace Prisma {
     role: RoleCreateNestedOneWithoutUsersInput
     allowedForms?: FormDefinitionCreateNestedManyWithoutAllowedUsersInput
     areas?: AreaCreateNestedManyWithoutUsersInput
+    licitaciones?: LicitacionCreateNestedManyWithoutUsersInput
     delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutUserInput
   }
 
@@ -154347,6 +154640,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     allowedForms?: FormDefinitionUncheckedCreateNestedManyWithoutAllowedUsersInput
     areas?: AreaUncheckedCreateNestedManyWithoutUsersInput
+    licitaciones?: LicitacionUncheckedCreateNestedManyWithoutUsersInput
     delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -154739,6 +155033,7 @@ export namespace Prisma {
     vehiculos?: VehiculoCreateNestedManyWithoutLicitacionInput
     matrices?: MatrizT_CabeceraCreateNestedManyWithoutLicitacionInput
     actasPlantillas?: ActaSupervisionPlantillaCreateNestedManyWithoutLicitacionInput
+    users?: UserCreateNestedManyWithoutLicitacionesInput
   }
 
   export type LicitacionUncheckedCreateWithoutUtsInput = {
@@ -154752,6 +155047,7 @@ export namespace Prisma {
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutLicitacionInput
     matrices?: MatrizT_CabeceraUncheckedCreateNestedManyWithoutLicitacionInput
     actasPlantillas?: ActaSupervisionPlantillaUncheckedCreateNestedManyWithoutLicitacionInput
+    users?: UserUncheckedCreateNestedManyWithoutLicitacionesInput
   }
 
   export type LicitacionCreateOrConnectWithoutUtsInput = {
@@ -154905,6 +155201,7 @@ export namespace Prisma {
     vehiculos?: VehiculoUpdateManyWithoutLicitacionNestedInput
     matrices?: MatrizT_CabeceraUpdateManyWithoutLicitacionNestedInput
     actasPlantillas?: ActaSupervisionPlantillaUpdateManyWithoutLicitacionNestedInput
+    users?: UserUpdateManyWithoutLicitacionesNestedInput
   }
 
   export type LicitacionUncheckedUpdateWithoutUtsInput = {
@@ -154918,6 +155215,7 @@ export namespace Prisma {
     vehiculos?: VehiculoUncheckedUpdateManyWithoutLicitacionNestedInput
     matrices?: MatrizT_CabeceraUncheckedUpdateManyWithoutLicitacionNestedInput
     actasPlantillas?: ActaSupervisionPlantillaUncheckedUpdateManyWithoutLicitacionNestedInput
+    users?: UserUncheckedUpdateManyWithoutLicitacionesNestedInput
   }
 
   export type SucursalUpsertWithoutUtsInput = {
@@ -155248,6 +155546,7 @@ export namespace Prisma {
     role: RoleCreateNestedOneWithoutUsersInput
     sucursales?: SucursalCreateNestedManyWithoutUsersInput
     areas?: AreaCreateNestedManyWithoutUsersInput
+    licitaciones?: LicitacionCreateNestedManyWithoutUsersInput
     delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutUserInput
   }
 
@@ -155267,6 +155566,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     sucursales?: SucursalUncheckedCreateNestedManyWithoutUsersInput
     areas?: AreaUncheckedCreateNestedManyWithoutUsersInput
+    licitaciones?: LicitacionUncheckedCreateNestedManyWithoutUsersInput
     delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -155435,6 +155735,7 @@ export namespace Prisma {
     role: RoleCreateNestedOneWithoutUsersInput
     sucursales?: SucursalCreateNestedManyWithoutUsersInput
     allowedForms?: FormDefinitionCreateNestedManyWithoutAllowedUsersInput
+    licitaciones?: LicitacionCreateNestedManyWithoutUsersInput
     delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutUserInput
   }
 
@@ -155454,6 +155755,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     sucursales?: SucursalUncheckedCreateNestedManyWithoutUsersInput
     allowedForms?: FormDefinitionUncheckedCreateNestedManyWithoutAllowedUsersInput
+    licitaciones?: LicitacionUncheckedCreateNestedManyWithoutUsersInput
     delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -156943,6 +157245,7 @@ export namespace Prisma {
     jefesZonales?: JefeZonalLicitacionCreateNestedManyWithoutLicitacionInput
     matrices?: MatrizT_CabeceraCreateNestedManyWithoutLicitacionInput
     actasPlantillas?: ActaSupervisionPlantillaCreateNestedManyWithoutLicitacionInput
+    users?: UserCreateNestedManyWithoutLicitacionesInput
   }
 
   export type LicitacionUncheckedCreateWithoutVehiculosInput = {
@@ -156956,6 +157259,7 @@ export namespace Prisma {
     jefesZonales?: JefeZonalLicitacionUncheckedCreateNestedManyWithoutLicitacionInput
     matrices?: MatrizT_CabeceraUncheckedCreateNestedManyWithoutLicitacionInput
     actasPlantillas?: ActaSupervisionPlantillaUncheckedCreateNestedManyWithoutLicitacionInput
+    users?: UserUncheckedCreateNestedManyWithoutLicitacionesInput
   }
 
   export type LicitacionCreateOrConnectWithoutVehiculosInput = {
@@ -157140,6 +157444,7 @@ export namespace Prisma {
     jefesZonales?: JefeZonalLicitacionUpdateManyWithoutLicitacionNestedInput
     matrices?: MatrizT_CabeceraUpdateManyWithoutLicitacionNestedInput
     actasPlantillas?: ActaSupervisionPlantillaUpdateManyWithoutLicitacionNestedInput
+    users?: UserUpdateManyWithoutLicitacionesNestedInput
   }
 
   export type LicitacionUncheckedUpdateWithoutVehiculosInput = {
@@ -157153,6 +157458,7 @@ export namespace Prisma {
     jefesZonales?: JefeZonalLicitacionUncheckedUpdateManyWithoutLicitacionNestedInput
     matrices?: MatrizT_CabeceraUncheckedUpdateManyWithoutLicitacionNestedInput
     actasPlantillas?: ActaSupervisionPlantillaUncheckedUpdateManyWithoutLicitacionNestedInput
+    users?: UserUncheckedUpdateManyWithoutLicitacionesNestedInput
   }
 
   export type SupervisorVehiculoUpsertWithWhereUniqueWithoutVehiculoInput = {
@@ -157503,6 +157809,7 @@ export namespace Prisma {
     vehiculos?: VehiculoCreateNestedManyWithoutLicitacionInput
     matrices?: MatrizT_CabeceraCreateNestedManyWithoutLicitacionInput
     actasPlantillas?: ActaSupervisionPlantillaCreateNestedManyWithoutLicitacionInput
+    users?: UserCreateNestedManyWithoutLicitacionesInput
   }
 
   export type LicitacionUncheckedCreateWithoutJefesZonalesInput = {
@@ -157516,6 +157823,7 @@ export namespace Prisma {
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutLicitacionInput
     matrices?: MatrizT_CabeceraUncheckedCreateNestedManyWithoutLicitacionInput
     actasPlantillas?: ActaSupervisionPlantillaUncheckedCreateNestedManyWithoutLicitacionInput
+    users?: UserUncheckedCreateNestedManyWithoutLicitacionesInput
   }
 
   export type LicitacionCreateOrConnectWithoutJefesZonalesInput = {
@@ -157583,6 +157891,7 @@ export namespace Prisma {
     vehiculos?: VehiculoUpdateManyWithoutLicitacionNestedInput
     matrices?: MatrizT_CabeceraUpdateManyWithoutLicitacionNestedInput
     actasPlantillas?: ActaSupervisionPlantillaUpdateManyWithoutLicitacionNestedInput
+    users?: UserUpdateManyWithoutLicitacionesNestedInput
   }
 
   export type LicitacionUncheckedUpdateWithoutJefesZonalesInput = {
@@ -157596,6 +157905,7 @@ export namespace Prisma {
     vehiculos?: VehiculoUncheckedUpdateManyWithoutLicitacionNestedInput
     matrices?: MatrizT_CabeceraUncheckedUpdateManyWithoutLicitacionNestedInput
     actasPlantillas?: ActaSupervisionPlantillaUncheckedUpdateManyWithoutLicitacionNestedInput
+    users?: UserUncheckedUpdateManyWithoutLicitacionesNestedInput
   }
 
   export type JefeZonalCreateWithoutSucursalesInput = {
@@ -158788,6 +159098,7 @@ export namespace Prisma {
     jefesZonales?: JefeZonalLicitacionCreateNestedManyWithoutLicitacionInput
     vehiculos?: VehiculoCreateNestedManyWithoutLicitacionInput
     actasPlantillas?: ActaSupervisionPlantillaCreateNestedManyWithoutLicitacionInput
+    users?: UserCreateNestedManyWithoutLicitacionesInput
   }
 
   export type LicitacionUncheckedCreateWithoutMatricesInput = {
@@ -158801,6 +159112,7 @@ export namespace Prisma {
     jefesZonales?: JefeZonalLicitacionUncheckedCreateNestedManyWithoutLicitacionInput
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutLicitacionInput
     actasPlantillas?: ActaSupervisionPlantillaUncheckedCreateNestedManyWithoutLicitacionInput
+    users?: UserUncheckedCreateNestedManyWithoutLicitacionesInput
   }
 
   export type LicitacionCreateOrConnectWithoutMatricesInput = {
@@ -158973,6 +159285,7 @@ export namespace Prisma {
     jefesZonales?: JefeZonalLicitacionUpdateManyWithoutLicitacionNestedInput
     vehiculos?: VehiculoUpdateManyWithoutLicitacionNestedInput
     actasPlantillas?: ActaSupervisionPlantillaUpdateManyWithoutLicitacionNestedInput
+    users?: UserUpdateManyWithoutLicitacionesNestedInput
   }
 
   export type LicitacionUncheckedUpdateWithoutMatricesInput = {
@@ -158986,6 +159299,7 @@ export namespace Prisma {
     jefesZonales?: JefeZonalLicitacionUncheckedUpdateManyWithoutLicitacionNestedInput
     vehiculos?: VehiculoUncheckedUpdateManyWithoutLicitacionNestedInput
     actasPlantillas?: ActaSupervisionPlantillaUncheckedUpdateManyWithoutLicitacionNestedInput
+    users?: UserUncheckedUpdateManyWithoutLicitacionesNestedInput
   }
 
   export type MatrizT_DetalleUpsertWithWhereUniqueWithoutCabeceraInput = {
@@ -159627,6 +159941,7 @@ export namespace Prisma {
     sucursales?: SucursalCreateNestedManyWithoutUsersInput
     allowedForms?: FormDefinitionCreateNestedManyWithoutAllowedUsersInput
     areas?: AreaCreateNestedManyWithoutUsersInput
+    licitaciones?: LicitacionCreateNestedManyWithoutUsersInput
   }
 
   export type UserUncheckedCreateWithoutDelegacionesInput = {
@@ -159646,6 +159961,7 @@ export namespace Prisma {
     sucursales?: SucursalUncheckedCreateNestedManyWithoutUsersInput
     allowedForms?: FormDefinitionUncheckedCreateNestedManyWithoutAllowedUsersInput
     areas?: AreaUncheckedCreateNestedManyWithoutUsersInput
+    licitaciones?: LicitacionUncheckedCreateNestedManyWithoutUsersInput
   }
 
   export type UserCreateOrConnectWithoutDelegacionesInput = {
@@ -159722,6 +160038,7 @@ export namespace Prisma {
     sucursales?: SucursalUpdateManyWithoutUsersNestedInput
     allowedForms?: FormDefinitionUpdateManyWithoutAllowedUsersNestedInput
     areas?: AreaUpdateManyWithoutUsersNestedInput
+    licitaciones?: LicitacionUpdateManyWithoutUsersNestedInput
   }
 
   export type UserUncheckedUpdateWithoutDelegacionesInput = {
@@ -159741,6 +160058,7 @@ export namespace Prisma {
     sucursales?: SucursalUncheckedUpdateManyWithoutUsersNestedInput
     allowedForms?: FormDefinitionUncheckedUpdateManyWithoutAllowedUsersNestedInput
     areas?: AreaUncheckedUpdateManyWithoutUsersNestedInput
+    licitaciones?: LicitacionUncheckedUpdateManyWithoutUsersNestedInput
   }
 
   export type SucursalUpsertWithoutDelegacionesInput = {
@@ -159800,6 +160118,7 @@ export namespace Prisma {
     jefesZonales?: JefeZonalLicitacionCreateNestedManyWithoutLicitacionInput
     vehiculos?: VehiculoCreateNestedManyWithoutLicitacionInput
     matrices?: MatrizT_CabeceraCreateNestedManyWithoutLicitacionInput
+    users?: UserCreateNestedManyWithoutLicitacionesInput
   }
 
   export type LicitacionUncheckedCreateWithoutActasPlantillasInput = {
@@ -159813,6 +160132,7 @@ export namespace Prisma {
     jefesZonales?: JefeZonalLicitacionUncheckedCreateNestedManyWithoutLicitacionInput
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutLicitacionInput
     matrices?: MatrizT_CabeceraUncheckedCreateNestedManyWithoutLicitacionInput
+    users?: UserUncheckedCreateNestedManyWithoutLicitacionesInput
   }
 
   export type LicitacionCreateOrConnectWithoutActasPlantillasInput = {
@@ -159893,6 +160213,7 @@ export namespace Prisma {
     jefesZonales?: JefeZonalLicitacionUpdateManyWithoutLicitacionNestedInput
     vehiculos?: VehiculoUpdateManyWithoutLicitacionNestedInput
     matrices?: MatrizT_CabeceraUpdateManyWithoutLicitacionNestedInput
+    users?: UserUpdateManyWithoutLicitacionesNestedInput
   }
 
   export type LicitacionUncheckedUpdateWithoutActasPlantillasInput = {
@@ -159906,6 +160227,7 @@ export namespace Prisma {
     jefesZonales?: JefeZonalLicitacionUncheckedUpdateManyWithoutLicitacionNestedInput
     vehiculos?: VehiculoUncheckedUpdateManyWithoutLicitacionNestedInput
     matrices?: MatrizT_CabeceraUncheckedUpdateManyWithoutLicitacionNestedInput
+    users?: UserUncheckedUpdateManyWithoutLicitacionesNestedInput
   }
 
   export type ActaSupervisionRespuestaUpsertWithWhereUniqueWithoutPlantillaInput = {
@@ -162951,6 +163273,7 @@ export namespace Prisma {
     sucursales?: SucursalUpdateManyWithoutUsersNestedInput
     allowedForms?: FormDefinitionUpdateManyWithoutAllowedUsersNestedInput
     areas?: AreaUpdateManyWithoutUsersNestedInput
+    licitaciones?: LicitacionUpdateManyWithoutUsersNestedInput
     delegaciones?: DelegacionVisualizacionUpdateManyWithoutUserNestedInput
   }
 
@@ -162970,6 +163293,7 @@ export namespace Prisma {
     sucursales?: SucursalUncheckedUpdateManyWithoutUsersNestedInput
     allowedForms?: FormDefinitionUncheckedUpdateManyWithoutAllowedUsersNestedInput
     areas?: AreaUncheckedUpdateManyWithoutUsersNestedInput
+    licitaciones?: LicitacionUncheckedUpdateManyWithoutUsersNestedInput
     delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -163111,6 +163435,41 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     nombre?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LicitacionUpdateWithoutUsersInput = {
+    licitacionHomologada?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uts?: UTUpdateManyWithoutLicitacionNestedInput
+    aspectosEE?: AspectoEEUpdateManyWithoutLicitacionNestedInput
+    jefesZonales?: JefeZonalLicitacionUpdateManyWithoutLicitacionNestedInput
+    vehiculos?: VehiculoUpdateManyWithoutLicitacionNestedInput
+    matrices?: MatrizT_CabeceraUpdateManyWithoutLicitacionNestedInput
+    actasPlantillas?: ActaSupervisionPlantillaUpdateManyWithoutLicitacionNestedInput
+  }
+
+  export type LicitacionUncheckedUpdateWithoutUsersInput = {
+    licId?: IntFieldUpdateOperationsInput | number
+    licitacionHomologada?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uts?: UTUncheckedUpdateManyWithoutLicitacionNestedInput
+    aspectosEE?: AspectoEEUncheckedUpdateManyWithoutLicitacionNestedInput
+    jefesZonales?: JefeZonalLicitacionUncheckedUpdateManyWithoutLicitacionNestedInput
+    vehiculos?: VehiculoUncheckedUpdateManyWithoutLicitacionNestedInput
+    matrices?: MatrizT_CabeceraUncheckedUpdateManyWithoutLicitacionNestedInput
+    actasPlantillas?: ActaSupervisionPlantillaUncheckedUpdateManyWithoutLicitacionNestedInput
+  }
+
+  export type LicitacionUncheckedUpdateManyWithoutUsersInput = {
+    licId?: IntFieldUpdateOperationsInput | number
+    licitacionHomologada?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -163449,6 +163808,62 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type UserUpdateWithoutLicitacionesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
+    mustChangePassword?: BoolFieldUpdateOperationsInput | boolean
+    canReceiveCollab?: BoolFieldUpdateOperationsInput | boolean
+    rbds?: UserUpdaterbdsInput | number[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: RoleUpdateOneRequiredWithoutUsersNestedInput
+    sucursales?: SucursalUpdateManyWithoutUsersNestedInput
+    allowedForms?: FormDefinitionUpdateManyWithoutAllowedUsersNestedInput
+    areas?: AreaUpdateManyWithoutUsersNestedInput
+    delegaciones?: DelegacionVisualizacionUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutLicitacionesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    roleId?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
+    mustChangePassword?: BoolFieldUpdateOperationsInput | boolean
+    canReceiveCollab?: BoolFieldUpdateOperationsInput | boolean
+    rbds?: UserUpdaterbdsInput | number[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sucursales?: SucursalUncheckedUpdateManyWithoutUsersNestedInput
+    allowedForms?: FormDefinitionUncheckedUpdateManyWithoutAllowedUsersNestedInput
+    areas?: AreaUncheckedUpdateManyWithoutUsersNestedInput
+    delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateManyWithoutLicitacionesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    roleId?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
+    mustChangePassword?: BoolFieldUpdateOperationsInput | boolean
+    canReceiveCollab?: BoolFieldUpdateOperationsInput | boolean
+    rbds?: UserUpdaterbdsInput | number[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type ListaCorreoCreateManySucursalInput = {
     id?: string
     nombre: string
@@ -163669,6 +164084,7 @@ export namespace Prisma {
     role?: RoleUpdateOneRequiredWithoutUsersNestedInput
     allowedForms?: FormDefinitionUpdateManyWithoutAllowedUsersNestedInput
     areas?: AreaUpdateManyWithoutUsersNestedInput
+    licitaciones?: LicitacionUpdateManyWithoutUsersNestedInput
     delegaciones?: DelegacionVisualizacionUpdateManyWithoutUserNestedInput
   }
 
@@ -163688,6 +164104,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     allowedForms?: FormDefinitionUncheckedUpdateManyWithoutAllowedUsersNestedInput
     areas?: AreaUncheckedUpdateManyWithoutUsersNestedInput
+    licitaciones?: LicitacionUncheckedUpdateManyWithoutUsersNestedInput
     delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -164016,6 +164433,7 @@ export namespace Prisma {
     role?: RoleUpdateOneRequiredWithoutUsersNestedInput
     sucursales?: SucursalUpdateManyWithoutUsersNestedInput
     areas?: AreaUpdateManyWithoutUsersNestedInput
+    licitaciones?: LicitacionUpdateManyWithoutUsersNestedInput
     delegaciones?: DelegacionVisualizacionUpdateManyWithoutUserNestedInput
   }
 
@@ -164035,6 +164453,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sucursales?: SucursalUncheckedUpdateManyWithoutUsersNestedInput
     areas?: AreaUncheckedUpdateManyWithoutUsersNestedInput
+    licitaciones?: LicitacionUncheckedUpdateManyWithoutUsersNestedInput
     delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -164132,6 +164551,7 @@ export namespace Prisma {
     role?: RoleUpdateOneRequiredWithoutUsersNestedInput
     sucursales?: SucursalUpdateManyWithoutUsersNestedInput
     allowedForms?: FormDefinitionUpdateManyWithoutAllowedUsersNestedInput
+    licitaciones?: LicitacionUpdateManyWithoutUsersNestedInput
     delegaciones?: DelegacionVisualizacionUpdateManyWithoutUserNestedInput
   }
 
@@ -164151,6 +164571,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sucursales?: SucursalUncheckedUpdateManyWithoutUsersNestedInput
     allowedForms?: FormDefinitionUncheckedUpdateManyWithoutAllowedUsersNestedInput
+    licitaciones?: LicitacionUncheckedUpdateManyWithoutUsersNestedInput
     delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutUserNestedInput
   }
 

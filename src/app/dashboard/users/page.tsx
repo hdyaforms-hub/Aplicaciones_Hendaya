@@ -18,7 +18,7 @@ export default async function UsersPage() {
                 name: { not: 'Manipuladoras' }
             }
         },
-        include: { role: true, sucursales: true, areas: true },
+        include: { role: true, sucursales: true, areas: true, licitaciones: true },
         orderBy: { createdAt: 'desc' }
     })
 
@@ -35,12 +35,17 @@ export default async function UsersPage() {
         orderBy: { nombre: 'asc' }
     })
 
+    const licitaciones = await prisma.licitacion.findMany({
+        orderBy: { licId: 'asc' }
+    })
+
     return (
         <UsersClient 
             initialUsers={users as any} 
             roles={roles} 
             sucursales={sucursales} 
             areas={areas} 
+            licitaciones={licitaciones}
         />
     )
 }

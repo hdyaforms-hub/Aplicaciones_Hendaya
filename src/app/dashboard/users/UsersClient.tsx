@@ -26,6 +26,10 @@ interface UserWithRelations {
         id: number
         nombre: string
     }[]
+    licitaciones?: {
+        licId: number
+        licitacionHomologada?: string | null
+    }[]
 }
 
 interface RoleDef {
@@ -43,17 +47,24 @@ interface AreaDef {
     nombre: string
 }
 
+interface LicitacionDef {
+    licId: number
+    estado: number
+    licitacionHomologada?: string | null
+}
+
 interface UsersClientProps {
     initialUsers: UserWithRelations[]
     roles: RoleDef[]
     sucursales: SucursalDef[]
     areas: AreaDef[]
+    licitaciones?: LicitacionDef[]
 }
 
-type SortColumn = 'username' | 'name' | 'isActive' | 'createdAt' | 'sucursales'
+type SortColumn = 'username' | 'name' | 'isActive' | 'createdAt' | 'sucursales' | 'licitaciones'
 type SortDirection = 'asc' | 'desc'
 
-export default function UsersClient({ initialUsers, roles, sucursales, areas }: UsersClientProps) {
+export default function UsersClient({ initialUsers, roles, sucursales, areas, licitaciones = [] }: UsersClientProps) {
     const [collapsedRoles, setCollapsedRoles] = useState<Record<string, boolean>>({})
     const [sortConfig, setSortConfig] = useState<{ column: SortColumn; direction: SortDirection } | null>(null)
 
@@ -116,6 +127,9 @@ export default function UsersClient({ initialUsers, roles, sucursales, areas }: 
                     } else if (column === 'sucursales') {
                         valA = a.sucursales.map(s => s.nombre).sort().join(', ').toLowerCase()
                         valB = b.sucursales.map(s => s.nombre).sort().join(', ').toLowerCase()
+                    } else if (column === 'licitaciones') {
+                        valA = (a.licitaciones || []).map(l => l.licId).sort().join(', ')
+                        valB = (b.licitaciones || []).map(l => l.licId).sort().join(', ')
                     }
 
                     if (valA < valB) return direction === 'asc' ? -1 : 1
@@ -167,7 +181,7 @@ export default function UsersClient({ initialUsers, roles, sucursales, areas }: 
                         📁 Ocultar Todos
                     </button>
                     <div className="sm:ml-2">
-                        <UserForm roles={roles} sucursales={sucursales} areas={areas} />
+                        <UserForm roles={roles} sucursales={sucursales} areas={areas} licitaciones={licitaciones} />
                     </div>
                 </div>
             </div>
@@ -224,6 +238,12 @@ export default function UsersClient({ initialUsers, roles, sucursales, areas }: 
                                                 Estado {renderSortIcon('isActive')}
                                             </th>
                                             <th 
+                                                onClick={() => handleSort('licitaciones')}
+                                                className="px-6 py-4 font-semibold cursor-pointer hover:text-cyan-700 hover:bg-slate-50/50 select-none transition-colors"
+                                            >
+                                                Licitaciones {renderSortIcon('licitaciones')}
+                                            </th>
+                                            <th 
                                                 onClick={() => handleSort('sucursales')}
                                                 className="px-6 py-4 font-semibold cursor-pointer hover:text-cyan-700 hover:bg-slate-50/50 select-none transition-colors"
                                             >
@@ -271,6 +291,21 @@ export default function UsersClient({ initialUsers, roles, sucursales, areas }: 
                                                     </div>
                                                 </td>
                                                 <td className="px-6 py-4">
+                                                    <div className="max-w-[220px] truncate text-gray-700 text-xs font-medium" title={u.licitaciones && u.licitaciones.length > 0 ? u.licitaciones.map((l: any) => `Licitación ${l.licId}${l.licitacionHomologada ? ` (${l.licitacionHomologada})` : ''}`).join(', ') : 'Ninguna'}>
+                                                        {u.licitaciones && u.licitaciones.length > 0 ? (
+                                                            <div className="flex flex-wrap gap-1">
+                                                                {u.licitaciones.map((l: any) => (
+                                                                    <span key={l.licId} className="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-semibold bg-cyan-50 text-cyan-800 border border-cyan-200">
+                                                                        Lic. {l.licId}{l.licitacionHomologada ? ` (${l.licitacionHomologada})` : ''}
+                                                                    </span>
+                                                                ))}
+                                                            </div>
+                                                        ) : (
+                                                            <span className="text-gray-400 italic">Ninguna</span>
+                                                        )}
+                                                    </div>
+                                                </td>
+                                                <td className="px-6 py-4">
                                                     <div className="max-w-[200px] truncate text-gray-500" title={u.sucursales.map((s: any) => s.nombre).join(', ')}>
                                                         {u.sucursales.length > 0 ? u.sucursales.map((s: any) => s.nombre).join(', ') : 'Ninguna'}
                                                     </div>
@@ -279,7 +314,7 @@ export default function UsersClient({ initialUsers, roles, sucursales, areas }: 
                                                     {new Date(u.createdAt).toLocaleDateString()}
                                                 </td>
                                                 <td className="px-6 py-4 text-right">
-                                                    <EditUserForm user={u as any} roles={roles} sucursales={sucursales} areas={areas} />
+                                                    <EditUserForm user={u as any} roles={roles} sucursales={sucursales} areas={areas} licitaciones={licitaciones} />
                                                 </td>
                                             </tr>
                                         ))}

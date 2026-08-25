@@ -36,6 +36,7 @@ model User {
   sucursales         Sucursal[]                @relation("SucursalToUser")
   allowedForms       FormDefinition[]          @relation("UserForms")
   areas              Area[]                    @relation("UserAreas")
+  licitaciones       Licitacion[]              @relation("UserLicitaciones")
   delegaciones       DelegacionVisualizacion[]
 }
 
@@ -172,6 +173,7 @@ model Licitacion {
   vehiculos            Vehiculo[]
   matrices             MatrizT_Cabecera[]
   actasPlantillas      ActaSupervisionPlantilla[]
+  users                User[]                     @relation("UserLicitaciones")
 }
 
 model AspectoEE {

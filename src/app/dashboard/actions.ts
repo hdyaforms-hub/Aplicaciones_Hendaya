@@ -22,6 +22,7 @@ export async function createUser(formData: FormData) {
     const canReceiveCollab = formData.get('canReceiveCollab') === 'true' // Por defecto false
     const sucursales = formData.getAll('sucursales') as string[]
     const areas = formData.getAll('areas') as string[]
+    const licitaciones = formData.getAll('licitaciones') as string[]
 
     if (!username || !password || !roleId) {
         return { error: 'Faltan campos obligatorios' }
@@ -52,6 +53,9 @@ export async function createUser(formData: FormData) {
                 },
                 areas: {
                     connect: areas.map(id => ({ id: parseInt(id, 10) }))
+                },
+                licitaciones: {
+                    connect: licitaciones.map(id => ({ licId: parseInt(id, 10) }))
                 }
             }
         })
@@ -80,6 +84,7 @@ export async function updateUser(formData: FormData) {
     const canReceiveCollab = formData.get('canReceiveCollab') === 'true'
     const sucursales = formData.getAll('sucursales') as string[]
     const areas = formData.getAll('areas') as string[]
+    const licitaciones = formData.getAll('licitaciones') as string[]
     const resetPassword = formData.get('resetPassword') === 'on'
 
     if (!id) return { error: 'ID de usuario no proporcionado' }
@@ -105,6 +110,10 @@ export async function updateUser(formData: FormData) {
             areas: {
                 set: [],
                 connect: areas.map(aId => ({ id: parseInt(aId, 10) }))
+            },
+            licitaciones: {
+                set: [],
+                connect: licitaciones.map(lId => ({ licId: parseInt(lId, 10) }))
             }
         }
 

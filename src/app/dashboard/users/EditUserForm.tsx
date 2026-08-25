@@ -13,22 +13,26 @@ type UserData = {
     roleId: string
     sucursales: { id: string }[]
     areas: { id: number }[]
+    licitaciones?: { licId: number }[]
 }
 
 type Role = { id: string, name: string }
 type SucursalVar = { id: string, nombre: string }
 type Area = { id: number, nombre: string }
+type LicitacionVar = { id?: number, licId: number, estado: number, licitacionHomologada?: string | null }
 
 export default function EditUserForm({
     user,
     roles,
     sucursales,
-    areas
+    areas,
+    licitaciones = []
 }: {
     user: UserData
     roles: Role[]
     sucursales: SucursalVar[]
     areas: Area[]
+    licitaciones?: LicitacionVar[]
 }) {
     const [isOpen, setIsOpen] = useState(false)
     const [error, setError] = useState('')
@@ -55,6 +59,7 @@ export default function EditUserForm({
     // Identificar seleccionados
     const initialSucursales = user.sucursales.map(s => s.id)
     const initialAreas = user.areas.map(a => a.id)
+    const initialLicitaciones = user.licitaciones ? user.licitaciones.map(l => l.licId) : []
 
     return (
         <>
@@ -67,12 +72,12 @@ export default function EditUserForm({
 
             {isOpen && (
                 <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-                    <div className="bg-white rounded-3xl w-full max-w-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in fade-in zoom-in-95 duration-200">
+                    <div className="bg-white rounded-3xl w-full max-w-4xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in fade-in zoom-in-95 duration-200">
                         {/* Cabecera Fija */}
                         <div className="p-5 sm:p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/80 shrink-0">
                             <div>
                                 <h3 className="text-lg font-black text-slate-900">Editar Usuario: @{user.username}</h3>
-                                <p className="text-xs text-slate-500">Actualiza datos, contraseña, rol asignado y sucursales permitidas.</p>
+                                <p className="text-xs text-slate-500">Actualiza datos, contraseña, rol asignado, licitaciones y sucursales permitidas.</p>
                             </div>
                             <button
                                 onClick={() => setIsOpen(false)}
@@ -176,11 +181,36 @@ export default function EditUserForm({
                                     </div>
                                 </div>
 
-                                {/* Asignaciones: Áreas y Sucursales en 2 Columnas */}
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                                {/* Asignaciones: Licitaciones, Áreas y Sucursales en 3 Columnas */}
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                                    <div>
+                                        <label className="block text-xs font-bold text-slate-700 mb-1">
+                                            Licitaciones Asignadas
+                                        </label>
+                                        <div className="max-h-36 overflow-y-auto w-full p-2 rounded-xl border border-slate-200 bg-slate-50 flex flex-col gap-1.5">
+                                            {licitaciones.map(l => (
+                                                <label key={l.licId} className="flex items-center gap-2 p-1 hover:bg-white rounded-lg cursor-pointer select-none text-xs">
+                                                    <input
+                                                        type="checkbox"
+                                                        name="licitaciones"
+                                                        value={l.licId}
+                                                        defaultChecked={initialLicitaciones.includes(l.licId)}
+                                                        className="w-3.5 h-3.5 text-cyan-600 rounded border-slate-300 focus:ring-cyan-500"
+                                                    />
+                                                    <span className="text-slate-700 font-medium">
+                                                        Licitación {l.licId} {l.licitacionHomologada ? `(${l.licitacionHomologada})` : ''}
+                                                    </span>
+                                                </label>
+                                            ))}
+                                            {licitaciones.length === 0 && (
+                                                <span className="text-xs text-slate-400 italic py-1">No hay licitaciones disponibles.</span>
+                                            )}
+                                        </div>
+                                    </div>
+
                                     <div>
                                         <label className="block text-xs font-bold text-slate-700 mb-1">Áreas Asignadas (Menú Áreas)</label>
-                                        <div className="max-h-32 overflow-y-auto w-full p-2 rounded-xl border border-slate-200 bg-slate-50 flex flex-col gap-1.5">
+                                        <div className="max-h-36 overflow-y-auto w-full p-2 rounded-xl border border-slate-200 bg-slate-50 flex flex-col gap-1.5">
                                             {areas.map(a => (
                                                 <label key={a.id} className="flex items-center gap-2 p-1 hover:bg-white rounded-lg cursor-pointer select-none text-xs">
                                                     <input
@@ -201,7 +231,7 @@ export default function EditUserForm({
 
                                     <div>
                                         <label className="block text-xs font-bold text-slate-700 mb-1">Sucursales Permitidas</label>
-                                        <div className="max-h-32 overflow-y-auto w-full p-2 rounded-xl border border-slate-200 bg-slate-50 flex flex-col gap-1.5">
+                                        <div className="max-h-36 overflow-y-auto w-full p-2 rounded-xl border border-slate-200 bg-slate-50 flex flex-col gap-1.5">
                                             {sucursales.map(s => (
                                                 <label key={s.id} className="flex items-center gap-2 p-1 hover:bg-white rounded-lg cursor-pointer select-none text-xs">
                                                     <input
