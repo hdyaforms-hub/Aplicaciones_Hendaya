@@ -1,3 +1,6 @@
+import fs from 'fs'
+import path from 'path'
+import crypto from 'crypto'
 import { rawPrisma } from '@/lib/prisma'
 import { encryptMessage, decryptMessage } from '@/lib/crypto'
 import { DriveItem, DriveItemVersion } from '@/types/documentos'
@@ -7,9 +10,13 @@ const DOC_ENCRYPTION_KEY = process.env.DOC_ENCRYPTION_KEY || 'hendaya-doc-super-
 // Interfaz para configuración interna ya descifrada
 export interface ConfiguracionDecrypted {
     id: string
+    authType: 'certificate' | 'secret'
     tenantId: string
     clientId: string
-    clientSecret: string
+    clientSecret?: string
+    certThumbprint?: string
+    certKeyPath?: string
+    certPrivateKeyPem?: string
     onedriveUserEmail: string
     rootFolderId?: string | null
     rootFolderName?: string | null
@@ -27,10 +34,151 @@ interface TokenCache {
 let cachedToken: TokenCache | null = null
 
 /**
- * Obtiene la configuración documental activa desde la base de datos y descifra los secretos.
+ * Convierte buffer o string a formato Base64URL
+ */
+function base64UrlEncode(input: Buffer | string): string {
+    const buf = Buffer.isBuffer(input) ? input : Buffer.from(input)
+    return buf.toString('base64').replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_')
+}
+
+/**
+ * Genera una aserción JWT firmada con la llave privada del certificado X.509 (RFC 7523)
+ */
+function createJwtClientAssertion(
+    tenantId: string,
+    clientId: string,
+    thumbprintHex: string,
+    privateKeyPem: string
+): string {
+    const thumbprintBuf = Buffer.from(thumbprintHex.replace(/\s+/g, ''), 'hex')
+    const x5t = base64UrlEncode(thumbprintBuf)
+    const now = Math.floor(Date.now() / 1000)
+    const tokenEndpoint = `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/token`
+
+    const header = {
+        alg: 'RS256',
+        typ: 'JWT',
+        x5t: x5t
+    }
+
+    const payload = {
+        aud: tokenEndpoint,
+        iss: clientId,
+        sub: clientId,
+        jti: crypto.randomUUID(),
+        nbf: now,
+        exp: now + 300 // 5 minutos de validez
+    }
+
+    const headerEncoded = base64UrlEncode(JSON.stringify(header))
+    const payloadEncoded = base64UrlEncode(JSON.stringify(payload))
+    const signInput = `${headerEncoded}.${payloadEncoded}`
+
+    const signer = crypto.createSign('RSA-SHA256')
+    signer.update(signInput)
+    const signature = signer.sign(privateKeyPem)
+    const signatureEncoded = base64UrlEncode(signature)
+
+    return `${signInput}.${signatureEncoded}`
+}
+
+/**
+ * Solicita token a Azure AD usando Certificado X.509 (JWT Client Assertion)
+ */
+async function fetchTokenWithCertificate(
+    tenantId: string,
+    clientId: string,
+    thumbprintHex: string,
+    privateKeyPem: string
+) {
+    try {
+        const assertion = createJwtClientAssertion(tenantId, clientId, thumbprintHex, privateKeyPem)
+        const tokenEndpoint = `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/token`
+
+        const bodyParams = new URLSearchParams({
+            grant_type: 'client_credentials',
+            client_id: clientId,
+            client_assertion_type: 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer',
+            client_assertion: assertion,
+            scope: 'https://graph.microsoft.com/.default'
+        })
+
+        const res = await fetch(tokenEndpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: bodyParams.toString()
+        })
+
+        const data = await res.json()
+        if (!res.ok) {
+            return {
+                ok: false,
+                error: data.error_description || data.error || 'Fallo de autenticación con certificado en Azure'
+            }
+        }
+
+        return {
+            ok: true,
+            accessToken: data.access_token as string,
+            expiresIn: (data.expires_in as number) || 3600
+        }
+    } catch (error: any) {
+        return { ok: false, error: error?.message || 'Error de conexión con Microsoft Online.' }
+    }
+}
+
+/**
+ * Obtiene la configuración documental activa (prioriza variables de entorno .env.local y fallback a base de datos).
  */
 export async function getDecryptedConfig(): Promise<ConfiguracionDecrypted | null> {
     try {
+        // 1. Verificar si existen variables de entorno (.env.local) con Certificado
+        const envTenantId = process.env.AZURE_TENANT_ID
+        const envClientId = process.env.AZURE_CLIENT_ID
+        const envThumbprint = process.env.AZURE_CERT_THUMBPRINT
+        const envKeyPath = process.env.AZURE_CERT_KEY_PATH || 'certs/private-key.pem'
+        const envUserEmail = process.env.ONEDRIVE_USER_EMAIL
+
+        if (envTenantId && envClientId && envThumbprint && envUserEmail) {
+            let privateKeyPem = ''
+            const resolvedPath = path.isAbsolute(envKeyPath)
+                ? envKeyPath
+                : path.join(process.cwd(), envKeyPath)
+
+            if (fs.existsSync(resolvedPath)) {
+                privateKeyPem = fs.readFileSync(resolvedPath, 'utf8')
+            }
+
+            // Consultar datos opcionales de carpeta raíz en BD
+            let rootFolderId: string | null = null
+            let rootFolderName: string | null = null
+            try {
+                const dbConfig = await rawPrisma.configuracionDocumental.findFirst({
+                    where: { activo: true },
+                    orderBy: { creadoEn: 'desc' }
+                })
+                if (dbConfig) {
+                    rootFolderId = dbConfig.rootFolderId
+                    rootFolderName = dbConfig.rootFolderName
+                }
+            } catch {}
+
+            return {
+                id: 'env-certificate-config',
+                authType: 'certificate',
+                tenantId: envTenantId,
+                clientId: envClientId,
+                certThumbprint: envThumbprint,
+                certKeyPath: envKeyPath,
+                certPrivateKeyPem: privateKeyPem,
+                onedriveUserEmail: envUserEmail,
+                rootFolderId,
+                rootFolderName,
+                activo: true
+            }
+        }
+
+        // 2. Si no hay variables de entorno con certificado, consultar base de datos
         const config = await rawPrisma.configuracionDocumental.findFirst({
             where: { activo: true },
             orderBy: { creadoEn: 'desc' }
@@ -40,6 +188,7 @@ export async function getDecryptedConfig(): Promise<ConfiguracionDecrypted | nul
 
         return {
             id: config.id,
+            authType: 'secret',
             tenantId: decryptMessage(config.tenantId, DOC_ENCRYPTION_KEY),
             clientId: decryptMessage(config.clientId, DOC_ENCRYPTION_KEY),
             clientSecret: decryptMessage(config.clientSecret, DOC_ENCRYPTION_KEY),
@@ -130,7 +279,7 @@ export async function saveEncryptedConfig(data: {
 }
 
 /**
- * Función interna directa para solicitar token OAuth2 (client_credentials).
+ * Función interna directa para solicitar token OAuth2 (client_credentials con secret).
  */
 async function fetchTokenDirect(tenantId: string, clientId: string, clientSecret: string) {
     const tokenEndpoint = `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/token`
@@ -186,14 +335,32 @@ export async function getAccessToken(forceRefresh = false): Promise<{ token: str
         return { token: cachedToken.token, config }
     }
 
-    const tokenRes = await fetchTokenDirect(config.tenantId, config.clientId, config.clientSecret)
+    let tokenRes: { ok: boolean; accessToken?: string; expiresIn?: number; error?: string }
+
+    if (config.authType === 'certificate') {
+        if (!config.certThumbprint || !config.certPrivateKeyPem) {
+            throw new Error('Falta el certificado o la llave privada para autenticación con Azure.')
+        }
+        tokenRes = await fetchTokenWithCertificate(
+            config.tenantId,
+            config.clientId,
+            config.certThumbprint,
+            config.certPrivateKeyPem
+        )
+    } else {
+        if (!config.clientSecret) {
+            throw new Error('El Client Secret de Azure no está configurado.')
+        }
+        tokenRes = await fetchTokenDirect(config.tenantId, config.clientId, config.clientSecret)
+    }
+
     if (!tokenRes.ok || !tokenRes.accessToken) {
         throw new Error(`Fallo al obtener token de Microsoft Graph: ${tokenRes.error}`)
     }
 
     cachedToken = {
         token: tokenRes.accessToken,
-        expiresAt: now + (tokenRes.expiresIn * 1000),
+        expiresAt: now + ((tokenRes.expiresIn || 3600) * 1000),
         tenantId: config.tenantId,
         clientId: config.clientId
     }
@@ -239,9 +406,13 @@ export async function testConnection(): Promise<{
         const driveRes = await graphFetch(`/users/${userEmail}/drive`)
         if (!driveRes.ok) {
             const errData = await driveRes.json().catch(() => ({}))
+            let errorMsg = `No se pudo acceder al OneDrive del usuario ${config.onedriveUserEmail}: ${errData.error?.message || driveRes.statusText}`
+            if (driveRes.status === 403 || driveRes.status === 401) {
+                errorMsg += ' (Falta conceder "Consentimiento de Administrador" para los permisos de tipo Application "Files.ReadWrite.All" y "User.Read.All" en Azure Portal).'
+            }
             return {
                 connected: false,
-                error: `No se pudo acceder al OneDrive del usuario ${config.onedriveUserEmail}: ${errData.error?.message || driveRes.statusText}`
+                error: errorMsg
             }
         }
 

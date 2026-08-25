@@ -34,8 +34,12 @@ export async function GET() {
         const uiConfig: ConfiguracionDocumentalUI = {
             configurado: true,
             conectado: false,
+            authType: config.authType,
             clientIdPreview: config.clientId ? `${config.clientId.slice(0, 8)}••••••••` : undefined,
             tenantIdPreview: config.tenantId ? `${config.tenantId.slice(0, 8)}••••••••` : undefined,
+            certThumbprintPreview: config.certThumbprint ? `${config.certThumbprint.slice(0, 8)}••••••••${config.certThumbprint.slice(-6)}` : undefined,
+            certKeyPath: config.certKeyPath,
+            tieneCertificado: !!(config.certThumbprint && config.certPrivateKeyPem),
             tieneSecret: !!config.clientSecret,
             onedriveUserEmail: config.onedriveUserEmail,
             rootFolderId: config.rootFolderId,

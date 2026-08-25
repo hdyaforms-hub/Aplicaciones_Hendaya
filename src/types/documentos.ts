@@ -72,9 +72,13 @@ export interface PrivilegioUI {
 export interface ConfiguracionDocumentalUI {
     configurado: boolean
     conectado: boolean
+    authType?: 'certificate' | 'secret'
     clientIdPreview?: string    // Primeros 8 caracteres del Client ID
     tenantIdPreview?: string    // Primeros 8 caracteres del Tenant ID
-    tieneSecret: boolean        // Indica si existe secret guardado
+    certThumbprintPreview?: string // Huella digital del certificado
+    certKeyPath?: string        // Ruta de llave privada
+    tieneCertificado?: boolean
+    tieneSecret?: boolean       // Indica si existe secret guardado
     onedriveUserEmail?: string
     rootFolderId?: string | null
     rootFolderName?: string | null
