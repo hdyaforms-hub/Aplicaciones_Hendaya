@@ -44,13 +44,64 @@ function base64UrlEncode(input: Buffer | string): string {
 /**
  * Genera una aserción JWT firmada con la llave privada del certificado X.509 (RFC 7523)
  */
+/**
+ * Normaliza y repara cadenas PEM de clave privada (maneja saltos de línea \n, espacios, base64 puro y quotes de Railway).
+ */
+export function normalizePrivateKey(rawKey: string): string {
+    if (!rawKey) return ''
+    let key = rawKey.trim()
+
+    // 1. Remover comillas envolventes si Railway las incluyó
+    if ((key.startsWith('"') && key.endsWith('"')) || (key.startsWith("'") && key.endsWith("'"))) {
+        key = key.slice(1, -1).trim()
+    }
+
+    // 2. Convertir saltos de línea escapados literales (\n o \r\n) en saltos de línea reales
+    key = key.replace(/\\r\\n/g, '\n').replace(/\\n/g, '\n').replace(/\\r/g, '\n')
+
+    // 3. Si no tiene encabezado BEGIN, verificar si es una cadena PEM codificada en Base64
+    if (!key.includes('-----BEGIN')) {
+        try {
+            const decoded = Buffer.from(key, 'base64').toString('utf8')
+            if (decoded.includes('-----BEGIN')) {
+                key = decoded.replace(/\\r\\n/g, '\n').replace(/\\n/g, '\n')
+            }
+        } catch {}
+    }
+
+    // 4. Si contiene BEGIN ... END pero viene en una sola línea o con espacios
+    const match = key.match(/(-----BEGIN[^-]+-----)([\s\S]+?)(-----END[^-]+-----)/)
+    if (match) {
+        const header = match[1].trim()
+        const rawBody = match[2].replace(/\s+/g, '') // Remover todos los espacios y saltos intermedios
+        const footer = match[3].trim()
+
+        // Reconstruir el cuerpo en líneas estándar de 64 caracteres (RFC 7468)
+        const chunkedBody = rawBody.match(/.{1,64}/g)?.join('\n') || rawBody
+        return `${header}\n${chunkedBody}\n${footer}\n`
+    }
+
+    // 5. Si es contenido puramente base64 (cuerpo de la clave sin encabezados)
+    const cleanBase64 = key.replace(/\s+/g, '')
+    if (/^[A-Za-z0-9+/=]+$/.test(cleanBase64) && cleanBase64.length > 100) {
+        const chunked = cleanBase64.match(/.{1,64}/g)?.join('\n') || cleanBase64
+        return `-----BEGIN PRIVATE KEY-----\n${chunked}\n-----END PRIVATE KEY-----\n`
+    }
+
+    return key
+}
+
+/**
+ * Genera una aserción JWT firmada con la llave privada del certificado X.509 (RFC 7523)
+ */
 function createJwtClientAssertion(
     tenantId: string,
     clientId: string,
     thumbprintHex: string,
     privateKeyPem: string
 ): string {
-    const thumbprintBuf = Buffer.from(thumbprintHex.replace(/\s+/g, ''), 'hex')
+    const cleanThumbprint = thumbprintHex.replace(/[^a-fA-F0-9]/g, '')
+    const thumbprintBuf = Buffer.from(cleanThumbprint, 'hex')
     const x5t = base64UrlEncode(thumbprintBuf)
     const now = Math.floor(Date.now() / 1000)
     const tokenEndpoint = `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/token`
@@ -74,9 +125,10 @@ function createJwtClientAssertion(
     const payloadEncoded = base64UrlEncode(JSON.stringify(payload))
     const signInput = `${headerEncoded}.${payloadEncoded}`
 
+    const normalizedKey = normalizePrivateKey(privateKeyPem)
     const signer = crypto.createSign('RSA-SHA256')
     signer.update(signInput)
-    const signature = signer.sign(privateKeyPem)
+    const signature = signer.sign(normalizedKey)
     const signatureEncoded = base64UrlEncode(signature)
 
     return `${signInput}.${signatureEncoded}`
@@ -170,6 +222,8 @@ export async function getDecryptedConfig(): Promise<ConfiguracionDecrypted | nul
                     privateKeyPem = fs.readFileSync(resolvedPath, 'utf8')
                 }
             }
+
+            privateKeyPem = normalizePrivateKey(privateKeyPem)
 
             // Consultar datos opcionales de carpeta raíz en BD
             let rootFolderId: string | null = null
