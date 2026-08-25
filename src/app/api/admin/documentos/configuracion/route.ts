@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
+import fs from 'fs'
+import path from 'path'
 import { getSession } from '@/lib/session'
 import { rawPrisma } from '@/lib/prisma'
 import { isGlobalDocAdmin, normalizeUserPermissions } from '@/lib/doc-permissions'
@@ -23,13 +25,34 @@ export async function GET() {
             return NextResponse.json({ message: 'Acceso no autorizado' }, { status: 403 })
         }
 
+        const hasCertFile = (() => {
+            try {
+                const p = process.env.AZURE_CERT_KEY_PATH || 'certs/private-key.pem'
+                const resolved = path.isAbsolute(p) ? p : path.join(process.cwd(), p)
+                return fs.existsSync(resolved)
+            } catch {
+                return false
+            }
+        })()
+
+        const envDiagnostics = {
+            hasTenantId: !!process.env.AZURE_TENANT_ID,
+            hasClientId: !!process.env.AZURE_CLIENT_ID,
+            hasThumbprint: !!process.env.AZURE_CERT_THUMBPRINT,
+            hasPrivateKey: !!(process.env.AZURE_CERT_PRIVATE_KEY || process.env.AZURE_CERT_PRIVATE_KEY_BASE64 || hasCertFile),
+            hasUserEmail: !!process.env.ONEDRIVE_USER_EMAIL
+        }
+
         const config = await getDecryptedConfig()
 
         if (!config) {
             const emptyUI: ConfiguracionDocumentalUI = {
                 configurado: false,
                 conectado: false,
-                tieneSecret: false
+                authType: 'certificate',
+                tieneSecret: false,
+                onedriveUserEmail: process.env.ONEDRIVE_USER_EMAIL,
+                envDiagnostics
             }
             return NextResponse.json({ config: emptyUI })
         }
@@ -47,7 +70,8 @@ export async function GET() {
             onedriveUserEmail: config.onedriveUserEmail,
             rootFolderId: config.rootFolderId,
             rootFolderName: config.rootFolderName,
-            activo: config.activo
+            activo: config.activo,
+            envDiagnostics
         }
 
         return NextResponse.json({ config: uiConfig })

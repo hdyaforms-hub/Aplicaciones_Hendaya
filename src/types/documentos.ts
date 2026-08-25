@@ -87,4 +87,11 @@ export interface ConfiguracionDocumentalUI {
     userDisplayName?: string
     activo?: boolean
     mensajeError?: string
+    envDiagnostics?: {
+        hasTenantId: boolean
+        hasClientId: boolean
+        hasThumbprint: boolean
+        hasPrivateKey: boolean
+        hasUserEmail: boolean
+    }
 }

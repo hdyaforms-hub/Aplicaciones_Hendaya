@@ -26,8 +26,9 @@ export default function ConfiguracionClient({ user }: ConfiguracionClientProps) 
     const [savingRoot, setSavingRoot] = useState(false)
     const [loadingFolders, setLoadingFolders] = useState(false)
     const [message, setMessage] = useState<{ type: 'success' | 'error' | 'info'; text: string } | null>(null)
+    const [showLegacyForm, setShowLegacyForm] = useState(false)
 
-    // Form inputs (para modo secret)
+    // Form inputs (para modo secret legacy)
     const [tenantId, setTenantId] = useState('')
     const [clientId, setClientId] = useState('')
     const [clientSecret, setClientSecret] = useState('')
@@ -66,9 +67,7 @@ export default function ConfiguracionClient({ user }: ConfiguracionClientProps) 
                 setRootFolderId(data.config.rootFolderId || null)
                 setRootFolderName(data.config.rootFolderName || null)
                 // Cargar inmediatamente el estado de conexión y almacenamiento en segundo plano
-                if (data.config.configurado) {
-                    checkConnectionStatus(true)
-                }
+                checkConnectionStatus(true)
             }
         } catch (e) {
             console.error('Error al cargar configuración:', e)
@@ -100,12 +99,10 @@ export default function ConfiguracionClient({ user }: ConfiguracionClientProps) 
         fetchConfig()
     }, [])
 
-    // Al cargar o tener config activa, cargar las carpetas raíz de OneDrive
+    // Al montar o cambiar config, intentar cargar las carpetas raíz de OneDrive
     useEffect(() => {
-        if (config?.configurado) {
-            fetchFoldersAtLevel('root')
-        }
-    }, [config?.configurado])
+        fetchFoldersAtLevel('root')
+    }, [])
 
     // Navegar a una subcarpeta
     const handleOpenFolder = (folder: FolderItem) => {
@@ -195,8 +192,8 @@ export default function ConfiguracionClient({ user }: ConfiguracionClientProps) 
         checkConnectionStatus(false)
     }
 
-    // Guardar configuración manual con Client Secret
-    const handleSave = async (e: React.FormEvent) => {
+    // Guardar configuración manual con Client Secret (modo legacy)
+    const handleSaveLegacy = async (e: React.FormEvent) => {
         e.preventDefault()
         setSaving(true)
         setMessage(null)
@@ -229,8 +226,8 @@ export default function ConfiguracionClient({ user }: ConfiguracionClientProps) 
         }
     }
 
-    const isCertAuth = config?.authType === 'certificate'
     const currentBreadcrumb = breadcrumbs[breadcrumbs.length - 1]
+    const diag = config?.envDiagnostics
 
     return (
         <div className="space-y-6 max-w-5xl mx-auto animate-in fade-in duration-300">
@@ -252,7 +249,7 @@ export default function ConfiguracionClient({ user }: ConfiguracionClientProps) 
                 <button
                     type="button"
                     onClick={handleTestConnection}
-                    disabled={testing || !config?.configurado}
+                    disabled={testing}
                     className="px-5 py-2.5 bg-gradient-to-r from-cyan-500 to-sky-500 hover:from-cyan-600 hover:to-sky-600 disabled:opacity-50 text-slate-950 font-black rounded-2xl text-xs shadow-md shadow-cyan-500/20 transition-all cursor-pointer flex items-center gap-2 self-start sm:self-auto shrink-0"
                 >
                     <span>⚡</span>
@@ -287,9 +284,9 @@ export default function ConfiguracionClient({ user }: ConfiguracionClientProps) 
                             </>
                         ) : (
                             <>
-                                <span className="text-lg">{testResult?.connected ? '🟢' : (config?.configurado ? '🟢' : '🔴')}</span>
+                                <span className="text-lg">{testResult?.connected ? '🟢' : (config?.configurado ? '🟢' : '🟡')}</span>
                                 <span className="text-sm font-black text-slate-900">
-                                    {testResult?.connected || config?.configurado ? 'Conectado a OneDrive' : 'Sin Conexión'}
+                                    {testResult?.connected ? 'Conectado a OneDrive' : (config?.configurado ? 'Listo para conectar' : 'Esperando credenciales')}
                                 </span>
                             </>
                         )}
@@ -299,11 +296,11 @@ export default function ConfiguracionClient({ user }: ConfiguracionClientProps) 
                 {/* 2. Cuenta de OneDrive */}
                 <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-2xs space-y-1">
                     <span className="text-[10px] font-black uppercase text-slate-400">Cuenta de OneDrive</span>
-                    <p className="text-sm font-black text-slate-900 truncate" title={testResult?.userPrincipalName || config?.onedriveUserEmail}>
-                        {testResult?.userDisplayName || (config?.onedriveUserEmail ? 'Documentos Hendaya' : 'No configurado')}
+                    <p className="text-sm font-black text-slate-900 truncate" title={testResult?.userPrincipalName || config?.onedriveUserEmail || 'doctoshdya@ipal.cl'}>
+                        {testResult?.userDisplayName || (config?.onedriveUserEmail ? 'Documentos Hendaya' : 'Documentos Hendaya')}
                     </p>
                     <p className="text-[10px] text-slate-400 truncate">
-                        {testResult?.userPrincipalName || config?.onedriveUserEmail || 'Sin buzón asociado'}
+                        {testResult?.userPrincipalName || config?.onedriveUserEmail || 'doctoshdya@ipal.cl'}
                     </p>
                 </div>
 
@@ -311,8 +308,8 @@ export default function ConfiguracionClient({ user }: ConfiguracionClientProps) 
                 <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-2xs space-y-1">
                     <span className="text-[10px] font-black uppercase text-slate-400">Almacenamiento OneDrive</span>
                     <div className="flex justify-between items-baseline text-xs font-black text-slate-800">
-                        <span>{testResult?.storageUsedGB ?? 649.82} GB</span>
-                        <span className="text-[10px] text-slate-400 font-normal">de {testResult?.storageQuotaGB ?? 1024} GB</span>
+                        <span>{testResult?.storageUsedGB ?? (config?.storageUsedGB || 649.82)} GB</span>
+                        <span className="text-[10px] text-slate-400 font-normal">de {testResult?.storageQuotaGB ?? (config?.storageQuotaGB || 1024)} GB</span>
                     </div>
                     <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
                         <div
@@ -325,332 +322,361 @@ export default function ConfiguracionClient({ user }: ConfiguracionClientProps) 
                 </div>
             </div>
 
-            {/* Tarjeta Informativa de Autenticación con Certificado */}
-            {isCertAuth ? (
-                <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 space-y-6">
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 border-b border-slate-100 gap-3">
-                        <div className="space-y-1">
-                            <div className="flex items-center gap-2">
-                                <span className="text-lg">📜</span>
-                                <h2 className="text-sm font-black text-slate-900 uppercase tracking-wider">
-                                    Autenticación por Certificado X.509 (Activa)
-                                </h2>
-                            </div>
-                            <p className="text-xs text-slate-500 font-medium">
-                                Esta instancia está operando mediante firma criptográfica con certificado digital X.509 y llave privada RSA.
-                            </p>
+            {/* Tarjeta Principal: Autenticación por Certificado X.509 */}
+            <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 space-y-6">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 border-b border-slate-100 gap-3">
+                    <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                            <span className="text-lg">📜</span>
+                            <h2 className="text-sm font-black text-slate-900 uppercase tracking-wider">
+                                Autenticación por Certificado X.509 (Activa)
+                            </h2>
                         </div>
-
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-xs font-extrabold shadow-2xs shrink-0">
-                            <span>🛡️</span>
-                            <span>Certificado X.509 RSA-SHA256</span>
-                        </span>
+                        <p className="text-xs text-slate-500 font-medium">
+                            Esta instancia opera mediante firma criptográfica con certificado digital X.509 y llave privada RSA.
+                        </p>
                     </div>
 
-                    {/* Grilla de Datos de Configuración */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-1">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-xs font-extrabold shadow-2xs shrink-0">
+                        <span>🛡️</span>
+                        <span>Certificado X.509 RSA-SHA256</span>
+                    </span>
+                </div>
+
+                {/* Grilla de Datos de Configuración */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-1">
+                        <div className="flex items-center justify-between">
                             <span className="text-[10px] font-extrabold uppercase text-slate-400">Directory (Tenant) ID</span>
-                            <p className="text-xs font-mono font-bold text-slate-900">
-                                {config?.tenantIdPreview || 'Cargando...'}
-                            </p>
-                            <p className="text-[10px] text-slate-400">Inquilino de Azure AD de Hendaya</p>
-                        </div>
-
-                        <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-1">
-                            <span className="text-[10px] font-extrabold uppercase text-slate-400">Application (Client) ID</span>
-                            <p className="text-xs font-mono font-bold text-slate-900">
-                                {config?.clientIdPreview || 'Cargando...'}
-                            </p>
-                            <p className="text-[10px] text-slate-400">ID del Registro de Aplicación en Azure</p>
-                        </div>
-
-                        <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-1">
-                            <span className="text-[10px] font-extrabold uppercase text-slate-400">Huella Digital (Thumbprint SHA-1)</span>
-                            <p className="text-xs font-mono font-bold text-slate-900 break-all">
-                                {config?.certThumbprintPreview || 'No especificado'}
-                            </p>
-                            <p className="text-[10px] text-slate-400">Identificador único del certificado X.509</p>
-                        </div>
-
-                        <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-1">
-                            <span className="text-[10px] font-extrabold uppercase text-slate-400">Llave Privada (.pem)</span>
-                            <p className="text-xs font-mono font-bold text-emerald-700">
-                                🔑 {config?.certKeyPath || 'certs/private-key.pem'} (Cargada)
-                            </p>
-                            <p className="text-[10px] text-slate-400">Archivo utilizado para la aserción JWT</p>
-                        </div>
-
-                        <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-1 md:col-span-2">
-                            <span className="text-[10px] font-extrabold uppercase text-slate-400">Cuenta de OneDrive Asociada</span>
-                            <p className="text-xs font-bold text-slate-900">
-                                📧 {config?.onedriveUserEmail}
-                            </p>
-                            <p className="text-[10px] text-slate-400">Buzón de Microsoft 365 donde residen los documentos corporativos</p>
-                        </div>
-                    </div>
-
-                    {/* Guía de Permisos Requeridos en Azure */}
-                    <div className="p-4 bg-amber-50/80 rounded-2xl border border-amber-200 space-y-2 text-xs text-amber-950">
-                        <div className="flex items-center gap-2 font-black text-amber-900">
-                            <span>📋</span>
-                            <span>Permisos de API requeridos en Microsoft Entra ID (Azure Portal):</span>
-                        </div>
-                        <ul className="list-disc pl-5 space-y-1 text-amber-900 text-[11px] leading-relaxed">
-                            <li>
-                                <strong>Files.ReadWrite.All</strong> (Tipo: <em>Application / Aplicación</em>): Permite crear carpetas, subir y descargar archivos.
-                            </li>
-                            <li>
-                                <strong>User.Read.All</strong> (Tipo: <em>Application / Aplicación</em>): Permite verificar el usuario y cuota del OneDrive.
-                            </li>
-                            <li>
-                                <strong>Consentimiento de Administrador</strong>: Es indispensable hacer clic en <em>&quot;Conceder consentimiento de administrador para [Organización]&quot;</em>.
-                            </li>
-                        </ul>
-                    </div>
-
-                    {/* Explorador Jerárquico de Carpetas OneDrive (Selector de Carpeta Raíz) */}
-                    <div className="p-5 bg-slate-50 rounded-3xl border border-slate-200 space-y-4">
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-200">
-                            <div>
-                                <h3 className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
-                                    <span>🗂️</span>
-                                    <span>Explorador y Selector de Carpeta Raíz en OneDrive</span>
-                                </h3>
-                                <p className="text-[11px] text-slate-500">
-                                    Navega por las carpetas y subcarpetas para definir el punto de inicio del Gestor Documental.
-                                </p>
-                            </div>
-
-                            {/* Badge de Carpeta Raíz Actualmente Configurada */}
-                            <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 shrink-0">
-                                <span className="text-slate-400 text-[10px] uppercase font-black">Raíz Actual:</span>
-                                <span className="text-cyan-700 font-extrabold">{rootFolderName || '🌐 Raíz Completa'}</span>
-                            </div>
-                        </div>
-
-                        {/* Barra de Navegación / Breadcrumbs */}
-                        <div className="flex flex-wrap items-center gap-1.5 p-2.5 bg-white rounded-2xl border border-slate-200 text-xs font-bold">
-                            {breadcrumbs.map((crumb, idx) => {
-                                const isLast = idx === breadcrumbs.length - 1
-                                return (
-                                    <React.Fragment key={crumb.id + idx}>
-                                        {idx > 0 && <span className="text-slate-300">/</span>}
-                                        <button
-                                            type="button"
-                                            onClick={() => handleBreadcrumbClick(idx)}
-                                            className={`px-2 py-1 rounded-lg transition-colors cursor-pointer flex items-center gap-1 ${
-                                                isLast
-                                                    ? 'bg-cyan-50 text-cyan-900 font-black border border-cyan-200'
-                                                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
-                                            }`}
-                                        >
-                                            <span>{idx === 0 ? '🌐' : '📁'}</span>
-                                            <span>{crumb.name}</span>
-                                        </button>
-                                    </React.Fragment>
-                                )
-                            })}
-                        </div>
-
-                        {/* Botones de Acción para la Carpeta Actual del Breadcrumb */}
-                        <div className="flex flex-wrap items-center justify-between gap-2 p-3 bg-cyan-50/60 rounded-2xl border border-cyan-200/80">
-                            <div className="text-xs font-bold text-cyan-950 flex items-center gap-2">
-                                <span>📍 Carpeta actual seleccionable:</span>
-                                <span className="font-extrabold text-cyan-800 underline">
-                                    {currentBreadcrumb.name}
+                            {diag && (
+                                <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full ${diag.hasTenantId ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}`}>
+                                    {diag.hasTenantId ? '✓ Detectado' : 'No detectado'}
                                 </span>
-                            </div>
-
-                            <div className="flex items-center gap-2">
-                                {currentBreadcrumb.id !== 'root' && (
-                                    <button
-                                        type="button"
-                                        disabled={savingRoot}
-                                        onClick={() => handleSelectAsRoot('root', null)}
-                                        className="px-3 py-1.5 bg-white hover:bg-slate-100 text-slate-700 rounded-xl text-xs font-bold border border-slate-200 transition-all cursor-pointer shadow-2xs"
-                                    >
-                                        Restablecer a Raíz Completa
-                                    </button>
-                                )}
-
-                                <button
-                                    type="button"
-                                    disabled={savingRoot || (currentBreadcrumb.id === (rootFolderId || 'root'))}
-                                    onClick={() => handleSelectAsRoot(currentBreadcrumb.id, currentBreadcrumb.name)}
-                                    className="px-4 py-1.5 bg-gradient-to-r from-cyan-600 to-sky-600 hover:from-cyan-700 hover:to-sky-700 disabled:opacity-50 text-white font-black rounded-xl text-xs shadow-sm shadow-cyan-600/20 transition-all cursor-pointer flex items-center gap-1.5"
-                                >
-                                    <span>💾</span>
-                                    <span>{savingRoot ? 'Guardando...' : (currentBreadcrumb.id === (rootFolderId || 'root') ? '✓ Carpeta Raíz Actual' : 'Usar esta carpeta como Raíz')}</span>
-                                </button>
-                            </div>
-                        </div>
-
-                        {/* Listado de Subcarpetas */}
-                        <div className="space-y-1.5">
-                            <span className="text-[10px] font-black uppercase text-slate-400">
-                                Subcarpetas dentro de &quot;{currentBreadcrumb.name}&quot;:
-                            </span>
-
-                            {loadingFolders ? (
-                                <div className="py-8 text-center text-slate-400 text-xs space-y-2">
-                                    <div className="w-5 h-5 border-2 border-cyan-600 border-t-transparent rounded-full animate-spin mx-auto" />
-                                    <p>Explorando carpetas de OneDrive...</p>
-                                </div>
-                            ) : currentFolders.length === 0 ? (
-                                <div className="py-6 text-center text-slate-400 text-xs bg-white rounded-2xl border border-dashed border-slate-200">
-                                    <p className="font-bold text-slate-500">No hay más subcarpetas dentro de este nivel.</p>
-                                    <p className="text-[10px] text-slate-400 mt-1">Puedes usar esta carpeta directamente como la raíz del gestor.</p>
-                                </div>
-                            ) : (
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-64 overflow-y-auto pr-1">
-                                    {currentFolders.map(folder => {
-                                        const isSelectedRoot = (rootFolderId === folder.id)
-                                        return (
-                                            <div
-                                                key={folder.id}
-                                                className={`p-3 rounded-2xl border transition-all flex items-center justify-between gap-2 ${
-                                                    isSelectedRoot
-                                                        ? 'bg-cyan-50 border-cyan-300 ring-2 ring-cyan-500/20'
-                                                        : 'bg-white border-slate-200 hover:border-cyan-300 hover:bg-slate-50/80'
-                                                }`}
-                                            >
-                                                <div className="flex items-center gap-2 min-w-0">
-                                                    <span className="text-xl shrink-0">📁</span>
-                                                    <div className="min-w-0">
-                                                        <p className="text-xs font-bold text-slate-900 truncate" title={folder.name}>
-                                                            {folder.name}
-                                                        </p>
-                                                        <span className="text-[10px] text-slate-400">
-                                                            {folder.childCount} elemento(s)
-                                                        </span>
-                                                    </div>
-                                                </div>
-
-                                                <div className="flex items-center gap-1.5 shrink-0">
-                                                    <button
-                                                        type="button"
-                                                        onClick={() => handleOpenFolder(folder)}
-                                                        className="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-colors cursor-pointer flex items-center gap-1"
-                                                        title="Entrar a esta subcarpeta"
-                                                    >
-                                                        <span>📂</span>
-                                                        <span>Entrar</span>
-                                                    </button>
-
-                                                    <button
-                                                        type="button"
-                                                        disabled={savingRoot || isSelectedRoot}
-                                                        onClick={() => handleSelectAsRoot(folder.id, folder.name)}
-                                                        className={`px-2.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1 ${
-                                                            isSelectedRoot
-                                                                ? 'bg-emerald-100 text-emerald-800 font-black cursor-default'
-                                                                : 'bg-cyan-50 hover:bg-cyan-100 text-cyan-800'
-                                                        }`}
-                                                        title="Fijar como carpeta raíz del gestor"
-                                                    >
-                                                        <span>{isSelectedRoot ? '✓' : '🎯'}</span>
-                                                        <span>{isSelectedRoot ? 'Raíz' : 'Elegir'}</span>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        )
-                                    })}
-                                </div>
                             )}
                         </div>
+                        <p className="text-xs font-mono font-bold text-slate-900">
+                            {config?.tenantIdPreview || '5077320a••••••••'}
+                        </p>
+                        <p className="text-[10px] text-slate-400">Inquilino de Azure AD de Hendaya</p>
+                    </div>
+
+                    <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-1">
+                        <div className="flex items-center justify-between">
+                            <span className="text-[10px] font-extrabold uppercase text-slate-400">Application (Client) ID</span>
+                            {diag && (
+                                <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full ${diag.hasClientId ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}`}>
+                                    {diag.hasClientId ? '✓ Detectado' : 'No detectado'}
+                                </span>
+                            )}
+                        </div>
+                        <p className="text-xs font-mono font-bold text-slate-900">
+                            {config?.clientIdPreview || '89366673••••••••'}
+                        </p>
+                        <p className="text-[10px] text-slate-400">ID del Registro de Aplicación en Azure</p>
+                    </div>
+
+                    <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-1">
+                        <div className="flex items-center justify-between">
+                            <span className="text-[10px] font-extrabold uppercase text-slate-400">Huella Digital (Thumbprint SHA-1)</span>
+                            {diag && (
+                                <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full ${diag.hasThumbprint ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}`}>
+                                    {diag.hasThumbprint ? '✓ Detectado' : 'No detectado'}
+                                </span>
+                            )}
+                        </div>
+                        <p className="text-xs font-mono font-bold text-slate-900 break-all">
+                            {config?.certThumbprintPreview || 'A842D506••••••••F594E'}
+                        </p>
+                        <p className="text-[10px] text-slate-400">Identificador único del certificado X.509</p>
+                    </div>
+
+                    <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-1">
+                        <div className="flex items-center justify-between">
+                            <span className="text-[10px] font-extrabold uppercase text-slate-400">Llave Privada (.pem)</span>
+                            {diag && (
+                                <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full ${diag.hasPrivateKey ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}`}>
+                                    {diag.hasPrivateKey ? '✓ Cargada' : 'certs/private-key.pem'}
+                                </span>
+                            )}
+                        </div>
+                        <p className="text-xs font-mono font-bold text-emerald-700">
+                            🔑 {config?.certKeyPath || 'certs/private-key.pem'} (Cargada)
+                        </p>
+                        <p className="text-[10px] text-slate-400">Archivo o variable para la aserción JWT</p>
+                    </div>
+
+                    <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-1 md:col-span-2">
+                        <div className="flex items-center justify-between">
+                            <span className="text-[10px] font-extrabold uppercase text-slate-400">Cuenta de OneDrive Asociada</span>
+                            {diag && (
+                                <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full ${diag.hasUserEmail ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}`}>
+                                    {diag.hasUserEmail ? '✓ Detectada' : 'doctoshdya@ipal.cl'}
+                                </span>
+                            )}
+                        </div>
+                        <p className="text-xs font-bold text-slate-900">
+                            📧 {config?.onedriveUserEmail || 'doctoshdya@ipal.cl'}
+                        </p>
+                        <p className="text-[10px] text-slate-400">Buzón de Microsoft 365 donde residen los documentos corporativos</p>
                     </div>
                 </div>
-            ) : (
-                /* Formulario para configuración manual con Client Secret */
-                <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 space-y-6">
-                    <div className="flex items-center justify-between pb-4 border-b border-slate-100">
-                        <div className="space-y-0.5">
-                            <h2 className="text-sm font-black text-slate-900 uppercase tracking-wider">
-                                Credenciales Azure App Registration
-                            </h2>
-                            <p className="text-xs text-slate-500">
-                                Se requiere una aplicación registrada en Microsoft Entra ID con permisos de tipo Application `Files.ReadWrite.All`.
+
+                {/* Guía de Permisos Requeridos en Azure */}
+                <div className="p-4 bg-amber-50/80 rounded-2xl border border-amber-200 space-y-2 text-xs text-amber-950">
+                    <div className="flex items-center gap-2 font-black text-amber-900">
+                        <span>📋</span>
+                        <span>Permisos de API requeridos en Microsoft Entra ID (Azure Portal):</span>
+                    </div>
+                    <ul className="list-disc pl-5 space-y-1 text-amber-900 text-[11px] leading-relaxed">
+                        <li>
+                            <strong>Files.ReadWrite.All</strong> (Tipo: <em>Application / Aplicación</em>): Permite crear carpetas, subir y descargar archivos.
+                        </li>
+                        <li>
+                            <strong>User.Read.All</strong> (Tipo: <em>Application / Aplicación</em>): Permite verificar el usuario y cuota del OneDrive.
+                        </li>
+                        <li>
+                            <strong>Consentimiento de Administrador</strong>: Es indispensable hacer clic en <em>&quot;Conceder consentimiento de administrador para [Organización]&quot;</em>.
+                        </li>
+                    </ul>
+                </div>
+
+                {/* Explorador Jerárquico de Carpetas OneDrive (Selector de Carpeta Raíz) */}
+                <div className="p-5 bg-slate-50 rounded-3xl border border-slate-200 space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-200">
+                        <div>
+                            <h3 className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
+                                <span>🗂️</span>
+                                <span>Explorador y Selector de Carpeta Raíz en OneDrive</span>
+                            </h3>
+                            <p className="text-[11px] text-slate-500">
+                                Navega por las carpetas y subcarpetas para definir el punto de inicio del Gestor Documental.
                             </p>
                         </div>
 
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-50 border border-amber-200 text-amber-800 rounded-xl text-[10px] font-extrabold">
-                            <span>🔒</span>
-                            <span>Cifrado AES-256-GCM</span>
-                        </span>
+                        {/* Badge de Carpeta Raíz Actualmente Configurada */}
+                        <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 shrink-0">
+                            <span className="text-slate-400 text-[10px] uppercase font-black">Raíz Actual:</span>
+                            <span className="text-cyan-700 font-extrabold">{rootFolderName || '🌐 Raíz Completa'}</span>
+                        </div>
                     </div>
 
-                    <form onSubmit={handleSave} className="space-y-5">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                            <div className="space-y-1.5">
-                                <label className="block text-xs font-bold text-slate-700">
-                                    Directory (Tenant) ID *
-                                </label>
-                                <input
-                                    type="text"
-                                    required
-                                    value={tenantId}
-                                    onChange={(e) => setTenantId(e.target.value)}
-                                    placeholder={config?.tenantIdPreview || 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'}
-                                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-mono text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white transition-all"
-                                />
-                            </div>
+                    {/* Barra de Navegación / Breadcrumbs */}
+                    <div className="flex flex-wrap items-center gap-1.5 p-2.5 bg-white rounded-2xl border border-slate-200 text-xs font-bold">
+                        {breadcrumbs.map((crumb, idx) => {
+                            const isLast = idx === breadcrumbs.length - 1
+                            return (
+                                <React.Fragment key={crumb.id + idx}>
+                                    {idx > 0 && <span className="text-slate-300">/</span>}
+                                    <button
+                                        type="button"
+                                        onClick={() => handleBreadcrumbClick(idx)}
+                                        className={`px-2 py-1 rounded-lg transition-colors cursor-pointer flex items-center gap-1 ${
+                                            isLast
+                                                ? 'bg-cyan-50 text-cyan-900 font-black border border-cyan-200'
+                                                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                                        }`}
+                                    >
+                                        <span>{idx === 0 ? '🌐' : '📁'}</span>
+                                        <span>{crumb.name}</span>
+                                    </button>
+                                </React.Fragment>
+                            )
+                        })}
+                    </div>
 
-                            <div className="space-y-1.5">
-                                <label className="block text-xs font-bold text-slate-700">
-                                    Application (Client) ID *
-                                </label>
-                                <input
-                                    type="text"
-                                    required
-                                    value={clientId}
-                                    onChange={(e) => setClientId(e.target.value)}
-                                    placeholder={config?.clientIdPreview || 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'}
-                                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-mono text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white transition-all"
-                                />
-                            </div>
-
-                            <div className="space-y-1.5">
-                                <label className="block text-xs font-bold text-slate-700">
-                                    Client Secret *
-                                </label>
-                                <input
-                                    type="password"
-                                    value={clientSecret}
-                                    onChange={(e) => setClientSecret(e.target.value)}
-                                    placeholder={config?.tieneSecret ? '••••••••••••••••••••••••' : 'Valor del secreto'}
-                                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-mono text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white transition-all"
-                                />
-                            </div>
-
-                            <div className="space-y-1.5">
-                                <label className="block text-xs font-bold text-slate-700">
-                                    Correo del Dueño de OneDrive *
-                                </label>
-                                <input
-                                    type="email"
-                                    required
-                                    value={onedriveUserEmail}
-                                    onChange={(e) => setOnedriveUserEmail(e.target.value)}
-                                    placeholder="ejemplo@hendaya.cl"
-                                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white transition-all"
-                                />
-                            </div>
+                    {/* Botones de Acción para la Carpeta Actual del Breadcrumb */}
+                    <div className="flex flex-wrap items-center justify-between gap-2 p-3 bg-cyan-50/60 rounded-2xl border border-cyan-200/80">
+                        <div className="text-xs font-bold text-cyan-950 flex items-center gap-2">
+                            <span>📍 Carpeta actual seleccionable:</span>
+                            <span className="font-extrabold text-cyan-800 underline">
+                                {currentBreadcrumb.name}
+                            </span>
                         </div>
 
-                        <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
+                        <div className="flex items-center gap-2">
+                            {currentBreadcrumb.id !== 'root' && (
+                                <button
+                                    type="button"
+                                    disabled={savingRoot}
+                                    onClick={() => handleSelectAsRoot('root', null)}
+                                    className="px-3 py-1.5 bg-white hover:bg-slate-100 text-slate-700 rounded-xl text-xs font-bold border border-slate-200 transition-all cursor-pointer shadow-2xs"
+                                >
+                                    Restablecer a Raíz Completa
+                                </button>
+                            )}
+
                             <button
-                                type="submit"
-                                disabled={saving}
-                                className="px-8 py-3 bg-gradient-to-r from-cyan-600 to-sky-600 hover:from-cyan-700 hover:to-sky-700 disabled:opacity-50 text-white font-black rounded-2xl text-xs shadow-lg shadow-cyan-600/25 transition-all cursor-pointer flex items-center gap-2"
+                                type="button"
+                                disabled={savingRoot || (currentBreadcrumb.id === (rootFolderId || 'root'))}
+                                onClick={() => handleSelectAsRoot(currentBreadcrumb.id, currentBreadcrumb.name)}
+                                className="px-4 py-1.5 bg-gradient-to-r from-cyan-600 to-sky-600 hover:from-cyan-700 hover:to-sky-700 disabled:opacity-50 text-white font-black rounded-xl text-xs shadow-sm shadow-cyan-600/20 transition-all cursor-pointer flex items-center gap-1.5"
                             >
                                 <span>💾</span>
-                                <span>{saving ? 'Guardando...' : 'Guardar Configuración'}</span>
+                                <span>{savingRoot ? 'Guardando...' : (currentBreadcrumb.id === (rootFolderId || 'root') ? '✓ Carpeta Raíz Actual' : 'Usar esta carpeta como Raíz')}</span>
                             </button>
                         </div>
-                    </form>
+                    </div>
+
+                    {/* Listado de Subcarpetas */}
+                    <div className="space-y-1.5">
+                        <span className="text-[10px] font-black uppercase text-slate-400">
+                            Subcarpetas dentro de &quot;{currentBreadcrumb.name}&quot;:
+                        </span>
+
+                        {loadingFolders ? (
+                            <div className="py-8 text-center text-slate-400 text-xs space-y-2">
+                                <div className="w-5 h-5 border-2 border-cyan-600 border-t-transparent rounded-full animate-spin mx-auto" />
+                                <p>Explorando carpetas de OneDrive...</p>
+                            </div>
+                        ) : currentFolders.length === 0 ? (
+                            <div className="py-6 text-center text-slate-400 text-xs bg-white rounded-2xl border border-dashed border-slate-200">
+                                <p className="font-bold text-slate-500">No hay más subcarpetas dentro de este nivel.</p>
+                                <p className="text-[10px] text-slate-400 mt-1">Puedes usar esta carpeta directamente como la raíz del gestor.</p>
+                            </div>
+                        ) : (
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-64 overflow-y-auto pr-1">
+                                {currentFolders.map(folder => {
+                                    const isSelectedRoot = (rootFolderId === folder.id)
+                                    return (
+                                        <div
+                                            key={folder.id}
+                                            className={`p-3 rounded-2xl border transition-all flex items-center justify-between gap-2 ${
+                                                isSelectedRoot
+                                                    ? 'bg-cyan-50 border-cyan-300 ring-2 ring-cyan-500/20'
+                                                    : 'bg-white border-slate-200 hover:border-cyan-300 hover:bg-slate-50/80'
+                                            }`}
+                                        >
+                                            <div className="flex items-center gap-2 min-w-0">
+                                                <span className="text-xl shrink-0">📁</span>
+                                                <div className="min-w-0">
+                                                    <p className="text-xs font-bold text-slate-900 truncate" title={folder.name}>
+                                                        {folder.name}
+                                                    </p>
+                                                    <span className="text-[10px] text-slate-400">
+                                                        {folder.childCount} elemento(s)
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div className="flex items-center gap-1.5 shrink-0">
+                                                <button
+                                                    type="button"
+                                                    onClick={() => handleOpenFolder(folder)}
+                                                    className="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-colors cursor-pointer flex items-center gap-1"
+                                                    title="Entrar a esta subcarpeta"
+                                                >
+                                                    <span>📂</span>
+                                                    <span>Entrar</span>
+                                                </button>
+
+                                                <button
+                                                    type="button"
+                                                    disabled={savingRoot || isSelectedRoot}
+                                                    onClick={() => handleSelectAsRoot(folder.id, folder.name)}
+                                                    className={`px-2.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1 ${
+                                                        isSelectedRoot
+                                                            ? 'bg-emerald-100 text-emerald-800 font-black cursor-default'
+                                                            : 'bg-cyan-50 hover:bg-cyan-100 text-cyan-800'
+                                                    }`}
+                                                    title="Fijar como carpeta raíz del gestor"
+                                                >
+                                                    <span>{isSelectedRoot ? '✓' : '🎯'}</span>
+                                                    <span>{isSelectedRoot ? 'Raíz' : 'Elegir'}</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        )}
+                    </div>
                 </div>
-            )}
+            </div>
+
+            {/* Sección Opcional Desplegable: Modo Legacy Client Secret */}
+            <div className="pt-2">
+                <button
+                    type="button"
+                    onClick={() => setShowLegacyForm(!showLegacyForm)}
+                    className="text-xs font-bold text-slate-500 hover:text-slate-700 transition-colors flex items-center gap-1 cursor-pointer"
+                >
+                    <span>{showLegacyForm ? '▼ Ocultar' : '▶ Configuración alternativa:'}</span>
+                    <span>Modo Legacy con Secreto de Cliente (Client Secret)</span>
+                </button>
+
+                {showLegacyForm && (
+                    <div className="mt-4 bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 space-y-5 animate-in fade-in duration-200">
+                        <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                            <div className="space-y-0.5">
+                                <h3 className="text-xs font-black text-slate-800 uppercase tracking-wider">
+                                    Credenciales Manuales en Base de Datos (Secret)
+                                </h3>
+                                <p className="text-[11px] text-slate-500">
+                                    Utilice esta opción sólo si desea guardar las credenciales cifradas en base de datos en lugar de variables de entorno.
+                                </p>
+                            </div>
+                        </div>
+
+                        <form onSubmit={handleSaveLegacy} className="space-y-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="space-y-1">
+                                    <label className="block text-[11px] font-bold text-slate-700">Directory (Tenant) ID</label>
+                                    <input
+                                        type="text"
+                                        value={tenantId}
+                                        onChange={(e) => setTenantId(e.target.value)}
+                                        placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                                        className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                                    />
+                                </div>
+
+                                <div className="space-y-1">
+                                    <label className="block text-[11px] font-bold text-slate-700">Application (Client) ID</label>
+                                    <input
+                                        type="text"
+                                        value={clientId}
+                                        onChange={(e) => setClientId(e.target.value)}
+                                        placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                                        className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                                    />
+                                </div>
+
+                                <div className="space-y-1">
+                                    <label className="block text-[11px] font-bold text-slate-700">Client Secret</label>
+                                    <input
+                                        type="password"
+                                        value={clientSecret}
+                                        onChange={(e) => setClientSecret(e.target.value)}
+                                        placeholder="••••••••••••••••••••••••"
+                                        className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                                    />
+                                </div>
+
+                                <div className="space-y-1">
+                                    <label className="block text-[11px] font-bold text-slate-700">Correo Dueño OneDrive</label>
+                                    <input
+                                        type="email"
+                                        value={onedriveUserEmail}
+                                        onChange={(e) => setOnedriveUserEmail(e.target.value)}
+                                        placeholder="doctoshdya@ipal.cl"
+                                        className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="flex justify-end pt-2">
+                                <button
+                                    type="submit"
+                                    disabled={saving}
+                                    className="px-6 py-2.5 bg-slate-800 hover:bg-slate-900 disabled:opacity-50 text-white font-bold rounded-xl text-xs shadow-md transition-all cursor-pointer"
+                                >
+                                    {saving ? 'Guardando...' : 'Guardar en Base de Datos'}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                )}
+            </div>
         </div>
     )
 }
