@@ -6,6 +6,9 @@ import { getDecryptedConfig, saveEncryptedConfig } from '@/lib/graph-client'
 import { logAuditAction } from '@/lib/audit'
 import { ConfiguracionDocumentalUI } from '@/types/documentos'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export async function GET() {
     try {
         const session = await getSession()

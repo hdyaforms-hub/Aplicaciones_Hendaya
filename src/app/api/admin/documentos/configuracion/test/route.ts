@@ -3,6 +3,9 @@ import { getSession } from '@/lib/session'
 import { isGlobalDocAdmin, normalizeUserPermissions } from '@/lib/doc-permissions'
 import { testConnection, listOneDriveRootFolders } from '@/lib/graph-client'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export async function POST() {
     try {
         const session = await getSession()

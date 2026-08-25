@@ -4,6 +4,9 @@ import { redirect } from 'next/navigation'
 import { isGlobalDocAdmin, normalizeUserPermissions } from '@/lib/doc-permissions'
 import ConfiguracionClient from './ConfiguracionClient'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export const metadata = {
     title: 'Configuración OneDrive | Gestor Documental | Hendaya',
     description: 'Configuración de conexión y credenciales de Microsoft Graph API / Azure para el Gestor Documental.'

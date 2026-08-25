@@ -58,7 +58,7 @@ export default function ConfiguracionClient({ user }: ConfiguracionClientProps) 
     const fetchConfig = async () => {
         setLoading(true)
         try {
-            const res = await fetch('/api/admin/documentos/configuracion')
+            const res = await fetch('/api/admin/documentos/configuracion', { cache: 'no-store' })
             const data = await res.json()
             if (res.ok && data.config) {
                 setConfig(data.config)
@@ -81,7 +81,7 @@ export default function ConfiguracionClient({ user }: ConfiguracionClientProps) 
     const fetchFoldersAtLevel = async (folderId: string) => {
         setLoadingFolders(true)
         try {
-            const res = await fetch(`/api/admin/documentos/configuracion/folders?folderId=${encodeURIComponent(folderId)}`)
+            const res = await fetch(`/api/admin/documentos/configuracion/folders?folderId=${encodeURIComponent(folderId)}`, { cache: 'no-store' })
             const data = await res.json()
             if (res.ok && data.folders) {
                 setCurrentFolders(data.folders)
