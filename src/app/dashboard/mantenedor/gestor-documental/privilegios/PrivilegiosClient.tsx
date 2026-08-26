@@ -18,6 +18,8 @@ export default function PrivilegiosClient({ user }: PrivilegiosClientProps) {
     const [colegios, setColegios] = useState<{ rbd: number; nombre: string }[]>([])
     const [loading, setLoading] = useState(true)
     const [loadingPrivs, setLoadingPrivs] = useState(false)
+    const [loadingCatalogos, setLoadingCatalogos] = useState(true)
+    const [errorCarpetas, setErrorCarpetas] = useState<string | null>(null)
     const [expandedFolders, setExpandedFolders] = useState<Record<string, boolean>>({})
 
     // Form inputs
@@ -31,8 +33,9 @@ export default function PrivilegiosClient({ user }: PrivilegiosClientProps) {
 
     // Cargar listas maestras de catálogos inmediatamente al montar
     const fetchCatalogos = useCallback(async () => {
+        setLoadingCatalogos(true)
         try {
-            const res = await fetch('/api/admin/documentos/privilegios')
+            const res = await fetch('/api/admin/documentos/privilegios', { cache: 'no-store' })
             const data = await res.json()
             if (res.ok) {
                 if (data.roles) setRoles(data.roles)
@@ -41,8 +44,10 @@ export default function PrivilegiosClient({ user }: PrivilegiosClientProps) {
                 if (data.licitaciones) setLicitaciones(data.licitaciones)
                 if (data.colegios) setColegios(data.colegios)
             }
-        } catch (e) {
+        } catch (e: any) {
             console.error('Error al cargar catálogos maestros:', e)
+        } finally {
+            setLoadingCatalogos(false)
         }
     }, [])
 
@@ -53,22 +58,31 @@ export default function PrivilegiosClient({ user }: PrivilegiosClientProps) {
     // Cargar carpetas
     const fetchCarpetas = useCallback(async () => {
         setLoading(true)
+        setErrorCarpetas(null)
         try {
-            const res = await fetch('/api/admin/documentos/carpetas')
+            const res = await fetch('/api/admin/documentos/carpetas', { cache: 'no-store' })
             const data = await res.json()
-            if (res.ok && data.carpetas) {
+            if (res.ok && Array.isArray(data.carpetas)) {
                 setCarpetas(data.carpetas)
-                if (data.carpetas.length > 0 && !selectedCarpeta) {
-                    setSelectedCarpeta(data.carpetas[0])
-                    setExpandedFolders({ [data.carpetas[0].id]: true })
+                if (data.carpetas.length > 0) {
+                    setSelectedCarpeta(prev => {
+                        if (prev && data.carpetas.some((c: CarpetaUI) => c.id === prev.id)) {
+                            return prev
+                        }
+                        setExpandedFolders(f => ({ ...f, [data.carpetas[0].id]: true }))
+                        return data.carpetas[0]
+                    })
                 }
+            } else {
+                setErrorCarpetas(data.message || 'Error al obtener estructura de carpetas')
             }
-        } catch (e) {
+        } catch (e: any) {
             console.error('Error al cargar carpetas:', e)
+            setErrorCarpetas(e?.message || 'Error de conexión al cargar carpetas')
         } finally {
             setLoading(false)
         }
-    }, [selectedCarpeta])
+    }, [])
 
     useEffect(() => {
         fetchCarpetas()
@@ -79,7 +93,7 @@ export default function PrivilegiosClient({ user }: PrivilegiosClientProps) {
         setLoadingPrivs(true)
         setMessage(null)
         try {
-            const res = await fetch(`/api/admin/documentos/privilegios?carpetaId=${carpetaId}`)
+            const res = await fetch(`/api/admin/documentos/privilegios?carpetaId=${carpetaId}`, { cache: 'no-store' })
             const data = await res.json()
             if (res.ok) {
                 setPrivilegios(data.privilegios || [])
@@ -88,19 +102,22 @@ export default function PrivilegiosClient({ user }: PrivilegiosClientProps) {
                 if (data.sucursales && data.sucursales.length > 0) setSucursales(data.sucursales)
                 if (data.licitaciones && data.licitaciones.length > 0) setLicitaciones(data.licitaciones)
                 if (data.colegios && data.colegios.length > 0) setColegios(data.colegios)
+            } else {
+                setMessage({ type: 'error', text: data.message || 'Error al cargar privilegios' })
             }
-        } catch (e) {
+        } catch (e: any) {
             console.error('Error al cargar privilegios:', e)
+            setMessage({ type: 'error', text: e?.message || 'Error de conexión al cargar privilegios' })
         } finally {
             setLoadingPrivs(false)
         }
     }, [])
 
     useEffect(() => {
-        if (selectedCarpeta) {
+        if (selectedCarpeta?.id) {
             fetchPrivilegios(selectedCarpeta.id)
         }
-    }, [selectedCarpeta, fetchPrivilegios])
+    }, [selectedCarpeta?.id, fetchPrivilegios])
 
     // Sincronizar automáticamente referenciaId cuando cambia el criterio o cargan los datos
     useEffect(() => {
@@ -319,10 +336,30 @@ export default function PrivilegiosClient({ user }: PrivilegiosClientProps) {
                     {loading ? (
                         <div className="py-12 text-center text-slate-400 text-xs space-y-2">
                             <div className="w-6 h-6 border-2 border-cyan-600 border-t-transparent rounded-full animate-spin mx-auto" />
-                            <p>Cargando carpetas...</p>
+                            <p>Cargando estructura de carpetas...</p>
+                        </div>
+                    ) : errorCarpetas ? (
+                        <div className="py-8 text-center space-y-3 px-2">
+                            <p className="text-xs font-bold text-rose-600">⚠️ {errorCarpetas}</p>
+                            <button
+                                type="button"
+                                onClick={fetchCarpetas}
+                                className="px-3 py-1.5 bg-cyan-50 hover:bg-cyan-100 text-cyan-800 text-xs font-bold rounded-xl border border-cyan-200 cursor-pointer"
+                            >
+                                🔄 Reintentar conexión
+                            </button>
                         </div>
                     ) : carpetas.length === 0 ? (
-                        <p className="text-xs text-slate-400 text-center py-8">No hay carpetas registradas.</p>
+                        <div className="py-8 text-center text-slate-400 text-xs space-y-2">
+                            <p>No hay carpetas registradas en el sistema.</p>
+                            <button
+                                type="button"
+                                onClick={fetchCarpetas}
+                                className="text-[11px] font-bold text-cyan-600 underline cursor-pointer"
+                            >
+                                Actualizar
+                            </button>
+                        </div>
                     ) : (
                         <div className="max-h-[600px] overflow-y-auto pr-1">
                             {renderFolderTree(carpetas)}

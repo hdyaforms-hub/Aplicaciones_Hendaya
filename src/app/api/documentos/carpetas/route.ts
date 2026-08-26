@@ -1,10 +1,13 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { getSession } from '@/lib/session'
 import { rawPrisma } from '@/lib/prisma'
 import { getFolderIdsForUser, getUserFolderPermissions } from '@/lib/doc-permissions'
 import { CarpetaUI } from '@/types/documentos'
 
-export async function GET() {
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
+export async function GET(request: NextRequest) {
     try {
         const session = await getSession()
         if (!session?.user) {

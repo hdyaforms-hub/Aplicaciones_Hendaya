@@ -5,6 +5,9 @@ import { isGlobalDocAdmin, normalizeUserPermissions } from '@/lib/doc-permission
 import { deleteItem } from '@/lib/graph-client'
 import { logAuditAction } from '@/lib/audit'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export async function PUT(
     request: NextRequest,
     context: { params: Promise<{ carpetaId: string }> }

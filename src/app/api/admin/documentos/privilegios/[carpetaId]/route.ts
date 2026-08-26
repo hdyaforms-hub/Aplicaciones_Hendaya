@@ -4,6 +4,9 @@ import { rawPrisma } from '@/lib/prisma'
 import { isGlobalDocAdmin, normalizeUserPermissions } from '@/lib/doc-permissions'
 import { PrivilegioUI, NivelPermiso, TipoPrivilegio } from '@/types/documentos'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export async function GET(
     request: NextRequest,
     context: { params: Promise<{ carpetaId: string }> }
@@ -22,8 +25,10 @@ export async function GET(
         }
 
         const { carpetaId } = await context.params
+        const { searchParams } = new URL(request.url)
+        const searchColegio = searchParams.get('searchColegio')?.trim()
 
-        const [privilegios, roles, users, sucursales, licitaciones, colegiosRaw, carpeta] = await Promise.all([
+        const [privilegios, roles, users, sucursales, licitaciones, carpeta] = await Promise.all([
             rawPrisma.privilegioDocumental.findMany({
                 where: { carpetaId },
                 orderBy: { creadoEn: 'desc' }
@@ -45,10 +50,6 @@ export async function GET(
                 select: { licId: true, licitacionHomologada: true },
                 orderBy: { licId: 'asc' }
             }),
-            rawPrisma.colegios.findMany({
-                select: { colRBD: true, nombreEstablecimiento: true, sucursal: true },
-                orderBy: { colRBD: 'asc' }
-            }),
             rawPrisma.carpetaDocumental.findUnique({
                 where: { id: carpetaId }
             })
@@ -57,6 +58,45 @@ export async function GET(
         if (!carpeta) {
             return NextResponse.json({ message: 'Carpeta no encontrada' }, { status: 404 })
         }
+
+        const assignedRBDs = Array.from(new Set(
+            privilegios
+                .filter(p => p.tipo === 'rbd')
+                .map(p => Number(p.referenciaId))
+                .filter(n => !isNaN(n) && n > 0)
+        ))
+
+        let colegiosWhere: any = undefined
+        if (searchColegio) {
+            const parsedNum = Number(searchColegio)
+            colegiosWhere = {
+                OR: [
+                    { nombreEstablecimiento: { contains: searchColegio, mode: 'insensitive' } },
+                    ...(isNaN(parsedNum) ? [] : [{ colRBD: parsedNum }])
+                ]
+            }
+        } else if (assignedRBDs.length > 0) {
+            colegiosWhere = {
+                OR: [
+                    { colRBD: { in: assignedRBDs } }
+                ]
+            }
+        }
+
+        const [colegiosAsignados, colegiosCatalogo] = await Promise.all([
+            assignedRBDs.length > 0 ? rawPrisma.colegios.findMany({
+                where: { colRBD: { in: assignedRBDs } },
+                select: { colRBD: true, nombreEstablecimiento: true, sucursal: true }
+            }) : Promise.resolve([]),
+            rawPrisma.colegios.findMany({
+                where: colegiosWhere,
+                select: { colRBD: true, nombreEstablecimiento: true, sucursal: true },
+                take: 200,
+                orderBy: { colRBD: 'asc' }
+            })
+        ])
+
+        const colegiosRaw = [...colegiosAsignados, ...colegiosCatalogo]
 
         const uniqueColegiosMap = new Map<number, { rbd: number; nombre: string }>()
         for (const c of colegiosRaw) {

@@ -21,6 +21,9 @@ function determineFileType(mimeType: string = '', filename: string = ''): 'pdf' 
     return 'otro'
 }
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export async function GET(request: NextRequest) {
     try {
         const session = await getSession()
