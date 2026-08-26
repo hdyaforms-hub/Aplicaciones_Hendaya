@@ -5,6 +5,9 @@ import { isGlobalDocAdmin, normalizeUserPermissions } from '@/lib/doc-permission
 import { uploadFile, deleteItem } from '@/lib/graph-client'
 import { logAuditAction } from '@/lib/audit'
 
+export const dynamic = 'force-dynamic'
+export const maxDuration = 180 // 3 minutos para subida de videos/archivos pesados
+
 export async function POST(
     request: NextRequest,
     context: { params: Promise<{ carpetaId: string }> }
@@ -39,9 +42,10 @@ export async function POST(
             return NextResponse.json({ message: 'No se ha proporcionado ningún archivo' }, { status: 400 })
         }
 
-        // Límite de 50MB
-        if (file.size > 50 * 1024 * 1024) {
-            return NextResponse.json({ message: 'El archivo excede el tamaño máximo permitido (50MB)' }, { status: 400 })
+        // Límite de 250MB (apto para videos explicativos, capacitaciones y documentos extensos)
+        const MAX_MB = 250
+        if (file.size > MAX_MB * 1024 * 1024) {
+            return NextResponse.json({ message: `El archivo "${file.name}" excede el tamaño máximo permitido (${MAX_MB}MB)` }, { status: 400 })
         }
 
         const arrayBuffer = await file.arrayBuffer()

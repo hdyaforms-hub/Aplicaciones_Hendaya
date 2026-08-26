@@ -198,6 +198,7 @@ export default function CarpetasClient({ user }: CarpetasClientProps) {
 
         const total = selectedFiles.length
         let successCount = 0
+        const errorMessages: string[] = []
 
         for (let i = 0; i < total; i++) {
             const file = selectedFiles[i]
@@ -211,13 +212,17 @@ export default function CarpetasClient({ user }: CarpetasClientProps) {
                     method: 'POST',
                     body: formData
                 })
-                if (res.ok) {
+                const data = await res.json().catch(() => ({}))
+                if (res.ok && data.success) {
                     successCount++
                 } else {
-                    const err = await res.json()
-                    console.error(`Error al subir ${file.name}:`, err.message)
+                    const msg = data.message || `Error del servidor (${res.status})`
+                    errorMessages.push(`${file.name}: ${msg}`)
+                    console.error(`Error al subir ${file.name}:`, msg)
                 }
-            } catch (e) {
+            } catch (e: any) {
+                const msg = e?.message || 'Error de conexión'
+                errorMessages.push(`${file.name}: ${msg}`)
                 console.error(`Error al subir ${file.name}:`, e)
             }
         }
@@ -227,6 +232,10 @@ export default function CarpetasClient({ user }: CarpetasClientProps) {
         setSelectedFiles([])
         setShowUploadModal(false)
         fetchArchivos(selectedCarpeta.id)
+
+        if (errorMessages.length > 0) {
+            alert(`Se subieron ${successCount} de ${total} archivo(s).\n\nErrores encontrados:\n• ${errorMessages.join('\n• ')}`)
+        }
     }
 
     // Eliminar archivo
@@ -681,7 +690,9 @@ export default function CarpetasClient({ user }: CarpetasClientProps) {
                                 <p className="text-xs font-bold text-slate-800">
                                     Arrastra y suelta aquí tus archivos o <span className="text-cyan-600 underline">haz clic para examinar</span>
                                 </p>
-                                <p className="text-[10px] text-slate-400">Puedes seleccionar múltiples archivos a la vez.</p>
+                                <p className="text-[10px] text-slate-400">
+                                    Admite documentos, imágenes y videos MP4 (hasta 250MB por archivo).
+                                </p>
                                 <input
                                     ref={fileInputRef}
                                     type="file"

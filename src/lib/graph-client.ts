@@ -787,16 +787,20 @@ export async function uploadFile(
                 body: new Uint8Array(chunk) as any
             })
 
-            if (!chunkRes.ok && chunkRes.status !== 201 && chunkRes.status !== 200) {
+            if (!chunkRes.ok) {
                 const chunkErr = await chunkRes.json().catch(() => ({}))
                 throw new Error(`Error subiendo fragmento de archivo: ${chunkErr.error?.message || chunkRes.statusText}`)
             }
 
-            lastResult = await chunkRes.json()
+            try {
+                lastResult = await chunkRes.json()
+            } catch {
+                // Algunos chunks intermedios retornan 202 Accepted sin body
+            }
             start = end
         }
 
-        return lastResult
+        return lastResult || { id: 'uploaded', name: filename, size: buffer.length }
     }
 }
 
