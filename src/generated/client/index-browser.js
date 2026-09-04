@@ -1535,6 +1535,20 @@ exports.Prisma.PrivilegioDocumentalScalarFieldEnum = {
   creadoEn: 'creadoEn'
 };
 
+exports.Prisma.UserWidgetLayoutScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  username: 'username',
+  userId: 'userId',
+  isDefault: 'isDefault',
+  isPublic: 'isPublic',
+  layoutType: 'layoutType',
+  configJson: 'configJson',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1660,7 +1674,8 @@ exports.Prisma.ModelName = {
   CollabKudo: 'CollabKudo',
   ConfiguracionDocumental: 'ConfiguracionDocumental',
   CarpetaDocumental: 'CarpetaDocumental',
-  PrivilegioDocumental: 'PrivilegioDocumental'
+  PrivilegioDocumental: 'PrivilegioDocumental',
+  UserWidgetLayout: 'UserWidgetLayout'
 };
 
 /**

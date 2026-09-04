@@ -13,6 +13,7 @@ function getModuleInfoFromPath(path: string): { modulo: string; detalle: string 
 
     // Tableros y Avances
     if (path.startsWith('/dashboard/tablero')) {
+        if (path.includes('/widgets')) return { modulo: 'Tableros y Avances', detalle: 'Accedió a Tablero Widgets Personalizables' }
         if (path.includes('/auditoria')) return { modulo: 'Tableros y Avances', detalle: 'Accedió al módulo de Auditoría de Actividad' }
         if (path.includes('/organigrama')) return { modulo: 'Tableros y Avances', detalle: 'Accedió a Organigrama por zonas' }
         if (path.includes('/solicitudes-pan')) return { modulo: 'Tableros y Avances', detalle: 'Accedió a Tablero Solicitudes de Pan' }

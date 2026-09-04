@@ -20,9 +20,10 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
     {
         name: 'Tableros y Avances',
         icon: '📈',
-        requiredPermission: ['view_tablero', 'view_tablero_pan', 'view_tablero_gas', 'view_tablero_retiro', 'view_tablero_elementos', 'view_tablero_multas_ee', 'view_tablero_organigrama', 'view_tablero_distancias', 'view_tablero_actas', 'view_tablero_auditoria', 'view_tablero_verificador_temperaturas'],
+        requiredPermission: ['view_tablero', 'view_tablero_pan', 'view_tablero_gas', 'view_tablero_retiro', 'view_tablero_elementos', 'view_tablero_multas_ee', 'view_tablero_organigrama', 'view_tablero_distancias', 'view_tablero_actas', 'view_tablero_auditoria', 'view_tablero_verificador_temperaturas', 'view_tablero_widgets'],
         subItems: [
             { name: 'Avance PMPA', href: '/dashboard/tablero', requiredPermission: 'view_tablero' },
+            { name: 'Widgets', href: '/dashboard/tablero/widgets', requiredPermission: 'view_tablero_widgets' },
             { name: 'Organigrama por zonas', href: '/dashboard/tablero/organigrama', requiredPermission: 'view_tablero_organigrama' },
             { name: 'Solicitudes de Pan', href: '/dashboard/tablero/solicitudes-pan', requiredPermission: 'view_tablero_pan' },
             { name: 'Solicitud de Gas', href: '/dashboard/tablero/solicitud-gas', requiredPermission: 'view_tablero_gas' },

@@ -1750,5 +1750,28 @@ model PrivilegioDocumental {
   @@map("privilegio_documental")
 }
 
+// ============================================================================
+// TABLERO DINÁMICO DE WIDGETS
+// ============================================================================
+
+model UserWidgetLayout {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  username    String
+  userId      String?
+  isDefault   Boolean  @default(false)
+  isPublic    Boolean  @default(false)
+  layoutType  String   // "grid-2x2" | "hero-1-3" | "analytics-kpi" | "grid-3x2" | "asymmetric" | "free"
+  configJson  String   @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([username])
+  @@index([userId])
+  @@map("user_widget_layouts")
+}
+
+
 
 

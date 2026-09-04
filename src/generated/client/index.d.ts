@@ -558,6 +558,11 @@ export type CarpetaDocumental = $Result.DefaultSelection<Prisma.$CarpetaDocument
  * 
  */
 export type PrivilegioDocumental = $Result.DefaultSelection<Prisma.$PrivilegioDocumentalPayload>
+/**
+ * Model UserWidgetLayout
+ * 
+ */
+export type UserWidgetLayout = $Result.DefaultSelection<Prisma.$UserWidgetLayoutPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -1771,6 +1776,16 @@ export class PrismaClient<
     * ```
     */
   get privilegioDocumental(): Prisma.PrivilegioDocumentalDelegate<ExtArgs>;
+
+  /**
+   * `prisma.userWidgetLayout`: Exposes CRUD operations for the **UserWidgetLayout** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserWidgetLayouts
+    * const userWidgetLayouts = await prisma.userWidgetLayout.findMany()
+    * ```
+    */
+  get userWidgetLayout(): Prisma.UserWidgetLayoutDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -2320,7 +2335,8 @@ export namespace Prisma {
     CollabKudo: 'CollabKudo',
     ConfiguracionDocumental: 'ConfiguracionDocumental',
     CarpetaDocumental: 'CarpetaDocumental',
-    PrivilegioDocumental: 'PrivilegioDocumental'
+    PrivilegioDocumental: 'PrivilegioDocumental',
+    UserWidgetLayout: 'UserWidgetLayout'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -2336,7 +2352,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental"
+      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -9967,6 +9983,76 @@ export namespace Prisma {
           count: {
             args: Prisma.PrivilegioDocumentalCountArgs<ExtArgs>
             result: $Utils.Optional<PrivilegioDocumentalCountAggregateOutputType> | number
+          }
+        }
+      }
+      UserWidgetLayout: {
+        payload: Prisma.$UserWidgetLayoutPayload<ExtArgs>
+        fields: Prisma.UserWidgetLayoutFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserWidgetLayoutFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserWidgetLayoutPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserWidgetLayoutFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserWidgetLayoutPayload>
+          }
+          findFirst: {
+            args: Prisma.UserWidgetLayoutFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserWidgetLayoutPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserWidgetLayoutFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserWidgetLayoutPayload>
+          }
+          findMany: {
+            args: Prisma.UserWidgetLayoutFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserWidgetLayoutPayload>[]
+          }
+          create: {
+            args: Prisma.UserWidgetLayoutCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserWidgetLayoutPayload>
+          }
+          createMany: {
+            args: Prisma.UserWidgetLayoutCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserWidgetLayoutCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserWidgetLayoutPayload>[]
+          }
+          delete: {
+            args: Prisma.UserWidgetLayoutDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserWidgetLayoutPayload>
+          }
+          update: {
+            args: Prisma.UserWidgetLayoutUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserWidgetLayoutPayload>
+          }
+          deleteMany: {
+            args: Prisma.UserWidgetLayoutDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserWidgetLayoutUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.UserWidgetLayoutUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserWidgetLayoutPayload>
+          }
+          aggregate: {
+            args: Prisma.UserWidgetLayoutAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserWidgetLayout>
+          }
+          groupBy: {
+            args: Prisma.UserWidgetLayoutGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserWidgetLayoutGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserWidgetLayoutCountArgs<ExtArgs>
+            result: $Utils.Optional<UserWidgetLayoutCountAggregateOutputType> | number
           }
         }
       }
@@ -122581,6 +122667,956 @@ export namespace Prisma {
 
 
   /**
+   * Model UserWidgetLayout
+   */
+
+  export type AggregateUserWidgetLayout = {
+    _count: UserWidgetLayoutCountAggregateOutputType | null
+    _min: UserWidgetLayoutMinAggregateOutputType | null
+    _max: UserWidgetLayoutMaxAggregateOutputType | null
+  }
+
+  export type UserWidgetLayoutMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    username: string | null
+    userId: string | null
+    isDefault: boolean | null
+    isPublic: boolean | null
+    layoutType: string | null
+    configJson: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UserWidgetLayoutMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    username: string | null
+    userId: string | null
+    isDefault: boolean | null
+    isPublic: boolean | null
+    layoutType: string | null
+    configJson: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UserWidgetLayoutCountAggregateOutputType = {
+    id: number
+    name: number
+    description: number
+    username: number
+    userId: number
+    isDefault: number
+    isPublic: number
+    layoutType: number
+    configJson: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type UserWidgetLayoutMinAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    username?: true
+    userId?: true
+    isDefault?: true
+    isPublic?: true
+    layoutType?: true
+    configJson?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UserWidgetLayoutMaxAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    username?: true
+    userId?: true
+    isDefault?: true
+    isPublic?: true
+    layoutType?: true
+    configJson?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UserWidgetLayoutCountAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    username?: true
+    userId?: true
+    isDefault?: true
+    isPublic?: true
+    layoutType?: true
+    configJson?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type UserWidgetLayoutAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserWidgetLayout to aggregate.
+     */
+    where?: UserWidgetLayoutWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserWidgetLayouts to fetch.
+     */
+    orderBy?: UserWidgetLayoutOrderByWithRelationInput | UserWidgetLayoutOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserWidgetLayoutWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserWidgetLayouts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserWidgetLayouts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserWidgetLayouts
+    **/
+    _count?: true | UserWidgetLayoutCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserWidgetLayoutMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserWidgetLayoutMaxAggregateInputType
+  }
+
+  export type GetUserWidgetLayoutAggregateType<T extends UserWidgetLayoutAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserWidgetLayout]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserWidgetLayout[P]>
+      : GetScalarType<T[P], AggregateUserWidgetLayout[P]>
+  }
+
+
+
+
+  export type UserWidgetLayoutGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWidgetLayoutWhereInput
+    orderBy?: UserWidgetLayoutOrderByWithAggregationInput | UserWidgetLayoutOrderByWithAggregationInput[]
+    by: UserWidgetLayoutScalarFieldEnum[] | UserWidgetLayoutScalarFieldEnum
+    having?: UserWidgetLayoutScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserWidgetLayoutCountAggregateInputType | true
+    _min?: UserWidgetLayoutMinAggregateInputType
+    _max?: UserWidgetLayoutMaxAggregateInputType
+  }
+
+  export type UserWidgetLayoutGroupByOutputType = {
+    id: string
+    name: string
+    description: string | null
+    username: string
+    userId: string | null
+    isDefault: boolean
+    isPublic: boolean
+    layoutType: string
+    configJson: string
+    createdAt: Date
+    updatedAt: Date
+    _count: UserWidgetLayoutCountAggregateOutputType | null
+    _min: UserWidgetLayoutMinAggregateOutputType | null
+    _max: UserWidgetLayoutMaxAggregateOutputType | null
+  }
+
+  type GetUserWidgetLayoutGroupByPayload<T extends UserWidgetLayoutGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserWidgetLayoutGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserWidgetLayoutGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserWidgetLayoutGroupByOutputType[P]>
+            : GetScalarType<T[P], UserWidgetLayoutGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserWidgetLayoutSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    username?: boolean
+    userId?: boolean
+    isDefault?: boolean
+    isPublic?: boolean
+    layoutType?: boolean
+    configJson?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["userWidgetLayout"]>
+
+  export type UserWidgetLayoutSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    username?: boolean
+    userId?: boolean
+    isDefault?: boolean
+    isPublic?: boolean
+    layoutType?: boolean
+    configJson?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["userWidgetLayout"]>
+
+  export type UserWidgetLayoutSelectScalar = {
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    username?: boolean
+    userId?: boolean
+    isDefault?: boolean
+    isPublic?: boolean
+    layoutType?: boolean
+    configJson?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type $UserWidgetLayoutPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserWidgetLayout"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      description: string | null
+      username: string
+      userId: string | null
+      isDefault: boolean
+      isPublic: boolean
+      layoutType: string
+      configJson: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["userWidgetLayout"]>
+    composites: {}
+  }
+
+  type UserWidgetLayoutGetPayload<S extends boolean | null | undefined | UserWidgetLayoutDefaultArgs> = $Result.GetResult<Prisma.$UserWidgetLayoutPayload, S>
+
+  type UserWidgetLayoutCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<UserWidgetLayoutFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: UserWidgetLayoutCountAggregateInputType | true
+    }
+
+  export interface UserWidgetLayoutDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserWidgetLayout'], meta: { name: 'UserWidgetLayout' } }
+    /**
+     * Find zero or one UserWidgetLayout that matches the filter.
+     * @param {UserWidgetLayoutFindUniqueArgs} args - Arguments to find a UserWidgetLayout
+     * @example
+     * // Get one UserWidgetLayout
+     * const userWidgetLayout = await prisma.userWidgetLayout.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserWidgetLayoutFindUniqueArgs>(args: SelectSubset<T, UserWidgetLayoutFindUniqueArgs<ExtArgs>>): Prisma__UserWidgetLayoutClient<$Result.GetResult<Prisma.$UserWidgetLayoutPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one UserWidgetLayout that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {UserWidgetLayoutFindUniqueOrThrowArgs} args - Arguments to find a UserWidgetLayout
+     * @example
+     * // Get one UserWidgetLayout
+     * const userWidgetLayout = await prisma.userWidgetLayout.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserWidgetLayoutFindUniqueOrThrowArgs>(args: SelectSubset<T, UserWidgetLayoutFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserWidgetLayoutClient<$Result.GetResult<Prisma.$UserWidgetLayoutPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first UserWidgetLayout that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserWidgetLayoutFindFirstArgs} args - Arguments to find a UserWidgetLayout
+     * @example
+     * // Get one UserWidgetLayout
+     * const userWidgetLayout = await prisma.userWidgetLayout.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserWidgetLayoutFindFirstArgs>(args?: SelectSubset<T, UserWidgetLayoutFindFirstArgs<ExtArgs>>): Prisma__UserWidgetLayoutClient<$Result.GetResult<Prisma.$UserWidgetLayoutPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first UserWidgetLayout that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserWidgetLayoutFindFirstOrThrowArgs} args - Arguments to find a UserWidgetLayout
+     * @example
+     * // Get one UserWidgetLayout
+     * const userWidgetLayout = await prisma.userWidgetLayout.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserWidgetLayoutFindFirstOrThrowArgs>(args?: SelectSubset<T, UserWidgetLayoutFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserWidgetLayoutClient<$Result.GetResult<Prisma.$UserWidgetLayoutPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more UserWidgetLayouts that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserWidgetLayoutFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserWidgetLayouts
+     * const userWidgetLayouts = await prisma.userWidgetLayout.findMany()
+     * 
+     * // Get first 10 UserWidgetLayouts
+     * const userWidgetLayouts = await prisma.userWidgetLayout.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userWidgetLayoutWithIdOnly = await prisma.userWidgetLayout.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserWidgetLayoutFindManyArgs>(args?: SelectSubset<T, UserWidgetLayoutFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserWidgetLayoutPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a UserWidgetLayout.
+     * @param {UserWidgetLayoutCreateArgs} args - Arguments to create a UserWidgetLayout.
+     * @example
+     * // Create one UserWidgetLayout
+     * const UserWidgetLayout = await prisma.userWidgetLayout.create({
+     *   data: {
+     *     // ... data to create a UserWidgetLayout
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserWidgetLayoutCreateArgs>(args: SelectSubset<T, UserWidgetLayoutCreateArgs<ExtArgs>>): Prisma__UserWidgetLayoutClient<$Result.GetResult<Prisma.$UserWidgetLayoutPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many UserWidgetLayouts.
+     * @param {UserWidgetLayoutCreateManyArgs} args - Arguments to create many UserWidgetLayouts.
+     * @example
+     * // Create many UserWidgetLayouts
+     * const userWidgetLayout = await prisma.userWidgetLayout.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserWidgetLayoutCreateManyArgs>(args?: SelectSubset<T, UserWidgetLayoutCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UserWidgetLayouts and returns the data saved in the database.
+     * @param {UserWidgetLayoutCreateManyAndReturnArgs} args - Arguments to create many UserWidgetLayouts.
+     * @example
+     * // Create many UserWidgetLayouts
+     * const userWidgetLayout = await prisma.userWidgetLayout.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UserWidgetLayouts and only return the `id`
+     * const userWidgetLayoutWithIdOnly = await prisma.userWidgetLayout.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserWidgetLayoutCreateManyAndReturnArgs>(args?: SelectSubset<T, UserWidgetLayoutCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserWidgetLayoutPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a UserWidgetLayout.
+     * @param {UserWidgetLayoutDeleteArgs} args - Arguments to delete one UserWidgetLayout.
+     * @example
+     * // Delete one UserWidgetLayout
+     * const UserWidgetLayout = await prisma.userWidgetLayout.delete({
+     *   where: {
+     *     // ... filter to delete one UserWidgetLayout
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserWidgetLayoutDeleteArgs>(args: SelectSubset<T, UserWidgetLayoutDeleteArgs<ExtArgs>>): Prisma__UserWidgetLayoutClient<$Result.GetResult<Prisma.$UserWidgetLayoutPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one UserWidgetLayout.
+     * @param {UserWidgetLayoutUpdateArgs} args - Arguments to update one UserWidgetLayout.
+     * @example
+     * // Update one UserWidgetLayout
+     * const userWidgetLayout = await prisma.userWidgetLayout.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserWidgetLayoutUpdateArgs>(args: SelectSubset<T, UserWidgetLayoutUpdateArgs<ExtArgs>>): Prisma__UserWidgetLayoutClient<$Result.GetResult<Prisma.$UserWidgetLayoutPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more UserWidgetLayouts.
+     * @param {UserWidgetLayoutDeleteManyArgs} args - Arguments to filter UserWidgetLayouts to delete.
+     * @example
+     * // Delete a few UserWidgetLayouts
+     * const { count } = await prisma.userWidgetLayout.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserWidgetLayoutDeleteManyArgs>(args?: SelectSubset<T, UserWidgetLayoutDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserWidgetLayouts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserWidgetLayoutUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserWidgetLayouts
+     * const userWidgetLayout = await prisma.userWidgetLayout.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserWidgetLayoutUpdateManyArgs>(args: SelectSubset<T, UserWidgetLayoutUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one UserWidgetLayout.
+     * @param {UserWidgetLayoutUpsertArgs} args - Arguments to update or create a UserWidgetLayout.
+     * @example
+     * // Update or create a UserWidgetLayout
+     * const userWidgetLayout = await prisma.userWidgetLayout.upsert({
+     *   create: {
+     *     // ... data to create a UserWidgetLayout
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserWidgetLayout we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserWidgetLayoutUpsertArgs>(args: SelectSubset<T, UserWidgetLayoutUpsertArgs<ExtArgs>>): Prisma__UserWidgetLayoutClient<$Result.GetResult<Prisma.$UserWidgetLayoutPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of UserWidgetLayouts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserWidgetLayoutCountArgs} args - Arguments to filter UserWidgetLayouts to count.
+     * @example
+     * // Count the number of UserWidgetLayouts
+     * const count = await prisma.userWidgetLayout.count({
+     *   where: {
+     *     // ... the filter for the UserWidgetLayouts we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserWidgetLayoutCountArgs>(
+      args?: Subset<T, UserWidgetLayoutCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserWidgetLayoutCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserWidgetLayout.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserWidgetLayoutAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserWidgetLayoutAggregateArgs>(args: Subset<T, UserWidgetLayoutAggregateArgs>): Prisma.PrismaPromise<GetUserWidgetLayoutAggregateType<T>>
+
+    /**
+     * Group by UserWidgetLayout.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserWidgetLayoutGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserWidgetLayoutGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserWidgetLayoutGroupByArgs['orderBy'] }
+        : { orderBy?: UserWidgetLayoutGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserWidgetLayoutGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserWidgetLayoutGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserWidgetLayout model
+   */
+  readonly fields: UserWidgetLayoutFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserWidgetLayout.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserWidgetLayoutClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserWidgetLayout model
+   */ 
+  interface UserWidgetLayoutFieldRefs {
+    readonly id: FieldRef<"UserWidgetLayout", 'String'>
+    readonly name: FieldRef<"UserWidgetLayout", 'String'>
+    readonly description: FieldRef<"UserWidgetLayout", 'String'>
+    readonly username: FieldRef<"UserWidgetLayout", 'String'>
+    readonly userId: FieldRef<"UserWidgetLayout", 'String'>
+    readonly isDefault: FieldRef<"UserWidgetLayout", 'Boolean'>
+    readonly isPublic: FieldRef<"UserWidgetLayout", 'Boolean'>
+    readonly layoutType: FieldRef<"UserWidgetLayout", 'String'>
+    readonly configJson: FieldRef<"UserWidgetLayout", 'String'>
+    readonly createdAt: FieldRef<"UserWidgetLayout", 'DateTime'>
+    readonly updatedAt: FieldRef<"UserWidgetLayout", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserWidgetLayout findUnique
+   */
+  export type UserWidgetLayoutFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserWidgetLayout
+     */
+    select?: UserWidgetLayoutSelect<ExtArgs> | null
+    /**
+     * Filter, which UserWidgetLayout to fetch.
+     */
+    where: UserWidgetLayoutWhereUniqueInput
+  }
+
+  /**
+   * UserWidgetLayout findUniqueOrThrow
+   */
+  export type UserWidgetLayoutFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserWidgetLayout
+     */
+    select?: UserWidgetLayoutSelect<ExtArgs> | null
+    /**
+     * Filter, which UserWidgetLayout to fetch.
+     */
+    where: UserWidgetLayoutWhereUniqueInput
+  }
+
+  /**
+   * UserWidgetLayout findFirst
+   */
+  export type UserWidgetLayoutFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserWidgetLayout
+     */
+    select?: UserWidgetLayoutSelect<ExtArgs> | null
+    /**
+     * Filter, which UserWidgetLayout to fetch.
+     */
+    where?: UserWidgetLayoutWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserWidgetLayouts to fetch.
+     */
+    orderBy?: UserWidgetLayoutOrderByWithRelationInput | UserWidgetLayoutOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserWidgetLayouts.
+     */
+    cursor?: UserWidgetLayoutWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserWidgetLayouts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserWidgetLayouts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserWidgetLayouts.
+     */
+    distinct?: UserWidgetLayoutScalarFieldEnum | UserWidgetLayoutScalarFieldEnum[]
+  }
+
+  /**
+   * UserWidgetLayout findFirstOrThrow
+   */
+  export type UserWidgetLayoutFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserWidgetLayout
+     */
+    select?: UserWidgetLayoutSelect<ExtArgs> | null
+    /**
+     * Filter, which UserWidgetLayout to fetch.
+     */
+    where?: UserWidgetLayoutWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserWidgetLayouts to fetch.
+     */
+    orderBy?: UserWidgetLayoutOrderByWithRelationInput | UserWidgetLayoutOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserWidgetLayouts.
+     */
+    cursor?: UserWidgetLayoutWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserWidgetLayouts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserWidgetLayouts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserWidgetLayouts.
+     */
+    distinct?: UserWidgetLayoutScalarFieldEnum | UserWidgetLayoutScalarFieldEnum[]
+  }
+
+  /**
+   * UserWidgetLayout findMany
+   */
+  export type UserWidgetLayoutFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserWidgetLayout
+     */
+    select?: UserWidgetLayoutSelect<ExtArgs> | null
+    /**
+     * Filter, which UserWidgetLayouts to fetch.
+     */
+    where?: UserWidgetLayoutWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserWidgetLayouts to fetch.
+     */
+    orderBy?: UserWidgetLayoutOrderByWithRelationInput | UserWidgetLayoutOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserWidgetLayouts.
+     */
+    cursor?: UserWidgetLayoutWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserWidgetLayouts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserWidgetLayouts.
+     */
+    skip?: number
+    distinct?: UserWidgetLayoutScalarFieldEnum | UserWidgetLayoutScalarFieldEnum[]
+  }
+
+  /**
+   * UserWidgetLayout create
+   */
+  export type UserWidgetLayoutCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserWidgetLayout
+     */
+    select?: UserWidgetLayoutSelect<ExtArgs> | null
+    /**
+     * The data needed to create a UserWidgetLayout.
+     */
+    data: XOR<UserWidgetLayoutCreateInput, UserWidgetLayoutUncheckedCreateInput>
+  }
+
+  /**
+   * UserWidgetLayout createMany
+   */
+  export type UserWidgetLayoutCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserWidgetLayouts.
+     */
+    data: UserWidgetLayoutCreateManyInput | UserWidgetLayoutCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * UserWidgetLayout createManyAndReturn
+   */
+  export type UserWidgetLayoutCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserWidgetLayout
+     */
+    select?: UserWidgetLayoutSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many UserWidgetLayouts.
+     */
+    data: UserWidgetLayoutCreateManyInput | UserWidgetLayoutCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * UserWidgetLayout update
+   */
+  export type UserWidgetLayoutUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserWidgetLayout
+     */
+    select?: UserWidgetLayoutSelect<ExtArgs> | null
+    /**
+     * The data needed to update a UserWidgetLayout.
+     */
+    data: XOR<UserWidgetLayoutUpdateInput, UserWidgetLayoutUncheckedUpdateInput>
+    /**
+     * Choose, which UserWidgetLayout to update.
+     */
+    where: UserWidgetLayoutWhereUniqueInput
+  }
+
+  /**
+   * UserWidgetLayout updateMany
+   */
+  export type UserWidgetLayoutUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserWidgetLayouts.
+     */
+    data: XOR<UserWidgetLayoutUpdateManyMutationInput, UserWidgetLayoutUncheckedUpdateManyInput>
+    /**
+     * Filter which UserWidgetLayouts to update
+     */
+    where?: UserWidgetLayoutWhereInput
+  }
+
+  /**
+   * UserWidgetLayout upsert
+   */
+  export type UserWidgetLayoutUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserWidgetLayout
+     */
+    select?: UserWidgetLayoutSelect<ExtArgs> | null
+    /**
+     * The filter to search for the UserWidgetLayout to update in case it exists.
+     */
+    where: UserWidgetLayoutWhereUniqueInput
+    /**
+     * In case the UserWidgetLayout found by the `where` argument doesn't exist, create a new UserWidgetLayout with this data.
+     */
+    create: XOR<UserWidgetLayoutCreateInput, UserWidgetLayoutUncheckedCreateInput>
+    /**
+     * In case the UserWidgetLayout was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserWidgetLayoutUpdateInput, UserWidgetLayoutUncheckedUpdateInput>
+  }
+
+  /**
+   * UserWidgetLayout delete
+   */
+  export type UserWidgetLayoutDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserWidgetLayout
+     */
+    select?: UserWidgetLayoutSelect<ExtArgs> | null
+    /**
+     * Filter which UserWidgetLayout to delete.
+     */
+    where: UserWidgetLayoutWhereUniqueInput
+  }
+
+  /**
+   * UserWidgetLayout deleteMany
+   */
+  export type UserWidgetLayoutDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserWidgetLayouts to delete
+     */
+    where?: UserWidgetLayoutWhereInput
+  }
+
+  /**
+   * UserWidgetLayout without action
+   */
+  export type UserWidgetLayoutDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserWidgetLayout
+     */
+    select?: UserWidgetLayoutSelect<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -124332,6 +125368,23 @@ export namespace Prisma {
   };
 
   export type PrivilegioDocumentalScalarFieldEnum = (typeof PrivilegioDocumentalScalarFieldEnum)[keyof typeof PrivilegioDocumentalScalarFieldEnum]
+
+
+  export const UserWidgetLayoutScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    description: 'description',
+    username: 'username',
+    userId: 'userId',
+    isDefault: 'isDefault',
+    isPublic: 'isPublic',
+    layoutType: 'layoutType',
+    configJson: 'configJson',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type UserWidgetLayoutScalarFieldEnum = (typeof UserWidgetLayoutScalarFieldEnum)[keyof typeof UserWidgetLayoutScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -133425,6 +134478,88 @@ export namespace Prisma {
     referenciaId?: StringWithAggregatesFilter<"PrivilegioDocumental"> | string
     permiso?: StringWithAggregatesFilter<"PrivilegioDocumental"> | string
     creadoEn?: DateTimeWithAggregatesFilter<"PrivilegioDocumental"> | Date | string
+  }
+
+  export type UserWidgetLayoutWhereInput = {
+    AND?: UserWidgetLayoutWhereInput | UserWidgetLayoutWhereInput[]
+    OR?: UserWidgetLayoutWhereInput[]
+    NOT?: UserWidgetLayoutWhereInput | UserWidgetLayoutWhereInput[]
+    id?: StringFilter<"UserWidgetLayout"> | string
+    name?: StringFilter<"UserWidgetLayout"> | string
+    description?: StringNullableFilter<"UserWidgetLayout"> | string | null
+    username?: StringFilter<"UserWidgetLayout"> | string
+    userId?: StringNullableFilter<"UserWidgetLayout"> | string | null
+    isDefault?: BoolFilter<"UserWidgetLayout"> | boolean
+    isPublic?: BoolFilter<"UserWidgetLayout"> | boolean
+    layoutType?: StringFilter<"UserWidgetLayout"> | string
+    configJson?: StringFilter<"UserWidgetLayout"> | string
+    createdAt?: DateTimeFilter<"UserWidgetLayout"> | Date | string
+    updatedAt?: DateTimeFilter<"UserWidgetLayout"> | Date | string
+  }
+
+  export type UserWidgetLayoutOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    username?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    isDefault?: SortOrder
+    isPublic?: SortOrder
+    layoutType?: SortOrder
+    configJson?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserWidgetLayoutWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: UserWidgetLayoutWhereInput | UserWidgetLayoutWhereInput[]
+    OR?: UserWidgetLayoutWhereInput[]
+    NOT?: UserWidgetLayoutWhereInput | UserWidgetLayoutWhereInput[]
+    name?: StringFilter<"UserWidgetLayout"> | string
+    description?: StringNullableFilter<"UserWidgetLayout"> | string | null
+    username?: StringFilter<"UserWidgetLayout"> | string
+    userId?: StringNullableFilter<"UserWidgetLayout"> | string | null
+    isDefault?: BoolFilter<"UserWidgetLayout"> | boolean
+    isPublic?: BoolFilter<"UserWidgetLayout"> | boolean
+    layoutType?: StringFilter<"UserWidgetLayout"> | string
+    configJson?: StringFilter<"UserWidgetLayout"> | string
+    createdAt?: DateTimeFilter<"UserWidgetLayout"> | Date | string
+    updatedAt?: DateTimeFilter<"UserWidgetLayout"> | Date | string
+  }, "id">
+
+  export type UserWidgetLayoutOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    username?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    isDefault?: SortOrder
+    isPublic?: SortOrder
+    layoutType?: SortOrder
+    configJson?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: UserWidgetLayoutCountOrderByAggregateInput
+    _max?: UserWidgetLayoutMaxOrderByAggregateInput
+    _min?: UserWidgetLayoutMinOrderByAggregateInput
+  }
+
+  export type UserWidgetLayoutScalarWhereWithAggregatesInput = {
+    AND?: UserWidgetLayoutScalarWhereWithAggregatesInput | UserWidgetLayoutScalarWhereWithAggregatesInput[]
+    OR?: UserWidgetLayoutScalarWhereWithAggregatesInput[]
+    NOT?: UserWidgetLayoutScalarWhereWithAggregatesInput | UserWidgetLayoutScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"UserWidgetLayout"> | string
+    name?: StringWithAggregatesFilter<"UserWidgetLayout"> | string
+    description?: StringNullableWithAggregatesFilter<"UserWidgetLayout"> | string | null
+    username?: StringWithAggregatesFilter<"UserWidgetLayout"> | string
+    userId?: StringNullableWithAggregatesFilter<"UserWidgetLayout"> | string | null
+    isDefault?: BoolWithAggregatesFilter<"UserWidgetLayout"> | boolean
+    isPublic?: BoolWithAggregatesFilter<"UserWidgetLayout"> | boolean
+    layoutType?: StringWithAggregatesFilter<"UserWidgetLayout"> | string
+    configJson?: StringWithAggregatesFilter<"UserWidgetLayout"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"UserWidgetLayout"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"UserWidgetLayout"> | Date | string
   }
 
   export type RoleCreateInput = {
@@ -143532,6 +144667,104 @@ export namespace Prisma {
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type UserWidgetLayoutCreateInput = {
+    id?: string
+    name: string
+    description?: string | null
+    username: string
+    userId?: string | null
+    isDefault?: boolean
+    isPublic?: boolean
+    layoutType: string
+    configJson: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserWidgetLayoutUncheckedCreateInput = {
+    id?: string
+    name: string
+    description?: string | null
+    username: string
+    userId?: string | null
+    isDefault?: boolean
+    isPublic?: boolean
+    layoutType: string
+    configJson: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserWidgetLayoutUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    layoutType?: StringFieldUpdateOperationsInput | string
+    configJson?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserWidgetLayoutUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    layoutType?: StringFieldUpdateOperationsInput | string
+    configJson?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserWidgetLayoutCreateManyInput = {
+    id?: string
+    name: string
+    description?: string | null
+    username: string
+    userId?: string | null
+    isDefault?: boolean
+    isPublic?: boolean
+    layoutType: string
+    configJson: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserWidgetLayoutUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    layoutType?: StringFieldUpdateOperationsInput | string
+    configJson?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserWidgetLayoutUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    layoutType?: StringFieldUpdateOperationsInput | string
+    configJson?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -149747,6 +150980,48 @@ export namespace Prisma {
     referenciaId?: SortOrder
     permiso?: SortOrder
     creadoEn?: SortOrder
+  }
+
+  export type UserWidgetLayoutCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    username?: SortOrder
+    userId?: SortOrder
+    isDefault?: SortOrder
+    isPublic?: SortOrder
+    layoutType?: SortOrder
+    configJson?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserWidgetLayoutMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    username?: SortOrder
+    userId?: SortOrder
+    isDefault?: SortOrder
+    isPublic?: SortOrder
+    layoutType?: SortOrder
+    configJson?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserWidgetLayoutMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    username?: SortOrder
+    userId?: SortOrder
+    isDefault?: SortOrder
+    isPublic?: SortOrder
+    layoutType?: SortOrder
+    configJson?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type UserCreateNestedManyWithoutRoleInput = {
@@ -168314,6 +169589,10 @@ export namespace Prisma {
      * @deprecated Use PrivilegioDocumentalDefaultArgs instead
      */
     export type PrivilegioDocumentalArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PrivilegioDocumentalDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use UserWidgetLayoutDefaultArgs instead
+     */
+    export type UserWidgetLayoutArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UserWidgetLayoutDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

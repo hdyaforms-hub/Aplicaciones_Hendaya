@@ -43,6 +43,7 @@ export default async function RolesPage() {
         { id: 'view_tablero_distancias', name: 'Tablero de Kilometraje', description: 'Visualización detallada de distancias y tiempos de viaje de supervisores por sucursal.', category: 'TABLEROS' },
         { id: 'view_tablero_actas', name: 'Tablero Actas', description: 'Acceso visual al tablero gerencial y ejecutivo de analítica de actas.', category: 'TABLEROS' },
         { id: 'view_tablero_verificador_temperaturas', name: 'Tablero Verificador de Temperaturas', description: 'Visualización gráfica de variaciones de temperaturas con límites máximos y mínimos.', category: 'TABLEROS' },
+        { id: 'view_tablero_widgets', name: 'Tablero Widgets Personalizables', description: 'Acceso y personalización de tableros dinámicos con widgets configurables.', category: 'TABLEROS' },
         { id: 'view_tablero_auditoria', name: 'Tablero Auditoría', description: 'Visualización y exportación de auditoría de actividad de usuarios.', category: 'TABLEROS' },
         
         { id: 'view_ingreso_raciones', name: 'Ingreso de Raciones', description: 'Gestión y auditoría de raciones por colegio.', category: 'APLICACIONES' },
