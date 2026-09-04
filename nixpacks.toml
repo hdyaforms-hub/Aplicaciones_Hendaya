@@ -2,7 +2,11 @@
 # Instala Python 3 + pdfplumber, necesarios para el procesamiento de PDFs
 # (python_scripts/extract_elementos.py)
 
+[variables]
+NIXPACKS_NODE_VERSION = "20"
+
 [phases.setup]
+nixPkgs = ["...", "nodejs_20"]
 aptPkgs = ["python3", "python3-pip"]
 
 [phases.install]
