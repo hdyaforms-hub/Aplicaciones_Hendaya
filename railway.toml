@@ -1,7 +1,4 @@
-[build]
-builder = "NIXPACKS"
-
 [deploy]
-startCommand = "npm start"
-healthcheckPath = "/"
-healthcheckTimeout = 100
+releaseCommand = "npx prisma db push --skip-generate"
+startCommand = "next start -p $PORT"
+healthcheckTimeout = 300
