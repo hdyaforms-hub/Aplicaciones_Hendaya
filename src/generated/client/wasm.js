@@ -1573,6 +1573,163 @@ exports.Prisma.NoticiaAlimentacionScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.LogBodegaScalarFieldEnum = {
+  id: 'id',
+  codigo: 'codigo',
+  nombre: 'nombre',
+  sucursalId: 'sucursalId',
+  direccion: 'direccion',
+  activa: 'activa',
+  orden: 'orden',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.LogUsuarioBodegaScalarFieldEnum = {
+  id: 'id',
+  usuarioId: 'usuarioId',
+  bodegaId: 'bodegaId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.LogAndenScalarFieldEnum = {
+  id: 'id',
+  bodegaId: 'bodegaId',
+  codigo: 'codigo',
+  nombre: 'nombre',
+  tipoCarga: 'tipoCarga',
+  estadoOperativo: 'estadoOperativo',
+  orden: 'orden',
+  activo: 'activo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.LogTransportistaScalarFieldEnum = {
+  id: 'id',
+  rut: 'rut',
+  razonSocial: 'razonSocial',
+  contacto: 'contacto',
+  telefono: 'telefono',
+  email: 'email',
+  activo: 'activo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.LogChoferScalarFieldEnum = {
+  id: 'id',
+  rut: 'rut',
+  nombre: 'nombre',
+  telefono: 'telefono',
+  email: 'email',
+  telegramChatId: 'telegramChatId',
+  transportistaId: 'transportistaId',
+  activo: 'activo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.LogCamionScalarFieldEnum = {
+  id: 'id',
+  patente: 'patente',
+  tipoVehiculo: 'tipoVehiculo',
+  capacidadKg: 'capacidadKg',
+  capacidadM3: 'capacidadM3',
+  transportistaId: 'transportistaId',
+  activo: 'activo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.LogClienteScalarFieldEnum = {
+  id: 'id',
+  codigo: 'codigo',
+  razonSocial: 'razonSocial',
+  direccion: 'direccion',
+  comuna: 'comuna',
+  region: 'region',
+  activo: 'activo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.LogRutaScalarFieldEnum = {
+  id: 'id',
+  numeroRuta: 'numeroRuta',
+  bodegaId: 'bodegaId',
+  transportistaId: 'transportistaId',
+  choferId: 'choferId',
+  camionId: 'camionId',
+  clienteId: 'clienteId',
+  estado: 'estado',
+  andenId: 'andenId',
+  fechaRuta: 'fechaRuta',
+  horaProgramada: 'horaProgramada',
+  horaLlegadaPorton: 'horaLlegadaPorton',
+  horaEntradaAnden: 'horaEntradaAnden',
+  horaSalidaAnden: 'horaSalidaAnden',
+  selloSalida: 'selloSalida',
+  totalBultos: 'totalBultos',
+  totalKilos: 'totalKilos',
+  observaciones: 'observaciones',
+  telegramMessageId: 'telegramMessageId',
+  tokenRuta: 'tokenRuta',
+  creadaPorId: 'creadaPorId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.LogEventoRutaScalarFieldEnum = {
+  id: 'id',
+  rutaId: 'rutaId',
+  estadoAnterior: 'estadoAnterior',
+  estadoNuevo: 'estadoNuevo',
+  andenId: 'andenId',
+  origenCambio: 'origenCambio',
+  notas: 'notas',
+  metadataJson: 'metadataJson',
+  usuarioId: 'usuarioId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.LogIntegracionConfigScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  provider: 'provider',
+  webhookUrl: 'webhookUrl',
+  secretToken: 'secretToken',
+  activo: 'activo',
+  eventosSuscritos: 'eventosSuscritos',
+  headersJson: 'headersJson',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.LogIntegracionLogScalarFieldEnum = {
+  id: 'id',
+  integracionConfigId: 'integracionConfigId',
+  evento: 'evento',
+  rutaId: 'rutaId',
+  payloadEnviado: 'payloadEnviado',
+  respuestaCodigo: 'respuestaCodigo',
+  respuestaCuerpo: 'respuestaCuerpo',
+  estado: 'estado',
+  intentos: 'intentos',
+  errorDetalle: 'errorDetalle',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.LogParametroScalarFieldEnum = {
+  id: 'id',
+  bodegaId: 'bodegaId',
+  clave: 'clave',
+  valor: 'valor',
+  descripcion: 'descripcion',
+  tipo: 'tipo',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1701,7 +1858,19 @@ exports.Prisma.ModelName = {
   PrivilegioDocumental: 'PrivilegioDocumental',
   UserWidgetLayout: 'UserWidgetLayout',
   ReservaSala: 'ReservaSala',
-  NoticiaAlimentacion: 'NoticiaAlimentacion'
+  NoticiaAlimentacion: 'NoticiaAlimentacion',
+  LogBodega: 'LogBodega',
+  LogUsuarioBodega: 'LogUsuarioBodega',
+  LogAnden: 'LogAnden',
+  LogTransportista: 'LogTransportista',
+  LogChofer: 'LogChofer',
+  LogCamion: 'LogCamion',
+  LogCliente: 'LogCliente',
+  LogRuta: 'LogRuta',
+  LogEventoRuta: 'LogEventoRuta',
+  LogIntegracionConfig: 'LogIntegracionConfig',
+  LogIntegracionLog: 'LogIntegracionLog',
+  LogParametro: 'LogParametro'
 };
 
 /**

@@ -44,11 +44,17 @@ export default function Sidebar({ user, menuOrders = [] }: { user: User, menuOrd
         setExpandedMenus(prev => ({ ...prev, [name]: !prev[name] }))
     }
 
-    const rawPermissions: string[] = Array.isArray(user.role.permissions)
-        ? user.role.permissions
-        : (typeof user.role.permissions === 'string'
-            ? JSON.parse(user.role.permissions)
-            : [])
+    let rawPermissions: string[] = []
+    const rolePerms = user.role.permissions as unknown
+    if (Array.isArray(rolePerms)) {
+        rawPermissions = rolePerms as string[]
+    } else if (typeof rolePerms === 'string') {
+        try {
+            rawPermissions = JSON.parse(rolePerms)
+        } catch {
+            rawPermissions = rolePerms.split(',').map((p: string) => p.trim()).filter(Boolean)
+        }
+    }
 
     const isAdmin = user.role.name === 'admin' || user.role.name === 'Administrador'
     const permissions = isAdmin && !rawPermissions.includes('view_tablero_distancias')

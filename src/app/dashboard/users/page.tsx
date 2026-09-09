@@ -6,8 +6,9 @@ import UsersClient from './UsersClient'
 export default async function UsersPage() {
     const session = await getSession()
     const permissions = session?.user?.role?.permissions || []
+    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
 
-    if (!permissions.includes('manage_users')) {
+    if (!isAdmin && !permissions.includes('manage_users')) {
         redirect('/dashboard')
     }
 

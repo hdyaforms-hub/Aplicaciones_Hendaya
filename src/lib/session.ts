@@ -62,7 +62,79 @@ export async function getSession() {
     const cookieStore = await cookies()
     const session = cookieStore.get('session')?.value
     if (!session) return null
-    return await decrypt(session)
+    const parsed = await decrypt(session)
+    if (!parsed || !parsed.user) return null
+
+    if (parsed.user.role) {
+        const isAdmin = parsed.user.role.name === 'Administrador' || parsed.user.role.name === 'admin'
+        let perms: string[] = []
+        if (Array.isArray(parsed.user.role.permissions)) {
+            perms = parsed.user.role.permissions
+        } else if (typeof parsed.user.role.permissions === 'string') {
+            try {
+                perms = JSON.parse(parsed.user.role.permissions)
+            } catch {
+                perms = parsed.user.role.permissions.split(',').map((p: string) => p.trim()).filter(Boolean)
+            }
+        }
+
+        if (isAdmin) {
+            const adminBasePerms = [
+                'manage_users',
+                'manage_roles',
+                'manage_correo',
+                'manage_listas',
+                'manage_notificaciones',
+                'manage_global_config',
+                'manage_menu_reorder',
+                'view_dashboard_home',
+                'view_tablero',
+                'view_tablero_pan',
+                'view_tablero_gas',
+                'view_tablero_retiro',
+                'view_tablero_elementos',
+                'view_tablero_multas_ee',
+                'view_tablero_organigrama',
+                'view_tablero_distancias',
+                'view_tablero_actas',
+                'view_tablero_verificador_temperaturas',
+                'view_tablero_widgets',
+                'view_tablero_auditoria',
+                'view_areas',
+                'view_operaciones',
+                'view_calidad',
+                'view_manipuladoras',
+                'view_multas_areas',
+                'logistica:tablero:ver',
+                'logistica:tablero:gestionar',
+                'logistica:rutas:ver',
+                'logistica:rutas:crear',
+                'logistica:rutas:editar',
+                'logistica:rutas:cancelar',
+                'logistica:rutas:forzar_estado',
+                'logistica:chofer:notificar',
+                'logistica:porton:marcar',
+                'logistica:despacho:completar',
+                'logistica:metricas:ver',
+                'logistica:rutas:exportar',
+                'logistica:config:ver',
+                'logistica:config:bodegas',
+                'logistica:config:choferes',
+                'logistica:config:camiones',
+                'logistica:config:transportistas',
+                'logistica:config:clientes',
+                'logistica:integraciones:ver',
+                'view_anonimizador',
+                'manage_anonimizador'
+            ]
+            const permsSet = new Set([...perms, ...adminBasePerms])
+            perms = Array.from(permsSet)
+        }
+
+        parsed.user.role.permissions = perms
+    }
+
+    return parsed
 }
 
 export async function updateSession(request: NextRequest) {

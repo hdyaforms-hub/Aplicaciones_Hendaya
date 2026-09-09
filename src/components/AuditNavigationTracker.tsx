@@ -92,6 +92,7 @@ function getModuleInfoFromPath(path: string): { modulo: string; detalle: string 
     if (path.startsWith('/dashboard/reports')) return { modulo: 'Reportes', detalle: `Accedió a Reportes (${path.replace('/dashboard/reports/', '')})` }
 
     // Colaboradores
+    if (path.includes('/anonimizador')) return { modulo: 'Colaboradores', detalle: 'Accedió a Anonimizador de Planillas' }
     if (path.includes('/sala-reuniones')) return { modulo: 'Colaboradores', detalle: 'Accedió a Reserva Sala de Reuniones' }
     if (path.includes('/conversacion')) return { modulo: 'Colaboradores', detalle: 'Accedió a Conversación y Colaboración' }
 

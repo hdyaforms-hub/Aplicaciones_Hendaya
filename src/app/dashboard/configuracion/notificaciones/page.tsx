@@ -14,9 +14,10 @@ export default async function NotificacionesPage() {
         redirect('/login')
     }
 
-    const { role } = session.user as { role: { permissions: string[] } }
+    const role = (session.user as any)?.role as { name?: string; permissions?: string[] }
+    const isAdmin = role?.name === 'Administrador' || role?.name === 'admin'
 
-    if (!role.permissions.includes('manage_notificaciones')) {
+    if (!isAdmin && (!role?.permissions || !role.permissions.includes('manage_notificaciones'))) {
         return (
             <div className="bg-red-50 border border-red-200 text-red-700 p-4 rounded-xl">
                 <h3 className="font-semibold mb-1">Acceso Denegado</h3>

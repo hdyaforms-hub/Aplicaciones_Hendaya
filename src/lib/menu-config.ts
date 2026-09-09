@@ -56,8 +56,32 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
     {
         name: 'Áreas',
         icon: '🏢',
-        requiredPermission: 'view_areas',
+        requiredPermission: [
+            'view_areas',
+            'logistica:tablero:ver',
+            'logistica:rutas:ver',
+            'logistica:metricas:ver',
+            'logistica:config:ver',
+            'logistica:integraciones:ver'
+        ],
         subItems: [
+            {
+                name: 'Logística',
+                requiredPermission: [
+                    'logistica:tablero:ver',
+                    'logistica:rutas:ver',
+                    'logistica:metricas:ver',
+                    'logistica:config:ver',
+                    'logistica:integraciones:ver'
+                ],
+                subItems: [
+                    { name: 'Tablero de Despacho', href: '/dashboard/areas/logistica/tablero', requiredPermission: 'logistica:tablero:ver' },
+                    { name: 'Historial de Rutas', href: '/dashboard/areas/logistica/rutas', requiredPermission: 'logistica:rutas:ver' },
+                    { name: 'Métricas de Despacho', href: '/dashboard/areas/logistica/metricas', requiredPermission: 'logistica:metricas:ver' },
+                    { name: 'Configuración Logística', href: '/dashboard/areas/logistica/configuracion', requiredPermission: 'logistica:config:ver' },
+                    { name: 'Integraciones (n8n)', href: '/dashboard/areas/logistica/integraciones', requiredPermission: 'logistica:integraciones:ver' }
+                ]
+            },
             {
                 name: 'Operaciones',
                 requiredPermission: 'view_operaciones',
@@ -308,10 +332,11 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
     {
         name: 'Colaboradores',
         icon: '👥',
-        requiredPermission: ['view_conversacion', 'view_sala_reuniones'],
+        requiredPermission: ['view_conversacion', 'view_sala_reuniones', 'view_anonimizador'],
         subItems: [
             { name: 'Conversación', href: '/dashboard/ayuda/conversacion', requiredPermission: 'view_conversacion' },
-            { name: 'Reserva Sala Reuniones', href: '/dashboard/colaboradores/sala-reuniones', requiredPermission: 'view_sala_reuniones' }
+            { name: 'Reserva Sala Reuniones', href: '/dashboard/colaboradores/sala-reuniones', requiredPermission: 'view_sala_reuniones' },
+            { name: 'Anonimizador', href: '/dashboard/colaboradores/anonimizador', requiredPermission: 'view_anonimizador' }
         ]
     },
     {

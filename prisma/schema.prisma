@@ -1806,3 +1806,251 @@ model NoticiaAlimentacion {
 
   @@map("noticias_alimentacion")
 }
+
+// ============================================================================
+// MÓDULO DE LOGÍSTICA & CONTROL DE DESPACHO
+// ============================================================================
+
+model LogBodega {
+  id          String   @id @default(uuid())
+  codigo      String   @unique
+  nombre      String
+  sucursalId  String?
+  direccion   String?  @db.Text
+  activa      Boolean  @default(true)
+  orden       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  andenes     LogAnden[]
+  rutas       LogRuta[]
+  usuarios    LogUsuarioBodega[]
+  parametros  LogParametro[]
+
+  @@map("log_bodegas")
+}
+
+model LogUsuarioBodega {
+  id        String    @id @default(uuid())
+  usuarioId String
+  bodegaId  String
+  createdAt DateTime  @default(now())
+
+  bodega    LogBodega @relation(fields: [bodegaId], references: [id], onDelete: Cascade)
+
+  @@unique([usuarioId, bodegaId])
+  @@map("log_usuario_bodegas")
+}
+
+model LogAnden {
+  id              String      @id @default(uuid())
+  bodegaId        String
+  codigo          String
+  nombre          String
+  tipoCarga       String      @default("GENERAL") // GENERAL, REFRIGERADO, CONGELADO, EXCLUSIVO
+  estadoOperativo String      @default("DISPONIBLE") // DISPONIBLE, OCUPADO, BLOQUEADO, MANTENCION
+  orden           Int         @default(0)
+  activo          Boolean     @default(true)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  bodega          LogBodega   @relation(fields: [bodegaId], references: [id], onDelete: Cascade)
+  rutas           LogRuta[]
+  eventos         LogEventoRuta[]
+
+  @@unique([bodegaId, codigo])
+  @@index([bodegaId])
+  @@index([estadoOperativo])
+  @@map("log_andenes")
+}
+
+model LogTransportista {
+  id          String       @id @default(uuid())
+  rut         String       @unique
+  razonSocial String
+  contacto    String?
+  telefono    String?
+  email       String?
+  activo      Boolean      @default(true)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  choferes    LogChofer[]
+  camiones    LogCamion[]
+  rutas       LogRuta[]
+
+  @@map("log_transportistas")
+}
+
+model LogChofer {
+  id              String            @id @default(uuid())
+  rut             String            @unique
+  nombre          String
+  telefono        String            // Formato E.164 ej +569...
+  email           String?
+  telegramChatId  String?
+  transportistaId String?
+  activo          Boolean           @default(true)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  transportista   LogTransportista? @relation(fields: [transportistaId], references: [id], onDelete: SetNull)
+  rutas           LogRuta[]
+
+  @@index([telefono])
+  @@index([telegramChatId])
+  @@map("log_choferes")
+}
+
+model LogCamion {
+  id              String            @id @default(uuid())
+  patente         String            @unique
+  tipoVehiculo    String            @default("RAMPLA") // 3/4, RAMPLA, CAMION_SIMPLE, FURGON
+  capacidadKg     Decimal?          @db.Decimal(10, 2)
+  capacidadM3     Decimal?          @db.Decimal(10, 2)
+  transportistaId String?
+  activo          Boolean           @default(true)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  transportista   LogTransportista? @relation(fields: [transportistaId], references: [id], onDelete: SetNull)
+  rutas           LogRuta[]
+
+  @@map("log_camiones")
+}
+
+model LogCliente {
+  id          String   @id @default(uuid())
+  codigo      String   @unique
+  razonSocial String
+  direccion   String?  @db.Text
+  comuna      String?
+  region      String?
+  activo      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  rutas       LogRuta[]
+
+  @@map("log_clientes")
+}
+
+model LogRuta {
+  id                  String            @id @default(uuid())
+  numeroRuta          String            @unique // Generado automáticamente ej: RUT-2026-0001
+  bodegaId            String
+  transportistaId     String?
+  choferId            String
+  camionId            String
+  clienteId           String?
+  estado              String            @default("PROGRAMADA") 
+  // Estados: BORRADOR, PROGRAMADA, NOTIFICADA, EN_PORTON, EN_ANDEN, EN_PROCESO, DESPACHADA, CANCELADA, REPROGRAMADA
+  andenId             String?
+  fechaRuta           String            // YYYY-MM-DD
+  horaProgramada      String            // HH:MM
+  horaLlegadaPorton   DateTime?
+  horaEntradaAnden    DateTime?
+  horaSalidaAnden     DateTime?
+  selloSalida         String?
+  totalBultos         Int?              @default(0)
+  totalKilos          Decimal?          @db.Decimal(10, 2)
+  observaciones       String?           @db.Text
+  telegramMessageId   String?
+  tokenRuta           String            @unique @default(uuid()) // Token de seguimiento para chofer
+  creadaPorId         String?
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+
+  bodega              LogBodega         @relation(fields: [bodegaId], references: [id])
+  transportista       LogTransportista? @relation(fields: [transportistaId], references: [id])
+  chofer              LogChofer         @relation(fields: [choferId], references: [id])
+  camion              LogCamion         @relation(fields: [camionId], references: [id])
+  cliente             LogCliente?       @relation(fields: [clienteId], references: [id])
+  anden               LogAnden?         @relation(fields: [andenId], references: [id])
+
+  eventos             LogEventoRuta[]
+  integracionLogs     LogIntegracionLog[]
+
+  @@index([bodegaId])
+  @@index([fechaRuta])
+  @@index([estado])
+  @@index([andenId])
+  @@index([choferId])
+  @@index([tokenRuta])
+  @@map("log_rutas")
+}
+
+model LogEventoRuta {
+  id            String    @id @default(uuid())
+  rutaId        String
+  estadoAnterior String?
+  estadoNuevo   String
+  andenId       String?
+  origenCambio  String    @default("SISTEMA") // SISTEMA, DESPACHADOR, TELEGRAM_CHOFER, N8N_WEBHOOK, PORTON
+  notas         String?   @db.Text
+  metadataJson  String?   @db.Text
+  usuarioId     String?
+  createdAt     DateTime  @default(now())
+
+  ruta          LogRuta   @relation(fields: [rutaId], references: [id], onDelete: Cascade)
+  anden         LogAnden? @relation(fields: [andenId], references: [id])
+
+  @@index([rutaId])
+  @@index([createdAt])
+  @@map("log_eventos_ruta")
+}
+
+model LogIntegracionConfig {
+  id               String              @id @default(uuid())
+  nombre           String              @default("N8N Despacho & Telegram")
+  provider         String              @default("N8N") // N8N, GENERIC_WEBHOOK
+  webhookUrl       String              @db.Text
+  secretToken      String?             // Token seguro para firma HMAC o Bearer
+  activo           Boolean             @default(true)
+  eventosSuscritos String              @default("[\"RUTA_CREADA\",\"CHOFER_NOTIFICADO\",\"ANDEN_ASIGNADO\",\"DESPACHO_COMPLETO\"]") @db.Text
+  headersJson      String?             @db.Text
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+
+  logs             LogIntegracionLog[]
+
+  @@map("log_integracion_configs")
+}
+
+model LogIntegracionLog {
+  id                  String                @id @default(uuid())
+  integracionConfigId String?
+  evento              String                // RUTA_CREADA, CHOFER_NOTIFICADO, etc.
+  rutaId              String?
+  payloadEnviado      String?               @db.Text
+  respuestaCodigo     Int?
+  respuestaCuerpo     String?               @db.Text
+  estado              String                @default("PENDIENTE") // EXITO, ERROR, REINTENTO, PENDIENTE
+  intentos            Int                   @default(1)
+  errorDetalle        String?               @db.Text
+  createdAt           DateTime              @default(now())
+
+  integracionConfig   LogIntegracionConfig? @relation(fields: [integracionConfigId], references: [id], onDelete: SetNull)
+  ruta                LogRuta?              @relation(fields: [rutaId], references: [id], onDelete: Cascade)
+
+  @@index([evento])
+  @@index([estado])
+  @@index([createdAt])
+  @@index([rutaId])
+  @@map("log_integracion_logs")
+}
+
+model LogParametro {
+  id          String     @id @default(uuid())
+  bodegaId    String?
+  clave       String     @unique
+  valor       String     @db.Text
+  descripcion String?    @db.Text
+  tipo        String     @default("NUMERO") // NUMERO, TEXTO, BOOLEANO
+  updatedAt   DateTime   @updatedAt
+
+  bodega      LogBodega? @relation(fields: [bodegaId], references: [id], onDelete: Cascade)
+
+  @@map("log_parametros")
+}
+

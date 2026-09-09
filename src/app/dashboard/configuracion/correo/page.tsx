@@ -6,8 +6,9 @@ import EmailConfigForm from './EmailConfigForm'
 export default async function EmailConfigPage() {
     const session = await getSession()
     const permissions = session?.user?.role?.permissions || []
+    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
 
-    if (!permissions.includes('manage_correo')) {
+    if (!isAdmin && !permissions.includes('manage_correo')) {
         redirect('/dashboard')
     }
 

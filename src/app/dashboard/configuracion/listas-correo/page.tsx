@@ -6,8 +6,9 @@ import ListaCorreoWrapper from './ListaCorreoWrapper'
 export default async function ListasCorreoPage() {
     const session = await getSession()
     const permissions = session?.user?.role?.permissions || []
+    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
 
-    if (!permissions.includes('manage_listas')) {
+    if (!isAdmin && !permissions.includes('manage_listas')) {
         redirect('/dashboard')
     }
 

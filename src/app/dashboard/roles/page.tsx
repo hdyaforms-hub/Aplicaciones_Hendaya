@@ -7,8 +7,9 @@ import RolesTabs from './RolesTabs'
 export default async function RolesPage() {
     const session = await getSession()
     const permissions = session?.user?.role?.permissions || []
+    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
 
-    if (!permissions.includes('manage_roles')) {
+    if (!isAdmin && !permissions.includes('manage_roles')) {
         redirect('/dashboard')
     }
 
@@ -92,6 +93,28 @@ export default async function RolesPage() {
         { id: 'view_multas_areas', name: 'Menú Multas', description: 'Acceso al menú de Multas en Áreas.', category: 'ÁREAS -> MULTAS' },
         { id: 'manage_calculos_ee', name: 'Cálculos de Elementos Esenciales', description: 'Permite calcular multas en base a elementos esenciales no conformes.', category: 'ÁREAS -> MULTAS' },
         { id: 'manage_descargos', name: 'Descargos de Actas', description: 'Gestionar descargos, resoluciones y no soluciones de aspectos de actas.', category: 'ÁREAS -> MULTAS' },
+
+        // ÁREAS -> LOGÍSTICA
+        { id: 'logistica:tablero:ver', name: 'Tablero de Despacho (Ver)', description: 'Visualizar el tablero en vivo de andenes y flujo de camiones.', category: 'ÁREAS -> LOGÍSTICA' },
+        { id: 'logistica:tablero:gestionar', name: 'Gestionar Andenes', description: 'Asignar, reasignar y liberar andenes de despacho.', category: 'ÁREAS -> LOGÍSTICA' },
+        { id: 'logistica:rutas:ver', name: 'Historial de Rutas (Ver)', description: 'Ver el listado y detalle histórico de rutas y despachos.', category: 'ÁREAS -> LOGÍSTICA' },
+        { id: 'logistica:rutas:crear', name: 'Crear Rutas', description: 'Crear nuevas rutas de despacho manuales o por importación Excel.', category: 'ÁREAS -> LOGÍSTICA' },
+        { id: 'logistica:rutas:editar', name: 'Editar Rutas', description: 'Modificar datos de rutas programadas o en preparación.', category: 'ÁREAS -> LOGÍSTICA' },
+        { id: 'logistica:rutas:cancelar', name: 'Cancelar / Reprogramar Rutas', description: 'Cancelar o reprogramar rutas planificadas.', category: 'ÁREAS -> LOGÍSTICA' },
+        { id: 'logistica:rutas:forzar_estado', name: 'Forzar Estado de Ruta', description: 'Cambio manual excepcional del estado operativo de una ruta.', category: 'ÁREAS -> LOGÍSTICA' },
+        { id: 'logistica:chofer:notificar', name: 'Notificar Chofer (Telegram)', description: 'Reenviar o disparar notificación al chofer vía n8n / Telegram.', category: 'ÁREAS -> LOGÍSTICA' },
+        { id: 'logistica:porton:marcar', name: 'Marcar Llegada a Portón', description: 'Registrar la llegada física de un camión al recinto.', category: 'ÁREAS -> LOGÍSTICA' },
+        { id: 'logistica:despacho:completar', name: 'Completar Despacho', description: 'Finalizar y cerrar despacho de ruta con sellos y observaciones.', category: 'ÁREAS -> LOGÍSTICA' },
+        { id: 'logistica:metricas:ver', name: 'Métricas de Despacho (Ver)', description: 'Visualizar KPIs, rotación de andenes y tiempos de permanencia.', category: 'ÁREAS -> LOGÍSTICA' },
+        { id: 'logistica:rutas:exportar', name: 'Exportar Rutas a Excel', description: 'Descargar reportes e informes de rutas en formato Excel.', category: 'ÁREAS -> LOGÍSTICA' },
+
+        { id: 'logistica:config:ver', name: 'Configuración Logística (Ver)', description: 'Acceso al panel de configuración general de logística.', category: 'ÁREAS -> LOGÍSTICA -> CONFIGURACIÓN' },
+        { id: 'logistica:config:bodegas', name: 'Administrar Bodegas y Andenes', description: 'Crear, editar y organizar centros de distribución y andenes.', category: 'ÁREAS -> LOGÍSTICA -> CONFIGURACIÓN' },
+        { id: 'logistica:config:choferes', name: 'Administrar Choferes', description: 'Gestionar choferes, teléfonos y vinculación con Telegram.', category: 'ÁREAS -> LOGÍSTICA -> CONFIGURACIÓN' },
+        { id: 'logistica:config:camiones', name: 'Administrar Camiones', description: 'Gestionar patentes, tipo de vehículo y capacidad de carga.', category: 'ÁREAS -> LOGÍSTICA -> CONFIGURACIÓN' },
+        { id: 'logistica:config:transportistas', name: 'Administrar Transportistas', description: 'Gestionar empresas transportistas externas o flota interna.', category: 'ÁREAS -> LOGÍSTICA -> CONFIGURACIÓN' },
+        { id: 'logistica:config:clientes', name: 'Administrar Clientes / Destinos', description: 'Gestionar clientes, direcciones de entrega y comunas.', category: 'ÁREAS -> LOGÍSTICA -> CONFIGURACIÓN' },
+        { id: 'logistica:integraciones:ver', name: 'Integraciones n8n / Webhooks', description: 'Configurar webhook saliente, secret tokens y ver bitácora de eventos.', category: 'ÁREAS -> LOGÍSTICA -> CONFIGURACIÓN' },
  
         { id: 'view_matriz_riesgo', name: 'Ver Matriz de Riesgo', description: 'Acceso al menú principal de matrices de riesgo.', category: 'MATRIZ DE RIESGO' },
         { id: 'fill_nueva_matriz', name: 'Ingresar nueva Matriz', description: 'Responder encuestas basadas en plantillas dinámicas de matrices de riesgo.', category: 'MATRIZ DE RIESGO -> INGRESAR NUEVA MATRIZ' },
@@ -162,6 +185,8 @@ export default async function RolesPage() {
         { id: 'view_conversacion', name: 'Conversación y Colaboración', description: 'Acceso a mensajería cifrada, gestión de tareas estilo Trello, citas/calendario y proyectos colaborativos.', category: 'COLABORADORES' },
         { id: 'view_sala_reuniones', name: 'Sala de Reuniones (Ver)', description: 'Visualizar el calendario semanal, horarios y disponibilidad de la sala de reuniones.', category: 'COLABORADORES' },
         { id: 'manage_sala_reuniones', name: 'Sala de Reuniones (Gestionar)', description: 'Crear nuevas reservas, modificar o cancelar reuniones en la sala.', category: 'COLABORADORES' },
+        { id: 'view_anonimizador', name: 'Anonimizador de Planillas (Ver)', description: 'Acceso al módulo y visualización de la herramienta de anonimización de datos personales.', category: 'COLABORADORES' },
+        { id: 'manage_anonimizador', name: 'Anonimizador de Planillas (Ejecutar)', description: 'Permite ejecutar el procesamiento, validar datos y descargar planillas anonimizadas y mapas de equivalencias.', category: 'COLABORADORES' },
 
         { id: 'view_anexos', name: 'Ver Anexos', description: 'Acceso al directorio telefónico de la empresa.', category: 'AYUDA' },
         { id: 'manage_anexos', name: 'Gestionar Anexos', description: 'Acceso a crear, editar y subir de forma masiva los anexos.', category: 'AYUDA' },

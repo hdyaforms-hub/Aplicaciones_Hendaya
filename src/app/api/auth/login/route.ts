@@ -62,7 +62,8 @@ export async function POST(request: Request) {
         try {
             permissions = JSON.parse(user.role.permissions)
         } catch (e) {
-            console.error(`Error parsing permissions:`, e)
+            const raw = (user.role.permissions || '').replace(/[\[\]"]/g, '')
+            permissions = raw.split(',').map((p: string) => p.trim()).filter(Boolean)
         }
 
         const sessionData = {

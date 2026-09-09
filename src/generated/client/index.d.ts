@@ -573,6 +573,66 @@ export type ReservaSala = $Result.DefaultSelection<Prisma.$ReservaSalaPayload>
  * 
  */
 export type NoticiaAlimentacion = $Result.DefaultSelection<Prisma.$NoticiaAlimentacionPayload>
+/**
+ * Model LogBodega
+ * 
+ */
+export type LogBodega = $Result.DefaultSelection<Prisma.$LogBodegaPayload>
+/**
+ * Model LogUsuarioBodega
+ * 
+ */
+export type LogUsuarioBodega = $Result.DefaultSelection<Prisma.$LogUsuarioBodegaPayload>
+/**
+ * Model LogAnden
+ * 
+ */
+export type LogAnden = $Result.DefaultSelection<Prisma.$LogAndenPayload>
+/**
+ * Model LogTransportista
+ * 
+ */
+export type LogTransportista = $Result.DefaultSelection<Prisma.$LogTransportistaPayload>
+/**
+ * Model LogChofer
+ * 
+ */
+export type LogChofer = $Result.DefaultSelection<Prisma.$LogChoferPayload>
+/**
+ * Model LogCamion
+ * 
+ */
+export type LogCamion = $Result.DefaultSelection<Prisma.$LogCamionPayload>
+/**
+ * Model LogCliente
+ * 
+ */
+export type LogCliente = $Result.DefaultSelection<Prisma.$LogClientePayload>
+/**
+ * Model LogRuta
+ * 
+ */
+export type LogRuta = $Result.DefaultSelection<Prisma.$LogRutaPayload>
+/**
+ * Model LogEventoRuta
+ * 
+ */
+export type LogEventoRuta = $Result.DefaultSelection<Prisma.$LogEventoRutaPayload>
+/**
+ * Model LogIntegracionConfig
+ * 
+ */
+export type LogIntegracionConfig = $Result.DefaultSelection<Prisma.$LogIntegracionConfigPayload>
+/**
+ * Model LogIntegracionLog
+ * 
+ */
+export type LogIntegracionLog = $Result.DefaultSelection<Prisma.$LogIntegracionLogPayload>
+/**
+ * Model LogParametro
+ * 
+ */
+export type LogParametro = $Result.DefaultSelection<Prisma.$LogParametroPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -1816,6 +1876,126 @@ export class PrismaClient<
     * ```
     */
   get noticiaAlimentacion(): Prisma.NoticiaAlimentacionDelegate<ExtArgs>;
+
+  /**
+   * `prisma.logBodega`: Exposes CRUD operations for the **LogBodega** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more LogBodegas
+    * const logBodegas = await prisma.logBodega.findMany()
+    * ```
+    */
+  get logBodega(): Prisma.LogBodegaDelegate<ExtArgs>;
+
+  /**
+   * `prisma.logUsuarioBodega`: Exposes CRUD operations for the **LogUsuarioBodega** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more LogUsuarioBodegas
+    * const logUsuarioBodegas = await prisma.logUsuarioBodega.findMany()
+    * ```
+    */
+  get logUsuarioBodega(): Prisma.LogUsuarioBodegaDelegate<ExtArgs>;
+
+  /**
+   * `prisma.logAnden`: Exposes CRUD operations for the **LogAnden** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more LogAndens
+    * const logAndens = await prisma.logAnden.findMany()
+    * ```
+    */
+  get logAnden(): Prisma.LogAndenDelegate<ExtArgs>;
+
+  /**
+   * `prisma.logTransportista`: Exposes CRUD operations for the **LogTransportista** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more LogTransportistas
+    * const logTransportistas = await prisma.logTransportista.findMany()
+    * ```
+    */
+  get logTransportista(): Prisma.LogTransportistaDelegate<ExtArgs>;
+
+  /**
+   * `prisma.logChofer`: Exposes CRUD operations for the **LogChofer** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more LogChofers
+    * const logChofers = await prisma.logChofer.findMany()
+    * ```
+    */
+  get logChofer(): Prisma.LogChoferDelegate<ExtArgs>;
+
+  /**
+   * `prisma.logCamion`: Exposes CRUD operations for the **LogCamion** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more LogCamions
+    * const logCamions = await prisma.logCamion.findMany()
+    * ```
+    */
+  get logCamion(): Prisma.LogCamionDelegate<ExtArgs>;
+
+  /**
+   * `prisma.logCliente`: Exposes CRUD operations for the **LogCliente** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more LogClientes
+    * const logClientes = await prisma.logCliente.findMany()
+    * ```
+    */
+  get logCliente(): Prisma.LogClienteDelegate<ExtArgs>;
+
+  /**
+   * `prisma.logRuta`: Exposes CRUD operations for the **LogRuta** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more LogRutas
+    * const logRutas = await prisma.logRuta.findMany()
+    * ```
+    */
+  get logRuta(): Prisma.LogRutaDelegate<ExtArgs>;
+
+  /**
+   * `prisma.logEventoRuta`: Exposes CRUD operations for the **LogEventoRuta** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more LogEventoRutas
+    * const logEventoRutas = await prisma.logEventoRuta.findMany()
+    * ```
+    */
+  get logEventoRuta(): Prisma.LogEventoRutaDelegate<ExtArgs>;
+
+  /**
+   * `prisma.logIntegracionConfig`: Exposes CRUD operations for the **LogIntegracionConfig** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more LogIntegracionConfigs
+    * const logIntegracionConfigs = await prisma.logIntegracionConfig.findMany()
+    * ```
+    */
+  get logIntegracionConfig(): Prisma.LogIntegracionConfigDelegate<ExtArgs>;
+
+  /**
+   * `prisma.logIntegracionLog`: Exposes CRUD operations for the **LogIntegracionLog** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more LogIntegracionLogs
+    * const logIntegracionLogs = await prisma.logIntegracionLog.findMany()
+    * ```
+    */
+  get logIntegracionLog(): Prisma.LogIntegracionLogDelegate<ExtArgs>;
+
+  /**
+   * `prisma.logParametro`: Exposes CRUD operations for the **LogParametro** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more LogParametros
+    * const logParametros = await prisma.logParametro.findMany()
+    * ```
+    */
+  get logParametro(): Prisma.LogParametroDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -2368,7 +2548,19 @@ export namespace Prisma {
     PrivilegioDocumental: 'PrivilegioDocumental',
     UserWidgetLayout: 'UserWidgetLayout',
     ReservaSala: 'ReservaSala',
-    NoticiaAlimentacion: 'NoticiaAlimentacion'
+    NoticiaAlimentacion: 'NoticiaAlimentacion',
+    LogBodega: 'LogBodega',
+    LogUsuarioBodega: 'LogUsuarioBodega',
+    LogAnden: 'LogAnden',
+    LogTransportista: 'LogTransportista',
+    LogChofer: 'LogChofer',
+    LogCamion: 'LogCamion',
+    LogCliente: 'LogCliente',
+    LogRuta: 'LogRuta',
+    LogEventoRuta: 'LogEventoRuta',
+    LogIntegracionConfig: 'LogIntegracionConfig',
+    LogIntegracionLog: 'LogIntegracionLog',
+    LogParametro: 'LogParametro'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -2384,7 +2576,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout" | "reservaSala" | "noticiaAlimentacion"
+      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout" | "reservaSala" | "noticiaAlimentacion" | "logBodega" | "logUsuarioBodega" | "logAnden" | "logTransportista" | "logChofer" | "logCamion" | "logCliente" | "logRuta" | "logEventoRuta" | "logIntegracionConfig" | "logIntegracionLog" | "logParametro"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -10228,6 +10420,846 @@ export namespace Prisma {
           }
         }
       }
+      LogBodega: {
+        payload: Prisma.$LogBodegaPayload<ExtArgs>
+        fields: Prisma.LogBodegaFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.LogBodegaFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogBodegaPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.LogBodegaFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogBodegaPayload>
+          }
+          findFirst: {
+            args: Prisma.LogBodegaFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogBodegaPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.LogBodegaFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogBodegaPayload>
+          }
+          findMany: {
+            args: Prisma.LogBodegaFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogBodegaPayload>[]
+          }
+          create: {
+            args: Prisma.LogBodegaCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogBodegaPayload>
+          }
+          createMany: {
+            args: Prisma.LogBodegaCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.LogBodegaCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogBodegaPayload>[]
+          }
+          delete: {
+            args: Prisma.LogBodegaDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogBodegaPayload>
+          }
+          update: {
+            args: Prisma.LogBodegaUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogBodegaPayload>
+          }
+          deleteMany: {
+            args: Prisma.LogBodegaDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.LogBodegaUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.LogBodegaUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogBodegaPayload>
+          }
+          aggregate: {
+            args: Prisma.LogBodegaAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLogBodega>
+          }
+          groupBy: {
+            args: Prisma.LogBodegaGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LogBodegaGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.LogBodegaCountArgs<ExtArgs>
+            result: $Utils.Optional<LogBodegaCountAggregateOutputType> | number
+          }
+        }
+      }
+      LogUsuarioBodega: {
+        payload: Prisma.$LogUsuarioBodegaPayload<ExtArgs>
+        fields: Prisma.LogUsuarioBodegaFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.LogUsuarioBodegaFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogUsuarioBodegaPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.LogUsuarioBodegaFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogUsuarioBodegaPayload>
+          }
+          findFirst: {
+            args: Prisma.LogUsuarioBodegaFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogUsuarioBodegaPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.LogUsuarioBodegaFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogUsuarioBodegaPayload>
+          }
+          findMany: {
+            args: Prisma.LogUsuarioBodegaFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogUsuarioBodegaPayload>[]
+          }
+          create: {
+            args: Prisma.LogUsuarioBodegaCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogUsuarioBodegaPayload>
+          }
+          createMany: {
+            args: Prisma.LogUsuarioBodegaCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.LogUsuarioBodegaCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogUsuarioBodegaPayload>[]
+          }
+          delete: {
+            args: Prisma.LogUsuarioBodegaDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogUsuarioBodegaPayload>
+          }
+          update: {
+            args: Prisma.LogUsuarioBodegaUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogUsuarioBodegaPayload>
+          }
+          deleteMany: {
+            args: Prisma.LogUsuarioBodegaDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.LogUsuarioBodegaUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.LogUsuarioBodegaUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogUsuarioBodegaPayload>
+          }
+          aggregate: {
+            args: Prisma.LogUsuarioBodegaAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLogUsuarioBodega>
+          }
+          groupBy: {
+            args: Prisma.LogUsuarioBodegaGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LogUsuarioBodegaGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.LogUsuarioBodegaCountArgs<ExtArgs>
+            result: $Utils.Optional<LogUsuarioBodegaCountAggregateOutputType> | number
+          }
+        }
+      }
+      LogAnden: {
+        payload: Prisma.$LogAndenPayload<ExtArgs>
+        fields: Prisma.LogAndenFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.LogAndenFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogAndenPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.LogAndenFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogAndenPayload>
+          }
+          findFirst: {
+            args: Prisma.LogAndenFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogAndenPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.LogAndenFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogAndenPayload>
+          }
+          findMany: {
+            args: Prisma.LogAndenFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogAndenPayload>[]
+          }
+          create: {
+            args: Prisma.LogAndenCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogAndenPayload>
+          }
+          createMany: {
+            args: Prisma.LogAndenCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.LogAndenCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogAndenPayload>[]
+          }
+          delete: {
+            args: Prisma.LogAndenDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogAndenPayload>
+          }
+          update: {
+            args: Prisma.LogAndenUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogAndenPayload>
+          }
+          deleteMany: {
+            args: Prisma.LogAndenDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.LogAndenUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.LogAndenUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogAndenPayload>
+          }
+          aggregate: {
+            args: Prisma.LogAndenAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLogAnden>
+          }
+          groupBy: {
+            args: Prisma.LogAndenGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LogAndenGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.LogAndenCountArgs<ExtArgs>
+            result: $Utils.Optional<LogAndenCountAggregateOutputType> | number
+          }
+        }
+      }
+      LogTransportista: {
+        payload: Prisma.$LogTransportistaPayload<ExtArgs>
+        fields: Prisma.LogTransportistaFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.LogTransportistaFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogTransportistaPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.LogTransportistaFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogTransportistaPayload>
+          }
+          findFirst: {
+            args: Prisma.LogTransportistaFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogTransportistaPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.LogTransportistaFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogTransportistaPayload>
+          }
+          findMany: {
+            args: Prisma.LogTransportistaFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogTransportistaPayload>[]
+          }
+          create: {
+            args: Prisma.LogTransportistaCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogTransportistaPayload>
+          }
+          createMany: {
+            args: Prisma.LogTransportistaCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.LogTransportistaCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogTransportistaPayload>[]
+          }
+          delete: {
+            args: Prisma.LogTransportistaDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogTransportistaPayload>
+          }
+          update: {
+            args: Prisma.LogTransportistaUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogTransportistaPayload>
+          }
+          deleteMany: {
+            args: Prisma.LogTransportistaDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.LogTransportistaUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.LogTransportistaUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogTransportistaPayload>
+          }
+          aggregate: {
+            args: Prisma.LogTransportistaAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLogTransportista>
+          }
+          groupBy: {
+            args: Prisma.LogTransportistaGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LogTransportistaGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.LogTransportistaCountArgs<ExtArgs>
+            result: $Utils.Optional<LogTransportistaCountAggregateOutputType> | number
+          }
+        }
+      }
+      LogChofer: {
+        payload: Prisma.$LogChoferPayload<ExtArgs>
+        fields: Prisma.LogChoferFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.LogChoferFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogChoferPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.LogChoferFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogChoferPayload>
+          }
+          findFirst: {
+            args: Prisma.LogChoferFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogChoferPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.LogChoferFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogChoferPayload>
+          }
+          findMany: {
+            args: Prisma.LogChoferFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogChoferPayload>[]
+          }
+          create: {
+            args: Prisma.LogChoferCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogChoferPayload>
+          }
+          createMany: {
+            args: Prisma.LogChoferCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.LogChoferCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogChoferPayload>[]
+          }
+          delete: {
+            args: Prisma.LogChoferDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogChoferPayload>
+          }
+          update: {
+            args: Prisma.LogChoferUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogChoferPayload>
+          }
+          deleteMany: {
+            args: Prisma.LogChoferDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.LogChoferUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.LogChoferUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogChoferPayload>
+          }
+          aggregate: {
+            args: Prisma.LogChoferAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLogChofer>
+          }
+          groupBy: {
+            args: Prisma.LogChoferGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LogChoferGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.LogChoferCountArgs<ExtArgs>
+            result: $Utils.Optional<LogChoferCountAggregateOutputType> | number
+          }
+        }
+      }
+      LogCamion: {
+        payload: Prisma.$LogCamionPayload<ExtArgs>
+        fields: Prisma.LogCamionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.LogCamionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogCamionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.LogCamionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogCamionPayload>
+          }
+          findFirst: {
+            args: Prisma.LogCamionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogCamionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.LogCamionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogCamionPayload>
+          }
+          findMany: {
+            args: Prisma.LogCamionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogCamionPayload>[]
+          }
+          create: {
+            args: Prisma.LogCamionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogCamionPayload>
+          }
+          createMany: {
+            args: Prisma.LogCamionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.LogCamionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogCamionPayload>[]
+          }
+          delete: {
+            args: Prisma.LogCamionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogCamionPayload>
+          }
+          update: {
+            args: Prisma.LogCamionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogCamionPayload>
+          }
+          deleteMany: {
+            args: Prisma.LogCamionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.LogCamionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.LogCamionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogCamionPayload>
+          }
+          aggregate: {
+            args: Prisma.LogCamionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLogCamion>
+          }
+          groupBy: {
+            args: Prisma.LogCamionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LogCamionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.LogCamionCountArgs<ExtArgs>
+            result: $Utils.Optional<LogCamionCountAggregateOutputType> | number
+          }
+        }
+      }
+      LogCliente: {
+        payload: Prisma.$LogClientePayload<ExtArgs>
+        fields: Prisma.LogClienteFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.LogClienteFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogClientePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.LogClienteFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogClientePayload>
+          }
+          findFirst: {
+            args: Prisma.LogClienteFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogClientePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.LogClienteFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogClientePayload>
+          }
+          findMany: {
+            args: Prisma.LogClienteFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogClientePayload>[]
+          }
+          create: {
+            args: Prisma.LogClienteCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogClientePayload>
+          }
+          createMany: {
+            args: Prisma.LogClienteCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.LogClienteCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogClientePayload>[]
+          }
+          delete: {
+            args: Prisma.LogClienteDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogClientePayload>
+          }
+          update: {
+            args: Prisma.LogClienteUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogClientePayload>
+          }
+          deleteMany: {
+            args: Prisma.LogClienteDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.LogClienteUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.LogClienteUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogClientePayload>
+          }
+          aggregate: {
+            args: Prisma.LogClienteAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLogCliente>
+          }
+          groupBy: {
+            args: Prisma.LogClienteGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LogClienteGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.LogClienteCountArgs<ExtArgs>
+            result: $Utils.Optional<LogClienteCountAggregateOutputType> | number
+          }
+        }
+      }
+      LogRuta: {
+        payload: Prisma.$LogRutaPayload<ExtArgs>
+        fields: Prisma.LogRutaFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.LogRutaFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogRutaPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.LogRutaFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogRutaPayload>
+          }
+          findFirst: {
+            args: Prisma.LogRutaFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogRutaPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.LogRutaFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogRutaPayload>
+          }
+          findMany: {
+            args: Prisma.LogRutaFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogRutaPayload>[]
+          }
+          create: {
+            args: Prisma.LogRutaCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogRutaPayload>
+          }
+          createMany: {
+            args: Prisma.LogRutaCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.LogRutaCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogRutaPayload>[]
+          }
+          delete: {
+            args: Prisma.LogRutaDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogRutaPayload>
+          }
+          update: {
+            args: Prisma.LogRutaUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogRutaPayload>
+          }
+          deleteMany: {
+            args: Prisma.LogRutaDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.LogRutaUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.LogRutaUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogRutaPayload>
+          }
+          aggregate: {
+            args: Prisma.LogRutaAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLogRuta>
+          }
+          groupBy: {
+            args: Prisma.LogRutaGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LogRutaGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.LogRutaCountArgs<ExtArgs>
+            result: $Utils.Optional<LogRutaCountAggregateOutputType> | number
+          }
+        }
+      }
+      LogEventoRuta: {
+        payload: Prisma.$LogEventoRutaPayload<ExtArgs>
+        fields: Prisma.LogEventoRutaFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.LogEventoRutaFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogEventoRutaPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.LogEventoRutaFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogEventoRutaPayload>
+          }
+          findFirst: {
+            args: Prisma.LogEventoRutaFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogEventoRutaPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.LogEventoRutaFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogEventoRutaPayload>
+          }
+          findMany: {
+            args: Prisma.LogEventoRutaFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogEventoRutaPayload>[]
+          }
+          create: {
+            args: Prisma.LogEventoRutaCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogEventoRutaPayload>
+          }
+          createMany: {
+            args: Prisma.LogEventoRutaCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.LogEventoRutaCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogEventoRutaPayload>[]
+          }
+          delete: {
+            args: Prisma.LogEventoRutaDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogEventoRutaPayload>
+          }
+          update: {
+            args: Prisma.LogEventoRutaUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogEventoRutaPayload>
+          }
+          deleteMany: {
+            args: Prisma.LogEventoRutaDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.LogEventoRutaUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.LogEventoRutaUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogEventoRutaPayload>
+          }
+          aggregate: {
+            args: Prisma.LogEventoRutaAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLogEventoRuta>
+          }
+          groupBy: {
+            args: Prisma.LogEventoRutaGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LogEventoRutaGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.LogEventoRutaCountArgs<ExtArgs>
+            result: $Utils.Optional<LogEventoRutaCountAggregateOutputType> | number
+          }
+        }
+      }
+      LogIntegracionConfig: {
+        payload: Prisma.$LogIntegracionConfigPayload<ExtArgs>
+        fields: Prisma.LogIntegracionConfigFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.LogIntegracionConfigFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogIntegracionConfigPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.LogIntegracionConfigFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogIntegracionConfigPayload>
+          }
+          findFirst: {
+            args: Prisma.LogIntegracionConfigFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogIntegracionConfigPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.LogIntegracionConfigFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogIntegracionConfigPayload>
+          }
+          findMany: {
+            args: Prisma.LogIntegracionConfigFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogIntegracionConfigPayload>[]
+          }
+          create: {
+            args: Prisma.LogIntegracionConfigCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogIntegracionConfigPayload>
+          }
+          createMany: {
+            args: Prisma.LogIntegracionConfigCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.LogIntegracionConfigCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogIntegracionConfigPayload>[]
+          }
+          delete: {
+            args: Prisma.LogIntegracionConfigDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogIntegracionConfigPayload>
+          }
+          update: {
+            args: Prisma.LogIntegracionConfigUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogIntegracionConfigPayload>
+          }
+          deleteMany: {
+            args: Prisma.LogIntegracionConfigDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.LogIntegracionConfigUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.LogIntegracionConfigUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogIntegracionConfigPayload>
+          }
+          aggregate: {
+            args: Prisma.LogIntegracionConfigAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLogIntegracionConfig>
+          }
+          groupBy: {
+            args: Prisma.LogIntegracionConfigGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LogIntegracionConfigGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.LogIntegracionConfigCountArgs<ExtArgs>
+            result: $Utils.Optional<LogIntegracionConfigCountAggregateOutputType> | number
+          }
+        }
+      }
+      LogIntegracionLog: {
+        payload: Prisma.$LogIntegracionLogPayload<ExtArgs>
+        fields: Prisma.LogIntegracionLogFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.LogIntegracionLogFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogIntegracionLogPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.LogIntegracionLogFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogIntegracionLogPayload>
+          }
+          findFirst: {
+            args: Prisma.LogIntegracionLogFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogIntegracionLogPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.LogIntegracionLogFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogIntegracionLogPayload>
+          }
+          findMany: {
+            args: Prisma.LogIntegracionLogFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogIntegracionLogPayload>[]
+          }
+          create: {
+            args: Prisma.LogIntegracionLogCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogIntegracionLogPayload>
+          }
+          createMany: {
+            args: Prisma.LogIntegracionLogCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.LogIntegracionLogCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogIntegracionLogPayload>[]
+          }
+          delete: {
+            args: Prisma.LogIntegracionLogDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogIntegracionLogPayload>
+          }
+          update: {
+            args: Prisma.LogIntegracionLogUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogIntegracionLogPayload>
+          }
+          deleteMany: {
+            args: Prisma.LogIntegracionLogDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.LogIntegracionLogUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.LogIntegracionLogUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogIntegracionLogPayload>
+          }
+          aggregate: {
+            args: Prisma.LogIntegracionLogAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLogIntegracionLog>
+          }
+          groupBy: {
+            args: Prisma.LogIntegracionLogGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LogIntegracionLogGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.LogIntegracionLogCountArgs<ExtArgs>
+            result: $Utils.Optional<LogIntegracionLogCountAggregateOutputType> | number
+          }
+        }
+      }
+      LogParametro: {
+        payload: Prisma.$LogParametroPayload<ExtArgs>
+        fields: Prisma.LogParametroFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.LogParametroFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogParametroPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.LogParametroFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogParametroPayload>
+          }
+          findFirst: {
+            args: Prisma.LogParametroFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogParametroPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.LogParametroFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogParametroPayload>
+          }
+          findMany: {
+            args: Prisma.LogParametroFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogParametroPayload>[]
+          }
+          create: {
+            args: Prisma.LogParametroCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogParametroPayload>
+          }
+          createMany: {
+            args: Prisma.LogParametroCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.LogParametroCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogParametroPayload>[]
+          }
+          delete: {
+            args: Prisma.LogParametroDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogParametroPayload>
+          }
+          update: {
+            args: Prisma.LogParametroUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogParametroPayload>
+          }
+          deleteMany: {
+            args: Prisma.LogParametroDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.LogParametroUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.LogParametroUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LogParametroPayload>
+          }
+          aggregate: {
+            args: Prisma.LogParametroAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLogParametro>
+          }
+          groupBy: {
+            args: Prisma.LogParametroGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LogParametroGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.LogParametroCountArgs<ExtArgs>
+            result: $Utils.Optional<LogParametroCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -11875,6 +12907,317 @@ export namespace Prisma {
    */
   export type CarpetaDocumentalCountOutputTypeCountPrivilegiosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PrivilegioDocumentalWhereInput
+  }
+
+
+  /**
+   * Count Type LogBodegaCountOutputType
+   */
+
+  export type LogBodegaCountOutputType = {
+    andenes: number
+    rutas: number
+    usuarios: number
+    parametros: number
+  }
+
+  export type LogBodegaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    andenes?: boolean | LogBodegaCountOutputTypeCountAndenesArgs
+    rutas?: boolean | LogBodegaCountOutputTypeCountRutasArgs
+    usuarios?: boolean | LogBodegaCountOutputTypeCountUsuariosArgs
+    parametros?: boolean | LogBodegaCountOutputTypeCountParametrosArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * LogBodegaCountOutputType without action
+   */
+  export type LogBodegaCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogBodegaCountOutputType
+     */
+    select?: LogBodegaCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * LogBodegaCountOutputType without action
+   */
+  export type LogBodegaCountOutputTypeCountAndenesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LogAndenWhereInput
+  }
+
+  /**
+   * LogBodegaCountOutputType without action
+   */
+  export type LogBodegaCountOutputTypeCountRutasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LogRutaWhereInput
+  }
+
+  /**
+   * LogBodegaCountOutputType without action
+   */
+  export type LogBodegaCountOutputTypeCountUsuariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LogUsuarioBodegaWhereInput
+  }
+
+  /**
+   * LogBodegaCountOutputType without action
+   */
+  export type LogBodegaCountOutputTypeCountParametrosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LogParametroWhereInput
+  }
+
+
+  /**
+   * Count Type LogAndenCountOutputType
+   */
+
+  export type LogAndenCountOutputType = {
+    rutas: number
+    eventos: number
+  }
+
+  export type LogAndenCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    rutas?: boolean | LogAndenCountOutputTypeCountRutasArgs
+    eventos?: boolean | LogAndenCountOutputTypeCountEventosArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * LogAndenCountOutputType without action
+   */
+  export type LogAndenCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogAndenCountOutputType
+     */
+    select?: LogAndenCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * LogAndenCountOutputType without action
+   */
+  export type LogAndenCountOutputTypeCountRutasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LogRutaWhereInput
+  }
+
+  /**
+   * LogAndenCountOutputType without action
+   */
+  export type LogAndenCountOutputTypeCountEventosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LogEventoRutaWhereInput
+  }
+
+
+  /**
+   * Count Type LogTransportistaCountOutputType
+   */
+
+  export type LogTransportistaCountOutputType = {
+    choferes: number
+    camiones: number
+    rutas: number
+  }
+
+  export type LogTransportistaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    choferes?: boolean | LogTransportistaCountOutputTypeCountChoferesArgs
+    camiones?: boolean | LogTransportistaCountOutputTypeCountCamionesArgs
+    rutas?: boolean | LogTransportistaCountOutputTypeCountRutasArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * LogTransportistaCountOutputType without action
+   */
+  export type LogTransportistaCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogTransportistaCountOutputType
+     */
+    select?: LogTransportistaCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * LogTransportistaCountOutputType without action
+   */
+  export type LogTransportistaCountOutputTypeCountChoferesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LogChoferWhereInput
+  }
+
+  /**
+   * LogTransportistaCountOutputType without action
+   */
+  export type LogTransportistaCountOutputTypeCountCamionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LogCamionWhereInput
+  }
+
+  /**
+   * LogTransportistaCountOutputType without action
+   */
+  export type LogTransportistaCountOutputTypeCountRutasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LogRutaWhereInput
+  }
+
+
+  /**
+   * Count Type LogChoferCountOutputType
+   */
+
+  export type LogChoferCountOutputType = {
+    rutas: number
+  }
+
+  export type LogChoferCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    rutas?: boolean | LogChoferCountOutputTypeCountRutasArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * LogChoferCountOutputType without action
+   */
+  export type LogChoferCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogChoferCountOutputType
+     */
+    select?: LogChoferCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * LogChoferCountOutputType without action
+   */
+  export type LogChoferCountOutputTypeCountRutasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LogRutaWhereInput
+  }
+
+
+  /**
+   * Count Type LogCamionCountOutputType
+   */
+
+  export type LogCamionCountOutputType = {
+    rutas: number
+  }
+
+  export type LogCamionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    rutas?: boolean | LogCamionCountOutputTypeCountRutasArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * LogCamionCountOutputType without action
+   */
+  export type LogCamionCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogCamionCountOutputType
+     */
+    select?: LogCamionCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * LogCamionCountOutputType without action
+   */
+  export type LogCamionCountOutputTypeCountRutasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LogRutaWhereInput
+  }
+
+
+  /**
+   * Count Type LogClienteCountOutputType
+   */
+
+  export type LogClienteCountOutputType = {
+    rutas: number
+  }
+
+  export type LogClienteCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    rutas?: boolean | LogClienteCountOutputTypeCountRutasArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * LogClienteCountOutputType without action
+   */
+  export type LogClienteCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogClienteCountOutputType
+     */
+    select?: LogClienteCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * LogClienteCountOutputType without action
+   */
+  export type LogClienteCountOutputTypeCountRutasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LogRutaWhereInput
+  }
+
+
+  /**
+   * Count Type LogRutaCountOutputType
+   */
+
+  export type LogRutaCountOutputType = {
+    eventos: number
+    integracionLogs: number
+  }
+
+  export type LogRutaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    eventos?: boolean | LogRutaCountOutputTypeCountEventosArgs
+    integracionLogs?: boolean | LogRutaCountOutputTypeCountIntegracionLogsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * LogRutaCountOutputType without action
+   */
+  export type LogRutaCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogRutaCountOutputType
+     */
+    select?: LogRutaCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * LogRutaCountOutputType without action
+   */
+  export type LogRutaCountOutputTypeCountEventosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LogEventoRutaWhereInput
+  }
+
+  /**
+   * LogRutaCountOutputType without action
+   */
+  export type LogRutaCountOutputTypeCountIntegracionLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LogIntegracionLogWhereInput
+  }
+
+
+  /**
+   * Count Type LogIntegracionConfigCountOutputType
+   */
+
+  export type LogIntegracionConfigCountOutputType = {
+    logs: number
+  }
+
+  export type LogIntegracionConfigCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    logs?: boolean | LogIntegracionConfigCountOutputTypeCountLogsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * LogIntegracionConfigCountOutputType without action
+   */
+  export type LogIntegracionConfigCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogIntegracionConfigCountOutputType
+     */
+    select?: LogIntegracionConfigCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * LogIntegracionConfigCountOutputType without action
+   */
+  export type LogIntegracionConfigCountOutputTypeCountLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LogIntegracionLogWhereInput
   }
 
 
@@ -125675,6 +127018,12625 @@ export namespace Prisma {
 
 
   /**
+   * Model LogBodega
+   */
+
+  export type AggregateLogBodega = {
+    _count: LogBodegaCountAggregateOutputType | null
+    _avg: LogBodegaAvgAggregateOutputType | null
+    _sum: LogBodegaSumAggregateOutputType | null
+    _min: LogBodegaMinAggregateOutputType | null
+    _max: LogBodegaMaxAggregateOutputType | null
+  }
+
+  export type LogBodegaAvgAggregateOutputType = {
+    orden: number | null
+  }
+
+  export type LogBodegaSumAggregateOutputType = {
+    orden: number | null
+  }
+
+  export type LogBodegaMinAggregateOutputType = {
+    id: string | null
+    codigo: string | null
+    nombre: string | null
+    sucursalId: string | null
+    direccion: string | null
+    activa: boolean | null
+    orden: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LogBodegaMaxAggregateOutputType = {
+    id: string | null
+    codigo: string | null
+    nombre: string | null
+    sucursalId: string | null
+    direccion: string | null
+    activa: boolean | null
+    orden: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LogBodegaCountAggregateOutputType = {
+    id: number
+    codigo: number
+    nombre: number
+    sucursalId: number
+    direccion: number
+    activa: number
+    orden: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type LogBodegaAvgAggregateInputType = {
+    orden?: true
+  }
+
+  export type LogBodegaSumAggregateInputType = {
+    orden?: true
+  }
+
+  export type LogBodegaMinAggregateInputType = {
+    id?: true
+    codigo?: true
+    nombre?: true
+    sucursalId?: true
+    direccion?: true
+    activa?: true
+    orden?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LogBodegaMaxAggregateInputType = {
+    id?: true
+    codigo?: true
+    nombre?: true
+    sucursalId?: true
+    direccion?: true
+    activa?: true
+    orden?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LogBodegaCountAggregateInputType = {
+    id?: true
+    codigo?: true
+    nombre?: true
+    sucursalId?: true
+    direccion?: true
+    activa?: true
+    orden?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type LogBodegaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LogBodega to aggregate.
+     */
+    where?: LogBodegaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogBodegas to fetch.
+     */
+    orderBy?: LogBodegaOrderByWithRelationInput | LogBodegaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LogBodegaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogBodegas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogBodegas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned LogBodegas
+    **/
+    _count?: true | LogBodegaCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: LogBodegaAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: LogBodegaSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LogBodegaMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LogBodegaMaxAggregateInputType
+  }
+
+  export type GetLogBodegaAggregateType<T extends LogBodegaAggregateArgs> = {
+        [P in keyof T & keyof AggregateLogBodega]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLogBodega[P]>
+      : GetScalarType<T[P], AggregateLogBodega[P]>
+  }
+
+
+
+
+  export type LogBodegaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LogBodegaWhereInput
+    orderBy?: LogBodegaOrderByWithAggregationInput | LogBodegaOrderByWithAggregationInput[]
+    by: LogBodegaScalarFieldEnum[] | LogBodegaScalarFieldEnum
+    having?: LogBodegaScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LogBodegaCountAggregateInputType | true
+    _avg?: LogBodegaAvgAggregateInputType
+    _sum?: LogBodegaSumAggregateInputType
+    _min?: LogBodegaMinAggregateInputType
+    _max?: LogBodegaMaxAggregateInputType
+  }
+
+  export type LogBodegaGroupByOutputType = {
+    id: string
+    codigo: string
+    nombre: string
+    sucursalId: string | null
+    direccion: string | null
+    activa: boolean
+    orden: number
+    createdAt: Date
+    updatedAt: Date
+    _count: LogBodegaCountAggregateOutputType | null
+    _avg: LogBodegaAvgAggregateOutputType | null
+    _sum: LogBodegaSumAggregateOutputType | null
+    _min: LogBodegaMinAggregateOutputType | null
+    _max: LogBodegaMaxAggregateOutputType | null
+  }
+
+  type GetLogBodegaGroupByPayload<T extends LogBodegaGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LogBodegaGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LogBodegaGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LogBodegaGroupByOutputType[P]>
+            : GetScalarType<T[P], LogBodegaGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LogBodegaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    codigo?: boolean
+    nombre?: boolean
+    sucursalId?: boolean
+    direccion?: boolean
+    activa?: boolean
+    orden?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    andenes?: boolean | LogBodega$andenesArgs<ExtArgs>
+    rutas?: boolean | LogBodega$rutasArgs<ExtArgs>
+    usuarios?: boolean | LogBodega$usuariosArgs<ExtArgs>
+    parametros?: boolean | LogBodega$parametrosArgs<ExtArgs>
+    _count?: boolean | LogBodegaCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["logBodega"]>
+
+  export type LogBodegaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    codigo?: boolean
+    nombre?: boolean
+    sucursalId?: boolean
+    direccion?: boolean
+    activa?: boolean
+    orden?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["logBodega"]>
+
+  export type LogBodegaSelectScalar = {
+    id?: boolean
+    codigo?: boolean
+    nombre?: boolean
+    sucursalId?: boolean
+    direccion?: boolean
+    activa?: boolean
+    orden?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type LogBodegaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    andenes?: boolean | LogBodega$andenesArgs<ExtArgs>
+    rutas?: boolean | LogBodega$rutasArgs<ExtArgs>
+    usuarios?: boolean | LogBodega$usuariosArgs<ExtArgs>
+    parametros?: boolean | LogBodega$parametrosArgs<ExtArgs>
+    _count?: boolean | LogBodegaCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type LogBodegaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $LogBodegaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "LogBodega"
+    objects: {
+      andenes: Prisma.$LogAndenPayload<ExtArgs>[]
+      rutas: Prisma.$LogRutaPayload<ExtArgs>[]
+      usuarios: Prisma.$LogUsuarioBodegaPayload<ExtArgs>[]
+      parametros: Prisma.$LogParametroPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      codigo: string
+      nombre: string
+      sucursalId: string | null
+      direccion: string | null
+      activa: boolean
+      orden: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["logBodega"]>
+    composites: {}
+  }
+
+  type LogBodegaGetPayload<S extends boolean | null | undefined | LogBodegaDefaultArgs> = $Result.GetResult<Prisma.$LogBodegaPayload, S>
+
+  type LogBodegaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<LogBodegaFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: LogBodegaCountAggregateInputType | true
+    }
+
+  export interface LogBodegaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['LogBodega'], meta: { name: 'LogBodega' } }
+    /**
+     * Find zero or one LogBodega that matches the filter.
+     * @param {LogBodegaFindUniqueArgs} args - Arguments to find a LogBodega
+     * @example
+     * // Get one LogBodega
+     * const logBodega = await prisma.logBodega.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends LogBodegaFindUniqueArgs>(args: SelectSubset<T, LogBodegaFindUniqueArgs<ExtArgs>>): Prisma__LogBodegaClient<$Result.GetResult<Prisma.$LogBodegaPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one LogBodega that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {LogBodegaFindUniqueOrThrowArgs} args - Arguments to find a LogBodega
+     * @example
+     * // Get one LogBodega
+     * const logBodega = await prisma.logBodega.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends LogBodegaFindUniqueOrThrowArgs>(args: SelectSubset<T, LogBodegaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LogBodegaClient<$Result.GetResult<Prisma.$LogBodegaPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first LogBodega that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogBodegaFindFirstArgs} args - Arguments to find a LogBodega
+     * @example
+     * // Get one LogBodega
+     * const logBodega = await prisma.logBodega.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends LogBodegaFindFirstArgs>(args?: SelectSubset<T, LogBodegaFindFirstArgs<ExtArgs>>): Prisma__LogBodegaClient<$Result.GetResult<Prisma.$LogBodegaPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first LogBodega that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogBodegaFindFirstOrThrowArgs} args - Arguments to find a LogBodega
+     * @example
+     * // Get one LogBodega
+     * const logBodega = await prisma.logBodega.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends LogBodegaFindFirstOrThrowArgs>(args?: SelectSubset<T, LogBodegaFindFirstOrThrowArgs<ExtArgs>>): Prisma__LogBodegaClient<$Result.GetResult<Prisma.$LogBodegaPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more LogBodegas that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogBodegaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all LogBodegas
+     * const logBodegas = await prisma.logBodega.findMany()
+     * 
+     * // Get first 10 LogBodegas
+     * const logBodegas = await prisma.logBodega.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const logBodegaWithIdOnly = await prisma.logBodega.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends LogBodegaFindManyArgs>(args?: SelectSubset<T, LogBodegaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogBodegaPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a LogBodega.
+     * @param {LogBodegaCreateArgs} args - Arguments to create a LogBodega.
+     * @example
+     * // Create one LogBodega
+     * const LogBodega = await prisma.logBodega.create({
+     *   data: {
+     *     // ... data to create a LogBodega
+     *   }
+     * })
+     * 
+     */
+    create<T extends LogBodegaCreateArgs>(args: SelectSubset<T, LogBodegaCreateArgs<ExtArgs>>): Prisma__LogBodegaClient<$Result.GetResult<Prisma.$LogBodegaPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many LogBodegas.
+     * @param {LogBodegaCreateManyArgs} args - Arguments to create many LogBodegas.
+     * @example
+     * // Create many LogBodegas
+     * const logBodega = await prisma.logBodega.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends LogBodegaCreateManyArgs>(args?: SelectSubset<T, LogBodegaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many LogBodegas and returns the data saved in the database.
+     * @param {LogBodegaCreateManyAndReturnArgs} args - Arguments to create many LogBodegas.
+     * @example
+     * // Create many LogBodegas
+     * const logBodega = await prisma.logBodega.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many LogBodegas and only return the `id`
+     * const logBodegaWithIdOnly = await prisma.logBodega.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends LogBodegaCreateManyAndReturnArgs>(args?: SelectSubset<T, LogBodegaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogBodegaPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a LogBodega.
+     * @param {LogBodegaDeleteArgs} args - Arguments to delete one LogBodega.
+     * @example
+     * // Delete one LogBodega
+     * const LogBodega = await prisma.logBodega.delete({
+     *   where: {
+     *     // ... filter to delete one LogBodega
+     *   }
+     * })
+     * 
+     */
+    delete<T extends LogBodegaDeleteArgs>(args: SelectSubset<T, LogBodegaDeleteArgs<ExtArgs>>): Prisma__LogBodegaClient<$Result.GetResult<Prisma.$LogBodegaPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one LogBodega.
+     * @param {LogBodegaUpdateArgs} args - Arguments to update one LogBodega.
+     * @example
+     * // Update one LogBodega
+     * const logBodega = await prisma.logBodega.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends LogBodegaUpdateArgs>(args: SelectSubset<T, LogBodegaUpdateArgs<ExtArgs>>): Prisma__LogBodegaClient<$Result.GetResult<Prisma.$LogBodegaPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more LogBodegas.
+     * @param {LogBodegaDeleteManyArgs} args - Arguments to filter LogBodegas to delete.
+     * @example
+     * // Delete a few LogBodegas
+     * const { count } = await prisma.logBodega.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends LogBodegaDeleteManyArgs>(args?: SelectSubset<T, LogBodegaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LogBodegas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogBodegaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many LogBodegas
+     * const logBodega = await prisma.logBodega.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends LogBodegaUpdateManyArgs>(args: SelectSubset<T, LogBodegaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one LogBodega.
+     * @param {LogBodegaUpsertArgs} args - Arguments to update or create a LogBodega.
+     * @example
+     * // Update or create a LogBodega
+     * const logBodega = await prisma.logBodega.upsert({
+     *   create: {
+     *     // ... data to create a LogBodega
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the LogBodega we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LogBodegaUpsertArgs>(args: SelectSubset<T, LogBodegaUpsertArgs<ExtArgs>>): Prisma__LogBodegaClient<$Result.GetResult<Prisma.$LogBodegaPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of LogBodegas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogBodegaCountArgs} args - Arguments to filter LogBodegas to count.
+     * @example
+     * // Count the number of LogBodegas
+     * const count = await prisma.logBodega.count({
+     *   where: {
+     *     // ... the filter for the LogBodegas we want to count
+     *   }
+     * })
+    **/
+    count<T extends LogBodegaCountArgs>(
+      args?: Subset<T, LogBodegaCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LogBodegaCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a LogBodega.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogBodegaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LogBodegaAggregateArgs>(args: Subset<T, LogBodegaAggregateArgs>): Prisma.PrismaPromise<GetLogBodegaAggregateType<T>>
+
+    /**
+     * Group by LogBodega.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogBodegaGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LogBodegaGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LogBodegaGroupByArgs['orderBy'] }
+        : { orderBy?: LogBodegaGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LogBodegaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLogBodegaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the LogBodega model
+   */
+  readonly fields: LogBodegaFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for LogBodega.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LogBodegaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    andenes<T extends LogBodega$andenesArgs<ExtArgs> = {}>(args?: Subset<T, LogBodega$andenesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogAndenPayload<ExtArgs>, T, "findMany"> | Null>
+    rutas<T extends LogBodega$rutasArgs<ExtArgs> = {}>(args?: Subset<T, LogBodega$rutasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogRutaPayload<ExtArgs>, T, "findMany"> | Null>
+    usuarios<T extends LogBodega$usuariosArgs<ExtArgs> = {}>(args?: Subset<T, LogBodega$usuariosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogUsuarioBodegaPayload<ExtArgs>, T, "findMany"> | Null>
+    parametros<T extends LogBodega$parametrosArgs<ExtArgs> = {}>(args?: Subset<T, LogBodega$parametrosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogParametroPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the LogBodega model
+   */ 
+  interface LogBodegaFieldRefs {
+    readonly id: FieldRef<"LogBodega", 'String'>
+    readonly codigo: FieldRef<"LogBodega", 'String'>
+    readonly nombre: FieldRef<"LogBodega", 'String'>
+    readonly sucursalId: FieldRef<"LogBodega", 'String'>
+    readonly direccion: FieldRef<"LogBodega", 'String'>
+    readonly activa: FieldRef<"LogBodega", 'Boolean'>
+    readonly orden: FieldRef<"LogBodega", 'Int'>
+    readonly createdAt: FieldRef<"LogBodega", 'DateTime'>
+    readonly updatedAt: FieldRef<"LogBodega", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * LogBodega findUnique
+   */
+  export type LogBodegaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogBodega
+     */
+    select?: LogBodegaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogBodegaInclude<ExtArgs> | null
+    /**
+     * Filter, which LogBodega to fetch.
+     */
+    where: LogBodegaWhereUniqueInput
+  }
+
+  /**
+   * LogBodega findUniqueOrThrow
+   */
+  export type LogBodegaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogBodega
+     */
+    select?: LogBodegaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogBodegaInclude<ExtArgs> | null
+    /**
+     * Filter, which LogBodega to fetch.
+     */
+    where: LogBodegaWhereUniqueInput
+  }
+
+  /**
+   * LogBodega findFirst
+   */
+  export type LogBodegaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogBodega
+     */
+    select?: LogBodegaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogBodegaInclude<ExtArgs> | null
+    /**
+     * Filter, which LogBodega to fetch.
+     */
+    where?: LogBodegaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogBodegas to fetch.
+     */
+    orderBy?: LogBodegaOrderByWithRelationInput | LogBodegaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LogBodegas.
+     */
+    cursor?: LogBodegaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogBodegas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogBodegas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LogBodegas.
+     */
+    distinct?: LogBodegaScalarFieldEnum | LogBodegaScalarFieldEnum[]
+  }
+
+  /**
+   * LogBodega findFirstOrThrow
+   */
+  export type LogBodegaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogBodega
+     */
+    select?: LogBodegaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogBodegaInclude<ExtArgs> | null
+    /**
+     * Filter, which LogBodega to fetch.
+     */
+    where?: LogBodegaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogBodegas to fetch.
+     */
+    orderBy?: LogBodegaOrderByWithRelationInput | LogBodegaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LogBodegas.
+     */
+    cursor?: LogBodegaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogBodegas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogBodegas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LogBodegas.
+     */
+    distinct?: LogBodegaScalarFieldEnum | LogBodegaScalarFieldEnum[]
+  }
+
+  /**
+   * LogBodega findMany
+   */
+  export type LogBodegaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogBodega
+     */
+    select?: LogBodegaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogBodegaInclude<ExtArgs> | null
+    /**
+     * Filter, which LogBodegas to fetch.
+     */
+    where?: LogBodegaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogBodegas to fetch.
+     */
+    orderBy?: LogBodegaOrderByWithRelationInput | LogBodegaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing LogBodegas.
+     */
+    cursor?: LogBodegaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogBodegas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogBodegas.
+     */
+    skip?: number
+    distinct?: LogBodegaScalarFieldEnum | LogBodegaScalarFieldEnum[]
+  }
+
+  /**
+   * LogBodega create
+   */
+  export type LogBodegaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogBodega
+     */
+    select?: LogBodegaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogBodegaInclude<ExtArgs> | null
+    /**
+     * The data needed to create a LogBodega.
+     */
+    data: XOR<LogBodegaCreateInput, LogBodegaUncheckedCreateInput>
+  }
+
+  /**
+   * LogBodega createMany
+   */
+  export type LogBodegaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many LogBodegas.
+     */
+    data: LogBodegaCreateManyInput | LogBodegaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * LogBodega createManyAndReturn
+   */
+  export type LogBodegaCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogBodega
+     */
+    select?: LogBodegaSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many LogBodegas.
+     */
+    data: LogBodegaCreateManyInput | LogBodegaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * LogBodega update
+   */
+  export type LogBodegaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogBodega
+     */
+    select?: LogBodegaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogBodegaInclude<ExtArgs> | null
+    /**
+     * The data needed to update a LogBodega.
+     */
+    data: XOR<LogBodegaUpdateInput, LogBodegaUncheckedUpdateInput>
+    /**
+     * Choose, which LogBodega to update.
+     */
+    where: LogBodegaWhereUniqueInput
+  }
+
+  /**
+   * LogBodega updateMany
+   */
+  export type LogBodegaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update LogBodegas.
+     */
+    data: XOR<LogBodegaUpdateManyMutationInput, LogBodegaUncheckedUpdateManyInput>
+    /**
+     * Filter which LogBodegas to update
+     */
+    where?: LogBodegaWhereInput
+  }
+
+  /**
+   * LogBodega upsert
+   */
+  export type LogBodegaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogBodega
+     */
+    select?: LogBodegaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogBodegaInclude<ExtArgs> | null
+    /**
+     * The filter to search for the LogBodega to update in case it exists.
+     */
+    where: LogBodegaWhereUniqueInput
+    /**
+     * In case the LogBodega found by the `where` argument doesn't exist, create a new LogBodega with this data.
+     */
+    create: XOR<LogBodegaCreateInput, LogBodegaUncheckedCreateInput>
+    /**
+     * In case the LogBodega was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LogBodegaUpdateInput, LogBodegaUncheckedUpdateInput>
+  }
+
+  /**
+   * LogBodega delete
+   */
+  export type LogBodegaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogBodega
+     */
+    select?: LogBodegaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogBodegaInclude<ExtArgs> | null
+    /**
+     * Filter which LogBodega to delete.
+     */
+    where: LogBodegaWhereUniqueInput
+  }
+
+  /**
+   * LogBodega deleteMany
+   */
+  export type LogBodegaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LogBodegas to delete
+     */
+    where?: LogBodegaWhereInput
+  }
+
+  /**
+   * LogBodega.andenes
+   */
+  export type LogBodega$andenesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogAnden
+     */
+    select?: LogAndenSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogAndenInclude<ExtArgs> | null
+    where?: LogAndenWhereInput
+    orderBy?: LogAndenOrderByWithRelationInput | LogAndenOrderByWithRelationInput[]
+    cursor?: LogAndenWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LogAndenScalarFieldEnum | LogAndenScalarFieldEnum[]
+  }
+
+  /**
+   * LogBodega.rutas
+   */
+  export type LogBodega$rutasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogRuta
+     */
+    select?: LogRutaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogRutaInclude<ExtArgs> | null
+    where?: LogRutaWhereInput
+    orderBy?: LogRutaOrderByWithRelationInput | LogRutaOrderByWithRelationInput[]
+    cursor?: LogRutaWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LogRutaScalarFieldEnum | LogRutaScalarFieldEnum[]
+  }
+
+  /**
+   * LogBodega.usuarios
+   */
+  export type LogBodega$usuariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogUsuarioBodega
+     */
+    select?: LogUsuarioBodegaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogUsuarioBodegaInclude<ExtArgs> | null
+    where?: LogUsuarioBodegaWhereInput
+    orderBy?: LogUsuarioBodegaOrderByWithRelationInput | LogUsuarioBodegaOrderByWithRelationInput[]
+    cursor?: LogUsuarioBodegaWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LogUsuarioBodegaScalarFieldEnum | LogUsuarioBodegaScalarFieldEnum[]
+  }
+
+  /**
+   * LogBodega.parametros
+   */
+  export type LogBodega$parametrosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogParametro
+     */
+    select?: LogParametroSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogParametroInclude<ExtArgs> | null
+    where?: LogParametroWhereInput
+    orderBy?: LogParametroOrderByWithRelationInput | LogParametroOrderByWithRelationInput[]
+    cursor?: LogParametroWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LogParametroScalarFieldEnum | LogParametroScalarFieldEnum[]
+  }
+
+  /**
+   * LogBodega without action
+   */
+  export type LogBodegaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogBodega
+     */
+    select?: LogBodegaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogBodegaInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model LogUsuarioBodega
+   */
+
+  export type AggregateLogUsuarioBodega = {
+    _count: LogUsuarioBodegaCountAggregateOutputType | null
+    _min: LogUsuarioBodegaMinAggregateOutputType | null
+    _max: LogUsuarioBodegaMaxAggregateOutputType | null
+  }
+
+  export type LogUsuarioBodegaMinAggregateOutputType = {
+    id: string | null
+    usuarioId: string | null
+    bodegaId: string | null
+    createdAt: Date | null
+  }
+
+  export type LogUsuarioBodegaMaxAggregateOutputType = {
+    id: string | null
+    usuarioId: string | null
+    bodegaId: string | null
+    createdAt: Date | null
+  }
+
+  export type LogUsuarioBodegaCountAggregateOutputType = {
+    id: number
+    usuarioId: number
+    bodegaId: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type LogUsuarioBodegaMinAggregateInputType = {
+    id?: true
+    usuarioId?: true
+    bodegaId?: true
+    createdAt?: true
+  }
+
+  export type LogUsuarioBodegaMaxAggregateInputType = {
+    id?: true
+    usuarioId?: true
+    bodegaId?: true
+    createdAt?: true
+  }
+
+  export type LogUsuarioBodegaCountAggregateInputType = {
+    id?: true
+    usuarioId?: true
+    bodegaId?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type LogUsuarioBodegaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LogUsuarioBodega to aggregate.
+     */
+    where?: LogUsuarioBodegaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogUsuarioBodegas to fetch.
+     */
+    orderBy?: LogUsuarioBodegaOrderByWithRelationInput | LogUsuarioBodegaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LogUsuarioBodegaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogUsuarioBodegas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogUsuarioBodegas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned LogUsuarioBodegas
+    **/
+    _count?: true | LogUsuarioBodegaCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LogUsuarioBodegaMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LogUsuarioBodegaMaxAggregateInputType
+  }
+
+  export type GetLogUsuarioBodegaAggregateType<T extends LogUsuarioBodegaAggregateArgs> = {
+        [P in keyof T & keyof AggregateLogUsuarioBodega]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLogUsuarioBodega[P]>
+      : GetScalarType<T[P], AggregateLogUsuarioBodega[P]>
+  }
+
+
+
+
+  export type LogUsuarioBodegaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LogUsuarioBodegaWhereInput
+    orderBy?: LogUsuarioBodegaOrderByWithAggregationInput | LogUsuarioBodegaOrderByWithAggregationInput[]
+    by: LogUsuarioBodegaScalarFieldEnum[] | LogUsuarioBodegaScalarFieldEnum
+    having?: LogUsuarioBodegaScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LogUsuarioBodegaCountAggregateInputType | true
+    _min?: LogUsuarioBodegaMinAggregateInputType
+    _max?: LogUsuarioBodegaMaxAggregateInputType
+  }
+
+  export type LogUsuarioBodegaGroupByOutputType = {
+    id: string
+    usuarioId: string
+    bodegaId: string
+    createdAt: Date
+    _count: LogUsuarioBodegaCountAggregateOutputType | null
+    _min: LogUsuarioBodegaMinAggregateOutputType | null
+    _max: LogUsuarioBodegaMaxAggregateOutputType | null
+  }
+
+  type GetLogUsuarioBodegaGroupByPayload<T extends LogUsuarioBodegaGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LogUsuarioBodegaGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LogUsuarioBodegaGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LogUsuarioBodegaGroupByOutputType[P]>
+            : GetScalarType<T[P], LogUsuarioBodegaGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LogUsuarioBodegaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    usuarioId?: boolean
+    bodegaId?: boolean
+    createdAt?: boolean
+    bodega?: boolean | LogBodegaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["logUsuarioBodega"]>
+
+  export type LogUsuarioBodegaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    usuarioId?: boolean
+    bodegaId?: boolean
+    createdAt?: boolean
+    bodega?: boolean | LogBodegaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["logUsuarioBodega"]>
+
+  export type LogUsuarioBodegaSelectScalar = {
+    id?: boolean
+    usuarioId?: boolean
+    bodegaId?: boolean
+    createdAt?: boolean
+  }
+
+  export type LogUsuarioBodegaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    bodega?: boolean | LogBodegaDefaultArgs<ExtArgs>
+  }
+  export type LogUsuarioBodegaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    bodega?: boolean | LogBodegaDefaultArgs<ExtArgs>
+  }
+
+  export type $LogUsuarioBodegaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "LogUsuarioBodega"
+    objects: {
+      bodega: Prisma.$LogBodegaPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      usuarioId: string
+      bodegaId: string
+      createdAt: Date
+    }, ExtArgs["result"]["logUsuarioBodega"]>
+    composites: {}
+  }
+
+  type LogUsuarioBodegaGetPayload<S extends boolean | null | undefined | LogUsuarioBodegaDefaultArgs> = $Result.GetResult<Prisma.$LogUsuarioBodegaPayload, S>
+
+  type LogUsuarioBodegaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<LogUsuarioBodegaFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: LogUsuarioBodegaCountAggregateInputType | true
+    }
+
+  export interface LogUsuarioBodegaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['LogUsuarioBodega'], meta: { name: 'LogUsuarioBodega' } }
+    /**
+     * Find zero or one LogUsuarioBodega that matches the filter.
+     * @param {LogUsuarioBodegaFindUniqueArgs} args - Arguments to find a LogUsuarioBodega
+     * @example
+     * // Get one LogUsuarioBodega
+     * const logUsuarioBodega = await prisma.logUsuarioBodega.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends LogUsuarioBodegaFindUniqueArgs>(args: SelectSubset<T, LogUsuarioBodegaFindUniqueArgs<ExtArgs>>): Prisma__LogUsuarioBodegaClient<$Result.GetResult<Prisma.$LogUsuarioBodegaPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one LogUsuarioBodega that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {LogUsuarioBodegaFindUniqueOrThrowArgs} args - Arguments to find a LogUsuarioBodega
+     * @example
+     * // Get one LogUsuarioBodega
+     * const logUsuarioBodega = await prisma.logUsuarioBodega.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends LogUsuarioBodegaFindUniqueOrThrowArgs>(args: SelectSubset<T, LogUsuarioBodegaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LogUsuarioBodegaClient<$Result.GetResult<Prisma.$LogUsuarioBodegaPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first LogUsuarioBodega that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogUsuarioBodegaFindFirstArgs} args - Arguments to find a LogUsuarioBodega
+     * @example
+     * // Get one LogUsuarioBodega
+     * const logUsuarioBodega = await prisma.logUsuarioBodega.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends LogUsuarioBodegaFindFirstArgs>(args?: SelectSubset<T, LogUsuarioBodegaFindFirstArgs<ExtArgs>>): Prisma__LogUsuarioBodegaClient<$Result.GetResult<Prisma.$LogUsuarioBodegaPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first LogUsuarioBodega that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogUsuarioBodegaFindFirstOrThrowArgs} args - Arguments to find a LogUsuarioBodega
+     * @example
+     * // Get one LogUsuarioBodega
+     * const logUsuarioBodega = await prisma.logUsuarioBodega.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends LogUsuarioBodegaFindFirstOrThrowArgs>(args?: SelectSubset<T, LogUsuarioBodegaFindFirstOrThrowArgs<ExtArgs>>): Prisma__LogUsuarioBodegaClient<$Result.GetResult<Prisma.$LogUsuarioBodegaPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more LogUsuarioBodegas that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogUsuarioBodegaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all LogUsuarioBodegas
+     * const logUsuarioBodegas = await prisma.logUsuarioBodega.findMany()
+     * 
+     * // Get first 10 LogUsuarioBodegas
+     * const logUsuarioBodegas = await prisma.logUsuarioBodega.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const logUsuarioBodegaWithIdOnly = await prisma.logUsuarioBodega.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends LogUsuarioBodegaFindManyArgs>(args?: SelectSubset<T, LogUsuarioBodegaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogUsuarioBodegaPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a LogUsuarioBodega.
+     * @param {LogUsuarioBodegaCreateArgs} args - Arguments to create a LogUsuarioBodega.
+     * @example
+     * // Create one LogUsuarioBodega
+     * const LogUsuarioBodega = await prisma.logUsuarioBodega.create({
+     *   data: {
+     *     // ... data to create a LogUsuarioBodega
+     *   }
+     * })
+     * 
+     */
+    create<T extends LogUsuarioBodegaCreateArgs>(args: SelectSubset<T, LogUsuarioBodegaCreateArgs<ExtArgs>>): Prisma__LogUsuarioBodegaClient<$Result.GetResult<Prisma.$LogUsuarioBodegaPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many LogUsuarioBodegas.
+     * @param {LogUsuarioBodegaCreateManyArgs} args - Arguments to create many LogUsuarioBodegas.
+     * @example
+     * // Create many LogUsuarioBodegas
+     * const logUsuarioBodega = await prisma.logUsuarioBodega.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends LogUsuarioBodegaCreateManyArgs>(args?: SelectSubset<T, LogUsuarioBodegaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many LogUsuarioBodegas and returns the data saved in the database.
+     * @param {LogUsuarioBodegaCreateManyAndReturnArgs} args - Arguments to create many LogUsuarioBodegas.
+     * @example
+     * // Create many LogUsuarioBodegas
+     * const logUsuarioBodega = await prisma.logUsuarioBodega.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many LogUsuarioBodegas and only return the `id`
+     * const logUsuarioBodegaWithIdOnly = await prisma.logUsuarioBodega.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends LogUsuarioBodegaCreateManyAndReturnArgs>(args?: SelectSubset<T, LogUsuarioBodegaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogUsuarioBodegaPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a LogUsuarioBodega.
+     * @param {LogUsuarioBodegaDeleteArgs} args - Arguments to delete one LogUsuarioBodega.
+     * @example
+     * // Delete one LogUsuarioBodega
+     * const LogUsuarioBodega = await prisma.logUsuarioBodega.delete({
+     *   where: {
+     *     // ... filter to delete one LogUsuarioBodega
+     *   }
+     * })
+     * 
+     */
+    delete<T extends LogUsuarioBodegaDeleteArgs>(args: SelectSubset<T, LogUsuarioBodegaDeleteArgs<ExtArgs>>): Prisma__LogUsuarioBodegaClient<$Result.GetResult<Prisma.$LogUsuarioBodegaPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one LogUsuarioBodega.
+     * @param {LogUsuarioBodegaUpdateArgs} args - Arguments to update one LogUsuarioBodega.
+     * @example
+     * // Update one LogUsuarioBodega
+     * const logUsuarioBodega = await prisma.logUsuarioBodega.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends LogUsuarioBodegaUpdateArgs>(args: SelectSubset<T, LogUsuarioBodegaUpdateArgs<ExtArgs>>): Prisma__LogUsuarioBodegaClient<$Result.GetResult<Prisma.$LogUsuarioBodegaPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more LogUsuarioBodegas.
+     * @param {LogUsuarioBodegaDeleteManyArgs} args - Arguments to filter LogUsuarioBodegas to delete.
+     * @example
+     * // Delete a few LogUsuarioBodegas
+     * const { count } = await prisma.logUsuarioBodega.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends LogUsuarioBodegaDeleteManyArgs>(args?: SelectSubset<T, LogUsuarioBodegaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LogUsuarioBodegas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogUsuarioBodegaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many LogUsuarioBodegas
+     * const logUsuarioBodega = await prisma.logUsuarioBodega.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends LogUsuarioBodegaUpdateManyArgs>(args: SelectSubset<T, LogUsuarioBodegaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one LogUsuarioBodega.
+     * @param {LogUsuarioBodegaUpsertArgs} args - Arguments to update or create a LogUsuarioBodega.
+     * @example
+     * // Update or create a LogUsuarioBodega
+     * const logUsuarioBodega = await prisma.logUsuarioBodega.upsert({
+     *   create: {
+     *     // ... data to create a LogUsuarioBodega
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the LogUsuarioBodega we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LogUsuarioBodegaUpsertArgs>(args: SelectSubset<T, LogUsuarioBodegaUpsertArgs<ExtArgs>>): Prisma__LogUsuarioBodegaClient<$Result.GetResult<Prisma.$LogUsuarioBodegaPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of LogUsuarioBodegas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogUsuarioBodegaCountArgs} args - Arguments to filter LogUsuarioBodegas to count.
+     * @example
+     * // Count the number of LogUsuarioBodegas
+     * const count = await prisma.logUsuarioBodega.count({
+     *   where: {
+     *     // ... the filter for the LogUsuarioBodegas we want to count
+     *   }
+     * })
+    **/
+    count<T extends LogUsuarioBodegaCountArgs>(
+      args?: Subset<T, LogUsuarioBodegaCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LogUsuarioBodegaCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a LogUsuarioBodega.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogUsuarioBodegaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LogUsuarioBodegaAggregateArgs>(args: Subset<T, LogUsuarioBodegaAggregateArgs>): Prisma.PrismaPromise<GetLogUsuarioBodegaAggregateType<T>>
+
+    /**
+     * Group by LogUsuarioBodega.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogUsuarioBodegaGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LogUsuarioBodegaGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LogUsuarioBodegaGroupByArgs['orderBy'] }
+        : { orderBy?: LogUsuarioBodegaGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LogUsuarioBodegaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLogUsuarioBodegaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the LogUsuarioBodega model
+   */
+  readonly fields: LogUsuarioBodegaFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for LogUsuarioBodega.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LogUsuarioBodegaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    bodega<T extends LogBodegaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LogBodegaDefaultArgs<ExtArgs>>): Prisma__LogBodegaClient<$Result.GetResult<Prisma.$LogBodegaPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the LogUsuarioBodega model
+   */ 
+  interface LogUsuarioBodegaFieldRefs {
+    readonly id: FieldRef<"LogUsuarioBodega", 'String'>
+    readonly usuarioId: FieldRef<"LogUsuarioBodega", 'String'>
+    readonly bodegaId: FieldRef<"LogUsuarioBodega", 'String'>
+    readonly createdAt: FieldRef<"LogUsuarioBodega", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * LogUsuarioBodega findUnique
+   */
+  export type LogUsuarioBodegaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogUsuarioBodega
+     */
+    select?: LogUsuarioBodegaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogUsuarioBodegaInclude<ExtArgs> | null
+    /**
+     * Filter, which LogUsuarioBodega to fetch.
+     */
+    where: LogUsuarioBodegaWhereUniqueInput
+  }
+
+  /**
+   * LogUsuarioBodega findUniqueOrThrow
+   */
+  export type LogUsuarioBodegaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogUsuarioBodega
+     */
+    select?: LogUsuarioBodegaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogUsuarioBodegaInclude<ExtArgs> | null
+    /**
+     * Filter, which LogUsuarioBodega to fetch.
+     */
+    where: LogUsuarioBodegaWhereUniqueInput
+  }
+
+  /**
+   * LogUsuarioBodega findFirst
+   */
+  export type LogUsuarioBodegaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogUsuarioBodega
+     */
+    select?: LogUsuarioBodegaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogUsuarioBodegaInclude<ExtArgs> | null
+    /**
+     * Filter, which LogUsuarioBodega to fetch.
+     */
+    where?: LogUsuarioBodegaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogUsuarioBodegas to fetch.
+     */
+    orderBy?: LogUsuarioBodegaOrderByWithRelationInput | LogUsuarioBodegaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LogUsuarioBodegas.
+     */
+    cursor?: LogUsuarioBodegaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogUsuarioBodegas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogUsuarioBodegas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LogUsuarioBodegas.
+     */
+    distinct?: LogUsuarioBodegaScalarFieldEnum | LogUsuarioBodegaScalarFieldEnum[]
+  }
+
+  /**
+   * LogUsuarioBodega findFirstOrThrow
+   */
+  export type LogUsuarioBodegaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogUsuarioBodega
+     */
+    select?: LogUsuarioBodegaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogUsuarioBodegaInclude<ExtArgs> | null
+    /**
+     * Filter, which LogUsuarioBodega to fetch.
+     */
+    where?: LogUsuarioBodegaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogUsuarioBodegas to fetch.
+     */
+    orderBy?: LogUsuarioBodegaOrderByWithRelationInput | LogUsuarioBodegaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LogUsuarioBodegas.
+     */
+    cursor?: LogUsuarioBodegaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogUsuarioBodegas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogUsuarioBodegas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LogUsuarioBodegas.
+     */
+    distinct?: LogUsuarioBodegaScalarFieldEnum | LogUsuarioBodegaScalarFieldEnum[]
+  }
+
+  /**
+   * LogUsuarioBodega findMany
+   */
+  export type LogUsuarioBodegaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogUsuarioBodega
+     */
+    select?: LogUsuarioBodegaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogUsuarioBodegaInclude<ExtArgs> | null
+    /**
+     * Filter, which LogUsuarioBodegas to fetch.
+     */
+    where?: LogUsuarioBodegaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogUsuarioBodegas to fetch.
+     */
+    orderBy?: LogUsuarioBodegaOrderByWithRelationInput | LogUsuarioBodegaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing LogUsuarioBodegas.
+     */
+    cursor?: LogUsuarioBodegaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogUsuarioBodegas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogUsuarioBodegas.
+     */
+    skip?: number
+    distinct?: LogUsuarioBodegaScalarFieldEnum | LogUsuarioBodegaScalarFieldEnum[]
+  }
+
+  /**
+   * LogUsuarioBodega create
+   */
+  export type LogUsuarioBodegaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogUsuarioBodega
+     */
+    select?: LogUsuarioBodegaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogUsuarioBodegaInclude<ExtArgs> | null
+    /**
+     * The data needed to create a LogUsuarioBodega.
+     */
+    data: XOR<LogUsuarioBodegaCreateInput, LogUsuarioBodegaUncheckedCreateInput>
+  }
+
+  /**
+   * LogUsuarioBodega createMany
+   */
+  export type LogUsuarioBodegaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many LogUsuarioBodegas.
+     */
+    data: LogUsuarioBodegaCreateManyInput | LogUsuarioBodegaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * LogUsuarioBodega createManyAndReturn
+   */
+  export type LogUsuarioBodegaCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogUsuarioBodega
+     */
+    select?: LogUsuarioBodegaSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many LogUsuarioBodegas.
+     */
+    data: LogUsuarioBodegaCreateManyInput | LogUsuarioBodegaCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogUsuarioBodegaIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * LogUsuarioBodega update
+   */
+  export type LogUsuarioBodegaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogUsuarioBodega
+     */
+    select?: LogUsuarioBodegaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogUsuarioBodegaInclude<ExtArgs> | null
+    /**
+     * The data needed to update a LogUsuarioBodega.
+     */
+    data: XOR<LogUsuarioBodegaUpdateInput, LogUsuarioBodegaUncheckedUpdateInput>
+    /**
+     * Choose, which LogUsuarioBodega to update.
+     */
+    where: LogUsuarioBodegaWhereUniqueInput
+  }
+
+  /**
+   * LogUsuarioBodega updateMany
+   */
+  export type LogUsuarioBodegaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update LogUsuarioBodegas.
+     */
+    data: XOR<LogUsuarioBodegaUpdateManyMutationInput, LogUsuarioBodegaUncheckedUpdateManyInput>
+    /**
+     * Filter which LogUsuarioBodegas to update
+     */
+    where?: LogUsuarioBodegaWhereInput
+  }
+
+  /**
+   * LogUsuarioBodega upsert
+   */
+  export type LogUsuarioBodegaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogUsuarioBodega
+     */
+    select?: LogUsuarioBodegaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogUsuarioBodegaInclude<ExtArgs> | null
+    /**
+     * The filter to search for the LogUsuarioBodega to update in case it exists.
+     */
+    where: LogUsuarioBodegaWhereUniqueInput
+    /**
+     * In case the LogUsuarioBodega found by the `where` argument doesn't exist, create a new LogUsuarioBodega with this data.
+     */
+    create: XOR<LogUsuarioBodegaCreateInput, LogUsuarioBodegaUncheckedCreateInput>
+    /**
+     * In case the LogUsuarioBodega was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LogUsuarioBodegaUpdateInput, LogUsuarioBodegaUncheckedUpdateInput>
+  }
+
+  /**
+   * LogUsuarioBodega delete
+   */
+  export type LogUsuarioBodegaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogUsuarioBodega
+     */
+    select?: LogUsuarioBodegaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogUsuarioBodegaInclude<ExtArgs> | null
+    /**
+     * Filter which LogUsuarioBodega to delete.
+     */
+    where: LogUsuarioBodegaWhereUniqueInput
+  }
+
+  /**
+   * LogUsuarioBodega deleteMany
+   */
+  export type LogUsuarioBodegaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LogUsuarioBodegas to delete
+     */
+    where?: LogUsuarioBodegaWhereInput
+  }
+
+  /**
+   * LogUsuarioBodega without action
+   */
+  export type LogUsuarioBodegaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogUsuarioBodega
+     */
+    select?: LogUsuarioBodegaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogUsuarioBodegaInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model LogAnden
+   */
+
+  export type AggregateLogAnden = {
+    _count: LogAndenCountAggregateOutputType | null
+    _avg: LogAndenAvgAggregateOutputType | null
+    _sum: LogAndenSumAggregateOutputType | null
+    _min: LogAndenMinAggregateOutputType | null
+    _max: LogAndenMaxAggregateOutputType | null
+  }
+
+  export type LogAndenAvgAggregateOutputType = {
+    orden: number | null
+  }
+
+  export type LogAndenSumAggregateOutputType = {
+    orden: number | null
+  }
+
+  export type LogAndenMinAggregateOutputType = {
+    id: string | null
+    bodegaId: string | null
+    codigo: string | null
+    nombre: string | null
+    tipoCarga: string | null
+    estadoOperativo: string | null
+    orden: number | null
+    activo: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LogAndenMaxAggregateOutputType = {
+    id: string | null
+    bodegaId: string | null
+    codigo: string | null
+    nombre: string | null
+    tipoCarga: string | null
+    estadoOperativo: string | null
+    orden: number | null
+    activo: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LogAndenCountAggregateOutputType = {
+    id: number
+    bodegaId: number
+    codigo: number
+    nombre: number
+    tipoCarga: number
+    estadoOperativo: number
+    orden: number
+    activo: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type LogAndenAvgAggregateInputType = {
+    orden?: true
+  }
+
+  export type LogAndenSumAggregateInputType = {
+    orden?: true
+  }
+
+  export type LogAndenMinAggregateInputType = {
+    id?: true
+    bodegaId?: true
+    codigo?: true
+    nombre?: true
+    tipoCarga?: true
+    estadoOperativo?: true
+    orden?: true
+    activo?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LogAndenMaxAggregateInputType = {
+    id?: true
+    bodegaId?: true
+    codigo?: true
+    nombre?: true
+    tipoCarga?: true
+    estadoOperativo?: true
+    orden?: true
+    activo?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LogAndenCountAggregateInputType = {
+    id?: true
+    bodegaId?: true
+    codigo?: true
+    nombre?: true
+    tipoCarga?: true
+    estadoOperativo?: true
+    orden?: true
+    activo?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type LogAndenAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LogAnden to aggregate.
+     */
+    where?: LogAndenWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogAndens to fetch.
+     */
+    orderBy?: LogAndenOrderByWithRelationInput | LogAndenOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LogAndenWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogAndens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogAndens.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned LogAndens
+    **/
+    _count?: true | LogAndenCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: LogAndenAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: LogAndenSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LogAndenMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LogAndenMaxAggregateInputType
+  }
+
+  export type GetLogAndenAggregateType<T extends LogAndenAggregateArgs> = {
+        [P in keyof T & keyof AggregateLogAnden]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLogAnden[P]>
+      : GetScalarType<T[P], AggregateLogAnden[P]>
+  }
+
+
+
+
+  export type LogAndenGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LogAndenWhereInput
+    orderBy?: LogAndenOrderByWithAggregationInput | LogAndenOrderByWithAggregationInput[]
+    by: LogAndenScalarFieldEnum[] | LogAndenScalarFieldEnum
+    having?: LogAndenScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LogAndenCountAggregateInputType | true
+    _avg?: LogAndenAvgAggregateInputType
+    _sum?: LogAndenSumAggregateInputType
+    _min?: LogAndenMinAggregateInputType
+    _max?: LogAndenMaxAggregateInputType
+  }
+
+  export type LogAndenGroupByOutputType = {
+    id: string
+    bodegaId: string
+    codigo: string
+    nombre: string
+    tipoCarga: string
+    estadoOperativo: string
+    orden: number
+    activo: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: LogAndenCountAggregateOutputType | null
+    _avg: LogAndenAvgAggregateOutputType | null
+    _sum: LogAndenSumAggregateOutputType | null
+    _min: LogAndenMinAggregateOutputType | null
+    _max: LogAndenMaxAggregateOutputType | null
+  }
+
+  type GetLogAndenGroupByPayload<T extends LogAndenGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LogAndenGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LogAndenGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LogAndenGroupByOutputType[P]>
+            : GetScalarType<T[P], LogAndenGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LogAndenSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    bodegaId?: boolean
+    codigo?: boolean
+    nombre?: boolean
+    tipoCarga?: boolean
+    estadoOperativo?: boolean
+    orden?: boolean
+    activo?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    bodega?: boolean | LogBodegaDefaultArgs<ExtArgs>
+    rutas?: boolean | LogAnden$rutasArgs<ExtArgs>
+    eventos?: boolean | LogAnden$eventosArgs<ExtArgs>
+    _count?: boolean | LogAndenCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["logAnden"]>
+
+  export type LogAndenSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    bodegaId?: boolean
+    codigo?: boolean
+    nombre?: boolean
+    tipoCarga?: boolean
+    estadoOperativo?: boolean
+    orden?: boolean
+    activo?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    bodega?: boolean | LogBodegaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["logAnden"]>
+
+  export type LogAndenSelectScalar = {
+    id?: boolean
+    bodegaId?: boolean
+    codigo?: boolean
+    nombre?: boolean
+    tipoCarga?: boolean
+    estadoOperativo?: boolean
+    orden?: boolean
+    activo?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type LogAndenInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    bodega?: boolean | LogBodegaDefaultArgs<ExtArgs>
+    rutas?: boolean | LogAnden$rutasArgs<ExtArgs>
+    eventos?: boolean | LogAnden$eventosArgs<ExtArgs>
+    _count?: boolean | LogAndenCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type LogAndenIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    bodega?: boolean | LogBodegaDefaultArgs<ExtArgs>
+  }
+
+  export type $LogAndenPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "LogAnden"
+    objects: {
+      bodega: Prisma.$LogBodegaPayload<ExtArgs>
+      rutas: Prisma.$LogRutaPayload<ExtArgs>[]
+      eventos: Prisma.$LogEventoRutaPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      bodegaId: string
+      codigo: string
+      nombre: string
+      tipoCarga: string
+      estadoOperativo: string
+      orden: number
+      activo: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["logAnden"]>
+    composites: {}
+  }
+
+  type LogAndenGetPayload<S extends boolean | null | undefined | LogAndenDefaultArgs> = $Result.GetResult<Prisma.$LogAndenPayload, S>
+
+  type LogAndenCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<LogAndenFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: LogAndenCountAggregateInputType | true
+    }
+
+  export interface LogAndenDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['LogAnden'], meta: { name: 'LogAnden' } }
+    /**
+     * Find zero or one LogAnden that matches the filter.
+     * @param {LogAndenFindUniqueArgs} args - Arguments to find a LogAnden
+     * @example
+     * // Get one LogAnden
+     * const logAnden = await prisma.logAnden.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends LogAndenFindUniqueArgs>(args: SelectSubset<T, LogAndenFindUniqueArgs<ExtArgs>>): Prisma__LogAndenClient<$Result.GetResult<Prisma.$LogAndenPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one LogAnden that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {LogAndenFindUniqueOrThrowArgs} args - Arguments to find a LogAnden
+     * @example
+     * // Get one LogAnden
+     * const logAnden = await prisma.logAnden.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends LogAndenFindUniqueOrThrowArgs>(args: SelectSubset<T, LogAndenFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LogAndenClient<$Result.GetResult<Prisma.$LogAndenPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first LogAnden that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogAndenFindFirstArgs} args - Arguments to find a LogAnden
+     * @example
+     * // Get one LogAnden
+     * const logAnden = await prisma.logAnden.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends LogAndenFindFirstArgs>(args?: SelectSubset<T, LogAndenFindFirstArgs<ExtArgs>>): Prisma__LogAndenClient<$Result.GetResult<Prisma.$LogAndenPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first LogAnden that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogAndenFindFirstOrThrowArgs} args - Arguments to find a LogAnden
+     * @example
+     * // Get one LogAnden
+     * const logAnden = await prisma.logAnden.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends LogAndenFindFirstOrThrowArgs>(args?: SelectSubset<T, LogAndenFindFirstOrThrowArgs<ExtArgs>>): Prisma__LogAndenClient<$Result.GetResult<Prisma.$LogAndenPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more LogAndens that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogAndenFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all LogAndens
+     * const logAndens = await prisma.logAnden.findMany()
+     * 
+     * // Get first 10 LogAndens
+     * const logAndens = await prisma.logAnden.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const logAndenWithIdOnly = await prisma.logAnden.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends LogAndenFindManyArgs>(args?: SelectSubset<T, LogAndenFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogAndenPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a LogAnden.
+     * @param {LogAndenCreateArgs} args - Arguments to create a LogAnden.
+     * @example
+     * // Create one LogAnden
+     * const LogAnden = await prisma.logAnden.create({
+     *   data: {
+     *     // ... data to create a LogAnden
+     *   }
+     * })
+     * 
+     */
+    create<T extends LogAndenCreateArgs>(args: SelectSubset<T, LogAndenCreateArgs<ExtArgs>>): Prisma__LogAndenClient<$Result.GetResult<Prisma.$LogAndenPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many LogAndens.
+     * @param {LogAndenCreateManyArgs} args - Arguments to create many LogAndens.
+     * @example
+     * // Create many LogAndens
+     * const logAnden = await prisma.logAnden.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends LogAndenCreateManyArgs>(args?: SelectSubset<T, LogAndenCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many LogAndens and returns the data saved in the database.
+     * @param {LogAndenCreateManyAndReturnArgs} args - Arguments to create many LogAndens.
+     * @example
+     * // Create many LogAndens
+     * const logAnden = await prisma.logAnden.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many LogAndens and only return the `id`
+     * const logAndenWithIdOnly = await prisma.logAnden.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends LogAndenCreateManyAndReturnArgs>(args?: SelectSubset<T, LogAndenCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogAndenPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a LogAnden.
+     * @param {LogAndenDeleteArgs} args - Arguments to delete one LogAnden.
+     * @example
+     * // Delete one LogAnden
+     * const LogAnden = await prisma.logAnden.delete({
+     *   where: {
+     *     // ... filter to delete one LogAnden
+     *   }
+     * })
+     * 
+     */
+    delete<T extends LogAndenDeleteArgs>(args: SelectSubset<T, LogAndenDeleteArgs<ExtArgs>>): Prisma__LogAndenClient<$Result.GetResult<Prisma.$LogAndenPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one LogAnden.
+     * @param {LogAndenUpdateArgs} args - Arguments to update one LogAnden.
+     * @example
+     * // Update one LogAnden
+     * const logAnden = await prisma.logAnden.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends LogAndenUpdateArgs>(args: SelectSubset<T, LogAndenUpdateArgs<ExtArgs>>): Prisma__LogAndenClient<$Result.GetResult<Prisma.$LogAndenPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more LogAndens.
+     * @param {LogAndenDeleteManyArgs} args - Arguments to filter LogAndens to delete.
+     * @example
+     * // Delete a few LogAndens
+     * const { count } = await prisma.logAnden.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends LogAndenDeleteManyArgs>(args?: SelectSubset<T, LogAndenDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LogAndens.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogAndenUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many LogAndens
+     * const logAnden = await prisma.logAnden.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends LogAndenUpdateManyArgs>(args: SelectSubset<T, LogAndenUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one LogAnden.
+     * @param {LogAndenUpsertArgs} args - Arguments to update or create a LogAnden.
+     * @example
+     * // Update or create a LogAnden
+     * const logAnden = await prisma.logAnden.upsert({
+     *   create: {
+     *     // ... data to create a LogAnden
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the LogAnden we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LogAndenUpsertArgs>(args: SelectSubset<T, LogAndenUpsertArgs<ExtArgs>>): Prisma__LogAndenClient<$Result.GetResult<Prisma.$LogAndenPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of LogAndens.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogAndenCountArgs} args - Arguments to filter LogAndens to count.
+     * @example
+     * // Count the number of LogAndens
+     * const count = await prisma.logAnden.count({
+     *   where: {
+     *     // ... the filter for the LogAndens we want to count
+     *   }
+     * })
+    **/
+    count<T extends LogAndenCountArgs>(
+      args?: Subset<T, LogAndenCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LogAndenCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a LogAnden.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogAndenAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LogAndenAggregateArgs>(args: Subset<T, LogAndenAggregateArgs>): Prisma.PrismaPromise<GetLogAndenAggregateType<T>>
+
+    /**
+     * Group by LogAnden.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogAndenGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LogAndenGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LogAndenGroupByArgs['orderBy'] }
+        : { orderBy?: LogAndenGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LogAndenGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLogAndenGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the LogAnden model
+   */
+  readonly fields: LogAndenFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for LogAnden.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LogAndenClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    bodega<T extends LogBodegaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LogBodegaDefaultArgs<ExtArgs>>): Prisma__LogBodegaClient<$Result.GetResult<Prisma.$LogBodegaPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    rutas<T extends LogAnden$rutasArgs<ExtArgs> = {}>(args?: Subset<T, LogAnden$rutasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogRutaPayload<ExtArgs>, T, "findMany"> | Null>
+    eventos<T extends LogAnden$eventosArgs<ExtArgs> = {}>(args?: Subset<T, LogAnden$eventosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogEventoRutaPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the LogAnden model
+   */ 
+  interface LogAndenFieldRefs {
+    readonly id: FieldRef<"LogAnden", 'String'>
+    readonly bodegaId: FieldRef<"LogAnden", 'String'>
+    readonly codigo: FieldRef<"LogAnden", 'String'>
+    readonly nombre: FieldRef<"LogAnden", 'String'>
+    readonly tipoCarga: FieldRef<"LogAnden", 'String'>
+    readonly estadoOperativo: FieldRef<"LogAnden", 'String'>
+    readonly orden: FieldRef<"LogAnden", 'Int'>
+    readonly activo: FieldRef<"LogAnden", 'Boolean'>
+    readonly createdAt: FieldRef<"LogAnden", 'DateTime'>
+    readonly updatedAt: FieldRef<"LogAnden", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * LogAnden findUnique
+   */
+  export type LogAndenFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogAnden
+     */
+    select?: LogAndenSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogAndenInclude<ExtArgs> | null
+    /**
+     * Filter, which LogAnden to fetch.
+     */
+    where: LogAndenWhereUniqueInput
+  }
+
+  /**
+   * LogAnden findUniqueOrThrow
+   */
+  export type LogAndenFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogAnden
+     */
+    select?: LogAndenSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogAndenInclude<ExtArgs> | null
+    /**
+     * Filter, which LogAnden to fetch.
+     */
+    where: LogAndenWhereUniqueInput
+  }
+
+  /**
+   * LogAnden findFirst
+   */
+  export type LogAndenFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogAnden
+     */
+    select?: LogAndenSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogAndenInclude<ExtArgs> | null
+    /**
+     * Filter, which LogAnden to fetch.
+     */
+    where?: LogAndenWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogAndens to fetch.
+     */
+    orderBy?: LogAndenOrderByWithRelationInput | LogAndenOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LogAndens.
+     */
+    cursor?: LogAndenWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogAndens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogAndens.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LogAndens.
+     */
+    distinct?: LogAndenScalarFieldEnum | LogAndenScalarFieldEnum[]
+  }
+
+  /**
+   * LogAnden findFirstOrThrow
+   */
+  export type LogAndenFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogAnden
+     */
+    select?: LogAndenSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogAndenInclude<ExtArgs> | null
+    /**
+     * Filter, which LogAnden to fetch.
+     */
+    where?: LogAndenWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogAndens to fetch.
+     */
+    orderBy?: LogAndenOrderByWithRelationInput | LogAndenOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LogAndens.
+     */
+    cursor?: LogAndenWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogAndens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogAndens.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LogAndens.
+     */
+    distinct?: LogAndenScalarFieldEnum | LogAndenScalarFieldEnum[]
+  }
+
+  /**
+   * LogAnden findMany
+   */
+  export type LogAndenFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogAnden
+     */
+    select?: LogAndenSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogAndenInclude<ExtArgs> | null
+    /**
+     * Filter, which LogAndens to fetch.
+     */
+    where?: LogAndenWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogAndens to fetch.
+     */
+    orderBy?: LogAndenOrderByWithRelationInput | LogAndenOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing LogAndens.
+     */
+    cursor?: LogAndenWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogAndens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogAndens.
+     */
+    skip?: number
+    distinct?: LogAndenScalarFieldEnum | LogAndenScalarFieldEnum[]
+  }
+
+  /**
+   * LogAnden create
+   */
+  export type LogAndenCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogAnden
+     */
+    select?: LogAndenSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogAndenInclude<ExtArgs> | null
+    /**
+     * The data needed to create a LogAnden.
+     */
+    data: XOR<LogAndenCreateInput, LogAndenUncheckedCreateInput>
+  }
+
+  /**
+   * LogAnden createMany
+   */
+  export type LogAndenCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many LogAndens.
+     */
+    data: LogAndenCreateManyInput | LogAndenCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * LogAnden createManyAndReturn
+   */
+  export type LogAndenCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogAnden
+     */
+    select?: LogAndenSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many LogAndens.
+     */
+    data: LogAndenCreateManyInput | LogAndenCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogAndenIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * LogAnden update
+   */
+  export type LogAndenUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogAnden
+     */
+    select?: LogAndenSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogAndenInclude<ExtArgs> | null
+    /**
+     * The data needed to update a LogAnden.
+     */
+    data: XOR<LogAndenUpdateInput, LogAndenUncheckedUpdateInput>
+    /**
+     * Choose, which LogAnden to update.
+     */
+    where: LogAndenWhereUniqueInput
+  }
+
+  /**
+   * LogAnden updateMany
+   */
+  export type LogAndenUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update LogAndens.
+     */
+    data: XOR<LogAndenUpdateManyMutationInput, LogAndenUncheckedUpdateManyInput>
+    /**
+     * Filter which LogAndens to update
+     */
+    where?: LogAndenWhereInput
+  }
+
+  /**
+   * LogAnden upsert
+   */
+  export type LogAndenUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogAnden
+     */
+    select?: LogAndenSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogAndenInclude<ExtArgs> | null
+    /**
+     * The filter to search for the LogAnden to update in case it exists.
+     */
+    where: LogAndenWhereUniqueInput
+    /**
+     * In case the LogAnden found by the `where` argument doesn't exist, create a new LogAnden with this data.
+     */
+    create: XOR<LogAndenCreateInput, LogAndenUncheckedCreateInput>
+    /**
+     * In case the LogAnden was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LogAndenUpdateInput, LogAndenUncheckedUpdateInput>
+  }
+
+  /**
+   * LogAnden delete
+   */
+  export type LogAndenDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogAnden
+     */
+    select?: LogAndenSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogAndenInclude<ExtArgs> | null
+    /**
+     * Filter which LogAnden to delete.
+     */
+    where: LogAndenWhereUniqueInput
+  }
+
+  /**
+   * LogAnden deleteMany
+   */
+  export type LogAndenDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LogAndens to delete
+     */
+    where?: LogAndenWhereInput
+  }
+
+  /**
+   * LogAnden.rutas
+   */
+  export type LogAnden$rutasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogRuta
+     */
+    select?: LogRutaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogRutaInclude<ExtArgs> | null
+    where?: LogRutaWhereInput
+    orderBy?: LogRutaOrderByWithRelationInput | LogRutaOrderByWithRelationInput[]
+    cursor?: LogRutaWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LogRutaScalarFieldEnum | LogRutaScalarFieldEnum[]
+  }
+
+  /**
+   * LogAnden.eventos
+   */
+  export type LogAnden$eventosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogEventoRuta
+     */
+    select?: LogEventoRutaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogEventoRutaInclude<ExtArgs> | null
+    where?: LogEventoRutaWhereInput
+    orderBy?: LogEventoRutaOrderByWithRelationInput | LogEventoRutaOrderByWithRelationInput[]
+    cursor?: LogEventoRutaWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LogEventoRutaScalarFieldEnum | LogEventoRutaScalarFieldEnum[]
+  }
+
+  /**
+   * LogAnden without action
+   */
+  export type LogAndenDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogAnden
+     */
+    select?: LogAndenSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogAndenInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model LogTransportista
+   */
+
+  export type AggregateLogTransportista = {
+    _count: LogTransportistaCountAggregateOutputType | null
+    _min: LogTransportistaMinAggregateOutputType | null
+    _max: LogTransportistaMaxAggregateOutputType | null
+  }
+
+  export type LogTransportistaMinAggregateOutputType = {
+    id: string | null
+    rut: string | null
+    razonSocial: string | null
+    contacto: string | null
+    telefono: string | null
+    email: string | null
+    activo: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LogTransportistaMaxAggregateOutputType = {
+    id: string | null
+    rut: string | null
+    razonSocial: string | null
+    contacto: string | null
+    telefono: string | null
+    email: string | null
+    activo: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LogTransportistaCountAggregateOutputType = {
+    id: number
+    rut: number
+    razonSocial: number
+    contacto: number
+    telefono: number
+    email: number
+    activo: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type LogTransportistaMinAggregateInputType = {
+    id?: true
+    rut?: true
+    razonSocial?: true
+    contacto?: true
+    telefono?: true
+    email?: true
+    activo?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LogTransportistaMaxAggregateInputType = {
+    id?: true
+    rut?: true
+    razonSocial?: true
+    contacto?: true
+    telefono?: true
+    email?: true
+    activo?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LogTransportistaCountAggregateInputType = {
+    id?: true
+    rut?: true
+    razonSocial?: true
+    contacto?: true
+    telefono?: true
+    email?: true
+    activo?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type LogTransportistaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LogTransportista to aggregate.
+     */
+    where?: LogTransportistaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogTransportistas to fetch.
+     */
+    orderBy?: LogTransportistaOrderByWithRelationInput | LogTransportistaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LogTransportistaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogTransportistas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogTransportistas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned LogTransportistas
+    **/
+    _count?: true | LogTransportistaCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LogTransportistaMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LogTransportistaMaxAggregateInputType
+  }
+
+  export type GetLogTransportistaAggregateType<T extends LogTransportistaAggregateArgs> = {
+        [P in keyof T & keyof AggregateLogTransportista]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLogTransportista[P]>
+      : GetScalarType<T[P], AggregateLogTransportista[P]>
+  }
+
+
+
+
+  export type LogTransportistaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LogTransportistaWhereInput
+    orderBy?: LogTransportistaOrderByWithAggregationInput | LogTransportistaOrderByWithAggregationInput[]
+    by: LogTransportistaScalarFieldEnum[] | LogTransportistaScalarFieldEnum
+    having?: LogTransportistaScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LogTransportistaCountAggregateInputType | true
+    _min?: LogTransportistaMinAggregateInputType
+    _max?: LogTransportistaMaxAggregateInputType
+  }
+
+  export type LogTransportistaGroupByOutputType = {
+    id: string
+    rut: string
+    razonSocial: string
+    contacto: string | null
+    telefono: string | null
+    email: string | null
+    activo: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: LogTransportistaCountAggregateOutputType | null
+    _min: LogTransportistaMinAggregateOutputType | null
+    _max: LogTransportistaMaxAggregateOutputType | null
+  }
+
+  type GetLogTransportistaGroupByPayload<T extends LogTransportistaGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LogTransportistaGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LogTransportistaGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LogTransportistaGroupByOutputType[P]>
+            : GetScalarType<T[P], LogTransportistaGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LogTransportistaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    rut?: boolean
+    razonSocial?: boolean
+    contacto?: boolean
+    telefono?: boolean
+    email?: boolean
+    activo?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    choferes?: boolean | LogTransportista$choferesArgs<ExtArgs>
+    camiones?: boolean | LogTransportista$camionesArgs<ExtArgs>
+    rutas?: boolean | LogTransportista$rutasArgs<ExtArgs>
+    _count?: boolean | LogTransportistaCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["logTransportista"]>
+
+  export type LogTransportistaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    rut?: boolean
+    razonSocial?: boolean
+    contacto?: boolean
+    telefono?: boolean
+    email?: boolean
+    activo?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["logTransportista"]>
+
+  export type LogTransportistaSelectScalar = {
+    id?: boolean
+    rut?: boolean
+    razonSocial?: boolean
+    contacto?: boolean
+    telefono?: boolean
+    email?: boolean
+    activo?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type LogTransportistaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    choferes?: boolean | LogTransportista$choferesArgs<ExtArgs>
+    camiones?: boolean | LogTransportista$camionesArgs<ExtArgs>
+    rutas?: boolean | LogTransportista$rutasArgs<ExtArgs>
+    _count?: boolean | LogTransportistaCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type LogTransportistaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $LogTransportistaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "LogTransportista"
+    objects: {
+      choferes: Prisma.$LogChoferPayload<ExtArgs>[]
+      camiones: Prisma.$LogCamionPayload<ExtArgs>[]
+      rutas: Prisma.$LogRutaPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      rut: string
+      razonSocial: string
+      contacto: string | null
+      telefono: string | null
+      email: string | null
+      activo: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["logTransportista"]>
+    composites: {}
+  }
+
+  type LogTransportistaGetPayload<S extends boolean | null | undefined | LogTransportistaDefaultArgs> = $Result.GetResult<Prisma.$LogTransportistaPayload, S>
+
+  type LogTransportistaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<LogTransportistaFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: LogTransportistaCountAggregateInputType | true
+    }
+
+  export interface LogTransportistaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['LogTransportista'], meta: { name: 'LogTransportista' } }
+    /**
+     * Find zero or one LogTransportista that matches the filter.
+     * @param {LogTransportistaFindUniqueArgs} args - Arguments to find a LogTransportista
+     * @example
+     * // Get one LogTransportista
+     * const logTransportista = await prisma.logTransportista.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends LogTransportistaFindUniqueArgs>(args: SelectSubset<T, LogTransportistaFindUniqueArgs<ExtArgs>>): Prisma__LogTransportistaClient<$Result.GetResult<Prisma.$LogTransportistaPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one LogTransportista that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {LogTransportistaFindUniqueOrThrowArgs} args - Arguments to find a LogTransportista
+     * @example
+     * // Get one LogTransportista
+     * const logTransportista = await prisma.logTransportista.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends LogTransportistaFindUniqueOrThrowArgs>(args: SelectSubset<T, LogTransportistaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LogTransportistaClient<$Result.GetResult<Prisma.$LogTransportistaPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first LogTransportista that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogTransportistaFindFirstArgs} args - Arguments to find a LogTransportista
+     * @example
+     * // Get one LogTransportista
+     * const logTransportista = await prisma.logTransportista.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends LogTransportistaFindFirstArgs>(args?: SelectSubset<T, LogTransportistaFindFirstArgs<ExtArgs>>): Prisma__LogTransportistaClient<$Result.GetResult<Prisma.$LogTransportistaPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first LogTransportista that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogTransportistaFindFirstOrThrowArgs} args - Arguments to find a LogTransportista
+     * @example
+     * // Get one LogTransportista
+     * const logTransportista = await prisma.logTransportista.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends LogTransportistaFindFirstOrThrowArgs>(args?: SelectSubset<T, LogTransportistaFindFirstOrThrowArgs<ExtArgs>>): Prisma__LogTransportistaClient<$Result.GetResult<Prisma.$LogTransportistaPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more LogTransportistas that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogTransportistaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all LogTransportistas
+     * const logTransportistas = await prisma.logTransportista.findMany()
+     * 
+     * // Get first 10 LogTransportistas
+     * const logTransportistas = await prisma.logTransportista.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const logTransportistaWithIdOnly = await prisma.logTransportista.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends LogTransportistaFindManyArgs>(args?: SelectSubset<T, LogTransportistaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogTransportistaPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a LogTransportista.
+     * @param {LogTransportistaCreateArgs} args - Arguments to create a LogTransportista.
+     * @example
+     * // Create one LogTransportista
+     * const LogTransportista = await prisma.logTransportista.create({
+     *   data: {
+     *     // ... data to create a LogTransportista
+     *   }
+     * })
+     * 
+     */
+    create<T extends LogTransportistaCreateArgs>(args: SelectSubset<T, LogTransportistaCreateArgs<ExtArgs>>): Prisma__LogTransportistaClient<$Result.GetResult<Prisma.$LogTransportistaPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many LogTransportistas.
+     * @param {LogTransportistaCreateManyArgs} args - Arguments to create many LogTransportistas.
+     * @example
+     * // Create many LogTransportistas
+     * const logTransportista = await prisma.logTransportista.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends LogTransportistaCreateManyArgs>(args?: SelectSubset<T, LogTransportistaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many LogTransportistas and returns the data saved in the database.
+     * @param {LogTransportistaCreateManyAndReturnArgs} args - Arguments to create many LogTransportistas.
+     * @example
+     * // Create many LogTransportistas
+     * const logTransportista = await prisma.logTransportista.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many LogTransportistas and only return the `id`
+     * const logTransportistaWithIdOnly = await prisma.logTransportista.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends LogTransportistaCreateManyAndReturnArgs>(args?: SelectSubset<T, LogTransportistaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogTransportistaPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a LogTransportista.
+     * @param {LogTransportistaDeleteArgs} args - Arguments to delete one LogTransportista.
+     * @example
+     * // Delete one LogTransportista
+     * const LogTransportista = await prisma.logTransportista.delete({
+     *   where: {
+     *     // ... filter to delete one LogTransportista
+     *   }
+     * })
+     * 
+     */
+    delete<T extends LogTransportistaDeleteArgs>(args: SelectSubset<T, LogTransportistaDeleteArgs<ExtArgs>>): Prisma__LogTransportistaClient<$Result.GetResult<Prisma.$LogTransportistaPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one LogTransportista.
+     * @param {LogTransportistaUpdateArgs} args - Arguments to update one LogTransportista.
+     * @example
+     * // Update one LogTransportista
+     * const logTransportista = await prisma.logTransportista.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends LogTransportistaUpdateArgs>(args: SelectSubset<T, LogTransportistaUpdateArgs<ExtArgs>>): Prisma__LogTransportistaClient<$Result.GetResult<Prisma.$LogTransportistaPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more LogTransportistas.
+     * @param {LogTransportistaDeleteManyArgs} args - Arguments to filter LogTransportistas to delete.
+     * @example
+     * // Delete a few LogTransportistas
+     * const { count } = await prisma.logTransportista.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends LogTransportistaDeleteManyArgs>(args?: SelectSubset<T, LogTransportistaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LogTransportistas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogTransportistaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many LogTransportistas
+     * const logTransportista = await prisma.logTransportista.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends LogTransportistaUpdateManyArgs>(args: SelectSubset<T, LogTransportistaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one LogTransportista.
+     * @param {LogTransportistaUpsertArgs} args - Arguments to update or create a LogTransportista.
+     * @example
+     * // Update or create a LogTransportista
+     * const logTransportista = await prisma.logTransportista.upsert({
+     *   create: {
+     *     // ... data to create a LogTransportista
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the LogTransportista we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LogTransportistaUpsertArgs>(args: SelectSubset<T, LogTransportistaUpsertArgs<ExtArgs>>): Prisma__LogTransportistaClient<$Result.GetResult<Prisma.$LogTransportistaPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of LogTransportistas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogTransportistaCountArgs} args - Arguments to filter LogTransportistas to count.
+     * @example
+     * // Count the number of LogTransportistas
+     * const count = await prisma.logTransportista.count({
+     *   where: {
+     *     // ... the filter for the LogTransportistas we want to count
+     *   }
+     * })
+    **/
+    count<T extends LogTransportistaCountArgs>(
+      args?: Subset<T, LogTransportistaCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LogTransportistaCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a LogTransportista.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogTransportistaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LogTransportistaAggregateArgs>(args: Subset<T, LogTransportistaAggregateArgs>): Prisma.PrismaPromise<GetLogTransportistaAggregateType<T>>
+
+    /**
+     * Group by LogTransportista.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogTransportistaGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LogTransportistaGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LogTransportistaGroupByArgs['orderBy'] }
+        : { orderBy?: LogTransportistaGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LogTransportistaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLogTransportistaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the LogTransportista model
+   */
+  readonly fields: LogTransportistaFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for LogTransportista.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LogTransportistaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    choferes<T extends LogTransportista$choferesArgs<ExtArgs> = {}>(args?: Subset<T, LogTransportista$choferesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogChoferPayload<ExtArgs>, T, "findMany"> | Null>
+    camiones<T extends LogTransportista$camionesArgs<ExtArgs> = {}>(args?: Subset<T, LogTransportista$camionesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogCamionPayload<ExtArgs>, T, "findMany"> | Null>
+    rutas<T extends LogTransportista$rutasArgs<ExtArgs> = {}>(args?: Subset<T, LogTransportista$rutasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogRutaPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the LogTransportista model
+   */ 
+  interface LogTransportistaFieldRefs {
+    readonly id: FieldRef<"LogTransportista", 'String'>
+    readonly rut: FieldRef<"LogTransportista", 'String'>
+    readonly razonSocial: FieldRef<"LogTransportista", 'String'>
+    readonly contacto: FieldRef<"LogTransportista", 'String'>
+    readonly telefono: FieldRef<"LogTransportista", 'String'>
+    readonly email: FieldRef<"LogTransportista", 'String'>
+    readonly activo: FieldRef<"LogTransportista", 'Boolean'>
+    readonly createdAt: FieldRef<"LogTransportista", 'DateTime'>
+    readonly updatedAt: FieldRef<"LogTransportista", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * LogTransportista findUnique
+   */
+  export type LogTransportistaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogTransportista
+     */
+    select?: LogTransportistaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogTransportistaInclude<ExtArgs> | null
+    /**
+     * Filter, which LogTransportista to fetch.
+     */
+    where: LogTransportistaWhereUniqueInput
+  }
+
+  /**
+   * LogTransportista findUniqueOrThrow
+   */
+  export type LogTransportistaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogTransportista
+     */
+    select?: LogTransportistaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogTransportistaInclude<ExtArgs> | null
+    /**
+     * Filter, which LogTransportista to fetch.
+     */
+    where: LogTransportistaWhereUniqueInput
+  }
+
+  /**
+   * LogTransportista findFirst
+   */
+  export type LogTransportistaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogTransportista
+     */
+    select?: LogTransportistaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogTransportistaInclude<ExtArgs> | null
+    /**
+     * Filter, which LogTransportista to fetch.
+     */
+    where?: LogTransportistaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogTransportistas to fetch.
+     */
+    orderBy?: LogTransportistaOrderByWithRelationInput | LogTransportistaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LogTransportistas.
+     */
+    cursor?: LogTransportistaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogTransportistas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogTransportistas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LogTransportistas.
+     */
+    distinct?: LogTransportistaScalarFieldEnum | LogTransportistaScalarFieldEnum[]
+  }
+
+  /**
+   * LogTransportista findFirstOrThrow
+   */
+  export type LogTransportistaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogTransportista
+     */
+    select?: LogTransportistaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogTransportistaInclude<ExtArgs> | null
+    /**
+     * Filter, which LogTransportista to fetch.
+     */
+    where?: LogTransportistaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogTransportistas to fetch.
+     */
+    orderBy?: LogTransportistaOrderByWithRelationInput | LogTransportistaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LogTransportistas.
+     */
+    cursor?: LogTransportistaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogTransportistas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogTransportistas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LogTransportistas.
+     */
+    distinct?: LogTransportistaScalarFieldEnum | LogTransportistaScalarFieldEnum[]
+  }
+
+  /**
+   * LogTransportista findMany
+   */
+  export type LogTransportistaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogTransportista
+     */
+    select?: LogTransportistaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogTransportistaInclude<ExtArgs> | null
+    /**
+     * Filter, which LogTransportistas to fetch.
+     */
+    where?: LogTransportistaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogTransportistas to fetch.
+     */
+    orderBy?: LogTransportistaOrderByWithRelationInput | LogTransportistaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing LogTransportistas.
+     */
+    cursor?: LogTransportistaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogTransportistas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogTransportistas.
+     */
+    skip?: number
+    distinct?: LogTransportistaScalarFieldEnum | LogTransportistaScalarFieldEnum[]
+  }
+
+  /**
+   * LogTransportista create
+   */
+  export type LogTransportistaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogTransportista
+     */
+    select?: LogTransportistaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogTransportistaInclude<ExtArgs> | null
+    /**
+     * The data needed to create a LogTransportista.
+     */
+    data: XOR<LogTransportistaCreateInput, LogTransportistaUncheckedCreateInput>
+  }
+
+  /**
+   * LogTransportista createMany
+   */
+  export type LogTransportistaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many LogTransportistas.
+     */
+    data: LogTransportistaCreateManyInput | LogTransportistaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * LogTransportista createManyAndReturn
+   */
+  export type LogTransportistaCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogTransportista
+     */
+    select?: LogTransportistaSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many LogTransportistas.
+     */
+    data: LogTransportistaCreateManyInput | LogTransportistaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * LogTransportista update
+   */
+  export type LogTransportistaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogTransportista
+     */
+    select?: LogTransportistaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogTransportistaInclude<ExtArgs> | null
+    /**
+     * The data needed to update a LogTransportista.
+     */
+    data: XOR<LogTransportistaUpdateInput, LogTransportistaUncheckedUpdateInput>
+    /**
+     * Choose, which LogTransportista to update.
+     */
+    where: LogTransportistaWhereUniqueInput
+  }
+
+  /**
+   * LogTransportista updateMany
+   */
+  export type LogTransportistaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update LogTransportistas.
+     */
+    data: XOR<LogTransportistaUpdateManyMutationInput, LogTransportistaUncheckedUpdateManyInput>
+    /**
+     * Filter which LogTransportistas to update
+     */
+    where?: LogTransportistaWhereInput
+  }
+
+  /**
+   * LogTransportista upsert
+   */
+  export type LogTransportistaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogTransportista
+     */
+    select?: LogTransportistaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogTransportistaInclude<ExtArgs> | null
+    /**
+     * The filter to search for the LogTransportista to update in case it exists.
+     */
+    where: LogTransportistaWhereUniqueInput
+    /**
+     * In case the LogTransportista found by the `where` argument doesn't exist, create a new LogTransportista with this data.
+     */
+    create: XOR<LogTransportistaCreateInput, LogTransportistaUncheckedCreateInput>
+    /**
+     * In case the LogTransportista was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LogTransportistaUpdateInput, LogTransportistaUncheckedUpdateInput>
+  }
+
+  /**
+   * LogTransportista delete
+   */
+  export type LogTransportistaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogTransportista
+     */
+    select?: LogTransportistaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogTransportistaInclude<ExtArgs> | null
+    /**
+     * Filter which LogTransportista to delete.
+     */
+    where: LogTransportistaWhereUniqueInput
+  }
+
+  /**
+   * LogTransportista deleteMany
+   */
+  export type LogTransportistaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LogTransportistas to delete
+     */
+    where?: LogTransportistaWhereInput
+  }
+
+  /**
+   * LogTransportista.choferes
+   */
+  export type LogTransportista$choferesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogChofer
+     */
+    select?: LogChoferSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogChoferInclude<ExtArgs> | null
+    where?: LogChoferWhereInput
+    orderBy?: LogChoferOrderByWithRelationInput | LogChoferOrderByWithRelationInput[]
+    cursor?: LogChoferWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LogChoferScalarFieldEnum | LogChoferScalarFieldEnum[]
+  }
+
+  /**
+   * LogTransportista.camiones
+   */
+  export type LogTransportista$camionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogCamion
+     */
+    select?: LogCamionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogCamionInclude<ExtArgs> | null
+    where?: LogCamionWhereInput
+    orderBy?: LogCamionOrderByWithRelationInput | LogCamionOrderByWithRelationInput[]
+    cursor?: LogCamionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LogCamionScalarFieldEnum | LogCamionScalarFieldEnum[]
+  }
+
+  /**
+   * LogTransportista.rutas
+   */
+  export type LogTransportista$rutasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogRuta
+     */
+    select?: LogRutaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogRutaInclude<ExtArgs> | null
+    where?: LogRutaWhereInput
+    orderBy?: LogRutaOrderByWithRelationInput | LogRutaOrderByWithRelationInput[]
+    cursor?: LogRutaWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LogRutaScalarFieldEnum | LogRutaScalarFieldEnum[]
+  }
+
+  /**
+   * LogTransportista without action
+   */
+  export type LogTransportistaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogTransportista
+     */
+    select?: LogTransportistaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogTransportistaInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model LogChofer
+   */
+
+  export type AggregateLogChofer = {
+    _count: LogChoferCountAggregateOutputType | null
+    _min: LogChoferMinAggregateOutputType | null
+    _max: LogChoferMaxAggregateOutputType | null
+  }
+
+  export type LogChoferMinAggregateOutputType = {
+    id: string | null
+    rut: string | null
+    nombre: string | null
+    telefono: string | null
+    email: string | null
+    telegramChatId: string | null
+    transportistaId: string | null
+    activo: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LogChoferMaxAggregateOutputType = {
+    id: string | null
+    rut: string | null
+    nombre: string | null
+    telefono: string | null
+    email: string | null
+    telegramChatId: string | null
+    transportistaId: string | null
+    activo: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LogChoferCountAggregateOutputType = {
+    id: number
+    rut: number
+    nombre: number
+    telefono: number
+    email: number
+    telegramChatId: number
+    transportistaId: number
+    activo: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type LogChoferMinAggregateInputType = {
+    id?: true
+    rut?: true
+    nombre?: true
+    telefono?: true
+    email?: true
+    telegramChatId?: true
+    transportistaId?: true
+    activo?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LogChoferMaxAggregateInputType = {
+    id?: true
+    rut?: true
+    nombre?: true
+    telefono?: true
+    email?: true
+    telegramChatId?: true
+    transportistaId?: true
+    activo?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LogChoferCountAggregateInputType = {
+    id?: true
+    rut?: true
+    nombre?: true
+    telefono?: true
+    email?: true
+    telegramChatId?: true
+    transportistaId?: true
+    activo?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type LogChoferAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LogChofer to aggregate.
+     */
+    where?: LogChoferWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogChofers to fetch.
+     */
+    orderBy?: LogChoferOrderByWithRelationInput | LogChoferOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LogChoferWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogChofers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogChofers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned LogChofers
+    **/
+    _count?: true | LogChoferCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LogChoferMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LogChoferMaxAggregateInputType
+  }
+
+  export type GetLogChoferAggregateType<T extends LogChoferAggregateArgs> = {
+        [P in keyof T & keyof AggregateLogChofer]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLogChofer[P]>
+      : GetScalarType<T[P], AggregateLogChofer[P]>
+  }
+
+
+
+
+  export type LogChoferGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LogChoferWhereInput
+    orderBy?: LogChoferOrderByWithAggregationInput | LogChoferOrderByWithAggregationInput[]
+    by: LogChoferScalarFieldEnum[] | LogChoferScalarFieldEnum
+    having?: LogChoferScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LogChoferCountAggregateInputType | true
+    _min?: LogChoferMinAggregateInputType
+    _max?: LogChoferMaxAggregateInputType
+  }
+
+  export type LogChoferGroupByOutputType = {
+    id: string
+    rut: string
+    nombre: string
+    telefono: string
+    email: string | null
+    telegramChatId: string | null
+    transportistaId: string | null
+    activo: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: LogChoferCountAggregateOutputType | null
+    _min: LogChoferMinAggregateOutputType | null
+    _max: LogChoferMaxAggregateOutputType | null
+  }
+
+  type GetLogChoferGroupByPayload<T extends LogChoferGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LogChoferGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LogChoferGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LogChoferGroupByOutputType[P]>
+            : GetScalarType<T[P], LogChoferGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LogChoferSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    rut?: boolean
+    nombre?: boolean
+    telefono?: boolean
+    email?: boolean
+    telegramChatId?: boolean
+    transportistaId?: boolean
+    activo?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    transportista?: boolean | LogChofer$transportistaArgs<ExtArgs>
+    rutas?: boolean | LogChofer$rutasArgs<ExtArgs>
+    _count?: boolean | LogChoferCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["logChofer"]>
+
+  export type LogChoferSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    rut?: boolean
+    nombre?: boolean
+    telefono?: boolean
+    email?: boolean
+    telegramChatId?: boolean
+    transportistaId?: boolean
+    activo?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    transportista?: boolean | LogChofer$transportistaArgs<ExtArgs>
+  }, ExtArgs["result"]["logChofer"]>
+
+  export type LogChoferSelectScalar = {
+    id?: boolean
+    rut?: boolean
+    nombre?: boolean
+    telefono?: boolean
+    email?: boolean
+    telegramChatId?: boolean
+    transportistaId?: boolean
+    activo?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type LogChoferInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    transportista?: boolean | LogChofer$transportistaArgs<ExtArgs>
+    rutas?: boolean | LogChofer$rutasArgs<ExtArgs>
+    _count?: boolean | LogChoferCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type LogChoferIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    transportista?: boolean | LogChofer$transportistaArgs<ExtArgs>
+  }
+
+  export type $LogChoferPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "LogChofer"
+    objects: {
+      transportista: Prisma.$LogTransportistaPayload<ExtArgs> | null
+      rutas: Prisma.$LogRutaPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      rut: string
+      nombre: string
+      telefono: string
+      email: string | null
+      telegramChatId: string | null
+      transportistaId: string | null
+      activo: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["logChofer"]>
+    composites: {}
+  }
+
+  type LogChoferGetPayload<S extends boolean | null | undefined | LogChoferDefaultArgs> = $Result.GetResult<Prisma.$LogChoferPayload, S>
+
+  type LogChoferCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<LogChoferFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: LogChoferCountAggregateInputType | true
+    }
+
+  export interface LogChoferDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['LogChofer'], meta: { name: 'LogChofer' } }
+    /**
+     * Find zero or one LogChofer that matches the filter.
+     * @param {LogChoferFindUniqueArgs} args - Arguments to find a LogChofer
+     * @example
+     * // Get one LogChofer
+     * const logChofer = await prisma.logChofer.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends LogChoferFindUniqueArgs>(args: SelectSubset<T, LogChoferFindUniqueArgs<ExtArgs>>): Prisma__LogChoferClient<$Result.GetResult<Prisma.$LogChoferPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one LogChofer that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {LogChoferFindUniqueOrThrowArgs} args - Arguments to find a LogChofer
+     * @example
+     * // Get one LogChofer
+     * const logChofer = await prisma.logChofer.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends LogChoferFindUniqueOrThrowArgs>(args: SelectSubset<T, LogChoferFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LogChoferClient<$Result.GetResult<Prisma.$LogChoferPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first LogChofer that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogChoferFindFirstArgs} args - Arguments to find a LogChofer
+     * @example
+     * // Get one LogChofer
+     * const logChofer = await prisma.logChofer.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends LogChoferFindFirstArgs>(args?: SelectSubset<T, LogChoferFindFirstArgs<ExtArgs>>): Prisma__LogChoferClient<$Result.GetResult<Prisma.$LogChoferPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first LogChofer that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogChoferFindFirstOrThrowArgs} args - Arguments to find a LogChofer
+     * @example
+     * // Get one LogChofer
+     * const logChofer = await prisma.logChofer.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends LogChoferFindFirstOrThrowArgs>(args?: SelectSubset<T, LogChoferFindFirstOrThrowArgs<ExtArgs>>): Prisma__LogChoferClient<$Result.GetResult<Prisma.$LogChoferPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more LogChofers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogChoferFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all LogChofers
+     * const logChofers = await prisma.logChofer.findMany()
+     * 
+     * // Get first 10 LogChofers
+     * const logChofers = await prisma.logChofer.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const logChoferWithIdOnly = await prisma.logChofer.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends LogChoferFindManyArgs>(args?: SelectSubset<T, LogChoferFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogChoferPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a LogChofer.
+     * @param {LogChoferCreateArgs} args - Arguments to create a LogChofer.
+     * @example
+     * // Create one LogChofer
+     * const LogChofer = await prisma.logChofer.create({
+     *   data: {
+     *     // ... data to create a LogChofer
+     *   }
+     * })
+     * 
+     */
+    create<T extends LogChoferCreateArgs>(args: SelectSubset<T, LogChoferCreateArgs<ExtArgs>>): Prisma__LogChoferClient<$Result.GetResult<Prisma.$LogChoferPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many LogChofers.
+     * @param {LogChoferCreateManyArgs} args - Arguments to create many LogChofers.
+     * @example
+     * // Create many LogChofers
+     * const logChofer = await prisma.logChofer.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends LogChoferCreateManyArgs>(args?: SelectSubset<T, LogChoferCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many LogChofers and returns the data saved in the database.
+     * @param {LogChoferCreateManyAndReturnArgs} args - Arguments to create many LogChofers.
+     * @example
+     * // Create many LogChofers
+     * const logChofer = await prisma.logChofer.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many LogChofers and only return the `id`
+     * const logChoferWithIdOnly = await prisma.logChofer.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends LogChoferCreateManyAndReturnArgs>(args?: SelectSubset<T, LogChoferCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogChoferPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a LogChofer.
+     * @param {LogChoferDeleteArgs} args - Arguments to delete one LogChofer.
+     * @example
+     * // Delete one LogChofer
+     * const LogChofer = await prisma.logChofer.delete({
+     *   where: {
+     *     // ... filter to delete one LogChofer
+     *   }
+     * })
+     * 
+     */
+    delete<T extends LogChoferDeleteArgs>(args: SelectSubset<T, LogChoferDeleteArgs<ExtArgs>>): Prisma__LogChoferClient<$Result.GetResult<Prisma.$LogChoferPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one LogChofer.
+     * @param {LogChoferUpdateArgs} args - Arguments to update one LogChofer.
+     * @example
+     * // Update one LogChofer
+     * const logChofer = await prisma.logChofer.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends LogChoferUpdateArgs>(args: SelectSubset<T, LogChoferUpdateArgs<ExtArgs>>): Prisma__LogChoferClient<$Result.GetResult<Prisma.$LogChoferPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more LogChofers.
+     * @param {LogChoferDeleteManyArgs} args - Arguments to filter LogChofers to delete.
+     * @example
+     * // Delete a few LogChofers
+     * const { count } = await prisma.logChofer.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends LogChoferDeleteManyArgs>(args?: SelectSubset<T, LogChoferDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LogChofers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogChoferUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many LogChofers
+     * const logChofer = await prisma.logChofer.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends LogChoferUpdateManyArgs>(args: SelectSubset<T, LogChoferUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one LogChofer.
+     * @param {LogChoferUpsertArgs} args - Arguments to update or create a LogChofer.
+     * @example
+     * // Update or create a LogChofer
+     * const logChofer = await prisma.logChofer.upsert({
+     *   create: {
+     *     // ... data to create a LogChofer
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the LogChofer we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LogChoferUpsertArgs>(args: SelectSubset<T, LogChoferUpsertArgs<ExtArgs>>): Prisma__LogChoferClient<$Result.GetResult<Prisma.$LogChoferPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of LogChofers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogChoferCountArgs} args - Arguments to filter LogChofers to count.
+     * @example
+     * // Count the number of LogChofers
+     * const count = await prisma.logChofer.count({
+     *   where: {
+     *     // ... the filter for the LogChofers we want to count
+     *   }
+     * })
+    **/
+    count<T extends LogChoferCountArgs>(
+      args?: Subset<T, LogChoferCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LogChoferCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a LogChofer.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogChoferAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LogChoferAggregateArgs>(args: Subset<T, LogChoferAggregateArgs>): Prisma.PrismaPromise<GetLogChoferAggregateType<T>>
+
+    /**
+     * Group by LogChofer.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogChoferGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LogChoferGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LogChoferGroupByArgs['orderBy'] }
+        : { orderBy?: LogChoferGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LogChoferGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLogChoferGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the LogChofer model
+   */
+  readonly fields: LogChoferFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for LogChofer.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LogChoferClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    transportista<T extends LogChofer$transportistaArgs<ExtArgs> = {}>(args?: Subset<T, LogChofer$transportistaArgs<ExtArgs>>): Prisma__LogTransportistaClient<$Result.GetResult<Prisma.$LogTransportistaPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    rutas<T extends LogChofer$rutasArgs<ExtArgs> = {}>(args?: Subset<T, LogChofer$rutasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogRutaPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the LogChofer model
+   */ 
+  interface LogChoferFieldRefs {
+    readonly id: FieldRef<"LogChofer", 'String'>
+    readonly rut: FieldRef<"LogChofer", 'String'>
+    readonly nombre: FieldRef<"LogChofer", 'String'>
+    readonly telefono: FieldRef<"LogChofer", 'String'>
+    readonly email: FieldRef<"LogChofer", 'String'>
+    readonly telegramChatId: FieldRef<"LogChofer", 'String'>
+    readonly transportistaId: FieldRef<"LogChofer", 'String'>
+    readonly activo: FieldRef<"LogChofer", 'Boolean'>
+    readonly createdAt: FieldRef<"LogChofer", 'DateTime'>
+    readonly updatedAt: FieldRef<"LogChofer", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * LogChofer findUnique
+   */
+  export type LogChoferFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogChofer
+     */
+    select?: LogChoferSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogChoferInclude<ExtArgs> | null
+    /**
+     * Filter, which LogChofer to fetch.
+     */
+    where: LogChoferWhereUniqueInput
+  }
+
+  /**
+   * LogChofer findUniqueOrThrow
+   */
+  export type LogChoferFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogChofer
+     */
+    select?: LogChoferSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogChoferInclude<ExtArgs> | null
+    /**
+     * Filter, which LogChofer to fetch.
+     */
+    where: LogChoferWhereUniqueInput
+  }
+
+  /**
+   * LogChofer findFirst
+   */
+  export type LogChoferFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogChofer
+     */
+    select?: LogChoferSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogChoferInclude<ExtArgs> | null
+    /**
+     * Filter, which LogChofer to fetch.
+     */
+    where?: LogChoferWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogChofers to fetch.
+     */
+    orderBy?: LogChoferOrderByWithRelationInput | LogChoferOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LogChofers.
+     */
+    cursor?: LogChoferWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogChofers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogChofers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LogChofers.
+     */
+    distinct?: LogChoferScalarFieldEnum | LogChoferScalarFieldEnum[]
+  }
+
+  /**
+   * LogChofer findFirstOrThrow
+   */
+  export type LogChoferFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogChofer
+     */
+    select?: LogChoferSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogChoferInclude<ExtArgs> | null
+    /**
+     * Filter, which LogChofer to fetch.
+     */
+    where?: LogChoferWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogChofers to fetch.
+     */
+    orderBy?: LogChoferOrderByWithRelationInput | LogChoferOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LogChofers.
+     */
+    cursor?: LogChoferWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogChofers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogChofers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LogChofers.
+     */
+    distinct?: LogChoferScalarFieldEnum | LogChoferScalarFieldEnum[]
+  }
+
+  /**
+   * LogChofer findMany
+   */
+  export type LogChoferFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogChofer
+     */
+    select?: LogChoferSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogChoferInclude<ExtArgs> | null
+    /**
+     * Filter, which LogChofers to fetch.
+     */
+    where?: LogChoferWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogChofers to fetch.
+     */
+    orderBy?: LogChoferOrderByWithRelationInput | LogChoferOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing LogChofers.
+     */
+    cursor?: LogChoferWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogChofers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogChofers.
+     */
+    skip?: number
+    distinct?: LogChoferScalarFieldEnum | LogChoferScalarFieldEnum[]
+  }
+
+  /**
+   * LogChofer create
+   */
+  export type LogChoferCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogChofer
+     */
+    select?: LogChoferSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogChoferInclude<ExtArgs> | null
+    /**
+     * The data needed to create a LogChofer.
+     */
+    data: XOR<LogChoferCreateInput, LogChoferUncheckedCreateInput>
+  }
+
+  /**
+   * LogChofer createMany
+   */
+  export type LogChoferCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many LogChofers.
+     */
+    data: LogChoferCreateManyInput | LogChoferCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * LogChofer createManyAndReturn
+   */
+  export type LogChoferCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogChofer
+     */
+    select?: LogChoferSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many LogChofers.
+     */
+    data: LogChoferCreateManyInput | LogChoferCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogChoferIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * LogChofer update
+   */
+  export type LogChoferUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogChofer
+     */
+    select?: LogChoferSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogChoferInclude<ExtArgs> | null
+    /**
+     * The data needed to update a LogChofer.
+     */
+    data: XOR<LogChoferUpdateInput, LogChoferUncheckedUpdateInput>
+    /**
+     * Choose, which LogChofer to update.
+     */
+    where: LogChoferWhereUniqueInput
+  }
+
+  /**
+   * LogChofer updateMany
+   */
+  export type LogChoferUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update LogChofers.
+     */
+    data: XOR<LogChoferUpdateManyMutationInput, LogChoferUncheckedUpdateManyInput>
+    /**
+     * Filter which LogChofers to update
+     */
+    where?: LogChoferWhereInput
+  }
+
+  /**
+   * LogChofer upsert
+   */
+  export type LogChoferUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogChofer
+     */
+    select?: LogChoferSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogChoferInclude<ExtArgs> | null
+    /**
+     * The filter to search for the LogChofer to update in case it exists.
+     */
+    where: LogChoferWhereUniqueInput
+    /**
+     * In case the LogChofer found by the `where` argument doesn't exist, create a new LogChofer with this data.
+     */
+    create: XOR<LogChoferCreateInput, LogChoferUncheckedCreateInput>
+    /**
+     * In case the LogChofer was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LogChoferUpdateInput, LogChoferUncheckedUpdateInput>
+  }
+
+  /**
+   * LogChofer delete
+   */
+  export type LogChoferDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogChofer
+     */
+    select?: LogChoferSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogChoferInclude<ExtArgs> | null
+    /**
+     * Filter which LogChofer to delete.
+     */
+    where: LogChoferWhereUniqueInput
+  }
+
+  /**
+   * LogChofer deleteMany
+   */
+  export type LogChoferDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LogChofers to delete
+     */
+    where?: LogChoferWhereInput
+  }
+
+  /**
+   * LogChofer.transportista
+   */
+  export type LogChofer$transportistaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogTransportista
+     */
+    select?: LogTransportistaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogTransportistaInclude<ExtArgs> | null
+    where?: LogTransportistaWhereInput
+  }
+
+  /**
+   * LogChofer.rutas
+   */
+  export type LogChofer$rutasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogRuta
+     */
+    select?: LogRutaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogRutaInclude<ExtArgs> | null
+    where?: LogRutaWhereInput
+    orderBy?: LogRutaOrderByWithRelationInput | LogRutaOrderByWithRelationInput[]
+    cursor?: LogRutaWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LogRutaScalarFieldEnum | LogRutaScalarFieldEnum[]
+  }
+
+  /**
+   * LogChofer without action
+   */
+  export type LogChoferDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogChofer
+     */
+    select?: LogChoferSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogChoferInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model LogCamion
+   */
+
+  export type AggregateLogCamion = {
+    _count: LogCamionCountAggregateOutputType | null
+    _avg: LogCamionAvgAggregateOutputType | null
+    _sum: LogCamionSumAggregateOutputType | null
+    _min: LogCamionMinAggregateOutputType | null
+    _max: LogCamionMaxAggregateOutputType | null
+  }
+
+  export type LogCamionAvgAggregateOutputType = {
+    capacidadKg: Decimal | null
+    capacidadM3: Decimal | null
+  }
+
+  export type LogCamionSumAggregateOutputType = {
+    capacidadKg: Decimal | null
+    capacidadM3: Decimal | null
+  }
+
+  export type LogCamionMinAggregateOutputType = {
+    id: string | null
+    patente: string | null
+    tipoVehiculo: string | null
+    capacidadKg: Decimal | null
+    capacidadM3: Decimal | null
+    transportistaId: string | null
+    activo: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LogCamionMaxAggregateOutputType = {
+    id: string | null
+    patente: string | null
+    tipoVehiculo: string | null
+    capacidadKg: Decimal | null
+    capacidadM3: Decimal | null
+    transportistaId: string | null
+    activo: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LogCamionCountAggregateOutputType = {
+    id: number
+    patente: number
+    tipoVehiculo: number
+    capacidadKg: number
+    capacidadM3: number
+    transportistaId: number
+    activo: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type LogCamionAvgAggregateInputType = {
+    capacidadKg?: true
+    capacidadM3?: true
+  }
+
+  export type LogCamionSumAggregateInputType = {
+    capacidadKg?: true
+    capacidadM3?: true
+  }
+
+  export type LogCamionMinAggregateInputType = {
+    id?: true
+    patente?: true
+    tipoVehiculo?: true
+    capacidadKg?: true
+    capacidadM3?: true
+    transportistaId?: true
+    activo?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LogCamionMaxAggregateInputType = {
+    id?: true
+    patente?: true
+    tipoVehiculo?: true
+    capacidadKg?: true
+    capacidadM3?: true
+    transportistaId?: true
+    activo?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LogCamionCountAggregateInputType = {
+    id?: true
+    patente?: true
+    tipoVehiculo?: true
+    capacidadKg?: true
+    capacidadM3?: true
+    transportistaId?: true
+    activo?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type LogCamionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LogCamion to aggregate.
+     */
+    where?: LogCamionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogCamions to fetch.
+     */
+    orderBy?: LogCamionOrderByWithRelationInput | LogCamionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LogCamionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogCamions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogCamions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned LogCamions
+    **/
+    _count?: true | LogCamionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: LogCamionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: LogCamionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LogCamionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LogCamionMaxAggregateInputType
+  }
+
+  export type GetLogCamionAggregateType<T extends LogCamionAggregateArgs> = {
+        [P in keyof T & keyof AggregateLogCamion]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLogCamion[P]>
+      : GetScalarType<T[P], AggregateLogCamion[P]>
+  }
+
+
+
+
+  export type LogCamionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LogCamionWhereInput
+    orderBy?: LogCamionOrderByWithAggregationInput | LogCamionOrderByWithAggregationInput[]
+    by: LogCamionScalarFieldEnum[] | LogCamionScalarFieldEnum
+    having?: LogCamionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LogCamionCountAggregateInputType | true
+    _avg?: LogCamionAvgAggregateInputType
+    _sum?: LogCamionSumAggregateInputType
+    _min?: LogCamionMinAggregateInputType
+    _max?: LogCamionMaxAggregateInputType
+  }
+
+  export type LogCamionGroupByOutputType = {
+    id: string
+    patente: string
+    tipoVehiculo: string
+    capacidadKg: Decimal | null
+    capacidadM3: Decimal | null
+    transportistaId: string | null
+    activo: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: LogCamionCountAggregateOutputType | null
+    _avg: LogCamionAvgAggregateOutputType | null
+    _sum: LogCamionSumAggregateOutputType | null
+    _min: LogCamionMinAggregateOutputType | null
+    _max: LogCamionMaxAggregateOutputType | null
+  }
+
+  type GetLogCamionGroupByPayload<T extends LogCamionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LogCamionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LogCamionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LogCamionGroupByOutputType[P]>
+            : GetScalarType<T[P], LogCamionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LogCamionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    patente?: boolean
+    tipoVehiculo?: boolean
+    capacidadKg?: boolean
+    capacidadM3?: boolean
+    transportistaId?: boolean
+    activo?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    transportista?: boolean | LogCamion$transportistaArgs<ExtArgs>
+    rutas?: boolean | LogCamion$rutasArgs<ExtArgs>
+    _count?: boolean | LogCamionCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["logCamion"]>
+
+  export type LogCamionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    patente?: boolean
+    tipoVehiculo?: boolean
+    capacidadKg?: boolean
+    capacidadM3?: boolean
+    transportistaId?: boolean
+    activo?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    transportista?: boolean | LogCamion$transportistaArgs<ExtArgs>
+  }, ExtArgs["result"]["logCamion"]>
+
+  export type LogCamionSelectScalar = {
+    id?: boolean
+    patente?: boolean
+    tipoVehiculo?: boolean
+    capacidadKg?: boolean
+    capacidadM3?: boolean
+    transportistaId?: boolean
+    activo?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type LogCamionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    transportista?: boolean | LogCamion$transportistaArgs<ExtArgs>
+    rutas?: boolean | LogCamion$rutasArgs<ExtArgs>
+    _count?: boolean | LogCamionCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type LogCamionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    transportista?: boolean | LogCamion$transportistaArgs<ExtArgs>
+  }
+
+  export type $LogCamionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "LogCamion"
+    objects: {
+      transportista: Prisma.$LogTransportistaPayload<ExtArgs> | null
+      rutas: Prisma.$LogRutaPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      patente: string
+      tipoVehiculo: string
+      capacidadKg: Prisma.Decimal | null
+      capacidadM3: Prisma.Decimal | null
+      transportistaId: string | null
+      activo: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["logCamion"]>
+    composites: {}
+  }
+
+  type LogCamionGetPayload<S extends boolean | null | undefined | LogCamionDefaultArgs> = $Result.GetResult<Prisma.$LogCamionPayload, S>
+
+  type LogCamionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<LogCamionFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: LogCamionCountAggregateInputType | true
+    }
+
+  export interface LogCamionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['LogCamion'], meta: { name: 'LogCamion' } }
+    /**
+     * Find zero or one LogCamion that matches the filter.
+     * @param {LogCamionFindUniqueArgs} args - Arguments to find a LogCamion
+     * @example
+     * // Get one LogCamion
+     * const logCamion = await prisma.logCamion.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends LogCamionFindUniqueArgs>(args: SelectSubset<T, LogCamionFindUniqueArgs<ExtArgs>>): Prisma__LogCamionClient<$Result.GetResult<Prisma.$LogCamionPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one LogCamion that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {LogCamionFindUniqueOrThrowArgs} args - Arguments to find a LogCamion
+     * @example
+     * // Get one LogCamion
+     * const logCamion = await prisma.logCamion.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends LogCamionFindUniqueOrThrowArgs>(args: SelectSubset<T, LogCamionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LogCamionClient<$Result.GetResult<Prisma.$LogCamionPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first LogCamion that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogCamionFindFirstArgs} args - Arguments to find a LogCamion
+     * @example
+     * // Get one LogCamion
+     * const logCamion = await prisma.logCamion.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends LogCamionFindFirstArgs>(args?: SelectSubset<T, LogCamionFindFirstArgs<ExtArgs>>): Prisma__LogCamionClient<$Result.GetResult<Prisma.$LogCamionPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first LogCamion that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogCamionFindFirstOrThrowArgs} args - Arguments to find a LogCamion
+     * @example
+     * // Get one LogCamion
+     * const logCamion = await prisma.logCamion.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends LogCamionFindFirstOrThrowArgs>(args?: SelectSubset<T, LogCamionFindFirstOrThrowArgs<ExtArgs>>): Prisma__LogCamionClient<$Result.GetResult<Prisma.$LogCamionPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more LogCamions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogCamionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all LogCamions
+     * const logCamions = await prisma.logCamion.findMany()
+     * 
+     * // Get first 10 LogCamions
+     * const logCamions = await prisma.logCamion.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const logCamionWithIdOnly = await prisma.logCamion.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends LogCamionFindManyArgs>(args?: SelectSubset<T, LogCamionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogCamionPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a LogCamion.
+     * @param {LogCamionCreateArgs} args - Arguments to create a LogCamion.
+     * @example
+     * // Create one LogCamion
+     * const LogCamion = await prisma.logCamion.create({
+     *   data: {
+     *     // ... data to create a LogCamion
+     *   }
+     * })
+     * 
+     */
+    create<T extends LogCamionCreateArgs>(args: SelectSubset<T, LogCamionCreateArgs<ExtArgs>>): Prisma__LogCamionClient<$Result.GetResult<Prisma.$LogCamionPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many LogCamions.
+     * @param {LogCamionCreateManyArgs} args - Arguments to create many LogCamions.
+     * @example
+     * // Create many LogCamions
+     * const logCamion = await prisma.logCamion.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends LogCamionCreateManyArgs>(args?: SelectSubset<T, LogCamionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many LogCamions and returns the data saved in the database.
+     * @param {LogCamionCreateManyAndReturnArgs} args - Arguments to create many LogCamions.
+     * @example
+     * // Create many LogCamions
+     * const logCamion = await prisma.logCamion.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many LogCamions and only return the `id`
+     * const logCamionWithIdOnly = await prisma.logCamion.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends LogCamionCreateManyAndReturnArgs>(args?: SelectSubset<T, LogCamionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogCamionPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a LogCamion.
+     * @param {LogCamionDeleteArgs} args - Arguments to delete one LogCamion.
+     * @example
+     * // Delete one LogCamion
+     * const LogCamion = await prisma.logCamion.delete({
+     *   where: {
+     *     // ... filter to delete one LogCamion
+     *   }
+     * })
+     * 
+     */
+    delete<T extends LogCamionDeleteArgs>(args: SelectSubset<T, LogCamionDeleteArgs<ExtArgs>>): Prisma__LogCamionClient<$Result.GetResult<Prisma.$LogCamionPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one LogCamion.
+     * @param {LogCamionUpdateArgs} args - Arguments to update one LogCamion.
+     * @example
+     * // Update one LogCamion
+     * const logCamion = await prisma.logCamion.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends LogCamionUpdateArgs>(args: SelectSubset<T, LogCamionUpdateArgs<ExtArgs>>): Prisma__LogCamionClient<$Result.GetResult<Prisma.$LogCamionPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more LogCamions.
+     * @param {LogCamionDeleteManyArgs} args - Arguments to filter LogCamions to delete.
+     * @example
+     * // Delete a few LogCamions
+     * const { count } = await prisma.logCamion.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends LogCamionDeleteManyArgs>(args?: SelectSubset<T, LogCamionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LogCamions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogCamionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many LogCamions
+     * const logCamion = await prisma.logCamion.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends LogCamionUpdateManyArgs>(args: SelectSubset<T, LogCamionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one LogCamion.
+     * @param {LogCamionUpsertArgs} args - Arguments to update or create a LogCamion.
+     * @example
+     * // Update or create a LogCamion
+     * const logCamion = await prisma.logCamion.upsert({
+     *   create: {
+     *     // ... data to create a LogCamion
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the LogCamion we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LogCamionUpsertArgs>(args: SelectSubset<T, LogCamionUpsertArgs<ExtArgs>>): Prisma__LogCamionClient<$Result.GetResult<Prisma.$LogCamionPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of LogCamions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogCamionCountArgs} args - Arguments to filter LogCamions to count.
+     * @example
+     * // Count the number of LogCamions
+     * const count = await prisma.logCamion.count({
+     *   where: {
+     *     // ... the filter for the LogCamions we want to count
+     *   }
+     * })
+    **/
+    count<T extends LogCamionCountArgs>(
+      args?: Subset<T, LogCamionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LogCamionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a LogCamion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogCamionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LogCamionAggregateArgs>(args: Subset<T, LogCamionAggregateArgs>): Prisma.PrismaPromise<GetLogCamionAggregateType<T>>
+
+    /**
+     * Group by LogCamion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogCamionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LogCamionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LogCamionGroupByArgs['orderBy'] }
+        : { orderBy?: LogCamionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LogCamionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLogCamionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the LogCamion model
+   */
+  readonly fields: LogCamionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for LogCamion.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LogCamionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    transportista<T extends LogCamion$transportistaArgs<ExtArgs> = {}>(args?: Subset<T, LogCamion$transportistaArgs<ExtArgs>>): Prisma__LogTransportistaClient<$Result.GetResult<Prisma.$LogTransportistaPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    rutas<T extends LogCamion$rutasArgs<ExtArgs> = {}>(args?: Subset<T, LogCamion$rutasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogRutaPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the LogCamion model
+   */ 
+  interface LogCamionFieldRefs {
+    readonly id: FieldRef<"LogCamion", 'String'>
+    readonly patente: FieldRef<"LogCamion", 'String'>
+    readonly tipoVehiculo: FieldRef<"LogCamion", 'String'>
+    readonly capacidadKg: FieldRef<"LogCamion", 'Decimal'>
+    readonly capacidadM3: FieldRef<"LogCamion", 'Decimal'>
+    readonly transportistaId: FieldRef<"LogCamion", 'String'>
+    readonly activo: FieldRef<"LogCamion", 'Boolean'>
+    readonly createdAt: FieldRef<"LogCamion", 'DateTime'>
+    readonly updatedAt: FieldRef<"LogCamion", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * LogCamion findUnique
+   */
+  export type LogCamionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogCamion
+     */
+    select?: LogCamionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogCamionInclude<ExtArgs> | null
+    /**
+     * Filter, which LogCamion to fetch.
+     */
+    where: LogCamionWhereUniqueInput
+  }
+
+  /**
+   * LogCamion findUniqueOrThrow
+   */
+  export type LogCamionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogCamion
+     */
+    select?: LogCamionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogCamionInclude<ExtArgs> | null
+    /**
+     * Filter, which LogCamion to fetch.
+     */
+    where: LogCamionWhereUniqueInput
+  }
+
+  /**
+   * LogCamion findFirst
+   */
+  export type LogCamionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogCamion
+     */
+    select?: LogCamionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogCamionInclude<ExtArgs> | null
+    /**
+     * Filter, which LogCamion to fetch.
+     */
+    where?: LogCamionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogCamions to fetch.
+     */
+    orderBy?: LogCamionOrderByWithRelationInput | LogCamionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LogCamions.
+     */
+    cursor?: LogCamionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogCamions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogCamions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LogCamions.
+     */
+    distinct?: LogCamionScalarFieldEnum | LogCamionScalarFieldEnum[]
+  }
+
+  /**
+   * LogCamion findFirstOrThrow
+   */
+  export type LogCamionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogCamion
+     */
+    select?: LogCamionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogCamionInclude<ExtArgs> | null
+    /**
+     * Filter, which LogCamion to fetch.
+     */
+    where?: LogCamionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogCamions to fetch.
+     */
+    orderBy?: LogCamionOrderByWithRelationInput | LogCamionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LogCamions.
+     */
+    cursor?: LogCamionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogCamions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogCamions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LogCamions.
+     */
+    distinct?: LogCamionScalarFieldEnum | LogCamionScalarFieldEnum[]
+  }
+
+  /**
+   * LogCamion findMany
+   */
+  export type LogCamionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogCamion
+     */
+    select?: LogCamionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogCamionInclude<ExtArgs> | null
+    /**
+     * Filter, which LogCamions to fetch.
+     */
+    where?: LogCamionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogCamions to fetch.
+     */
+    orderBy?: LogCamionOrderByWithRelationInput | LogCamionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing LogCamions.
+     */
+    cursor?: LogCamionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogCamions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogCamions.
+     */
+    skip?: number
+    distinct?: LogCamionScalarFieldEnum | LogCamionScalarFieldEnum[]
+  }
+
+  /**
+   * LogCamion create
+   */
+  export type LogCamionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogCamion
+     */
+    select?: LogCamionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogCamionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a LogCamion.
+     */
+    data: XOR<LogCamionCreateInput, LogCamionUncheckedCreateInput>
+  }
+
+  /**
+   * LogCamion createMany
+   */
+  export type LogCamionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many LogCamions.
+     */
+    data: LogCamionCreateManyInput | LogCamionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * LogCamion createManyAndReturn
+   */
+  export type LogCamionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogCamion
+     */
+    select?: LogCamionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many LogCamions.
+     */
+    data: LogCamionCreateManyInput | LogCamionCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogCamionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * LogCamion update
+   */
+  export type LogCamionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogCamion
+     */
+    select?: LogCamionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogCamionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a LogCamion.
+     */
+    data: XOR<LogCamionUpdateInput, LogCamionUncheckedUpdateInput>
+    /**
+     * Choose, which LogCamion to update.
+     */
+    where: LogCamionWhereUniqueInput
+  }
+
+  /**
+   * LogCamion updateMany
+   */
+  export type LogCamionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update LogCamions.
+     */
+    data: XOR<LogCamionUpdateManyMutationInput, LogCamionUncheckedUpdateManyInput>
+    /**
+     * Filter which LogCamions to update
+     */
+    where?: LogCamionWhereInput
+  }
+
+  /**
+   * LogCamion upsert
+   */
+  export type LogCamionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogCamion
+     */
+    select?: LogCamionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogCamionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the LogCamion to update in case it exists.
+     */
+    where: LogCamionWhereUniqueInput
+    /**
+     * In case the LogCamion found by the `where` argument doesn't exist, create a new LogCamion with this data.
+     */
+    create: XOR<LogCamionCreateInput, LogCamionUncheckedCreateInput>
+    /**
+     * In case the LogCamion was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LogCamionUpdateInput, LogCamionUncheckedUpdateInput>
+  }
+
+  /**
+   * LogCamion delete
+   */
+  export type LogCamionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogCamion
+     */
+    select?: LogCamionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogCamionInclude<ExtArgs> | null
+    /**
+     * Filter which LogCamion to delete.
+     */
+    where: LogCamionWhereUniqueInput
+  }
+
+  /**
+   * LogCamion deleteMany
+   */
+  export type LogCamionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LogCamions to delete
+     */
+    where?: LogCamionWhereInput
+  }
+
+  /**
+   * LogCamion.transportista
+   */
+  export type LogCamion$transportistaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogTransportista
+     */
+    select?: LogTransportistaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogTransportistaInclude<ExtArgs> | null
+    where?: LogTransportistaWhereInput
+  }
+
+  /**
+   * LogCamion.rutas
+   */
+  export type LogCamion$rutasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogRuta
+     */
+    select?: LogRutaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogRutaInclude<ExtArgs> | null
+    where?: LogRutaWhereInput
+    orderBy?: LogRutaOrderByWithRelationInput | LogRutaOrderByWithRelationInput[]
+    cursor?: LogRutaWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LogRutaScalarFieldEnum | LogRutaScalarFieldEnum[]
+  }
+
+  /**
+   * LogCamion without action
+   */
+  export type LogCamionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogCamion
+     */
+    select?: LogCamionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogCamionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model LogCliente
+   */
+
+  export type AggregateLogCliente = {
+    _count: LogClienteCountAggregateOutputType | null
+    _min: LogClienteMinAggregateOutputType | null
+    _max: LogClienteMaxAggregateOutputType | null
+  }
+
+  export type LogClienteMinAggregateOutputType = {
+    id: string | null
+    codigo: string | null
+    razonSocial: string | null
+    direccion: string | null
+    comuna: string | null
+    region: string | null
+    activo: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LogClienteMaxAggregateOutputType = {
+    id: string | null
+    codigo: string | null
+    razonSocial: string | null
+    direccion: string | null
+    comuna: string | null
+    region: string | null
+    activo: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LogClienteCountAggregateOutputType = {
+    id: number
+    codigo: number
+    razonSocial: number
+    direccion: number
+    comuna: number
+    region: number
+    activo: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type LogClienteMinAggregateInputType = {
+    id?: true
+    codigo?: true
+    razonSocial?: true
+    direccion?: true
+    comuna?: true
+    region?: true
+    activo?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LogClienteMaxAggregateInputType = {
+    id?: true
+    codigo?: true
+    razonSocial?: true
+    direccion?: true
+    comuna?: true
+    region?: true
+    activo?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LogClienteCountAggregateInputType = {
+    id?: true
+    codigo?: true
+    razonSocial?: true
+    direccion?: true
+    comuna?: true
+    region?: true
+    activo?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type LogClienteAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LogCliente to aggregate.
+     */
+    where?: LogClienteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogClientes to fetch.
+     */
+    orderBy?: LogClienteOrderByWithRelationInput | LogClienteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LogClienteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogClientes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogClientes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned LogClientes
+    **/
+    _count?: true | LogClienteCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LogClienteMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LogClienteMaxAggregateInputType
+  }
+
+  export type GetLogClienteAggregateType<T extends LogClienteAggregateArgs> = {
+        [P in keyof T & keyof AggregateLogCliente]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLogCliente[P]>
+      : GetScalarType<T[P], AggregateLogCliente[P]>
+  }
+
+
+
+
+  export type LogClienteGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LogClienteWhereInput
+    orderBy?: LogClienteOrderByWithAggregationInput | LogClienteOrderByWithAggregationInput[]
+    by: LogClienteScalarFieldEnum[] | LogClienteScalarFieldEnum
+    having?: LogClienteScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LogClienteCountAggregateInputType | true
+    _min?: LogClienteMinAggregateInputType
+    _max?: LogClienteMaxAggregateInputType
+  }
+
+  export type LogClienteGroupByOutputType = {
+    id: string
+    codigo: string
+    razonSocial: string
+    direccion: string | null
+    comuna: string | null
+    region: string | null
+    activo: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: LogClienteCountAggregateOutputType | null
+    _min: LogClienteMinAggregateOutputType | null
+    _max: LogClienteMaxAggregateOutputType | null
+  }
+
+  type GetLogClienteGroupByPayload<T extends LogClienteGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LogClienteGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LogClienteGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LogClienteGroupByOutputType[P]>
+            : GetScalarType<T[P], LogClienteGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LogClienteSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    codigo?: boolean
+    razonSocial?: boolean
+    direccion?: boolean
+    comuna?: boolean
+    region?: boolean
+    activo?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    rutas?: boolean | LogCliente$rutasArgs<ExtArgs>
+    _count?: boolean | LogClienteCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["logCliente"]>
+
+  export type LogClienteSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    codigo?: boolean
+    razonSocial?: boolean
+    direccion?: boolean
+    comuna?: boolean
+    region?: boolean
+    activo?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["logCliente"]>
+
+  export type LogClienteSelectScalar = {
+    id?: boolean
+    codigo?: boolean
+    razonSocial?: boolean
+    direccion?: boolean
+    comuna?: boolean
+    region?: boolean
+    activo?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type LogClienteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    rutas?: boolean | LogCliente$rutasArgs<ExtArgs>
+    _count?: boolean | LogClienteCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type LogClienteIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $LogClientePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "LogCliente"
+    objects: {
+      rutas: Prisma.$LogRutaPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      codigo: string
+      razonSocial: string
+      direccion: string | null
+      comuna: string | null
+      region: string | null
+      activo: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["logCliente"]>
+    composites: {}
+  }
+
+  type LogClienteGetPayload<S extends boolean | null | undefined | LogClienteDefaultArgs> = $Result.GetResult<Prisma.$LogClientePayload, S>
+
+  type LogClienteCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<LogClienteFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: LogClienteCountAggregateInputType | true
+    }
+
+  export interface LogClienteDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['LogCliente'], meta: { name: 'LogCliente' } }
+    /**
+     * Find zero or one LogCliente that matches the filter.
+     * @param {LogClienteFindUniqueArgs} args - Arguments to find a LogCliente
+     * @example
+     * // Get one LogCliente
+     * const logCliente = await prisma.logCliente.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends LogClienteFindUniqueArgs>(args: SelectSubset<T, LogClienteFindUniqueArgs<ExtArgs>>): Prisma__LogClienteClient<$Result.GetResult<Prisma.$LogClientePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one LogCliente that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {LogClienteFindUniqueOrThrowArgs} args - Arguments to find a LogCliente
+     * @example
+     * // Get one LogCliente
+     * const logCliente = await prisma.logCliente.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends LogClienteFindUniqueOrThrowArgs>(args: SelectSubset<T, LogClienteFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LogClienteClient<$Result.GetResult<Prisma.$LogClientePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first LogCliente that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogClienteFindFirstArgs} args - Arguments to find a LogCliente
+     * @example
+     * // Get one LogCliente
+     * const logCliente = await prisma.logCliente.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends LogClienteFindFirstArgs>(args?: SelectSubset<T, LogClienteFindFirstArgs<ExtArgs>>): Prisma__LogClienteClient<$Result.GetResult<Prisma.$LogClientePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first LogCliente that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogClienteFindFirstOrThrowArgs} args - Arguments to find a LogCliente
+     * @example
+     * // Get one LogCliente
+     * const logCliente = await prisma.logCliente.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends LogClienteFindFirstOrThrowArgs>(args?: SelectSubset<T, LogClienteFindFirstOrThrowArgs<ExtArgs>>): Prisma__LogClienteClient<$Result.GetResult<Prisma.$LogClientePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more LogClientes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogClienteFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all LogClientes
+     * const logClientes = await prisma.logCliente.findMany()
+     * 
+     * // Get first 10 LogClientes
+     * const logClientes = await prisma.logCliente.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const logClienteWithIdOnly = await prisma.logCliente.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends LogClienteFindManyArgs>(args?: SelectSubset<T, LogClienteFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogClientePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a LogCliente.
+     * @param {LogClienteCreateArgs} args - Arguments to create a LogCliente.
+     * @example
+     * // Create one LogCliente
+     * const LogCliente = await prisma.logCliente.create({
+     *   data: {
+     *     // ... data to create a LogCliente
+     *   }
+     * })
+     * 
+     */
+    create<T extends LogClienteCreateArgs>(args: SelectSubset<T, LogClienteCreateArgs<ExtArgs>>): Prisma__LogClienteClient<$Result.GetResult<Prisma.$LogClientePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many LogClientes.
+     * @param {LogClienteCreateManyArgs} args - Arguments to create many LogClientes.
+     * @example
+     * // Create many LogClientes
+     * const logCliente = await prisma.logCliente.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends LogClienteCreateManyArgs>(args?: SelectSubset<T, LogClienteCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many LogClientes and returns the data saved in the database.
+     * @param {LogClienteCreateManyAndReturnArgs} args - Arguments to create many LogClientes.
+     * @example
+     * // Create many LogClientes
+     * const logCliente = await prisma.logCliente.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many LogClientes and only return the `id`
+     * const logClienteWithIdOnly = await prisma.logCliente.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends LogClienteCreateManyAndReturnArgs>(args?: SelectSubset<T, LogClienteCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogClientePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a LogCliente.
+     * @param {LogClienteDeleteArgs} args - Arguments to delete one LogCliente.
+     * @example
+     * // Delete one LogCliente
+     * const LogCliente = await prisma.logCliente.delete({
+     *   where: {
+     *     // ... filter to delete one LogCliente
+     *   }
+     * })
+     * 
+     */
+    delete<T extends LogClienteDeleteArgs>(args: SelectSubset<T, LogClienteDeleteArgs<ExtArgs>>): Prisma__LogClienteClient<$Result.GetResult<Prisma.$LogClientePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one LogCliente.
+     * @param {LogClienteUpdateArgs} args - Arguments to update one LogCliente.
+     * @example
+     * // Update one LogCliente
+     * const logCliente = await prisma.logCliente.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends LogClienteUpdateArgs>(args: SelectSubset<T, LogClienteUpdateArgs<ExtArgs>>): Prisma__LogClienteClient<$Result.GetResult<Prisma.$LogClientePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more LogClientes.
+     * @param {LogClienteDeleteManyArgs} args - Arguments to filter LogClientes to delete.
+     * @example
+     * // Delete a few LogClientes
+     * const { count } = await prisma.logCliente.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends LogClienteDeleteManyArgs>(args?: SelectSubset<T, LogClienteDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LogClientes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogClienteUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many LogClientes
+     * const logCliente = await prisma.logCliente.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends LogClienteUpdateManyArgs>(args: SelectSubset<T, LogClienteUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one LogCliente.
+     * @param {LogClienteUpsertArgs} args - Arguments to update or create a LogCliente.
+     * @example
+     * // Update or create a LogCliente
+     * const logCliente = await prisma.logCliente.upsert({
+     *   create: {
+     *     // ... data to create a LogCliente
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the LogCliente we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LogClienteUpsertArgs>(args: SelectSubset<T, LogClienteUpsertArgs<ExtArgs>>): Prisma__LogClienteClient<$Result.GetResult<Prisma.$LogClientePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of LogClientes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogClienteCountArgs} args - Arguments to filter LogClientes to count.
+     * @example
+     * // Count the number of LogClientes
+     * const count = await prisma.logCliente.count({
+     *   where: {
+     *     // ... the filter for the LogClientes we want to count
+     *   }
+     * })
+    **/
+    count<T extends LogClienteCountArgs>(
+      args?: Subset<T, LogClienteCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LogClienteCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a LogCliente.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogClienteAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LogClienteAggregateArgs>(args: Subset<T, LogClienteAggregateArgs>): Prisma.PrismaPromise<GetLogClienteAggregateType<T>>
+
+    /**
+     * Group by LogCliente.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogClienteGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LogClienteGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LogClienteGroupByArgs['orderBy'] }
+        : { orderBy?: LogClienteGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LogClienteGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLogClienteGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the LogCliente model
+   */
+  readonly fields: LogClienteFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for LogCliente.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LogClienteClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    rutas<T extends LogCliente$rutasArgs<ExtArgs> = {}>(args?: Subset<T, LogCliente$rutasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogRutaPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the LogCliente model
+   */ 
+  interface LogClienteFieldRefs {
+    readonly id: FieldRef<"LogCliente", 'String'>
+    readonly codigo: FieldRef<"LogCliente", 'String'>
+    readonly razonSocial: FieldRef<"LogCliente", 'String'>
+    readonly direccion: FieldRef<"LogCliente", 'String'>
+    readonly comuna: FieldRef<"LogCliente", 'String'>
+    readonly region: FieldRef<"LogCliente", 'String'>
+    readonly activo: FieldRef<"LogCliente", 'Boolean'>
+    readonly createdAt: FieldRef<"LogCliente", 'DateTime'>
+    readonly updatedAt: FieldRef<"LogCliente", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * LogCliente findUnique
+   */
+  export type LogClienteFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogCliente
+     */
+    select?: LogClienteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogClienteInclude<ExtArgs> | null
+    /**
+     * Filter, which LogCliente to fetch.
+     */
+    where: LogClienteWhereUniqueInput
+  }
+
+  /**
+   * LogCliente findUniqueOrThrow
+   */
+  export type LogClienteFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogCliente
+     */
+    select?: LogClienteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogClienteInclude<ExtArgs> | null
+    /**
+     * Filter, which LogCliente to fetch.
+     */
+    where: LogClienteWhereUniqueInput
+  }
+
+  /**
+   * LogCliente findFirst
+   */
+  export type LogClienteFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogCliente
+     */
+    select?: LogClienteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogClienteInclude<ExtArgs> | null
+    /**
+     * Filter, which LogCliente to fetch.
+     */
+    where?: LogClienteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogClientes to fetch.
+     */
+    orderBy?: LogClienteOrderByWithRelationInput | LogClienteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LogClientes.
+     */
+    cursor?: LogClienteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogClientes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogClientes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LogClientes.
+     */
+    distinct?: LogClienteScalarFieldEnum | LogClienteScalarFieldEnum[]
+  }
+
+  /**
+   * LogCliente findFirstOrThrow
+   */
+  export type LogClienteFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogCliente
+     */
+    select?: LogClienteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogClienteInclude<ExtArgs> | null
+    /**
+     * Filter, which LogCliente to fetch.
+     */
+    where?: LogClienteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogClientes to fetch.
+     */
+    orderBy?: LogClienteOrderByWithRelationInput | LogClienteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LogClientes.
+     */
+    cursor?: LogClienteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogClientes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogClientes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LogClientes.
+     */
+    distinct?: LogClienteScalarFieldEnum | LogClienteScalarFieldEnum[]
+  }
+
+  /**
+   * LogCliente findMany
+   */
+  export type LogClienteFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogCliente
+     */
+    select?: LogClienteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogClienteInclude<ExtArgs> | null
+    /**
+     * Filter, which LogClientes to fetch.
+     */
+    where?: LogClienteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogClientes to fetch.
+     */
+    orderBy?: LogClienteOrderByWithRelationInput | LogClienteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing LogClientes.
+     */
+    cursor?: LogClienteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogClientes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogClientes.
+     */
+    skip?: number
+    distinct?: LogClienteScalarFieldEnum | LogClienteScalarFieldEnum[]
+  }
+
+  /**
+   * LogCliente create
+   */
+  export type LogClienteCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogCliente
+     */
+    select?: LogClienteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogClienteInclude<ExtArgs> | null
+    /**
+     * The data needed to create a LogCliente.
+     */
+    data: XOR<LogClienteCreateInput, LogClienteUncheckedCreateInput>
+  }
+
+  /**
+   * LogCliente createMany
+   */
+  export type LogClienteCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many LogClientes.
+     */
+    data: LogClienteCreateManyInput | LogClienteCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * LogCliente createManyAndReturn
+   */
+  export type LogClienteCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogCliente
+     */
+    select?: LogClienteSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many LogClientes.
+     */
+    data: LogClienteCreateManyInput | LogClienteCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * LogCliente update
+   */
+  export type LogClienteUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogCliente
+     */
+    select?: LogClienteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogClienteInclude<ExtArgs> | null
+    /**
+     * The data needed to update a LogCliente.
+     */
+    data: XOR<LogClienteUpdateInput, LogClienteUncheckedUpdateInput>
+    /**
+     * Choose, which LogCliente to update.
+     */
+    where: LogClienteWhereUniqueInput
+  }
+
+  /**
+   * LogCliente updateMany
+   */
+  export type LogClienteUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update LogClientes.
+     */
+    data: XOR<LogClienteUpdateManyMutationInput, LogClienteUncheckedUpdateManyInput>
+    /**
+     * Filter which LogClientes to update
+     */
+    where?: LogClienteWhereInput
+  }
+
+  /**
+   * LogCliente upsert
+   */
+  export type LogClienteUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogCliente
+     */
+    select?: LogClienteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogClienteInclude<ExtArgs> | null
+    /**
+     * The filter to search for the LogCliente to update in case it exists.
+     */
+    where: LogClienteWhereUniqueInput
+    /**
+     * In case the LogCliente found by the `where` argument doesn't exist, create a new LogCliente with this data.
+     */
+    create: XOR<LogClienteCreateInput, LogClienteUncheckedCreateInput>
+    /**
+     * In case the LogCliente was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LogClienteUpdateInput, LogClienteUncheckedUpdateInput>
+  }
+
+  /**
+   * LogCliente delete
+   */
+  export type LogClienteDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogCliente
+     */
+    select?: LogClienteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogClienteInclude<ExtArgs> | null
+    /**
+     * Filter which LogCliente to delete.
+     */
+    where: LogClienteWhereUniqueInput
+  }
+
+  /**
+   * LogCliente deleteMany
+   */
+  export type LogClienteDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LogClientes to delete
+     */
+    where?: LogClienteWhereInput
+  }
+
+  /**
+   * LogCliente.rutas
+   */
+  export type LogCliente$rutasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogRuta
+     */
+    select?: LogRutaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogRutaInclude<ExtArgs> | null
+    where?: LogRutaWhereInput
+    orderBy?: LogRutaOrderByWithRelationInput | LogRutaOrderByWithRelationInput[]
+    cursor?: LogRutaWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LogRutaScalarFieldEnum | LogRutaScalarFieldEnum[]
+  }
+
+  /**
+   * LogCliente without action
+   */
+  export type LogClienteDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogCliente
+     */
+    select?: LogClienteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogClienteInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model LogRuta
+   */
+
+  export type AggregateLogRuta = {
+    _count: LogRutaCountAggregateOutputType | null
+    _avg: LogRutaAvgAggregateOutputType | null
+    _sum: LogRutaSumAggregateOutputType | null
+    _min: LogRutaMinAggregateOutputType | null
+    _max: LogRutaMaxAggregateOutputType | null
+  }
+
+  export type LogRutaAvgAggregateOutputType = {
+    totalBultos: number | null
+    totalKilos: Decimal | null
+  }
+
+  export type LogRutaSumAggregateOutputType = {
+    totalBultos: number | null
+    totalKilos: Decimal | null
+  }
+
+  export type LogRutaMinAggregateOutputType = {
+    id: string | null
+    numeroRuta: string | null
+    bodegaId: string | null
+    transportistaId: string | null
+    choferId: string | null
+    camionId: string | null
+    clienteId: string | null
+    estado: string | null
+    andenId: string | null
+    fechaRuta: string | null
+    horaProgramada: string | null
+    horaLlegadaPorton: Date | null
+    horaEntradaAnden: Date | null
+    horaSalidaAnden: Date | null
+    selloSalida: string | null
+    totalBultos: number | null
+    totalKilos: Decimal | null
+    observaciones: string | null
+    telegramMessageId: string | null
+    tokenRuta: string | null
+    creadaPorId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LogRutaMaxAggregateOutputType = {
+    id: string | null
+    numeroRuta: string | null
+    bodegaId: string | null
+    transportistaId: string | null
+    choferId: string | null
+    camionId: string | null
+    clienteId: string | null
+    estado: string | null
+    andenId: string | null
+    fechaRuta: string | null
+    horaProgramada: string | null
+    horaLlegadaPorton: Date | null
+    horaEntradaAnden: Date | null
+    horaSalidaAnden: Date | null
+    selloSalida: string | null
+    totalBultos: number | null
+    totalKilos: Decimal | null
+    observaciones: string | null
+    telegramMessageId: string | null
+    tokenRuta: string | null
+    creadaPorId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LogRutaCountAggregateOutputType = {
+    id: number
+    numeroRuta: number
+    bodegaId: number
+    transportistaId: number
+    choferId: number
+    camionId: number
+    clienteId: number
+    estado: number
+    andenId: number
+    fechaRuta: number
+    horaProgramada: number
+    horaLlegadaPorton: number
+    horaEntradaAnden: number
+    horaSalidaAnden: number
+    selloSalida: number
+    totalBultos: number
+    totalKilos: number
+    observaciones: number
+    telegramMessageId: number
+    tokenRuta: number
+    creadaPorId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type LogRutaAvgAggregateInputType = {
+    totalBultos?: true
+    totalKilos?: true
+  }
+
+  export type LogRutaSumAggregateInputType = {
+    totalBultos?: true
+    totalKilos?: true
+  }
+
+  export type LogRutaMinAggregateInputType = {
+    id?: true
+    numeroRuta?: true
+    bodegaId?: true
+    transportistaId?: true
+    choferId?: true
+    camionId?: true
+    clienteId?: true
+    estado?: true
+    andenId?: true
+    fechaRuta?: true
+    horaProgramada?: true
+    horaLlegadaPorton?: true
+    horaEntradaAnden?: true
+    horaSalidaAnden?: true
+    selloSalida?: true
+    totalBultos?: true
+    totalKilos?: true
+    observaciones?: true
+    telegramMessageId?: true
+    tokenRuta?: true
+    creadaPorId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LogRutaMaxAggregateInputType = {
+    id?: true
+    numeroRuta?: true
+    bodegaId?: true
+    transportistaId?: true
+    choferId?: true
+    camionId?: true
+    clienteId?: true
+    estado?: true
+    andenId?: true
+    fechaRuta?: true
+    horaProgramada?: true
+    horaLlegadaPorton?: true
+    horaEntradaAnden?: true
+    horaSalidaAnden?: true
+    selloSalida?: true
+    totalBultos?: true
+    totalKilos?: true
+    observaciones?: true
+    telegramMessageId?: true
+    tokenRuta?: true
+    creadaPorId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LogRutaCountAggregateInputType = {
+    id?: true
+    numeroRuta?: true
+    bodegaId?: true
+    transportistaId?: true
+    choferId?: true
+    camionId?: true
+    clienteId?: true
+    estado?: true
+    andenId?: true
+    fechaRuta?: true
+    horaProgramada?: true
+    horaLlegadaPorton?: true
+    horaEntradaAnden?: true
+    horaSalidaAnden?: true
+    selloSalida?: true
+    totalBultos?: true
+    totalKilos?: true
+    observaciones?: true
+    telegramMessageId?: true
+    tokenRuta?: true
+    creadaPorId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type LogRutaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LogRuta to aggregate.
+     */
+    where?: LogRutaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogRutas to fetch.
+     */
+    orderBy?: LogRutaOrderByWithRelationInput | LogRutaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LogRutaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogRutas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogRutas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned LogRutas
+    **/
+    _count?: true | LogRutaCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: LogRutaAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: LogRutaSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LogRutaMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LogRutaMaxAggregateInputType
+  }
+
+  export type GetLogRutaAggregateType<T extends LogRutaAggregateArgs> = {
+        [P in keyof T & keyof AggregateLogRuta]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLogRuta[P]>
+      : GetScalarType<T[P], AggregateLogRuta[P]>
+  }
+
+
+
+
+  export type LogRutaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LogRutaWhereInput
+    orderBy?: LogRutaOrderByWithAggregationInput | LogRutaOrderByWithAggregationInput[]
+    by: LogRutaScalarFieldEnum[] | LogRutaScalarFieldEnum
+    having?: LogRutaScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LogRutaCountAggregateInputType | true
+    _avg?: LogRutaAvgAggregateInputType
+    _sum?: LogRutaSumAggregateInputType
+    _min?: LogRutaMinAggregateInputType
+    _max?: LogRutaMaxAggregateInputType
+  }
+
+  export type LogRutaGroupByOutputType = {
+    id: string
+    numeroRuta: string
+    bodegaId: string
+    transportistaId: string | null
+    choferId: string
+    camionId: string
+    clienteId: string | null
+    estado: string
+    andenId: string | null
+    fechaRuta: string
+    horaProgramada: string
+    horaLlegadaPorton: Date | null
+    horaEntradaAnden: Date | null
+    horaSalidaAnden: Date | null
+    selloSalida: string | null
+    totalBultos: number | null
+    totalKilos: Decimal | null
+    observaciones: string | null
+    telegramMessageId: string | null
+    tokenRuta: string
+    creadaPorId: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: LogRutaCountAggregateOutputType | null
+    _avg: LogRutaAvgAggregateOutputType | null
+    _sum: LogRutaSumAggregateOutputType | null
+    _min: LogRutaMinAggregateOutputType | null
+    _max: LogRutaMaxAggregateOutputType | null
+  }
+
+  type GetLogRutaGroupByPayload<T extends LogRutaGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LogRutaGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LogRutaGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LogRutaGroupByOutputType[P]>
+            : GetScalarType<T[P], LogRutaGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LogRutaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    numeroRuta?: boolean
+    bodegaId?: boolean
+    transportistaId?: boolean
+    choferId?: boolean
+    camionId?: boolean
+    clienteId?: boolean
+    estado?: boolean
+    andenId?: boolean
+    fechaRuta?: boolean
+    horaProgramada?: boolean
+    horaLlegadaPorton?: boolean
+    horaEntradaAnden?: boolean
+    horaSalidaAnden?: boolean
+    selloSalida?: boolean
+    totalBultos?: boolean
+    totalKilos?: boolean
+    observaciones?: boolean
+    telegramMessageId?: boolean
+    tokenRuta?: boolean
+    creadaPorId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    bodega?: boolean | LogBodegaDefaultArgs<ExtArgs>
+    transportista?: boolean | LogRuta$transportistaArgs<ExtArgs>
+    chofer?: boolean | LogChoferDefaultArgs<ExtArgs>
+    camion?: boolean | LogCamionDefaultArgs<ExtArgs>
+    cliente?: boolean | LogRuta$clienteArgs<ExtArgs>
+    anden?: boolean | LogRuta$andenArgs<ExtArgs>
+    eventos?: boolean | LogRuta$eventosArgs<ExtArgs>
+    integracionLogs?: boolean | LogRuta$integracionLogsArgs<ExtArgs>
+    _count?: boolean | LogRutaCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["logRuta"]>
+
+  export type LogRutaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    numeroRuta?: boolean
+    bodegaId?: boolean
+    transportistaId?: boolean
+    choferId?: boolean
+    camionId?: boolean
+    clienteId?: boolean
+    estado?: boolean
+    andenId?: boolean
+    fechaRuta?: boolean
+    horaProgramada?: boolean
+    horaLlegadaPorton?: boolean
+    horaEntradaAnden?: boolean
+    horaSalidaAnden?: boolean
+    selloSalida?: boolean
+    totalBultos?: boolean
+    totalKilos?: boolean
+    observaciones?: boolean
+    telegramMessageId?: boolean
+    tokenRuta?: boolean
+    creadaPorId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    bodega?: boolean | LogBodegaDefaultArgs<ExtArgs>
+    transportista?: boolean | LogRuta$transportistaArgs<ExtArgs>
+    chofer?: boolean | LogChoferDefaultArgs<ExtArgs>
+    camion?: boolean | LogCamionDefaultArgs<ExtArgs>
+    cliente?: boolean | LogRuta$clienteArgs<ExtArgs>
+    anden?: boolean | LogRuta$andenArgs<ExtArgs>
+  }, ExtArgs["result"]["logRuta"]>
+
+  export type LogRutaSelectScalar = {
+    id?: boolean
+    numeroRuta?: boolean
+    bodegaId?: boolean
+    transportistaId?: boolean
+    choferId?: boolean
+    camionId?: boolean
+    clienteId?: boolean
+    estado?: boolean
+    andenId?: boolean
+    fechaRuta?: boolean
+    horaProgramada?: boolean
+    horaLlegadaPorton?: boolean
+    horaEntradaAnden?: boolean
+    horaSalidaAnden?: boolean
+    selloSalida?: boolean
+    totalBultos?: boolean
+    totalKilos?: boolean
+    observaciones?: boolean
+    telegramMessageId?: boolean
+    tokenRuta?: boolean
+    creadaPorId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type LogRutaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    bodega?: boolean | LogBodegaDefaultArgs<ExtArgs>
+    transportista?: boolean | LogRuta$transportistaArgs<ExtArgs>
+    chofer?: boolean | LogChoferDefaultArgs<ExtArgs>
+    camion?: boolean | LogCamionDefaultArgs<ExtArgs>
+    cliente?: boolean | LogRuta$clienteArgs<ExtArgs>
+    anden?: boolean | LogRuta$andenArgs<ExtArgs>
+    eventos?: boolean | LogRuta$eventosArgs<ExtArgs>
+    integracionLogs?: boolean | LogRuta$integracionLogsArgs<ExtArgs>
+    _count?: boolean | LogRutaCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type LogRutaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    bodega?: boolean | LogBodegaDefaultArgs<ExtArgs>
+    transportista?: boolean | LogRuta$transportistaArgs<ExtArgs>
+    chofer?: boolean | LogChoferDefaultArgs<ExtArgs>
+    camion?: boolean | LogCamionDefaultArgs<ExtArgs>
+    cliente?: boolean | LogRuta$clienteArgs<ExtArgs>
+    anden?: boolean | LogRuta$andenArgs<ExtArgs>
+  }
+
+  export type $LogRutaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "LogRuta"
+    objects: {
+      bodega: Prisma.$LogBodegaPayload<ExtArgs>
+      transportista: Prisma.$LogTransportistaPayload<ExtArgs> | null
+      chofer: Prisma.$LogChoferPayload<ExtArgs>
+      camion: Prisma.$LogCamionPayload<ExtArgs>
+      cliente: Prisma.$LogClientePayload<ExtArgs> | null
+      anden: Prisma.$LogAndenPayload<ExtArgs> | null
+      eventos: Prisma.$LogEventoRutaPayload<ExtArgs>[]
+      integracionLogs: Prisma.$LogIntegracionLogPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      numeroRuta: string
+      bodegaId: string
+      transportistaId: string | null
+      choferId: string
+      camionId: string
+      clienteId: string | null
+      estado: string
+      andenId: string | null
+      fechaRuta: string
+      horaProgramada: string
+      horaLlegadaPorton: Date | null
+      horaEntradaAnden: Date | null
+      horaSalidaAnden: Date | null
+      selloSalida: string | null
+      totalBultos: number | null
+      totalKilos: Prisma.Decimal | null
+      observaciones: string | null
+      telegramMessageId: string | null
+      tokenRuta: string
+      creadaPorId: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["logRuta"]>
+    composites: {}
+  }
+
+  type LogRutaGetPayload<S extends boolean | null | undefined | LogRutaDefaultArgs> = $Result.GetResult<Prisma.$LogRutaPayload, S>
+
+  type LogRutaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<LogRutaFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: LogRutaCountAggregateInputType | true
+    }
+
+  export interface LogRutaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['LogRuta'], meta: { name: 'LogRuta' } }
+    /**
+     * Find zero or one LogRuta that matches the filter.
+     * @param {LogRutaFindUniqueArgs} args - Arguments to find a LogRuta
+     * @example
+     * // Get one LogRuta
+     * const logRuta = await prisma.logRuta.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends LogRutaFindUniqueArgs>(args: SelectSubset<T, LogRutaFindUniqueArgs<ExtArgs>>): Prisma__LogRutaClient<$Result.GetResult<Prisma.$LogRutaPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one LogRuta that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {LogRutaFindUniqueOrThrowArgs} args - Arguments to find a LogRuta
+     * @example
+     * // Get one LogRuta
+     * const logRuta = await prisma.logRuta.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends LogRutaFindUniqueOrThrowArgs>(args: SelectSubset<T, LogRutaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LogRutaClient<$Result.GetResult<Prisma.$LogRutaPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first LogRuta that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogRutaFindFirstArgs} args - Arguments to find a LogRuta
+     * @example
+     * // Get one LogRuta
+     * const logRuta = await prisma.logRuta.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends LogRutaFindFirstArgs>(args?: SelectSubset<T, LogRutaFindFirstArgs<ExtArgs>>): Prisma__LogRutaClient<$Result.GetResult<Prisma.$LogRutaPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first LogRuta that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogRutaFindFirstOrThrowArgs} args - Arguments to find a LogRuta
+     * @example
+     * // Get one LogRuta
+     * const logRuta = await prisma.logRuta.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends LogRutaFindFirstOrThrowArgs>(args?: SelectSubset<T, LogRutaFindFirstOrThrowArgs<ExtArgs>>): Prisma__LogRutaClient<$Result.GetResult<Prisma.$LogRutaPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more LogRutas that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogRutaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all LogRutas
+     * const logRutas = await prisma.logRuta.findMany()
+     * 
+     * // Get first 10 LogRutas
+     * const logRutas = await prisma.logRuta.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const logRutaWithIdOnly = await prisma.logRuta.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends LogRutaFindManyArgs>(args?: SelectSubset<T, LogRutaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogRutaPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a LogRuta.
+     * @param {LogRutaCreateArgs} args - Arguments to create a LogRuta.
+     * @example
+     * // Create one LogRuta
+     * const LogRuta = await prisma.logRuta.create({
+     *   data: {
+     *     // ... data to create a LogRuta
+     *   }
+     * })
+     * 
+     */
+    create<T extends LogRutaCreateArgs>(args: SelectSubset<T, LogRutaCreateArgs<ExtArgs>>): Prisma__LogRutaClient<$Result.GetResult<Prisma.$LogRutaPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many LogRutas.
+     * @param {LogRutaCreateManyArgs} args - Arguments to create many LogRutas.
+     * @example
+     * // Create many LogRutas
+     * const logRuta = await prisma.logRuta.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends LogRutaCreateManyArgs>(args?: SelectSubset<T, LogRutaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many LogRutas and returns the data saved in the database.
+     * @param {LogRutaCreateManyAndReturnArgs} args - Arguments to create many LogRutas.
+     * @example
+     * // Create many LogRutas
+     * const logRuta = await prisma.logRuta.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many LogRutas and only return the `id`
+     * const logRutaWithIdOnly = await prisma.logRuta.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends LogRutaCreateManyAndReturnArgs>(args?: SelectSubset<T, LogRutaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogRutaPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a LogRuta.
+     * @param {LogRutaDeleteArgs} args - Arguments to delete one LogRuta.
+     * @example
+     * // Delete one LogRuta
+     * const LogRuta = await prisma.logRuta.delete({
+     *   where: {
+     *     // ... filter to delete one LogRuta
+     *   }
+     * })
+     * 
+     */
+    delete<T extends LogRutaDeleteArgs>(args: SelectSubset<T, LogRutaDeleteArgs<ExtArgs>>): Prisma__LogRutaClient<$Result.GetResult<Prisma.$LogRutaPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one LogRuta.
+     * @param {LogRutaUpdateArgs} args - Arguments to update one LogRuta.
+     * @example
+     * // Update one LogRuta
+     * const logRuta = await prisma.logRuta.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends LogRutaUpdateArgs>(args: SelectSubset<T, LogRutaUpdateArgs<ExtArgs>>): Prisma__LogRutaClient<$Result.GetResult<Prisma.$LogRutaPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more LogRutas.
+     * @param {LogRutaDeleteManyArgs} args - Arguments to filter LogRutas to delete.
+     * @example
+     * // Delete a few LogRutas
+     * const { count } = await prisma.logRuta.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends LogRutaDeleteManyArgs>(args?: SelectSubset<T, LogRutaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LogRutas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogRutaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many LogRutas
+     * const logRuta = await prisma.logRuta.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends LogRutaUpdateManyArgs>(args: SelectSubset<T, LogRutaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one LogRuta.
+     * @param {LogRutaUpsertArgs} args - Arguments to update or create a LogRuta.
+     * @example
+     * // Update or create a LogRuta
+     * const logRuta = await prisma.logRuta.upsert({
+     *   create: {
+     *     // ... data to create a LogRuta
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the LogRuta we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LogRutaUpsertArgs>(args: SelectSubset<T, LogRutaUpsertArgs<ExtArgs>>): Prisma__LogRutaClient<$Result.GetResult<Prisma.$LogRutaPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of LogRutas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogRutaCountArgs} args - Arguments to filter LogRutas to count.
+     * @example
+     * // Count the number of LogRutas
+     * const count = await prisma.logRuta.count({
+     *   where: {
+     *     // ... the filter for the LogRutas we want to count
+     *   }
+     * })
+    **/
+    count<T extends LogRutaCountArgs>(
+      args?: Subset<T, LogRutaCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LogRutaCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a LogRuta.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogRutaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LogRutaAggregateArgs>(args: Subset<T, LogRutaAggregateArgs>): Prisma.PrismaPromise<GetLogRutaAggregateType<T>>
+
+    /**
+     * Group by LogRuta.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogRutaGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LogRutaGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LogRutaGroupByArgs['orderBy'] }
+        : { orderBy?: LogRutaGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LogRutaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLogRutaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the LogRuta model
+   */
+  readonly fields: LogRutaFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for LogRuta.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LogRutaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    bodega<T extends LogBodegaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LogBodegaDefaultArgs<ExtArgs>>): Prisma__LogBodegaClient<$Result.GetResult<Prisma.$LogBodegaPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    transportista<T extends LogRuta$transportistaArgs<ExtArgs> = {}>(args?: Subset<T, LogRuta$transportistaArgs<ExtArgs>>): Prisma__LogTransportistaClient<$Result.GetResult<Prisma.$LogTransportistaPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    chofer<T extends LogChoferDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LogChoferDefaultArgs<ExtArgs>>): Prisma__LogChoferClient<$Result.GetResult<Prisma.$LogChoferPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    camion<T extends LogCamionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LogCamionDefaultArgs<ExtArgs>>): Prisma__LogCamionClient<$Result.GetResult<Prisma.$LogCamionPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    cliente<T extends LogRuta$clienteArgs<ExtArgs> = {}>(args?: Subset<T, LogRuta$clienteArgs<ExtArgs>>): Prisma__LogClienteClient<$Result.GetResult<Prisma.$LogClientePayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    anden<T extends LogRuta$andenArgs<ExtArgs> = {}>(args?: Subset<T, LogRuta$andenArgs<ExtArgs>>): Prisma__LogAndenClient<$Result.GetResult<Prisma.$LogAndenPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    eventos<T extends LogRuta$eventosArgs<ExtArgs> = {}>(args?: Subset<T, LogRuta$eventosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogEventoRutaPayload<ExtArgs>, T, "findMany"> | Null>
+    integracionLogs<T extends LogRuta$integracionLogsArgs<ExtArgs> = {}>(args?: Subset<T, LogRuta$integracionLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogIntegracionLogPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the LogRuta model
+   */ 
+  interface LogRutaFieldRefs {
+    readonly id: FieldRef<"LogRuta", 'String'>
+    readonly numeroRuta: FieldRef<"LogRuta", 'String'>
+    readonly bodegaId: FieldRef<"LogRuta", 'String'>
+    readonly transportistaId: FieldRef<"LogRuta", 'String'>
+    readonly choferId: FieldRef<"LogRuta", 'String'>
+    readonly camionId: FieldRef<"LogRuta", 'String'>
+    readonly clienteId: FieldRef<"LogRuta", 'String'>
+    readonly estado: FieldRef<"LogRuta", 'String'>
+    readonly andenId: FieldRef<"LogRuta", 'String'>
+    readonly fechaRuta: FieldRef<"LogRuta", 'String'>
+    readonly horaProgramada: FieldRef<"LogRuta", 'String'>
+    readonly horaLlegadaPorton: FieldRef<"LogRuta", 'DateTime'>
+    readonly horaEntradaAnden: FieldRef<"LogRuta", 'DateTime'>
+    readonly horaSalidaAnden: FieldRef<"LogRuta", 'DateTime'>
+    readonly selloSalida: FieldRef<"LogRuta", 'String'>
+    readonly totalBultos: FieldRef<"LogRuta", 'Int'>
+    readonly totalKilos: FieldRef<"LogRuta", 'Decimal'>
+    readonly observaciones: FieldRef<"LogRuta", 'String'>
+    readonly telegramMessageId: FieldRef<"LogRuta", 'String'>
+    readonly tokenRuta: FieldRef<"LogRuta", 'String'>
+    readonly creadaPorId: FieldRef<"LogRuta", 'String'>
+    readonly createdAt: FieldRef<"LogRuta", 'DateTime'>
+    readonly updatedAt: FieldRef<"LogRuta", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * LogRuta findUnique
+   */
+  export type LogRutaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogRuta
+     */
+    select?: LogRutaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogRutaInclude<ExtArgs> | null
+    /**
+     * Filter, which LogRuta to fetch.
+     */
+    where: LogRutaWhereUniqueInput
+  }
+
+  /**
+   * LogRuta findUniqueOrThrow
+   */
+  export type LogRutaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogRuta
+     */
+    select?: LogRutaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogRutaInclude<ExtArgs> | null
+    /**
+     * Filter, which LogRuta to fetch.
+     */
+    where: LogRutaWhereUniqueInput
+  }
+
+  /**
+   * LogRuta findFirst
+   */
+  export type LogRutaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogRuta
+     */
+    select?: LogRutaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogRutaInclude<ExtArgs> | null
+    /**
+     * Filter, which LogRuta to fetch.
+     */
+    where?: LogRutaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogRutas to fetch.
+     */
+    orderBy?: LogRutaOrderByWithRelationInput | LogRutaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LogRutas.
+     */
+    cursor?: LogRutaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogRutas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogRutas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LogRutas.
+     */
+    distinct?: LogRutaScalarFieldEnum | LogRutaScalarFieldEnum[]
+  }
+
+  /**
+   * LogRuta findFirstOrThrow
+   */
+  export type LogRutaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogRuta
+     */
+    select?: LogRutaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogRutaInclude<ExtArgs> | null
+    /**
+     * Filter, which LogRuta to fetch.
+     */
+    where?: LogRutaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogRutas to fetch.
+     */
+    orderBy?: LogRutaOrderByWithRelationInput | LogRutaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LogRutas.
+     */
+    cursor?: LogRutaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogRutas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogRutas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LogRutas.
+     */
+    distinct?: LogRutaScalarFieldEnum | LogRutaScalarFieldEnum[]
+  }
+
+  /**
+   * LogRuta findMany
+   */
+  export type LogRutaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogRuta
+     */
+    select?: LogRutaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogRutaInclude<ExtArgs> | null
+    /**
+     * Filter, which LogRutas to fetch.
+     */
+    where?: LogRutaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogRutas to fetch.
+     */
+    orderBy?: LogRutaOrderByWithRelationInput | LogRutaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing LogRutas.
+     */
+    cursor?: LogRutaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogRutas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogRutas.
+     */
+    skip?: number
+    distinct?: LogRutaScalarFieldEnum | LogRutaScalarFieldEnum[]
+  }
+
+  /**
+   * LogRuta create
+   */
+  export type LogRutaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogRuta
+     */
+    select?: LogRutaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogRutaInclude<ExtArgs> | null
+    /**
+     * The data needed to create a LogRuta.
+     */
+    data: XOR<LogRutaCreateInput, LogRutaUncheckedCreateInput>
+  }
+
+  /**
+   * LogRuta createMany
+   */
+  export type LogRutaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many LogRutas.
+     */
+    data: LogRutaCreateManyInput | LogRutaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * LogRuta createManyAndReturn
+   */
+  export type LogRutaCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogRuta
+     */
+    select?: LogRutaSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many LogRutas.
+     */
+    data: LogRutaCreateManyInput | LogRutaCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogRutaIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * LogRuta update
+   */
+  export type LogRutaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogRuta
+     */
+    select?: LogRutaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogRutaInclude<ExtArgs> | null
+    /**
+     * The data needed to update a LogRuta.
+     */
+    data: XOR<LogRutaUpdateInput, LogRutaUncheckedUpdateInput>
+    /**
+     * Choose, which LogRuta to update.
+     */
+    where: LogRutaWhereUniqueInput
+  }
+
+  /**
+   * LogRuta updateMany
+   */
+  export type LogRutaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update LogRutas.
+     */
+    data: XOR<LogRutaUpdateManyMutationInput, LogRutaUncheckedUpdateManyInput>
+    /**
+     * Filter which LogRutas to update
+     */
+    where?: LogRutaWhereInput
+  }
+
+  /**
+   * LogRuta upsert
+   */
+  export type LogRutaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogRuta
+     */
+    select?: LogRutaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogRutaInclude<ExtArgs> | null
+    /**
+     * The filter to search for the LogRuta to update in case it exists.
+     */
+    where: LogRutaWhereUniqueInput
+    /**
+     * In case the LogRuta found by the `where` argument doesn't exist, create a new LogRuta with this data.
+     */
+    create: XOR<LogRutaCreateInput, LogRutaUncheckedCreateInput>
+    /**
+     * In case the LogRuta was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LogRutaUpdateInput, LogRutaUncheckedUpdateInput>
+  }
+
+  /**
+   * LogRuta delete
+   */
+  export type LogRutaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogRuta
+     */
+    select?: LogRutaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogRutaInclude<ExtArgs> | null
+    /**
+     * Filter which LogRuta to delete.
+     */
+    where: LogRutaWhereUniqueInput
+  }
+
+  /**
+   * LogRuta deleteMany
+   */
+  export type LogRutaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LogRutas to delete
+     */
+    where?: LogRutaWhereInput
+  }
+
+  /**
+   * LogRuta.transportista
+   */
+  export type LogRuta$transportistaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogTransportista
+     */
+    select?: LogTransportistaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogTransportistaInclude<ExtArgs> | null
+    where?: LogTransportistaWhereInput
+  }
+
+  /**
+   * LogRuta.cliente
+   */
+  export type LogRuta$clienteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogCliente
+     */
+    select?: LogClienteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogClienteInclude<ExtArgs> | null
+    where?: LogClienteWhereInput
+  }
+
+  /**
+   * LogRuta.anden
+   */
+  export type LogRuta$andenArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogAnden
+     */
+    select?: LogAndenSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogAndenInclude<ExtArgs> | null
+    where?: LogAndenWhereInput
+  }
+
+  /**
+   * LogRuta.eventos
+   */
+  export type LogRuta$eventosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogEventoRuta
+     */
+    select?: LogEventoRutaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogEventoRutaInclude<ExtArgs> | null
+    where?: LogEventoRutaWhereInput
+    orderBy?: LogEventoRutaOrderByWithRelationInput | LogEventoRutaOrderByWithRelationInput[]
+    cursor?: LogEventoRutaWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LogEventoRutaScalarFieldEnum | LogEventoRutaScalarFieldEnum[]
+  }
+
+  /**
+   * LogRuta.integracionLogs
+   */
+  export type LogRuta$integracionLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogIntegracionLog
+     */
+    select?: LogIntegracionLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogIntegracionLogInclude<ExtArgs> | null
+    where?: LogIntegracionLogWhereInput
+    orderBy?: LogIntegracionLogOrderByWithRelationInput | LogIntegracionLogOrderByWithRelationInput[]
+    cursor?: LogIntegracionLogWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LogIntegracionLogScalarFieldEnum | LogIntegracionLogScalarFieldEnum[]
+  }
+
+  /**
+   * LogRuta without action
+   */
+  export type LogRutaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogRuta
+     */
+    select?: LogRutaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogRutaInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model LogEventoRuta
+   */
+
+  export type AggregateLogEventoRuta = {
+    _count: LogEventoRutaCountAggregateOutputType | null
+    _min: LogEventoRutaMinAggregateOutputType | null
+    _max: LogEventoRutaMaxAggregateOutputType | null
+  }
+
+  export type LogEventoRutaMinAggregateOutputType = {
+    id: string | null
+    rutaId: string | null
+    estadoAnterior: string | null
+    estadoNuevo: string | null
+    andenId: string | null
+    origenCambio: string | null
+    notas: string | null
+    metadataJson: string | null
+    usuarioId: string | null
+    createdAt: Date | null
+  }
+
+  export type LogEventoRutaMaxAggregateOutputType = {
+    id: string | null
+    rutaId: string | null
+    estadoAnterior: string | null
+    estadoNuevo: string | null
+    andenId: string | null
+    origenCambio: string | null
+    notas: string | null
+    metadataJson: string | null
+    usuarioId: string | null
+    createdAt: Date | null
+  }
+
+  export type LogEventoRutaCountAggregateOutputType = {
+    id: number
+    rutaId: number
+    estadoAnterior: number
+    estadoNuevo: number
+    andenId: number
+    origenCambio: number
+    notas: number
+    metadataJson: number
+    usuarioId: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type LogEventoRutaMinAggregateInputType = {
+    id?: true
+    rutaId?: true
+    estadoAnterior?: true
+    estadoNuevo?: true
+    andenId?: true
+    origenCambio?: true
+    notas?: true
+    metadataJson?: true
+    usuarioId?: true
+    createdAt?: true
+  }
+
+  export type LogEventoRutaMaxAggregateInputType = {
+    id?: true
+    rutaId?: true
+    estadoAnterior?: true
+    estadoNuevo?: true
+    andenId?: true
+    origenCambio?: true
+    notas?: true
+    metadataJson?: true
+    usuarioId?: true
+    createdAt?: true
+  }
+
+  export type LogEventoRutaCountAggregateInputType = {
+    id?: true
+    rutaId?: true
+    estadoAnterior?: true
+    estadoNuevo?: true
+    andenId?: true
+    origenCambio?: true
+    notas?: true
+    metadataJson?: true
+    usuarioId?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type LogEventoRutaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LogEventoRuta to aggregate.
+     */
+    where?: LogEventoRutaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogEventoRutas to fetch.
+     */
+    orderBy?: LogEventoRutaOrderByWithRelationInput | LogEventoRutaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LogEventoRutaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogEventoRutas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogEventoRutas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned LogEventoRutas
+    **/
+    _count?: true | LogEventoRutaCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LogEventoRutaMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LogEventoRutaMaxAggregateInputType
+  }
+
+  export type GetLogEventoRutaAggregateType<T extends LogEventoRutaAggregateArgs> = {
+        [P in keyof T & keyof AggregateLogEventoRuta]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLogEventoRuta[P]>
+      : GetScalarType<T[P], AggregateLogEventoRuta[P]>
+  }
+
+
+
+
+  export type LogEventoRutaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LogEventoRutaWhereInput
+    orderBy?: LogEventoRutaOrderByWithAggregationInput | LogEventoRutaOrderByWithAggregationInput[]
+    by: LogEventoRutaScalarFieldEnum[] | LogEventoRutaScalarFieldEnum
+    having?: LogEventoRutaScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LogEventoRutaCountAggregateInputType | true
+    _min?: LogEventoRutaMinAggregateInputType
+    _max?: LogEventoRutaMaxAggregateInputType
+  }
+
+  export type LogEventoRutaGroupByOutputType = {
+    id: string
+    rutaId: string
+    estadoAnterior: string | null
+    estadoNuevo: string
+    andenId: string | null
+    origenCambio: string
+    notas: string | null
+    metadataJson: string | null
+    usuarioId: string | null
+    createdAt: Date
+    _count: LogEventoRutaCountAggregateOutputType | null
+    _min: LogEventoRutaMinAggregateOutputType | null
+    _max: LogEventoRutaMaxAggregateOutputType | null
+  }
+
+  type GetLogEventoRutaGroupByPayload<T extends LogEventoRutaGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LogEventoRutaGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LogEventoRutaGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LogEventoRutaGroupByOutputType[P]>
+            : GetScalarType<T[P], LogEventoRutaGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LogEventoRutaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    rutaId?: boolean
+    estadoAnterior?: boolean
+    estadoNuevo?: boolean
+    andenId?: boolean
+    origenCambio?: boolean
+    notas?: boolean
+    metadataJson?: boolean
+    usuarioId?: boolean
+    createdAt?: boolean
+    ruta?: boolean | LogRutaDefaultArgs<ExtArgs>
+    anden?: boolean | LogEventoRuta$andenArgs<ExtArgs>
+  }, ExtArgs["result"]["logEventoRuta"]>
+
+  export type LogEventoRutaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    rutaId?: boolean
+    estadoAnterior?: boolean
+    estadoNuevo?: boolean
+    andenId?: boolean
+    origenCambio?: boolean
+    notas?: boolean
+    metadataJson?: boolean
+    usuarioId?: boolean
+    createdAt?: boolean
+    ruta?: boolean | LogRutaDefaultArgs<ExtArgs>
+    anden?: boolean | LogEventoRuta$andenArgs<ExtArgs>
+  }, ExtArgs["result"]["logEventoRuta"]>
+
+  export type LogEventoRutaSelectScalar = {
+    id?: boolean
+    rutaId?: boolean
+    estadoAnterior?: boolean
+    estadoNuevo?: boolean
+    andenId?: boolean
+    origenCambio?: boolean
+    notas?: boolean
+    metadataJson?: boolean
+    usuarioId?: boolean
+    createdAt?: boolean
+  }
+
+  export type LogEventoRutaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    ruta?: boolean | LogRutaDefaultArgs<ExtArgs>
+    anden?: boolean | LogEventoRuta$andenArgs<ExtArgs>
+  }
+  export type LogEventoRutaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    ruta?: boolean | LogRutaDefaultArgs<ExtArgs>
+    anden?: boolean | LogEventoRuta$andenArgs<ExtArgs>
+  }
+
+  export type $LogEventoRutaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "LogEventoRuta"
+    objects: {
+      ruta: Prisma.$LogRutaPayload<ExtArgs>
+      anden: Prisma.$LogAndenPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      rutaId: string
+      estadoAnterior: string | null
+      estadoNuevo: string
+      andenId: string | null
+      origenCambio: string
+      notas: string | null
+      metadataJson: string | null
+      usuarioId: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["logEventoRuta"]>
+    composites: {}
+  }
+
+  type LogEventoRutaGetPayload<S extends boolean | null | undefined | LogEventoRutaDefaultArgs> = $Result.GetResult<Prisma.$LogEventoRutaPayload, S>
+
+  type LogEventoRutaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<LogEventoRutaFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: LogEventoRutaCountAggregateInputType | true
+    }
+
+  export interface LogEventoRutaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['LogEventoRuta'], meta: { name: 'LogEventoRuta' } }
+    /**
+     * Find zero or one LogEventoRuta that matches the filter.
+     * @param {LogEventoRutaFindUniqueArgs} args - Arguments to find a LogEventoRuta
+     * @example
+     * // Get one LogEventoRuta
+     * const logEventoRuta = await prisma.logEventoRuta.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends LogEventoRutaFindUniqueArgs>(args: SelectSubset<T, LogEventoRutaFindUniqueArgs<ExtArgs>>): Prisma__LogEventoRutaClient<$Result.GetResult<Prisma.$LogEventoRutaPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one LogEventoRuta that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {LogEventoRutaFindUniqueOrThrowArgs} args - Arguments to find a LogEventoRuta
+     * @example
+     * // Get one LogEventoRuta
+     * const logEventoRuta = await prisma.logEventoRuta.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends LogEventoRutaFindUniqueOrThrowArgs>(args: SelectSubset<T, LogEventoRutaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LogEventoRutaClient<$Result.GetResult<Prisma.$LogEventoRutaPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first LogEventoRuta that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogEventoRutaFindFirstArgs} args - Arguments to find a LogEventoRuta
+     * @example
+     * // Get one LogEventoRuta
+     * const logEventoRuta = await prisma.logEventoRuta.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends LogEventoRutaFindFirstArgs>(args?: SelectSubset<T, LogEventoRutaFindFirstArgs<ExtArgs>>): Prisma__LogEventoRutaClient<$Result.GetResult<Prisma.$LogEventoRutaPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first LogEventoRuta that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogEventoRutaFindFirstOrThrowArgs} args - Arguments to find a LogEventoRuta
+     * @example
+     * // Get one LogEventoRuta
+     * const logEventoRuta = await prisma.logEventoRuta.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends LogEventoRutaFindFirstOrThrowArgs>(args?: SelectSubset<T, LogEventoRutaFindFirstOrThrowArgs<ExtArgs>>): Prisma__LogEventoRutaClient<$Result.GetResult<Prisma.$LogEventoRutaPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more LogEventoRutas that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogEventoRutaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all LogEventoRutas
+     * const logEventoRutas = await prisma.logEventoRuta.findMany()
+     * 
+     * // Get first 10 LogEventoRutas
+     * const logEventoRutas = await prisma.logEventoRuta.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const logEventoRutaWithIdOnly = await prisma.logEventoRuta.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends LogEventoRutaFindManyArgs>(args?: SelectSubset<T, LogEventoRutaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogEventoRutaPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a LogEventoRuta.
+     * @param {LogEventoRutaCreateArgs} args - Arguments to create a LogEventoRuta.
+     * @example
+     * // Create one LogEventoRuta
+     * const LogEventoRuta = await prisma.logEventoRuta.create({
+     *   data: {
+     *     // ... data to create a LogEventoRuta
+     *   }
+     * })
+     * 
+     */
+    create<T extends LogEventoRutaCreateArgs>(args: SelectSubset<T, LogEventoRutaCreateArgs<ExtArgs>>): Prisma__LogEventoRutaClient<$Result.GetResult<Prisma.$LogEventoRutaPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many LogEventoRutas.
+     * @param {LogEventoRutaCreateManyArgs} args - Arguments to create many LogEventoRutas.
+     * @example
+     * // Create many LogEventoRutas
+     * const logEventoRuta = await prisma.logEventoRuta.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends LogEventoRutaCreateManyArgs>(args?: SelectSubset<T, LogEventoRutaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many LogEventoRutas and returns the data saved in the database.
+     * @param {LogEventoRutaCreateManyAndReturnArgs} args - Arguments to create many LogEventoRutas.
+     * @example
+     * // Create many LogEventoRutas
+     * const logEventoRuta = await prisma.logEventoRuta.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many LogEventoRutas and only return the `id`
+     * const logEventoRutaWithIdOnly = await prisma.logEventoRuta.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends LogEventoRutaCreateManyAndReturnArgs>(args?: SelectSubset<T, LogEventoRutaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogEventoRutaPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a LogEventoRuta.
+     * @param {LogEventoRutaDeleteArgs} args - Arguments to delete one LogEventoRuta.
+     * @example
+     * // Delete one LogEventoRuta
+     * const LogEventoRuta = await prisma.logEventoRuta.delete({
+     *   where: {
+     *     // ... filter to delete one LogEventoRuta
+     *   }
+     * })
+     * 
+     */
+    delete<T extends LogEventoRutaDeleteArgs>(args: SelectSubset<T, LogEventoRutaDeleteArgs<ExtArgs>>): Prisma__LogEventoRutaClient<$Result.GetResult<Prisma.$LogEventoRutaPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one LogEventoRuta.
+     * @param {LogEventoRutaUpdateArgs} args - Arguments to update one LogEventoRuta.
+     * @example
+     * // Update one LogEventoRuta
+     * const logEventoRuta = await prisma.logEventoRuta.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends LogEventoRutaUpdateArgs>(args: SelectSubset<T, LogEventoRutaUpdateArgs<ExtArgs>>): Prisma__LogEventoRutaClient<$Result.GetResult<Prisma.$LogEventoRutaPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more LogEventoRutas.
+     * @param {LogEventoRutaDeleteManyArgs} args - Arguments to filter LogEventoRutas to delete.
+     * @example
+     * // Delete a few LogEventoRutas
+     * const { count } = await prisma.logEventoRuta.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends LogEventoRutaDeleteManyArgs>(args?: SelectSubset<T, LogEventoRutaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LogEventoRutas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogEventoRutaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many LogEventoRutas
+     * const logEventoRuta = await prisma.logEventoRuta.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends LogEventoRutaUpdateManyArgs>(args: SelectSubset<T, LogEventoRutaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one LogEventoRuta.
+     * @param {LogEventoRutaUpsertArgs} args - Arguments to update or create a LogEventoRuta.
+     * @example
+     * // Update or create a LogEventoRuta
+     * const logEventoRuta = await prisma.logEventoRuta.upsert({
+     *   create: {
+     *     // ... data to create a LogEventoRuta
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the LogEventoRuta we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LogEventoRutaUpsertArgs>(args: SelectSubset<T, LogEventoRutaUpsertArgs<ExtArgs>>): Prisma__LogEventoRutaClient<$Result.GetResult<Prisma.$LogEventoRutaPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of LogEventoRutas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogEventoRutaCountArgs} args - Arguments to filter LogEventoRutas to count.
+     * @example
+     * // Count the number of LogEventoRutas
+     * const count = await prisma.logEventoRuta.count({
+     *   where: {
+     *     // ... the filter for the LogEventoRutas we want to count
+     *   }
+     * })
+    **/
+    count<T extends LogEventoRutaCountArgs>(
+      args?: Subset<T, LogEventoRutaCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LogEventoRutaCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a LogEventoRuta.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogEventoRutaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LogEventoRutaAggregateArgs>(args: Subset<T, LogEventoRutaAggregateArgs>): Prisma.PrismaPromise<GetLogEventoRutaAggregateType<T>>
+
+    /**
+     * Group by LogEventoRuta.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogEventoRutaGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LogEventoRutaGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LogEventoRutaGroupByArgs['orderBy'] }
+        : { orderBy?: LogEventoRutaGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LogEventoRutaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLogEventoRutaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the LogEventoRuta model
+   */
+  readonly fields: LogEventoRutaFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for LogEventoRuta.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LogEventoRutaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    ruta<T extends LogRutaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LogRutaDefaultArgs<ExtArgs>>): Prisma__LogRutaClient<$Result.GetResult<Prisma.$LogRutaPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    anden<T extends LogEventoRuta$andenArgs<ExtArgs> = {}>(args?: Subset<T, LogEventoRuta$andenArgs<ExtArgs>>): Prisma__LogAndenClient<$Result.GetResult<Prisma.$LogAndenPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the LogEventoRuta model
+   */ 
+  interface LogEventoRutaFieldRefs {
+    readonly id: FieldRef<"LogEventoRuta", 'String'>
+    readonly rutaId: FieldRef<"LogEventoRuta", 'String'>
+    readonly estadoAnterior: FieldRef<"LogEventoRuta", 'String'>
+    readonly estadoNuevo: FieldRef<"LogEventoRuta", 'String'>
+    readonly andenId: FieldRef<"LogEventoRuta", 'String'>
+    readonly origenCambio: FieldRef<"LogEventoRuta", 'String'>
+    readonly notas: FieldRef<"LogEventoRuta", 'String'>
+    readonly metadataJson: FieldRef<"LogEventoRuta", 'String'>
+    readonly usuarioId: FieldRef<"LogEventoRuta", 'String'>
+    readonly createdAt: FieldRef<"LogEventoRuta", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * LogEventoRuta findUnique
+   */
+  export type LogEventoRutaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogEventoRuta
+     */
+    select?: LogEventoRutaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogEventoRutaInclude<ExtArgs> | null
+    /**
+     * Filter, which LogEventoRuta to fetch.
+     */
+    where: LogEventoRutaWhereUniqueInput
+  }
+
+  /**
+   * LogEventoRuta findUniqueOrThrow
+   */
+  export type LogEventoRutaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogEventoRuta
+     */
+    select?: LogEventoRutaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogEventoRutaInclude<ExtArgs> | null
+    /**
+     * Filter, which LogEventoRuta to fetch.
+     */
+    where: LogEventoRutaWhereUniqueInput
+  }
+
+  /**
+   * LogEventoRuta findFirst
+   */
+  export type LogEventoRutaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogEventoRuta
+     */
+    select?: LogEventoRutaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogEventoRutaInclude<ExtArgs> | null
+    /**
+     * Filter, which LogEventoRuta to fetch.
+     */
+    where?: LogEventoRutaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogEventoRutas to fetch.
+     */
+    orderBy?: LogEventoRutaOrderByWithRelationInput | LogEventoRutaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LogEventoRutas.
+     */
+    cursor?: LogEventoRutaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogEventoRutas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogEventoRutas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LogEventoRutas.
+     */
+    distinct?: LogEventoRutaScalarFieldEnum | LogEventoRutaScalarFieldEnum[]
+  }
+
+  /**
+   * LogEventoRuta findFirstOrThrow
+   */
+  export type LogEventoRutaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogEventoRuta
+     */
+    select?: LogEventoRutaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogEventoRutaInclude<ExtArgs> | null
+    /**
+     * Filter, which LogEventoRuta to fetch.
+     */
+    where?: LogEventoRutaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogEventoRutas to fetch.
+     */
+    orderBy?: LogEventoRutaOrderByWithRelationInput | LogEventoRutaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LogEventoRutas.
+     */
+    cursor?: LogEventoRutaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogEventoRutas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogEventoRutas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LogEventoRutas.
+     */
+    distinct?: LogEventoRutaScalarFieldEnum | LogEventoRutaScalarFieldEnum[]
+  }
+
+  /**
+   * LogEventoRuta findMany
+   */
+  export type LogEventoRutaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogEventoRuta
+     */
+    select?: LogEventoRutaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogEventoRutaInclude<ExtArgs> | null
+    /**
+     * Filter, which LogEventoRutas to fetch.
+     */
+    where?: LogEventoRutaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogEventoRutas to fetch.
+     */
+    orderBy?: LogEventoRutaOrderByWithRelationInput | LogEventoRutaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing LogEventoRutas.
+     */
+    cursor?: LogEventoRutaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogEventoRutas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogEventoRutas.
+     */
+    skip?: number
+    distinct?: LogEventoRutaScalarFieldEnum | LogEventoRutaScalarFieldEnum[]
+  }
+
+  /**
+   * LogEventoRuta create
+   */
+  export type LogEventoRutaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogEventoRuta
+     */
+    select?: LogEventoRutaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogEventoRutaInclude<ExtArgs> | null
+    /**
+     * The data needed to create a LogEventoRuta.
+     */
+    data: XOR<LogEventoRutaCreateInput, LogEventoRutaUncheckedCreateInput>
+  }
+
+  /**
+   * LogEventoRuta createMany
+   */
+  export type LogEventoRutaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many LogEventoRutas.
+     */
+    data: LogEventoRutaCreateManyInput | LogEventoRutaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * LogEventoRuta createManyAndReturn
+   */
+  export type LogEventoRutaCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogEventoRuta
+     */
+    select?: LogEventoRutaSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many LogEventoRutas.
+     */
+    data: LogEventoRutaCreateManyInput | LogEventoRutaCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogEventoRutaIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * LogEventoRuta update
+   */
+  export type LogEventoRutaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogEventoRuta
+     */
+    select?: LogEventoRutaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogEventoRutaInclude<ExtArgs> | null
+    /**
+     * The data needed to update a LogEventoRuta.
+     */
+    data: XOR<LogEventoRutaUpdateInput, LogEventoRutaUncheckedUpdateInput>
+    /**
+     * Choose, which LogEventoRuta to update.
+     */
+    where: LogEventoRutaWhereUniqueInput
+  }
+
+  /**
+   * LogEventoRuta updateMany
+   */
+  export type LogEventoRutaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update LogEventoRutas.
+     */
+    data: XOR<LogEventoRutaUpdateManyMutationInput, LogEventoRutaUncheckedUpdateManyInput>
+    /**
+     * Filter which LogEventoRutas to update
+     */
+    where?: LogEventoRutaWhereInput
+  }
+
+  /**
+   * LogEventoRuta upsert
+   */
+  export type LogEventoRutaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogEventoRuta
+     */
+    select?: LogEventoRutaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogEventoRutaInclude<ExtArgs> | null
+    /**
+     * The filter to search for the LogEventoRuta to update in case it exists.
+     */
+    where: LogEventoRutaWhereUniqueInput
+    /**
+     * In case the LogEventoRuta found by the `where` argument doesn't exist, create a new LogEventoRuta with this data.
+     */
+    create: XOR<LogEventoRutaCreateInput, LogEventoRutaUncheckedCreateInput>
+    /**
+     * In case the LogEventoRuta was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LogEventoRutaUpdateInput, LogEventoRutaUncheckedUpdateInput>
+  }
+
+  /**
+   * LogEventoRuta delete
+   */
+  export type LogEventoRutaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogEventoRuta
+     */
+    select?: LogEventoRutaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogEventoRutaInclude<ExtArgs> | null
+    /**
+     * Filter which LogEventoRuta to delete.
+     */
+    where: LogEventoRutaWhereUniqueInput
+  }
+
+  /**
+   * LogEventoRuta deleteMany
+   */
+  export type LogEventoRutaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LogEventoRutas to delete
+     */
+    where?: LogEventoRutaWhereInput
+  }
+
+  /**
+   * LogEventoRuta.anden
+   */
+  export type LogEventoRuta$andenArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogAnden
+     */
+    select?: LogAndenSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogAndenInclude<ExtArgs> | null
+    where?: LogAndenWhereInput
+  }
+
+  /**
+   * LogEventoRuta without action
+   */
+  export type LogEventoRutaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogEventoRuta
+     */
+    select?: LogEventoRutaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogEventoRutaInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model LogIntegracionConfig
+   */
+
+  export type AggregateLogIntegracionConfig = {
+    _count: LogIntegracionConfigCountAggregateOutputType | null
+    _min: LogIntegracionConfigMinAggregateOutputType | null
+    _max: LogIntegracionConfigMaxAggregateOutputType | null
+  }
+
+  export type LogIntegracionConfigMinAggregateOutputType = {
+    id: string | null
+    nombre: string | null
+    provider: string | null
+    webhookUrl: string | null
+    secretToken: string | null
+    activo: boolean | null
+    eventosSuscritos: string | null
+    headersJson: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LogIntegracionConfigMaxAggregateOutputType = {
+    id: string | null
+    nombre: string | null
+    provider: string | null
+    webhookUrl: string | null
+    secretToken: string | null
+    activo: boolean | null
+    eventosSuscritos: string | null
+    headersJson: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LogIntegracionConfigCountAggregateOutputType = {
+    id: number
+    nombre: number
+    provider: number
+    webhookUrl: number
+    secretToken: number
+    activo: number
+    eventosSuscritos: number
+    headersJson: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type LogIntegracionConfigMinAggregateInputType = {
+    id?: true
+    nombre?: true
+    provider?: true
+    webhookUrl?: true
+    secretToken?: true
+    activo?: true
+    eventosSuscritos?: true
+    headersJson?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LogIntegracionConfigMaxAggregateInputType = {
+    id?: true
+    nombre?: true
+    provider?: true
+    webhookUrl?: true
+    secretToken?: true
+    activo?: true
+    eventosSuscritos?: true
+    headersJson?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LogIntegracionConfigCountAggregateInputType = {
+    id?: true
+    nombre?: true
+    provider?: true
+    webhookUrl?: true
+    secretToken?: true
+    activo?: true
+    eventosSuscritos?: true
+    headersJson?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type LogIntegracionConfigAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LogIntegracionConfig to aggregate.
+     */
+    where?: LogIntegracionConfigWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogIntegracionConfigs to fetch.
+     */
+    orderBy?: LogIntegracionConfigOrderByWithRelationInput | LogIntegracionConfigOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LogIntegracionConfigWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogIntegracionConfigs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogIntegracionConfigs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned LogIntegracionConfigs
+    **/
+    _count?: true | LogIntegracionConfigCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LogIntegracionConfigMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LogIntegracionConfigMaxAggregateInputType
+  }
+
+  export type GetLogIntegracionConfigAggregateType<T extends LogIntegracionConfigAggregateArgs> = {
+        [P in keyof T & keyof AggregateLogIntegracionConfig]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLogIntegracionConfig[P]>
+      : GetScalarType<T[P], AggregateLogIntegracionConfig[P]>
+  }
+
+
+
+
+  export type LogIntegracionConfigGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LogIntegracionConfigWhereInput
+    orderBy?: LogIntegracionConfigOrderByWithAggregationInput | LogIntegracionConfigOrderByWithAggregationInput[]
+    by: LogIntegracionConfigScalarFieldEnum[] | LogIntegracionConfigScalarFieldEnum
+    having?: LogIntegracionConfigScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LogIntegracionConfigCountAggregateInputType | true
+    _min?: LogIntegracionConfigMinAggregateInputType
+    _max?: LogIntegracionConfigMaxAggregateInputType
+  }
+
+  export type LogIntegracionConfigGroupByOutputType = {
+    id: string
+    nombre: string
+    provider: string
+    webhookUrl: string
+    secretToken: string | null
+    activo: boolean
+    eventosSuscritos: string
+    headersJson: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: LogIntegracionConfigCountAggregateOutputType | null
+    _min: LogIntegracionConfigMinAggregateOutputType | null
+    _max: LogIntegracionConfigMaxAggregateOutputType | null
+  }
+
+  type GetLogIntegracionConfigGroupByPayload<T extends LogIntegracionConfigGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LogIntegracionConfigGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LogIntegracionConfigGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LogIntegracionConfigGroupByOutputType[P]>
+            : GetScalarType<T[P], LogIntegracionConfigGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LogIntegracionConfigSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nombre?: boolean
+    provider?: boolean
+    webhookUrl?: boolean
+    secretToken?: boolean
+    activo?: boolean
+    eventosSuscritos?: boolean
+    headersJson?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    logs?: boolean | LogIntegracionConfig$logsArgs<ExtArgs>
+    _count?: boolean | LogIntegracionConfigCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["logIntegracionConfig"]>
+
+  export type LogIntegracionConfigSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nombre?: boolean
+    provider?: boolean
+    webhookUrl?: boolean
+    secretToken?: boolean
+    activo?: boolean
+    eventosSuscritos?: boolean
+    headersJson?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["logIntegracionConfig"]>
+
+  export type LogIntegracionConfigSelectScalar = {
+    id?: boolean
+    nombre?: boolean
+    provider?: boolean
+    webhookUrl?: boolean
+    secretToken?: boolean
+    activo?: boolean
+    eventosSuscritos?: boolean
+    headersJson?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type LogIntegracionConfigInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    logs?: boolean | LogIntegracionConfig$logsArgs<ExtArgs>
+    _count?: boolean | LogIntegracionConfigCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type LogIntegracionConfigIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $LogIntegracionConfigPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "LogIntegracionConfig"
+    objects: {
+      logs: Prisma.$LogIntegracionLogPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      nombre: string
+      provider: string
+      webhookUrl: string
+      secretToken: string | null
+      activo: boolean
+      eventosSuscritos: string
+      headersJson: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["logIntegracionConfig"]>
+    composites: {}
+  }
+
+  type LogIntegracionConfigGetPayload<S extends boolean | null | undefined | LogIntegracionConfigDefaultArgs> = $Result.GetResult<Prisma.$LogIntegracionConfigPayload, S>
+
+  type LogIntegracionConfigCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<LogIntegracionConfigFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: LogIntegracionConfigCountAggregateInputType | true
+    }
+
+  export interface LogIntegracionConfigDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['LogIntegracionConfig'], meta: { name: 'LogIntegracionConfig' } }
+    /**
+     * Find zero or one LogIntegracionConfig that matches the filter.
+     * @param {LogIntegracionConfigFindUniqueArgs} args - Arguments to find a LogIntegracionConfig
+     * @example
+     * // Get one LogIntegracionConfig
+     * const logIntegracionConfig = await prisma.logIntegracionConfig.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends LogIntegracionConfigFindUniqueArgs>(args: SelectSubset<T, LogIntegracionConfigFindUniqueArgs<ExtArgs>>): Prisma__LogIntegracionConfigClient<$Result.GetResult<Prisma.$LogIntegracionConfigPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one LogIntegracionConfig that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {LogIntegracionConfigFindUniqueOrThrowArgs} args - Arguments to find a LogIntegracionConfig
+     * @example
+     * // Get one LogIntegracionConfig
+     * const logIntegracionConfig = await prisma.logIntegracionConfig.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends LogIntegracionConfigFindUniqueOrThrowArgs>(args: SelectSubset<T, LogIntegracionConfigFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LogIntegracionConfigClient<$Result.GetResult<Prisma.$LogIntegracionConfigPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first LogIntegracionConfig that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogIntegracionConfigFindFirstArgs} args - Arguments to find a LogIntegracionConfig
+     * @example
+     * // Get one LogIntegracionConfig
+     * const logIntegracionConfig = await prisma.logIntegracionConfig.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends LogIntegracionConfigFindFirstArgs>(args?: SelectSubset<T, LogIntegracionConfigFindFirstArgs<ExtArgs>>): Prisma__LogIntegracionConfigClient<$Result.GetResult<Prisma.$LogIntegracionConfigPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first LogIntegracionConfig that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogIntegracionConfigFindFirstOrThrowArgs} args - Arguments to find a LogIntegracionConfig
+     * @example
+     * // Get one LogIntegracionConfig
+     * const logIntegracionConfig = await prisma.logIntegracionConfig.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends LogIntegracionConfigFindFirstOrThrowArgs>(args?: SelectSubset<T, LogIntegracionConfigFindFirstOrThrowArgs<ExtArgs>>): Prisma__LogIntegracionConfigClient<$Result.GetResult<Prisma.$LogIntegracionConfigPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more LogIntegracionConfigs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogIntegracionConfigFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all LogIntegracionConfigs
+     * const logIntegracionConfigs = await prisma.logIntegracionConfig.findMany()
+     * 
+     * // Get first 10 LogIntegracionConfigs
+     * const logIntegracionConfigs = await prisma.logIntegracionConfig.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const logIntegracionConfigWithIdOnly = await prisma.logIntegracionConfig.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends LogIntegracionConfigFindManyArgs>(args?: SelectSubset<T, LogIntegracionConfigFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogIntegracionConfigPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a LogIntegracionConfig.
+     * @param {LogIntegracionConfigCreateArgs} args - Arguments to create a LogIntegracionConfig.
+     * @example
+     * // Create one LogIntegracionConfig
+     * const LogIntegracionConfig = await prisma.logIntegracionConfig.create({
+     *   data: {
+     *     // ... data to create a LogIntegracionConfig
+     *   }
+     * })
+     * 
+     */
+    create<T extends LogIntegracionConfigCreateArgs>(args: SelectSubset<T, LogIntegracionConfigCreateArgs<ExtArgs>>): Prisma__LogIntegracionConfigClient<$Result.GetResult<Prisma.$LogIntegracionConfigPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many LogIntegracionConfigs.
+     * @param {LogIntegracionConfigCreateManyArgs} args - Arguments to create many LogIntegracionConfigs.
+     * @example
+     * // Create many LogIntegracionConfigs
+     * const logIntegracionConfig = await prisma.logIntegracionConfig.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends LogIntegracionConfigCreateManyArgs>(args?: SelectSubset<T, LogIntegracionConfigCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many LogIntegracionConfigs and returns the data saved in the database.
+     * @param {LogIntegracionConfigCreateManyAndReturnArgs} args - Arguments to create many LogIntegracionConfigs.
+     * @example
+     * // Create many LogIntegracionConfigs
+     * const logIntegracionConfig = await prisma.logIntegracionConfig.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many LogIntegracionConfigs and only return the `id`
+     * const logIntegracionConfigWithIdOnly = await prisma.logIntegracionConfig.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends LogIntegracionConfigCreateManyAndReturnArgs>(args?: SelectSubset<T, LogIntegracionConfigCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogIntegracionConfigPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a LogIntegracionConfig.
+     * @param {LogIntegracionConfigDeleteArgs} args - Arguments to delete one LogIntegracionConfig.
+     * @example
+     * // Delete one LogIntegracionConfig
+     * const LogIntegracionConfig = await prisma.logIntegracionConfig.delete({
+     *   where: {
+     *     // ... filter to delete one LogIntegracionConfig
+     *   }
+     * })
+     * 
+     */
+    delete<T extends LogIntegracionConfigDeleteArgs>(args: SelectSubset<T, LogIntegracionConfigDeleteArgs<ExtArgs>>): Prisma__LogIntegracionConfigClient<$Result.GetResult<Prisma.$LogIntegracionConfigPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one LogIntegracionConfig.
+     * @param {LogIntegracionConfigUpdateArgs} args - Arguments to update one LogIntegracionConfig.
+     * @example
+     * // Update one LogIntegracionConfig
+     * const logIntegracionConfig = await prisma.logIntegracionConfig.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends LogIntegracionConfigUpdateArgs>(args: SelectSubset<T, LogIntegracionConfigUpdateArgs<ExtArgs>>): Prisma__LogIntegracionConfigClient<$Result.GetResult<Prisma.$LogIntegracionConfigPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more LogIntegracionConfigs.
+     * @param {LogIntegracionConfigDeleteManyArgs} args - Arguments to filter LogIntegracionConfigs to delete.
+     * @example
+     * // Delete a few LogIntegracionConfigs
+     * const { count } = await prisma.logIntegracionConfig.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends LogIntegracionConfigDeleteManyArgs>(args?: SelectSubset<T, LogIntegracionConfigDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LogIntegracionConfigs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogIntegracionConfigUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many LogIntegracionConfigs
+     * const logIntegracionConfig = await prisma.logIntegracionConfig.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends LogIntegracionConfigUpdateManyArgs>(args: SelectSubset<T, LogIntegracionConfigUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one LogIntegracionConfig.
+     * @param {LogIntegracionConfigUpsertArgs} args - Arguments to update or create a LogIntegracionConfig.
+     * @example
+     * // Update or create a LogIntegracionConfig
+     * const logIntegracionConfig = await prisma.logIntegracionConfig.upsert({
+     *   create: {
+     *     // ... data to create a LogIntegracionConfig
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the LogIntegracionConfig we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LogIntegracionConfigUpsertArgs>(args: SelectSubset<T, LogIntegracionConfigUpsertArgs<ExtArgs>>): Prisma__LogIntegracionConfigClient<$Result.GetResult<Prisma.$LogIntegracionConfigPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of LogIntegracionConfigs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogIntegracionConfigCountArgs} args - Arguments to filter LogIntegracionConfigs to count.
+     * @example
+     * // Count the number of LogIntegracionConfigs
+     * const count = await prisma.logIntegracionConfig.count({
+     *   where: {
+     *     // ... the filter for the LogIntegracionConfigs we want to count
+     *   }
+     * })
+    **/
+    count<T extends LogIntegracionConfigCountArgs>(
+      args?: Subset<T, LogIntegracionConfigCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LogIntegracionConfigCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a LogIntegracionConfig.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogIntegracionConfigAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LogIntegracionConfigAggregateArgs>(args: Subset<T, LogIntegracionConfigAggregateArgs>): Prisma.PrismaPromise<GetLogIntegracionConfigAggregateType<T>>
+
+    /**
+     * Group by LogIntegracionConfig.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogIntegracionConfigGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LogIntegracionConfigGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LogIntegracionConfigGroupByArgs['orderBy'] }
+        : { orderBy?: LogIntegracionConfigGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LogIntegracionConfigGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLogIntegracionConfigGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the LogIntegracionConfig model
+   */
+  readonly fields: LogIntegracionConfigFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for LogIntegracionConfig.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LogIntegracionConfigClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    logs<T extends LogIntegracionConfig$logsArgs<ExtArgs> = {}>(args?: Subset<T, LogIntegracionConfig$logsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogIntegracionLogPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the LogIntegracionConfig model
+   */ 
+  interface LogIntegracionConfigFieldRefs {
+    readonly id: FieldRef<"LogIntegracionConfig", 'String'>
+    readonly nombre: FieldRef<"LogIntegracionConfig", 'String'>
+    readonly provider: FieldRef<"LogIntegracionConfig", 'String'>
+    readonly webhookUrl: FieldRef<"LogIntegracionConfig", 'String'>
+    readonly secretToken: FieldRef<"LogIntegracionConfig", 'String'>
+    readonly activo: FieldRef<"LogIntegracionConfig", 'Boolean'>
+    readonly eventosSuscritos: FieldRef<"LogIntegracionConfig", 'String'>
+    readonly headersJson: FieldRef<"LogIntegracionConfig", 'String'>
+    readonly createdAt: FieldRef<"LogIntegracionConfig", 'DateTime'>
+    readonly updatedAt: FieldRef<"LogIntegracionConfig", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * LogIntegracionConfig findUnique
+   */
+  export type LogIntegracionConfigFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogIntegracionConfig
+     */
+    select?: LogIntegracionConfigSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogIntegracionConfigInclude<ExtArgs> | null
+    /**
+     * Filter, which LogIntegracionConfig to fetch.
+     */
+    where: LogIntegracionConfigWhereUniqueInput
+  }
+
+  /**
+   * LogIntegracionConfig findUniqueOrThrow
+   */
+  export type LogIntegracionConfigFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogIntegracionConfig
+     */
+    select?: LogIntegracionConfigSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogIntegracionConfigInclude<ExtArgs> | null
+    /**
+     * Filter, which LogIntegracionConfig to fetch.
+     */
+    where: LogIntegracionConfigWhereUniqueInput
+  }
+
+  /**
+   * LogIntegracionConfig findFirst
+   */
+  export type LogIntegracionConfigFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogIntegracionConfig
+     */
+    select?: LogIntegracionConfigSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogIntegracionConfigInclude<ExtArgs> | null
+    /**
+     * Filter, which LogIntegracionConfig to fetch.
+     */
+    where?: LogIntegracionConfigWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogIntegracionConfigs to fetch.
+     */
+    orderBy?: LogIntegracionConfigOrderByWithRelationInput | LogIntegracionConfigOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LogIntegracionConfigs.
+     */
+    cursor?: LogIntegracionConfigWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogIntegracionConfigs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogIntegracionConfigs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LogIntegracionConfigs.
+     */
+    distinct?: LogIntegracionConfigScalarFieldEnum | LogIntegracionConfigScalarFieldEnum[]
+  }
+
+  /**
+   * LogIntegracionConfig findFirstOrThrow
+   */
+  export type LogIntegracionConfigFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogIntegracionConfig
+     */
+    select?: LogIntegracionConfigSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogIntegracionConfigInclude<ExtArgs> | null
+    /**
+     * Filter, which LogIntegracionConfig to fetch.
+     */
+    where?: LogIntegracionConfigWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogIntegracionConfigs to fetch.
+     */
+    orderBy?: LogIntegracionConfigOrderByWithRelationInput | LogIntegracionConfigOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LogIntegracionConfigs.
+     */
+    cursor?: LogIntegracionConfigWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogIntegracionConfigs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogIntegracionConfigs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LogIntegracionConfigs.
+     */
+    distinct?: LogIntegracionConfigScalarFieldEnum | LogIntegracionConfigScalarFieldEnum[]
+  }
+
+  /**
+   * LogIntegracionConfig findMany
+   */
+  export type LogIntegracionConfigFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogIntegracionConfig
+     */
+    select?: LogIntegracionConfigSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogIntegracionConfigInclude<ExtArgs> | null
+    /**
+     * Filter, which LogIntegracionConfigs to fetch.
+     */
+    where?: LogIntegracionConfigWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogIntegracionConfigs to fetch.
+     */
+    orderBy?: LogIntegracionConfigOrderByWithRelationInput | LogIntegracionConfigOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing LogIntegracionConfigs.
+     */
+    cursor?: LogIntegracionConfigWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogIntegracionConfigs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogIntegracionConfigs.
+     */
+    skip?: number
+    distinct?: LogIntegracionConfigScalarFieldEnum | LogIntegracionConfigScalarFieldEnum[]
+  }
+
+  /**
+   * LogIntegracionConfig create
+   */
+  export type LogIntegracionConfigCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogIntegracionConfig
+     */
+    select?: LogIntegracionConfigSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogIntegracionConfigInclude<ExtArgs> | null
+    /**
+     * The data needed to create a LogIntegracionConfig.
+     */
+    data: XOR<LogIntegracionConfigCreateInput, LogIntegracionConfigUncheckedCreateInput>
+  }
+
+  /**
+   * LogIntegracionConfig createMany
+   */
+  export type LogIntegracionConfigCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many LogIntegracionConfigs.
+     */
+    data: LogIntegracionConfigCreateManyInput | LogIntegracionConfigCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * LogIntegracionConfig createManyAndReturn
+   */
+  export type LogIntegracionConfigCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogIntegracionConfig
+     */
+    select?: LogIntegracionConfigSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many LogIntegracionConfigs.
+     */
+    data: LogIntegracionConfigCreateManyInput | LogIntegracionConfigCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * LogIntegracionConfig update
+   */
+  export type LogIntegracionConfigUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogIntegracionConfig
+     */
+    select?: LogIntegracionConfigSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogIntegracionConfigInclude<ExtArgs> | null
+    /**
+     * The data needed to update a LogIntegracionConfig.
+     */
+    data: XOR<LogIntegracionConfigUpdateInput, LogIntegracionConfigUncheckedUpdateInput>
+    /**
+     * Choose, which LogIntegracionConfig to update.
+     */
+    where: LogIntegracionConfigWhereUniqueInput
+  }
+
+  /**
+   * LogIntegracionConfig updateMany
+   */
+  export type LogIntegracionConfigUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update LogIntegracionConfigs.
+     */
+    data: XOR<LogIntegracionConfigUpdateManyMutationInput, LogIntegracionConfigUncheckedUpdateManyInput>
+    /**
+     * Filter which LogIntegracionConfigs to update
+     */
+    where?: LogIntegracionConfigWhereInput
+  }
+
+  /**
+   * LogIntegracionConfig upsert
+   */
+  export type LogIntegracionConfigUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogIntegracionConfig
+     */
+    select?: LogIntegracionConfigSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogIntegracionConfigInclude<ExtArgs> | null
+    /**
+     * The filter to search for the LogIntegracionConfig to update in case it exists.
+     */
+    where: LogIntegracionConfigWhereUniqueInput
+    /**
+     * In case the LogIntegracionConfig found by the `where` argument doesn't exist, create a new LogIntegracionConfig with this data.
+     */
+    create: XOR<LogIntegracionConfigCreateInput, LogIntegracionConfigUncheckedCreateInput>
+    /**
+     * In case the LogIntegracionConfig was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LogIntegracionConfigUpdateInput, LogIntegracionConfigUncheckedUpdateInput>
+  }
+
+  /**
+   * LogIntegracionConfig delete
+   */
+  export type LogIntegracionConfigDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogIntegracionConfig
+     */
+    select?: LogIntegracionConfigSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogIntegracionConfigInclude<ExtArgs> | null
+    /**
+     * Filter which LogIntegracionConfig to delete.
+     */
+    where: LogIntegracionConfigWhereUniqueInput
+  }
+
+  /**
+   * LogIntegracionConfig deleteMany
+   */
+  export type LogIntegracionConfigDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LogIntegracionConfigs to delete
+     */
+    where?: LogIntegracionConfigWhereInput
+  }
+
+  /**
+   * LogIntegracionConfig.logs
+   */
+  export type LogIntegracionConfig$logsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogIntegracionLog
+     */
+    select?: LogIntegracionLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogIntegracionLogInclude<ExtArgs> | null
+    where?: LogIntegracionLogWhereInput
+    orderBy?: LogIntegracionLogOrderByWithRelationInput | LogIntegracionLogOrderByWithRelationInput[]
+    cursor?: LogIntegracionLogWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LogIntegracionLogScalarFieldEnum | LogIntegracionLogScalarFieldEnum[]
+  }
+
+  /**
+   * LogIntegracionConfig without action
+   */
+  export type LogIntegracionConfigDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogIntegracionConfig
+     */
+    select?: LogIntegracionConfigSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogIntegracionConfigInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model LogIntegracionLog
+   */
+
+  export type AggregateLogIntegracionLog = {
+    _count: LogIntegracionLogCountAggregateOutputType | null
+    _avg: LogIntegracionLogAvgAggregateOutputType | null
+    _sum: LogIntegracionLogSumAggregateOutputType | null
+    _min: LogIntegracionLogMinAggregateOutputType | null
+    _max: LogIntegracionLogMaxAggregateOutputType | null
+  }
+
+  export type LogIntegracionLogAvgAggregateOutputType = {
+    respuestaCodigo: number | null
+    intentos: number | null
+  }
+
+  export type LogIntegracionLogSumAggregateOutputType = {
+    respuestaCodigo: number | null
+    intentos: number | null
+  }
+
+  export type LogIntegracionLogMinAggregateOutputType = {
+    id: string | null
+    integracionConfigId: string | null
+    evento: string | null
+    rutaId: string | null
+    payloadEnviado: string | null
+    respuestaCodigo: number | null
+    respuestaCuerpo: string | null
+    estado: string | null
+    intentos: number | null
+    errorDetalle: string | null
+    createdAt: Date | null
+  }
+
+  export type LogIntegracionLogMaxAggregateOutputType = {
+    id: string | null
+    integracionConfigId: string | null
+    evento: string | null
+    rutaId: string | null
+    payloadEnviado: string | null
+    respuestaCodigo: number | null
+    respuestaCuerpo: string | null
+    estado: string | null
+    intentos: number | null
+    errorDetalle: string | null
+    createdAt: Date | null
+  }
+
+  export type LogIntegracionLogCountAggregateOutputType = {
+    id: number
+    integracionConfigId: number
+    evento: number
+    rutaId: number
+    payloadEnviado: number
+    respuestaCodigo: number
+    respuestaCuerpo: number
+    estado: number
+    intentos: number
+    errorDetalle: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type LogIntegracionLogAvgAggregateInputType = {
+    respuestaCodigo?: true
+    intentos?: true
+  }
+
+  export type LogIntegracionLogSumAggregateInputType = {
+    respuestaCodigo?: true
+    intentos?: true
+  }
+
+  export type LogIntegracionLogMinAggregateInputType = {
+    id?: true
+    integracionConfigId?: true
+    evento?: true
+    rutaId?: true
+    payloadEnviado?: true
+    respuestaCodigo?: true
+    respuestaCuerpo?: true
+    estado?: true
+    intentos?: true
+    errorDetalle?: true
+    createdAt?: true
+  }
+
+  export type LogIntegracionLogMaxAggregateInputType = {
+    id?: true
+    integracionConfigId?: true
+    evento?: true
+    rutaId?: true
+    payloadEnviado?: true
+    respuestaCodigo?: true
+    respuestaCuerpo?: true
+    estado?: true
+    intentos?: true
+    errorDetalle?: true
+    createdAt?: true
+  }
+
+  export type LogIntegracionLogCountAggregateInputType = {
+    id?: true
+    integracionConfigId?: true
+    evento?: true
+    rutaId?: true
+    payloadEnviado?: true
+    respuestaCodigo?: true
+    respuestaCuerpo?: true
+    estado?: true
+    intentos?: true
+    errorDetalle?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type LogIntegracionLogAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LogIntegracionLog to aggregate.
+     */
+    where?: LogIntegracionLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogIntegracionLogs to fetch.
+     */
+    orderBy?: LogIntegracionLogOrderByWithRelationInput | LogIntegracionLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LogIntegracionLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogIntegracionLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogIntegracionLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned LogIntegracionLogs
+    **/
+    _count?: true | LogIntegracionLogCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: LogIntegracionLogAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: LogIntegracionLogSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LogIntegracionLogMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LogIntegracionLogMaxAggregateInputType
+  }
+
+  export type GetLogIntegracionLogAggregateType<T extends LogIntegracionLogAggregateArgs> = {
+        [P in keyof T & keyof AggregateLogIntegracionLog]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLogIntegracionLog[P]>
+      : GetScalarType<T[P], AggregateLogIntegracionLog[P]>
+  }
+
+
+
+
+  export type LogIntegracionLogGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LogIntegracionLogWhereInput
+    orderBy?: LogIntegracionLogOrderByWithAggregationInput | LogIntegracionLogOrderByWithAggregationInput[]
+    by: LogIntegracionLogScalarFieldEnum[] | LogIntegracionLogScalarFieldEnum
+    having?: LogIntegracionLogScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LogIntegracionLogCountAggregateInputType | true
+    _avg?: LogIntegracionLogAvgAggregateInputType
+    _sum?: LogIntegracionLogSumAggregateInputType
+    _min?: LogIntegracionLogMinAggregateInputType
+    _max?: LogIntegracionLogMaxAggregateInputType
+  }
+
+  export type LogIntegracionLogGroupByOutputType = {
+    id: string
+    integracionConfigId: string | null
+    evento: string
+    rutaId: string | null
+    payloadEnviado: string | null
+    respuestaCodigo: number | null
+    respuestaCuerpo: string | null
+    estado: string
+    intentos: number
+    errorDetalle: string | null
+    createdAt: Date
+    _count: LogIntegracionLogCountAggregateOutputType | null
+    _avg: LogIntegracionLogAvgAggregateOutputType | null
+    _sum: LogIntegracionLogSumAggregateOutputType | null
+    _min: LogIntegracionLogMinAggregateOutputType | null
+    _max: LogIntegracionLogMaxAggregateOutputType | null
+  }
+
+  type GetLogIntegracionLogGroupByPayload<T extends LogIntegracionLogGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LogIntegracionLogGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LogIntegracionLogGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LogIntegracionLogGroupByOutputType[P]>
+            : GetScalarType<T[P], LogIntegracionLogGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LogIntegracionLogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    integracionConfigId?: boolean
+    evento?: boolean
+    rutaId?: boolean
+    payloadEnviado?: boolean
+    respuestaCodigo?: boolean
+    respuestaCuerpo?: boolean
+    estado?: boolean
+    intentos?: boolean
+    errorDetalle?: boolean
+    createdAt?: boolean
+    integracionConfig?: boolean | LogIntegracionLog$integracionConfigArgs<ExtArgs>
+    ruta?: boolean | LogIntegracionLog$rutaArgs<ExtArgs>
+  }, ExtArgs["result"]["logIntegracionLog"]>
+
+  export type LogIntegracionLogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    integracionConfigId?: boolean
+    evento?: boolean
+    rutaId?: boolean
+    payloadEnviado?: boolean
+    respuestaCodigo?: boolean
+    respuestaCuerpo?: boolean
+    estado?: boolean
+    intentos?: boolean
+    errorDetalle?: boolean
+    createdAt?: boolean
+    integracionConfig?: boolean | LogIntegracionLog$integracionConfigArgs<ExtArgs>
+    ruta?: boolean | LogIntegracionLog$rutaArgs<ExtArgs>
+  }, ExtArgs["result"]["logIntegracionLog"]>
+
+  export type LogIntegracionLogSelectScalar = {
+    id?: boolean
+    integracionConfigId?: boolean
+    evento?: boolean
+    rutaId?: boolean
+    payloadEnviado?: boolean
+    respuestaCodigo?: boolean
+    respuestaCuerpo?: boolean
+    estado?: boolean
+    intentos?: boolean
+    errorDetalle?: boolean
+    createdAt?: boolean
+  }
+
+  export type LogIntegracionLogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    integracionConfig?: boolean | LogIntegracionLog$integracionConfigArgs<ExtArgs>
+    ruta?: boolean | LogIntegracionLog$rutaArgs<ExtArgs>
+  }
+  export type LogIntegracionLogIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    integracionConfig?: boolean | LogIntegracionLog$integracionConfigArgs<ExtArgs>
+    ruta?: boolean | LogIntegracionLog$rutaArgs<ExtArgs>
+  }
+
+  export type $LogIntegracionLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "LogIntegracionLog"
+    objects: {
+      integracionConfig: Prisma.$LogIntegracionConfigPayload<ExtArgs> | null
+      ruta: Prisma.$LogRutaPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      integracionConfigId: string | null
+      evento: string
+      rutaId: string | null
+      payloadEnviado: string | null
+      respuestaCodigo: number | null
+      respuestaCuerpo: string | null
+      estado: string
+      intentos: number
+      errorDetalle: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["logIntegracionLog"]>
+    composites: {}
+  }
+
+  type LogIntegracionLogGetPayload<S extends boolean | null | undefined | LogIntegracionLogDefaultArgs> = $Result.GetResult<Prisma.$LogIntegracionLogPayload, S>
+
+  type LogIntegracionLogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<LogIntegracionLogFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: LogIntegracionLogCountAggregateInputType | true
+    }
+
+  export interface LogIntegracionLogDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['LogIntegracionLog'], meta: { name: 'LogIntegracionLog' } }
+    /**
+     * Find zero or one LogIntegracionLog that matches the filter.
+     * @param {LogIntegracionLogFindUniqueArgs} args - Arguments to find a LogIntegracionLog
+     * @example
+     * // Get one LogIntegracionLog
+     * const logIntegracionLog = await prisma.logIntegracionLog.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends LogIntegracionLogFindUniqueArgs>(args: SelectSubset<T, LogIntegracionLogFindUniqueArgs<ExtArgs>>): Prisma__LogIntegracionLogClient<$Result.GetResult<Prisma.$LogIntegracionLogPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one LogIntegracionLog that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {LogIntegracionLogFindUniqueOrThrowArgs} args - Arguments to find a LogIntegracionLog
+     * @example
+     * // Get one LogIntegracionLog
+     * const logIntegracionLog = await prisma.logIntegracionLog.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends LogIntegracionLogFindUniqueOrThrowArgs>(args: SelectSubset<T, LogIntegracionLogFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LogIntegracionLogClient<$Result.GetResult<Prisma.$LogIntegracionLogPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first LogIntegracionLog that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogIntegracionLogFindFirstArgs} args - Arguments to find a LogIntegracionLog
+     * @example
+     * // Get one LogIntegracionLog
+     * const logIntegracionLog = await prisma.logIntegracionLog.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends LogIntegracionLogFindFirstArgs>(args?: SelectSubset<T, LogIntegracionLogFindFirstArgs<ExtArgs>>): Prisma__LogIntegracionLogClient<$Result.GetResult<Prisma.$LogIntegracionLogPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first LogIntegracionLog that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogIntegracionLogFindFirstOrThrowArgs} args - Arguments to find a LogIntegracionLog
+     * @example
+     * // Get one LogIntegracionLog
+     * const logIntegracionLog = await prisma.logIntegracionLog.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends LogIntegracionLogFindFirstOrThrowArgs>(args?: SelectSubset<T, LogIntegracionLogFindFirstOrThrowArgs<ExtArgs>>): Prisma__LogIntegracionLogClient<$Result.GetResult<Prisma.$LogIntegracionLogPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more LogIntegracionLogs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogIntegracionLogFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all LogIntegracionLogs
+     * const logIntegracionLogs = await prisma.logIntegracionLog.findMany()
+     * 
+     * // Get first 10 LogIntegracionLogs
+     * const logIntegracionLogs = await prisma.logIntegracionLog.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const logIntegracionLogWithIdOnly = await prisma.logIntegracionLog.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends LogIntegracionLogFindManyArgs>(args?: SelectSubset<T, LogIntegracionLogFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogIntegracionLogPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a LogIntegracionLog.
+     * @param {LogIntegracionLogCreateArgs} args - Arguments to create a LogIntegracionLog.
+     * @example
+     * // Create one LogIntegracionLog
+     * const LogIntegracionLog = await prisma.logIntegracionLog.create({
+     *   data: {
+     *     // ... data to create a LogIntegracionLog
+     *   }
+     * })
+     * 
+     */
+    create<T extends LogIntegracionLogCreateArgs>(args: SelectSubset<T, LogIntegracionLogCreateArgs<ExtArgs>>): Prisma__LogIntegracionLogClient<$Result.GetResult<Prisma.$LogIntegracionLogPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many LogIntegracionLogs.
+     * @param {LogIntegracionLogCreateManyArgs} args - Arguments to create many LogIntegracionLogs.
+     * @example
+     * // Create many LogIntegracionLogs
+     * const logIntegracionLog = await prisma.logIntegracionLog.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends LogIntegracionLogCreateManyArgs>(args?: SelectSubset<T, LogIntegracionLogCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many LogIntegracionLogs and returns the data saved in the database.
+     * @param {LogIntegracionLogCreateManyAndReturnArgs} args - Arguments to create many LogIntegracionLogs.
+     * @example
+     * // Create many LogIntegracionLogs
+     * const logIntegracionLog = await prisma.logIntegracionLog.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many LogIntegracionLogs and only return the `id`
+     * const logIntegracionLogWithIdOnly = await prisma.logIntegracionLog.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends LogIntegracionLogCreateManyAndReturnArgs>(args?: SelectSubset<T, LogIntegracionLogCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogIntegracionLogPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a LogIntegracionLog.
+     * @param {LogIntegracionLogDeleteArgs} args - Arguments to delete one LogIntegracionLog.
+     * @example
+     * // Delete one LogIntegracionLog
+     * const LogIntegracionLog = await prisma.logIntegracionLog.delete({
+     *   where: {
+     *     // ... filter to delete one LogIntegracionLog
+     *   }
+     * })
+     * 
+     */
+    delete<T extends LogIntegracionLogDeleteArgs>(args: SelectSubset<T, LogIntegracionLogDeleteArgs<ExtArgs>>): Prisma__LogIntegracionLogClient<$Result.GetResult<Prisma.$LogIntegracionLogPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one LogIntegracionLog.
+     * @param {LogIntegracionLogUpdateArgs} args - Arguments to update one LogIntegracionLog.
+     * @example
+     * // Update one LogIntegracionLog
+     * const logIntegracionLog = await prisma.logIntegracionLog.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends LogIntegracionLogUpdateArgs>(args: SelectSubset<T, LogIntegracionLogUpdateArgs<ExtArgs>>): Prisma__LogIntegracionLogClient<$Result.GetResult<Prisma.$LogIntegracionLogPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more LogIntegracionLogs.
+     * @param {LogIntegracionLogDeleteManyArgs} args - Arguments to filter LogIntegracionLogs to delete.
+     * @example
+     * // Delete a few LogIntegracionLogs
+     * const { count } = await prisma.logIntegracionLog.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends LogIntegracionLogDeleteManyArgs>(args?: SelectSubset<T, LogIntegracionLogDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LogIntegracionLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogIntegracionLogUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many LogIntegracionLogs
+     * const logIntegracionLog = await prisma.logIntegracionLog.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends LogIntegracionLogUpdateManyArgs>(args: SelectSubset<T, LogIntegracionLogUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one LogIntegracionLog.
+     * @param {LogIntegracionLogUpsertArgs} args - Arguments to update or create a LogIntegracionLog.
+     * @example
+     * // Update or create a LogIntegracionLog
+     * const logIntegracionLog = await prisma.logIntegracionLog.upsert({
+     *   create: {
+     *     // ... data to create a LogIntegracionLog
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the LogIntegracionLog we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LogIntegracionLogUpsertArgs>(args: SelectSubset<T, LogIntegracionLogUpsertArgs<ExtArgs>>): Prisma__LogIntegracionLogClient<$Result.GetResult<Prisma.$LogIntegracionLogPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of LogIntegracionLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogIntegracionLogCountArgs} args - Arguments to filter LogIntegracionLogs to count.
+     * @example
+     * // Count the number of LogIntegracionLogs
+     * const count = await prisma.logIntegracionLog.count({
+     *   where: {
+     *     // ... the filter for the LogIntegracionLogs we want to count
+     *   }
+     * })
+    **/
+    count<T extends LogIntegracionLogCountArgs>(
+      args?: Subset<T, LogIntegracionLogCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LogIntegracionLogCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a LogIntegracionLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogIntegracionLogAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LogIntegracionLogAggregateArgs>(args: Subset<T, LogIntegracionLogAggregateArgs>): Prisma.PrismaPromise<GetLogIntegracionLogAggregateType<T>>
+
+    /**
+     * Group by LogIntegracionLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogIntegracionLogGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LogIntegracionLogGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LogIntegracionLogGroupByArgs['orderBy'] }
+        : { orderBy?: LogIntegracionLogGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LogIntegracionLogGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLogIntegracionLogGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the LogIntegracionLog model
+   */
+  readonly fields: LogIntegracionLogFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for LogIntegracionLog.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LogIntegracionLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    integracionConfig<T extends LogIntegracionLog$integracionConfigArgs<ExtArgs> = {}>(args?: Subset<T, LogIntegracionLog$integracionConfigArgs<ExtArgs>>): Prisma__LogIntegracionConfigClient<$Result.GetResult<Prisma.$LogIntegracionConfigPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    ruta<T extends LogIntegracionLog$rutaArgs<ExtArgs> = {}>(args?: Subset<T, LogIntegracionLog$rutaArgs<ExtArgs>>): Prisma__LogRutaClient<$Result.GetResult<Prisma.$LogRutaPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the LogIntegracionLog model
+   */ 
+  interface LogIntegracionLogFieldRefs {
+    readonly id: FieldRef<"LogIntegracionLog", 'String'>
+    readonly integracionConfigId: FieldRef<"LogIntegracionLog", 'String'>
+    readonly evento: FieldRef<"LogIntegracionLog", 'String'>
+    readonly rutaId: FieldRef<"LogIntegracionLog", 'String'>
+    readonly payloadEnviado: FieldRef<"LogIntegracionLog", 'String'>
+    readonly respuestaCodigo: FieldRef<"LogIntegracionLog", 'Int'>
+    readonly respuestaCuerpo: FieldRef<"LogIntegracionLog", 'String'>
+    readonly estado: FieldRef<"LogIntegracionLog", 'String'>
+    readonly intentos: FieldRef<"LogIntegracionLog", 'Int'>
+    readonly errorDetalle: FieldRef<"LogIntegracionLog", 'String'>
+    readonly createdAt: FieldRef<"LogIntegracionLog", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * LogIntegracionLog findUnique
+   */
+  export type LogIntegracionLogFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogIntegracionLog
+     */
+    select?: LogIntegracionLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogIntegracionLogInclude<ExtArgs> | null
+    /**
+     * Filter, which LogIntegracionLog to fetch.
+     */
+    where: LogIntegracionLogWhereUniqueInput
+  }
+
+  /**
+   * LogIntegracionLog findUniqueOrThrow
+   */
+  export type LogIntegracionLogFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogIntegracionLog
+     */
+    select?: LogIntegracionLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogIntegracionLogInclude<ExtArgs> | null
+    /**
+     * Filter, which LogIntegracionLog to fetch.
+     */
+    where: LogIntegracionLogWhereUniqueInput
+  }
+
+  /**
+   * LogIntegracionLog findFirst
+   */
+  export type LogIntegracionLogFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogIntegracionLog
+     */
+    select?: LogIntegracionLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogIntegracionLogInclude<ExtArgs> | null
+    /**
+     * Filter, which LogIntegracionLog to fetch.
+     */
+    where?: LogIntegracionLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogIntegracionLogs to fetch.
+     */
+    orderBy?: LogIntegracionLogOrderByWithRelationInput | LogIntegracionLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LogIntegracionLogs.
+     */
+    cursor?: LogIntegracionLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogIntegracionLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogIntegracionLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LogIntegracionLogs.
+     */
+    distinct?: LogIntegracionLogScalarFieldEnum | LogIntegracionLogScalarFieldEnum[]
+  }
+
+  /**
+   * LogIntegracionLog findFirstOrThrow
+   */
+  export type LogIntegracionLogFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogIntegracionLog
+     */
+    select?: LogIntegracionLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogIntegracionLogInclude<ExtArgs> | null
+    /**
+     * Filter, which LogIntegracionLog to fetch.
+     */
+    where?: LogIntegracionLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogIntegracionLogs to fetch.
+     */
+    orderBy?: LogIntegracionLogOrderByWithRelationInput | LogIntegracionLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LogIntegracionLogs.
+     */
+    cursor?: LogIntegracionLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogIntegracionLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogIntegracionLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LogIntegracionLogs.
+     */
+    distinct?: LogIntegracionLogScalarFieldEnum | LogIntegracionLogScalarFieldEnum[]
+  }
+
+  /**
+   * LogIntegracionLog findMany
+   */
+  export type LogIntegracionLogFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogIntegracionLog
+     */
+    select?: LogIntegracionLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogIntegracionLogInclude<ExtArgs> | null
+    /**
+     * Filter, which LogIntegracionLogs to fetch.
+     */
+    where?: LogIntegracionLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogIntegracionLogs to fetch.
+     */
+    orderBy?: LogIntegracionLogOrderByWithRelationInput | LogIntegracionLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing LogIntegracionLogs.
+     */
+    cursor?: LogIntegracionLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogIntegracionLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogIntegracionLogs.
+     */
+    skip?: number
+    distinct?: LogIntegracionLogScalarFieldEnum | LogIntegracionLogScalarFieldEnum[]
+  }
+
+  /**
+   * LogIntegracionLog create
+   */
+  export type LogIntegracionLogCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogIntegracionLog
+     */
+    select?: LogIntegracionLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogIntegracionLogInclude<ExtArgs> | null
+    /**
+     * The data needed to create a LogIntegracionLog.
+     */
+    data: XOR<LogIntegracionLogCreateInput, LogIntegracionLogUncheckedCreateInput>
+  }
+
+  /**
+   * LogIntegracionLog createMany
+   */
+  export type LogIntegracionLogCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many LogIntegracionLogs.
+     */
+    data: LogIntegracionLogCreateManyInput | LogIntegracionLogCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * LogIntegracionLog createManyAndReturn
+   */
+  export type LogIntegracionLogCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogIntegracionLog
+     */
+    select?: LogIntegracionLogSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many LogIntegracionLogs.
+     */
+    data: LogIntegracionLogCreateManyInput | LogIntegracionLogCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogIntegracionLogIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * LogIntegracionLog update
+   */
+  export type LogIntegracionLogUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogIntegracionLog
+     */
+    select?: LogIntegracionLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogIntegracionLogInclude<ExtArgs> | null
+    /**
+     * The data needed to update a LogIntegracionLog.
+     */
+    data: XOR<LogIntegracionLogUpdateInput, LogIntegracionLogUncheckedUpdateInput>
+    /**
+     * Choose, which LogIntegracionLog to update.
+     */
+    where: LogIntegracionLogWhereUniqueInput
+  }
+
+  /**
+   * LogIntegracionLog updateMany
+   */
+  export type LogIntegracionLogUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update LogIntegracionLogs.
+     */
+    data: XOR<LogIntegracionLogUpdateManyMutationInput, LogIntegracionLogUncheckedUpdateManyInput>
+    /**
+     * Filter which LogIntegracionLogs to update
+     */
+    where?: LogIntegracionLogWhereInput
+  }
+
+  /**
+   * LogIntegracionLog upsert
+   */
+  export type LogIntegracionLogUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogIntegracionLog
+     */
+    select?: LogIntegracionLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogIntegracionLogInclude<ExtArgs> | null
+    /**
+     * The filter to search for the LogIntegracionLog to update in case it exists.
+     */
+    where: LogIntegracionLogWhereUniqueInput
+    /**
+     * In case the LogIntegracionLog found by the `where` argument doesn't exist, create a new LogIntegracionLog with this data.
+     */
+    create: XOR<LogIntegracionLogCreateInput, LogIntegracionLogUncheckedCreateInput>
+    /**
+     * In case the LogIntegracionLog was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LogIntegracionLogUpdateInput, LogIntegracionLogUncheckedUpdateInput>
+  }
+
+  /**
+   * LogIntegracionLog delete
+   */
+  export type LogIntegracionLogDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogIntegracionLog
+     */
+    select?: LogIntegracionLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogIntegracionLogInclude<ExtArgs> | null
+    /**
+     * Filter which LogIntegracionLog to delete.
+     */
+    where: LogIntegracionLogWhereUniqueInput
+  }
+
+  /**
+   * LogIntegracionLog deleteMany
+   */
+  export type LogIntegracionLogDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LogIntegracionLogs to delete
+     */
+    where?: LogIntegracionLogWhereInput
+  }
+
+  /**
+   * LogIntegracionLog.integracionConfig
+   */
+  export type LogIntegracionLog$integracionConfigArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogIntegracionConfig
+     */
+    select?: LogIntegracionConfigSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogIntegracionConfigInclude<ExtArgs> | null
+    where?: LogIntegracionConfigWhereInput
+  }
+
+  /**
+   * LogIntegracionLog.ruta
+   */
+  export type LogIntegracionLog$rutaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogRuta
+     */
+    select?: LogRutaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogRutaInclude<ExtArgs> | null
+    where?: LogRutaWhereInput
+  }
+
+  /**
+   * LogIntegracionLog without action
+   */
+  export type LogIntegracionLogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogIntegracionLog
+     */
+    select?: LogIntegracionLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogIntegracionLogInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model LogParametro
+   */
+
+  export type AggregateLogParametro = {
+    _count: LogParametroCountAggregateOutputType | null
+    _min: LogParametroMinAggregateOutputType | null
+    _max: LogParametroMaxAggregateOutputType | null
+  }
+
+  export type LogParametroMinAggregateOutputType = {
+    id: string | null
+    bodegaId: string | null
+    clave: string | null
+    valor: string | null
+    descripcion: string | null
+    tipo: string | null
+    updatedAt: Date | null
+  }
+
+  export type LogParametroMaxAggregateOutputType = {
+    id: string | null
+    bodegaId: string | null
+    clave: string | null
+    valor: string | null
+    descripcion: string | null
+    tipo: string | null
+    updatedAt: Date | null
+  }
+
+  export type LogParametroCountAggregateOutputType = {
+    id: number
+    bodegaId: number
+    clave: number
+    valor: number
+    descripcion: number
+    tipo: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type LogParametroMinAggregateInputType = {
+    id?: true
+    bodegaId?: true
+    clave?: true
+    valor?: true
+    descripcion?: true
+    tipo?: true
+    updatedAt?: true
+  }
+
+  export type LogParametroMaxAggregateInputType = {
+    id?: true
+    bodegaId?: true
+    clave?: true
+    valor?: true
+    descripcion?: true
+    tipo?: true
+    updatedAt?: true
+  }
+
+  export type LogParametroCountAggregateInputType = {
+    id?: true
+    bodegaId?: true
+    clave?: true
+    valor?: true
+    descripcion?: true
+    tipo?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type LogParametroAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LogParametro to aggregate.
+     */
+    where?: LogParametroWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogParametros to fetch.
+     */
+    orderBy?: LogParametroOrderByWithRelationInput | LogParametroOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LogParametroWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogParametros from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogParametros.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned LogParametros
+    **/
+    _count?: true | LogParametroCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LogParametroMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LogParametroMaxAggregateInputType
+  }
+
+  export type GetLogParametroAggregateType<T extends LogParametroAggregateArgs> = {
+        [P in keyof T & keyof AggregateLogParametro]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLogParametro[P]>
+      : GetScalarType<T[P], AggregateLogParametro[P]>
+  }
+
+
+
+
+  export type LogParametroGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LogParametroWhereInput
+    orderBy?: LogParametroOrderByWithAggregationInput | LogParametroOrderByWithAggregationInput[]
+    by: LogParametroScalarFieldEnum[] | LogParametroScalarFieldEnum
+    having?: LogParametroScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LogParametroCountAggregateInputType | true
+    _min?: LogParametroMinAggregateInputType
+    _max?: LogParametroMaxAggregateInputType
+  }
+
+  export type LogParametroGroupByOutputType = {
+    id: string
+    bodegaId: string | null
+    clave: string
+    valor: string
+    descripcion: string | null
+    tipo: string
+    updatedAt: Date
+    _count: LogParametroCountAggregateOutputType | null
+    _min: LogParametroMinAggregateOutputType | null
+    _max: LogParametroMaxAggregateOutputType | null
+  }
+
+  type GetLogParametroGroupByPayload<T extends LogParametroGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LogParametroGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LogParametroGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LogParametroGroupByOutputType[P]>
+            : GetScalarType<T[P], LogParametroGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LogParametroSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    bodegaId?: boolean
+    clave?: boolean
+    valor?: boolean
+    descripcion?: boolean
+    tipo?: boolean
+    updatedAt?: boolean
+    bodega?: boolean | LogParametro$bodegaArgs<ExtArgs>
+  }, ExtArgs["result"]["logParametro"]>
+
+  export type LogParametroSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    bodegaId?: boolean
+    clave?: boolean
+    valor?: boolean
+    descripcion?: boolean
+    tipo?: boolean
+    updatedAt?: boolean
+    bodega?: boolean | LogParametro$bodegaArgs<ExtArgs>
+  }, ExtArgs["result"]["logParametro"]>
+
+  export type LogParametroSelectScalar = {
+    id?: boolean
+    bodegaId?: boolean
+    clave?: boolean
+    valor?: boolean
+    descripcion?: boolean
+    tipo?: boolean
+    updatedAt?: boolean
+  }
+
+  export type LogParametroInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    bodega?: boolean | LogParametro$bodegaArgs<ExtArgs>
+  }
+  export type LogParametroIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    bodega?: boolean | LogParametro$bodegaArgs<ExtArgs>
+  }
+
+  export type $LogParametroPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "LogParametro"
+    objects: {
+      bodega: Prisma.$LogBodegaPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      bodegaId: string | null
+      clave: string
+      valor: string
+      descripcion: string | null
+      tipo: string
+      updatedAt: Date
+    }, ExtArgs["result"]["logParametro"]>
+    composites: {}
+  }
+
+  type LogParametroGetPayload<S extends boolean | null | undefined | LogParametroDefaultArgs> = $Result.GetResult<Prisma.$LogParametroPayload, S>
+
+  type LogParametroCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<LogParametroFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: LogParametroCountAggregateInputType | true
+    }
+
+  export interface LogParametroDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['LogParametro'], meta: { name: 'LogParametro' } }
+    /**
+     * Find zero or one LogParametro that matches the filter.
+     * @param {LogParametroFindUniqueArgs} args - Arguments to find a LogParametro
+     * @example
+     * // Get one LogParametro
+     * const logParametro = await prisma.logParametro.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends LogParametroFindUniqueArgs>(args: SelectSubset<T, LogParametroFindUniqueArgs<ExtArgs>>): Prisma__LogParametroClient<$Result.GetResult<Prisma.$LogParametroPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one LogParametro that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {LogParametroFindUniqueOrThrowArgs} args - Arguments to find a LogParametro
+     * @example
+     * // Get one LogParametro
+     * const logParametro = await prisma.logParametro.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends LogParametroFindUniqueOrThrowArgs>(args: SelectSubset<T, LogParametroFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LogParametroClient<$Result.GetResult<Prisma.$LogParametroPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first LogParametro that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogParametroFindFirstArgs} args - Arguments to find a LogParametro
+     * @example
+     * // Get one LogParametro
+     * const logParametro = await prisma.logParametro.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends LogParametroFindFirstArgs>(args?: SelectSubset<T, LogParametroFindFirstArgs<ExtArgs>>): Prisma__LogParametroClient<$Result.GetResult<Prisma.$LogParametroPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first LogParametro that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogParametroFindFirstOrThrowArgs} args - Arguments to find a LogParametro
+     * @example
+     * // Get one LogParametro
+     * const logParametro = await prisma.logParametro.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends LogParametroFindFirstOrThrowArgs>(args?: SelectSubset<T, LogParametroFindFirstOrThrowArgs<ExtArgs>>): Prisma__LogParametroClient<$Result.GetResult<Prisma.$LogParametroPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more LogParametros that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogParametroFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all LogParametros
+     * const logParametros = await prisma.logParametro.findMany()
+     * 
+     * // Get first 10 LogParametros
+     * const logParametros = await prisma.logParametro.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const logParametroWithIdOnly = await prisma.logParametro.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends LogParametroFindManyArgs>(args?: SelectSubset<T, LogParametroFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogParametroPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a LogParametro.
+     * @param {LogParametroCreateArgs} args - Arguments to create a LogParametro.
+     * @example
+     * // Create one LogParametro
+     * const LogParametro = await prisma.logParametro.create({
+     *   data: {
+     *     // ... data to create a LogParametro
+     *   }
+     * })
+     * 
+     */
+    create<T extends LogParametroCreateArgs>(args: SelectSubset<T, LogParametroCreateArgs<ExtArgs>>): Prisma__LogParametroClient<$Result.GetResult<Prisma.$LogParametroPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many LogParametros.
+     * @param {LogParametroCreateManyArgs} args - Arguments to create many LogParametros.
+     * @example
+     * // Create many LogParametros
+     * const logParametro = await prisma.logParametro.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends LogParametroCreateManyArgs>(args?: SelectSubset<T, LogParametroCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many LogParametros and returns the data saved in the database.
+     * @param {LogParametroCreateManyAndReturnArgs} args - Arguments to create many LogParametros.
+     * @example
+     * // Create many LogParametros
+     * const logParametro = await prisma.logParametro.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many LogParametros and only return the `id`
+     * const logParametroWithIdOnly = await prisma.logParametro.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends LogParametroCreateManyAndReturnArgs>(args?: SelectSubset<T, LogParametroCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogParametroPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a LogParametro.
+     * @param {LogParametroDeleteArgs} args - Arguments to delete one LogParametro.
+     * @example
+     * // Delete one LogParametro
+     * const LogParametro = await prisma.logParametro.delete({
+     *   where: {
+     *     // ... filter to delete one LogParametro
+     *   }
+     * })
+     * 
+     */
+    delete<T extends LogParametroDeleteArgs>(args: SelectSubset<T, LogParametroDeleteArgs<ExtArgs>>): Prisma__LogParametroClient<$Result.GetResult<Prisma.$LogParametroPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one LogParametro.
+     * @param {LogParametroUpdateArgs} args - Arguments to update one LogParametro.
+     * @example
+     * // Update one LogParametro
+     * const logParametro = await prisma.logParametro.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends LogParametroUpdateArgs>(args: SelectSubset<T, LogParametroUpdateArgs<ExtArgs>>): Prisma__LogParametroClient<$Result.GetResult<Prisma.$LogParametroPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more LogParametros.
+     * @param {LogParametroDeleteManyArgs} args - Arguments to filter LogParametros to delete.
+     * @example
+     * // Delete a few LogParametros
+     * const { count } = await prisma.logParametro.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends LogParametroDeleteManyArgs>(args?: SelectSubset<T, LogParametroDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LogParametros.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogParametroUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many LogParametros
+     * const logParametro = await prisma.logParametro.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends LogParametroUpdateManyArgs>(args: SelectSubset<T, LogParametroUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one LogParametro.
+     * @param {LogParametroUpsertArgs} args - Arguments to update or create a LogParametro.
+     * @example
+     * // Update or create a LogParametro
+     * const logParametro = await prisma.logParametro.upsert({
+     *   create: {
+     *     // ... data to create a LogParametro
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the LogParametro we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LogParametroUpsertArgs>(args: SelectSubset<T, LogParametroUpsertArgs<ExtArgs>>): Prisma__LogParametroClient<$Result.GetResult<Prisma.$LogParametroPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of LogParametros.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogParametroCountArgs} args - Arguments to filter LogParametros to count.
+     * @example
+     * // Count the number of LogParametros
+     * const count = await prisma.logParametro.count({
+     *   where: {
+     *     // ... the filter for the LogParametros we want to count
+     *   }
+     * })
+    **/
+    count<T extends LogParametroCountArgs>(
+      args?: Subset<T, LogParametroCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LogParametroCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a LogParametro.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogParametroAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LogParametroAggregateArgs>(args: Subset<T, LogParametroAggregateArgs>): Prisma.PrismaPromise<GetLogParametroAggregateType<T>>
+
+    /**
+     * Group by LogParametro.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogParametroGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LogParametroGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LogParametroGroupByArgs['orderBy'] }
+        : { orderBy?: LogParametroGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LogParametroGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLogParametroGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the LogParametro model
+   */
+  readonly fields: LogParametroFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for LogParametro.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LogParametroClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    bodega<T extends LogParametro$bodegaArgs<ExtArgs> = {}>(args?: Subset<T, LogParametro$bodegaArgs<ExtArgs>>): Prisma__LogBodegaClient<$Result.GetResult<Prisma.$LogBodegaPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the LogParametro model
+   */ 
+  interface LogParametroFieldRefs {
+    readonly id: FieldRef<"LogParametro", 'String'>
+    readonly bodegaId: FieldRef<"LogParametro", 'String'>
+    readonly clave: FieldRef<"LogParametro", 'String'>
+    readonly valor: FieldRef<"LogParametro", 'String'>
+    readonly descripcion: FieldRef<"LogParametro", 'String'>
+    readonly tipo: FieldRef<"LogParametro", 'String'>
+    readonly updatedAt: FieldRef<"LogParametro", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * LogParametro findUnique
+   */
+  export type LogParametroFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogParametro
+     */
+    select?: LogParametroSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogParametroInclude<ExtArgs> | null
+    /**
+     * Filter, which LogParametro to fetch.
+     */
+    where: LogParametroWhereUniqueInput
+  }
+
+  /**
+   * LogParametro findUniqueOrThrow
+   */
+  export type LogParametroFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogParametro
+     */
+    select?: LogParametroSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogParametroInclude<ExtArgs> | null
+    /**
+     * Filter, which LogParametro to fetch.
+     */
+    where: LogParametroWhereUniqueInput
+  }
+
+  /**
+   * LogParametro findFirst
+   */
+  export type LogParametroFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogParametro
+     */
+    select?: LogParametroSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogParametroInclude<ExtArgs> | null
+    /**
+     * Filter, which LogParametro to fetch.
+     */
+    where?: LogParametroWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogParametros to fetch.
+     */
+    orderBy?: LogParametroOrderByWithRelationInput | LogParametroOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LogParametros.
+     */
+    cursor?: LogParametroWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogParametros from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogParametros.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LogParametros.
+     */
+    distinct?: LogParametroScalarFieldEnum | LogParametroScalarFieldEnum[]
+  }
+
+  /**
+   * LogParametro findFirstOrThrow
+   */
+  export type LogParametroFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogParametro
+     */
+    select?: LogParametroSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogParametroInclude<ExtArgs> | null
+    /**
+     * Filter, which LogParametro to fetch.
+     */
+    where?: LogParametroWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogParametros to fetch.
+     */
+    orderBy?: LogParametroOrderByWithRelationInput | LogParametroOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LogParametros.
+     */
+    cursor?: LogParametroWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogParametros from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogParametros.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LogParametros.
+     */
+    distinct?: LogParametroScalarFieldEnum | LogParametroScalarFieldEnum[]
+  }
+
+  /**
+   * LogParametro findMany
+   */
+  export type LogParametroFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogParametro
+     */
+    select?: LogParametroSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogParametroInclude<ExtArgs> | null
+    /**
+     * Filter, which LogParametros to fetch.
+     */
+    where?: LogParametroWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LogParametros to fetch.
+     */
+    orderBy?: LogParametroOrderByWithRelationInput | LogParametroOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing LogParametros.
+     */
+    cursor?: LogParametroWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LogParametros from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LogParametros.
+     */
+    skip?: number
+    distinct?: LogParametroScalarFieldEnum | LogParametroScalarFieldEnum[]
+  }
+
+  /**
+   * LogParametro create
+   */
+  export type LogParametroCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogParametro
+     */
+    select?: LogParametroSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogParametroInclude<ExtArgs> | null
+    /**
+     * The data needed to create a LogParametro.
+     */
+    data: XOR<LogParametroCreateInput, LogParametroUncheckedCreateInput>
+  }
+
+  /**
+   * LogParametro createMany
+   */
+  export type LogParametroCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many LogParametros.
+     */
+    data: LogParametroCreateManyInput | LogParametroCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * LogParametro createManyAndReturn
+   */
+  export type LogParametroCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogParametro
+     */
+    select?: LogParametroSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many LogParametros.
+     */
+    data: LogParametroCreateManyInput | LogParametroCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogParametroIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * LogParametro update
+   */
+  export type LogParametroUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogParametro
+     */
+    select?: LogParametroSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogParametroInclude<ExtArgs> | null
+    /**
+     * The data needed to update a LogParametro.
+     */
+    data: XOR<LogParametroUpdateInput, LogParametroUncheckedUpdateInput>
+    /**
+     * Choose, which LogParametro to update.
+     */
+    where: LogParametroWhereUniqueInput
+  }
+
+  /**
+   * LogParametro updateMany
+   */
+  export type LogParametroUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update LogParametros.
+     */
+    data: XOR<LogParametroUpdateManyMutationInput, LogParametroUncheckedUpdateManyInput>
+    /**
+     * Filter which LogParametros to update
+     */
+    where?: LogParametroWhereInput
+  }
+
+  /**
+   * LogParametro upsert
+   */
+  export type LogParametroUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogParametro
+     */
+    select?: LogParametroSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogParametroInclude<ExtArgs> | null
+    /**
+     * The filter to search for the LogParametro to update in case it exists.
+     */
+    where: LogParametroWhereUniqueInput
+    /**
+     * In case the LogParametro found by the `where` argument doesn't exist, create a new LogParametro with this data.
+     */
+    create: XOR<LogParametroCreateInput, LogParametroUncheckedCreateInput>
+    /**
+     * In case the LogParametro was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LogParametroUpdateInput, LogParametroUncheckedUpdateInput>
+  }
+
+  /**
+   * LogParametro delete
+   */
+  export type LogParametroDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogParametro
+     */
+    select?: LogParametroSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogParametroInclude<ExtArgs> | null
+    /**
+     * Filter which LogParametro to delete.
+     */
+    where: LogParametroWhereUniqueInput
+  }
+
+  /**
+   * LogParametro deleteMany
+   */
+  export type LogParametroDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LogParametros to delete
+     */
+    where?: LogParametroWhereInput
+  }
+
+  /**
+   * LogParametro.bodega
+   */
+  export type LogParametro$bodegaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogBodega
+     */
+    select?: LogBodegaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogBodegaInclude<ExtArgs> | null
+    where?: LogBodegaWhereInput
+  }
+
+  /**
+   * LogParametro without action
+   */
+  export type LogParametroDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LogParametro
+     */
+    select?: LogParametroSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LogParametroInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -127473,6 +141435,199 @@ export namespace Prisma {
   };
 
   export type NoticiaAlimentacionScalarFieldEnum = (typeof NoticiaAlimentacionScalarFieldEnum)[keyof typeof NoticiaAlimentacionScalarFieldEnum]
+
+
+  export const LogBodegaScalarFieldEnum: {
+    id: 'id',
+    codigo: 'codigo',
+    nombre: 'nombre',
+    sucursalId: 'sucursalId',
+    direccion: 'direccion',
+    activa: 'activa',
+    orden: 'orden',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type LogBodegaScalarFieldEnum = (typeof LogBodegaScalarFieldEnum)[keyof typeof LogBodegaScalarFieldEnum]
+
+
+  export const LogUsuarioBodegaScalarFieldEnum: {
+    id: 'id',
+    usuarioId: 'usuarioId',
+    bodegaId: 'bodegaId',
+    createdAt: 'createdAt'
+  };
+
+  export type LogUsuarioBodegaScalarFieldEnum = (typeof LogUsuarioBodegaScalarFieldEnum)[keyof typeof LogUsuarioBodegaScalarFieldEnum]
+
+
+  export const LogAndenScalarFieldEnum: {
+    id: 'id',
+    bodegaId: 'bodegaId',
+    codigo: 'codigo',
+    nombre: 'nombre',
+    tipoCarga: 'tipoCarga',
+    estadoOperativo: 'estadoOperativo',
+    orden: 'orden',
+    activo: 'activo',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type LogAndenScalarFieldEnum = (typeof LogAndenScalarFieldEnum)[keyof typeof LogAndenScalarFieldEnum]
+
+
+  export const LogTransportistaScalarFieldEnum: {
+    id: 'id',
+    rut: 'rut',
+    razonSocial: 'razonSocial',
+    contacto: 'contacto',
+    telefono: 'telefono',
+    email: 'email',
+    activo: 'activo',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type LogTransportistaScalarFieldEnum = (typeof LogTransportistaScalarFieldEnum)[keyof typeof LogTransportistaScalarFieldEnum]
+
+
+  export const LogChoferScalarFieldEnum: {
+    id: 'id',
+    rut: 'rut',
+    nombre: 'nombre',
+    telefono: 'telefono',
+    email: 'email',
+    telegramChatId: 'telegramChatId',
+    transportistaId: 'transportistaId',
+    activo: 'activo',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type LogChoferScalarFieldEnum = (typeof LogChoferScalarFieldEnum)[keyof typeof LogChoferScalarFieldEnum]
+
+
+  export const LogCamionScalarFieldEnum: {
+    id: 'id',
+    patente: 'patente',
+    tipoVehiculo: 'tipoVehiculo',
+    capacidadKg: 'capacidadKg',
+    capacidadM3: 'capacidadM3',
+    transportistaId: 'transportistaId',
+    activo: 'activo',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type LogCamionScalarFieldEnum = (typeof LogCamionScalarFieldEnum)[keyof typeof LogCamionScalarFieldEnum]
+
+
+  export const LogClienteScalarFieldEnum: {
+    id: 'id',
+    codigo: 'codigo',
+    razonSocial: 'razonSocial',
+    direccion: 'direccion',
+    comuna: 'comuna',
+    region: 'region',
+    activo: 'activo',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type LogClienteScalarFieldEnum = (typeof LogClienteScalarFieldEnum)[keyof typeof LogClienteScalarFieldEnum]
+
+
+  export const LogRutaScalarFieldEnum: {
+    id: 'id',
+    numeroRuta: 'numeroRuta',
+    bodegaId: 'bodegaId',
+    transportistaId: 'transportistaId',
+    choferId: 'choferId',
+    camionId: 'camionId',
+    clienteId: 'clienteId',
+    estado: 'estado',
+    andenId: 'andenId',
+    fechaRuta: 'fechaRuta',
+    horaProgramada: 'horaProgramada',
+    horaLlegadaPorton: 'horaLlegadaPorton',
+    horaEntradaAnden: 'horaEntradaAnden',
+    horaSalidaAnden: 'horaSalidaAnden',
+    selloSalida: 'selloSalida',
+    totalBultos: 'totalBultos',
+    totalKilos: 'totalKilos',
+    observaciones: 'observaciones',
+    telegramMessageId: 'telegramMessageId',
+    tokenRuta: 'tokenRuta',
+    creadaPorId: 'creadaPorId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type LogRutaScalarFieldEnum = (typeof LogRutaScalarFieldEnum)[keyof typeof LogRutaScalarFieldEnum]
+
+
+  export const LogEventoRutaScalarFieldEnum: {
+    id: 'id',
+    rutaId: 'rutaId',
+    estadoAnterior: 'estadoAnterior',
+    estadoNuevo: 'estadoNuevo',
+    andenId: 'andenId',
+    origenCambio: 'origenCambio',
+    notas: 'notas',
+    metadataJson: 'metadataJson',
+    usuarioId: 'usuarioId',
+    createdAt: 'createdAt'
+  };
+
+  export type LogEventoRutaScalarFieldEnum = (typeof LogEventoRutaScalarFieldEnum)[keyof typeof LogEventoRutaScalarFieldEnum]
+
+
+  export const LogIntegracionConfigScalarFieldEnum: {
+    id: 'id',
+    nombre: 'nombre',
+    provider: 'provider',
+    webhookUrl: 'webhookUrl',
+    secretToken: 'secretToken',
+    activo: 'activo',
+    eventosSuscritos: 'eventosSuscritos',
+    headersJson: 'headersJson',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type LogIntegracionConfigScalarFieldEnum = (typeof LogIntegracionConfigScalarFieldEnum)[keyof typeof LogIntegracionConfigScalarFieldEnum]
+
+
+  export const LogIntegracionLogScalarFieldEnum: {
+    id: 'id',
+    integracionConfigId: 'integracionConfigId',
+    evento: 'evento',
+    rutaId: 'rutaId',
+    payloadEnviado: 'payloadEnviado',
+    respuestaCodigo: 'respuestaCodigo',
+    respuestaCuerpo: 'respuestaCuerpo',
+    estado: 'estado',
+    intentos: 'intentos',
+    errorDetalle: 'errorDetalle',
+    createdAt: 'createdAt'
+  };
+
+  export type LogIntegracionLogScalarFieldEnum = (typeof LogIntegracionLogScalarFieldEnum)[keyof typeof LogIntegracionLogScalarFieldEnum]
+
+
+  export const LogParametroScalarFieldEnum: {
+    id: 'id',
+    bodegaId: 'bodegaId',
+    clave: 'clave',
+    valor: 'valor',
+    descripcion: 'descripcion',
+    tipo: 'tipo',
+    updatedAt: 'updatedAt'
+  };
+
+  export type LogParametroScalarFieldEnum = (typeof LogParametroScalarFieldEnum)[keyof typeof LogParametroScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -136794,6 +150949,1037 @@ export namespace Prisma {
     link?: StringWithAggregatesFilter<"NoticiaAlimentacion"> | string
     orden?: IntWithAggregatesFilter<"NoticiaAlimentacion"> | number
     createdAt?: DateTimeWithAggregatesFilter<"NoticiaAlimentacion"> | Date | string
+  }
+
+  export type LogBodegaWhereInput = {
+    AND?: LogBodegaWhereInput | LogBodegaWhereInput[]
+    OR?: LogBodegaWhereInput[]
+    NOT?: LogBodegaWhereInput | LogBodegaWhereInput[]
+    id?: StringFilter<"LogBodega"> | string
+    codigo?: StringFilter<"LogBodega"> | string
+    nombre?: StringFilter<"LogBodega"> | string
+    sucursalId?: StringNullableFilter<"LogBodega"> | string | null
+    direccion?: StringNullableFilter<"LogBodega"> | string | null
+    activa?: BoolFilter<"LogBodega"> | boolean
+    orden?: IntFilter<"LogBodega"> | number
+    createdAt?: DateTimeFilter<"LogBodega"> | Date | string
+    updatedAt?: DateTimeFilter<"LogBodega"> | Date | string
+    andenes?: LogAndenListRelationFilter
+    rutas?: LogRutaListRelationFilter
+    usuarios?: LogUsuarioBodegaListRelationFilter
+    parametros?: LogParametroListRelationFilter
+  }
+
+  export type LogBodegaOrderByWithRelationInput = {
+    id?: SortOrder
+    codigo?: SortOrder
+    nombre?: SortOrder
+    sucursalId?: SortOrderInput | SortOrder
+    direccion?: SortOrderInput | SortOrder
+    activa?: SortOrder
+    orden?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    andenes?: LogAndenOrderByRelationAggregateInput
+    rutas?: LogRutaOrderByRelationAggregateInput
+    usuarios?: LogUsuarioBodegaOrderByRelationAggregateInput
+    parametros?: LogParametroOrderByRelationAggregateInput
+  }
+
+  export type LogBodegaWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    codigo?: string
+    AND?: LogBodegaWhereInput | LogBodegaWhereInput[]
+    OR?: LogBodegaWhereInput[]
+    NOT?: LogBodegaWhereInput | LogBodegaWhereInput[]
+    nombre?: StringFilter<"LogBodega"> | string
+    sucursalId?: StringNullableFilter<"LogBodega"> | string | null
+    direccion?: StringNullableFilter<"LogBodega"> | string | null
+    activa?: BoolFilter<"LogBodega"> | boolean
+    orden?: IntFilter<"LogBodega"> | number
+    createdAt?: DateTimeFilter<"LogBodega"> | Date | string
+    updatedAt?: DateTimeFilter<"LogBodega"> | Date | string
+    andenes?: LogAndenListRelationFilter
+    rutas?: LogRutaListRelationFilter
+    usuarios?: LogUsuarioBodegaListRelationFilter
+    parametros?: LogParametroListRelationFilter
+  }, "id" | "codigo">
+
+  export type LogBodegaOrderByWithAggregationInput = {
+    id?: SortOrder
+    codigo?: SortOrder
+    nombre?: SortOrder
+    sucursalId?: SortOrderInput | SortOrder
+    direccion?: SortOrderInput | SortOrder
+    activa?: SortOrder
+    orden?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: LogBodegaCountOrderByAggregateInput
+    _avg?: LogBodegaAvgOrderByAggregateInput
+    _max?: LogBodegaMaxOrderByAggregateInput
+    _min?: LogBodegaMinOrderByAggregateInput
+    _sum?: LogBodegaSumOrderByAggregateInput
+  }
+
+  export type LogBodegaScalarWhereWithAggregatesInput = {
+    AND?: LogBodegaScalarWhereWithAggregatesInput | LogBodegaScalarWhereWithAggregatesInput[]
+    OR?: LogBodegaScalarWhereWithAggregatesInput[]
+    NOT?: LogBodegaScalarWhereWithAggregatesInput | LogBodegaScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"LogBodega"> | string
+    codigo?: StringWithAggregatesFilter<"LogBodega"> | string
+    nombre?: StringWithAggregatesFilter<"LogBodega"> | string
+    sucursalId?: StringNullableWithAggregatesFilter<"LogBodega"> | string | null
+    direccion?: StringNullableWithAggregatesFilter<"LogBodega"> | string | null
+    activa?: BoolWithAggregatesFilter<"LogBodega"> | boolean
+    orden?: IntWithAggregatesFilter<"LogBodega"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"LogBodega"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"LogBodega"> | Date | string
+  }
+
+  export type LogUsuarioBodegaWhereInput = {
+    AND?: LogUsuarioBodegaWhereInput | LogUsuarioBodegaWhereInput[]
+    OR?: LogUsuarioBodegaWhereInput[]
+    NOT?: LogUsuarioBodegaWhereInput | LogUsuarioBodegaWhereInput[]
+    id?: StringFilter<"LogUsuarioBodega"> | string
+    usuarioId?: StringFilter<"LogUsuarioBodega"> | string
+    bodegaId?: StringFilter<"LogUsuarioBodega"> | string
+    createdAt?: DateTimeFilter<"LogUsuarioBodega"> | Date | string
+    bodega?: XOR<LogBodegaRelationFilter, LogBodegaWhereInput>
+  }
+
+  export type LogUsuarioBodegaOrderByWithRelationInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    bodegaId?: SortOrder
+    createdAt?: SortOrder
+    bodega?: LogBodegaOrderByWithRelationInput
+  }
+
+  export type LogUsuarioBodegaWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    usuarioId_bodegaId?: LogUsuarioBodegaUsuarioIdBodegaIdCompoundUniqueInput
+    AND?: LogUsuarioBodegaWhereInput | LogUsuarioBodegaWhereInput[]
+    OR?: LogUsuarioBodegaWhereInput[]
+    NOT?: LogUsuarioBodegaWhereInput | LogUsuarioBodegaWhereInput[]
+    usuarioId?: StringFilter<"LogUsuarioBodega"> | string
+    bodegaId?: StringFilter<"LogUsuarioBodega"> | string
+    createdAt?: DateTimeFilter<"LogUsuarioBodega"> | Date | string
+    bodega?: XOR<LogBodegaRelationFilter, LogBodegaWhereInput>
+  }, "id" | "usuarioId_bodegaId">
+
+  export type LogUsuarioBodegaOrderByWithAggregationInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    bodegaId?: SortOrder
+    createdAt?: SortOrder
+    _count?: LogUsuarioBodegaCountOrderByAggregateInput
+    _max?: LogUsuarioBodegaMaxOrderByAggregateInput
+    _min?: LogUsuarioBodegaMinOrderByAggregateInput
+  }
+
+  export type LogUsuarioBodegaScalarWhereWithAggregatesInput = {
+    AND?: LogUsuarioBodegaScalarWhereWithAggregatesInput | LogUsuarioBodegaScalarWhereWithAggregatesInput[]
+    OR?: LogUsuarioBodegaScalarWhereWithAggregatesInput[]
+    NOT?: LogUsuarioBodegaScalarWhereWithAggregatesInput | LogUsuarioBodegaScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"LogUsuarioBodega"> | string
+    usuarioId?: StringWithAggregatesFilter<"LogUsuarioBodega"> | string
+    bodegaId?: StringWithAggregatesFilter<"LogUsuarioBodega"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"LogUsuarioBodega"> | Date | string
+  }
+
+  export type LogAndenWhereInput = {
+    AND?: LogAndenWhereInput | LogAndenWhereInput[]
+    OR?: LogAndenWhereInput[]
+    NOT?: LogAndenWhereInput | LogAndenWhereInput[]
+    id?: StringFilter<"LogAnden"> | string
+    bodegaId?: StringFilter<"LogAnden"> | string
+    codigo?: StringFilter<"LogAnden"> | string
+    nombre?: StringFilter<"LogAnden"> | string
+    tipoCarga?: StringFilter<"LogAnden"> | string
+    estadoOperativo?: StringFilter<"LogAnden"> | string
+    orden?: IntFilter<"LogAnden"> | number
+    activo?: BoolFilter<"LogAnden"> | boolean
+    createdAt?: DateTimeFilter<"LogAnden"> | Date | string
+    updatedAt?: DateTimeFilter<"LogAnden"> | Date | string
+    bodega?: XOR<LogBodegaRelationFilter, LogBodegaWhereInput>
+    rutas?: LogRutaListRelationFilter
+    eventos?: LogEventoRutaListRelationFilter
+  }
+
+  export type LogAndenOrderByWithRelationInput = {
+    id?: SortOrder
+    bodegaId?: SortOrder
+    codigo?: SortOrder
+    nombre?: SortOrder
+    tipoCarga?: SortOrder
+    estadoOperativo?: SortOrder
+    orden?: SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    bodega?: LogBodegaOrderByWithRelationInput
+    rutas?: LogRutaOrderByRelationAggregateInput
+    eventos?: LogEventoRutaOrderByRelationAggregateInput
+  }
+
+  export type LogAndenWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    bodegaId_codigo?: LogAndenBodegaIdCodigoCompoundUniqueInput
+    AND?: LogAndenWhereInput | LogAndenWhereInput[]
+    OR?: LogAndenWhereInput[]
+    NOT?: LogAndenWhereInput | LogAndenWhereInput[]
+    bodegaId?: StringFilter<"LogAnden"> | string
+    codigo?: StringFilter<"LogAnden"> | string
+    nombre?: StringFilter<"LogAnden"> | string
+    tipoCarga?: StringFilter<"LogAnden"> | string
+    estadoOperativo?: StringFilter<"LogAnden"> | string
+    orden?: IntFilter<"LogAnden"> | number
+    activo?: BoolFilter<"LogAnden"> | boolean
+    createdAt?: DateTimeFilter<"LogAnden"> | Date | string
+    updatedAt?: DateTimeFilter<"LogAnden"> | Date | string
+    bodega?: XOR<LogBodegaRelationFilter, LogBodegaWhereInput>
+    rutas?: LogRutaListRelationFilter
+    eventos?: LogEventoRutaListRelationFilter
+  }, "id" | "bodegaId_codigo">
+
+  export type LogAndenOrderByWithAggregationInput = {
+    id?: SortOrder
+    bodegaId?: SortOrder
+    codigo?: SortOrder
+    nombre?: SortOrder
+    tipoCarga?: SortOrder
+    estadoOperativo?: SortOrder
+    orden?: SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: LogAndenCountOrderByAggregateInput
+    _avg?: LogAndenAvgOrderByAggregateInput
+    _max?: LogAndenMaxOrderByAggregateInput
+    _min?: LogAndenMinOrderByAggregateInput
+    _sum?: LogAndenSumOrderByAggregateInput
+  }
+
+  export type LogAndenScalarWhereWithAggregatesInput = {
+    AND?: LogAndenScalarWhereWithAggregatesInput | LogAndenScalarWhereWithAggregatesInput[]
+    OR?: LogAndenScalarWhereWithAggregatesInput[]
+    NOT?: LogAndenScalarWhereWithAggregatesInput | LogAndenScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"LogAnden"> | string
+    bodegaId?: StringWithAggregatesFilter<"LogAnden"> | string
+    codigo?: StringWithAggregatesFilter<"LogAnden"> | string
+    nombre?: StringWithAggregatesFilter<"LogAnden"> | string
+    tipoCarga?: StringWithAggregatesFilter<"LogAnden"> | string
+    estadoOperativo?: StringWithAggregatesFilter<"LogAnden"> | string
+    orden?: IntWithAggregatesFilter<"LogAnden"> | number
+    activo?: BoolWithAggregatesFilter<"LogAnden"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"LogAnden"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"LogAnden"> | Date | string
+  }
+
+  export type LogTransportistaWhereInput = {
+    AND?: LogTransportistaWhereInput | LogTransportistaWhereInput[]
+    OR?: LogTransportistaWhereInput[]
+    NOT?: LogTransportistaWhereInput | LogTransportistaWhereInput[]
+    id?: StringFilter<"LogTransportista"> | string
+    rut?: StringFilter<"LogTransportista"> | string
+    razonSocial?: StringFilter<"LogTransportista"> | string
+    contacto?: StringNullableFilter<"LogTransportista"> | string | null
+    telefono?: StringNullableFilter<"LogTransportista"> | string | null
+    email?: StringNullableFilter<"LogTransportista"> | string | null
+    activo?: BoolFilter<"LogTransportista"> | boolean
+    createdAt?: DateTimeFilter<"LogTransportista"> | Date | string
+    updatedAt?: DateTimeFilter<"LogTransportista"> | Date | string
+    choferes?: LogChoferListRelationFilter
+    camiones?: LogCamionListRelationFilter
+    rutas?: LogRutaListRelationFilter
+  }
+
+  export type LogTransportistaOrderByWithRelationInput = {
+    id?: SortOrder
+    rut?: SortOrder
+    razonSocial?: SortOrder
+    contacto?: SortOrderInput | SortOrder
+    telefono?: SortOrderInput | SortOrder
+    email?: SortOrderInput | SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    choferes?: LogChoferOrderByRelationAggregateInput
+    camiones?: LogCamionOrderByRelationAggregateInput
+    rutas?: LogRutaOrderByRelationAggregateInput
+  }
+
+  export type LogTransportistaWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    rut?: string
+    AND?: LogTransportistaWhereInput | LogTransportistaWhereInput[]
+    OR?: LogTransportistaWhereInput[]
+    NOT?: LogTransportistaWhereInput | LogTransportistaWhereInput[]
+    razonSocial?: StringFilter<"LogTransportista"> | string
+    contacto?: StringNullableFilter<"LogTransportista"> | string | null
+    telefono?: StringNullableFilter<"LogTransportista"> | string | null
+    email?: StringNullableFilter<"LogTransportista"> | string | null
+    activo?: BoolFilter<"LogTransportista"> | boolean
+    createdAt?: DateTimeFilter<"LogTransportista"> | Date | string
+    updatedAt?: DateTimeFilter<"LogTransportista"> | Date | string
+    choferes?: LogChoferListRelationFilter
+    camiones?: LogCamionListRelationFilter
+    rutas?: LogRutaListRelationFilter
+  }, "id" | "rut">
+
+  export type LogTransportistaOrderByWithAggregationInput = {
+    id?: SortOrder
+    rut?: SortOrder
+    razonSocial?: SortOrder
+    contacto?: SortOrderInput | SortOrder
+    telefono?: SortOrderInput | SortOrder
+    email?: SortOrderInput | SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: LogTransportistaCountOrderByAggregateInput
+    _max?: LogTransportistaMaxOrderByAggregateInput
+    _min?: LogTransportistaMinOrderByAggregateInput
+  }
+
+  export type LogTransportistaScalarWhereWithAggregatesInput = {
+    AND?: LogTransportistaScalarWhereWithAggregatesInput | LogTransportistaScalarWhereWithAggregatesInput[]
+    OR?: LogTransportistaScalarWhereWithAggregatesInput[]
+    NOT?: LogTransportistaScalarWhereWithAggregatesInput | LogTransportistaScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"LogTransportista"> | string
+    rut?: StringWithAggregatesFilter<"LogTransportista"> | string
+    razonSocial?: StringWithAggregatesFilter<"LogTransportista"> | string
+    contacto?: StringNullableWithAggregatesFilter<"LogTransportista"> | string | null
+    telefono?: StringNullableWithAggregatesFilter<"LogTransportista"> | string | null
+    email?: StringNullableWithAggregatesFilter<"LogTransportista"> | string | null
+    activo?: BoolWithAggregatesFilter<"LogTransportista"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"LogTransportista"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"LogTransportista"> | Date | string
+  }
+
+  export type LogChoferWhereInput = {
+    AND?: LogChoferWhereInput | LogChoferWhereInput[]
+    OR?: LogChoferWhereInput[]
+    NOT?: LogChoferWhereInput | LogChoferWhereInput[]
+    id?: StringFilter<"LogChofer"> | string
+    rut?: StringFilter<"LogChofer"> | string
+    nombre?: StringFilter<"LogChofer"> | string
+    telefono?: StringFilter<"LogChofer"> | string
+    email?: StringNullableFilter<"LogChofer"> | string | null
+    telegramChatId?: StringNullableFilter<"LogChofer"> | string | null
+    transportistaId?: StringNullableFilter<"LogChofer"> | string | null
+    activo?: BoolFilter<"LogChofer"> | boolean
+    createdAt?: DateTimeFilter<"LogChofer"> | Date | string
+    updatedAt?: DateTimeFilter<"LogChofer"> | Date | string
+    transportista?: XOR<LogTransportistaNullableRelationFilter, LogTransportistaWhereInput> | null
+    rutas?: LogRutaListRelationFilter
+  }
+
+  export type LogChoferOrderByWithRelationInput = {
+    id?: SortOrder
+    rut?: SortOrder
+    nombre?: SortOrder
+    telefono?: SortOrder
+    email?: SortOrderInput | SortOrder
+    telegramChatId?: SortOrderInput | SortOrder
+    transportistaId?: SortOrderInput | SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    transportista?: LogTransportistaOrderByWithRelationInput
+    rutas?: LogRutaOrderByRelationAggregateInput
+  }
+
+  export type LogChoferWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    rut?: string
+    AND?: LogChoferWhereInput | LogChoferWhereInput[]
+    OR?: LogChoferWhereInput[]
+    NOT?: LogChoferWhereInput | LogChoferWhereInput[]
+    nombre?: StringFilter<"LogChofer"> | string
+    telefono?: StringFilter<"LogChofer"> | string
+    email?: StringNullableFilter<"LogChofer"> | string | null
+    telegramChatId?: StringNullableFilter<"LogChofer"> | string | null
+    transportistaId?: StringNullableFilter<"LogChofer"> | string | null
+    activo?: BoolFilter<"LogChofer"> | boolean
+    createdAt?: DateTimeFilter<"LogChofer"> | Date | string
+    updatedAt?: DateTimeFilter<"LogChofer"> | Date | string
+    transportista?: XOR<LogTransportistaNullableRelationFilter, LogTransportistaWhereInput> | null
+    rutas?: LogRutaListRelationFilter
+  }, "id" | "rut">
+
+  export type LogChoferOrderByWithAggregationInput = {
+    id?: SortOrder
+    rut?: SortOrder
+    nombre?: SortOrder
+    telefono?: SortOrder
+    email?: SortOrderInput | SortOrder
+    telegramChatId?: SortOrderInput | SortOrder
+    transportistaId?: SortOrderInput | SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: LogChoferCountOrderByAggregateInput
+    _max?: LogChoferMaxOrderByAggregateInput
+    _min?: LogChoferMinOrderByAggregateInput
+  }
+
+  export type LogChoferScalarWhereWithAggregatesInput = {
+    AND?: LogChoferScalarWhereWithAggregatesInput | LogChoferScalarWhereWithAggregatesInput[]
+    OR?: LogChoferScalarWhereWithAggregatesInput[]
+    NOT?: LogChoferScalarWhereWithAggregatesInput | LogChoferScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"LogChofer"> | string
+    rut?: StringWithAggregatesFilter<"LogChofer"> | string
+    nombre?: StringWithAggregatesFilter<"LogChofer"> | string
+    telefono?: StringWithAggregatesFilter<"LogChofer"> | string
+    email?: StringNullableWithAggregatesFilter<"LogChofer"> | string | null
+    telegramChatId?: StringNullableWithAggregatesFilter<"LogChofer"> | string | null
+    transportistaId?: StringNullableWithAggregatesFilter<"LogChofer"> | string | null
+    activo?: BoolWithAggregatesFilter<"LogChofer"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"LogChofer"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"LogChofer"> | Date | string
+  }
+
+  export type LogCamionWhereInput = {
+    AND?: LogCamionWhereInput | LogCamionWhereInput[]
+    OR?: LogCamionWhereInput[]
+    NOT?: LogCamionWhereInput | LogCamionWhereInput[]
+    id?: StringFilter<"LogCamion"> | string
+    patente?: StringFilter<"LogCamion"> | string
+    tipoVehiculo?: StringFilter<"LogCamion"> | string
+    capacidadKg?: DecimalNullableFilter<"LogCamion"> | Decimal | DecimalJsLike | number | string | null
+    capacidadM3?: DecimalNullableFilter<"LogCamion"> | Decimal | DecimalJsLike | number | string | null
+    transportistaId?: StringNullableFilter<"LogCamion"> | string | null
+    activo?: BoolFilter<"LogCamion"> | boolean
+    createdAt?: DateTimeFilter<"LogCamion"> | Date | string
+    updatedAt?: DateTimeFilter<"LogCamion"> | Date | string
+    transportista?: XOR<LogTransportistaNullableRelationFilter, LogTransportistaWhereInput> | null
+    rutas?: LogRutaListRelationFilter
+  }
+
+  export type LogCamionOrderByWithRelationInput = {
+    id?: SortOrder
+    patente?: SortOrder
+    tipoVehiculo?: SortOrder
+    capacidadKg?: SortOrderInput | SortOrder
+    capacidadM3?: SortOrderInput | SortOrder
+    transportistaId?: SortOrderInput | SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    transportista?: LogTransportistaOrderByWithRelationInput
+    rutas?: LogRutaOrderByRelationAggregateInput
+  }
+
+  export type LogCamionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    patente?: string
+    AND?: LogCamionWhereInput | LogCamionWhereInput[]
+    OR?: LogCamionWhereInput[]
+    NOT?: LogCamionWhereInput | LogCamionWhereInput[]
+    tipoVehiculo?: StringFilter<"LogCamion"> | string
+    capacidadKg?: DecimalNullableFilter<"LogCamion"> | Decimal | DecimalJsLike | number | string | null
+    capacidadM3?: DecimalNullableFilter<"LogCamion"> | Decimal | DecimalJsLike | number | string | null
+    transportistaId?: StringNullableFilter<"LogCamion"> | string | null
+    activo?: BoolFilter<"LogCamion"> | boolean
+    createdAt?: DateTimeFilter<"LogCamion"> | Date | string
+    updatedAt?: DateTimeFilter<"LogCamion"> | Date | string
+    transportista?: XOR<LogTransportistaNullableRelationFilter, LogTransportistaWhereInput> | null
+    rutas?: LogRutaListRelationFilter
+  }, "id" | "patente">
+
+  export type LogCamionOrderByWithAggregationInput = {
+    id?: SortOrder
+    patente?: SortOrder
+    tipoVehiculo?: SortOrder
+    capacidadKg?: SortOrderInput | SortOrder
+    capacidadM3?: SortOrderInput | SortOrder
+    transportistaId?: SortOrderInput | SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: LogCamionCountOrderByAggregateInput
+    _avg?: LogCamionAvgOrderByAggregateInput
+    _max?: LogCamionMaxOrderByAggregateInput
+    _min?: LogCamionMinOrderByAggregateInput
+    _sum?: LogCamionSumOrderByAggregateInput
+  }
+
+  export type LogCamionScalarWhereWithAggregatesInput = {
+    AND?: LogCamionScalarWhereWithAggregatesInput | LogCamionScalarWhereWithAggregatesInput[]
+    OR?: LogCamionScalarWhereWithAggregatesInput[]
+    NOT?: LogCamionScalarWhereWithAggregatesInput | LogCamionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"LogCamion"> | string
+    patente?: StringWithAggregatesFilter<"LogCamion"> | string
+    tipoVehiculo?: StringWithAggregatesFilter<"LogCamion"> | string
+    capacidadKg?: DecimalNullableWithAggregatesFilter<"LogCamion"> | Decimal | DecimalJsLike | number | string | null
+    capacidadM3?: DecimalNullableWithAggregatesFilter<"LogCamion"> | Decimal | DecimalJsLike | number | string | null
+    transportistaId?: StringNullableWithAggregatesFilter<"LogCamion"> | string | null
+    activo?: BoolWithAggregatesFilter<"LogCamion"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"LogCamion"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"LogCamion"> | Date | string
+  }
+
+  export type LogClienteWhereInput = {
+    AND?: LogClienteWhereInput | LogClienteWhereInput[]
+    OR?: LogClienteWhereInput[]
+    NOT?: LogClienteWhereInput | LogClienteWhereInput[]
+    id?: StringFilter<"LogCliente"> | string
+    codigo?: StringFilter<"LogCliente"> | string
+    razonSocial?: StringFilter<"LogCliente"> | string
+    direccion?: StringNullableFilter<"LogCliente"> | string | null
+    comuna?: StringNullableFilter<"LogCliente"> | string | null
+    region?: StringNullableFilter<"LogCliente"> | string | null
+    activo?: BoolFilter<"LogCliente"> | boolean
+    createdAt?: DateTimeFilter<"LogCliente"> | Date | string
+    updatedAt?: DateTimeFilter<"LogCliente"> | Date | string
+    rutas?: LogRutaListRelationFilter
+  }
+
+  export type LogClienteOrderByWithRelationInput = {
+    id?: SortOrder
+    codigo?: SortOrder
+    razonSocial?: SortOrder
+    direccion?: SortOrderInput | SortOrder
+    comuna?: SortOrderInput | SortOrder
+    region?: SortOrderInput | SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    rutas?: LogRutaOrderByRelationAggregateInput
+  }
+
+  export type LogClienteWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    codigo?: string
+    AND?: LogClienteWhereInput | LogClienteWhereInput[]
+    OR?: LogClienteWhereInput[]
+    NOT?: LogClienteWhereInput | LogClienteWhereInput[]
+    razonSocial?: StringFilter<"LogCliente"> | string
+    direccion?: StringNullableFilter<"LogCliente"> | string | null
+    comuna?: StringNullableFilter<"LogCliente"> | string | null
+    region?: StringNullableFilter<"LogCliente"> | string | null
+    activo?: BoolFilter<"LogCliente"> | boolean
+    createdAt?: DateTimeFilter<"LogCliente"> | Date | string
+    updatedAt?: DateTimeFilter<"LogCliente"> | Date | string
+    rutas?: LogRutaListRelationFilter
+  }, "id" | "codigo">
+
+  export type LogClienteOrderByWithAggregationInput = {
+    id?: SortOrder
+    codigo?: SortOrder
+    razonSocial?: SortOrder
+    direccion?: SortOrderInput | SortOrder
+    comuna?: SortOrderInput | SortOrder
+    region?: SortOrderInput | SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: LogClienteCountOrderByAggregateInput
+    _max?: LogClienteMaxOrderByAggregateInput
+    _min?: LogClienteMinOrderByAggregateInput
+  }
+
+  export type LogClienteScalarWhereWithAggregatesInput = {
+    AND?: LogClienteScalarWhereWithAggregatesInput | LogClienteScalarWhereWithAggregatesInput[]
+    OR?: LogClienteScalarWhereWithAggregatesInput[]
+    NOT?: LogClienteScalarWhereWithAggregatesInput | LogClienteScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"LogCliente"> | string
+    codigo?: StringWithAggregatesFilter<"LogCliente"> | string
+    razonSocial?: StringWithAggregatesFilter<"LogCliente"> | string
+    direccion?: StringNullableWithAggregatesFilter<"LogCliente"> | string | null
+    comuna?: StringNullableWithAggregatesFilter<"LogCliente"> | string | null
+    region?: StringNullableWithAggregatesFilter<"LogCliente"> | string | null
+    activo?: BoolWithAggregatesFilter<"LogCliente"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"LogCliente"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"LogCliente"> | Date | string
+  }
+
+  export type LogRutaWhereInput = {
+    AND?: LogRutaWhereInput | LogRutaWhereInput[]
+    OR?: LogRutaWhereInput[]
+    NOT?: LogRutaWhereInput | LogRutaWhereInput[]
+    id?: StringFilter<"LogRuta"> | string
+    numeroRuta?: StringFilter<"LogRuta"> | string
+    bodegaId?: StringFilter<"LogRuta"> | string
+    transportistaId?: StringNullableFilter<"LogRuta"> | string | null
+    choferId?: StringFilter<"LogRuta"> | string
+    camionId?: StringFilter<"LogRuta"> | string
+    clienteId?: StringNullableFilter<"LogRuta"> | string | null
+    estado?: StringFilter<"LogRuta"> | string
+    andenId?: StringNullableFilter<"LogRuta"> | string | null
+    fechaRuta?: StringFilter<"LogRuta"> | string
+    horaProgramada?: StringFilter<"LogRuta"> | string
+    horaLlegadaPorton?: DateTimeNullableFilter<"LogRuta"> | Date | string | null
+    horaEntradaAnden?: DateTimeNullableFilter<"LogRuta"> | Date | string | null
+    horaSalidaAnden?: DateTimeNullableFilter<"LogRuta"> | Date | string | null
+    selloSalida?: StringNullableFilter<"LogRuta"> | string | null
+    totalBultos?: IntNullableFilter<"LogRuta"> | number | null
+    totalKilos?: DecimalNullableFilter<"LogRuta"> | Decimal | DecimalJsLike | number | string | null
+    observaciones?: StringNullableFilter<"LogRuta"> | string | null
+    telegramMessageId?: StringNullableFilter<"LogRuta"> | string | null
+    tokenRuta?: StringFilter<"LogRuta"> | string
+    creadaPorId?: StringNullableFilter<"LogRuta"> | string | null
+    createdAt?: DateTimeFilter<"LogRuta"> | Date | string
+    updatedAt?: DateTimeFilter<"LogRuta"> | Date | string
+    bodega?: XOR<LogBodegaRelationFilter, LogBodegaWhereInput>
+    transportista?: XOR<LogTransportistaNullableRelationFilter, LogTransportistaWhereInput> | null
+    chofer?: XOR<LogChoferRelationFilter, LogChoferWhereInput>
+    camion?: XOR<LogCamionRelationFilter, LogCamionWhereInput>
+    cliente?: XOR<LogClienteNullableRelationFilter, LogClienteWhereInput> | null
+    anden?: XOR<LogAndenNullableRelationFilter, LogAndenWhereInput> | null
+    eventos?: LogEventoRutaListRelationFilter
+    integracionLogs?: LogIntegracionLogListRelationFilter
+  }
+
+  export type LogRutaOrderByWithRelationInput = {
+    id?: SortOrder
+    numeroRuta?: SortOrder
+    bodegaId?: SortOrder
+    transportistaId?: SortOrderInput | SortOrder
+    choferId?: SortOrder
+    camionId?: SortOrder
+    clienteId?: SortOrderInput | SortOrder
+    estado?: SortOrder
+    andenId?: SortOrderInput | SortOrder
+    fechaRuta?: SortOrder
+    horaProgramada?: SortOrder
+    horaLlegadaPorton?: SortOrderInput | SortOrder
+    horaEntradaAnden?: SortOrderInput | SortOrder
+    horaSalidaAnden?: SortOrderInput | SortOrder
+    selloSalida?: SortOrderInput | SortOrder
+    totalBultos?: SortOrderInput | SortOrder
+    totalKilos?: SortOrderInput | SortOrder
+    observaciones?: SortOrderInput | SortOrder
+    telegramMessageId?: SortOrderInput | SortOrder
+    tokenRuta?: SortOrder
+    creadaPorId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    bodega?: LogBodegaOrderByWithRelationInput
+    transportista?: LogTransportistaOrderByWithRelationInput
+    chofer?: LogChoferOrderByWithRelationInput
+    camion?: LogCamionOrderByWithRelationInput
+    cliente?: LogClienteOrderByWithRelationInput
+    anden?: LogAndenOrderByWithRelationInput
+    eventos?: LogEventoRutaOrderByRelationAggregateInput
+    integracionLogs?: LogIntegracionLogOrderByRelationAggregateInput
+  }
+
+  export type LogRutaWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    numeroRuta?: string
+    tokenRuta?: string
+    AND?: LogRutaWhereInput | LogRutaWhereInput[]
+    OR?: LogRutaWhereInput[]
+    NOT?: LogRutaWhereInput | LogRutaWhereInput[]
+    bodegaId?: StringFilter<"LogRuta"> | string
+    transportistaId?: StringNullableFilter<"LogRuta"> | string | null
+    choferId?: StringFilter<"LogRuta"> | string
+    camionId?: StringFilter<"LogRuta"> | string
+    clienteId?: StringNullableFilter<"LogRuta"> | string | null
+    estado?: StringFilter<"LogRuta"> | string
+    andenId?: StringNullableFilter<"LogRuta"> | string | null
+    fechaRuta?: StringFilter<"LogRuta"> | string
+    horaProgramada?: StringFilter<"LogRuta"> | string
+    horaLlegadaPorton?: DateTimeNullableFilter<"LogRuta"> | Date | string | null
+    horaEntradaAnden?: DateTimeNullableFilter<"LogRuta"> | Date | string | null
+    horaSalidaAnden?: DateTimeNullableFilter<"LogRuta"> | Date | string | null
+    selloSalida?: StringNullableFilter<"LogRuta"> | string | null
+    totalBultos?: IntNullableFilter<"LogRuta"> | number | null
+    totalKilos?: DecimalNullableFilter<"LogRuta"> | Decimal | DecimalJsLike | number | string | null
+    observaciones?: StringNullableFilter<"LogRuta"> | string | null
+    telegramMessageId?: StringNullableFilter<"LogRuta"> | string | null
+    creadaPorId?: StringNullableFilter<"LogRuta"> | string | null
+    createdAt?: DateTimeFilter<"LogRuta"> | Date | string
+    updatedAt?: DateTimeFilter<"LogRuta"> | Date | string
+    bodega?: XOR<LogBodegaRelationFilter, LogBodegaWhereInput>
+    transportista?: XOR<LogTransportistaNullableRelationFilter, LogTransportistaWhereInput> | null
+    chofer?: XOR<LogChoferRelationFilter, LogChoferWhereInput>
+    camion?: XOR<LogCamionRelationFilter, LogCamionWhereInput>
+    cliente?: XOR<LogClienteNullableRelationFilter, LogClienteWhereInput> | null
+    anden?: XOR<LogAndenNullableRelationFilter, LogAndenWhereInput> | null
+    eventos?: LogEventoRutaListRelationFilter
+    integracionLogs?: LogIntegracionLogListRelationFilter
+  }, "id" | "numeroRuta" | "tokenRuta">
+
+  export type LogRutaOrderByWithAggregationInput = {
+    id?: SortOrder
+    numeroRuta?: SortOrder
+    bodegaId?: SortOrder
+    transportistaId?: SortOrderInput | SortOrder
+    choferId?: SortOrder
+    camionId?: SortOrder
+    clienteId?: SortOrderInput | SortOrder
+    estado?: SortOrder
+    andenId?: SortOrderInput | SortOrder
+    fechaRuta?: SortOrder
+    horaProgramada?: SortOrder
+    horaLlegadaPorton?: SortOrderInput | SortOrder
+    horaEntradaAnden?: SortOrderInput | SortOrder
+    horaSalidaAnden?: SortOrderInput | SortOrder
+    selloSalida?: SortOrderInput | SortOrder
+    totalBultos?: SortOrderInput | SortOrder
+    totalKilos?: SortOrderInput | SortOrder
+    observaciones?: SortOrderInput | SortOrder
+    telegramMessageId?: SortOrderInput | SortOrder
+    tokenRuta?: SortOrder
+    creadaPorId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: LogRutaCountOrderByAggregateInput
+    _avg?: LogRutaAvgOrderByAggregateInput
+    _max?: LogRutaMaxOrderByAggregateInput
+    _min?: LogRutaMinOrderByAggregateInput
+    _sum?: LogRutaSumOrderByAggregateInput
+  }
+
+  export type LogRutaScalarWhereWithAggregatesInput = {
+    AND?: LogRutaScalarWhereWithAggregatesInput | LogRutaScalarWhereWithAggregatesInput[]
+    OR?: LogRutaScalarWhereWithAggregatesInput[]
+    NOT?: LogRutaScalarWhereWithAggregatesInput | LogRutaScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"LogRuta"> | string
+    numeroRuta?: StringWithAggregatesFilter<"LogRuta"> | string
+    bodegaId?: StringWithAggregatesFilter<"LogRuta"> | string
+    transportistaId?: StringNullableWithAggregatesFilter<"LogRuta"> | string | null
+    choferId?: StringWithAggregatesFilter<"LogRuta"> | string
+    camionId?: StringWithAggregatesFilter<"LogRuta"> | string
+    clienteId?: StringNullableWithAggregatesFilter<"LogRuta"> | string | null
+    estado?: StringWithAggregatesFilter<"LogRuta"> | string
+    andenId?: StringNullableWithAggregatesFilter<"LogRuta"> | string | null
+    fechaRuta?: StringWithAggregatesFilter<"LogRuta"> | string
+    horaProgramada?: StringWithAggregatesFilter<"LogRuta"> | string
+    horaLlegadaPorton?: DateTimeNullableWithAggregatesFilter<"LogRuta"> | Date | string | null
+    horaEntradaAnden?: DateTimeNullableWithAggregatesFilter<"LogRuta"> | Date | string | null
+    horaSalidaAnden?: DateTimeNullableWithAggregatesFilter<"LogRuta"> | Date | string | null
+    selloSalida?: StringNullableWithAggregatesFilter<"LogRuta"> | string | null
+    totalBultos?: IntNullableWithAggregatesFilter<"LogRuta"> | number | null
+    totalKilos?: DecimalNullableWithAggregatesFilter<"LogRuta"> | Decimal | DecimalJsLike | number | string | null
+    observaciones?: StringNullableWithAggregatesFilter<"LogRuta"> | string | null
+    telegramMessageId?: StringNullableWithAggregatesFilter<"LogRuta"> | string | null
+    tokenRuta?: StringWithAggregatesFilter<"LogRuta"> | string
+    creadaPorId?: StringNullableWithAggregatesFilter<"LogRuta"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"LogRuta"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"LogRuta"> | Date | string
+  }
+
+  export type LogEventoRutaWhereInput = {
+    AND?: LogEventoRutaWhereInput | LogEventoRutaWhereInput[]
+    OR?: LogEventoRutaWhereInput[]
+    NOT?: LogEventoRutaWhereInput | LogEventoRutaWhereInput[]
+    id?: StringFilter<"LogEventoRuta"> | string
+    rutaId?: StringFilter<"LogEventoRuta"> | string
+    estadoAnterior?: StringNullableFilter<"LogEventoRuta"> | string | null
+    estadoNuevo?: StringFilter<"LogEventoRuta"> | string
+    andenId?: StringNullableFilter<"LogEventoRuta"> | string | null
+    origenCambio?: StringFilter<"LogEventoRuta"> | string
+    notas?: StringNullableFilter<"LogEventoRuta"> | string | null
+    metadataJson?: StringNullableFilter<"LogEventoRuta"> | string | null
+    usuarioId?: StringNullableFilter<"LogEventoRuta"> | string | null
+    createdAt?: DateTimeFilter<"LogEventoRuta"> | Date | string
+    ruta?: XOR<LogRutaRelationFilter, LogRutaWhereInput>
+    anden?: XOR<LogAndenNullableRelationFilter, LogAndenWhereInput> | null
+  }
+
+  export type LogEventoRutaOrderByWithRelationInput = {
+    id?: SortOrder
+    rutaId?: SortOrder
+    estadoAnterior?: SortOrderInput | SortOrder
+    estadoNuevo?: SortOrder
+    andenId?: SortOrderInput | SortOrder
+    origenCambio?: SortOrder
+    notas?: SortOrderInput | SortOrder
+    metadataJson?: SortOrderInput | SortOrder
+    usuarioId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    ruta?: LogRutaOrderByWithRelationInput
+    anden?: LogAndenOrderByWithRelationInput
+  }
+
+  export type LogEventoRutaWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: LogEventoRutaWhereInput | LogEventoRutaWhereInput[]
+    OR?: LogEventoRutaWhereInput[]
+    NOT?: LogEventoRutaWhereInput | LogEventoRutaWhereInput[]
+    rutaId?: StringFilter<"LogEventoRuta"> | string
+    estadoAnterior?: StringNullableFilter<"LogEventoRuta"> | string | null
+    estadoNuevo?: StringFilter<"LogEventoRuta"> | string
+    andenId?: StringNullableFilter<"LogEventoRuta"> | string | null
+    origenCambio?: StringFilter<"LogEventoRuta"> | string
+    notas?: StringNullableFilter<"LogEventoRuta"> | string | null
+    metadataJson?: StringNullableFilter<"LogEventoRuta"> | string | null
+    usuarioId?: StringNullableFilter<"LogEventoRuta"> | string | null
+    createdAt?: DateTimeFilter<"LogEventoRuta"> | Date | string
+    ruta?: XOR<LogRutaRelationFilter, LogRutaWhereInput>
+    anden?: XOR<LogAndenNullableRelationFilter, LogAndenWhereInput> | null
+  }, "id">
+
+  export type LogEventoRutaOrderByWithAggregationInput = {
+    id?: SortOrder
+    rutaId?: SortOrder
+    estadoAnterior?: SortOrderInput | SortOrder
+    estadoNuevo?: SortOrder
+    andenId?: SortOrderInput | SortOrder
+    origenCambio?: SortOrder
+    notas?: SortOrderInput | SortOrder
+    metadataJson?: SortOrderInput | SortOrder
+    usuarioId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: LogEventoRutaCountOrderByAggregateInput
+    _max?: LogEventoRutaMaxOrderByAggregateInput
+    _min?: LogEventoRutaMinOrderByAggregateInput
+  }
+
+  export type LogEventoRutaScalarWhereWithAggregatesInput = {
+    AND?: LogEventoRutaScalarWhereWithAggregatesInput | LogEventoRutaScalarWhereWithAggregatesInput[]
+    OR?: LogEventoRutaScalarWhereWithAggregatesInput[]
+    NOT?: LogEventoRutaScalarWhereWithAggregatesInput | LogEventoRutaScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"LogEventoRuta"> | string
+    rutaId?: StringWithAggregatesFilter<"LogEventoRuta"> | string
+    estadoAnterior?: StringNullableWithAggregatesFilter<"LogEventoRuta"> | string | null
+    estadoNuevo?: StringWithAggregatesFilter<"LogEventoRuta"> | string
+    andenId?: StringNullableWithAggregatesFilter<"LogEventoRuta"> | string | null
+    origenCambio?: StringWithAggregatesFilter<"LogEventoRuta"> | string
+    notas?: StringNullableWithAggregatesFilter<"LogEventoRuta"> | string | null
+    metadataJson?: StringNullableWithAggregatesFilter<"LogEventoRuta"> | string | null
+    usuarioId?: StringNullableWithAggregatesFilter<"LogEventoRuta"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"LogEventoRuta"> | Date | string
+  }
+
+  export type LogIntegracionConfigWhereInput = {
+    AND?: LogIntegracionConfigWhereInput | LogIntegracionConfigWhereInput[]
+    OR?: LogIntegracionConfigWhereInput[]
+    NOT?: LogIntegracionConfigWhereInput | LogIntegracionConfigWhereInput[]
+    id?: StringFilter<"LogIntegracionConfig"> | string
+    nombre?: StringFilter<"LogIntegracionConfig"> | string
+    provider?: StringFilter<"LogIntegracionConfig"> | string
+    webhookUrl?: StringFilter<"LogIntegracionConfig"> | string
+    secretToken?: StringNullableFilter<"LogIntegracionConfig"> | string | null
+    activo?: BoolFilter<"LogIntegracionConfig"> | boolean
+    eventosSuscritos?: StringFilter<"LogIntegracionConfig"> | string
+    headersJson?: StringNullableFilter<"LogIntegracionConfig"> | string | null
+    createdAt?: DateTimeFilter<"LogIntegracionConfig"> | Date | string
+    updatedAt?: DateTimeFilter<"LogIntegracionConfig"> | Date | string
+    logs?: LogIntegracionLogListRelationFilter
+  }
+
+  export type LogIntegracionConfigOrderByWithRelationInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    provider?: SortOrder
+    webhookUrl?: SortOrder
+    secretToken?: SortOrderInput | SortOrder
+    activo?: SortOrder
+    eventosSuscritos?: SortOrder
+    headersJson?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    logs?: LogIntegracionLogOrderByRelationAggregateInput
+  }
+
+  export type LogIntegracionConfigWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: LogIntegracionConfigWhereInput | LogIntegracionConfigWhereInput[]
+    OR?: LogIntegracionConfigWhereInput[]
+    NOT?: LogIntegracionConfigWhereInput | LogIntegracionConfigWhereInput[]
+    nombre?: StringFilter<"LogIntegracionConfig"> | string
+    provider?: StringFilter<"LogIntegracionConfig"> | string
+    webhookUrl?: StringFilter<"LogIntegracionConfig"> | string
+    secretToken?: StringNullableFilter<"LogIntegracionConfig"> | string | null
+    activo?: BoolFilter<"LogIntegracionConfig"> | boolean
+    eventosSuscritos?: StringFilter<"LogIntegracionConfig"> | string
+    headersJson?: StringNullableFilter<"LogIntegracionConfig"> | string | null
+    createdAt?: DateTimeFilter<"LogIntegracionConfig"> | Date | string
+    updatedAt?: DateTimeFilter<"LogIntegracionConfig"> | Date | string
+    logs?: LogIntegracionLogListRelationFilter
+  }, "id">
+
+  export type LogIntegracionConfigOrderByWithAggregationInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    provider?: SortOrder
+    webhookUrl?: SortOrder
+    secretToken?: SortOrderInput | SortOrder
+    activo?: SortOrder
+    eventosSuscritos?: SortOrder
+    headersJson?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: LogIntegracionConfigCountOrderByAggregateInput
+    _max?: LogIntegracionConfigMaxOrderByAggregateInput
+    _min?: LogIntegracionConfigMinOrderByAggregateInput
+  }
+
+  export type LogIntegracionConfigScalarWhereWithAggregatesInput = {
+    AND?: LogIntegracionConfigScalarWhereWithAggregatesInput | LogIntegracionConfigScalarWhereWithAggregatesInput[]
+    OR?: LogIntegracionConfigScalarWhereWithAggregatesInput[]
+    NOT?: LogIntegracionConfigScalarWhereWithAggregatesInput | LogIntegracionConfigScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"LogIntegracionConfig"> | string
+    nombre?: StringWithAggregatesFilter<"LogIntegracionConfig"> | string
+    provider?: StringWithAggregatesFilter<"LogIntegracionConfig"> | string
+    webhookUrl?: StringWithAggregatesFilter<"LogIntegracionConfig"> | string
+    secretToken?: StringNullableWithAggregatesFilter<"LogIntegracionConfig"> | string | null
+    activo?: BoolWithAggregatesFilter<"LogIntegracionConfig"> | boolean
+    eventosSuscritos?: StringWithAggregatesFilter<"LogIntegracionConfig"> | string
+    headersJson?: StringNullableWithAggregatesFilter<"LogIntegracionConfig"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"LogIntegracionConfig"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"LogIntegracionConfig"> | Date | string
+  }
+
+  export type LogIntegracionLogWhereInput = {
+    AND?: LogIntegracionLogWhereInput | LogIntegracionLogWhereInput[]
+    OR?: LogIntegracionLogWhereInput[]
+    NOT?: LogIntegracionLogWhereInput | LogIntegracionLogWhereInput[]
+    id?: StringFilter<"LogIntegracionLog"> | string
+    integracionConfigId?: StringNullableFilter<"LogIntegracionLog"> | string | null
+    evento?: StringFilter<"LogIntegracionLog"> | string
+    rutaId?: StringNullableFilter<"LogIntegracionLog"> | string | null
+    payloadEnviado?: StringNullableFilter<"LogIntegracionLog"> | string | null
+    respuestaCodigo?: IntNullableFilter<"LogIntegracionLog"> | number | null
+    respuestaCuerpo?: StringNullableFilter<"LogIntegracionLog"> | string | null
+    estado?: StringFilter<"LogIntegracionLog"> | string
+    intentos?: IntFilter<"LogIntegracionLog"> | number
+    errorDetalle?: StringNullableFilter<"LogIntegracionLog"> | string | null
+    createdAt?: DateTimeFilter<"LogIntegracionLog"> | Date | string
+    integracionConfig?: XOR<LogIntegracionConfigNullableRelationFilter, LogIntegracionConfigWhereInput> | null
+    ruta?: XOR<LogRutaNullableRelationFilter, LogRutaWhereInput> | null
+  }
+
+  export type LogIntegracionLogOrderByWithRelationInput = {
+    id?: SortOrder
+    integracionConfigId?: SortOrderInput | SortOrder
+    evento?: SortOrder
+    rutaId?: SortOrderInput | SortOrder
+    payloadEnviado?: SortOrderInput | SortOrder
+    respuestaCodigo?: SortOrderInput | SortOrder
+    respuestaCuerpo?: SortOrderInput | SortOrder
+    estado?: SortOrder
+    intentos?: SortOrder
+    errorDetalle?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    integracionConfig?: LogIntegracionConfigOrderByWithRelationInput
+    ruta?: LogRutaOrderByWithRelationInput
+  }
+
+  export type LogIntegracionLogWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: LogIntegracionLogWhereInput | LogIntegracionLogWhereInput[]
+    OR?: LogIntegracionLogWhereInput[]
+    NOT?: LogIntegracionLogWhereInput | LogIntegracionLogWhereInput[]
+    integracionConfigId?: StringNullableFilter<"LogIntegracionLog"> | string | null
+    evento?: StringFilter<"LogIntegracionLog"> | string
+    rutaId?: StringNullableFilter<"LogIntegracionLog"> | string | null
+    payloadEnviado?: StringNullableFilter<"LogIntegracionLog"> | string | null
+    respuestaCodigo?: IntNullableFilter<"LogIntegracionLog"> | number | null
+    respuestaCuerpo?: StringNullableFilter<"LogIntegracionLog"> | string | null
+    estado?: StringFilter<"LogIntegracionLog"> | string
+    intentos?: IntFilter<"LogIntegracionLog"> | number
+    errorDetalle?: StringNullableFilter<"LogIntegracionLog"> | string | null
+    createdAt?: DateTimeFilter<"LogIntegracionLog"> | Date | string
+    integracionConfig?: XOR<LogIntegracionConfigNullableRelationFilter, LogIntegracionConfigWhereInput> | null
+    ruta?: XOR<LogRutaNullableRelationFilter, LogRutaWhereInput> | null
+  }, "id">
+
+  export type LogIntegracionLogOrderByWithAggregationInput = {
+    id?: SortOrder
+    integracionConfigId?: SortOrderInput | SortOrder
+    evento?: SortOrder
+    rutaId?: SortOrderInput | SortOrder
+    payloadEnviado?: SortOrderInput | SortOrder
+    respuestaCodigo?: SortOrderInput | SortOrder
+    respuestaCuerpo?: SortOrderInput | SortOrder
+    estado?: SortOrder
+    intentos?: SortOrder
+    errorDetalle?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: LogIntegracionLogCountOrderByAggregateInput
+    _avg?: LogIntegracionLogAvgOrderByAggregateInput
+    _max?: LogIntegracionLogMaxOrderByAggregateInput
+    _min?: LogIntegracionLogMinOrderByAggregateInput
+    _sum?: LogIntegracionLogSumOrderByAggregateInput
+  }
+
+  export type LogIntegracionLogScalarWhereWithAggregatesInput = {
+    AND?: LogIntegracionLogScalarWhereWithAggregatesInput | LogIntegracionLogScalarWhereWithAggregatesInput[]
+    OR?: LogIntegracionLogScalarWhereWithAggregatesInput[]
+    NOT?: LogIntegracionLogScalarWhereWithAggregatesInput | LogIntegracionLogScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"LogIntegracionLog"> | string
+    integracionConfigId?: StringNullableWithAggregatesFilter<"LogIntegracionLog"> | string | null
+    evento?: StringWithAggregatesFilter<"LogIntegracionLog"> | string
+    rutaId?: StringNullableWithAggregatesFilter<"LogIntegracionLog"> | string | null
+    payloadEnviado?: StringNullableWithAggregatesFilter<"LogIntegracionLog"> | string | null
+    respuestaCodigo?: IntNullableWithAggregatesFilter<"LogIntegracionLog"> | number | null
+    respuestaCuerpo?: StringNullableWithAggregatesFilter<"LogIntegracionLog"> | string | null
+    estado?: StringWithAggregatesFilter<"LogIntegracionLog"> | string
+    intentos?: IntWithAggregatesFilter<"LogIntegracionLog"> | number
+    errorDetalle?: StringNullableWithAggregatesFilter<"LogIntegracionLog"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"LogIntegracionLog"> | Date | string
+  }
+
+  export type LogParametroWhereInput = {
+    AND?: LogParametroWhereInput | LogParametroWhereInput[]
+    OR?: LogParametroWhereInput[]
+    NOT?: LogParametroWhereInput | LogParametroWhereInput[]
+    id?: StringFilter<"LogParametro"> | string
+    bodegaId?: StringNullableFilter<"LogParametro"> | string | null
+    clave?: StringFilter<"LogParametro"> | string
+    valor?: StringFilter<"LogParametro"> | string
+    descripcion?: StringNullableFilter<"LogParametro"> | string | null
+    tipo?: StringFilter<"LogParametro"> | string
+    updatedAt?: DateTimeFilter<"LogParametro"> | Date | string
+    bodega?: XOR<LogBodegaNullableRelationFilter, LogBodegaWhereInput> | null
+  }
+
+  export type LogParametroOrderByWithRelationInput = {
+    id?: SortOrder
+    bodegaId?: SortOrderInput | SortOrder
+    clave?: SortOrder
+    valor?: SortOrder
+    descripcion?: SortOrderInput | SortOrder
+    tipo?: SortOrder
+    updatedAt?: SortOrder
+    bodega?: LogBodegaOrderByWithRelationInput
+  }
+
+  export type LogParametroWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    clave?: string
+    AND?: LogParametroWhereInput | LogParametroWhereInput[]
+    OR?: LogParametroWhereInput[]
+    NOT?: LogParametroWhereInput | LogParametroWhereInput[]
+    bodegaId?: StringNullableFilter<"LogParametro"> | string | null
+    valor?: StringFilter<"LogParametro"> | string
+    descripcion?: StringNullableFilter<"LogParametro"> | string | null
+    tipo?: StringFilter<"LogParametro"> | string
+    updatedAt?: DateTimeFilter<"LogParametro"> | Date | string
+    bodega?: XOR<LogBodegaNullableRelationFilter, LogBodegaWhereInput> | null
+  }, "id" | "clave">
+
+  export type LogParametroOrderByWithAggregationInput = {
+    id?: SortOrder
+    bodegaId?: SortOrderInput | SortOrder
+    clave?: SortOrder
+    valor?: SortOrder
+    descripcion?: SortOrderInput | SortOrder
+    tipo?: SortOrder
+    updatedAt?: SortOrder
+    _count?: LogParametroCountOrderByAggregateInput
+    _max?: LogParametroMaxOrderByAggregateInput
+    _min?: LogParametroMinOrderByAggregateInput
+  }
+
+  export type LogParametroScalarWhereWithAggregatesInput = {
+    AND?: LogParametroScalarWhereWithAggregatesInput | LogParametroScalarWhereWithAggregatesInput[]
+    OR?: LogParametroScalarWhereWithAggregatesInput[]
+    NOT?: LogParametroScalarWhereWithAggregatesInput | LogParametroScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"LogParametro"> | string
+    bodegaId?: StringNullableWithAggregatesFilter<"LogParametro"> | string | null
+    clave?: StringWithAggregatesFilter<"LogParametro"> | string
+    valor?: StringWithAggregatesFilter<"LogParametro"> | string
+    descripcion?: StringNullableWithAggregatesFilter<"LogParametro"> | string | null
+    tipo?: StringWithAggregatesFilter<"LogParametro"> | string
+    updatedAt?: DateTimeWithAggregatesFilter<"LogParametro"> | Date | string
   }
 
   export type RoleCreateInput = {
@@ -147167,6 +162353,1150 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type LogBodegaCreateInput = {
+    id?: string
+    codigo: string
+    nombre: string
+    sucursalId?: string | null
+    direccion?: string | null
+    activa?: boolean
+    orden?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    andenes?: LogAndenCreateNestedManyWithoutBodegaInput
+    rutas?: LogRutaCreateNestedManyWithoutBodegaInput
+    usuarios?: LogUsuarioBodegaCreateNestedManyWithoutBodegaInput
+    parametros?: LogParametroCreateNestedManyWithoutBodegaInput
+  }
+
+  export type LogBodegaUncheckedCreateInput = {
+    id?: string
+    codigo: string
+    nombre: string
+    sucursalId?: string | null
+    direccion?: string | null
+    activa?: boolean
+    orden?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    andenes?: LogAndenUncheckedCreateNestedManyWithoutBodegaInput
+    rutas?: LogRutaUncheckedCreateNestedManyWithoutBodegaInput
+    usuarios?: LogUsuarioBodegaUncheckedCreateNestedManyWithoutBodegaInput
+    parametros?: LogParametroUncheckedCreateNestedManyWithoutBodegaInput
+  }
+
+  export type LogBodegaUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    sucursalId?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    orden?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    andenes?: LogAndenUpdateManyWithoutBodegaNestedInput
+    rutas?: LogRutaUpdateManyWithoutBodegaNestedInput
+    usuarios?: LogUsuarioBodegaUpdateManyWithoutBodegaNestedInput
+    parametros?: LogParametroUpdateManyWithoutBodegaNestedInput
+  }
+
+  export type LogBodegaUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    sucursalId?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    orden?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    andenes?: LogAndenUncheckedUpdateManyWithoutBodegaNestedInput
+    rutas?: LogRutaUncheckedUpdateManyWithoutBodegaNestedInput
+    usuarios?: LogUsuarioBodegaUncheckedUpdateManyWithoutBodegaNestedInput
+    parametros?: LogParametroUncheckedUpdateManyWithoutBodegaNestedInput
+  }
+
+  export type LogBodegaCreateManyInput = {
+    id?: string
+    codigo: string
+    nombre: string
+    sucursalId?: string | null
+    direccion?: string | null
+    activa?: boolean
+    orden?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LogBodegaUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    sucursalId?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    orden?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogBodegaUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    sucursalId?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    orden?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogUsuarioBodegaCreateInput = {
+    id?: string
+    usuarioId: string
+    createdAt?: Date | string
+    bodega: LogBodegaCreateNestedOneWithoutUsuariosInput
+  }
+
+  export type LogUsuarioBodegaUncheckedCreateInput = {
+    id?: string
+    usuarioId: string
+    bodegaId: string
+    createdAt?: Date | string
+  }
+
+  export type LogUsuarioBodegaUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    usuarioId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bodega?: LogBodegaUpdateOneRequiredWithoutUsuariosNestedInput
+  }
+
+  export type LogUsuarioBodegaUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    usuarioId?: StringFieldUpdateOperationsInput | string
+    bodegaId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogUsuarioBodegaCreateManyInput = {
+    id?: string
+    usuarioId: string
+    bodegaId: string
+    createdAt?: Date | string
+  }
+
+  export type LogUsuarioBodegaUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    usuarioId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogUsuarioBodegaUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    usuarioId?: StringFieldUpdateOperationsInput | string
+    bodegaId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogAndenCreateInput = {
+    id?: string
+    codigo: string
+    nombre: string
+    tipoCarga?: string
+    estadoOperativo?: string
+    orden?: number
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bodega: LogBodegaCreateNestedOneWithoutAndenesInput
+    rutas?: LogRutaCreateNestedManyWithoutAndenInput
+    eventos?: LogEventoRutaCreateNestedManyWithoutAndenInput
+  }
+
+  export type LogAndenUncheckedCreateInput = {
+    id?: string
+    bodegaId: string
+    codigo: string
+    nombre: string
+    tipoCarga?: string
+    estadoOperativo?: string
+    orden?: number
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    rutas?: LogRutaUncheckedCreateNestedManyWithoutAndenInput
+    eventos?: LogEventoRutaUncheckedCreateNestedManyWithoutAndenInput
+  }
+
+  export type LogAndenUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    tipoCarga?: StringFieldUpdateOperationsInput | string
+    estadoOperativo?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bodega?: LogBodegaUpdateOneRequiredWithoutAndenesNestedInput
+    rutas?: LogRutaUpdateManyWithoutAndenNestedInput
+    eventos?: LogEventoRutaUpdateManyWithoutAndenNestedInput
+  }
+
+  export type LogAndenUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bodegaId?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    tipoCarga?: StringFieldUpdateOperationsInput | string
+    estadoOperativo?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rutas?: LogRutaUncheckedUpdateManyWithoutAndenNestedInput
+    eventos?: LogEventoRutaUncheckedUpdateManyWithoutAndenNestedInput
+  }
+
+  export type LogAndenCreateManyInput = {
+    id?: string
+    bodegaId: string
+    codigo: string
+    nombre: string
+    tipoCarga?: string
+    estadoOperativo?: string
+    orden?: number
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LogAndenUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    tipoCarga?: StringFieldUpdateOperationsInput | string
+    estadoOperativo?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogAndenUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bodegaId?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    tipoCarga?: StringFieldUpdateOperationsInput | string
+    estadoOperativo?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogTransportistaCreateInput = {
+    id?: string
+    rut: string
+    razonSocial: string
+    contacto?: string | null
+    telefono?: string | null
+    email?: string | null
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    choferes?: LogChoferCreateNestedManyWithoutTransportistaInput
+    camiones?: LogCamionCreateNestedManyWithoutTransportistaInput
+    rutas?: LogRutaCreateNestedManyWithoutTransportistaInput
+  }
+
+  export type LogTransportistaUncheckedCreateInput = {
+    id?: string
+    rut: string
+    razonSocial: string
+    contacto?: string | null
+    telefono?: string | null
+    email?: string | null
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    choferes?: LogChoferUncheckedCreateNestedManyWithoutTransportistaInput
+    camiones?: LogCamionUncheckedCreateNestedManyWithoutTransportistaInput
+    rutas?: LogRutaUncheckedCreateNestedManyWithoutTransportistaInput
+  }
+
+  export type LogTransportistaUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rut?: StringFieldUpdateOperationsInput | string
+    razonSocial?: StringFieldUpdateOperationsInput | string
+    contacto?: NullableStringFieldUpdateOperationsInput | string | null
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    choferes?: LogChoferUpdateManyWithoutTransportistaNestedInput
+    camiones?: LogCamionUpdateManyWithoutTransportistaNestedInput
+    rutas?: LogRutaUpdateManyWithoutTransportistaNestedInput
+  }
+
+  export type LogTransportistaUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rut?: StringFieldUpdateOperationsInput | string
+    razonSocial?: StringFieldUpdateOperationsInput | string
+    contacto?: NullableStringFieldUpdateOperationsInput | string | null
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    choferes?: LogChoferUncheckedUpdateManyWithoutTransportistaNestedInput
+    camiones?: LogCamionUncheckedUpdateManyWithoutTransportistaNestedInput
+    rutas?: LogRutaUncheckedUpdateManyWithoutTransportistaNestedInput
+  }
+
+  export type LogTransportistaCreateManyInput = {
+    id?: string
+    rut: string
+    razonSocial: string
+    contacto?: string | null
+    telefono?: string | null
+    email?: string | null
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LogTransportistaUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rut?: StringFieldUpdateOperationsInput | string
+    razonSocial?: StringFieldUpdateOperationsInput | string
+    contacto?: NullableStringFieldUpdateOperationsInput | string | null
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogTransportistaUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rut?: StringFieldUpdateOperationsInput | string
+    razonSocial?: StringFieldUpdateOperationsInput | string
+    contacto?: NullableStringFieldUpdateOperationsInput | string | null
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogChoferCreateInput = {
+    id?: string
+    rut: string
+    nombre: string
+    telefono: string
+    email?: string | null
+    telegramChatId?: string | null
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    transportista?: LogTransportistaCreateNestedOneWithoutChoferesInput
+    rutas?: LogRutaCreateNestedManyWithoutChoferInput
+  }
+
+  export type LogChoferUncheckedCreateInput = {
+    id?: string
+    rut: string
+    nombre: string
+    telefono: string
+    email?: string | null
+    telegramChatId?: string | null
+    transportistaId?: string | null
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    rutas?: LogRutaUncheckedCreateNestedManyWithoutChoferInput
+  }
+
+  export type LogChoferUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rut?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    telefono?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramChatId?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    transportista?: LogTransportistaUpdateOneWithoutChoferesNestedInput
+    rutas?: LogRutaUpdateManyWithoutChoferNestedInput
+  }
+
+  export type LogChoferUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rut?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    telefono?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramChatId?: NullableStringFieldUpdateOperationsInput | string | null
+    transportistaId?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rutas?: LogRutaUncheckedUpdateManyWithoutChoferNestedInput
+  }
+
+  export type LogChoferCreateManyInput = {
+    id?: string
+    rut: string
+    nombre: string
+    telefono: string
+    email?: string | null
+    telegramChatId?: string | null
+    transportistaId?: string | null
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LogChoferUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rut?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    telefono?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramChatId?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogChoferUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rut?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    telefono?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramChatId?: NullableStringFieldUpdateOperationsInput | string | null
+    transportistaId?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogCamionCreateInput = {
+    id?: string
+    patente: string
+    tipoVehiculo?: string
+    capacidadKg?: Decimal | DecimalJsLike | number | string | null
+    capacidadM3?: Decimal | DecimalJsLike | number | string | null
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    transportista?: LogTransportistaCreateNestedOneWithoutCamionesInput
+    rutas?: LogRutaCreateNestedManyWithoutCamionInput
+  }
+
+  export type LogCamionUncheckedCreateInput = {
+    id?: string
+    patente: string
+    tipoVehiculo?: string
+    capacidadKg?: Decimal | DecimalJsLike | number | string | null
+    capacidadM3?: Decimal | DecimalJsLike | number | string | null
+    transportistaId?: string | null
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    rutas?: LogRutaUncheckedCreateNestedManyWithoutCamionInput
+  }
+
+  export type LogCamionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    patente?: StringFieldUpdateOperationsInput | string
+    tipoVehiculo?: StringFieldUpdateOperationsInput | string
+    capacidadKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    capacidadM3?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    transportista?: LogTransportistaUpdateOneWithoutCamionesNestedInput
+    rutas?: LogRutaUpdateManyWithoutCamionNestedInput
+  }
+
+  export type LogCamionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    patente?: StringFieldUpdateOperationsInput | string
+    tipoVehiculo?: StringFieldUpdateOperationsInput | string
+    capacidadKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    capacidadM3?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    transportistaId?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rutas?: LogRutaUncheckedUpdateManyWithoutCamionNestedInput
+  }
+
+  export type LogCamionCreateManyInput = {
+    id?: string
+    patente: string
+    tipoVehiculo?: string
+    capacidadKg?: Decimal | DecimalJsLike | number | string | null
+    capacidadM3?: Decimal | DecimalJsLike | number | string | null
+    transportistaId?: string | null
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LogCamionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    patente?: StringFieldUpdateOperationsInput | string
+    tipoVehiculo?: StringFieldUpdateOperationsInput | string
+    capacidadKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    capacidadM3?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogCamionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    patente?: StringFieldUpdateOperationsInput | string
+    tipoVehiculo?: StringFieldUpdateOperationsInput | string
+    capacidadKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    capacidadM3?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    transportistaId?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogClienteCreateInput = {
+    id?: string
+    codigo: string
+    razonSocial: string
+    direccion?: string | null
+    comuna?: string | null
+    region?: string | null
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    rutas?: LogRutaCreateNestedManyWithoutClienteInput
+  }
+
+  export type LogClienteUncheckedCreateInput = {
+    id?: string
+    codigo: string
+    razonSocial: string
+    direccion?: string | null
+    comuna?: string | null
+    region?: string | null
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    rutas?: LogRutaUncheckedCreateNestedManyWithoutClienteInput
+  }
+
+  export type LogClienteUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    razonSocial?: StringFieldUpdateOperationsInput | string
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rutas?: LogRutaUpdateManyWithoutClienteNestedInput
+  }
+
+  export type LogClienteUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    razonSocial?: StringFieldUpdateOperationsInput | string
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rutas?: LogRutaUncheckedUpdateManyWithoutClienteNestedInput
+  }
+
+  export type LogClienteCreateManyInput = {
+    id?: string
+    codigo: string
+    razonSocial: string
+    direccion?: string | null
+    comuna?: string | null
+    region?: string | null
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LogClienteUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    razonSocial?: StringFieldUpdateOperationsInput | string
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogClienteUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    razonSocial?: StringFieldUpdateOperationsInput | string
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogRutaCreateInput = {
+    id?: string
+    numeroRuta: string
+    estado?: string
+    fechaRuta: string
+    horaProgramada: string
+    horaLlegadaPorton?: Date | string | null
+    horaEntradaAnden?: Date | string | null
+    horaSalidaAnden?: Date | string | null
+    selloSalida?: string | null
+    totalBultos?: number | null
+    totalKilos?: Decimal | DecimalJsLike | number | string | null
+    observaciones?: string | null
+    telegramMessageId?: string | null
+    tokenRuta?: string
+    creadaPorId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bodega: LogBodegaCreateNestedOneWithoutRutasInput
+    transportista?: LogTransportistaCreateNestedOneWithoutRutasInput
+    chofer: LogChoferCreateNestedOneWithoutRutasInput
+    camion: LogCamionCreateNestedOneWithoutRutasInput
+    cliente?: LogClienteCreateNestedOneWithoutRutasInput
+    anden?: LogAndenCreateNestedOneWithoutRutasInput
+    eventos?: LogEventoRutaCreateNestedManyWithoutRutaInput
+    integracionLogs?: LogIntegracionLogCreateNestedManyWithoutRutaInput
+  }
+
+  export type LogRutaUncheckedCreateInput = {
+    id?: string
+    numeroRuta: string
+    bodegaId: string
+    transportistaId?: string | null
+    choferId: string
+    camionId: string
+    clienteId?: string | null
+    estado?: string
+    andenId?: string | null
+    fechaRuta: string
+    horaProgramada: string
+    horaLlegadaPorton?: Date | string | null
+    horaEntradaAnden?: Date | string | null
+    horaSalidaAnden?: Date | string | null
+    selloSalida?: string | null
+    totalBultos?: number | null
+    totalKilos?: Decimal | DecimalJsLike | number | string | null
+    observaciones?: string | null
+    telegramMessageId?: string | null
+    tokenRuta?: string
+    creadaPorId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    eventos?: LogEventoRutaUncheckedCreateNestedManyWithoutRutaInput
+    integracionLogs?: LogIntegracionLogUncheckedCreateNestedManyWithoutRutaInput
+  }
+
+  export type LogRutaUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroRuta?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    fechaRuta?: StringFieldUpdateOperationsInput | string
+    horaProgramada?: StringFieldUpdateOperationsInput | string
+    horaLlegadaPorton?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaEntradaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaSalidaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    selloSalida?: NullableStringFieldUpdateOperationsInput | string | null
+    totalBultos?: NullableIntFieldUpdateOperationsInput | number | null
+    totalKilos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenRuta?: StringFieldUpdateOperationsInput | string
+    creadaPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bodega?: LogBodegaUpdateOneRequiredWithoutRutasNestedInput
+    transportista?: LogTransportistaUpdateOneWithoutRutasNestedInput
+    chofer?: LogChoferUpdateOneRequiredWithoutRutasNestedInput
+    camion?: LogCamionUpdateOneRequiredWithoutRutasNestedInput
+    cliente?: LogClienteUpdateOneWithoutRutasNestedInput
+    anden?: LogAndenUpdateOneWithoutRutasNestedInput
+    eventos?: LogEventoRutaUpdateManyWithoutRutaNestedInput
+    integracionLogs?: LogIntegracionLogUpdateManyWithoutRutaNestedInput
+  }
+
+  export type LogRutaUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroRuta?: StringFieldUpdateOperationsInput | string
+    bodegaId?: StringFieldUpdateOperationsInput | string
+    transportistaId?: NullableStringFieldUpdateOperationsInput | string | null
+    choferId?: StringFieldUpdateOperationsInput | string
+    camionId?: StringFieldUpdateOperationsInput | string
+    clienteId?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    andenId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaRuta?: StringFieldUpdateOperationsInput | string
+    horaProgramada?: StringFieldUpdateOperationsInput | string
+    horaLlegadaPorton?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaEntradaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaSalidaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    selloSalida?: NullableStringFieldUpdateOperationsInput | string | null
+    totalBultos?: NullableIntFieldUpdateOperationsInput | number | null
+    totalKilos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenRuta?: StringFieldUpdateOperationsInput | string
+    creadaPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    eventos?: LogEventoRutaUncheckedUpdateManyWithoutRutaNestedInput
+    integracionLogs?: LogIntegracionLogUncheckedUpdateManyWithoutRutaNestedInput
+  }
+
+  export type LogRutaCreateManyInput = {
+    id?: string
+    numeroRuta: string
+    bodegaId: string
+    transportistaId?: string | null
+    choferId: string
+    camionId: string
+    clienteId?: string | null
+    estado?: string
+    andenId?: string | null
+    fechaRuta: string
+    horaProgramada: string
+    horaLlegadaPorton?: Date | string | null
+    horaEntradaAnden?: Date | string | null
+    horaSalidaAnden?: Date | string | null
+    selloSalida?: string | null
+    totalBultos?: number | null
+    totalKilos?: Decimal | DecimalJsLike | number | string | null
+    observaciones?: string | null
+    telegramMessageId?: string | null
+    tokenRuta?: string
+    creadaPorId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LogRutaUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroRuta?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    fechaRuta?: StringFieldUpdateOperationsInput | string
+    horaProgramada?: StringFieldUpdateOperationsInput | string
+    horaLlegadaPorton?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaEntradaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaSalidaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    selloSalida?: NullableStringFieldUpdateOperationsInput | string | null
+    totalBultos?: NullableIntFieldUpdateOperationsInput | number | null
+    totalKilos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenRuta?: StringFieldUpdateOperationsInput | string
+    creadaPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogRutaUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroRuta?: StringFieldUpdateOperationsInput | string
+    bodegaId?: StringFieldUpdateOperationsInput | string
+    transportistaId?: NullableStringFieldUpdateOperationsInput | string | null
+    choferId?: StringFieldUpdateOperationsInput | string
+    camionId?: StringFieldUpdateOperationsInput | string
+    clienteId?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    andenId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaRuta?: StringFieldUpdateOperationsInput | string
+    horaProgramada?: StringFieldUpdateOperationsInput | string
+    horaLlegadaPorton?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaEntradaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaSalidaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    selloSalida?: NullableStringFieldUpdateOperationsInput | string | null
+    totalBultos?: NullableIntFieldUpdateOperationsInput | number | null
+    totalKilos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenRuta?: StringFieldUpdateOperationsInput | string
+    creadaPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogEventoRutaCreateInput = {
+    id?: string
+    estadoAnterior?: string | null
+    estadoNuevo: string
+    origenCambio?: string
+    notas?: string | null
+    metadataJson?: string | null
+    usuarioId?: string | null
+    createdAt?: Date | string
+    ruta: LogRutaCreateNestedOneWithoutEventosInput
+    anden?: LogAndenCreateNestedOneWithoutEventosInput
+  }
+
+  export type LogEventoRutaUncheckedCreateInput = {
+    id?: string
+    rutaId: string
+    estadoAnterior?: string | null
+    estadoNuevo: string
+    andenId?: string | null
+    origenCambio?: string
+    notas?: string | null
+    metadataJson?: string | null
+    usuarioId?: string | null
+    createdAt?: Date | string
+  }
+
+  export type LogEventoRutaUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    estadoAnterior?: NullableStringFieldUpdateOperationsInput | string | null
+    estadoNuevo?: StringFieldUpdateOperationsInput | string
+    origenCambio?: StringFieldUpdateOperationsInput | string
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    metadataJson?: NullableStringFieldUpdateOperationsInput | string | null
+    usuarioId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ruta?: LogRutaUpdateOneRequiredWithoutEventosNestedInput
+    anden?: LogAndenUpdateOneWithoutEventosNestedInput
+  }
+
+  export type LogEventoRutaUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rutaId?: StringFieldUpdateOperationsInput | string
+    estadoAnterior?: NullableStringFieldUpdateOperationsInput | string | null
+    estadoNuevo?: StringFieldUpdateOperationsInput | string
+    andenId?: NullableStringFieldUpdateOperationsInput | string | null
+    origenCambio?: StringFieldUpdateOperationsInput | string
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    metadataJson?: NullableStringFieldUpdateOperationsInput | string | null
+    usuarioId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogEventoRutaCreateManyInput = {
+    id?: string
+    rutaId: string
+    estadoAnterior?: string | null
+    estadoNuevo: string
+    andenId?: string | null
+    origenCambio?: string
+    notas?: string | null
+    metadataJson?: string | null
+    usuarioId?: string | null
+    createdAt?: Date | string
+  }
+
+  export type LogEventoRutaUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    estadoAnterior?: NullableStringFieldUpdateOperationsInput | string | null
+    estadoNuevo?: StringFieldUpdateOperationsInput | string
+    origenCambio?: StringFieldUpdateOperationsInput | string
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    metadataJson?: NullableStringFieldUpdateOperationsInput | string | null
+    usuarioId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogEventoRutaUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rutaId?: StringFieldUpdateOperationsInput | string
+    estadoAnterior?: NullableStringFieldUpdateOperationsInput | string | null
+    estadoNuevo?: StringFieldUpdateOperationsInput | string
+    andenId?: NullableStringFieldUpdateOperationsInput | string | null
+    origenCambio?: StringFieldUpdateOperationsInput | string
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    metadataJson?: NullableStringFieldUpdateOperationsInput | string | null
+    usuarioId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogIntegracionConfigCreateInput = {
+    id?: string
+    nombre?: string
+    provider?: string
+    webhookUrl: string
+    secretToken?: string | null
+    activo?: boolean
+    eventosSuscritos?: string
+    headersJson?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    logs?: LogIntegracionLogCreateNestedManyWithoutIntegracionConfigInput
+  }
+
+  export type LogIntegracionConfigUncheckedCreateInput = {
+    id?: string
+    nombre?: string
+    provider?: string
+    webhookUrl: string
+    secretToken?: string | null
+    activo?: boolean
+    eventosSuscritos?: string
+    headersJson?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    logs?: LogIntegracionLogUncheckedCreateNestedManyWithoutIntegracionConfigInput
+  }
+
+  export type LogIntegracionConfigUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    webhookUrl?: StringFieldUpdateOperationsInput | string
+    secretToken?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    eventosSuscritos?: StringFieldUpdateOperationsInput | string
+    headersJson?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    logs?: LogIntegracionLogUpdateManyWithoutIntegracionConfigNestedInput
+  }
+
+  export type LogIntegracionConfigUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    webhookUrl?: StringFieldUpdateOperationsInput | string
+    secretToken?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    eventosSuscritos?: StringFieldUpdateOperationsInput | string
+    headersJson?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    logs?: LogIntegracionLogUncheckedUpdateManyWithoutIntegracionConfigNestedInput
+  }
+
+  export type LogIntegracionConfigCreateManyInput = {
+    id?: string
+    nombre?: string
+    provider?: string
+    webhookUrl: string
+    secretToken?: string | null
+    activo?: boolean
+    eventosSuscritos?: string
+    headersJson?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LogIntegracionConfigUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    webhookUrl?: StringFieldUpdateOperationsInput | string
+    secretToken?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    eventosSuscritos?: StringFieldUpdateOperationsInput | string
+    headersJson?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogIntegracionConfigUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    webhookUrl?: StringFieldUpdateOperationsInput | string
+    secretToken?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    eventosSuscritos?: StringFieldUpdateOperationsInput | string
+    headersJson?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogIntegracionLogCreateInput = {
+    id?: string
+    evento: string
+    payloadEnviado?: string | null
+    respuestaCodigo?: number | null
+    respuestaCuerpo?: string | null
+    estado?: string
+    intentos?: number
+    errorDetalle?: string | null
+    createdAt?: Date | string
+    integracionConfig?: LogIntegracionConfigCreateNestedOneWithoutLogsInput
+    ruta?: LogRutaCreateNestedOneWithoutIntegracionLogsInput
+  }
+
+  export type LogIntegracionLogUncheckedCreateInput = {
+    id?: string
+    integracionConfigId?: string | null
+    evento: string
+    rutaId?: string | null
+    payloadEnviado?: string | null
+    respuestaCodigo?: number | null
+    respuestaCuerpo?: string | null
+    estado?: string
+    intentos?: number
+    errorDetalle?: string | null
+    createdAt?: Date | string
+  }
+
+  export type LogIntegracionLogUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    evento?: StringFieldUpdateOperationsInput | string
+    payloadEnviado?: NullableStringFieldUpdateOperationsInput | string | null
+    respuestaCodigo?: NullableIntFieldUpdateOperationsInput | number | null
+    respuestaCuerpo?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    intentos?: IntFieldUpdateOperationsInput | number
+    errorDetalle?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    integracionConfig?: LogIntegracionConfigUpdateOneWithoutLogsNestedInput
+    ruta?: LogRutaUpdateOneWithoutIntegracionLogsNestedInput
+  }
+
+  export type LogIntegracionLogUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    integracionConfigId?: NullableStringFieldUpdateOperationsInput | string | null
+    evento?: StringFieldUpdateOperationsInput | string
+    rutaId?: NullableStringFieldUpdateOperationsInput | string | null
+    payloadEnviado?: NullableStringFieldUpdateOperationsInput | string | null
+    respuestaCodigo?: NullableIntFieldUpdateOperationsInput | number | null
+    respuestaCuerpo?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    intentos?: IntFieldUpdateOperationsInput | number
+    errorDetalle?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogIntegracionLogCreateManyInput = {
+    id?: string
+    integracionConfigId?: string | null
+    evento: string
+    rutaId?: string | null
+    payloadEnviado?: string | null
+    respuestaCodigo?: number | null
+    respuestaCuerpo?: string | null
+    estado?: string
+    intentos?: number
+    errorDetalle?: string | null
+    createdAt?: Date | string
+  }
+
+  export type LogIntegracionLogUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    evento?: StringFieldUpdateOperationsInput | string
+    payloadEnviado?: NullableStringFieldUpdateOperationsInput | string | null
+    respuestaCodigo?: NullableIntFieldUpdateOperationsInput | number | null
+    respuestaCuerpo?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    intentos?: IntFieldUpdateOperationsInput | number
+    errorDetalle?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogIntegracionLogUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    integracionConfigId?: NullableStringFieldUpdateOperationsInput | string | null
+    evento?: StringFieldUpdateOperationsInput | string
+    rutaId?: NullableStringFieldUpdateOperationsInput | string | null
+    payloadEnviado?: NullableStringFieldUpdateOperationsInput | string | null
+    respuestaCodigo?: NullableIntFieldUpdateOperationsInput | number | null
+    respuestaCuerpo?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    intentos?: IntFieldUpdateOperationsInput | number
+    errorDetalle?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogParametroCreateInput = {
+    id?: string
+    clave: string
+    valor: string
+    descripcion?: string | null
+    tipo?: string
+    updatedAt?: Date | string
+    bodega?: LogBodegaCreateNestedOneWithoutParametrosInput
+  }
+
+  export type LogParametroUncheckedCreateInput = {
+    id?: string
+    bodegaId?: string | null
+    clave: string
+    valor: string
+    descripcion?: string | null
+    tipo?: string
+    updatedAt?: Date | string
+  }
+
+  export type LogParametroUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    clave?: StringFieldUpdateOperationsInput | string
+    valor?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    tipo?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bodega?: LogBodegaUpdateOneWithoutParametrosNestedInput
+  }
+
+  export type LogParametroUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bodegaId?: NullableStringFieldUpdateOperationsInput | string | null
+    clave?: StringFieldUpdateOperationsInput | string
+    valor?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    tipo?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogParametroCreateManyInput = {
+    id?: string
+    bodegaId?: string | null
+    clave: string
+    valor: string
+    descripcion?: string | null
+    tipo?: string
+    updatedAt?: Date | string
+  }
+
+  export type LogParametroUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    clave?: StringFieldUpdateOperationsInput | string
+    valor?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    tipo?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogParametroUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bodegaId?: NullableStringFieldUpdateOperationsInput | string | null
+    clave?: StringFieldUpdateOperationsInput | string
+    valor?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    tipo?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -153506,6 +169836,690 @@ export namespace Prisma {
     orden?: SortOrder
   }
 
+  export type LogAndenListRelationFilter = {
+    every?: LogAndenWhereInput
+    some?: LogAndenWhereInput
+    none?: LogAndenWhereInput
+  }
+
+  export type LogRutaListRelationFilter = {
+    every?: LogRutaWhereInput
+    some?: LogRutaWhereInput
+    none?: LogRutaWhereInput
+  }
+
+  export type LogUsuarioBodegaListRelationFilter = {
+    every?: LogUsuarioBodegaWhereInput
+    some?: LogUsuarioBodegaWhereInput
+    none?: LogUsuarioBodegaWhereInput
+  }
+
+  export type LogParametroListRelationFilter = {
+    every?: LogParametroWhereInput
+    some?: LogParametroWhereInput
+    none?: LogParametroWhereInput
+  }
+
+  export type LogAndenOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type LogRutaOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type LogUsuarioBodegaOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type LogParametroOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type LogBodegaCountOrderByAggregateInput = {
+    id?: SortOrder
+    codigo?: SortOrder
+    nombre?: SortOrder
+    sucursalId?: SortOrder
+    direccion?: SortOrder
+    activa?: SortOrder
+    orden?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LogBodegaAvgOrderByAggregateInput = {
+    orden?: SortOrder
+  }
+
+  export type LogBodegaMaxOrderByAggregateInput = {
+    id?: SortOrder
+    codigo?: SortOrder
+    nombre?: SortOrder
+    sucursalId?: SortOrder
+    direccion?: SortOrder
+    activa?: SortOrder
+    orden?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LogBodegaMinOrderByAggregateInput = {
+    id?: SortOrder
+    codigo?: SortOrder
+    nombre?: SortOrder
+    sucursalId?: SortOrder
+    direccion?: SortOrder
+    activa?: SortOrder
+    orden?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LogBodegaSumOrderByAggregateInput = {
+    orden?: SortOrder
+  }
+
+  export type LogBodegaRelationFilter = {
+    is?: LogBodegaWhereInput
+    isNot?: LogBodegaWhereInput
+  }
+
+  export type LogUsuarioBodegaUsuarioIdBodegaIdCompoundUniqueInput = {
+    usuarioId: string
+    bodegaId: string
+  }
+
+  export type LogUsuarioBodegaCountOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    bodegaId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type LogUsuarioBodegaMaxOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    bodegaId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type LogUsuarioBodegaMinOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    bodegaId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type LogEventoRutaListRelationFilter = {
+    every?: LogEventoRutaWhereInput
+    some?: LogEventoRutaWhereInput
+    none?: LogEventoRutaWhereInput
+  }
+
+  export type LogEventoRutaOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type LogAndenBodegaIdCodigoCompoundUniqueInput = {
+    bodegaId: string
+    codigo: string
+  }
+
+  export type LogAndenCountOrderByAggregateInput = {
+    id?: SortOrder
+    bodegaId?: SortOrder
+    codigo?: SortOrder
+    nombre?: SortOrder
+    tipoCarga?: SortOrder
+    estadoOperativo?: SortOrder
+    orden?: SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LogAndenAvgOrderByAggregateInput = {
+    orden?: SortOrder
+  }
+
+  export type LogAndenMaxOrderByAggregateInput = {
+    id?: SortOrder
+    bodegaId?: SortOrder
+    codigo?: SortOrder
+    nombre?: SortOrder
+    tipoCarga?: SortOrder
+    estadoOperativo?: SortOrder
+    orden?: SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LogAndenMinOrderByAggregateInput = {
+    id?: SortOrder
+    bodegaId?: SortOrder
+    codigo?: SortOrder
+    nombre?: SortOrder
+    tipoCarga?: SortOrder
+    estadoOperativo?: SortOrder
+    orden?: SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LogAndenSumOrderByAggregateInput = {
+    orden?: SortOrder
+  }
+
+  export type LogChoferListRelationFilter = {
+    every?: LogChoferWhereInput
+    some?: LogChoferWhereInput
+    none?: LogChoferWhereInput
+  }
+
+  export type LogCamionListRelationFilter = {
+    every?: LogCamionWhereInput
+    some?: LogCamionWhereInput
+    none?: LogCamionWhereInput
+  }
+
+  export type LogChoferOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type LogCamionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type LogTransportistaCountOrderByAggregateInput = {
+    id?: SortOrder
+    rut?: SortOrder
+    razonSocial?: SortOrder
+    contacto?: SortOrder
+    telefono?: SortOrder
+    email?: SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LogTransportistaMaxOrderByAggregateInput = {
+    id?: SortOrder
+    rut?: SortOrder
+    razonSocial?: SortOrder
+    contacto?: SortOrder
+    telefono?: SortOrder
+    email?: SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LogTransportistaMinOrderByAggregateInput = {
+    id?: SortOrder
+    rut?: SortOrder
+    razonSocial?: SortOrder
+    contacto?: SortOrder
+    telefono?: SortOrder
+    email?: SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LogTransportistaNullableRelationFilter = {
+    is?: LogTransportistaWhereInput | null
+    isNot?: LogTransportistaWhereInput | null
+  }
+
+  export type LogChoferCountOrderByAggregateInput = {
+    id?: SortOrder
+    rut?: SortOrder
+    nombre?: SortOrder
+    telefono?: SortOrder
+    email?: SortOrder
+    telegramChatId?: SortOrder
+    transportistaId?: SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LogChoferMaxOrderByAggregateInput = {
+    id?: SortOrder
+    rut?: SortOrder
+    nombre?: SortOrder
+    telefono?: SortOrder
+    email?: SortOrder
+    telegramChatId?: SortOrder
+    transportistaId?: SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LogChoferMinOrderByAggregateInput = {
+    id?: SortOrder
+    rut?: SortOrder
+    nombre?: SortOrder
+    telefono?: SortOrder
+    email?: SortOrder
+    telegramChatId?: SortOrder
+    transportistaId?: SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DecimalNullableFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+  }
+
+  export type LogCamionCountOrderByAggregateInput = {
+    id?: SortOrder
+    patente?: SortOrder
+    tipoVehiculo?: SortOrder
+    capacidadKg?: SortOrder
+    capacidadM3?: SortOrder
+    transportistaId?: SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LogCamionAvgOrderByAggregateInput = {
+    capacidadKg?: SortOrder
+    capacidadM3?: SortOrder
+  }
+
+  export type LogCamionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    patente?: SortOrder
+    tipoVehiculo?: SortOrder
+    capacidadKg?: SortOrder
+    capacidadM3?: SortOrder
+    transportistaId?: SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LogCamionMinOrderByAggregateInput = {
+    id?: SortOrder
+    patente?: SortOrder
+    tipoVehiculo?: SortOrder
+    capacidadKg?: SortOrder
+    capacidadM3?: SortOrder
+    transportistaId?: SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LogCamionSumOrderByAggregateInput = {
+    capacidadKg?: SortOrder
+    capacidadM3?: SortOrder
+  }
+
+  export type DecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedDecimalNullableFilter<$PrismaModel>
+    _sum?: NestedDecimalNullableFilter<$PrismaModel>
+    _min?: NestedDecimalNullableFilter<$PrismaModel>
+    _max?: NestedDecimalNullableFilter<$PrismaModel>
+  }
+
+  export type LogClienteCountOrderByAggregateInput = {
+    id?: SortOrder
+    codigo?: SortOrder
+    razonSocial?: SortOrder
+    direccion?: SortOrder
+    comuna?: SortOrder
+    region?: SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LogClienteMaxOrderByAggregateInput = {
+    id?: SortOrder
+    codigo?: SortOrder
+    razonSocial?: SortOrder
+    direccion?: SortOrder
+    comuna?: SortOrder
+    region?: SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LogClienteMinOrderByAggregateInput = {
+    id?: SortOrder
+    codigo?: SortOrder
+    razonSocial?: SortOrder
+    direccion?: SortOrder
+    comuna?: SortOrder
+    region?: SortOrder
+    activo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LogChoferRelationFilter = {
+    is?: LogChoferWhereInput
+    isNot?: LogChoferWhereInput
+  }
+
+  export type LogCamionRelationFilter = {
+    is?: LogCamionWhereInput
+    isNot?: LogCamionWhereInput
+  }
+
+  export type LogClienteNullableRelationFilter = {
+    is?: LogClienteWhereInput | null
+    isNot?: LogClienteWhereInput | null
+  }
+
+  export type LogAndenNullableRelationFilter = {
+    is?: LogAndenWhereInput | null
+    isNot?: LogAndenWhereInput | null
+  }
+
+  export type LogIntegracionLogListRelationFilter = {
+    every?: LogIntegracionLogWhereInput
+    some?: LogIntegracionLogWhereInput
+    none?: LogIntegracionLogWhereInput
+  }
+
+  export type LogIntegracionLogOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type LogRutaCountOrderByAggregateInput = {
+    id?: SortOrder
+    numeroRuta?: SortOrder
+    bodegaId?: SortOrder
+    transportistaId?: SortOrder
+    choferId?: SortOrder
+    camionId?: SortOrder
+    clienteId?: SortOrder
+    estado?: SortOrder
+    andenId?: SortOrder
+    fechaRuta?: SortOrder
+    horaProgramada?: SortOrder
+    horaLlegadaPorton?: SortOrder
+    horaEntradaAnden?: SortOrder
+    horaSalidaAnden?: SortOrder
+    selloSalida?: SortOrder
+    totalBultos?: SortOrder
+    totalKilos?: SortOrder
+    observaciones?: SortOrder
+    telegramMessageId?: SortOrder
+    tokenRuta?: SortOrder
+    creadaPorId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LogRutaAvgOrderByAggregateInput = {
+    totalBultos?: SortOrder
+    totalKilos?: SortOrder
+  }
+
+  export type LogRutaMaxOrderByAggregateInput = {
+    id?: SortOrder
+    numeroRuta?: SortOrder
+    bodegaId?: SortOrder
+    transportistaId?: SortOrder
+    choferId?: SortOrder
+    camionId?: SortOrder
+    clienteId?: SortOrder
+    estado?: SortOrder
+    andenId?: SortOrder
+    fechaRuta?: SortOrder
+    horaProgramada?: SortOrder
+    horaLlegadaPorton?: SortOrder
+    horaEntradaAnden?: SortOrder
+    horaSalidaAnden?: SortOrder
+    selloSalida?: SortOrder
+    totalBultos?: SortOrder
+    totalKilos?: SortOrder
+    observaciones?: SortOrder
+    telegramMessageId?: SortOrder
+    tokenRuta?: SortOrder
+    creadaPorId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LogRutaMinOrderByAggregateInput = {
+    id?: SortOrder
+    numeroRuta?: SortOrder
+    bodegaId?: SortOrder
+    transportistaId?: SortOrder
+    choferId?: SortOrder
+    camionId?: SortOrder
+    clienteId?: SortOrder
+    estado?: SortOrder
+    andenId?: SortOrder
+    fechaRuta?: SortOrder
+    horaProgramada?: SortOrder
+    horaLlegadaPorton?: SortOrder
+    horaEntradaAnden?: SortOrder
+    horaSalidaAnden?: SortOrder
+    selloSalida?: SortOrder
+    totalBultos?: SortOrder
+    totalKilos?: SortOrder
+    observaciones?: SortOrder
+    telegramMessageId?: SortOrder
+    tokenRuta?: SortOrder
+    creadaPorId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LogRutaSumOrderByAggregateInput = {
+    totalBultos?: SortOrder
+    totalKilos?: SortOrder
+  }
+
+  export type LogRutaRelationFilter = {
+    is?: LogRutaWhereInput
+    isNot?: LogRutaWhereInput
+  }
+
+  export type LogEventoRutaCountOrderByAggregateInput = {
+    id?: SortOrder
+    rutaId?: SortOrder
+    estadoAnterior?: SortOrder
+    estadoNuevo?: SortOrder
+    andenId?: SortOrder
+    origenCambio?: SortOrder
+    notas?: SortOrder
+    metadataJson?: SortOrder
+    usuarioId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type LogEventoRutaMaxOrderByAggregateInput = {
+    id?: SortOrder
+    rutaId?: SortOrder
+    estadoAnterior?: SortOrder
+    estadoNuevo?: SortOrder
+    andenId?: SortOrder
+    origenCambio?: SortOrder
+    notas?: SortOrder
+    metadataJson?: SortOrder
+    usuarioId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type LogEventoRutaMinOrderByAggregateInput = {
+    id?: SortOrder
+    rutaId?: SortOrder
+    estadoAnterior?: SortOrder
+    estadoNuevo?: SortOrder
+    andenId?: SortOrder
+    origenCambio?: SortOrder
+    notas?: SortOrder
+    metadataJson?: SortOrder
+    usuarioId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type LogIntegracionConfigCountOrderByAggregateInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    provider?: SortOrder
+    webhookUrl?: SortOrder
+    secretToken?: SortOrder
+    activo?: SortOrder
+    eventosSuscritos?: SortOrder
+    headersJson?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LogIntegracionConfigMaxOrderByAggregateInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    provider?: SortOrder
+    webhookUrl?: SortOrder
+    secretToken?: SortOrder
+    activo?: SortOrder
+    eventosSuscritos?: SortOrder
+    headersJson?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LogIntegracionConfigMinOrderByAggregateInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    provider?: SortOrder
+    webhookUrl?: SortOrder
+    secretToken?: SortOrder
+    activo?: SortOrder
+    eventosSuscritos?: SortOrder
+    headersJson?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LogIntegracionConfigNullableRelationFilter = {
+    is?: LogIntegracionConfigWhereInput | null
+    isNot?: LogIntegracionConfigWhereInput | null
+  }
+
+  export type LogRutaNullableRelationFilter = {
+    is?: LogRutaWhereInput | null
+    isNot?: LogRutaWhereInput | null
+  }
+
+  export type LogIntegracionLogCountOrderByAggregateInput = {
+    id?: SortOrder
+    integracionConfigId?: SortOrder
+    evento?: SortOrder
+    rutaId?: SortOrder
+    payloadEnviado?: SortOrder
+    respuestaCodigo?: SortOrder
+    respuestaCuerpo?: SortOrder
+    estado?: SortOrder
+    intentos?: SortOrder
+    errorDetalle?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type LogIntegracionLogAvgOrderByAggregateInput = {
+    respuestaCodigo?: SortOrder
+    intentos?: SortOrder
+  }
+
+  export type LogIntegracionLogMaxOrderByAggregateInput = {
+    id?: SortOrder
+    integracionConfigId?: SortOrder
+    evento?: SortOrder
+    rutaId?: SortOrder
+    payloadEnviado?: SortOrder
+    respuestaCodigo?: SortOrder
+    respuestaCuerpo?: SortOrder
+    estado?: SortOrder
+    intentos?: SortOrder
+    errorDetalle?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type LogIntegracionLogMinOrderByAggregateInput = {
+    id?: SortOrder
+    integracionConfigId?: SortOrder
+    evento?: SortOrder
+    rutaId?: SortOrder
+    payloadEnviado?: SortOrder
+    respuestaCodigo?: SortOrder
+    respuestaCuerpo?: SortOrder
+    estado?: SortOrder
+    intentos?: SortOrder
+    errorDetalle?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type LogIntegracionLogSumOrderByAggregateInput = {
+    respuestaCodigo?: SortOrder
+    intentos?: SortOrder
+  }
+
+  export type LogBodegaNullableRelationFilter = {
+    is?: LogBodegaWhereInput | null
+    isNot?: LogBodegaWhereInput | null
+  }
+
+  export type LogParametroCountOrderByAggregateInput = {
+    id?: SortOrder
+    bodegaId?: SortOrder
+    clave?: SortOrder
+    valor?: SortOrder
+    descripcion?: SortOrder
+    tipo?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LogParametroMaxOrderByAggregateInput = {
+    id?: SortOrder
+    bodegaId?: SortOrder
+    clave?: SortOrder
+    valor?: SortOrder
+    descripcion?: SortOrder
+    tipo?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LogParametroMinOrderByAggregateInput = {
+    id?: SortOrder
+    bodegaId?: SortOrder
+    clave?: SortOrder
+    valor?: SortOrder
+    descripcion?: SortOrder
+    tipo?: SortOrder
+    updatedAt?: SortOrder
+  }
+
   export type UserCreateNestedManyWithoutRoleInput = {
     create?: XOR<UserCreateWithoutRoleInput, UserUncheckedCreateWithoutRoleInput> | UserCreateWithoutRoleInput[] | UserUncheckedCreateWithoutRoleInput[]
     connectOrCreate?: UserCreateOrConnectWithoutRoleInput | UserCreateOrConnectWithoutRoleInput[]
@@ -157833,6 +174847,872 @@ export namespace Prisma {
     update?: XOR<XOR<CarpetaDocumentalUpdateToOneWithWhereWithoutPrivilegiosInput, CarpetaDocumentalUpdateWithoutPrivilegiosInput>, CarpetaDocumentalUncheckedUpdateWithoutPrivilegiosInput>
   }
 
+  export type LogAndenCreateNestedManyWithoutBodegaInput = {
+    create?: XOR<LogAndenCreateWithoutBodegaInput, LogAndenUncheckedCreateWithoutBodegaInput> | LogAndenCreateWithoutBodegaInput[] | LogAndenUncheckedCreateWithoutBodegaInput[]
+    connectOrCreate?: LogAndenCreateOrConnectWithoutBodegaInput | LogAndenCreateOrConnectWithoutBodegaInput[]
+    createMany?: LogAndenCreateManyBodegaInputEnvelope
+    connect?: LogAndenWhereUniqueInput | LogAndenWhereUniqueInput[]
+  }
+
+  export type LogRutaCreateNestedManyWithoutBodegaInput = {
+    create?: XOR<LogRutaCreateWithoutBodegaInput, LogRutaUncheckedCreateWithoutBodegaInput> | LogRutaCreateWithoutBodegaInput[] | LogRutaUncheckedCreateWithoutBodegaInput[]
+    connectOrCreate?: LogRutaCreateOrConnectWithoutBodegaInput | LogRutaCreateOrConnectWithoutBodegaInput[]
+    createMany?: LogRutaCreateManyBodegaInputEnvelope
+    connect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+  }
+
+  export type LogUsuarioBodegaCreateNestedManyWithoutBodegaInput = {
+    create?: XOR<LogUsuarioBodegaCreateWithoutBodegaInput, LogUsuarioBodegaUncheckedCreateWithoutBodegaInput> | LogUsuarioBodegaCreateWithoutBodegaInput[] | LogUsuarioBodegaUncheckedCreateWithoutBodegaInput[]
+    connectOrCreate?: LogUsuarioBodegaCreateOrConnectWithoutBodegaInput | LogUsuarioBodegaCreateOrConnectWithoutBodegaInput[]
+    createMany?: LogUsuarioBodegaCreateManyBodegaInputEnvelope
+    connect?: LogUsuarioBodegaWhereUniqueInput | LogUsuarioBodegaWhereUniqueInput[]
+  }
+
+  export type LogParametroCreateNestedManyWithoutBodegaInput = {
+    create?: XOR<LogParametroCreateWithoutBodegaInput, LogParametroUncheckedCreateWithoutBodegaInput> | LogParametroCreateWithoutBodegaInput[] | LogParametroUncheckedCreateWithoutBodegaInput[]
+    connectOrCreate?: LogParametroCreateOrConnectWithoutBodegaInput | LogParametroCreateOrConnectWithoutBodegaInput[]
+    createMany?: LogParametroCreateManyBodegaInputEnvelope
+    connect?: LogParametroWhereUniqueInput | LogParametroWhereUniqueInput[]
+  }
+
+  export type LogAndenUncheckedCreateNestedManyWithoutBodegaInput = {
+    create?: XOR<LogAndenCreateWithoutBodegaInput, LogAndenUncheckedCreateWithoutBodegaInput> | LogAndenCreateWithoutBodegaInput[] | LogAndenUncheckedCreateWithoutBodegaInput[]
+    connectOrCreate?: LogAndenCreateOrConnectWithoutBodegaInput | LogAndenCreateOrConnectWithoutBodegaInput[]
+    createMany?: LogAndenCreateManyBodegaInputEnvelope
+    connect?: LogAndenWhereUniqueInput | LogAndenWhereUniqueInput[]
+  }
+
+  export type LogRutaUncheckedCreateNestedManyWithoutBodegaInput = {
+    create?: XOR<LogRutaCreateWithoutBodegaInput, LogRutaUncheckedCreateWithoutBodegaInput> | LogRutaCreateWithoutBodegaInput[] | LogRutaUncheckedCreateWithoutBodegaInput[]
+    connectOrCreate?: LogRutaCreateOrConnectWithoutBodegaInput | LogRutaCreateOrConnectWithoutBodegaInput[]
+    createMany?: LogRutaCreateManyBodegaInputEnvelope
+    connect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+  }
+
+  export type LogUsuarioBodegaUncheckedCreateNestedManyWithoutBodegaInput = {
+    create?: XOR<LogUsuarioBodegaCreateWithoutBodegaInput, LogUsuarioBodegaUncheckedCreateWithoutBodegaInput> | LogUsuarioBodegaCreateWithoutBodegaInput[] | LogUsuarioBodegaUncheckedCreateWithoutBodegaInput[]
+    connectOrCreate?: LogUsuarioBodegaCreateOrConnectWithoutBodegaInput | LogUsuarioBodegaCreateOrConnectWithoutBodegaInput[]
+    createMany?: LogUsuarioBodegaCreateManyBodegaInputEnvelope
+    connect?: LogUsuarioBodegaWhereUniqueInput | LogUsuarioBodegaWhereUniqueInput[]
+  }
+
+  export type LogParametroUncheckedCreateNestedManyWithoutBodegaInput = {
+    create?: XOR<LogParametroCreateWithoutBodegaInput, LogParametroUncheckedCreateWithoutBodegaInput> | LogParametroCreateWithoutBodegaInput[] | LogParametroUncheckedCreateWithoutBodegaInput[]
+    connectOrCreate?: LogParametroCreateOrConnectWithoutBodegaInput | LogParametroCreateOrConnectWithoutBodegaInput[]
+    createMany?: LogParametroCreateManyBodegaInputEnvelope
+    connect?: LogParametroWhereUniqueInput | LogParametroWhereUniqueInput[]
+  }
+
+  export type LogAndenUpdateManyWithoutBodegaNestedInput = {
+    create?: XOR<LogAndenCreateWithoutBodegaInput, LogAndenUncheckedCreateWithoutBodegaInput> | LogAndenCreateWithoutBodegaInput[] | LogAndenUncheckedCreateWithoutBodegaInput[]
+    connectOrCreate?: LogAndenCreateOrConnectWithoutBodegaInput | LogAndenCreateOrConnectWithoutBodegaInput[]
+    upsert?: LogAndenUpsertWithWhereUniqueWithoutBodegaInput | LogAndenUpsertWithWhereUniqueWithoutBodegaInput[]
+    createMany?: LogAndenCreateManyBodegaInputEnvelope
+    set?: LogAndenWhereUniqueInput | LogAndenWhereUniqueInput[]
+    disconnect?: LogAndenWhereUniqueInput | LogAndenWhereUniqueInput[]
+    delete?: LogAndenWhereUniqueInput | LogAndenWhereUniqueInput[]
+    connect?: LogAndenWhereUniqueInput | LogAndenWhereUniqueInput[]
+    update?: LogAndenUpdateWithWhereUniqueWithoutBodegaInput | LogAndenUpdateWithWhereUniqueWithoutBodegaInput[]
+    updateMany?: LogAndenUpdateManyWithWhereWithoutBodegaInput | LogAndenUpdateManyWithWhereWithoutBodegaInput[]
+    deleteMany?: LogAndenScalarWhereInput | LogAndenScalarWhereInput[]
+  }
+
+  export type LogRutaUpdateManyWithoutBodegaNestedInput = {
+    create?: XOR<LogRutaCreateWithoutBodegaInput, LogRutaUncheckedCreateWithoutBodegaInput> | LogRutaCreateWithoutBodegaInput[] | LogRutaUncheckedCreateWithoutBodegaInput[]
+    connectOrCreate?: LogRutaCreateOrConnectWithoutBodegaInput | LogRutaCreateOrConnectWithoutBodegaInput[]
+    upsert?: LogRutaUpsertWithWhereUniqueWithoutBodegaInput | LogRutaUpsertWithWhereUniqueWithoutBodegaInput[]
+    createMany?: LogRutaCreateManyBodegaInputEnvelope
+    set?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    disconnect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    delete?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    connect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    update?: LogRutaUpdateWithWhereUniqueWithoutBodegaInput | LogRutaUpdateWithWhereUniqueWithoutBodegaInput[]
+    updateMany?: LogRutaUpdateManyWithWhereWithoutBodegaInput | LogRutaUpdateManyWithWhereWithoutBodegaInput[]
+    deleteMany?: LogRutaScalarWhereInput | LogRutaScalarWhereInput[]
+  }
+
+  export type LogUsuarioBodegaUpdateManyWithoutBodegaNestedInput = {
+    create?: XOR<LogUsuarioBodegaCreateWithoutBodegaInput, LogUsuarioBodegaUncheckedCreateWithoutBodegaInput> | LogUsuarioBodegaCreateWithoutBodegaInput[] | LogUsuarioBodegaUncheckedCreateWithoutBodegaInput[]
+    connectOrCreate?: LogUsuarioBodegaCreateOrConnectWithoutBodegaInput | LogUsuarioBodegaCreateOrConnectWithoutBodegaInput[]
+    upsert?: LogUsuarioBodegaUpsertWithWhereUniqueWithoutBodegaInput | LogUsuarioBodegaUpsertWithWhereUniqueWithoutBodegaInput[]
+    createMany?: LogUsuarioBodegaCreateManyBodegaInputEnvelope
+    set?: LogUsuarioBodegaWhereUniqueInput | LogUsuarioBodegaWhereUniqueInput[]
+    disconnect?: LogUsuarioBodegaWhereUniqueInput | LogUsuarioBodegaWhereUniqueInput[]
+    delete?: LogUsuarioBodegaWhereUniqueInput | LogUsuarioBodegaWhereUniqueInput[]
+    connect?: LogUsuarioBodegaWhereUniqueInput | LogUsuarioBodegaWhereUniqueInput[]
+    update?: LogUsuarioBodegaUpdateWithWhereUniqueWithoutBodegaInput | LogUsuarioBodegaUpdateWithWhereUniqueWithoutBodegaInput[]
+    updateMany?: LogUsuarioBodegaUpdateManyWithWhereWithoutBodegaInput | LogUsuarioBodegaUpdateManyWithWhereWithoutBodegaInput[]
+    deleteMany?: LogUsuarioBodegaScalarWhereInput | LogUsuarioBodegaScalarWhereInput[]
+  }
+
+  export type LogParametroUpdateManyWithoutBodegaNestedInput = {
+    create?: XOR<LogParametroCreateWithoutBodegaInput, LogParametroUncheckedCreateWithoutBodegaInput> | LogParametroCreateWithoutBodegaInput[] | LogParametroUncheckedCreateWithoutBodegaInput[]
+    connectOrCreate?: LogParametroCreateOrConnectWithoutBodegaInput | LogParametroCreateOrConnectWithoutBodegaInput[]
+    upsert?: LogParametroUpsertWithWhereUniqueWithoutBodegaInput | LogParametroUpsertWithWhereUniqueWithoutBodegaInput[]
+    createMany?: LogParametroCreateManyBodegaInputEnvelope
+    set?: LogParametroWhereUniqueInput | LogParametroWhereUniqueInput[]
+    disconnect?: LogParametroWhereUniqueInput | LogParametroWhereUniqueInput[]
+    delete?: LogParametroWhereUniqueInput | LogParametroWhereUniqueInput[]
+    connect?: LogParametroWhereUniqueInput | LogParametroWhereUniqueInput[]
+    update?: LogParametroUpdateWithWhereUniqueWithoutBodegaInput | LogParametroUpdateWithWhereUniqueWithoutBodegaInput[]
+    updateMany?: LogParametroUpdateManyWithWhereWithoutBodegaInput | LogParametroUpdateManyWithWhereWithoutBodegaInput[]
+    deleteMany?: LogParametroScalarWhereInput | LogParametroScalarWhereInput[]
+  }
+
+  export type LogAndenUncheckedUpdateManyWithoutBodegaNestedInput = {
+    create?: XOR<LogAndenCreateWithoutBodegaInput, LogAndenUncheckedCreateWithoutBodegaInput> | LogAndenCreateWithoutBodegaInput[] | LogAndenUncheckedCreateWithoutBodegaInput[]
+    connectOrCreate?: LogAndenCreateOrConnectWithoutBodegaInput | LogAndenCreateOrConnectWithoutBodegaInput[]
+    upsert?: LogAndenUpsertWithWhereUniqueWithoutBodegaInput | LogAndenUpsertWithWhereUniqueWithoutBodegaInput[]
+    createMany?: LogAndenCreateManyBodegaInputEnvelope
+    set?: LogAndenWhereUniqueInput | LogAndenWhereUniqueInput[]
+    disconnect?: LogAndenWhereUniqueInput | LogAndenWhereUniqueInput[]
+    delete?: LogAndenWhereUniqueInput | LogAndenWhereUniqueInput[]
+    connect?: LogAndenWhereUniqueInput | LogAndenWhereUniqueInput[]
+    update?: LogAndenUpdateWithWhereUniqueWithoutBodegaInput | LogAndenUpdateWithWhereUniqueWithoutBodegaInput[]
+    updateMany?: LogAndenUpdateManyWithWhereWithoutBodegaInput | LogAndenUpdateManyWithWhereWithoutBodegaInput[]
+    deleteMany?: LogAndenScalarWhereInput | LogAndenScalarWhereInput[]
+  }
+
+  export type LogRutaUncheckedUpdateManyWithoutBodegaNestedInput = {
+    create?: XOR<LogRutaCreateWithoutBodegaInput, LogRutaUncheckedCreateWithoutBodegaInput> | LogRutaCreateWithoutBodegaInput[] | LogRutaUncheckedCreateWithoutBodegaInput[]
+    connectOrCreate?: LogRutaCreateOrConnectWithoutBodegaInput | LogRutaCreateOrConnectWithoutBodegaInput[]
+    upsert?: LogRutaUpsertWithWhereUniqueWithoutBodegaInput | LogRutaUpsertWithWhereUniqueWithoutBodegaInput[]
+    createMany?: LogRutaCreateManyBodegaInputEnvelope
+    set?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    disconnect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    delete?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    connect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    update?: LogRutaUpdateWithWhereUniqueWithoutBodegaInput | LogRutaUpdateWithWhereUniqueWithoutBodegaInput[]
+    updateMany?: LogRutaUpdateManyWithWhereWithoutBodegaInput | LogRutaUpdateManyWithWhereWithoutBodegaInput[]
+    deleteMany?: LogRutaScalarWhereInput | LogRutaScalarWhereInput[]
+  }
+
+  export type LogUsuarioBodegaUncheckedUpdateManyWithoutBodegaNestedInput = {
+    create?: XOR<LogUsuarioBodegaCreateWithoutBodegaInput, LogUsuarioBodegaUncheckedCreateWithoutBodegaInput> | LogUsuarioBodegaCreateWithoutBodegaInput[] | LogUsuarioBodegaUncheckedCreateWithoutBodegaInput[]
+    connectOrCreate?: LogUsuarioBodegaCreateOrConnectWithoutBodegaInput | LogUsuarioBodegaCreateOrConnectWithoutBodegaInput[]
+    upsert?: LogUsuarioBodegaUpsertWithWhereUniqueWithoutBodegaInput | LogUsuarioBodegaUpsertWithWhereUniqueWithoutBodegaInput[]
+    createMany?: LogUsuarioBodegaCreateManyBodegaInputEnvelope
+    set?: LogUsuarioBodegaWhereUniqueInput | LogUsuarioBodegaWhereUniqueInput[]
+    disconnect?: LogUsuarioBodegaWhereUniqueInput | LogUsuarioBodegaWhereUniqueInput[]
+    delete?: LogUsuarioBodegaWhereUniqueInput | LogUsuarioBodegaWhereUniqueInput[]
+    connect?: LogUsuarioBodegaWhereUniqueInput | LogUsuarioBodegaWhereUniqueInput[]
+    update?: LogUsuarioBodegaUpdateWithWhereUniqueWithoutBodegaInput | LogUsuarioBodegaUpdateWithWhereUniqueWithoutBodegaInput[]
+    updateMany?: LogUsuarioBodegaUpdateManyWithWhereWithoutBodegaInput | LogUsuarioBodegaUpdateManyWithWhereWithoutBodegaInput[]
+    deleteMany?: LogUsuarioBodegaScalarWhereInput | LogUsuarioBodegaScalarWhereInput[]
+  }
+
+  export type LogParametroUncheckedUpdateManyWithoutBodegaNestedInput = {
+    create?: XOR<LogParametroCreateWithoutBodegaInput, LogParametroUncheckedCreateWithoutBodegaInput> | LogParametroCreateWithoutBodegaInput[] | LogParametroUncheckedCreateWithoutBodegaInput[]
+    connectOrCreate?: LogParametroCreateOrConnectWithoutBodegaInput | LogParametroCreateOrConnectWithoutBodegaInput[]
+    upsert?: LogParametroUpsertWithWhereUniqueWithoutBodegaInput | LogParametroUpsertWithWhereUniqueWithoutBodegaInput[]
+    createMany?: LogParametroCreateManyBodegaInputEnvelope
+    set?: LogParametroWhereUniqueInput | LogParametroWhereUniqueInput[]
+    disconnect?: LogParametroWhereUniqueInput | LogParametroWhereUniqueInput[]
+    delete?: LogParametroWhereUniqueInput | LogParametroWhereUniqueInput[]
+    connect?: LogParametroWhereUniqueInput | LogParametroWhereUniqueInput[]
+    update?: LogParametroUpdateWithWhereUniqueWithoutBodegaInput | LogParametroUpdateWithWhereUniqueWithoutBodegaInput[]
+    updateMany?: LogParametroUpdateManyWithWhereWithoutBodegaInput | LogParametroUpdateManyWithWhereWithoutBodegaInput[]
+    deleteMany?: LogParametroScalarWhereInput | LogParametroScalarWhereInput[]
+  }
+
+  export type LogBodegaCreateNestedOneWithoutUsuariosInput = {
+    create?: XOR<LogBodegaCreateWithoutUsuariosInput, LogBodegaUncheckedCreateWithoutUsuariosInput>
+    connectOrCreate?: LogBodegaCreateOrConnectWithoutUsuariosInput
+    connect?: LogBodegaWhereUniqueInput
+  }
+
+  export type LogBodegaUpdateOneRequiredWithoutUsuariosNestedInput = {
+    create?: XOR<LogBodegaCreateWithoutUsuariosInput, LogBodegaUncheckedCreateWithoutUsuariosInput>
+    connectOrCreate?: LogBodegaCreateOrConnectWithoutUsuariosInput
+    upsert?: LogBodegaUpsertWithoutUsuariosInput
+    connect?: LogBodegaWhereUniqueInput
+    update?: XOR<XOR<LogBodegaUpdateToOneWithWhereWithoutUsuariosInput, LogBodegaUpdateWithoutUsuariosInput>, LogBodegaUncheckedUpdateWithoutUsuariosInput>
+  }
+
+  export type LogBodegaCreateNestedOneWithoutAndenesInput = {
+    create?: XOR<LogBodegaCreateWithoutAndenesInput, LogBodegaUncheckedCreateWithoutAndenesInput>
+    connectOrCreate?: LogBodegaCreateOrConnectWithoutAndenesInput
+    connect?: LogBodegaWhereUniqueInput
+  }
+
+  export type LogRutaCreateNestedManyWithoutAndenInput = {
+    create?: XOR<LogRutaCreateWithoutAndenInput, LogRutaUncheckedCreateWithoutAndenInput> | LogRutaCreateWithoutAndenInput[] | LogRutaUncheckedCreateWithoutAndenInput[]
+    connectOrCreate?: LogRutaCreateOrConnectWithoutAndenInput | LogRutaCreateOrConnectWithoutAndenInput[]
+    createMany?: LogRutaCreateManyAndenInputEnvelope
+    connect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+  }
+
+  export type LogEventoRutaCreateNestedManyWithoutAndenInput = {
+    create?: XOR<LogEventoRutaCreateWithoutAndenInput, LogEventoRutaUncheckedCreateWithoutAndenInput> | LogEventoRutaCreateWithoutAndenInput[] | LogEventoRutaUncheckedCreateWithoutAndenInput[]
+    connectOrCreate?: LogEventoRutaCreateOrConnectWithoutAndenInput | LogEventoRutaCreateOrConnectWithoutAndenInput[]
+    createMany?: LogEventoRutaCreateManyAndenInputEnvelope
+    connect?: LogEventoRutaWhereUniqueInput | LogEventoRutaWhereUniqueInput[]
+  }
+
+  export type LogRutaUncheckedCreateNestedManyWithoutAndenInput = {
+    create?: XOR<LogRutaCreateWithoutAndenInput, LogRutaUncheckedCreateWithoutAndenInput> | LogRutaCreateWithoutAndenInput[] | LogRutaUncheckedCreateWithoutAndenInput[]
+    connectOrCreate?: LogRutaCreateOrConnectWithoutAndenInput | LogRutaCreateOrConnectWithoutAndenInput[]
+    createMany?: LogRutaCreateManyAndenInputEnvelope
+    connect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+  }
+
+  export type LogEventoRutaUncheckedCreateNestedManyWithoutAndenInput = {
+    create?: XOR<LogEventoRutaCreateWithoutAndenInput, LogEventoRutaUncheckedCreateWithoutAndenInput> | LogEventoRutaCreateWithoutAndenInput[] | LogEventoRutaUncheckedCreateWithoutAndenInput[]
+    connectOrCreate?: LogEventoRutaCreateOrConnectWithoutAndenInput | LogEventoRutaCreateOrConnectWithoutAndenInput[]
+    createMany?: LogEventoRutaCreateManyAndenInputEnvelope
+    connect?: LogEventoRutaWhereUniqueInput | LogEventoRutaWhereUniqueInput[]
+  }
+
+  export type LogBodegaUpdateOneRequiredWithoutAndenesNestedInput = {
+    create?: XOR<LogBodegaCreateWithoutAndenesInput, LogBodegaUncheckedCreateWithoutAndenesInput>
+    connectOrCreate?: LogBodegaCreateOrConnectWithoutAndenesInput
+    upsert?: LogBodegaUpsertWithoutAndenesInput
+    connect?: LogBodegaWhereUniqueInput
+    update?: XOR<XOR<LogBodegaUpdateToOneWithWhereWithoutAndenesInput, LogBodegaUpdateWithoutAndenesInput>, LogBodegaUncheckedUpdateWithoutAndenesInput>
+  }
+
+  export type LogRutaUpdateManyWithoutAndenNestedInput = {
+    create?: XOR<LogRutaCreateWithoutAndenInput, LogRutaUncheckedCreateWithoutAndenInput> | LogRutaCreateWithoutAndenInput[] | LogRutaUncheckedCreateWithoutAndenInput[]
+    connectOrCreate?: LogRutaCreateOrConnectWithoutAndenInput | LogRutaCreateOrConnectWithoutAndenInput[]
+    upsert?: LogRutaUpsertWithWhereUniqueWithoutAndenInput | LogRutaUpsertWithWhereUniqueWithoutAndenInput[]
+    createMany?: LogRutaCreateManyAndenInputEnvelope
+    set?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    disconnect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    delete?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    connect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    update?: LogRutaUpdateWithWhereUniqueWithoutAndenInput | LogRutaUpdateWithWhereUniqueWithoutAndenInput[]
+    updateMany?: LogRutaUpdateManyWithWhereWithoutAndenInput | LogRutaUpdateManyWithWhereWithoutAndenInput[]
+    deleteMany?: LogRutaScalarWhereInput | LogRutaScalarWhereInput[]
+  }
+
+  export type LogEventoRutaUpdateManyWithoutAndenNestedInput = {
+    create?: XOR<LogEventoRutaCreateWithoutAndenInput, LogEventoRutaUncheckedCreateWithoutAndenInput> | LogEventoRutaCreateWithoutAndenInput[] | LogEventoRutaUncheckedCreateWithoutAndenInput[]
+    connectOrCreate?: LogEventoRutaCreateOrConnectWithoutAndenInput | LogEventoRutaCreateOrConnectWithoutAndenInput[]
+    upsert?: LogEventoRutaUpsertWithWhereUniqueWithoutAndenInput | LogEventoRutaUpsertWithWhereUniqueWithoutAndenInput[]
+    createMany?: LogEventoRutaCreateManyAndenInputEnvelope
+    set?: LogEventoRutaWhereUniqueInput | LogEventoRutaWhereUniqueInput[]
+    disconnect?: LogEventoRutaWhereUniqueInput | LogEventoRutaWhereUniqueInput[]
+    delete?: LogEventoRutaWhereUniqueInput | LogEventoRutaWhereUniqueInput[]
+    connect?: LogEventoRutaWhereUniqueInput | LogEventoRutaWhereUniqueInput[]
+    update?: LogEventoRutaUpdateWithWhereUniqueWithoutAndenInput | LogEventoRutaUpdateWithWhereUniqueWithoutAndenInput[]
+    updateMany?: LogEventoRutaUpdateManyWithWhereWithoutAndenInput | LogEventoRutaUpdateManyWithWhereWithoutAndenInput[]
+    deleteMany?: LogEventoRutaScalarWhereInput | LogEventoRutaScalarWhereInput[]
+  }
+
+  export type LogRutaUncheckedUpdateManyWithoutAndenNestedInput = {
+    create?: XOR<LogRutaCreateWithoutAndenInput, LogRutaUncheckedCreateWithoutAndenInput> | LogRutaCreateWithoutAndenInput[] | LogRutaUncheckedCreateWithoutAndenInput[]
+    connectOrCreate?: LogRutaCreateOrConnectWithoutAndenInput | LogRutaCreateOrConnectWithoutAndenInput[]
+    upsert?: LogRutaUpsertWithWhereUniqueWithoutAndenInput | LogRutaUpsertWithWhereUniqueWithoutAndenInput[]
+    createMany?: LogRutaCreateManyAndenInputEnvelope
+    set?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    disconnect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    delete?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    connect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    update?: LogRutaUpdateWithWhereUniqueWithoutAndenInput | LogRutaUpdateWithWhereUniqueWithoutAndenInput[]
+    updateMany?: LogRutaUpdateManyWithWhereWithoutAndenInput | LogRutaUpdateManyWithWhereWithoutAndenInput[]
+    deleteMany?: LogRutaScalarWhereInput | LogRutaScalarWhereInput[]
+  }
+
+  export type LogEventoRutaUncheckedUpdateManyWithoutAndenNestedInput = {
+    create?: XOR<LogEventoRutaCreateWithoutAndenInput, LogEventoRutaUncheckedCreateWithoutAndenInput> | LogEventoRutaCreateWithoutAndenInput[] | LogEventoRutaUncheckedCreateWithoutAndenInput[]
+    connectOrCreate?: LogEventoRutaCreateOrConnectWithoutAndenInput | LogEventoRutaCreateOrConnectWithoutAndenInput[]
+    upsert?: LogEventoRutaUpsertWithWhereUniqueWithoutAndenInput | LogEventoRutaUpsertWithWhereUniqueWithoutAndenInput[]
+    createMany?: LogEventoRutaCreateManyAndenInputEnvelope
+    set?: LogEventoRutaWhereUniqueInput | LogEventoRutaWhereUniqueInput[]
+    disconnect?: LogEventoRutaWhereUniqueInput | LogEventoRutaWhereUniqueInput[]
+    delete?: LogEventoRutaWhereUniqueInput | LogEventoRutaWhereUniqueInput[]
+    connect?: LogEventoRutaWhereUniqueInput | LogEventoRutaWhereUniqueInput[]
+    update?: LogEventoRutaUpdateWithWhereUniqueWithoutAndenInput | LogEventoRutaUpdateWithWhereUniqueWithoutAndenInput[]
+    updateMany?: LogEventoRutaUpdateManyWithWhereWithoutAndenInput | LogEventoRutaUpdateManyWithWhereWithoutAndenInput[]
+    deleteMany?: LogEventoRutaScalarWhereInput | LogEventoRutaScalarWhereInput[]
+  }
+
+  export type LogChoferCreateNestedManyWithoutTransportistaInput = {
+    create?: XOR<LogChoferCreateWithoutTransportistaInput, LogChoferUncheckedCreateWithoutTransportistaInput> | LogChoferCreateWithoutTransportistaInput[] | LogChoferUncheckedCreateWithoutTransportistaInput[]
+    connectOrCreate?: LogChoferCreateOrConnectWithoutTransportistaInput | LogChoferCreateOrConnectWithoutTransportistaInput[]
+    createMany?: LogChoferCreateManyTransportistaInputEnvelope
+    connect?: LogChoferWhereUniqueInput | LogChoferWhereUniqueInput[]
+  }
+
+  export type LogCamionCreateNestedManyWithoutTransportistaInput = {
+    create?: XOR<LogCamionCreateWithoutTransportistaInput, LogCamionUncheckedCreateWithoutTransportistaInput> | LogCamionCreateWithoutTransportistaInput[] | LogCamionUncheckedCreateWithoutTransportistaInput[]
+    connectOrCreate?: LogCamionCreateOrConnectWithoutTransportistaInput | LogCamionCreateOrConnectWithoutTransportistaInput[]
+    createMany?: LogCamionCreateManyTransportistaInputEnvelope
+    connect?: LogCamionWhereUniqueInput | LogCamionWhereUniqueInput[]
+  }
+
+  export type LogRutaCreateNestedManyWithoutTransportistaInput = {
+    create?: XOR<LogRutaCreateWithoutTransportistaInput, LogRutaUncheckedCreateWithoutTransportistaInput> | LogRutaCreateWithoutTransportistaInput[] | LogRutaUncheckedCreateWithoutTransportistaInput[]
+    connectOrCreate?: LogRutaCreateOrConnectWithoutTransportistaInput | LogRutaCreateOrConnectWithoutTransportistaInput[]
+    createMany?: LogRutaCreateManyTransportistaInputEnvelope
+    connect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+  }
+
+  export type LogChoferUncheckedCreateNestedManyWithoutTransportistaInput = {
+    create?: XOR<LogChoferCreateWithoutTransportistaInput, LogChoferUncheckedCreateWithoutTransportistaInput> | LogChoferCreateWithoutTransportistaInput[] | LogChoferUncheckedCreateWithoutTransportistaInput[]
+    connectOrCreate?: LogChoferCreateOrConnectWithoutTransportistaInput | LogChoferCreateOrConnectWithoutTransportistaInput[]
+    createMany?: LogChoferCreateManyTransportistaInputEnvelope
+    connect?: LogChoferWhereUniqueInput | LogChoferWhereUniqueInput[]
+  }
+
+  export type LogCamionUncheckedCreateNestedManyWithoutTransportistaInput = {
+    create?: XOR<LogCamionCreateWithoutTransportistaInput, LogCamionUncheckedCreateWithoutTransportistaInput> | LogCamionCreateWithoutTransportistaInput[] | LogCamionUncheckedCreateWithoutTransportistaInput[]
+    connectOrCreate?: LogCamionCreateOrConnectWithoutTransportistaInput | LogCamionCreateOrConnectWithoutTransportistaInput[]
+    createMany?: LogCamionCreateManyTransportistaInputEnvelope
+    connect?: LogCamionWhereUniqueInput | LogCamionWhereUniqueInput[]
+  }
+
+  export type LogRutaUncheckedCreateNestedManyWithoutTransportistaInput = {
+    create?: XOR<LogRutaCreateWithoutTransportistaInput, LogRutaUncheckedCreateWithoutTransportistaInput> | LogRutaCreateWithoutTransportistaInput[] | LogRutaUncheckedCreateWithoutTransportistaInput[]
+    connectOrCreate?: LogRutaCreateOrConnectWithoutTransportistaInput | LogRutaCreateOrConnectWithoutTransportistaInput[]
+    createMany?: LogRutaCreateManyTransportistaInputEnvelope
+    connect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+  }
+
+  export type LogChoferUpdateManyWithoutTransportistaNestedInput = {
+    create?: XOR<LogChoferCreateWithoutTransportistaInput, LogChoferUncheckedCreateWithoutTransportistaInput> | LogChoferCreateWithoutTransportistaInput[] | LogChoferUncheckedCreateWithoutTransportistaInput[]
+    connectOrCreate?: LogChoferCreateOrConnectWithoutTransportistaInput | LogChoferCreateOrConnectWithoutTransportistaInput[]
+    upsert?: LogChoferUpsertWithWhereUniqueWithoutTransportistaInput | LogChoferUpsertWithWhereUniqueWithoutTransportistaInput[]
+    createMany?: LogChoferCreateManyTransportistaInputEnvelope
+    set?: LogChoferWhereUniqueInput | LogChoferWhereUniqueInput[]
+    disconnect?: LogChoferWhereUniqueInput | LogChoferWhereUniqueInput[]
+    delete?: LogChoferWhereUniqueInput | LogChoferWhereUniqueInput[]
+    connect?: LogChoferWhereUniqueInput | LogChoferWhereUniqueInput[]
+    update?: LogChoferUpdateWithWhereUniqueWithoutTransportistaInput | LogChoferUpdateWithWhereUniqueWithoutTransportistaInput[]
+    updateMany?: LogChoferUpdateManyWithWhereWithoutTransportistaInput | LogChoferUpdateManyWithWhereWithoutTransportistaInput[]
+    deleteMany?: LogChoferScalarWhereInput | LogChoferScalarWhereInput[]
+  }
+
+  export type LogCamionUpdateManyWithoutTransportistaNestedInput = {
+    create?: XOR<LogCamionCreateWithoutTransportistaInput, LogCamionUncheckedCreateWithoutTransportistaInput> | LogCamionCreateWithoutTransportistaInput[] | LogCamionUncheckedCreateWithoutTransportistaInput[]
+    connectOrCreate?: LogCamionCreateOrConnectWithoutTransportistaInput | LogCamionCreateOrConnectWithoutTransportistaInput[]
+    upsert?: LogCamionUpsertWithWhereUniqueWithoutTransportistaInput | LogCamionUpsertWithWhereUniqueWithoutTransportistaInput[]
+    createMany?: LogCamionCreateManyTransportistaInputEnvelope
+    set?: LogCamionWhereUniqueInput | LogCamionWhereUniqueInput[]
+    disconnect?: LogCamionWhereUniqueInput | LogCamionWhereUniqueInput[]
+    delete?: LogCamionWhereUniqueInput | LogCamionWhereUniqueInput[]
+    connect?: LogCamionWhereUniqueInput | LogCamionWhereUniqueInput[]
+    update?: LogCamionUpdateWithWhereUniqueWithoutTransportistaInput | LogCamionUpdateWithWhereUniqueWithoutTransportistaInput[]
+    updateMany?: LogCamionUpdateManyWithWhereWithoutTransportistaInput | LogCamionUpdateManyWithWhereWithoutTransportistaInput[]
+    deleteMany?: LogCamionScalarWhereInput | LogCamionScalarWhereInput[]
+  }
+
+  export type LogRutaUpdateManyWithoutTransportistaNestedInput = {
+    create?: XOR<LogRutaCreateWithoutTransportistaInput, LogRutaUncheckedCreateWithoutTransportistaInput> | LogRutaCreateWithoutTransportistaInput[] | LogRutaUncheckedCreateWithoutTransportistaInput[]
+    connectOrCreate?: LogRutaCreateOrConnectWithoutTransportistaInput | LogRutaCreateOrConnectWithoutTransportistaInput[]
+    upsert?: LogRutaUpsertWithWhereUniqueWithoutTransportistaInput | LogRutaUpsertWithWhereUniqueWithoutTransportistaInput[]
+    createMany?: LogRutaCreateManyTransportistaInputEnvelope
+    set?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    disconnect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    delete?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    connect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    update?: LogRutaUpdateWithWhereUniqueWithoutTransportistaInput | LogRutaUpdateWithWhereUniqueWithoutTransportistaInput[]
+    updateMany?: LogRutaUpdateManyWithWhereWithoutTransportistaInput | LogRutaUpdateManyWithWhereWithoutTransportistaInput[]
+    deleteMany?: LogRutaScalarWhereInput | LogRutaScalarWhereInput[]
+  }
+
+  export type LogChoferUncheckedUpdateManyWithoutTransportistaNestedInput = {
+    create?: XOR<LogChoferCreateWithoutTransportistaInput, LogChoferUncheckedCreateWithoutTransportistaInput> | LogChoferCreateWithoutTransportistaInput[] | LogChoferUncheckedCreateWithoutTransportistaInput[]
+    connectOrCreate?: LogChoferCreateOrConnectWithoutTransportistaInput | LogChoferCreateOrConnectWithoutTransportistaInput[]
+    upsert?: LogChoferUpsertWithWhereUniqueWithoutTransportistaInput | LogChoferUpsertWithWhereUniqueWithoutTransportistaInput[]
+    createMany?: LogChoferCreateManyTransportistaInputEnvelope
+    set?: LogChoferWhereUniqueInput | LogChoferWhereUniqueInput[]
+    disconnect?: LogChoferWhereUniqueInput | LogChoferWhereUniqueInput[]
+    delete?: LogChoferWhereUniqueInput | LogChoferWhereUniqueInput[]
+    connect?: LogChoferWhereUniqueInput | LogChoferWhereUniqueInput[]
+    update?: LogChoferUpdateWithWhereUniqueWithoutTransportistaInput | LogChoferUpdateWithWhereUniqueWithoutTransportistaInput[]
+    updateMany?: LogChoferUpdateManyWithWhereWithoutTransportistaInput | LogChoferUpdateManyWithWhereWithoutTransportistaInput[]
+    deleteMany?: LogChoferScalarWhereInput | LogChoferScalarWhereInput[]
+  }
+
+  export type LogCamionUncheckedUpdateManyWithoutTransportistaNestedInput = {
+    create?: XOR<LogCamionCreateWithoutTransportistaInput, LogCamionUncheckedCreateWithoutTransportistaInput> | LogCamionCreateWithoutTransportistaInput[] | LogCamionUncheckedCreateWithoutTransportistaInput[]
+    connectOrCreate?: LogCamionCreateOrConnectWithoutTransportistaInput | LogCamionCreateOrConnectWithoutTransportistaInput[]
+    upsert?: LogCamionUpsertWithWhereUniqueWithoutTransportistaInput | LogCamionUpsertWithWhereUniqueWithoutTransportistaInput[]
+    createMany?: LogCamionCreateManyTransportistaInputEnvelope
+    set?: LogCamionWhereUniqueInput | LogCamionWhereUniqueInput[]
+    disconnect?: LogCamionWhereUniqueInput | LogCamionWhereUniqueInput[]
+    delete?: LogCamionWhereUniqueInput | LogCamionWhereUniqueInput[]
+    connect?: LogCamionWhereUniqueInput | LogCamionWhereUniqueInput[]
+    update?: LogCamionUpdateWithWhereUniqueWithoutTransportistaInput | LogCamionUpdateWithWhereUniqueWithoutTransportistaInput[]
+    updateMany?: LogCamionUpdateManyWithWhereWithoutTransportistaInput | LogCamionUpdateManyWithWhereWithoutTransportistaInput[]
+    deleteMany?: LogCamionScalarWhereInput | LogCamionScalarWhereInput[]
+  }
+
+  export type LogRutaUncheckedUpdateManyWithoutTransportistaNestedInput = {
+    create?: XOR<LogRutaCreateWithoutTransportistaInput, LogRutaUncheckedCreateWithoutTransportistaInput> | LogRutaCreateWithoutTransportistaInput[] | LogRutaUncheckedCreateWithoutTransportistaInput[]
+    connectOrCreate?: LogRutaCreateOrConnectWithoutTransportistaInput | LogRutaCreateOrConnectWithoutTransportistaInput[]
+    upsert?: LogRutaUpsertWithWhereUniqueWithoutTransportistaInput | LogRutaUpsertWithWhereUniqueWithoutTransportistaInput[]
+    createMany?: LogRutaCreateManyTransportistaInputEnvelope
+    set?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    disconnect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    delete?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    connect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    update?: LogRutaUpdateWithWhereUniqueWithoutTransportistaInput | LogRutaUpdateWithWhereUniqueWithoutTransportistaInput[]
+    updateMany?: LogRutaUpdateManyWithWhereWithoutTransportistaInput | LogRutaUpdateManyWithWhereWithoutTransportistaInput[]
+    deleteMany?: LogRutaScalarWhereInput | LogRutaScalarWhereInput[]
+  }
+
+  export type LogTransportistaCreateNestedOneWithoutChoferesInput = {
+    create?: XOR<LogTransportistaCreateWithoutChoferesInput, LogTransportistaUncheckedCreateWithoutChoferesInput>
+    connectOrCreate?: LogTransportistaCreateOrConnectWithoutChoferesInput
+    connect?: LogTransportistaWhereUniqueInput
+  }
+
+  export type LogRutaCreateNestedManyWithoutChoferInput = {
+    create?: XOR<LogRutaCreateWithoutChoferInput, LogRutaUncheckedCreateWithoutChoferInput> | LogRutaCreateWithoutChoferInput[] | LogRutaUncheckedCreateWithoutChoferInput[]
+    connectOrCreate?: LogRutaCreateOrConnectWithoutChoferInput | LogRutaCreateOrConnectWithoutChoferInput[]
+    createMany?: LogRutaCreateManyChoferInputEnvelope
+    connect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+  }
+
+  export type LogRutaUncheckedCreateNestedManyWithoutChoferInput = {
+    create?: XOR<LogRutaCreateWithoutChoferInput, LogRutaUncheckedCreateWithoutChoferInput> | LogRutaCreateWithoutChoferInput[] | LogRutaUncheckedCreateWithoutChoferInput[]
+    connectOrCreate?: LogRutaCreateOrConnectWithoutChoferInput | LogRutaCreateOrConnectWithoutChoferInput[]
+    createMany?: LogRutaCreateManyChoferInputEnvelope
+    connect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+  }
+
+  export type LogTransportistaUpdateOneWithoutChoferesNestedInput = {
+    create?: XOR<LogTransportistaCreateWithoutChoferesInput, LogTransportistaUncheckedCreateWithoutChoferesInput>
+    connectOrCreate?: LogTransportistaCreateOrConnectWithoutChoferesInput
+    upsert?: LogTransportistaUpsertWithoutChoferesInput
+    disconnect?: LogTransportistaWhereInput | boolean
+    delete?: LogTransportistaWhereInput | boolean
+    connect?: LogTransportistaWhereUniqueInput
+    update?: XOR<XOR<LogTransportistaUpdateToOneWithWhereWithoutChoferesInput, LogTransportistaUpdateWithoutChoferesInput>, LogTransportistaUncheckedUpdateWithoutChoferesInput>
+  }
+
+  export type LogRutaUpdateManyWithoutChoferNestedInput = {
+    create?: XOR<LogRutaCreateWithoutChoferInput, LogRutaUncheckedCreateWithoutChoferInput> | LogRutaCreateWithoutChoferInput[] | LogRutaUncheckedCreateWithoutChoferInput[]
+    connectOrCreate?: LogRutaCreateOrConnectWithoutChoferInput | LogRutaCreateOrConnectWithoutChoferInput[]
+    upsert?: LogRutaUpsertWithWhereUniqueWithoutChoferInput | LogRutaUpsertWithWhereUniqueWithoutChoferInput[]
+    createMany?: LogRutaCreateManyChoferInputEnvelope
+    set?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    disconnect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    delete?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    connect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    update?: LogRutaUpdateWithWhereUniqueWithoutChoferInput | LogRutaUpdateWithWhereUniqueWithoutChoferInput[]
+    updateMany?: LogRutaUpdateManyWithWhereWithoutChoferInput | LogRutaUpdateManyWithWhereWithoutChoferInput[]
+    deleteMany?: LogRutaScalarWhereInput | LogRutaScalarWhereInput[]
+  }
+
+  export type LogRutaUncheckedUpdateManyWithoutChoferNestedInput = {
+    create?: XOR<LogRutaCreateWithoutChoferInput, LogRutaUncheckedCreateWithoutChoferInput> | LogRutaCreateWithoutChoferInput[] | LogRutaUncheckedCreateWithoutChoferInput[]
+    connectOrCreate?: LogRutaCreateOrConnectWithoutChoferInput | LogRutaCreateOrConnectWithoutChoferInput[]
+    upsert?: LogRutaUpsertWithWhereUniqueWithoutChoferInput | LogRutaUpsertWithWhereUniqueWithoutChoferInput[]
+    createMany?: LogRutaCreateManyChoferInputEnvelope
+    set?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    disconnect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    delete?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    connect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    update?: LogRutaUpdateWithWhereUniqueWithoutChoferInput | LogRutaUpdateWithWhereUniqueWithoutChoferInput[]
+    updateMany?: LogRutaUpdateManyWithWhereWithoutChoferInput | LogRutaUpdateManyWithWhereWithoutChoferInput[]
+    deleteMany?: LogRutaScalarWhereInput | LogRutaScalarWhereInput[]
+  }
+
+  export type LogTransportistaCreateNestedOneWithoutCamionesInput = {
+    create?: XOR<LogTransportistaCreateWithoutCamionesInput, LogTransportistaUncheckedCreateWithoutCamionesInput>
+    connectOrCreate?: LogTransportistaCreateOrConnectWithoutCamionesInput
+    connect?: LogTransportistaWhereUniqueInput
+  }
+
+  export type LogRutaCreateNestedManyWithoutCamionInput = {
+    create?: XOR<LogRutaCreateWithoutCamionInput, LogRutaUncheckedCreateWithoutCamionInput> | LogRutaCreateWithoutCamionInput[] | LogRutaUncheckedCreateWithoutCamionInput[]
+    connectOrCreate?: LogRutaCreateOrConnectWithoutCamionInput | LogRutaCreateOrConnectWithoutCamionInput[]
+    createMany?: LogRutaCreateManyCamionInputEnvelope
+    connect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+  }
+
+  export type LogRutaUncheckedCreateNestedManyWithoutCamionInput = {
+    create?: XOR<LogRutaCreateWithoutCamionInput, LogRutaUncheckedCreateWithoutCamionInput> | LogRutaCreateWithoutCamionInput[] | LogRutaUncheckedCreateWithoutCamionInput[]
+    connectOrCreate?: LogRutaCreateOrConnectWithoutCamionInput | LogRutaCreateOrConnectWithoutCamionInput[]
+    createMany?: LogRutaCreateManyCamionInputEnvelope
+    connect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+  }
+
+  export type NullableDecimalFieldUpdateOperationsInput = {
+    set?: Decimal | DecimalJsLike | number | string | null
+    increment?: Decimal | DecimalJsLike | number | string
+    decrement?: Decimal | DecimalJsLike | number | string
+    multiply?: Decimal | DecimalJsLike | number | string
+    divide?: Decimal | DecimalJsLike | number | string
+  }
+
+  export type LogTransportistaUpdateOneWithoutCamionesNestedInput = {
+    create?: XOR<LogTransportistaCreateWithoutCamionesInput, LogTransportistaUncheckedCreateWithoutCamionesInput>
+    connectOrCreate?: LogTransportistaCreateOrConnectWithoutCamionesInput
+    upsert?: LogTransportistaUpsertWithoutCamionesInput
+    disconnect?: LogTransportistaWhereInput | boolean
+    delete?: LogTransportistaWhereInput | boolean
+    connect?: LogTransportistaWhereUniqueInput
+    update?: XOR<XOR<LogTransportistaUpdateToOneWithWhereWithoutCamionesInput, LogTransportistaUpdateWithoutCamionesInput>, LogTransportistaUncheckedUpdateWithoutCamionesInput>
+  }
+
+  export type LogRutaUpdateManyWithoutCamionNestedInput = {
+    create?: XOR<LogRutaCreateWithoutCamionInput, LogRutaUncheckedCreateWithoutCamionInput> | LogRutaCreateWithoutCamionInput[] | LogRutaUncheckedCreateWithoutCamionInput[]
+    connectOrCreate?: LogRutaCreateOrConnectWithoutCamionInput | LogRutaCreateOrConnectWithoutCamionInput[]
+    upsert?: LogRutaUpsertWithWhereUniqueWithoutCamionInput | LogRutaUpsertWithWhereUniqueWithoutCamionInput[]
+    createMany?: LogRutaCreateManyCamionInputEnvelope
+    set?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    disconnect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    delete?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    connect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    update?: LogRutaUpdateWithWhereUniqueWithoutCamionInput | LogRutaUpdateWithWhereUniqueWithoutCamionInput[]
+    updateMany?: LogRutaUpdateManyWithWhereWithoutCamionInput | LogRutaUpdateManyWithWhereWithoutCamionInput[]
+    deleteMany?: LogRutaScalarWhereInput | LogRutaScalarWhereInput[]
+  }
+
+  export type LogRutaUncheckedUpdateManyWithoutCamionNestedInput = {
+    create?: XOR<LogRutaCreateWithoutCamionInput, LogRutaUncheckedCreateWithoutCamionInput> | LogRutaCreateWithoutCamionInput[] | LogRutaUncheckedCreateWithoutCamionInput[]
+    connectOrCreate?: LogRutaCreateOrConnectWithoutCamionInput | LogRutaCreateOrConnectWithoutCamionInput[]
+    upsert?: LogRutaUpsertWithWhereUniqueWithoutCamionInput | LogRutaUpsertWithWhereUniqueWithoutCamionInput[]
+    createMany?: LogRutaCreateManyCamionInputEnvelope
+    set?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    disconnect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    delete?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    connect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    update?: LogRutaUpdateWithWhereUniqueWithoutCamionInput | LogRutaUpdateWithWhereUniqueWithoutCamionInput[]
+    updateMany?: LogRutaUpdateManyWithWhereWithoutCamionInput | LogRutaUpdateManyWithWhereWithoutCamionInput[]
+    deleteMany?: LogRutaScalarWhereInput | LogRutaScalarWhereInput[]
+  }
+
+  export type LogRutaCreateNestedManyWithoutClienteInput = {
+    create?: XOR<LogRutaCreateWithoutClienteInput, LogRutaUncheckedCreateWithoutClienteInput> | LogRutaCreateWithoutClienteInput[] | LogRutaUncheckedCreateWithoutClienteInput[]
+    connectOrCreate?: LogRutaCreateOrConnectWithoutClienteInput | LogRutaCreateOrConnectWithoutClienteInput[]
+    createMany?: LogRutaCreateManyClienteInputEnvelope
+    connect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+  }
+
+  export type LogRutaUncheckedCreateNestedManyWithoutClienteInput = {
+    create?: XOR<LogRutaCreateWithoutClienteInput, LogRutaUncheckedCreateWithoutClienteInput> | LogRutaCreateWithoutClienteInput[] | LogRutaUncheckedCreateWithoutClienteInput[]
+    connectOrCreate?: LogRutaCreateOrConnectWithoutClienteInput | LogRutaCreateOrConnectWithoutClienteInput[]
+    createMany?: LogRutaCreateManyClienteInputEnvelope
+    connect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+  }
+
+  export type LogRutaUpdateManyWithoutClienteNestedInput = {
+    create?: XOR<LogRutaCreateWithoutClienteInput, LogRutaUncheckedCreateWithoutClienteInput> | LogRutaCreateWithoutClienteInput[] | LogRutaUncheckedCreateWithoutClienteInput[]
+    connectOrCreate?: LogRutaCreateOrConnectWithoutClienteInput | LogRutaCreateOrConnectWithoutClienteInput[]
+    upsert?: LogRutaUpsertWithWhereUniqueWithoutClienteInput | LogRutaUpsertWithWhereUniqueWithoutClienteInput[]
+    createMany?: LogRutaCreateManyClienteInputEnvelope
+    set?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    disconnect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    delete?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    connect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    update?: LogRutaUpdateWithWhereUniqueWithoutClienteInput | LogRutaUpdateWithWhereUniqueWithoutClienteInput[]
+    updateMany?: LogRutaUpdateManyWithWhereWithoutClienteInput | LogRutaUpdateManyWithWhereWithoutClienteInput[]
+    deleteMany?: LogRutaScalarWhereInput | LogRutaScalarWhereInput[]
+  }
+
+  export type LogRutaUncheckedUpdateManyWithoutClienteNestedInput = {
+    create?: XOR<LogRutaCreateWithoutClienteInput, LogRutaUncheckedCreateWithoutClienteInput> | LogRutaCreateWithoutClienteInput[] | LogRutaUncheckedCreateWithoutClienteInput[]
+    connectOrCreate?: LogRutaCreateOrConnectWithoutClienteInput | LogRutaCreateOrConnectWithoutClienteInput[]
+    upsert?: LogRutaUpsertWithWhereUniqueWithoutClienteInput | LogRutaUpsertWithWhereUniqueWithoutClienteInput[]
+    createMany?: LogRutaCreateManyClienteInputEnvelope
+    set?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    disconnect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    delete?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    connect?: LogRutaWhereUniqueInput | LogRutaWhereUniqueInput[]
+    update?: LogRutaUpdateWithWhereUniqueWithoutClienteInput | LogRutaUpdateWithWhereUniqueWithoutClienteInput[]
+    updateMany?: LogRutaUpdateManyWithWhereWithoutClienteInput | LogRutaUpdateManyWithWhereWithoutClienteInput[]
+    deleteMany?: LogRutaScalarWhereInput | LogRutaScalarWhereInput[]
+  }
+
+  export type LogBodegaCreateNestedOneWithoutRutasInput = {
+    create?: XOR<LogBodegaCreateWithoutRutasInput, LogBodegaUncheckedCreateWithoutRutasInput>
+    connectOrCreate?: LogBodegaCreateOrConnectWithoutRutasInput
+    connect?: LogBodegaWhereUniqueInput
+  }
+
+  export type LogTransportistaCreateNestedOneWithoutRutasInput = {
+    create?: XOR<LogTransportistaCreateWithoutRutasInput, LogTransportistaUncheckedCreateWithoutRutasInput>
+    connectOrCreate?: LogTransportistaCreateOrConnectWithoutRutasInput
+    connect?: LogTransportistaWhereUniqueInput
+  }
+
+  export type LogChoferCreateNestedOneWithoutRutasInput = {
+    create?: XOR<LogChoferCreateWithoutRutasInput, LogChoferUncheckedCreateWithoutRutasInput>
+    connectOrCreate?: LogChoferCreateOrConnectWithoutRutasInput
+    connect?: LogChoferWhereUniqueInput
+  }
+
+  export type LogCamionCreateNestedOneWithoutRutasInput = {
+    create?: XOR<LogCamionCreateWithoutRutasInput, LogCamionUncheckedCreateWithoutRutasInput>
+    connectOrCreate?: LogCamionCreateOrConnectWithoutRutasInput
+    connect?: LogCamionWhereUniqueInput
+  }
+
+  export type LogClienteCreateNestedOneWithoutRutasInput = {
+    create?: XOR<LogClienteCreateWithoutRutasInput, LogClienteUncheckedCreateWithoutRutasInput>
+    connectOrCreate?: LogClienteCreateOrConnectWithoutRutasInput
+    connect?: LogClienteWhereUniqueInput
+  }
+
+  export type LogAndenCreateNestedOneWithoutRutasInput = {
+    create?: XOR<LogAndenCreateWithoutRutasInput, LogAndenUncheckedCreateWithoutRutasInput>
+    connectOrCreate?: LogAndenCreateOrConnectWithoutRutasInput
+    connect?: LogAndenWhereUniqueInput
+  }
+
+  export type LogEventoRutaCreateNestedManyWithoutRutaInput = {
+    create?: XOR<LogEventoRutaCreateWithoutRutaInput, LogEventoRutaUncheckedCreateWithoutRutaInput> | LogEventoRutaCreateWithoutRutaInput[] | LogEventoRutaUncheckedCreateWithoutRutaInput[]
+    connectOrCreate?: LogEventoRutaCreateOrConnectWithoutRutaInput | LogEventoRutaCreateOrConnectWithoutRutaInput[]
+    createMany?: LogEventoRutaCreateManyRutaInputEnvelope
+    connect?: LogEventoRutaWhereUniqueInput | LogEventoRutaWhereUniqueInput[]
+  }
+
+  export type LogIntegracionLogCreateNestedManyWithoutRutaInput = {
+    create?: XOR<LogIntegracionLogCreateWithoutRutaInput, LogIntegracionLogUncheckedCreateWithoutRutaInput> | LogIntegracionLogCreateWithoutRutaInput[] | LogIntegracionLogUncheckedCreateWithoutRutaInput[]
+    connectOrCreate?: LogIntegracionLogCreateOrConnectWithoutRutaInput | LogIntegracionLogCreateOrConnectWithoutRutaInput[]
+    createMany?: LogIntegracionLogCreateManyRutaInputEnvelope
+    connect?: LogIntegracionLogWhereUniqueInput | LogIntegracionLogWhereUniqueInput[]
+  }
+
+  export type LogEventoRutaUncheckedCreateNestedManyWithoutRutaInput = {
+    create?: XOR<LogEventoRutaCreateWithoutRutaInput, LogEventoRutaUncheckedCreateWithoutRutaInput> | LogEventoRutaCreateWithoutRutaInput[] | LogEventoRutaUncheckedCreateWithoutRutaInput[]
+    connectOrCreate?: LogEventoRutaCreateOrConnectWithoutRutaInput | LogEventoRutaCreateOrConnectWithoutRutaInput[]
+    createMany?: LogEventoRutaCreateManyRutaInputEnvelope
+    connect?: LogEventoRutaWhereUniqueInput | LogEventoRutaWhereUniqueInput[]
+  }
+
+  export type LogIntegracionLogUncheckedCreateNestedManyWithoutRutaInput = {
+    create?: XOR<LogIntegracionLogCreateWithoutRutaInput, LogIntegracionLogUncheckedCreateWithoutRutaInput> | LogIntegracionLogCreateWithoutRutaInput[] | LogIntegracionLogUncheckedCreateWithoutRutaInput[]
+    connectOrCreate?: LogIntegracionLogCreateOrConnectWithoutRutaInput | LogIntegracionLogCreateOrConnectWithoutRutaInput[]
+    createMany?: LogIntegracionLogCreateManyRutaInputEnvelope
+    connect?: LogIntegracionLogWhereUniqueInput | LogIntegracionLogWhereUniqueInput[]
+  }
+
+  export type LogBodegaUpdateOneRequiredWithoutRutasNestedInput = {
+    create?: XOR<LogBodegaCreateWithoutRutasInput, LogBodegaUncheckedCreateWithoutRutasInput>
+    connectOrCreate?: LogBodegaCreateOrConnectWithoutRutasInput
+    upsert?: LogBodegaUpsertWithoutRutasInput
+    connect?: LogBodegaWhereUniqueInput
+    update?: XOR<XOR<LogBodegaUpdateToOneWithWhereWithoutRutasInput, LogBodegaUpdateWithoutRutasInput>, LogBodegaUncheckedUpdateWithoutRutasInput>
+  }
+
+  export type LogTransportistaUpdateOneWithoutRutasNestedInput = {
+    create?: XOR<LogTransportistaCreateWithoutRutasInput, LogTransportistaUncheckedCreateWithoutRutasInput>
+    connectOrCreate?: LogTransportistaCreateOrConnectWithoutRutasInput
+    upsert?: LogTransportistaUpsertWithoutRutasInput
+    disconnect?: LogTransportistaWhereInput | boolean
+    delete?: LogTransportistaWhereInput | boolean
+    connect?: LogTransportistaWhereUniqueInput
+    update?: XOR<XOR<LogTransportistaUpdateToOneWithWhereWithoutRutasInput, LogTransportistaUpdateWithoutRutasInput>, LogTransportistaUncheckedUpdateWithoutRutasInput>
+  }
+
+  export type LogChoferUpdateOneRequiredWithoutRutasNestedInput = {
+    create?: XOR<LogChoferCreateWithoutRutasInput, LogChoferUncheckedCreateWithoutRutasInput>
+    connectOrCreate?: LogChoferCreateOrConnectWithoutRutasInput
+    upsert?: LogChoferUpsertWithoutRutasInput
+    connect?: LogChoferWhereUniqueInput
+    update?: XOR<XOR<LogChoferUpdateToOneWithWhereWithoutRutasInput, LogChoferUpdateWithoutRutasInput>, LogChoferUncheckedUpdateWithoutRutasInput>
+  }
+
+  export type LogCamionUpdateOneRequiredWithoutRutasNestedInput = {
+    create?: XOR<LogCamionCreateWithoutRutasInput, LogCamionUncheckedCreateWithoutRutasInput>
+    connectOrCreate?: LogCamionCreateOrConnectWithoutRutasInput
+    upsert?: LogCamionUpsertWithoutRutasInput
+    connect?: LogCamionWhereUniqueInput
+    update?: XOR<XOR<LogCamionUpdateToOneWithWhereWithoutRutasInput, LogCamionUpdateWithoutRutasInput>, LogCamionUncheckedUpdateWithoutRutasInput>
+  }
+
+  export type LogClienteUpdateOneWithoutRutasNestedInput = {
+    create?: XOR<LogClienteCreateWithoutRutasInput, LogClienteUncheckedCreateWithoutRutasInput>
+    connectOrCreate?: LogClienteCreateOrConnectWithoutRutasInput
+    upsert?: LogClienteUpsertWithoutRutasInput
+    disconnect?: LogClienteWhereInput | boolean
+    delete?: LogClienteWhereInput | boolean
+    connect?: LogClienteWhereUniqueInput
+    update?: XOR<XOR<LogClienteUpdateToOneWithWhereWithoutRutasInput, LogClienteUpdateWithoutRutasInput>, LogClienteUncheckedUpdateWithoutRutasInput>
+  }
+
+  export type LogAndenUpdateOneWithoutRutasNestedInput = {
+    create?: XOR<LogAndenCreateWithoutRutasInput, LogAndenUncheckedCreateWithoutRutasInput>
+    connectOrCreate?: LogAndenCreateOrConnectWithoutRutasInput
+    upsert?: LogAndenUpsertWithoutRutasInput
+    disconnect?: LogAndenWhereInput | boolean
+    delete?: LogAndenWhereInput | boolean
+    connect?: LogAndenWhereUniqueInput
+    update?: XOR<XOR<LogAndenUpdateToOneWithWhereWithoutRutasInput, LogAndenUpdateWithoutRutasInput>, LogAndenUncheckedUpdateWithoutRutasInput>
+  }
+
+  export type LogEventoRutaUpdateManyWithoutRutaNestedInput = {
+    create?: XOR<LogEventoRutaCreateWithoutRutaInput, LogEventoRutaUncheckedCreateWithoutRutaInput> | LogEventoRutaCreateWithoutRutaInput[] | LogEventoRutaUncheckedCreateWithoutRutaInput[]
+    connectOrCreate?: LogEventoRutaCreateOrConnectWithoutRutaInput | LogEventoRutaCreateOrConnectWithoutRutaInput[]
+    upsert?: LogEventoRutaUpsertWithWhereUniqueWithoutRutaInput | LogEventoRutaUpsertWithWhereUniqueWithoutRutaInput[]
+    createMany?: LogEventoRutaCreateManyRutaInputEnvelope
+    set?: LogEventoRutaWhereUniqueInput | LogEventoRutaWhereUniqueInput[]
+    disconnect?: LogEventoRutaWhereUniqueInput | LogEventoRutaWhereUniqueInput[]
+    delete?: LogEventoRutaWhereUniqueInput | LogEventoRutaWhereUniqueInput[]
+    connect?: LogEventoRutaWhereUniqueInput | LogEventoRutaWhereUniqueInput[]
+    update?: LogEventoRutaUpdateWithWhereUniqueWithoutRutaInput | LogEventoRutaUpdateWithWhereUniqueWithoutRutaInput[]
+    updateMany?: LogEventoRutaUpdateManyWithWhereWithoutRutaInput | LogEventoRutaUpdateManyWithWhereWithoutRutaInput[]
+    deleteMany?: LogEventoRutaScalarWhereInput | LogEventoRutaScalarWhereInput[]
+  }
+
+  export type LogIntegracionLogUpdateManyWithoutRutaNestedInput = {
+    create?: XOR<LogIntegracionLogCreateWithoutRutaInput, LogIntegracionLogUncheckedCreateWithoutRutaInput> | LogIntegracionLogCreateWithoutRutaInput[] | LogIntegracionLogUncheckedCreateWithoutRutaInput[]
+    connectOrCreate?: LogIntegracionLogCreateOrConnectWithoutRutaInput | LogIntegracionLogCreateOrConnectWithoutRutaInput[]
+    upsert?: LogIntegracionLogUpsertWithWhereUniqueWithoutRutaInput | LogIntegracionLogUpsertWithWhereUniqueWithoutRutaInput[]
+    createMany?: LogIntegracionLogCreateManyRutaInputEnvelope
+    set?: LogIntegracionLogWhereUniqueInput | LogIntegracionLogWhereUniqueInput[]
+    disconnect?: LogIntegracionLogWhereUniqueInput | LogIntegracionLogWhereUniqueInput[]
+    delete?: LogIntegracionLogWhereUniqueInput | LogIntegracionLogWhereUniqueInput[]
+    connect?: LogIntegracionLogWhereUniqueInput | LogIntegracionLogWhereUniqueInput[]
+    update?: LogIntegracionLogUpdateWithWhereUniqueWithoutRutaInput | LogIntegracionLogUpdateWithWhereUniqueWithoutRutaInput[]
+    updateMany?: LogIntegracionLogUpdateManyWithWhereWithoutRutaInput | LogIntegracionLogUpdateManyWithWhereWithoutRutaInput[]
+    deleteMany?: LogIntegracionLogScalarWhereInput | LogIntegracionLogScalarWhereInput[]
+  }
+
+  export type LogEventoRutaUncheckedUpdateManyWithoutRutaNestedInput = {
+    create?: XOR<LogEventoRutaCreateWithoutRutaInput, LogEventoRutaUncheckedCreateWithoutRutaInput> | LogEventoRutaCreateWithoutRutaInput[] | LogEventoRutaUncheckedCreateWithoutRutaInput[]
+    connectOrCreate?: LogEventoRutaCreateOrConnectWithoutRutaInput | LogEventoRutaCreateOrConnectWithoutRutaInput[]
+    upsert?: LogEventoRutaUpsertWithWhereUniqueWithoutRutaInput | LogEventoRutaUpsertWithWhereUniqueWithoutRutaInput[]
+    createMany?: LogEventoRutaCreateManyRutaInputEnvelope
+    set?: LogEventoRutaWhereUniqueInput | LogEventoRutaWhereUniqueInput[]
+    disconnect?: LogEventoRutaWhereUniqueInput | LogEventoRutaWhereUniqueInput[]
+    delete?: LogEventoRutaWhereUniqueInput | LogEventoRutaWhereUniqueInput[]
+    connect?: LogEventoRutaWhereUniqueInput | LogEventoRutaWhereUniqueInput[]
+    update?: LogEventoRutaUpdateWithWhereUniqueWithoutRutaInput | LogEventoRutaUpdateWithWhereUniqueWithoutRutaInput[]
+    updateMany?: LogEventoRutaUpdateManyWithWhereWithoutRutaInput | LogEventoRutaUpdateManyWithWhereWithoutRutaInput[]
+    deleteMany?: LogEventoRutaScalarWhereInput | LogEventoRutaScalarWhereInput[]
+  }
+
+  export type LogIntegracionLogUncheckedUpdateManyWithoutRutaNestedInput = {
+    create?: XOR<LogIntegracionLogCreateWithoutRutaInput, LogIntegracionLogUncheckedCreateWithoutRutaInput> | LogIntegracionLogCreateWithoutRutaInput[] | LogIntegracionLogUncheckedCreateWithoutRutaInput[]
+    connectOrCreate?: LogIntegracionLogCreateOrConnectWithoutRutaInput | LogIntegracionLogCreateOrConnectWithoutRutaInput[]
+    upsert?: LogIntegracionLogUpsertWithWhereUniqueWithoutRutaInput | LogIntegracionLogUpsertWithWhereUniqueWithoutRutaInput[]
+    createMany?: LogIntegracionLogCreateManyRutaInputEnvelope
+    set?: LogIntegracionLogWhereUniqueInput | LogIntegracionLogWhereUniqueInput[]
+    disconnect?: LogIntegracionLogWhereUniqueInput | LogIntegracionLogWhereUniqueInput[]
+    delete?: LogIntegracionLogWhereUniqueInput | LogIntegracionLogWhereUniqueInput[]
+    connect?: LogIntegracionLogWhereUniqueInput | LogIntegracionLogWhereUniqueInput[]
+    update?: LogIntegracionLogUpdateWithWhereUniqueWithoutRutaInput | LogIntegracionLogUpdateWithWhereUniqueWithoutRutaInput[]
+    updateMany?: LogIntegracionLogUpdateManyWithWhereWithoutRutaInput | LogIntegracionLogUpdateManyWithWhereWithoutRutaInput[]
+    deleteMany?: LogIntegracionLogScalarWhereInput | LogIntegracionLogScalarWhereInput[]
+  }
+
+  export type LogRutaCreateNestedOneWithoutEventosInput = {
+    create?: XOR<LogRutaCreateWithoutEventosInput, LogRutaUncheckedCreateWithoutEventosInput>
+    connectOrCreate?: LogRutaCreateOrConnectWithoutEventosInput
+    connect?: LogRutaWhereUniqueInput
+  }
+
+  export type LogAndenCreateNestedOneWithoutEventosInput = {
+    create?: XOR<LogAndenCreateWithoutEventosInput, LogAndenUncheckedCreateWithoutEventosInput>
+    connectOrCreate?: LogAndenCreateOrConnectWithoutEventosInput
+    connect?: LogAndenWhereUniqueInput
+  }
+
+  export type LogRutaUpdateOneRequiredWithoutEventosNestedInput = {
+    create?: XOR<LogRutaCreateWithoutEventosInput, LogRutaUncheckedCreateWithoutEventosInput>
+    connectOrCreate?: LogRutaCreateOrConnectWithoutEventosInput
+    upsert?: LogRutaUpsertWithoutEventosInput
+    connect?: LogRutaWhereUniqueInput
+    update?: XOR<XOR<LogRutaUpdateToOneWithWhereWithoutEventosInput, LogRutaUpdateWithoutEventosInput>, LogRutaUncheckedUpdateWithoutEventosInput>
+  }
+
+  export type LogAndenUpdateOneWithoutEventosNestedInput = {
+    create?: XOR<LogAndenCreateWithoutEventosInput, LogAndenUncheckedCreateWithoutEventosInput>
+    connectOrCreate?: LogAndenCreateOrConnectWithoutEventosInput
+    upsert?: LogAndenUpsertWithoutEventosInput
+    disconnect?: LogAndenWhereInput | boolean
+    delete?: LogAndenWhereInput | boolean
+    connect?: LogAndenWhereUniqueInput
+    update?: XOR<XOR<LogAndenUpdateToOneWithWhereWithoutEventosInput, LogAndenUpdateWithoutEventosInput>, LogAndenUncheckedUpdateWithoutEventosInput>
+  }
+
+  export type LogIntegracionLogCreateNestedManyWithoutIntegracionConfigInput = {
+    create?: XOR<LogIntegracionLogCreateWithoutIntegracionConfigInput, LogIntegracionLogUncheckedCreateWithoutIntegracionConfigInput> | LogIntegracionLogCreateWithoutIntegracionConfigInput[] | LogIntegracionLogUncheckedCreateWithoutIntegracionConfigInput[]
+    connectOrCreate?: LogIntegracionLogCreateOrConnectWithoutIntegracionConfigInput | LogIntegracionLogCreateOrConnectWithoutIntegracionConfigInput[]
+    createMany?: LogIntegracionLogCreateManyIntegracionConfigInputEnvelope
+    connect?: LogIntegracionLogWhereUniqueInput | LogIntegracionLogWhereUniqueInput[]
+  }
+
+  export type LogIntegracionLogUncheckedCreateNestedManyWithoutIntegracionConfigInput = {
+    create?: XOR<LogIntegracionLogCreateWithoutIntegracionConfigInput, LogIntegracionLogUncheckedCreateWithoutIntegracionConfigInput> | LogIntegracionLogCreateWithoutIntegracionConfigInput[] | LogIntegracionLogUncheckedCreateWithoutIntegracionConfigInput[]
+    connectOrCreate?: LogIntegracionLogCreateOrConnectWithoutIntegracionConfigInput | LogIntegracionLogCreateOrConnectWithoutIntegracionConfigInput[]
+    createMany?: LogIntegracionLogCreateManyIntegracionConfigInputEnvelope
+    connect?: LogIntegracionLogWhereUniqueInput | LogIntegracionLogWhereUniqueInput[]
+  }
+
+  export type LogIntegracionLogUpdateManyWithoutIntegracionConfigNestedInput = {
+    create?: XOR<LogIntegracionLogCreateWithoutIntegracionConfigInput, LogIntegracionLogUncheckedCreateWithoutIntegracionConfigInput> | LogIntegracionLogCreateWithoutIntegracionConfigInput[] | LogIntegracionLogUncheckedCreateWithoutIntegracionConfigInput[]
+    connectOrCreate?: LogIntegracionLogCreateOrConnectWithoutIntegracionConfigInput | LogIntegracionLogCreateOrConnectWithoutIntegracionConfigInput[]
+    upsert?: LogIntegracionLogUpsertWithWhereUniqueWithoutIntegracionConfigInput | LogIntegracionLogUpsertWithWhereUniqueWithoutIntegracionConfigInput[]
+    createMany?: LogIntegracionLogCreateManyIntegracionConfigInputEnvelope
+    set?: LogIntegracionLogWhereUniqueInput | LogIntegracionLogWhereUniqueInput[]
+    disconnect?: LogIntegracionLogWhereUniqueInput | LogIntegracionLogWhereUniqueInput[]
+    delete?: LogIntegracionLogWhereUniqueInput | LogIntegracionLogWhereUniqueInput[]
+    connect?: LogIntegracionLogWhereUniqueInput | LogIntegracionLogWhereUniqueInput[]
+    update?: LogIntegracionLogUpdateWithWhereUniqueWithoutIntegracionConfigInput | LogIntegracionLogUpdateWithWhereUniqueWithoutIntegracionConfigInput[]
+    updateMany?: LogIntegracionLogUpdateManyWithWhereWithoutIntegracionConfigInput | LogIntegracionLogUpdateManyWithWhereWithoutIntegracionConfigInput[]
+    deleteMany?: LogIntegracionLogScalarWhereInput | LogIntegracionLogScalarWhereInput[]
+  }
+
+  export type LogIntegracionLogUncheckedUpdateManyWithoutIntegracionConfigNestedInput = {
+    create?: XOR<LogIntegracionLogCreateWithoutIntegracionConfigInput, LogIntegracionLogUncheckedCreateWithoutIntegracionConfigInput> | LogIntegracionLogCreateWithoutIntegracionConfigInput[] | LogIntegracionLogUncheckedCreateWithoutIntegracionConfigInput[]
+    connectOrCreate?: LogIntegracionLogCreateOrConnectWithoutIntegracionConfigInput | LogIntegracionLogCreateOrConnectWithoutIntegracionConfigInput[]
+    upsert?: LogIntegracionLogUpsertWithWhereUniqueWithoutIntegracionConfigInput | LogIntegracionLogUpsertWithWhereUniqueWithoutIntegracionConfigInput[]
+    createMany?: LogIntegracionLogCreateManyIntegracionConfigInputEnvelope
+    set?: LogIntegracionLogWhereUniqueInput | LogIntegracionLogWhereUniqueInput[]
+    disconnect?: LogIntegracionLogWhereUniqueInput | LogIntegracionLogWhereUniqueInput[]
+    delete?: LogIntegracionLogWhereUniqueInput | LogIntegracionLogWhereUniqueInput[]
+    connect?: LogIntegracionLogWhereUniqueInput | LogIntegracionLogWhereUniqueInput[]
+    update?: LogIntegracionLogUpdateWithWhereUniqueWithoutIntegracionConfigInput | LogIntegracionLogUpdateWithWhereUniqueWithoutIntegracionConfigInput[]
+    updateMany?: LogIntegracionLogUpdateManyWithWhereWithoutIntegracionConfigInput | LogIntegracionLogUpdateManyWithWhereWithoutIntegracionConfigInput[]
+    deleteMany?: LogIntegracionLogScalarWhereInput | LogIntegracionLogScalarWhereInput[]
+  }
+
+  export type LogIntegracionConfigCreateNestedOneWithoutLogsInput = {
+    create?: XOR<LogIntegracionConfigCreateWithoutLogsInput, LogIntegracionConfigUncheckedCreateWithoutLogsInput>
+    connectOrCreate?: LogIntegracionConfigCreateOrConnectWithoutLogsInput
+    connect?: LogIntegracionConfigWhereUniqueInput
+  }
+
+  export type LogRutaCreateNestedOneWithoutIntegracionLogsInput = {
+    create?: XOR<LogRutaCreateWithoutIntegracionLogsInput, LogRutaUncheckedCreateWithoutIntegracionLogsInput>
+    connectOrCreate?: LogRutaCreateOrConnectWithoutIntegracionLogsInput
+    connect?: LogRutaWhereUniqueInput
+  }
+
+  export type LogIntegracionConfigUpdateOneWithoutLogsNestedInput = {
+    create?: XOR<LogIntegracionConfigCreateWithoutLogsInput, LogIntegracionConfigUncheckedCreateWithoutLogsInput>
+    connectOrCreate?: LogIntegracionConfigCreateOrConnectWithoutLogsInput
+    upsert?: LogIntegracionConfigUpsertWithoutLogsInput
+    disconnect?: LogIntegracionConfigWhereInput | boolean
+    delete?: LogIntegracionConfigWhereInput | boolean
+    connect?: LogIntegracionConfigWhereUniqueInput
+    update?: XOR<XOR<LogIntegracionConfigUpdateToOneWithWhereWithoutLogsInput, LogIntegracionConfigUpdateWithoutLogsInput>, LogIntegracionConfigUncheckedUpdateWithoutLogsInput>
+  }
+
+  export type LogRutaUpdateOneWithoutIntegracionLogsNestedInput = {
+    create?: XOR<LogRutaCreateWithoutIntegracionLogsInput, LogRutaUncheckedCreateWithoutIntegracionLogsInput>
+    connectOrCreate?: LogRutaCreateOrConnectWithoutIntegracionLogsInput
+    upsert?: LogRutaUpsertWithoutIntegracionLogsInput
+    disconnect?: LogRutaWhereInput | boolean
+    delete?: LogRutaWhereInput | boolean
+    connect?: LogRutaWhereUniqueInput
+    update?: XOR<XOR<LogRutaUpdateToOneWithWhereWithoutIntegracionLogsInput, LogRutaUpdateWithoutIntegracionLogsInput>, LogRutaUncheckedUpdateWithoutIntegracionLogsInput>
+  }
+
+  export type LogBodegaCreateNestedOneWithoutParametrosInput = {
+    create?: XOR<LogBodegaCreateWithoutParametrosInput, LogBodegaUncheckedCreateWithoutParametrosInput>
+    connectOrCreate?: LogBodegaCreateOrConnectWithoutParametrosInput
+    connect?: LogBodegaWhereUniqueInput
+  }
+
+  export type LogBodegaUpdateOneWithoutParametrosNestedInput = {
+    create?: XOR<LogBodegaCreateWithoutParametrosInput, LogBodegaUncheckedCreateWithoutParametrosInput>
+    connectOrCreate?: LogBodegaCreateOrConnectWithoutParametrosInput
+    upsert?: LogBodegaUpsertWithoutParametrosInput
+    disconnect?: LogBodegaWhereInput | boolean
+    delete?: LogBodegaWhereInput | boolean
+    connect?: LogBodegaWhereUniqueInput
+    update?: XOR<XOR<LogBodegaUpdateToOneWithWhereWithoutParametrosInput, LogBodegaUpdateWithoutParametrosInput>, LogBodegaUncheckedUpdateWithoutParametrosInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -158118,6 +175998,33 @@ export namespace Prisma {
     _sum?: NestedBigIntFilter<$PrismaModel>
     _min?: NestedBigIntFilter<$PrismaModel>
     _max?: NestedBigIntFilter<$PrismaModel>
+  }
+
+  export type NestedDecimalNullableFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+  }
+
+  export type NestedDecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedDecimalNullableFilter<$PrismaModel>
+    _sum?: NestedDecimalNullableFilter<$PrismaModel>
+    _min?: NestedDecimalNullableFilter<$PrismaModel>
+    _max?: NestedDecimalNullableFilter<$PrismaModel>
   }
 
   export type UserCreateWithoutRoleInput = {
@@ -168122,6 +186029,2236 @@ export namespace Prisma {
     actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type LogAndenCreateWithoutBodegaInput = {
+    id?: string
+    codigo: string
+    nombre: string
+    tipoCarga?: string
+    estadoOperativo?: string
+    orden?: number
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    rutas?: LogRutaCreateNestedManyWithoutAndenInput
+    eventos?: LogEventoRutaCreateNestedManyWithoutAndenInput
+  }
+
+  export type LogAndenUncheckedCreateWithoutBodegaInput = {
+    id?: string
+    codigo: string
+    nombre: string
+    tipoCarga?: string
+    estadoOperativo?: string
+    orden?: number
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    rutas?: LogRutaUncheckedCreateNestedManyWithoutAndenInput
+    eventos?: LogEventoRutaUncheckedCreateNestedManyWithoutAndenInput
+  }
+
+  export type LogAndenCreateOrConnectWithoutBodegaInput = {
+    where: LogAndenWhereUniqueInput
+    create: XOR<LogAndenCreateWithoutBodegaInput, LogAndenUncheckedCreateWithoutBodegaInput>
+  }
+
+  export type LogAndenCreateManyBodegaInputEnvelope = {
+    data: LogAndenCreateManyBodegaInput | LogAndenCreateManyBodegaInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LogRutaCreateWithoutBodegaInput = {
+    id?: string
+    numeroRuta: string
+    estado?: string
+    fechaRuta: string
+    horaProgramada: string
+    horaLlegadaPorton?: Date | string | null
+    horaEntradaAnden?: Date | string | null
+    horaSalidaAnden?: Date | string | null
+    selloSalida?: string | null
+    totalBultos?: number | null
+    totalKilos?: Decimal | DecimalJsLike | number | string | null
+    observaciones?: string | null
+    telegramMessageId?: string | null
+    tokenRuta?: string
+    creadaPorId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    transportista?: LogTransportistaCreateNestedOneWithoutRutasInput
+    chofer: LogChoferCreateNestedOneWithoutRutasInput
+    camion: LogCamionCreateNestedOneWithoutRutasInput
+    cliente?: LogClienteCreateNestedOneWithoutRutasInput
+    anden?: LogAndenCreateNestedOneWithoutRutasInput
+    eventos?: LogEventoRutaCreateNestedManyWithoutRutaInput
+    integracionLogs?: LogIntegracionLogCreateNestedManyWithoutRutaInput
+  }
+
+  export type LogRutaUncheckedCreateWithoutBodegaInput = {
+    id?: string
+    numeroRuta: string
+    transportistaId?: string | null
+    choferId: string
+    camionId: string
+    clienteId?: string | null
+    estado?: string
+    andenId?: string | null
+    fechaRuta: string
+    horaProgramada: string
+    horaLlegadaPorton?: Date | string | null
+    horaEntradaAnden?: Date | string | null
+    horaSalidaAnden?: Date | string | null
+    selloSalida?: string | null
+    totalBultos?: number | null
+    totalKilos?: Decimal | DecimalJsLike | number | string | null
+    observaciones?: string | null
+    telegramMessageId?: string | null
+    tokenRuta?: string
+    creadaPorId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    eventos?: LogEventoRutaUncheckedCreateNestedManyWithoutRutaInput
+    integracionLogs?: LogIntegracionLogUncheckedCreateNestedManyWithoutRutaInput
+  }
+
+  export type LogRutaCreateOrConnectWithoutBodegaInput = {
+    where: LogRutaWhereUniqueInput
+    create: XOR<LogRutaCreateWithoutBodegaInput, LogRutaUncheckedCreateWithoutBodegaInput>
+  }
+
+  export type LogRutaCreateManyBodegaInputEnvelope = {
+    data: LogRutaCreateManyBodegaInput | LogRutaCreateManyBodegaInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LogUsuarioBodegaCreateWithoutBodegaInput = {
+    id?: string
+    usuarioId: string
+    createdAt?: Date | string
+  }
+
+  export type LogUsuarioBodegaUncheckedCreateWithoutBodegaInput = {
+    id?: string
+    usuarioId: string
+    createdAt?: Date | string
+  }
+
+  export type LogUsuarioBodegaCreateOrConnectWithoutBodegaInput = {
+    where: LogUsuarioBodegaWhereUniqueInput
+    create: XOR<LogUsuarioBodegaCreateWithoutBodegaInput, LogUsuarioBodegaUncheckedCreateWithoutBodegaInput>
+  }
+
+  export type LogUsuarioBodegaCreateManyBodegaInputEnvelope = {
+    data: LogUsuarioBodegaCreateManyBodegaInput | LogUsuarioBodegaCreateManyBodegaInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LogParametroCreateWithoutBodegaInput = {
+    id?: string
+    clave: string
+    valor: string
+    descripcion?: string | null
+    tipo?: string
+    updatedAt?: Date | string
+  }
+
+  export type LogParametroUncheckedCreateWithoutBodegaInput = {
+    id?: string
+    clave: string
+    valor: string
+    descripcion?: string | null
+    tipo?: string
+    updatedAt?: Date | string
+  }
+
+  export type LogParametroCreateOrConnectWithoutBodegaInput = {
+    where: LogParametroWhereUniqueInput
+    create: XOR<LogParametroCreateWithoutBodegaInput, LogParametroUncheckedCreateWithoutBodegaInput>
+  }
+
+  export type LogParametroCreateManyBodegaInputEnvelope = {
+    data: LogParametroCreateManyBodegaInput | LogParametroCreateManyBodegaInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LogAndenUpsertWithWhereUniqueWithoutBodegaInput = {
+    where: LogAndenWhereUniqueInput
+    update: XOR<LogAndenUpdateWithoutBodegaInput, LogAndenUncheckedUpdateWithoutBodegaInput>
+    create: XOR<LogAndenCreateWithoutBodegaInput, LogAndenUncheckedCreateWithoutBodegaInput>
+  }
+
+  export type LogAndenUpdateWithWhereUniqueWithoutBodegaInput = {
+    where: LogAndenWhereUniqueInput
+    data: XOR<LogAndenUpdateWithoutBodegaInput, LogAndenUncheckedUpdateWithoutBodegaInput>
+  }
+
+  export type LogAndenUpdateManyWithWhereWithoutBodegaInput = {
+    where: LogAndenScalarWhereInput
+    data: XOR<LogAndenUpdateManyMutationInput, LogAndenUncheckedUpdateManyWithoutBodegaInput>
+  }
+
+  export type LogAndenScalarWhereInput = {
+    AND?: LogAndenScalarWhereInput | LogAndenScalarWhereInput[]
+    OR?: LogAndenScalarWhereInput[]
+    NOT?: LogAndenScalarWhereInput | LogAndenScalarWhereInput[]
+    id?: StringFilter<"LogAnden"> | string
+    bodegaId?: StringFilter<"LogAnden"> | string
+    codigo?: StringFilter<"LogAnden"> | string
+    nombre?: StringFilter<"LogAnden"> | string
+    tipoCarga?: StringFilter<"LogAnden"> | string
+    estadoOperativo?: StringFilter<"LogAnden"> | string
+    orden?: IntFilter<"LogAnden"> | number
+    activo?: BoolFilter<"LogAnden"> | boolean
+    createdAt?: DateTimeFilter<"LogAnden"> | Date | string
+    updatedAt?: DateTimeFilter<"LogAnden"> | Date | string
+  }
+
+  export type LogRutaUpsertWithWhereUniqueWithoutBodegaInput = {
+    where: LogRutaWhereUniqueInput
+    update: XOR<LogRutaUpdateWithoutBodegaInput, LogRutaUncheckedUpdateWithoutBodegaInput>
+    create: XOR<LogRutaCreateWithoutBodegaInput, LogRutaUncheckedCreateWithoutBodegaInput>
+  }
+
+  export type LogRutaUpdateWithWhereUniqueWithoutBodegaInput = {
+    where: LogRutaWhereUniqueInput
+    data: XOR<LogRutaUpdateWithoutBodegaInput, LogRutaUncheckedUpdateWithoutBodegaInput>
+  }
+
+  export type LogRutaUpdateManyWithWhereWithoutBodegaInput = {
+    where: LogRutaScalarWhereInput
+    data: XOR<LogRutaUpdateManyMutationInput, LogRutaUncheckedUpdateManyWithoutBodegaInput>
+  }
+
+  export type LogRutaScalarWhereInput = {
+    AND?: LogRutaScalarWhereInput | LogRutaScalarWhereInput[]
+    OR?: LogRutaScalarWhereInput[]
+    NOT?: LogRutaScalarWhereInput | LogRutaScalarWhereInput[]
+    id?: StringFilter<"LogRuta"> | string
+    numeroRuta?: StringFilter<"LogRuta"> | string
+    bodegaId?: StringFilter<"LogRuta"> | string
+    transportistaId?: StringNullableFilter<"LogRuta"> | string | null
+    choferId?: StringFilter<"LogRuta"> | string
+    camionId?: StringFilter<"LogRuta"> | string
+    clienteId?: StringNullableFilter<"LogRuta"> | string | null
+    estado?: StringFilter<"LogRuta"> | string
+    andenId?: StringNullableFilter<"LogRuta"> | string | null
+    fechaRuta?: StringFilter<"LogRuta"> | string
+    horaProgramada?: StringFilter<"LogRuta"> | string
+    horaLlegadaPorton?: DateTimeNullableFilter<"LogRuta"> | Date | string | null
+    horaEntradaAnden?: DateTimeNullableFilter<"LogRuta"> | Date | string | null
+    horaSalidaAnden?: DateTimeNullableFilter<"LogRuta"> | Date | string | null
+    selloSalida?: StringNullableFilter<"LogRuta"> | string | null
+    totalBultos?: IntNullableFilter<"LogRuta"> | number | null
+    totalKilos?: DecimalNullableFilter<"LogRuta"> | Decimal | DecimalJsLike | number | string | null
+    observaciones?: StringNullableFilter<"LogRuta"> | string | null
+    telegramMessageId?: StringNullableFilter<"LogRuta"> | string | null
+    tokenRuta?: StringFilter<"LogRuta"> | string
+    creadaPorId?: StringNullableFilter<"LogRuta"> | string | null
+    createdAt?: DateTimeFilter<"LogRuta"> | Date | string
+    updatedAt?: DateTimeFilter<"LogRuta"> | Date | string
+  }
+
+  export type LogUsuarioBodegaUpsertWithWhereUniqueWithoutBodegaInput = {
+    where: LogUsuarioBodegaWhereUniqueInput
+    update: XOR<LogUsuarioBodegaUpdateWithoutBodegaInput, LogUsuarioBodegaUncheckedUpdateWithoutBodegaInput>
+    create: XOR<LogUsuarioBodegaCreateWithoutBodegaInput, LogUsuarioBodegaUncheckedCreateWithoutBodegaInput>
+  }
+
+  export type LogUsuarioBodegaUpdateWithWhereUniqueWithoutBodegaInput = {
+    where: LogUsuarioBodegaWhereUniqueInput
+    data: XOR<LogUsuarioBodegaUpdateWithoutBodegaInput, LogUsuarioBodegaUncheckedUpdateWithoutBodegaInput>
+  }
+
+  export type LogUsuarioBodegaUpdateManyWithWhereWithoutBodegaInput = {
+    where: LogUsuarioBodegaScalarWhereInput
+    data: XOR<LogUsuarioBodegaUpdateManyMutationInput, LogUsuarioBodegaUncheckedUpdateManyWithoutBodegaInput>
+  }
+
+  export type LogUsuarioBodegaScalarWhereInput = {
+    AND?: LogUsuarioBodegaScalarWhereInput | LogUsuarioBodegaScalarWhereInput[]
+    OR?: LogUsuarioBodegaScalarWhereInput[]
+    NOT?: LogUsuarioBodegaScalarWhereInput | LogUsuarioBodegaScalarWhereInput[]
+    id?: StringFilter<"LogUsuarioBodega"> | string
+    usuarioId?: StringFilter<"LogUsuarioBodega"> | string
+    bodegaId?: StringFilter<"LogUsuarioBodega"> | string
+    createdAt?: DateTimeFilter<"LogUsuarioBodega"> | Date | string
+  }
+
+  export type LogParametroUpsertWithWhereUniqueWithoutBodegaInput = {
+    where: LogParametroWhereUniqueInput
+    update: XOR<LogParametroUpdateWithoutBodegaInput, LogParametroUncheckedUpdateWithoutBodegaInput>
+    create: XOR<LogParametroCreateWithoutBodegaInput, LogParametroUncheckedCreateWithoutBodegaInput>
+  }
+
+  export type LogParametroUpdateWithWhereUniqueWithoutBodegaInput = {
+    where: LogParametroWhereUniqueInput
+    data: XOR<LogParametroUpdateWithoutBodegaInput, LogParametroUncheckedUpdateWithoutBodegaInput>
+  }
+
+  export type LogParametroUpdateManyWithWhereWithoutBodegaInput = {
+    where: LogParametroScalarWhereInput
+    data: XOR<LogParametroUpdateManyMutationInput, LogParametroUncheckedUpdateManyWithoutBodegaInput>
+  }
+
+  export type LogParametroScalarWhereInput = {
+    AND?: LogParametroScalarWhereInput | LogParametroScalarWhereInput[]
+    OR?: LogParametroScalarWhereInput[]
+    NOT?: LogParametroScalarWhereInput | LogParametroScalarWhereInput[]
+    id?: StringFilter<"LogParametro"> | string
+    bodegaId?: StringNullableFilter<"LogParametro"> | string | null
+    clave?: StringFilter<"LogParametro"> | string
+    valor?: StringFilter<"LogParametro"> | string
+    descripcion?: StringNullableFilter<"LogParametro"> | string | null
+    tipo?: StringFilter<"LogParametro"> | string
+    updatedAt?: DateTimeFilter<"LogParametro"> | Date | string
+  }
+
+  export type LogBodegaCreateWithoutUsuariosInput = {
+    id?: string
+    codigo: string
+    nombre: string
+    sucursalId?: string | null
+    direccion?: string | null
+    activa?: boolean
+    orden?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    andenes?: LogAndenCreateNestedManyWithoutBodegaInput
+    rutas?: LogRutaCreateNestedManyWithoutBodegaInput
+    parametros?: LogParametroCreateNestedManyWithoutBodegaInput
+  }
+
+  export type LogBodegaUncheckedCreateWithoutUsuariosInput = {
+    id?: string
+    codigo: string
+    nombre: string
+    sucursalId?: string | null
+    direccion?: string | null
+    activa?: boolean
+    orden?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    andenes?: LogAndenUncheckedCreateNestedManyWithoutBodegaInput
+    rutas?: LogRutaUncheckedCreateNestedManyWithoutBodegaInput
+    parametros?: LogParametroUncheckedCreateNestedManyWithoutBodegaInput
+  }
+
+  export type LogBodegaCreateOrConnectWithoutUsuariosInput = {
+    where: LogBodegaWhereUniqueInput
+    create: XOR<LogBodegaCreateWithoutUsuariosInput, LogBodegaUncheckedCreateWithoutUsuariosInput>
+  }
+
+  export type LogBodegaUpsertWithoutUsuariosInput = {
+    update: XOR<LogBodegaUpdateWithoutUsuariosInput, LogBodegaUncheckedUpdateWithoutUsuariosInput>
+    create: XOR<LogBodegaCreateWithoutUsuariosInput, LogBodegaUncheckedCreateWithoutUsuariosInput>
+    where?: LogBodegaWhereInput
+  }
+
+  export type LogBodegaUpdateToOneWithWhereWithoutUsuariosInput = {
+    where?: LogBodegaWhereInput
+    data: XOR<LogBodegaUpdateWithoutUsuariosInput, LogBodegaUncheckedUpdateWithoutUsuariosInput>
+  }
+
+  export type LogBodegaUpdateWithoutUsuariosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    sucursalId?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    orden?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    andenes?: LogAndenUpdateManyWithoutBodegaNestedInput
+    rutas?: LogRutaUpdateManyWithoutBodegaNestedInput
+    parametros?: LogParametroUpdateManyWithoutBodegaNestedInput
+  }
+
+  export type LogBodegaUncheckedUpdateWithoutUsuariosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    sucursalId?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    orden?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    andenes?: LogAndenUncheckedUpdateManyWithoutBodegaNestedInput
+    rutas?: LogRutaUncheckedUpdateManyWithoutBodegaNestedInput
+    parametros?: LogParametroUncheckedUpdateManyWithoutBodegaNestedInput
+  }
+
+  export type LogBodegaCreateWithoutAndenesInput = {
+    id?: string
+    codigo: string
+    nombre: string
+    sucursalId?: string | null
+    direccion?: string | null
+    activa?: boolean
+    orden?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    rutas?: LogRutaCreateNestedManyWithoutBodegaInput
+    usuarios?: LogUsuarioBodegaCreateNestedManyWithoutBodegaInput
+    parametros?: LogParametroCreateNestedManyWithoutBodegaInput
+  }
+
+  export type LogBodegaUncheckedCreateWithoutAndenesInput = {
+    id?: string
+    codigo: string
+    nombre: string
+    sucursalId?: string | null
+    direccion?: string | null
+    activa?: boolean
+    orden?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    rutas?: LogRutaUncheckedCreateNestedManyWithoutBodegaInput
+    usuarios?: LogUsuarioBodegaUncheckedCreateNestedManyWithoutBodegaInput
+    parametros?: LogParametroUncheckedCreateNestedManyWithoutBodegaInput
+  }
+
+  export type LogBodegaCreateOrConnectWithoutAndenesInput = {
+    where: LogBodegaWhereUniqueInput
+    create: XOR<LogBodegaCreateWithoutAndenesInput, LogBodegaUncheckedCreateWithoutAndenesInput>
+  }
+
+  export type LogRutaCreateWithoutAndenInput = {
+    id?: string
+    numeroRuta: string
+    estado?: string
+    fechaRuta: string
+    horaProgramada: string
+    horaLlegadaPorton?: Date | string | null
+    horaEntradaAnden?: Date | string | null
+    horaSalidaAnden?: Date | string | null
+    selloSalida?: string | null
+    totalBultos?: number | null
+    totalKilos?: Decimal | DecimalJsLike | number | string | null
+    observaciones?: string | null
+    telegramMessageId?: string | null
+    tokenRuta?: string
+    creadaPorId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bodega: LogBodegaCreateNestedOneWithoutRutasInput
+    transportista?: LogTransportistaCreateNestedOneWithoutRutasInput
+    chofer: LogChoferCreateNestedOneWithoutRutasInput
+    camion: LogCamionCreateNestedOneWithoutRutasInput
+    cliente?: LogClienteCreateNestedOneWithoutRutasInput
+    eventos?: LogEventoRutaCreateNestedManyWithoutRutaInput
+    integracionLogs?: LogIntegracionLogCreateNestedManyWithoutRutaInput
+  }
+
+  export type LogRutaUncheckedCreateWithoutAndenInput = {
+    id?: string
+    numeroRuta: string
+    bodegaId: string
+    transportistaId?: string | null
+    choferId: string
+    camionId: string
+    clienteId?: string | null
+    estado?: string
+    fechaRuta: string
+    horaProgramada: string
+    horaLlegadaPorton?: Date | string | null
+    horaEntradaAnden?: Date | string | null
+    horaSalidaAnden?: Date | string | null
+    selloSalida?: string | null
+    totalBultos?: number | null
+    totalKilos?: Decimal | DecimalJsLike | number | string | null
+    observaciones?: string | null
+    telegramMessageId?: string | null
+    tokenRuta?: string
+    creadaPorId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    eventos?: LogEventoRutaUncheckedCreateNestedManyWithoutRutaInput
+    integracionLogs?: LogIntegracionLogUncheckedCreateNestedManyWithoutRutaInput
+  }
+
+  export type LogRutaCreateOrConnectWithoutAndenInput = {
+    where: LogRutaWhereUniqueInput
+    create: XOR<LogRutaCreateWithoutAndenInput, LogRutaUncheckedCreateWithoutAndenInput>
+  }
+
+  export type LogRutaCreateManyAndenInputEnvelope = {
+    data: LogRutaCreateManyAndenInput | LogRutaCreateManyAndenInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LogEventoRutaCreateWithoutAndenInput = {
+    id?: string
+    estadoAnterior?: string | null
+    estadoNuevo: string
+    origenCambio?: string
+    notas?: string | null
+    metadataJson?: string | null
+    usuarioId?: string | null
+    createdAt?: Date | string
+    ruta: LogRutaCreateNestedOneWithoutEventosInput
+  }
+
+  export type LogEventoRutaUncheckedCreateWithoutAndenInput = {
+    id?: string
+    rutaId: string
+    estadoAnterior?: string | null
+    estadoNuevo: string
+    origenCambio?: string
+    notas?: string | null
+    metadataJson?: string | null
+    usuarioId?: string | null
+    createdAt?: Date | string
+  }
+
+  export type LogEventoRutaCreateOrConnectWithoutAndenInput = {
+    where: LogEventoRutaWhereUniqueInput
+    create: XOR<LogEventoRutaCreateWithoutAndenInput, LogEventoRutaUncheckedCreateWithoutAndenInput>
+  }
+
+  export type LogEventoRutaCreateManyAndenInputEnvelope = {
+    data: LogEventoRutaCreateManyAndenInput | LogEventoRutaCreateManyAndenInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LogBodegaUpsertWithoutAndenesInput = {
+    update: XOR<LogBodegaUpdateWithoutAndenesInput, LogBodegaUncheckedUpdateWithoutAndenesInput>
+    create: XOR<LogBodegaCreateWithoutAndenesInput, LogBodegaUncheckedCreateWithoutAndenesInput>
+    where?: LogBodegaWhereInput
+  }
+
+  export type LogBodegaUpdateToOneWithWhereWithoutAndenesInput = {
+    where?: LogBodegaWhereInput
+    data: XOR<LogBodegaUpdateWithoutAndenesInput, LogBodegaUncheckedUpdateWithoutAndenesInput>
+  }
+
+  export type LogBodegaUpdateWithoutAndenesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    sucursalId?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    orden?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rutas?: LogRutaUpdateManyWithoutBodegaNestedInput
+    usuarios?: LogUsuarioBodegaUpdateManyWithoutBodegaNestedInput
+    parametros?: LogParametroUpdateManyWithoutBodegaNestedInput
+  }
+
+  export type LogBodegaUncheckedUpdateWithoutAndenesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    sucursalId?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    orden?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rutas?: LogRutaUncheckedUpdateManyWithoutBodegaNestedInput
+    usuarios?: LogUsuarioBodegaUncheckedUpdateManyWithoutBodegaNestedInput
+    parametros?: LogParametroUncheckedUpdateManyWithoutBodegaNestedInput
+  }
+
+  export type LogRutaUpsertWithWhereUniqueWithoutAndenInput = {
+    where: LogRutaWhereUniqueInput
+    update: XOR<LogRutaUpdateWithoutAndenInput, LogRutaUncheckedUpdateWithoutAndenInput>
+    create: XOR<LogRutaCreateWithoutAndenInput, LogRutaUncheckedCreateWithoutAndenInput>
+  }
+
+  export type LogRutaUpdateWithWhereUniqueWithoutAndenInput = {
+    where: LogRutaWhereUniqueInput
+    data: XOR<LogRutaUpdateWithoutAndenInput, LogRutaUncheckedUpdateWithoutAndenInput>
+  }
+
+  export type LogRutaUpdateManyWithWhereWithoutAndenInput = {
+    where: LogRutaScalarWhereInput
+    data: XOR<LogRutaUpdateManyMutationInput, LogRutaUncheckedUpdateManyWithoutAndenInput>
+  }
+
+  export type LogEventoRutaUpsertWithWhereUniqueWithoutAndenInput = {
+    where: LogEventoRutaWhereUniqueInput
+    update: XOR<LogEventoRutaUpdateWithoutAndenInput, LogEventoRutaUncheckedUpdateWithoutAndenInput>
+    create: XOR<LogEventoRutaCreateWithoutAndenInput, LogEventoRutaUncheckedCreateWithoutAndenInput>
+  }
+
+  export type LogEventoRutaUpdateWithWhereUniqueWithoutAndenInput = {
+    where: LogEventoRutaWhereUniqueInput
+    data: XOR<LogEventoRutaUpdateWithoutAndenInput, LogEventoRutaUncheckedUpdateWithoutAndenInput>
+  }
+
+  export type LogEventoRutaUpdateManyWithWhereWithoutAndenInput = {
+    where: LogEventoRutaScalarWhereInput
+    data: XOR<LogEventoRutaUpdateManyMutationInput, LogEventoRutaUncheckedUpdateManyWithoutAndenInput>
+  }
+
+  export type LogEventoRutaScalarWhereInput = {
+    AND?: LogEventoRutaScalarWhereInput | LogEventoRutaScalarWhereInput[]
+    OR?: LogEventoRutaScalarWhereInput[]
+    NOT?: LogEventoRutaScalarWhereInput | LogEventoRutaScalarWhereInput[]
+    id?: StringFilter<"LogEventoRuta"> | string
+    rutaId?: StringFilter<"LogEventoRuta"> | string
+    estadoAnterior?: StringNullableFilter<"LogEventoRuta"> | string | null
+    estadoNuevo?: StringFilter<"LogEventoRuta"> | string
+    andenId?: StringNullableFilter<"LogEventoRuta"> | string | null
+    origenCambio?: StringFilter<"LogEventoRuta"> | string
+    notas?: StringNullableFilter<"LogEventoRuta"> | string | null
+    metadataJson?: StringNullableFilter<"LogEventoRuta"> | string | null
+    usuarioId?: StringNullableFilter<"LogEventoRuta"> | string | null
+    createdAt?: DateTimeFilter<"LogEventoRuta"> | Date | string
+  }
+
+  export type LogChoferCreateWithoutTransportistaInput = {
+    id?: string
+    rut: string
+    nombre: string
+    telefono: string
+    email?: string | null
+    telegramChatId?: string | null
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    rutas?: LogRutaCreateNestedManyWithoutChoferInput
+  }
+
+  export type LogChoferUncheckedCreateWithoutTransportistaInput = {
+    id?: string
+    rut: string
+    nombre: string
+    telefono: string
+    email?: string | null
+    telegramChatId?: string | null
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    rutas?: LogRutaUncheckedCreateNestedManyWithoutChoferInput
+  }
+
+  export type LogChoferCreateOrConnectWithoutTransportistaInput = {
+    where: LogChoferWhereUniqueInput
+    create: XOR<LogChoferCreateWithoutTransportistaInput, LogChoferUncheckedCreateWithoutTransportistaInput>
+  }
+
+  export type LogChoferCreateManyTransportistaInputEnvelope = {
+    data: LogChoferCreateManyTransportistaInput | LogChoferCreateManyTransportistaInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LogCamionCreateWithoutTransportistaInput = {
+    id?: string
+    patente: string
+    tipoVehiculo?: string
+    capacidadKg?: Decimal | DecimalJsLike | number | string | null
+    capacidadM3?: Decimal | DecimalJsLike | number | string | null
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    rutas?: LogRutaCreateNestedManyWithoutCamionInput
+  }
+
+  export type LogCamionUncheckedCreateWithoutTransportistaInput = {
+    id?: string
+    patente: string
+    tipoVehiculo?: string
+    capacidadKg?: Decimal | DecimalJsLike | number | string | null
+    capacidadM3?: Decimal | DecimalJsLike | number | string | null
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    rutas?: LogRutaUncheckedCreateNestedManyWithoutCamionInput
+  }
+
+  export type LogCamionCreateOrConnectWithoutTransportistaInput = {
+    where: LogCamionWhereUniqueInput
+    create: XOR<LogCamionCreateWithoutTransportistaInput, LogCamionUncheckedCreateWithoutTransportistaInput>
+  }
+
+  export type LogCamionCreateManyTransportistaInputEnvelope = {
+    data: LogCamionCreateManyTransportistaInput | LogCamionCreateManyTransportistaInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LogRutaCreateWithoutTransportistaInput = {
+    id?: string
+    numeroRuta: string
+    estado?: string
+    fechaRuta: string
+    horaProgramada: string
+    horaLlegadaPorton?: Date | string | null
+    horaEntradaAnden?: Date | string | null
+    horaSalidaAnden?: Date | string | null
+    selloSalida?: string | null
+    totalBultos?: number | null
+    totalKilos?: Decimal | DecimalJsLike | number | string | null
+    observaciones?: string | null
+    telegramMessageId?: string | null
+    tokenRuta?: string
+    creadaPorId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bodega: LogBodegaCreateNestedOneWithoutRutasInput
+    chofer: LogChoferCreateNestedOneWithoutRutasInput
+    camion: LogCamionCreateNestedOneWithoutRutasInput
+    cliente?: LogClienteCreateNestedOneWithoutRutasInput
+    anden?: LogAndenCreateNestedOneWithoutRutasInput
+    eventos?: LogEventoRutaCreateNestedManyWithoutRutaInput
+    integracionLogs?: LogIntegracionLogCreateNestedManyWithoutRutaInput
+  }
+
+  export type LogRutaUncheckedCreateWithoutTransportistaInput = {
+    id?: string
+    numeroRuta: string
+    bodegaId: string
+    choferId: string
+    camionId: string
+    clienteId?: string | null
+    estado?: string
+    andenId?: string | null
+    fechaRuta: string
+    horaProgramada: string
+    horaLlegadaPorton?: Date | string | null
+    horaEntradaAnden?: Date | string | null
+    horaSalidaAnden?: Date | string | null
+    selloSalida?: string | null
+    totalBultos?: number | null
+    totalKilos?: Decimal | DecimalJsLike | number | string | null
+    observaciones?: string | null
+    telegramMessageId?: string | null
+    tokenRuta?: string
+    creadaPorId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    eventos?: LogEventoRutaUncheckedCreateNestedManyWithoutRutaInput
+    integracionLogs?: LogIntegracionLogUncheckedCreateNestedManyWithoutRutaInput
+  }
+
+  export type LogRutaCreateOrConnectWithoutTransportistaInput = {
+    where: LogRutaWhereUniqueInput
+    create: XOR<LogRutaCreateWithoutTransportistaInput, LogRutaUncheckedCreateWithoutTransportistaInput>
+  }
+
+  export type LogRutaCreateManyTransportistaInputEnvelope = {
+    data: LogRutaCreateManyTransportistaInput | LogRutaCreateManyTransportistaInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LogChoferUpsertWithWhereUniqueWithoutTransportistaInput = {
+    where: LogChoferWhereUniqueInput
+    update: XOR<LogChoferUpdateWithoutTransportistaInput, LogChoferUncheckedUpdateWithoutTransportistaInput>
+    create: XOR<LogChoferCreateWithoutTransportistaInput, LogChoferUncheckedCreateWithoutTransportistaInput>
+  }
+
+  export type LogChoferUpdateWithWhereUniqueWithoutTransportistaInput = {
+    where: LogChoferWhereUniqueInput
+    data: XOR<LogChoferUpdateWithoutTransportistaInput, LogChoferUncheckedUpdateWithoutTransportistaInput>
+  }
+
+  export type LogChoferUpdateManyWithWhereWithoutTransportistaInput = {
+    where: LogChoferScalarWhereInput
+    data: XOR<LogChoferUpdateManyMutationInput, LogChoferUncheckedUpdateManyWithoutTransportistaInput>
+  }
+
+  export type LogChoferScalarWhereInput = {
+    AND?: LogChoferScalarWhereInput | LogChoferScalarWhereInput[]
+    OR?: LogChoferScalarWhereInput[]
+    NOT?: LogChoferScalarWhereInput | LogChoferScalarWhereInput[]
+    id?: StringFilter<"LogChofer"> | string
+    rut?: StringFilter<"LogChofer"> | string
+    nombre?: StringFilter<"LogChofer"> | string
+    telefono?: StringFilter<"LogChofer"> | string
+    email?: StringNullableFilter<"LogChofer"> | string | null
+    telegramChatId?: StringNullableFilter<"LogChofer"> | string | null
+    transportistaId?: StringNullableFilter<"LogChofer"> | string | null
+    activo?: BoolFilter<"LogChofer"> | boolean
+    createdAt?: DateTimeFilter<"LogChofer"> | Date | string
+    updatedAt?: DateTimeFilter<"LogChofer"> | Date | string
+  }
+
+  export type LogCamionUpsertWithWhereUniqueWithoutTransportistaInput = {
+    where: LogCamionWhereUniqueInput
+    update: XOR<LogCamionUpdateWithoutTransportistaInput, LogCamionUncheckedUpdateWithoutTransportistaInput>
+    create: XOR<LogCamionCreateWithoutTransportistaInput, LogCamionUncheckedCreateWithoutTransportistaInput>
+  }
+
+  export type LogCamionUpdateWithWhereUniqueWithoutTransportistaInput = {
+    where: LogCamionWhereUniqueInput
+    data: XOR<LogCamionUpdateWithoutTransportistaInput, LogCamionUncheckedUpdateWithoutTransportistaInput>
+  }
+
+  export type LogCamionUpdateManyWithWhereWithoutTransportistaInput = {
+    where: LogCamionScalarWhereInput
+    data: XOR<LogCamionUpdateManyMutationInput, LogCamionUncheckedUpdateManyWithoutTransportistaInput>
+  }
+
+  export type LogCamionScalarWhereInput = {
+    AND?: LogCamionScalarWhereInput | LogCamionScalarWhereInput[]
+    OR?: LogCamionScalarWhereInput[]
+    NOT?: LogCamionScalarWhereInput | LogCamionScalarWhereInput[]
+    id?: StringFilter<"LogCamion"> | string
+    patente?: StringFilter<"LogCamion"> | string
+    tipoVehiculo?: StringFilter<"LogCamion"> | string
+    capacidadKg?: DecimalNullableFilter<"LogCamion"> | Decimal | DecimalJsLike | number | string | null
+    capacidadM3?: DecimalNullableFilter<"LogCamion"> | Decimal | DecimalJsLike | number | string | null
+    transportistaId?: StringNullableFilter<"LogCamion"> | string | null
+    activo?: BoolFilter<"LogCamion"> | boolean
+    createdAt?: DateTimeFilter<"LogCamion"> | Date | string
+    updatedAt?: DateTimeFilter<"LogCamion"> | Date | string
+  }
+
+  export type LogRutaUpsertWithWhereUniqueWithoutTransportistaInput = {
+    where: LogRutaWhereUniqueInput
+    update: XOR<LogRutaUpdateWithoutTransportistaInput, LogRutaUncheckedUpdateWithoutTransportistaInput>
+    create: XOR<LogRutaCreateWithoutTransportistaInput, LogRutaUncheckedCreateWithoutTransportistaInput>
+  }
+
+  export type LogRutaUpdateWithWhereUniqueWithoutTransportistaInput = {
+    where: LogRutaWhereUniqueInput
+    data: XOR<LogRutaUpdateWithoutTransportistaInput, LogRutaUncheckedUpdateWithoutTransportistaInput>
+  }
+
+  export type LogRutaUpdateManyWithWhereWithoutTransportistaInput = {
+    where: LogRutaScalarWhereInput
+    data: XOR<LogRutaUpdateManyMutationInput, LogRutaUncheckedUpdateManyWithoutTransportistaInput>
+  }
+
+  export type LogTransportistaCreateWithoutChoferesInput = {
+    id?: string
+    rut: string
+    razonSocial: string
+    contacto?: string | null
+    telefono?: string | null
+    email?: string | null
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    camiones?: LogCamionCreateNestedManyWithoutTransportistaInput
+    rutas?: LogRutaCreateNestedManyWithoutTransportistaInput
+  }
+
+  export type LogTransportistaUncheckedCreateWithoutChoferesInput = {
+    id?: string
+    rut: string
+    razonSocial: string
+    contacto?: string | null
+    telefono?: string | null
+    email?: string | null
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    camiones?: LogCamionUncheckedCreateNestedManyWithoutTransportistaInput
+    rutas?: LogRutaUncheckedCreateNestedManyWithoutTransportistaInput
+  }
+
+  export type LogTransportistaCreateOrConnectWithoutChoferesInput = {
+    where: LogTransportistaWhereUniqueInput
+    create: XOR<LogTransportistaCreateWithoutChoferesInput, LogTransportistaUncheckedCreateWithoutChoferesInput>
+  }
+
+  export type LogRutaCreateWithoutChoferInput = {
+    id?: string
+    numeroRuta: string
+    estado?: string
+    fechaRuta: string
+    horaProgramada: string
+    horaLlegadaPorton?: Date | string | null
+    horaEntradaAnden?: Date | string | null
+    horaSalidaAnden?: Date | string | null
+    selloSalida?: string | null
+    totalBultos?: number | null
+    totalKilos?: Decimal | DecimalJsLike | number | string | null
+    observaciones?: string | null
+    telegramMessageId?: string | null
+    tokenRuta?: string
+    creadaPorId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bodega: LogBodegaCreateNestedOneWithoutRutasInput
+    transportista?: LogTransportistaCreateNestedOneWithoutRutasInput
+    camion: LogCamionCreateNestedOneWithoutRutasInput
+    cliente?: LogClienteCreateNestedOneWithoutRutasInput
+    anden?: LogAndenCreateNestedOneWithoutRutasInput
+    eventos?: LogEventoRutaCreateNestedManyWithoutRutaInput
+    integracionLogs?: LogIntegracionLogCreateNestedManyWithoutRutaInput
+  }
+
+  export type LogRutaUncheckedCreateWithoutChoferInput = {
+    id?: string
+    numeroRuta: string
+    bodegaId: string
+    transportistaId?: string | null
+    camionId: string
+    clienteId?: string | null
+    estado?: string
+    andenId?: string | null
+    fechaRuta: string
+    horaProgramada: string
+    horaLlegadaPorton?: Date | string | null
+    horaEntradaAnden?: Date | string | null
+    horaSalidaAnden?: Date | string | null
+    selloSalida?: string | null
+    totalBultos?: number | null
+    totalKilos?: Decimal | DecimalJsLike | number | string | null
+    observaciones?: string | null
+    telegramMessageId?: string | null
+    tokenRuta?: string
+    creadaPorId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    eventos?: LogEventoRutaUncheckedCreateNestedManyWithoutRutaInput
+    integracionLogs?: LogIntegracionLogUncheckedCreateNestedManyWithoutRutaInput
+  }
+
+  export type LogRutaCreateOrConnectWithoutChoferInput = {
+    where: LogRutaWhereUniqueInput
+    create: XOR<LogRutaCreateWithoutChoferInput, LogRutaUncheckedCreateWithoutChoferInput>
+  }
+
+  export type LogRutaCreateManyChoferInputEnvelope = {
+    data: LogRutaCreateManyChoferInput | LogRutaCreateManyChoferInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LogTransportistaUpsertWithoutChoferesInput = {
+    update: XOR<LogTransportistaUpdateWithoutChoferesInput, LogTransportistaUncheckedUpdateWithoutChoferesInput>
+    create: XOR<LogTransportistaCreateWithoutChoferesInput, LogTransportistaUncheckedCreateWithoutChoferesInput>
+    where?: LogTransportistaWhereInput
+  }
+
+  export type LogTransportistaUpdateToOneWithWhereWithoutChoferesInput = {
+    where?: LogTransportistaWhereInput
+    data: XOR<LogTransportistaUpdateWithoutChoferesInput, LogTransportistaUncheckedUpdateWithoutChoferesInput>
+  }
+
+  export type LogTransportistaUpdateWithoutChoferesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rut?: StringFieldUpdateOperationsInput | string
+    razonSocial?: StringFieldUpdateOperationsInput | string
+    contacto?: NullableStringFieldUpdateOperationsInput | string | null
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    camiones?: LogCamionUpdateManyWithoutTransportistaNestedInput
+    rutas?: LogRutaUpdateManyWithoutTransportistaNestedInput
+  }
+
+  export type LogTransportistaUncheckedUpdateWithoutChoferesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rut?: StringFieldUpdateOperationsInput | string
+    razonSocial?: StringFieldUpdateOperationsInput | string
+    contacto?: NullableStringFieldUpdateOperationsInput | string | null
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    camiones?: LogCamionUncheckedUpdateManyWithoutTransportistaNestedInput
+    rutas?: LogRutaUncheckedUpdateManyWithoutTransportistaNestedInput
+  }
+
+  export type LogRutaUpsertWithWhereUniqueWithoutChoferInput = {
+    where: LogRutaWhereUniqueInput
+    update: XOR<LogRutaUpdateWithoutChoferInput, LogRutaUncheckedUpdateWithoutChoferInput>
+    create: XOR<LogRutaCreateWithoutChoferInput, LogRutaUncheckedCreateWithoutChoferInput>
+  }
+
+  export type LogRutaUpdateWithWhereUniqueWithoutChoferInput = {
+    where: LogRutaWhereUniqueInput
+    data: XOR<LogRutaUpdateWithoutChoferInput, LogRutaUncheckedUpdateWithoutChoferInput>
+  }
+
+  export type LogRutaUpdateManyWithWhereWithoutChoferInput = {
+    where: LogRutaScalarWhereInput
+    data: XOR<LogRutaUpdateManyMutationInput, LogRutaUncheckedUpdateManyWithoutChoferInput>
+  }
+
+  export type LogTransportistaCreateWithoutCamionesInput = {
+    id?: string
+    rut: string
+    razonSocial: string
+    contacto?: string | null
+    telefono?: string | null
+    email?: string | null
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    choferes?: LogChoferCreateNestedManyWithoutTransportistaInput
+    rutas?: LogRutaCreateNestedManyWithoutTransportistaInput
+  }
+
+  export type LogTransportistaUncheckedCreateWithoutCamionesInput = {
+    id?: string
+    rut: string
+    razonSocial: string
+    contacto?: string | null
+    telefono?: string | null
+    email?: string | null
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    choferes?: LogChoferUncheckedCreateNestedManyWithoutTransportistaInput
+    rutas?: LogRutaUncheckedCreateNestedManyWithoutTransportistaInput
+  }
+
+  export type LogTransportistaCreateOrConnectWithoutCamionesInput = {
+    where: LogTransportistaWhereUniqueInput
+    create: XOR<LogTransportistaCreateWithoutCamionesInput, LogTransportistaUncheckedCreateWithoutCamionesInput>
+  }
+
+  export type LogRutaCreateWithoutCamionInput = {
+    id?: string
+    numeroRuta: string
+    estado?: string
+    fechaRuta: string
+    horaProgramada: string
+    horaLlegadaPorton?: Date | string | null
+    horaEntradaAnden?: Date | string | null
+    horaSalidaAnden?: Date | string | null
+    selloSalida?: string | null
+    totalBultos?: number | null
+    totalKilos?: Decimal | DecimalJsLike | number | string | null
+    observaciones?: string | null
+    telegramMessageId?: string | null
+    tokenRuta?: string
+    creadaPorId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bodega: LogBodegaCreateNestedOneWithoutRutasInput
+    transportista?: LogTransportistaCreateNestedOneWithoutRutasInput
+    chofer: LogChoferCreateNestedOneWithoutRutasInput
+    cliente?: LogClienteCreateNestedOneWithoutRutasInput
+    anden?: LogAndenCreateNestedOneWithoutRutasInput
+    eventos?: LogEventoRutaCreateNestedManyWithoutRutaInput
+    integracionLogs?: LogIntegracionLogCreateNestedManyWithoutRutaInput
+  }
+
+  export type LogRutaUncheckedCreateWithoutCamionInput = {
+    id?: string
+    numeroRuta: string
+    bodegaId: string
+    transportistaId?: string | null
+    choferId: string
+    clienteId?: string | null
+    estado?: string
+    andenId?: string | null
+    fechaRuta: string
+    horaProgramada: string
+    horaLlegadaPorton?: Date | string | null
+    horaEntradaAnden?: Date | string | null
+    horaSalidaAnden?: Date | string | null
+    selloSalida?: string | null
+    totalBultos?: number | null
+    totalKilos?: Decimal | DecimalJsLike | number | string | null
+    observaciones?: string | null
+    telegramMessageId?: string | null
+    tokenRuta?: string
+    creadaPorId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    eventos?: LogEventoRutaUncheckedCreateNestedManyWithoutRutaInput
+    integracionLogs?: LogIntegracionLogUncheckedCreateNestedManyWithoutRutaInput
+  }
+
+  export type LogRutaCreateOrConnectWithoutCamionInput = {
+    where: LogRutaWhereUniqueInput
+    create: XOR<LogRutaCreateWithoutCamionInput, LogRutaUncheckedCreateWithoutCamionInput>
+  }
+
+  export type LogRutaCreateManyCamionInputEnvelope = {
+    data: LogRutaCreateManyCamionInput | LogRutaCreateManyCamionInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LogTransportistaUpsertWithoutCamionesInput = {
+    update: XOR<LogTransportistaUpdateWithoutCamionesInput, LogTransportistaUncheckedUpdateWithoutCamionesInput>
+    create: XOR<LogTransportistaCreateWithoutCamionesInput, LogTransportistaUncheckedCreateWithoutCamionesInput>
+    where?: LogTransportistaWhereInput
+  }
+
+  export type LogTransportistaUpdateToOneWithWhereWithoutCamionesInput = {
+    where?: LogTransportistaWhereInput
+    data: XOR<LogTransportistaUpdateWithoutCamionesInput, LogTransportistaUncheckedUpdateWithoutCamionesInput>
+  }
+
+  export type LogTransportistaUpdateWithoutCamionesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rut?: StringFieldUpdateOperationsInput | string
+    razonSocial?: StringFieldUpdateOperationsInput | string
+    contacto?: NullableStringFieldUpdateOperationsInput | string | null
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    choferes?: LogChoferUpdateManyWithoutTransportistaNestedInput
+    rutas?: LogRutaUpdateManyWithoutTransportistaNestedInput
+  }
+
+  export type LogTransportistaUncheckedUpdateWithoutCamionesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rut?: StringFieldUpdateOperationsInput | string
+    razonSocial?: StringFieldUpdateOperationsInput | string
+    contacto?: NullableStringFieldUpdateOperationsInput | string | null
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    choferes?: LogChoferUncheckedUpdateManyWithoutTransportistaNestedInput
+    rutas?: LogRutaUncheckedUpdateManyWithoutTransportistaNestedInput
+  }
+
+  export type LogRutaUpsertWithWhereUniqueWithoutCamionInput = {
+    where: LogRutaWhereUniqueInput
+    update: XOR<LogRutaUpdateWithoutCamionInput, LogRutaUncheckedUpdateWithoutCamionInput>
+    create: XOR<LogRutaCreateWithoutCamionInput, LogRutaUncheckedCreateWithoutCamionInput>
+  }
+
+  export type LogRutaUpdateWithWhereUniqueWithoutCamionInput = {
+    where: LogRutaWhereUniqueInput
+    data: XOR<LogRutaUpdateWithoutCamionInput, LogRutaUncheckedUpdateWithoutCamionInput>
+  }
+
+  export type LogRutaUpdateManyWithWhereWithoutCamionInput = {
+    where: LogRutaScalarWhereInput
+    data: XOR<LogRutaUpdateManyMutationInput, LogRutaUncheckedUpdateManyWithoutCamionInput>
+  }
+
+  export type LogRutaCreateWithoutClienteInput = {
+    id?: string
+    numeroRuta: string
+    estado?: string
+    fechaRuta: string
+    horaProgramada: string
+    horaLlegadaPorton?: Date | string | null
+    horaEntradaAnden?: Date | string | null
+    horaSalidaAnden?: Date | string | null
+    selloSalida?: string | null
+    totalBultos?: number | null
+    totalKilos?: Decimal | DecimalJsLike | number | string | null
+    observaciones?: string | null
+    telegramMessageId?: string | null
+    tokenRuta?: string
+    creadaPorId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bodega: LogBodegaCreateNestedOneWithoutRutasInput
+    transportista?: LogTransportistaCreateNestedOneWithoutRutasInput
+    chofer: LogChoferCreateNestedOneWithoutRutasInput
+    camion: LogCamionCreateNestedOneWithoutRutasInput
+    anden?: LogAndenCreateNestedOneWithoutRutasInput
+    eventos?: LogEventoRutaCreateNestedManyWithoutRutaInput
+    integracionLogs?: LogIntegracionLogCreateNestedManyWithoutRutaInput
+  }
+
+  export type LogRutaUncheckedCreateWithoutClienteInput = {
+    id?: string
+    numeroRuta: string
+    bodegaId: string
+    transportistaId?: string | null
+    choferId: string
+    camionId: string
+    estado?: string
+    andenId?: string | null
+    fechaRuta: string
+    horaProgramada: string
+    horaLlegadaPorton?: Date | string | null
+    horaEntradaAnden?: Date | string | null
+    horaSalidaAnden?: Date | string | null
+    selloSalida?: string | null
+    totalBultos?: number | null
+    totalKilos?: Decimal | DecimalJsLike | number | string | null
+    observaciones?: string | null
+    telegramMessageId?: string | null
+    tokenRuta?: string
+    creadaPorId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    eventos?: LogEventoRutaUncheckedCreateNestedManyWithoutRutaInput
+    integracionLogs?: LogIntegracionLogUncheckedCreateNestedManyWithoutRutaInput
+  }
+
+  export type LogRutaCreateOrConnectWithoutClienteInput = {
+    where: LogRutaWhereUniqueInput
+    create: XOR<LogRutaCreateWithoutClienteInput, LogRutaUncheckedCreateWithoutClienteInput>
+  }
+
+  export type LogRutaCreateManyClienteInputEnvelope = {
+    data: LogRutaCreateManyClienteInput | LogRutaCreateManyClienteInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LogRutaUpsertWithWhereUniqueWithoutClienteInput = {
+    where: LogRutaWhereUniqueInput
+    update: XOR<LogRutaUpdateWithoutClienteInput, LogRutaUncheckedUpdateWithoutClienteInput>
+    create: XOR<LogRutaCreateWithoutClienteInput, LogRutaUncheckedCreateWithoutClienteInput>
+  }
+
+  export type LogRutaUpdateWithWhereUniqueWithoutClienteInput = {
+    where: LogRutaWhereUniqueInput
+    data: XOR<LogRutaUpdateWithoutClienteInput, LogRutaUncheckedUpdateWithoutClienteInput>
+  }
+
+  export type LogRutaUpdateManyWithWhereWithoutClienteInput = {
+    where: LogRutaScalarWhereInput
+    data: XOR<LogRutaUpdateManyMutationInput, LogRutaUncheckedUpdateManyWithoutClienteInput>
+  }
+
+  export type LogBodegaCreateWithoutRutasInput = {
+    id?: string
+    codigo: string
+    nombre: string
+    sucursalId?: string | null
+    direccion?: string | null
+    activa?: boolean
+    orden?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    andenes?: LogAndenCreateNestedManyWithoutBodegaInput
+    usuarios?: LogUsuarioBodegaCreateNestedManyWithoutBodegaInput
+    parametros?: LogParametroCreateNestedManyWithoutBodegaInput
+  }
+
+  export type LogBodegaUncheckedCreateWithoutRutasInput = {
+    id?: string
+    codigo: string
+    nombre: string
+    sucursalId?: string | null
+    direccion?: string | null
+    activa?: boolean
+    orden?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    andenes?: LogAndenUncheckedCreateNestedManyWithoutBodegaInput
+    usuarios?: LogUsuarioBodegaUncheckedCreateNestedManyWithoutBodegaInput
+    parametros?: LogParametroUncheckedCreateNestedManyWithoutBodegaInput
+  }
+
+  export type LogBodegaCreateOrConnectWithoutRutasInput = {
+    where: LogBodegaWhereUniqueInput
+    create: XOR<LogBodegaCreateWithoutRutasInput, LogBodegaUncheckedCreateWithoutRutasInput>
+  }
+
+  export type LogTransportistaCreateWithoutRutasInput = {
+    id?: string
+    rut: string
+    razonSocial: string
+    contacto?: string | null
+    telefono?: string | null
+    email?: string | null
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    choferes?: LogChoferCreateNestedManyWithoutTransportistaInput
+    camiones?: LogCamionCreateNestedManyWithoutTransportistaInput
+  }
+
+  export type LogTransportistaUncheckedCreateWithoutRutasInput = {
+    id?: string
+    rut: string
+    razonSocial: string
+    contacto?: string | null
+    telefono?: string | null
+    email?: string | null
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    choferes?: LogChoferUncheckedCreateNestedManyWithoutTransportistaInput
+    camiones?: LogCamionUncheckedCreateNestedManyWithoutTransportistaInput
+  }
+
+  export type LogTransportistaCreateOrConnectWithoutRutasInput = {
+    where: LogTransportistaWhereUniqueInput
+    create: XOR<LogTransportistaCreateWithoutRutasInput, LogTransportistaUncheckedCreateWithoutRutasInput>
+  }
+
+  export type LogChoferCreateWithoutRutasInput = {
+    id?: string
+    rut: string
+    nombre: string
+    telefono: string
+    email?: string | null
+    telegramChatId?: string | null
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    transportista?: LogTransportistaCreateNestedOneWithoutChoferesInput
+  }
+
+  export type LogChoferUncheckedCreateWithoutRutasInput = {
+    id?: string
+    rut: string
+    nombre: string
+    telefono: string
+    email?: string | null
+    telegramChatId?: string | null
+    transportistaId?: string | null
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LogChoferCreateOrConnectWithoutRutasInput = {
+    where: LogChoferWhereUniqueInput
+    create: XOR<LogChoferCreateWithoutRutasInput, LogChoferUncheckedCreateWithoutRutasInput>
+  }
+
+  export type LogCamionCreateWithoutRutasInput = {
+    id?: string
+    patente: string
+    tipoVehiculo?: string
+    capacidadKg?: Decimal | DecimalJsLike | number | string | null
+    capacidadM3?: Decimal | DecimalJsLike | number | string | null
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    transportista?: LogTransportistaCreateNestedOneWithoutCamionesInput
+  }
+
+  export type LogCamionUncheckedCreateWithoutRutasInput = {
+    id?: string
+    patente: string
+    tipoVehiculo?: string
+    capacidadKg?: Decimal | DecimalJsLike | number | string | null
+    capacidadM3?: Decimal | DecimalJsLike | number | string | null
+    transportistaId?: string | null
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LogCamionCreateOrConnectWithoutRutasInput = {
+    where: LogCamionWhereUniqueInput
+    create: XOR<LogCamionCreateWithoutRutasInput, LogCamionUncheckedCreateWithoutRutasInput>
+  }
+
+  export type LogClienteCreateWithoutRutasInput = {
+    id?: string
+    codigo: string
+    razonSocial: string
+    direccion?: string | null
+    comuna?: string | null
+    region?: string | null
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LogClienteUncheckedCreateWithoutRutasInput = {
+    id?: string
+    codigo: string
+    razonSocial: string
+    direccion?: string | null
+    comuna?: string | null
+    region?: string | null
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LogClienteCreateOrConnectWithoutRutasInput = {
+    where: LogClienteWhereUniqueInput
+    create: XOR<LogClienteCreateWithoutRutasInput, LogClienteUncheckedCreateWithoutRutasInput>
+  }
+
+  export type LogAndenCreateWithoutRutasInput = {
+    id?: string
+    codigo: string
+    nombre: string
+    tipoCarga?: string
+    estadoOperativo?: string
+    orden?: number
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bodega: LogBodegaCreateNestedOneWithoutAndenesInput
+    eventos?: LogEventoRutaCreateNestedManyWithoutAndenInput
+  }
+
+  export type LogAndenUncheckedCreateWithoutRutasInput = {
+    id?: string
+    bodegaId: string
+    codigo: string
+    nombre: string
+    tipoCarga?: string
+    estadoOperativo?: string
+    orden?: number
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    eventos?: LogEventoRutaUncheckedCreateNestedManyWithoutAndenInput
+  }
+
+  export type LogAndenCreateOrConnectWithoutRutasInput = {
+    where: LogAndenWhereUniqueInput
+    create: XOR<LogAndenCreateWithoutRutasInput, LogAndenUncheckedCreateWithoutRutasInput>
+  }
+
+  export type LogEventoRutaCreateWithoutRutaInput = {
+    id?: string
+    estadoAnterior?: string | null
+    estadoNuevo: string
+    origenCambio?: string
+    notas?: string | null
+    metadataJson?: string | null
+    usuarioId?: string | null
+    createdAt?: Date | string
+    anden?: LogAndenCreateNestedOneWithoutEventosInput
+  }
+
+  export type LogEventoRutaUncheckedCreateWithoutRutaInput = {
+    id?: string
+    estadoAnterior?: string | null
+    estadoNuevo: string
+    andenId?: string | null
+    origenCambio?: string
+    notas?: string | null
+    metadataJson?: string | null
+    usuarioId?: string | null
+    createdAt?: Date | string
+  }
+
+  export type LogEventoRutaCreateOrConnectWithoutRutaInput = {
+    where: LogEventoRutaWhereUniqueInput
+    create: XOR<LogEventoRutaCreateWithoutRutaInput, LogEventoRutaUncheckedCreateWithoutRutaInput>
+  }
+
+  export type LogEventoRutaCreateManyRutaInputEnvelope = {
+    data: LogEventoRutaCreateManyRutaInput | LogEventoRutaCreateManyRutaInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LogIntegracionLogCreateWithoutRutaInput = {
+    id?: string
+    evento: string
+    payloadEnviado?: string | null
+    respuestaCodigo?: number | null
+    respuestaCuerpo?: string | null
+    estado?: string
+    intentos?: number
+    errorDetalle?: string | null
+    createdAt?: Date | string
+    integracionConfig?: LogIntegracionConfigCreateNestedOneWithoutLogsInput
+  }
+
+  export type LogIntegracionLogUncheckedCreateWithoutRutaInput = {
+    id?: string
+    integracionConfigId?: string | null
+    evento: string
+    payloadEnviado?: string | null
+    respuestaCodigo?: number | null
+    respuestaCuerpo?: string | null
+    estado?: string
+    intentos?: number
+    errorDetalle?: string | null
+    createdAt?: Date | string
+  }
+
+  export type LogIntegracionLogCreateOrConnectWithoutRutaInput = {
+    where: LogIntegracionLogWhereUniqueInput
+    create: XOR<LogIntegracionLogCreateWithoutRutaInput, LogIntegracionLogUncheckedCreateWithoutRutaInput>
+  }
+
+  export type LogIntegracionLogCreateManyRutaInputEnvelope = {
+    data: LogIntegracionLogCreateManyRutaInput | LogIntegracionLogCreateManyRutaInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LogBodegaUpsertWithoutRutasInput = {
+    update: XOR<LogBodegaUpdateWithoutRutasInput, LogBodegaUncheckedUpdateWithoutRutasInput>
+    create: XOR<LogBodegaCreateWithoutRutasInput, LogBodegaUncheckedCreateWithoutRutasInput>
+    where?: LogBodegaWhereInput
+  }
+
+  export type LogBodegaUpdateToOneWithWhereWithoutRutasInput = {
+    where?: LogBodegaWhereInput
+    data: XOR<LogBodegaUpdateWithoutRutasInput, LogBodegaUncheckedUpdateWithoutRutasInput>
+  }
+
+  export type LogBodegaUpdateWithoutRutasInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    sucursalId?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    orden?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    andenes?: LogAndenUpdateManyWithoutBodegaNestedInput
+    usuarios?: LogUsuarioBodegaUpdateManyWithoutBodegaNestedInput
+    parametros?: LogParametroUpdateManyWithoutBodegaNestedInput
+  }
+
+  export type LogBodegaUncheckedUpdateWithoutRutasInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    sucursalId?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    orden?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    andenes?: LogAndenUncheckedUpdateManyWithoutBodegaNestedInput
+    usuarios?: LogUsuarioBodegaUncheckedUpdateManyWithoutBodegaNestedInput
+    parametros?: LogParametroUncheckedUpdateManyWithoutBodegaNestedInput
+  }
+
+  export type LogTransportistaUpsertWithoutRutasInput = {
+    update: XOR<LogTransportistaUpdateWithoutRutasInput, LogTransportistaUncheckedUpdateWithoutRutasInput>
+    create: XOR<LogTransportistaCreateWithoutRutasInput, LogTransportistaUncheckedCreateWithoutRutasInput>
+    where?: LogTransportistaWhereInput
+  }
+
+  export type LogTransportistaUpdateToOneWithWhereWithoutRutasInput = {
+    where?: LogTransportistaWhereInput
+    data: XOR<LogTransportistaUpdateWithoutRutasInput, LogTransportistaUncheckedUpdateWithoutRutasInput>
+  }
+
+  export type LogTransportistaUpdateWithoutRutasInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rut?: StringFieldUpdateOperationsInput | string
+    razonSocial?: StringFieldUpdateOperationsInput | string
+    contacto?: NullableStringFieldUpdateOperationsInput | string | null
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    choferes?: LogChoferUpdateManyWithoutTransportistaNestedInput
+    camiones?: LogCamionUpdateManyWithoutTransportistaNestedInput
+  }
+
+  export type LogTransportistaUncheckedUpdateWithoutRutasInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rut?: StringFieldUpdateOperationsInput | string
+    razonSocial?: StringFieldUpdateOperationsInput | string
+    contacto?: NullableStringFieldUpdateOperationsInput | string | null
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    choferes?: LogChoferUncheckedUpdateManyWithoutTransportistaNestedInput
+    camiones?: LogCamionUncheckedUpdateManyWithoutTransportistaNestedInput
+  }
+
+  export type LogChoferUpsertWithoutRutasInput = {
+    update: XOR<LogChoferUpdateWithoutRutasInput, LogChoferUncheckedUpdateWithoutRutasInput>
+    create: XOR<LogChoferCreateWithoutRutasInput, LogChoferUncheckedCreateWithoutRutasInput>
+    where?: LogChoferWhereInput
+  }
+
+  export type LogChoferUpdateToOneWithWhereWithoutRutasInput = {
+    where?: LogChoferWhereInput
+    data: XOR<LogChoferUpdateWithoutRutasInput, LogChoferUncheckedUpdateWithoutRutasInput>
+  }
+
+  export type LogChoferUpdateWithoutRutasInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rut?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    telefono?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramChatId?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    transportista?: LogTransportistaUpdateOneWithoutChoferesNestedInput
+  }
+
+  export type LogChoferUncheckedUpdateWithoutRutasInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rut?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    telefono?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramChatId?: NullableStringFieldUpdateOperationsInput | string | null
+    transportistaId?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogCamionUpsertWithoutRutasInput = {
+    update: XOR<LogCamionUpdateWithoutRutasInput, LogCamionUncheckedUpdateWithoutRutasInput>
+    create: XOR<LogCamionCreateWithoutRutasInput, LogCamionUncheckedCreateWithoutRutasInput>
+    where?: LogCamionWhereInput
+  }
+
+  export type LogCamionUpdateToOneWithWhereWithoutRutasInput = {
+    where?: LogCamionWhereInput
+    data: XOR<LogCamionUpdateWithoutRutasInput, LogCamionUncheckedUpdateWithoutRutasInput>
+  }
+
+  export type LogCamionUpdateWithoutRutasInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    patente?: StringFieldUpdateOperationsInput | string
+    tipoVehiculo?: StringFieldUpdateOperationsInput | string
+    capacidadKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    capacidadM3?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    transportista?: LogTransportistaUpdateOneWithoutCamionesNestedInput
+  }
+
+  export type LogCamionUncheckedUpdateWithoutRutasInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    patente?: StringFieldUpdateOperationsInput | string
+    tipoVehiculo?: StringFieldUpdateOperationsInput | string
+    capacidadKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    capacidadM3?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    transportistaId?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogClienteUpsertWithoutRutasInput = {
+    update: XOR<LogClienteUpdateWithoutRutasInput, LogClienteUncheckedUpdateWithoutRutasInput>
+    create: XOR<LogClienteCreateWithoutRutasInput, LogClienteUncheckedCreateWithoutRutasInput>
+    where?: LogClienteWhereInput
+  }
+
+  export type LogClienteUpdateToOneWithWhereWithoutRutasInput = {
+    where?: LogClienteWhereInput
+    data: XOR<LogClienteUpdateWithoutRutasInput, LogClienteUncheckedUpdateWithoutRutasInput>
+  }
+
+  export type LogClienteUpdateWithoutRutasInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    razonSocial?: StringFieldUpdateOperationsInput | string
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogClienteUncheckedUpdateWithoutRutasInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    razonSocial?: StringFieldUpdateOperationsInput | string
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogAndenUpsertWithoutRutasInput = {
+    update: XOR<LogAndenUpdateWithoutRutasInput, LogAndenUncheckedUpdateWithoutRutasInput>
+    create: XOR<LogAndenCreateWithoutRutasInput, LogAndenUncheckedCreateWithoutRutasInput>
+    where?: LogAndenWhereInput
+  }
+
+  export type LogAndenUpdateToOneWithWhereWithoutRutasInput = {
+    where?: LogAndenWhereInput
+    data: XOR<LogAndenUpdateWithoutRutasInput, LogAndenUncheckedUpdateWithoutRutasInput>
+  }
+
+  export type LogAndenUpdateWithoutRutasInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    tipoCarga?: StringFieldUpdateOperationsInput | string
+    estadoOperativo?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bodega?: LogBodegaUpdateOneRequiredWithoutAndenesNestedInput
+    eventos?: LogEventoRutaUpdateManyWithoutAndenNestedInput
+  }
+
+  export type LogAndenUncheckedUpdateWithoutRutasInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bodegaId?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    tipoCarga?: StringFieldUpdateOperationsInput | string
+    estadoOperativo?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    eventos?: LogEventoRutaUncheckedUpdateManyWithoutAndenNestedInput
+  }
+
+  export type LogEventoRutaUpsertWithWhereUniqueWithoutRutaInput = {
+    where: LogEventoRutaWhereUniqueInput
+    update: XOR<LogEventoRutaUpdateWithoutRutaInput, LogEventoRutaUncheckedUpdateWithoutRutaInput>
+    create: XOR<LogEventoRutaCreateWithoutRutaInput, LogEventoRutaUncheckedCreateWithoutRutaInput>
+  }
+
+  export type LogEventoRutaUpdateWithWhereUniqueWithoutRutaInput = {
+    where: LogEventoRutaWhereUniqueInput
+    data: XOR<LogEventoRutaUpdateWithoutRutaInput, LogEventoRutaUncheckedUpdateWithoutRutaInput>
+  }
+
+  export type LogEventoRutaUpdateManyWithWhereWithoutRutaInput = {
+    where: LogEventoRutaScalarWhereInput
+    data: XOR<LogEventoRutaUpdateManyMutationInput, LogEventoRutaUncheckedUpdateManyWithoutRutaInput>
+  }
+
+  export type LogIntegracionLogUpsertWithWhereUniqueWithoutRutaInput = {
+    where: LogIntegracionLogWhereUniqueInput
+    update: XOR<LogIntegracionLogUpdateWithoutRutaInput, LogIntegracionLogUncheckedUpdateWithoutRutaInput>
+    create: XOR<LogIntegracionLogCreateWithoutRutaInput, LogIntegracionLogUncheckedCreateWithoutRutaInput>
+  }
+
+  export type LogIntegracionLogUpdateWithWhereUniqueWithoutRutaInput = {
+    where: LogIntegracionLogWhereUniqueInput
+    data: XOR<LogIntegracionLogUpdateWithoutRutaInput, LogIntegracionLogUncheckedUpdateWithoutRutaInput>
+  }
+
+  export type LogIntegracionLogUpdateManyWithWhereWithoutRutaInput = {
+    where: LogIntegracionLogScalarWhereInput
+    data: XOR<LogIntegracionLogUpdateManyMutationInput, LogIntegracionLogUncheckedUpdateManyWithoutRutaInput>
+  }
+
+  export type LogIntegracionLogScalarWhereInput = {
+    AND?: LogIntegracionLogScalarWhereInput | LogIntegracionLogScalarWhereInput[]
+    OR?: LogIntegracionLogScalarWhereInput[]
+    NOT?: LogIntegracionLogScalarWhereInput | LogIntegracionLogScalarWhereInput[]
+    id?: StringFilter<"LogIntegracionLog"> | string
+    integracionConfigId?: StringNullableFilter<"LogIntegracionLog"> | string | null
+    evento?: StringFilter<"LogIntegracionLog"> | string
+    rutaId?: StringNullableFilter<"LogIntegracionLog"> | string | null
+    payloadEnviado?: StringNullableFilter<"LogIntegracionLog"> | string | null
+    respuestaCodigo?: IntNullableFilter<"LogIntegracionLog"> | number | null
+    respuestaCuerpo?: StringNullableFilter<"LogIntegracionLog"> | string | null
+    estado?: StringFilter<"LogIntegracionLog"> | string
+    intentos?: IntFilter<"LogIntegracionLog"> | number
+    errorDetalle?: StringNullableFilter<"LogIntegracionLog"> | string | null
+    createdAt?: DateTimeFilter<"LogIntegracionLog"> | Date | string
+  }
+
+  export type LogRutaCreateWithoutEventosInput = {
+    id?: string
+    numeroRuta: string
+    estado?: string
+    fechaRuta: string
+    horaProgramada: string
+    horaLlegadaPorton?: Date | string | null
+    horaEntradaAnden?: Date | string | null
+    horaSalidaAnden?: Date | string | null
+    selloSalida?: string | null
+    totalBultos?: number | null
+    totalKilos?: Decimal | DecimalJsLike | number | string | null
+    observaciones?: string | null
+    telegramMessageId?: string | null
+    tokenRuta?: string
+    creadaPorId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bodega: LogBodegaCreateNestedOneWithoutRutasInput
+    transportista?: LogTransportistaCreateNestedOneWithoutRutasInput
+    chofer: LogChoferCreateNestedOneWithoutRutasInput
+    camion: LogCamionCreateNestedOneWithoutRutasInput
+    cliente?: LogClienteCreateNestedOneWithoutRutasInput
+    anden?: LogAndenCreateNestedOneWithoutRutasInput
+    integracionLogs?: LogIntegracionLogCreateNestedManyWithoutRutaInput
+  }
+
+  export type LogRutaUncheckedCreateWithoutEventosInput = {
+    id?: string
+    numeroRuta: string
+    bodegaId: string
+    transportistaId?: string | null
+    choferId: string
+    camionId: string
+    clienteId?: string | null
+    estado?: string
+    andenId?: string | null
+    fechaRuta: string
+    horaProgramada: string
+    horaLlegadaPorton?: Date | string | null
+    horaEntradaAnden?: Date | string | null
+    horaSalidaAnden?: Date | string | null
+    selloSalida?: string | null
+    totalBultos?: number | null
+    totalKilos?: Decimal | DecimalJsLike | number | string | null
+    observaciones?: string | null
+    telegramMessageId?: string | null
+    tokenRuta?: string
+    creadaPorId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    integracionLogs?: LogIntegracionLogUncheckedCreateNestedManyWithoutRutaInput
+  }
+
+  export type LogRutaCreateOrConnectWithoutEventosInput = {
+    where: LogRutaWhereUniqueInput
+    create: XOR<LogRutaCreateWithoutEventosInput, LogRutaUncheckedCreateWithoutEventosInput>
+  }
+
+  export type LogAndenCreateWithoutEventosInput = {
+    id?: string
+    codigo: string
+    nombre: string
+    tipoCarga?: string
+    estadoOperativo?: string
+    orden?: number
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bodega: LogBodegaCreateNestedOneWithoutAndenesInput
+    rutas?: LogRutaCreateNestedManyWithoutAndenInput
+  }
+
+  export type LogAndenUncheckedCreateWithoutEventosInput = {
+    id?: string
+    bodegaId: string
+    codigo: string
+    nombre: string
+    tipoCarga?: string
+    estadoOperativo?: string
+    orden?: number
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    rutas?: LogRutaUncheckedCreateNestedManyWithoutAndenInput
+  }
+
+  export type LogAndenCreateOrConnectWithoutEventosInput = {
+    where: LogAndenWhereUniqueInput
+    create: XOR<LogAndenCreateWithoutEventosInput, LogAndenUncheckedCreateWithoutEventosInput>
+  }
+
+  export type LogRutaUpsertWithoutEventosInput = {
+    update: XOR<LogRutaUpdateWithoutEventosInput, LogRutaUncheckedUpdateWithoutEventosInput>
+    create: XOR<LogRutaCreateWithoutEventosInput, LogRutaUncheckedCreateWithoutEventosInput>
+    where?: LogRutaWhereInput
+  }
+
+  export type LogRutaUpdateToOneWithWhereWithoutEventosInput = {
+    where?: LogRutaWhereInput
+    data: XOR<LogRutaUpdateWithoutEventosInput, LogRutaUncheckedUpdateWithoutEventosInput>
+  }
+
+  export type LogRutaUpdateWithoutEventosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroRuta?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    fechaRuta?: StringFieldUpdateOperationsInput | string
+    horaProgramada?: StringFieldUpdateOperationsInput | string
+    horaLlegadaPorton?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaEntradaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaSalidaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    selloSalida?: NullableStringFieldUpdateOperationsInput | string | null
+    totalBultos?: NullableIntFieldUpdateOperationsInput | number | null
+    totalKilos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenRuta?: StringFieldUpdateOperationsInput | string
+    creadaPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bodega?: LogBodegaUpdateOneRequiredWithoutRutasNestedInput
+    transportista?: LogTransportistaUpdateOneWithoutRutasNestedInput
+    chofer?: LogChoferUpdateOneRequiredWithoutRutasNestedInput
+    camion?: LogCamionUpdateOneRequiredWithoutRutasNestedInput
+    cliente?: LogClienteUpdateOneWithoutRutasNestedInput
+    anden?: LogAndenUpdateOneWithoutRutasNestedInput
+    integracionLogs?: LogIntegracionLogUpdateManyWithoutRutaNestedInput
+  }
+
+  export type LogRutaUncheckedUpdateWithoutEventosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroRuta?: StringFieldUpdateOperationsInput | string
+    bodegaId?: StringFieldUpdateOperationsInput | string
+    transportistaId?: NullableStringFieldUpdateOperationsInput | string | null
+    choferId?: StringFieldUpdateOperationsInput | string
+    camionId?: StringFieldUpdateOperationsInput | string
+    clienteId?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    andenId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaRuta?: StringFieldUpdateOperationsInput | string
+    horaProgramada?: StringFieldUpdateOperationsInput | string
+    horaLlegadaPorton?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaEntradaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaSalidaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    selloSalida?: NullableStringFieldUpdateOperationsInput | string | null
+    totalBultos?: NullableIntFieldUpdateOperationsInput | number | null
+    totalKilos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenRuta?: StringFieldUpdateOperationsInput | string
+    creadaPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    integracionLogs?: LogIntegracionLogUncheckedUpdateManyWithoutRutaNestedInput
+  }
+
+  export type LogAndenUpsertWithoutEventosInput = {
+    update: XOR<LogAndenUpdateWithoutEventosInput, LogAndenUncheckedUpdateWithoutEventosInput>
+    create: XOR<LogAndenCreateWithoutEventosInput, LogAndenUncheckedCreateWithoutEventosInput>
+    where?: LogAndenWhereInput
+  }
+
+  export type LogAndenUpdateToOneWithWhereWithoutEventosInput = {
+    where?: LogAndenWhereInput
+    data: XOR<LogAndenUpdateWithoutEventosInput, LogAndenUncheckedUpdateWithoutEventosInput>
+  }
+
+  export type LogAndenUpdateWithoutEventosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    tipoCarga?: StringFieldUpdateOperationsInput | string
+    estadoOperativo?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bodega?: LogBodegaUpdateOneRequiredWithoutAndenesNestedInput
+    rutas?: LogRutaUpdateManyWithoutAndenNestedInput
+  }
+
+  export type LogAndenUncheckedUpdateWithoutEventosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bodegaId?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    tipoCarga?: StringFieldUpdateOperationsInput | string
+    estadoOperativo?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rutas?: LogRutaUncheckedUpdateManyWithoutAndenNestedInput
+  }
+
+  export type LogIntegracionLogCreateWithoutIntegracionConfigInput = {
+    id?: string
+    evento: string
+    payloadEnviado?: string | null
+    respuestaCodigo?: number | null
+    respuestaCuerpo?: string | null
+    estado?: string
+    intentos?: number
+    errorDetalle?: string | null
+    createdAt?: Date | string
+    ruta?: LogRutaCreateNestedOneWithoutIntegracionLogsInput
+  }
+
+  export type LogIntegracionLogUncheckedCreateWithoutIntegracionConfigInput = {
+    id?: string
+    evento: string
+    rutaId?: string | null
+    payloadEnviado?: string | null
+    respuestaCodigo?: number | null
+    respuestaCuerpo?: string | null
+    estado?: string
+    intentos?: number
+    errorDetalle?: string | null
+    createdAt?: Date | string
+  }
+
+  export type LogIntegracionLogCreateOrConnectWithoutIntegracionConfigInput = {
+    where: LogIntegracionLogWhereUniqueInput
+    create: XOR<LogIntegracionLogCreateWithoutIntegracionConfigInput, LogIntegracionLogUncheckedCreateWithoutIntegracionConfigInput>
+  }
+
+  export type LogIntegracionLogCreateManyIntegracionConfigInputEnvelope = {
+    data: LogIntegracionLogCreateManyIntegracionConfigInput | LogIntegracionLogCreateManyIntegracionConfigInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LogIntegracionLogUpsertWithWhereUniqueWithoutIntegracionConfigInput = {
+    where: LogIntegracionLogWhereUniqueInput
+    update: XOR<LogIntegracionLogUpdateWithoutIntegracionConfigInput, LogIntegracionLogUncheckedUpdateWithoutIntegracionConfigInput>
+    create: XOR<LogIntegracionLogCreateWithoutIntegracionConfigInput, LogIntegracionLogUncheckedCreateWithoutIntegracionConfigInput>
+  }
+
+  export type LogIntegracionLogUpdateWithWhereUniqueWithoutIntegracionConfigInput = {
+    where: LogIntegracionLogWhereUniqueInput
+    data: XOR<LogIntegracionLogUpdateWithoutIntegracionConfigInput, LogIntegracionLogUncheckedUpdateWithoutIntegracionConfigInput>
+  }
+
+  export type LogIntegracionLogUpdateManyWithWhereWithoutIntegracionConfigInput = {
+    where: LogIntegracionLogScalarWhereInput
+    data: XOR<LogIntegracionLogUpdateManyMutationInput, LogIntegracionLogUncheckedUpdateManyWithoutIntegracionConfigInput>
+  }
+
+  export type LogIntegracionConfigCreateWithoutLogsInput = {
+    id?: string
+    nombre?: string
+    provider?: string
+    webhookUrl: string
+    secretToken?: string | null
+    activo?: boolean
+    eventosSuscritos?: string
+    headersJson?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LogIntegracionConfigUncheckedCreateWithoutLogsInput = {
+    id?: string
+    nombre?: string
+    provider?: string
+    webhookUrl: string
+    secretToken?: string | null
+    activo?: boolean
+    eventosSuscritos?: string
+    headersJson?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LogIntegracionConfigCreateOrConnectWithoutLogsInput = {
+    where: LogIntegracionConfigWhereUniqueInput
+    create: XOR<LogIntegracionConfigCreateWithoutLogsInput, LogIntegracionConfigUncheckedCreateWithoutLogsInput>
+  }
+
+  export type LogRutaCreateWithoutIntegracionLogsInput = {
+    id?: string
+    numeroRuta: string
+    estado?: string
+    fechaRuta: string
+    horaProgramada: string
+    horaLlegadaPorton?: Date | string | null
+    horaEntradaAnden?: Date | string | null
+    horaSalidaAnden?: Date | string | null
+    selloSalida?: string | null
+    totalBultos?: number | null
+    totalKilos?: Decimal | DecimalJsLike | number | string | null
+    observaciones?: string | null
+    telegramMessageId?: string | null
+    tokenRuta?: string
+    creadaPorId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bodega: LogBodegaCreateNestedOneWithoutRutasInput
+    transportista?: LogTransportistaCreateNestedOneWithoutRutasInput
+    chofer: LogChoferCreateNestedOneWithoutRutasInput
+    camion: LogCamionCreateNestedOneWithoutRutasInput
+    cliente?: LogClienteCreateNestedOneWithoutRutasInput
+    anden?: LogAndenCreateNestedOneWithoutRutasInput
+    eventos?: LogEventoRutaCreateNestedManyWithoutRutaInput
+  }
+
+  export type LogRutaUncheckedCreateWithoutIntegracionLogsInput = {
+    id?: string
+    numeroRuta: string
+    bodegaId: string
+    transportistaId?: string | null
+    choferId: string
+    camionId: string
+    clienteId?: string | null
+    estado?: string
+    andenId?: string | null
+    fechaRuta: string
+    horaProgramada: string
+    horaLlegadaPorton?: Date | string | null
+    horaEntradaAnden?: Date | string | null
+    horaSalidaAnden?: Date | string | null
+    selloSalida?: string | null
+    totalBultos?: number | null
+    totalKilos?: Decimal | DecimalJsLike | number | string | null
+    observaciones?: string | null
+    telegramMessageId?: string | null
+    tokenRuta?: string
+    creadaPorId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    eventos?: LogEventoRutaUncheckedCreateNestedManyWithoutRutaInput
+  }
+
+  export type LogRutaCreateOrConnectWithoutIntegracionLogsInput = {
+    where: LogRutaWhereUniqueInput
+    create: XOR<LogRutaCreateWithoutIntegracionLogsInput, LogRutaUncheckedCreateWithoutIntegracionLogsInput>
+  }
+
+  export type LogIntegracionConfigUpsertWithoutLogsInput = {
+    update: XOR<LogIntegracionConfigUpdateWithoutLogsInput, LogIntegracionConfigUncheckedUpdateWithoutLogsInput>
+    create: XOR<LogIntegracionConfigCreateWithoutLogsInput, LogIntegracionConfigUncheckedCreateWithoutLogsInput>
+    where?: LogIntegracionConfigWhereInput
+  }
+
+  export type LogIntegracionConfigUpdateToOneWithWhereWithoutLogsInput = {
+    where?: LogIntegracionConfigWhereInput
+    data: XOR<LogIntegracionConfigUpdateWithoutLogsInput, LogIntegracionConfigUncheckedUpdateWithoutLogsInput>
+  }
+
+  export type LogIntegracionConfigUpdateWithoutLogsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    webhookUrl?: StringFieldUpdateOperationsInput | string
+    secretToken?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    eventosSuscritos?: StringFieldUpdateOperationsInput | string
+    headersJson?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogIntegracionConfigUncheckedUpdateWithoutLogsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    webhookUrl?: StringFieldUpdateOperationsInput | string
+    secretToken?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    eventosSuscritos?: StringFieldUpdateOperationsInput | string
+    headersJson?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogRutaUpsertWithoutIntegracionLogsInput = {
+    update: XOR<LogRutaUpdateWithoutIntegracionLogsInput, LogRutaUncheckedUpdateWithoutIntegracionLogsInput>
+    create: XOR<LogRutaCreateWithoutIntegracionLogsInput, LogRutaUncheckedCreateWithoutIntegracionLogsInput>
+    where?: LogRutaWhereInput
+  }
+
+  export type LogRutaUpdateToOneWithWhereWithoutIntegracionLogsInput = {
+    where?: LogRutaWhereInput
+    data: XOR<LogRutaUpdateWithoutIntegracionLogsInput, LogRutaUncheckedUpdateWithoutIntegracionLogsInput>
+  }
+
+  export type LogRutaUpdateWithoutIntegracionLogsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroRuta?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    fechaRuta?: StringFieldUpdateOperationsInput | string
+    horaProgramada?: StringFieldUpdateOperationsInput | string
+    horaLlegadaPorton?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaEntradaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaSalidaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    selloSalida?: NullableStringFieldUpdateOperationsInput | string | null
+    totalBultos?: NullableIntFieldUpdateOperationsInput | number | null
+    totalKilos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenRuta?: StringFieldUpdateOperationsInput | string
+    creadaPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bodega?: LogBodegaUpdateOneRequiredWithoutRutasNestedInput
+    transportista?: LogTransportistaUpdateOneWithoutRutasNestedInput
+    chofer?: LogChoferUpdateOneRequiredWithoutRutasNestedInput
+    camion?: LogCamionUpdateOneRequiredWithoutRutasNestedInput
+    cliente?: LogClienteUpdateOneWithoutRutasNestedInput
+    anden?: LogAndenUpdateOneWithoutRutasNestedInput
+    eventos?: LogEventoRutaUpdateManyWithoutRutaNestedInput
+  }
+
+  export type LogRutaUncheckedUpdateWithoutIntegracionLogsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroRuta?: StringFieldUpdateOperationsInput | string
+    bodegaId?: StringFieldUpdateOperationsInput | string
+    transportistaId?: NullableStringFieldUpdateOperationsInput | string | null
+    choferId?: StringFieldUpdateOperationsInput | string
+    camionId?: StringFieldUpdateOperationsInput | string
+    clienteId?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    andenId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaRuta?: StringFieldUpdateOperationsInput | string
+    horaProgramada?: StringFieldUpdateOperationsInput | string
+    horaLlegadaPorton?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaEntradaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaSalidaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    selloSalida?: NullableStringFieldUpdateOperationsInput | string | null
+    totalBultos?: NullableIntFieldUpdateOperationsInput | number | null
+    totalKilos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenRuta?: StringFieldUpdateOperationsInput | string
+    creadaPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    eventos?: LogEventoRutaUncheckedUpdateManyWithoutRutaNestedInput
+  }
+
+  export type LogBodegaCreateWithoutParametrosInput = {
+    id?: string
+    codigo: string
+    nombre: string
+    sucursalId?: string | null
+    direccion?: string | null
+    activa?: boolean
+    orden?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    andenes?: LogAndenCreateNestedManyWithoutBodegaInput
+    rutas?: LogRutaCreateNestedManyWithoutBodegaInput
+    usuarios?: LogUsuarioBodegaCreateNestedManyWithoutBodegaInput
+  }
+
+  export type LogBodegaUncheckedCreateWithoutParametrosInput = {
+    id?: string
+    codigo: string
+    nombre: string
+    sucursalId?: string | null
+    direccion?: string | null
+    activa?: boolean
+    orden?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    andenes?: LogAndenUncheckedCreateNestedManyWithoutBodegaInput
+    rutas?: LogRutaUncheckedCreateNestedManyWithoutBodegaInput
+    usuarios?: LogUsuarioBodegaUncheckedCreateNestedManyWithoutBodegaInput
+  }
+
+  export type LogBodegaCreateOrConnectWithoutParametrosInput = {
+    where: LogBodegaWhereUniqueInput
+    create: XOR<LogBodegaCreateWithoutParametrosInput, LogBodegaUncheckedCreateWithoutParametrosInput>
+  }
+
+  export type LogBodegaUpsertWithoutParametrosInput = {
+    update: XOR<LogBodegaUpdateWithoutParametrosInput, LogBodegaUncheckedUpdateWithoutParametrosInput>
+    create: XOR<LogBodegaCreateWithoutParametrosInput, LogBodegaUncheckedCreateWithoutParametrosInput>
+    where?: LogBodegaWhereInput
+  }
+
+  export type LogBodegaUpdateToOneWithWhereWithoutParametrosInput = {
+    where?: LogBodegaWhereInput
+    data: XOR<LogBodegaUpdateWithoutParametrosInput, LogBodegaUncheckedUpdateWithoutParametrosInput>
+  }
+
+  export type LogBodegaUpdateWithoutParametrosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    sucursalId?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    orden?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    andenes?: LogAndenUpdateManyWithoutBodegaNestedInput
+    rutas?: LogRutaUpdateManyWithoutBodegaNestedInput
+    usuarios?: LogUsuarioBodegaUpdateManyWithoutBodegaNestedInput
+  }
+
+  export type LogBodegaUncheckedUpdateWithoutParametrosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    sucursalId?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    activa?: BoolFieldUpdateOperationsInput | boolean
+    orden?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    andenes?: LogAndenUncheckedUpdateManyWithoutBodegaNestedInput
+    rutas?: LogRutaUncheckedUpdateManyWithoutBodegaNestedInput
+    usuarios?: LogUsuarioBodegaUncheckedUpdateManyWithoutBodegaNestedInput
+  }
+
   export type UserCreateManyRoleInput = {
     id?: string
     username: string
@@ -171486,6 +191623,1038 @@ export namespace Prisma {
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type LogAndenCreateManyBodegaInput = {
+    id?: string
+    codigo: string
+    nombre: string
+    tipoCarga?: string
+    estadoOperativo?: string
+    orden?: number
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LogRutaCreateManyBodegaInput = {
+    id?: string
+    numeroRuta: string
+    transportistaId?: string | null
+    choferId: string
+    camionId: string
+    clienteId?: string | null
+    estado?: string
+    andenId?: string | null
+    fechaRuta: string
+    horaProgramada: string
+    horaLlegadaPorton?: Date | string | null
+    horaEntradaAnden?: Date | string | null
+    horaSalidaAnden?: Date | string | null
+    selloSalida?: string | null
+    totalBultos?: number | null
+    totalKilos?: Decimal | DecimalJsLike | number | string | null
+    observaciones?: string | null
+    telegramMessageId?: string | null
+    tokenRuta?: string
+    creadaPorId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LogUsuarioBodegaCreateManyBodegaInput = {
+    id?: string
+    usuarioId: string
+    createdAt?: Date | string
+  }
+
+  export type LogParametroCreateManyBodegaInput = {
+    id?: string
+    clave: string
+    valor: string
+    descripcion?: string | null
+    tipo?: string
+    updatedAt?: Date | string
+  }
+
+  export type LogAndenUpdateWithoutBodegaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    tipoCarga?: StringFieldUpdateOperationsInput | string
+    estadoOperativo?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rutas?: LogRutaUpdateManyWithoutAndenNestedInput
+    eventos?: LogEventoRutaUpdateManyWithoutAndenNestedInput
+  }
+
+  export type LogAndenUncheckedUpdateWithoutBodegaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    tipoCarga?: StringFieldUpdateOperationsInput | string
+    estadoOperativo?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rutas?: LogRutaUncheckedUpdateManyWithoutAndenNestedInput
+    eventos?: LogEventoRutaUncheckedUpdateManyWithoutAndenNestedInput
+  }
+
+  export type LogAndenUncheckedUpdateManyWithoutBodegaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    codigo?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    tipoCarga?: StringFieldUpdateOperationsInput | string
+    estadoOperativo?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogRutaUpdateWithoutBodegaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroRuta?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    fechaRuta?: StringFieldUpdateOperationsInput | string
+    horaProgramada?: StringFieldUpdateOperationsInput | string
+    horaLlegadaPorton?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaEntradaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaSalidaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    selloSalida?: NullableStringFieldUpdateOperationsInput | string | null
+    totalBultos?: NullableIntFieldUpdateOperationsInput | number | null
+    totalKilos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenRuta?: StringFieldUpdateOperationsInput | string
+    creadaPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    transportista?: LogTransportistaUpdateOneWithoutRutasNestedInput
+    chofer?: LogChoferUpdateOneRequiredWithoutRutasNestedInput
+    camion?: LogCamionUpdateOneRequiredWithoutRutasNestedInput
+    cliente?: LogClienteUpdateOneWithoutRutasNestedInput
+    anden?: LogAndenUpdateOneWithoutRutasNestedInput
+    eventos?: LogEventoRutaUpdateManyWithoutRutaNestedInput
+    integracionLogs?: LogIntegracionLogUpdateManyWithoutRutaNestedInput
+  }
+
+  export type LogRutaUncheckedUpdateWithoutBodegaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroRuta?: StringFieldUpdateOperationsInput | string
+    transportistaId?: NullableStringFieldUpdateOperationsInput | string | null
+    choferId?: StringFieldUpdateOperationsInput | string
+    camionId?: StringFieldUpdateOperationsInput | string
+    clienteId?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    andenId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaRuta?: StringFieldUpdateOperationsInput | string
+    horaProgramada?: StringFieldUpdateOperationsInput | string
+    horaLlegadaPorton?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaEntradaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaSalidaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    selloSalida?: NullableStringFieldUpdateOperationsInput | string | null
+    totalBultos?: NullableIntFieldUpdateOperationsInput | number | null
+    totalKilos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenRuta?: StringFieldUpdateOperationsInput | string
+    creadaPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    eventos?: LogEventoRutaUncheckedUpdateManyWithoutRutaNestedInput
+    integracionLogs?: LogIntegracionLogUncheckedUpdateManyWithoutRutaNestedInput
+  }
+
+  export type LogRutaUncheckedUpdateManyWithoutBodegaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroRuta?: StringFieldUpdateOperationsInput | string
+    transportistaId?: NullableStringFieldUpdateOperationsInput | string | null
+    choferId?: StringFieldUpdateOperationsInput | string
+    camionId?: StringFieldUpdateOperationsInput | string
+    clienteId?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    andenId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaRuta?: StringFieldUpdateOperationsInput | string
+    horaProgramada?: StringFieldUpdateOperationsInput | string
+    horaLlegadaPorton?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaEntradaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaSalidaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    selloSalida?: NullableStringFieldUpdateOperationsInput | string | null
+    totalBultos?: NullableIntFieldUpdateOperationsInput | number | null
+    totalKilos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenRuta?: StringFieldUpdateOperationsInput | string
+    creadaPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogUsuarioBodegaUpdateWithoutBodegaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    usuarioId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogUsuarioBodegaUncheckedUpdateWithoutBodegaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    usuarioId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogUsuarioBodegaUncheckedUpdateManyWithoutBodegaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    usuarioId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogParametroUpdateWithoutBodegaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    clave?: StringFieldUpdateOperationsInput | string
+    valor?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    tipo?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogParametroUncheckedUpdateWithoutBodegaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    clave?: StringFieldUpdateOperationsInput | string
+    valor?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    tipo?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogParametroUncheckedUpdateManyWithoutBodegaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    clave?: StringFieldUpdateOperationsInput | string
+    valor?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    tipo?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogRutaCreateManyAndenInput = {
+    id?: string
+    numeroRuta: string
+    bodegaId: string
+    transportistaId?: string | null
+    choferId: string
+    camionId: string
+    clienteId?: string | null
+    estado?: string
+    fechaRuta: string
+    horaProgramada: string
+    horaLlegadaPorton?: Date | string | null
+    horaEntradaAnden?: Date | string | null
+    horaSalidaAnden?: Date | string | null
+    selloSalida?: string | null
+    totalBultos?: number | null
+    totalKilos?: Decimal | DecimalJsLike | number | string | null
+    observaciones?: string | null
+    telegramMessageId?: string | null
+    tokenRuta?: string
+    creadaPorId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LogEventoRutaCreateManyAndenInput = {
+    id?: string
+    rutaId: string
+    estadoAnterior?: string | null
+    estadoNuevo: string
+    origenCambio?: string
+    notas?: string | null
+    metadataJson?: string | null
+    usuarioId?: string | null
+    createdAt?: Date | string
+  }
+
+  export type LogRutaUpdateWithoutAndenInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroRuta?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    fechaRuta?: StringFieldUpdateOperationsInput | string
+    horaProgramada?: StringFieldUpdateOperationsInput | string
+    horaLlegadaPorton?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaEntradaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaSalidaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    selloSalida?: NullableStringFieldUpdateOperationsInput | string | null
+    totalBultos?: NullableIntFieldUpdateOperationsInput | number | null
+    totalKilos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenRuta?: StringFieldUpdateOperationsInput | string
+    creadaPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bodega?: LogBodegaUpdateOneRequiredWithoutRutasNestedInput
+    transportista?: LogTransportistaUpdateOneWithoutRutasNestedInput
+    chofer?: LogChoferUpdateOneRequiredWithoutRutasNestedInput
+    camion?: LogCamionUpdateOneRequiredWithoutRutasNestedInput
+    cliente?: LogClienteUpdateOneWithoutRutasNestedInput
+    eventos?: LogEventoRutaUpdateManyWithoutRutaNestedInput
+    integracionLogs?: LogIntegracionLogUpdateManyWithoutRutaNestedInput
+  }
+
+  export type LogRutaUncheckedUpdateWithoutAndenInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroRuta?: StringFieldUpdateOperationsInput | string
+    bodegaId?: StringFieldUpdateOperationsInput | string
+    transportistaId?: NullableStringFieldUpdateOperationsInput | string | null
+    choferId?: StringFieldUpdateOperationsInput | string
+    camionId?: StringFieldUpdateOperationsInput | string
+    clienteId?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fechaRuta?: StringFieldUpdateOperationsInput | string
+    horaProgramada?: StringFieldUpdateOperationsInput | string
+    horaLlegadaPorton?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaEntradaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaSalidaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    selloSalida?: NullableStringFieldUpdateOperationsInput | string | null
+    totalBultos?: NullableIntFieldUpdateOperationsInput | number | null
+    totalKilos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenRuta?: StringFieldUpdateOperationsInput | string
+    creadaPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    eventos?: LogEventoRutaUncheckedUpdateManyWithoutRutaNestedInput
+    integracionLogs?: LogIntegracionLogUncheckedUpdateManyWithoutRutaNestedInput
+  }
+
+  export type LogRutaUncheckedUpdateManyWithoutAndenInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroRuta?: StringFieldUpdateOperationsInput | string
+    bodegaId?: StringFieldUpdateOperationsInput | string
+    transportistaId?: NullableStringFieldUpdateOperationsInput | string | null
+    choferId?: StringFieldUpdateOperationsInput | string
+    camionId?: StringFieldUpdateOperationsInput | string
+    clienteId?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fechaRuta?: StringFieldUpdateOperationsInput | string
+    horaProgramada?: StringFieldUpdateOperationsInput | string
+    horaLlegadaPorton?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaEntradaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaSalidaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    selloSalida?: NullableStringFieldUpdateOperationsInput | string | null
+    totalBultos?: NullableIntFieldUpdateOperationsInput | number | null
+    totalKilos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenRuta?: StringFieldUpdateOperationsInput | string
+    creadaPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogEventoRutaUpdateWithoutAndenInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    estadoAnterior?: NullableStringFieldUpdateOperationsInput | string | null
+    estadoNuevo?: StringFieldUpdateOperationsInput | string
+    origenCambio?: StringFieldUpdateOperationsInput | string
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    metadataJson?: NullableStringFieldUpdateOperationsInput | string | null
+    usuarioId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ruta?: LogRutaUpdateOneRequiredWithoutEventosNestedInput
+  }
+
+  export type LogEventoRutaUncheckedUpdateWithoutAndenInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rutaId?: StringFieldUpdateOperationsInput | string
+    estadoAnterior?: NullableStringFieldUpdateOperationsInput | string | null
+    estadoNuevo?: StringFieldUpdateOperationsInput | string
+    origenCambio?: StringFieldUpdateOperationsInput | string
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    metadataJson?: NullableStringFieldUpdateOperationsInput | string | null
+    usuarioId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogEventoRutaUncheckedUpdateManyWithoutAndenInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rutaId?: StringFieldUpdateOperationsInput | string
+    estadoAnterior?: NullableStringFieldUpdateOperationsInput | string | null
+    estadoNuevo?: StringFieldUpdateOperationsInput | string
+    origenCambio?: StringFieldUpdateOperationsInput | string
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    metadataJson?: NullableStringFieldUpdateOperationsInput | string | null
+    usuarioId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogChoferCreateManyTransportistaInput = {
+    id?: string
+    rut: string
+    nombre: string
+    telefono: string
+    email?: string | null
+    telegramChatId?: string | null
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LogCamionCreateManyTransportistaInput = {
+    id?: string
+    patente: string
+    tipoVehiculo?: string
+    capacidadKg?: Decimal | DecimalJsLike | number | string | null
+    capacidadM3?: Decimal | DecimalJsLike | number | string | null
+    activo?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LogRutaCreateManyTransportistaInput = {
+    id?: string
+    numeroRuta: string
+    bodegaId: string
+    choferId: string
+    camionId: string
+    clienteId?: string | null
+    estado?: string
+    andenId?: string | null
+    fechaRuta: string
+    horaProgramada: string
+    horaLlegadaPorton?: Date | string | null
+    horaEntradaAnden?: Date | string | null
+    horaSalidaAnden?: Date | string | null
+    selloSalida?: string | null
+    totalBultos?: number | null
+    totalKilos?: Decimal | DecimalJsLike | number | string | null
+    observaciones?: string | null
+    telegramMessageId?: string | null
+    tokenRuta?: string
+    creadaPorId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LogChoferUpdateWithoutTransportistaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rut?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    telefono?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramChatId?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rutas?: LogRutaUpdateManyWithoutChoferNestedInput
+  }
+
+  export type LogChoferUncheckedUpdateWithoutTransportistaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rut?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    telefono?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramChatId?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rutas?: LogRutaUncheckedUpdateManyWithoutChoferNestedInput
+  }
+
+  export type LogChoferUncheckedUpdateManyWithoutTransportistaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rut?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    telefono?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramChatId?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogCamionUpdateWithoutTransportistaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    patente?: StringFieldUpdateOperationsInput | string
+    tipoVehiculo?: StringFieldUpdateOperationsInput | string
+    capacidadKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    capacidadM3?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rutas?: LogRutaUpdateManyWithoutCamionNestedInput
+  }
+
+  export type LogCamionUncheckedUpdateWithoutTransportistaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    patente?: StringFieldUpdateOperationsInput | string
+    tipoVehiculo?: StringFieldUpdateOperationsInput | string
+    capacidadKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    capacidadM3?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rutas?: LogRutaUncheckedUpdateManyWithoutCamionNestedInput
+  }
+
+  export type LogCamionUncheckedUpdateManyWithoutTransportistaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    patente?: StringFieldUpdateOperationsInput | string
+    tipoVehiculo?: StringFieldUpdateOperationsInput | string
+    capacidadKg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    capacidadM3?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogRutaUpdateWithoutTransportistaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroRuta?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    fechaRuta?: StringFieldUpdateOperationsInput | string
+    horaProgramada?: StringFieldUpdateOperationsInput | string
+    horaLlegadaPorton?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaEntradaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaSalidaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    selloSalida?: NullableStringFieldUpdateOperationsInput | string | null
+    totalBultos?: NullableIntFieldUpdateOperationsInput | number | null
+    totalKilos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenRuta?: StringFieldUpdateOperationsInput | string
+    creadaPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bodega?: LogBodegaUpdateOneRequiredWithoutRutasNestedInput
+    chofer?: LogChoferUpdateOneRequiredWithoutRutasNestedInput
+    camion?: LogCamionUpdateOneRequiredWithoutRutasNestedInput
+    cliente?: LogClienteUpdateOneWithoutRutasNestedInput
+    anden?: LogAndenUpdateOneWithoutRutasNestedInput
+    eventos?: LogEventoRutaUpdateManyWithoutRutaNestedInput
+    integracionLogs?: LogIntegracionLogUpdateManyWithoutRutaNestedInput
+  }
+
+  export type LogRutaUncheckedUpdateWithoutTransportistaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroRuta?: StringFieldUpdateOperationsInput | string
+    bodegaId?: StringFieldUpdateOperationsInput | string
+    choferId?: StringFieldUpdateOperationsInput | string
+    camionId?: StringFieldUpdateOperationsInput | string
+    clienteId?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    andenId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaRuta?: StringFieldUpdateOperationsInput | string
+    horaProgramada?: StringFieldUpdateOperationsInput | string
+    horaLlegadaPorton?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaEntradaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaSalidaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    selloSalida?: NullableStringFieldUpdateOperationsInput | string | null
+    totalBultos?: NullableIntFieldUpdateOperationsInput | number | null
+    totalKilos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenRuta?: StringFieldUpdateOperationsInput | string
+    creadaPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    eventos?: LogEventoRutaUncheckedUpdateManyWithoutRutaNestedInput
+    integracionLogs?: LogIntegracionLogUncheckedUpdateManyWithoutRutaNestedInput
+  }
+
+  export type LogRutaUncheckedUpdateManyWithoutTransportistaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroRuta?: StringFieldUpdateOperationsInput | string
+    bodegaId?: StringFieldUpdateOperationsInput | string
+    choferId?: StringFieldUpdateOperationsInput | string
+    camionId?: StringFieldUpdateOperationsInput | string
+    clienteId?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    andenId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaRuta?: StringFieldUpdateOperationsInput | string
+    horaProgramada?: StringFieldUpdateOperationsInput | string
+    horaLlegadaPorton?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaEntradaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaSalidaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    selloSalida?: NullableStringFieldUpdateOperationsInput | string | null
+    totalBultos?: NullableIntFieldUpdateOperationsInput | number | null
+    totalKilos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenRuta?: StringFieldUpdateOperationsInput | string
+    creadaPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogRutaCreateManyChoferInput = {
+    id?: string
+    numeroRuta: string
+    bodegaId: string
+    transportistaId?: string | null
+    camionId: string
+    clienteId?: string | null
+    estado?: string
+    andenId?: string | null
+    fechaRuta: string
+    horaProgramada: string
+    horaLlegadaPorton?: Date | string | null
+    horaEntradaAnden?: Date | string | null
+    horaSalidaAnden?: Date | string | null
+    selloSalida?: string | null
+    totalBultos?: number | null
+    totalKilos?: Decimal | DecimalJsLike | number | string | null
+    observaciones?: string | null
+    telegramMessageId?: string | null
+    tokenRuta?: string
+    creadaPorId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LogRutaUpdateWithoutChoferInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroRuta?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    fechaRuta?: StringFieldUpdateOperationsInput | string
+    horaProgramada?: StringFieldUpdateOperationsInput | string
+    horaLlegadaPorton?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaEntradaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaSalidaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    selloSalida?: NullableStringFieldUpdateOperationsInput | string | null
+    totalBultos?: NullableIntFieldUpdateOperationsInput | number | null
+    totalKilos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenRuta?: StringFieldUpdateOperationsInput | string
+    creadaPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bodega?: LogBodegaUpdateOneRequiredWithoutRutasNestedInput
+    transportista?: LogTransportistaUpdateOneWithoutRutasNestedInput
+    camion?: LogCamionUpdateOneRequiredWithoutRutasNestedInput
+    cliente?: LogClienteUpdateOneWithoutRutasNestedInput
+    anden?: LogAndenUpdateOneWithoutRutasNestedInput
+    eventos?: LogEventoRutaUpdateManyWithoutRutaNestedInput
+    integracionLogs?: LogIntegracionLogUpdateManyWithoutRutaNestedInput
+  }
+
+  export type LogRutaUncheckedUpdateWithoutChoferInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroRuta?: StringFieldUpdateOperationsInput | string
+    bodegaId?: StringFieldUpdateOperationsInput | string
+    transportistaId?: NullableStringFieldUpdateOperationsInput | string | null
+    camionId?: StringFieldUpdateOperationsInput | string
+    clienteId?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    andenId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaRuta?: StringFieldUpdateOperationsInput | string
+    horaProgramada?: StringFieldUpdateOperationsInput | string
+    horaLlegadaPorton?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaEntradaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaSalidaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    selloSalida?: NullableStringFieldUpdateOperationsInput | string | null
+    totalBultos?: NullableIntFieldUpdateOperationsInput | number | null
+    totalKilos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenRuta?: StringFieldUpdateOperationsInput | string
+    creadaPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    eventos?: LogEventoRutaUncheckedUpdateManyWithoutRutaNestedInput
+    integracionLogs?: LogIntegracionLogUncheckedUpdateManyWithoutRutaNestedInput
+  }
+
+  export type LogRutaUncheckedUpdateManyWithoutChoferInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroRuta?: StringFieldUpdateOperationsInput | string
+    bodegaId?: StringFieldUpdateOperationsInput | string
+    transportistaId?: NullableStringFieldUpdateOperationsInput | string | null
+    camionId?: StringFieldUpdateOperationsInput | string
+    clienteId?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    andenId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaRuta?: StringFieldUpdateOperationsInput | string
+    horaProgramada?: StringFieldUpdateOperationsInput | string
+    horaLlegadaPorton?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaEntradaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaSalidaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    selloSalida?: NullableStringFieldUpdateOperationsInput | string | null
+    totalBultos?: NullableIntFieldUpdateOperationsInput | number | null
+    totalKilos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenRuta?: StringFieldUpdateOperationsInput | string
+    creadaPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogRutaCreateManyCamionInput = {
+    id?: string
+    numeroRuta: string
+    bodegaId: string
+    transportistaId?: string | null
+    choferId: string
+    clienteId?: string | null
+    estado?: string
+    andenId?: string | null
+    fechaRuta: string
+    horaProgramada: string
+    horaLlegadaPorton?: Date | string | null
+    horaEntradaAnden?: Date | string | null
+    horaSalidaAnden?: Date | string | null
+    selloSalida?: string | null
+    totalBultos?: number | null
+    totalKilos?: Decimal | DecimalJsLike | number | string | null
+    observaciones?: string | null
+    telegramMessageId?: string | null
+    tokenRuta?: string
+    creadaPorId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LogRutaUpdateWithoutCamionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroRuta?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    fechaRuta?: StringFieldUpdateOperationsInput | string
+    horaProgramada?: StringFieldUpdateOperationsInput | string
+    horaLlegadaPorton?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaEntradaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaSalidaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    selloSalida?: NullableStringFieldUpdateOperationsInput | string | null
+    totalBultos?: NullableIntFieldUpdateOperationsInput | number | null
+    totalKilos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenRuta?: StringFieldUpdateOperationsInput | string
+    creadaPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bodega?: LogBodegaUpdateOneRequiredWithoutRutasNestedInput
+    transportista?: LogTransportistaUpdateOneWithoutRutasNestedInput
+    chofer?: LogChoferUpdateOneRequiredWithoutRutasNestedInput
+    cliente?: LogClienteUpdateOneWithoutRutasNestedInput
+    anden?: LogAndenUpdateOneWithoutRutasNestedInput
+    eventos?: LogEventoRutaUpdateManyWithoutRutaNestedInput
+    integracionLogs?: LogIntegracionLogUpdateManyWithoutRutaNestedInput
+  }
+
+  export type LogRutaUncheckedUpdateWithoutCamionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroRuta?: StringFieldUpdateOperationsInput | string
+    bodegaId?: StringFieldUpdateOperationsInput | string
+    transportistaId?: NullableStringFieldUpdateOperationsInput | string | null
+    choferId?: StringFieldUpdateOperationsInput | string
+    clienteId?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    andenId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaRuta?: StringFieldUpdateOperationsInput | string
+    horaProgramada?: StringFieldUpdateOperationsInput | string
+    horaLlegadaPorton?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaEntradaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaSalidaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    selloSalida?: NullableStringFieldUpdateOperationsInput | string | null
+    totalBultos?: NullableIntFieldUpdateOperationsInput | number | null
+    totalKilos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenRuta?: StringFieldUpdateOperationsInput | string
+    creadaPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    eventos?: LogEventoRutaUncheckedUpdateManyWithoutRutaNestedInput
+    integracionLogs?: LogIntegracionLogUncheckedUpdateManyWithoutRutaNestedInput
+  }
+
+  export type LogRutaUncheckedUpdateManyWithoutCamionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroRuta?: StringFieldUpdateOperationsInput | string
+    bodegaId?: StringFieldUpdateOperationsInput | string
+    transportistaId?: NullableStringFieldUpdateOperationsInput | string | null
+    choferId?: StringFieldUpdateOperationsInput | string
+    clienteId?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    andenId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaRuta?: StringFieldUpdateOperationsInput | string
+    horaProgramada?: StringFieldUpdateOperationsInput | string
+    horaLlegadaPorton?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaEntradaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaSalidaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    selloSalida?: NullableStringFieldUpdateOperationsInput | string | null
+    totalBultos?: NullableIntFieldUpdateOperationsInput | number | null
+    totalKilos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenRuta?: StringFieldUpdateOperationsInput | string
+    creadaPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogRutaCreateManyClienteInput = {
+    id?: string
+    numeroRuta: string
+    bodegaId: string
+    transportistaId?: string | null
+    choferId: string
+    camionId: string
+    estado?: string
+    andenId?: string | null
+    fechaRuta: string
+    horaProgramada: string
+    horaLlegadaPorton?: Date | string | null
+    horaEntradaAnden?: Date | string | null
+    horaSalidaAnden?: Date | string | null
+    selloSalida?: string | null
+    totalBultos?: number | null
+    totalKilos?: Decimal | DecimalJsLike | number | string | null
+    observaciones?: string | null
+    telegramMessageId?: string | null
+    tokenRuta?: string
+    creadaPorId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LogRutaUpdateWithoutClienteInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroRuta?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    fechaRuta?: StringFieldUpdateOperationsInput | string
+    horaProgramada?: StringFieldUpdateOperationsInput | string
+    horaLlegadaPorton?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaEntradaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaSalidaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    selloSalida?: NullableStringFieldUpdateOperationsInput | string | null
+    totalBultos?: NullableIntFieldUpdateOperationsInput | number | null
+    totalKilos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenRuta?: StringFieldUpdateOperationsInput | string
+    creadaPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bodega?: LogBodegaUpdateOneRequiredWithoutRutasNestedInput
+    transportista?: LogTransportistaUpdateOneWithoutRutasNestedInput
+    chofer?: LogChoferUpdateOneRequiredWithoutRutasNestedInput
+    camion?: LogCamionUpdateOneRequiredWithoutRutasNestedInput
+    anden?: LogAndenUpdateOneWithoutRutasNestedInput
+    eventos?: LogEventoRutaUpdateManyWithoutRutaNestedInput
+    integracionLogs?: LogIntegracionLogUpdateManyWithoutRutaNestedInput
+  }
+
+  export type LogRutaUncheckedUpdateWithoutClienteInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroRuta?: StringFieldUpdateOperationsInput | string
+    bodegaId?: StringFieldUpdateOperationsInput | string
+    transportistaId?: NullableStringFieldUpdateOperationsInput | string | null
+    choferId?: StringFieldUpdateOperationsInput | string
+    camionId?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    andenId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaRuta?: StringFieldUpdateOperationsInput | string
+    horaProgramada?: StringFieldUpdateOperationsInput | string
+    horaLlegadaPorton?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaEntradaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaSalidaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    selloSalida?: NullableStringFieldUpdateOperationsInput | string | null
+    totalBultos?: NullableIntFieldUpdateOperationsInput | number | null
+    totalKilos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenRuta?: StringFieldUpdateOperationsInput | string
+    creadaPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    eventos?: LogEventoRutaUncheckedUpdateManyWithoutRutaNestedInput
+    integracionLogs?: LogIntegracionLogUncheckedUpdateManyWithoutRutaNestedInput
+  }
+
+  export type LogRutaUncheckedUpdateManyWithoutClienteInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numeroRuta?: StringFieldUpdateOperationsInput | string
+    bodegaId?: StringFieldUpdateOperationsInput | string
+    transportistaId?: NullableStringFieldUpdateOperationsInput | string | null
+    choferId?: StringFieldUpdateOperationsInput | string
+    camionId?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    andenId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaRuta?: StringFieldUpdateOperationsInput | string
+    horaProgramada?: StringFieldUpdateOperationsInput | string
+    horaLlegadaPorton?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaEntradaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    horaSalidaAnden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    selloSalida?: NullableStringFieldUpdateOperationsInput | string | null
+    totalBultos?: NullableIntFieldUpdateOperationsInput | number | null
+    totalKilos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramMessageId?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenRuta?: StringFieldUpdateOperationsInput | string
+    creadaPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogEventoRutaCreateManyRutaInput = {
+    id?: string
+    estadoAnterior?: string | null
+    estadoNuevo: string
+    andenId?: string | null
+    origenCambio?: string
+    notas?: string | null
+    metadataJson?: string | null
+    usuarioId?: string | null
+    createdAt?: Date | string
+  }
+
+  export type LogIntegracionLogCreateManyRutaInput = {
+    id?: string
+    integracionConfigId?: string | null
+    evento: string
+    payloadEnviado?: string | null
+    respuestaCodigo?: number | null
+    respuestaCuerpo?: string | null
+    estado?: string
+    intentos?: number
+    errorDetalle?: string | null
+    createdAt?: Date | string
+  }
+
+  export type LogEventoRutaUpdateWithoutRutaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    estadoAnterior?: NullableStringFieldUpdateOperationsInput | string | null
+    estadoNuevo?: StringFieldUpdateOperationsInput | string
+    origenCambio?: StringFieldUpdateOperationsInput | string
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    metadataJson?: NullableStringFieldUpdateOperationsInput | string | null
+    usuarioId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    anden?: LogAndenUpdateOneWithoutEventosNestedInput
+  }
+
+  export type LogEventoRutaUncheckedUpdateWithoutRutaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    estadoAnterior?: NullableStringFieldUpdateOperationsInput | string | null
+    estadoNuevo?: StringFieldUpdateOperationsInput | string
+    andenId?: NullableStringFieldUpdateOperationsInput | string | null
+    origenCambio?: StringFieldUpdateOperationsInput | string
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    metadataJson?: NullableStringFieldUpdateOperationsInput | string | null
+    usuarioId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogEventoRutaUncheckedUpdateManyWithoutRutaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    estadoAnterior?: NullableStringFieldUpdateOperationsInput | string | null
+    estadoNuevo?: StringFieldUpdateOperationsInput | string
+    andenId?: NullableStringFieldUpdateOperationsInput | string | null
+    origenCambio?: StringFieldUpdateOperationsInput | string
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    metadataJson?: NullableStringFieldUpdateOperationsInput | string | null
+    usuarioId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogIntegracionLogUpdateWithoutRutaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    evento?: StringFieldUpdateOperationsInput | string
+    payloadEnviado?: NullableStringFieldUpdateOperationsInput | string | null
+    respuestaCodigo?: NullableIntFieldUpdateOperationsInput | number | null
+    respuestaCuerpo?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    intentos?: IntFieldUpdateOperationsInput | number
+    errorDetalle?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    integracionConfig?: LogIntegracionConfigUpdateOneWithoutLogsNestedInput
+  }
+
+  export type LogIntegracionLogUncheckedUpdateWithoutRutaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    integracionConfigId?: NullableStringFieldUpdateOperationsInput | string | null
+    evento?: StringFieldUpdateOperationsInput | string
+    payloadEnviado?: NullableStringFieldUpdateOperationsInput | string | null
+    respuestaCodigo?: NullableIntFieldUpdateOperationsInput | number | null
+    respuestaCuerpo?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    intentos?: IntFieldUpdateOperationsInput | number
+    errorDetalle?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogIntegracionLogUncheckedUpdateManyWithoutRutaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    integracionConfigId?: NullableStringFieldUpdateOperationsInput | string | null
+    evento?: StringFieldUpdateOperationsInput | string
+    payloadEnviado?: NullableStringFieldUpdateOperationsInput | string | null
+    respuestaCodigo?: NullableIntFieldUpdateOperationsInput | number | null
+    respuestaCuerpo?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    intentos?: IntFieldUpdateOperationsInput | number
+    errorDetalle?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogIntegracionLogCreateManyIntegracionConfigInput = {
+    id?: string
+    evento: string
+    rutaId?: string | null
+    payloadEnviado?: string | null
+    respuestaCodigo?: number | null
+    respuestaCuerpo?: string | null
+    estado?: string
+    intentos?: number
+    errorDetalle?: string | null
+    createdAt?: Date | string
+  }
+
+  export type LogIntegracionLogUpdateWithoutIntegracionConfigInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    evento?: StringFieldUpdateOperationsInput | string
+    payloadEnviado?: NullableStringFieldUpdateOperationsInput | string | null
+    respuestaCodigo?: NullableIntFieldUpdateOperationsInput | number | null
+    respuestaCuerpo?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    intentos?: IntFieldUpdateOperationsInput | number
+    errorDetalle?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ruta?: LogRutaUpdateOneWithoutIntegracionLogsNestedInput
+  }
+
+  export type LogIntegracionLogUncheckedUpdateWithoutIntegracionConfigInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    evento?: StringFieldUpdateOperationsInput | string
+    rutaId?: NullableStringFieldUpdateOperationsInput | string | null
+    payloadEnviado?: NullableStringFieldUpdateOperationsInput | string | null
+    respuestaCodigo?: NullableIntFieldUpdateOperationsInput | number | null
+    respuestaCuerpo?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    intentos?: IntFieldUpdateOperationsInput | number
+    errorDetalle?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogIntegracionLogUncheckedUpdateManyWithoutIntegracionConfigInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    evento?: StringFieldUpdateOperationsInput | string
+    rutaId?: NullableStringFieldUpdateOperationsInput | string | null
+    payloadEnviado?: NullableStringFieldUpdateOperationsInput | string | null
+    respuestaCodigo?: NullableIntFieldUpdateOperationsInput | number | null
+    respuestaCuerpo?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    intentos?: IntFieldUpdateOperationsInput | number
+    errorDetalle?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
 
 
   /**
@@ -171635,6 +192804,38 @@ export namespace Prisma {
      * @deprecated Use CarpetaDocumentalCountOutputTypeDefaultArgs instead
      */
     export type CarpetaDocumentalCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = CarpetaDocumentalCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use LogBodegaCountOutputTypeDefaultArgs instead
+     */
+    export type LogBodegaCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LogBodegaCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use LogAndenCountOutputTypeDefaultArgs instead
+     */
+    export type LogAndenCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LogAndenCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use LogTransportistaCountOutputTypeDefaultArgs instead
+     */
+    export type LogTransportistaCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LogTransportistaCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use LogChoferCountOutputTypeDefaultArgs instead
+     */
+    export type LogChoferCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LogChoferCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use LogCamionCountOutputTypeDefaultArgs instead
+     */
+    export type LogCamionCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LogCamionCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use LogClienteCountOutputTypeDefaultArgs instead
+     */
+    export type LogClienteCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LogClienteCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use LogRutaCountOutputTypeDefaultArgs instead
+     */
+    export type LogRutaCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LogRutaCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use LogIntegracionConfigCountOutputTypeDefaultArgs instead
+     */
+    export type LogIntegracionConfigCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LogIntegracionConfigCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use RoleDefaultArgs instead
      */
@@ -172083,6 +193284,54 @@ export namespace Prisma {
      * @deprecated Use NoticiaAlimentacionDefaultArgs instead
      */
     export type NoticiaAlimentacionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = NoticiaAlimentacionDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use LogBodegaDefaultArgs instead
+     */
+    export type LogBodegaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LogBodegaDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use LogUsuarioBodegaDefaultArgs instead
+     */
+    export type LogUsuarioBodegaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LogUsuarioBodegaDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use LogAndenDefaultArgs instead
+     */
+    export type LogAndenArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LogAndenDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use LogTransportistaDefaultArgs instead
+     */
+    export type LogTransportistaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LogTransportistaDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use LogChoferDefaultArgs instead
+     */
+    export type LogChoferArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LogChoferDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use LogCamionDefaultArgs instead
+     */
+    export type LogCamionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LogCamionDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use LogClienteDefaultArgs instead
+     */
+    export type LogClienteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LogClienteDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use LogRutaDefaultArgs instead
+     */
+    export type LogRutaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LogRutaDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use LogEventoRutaDefaultArgs instead
+     */
+    export type LogEventoRutaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LogEventoRutaDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use LogIntegracionConfigDefaultArgs instead
+     */
+    export type LogIntegracionConfigArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LogIntegracionConfigDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use LogIntegracionLogDefaultArgs instead
+     */
+    export type LogIntegracionLogArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LogIntegracionLogDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use LogParametroDefaultArgs instead
+     */
+    export type LogParametroArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LogParametroDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany
