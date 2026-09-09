@@ -101,6 +101,14 @@ async function main() {
         console.log('Noticias insertadas exitosamente.')
     }
 
+    // 4. Asegurar correo de admin oficial en base de datos
+    console.log('4. Sincronizando correo oficial de usuario admin...')
+    await prisma.user.updateMany({
+        where: { username: 'admin' },
+        data: { email: 'doctohdya@hendayasac.cl' }
+    })
+    console.log('Correo de admin sincronizado a doctohdya@hendayasac.cl')
+
     console.log('--- Inicialización completada con éxito ---')
 }
 

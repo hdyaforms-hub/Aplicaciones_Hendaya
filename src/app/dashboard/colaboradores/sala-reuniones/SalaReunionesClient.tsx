@@ -1018,10 +1018,15 @@ export default function SalaReunionesClient({ initialData }: Props) {
                                     <label className="text-xs font-bold text-gray-700 block mb-1">Email</label>
                                     <input
                                         type="email"
+                                        required
                                         value={form.email}
-                                        readOnly
-                                        disabled
-                                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-100 text-gray-800 font-bold text-sm cursor-not-allowed select-none shadow-xs font-mono"
+                                        onChange={(e) => setForm(prev => ({ ...prev, email: e.target.value }))}
+                                        readOnly={Boolean(currentUser?.email)}
+                                        disabled={Boolean(currentUser?.email)}
+                                        placeholder="correo@ejemplo.cl"
+                                        className={`w-full px-4 py-2.5 rounded-xl border border-gray-200 text-gray-800 font-bold text-sm shadow-xs font-mono ${
+                                            currentUser?.email ? 'bg-gray-100 cursor-not-allowed select-none' : 'bg-white'
+                                        }`}
                                     />
                                 </div>
 

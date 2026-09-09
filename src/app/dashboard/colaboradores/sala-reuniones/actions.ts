@@ -476,10 +476,8 @@ export async function getSalaData(inicioSemanaISO: string): Promise<SalaDataResp
     // Reservas de la semana
     const reservasSemana = confirmadas.filter(r => diasSemana.includes(r.fecha))
 
-    // Fecha y hora actual
-    const ahora = new Date()
-    const hoyISO = `${ahora.getFullYear()}-${String(ahora.getMonth() + 1).padStart(2, '0')}-${String(ahora.getDate()).padStart(2, '0')}`
-    const horaActual = `${String(ahora.getHours()).padStart(2, '0')}:${String(ahora.getMinutes()).padStart(2, '0')}`
+    // Fecha y hora actual en zona horaria de Chile (America/Santiago)
+    const { fechaActual: hoyISO, horaActual } = getNowSantiago()
 
     // KPI 1: Estado ahora
     const reservaActual = confirmadas.find(r => r.fecha === hoyISO && r.horaInicio <= horaActual && horaActual < r.horaFin)
@@ -526,6 +524,19 @@ export async function getSalaData(inicioSemanaISO: string): Promise<SalaDataResp
             where: { username: session.user.username },
             select: { id: true, name: true, username: true, email: true, role: { select: { name: true } } }
         })
+    }
+
+    // Si el usuario es admin y en la BD no tiene correo o tiene el placeholder antiguo, sincronizar con el oficial
+    if (dbUser && dbUser.username === 'admin' && (!dbUser.email || dbUser.email === 'admin@hendaya.cl')) {
+        try {
+            await rawPrisma.user.update({
+                where: { id: dbUser.id },
+                data: { email: 'doctohdya@hendayasac.cl' }
+            })
+            dbUser.email = 'doctohdya@hendayasac.cl'
+        } catch (err) {
+            console.error('[SalaReuniones] Error actualizando correo de admin:', err)
+        }
     }
 
     return {
@@ -575,7 +586,11 @@ export async function createReserva(formData: {
             return { status: 'error', mensaje: 'Debes iniciar sesión para realizar una reserva.' }
         }
 
-        const { solicitante, email, fecha, hora_inicio, hora_fin, motivo, clientOrigin } = formData
+        let { solicitante, email, fecha, hora_inicio, hora_fin, motivo, clientOrigin } = formData
+
+        if (session?.user?.username === 'admin' && (!email || email === 'admin@hendaya.cl')) {
+            email = 'doctohdya@hendayasac.cl'
+        }
 
         if (!solicitante || !email || !fecha || !hora_inicio || !hora_fin || !motivo) {
             return { status: 'error', mensaje: 'Todos los campos son obligatorios.' }
