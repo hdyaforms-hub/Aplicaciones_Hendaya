@@ -13,6 +13,7 @@ import {
     logWidgetLayoutLoadedAction,
     fetchPlatformWidgetsDataAction
 } from './actions'
+import WidgetsFilterBar, { FilterMetadata, WidgetsFiltersState } from './WidgetsFilterBar'
 
 // Definición de tipos de esqueletos
 export type LayoutSkeletonType = 'grid-2x2' | 'hero-1-3' | 'analytics-kpi' | 'grid-3x2' | 'asymmetric' | 'free'
@@ -130,12 +131,23 @@ type Props = {
         name?: string | null
         roleName?: string | null
     }
+    filterMetadata?: FilterMetadata
 }
 
-export default function WidgetsDashboardClient({ initialLayouts, initialData, currentUser }: Props) {
+export default function WidgetsDashboardClient({ initialLayouts, initialData, currentUser, filterMetadata }: Props) {
     const [layoutsList, setLayoutsList] = useState<WidgetLayoutData[]>(initialLayouts)
     const [platformData, setPlatformData] = useState<any>(initialData)
     const [loadingData, setLoadingData] = useState(false)
+
+    // Criterios de Selección Estándar (Filtros en cascada)
+    const [filters, setFilters] = useState<WidgetsFiltersState>({
+        licitacion: '',
+        ano: '2026',
+        mes: '',
+        sucursal: '',
+        rbd: null,
+        supervisor: ''
+    })
 
     // Estado del tablero activo
     const [selectedPresetId, setSelectedPresetId] = useState<string>('sys-ejecutivo')
@@ -171,11 +183,40 @@ export default function WidgetsDashboardClient({ initialLayouts, initialData, cu
         setTimeout(() => setToastMessage(null), 4000)
     }
 
-    // Recargar datos de métricas
+    // Manejar cambio de filtros con recarga reactiva de métricas
+    const handleFiltersChange = async (newFilters: WidgetsFiltersState) => {
+        setFilters(newFilters)
+        setLoadingData(true)
+        try {
+            const fresh = await fetchPlatformWidgetsDataAction({
+                licitacion: newFilters.licitacion || undefined,
+                ano: newFilters.ano || undefined,
+                mes: newFilters.mes || undefined,
+                sucursal: newFilters.sucursal || undefined,
+                rbd: newFilters.rbd !== null ? newFilters.rbd : undefined,
+                supervisor: newFilters.supervisor || undefined
+            })
+            setPlatformData(fresh)
+        } catch (e) {
+            console.error('Error aplicando filtros en widgets:', e)
+            showToast('Error al actualizar métricas con los filtros seleccionados')
+        } finally {
+            setLoadingData(false)
+        }
+    }
+
+    // Recargar datos de métricas considerando los filtros activos
     const refreshData = async () => {
         setLoadingData(true)
         try {
-            const fresh = await fetchPlatformWidgetsDataAction()
+            const fresh = await fetchPlatformWidgetsDataAction({
+                licitacion: filters.licitacion || undefined,
+                ano: filters.ano || undefined,
+                mes: filters.mes || undefined,
+                sucursal: filters.sucursal || undefined,
+                rbd: filters.rbd !== null ? filters.rbd : undefined,
+                supervisor: filters.supervisor || undefined
+            })
             setPlatformData(fresh)
             showToast('Métricas actualizadas exitosamente')
         } catch (e) {
@@ -490,6 +531,16 @@ export default function WidgetsDashboardClient({ initialLayouts, initialData, cu
                     </button>
                 </div>
             </div>
+
+            {/* CRITERIOS DE SELECCIÓN ESTÁNDAR (FILTROS EN CASCADA BIDIRECCIONAL) */}
+            {filterMetadata && (
+                <WidgetsFilterBar
+                    filters={filters}
+                    onFiltersChange={handleFiltersChange}
+                    metadata={filterMetadata}
+                    isLoading={loadingData}
+                />
+            )}
 
             {/* SELECTOR DE ESQUELETOS (LAYOUTS) */}
             <div className="bg-slate-900/70 border border-slate-800/80 rounded-2xl p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">

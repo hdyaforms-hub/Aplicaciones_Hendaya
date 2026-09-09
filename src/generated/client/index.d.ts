@@ -563,6 +563,16 @@ export type PrivilegioDocumental = $Result.DefaultSelection<Prisma.$PrivilegioDo
  * 
  */
 export type UserWidgetLayout = $Result.DefaultSelection<Prisma.$UserWidgetLayoutPayload>
+/**
+ * Model ReservaSala
+ * 
+ */
+export type ReservaSala = $Result.DefaultSelection<Prisma.$ReservaSalaPayload>
+/**
+ * Model NoticiaAlimentacion
+ * 
+ */
+export type NoticiaAlimentacion = $Result.DefaultSelection<Prisma.$NoticiaAlimentacionPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -1786,6 +1796,26 @@ export class PrismaClient<
     * ```
     */
   get userWidgetLayout(): Prisma.UserWidgetLayoutDelegate<ExtArgs>;
+
+  /**
+   * `prisma.reservaSala`: Exposes CRUD operations for the **ReservaSala** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ReservaSalas
+    * const reservaSalas = await prisma.reservaSala.findMany()
+    * ```
+    */
+  get reservaSala(): Prisma.ReservaSalaDelegate<ExtArgs>;
+
+  /**
+   * `prisma.noticiaAlimentacion`: Exposes CRUD operations for the **NoticiaAlimentacion** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more NoticiaAlimentacions
+    * const noticiaAlimentacions = await prisma.noticiaAlimentacion.findMany()
+    * ```
+    */
+  get noticiaAlimentacion(): Prisma.NoticiaAlimentacionDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -2336,7 +2366,9 @@ export namespace Prisma {
     ConfiguracionDocumental: 'ConfiguracionDocumental',
     CarpetaDocumental: 'CarpetaDocumental',
     PrivilegioDocumental: 'PrivilegioDocumental',
-    UserWidgetLayout: 'UserWidgetLayout'
+    UserWidgetLayout: 'UserWidgetLayout',
+    ReservaSala: 'ReservaSala',
+    NoticiaAlimentacion: 'NoticiaAlimentacion'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -2352,7 +2384,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout"
+      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout" | "reservaSala" | "noticiaAlimentacion"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -10053,6 +10085,146 @@ export namespace Prisma {
           count: {
             args: Prisma.UserWidgetLayoutCountArgs<ExtArgs>
             result: $Utils.Optional<UserWidgetLayoutCountAggregateOutputType> | number
+          }
+        }
+      }
+      ReservaSala: {
+        payload: Prisma.$ReservaSalaPayload<ExtArgs>
+        fields: Prisma.ReservaSalaFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ReservaSalaFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReservaSalaPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ReservaSalaFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReservaSalaPayload>
+          }
+          findFirst: {
+            args: Prisma.ReservaSalaFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReservaSalaPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ReservaSalaFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReservaSalaPayload>
+          }
+          findMany: {
+            args: Prisma.ReservaSalaFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReservaSalaPayload>[]
+          }
+          create: {
+            args: Prisma.ReservaSalaCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReservaSalaPayload>
+          }
+          createMany: {
+            args: Prisma.ReservaSalaCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ReservaSalaCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReservaSalaPayload>[]
+          }
+          delete: {
+            args: Prisma.ReservaSalaDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReservaSalaPayload>
+          }
+          update: {
+            args: Prisma.ReservaSalaUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReservaSalaPayload>
+          }
+          deleteMany: {
+            args: Prisma.ReservaSalaDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ReservaSalaUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ReservaSalaUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReservaSalaPayload>
+          }
+          aggregate: {
+            args: Prisma.ReservaSalaAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateReservaSala>
+          }
+          groupBy: {
+            args: Prisma.ReservaSalaGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ReservaSalaGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ReservaSalaCountArgs<ExtArgs>
+            result: $Utils.Optional<ReservaSalaCountAggregateOutputType> | number
+          }
+        }
+      }
+      NoticiaAlimentacion: {
+        payload: Prisma.$NoticiaAlimentacionPayload<ExtArgs>
+        fields: Prisma.NoticiaAlimentacionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.NoticiaAlimentacionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NoticiaAlimentacionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.NoticiaAlimentacionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NoticiaAlimentacionPayload>
+          }
+          findFirst: {
+            args: Prisma.NoticiaAlimentacionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NoticiaAlimentacionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.NoticiaAlimentacionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NoticiaAlimentacionPayload>
+          }
+          findMany: {
+            args: Prisma.NoticiaAlimentacionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NoticiaAlimentacionPayload>[]
+          }
+          create: {
+            args: Prisma.NoticiaAlimentacionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NoticiaAlimentacionPayload>
+          }
+          createMany: {
+            args: Prisma.NoticiaAlimentacionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.NoticiaAlimentacionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NoticiaAlimentacionPayload>[]
+          }
+          delete: {
+            args: Prisma.NoticiaAlimentacionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NoticiaAlimentacionPayload>
+          }
+          update: {
+            args: Prisma.NoticiaAlimentacionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NoticiaAlimentacionPayload>
+          }
+          deleteMany: {
+            args: Prisma.NoticiaAlimentacionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.NoticiaAlimentacionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.NoticiaAlimentacionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NoticiaAlimentacionPayload>
+          }
+          aggregate: {
+            args: Prisma.NoticiaAlimentacionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateNoticiaAlimentacion>
+          }
+          groupBy: {
+            args: Prisma.NoticiaAlimentacionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<NoticiaAlimentacionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.NoticiaAlimentacionCountArgs<ExtArgs>
+            result: $Utils.Optional<NoticiaAlimentacionCountAggregateOutputType> | number
           }
         }
       }
@@ -123617,6 +123789,1892 @@ export namespace Prisma {
 
 
   /**
+   * Model ReservaSala
+   */
+
+  export type AggregateReservaSala = {
+    _count: ReservaSalaCountAggregateOutputType | null
+    _min: ReservaSalaMinAggregateOutputType | null
+    _max: ReservaSalaMaxAggregateOutputType | null
+  }
+
+  export type ReservaSalaMinAggregateOutputType = {
+    id: string | null
+    solicitante: string | null
+    email: string | null
+    userId: string | null
+    fecha: string | null
+    horaInicio: string | null
+    horaFin: string | null
+    motivo: string | null
+    estado: string | null
+    tokenCancelacion: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ReservaSalaMaxAggregateOutputType = {
+    id: string | null
+    solicitante: string | null
+    email: string | null
+    userId: string | null
+    fecha: string | null
+    horaInicio: string | null
+    horaFin: string | null
+    motivo: string | null
+    estado: string | null
+    tokenCancelacion: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ReservaSalaCountAggregateOutputType = {
+    id: number
+    solicitante: number
+    email: number
+    userId: number
+    fecha: number
+    horaInicio: number
+    horaFin: number
+    motivo: number
+    estado: number
+    tokenCancelacion: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ReservaSalaMinAggregateInputType = {
+    id?: true
+    solicitante?: true
+    email?: true
+    userId?: true
+    fecha?: true
+    horaInicio?: true
+    horaFin?: true
+    motivo?: true
+    estado?: true
+    tokenCancelacion?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ReservaSalaMaxAggregateInputType = {
+    id?: true
+    solicitante?: true
+    email?: true
+    userId?: true
+    fecha?: true
+    horaInicio?: true
+    horaFin?: true
+    motivo?: true
+    estado?: true
+    tokenCancelacion?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ReservaSalaCountAggregateInputType = {
+    id?: true
+    solicitante?: true
+    email?: true
+    userId?: true
+    fecha?: true
+    horaInicio?: true
+    horaFin?: true
+    motivo?: true
+    estado?: true
+    tokenCancelacion?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ReservaSalaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ReservaSala to aggregate.
+     */
+    where?: ReservaSalaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ReservaSalas to fetch.
+     */
+    orderBy?: ReservaSalaOrderByWithRelationInput | ReservaSalaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ReservaSalaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ReservaSalas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ReservaSalas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ReservaSalas
+    **/
+    _count?: true | ReservaSalaCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ReservaSalaMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ReservaSalaMaxAggregateInputType
+  }
+
+  export type GetReservaSalaAggregateType<T extends ReservaSalaAggregateArgs> = {
+        [P in keyof T & keyof AggregateReservaSala]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateReservaSala[P]>
+      : GetScalarType<T[P], AggregateReservaSala[P]>
+  }
+
+
+
+
+  export type ReservaSalaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReservaSalaWhereInput
+    orderBy?: ReservaSalaOrderByWithAggregationInput | ReservaSalaOrderByWithAggregationInput[]
+    by: ReservaSalaScalarFieldEnum[] | ReservaSalaScalarFieldEnum
+    having?: ReservaSalaScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ReservaSalaCountAggregateInputType | true
+    _min?: ReservaSalaMinAggregateInputType
+    _max?: ReservaSalaMaxAggregateInputType
+  }
+
+  export type ReservaSalaGroupByOutputType = {
+    id: string
+    solicitante: string
+    email: string
+    userId: string | null
+    fecha: string
+    horaInicio: string
+    horaFin: string
+    motivo: string
+    estado: string
+    tokenCancelacion: string
+    createdAt: Date
+    updatedAt: Date
+    _count: ReservaSalaCountAggregateOutputType | null
+    _min: ReservaSalaMinAggregateOutputType | null
+    _max: ReservaSalaMaxAggregateOutputType | null
+  }
+
+  type GetReservaSalaGroupByPayload<T extends ReservaSalaGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ReservaSalaGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ReservaSalaGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ReservaSalaGroupByOutputType[P]>
+            : GetScalarType<T[P], ReservaSalaGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ReservaSalaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    solicitante?: boolean
+    email?: boolean
+    userId?: boolean
+    fecha?: boolean
+    horaInicio?: boolean
+    horaFin?: boolean
+    motivo?: boolean
+    estado?: boolean
+    tokenCancelacion?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["reservaSala"]>
+
+  export type ReservaSalaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    solicitante?: boolean
+    email?: boolean
+    userId?: boolean
+    fecha?: boolean
+    horaInicio?: boolean
+    horaFin?: boolean
+    motivo?: boolean
+    estado?: boolean
+    tokenCancelacion?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["reservaSala"]>
+
+  export type ReservaSalaSelectScalar = {
+    id?: boolean
+    solicitante?: boolean
+    email?: boolean
+    userId?: boolean
+    fecha?: boolean
+    horaInicio?: boolean
+    horaFin?: boolean
+    motivo?: boolean
+    estado?: boolean
+    tokenCancelacion?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type $ReservaSalaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ReservaSala"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      solicitante: string
+      email: string
+      userId: string | null
+      fecha: string
+      horaInicio: string
+      horaFin: string
+      motivo: string
+      estado: string
+      tokenCancelacion: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["reservaSala"]>
+    composites: {}
+  }
+
+  type ReservaSalaGetPayload<S extends boolean | null | undefined | ReservaSalaDefaultArgs> = $Result.GetResult<Prisma.$ReservaSalaPayload, S>
+
+  type ReservaSalaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ReservaSalaFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ReservaSalaCountAggregateInputType | true
+    }
+
+  export interface ReservaSalaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ReservaSala'], meta: { name: 'ReservaSala' } }
+    /**
+     * Find zero or one ReservaSala that matches the filter.
+     * @param {ReservaSalaFindUniqueArgs} args - Arguments to find a ReservaSala
+     * @example
+     * // Get one ReservaSala
+     * const reservaSala = await prisma.reservaSala.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ReservaSalaFindUniqueArgs>(args: SelectSubset<T, ReservaSalaFindUniqueArgs<ExtArgs>>): Prisma__ReservaSalaClient<$Result.GetResult<Prisma.$ReservaSalaPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one ReservaSala that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {ReservaSalaFindUniqueOrThrowArgs} args - Arguments to find a ReservaSala
+     * @example
+     * // Get one ReservaSala
+     * const reservaSala = await prisma.reservaSala.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ReservaSalaFindUniqueOrThrowArgs>(args: SelectSubset<T, ReservaSalaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ReservaSalaClient<$Result.GetResult<Prisma.$ReservaSalaPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first ReservaSala that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReservaSalaFindFirstArgs} args - Arguments to find a ReservaSala
+     * @example
+     * // Get one ReservaSala
+     * const reservaSala = await prisma.reservaSala.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ReservaSalaFindFirstArgs>(args?: SelectSubset<T, ReservaSalaFindFirstArgs<ExtArgs>>): Prisma__ReservaSalaClient<$Result.GetResult<Prisma.$ReservaSalaPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first ReservaSala that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReservaSalaFindFirstOrThrowArgs} args - Arguments to find a ReservaSala
+     * @example
+     * // Get one ReservaSala
+     * const reservaSala = await prisma.reservaSala.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ReservaSalaFindFirstOrThrowArgs>(args?: SelectSubset<T, ReservaSalaFindFirstOrThrowArgs<ExtArgs>>): Prisma__ReservaSalaClient<$Result.GetResult<Prisma.$ReservaSalaPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more ReservaSalas that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReservaSalaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ReservaSalas
+     * const reservaSalas = await prisma.reservaSala.findMany()
+     * 
+     * // Get first 10 ReservaSalas
+     * const reservaSalas = await prisma.reservaSala.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const reservaSalaWithIdOnly = await prisma.reservaSala.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ReservaSalaFindManyArgs>(args?: SelectSubset<T, ReservaSalaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReservaSalaPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a ReservaSala.
+     * @param {ReservaSalaCreateArgs} args - Arguments to create a ReservaSala.
+     * @example
+     * // Create one ReservaSala
+     * const ReservaSala = await prisma.reservaSala.create({
+     *   data: {
+     *     // ... data to create a ReservaSala
+     *   }
+     * })
+     * 
+     */
+    create<T extends ReservaSalaCreateArgs>(args: SelectSubset<T, ReservaSalaCreateArgs<ExtArgs>>): Prisma__ReservaSalaClient<$Result.GetResult<Prisma.$ReservaSalaPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many ReservaSalas.
+     * @param {ReservaSalaCreateManyArgs} args - Arguments to create many ReservaSalas.
+     * @example
+     * // Create many ReservaSalas
+     * const reservaSala = await prisma.reservaSala.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ReservaSalaCreateManyArgs>(args?: SelectSubset<T, ReservaSalaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ReservaSalas and returns the data saved in the database.
+     * @param {ReservaSalaCreateManyAndReturnArgs} args - Arguments to create many ReservaSalas.
+     * @example
+     * // Create many ReservaSalas
+     * const reservaSala = await prisma.reservaSala.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ReservaSalas and only return the `id`
+     * const reservaSalaWithIdOnly = await prisma.reservaSala.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ReservaSalaCreateManyAndReturnArgs>(args?: SelectSubset<T, ReservaSalaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReservaSalaPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a ReservaSala.
+     * @param {ReservaSalaDeleteArgs} args - Arguments to delete one ReservaSala.
+     * @example
+     * // Delete one ReservaSala
+     * const ReservaSala = await prisma.reservaSala.delete({
+     *   where: {
+     *     // ... filter to delete one ReservaSala
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ReservaSalaDeleteArgs>(args: SelectSubset<T, ReservaSalaDeleteArgs<ExtArgs>>): Prisma__ReservaSalaClient<$Result.GetResult<Prisma.$ReservaSalaPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one ReservaSala.
+     * @param {ReservaSalaUpdateArgs} args - Arguments to update one ReservaSala.
+     * @example
+     * // Update one ReservaSala
+     * const reservaSala = await prisma.reservaSala.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ReservaSalaUpdateArgs>(args: SelectSubset<T, ReservaSalaUpdateArgs<ExtArgs>>): Prisma__ReservaSalaClient<$Result.GetResult<Prisma.$ReservaSalaPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more ReservaSalas.
+     * @param {ReservaSalaDeleteManyArgs} args - Arguments to filter ReservaSalas to delete.
+     * @example
+     * // Delete a few ReservaSalas
+     * const { count } = await prisma.reservaSala.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ReservaSalaDeleteManyArgs>(args?: SelectSubset<T, ReservaSalaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ReservaSalas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReservaSalaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ReservaSalas
+     * const reservaSala = await prisma.reservaSala.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ReservaSalaUpdateManyArgs>(args: SelectSubset<T, ReservaSalaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ReservaSala.
+     * @param {ReservaSalaUpsertArgs} args - Arguments to update or create a ReservaSala.
+     * @example
+     * // Update or create a ReservaSala
+     * const reservaSala = await prisma.reservaSala.upsert({
+     *   create: {
+     *     // ... data to create a ReservaSala
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ReservaSala we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ReservaSalaUpsertArgs>(args: SelectSubset<T, ReservaSalaUpsertArgs<ExtArgs>>): Prisma__ReservaSalaClient<$Result.GetResult<Prisma.$ReservaSalaPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of ReservaSalas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReservaSalaCountArgs} args - Arguments to filter ReservaSalas to count.
+     * @example
+     * // Count the number of ReservaSalas
+     * const count = await prisma.reservaSala.count({
+     *   where: {
+     *     // ... the filter for the ReservaSalas we want to count
+     *   }
+     * })
+    **/
+    count<T extends ReservaSalaCountArgs>(
+      args?: Subset<T, ReservaSalaCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ReservaSalaCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ReservaSala.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReservaSalaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ReservaSalaAggregateArgs>(args: Subset<T, ReservaSalaAggregateArgs>): Prisma.PrismaPromise<GetReservaSalaAggregateType<T>>
+
+    /**
+     * Group by ReservaSala.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReservaSalaGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ReservaSalaGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ReservaSalaGroupByArgs['orderBy'] }
+        : { orderBy?: ReservaSalaGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ReservaSalaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetReservaSalaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ReservaSala model
+   */
+  readonly fields: ReservaSalaFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ReservaSala.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ReservaSalaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ReservaSala model
+   */ 
+  interface ReservaSalaFieldRefs {
+    readonly id: FieldRef<"ReservaSala", 'String'>
+    readonly solicitante: FieldRef<"ReservaSala", 'String'>
+    readonly email: FieldRef<"ReservaSala", 'String'>
+    readonly userId: FieldRef<"ReservaSala", 'String'>
+    readonly fecha: FieldRef<"ReservaSala", 'String'>
+    readonly horaInicio: FieldRef<"ReservaSala", 'String'>
+    readonly horaFin: FieldRef<"ReservaSala", 'String'>
+    readonly motivo: FieldRef<"ReservaSala", 'String'>
+    readonly estado: FieldRef<"ReservaSala", 'String'>
+    readonly tokenCancelacion: FieldRef<"ReservaSala", 'String'>
+    readonly createdAt: FieldRef<"ReservaSala", 'DateTime'>
+    readonly updatedAt: FieldRef<"ReservaSala", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ReservaSala findUnique
+   */
+  export type ReservaSalaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReservaSala
+     */
+    select?: ReservaSalaSelect<ExtArgs> | null
+    /**
+     * Filter, which ReservaSala to fetch.
+     */
+    where: ReservaSalaWhereUniqueInput
+  }
+
+  /**
+   * ReservaSala findUniqueOrThrow
+   */
+  export type ReservaSalaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReservaSala
+     */
+    select?: ReservaSalaSelect<ExtArgs> | null
+    /**
+     * Filter, which ReservaSala to fetch.
+     */
+    where: ReservaSalaWhereUniqueInput
+  }
+
+  /**
+   * ReservaSala findFirst
+   */
+  export type ReservaSalaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReservaSala
+     */
+    select?: ReservaSalaSelect<ExtArgs> | null
+    /**
+     * Filter, which ReservaSala to fetch.
+     */
+    where?: ReservaSalaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ReservaSalas to fetch.
+     */
+    orderBy?: ReservaSalaOrderByWithRelationInput | ReservaSalaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ReservaSalas.
+     */
+    cursor?: ReservaSalaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ReservaSalas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ReservaSalas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ReservaSalas.
+     */
+    distinct?: ReservaSalaScalarFieldEnum | ReservaSalaScalarFieldEnum[]
+  }
+
+  /**
+   * ReservaSala findFirstOrThrow
+   */
+  export type ReservaSalaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReservaSala
+     */
+    select?: ReservaSalaSelect<ExtArgs> | null
+    /**
+     * Filter, which ReservaSala to fetch.
+     */
+    where?: ReservaSalaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ReservaSalas to fetch.
+     */
+    orderBy?: ReservaSalaOrderByWithRelationInput | ReservaSalaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ReservaSalas.
+     */
+    cursor?: ReservaSalaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ReservaSalas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ReservaSalas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ReservaSalas.
+     */
+    distinct?: ReservaSalaScalarFieldEnum | ReservaSalaScalarFieldEnum[]
+  }
+
+  /**
+   * ReservaSala findMany
+   */
+  export type ReservaSalaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReservaSala
+     */
+    select?: ReservaSalaSelect<ExtArgs> | null
+    /**
+     * Filter, which ReservaSalas to fetch.
+     */
+    where?: ReservaSalaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ReservaSalas to fetch.
+     */
+    orderBy?: ReservaSalaOrderByWithRelationInput | ReservaSalaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ReservaSalas.
+     */
+    cursor?: ReservaSalaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ReservaSalas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ReservaSalas.
+     */
+    skip?: number
+    distinct?: ReservaSalaScalarFieldEnum | ReservaSalaScalarFieldEnum[]
+  }
+
+  /**
+   * ReservaSala create
+   */
+  export type ReservaSalaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReservaSala
+     */
+    select?: ReservaSalaSelect<ExtArgs> | null
+    /**
+     * The data needed to create a ReservaSala.
+     */
+    data: XOR<ReservaSalaCreateInput, ReservaSalaUncheckedCreateInput>
+  }
+
+  /**
+   * ReservaSala createMany
+   */
+  export type ReservaSalaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ReservaSalas.
+     */
+    data: ReservaSalaCreateManyInput | ReservaSalaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ReservaSala createManyAndReturn
+   */
+  export type ReservaSalaCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReservaSala
+     */
+    select?: ReservaSalaSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many ReservaSalas.
+     */
+    data: ReservaSalaCreateManyInput | ReservaSalaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ReservaSala update
+   */
+  export type ReservaSalaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReservaSala
+     */
+    select?: ReservaSalaSelect<ExtArgs> | null
+    /**
+     * The data needed to update a ReservaSala.
+     */
+    data: XOR<ReservaSalaUpdateInput, ReservaSalaUncheckedUpdateInput>
+    /**
+     * Choose, which ReservaSala to update.
+     */
+    where: ReservaSalaWhereUniqueInput
+  }
+
+  /**
+   * ReservaSala updateMany
+   */
+  export type ReservaSalaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ReservaSalas.
+     */
+    data: XOR<ReservaSalaUpdateManyMutationInput, ReservaSalaUncheckedUpdateManyInput>
+    /**
+     * Filter which ReservaSalas to update
+     */
+    where?: ReservaSalaWhereInput
+  }
+
+  /**
+   * ReservaSala upsert
+   */
+  export type ReservaSalaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReservaSala
+     */
+    select?: ReservaSalaSelect<ExtArgs> | null
+    /**
+     * The filter to search for the ReservaSala to update in case it exists.
+     */
+    where: ReservaSalaWhereUniqueInput
+    /**
+     * In case the ReservaSala found by the `where` argument doesn't exist, create a new ReservaSala with this data.
+     */
+    create: XOR<ReservaSalaCreateInput, ReservaSalaUncheckedCreateInput>
+    /**
+     * In case the ReservaSala was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ReservaSalaUpdateInput, ReservaSalaUncheckedUpdateInput>
+  }
+
+  /**
+   * ReservaSala delete
+   */
+  export type ReservaSalaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReservaSala
+     */
+    select?: ReservaSalaSelect<ExtArgs> | null
+    /**
+     * Filter which ReservaSala to delete.
+     */
+    where: ReservaSalaWhereUniqueInput
+  }
+
+  /**
+   * ReservaSala deleteMany
+   */
+  export type ReservaSalaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ReservaSalas to delete
+     */
+    where?: ReservaSalaWhereInput
+  }
+
+  /**
+   * ReservaSala without action
+   */
+  export type ReservaSalaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReservaSala
+     */
+    select?: ReservaSalaSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * Model NoticiaAlimentacion
+   */
+
+  export type AggregateNoticiaAlimentacion = {
+    _count: NoticiaAlimentacionCountAggregateOutputType | null
+    _avg: NoticiaAlimentacionAvgAggregateOutputType | null
+    _sum: NoticiaAlimentacionSumAggregateOutputType | null
+    _min: NoticiaAlimentacionMinAggregateOutputType | null
+    _max: NoticiaAlimentacionMaxAggregateOutputType | null
+  }
+
+  export type NoticiaAlimentacionAvgAggregateOutputType = {
+    orden: number | null
+  }
+
+  export type NoticiaAlimentacionSumAggregateOutputType = {
+    orden: number | null
+  }
+
+  export type NoticiaAlimentacionMinAggregateOutputType = {
+    id: string | null
+    titulo: string | null
+    fuente: string | null
+    link: string | null
+    orden: number | null
+    createdAt: Date | null
+  }
+
+  export type NoticiaAlimentacionMaxAggregateOutputType = {
+    id: string | null
+    titulo: string | null
+    fuente: string | null
+    link: string | null
+    orden: number | null
+    createdAt: Date | null
+  }
+
+  export type NoticiaAlimentacionCountAggregateOutputType = {
+    id: number
+    titulo: number
+    fuente: number
+    link: number
+    orden: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type NoticiaAlimentacionAvgAggregateInputType = {
+    orden?: true
+  }
+
+  export type NoticiaAlimentacionSumAggregateInputType = {
+    orden?: true
+  }
+
+  export type NoticiaAlimentacionMinAggregateInputType = {
+    id?: true
+    titulo?: true
+    fuente?: true
+    link?: true
+    orden?: true
+    createdAt?: true
+  }
+
+  export type NoticiaAlimentacionMaxAggregateInputType = {
+    id?: true
+    titulo?: true
+    fuente?: true
+    link?: true
+    orden?: true
+    createdAt?: true
+  }
+
+  export type NoticiaAlimentacionCountAggregateInputType = {
+    id?: true
+    titulo?: true
+    fuente?: true
+    link?: true
+    orden?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type NoticiaAlimentacionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which NoticiaAlimentacion to aggregate.
+     */
+    where?: NoticiaAlimentacionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of NoticiaAlimentacions to fetch.
+     */
+    orderBy?: NoticiaAlimentacionOrderByWithRelationInput | NoticiaAlimentacionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: NoticiaAlimentacionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` NoticiaAlimentacions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` NoticiaAlimentacions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned NoticiaAlimentacions
+    **/
+    _count?: true | NoticiaAlimentacionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: NoticiaAlimentacionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: NoticiaAlimentacionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: NoticiaAlimentacionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: NoticiaAlimentacionMaxAggregateInputType
+  }
+
+  export type GetNoticiaAlimentacionAggregateType<T extends NoticiaAlimentacionAggregateArgs> = {
+        [P in keyof T & keyof AggregateNoticiaAlimentacion]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateNoticiaAlimentacion[P]>
+      : GetScalarType<T[P], AggregateNoticiaAlimentacion[P]>
+  }
+
+
+
+
+  export type NoticiaAlimentacionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NoticiaAlimentacionWhereInput
+    orderBy?: NoticiaAlimentacionOrderByWithAggregationInput | NoticiaAlimentacionOrderByWithAggregationInput[]
+    by: NoticiaAlimentacionScalarFieldEnum[] | NoticiaAlimentacionScalarFieldEnum
+    having?: NoticiaAlimentacionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: NoticiaAlimentacionCountAggregateInputType | true
+    _avg?: NoticiaAlimentacionAvgAggregateInputType
+    _sum?: NoticiaAlimentacionSumAggregateInputType
+    _min?: NoticiaAlimentacionMinAggregateInputType
+    _max?: NoticiaAlimentacionMaxAggregateInputType
+  }
+
+  export type NoticiaAlimentacionGroupByOutputType = {
+    id: string
+    titulo: string
+    fuente: string
+    link: string
+    orden: number
+    createdAt: Date
+    _count: NoticiaAlimentacionCountAggregateOutputType | null
+    _avg: NoticiaAlimentacionAvgAggregateOutputType | null
+    _sum: NoticiaAlimentacionSumAggregateOutputType | null
+    _min: NoticiaAlimentacionMinAggregateOutputType | null
+    _max: NoticiaAlimentacionMaxAggregateOutputType | null
+  }
+
+  type GetNoticiaAlimentacionGroupByPayload<T extends NoticiaAlimentacionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<NoticiaAlimentacionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof NoticiaAlimentacionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], NoticiaAlimentacionGroupByOutputType[P]>
+            : GetScalarType<T[P], NoticiaAlimentacionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type NoticiaAlimentacionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    titulo?: boolean
+    fuente?: boolean
+    link?: boolean
+    orden?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["noticiaAlimentacion"]>
+
+  export type NoticiaAlimentacionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    titulo?: boolean
+    fuente?: boolean
+    link?: boolean
+    orden?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["noticiaAlimentacion"]>
+
+  export type NoticiaAlimentacionSelectScalar = {
+    id?: boolean
+    titulo?: boolean
+    fuente?: boolean
+    link?: boolean
+    orden?: boolean
+    createdAt?: boolean
+  }
+
+
+  export type $NoticiaAlimentacionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "NoticiaAlimentacion"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      titulo: string
+      fuente: string
+      link: string
+      orden: number
+      createdAt: Date
+    }, ExtArgs["result"]["noticiaAlimentacion"]>
+    composites: {}
+  }
+
+  type NoticiaAlimentacionGetPayload<S extends boolean | null | undefined | NoticiaAlimentacionDefaultArgs> = $Result.GetResult<Prisma.$NoticiaAlimentacionPayload, S>
+
+  type NoticiaAlimentacionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<NoticiaAlimentacionFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: NoticiaAlimentacionCountAggregateInputType | true
+    }
+
+  export interface NoticiaAlimentacionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['NoticiaAlimentacion'], meta: { name: 'NoticiaAlimentacion' } }
+    /**
+     * Find zero or one NoticiaAlimentacion that matches the filter.
+     * @param {NoticiaAlimentacionFindUniqueArgs} args - Arguments to find a NoticiaAlimentacion
+     * @example
+     * // Get one NoticiaAlimentacion
+     * const noticiaAlimentacion = await prisma.noticiaAlimentacion.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends NoticiaAlimentacionFindUniqueArgs>(args: SelectSubset<T, NoticiaAlimentacionFindUniqueArgs<ExtArgs>>): Prisma__NoticiaAlimentacionClient<$Result.GetResult<Prisma.$NoticiaAlimentacionPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one NoticiaAlimentacion that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {NoticiaAlimentacionFindUniqueOrThrowArgs} args - Arguments to find a NoticiaAlimentacion
+     * @example
+     * // Get one NoticiaAlimentacion
+     * const noticiaAlimentacion = await prisma.noticiaAlimentacion.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends NoticiaAlimentacionFindUniqueOrThrowArgs>(args: SelectSubset<T, NoticiaAlimentacionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__NoticiaAlimentacionClient<$Result.GetResult<Prisma.$NoticiaAlimentacionPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first NoticiaAlimentacion that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NoticiaAlimentacionFindFirstArgs} args - Arguments to find a NoticiaAlimentacion
+     * @example
+     * // Get one NoticiaAlimentacion
+     * const noticiaAlimentacion = await prisma.noticiaAlimentacion.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends NoticiaAlimentacionFindFirstArgs>(args?: SelectSubset<T, NoticiaAlimentacionFindFirstArgs<ExtArgs>>): Prisma__NoticiaAlimentacionClient<$Result.GetResult<Prisma.$NoticiaAlimentacionPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first NoticiaAlimentacion that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NoticiaAlimentacionFindFirstOrThrowArgs} args - Arguments to find a NoticiaAlimentacion
+     * @example
+     * // Get one NoticiaAlimentacion
+     * const noticiaAlimentacion = await prisma.noticiaAlimentacion.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends NoticiaAlimentacionFindFirstOrThrowArgs>(args?: SelectSubset<T, NoticiaAlimentacionFindFirstOrThrowArgs<ExtArgs>>): Prisma__NoticiaAlimentacionClient<$Result.GetResult<Prisma.$NoticiaAlimentacionPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more NoticiaAlimentacions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NoticiaAlimentacionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all NoticiaAlimentacions
+     * const noticiaAlimentacions = await prisma.noticiaAlimentacion.findMany()
+     * 
+     * // Get first 10 NoticiaAlimentacions
+     * const noticiaAlimentacions = await prisma.noticiaAlimentacion.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const noticiaAlimentacionWithIdOnly = await prisma.noticiaAlimentacion.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends NoticiaAlimentacionFindManyArgs>(args?: SelectSubset<T, NoticiaAlimentacionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NoticiaAlimentacionPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a NoticiaAlimentacion.
+     * @param {NoticiaAlimentacionCreateArgs} args - Arguments to create a NoticiaAlimentacion.
+     * @example
+     * // Create one NoticiaAlimentacion
+     * const NoticiaAlimentacion = await prisma.noticiaAlimentacion.create({
+     *   data: {
+     *     // ... data to create a NoticiaAlimentacion
+     *   }
+     * })
+     * 
+     */
+    create<T extends NoticiaAlimentacionCreateArgs>(args: SelectSubset<T, NoticiaAlimentacionCreateArgs<ExtArgs>>): Prisma__NoticiaAlimentacionClient<$Result.GetResult<Prisma.$NoticiaAlimentacionPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many NoticiaAlimentacions.
+     * @param {NoticiaAlimentacionCreateManyArgs} args - Arguments to create many NoticiaAlimentacions.
+     * @example
+     * // Create many NoticiaAlimentacions
+     * const noticiaAlimentacion = await prisma.noticiaAlimentacion.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends NoticiaAlimentacionCreateManyArgs>(args?: SelectSubset<T, NoticiaAlimentacionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many NoticiaAlimentacions and returns the data saved in the database.
+     * @param {NoticiaAlimentacionCreateManyAndReturnArgs} args - Arguments to create many NoticiaAlimentacions.
+     * @example
+     * // Create many NoticiaAlimentacions
+     * const noticiaAlimentacion = await prisma.noticiaAlimentacion.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many NoticiaAlimentacions and only return the `id`
+     * const noticiaAlimentacionWithIdOnly = await prisma.noticiaAlimentacion.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends NoticiaAlimentacionCreateManyAndReturnArgs>(args?: SelectSubset<T, NoticiaAlimentacionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NoticiaAlimentacionPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a NoticiaAlimentacion.
+     * @param {NoticiaAlimentacionDeleteArgs} args - Arguments to delete one NoticiaAlimentacion.
+     * @example
+     * // Delete one NoticiaAlimentacion
+     * const NoticiaAlimentacion = await prisma.noticiaAlimentacion.delete({
+     *   where: {
+     *     // ... filter to delete one NoticiaAlimentacion
+     *   }
+     * })
+     * 
+     */
+    delete<T extends NoticiaAlimentacionDeleteArgs>(args: SelectSubset<T, NoticiaAlimentacionDeleteArgs<ExtArgs>>): Prisma__NoticiaAlimentacionClient<$Result.GetResult<Prisma.$NoticiaAlimentacionPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one NoticiaAlimentacion.
+     * @param {NoticiaAlimentacionUpdateArgs} args - Arguments to update one NoticiaAlimentacion.
+     * @example
+     * // Update one NoticiaAlimentacion
+     * const noticiaAlimentacion = await prisma.noticiaAlimentacion.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends NoticiaAlimentacionUpdateArgs>(args: SelectSubset<T, NoticiaAlimentacionUpdateArgs<ExtArgs>>): Prisma__NoticiaAlimentacionClient<$Result.GetResult<Prisma.$NoticiaAlimentacionPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more NoticiaAlimentacions.
+     * @param {NoticiaAlimentacionDeleteManyArgs} args - Arguments to filter NoticiaAlimentacions to delete.
+     * @example
+     * // Delete a few NoticiaAlimentacions
+     * const { count } = await prisma.noticiaAlimentacion.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends NoticiaAlimentacionDeleteManyArgs>(args?: SelectSubset<T, NoticiaAlimentacionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more NoticiaAlimentacions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NoticiaAlimentacionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many NoticiaAlimentacions
+     * const noticiaAlimentacion = await prisma.noticiaAlimentacion.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends NoticiaAlimentacionUpdateManyArgs>(args: SelectSubset<T, NoticiaAlimentacionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one NoticiaAlimentacion.
+     * @param {NoticiaAlimentacionUpsertArgs} args - Arguments to update or create a NoticiaAlimentacion.
+     * @example
+     * // Update or create a NoticiaAlimentacion
+     * const noticiaAlimentacion = await prisma.noticiaAlimentacion.upsert({
+     *   create: {
+     *     // ... data to create a NoticiaAlimentacion
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the NoticiaAlimentacion we want to update
+     *   }
+     * })
+     */
+    upsert<T extends NoticiaAlimentacionUpsertArgs>(args: SelectSubset<T, NoticiaAlimentacionUpsertArgs<ExtArgs>>): Prisma__NoticiaAlimentacionClient<$Result.GetResult<Prisma.$NoticiaAlimentacionPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of NoticiaAlimentacions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NoticiaAlimentacionCountArgs} args - Arguments to filter NoticiaAlimentacions to count.
+     * @example
+     * // Count the number of NoticiaAlimentacions
+     * const count = await prisma.noticiaAlimentacion.count({
+     *   where: {
+     *     // ... the filter for the NoticiaAlimentacions we want to count
+     *   }
+     * })
+    **/
+    count<T extends NoticiaAlimentacionCountArgs>(
+      args?: Subset<T, NoticiaAlimentacionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], NoticiaAlimentacionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a NoticiaAlimentacion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NoticiaAlimentacionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends NoticiaAlimentacionAggregateArgs>(args: Subset<T, NoticiaAlimentacionAggregateArgs>): Prisma.PrismaPromise<GetNoticiaAlimentacionAggregateType<T>>
+
+    /**
+     * Group by NoticiaAlimentacion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NoticiaAlimentacionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends NoticiaAlimentacionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: NoticiaAlimentacionGroupByArgs['orderBy'] }
+        : { orderBy?: NoticiaAlimentacionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, NoticiaAlimentacionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetNoticiaAlimentacionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the NoticiaAlimentacion model
+   */
+  readonly fields: NoticiaAlimentacionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for NoticiaAlimentacion.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__NoticiaAlimentacionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the NoticiaAlimentacion model
+   */ 
+  interface NoticiaAlimentacionFieldRefs {
+    readonly id: FieldRef<"NoticiaAlimentacion", 'String'>
+    readonly titulo: FieldRef<"NoticiaAlimentacion", 'String'>
+    readonly fuente: FieldRef<"NoticiaAlimentacion", 'String'>
+    readonly link: FieldRef<"NoticiaAlimentacion", 'String'>
+    readonly orden: FieldRef<"NoticiaAlimentacion", 'Int'>
+    readonly createdAt: FieldRef<"NoticiaAlimentacion", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * NoticiaAlimentacion findUnique
+   */
+  export type NoticiaAlimentacionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NoticiaAlimentacion
+     */
+    select?: NoticiaAlimentacionSelect<ExtArgs> | null
+    /**
+     * Filter, which NoticiaAlimentacion to fetch.
+     */
+    where: NoticiaAlimentacionWhereUniqueInput
+  }
+
+  /**
+   * NoticiaAlimentacion findUniqueOrThrow
+   */
+  export type NoticiaAlimentacionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NoticiaAlimentacion
+     */
+    select?: NoticiaAlimentacionSelect<ExtArgs> | null
+    /**
+     * Filter, which NoticiaAlimentacion to fetch.
+     */
+    where: NoticiaAlimentacionWhereUniqueInput
+  }
+
+  /**
+   * NoticiaAlimentacion findFirst
+   */
+  export type NoticiaAlimentacionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NoticiaAlimentacion
+     */
+    select?: NoticiaAlimentacionSelect<ExtArgs> | null
+    /**
+     * Filter, which NoticiaAlimentacion to fetch.
+     */
+    where?: NoticiaAlimentacionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of NoticiaAlimentacions to fetch.
+     */
+    orderBy?: NoticiaAlimentacionOrderByWithRelationInput | NoticiaAlimentacionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for NoticiaAlimentacions.
+     */
+    cursor?: NoticiaAlimentacionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` NoticiaAlimentacions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` NoticiaAlimentacions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of NoticiaAlimentacions.
+     */
+    distinct?: NoticiaAlimentacionScalarFieldEnum | NoticiaAlimentacionScalarFieldEnum[]
+  }
+
+  /**
+   * NoticiaAlimentacion findFirstOrThrow
+   */
+  export type NoticiaAlimentacionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NoticiaAlimentacion
+     */
+    select?: NoticiaAlimentacionSelect<ExtArgs> | null
+    /**
+     * Filter, which NoticiaAlimentacion to fetch.
+     */
+    where?: NoticiaAlimentacionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of NoticiaAlimentacions to fetch.
+     */
+    orderBy?: NoticiaAlimentacionOrderByWithRelationInput | NoticiaAlimentacionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for NoticiaAlimentacions.
+     */
+    cursor?: NoticiaAlimentacionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` NoticiaAlimentacions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` NoticiaAlimentacions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of NoticiaAlimentacions.
+     */
+    distinct?: NoticiaAlimentacionScalarFieldEnum | NoticiaAlimentacionScalarFieldEnum[]
+  }
+
+  /**
+   * NoticiaAlimentacion findMany
+   */
+  export type NoticiaAlimentacionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NoticiaAlimentacion
+     */
+    select?: NoticiaAlimentacionSelect<ExtArgs> | null
+    /**
+     * Filter, which NoticiaAlimentacions to fetch.
+     */
+    where?: NoticiaAlimentacionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of NoticiaAlimentacions to fetch.
+     */
+    orderBy?: NoticiaAlimentacionOrderByWithRelationInput | NoticiaAlimentacionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing NoticiaAlimentacions.
+     */
+    cursor?: NoticiaAlimentacionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` NoticiaAlimentacions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` NoticiaAlimentacions.
+     */
+    skip?: number
+    distinct?: NoticiaAlimentacionScalarFieldEnum | NoticiaAlimentacionScalarFieldEnum[]
+  }
+
+  /**
+   * NoticiaAlimentacion create
+   */
+  export type NoticiaAlimentacionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NoticiaAlimentacion
+     */
+    select?: NoticiaAlimentacionSelect<ExtArgs> | null
+    /**
+     * The data needed to create a NoticiaAlimentacion.
+     */
+    data: XOR<NoticiaAlimentacionCreateInput, NoticiaAlimentacionUncheckedCreateInput>
+  }
+
+  /**
+   * NoticiaAlimentacion createMany
+   */
+  export type NoticiaAlimentacionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many NoticiaAlimentacions.
+     */
+    data: NoticiaAlimentacionCreateManyInput | NoticiaAlimentacionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * NoticiaAlimentacion createManyAndReturn
+   */
+  export type NoticiaAlimentacionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NoticiaAlimentacion
+     */
+    select?: NoticiaAlimentacionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many NoticiaAlimentacions.
+     */
+    data: NoticiaAlimentacionCreateManyInput | NoticiaAlimentacionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * NoticiaAlimentacion update
+   */
+  export type NoticiaAlimentacionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NoticiaAlimentacion
+     */
+    select?: NoticiaAlimentacionSelect<ExtArgs> | null
+    /**
+     * The data needed to update a NoticiaAlimentacion.
+     */
+    data: XOR<NoticiaAlimentacionUpdateInput, NoticiaAlimentacionUncheckedUpdateInput>
+    /**
+     * Choose, which NoticiaAlimentacion to update.
+     */
+    where: NoticiaAlimentacionWhereUniqueInput
+  }
+
+  /**
+   * NoticiaAlimentacion updateMany
+   */
+  export type NoticiaAlimentacionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update NoticiaAlimentacions.
+     */
+    data: XOR<NoticiaAlimentacionUpdateManyMutationInput, NoticiaAlimentacionUncheckedUpdateManyInput>
+    /**
+     * Filter which NoticiaAlimentacions to update
+     */
+    where?: NoticiaAlimentacionWhereInput
+  }
+
+  /**
+   * NoticiaAlimentacion upsert
+   */
+  export type NoticiaAlimentacionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NoticiaAlimentacion
+     */
+    select?: NoticiaAlimentacionSelect<ExtArgs> | null
+    /**
+     * The filter to search for the NoticiaAlimentacion to update in case it exists.
+     */
+    where: NoticiaAlimentacionWhereUniqueInput
+    /**
+     * In case the NoticiaAlimentacion found by the `where` argument doesn't exist, create a new NoticiaAlimentacion with this data.
+     */
+    create: XOR<NoticiaAlimentacionCreateInput, NoticiaAlimentacionUncheckedCreateInput>
+    /**
+     * In case the NoticiaAlimentacion was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<NoticiaAlimentacionUpdateInput, NoticiaAlimentacionUncheckedUpdateInput>
+  }
+
+  /**
+   * NoticiaAlimentacion delete
+   */
+  export type NoticiaAlimentacionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NoticiaAlimentacion
+     */
+    select?: NoticiaAlimentacionSelect<ExtArgs> | null
+    /**
+     * Filter which NoticiaAlimentacion to delete.
+     */
+    where: NoticiaAlimentacionWhereUniqueInput
+  }
+
+  /**
+   * NoticiaAlimentacion deleteMany
+   */
+  export type NoticiaAlimentacionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which NoticiaAlimentacions to delete
+     */
+    where?: NoticiaAlimentacionWhereInput
+  }
+
+  /**
+   * NoticiaAlimentacion without action
+   */
+  export type NoticiaAlimentacionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NoticiaAlimentacion
+     */
+    select?: NoticiaAlimentacionSelect<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -125385,6 +127443,36 @@ export namespace Prisma {
   };
 
   export type UserWidgetLayoutScalarFieldEnum = (typeof UserWidgetLayoutScalarFieldEnum)[keyof typeof UserWidgetLayoutScalarFieldEnum]
+
+
+  export const ReservaSalaScalarFieldEnum: {
+    id: 'id',
+    solicitante: 'solicitante',
+    email: 'email',
+    userId: 'userId',
+    fecha: 'fecha',
+    horaInicio: 'horaInicio',
+    horaFin: 'horaFin',
+    motivo: 'motivo',
+    estado: 'estado',
+    tokenCancelacion: 'tokenCancelacion',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ReservaSalaScalarFieldEnum = (typeof ReservaSalaScalarFieldEnum)[keyof typeof ReservaSalaScalarFieldEnum]
+
+
+  export const NoticiaAlimentacionScalarFieldEnum: {
+    id: 'id',
+    titulo: 'titulo',
+    fuente: 'fuente',
+    link: 'link',
+    orden: 'orden',
+    createdAt: 'createdAt'
+  };
+
+  export type NoticiaAlimentacionScalarFieldEnum = (typeof NoticiaAlimentacionScalarFieldEnum)[keyof typeof NoticiaAlimentacionScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -134560,6 +136648,152 @@ export namespace Prisma {
     configJson?: StringWithAggregatesFilter<"UserWidgetLayout"> | string
     createdAt?: DateTimeWithAggregatesFilter<"UserWidgetLayout"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"UserWidgetLayout"> | Date | string
+  }
+
+  export type ReservaSalaWhereInput = {
+    AND?: ReservaSalaWhereInput | ReservaSalaWhereInput[]
+    OR?: ReservaSalaWhereInput[]
+    NOT?: ReservaSalaWhereInput | ReservaSalaWhereInput[]
+    id?: StringFilter<"ReservaSala"> | string
+    solicitante?: StringFilter<"ReservaSala"> | string
+    email?: StringFilter<"ReservaSala"> | string
+    userId?: StringNullableFilter<"ReservaSala"> | string | null
+    fecha?: StringFilter<"ReservaSala"> | string
+    horaInicio?: StringFilter<"ReservaSala"> | string
+    horaFin?: StringFilter<"ReservaSala"> | string
+    motivo?: StringFilter<"ReservaSala"> | string
+    estado?: StringFilter<"ReservaSala"> | string
+    tokenCancelacion?: StringFilter<"ReservaSala"> | string
+    createdAt?: DateTimeFilter<"ReservaSala"> | Date | string
+    updatedAt?: DateTimeFilter<"ReservaSala"> | Date | string
+  }
+
+  export type ReservaSalaOrderByWithRelationInput = {
+    id?: SortOrder
+    solicitante?: SortOrder
+    email?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    fecha?: SortOrder
+    horaInicio?: SortOrder
+    horaFin?: SortOrder
+    motivo?: SortOrder
+    estado?: SortOrder
+    tokenCancelacion?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ReservaSalaWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    tokenCancelacion?: string
+    AND?: ReservaSalaWhereInput | ReservaSalaWhereInput[]
+    OR?: ReservaSalaWhereInput[]
+    NOT?: ReservaSalaWhereInput | ReservaSalaWhereInput[]
+    solicitante?: StringFilter<"ReservaSala"> | string
+    email?: StringFilter<"ReservaSala"> | string
+    userId?: StringNullableFilter<"ReservaSala"> | string | null
+    fecha?: StringFilter<"ReservaSala"> | string
+    horaInicio?: StringFilter<"ReservaSala"> | string
+    horaFin?: StringFilter<"ReservaSala"> | string
+    motivo?: StringFilter<"ReservaSala"> | string
+    estado?: StringFilter<"ReservaSala"> | string
+    createdAt?: DateTimeFilter<"ReservaSala"> | Date | string
+    updatedAt?: DateTimeFilter<"ReservaSala"> | Date | string
+  }, "id" | "tokenCancelacion">
+
+  export type ReservaSalaOrderByWithAggregationInput = {
+    id?: SortOrder
+    solicitante?: SortOrder
+    email?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    fecha?: SortOrder
+    horaInicio?: SortOrder
+    horaFin?: SortOrder
+    motivo?: SortOrder
+    estado?: SortOrder
+    tokenCancelacion?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ReservaSalaCountOrderByAggregateInput
+    _max?: ReservaSalaMaxOrderByAggregateInput
+    _min?: ReservaSalaMinOrderByAggregateInput
+  }
+
+  export type ReservaSalaScalarWhereWithAggregatesInput = {
+    AND?: ReservaSalaScalarWhereWithAggregatesInput | ReservaSalaScalarWhereWithAggregatesInput[]
+    OR?: ReservaSalaScalarWhereWithAggregatesInput[]
+    NOT?: ReservaSalaScalarWhereWithAggregatesInput | ReservaSalaScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ReservaSala"> | string
+    solicitante?: StringWithAggregatesFilter<"ReservaSala"> | string
+    email?: StringWithAggregatesFilter<"ReservaSala"> | string
+    userId?: StringNullableWithAggregatesFilter<"ReservaSala"> | string | null
+    fecha?: StringWithAggregatesFilter<"ReservaSala"> | string
+    horaInicio?: StringWithAggregatesFilter<"ReservaSala"> | string
+    horaFin?: StringWithAggregatesFilter<"ReservaSala"> | string
+    motivo?: StringWithAggregatesFilter<"ReservaSala"> | string
+    estado?: StringWithAggregatesFilter<"ReservaSala"> | string
+    tokenCancelacion?: StringWithAggregatesFilter<"ReservaSala"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"ReservaSala"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ReservaSala"> | Date | string
+  }
+
+  export type NoticiaAlimentacionWhereInput = {
+    AND?: NoticiaAlimentacionWhereInput | NoticiaAlimentacionWhereInput[]
+    OR?: NoticiaAlimentacionWhereInput[]
+    NOT?: NoticiaAlimentacionWhereInput | NoticiaAlimentacionWhereInput[]
+    id?: StringFilter<"NoticiaAlimentacion"> | string
+    titulo?: StringFilter<"NoticiaAlimentacion"> | string
+    fuente?: StringFilter<"NoticiaAlimentacion"> | string
+    link?: StringFilter<"NoticiaAlimentacion"> | string
+    orden?: IntFilter<"NoticiaAlimentacion"> | number
+    createdAt?: DateTimeFilter<"NoticiaAlimentacion"> | Date | string
+  }
+
+  export type NoticiaAlimentacionOrderByWithRelationInput = {
+    id?: SortOrder
+    titulo?: SortOrder
+    fuente?: SortOrder
+    link?: SortOrder
+    orden?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type NoticiaAlimentacionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: NoticiaAlimentacionWhereInput | NoticiaAlimentacionWhereInput[]
+    OR?: NoticiaAlimentacionWhereInput[]
+    NOT?: NoticiaAlimentacionWhereInput | NoticiaAlimentacionWhereInput[]
+    titulo?: StringFilter<"NoticiaAlimentacion"> | string
+    fuente?: StringFilter<"NoticiaAlimentacion"> | string
+    link?: StringFilter<"NoticiaAlimentacion"> | string
+    orden?: IntFilter<"NoticiaAlimentacion"> | number
+    createdAt?: DateTimeFilter<"NoticiaAlimentacion"> | Date | string
+  }, "id">
+
+  export type NoticiaAlimentacionOrderByWithAggregationInput = {
+    id?: SortOrder
+    titulo?: SortOrder
+    fuente?: SortOrder
+    link?: SortOrder
+    orden?: SortOrder
+    createdAt?: SortOrder
+    _count?: NoticiaAlimentacionCountOrderByAggregateInput
+    _avg?: NoticiaAlimentacionAvgOrderByAggregateInput
+    _max?: NoticiaAlimentacionMaxOrderByAggregateInput
+    _min?: NoticiaAlimentacionMinOrderByAggregateInput
+    _sum?: NoticiaAlimentacionSumOrderByAggregateInput
+  }
+
+  export type NoticiaAlimentacionScalarWhereWithAggregatesInput = {
+    AND?: NoticiaAlimentacionScalarWhereWithAggregatesInput | NoticiaAlimentacionScalarWhereWithAggregatesInput[]
+    OR?: NoticiaAlimentacionScalarWhereWithAggregatesInput[]
+    NOT?: NoticiaAlimentacionScalarWhereWithAggregatesInput | NoticiaAlimentacionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"NoticiaAlimentacion"> | string
+    titulo?: StringWithAggregatesFilter<"NoticiaAlimentacion"> | string
+    fuente?: StringWithAggregatesFilter<"NoticiaAlimentacion"> | string
+    link?: StringWithAggregatesFilter<"NoticiaAlimentacion"> | string
+    orden?: IntWithAggregatesFilter<"NoticiaAlimentacion"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"NoticiaAlimentacion"> | Date | string
   }
 
   export type RoleCreateInput = {
@@ -144765,6 +146999,174 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ReservaSalaCreateInput = {
+    id?: string
+    solicitante: string
+    email: string
+    userId?: string | null
+    fecha: string
+    horaInicio: string
+    horaFin: string
+    motivo: string
+    estado?: string
+    tokenCancelacion?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ReservaSalaUncheckedCreateInput = {
+    id?: string
+    solicitante: string
+    email: string
+    userId?: string | null
+    fecha: string
+    horaInicio: string
+    horaFin: string
+    motivo: string
+    estado?: string
+    tokenCancelacion?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ReservaSalaUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    solicitante?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha?: StringFieldUpdateOperationsInput | string
+    horaInicio?: StringFieldUpdateOperationsInput | string
+    horaFin?: StringFieldUpdateOperationsInput | string
+    motivo?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    tokenCancelacion?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReservaSalaUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    solicitante?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha?: StringFieldUpdateOperationsInput | string
+    horaInicio?: StringFieldUpdateOperationsInput | string
+    horaFin?: StringFieldUpdateOperationsInput | string
+    motivo?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    tokenCancelacion?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReservaSalaCreateManyInput = {
+    id?: string
+    solicitante: string
+    email: string
+    userId?: string | null
+    fecha: string
+    horaInicio: string
+    horaFin: string
+    motivo: string
+    estado?: string
+    tokenCancelacion?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ReservaSalaUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    solicitante?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha?: StringFieldUpdateOperationsInput | string
+    horaInicio?: StringFieldUpdateOperationsInput | string
+    horaFin?: StringFieldUpdateOperationsInput | string
+    motivo?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    tokenCancelacion?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReservaSalaUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    solicitante?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha?: StringFieldUpdateOperationsInput | string
+    horaInicio?: StringFieldUpdateOperationsInput | string
+    horaFin?: StringFieldUpdateOperationsInput | string
+    motivo?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    tokenCancelacion?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NoticiaAlimentacionCreateInput = {
+    id?: string
+    titulo: string
+    fuente: string
+    link: string
+    orden?: number
+    createdAt?: Date | string
+  }
+
+  export type NoticiaAlimentacionUncheckedCreateInput = {
+    id?: string
+    titulo: string
+    fuente: string
+    link: string
+    orden?: number
+    createdAt?: Date | string
+  }
+
+  export type NoticiaAlimentacionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    titulo?: StringFieldUpdateOperationsInput | string
+    fuente?: StringFieldUpdateOperationsInput | string
+    link?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NoticiaAlimentacionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    titulo?: StringFieldUpdateOperationsInput | string
+    fuente?: StringFieldUpdateOperationsInput | string
+    link?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NoticiaAlimentacionCreateManyInput = {
+    id?: string
+    titulo: string
+    fuente: string
+    link: string
+    orden?: number
+    createdAt?: Date | string
+  }
+
+  export type NoticiaAlimentacionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    titulo?: StringFieldUpdateOperationsInput | string
+    fuente?: StringFieldUpdateOperationsInput | string
+    link?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NoticiaAlimentacionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    titulo?: StringFieldUpdateOperationsInput | string
+    fuente?: StringFieldUpdateOperationsInput | string
+    link?: StringFieldUpdateOperationsInput | string
+    orden?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -151022,6 +153424,86 @@ export namespace Prisma {
     configJson?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type ReservaSalaCountOrderByAggregateInput = {
+    id?: SortOrder
+    solicitante?: SortOrder
+    email?: SortOrder
+    userId?: SortOrder
+    fecha?: SortOrder
+    horaInicio?: SortOrder
+    horaFin?: SortOrder
+    motivo?: SortOrder
+    estado?: SortOrder
+    tokenCancelacion?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ReservaSalaMaxOrderByAggregateInput = {
+    id?: SortOrder
+    solicitante?: SortOrder
+    email?: SortOrder
+    userId?: SortOrder
+    fecha?: SortOrder
+    horaInicio?: SortOrder
+    horaFin?: SortOrder
+    motivo?: SortOrder
+    estado?: SortOrder
+    tokenCancelacion?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ReservaSalaMinOrderByAggregateInput = {
+    id?: SortOrder
+    solicitante?: SortOrder
+    email?: SortOrder
+    userId?: SortOrder
+    fecha?: SortOrder
+    horaInicio?: SortOrder
+    horaFin?: SortOrder
+    motivo?: SortOrder
+    estado?: SortOrder
+    tokenCancelacion?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type NoticiaAlimentacionCountOrderByAggregateInput = {
+    id?: SortOrder
+    titulo?: SortOrder
+    fuente?: SortOrder
+    link?: SortOrder
+    orden?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type NoticiaAlimentacionAvgOrderByAggregateInput = {
+    orden?: SortOrder
+  }
+
+  export type NoticiaAlimentacionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    titulo?: SortOrder
+    fuente?: SortOrder
+    link?: SortOrder
+    orden?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type NoticiaAlimentacionMinOrderByAggregateInput = {
+    id?: SortOrder
+    titulo?: SortOrder
+    fuente?: SortOrder
+    link?: SortOrder
+    orden?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type NoticiaAlimentacionSumOrderByAggregateInput = {
+    orden?: SortOrder
   }
 
   export type UserCreateNestedManyWithoutRoleInput = {
@@ -169593,6 +172075,14 @@ export namespace Prisma {
      * @deprecated Use UserWidgetLayoutDefaultArgs instead
      */
     export type UserWidgetLayoutArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UserWidgetLayoutDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ReservaSalaDefaultArgs instead
+     */
+    export type ReservaSalaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ReservaSalaDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use NoticiaAlimentacionDefaultArgs instead
+     */
+    export type NoticiaAlimentacionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = NoticiaAlimentacionDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

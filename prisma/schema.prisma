@@ -1772,6 +1772,37 @@ model UserWidgetLayout {
   @@map("user_widget_layouts")
 }
 
+// ============================================================================
+// SALA DE REUNIONES & COLABORADORES
+// ============================================================================
 
+model ReservaSala {
+  id               String   @id @default(uuid())
+  solicitante      String
+  email            String
+  userId           String?
+  fecha            String   // YYYY-MM-DD
+  horaInicio       String   // HH:MM
+  horaFin          String   // HH:MM
+  motivo           String   @db.Text
+  estado           String   @default("CONFIRMADA") // CONFIRMADA | CANCELADA
+  tokenCancelacion String   @unique @default(uuid())
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 
+  @@index([fecha])
+  @@index([estado])
+  @@index([tokenCancelacion])
+  @@map("reservas_sala")
+}
 
+model NoticiaAlimentacion {
+  id        String   @id @default(uuid())
+  titulo    String   @db.Text
+  fuente    String
+  link      String   @db.Text
+  orden     Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@map("noticias_alimentacion")
+}

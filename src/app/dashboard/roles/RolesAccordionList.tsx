@@ -1,25 +1,20 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo, useRef } from 'react'
 import EditRoleForm from './EditRoleForm'
 import CopyRoleForm from './CopyRoleForm'
 import RolePermissionList from './RolePermissionList'
-
-type PermissionDef = {
-    id: string
-    name: string
-    description: string
-    category: string
-}
+import { RoleUsersPopup, RolePermissionsPopup, RoleUser, PermissionDef } from './RoleHoverPopups'
 
 type RoleItem = {
     id: string
     name: string
     description: string | null
     permissions: string
-    _count: {
+    _count?: {
         users: number
     }
+    users?: RoleUser[]
 }
 
 interface Props {
@@ -30,6 +25,58 @@ interface Props {
 export default function RolesAccordionList({ roles, availablePermissions }: Props) {
     const [openRoles, setOpenRoles] = useState<Record<string, boolean>>({})
     const [searchTerm, setSearchTerm] = useState('')
+
+    // Popups flotantes al hacer hover
+    const [activeUsersPopup, setActiveUsersPopup] = useState<{
+        roleName: string
+        users: RoleUser[]
+        rect: DOMRect | null
+    } | null>(null)
+
+    const [activePermsPopup, setActivePermsPopup] = useState<{
+        roleName: string
+        rolePerms: string[]
+        rect: DOMRect | null
+    } | null>(null)
+
+    const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+    const clearCloseTimeout = () => {
+        if (closeTimeoutRef.current) {
+            clearTimeout(closeTimeoutRef.current)
+            closeTimeoutRef.current = null
+        }
+    }
+
+    const scheduleClosePopups = () => {
+        clearCloseTimeout()
+        closeTimeoutRef.current = setTimeout(() => {
+            setActiveUsersPopup(null)
+            setActivePermsPopup(null)
+        }, 180)
+    }
+
+    const handleUsersBadgeEnter = (e: React.MouseEvent<HTMLElement>, role: RoleItem) => {
+        clearCloseTimeout()
+        setActivePermsPopup(null)
+        const rect = e.currentTarget.getBoundingClientRect()
+        setActiveUsersPopup({
+            roleName: role.name,
+            users: role.users || [],
+            rect
+        })
+    }
+
+    const handlePermsBadgeEnter = (e: React.MouseEvent<HTMLElement>, role: RoleItem, rolePerms: string[]) => {
+        clearCloseTimeout()
+        setActiveUsersPopup(null)
+        const rect = e.currentTarget.getBoundingClientRect()
+        setActivePermsPopup({
+            roleName: role.name,
+            rolePerms,
+            rect
+        })
+    }
 
     const toggleRole = (roleId: string) => {
         setOpenRoles(prev => ({ ...prev, [roleId]: !prev[roleId] }))
@@ -45,11 +92,22 @@ export default function RolesAccordionList({ roles, availablePermissions }: Prop
         setOpenRoles({})
     }
 
-    const filteredRoles = roles.filter(r => {
-        if (!searchTerm.trim()) return true
+    // Ordenamiento alfabético estricto en español (A - Z)
+    const sortedRoles = useMemo(() => {
+        return [...roles].sort((a, b) => 
+            a.name.localeCompare(b.name, 'es', { sensitivity: 'base', numeric: true })
+        )
+    }, [roles])
+
+    // Filtrado según término de búsqueda
+    const filteredRoles = useMemo(() => {
+        if (!searchTerm.trim()) return sortedRoles
         const term = searchTerm.toLowerCase()
-        return r.name.toLowerCase().includes(term) || (r.description && r.description.toLowerCase().includes(term))
-    })
+        return sortedRoles.filter(r => 
+            r.name.toLowerCase().includes(term) || 
+            (r.description && r.description.toLowerCase().includes(term))
+        )
+    }, [sortedRoles, searchTerm])
 
     return (
         <div className="space-y-4">
@@ -104,6 +162,7 @@ export default function RolesAccordionList({ roles, availablePermissions }: Prop
                     }
 
                     const activePermsCount = rolePerms.filter(rp => availablePermissions.some(ap => ap.id === rp)).length
+                    const userCount = role.users ? role.users.length : (role._count?.users ?? 0)
 
                     return (
                         <div
@@ -132,12 +191,38 @@ export default function RolesAccordionList({ roles, availablePermissions }: Prop
                                             <h3 className="text-base font-bold text-gray-900 truncate">
                                                 {role.name}
                                             </h3>
-                                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-cyan-50 text-cyan-700 border border-cyan-100">
-                                                {role._count.users} {role._count.users === 1 ? 'Usuario' : 'Usuarios'}
-                                            </span>
-                                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-600 border border-slate-200">
-                                                {activePermsCount} / {availablePermissions.length} accesos
-                                            </span>
+
+                                            {/* Badge 1: Conteo de Usuarios con Popup al hacer Hover */}
+                                            <div
+                                                className="inline-flex items-center"
+                                                onMouseEnter={(e) => handleUsersBadgeEnter(e, role)}
+                                                onMouseLeave={scheduleClosePopups}
+                                                onClick={(e) => e.stopPropagation()}
+                                            >
+                                                <span 
+                                                    title="Pasa el cursor para ver usuarios asociados"
+                                                    className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-cyan-50 text-cyan-800 border border-cyan-200 hover:bg-cyan-100 hover:border-cyan-300 transition-all cursor-help shadow-2xs"
+                                                >
+                                                    <span>👥</span>
+                                                    <span>{userCount} {userCount === 1 ? 'Usuario' : 'Usuarios'}</span>
+                                                </span>
+                                            </div>
+
+                                            {/* Badge 2: Accesos y Módulos con Popup al hacer Hover */}
+                                            <div
+                                                className="inline-flex items-center"
+                                                onMouseEnter={(e) => handlePermsBadgeEnter(e, role, rolePerms)}
+                                                onMouseLeave={scheduleClosePopups}
+                                                onClick={(e) => e.stopPropagation()}
+                                            >
+                                                <span 
+                                                    title="Pasa el cursor para ver módulos asociados y desasociados"
+                                                    className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-700 border border-slate-200 hover:bg-slate-200 hover:border-slate-300 transition-all cursor-help shadow-2xs"
+                                                >
+                                                    <span>🛡️</span>
+                                                    <span>{activePermsCount} / {availablePermissions.length} accesos</span>
+                                                </span>
+                                            </div>
                                         </div>
                                         <p className="text-xs text-gray-500 mt-1 line-clamp-1">
                                             {role.description || 'Sin descripción configurada.'}
@@ -205,6 +290,26 @@ export default function RolesAccordionList({ roles, availablePermissions }: Prop
                     </div>
                 )}
             </div>
+
+            {/* POPUPS FLOTANTES (PORTAL) */}
+            <RoleUsersPopup
+                isOpen={!!activeUsersPopup}
+                roleName={activeUsersPopup?.roleName || ''}
+                users={activeUsersPopup?.users || []}
+                anchorRect={activeUsersPopup?.rect || null}
+                onMouseEnter={clearCloseTimeout}
+                onMouseLeave={scheduleClosePopups}
+            />
+
+            <RolePermissionsPopup
+                isOpen={!!activePermsPopup}
+                roleName={activePermsPopup?.roleName || ''}
+                rolePerms={activePermsPopup?.rolePerms || []}
+                availablePermissions={availablePermissions}
+                anchorRect={activePermsPopup?.rect || null}
+                onMouseEnter={clearCloseTimeout}
+                onMouseLeave={scheduleClosePopups}
+            />
         </div>
     )
 }

@@ -146,7 +146,7 @@ export default function LoginPage() {
                                 required
                                 autoComplete="username"
                                 className="w-full px-5 py-3 rounded-xl bg-black/20 border border-white/10 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-200"
-                                placeholder="Ej: laviles"
+                                placeholder="Ej: usuario"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
                             />

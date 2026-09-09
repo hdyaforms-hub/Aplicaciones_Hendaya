@@ -306,11 +306,19 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
         ]
     },
     {
-        name: 'Ayuda',
-        icon: '❓',
-        requiredPermission: ['manage_anexos', 'view_anexos', 'view_conversacion'],
+        name: 'Colaboradores',
+        icon: '👥',
+        requiredPermission: ['view_conversacion', 'view_sala_reuniones'],
         subItems: [
             { name: 'Conversación', href: '/dashboard/ayuda/conversacion', requiredPermission: 'view_conversacion' },
+            { name: 'Reserva Sala Reuniones', href: '/dashboard/colaboradores/sala-reuniones', requiredPermission: 'view_sala_reuniones' }
+        ]
+    },
+    {
+        name: 'Ayuda',
+        icon: '❓',
+        requiredPermission: ['manage_anexos', 'view_anexos'],
+        subItems: [
             { name: 'Agregar Anexos', href: '/dashboard/ayuda/agregar', requiredPermission: 'manage_anexos' },
             { name: 'Ver Anexos', href: '/dashboard/ayuda/ver', requiredPermission: 'view_anexos' }
         ]

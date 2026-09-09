@@ -65,3 +65,6 @@ src/generated/client/*.tmp*
 
 # certs
 certs/
+
+# agent scratch / outputs
+Claude outputs/

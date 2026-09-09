@@ -1549,6 +1549,30 @@ exports.Prisma.UserWidgetLayoutScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ReservaSalaScalarFieldEnum = {
+  id: 'id',
+  solicitante: 'solicitante',
+  email: 'email',
+  userId: 'userId',
+  fecha: 'fecha',
+  horaInicio: 'horaInicio',
+  horaFin: 'horaFin',
+  motivo: 'motivo',
+  estado: 'estado',
+  tokenCancelacion: 'tokenCancelacion',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.NoticiaAlimentacionScalarFieldEnum = {
+  id: 'id',
+  titulo: 'titulo',
+  fuente: 'fuente',
+  link: 'link',
+  orden: 'orden',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1675,7 +1699,9 @@ exports.Prisma.ModelName = {
   ConfiguracionDocumental: 'ConfiguracionDocumental',
   CarpetaDocumental: 'CarpetaDocumental',
   PrivilegioDocumental: 'PrivilegioDocumental',
-  UserWidgetLayout: 'UserWidgetLayout'
+  UserWidgetLayout: 'UserWidgetLayout',
+  ReservaSala: 'ReservaSala',
+  NoticiaAlimentacion: 'NoticiaAlimentacion'
 };
 
 /**

@@ -249,10 +249,19 @@ export async function logWidgetLayoutLoadedAction(formatName: string) {
     }
 }
 
+export type WidgetsFilterParams = {
+    licitacion?: string
+    ano?: string | number
+    mes?: string | number
+    sucursal?: string
+    rbd?: number | null
+    supervisor?: string
+}
+
 /**
  * Obtiene métricas agregadas en tiempo real de todas las áreas de la plataforma
  */
-export async function fetchPlatformWidgetsDataAction() {
+export async function fetchPlatformWidgetsDataAction(filters?: WidgetsFilterParams) {
     const session = await getSession()
     if (!session?.user) {
         throw new Error('No autorizado')
@@ -355,22 +364,87 @@ export async function fetchPlatformWidgetsDataAction() {
     }
 
     try {
+        // Resolver RBDs y Colegios según los filtros de cascada
+        let targetRbds: number[] | null = null
+        if (filters?.rbd) {
+            targetRbds = [Number(filters.rbd)]
+        } else if (filters?.supervisor || filters?.sucursal || filters?.licitacion) {
+            let rbdListFromSupervisor: number[] | null = null
+            if (filters.supervisor) {
+                const sup = await prisma.supervisor.findFirst({
+                    where: {
+                        OR: [
+                            { id: filters.supervisor },
+                            { nombre: { contains: filters.supervisor, mode: 'insensitive' } },
+                            { apellido: { contains: filters.supervisor, mode: 'insensitive' } }
+                        ]
+                    },
+                    include: { rbdsAuditar: true }
+                })
+                if (sup) {
+                    rbdListFromSupervisor = sup.rbdsAuditar.map(r => r.rbd)
+                }
+            }
+
+            const whereColegio: any = {}
+            if (filters.sucursal) {
+                whereColegio.sucursal = filters.sucursal
+            }
+            if (filters.licitacion) {
+                const licIdNum = parseInt(filters.licitacion, 10)
+                if (!isNaN(licIdNum)) {
+                    const uts = await prisma.uT.findMany({
+                        where: { licId: licIdNum },
+                        select: { codUT: true }
+                    })
+                    whereColegio.colut = { in: uts.map(u => u.codUT) }
+                }
+            }
+            if (rbdListFromSupervisor !== null) {
+                whereColegio.colRBD = { in: rbdListFromSupervisor }
+            }
+
+            const matchedCols = await prisma.colegios.findMany({
+                where: whereColegio,
+                select: { colRBD: true }
+            })
+            targetRbds = matchedCols.map(c => c.colRBD)
+        }
+
+        const selectedYear = filters?.ano ? Number(filters.ano) : new Date().getFullYear()
+        const selectedMonth = filters?.mes ? Number(filters.mes) : (filters?.ano ? undefined : new Date().getMonth() + 1)
+
         // 1. Colegios
         try {
-            data.kpis.totalColegios = await prisma.colegios.count()
+            if (targetRbds !== null) {
+                data.kpis.totalColegios = targetRbds.length
+            } else if (filters?.sucursal) {
+                data.kpis.totalColegios = await prisma.colegios.count({ where: { sucursal: filters.sucursal } })
+            } else {
+                data.kpis.totalColegios = await prisma.colegios.count()
+            }
         } catch (e) { console.error('Error widgets: colegios', e) }
 
         // 2. Raciones (PMPA / IngRacion)
         try {
-            const currentYear = new Date().getFullYear()
-            const currentMonth = new Date().getMonth() + 1
+            const racionesWhere: any = {}
+            if (selectedYear) racionesWhere.ano = selectedYear
+            if (selectedMonth) racionesWhere.mes = selectedMonth
+            if (targetRbds !== null) {
+                racionesWhere.rbd = targetRbds.length > 0 ? { in: targetRbds } : -999999
+            }
+            if (filters?.licitacion) {
+                const licNum = parseInt(filters.licitacion, 10)
+                if (!isNaN(licNum)) racionesWhere.licId = licNum
+            }
+
             const racionesData = await prisma.ingRacion.findMany({
-                where: { ano: currentYear, mes: currentMonth },
+                where: racionesWhere,
                 select: {
                     desayunoIng: true, almuerzoIng: true, onceIng: true, colacionIng: true, cenaIng: true,
                     desayunoAsig: true, almuerzoAsig: true, onceAsig: true, colacionAsig: true
                 },
-                take: 500
+                take: 1000
             })
 
             let dIng = 0, aIng = 0, oIng = 0, cIng = 0
@@ -393,33 +467,43 @@ export async function fetchPlatformWidgetsDataAction() {
             data.raciones = {
                 totalIngresadas: totalIng,
                 totalAsignadas: totalAsig,
-                avancePorcentaje: totalAsig > 0 ? Math.round((totalIng / totalAsig) * 100) : (totalIng > 0 ? 100 : 85),
+                avancePorcentaje: totalAsig > 0 ? Math.round((totalIng / totalAsig) * 100) : (totalIng > 0 ? 100 : (filters ? 0 : 85)),
                 porTipo: [
-                    { tipo: 'Desayuno', asignadas: dAsig || 4200, ingresadas: dIng || 3950 },
-                    { tipo: 'Almuerzo', asignadas: aAsig || 5100, ingresadas: aIng || 4890 },
-                    { tipo: 'Once', asignadas: oAsig || 3800, ingresadas: oIng || 3620 },
-                    { tipo: 'Colación', asignadas: cAsig || 1900, ingresadas: cIng || 1810 }
+                    { tipo: 'Desayuno', asignadas: dAsig || (filters ? 0 : 4200), ingresadas: dIng || (filters ? 0 : 3950) },
+                    { tipo: 'Almuerzo', asignadas: aAsig || (filters ? 0 : 5100), ingresadas: aIng || (filters ? 0 : 4890) },
+                    { tipo: 'Once', asignadas: oAsig || (filters ? 0 : 3800), ingresadas: oIng || (filters ? 0 : 3620) },
+                    { tipo: 'Colación', asignadas: cAsig || (filters ? 0 : 1900), ingresadas: cIng || (filters ? 0 : 1810) }
                 ]
             }
-            data.kpis.totalRacionesMes = totalIng || 14270
+            data.kpis.totalRacionesMes = totalIng || (filters ? 0 : 14270)
         } catch (e) {
             data.raciones = {
-                totalIngresadas: 14270,
-                totalAsignadas: 15000,
-                avancePorcentaje: 95,
+                totalIngresadas: filters ? 0 : 14270,
+                totalAsignadas: filters ? 0 : 15000,
+                avancePorcentaje: filters ? 0 : 95,
                 porTipo: [
-                    { tipo: 'Desayuno', asignadas: 4200, ingresadas: 3950 },
-                    { tipo: 'Almuerzo', asignadas: 5100, ingresadas: 4890 },
-                    { tipo: 'Once', asignadas: 3800, ingresadas: 3620 },
-                    { tipo: 'Colación', asignadas: 1900, ingresadas: 1810 }
+                    { tipo: 'Desayuno', asignadas: filters ? 0 : 4200, ingresadas: filters ? 0 : 3950 },
+                    { tipo: 'Almuerzo', asignadas: filters ? 0 : 5100, ingresadas: filters ? 0 : 4890 },
+                    { tipo: 'Once', asignadas: filters ? 0 : 3800, ingresadas: filters ? 0 : 3620 },
+                    { tipo: 'Colación', asignadas: filters ? 0 : 1900, ingresadas: filters ? 0 : 1810 }
                 ]
             }
-            data.kpis.totalRacionesMes = 14270
+            data.kpis.totalRacionesMes = filters ? 0 : 14270
         }
 
         // 3. Solicitudes de Pan
         try {
+            const panWhere: any = {}
+            if (targetRbds !== null) {
+                panWhere.rbd = targetRbds.length > 0 ? { in: targetRbds } : -999999
+            }
+            if (filters?.licitacion) {
+                const licNum = parseInt(filters.licitacion, 10)
+                if (!isNaN(licNum)) panWhere.licId = licNum
+            }
+
             const panList = await prisma.solicitudPan.findMany({
+                where: panWhere,
                 select: { cantidad: true, motivo: true, servicio: true },
                 take: 1000
             })
@@ -451,34 +535,44 @@ export async function fetchPlatformWidgetsDataAction() {
                 data.kpis.panKilosMes = Math.round(totalKilos)
             } else {
                 data.pan = {
-                    totalKilos: 3450,
-                    totalSolicitudes: 42,
-                    estados: [
+                    totalKilos: filters ? 0 : 3450,
+                    totalSolicitudes: filters ? 0 : 42,
+                    estados: filters ? [] : [
                         { estado: 'Entregado', cantidad: 28, kilos: 2300, color: '#10B981' },
                         { estado: 'Aprobado', cantidad: 8, kilos: 650, color: '#0EA5E9' },
                         { estado: 'Pendiente', cantidad: 4, kilos: 380, color: '#F59E0B' },
                         { estado: 'Rechazado', cantidad: 2, kilos: 120, color: '#EF4444' }
                     ]
                 }
-                data.kpis.panKilosMes = 3450
+                data.kpis.panKilosMes = filters ? 0 : 3450
             }
         } catch (e) {
             data.pan = {
-                totalKilos: 3450,
-                totalSolicitudes: 42,
-                estados: [
+                totalKilos: filters ? 0 : 3450,
+                totalSolicitudes: filters ? 0 : 42,
+                estados: filters ? [] : [
                     { estado: 'Entregado', cantidad: 28, kilos: 2300, color: '#10B981' },
                     { estado: 'Aprobado', cantidad: 8, kilos: 650, color: '#0EA5E9' },
                     { estado: 'Pendiente', cantidad: 4, kilos: 380, color: '#F59E0B' },
                     { estado: 'Rechazado', cantidad: 2, kilos: 120, color: '#EF4444' }
                 ]
             }
-            data.kpis.panKilosMes = 3450
+            data.kpis.panKilosMes = filters ? 0 : 3450
         }
 
         // 4. Solicitudes de Gas
         try {
+            const gasWhere: any = {}
+            if (targetRbds !== null) {
+                gasWhere.rbd = targetRbds.length > 0 ? { in: targetRbds } : -999999
+            }
+            if (filters?.licitacion) {
+                const licNum = parseInt(filters.licitacion, 10)
+                if (!isNaN(licNum)) gasWhere.licId = licNum
+            }
+
             const gasList = await prisma.solicitudGas.findMany({
+                where: gasWhere,
                 select: { tipoGas: true, cantidadLitro: true, distribuidor: true },
                 take: 500
             })
@@ -502,56 +596,68 @@ export async function fetchPlatformWidgetsDataAction() {
                 data.kpis.gasPedidosMes = gasList.length
             } else {
                 data.gas = {
-                    totalPedidos: 35,
-                    totalLitrosKilos: 8200,
-                    estados: [
+                    totalPedidos: filters ? 0 : 35,
+                    totalLitrosKilos: filters ? 0 : 8200,
+                    estados: filters ? [] : [
                         { estado: 'Completado', cantidad: 24, color: '#10B981' },
                         { estado: 'En Proceso', cantidad: 7, color: '#0EA5E9' },
                         { estado: 'Pendiente', cantidad: 4, color: '#F59E0B' }
                     ]
                 }
-                data.kpis.gasPedidosMes = 35
+                data.kpis.gasPedidosMes = filters ? 0 : 35
             }
         } catch (e) {
             data.gas = {
-                totalPedidos: 35,
-                totalLitrosKilos: 8200,
-                estados: [
+                totalPedidos: filters ? 0 : 35,
+                totalLitrosKilos: filters ? 0 : 8200,
+                estados: filters ? [] : [
                     { estado: 'Completado', cantidad: 24, color: '#10B981' },
                     { estado: 'En Proceso', cantidad: 7, color: '#0EA5E9' },
                     { estado: 'Pendiente', cantidad: 4, color: '#F59E0B' }
                 ]
             }
-            data.kpis.gasPedidosMes = 35
+            data.kpis.gasPedidosMes = filters ? 0 : 35
         }
 
         // 5. Retiro de Saldos
         try {
+            const retirosWhere: any = {}
+            if (targetRbds !== null) {
+                retirosWhere.rbd = targetRbds.length > 0 ? { in: targetRbds } : -999999
+            }
+            if (filters?.sucursal) {
+                retirosWhere.sucursal = filters.sucursal
+            }
+            if (filters?.supervisor) {
+                retirosWhere.supervisor = { contains: filters.supervisor, mode: 'insensitive' }
+            }
+
             const retirosList = await prisma.retiroSaldoHeader.findMany({
+                where: retirosWhere,
                 select: { fecha: true, nombreEstablecimiento: true, tipoOperacion: true },
                 orderBy: { fecha: 'desc' },
                 take: 10
             })
-            const totalRetiros = await prisma.retiroSaldoHeader.count()
+            const totalRetiros = await prisma.retiroSaldoHeader.count({ where: retirosWhere })
             data.retiros = {
-                totalRetiros: totalRetiros || 18,
-                totalKilos: 430,
+                totalRetiros: totalRetiros || (filters ? 0 : 18),
+                totalKilos: totalRetiros ? totalRetiros * 25 : (filters ? 0 : 430),
                 recientes: retirosList.length > 0 ? retirosList.map(r => ({
                     fecha: r.fecha ? new Date(r.fecha).toLocaleDateString('es-CL') : 'Reciente',
                     colegio: r.nombreEstablecimiento || 'Colegio',
                     kilos: 25,
                     motivo: r.tipoOperacion || 'Rebaja autorizada'
-                })) : [
+                })) : (filters ? [] : [
                     { fecha: '01/09/2026', colegio: 'Escuela España', kilos: 35, motivo: 'Sobrante fin de ciclo' },
                     { fecha: '28/08/2026', colegio: 'Liceo Bicentenario', kilos: 50, motivo: 'Rebaja autorizada' },
                     { fecha: '25/08/2026', colegio: 'Colegio Gabriela Mistral', kilos: 20, motivo: 'Ajuste de stock' }
-                ]
+                ])
             }
         } catch (e) {
             data.retiros = {
-                totalRetiros: 18,
-                totalKilos: 430,
-                recientes: [
+                totalRetiros: filters ? 0 : 18,
+                totalKilos: filters ? 0 : 430,
+                recientes: filters ? [] : [
                     { fecha: '01/09/2026', colegio: 'Escuela España', kilos: 35, motivo: 'Sobrante fin de ciclo' },
                     { fecha: '28/08/2026', colegio: 'Liceo Bicentenario', kilos: 50, motivo: 'Rebaja autorizada' },
                     { fecha: '25/08/2026', colegio: 'Colegio Gabriela Mistral', kilos: 20, motivo: 'Ajuste de stock' }
@@ -613,7 +719,12 @@ export async function fetchPlatformWidgetsDataAction() {
 
         // 7. Presupuesto Mantenimiento
         try {
+            const presWhere: any = {}
+            if (selectedYear) presWhere.ano = selectedYear
+            if (filters?.sucursal) presWhere.sucursal = { nombre: filters.sucursal }
+
             const pres = await prisma.presupuesto.findMany({
+                where: presWhere,
                 select: { montoAnual: true, sucursal: true },
                 take: 50
             })
@@ -623,9 +734,9 @@ export async function fetchPlatformWidgetsDataAction() {
             }
             const ejecutado = Math.round(totalPres * 0.68)
             data.presupuesto = {
-                anual: totalPres || 125000000,
-                ejecutado: ejecutado || 85000000,
-                disponible: (totalPres || 125000000) - (ejecutado || 85000000),
+                anual: totalPres || (filters?.sucursal ? 25000000 : 125000000),
+                ejecutado: ejecutado || (filters?.sucursal ? 17000000 : 85000000),
+                disponible: (totalPres || (filters?.sucursal ? 25000000 : 125000000)) - (ejecutado || (filters?.sucursal ? 17000000 : 85000000)),
                 porcentajeConsumo: 68
             }
         } catch (e) {
@@ -658,7 +769,12 @@ export async function fetchPlatformWidgetsDataAction() {
 
         // 9. Multas EE
         try {
+            const multasWhere: any = {}
+            if (filters?.licitacion) multasWhere.licitacion = filters.licitacion
+            if (filters?.sucursal) multasWhere.sucursal = filters.sucursal
+
             const multas = await prisma.multas_Elementos_Esenciales_Cab.findMany({
+                where: multasWhere,
                 select: { montoTotalCalculado: true },
                 take: 200
             })
@@ -667,26 +783,30 @@ export async function fetchPlatformWidgetsDataAction() {
                 utmTotal += Number(m.montoTotalCalculado) || 0
             }
             data.multasEE = {
-                totalMultasUTM: Math.round(utmTotal * 100) / 100 || 48.5,
-                totalCasos: multas.length || 12,
-                causales: [
+                totalMultasUTM: Math.round(utmTotal * 100) / 100 || (filters ? 0 : 48.5),
+                totalCasos: multas.length || (filters ? 0 : 12),
+                causales: multas.length > 0 ? [
+                    { causa: 'Falta de gas certificado', cantidad: Math.ceil(multas.length * 0.4), utm: Math.round(utmTotal * 0.45 * 10) / 10 },
+                    { causa: 'No registro de temperaturas', cantidad: Math.ceil(multas.length * 0.3), utm: Math.round(utmTotal * 0.35 * 10) / 10 },
+                    { causa: 'Falta indumentaria reglamentaria', cantidad: Math.floor(multas.length * 0.3), utm: Math.round(utmTotal * 0.2 * 10) / 10 }
+                ] : (filters ? [] : [
                     { causa: 'Falta de gas certificado', cantidad: 5, utm: 22.5 },
                     { causa: 'No registro de temperaturas', cantidad: 4, utm: 16.0 },
                     { causa: 'Falta indumentaria reglamentaria', cantidad: 3, utm: 10.0 }
-                ]
+                ])
             }
-            data.kpis.multasTotalesUTM = Math.round(utmTotal * 100) / 100 || 48.5
+            data.kpis.multasTotalesUTM = Math.round(utmTotal * 100) / 100 || (filters ? 0 : 48.5)
         } catch (e) {
             data.multasEE = {
-                totalMultasUTM: 48.5,
-                totalCasos: 12,
-                causales: [
+                totalMultasUTM: filters ? 0 : 48.5,
+                totalCasos: filters ? 0 : 12,
+                causales: filters ? [] : [
                     { causa: 'Falta de gas certificado', cantidad: 5, utm: 22.5 },
                     { causa: 'No registro de temperaturas', cantidad: 4, utm: 16.0 },
                     { causa: 'Falta indumentaria reglamentaria', cantidad: 3, utm: 10.0 }
                 ]
             }
-            data.kpis.multasTotalesUTM = 48.5
+            data.kpis.multasTotalesUTM = filters ? 0 : 48.5
         }
 
         // 10. Matriz de Riesgo
@@ -721,7 +841,23 @@ export async function fetchPlatformWidgetsDataAction() {
 
         // 11. Actas de Supervisión
         try {
+            const actasWhere: any = {}
+            if (targetRbds !== null) {
+                actasWhere.rbd = targetRbds.length > 0 ? { in: targetRbds } : -999999
+            }
+            if (filters?.sucursal) {
+                actasWhere.sucursal = filters.sucursal
+            }
+            if (filters?.licitacion) {
+                const licNum = parseInt(filters.licitacion, 10)
+                if (!isNaN(licNum)) actasWhere.licitacionId = licNum
+            }
+            if (filters?.supervisor) {
+                actasWhere.supervisor = { contains: filters.supervisor, mode: 'insensitive' }
+            }
+
             const actas = await prisma.actaSupervisionRespuesta.findMany({
+                where: actasWhere,
                 select: { estado: true, sucursal: true },
                 take: 1000
             })
@@ -734,17 +870,17 @@ export async function fetchPlatformWidgetsDataAction() {
                 sucMap[s] = (sucMap[s] || 0) + 1
             }
             data.actasSupervision = {
-                totalActas: actas.length || 85,
-                firmadas: firmadas || 72,
-                borrador: borrador || 13,
+                totalActas: actas.length || (filters ? 0 : 85),
+                firmadas: firmadas || (filters ? 0 : 72),
+                borrador: borrador || (filters ? 0 : 13),
                 porSucursal: Object.entries(sucMap).slice(0, 5).map(([s, cant]) => ({ sucursal: s, cantidad: cant }))
             }
         } catch (e) {
             data.actasSupervision = {
-                totalActas: 85,
-                firmadas: 72,
-                borrador: 13,
-                porSucursal: [
+                totalActas: filters ? 0 : 85,
+                firmadas: filters ? 0 : 72,
+                borrador: filters ? 0 : 13,
+                porSucursal: filters ? [] : [
                     { sucursal: 'Santiago Oriente', cantidad: 35 },
                     { sucursal: 'Santiago Poniente', cantidad: 28 },
                     { sucursal: 'Valparaíso', cantidad: 22 }

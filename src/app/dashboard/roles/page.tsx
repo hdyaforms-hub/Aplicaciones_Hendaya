@@ -13,8 +13,24 @@ export default async function RolesPage() {
     }
 
     const roles = await prisma.role.findMany({
-        include: { _count: { select: { users: true } } },
-        orderBy: { createdAt: 'desc' }
+        include: { 
+            _count: { select: { users: { where: { isDeleted: false } } } },
+            users: {
+                where: { isDeleted: false },
+                select: {
+                    id: true,
+                    name: true,
+                    username: true,
+                    email: true,
+                    isActive: true,
+                },
+                orderBy: [
+                    { name: 'asc' },
+                    { username: 'asc' }
+                ]
+            }
+        },
+        orderBy: { name: 'asc' }
     })
 
     // Cargar usuarios
@@ -143,9 +159,12 @@ export default async function RolesPage() {
         { id: 'view_descargar_actas', name: 'Descargar Actas', description: 'Acceso a la vista de consulta, descarga individual y descarga masiva de PDFs de actas.', category: 'ACTAS' },
         { id: 'manage_generar_actas', name: 'Eliminar Actas Generadas', description: 'Otorga el privilegio de eliminar respuestas de actas en progreso.', category: 'ACTAS' },
  
+        { id: 'view_conversacion', name: 'Conversación y Colaboración', description: 'Acceso a mensajería cifrada, gestión de tareas estilo Trello, citas/calendario y proyectos colaborativos.', category: 'COLABORADORES' },
+        { id: 'view_sala_reuniones', name: 'Sala de Reuniones (Ver)', description: 'Visualizar el calendario semanal, horarios y disponibilidad de la sala de reuniones.', category: 'COLABORADORES' },
+        { id: 'manage_sala_reuniones', name: 'Sala de Reuniones (Gestionar)', description: 'Crear nuevas reservas, modificar o cancelar reuniones en la sala.', category: 'COLABORADORES' },
+
         { id: 'view_anexos', name: 'Ver Anexos', description: 'Acceso al directorio telefónico de la empresa.', category: 'AYUDA' },
         { id: 'manage_anexos', name: 'Gestionar Anexos', description: 'Acceso a crear, editar y subir de forma masiva los anexos.', category: 'AYUDA' },
-        { id: 'view_conversacion', name: 'Conversación y Colaboración', description: 'Acceso a mensajería cifrada, gestión de tareas estilo Trello, citas/calendario y proyectos colaborativos.', category: 'AYUDA' },
 
         { id: 'view_documentos', name: 'Gestor Documental (Vista Usuario)', description: 'Permite explorar, previsualizar y descargar documentos según permisos asignados.', category: 'GESTOR DOCUMENTAL' },
         { id: 'manage_doc_configuracion', name: 'Configuración OneDrive', description: 'Permite configurar y vincular las credenciales de Microsoft Graph API / Azure.', category: 'GESTOR DOCUMENTAL' },
