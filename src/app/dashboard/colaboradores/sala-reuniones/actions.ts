@@ -138,10 +138,33 @@ function getNowSantiago() {
     }
 }
 
-// Obtener la URL base de la aplicación de forma dinámica (soporta dev en puerto 3001 y dominio productivo https)
-async function getBaseAppUrl(): Promise<string> {
+// Obtener la URL base de la aplicación de forma dinámica (soporta dev en puerto 3001, origin del cliente y dominio productivo https)
+async function getBaseAppUrl(clientOrigin?: string): Promise<string> {
+    if (clientOrigin && clientOrigin.startsWith('http')) {
+        return clientOrigin.replace(/\/$/, '')
+    }
+
     try {
         const headerList = await headers()
+
+        // 1. Origin header (enviado por el navegador en todo Server Action / POST)
+        const origin = headerList.get('origin')
+        if (origin && origin !== 'null' && origin.startsWith('http')) {
+            return origin.replace(/\/$/, '')
+        }
+
+        // 2. Referer header (URL completa desde donde llamó el navegador)
+        const referer = headerList.get('referer')
+        if (referer) {
+            try {
+                const url = new URL(referer)
+                if (url.origin && url.origin.startsWith('http')) {
+                    return url.origin.replace(/\/$/, '')
+                }
+            } catch {}
+        }
+
+        // 3. host / x-forwarded-host
         const host = headerList.get('x-forwarded-host') || headerList.get('host')
         const proto = headerList.get('x-forwarded-proto') || (host && !host.includes('localhost') ? 'https' : 'http')
         if (host) {
@@ -165,7 +188,8 @@ async function sendReservaConfirmationEmail({
     horaInicio,
     horaFin,
     motivo,
-    token
+    token,
+    clientOrigin
 }: {
     to: string
     solicitante: string
@@ -174,6 +198,7 @@ async function sendReservaConfirmationEmail({
     horaFin: string
     motivo: string
     token: string
+    clientOrigin?: string
 }): Promise<{ success: boolean; warning?: string }> {
     try {
         const emailConfig = await rawPrisma.emailConfig.findUnique({ where: { id: 'global' } })
@@ -195,7 +220,7 @@ async function sendReservaConfirmationEmail({
             }
         })
 
-        const appUrl = await getBaseAppUrl()
+        const appUrl = await getBaseAppUrl(clientOrigin)
         const linkModificar = `${appUrl}/dashboard/colaboradores/sala-reuniones?action=modificar&token=${token}`
         const linkCancelar = `${appUrl}/dashboard/colaboradores/sala-reuniones?action=cancelar&token=${token}`
 
@@ -541,6 +566,7 @@ export async function createReserva(formData: {
     hora_inicio: string
     hora_fin: string
     motivo: string
+    clientOrigin?: string
 }) {
     try {
         await ensureTablesExist()
@@ -549,7 +575,7 @@ export async function createReserva(formData: {
             return { status: 'error', mensaje: 'Debes iniciar sesión para realizar una reserva.' }
         }
 
-        const { solicitante, email, fecha, hora_inicio, hora_fin, motivo } = formData
+        const { solicitante, email, fecha, hora_inicio, hora_fin, motivo, clientOrigin } = formData
 
         if (!solicitante || !email || !fecha || !hora_inicio || !hora_fin || !motivo) {
             return { status: 'error', mensaje: 'Todos los campos son obligatorios.' }
@@ -616,7 +642,8 @@ export async function createReserva(formData: {
             horaInicio: hora_inicio,
             horaFin: hora_fin,
             motivo,
-            token
+            token,
+            clientOrigin
         })
 
         revalidatePath('/dashboard/colaboradores/sala-reuniones')
@@ -641,7 +668,7 @@ export async function createReserva(formData: {
     }
 }
 
-// Cancelar reserva
+// Cancelar reserva (con idempotencia y protección anti-clics duplicados)
 export async function cancelReserva(reservaId: string, token?: string) {
     try {
         await ensureTablesExist()
@@ -652,6 +679,11 @@ export async function cancelReserva(reservaId: string, token?: string) {
 
         if (!reserva) {
             return { status: 'error', mensaje: 'La reserva no fue encontrada.' }
+        }
+
+        // Si ya está cancelada, responder éxito sin reenviar correos
+        if (reserva.estado === 'CANCELADA') {
+            return { status: 'ok', mensaje: 'Esta reserva ya se encontraba cancelada.' }
         }
 
         // Permiso: Admin, dueño de la reserva o poseedor del token de correo
@@ -691,7 +723,7 @@ export async function cancelReserva(reservaId: string, token?: string) {
     }
 }
 
-// Modificar reserva
+// Modificar reserva (con idempotencia y protección anti-clics duplicados)
 export async function updateReserva(
     reservaId: string,
     data: {
@@ -700,7 +732,8 @@ export async function updateReserva(
         hora_fin: string
         motivo: string
     },
-    token?: string
+    token?: string,
+    clientOrigin?: string
 ) {
     try {
         await ensureTablesExist()
@@ -713,6 +746,10 @@ export async function updateReserva(
             return { status: 'error', mensaje: 'La reserva no fue encontrada.' }
         }
 
+        if (reserva.estado === 'CANCELADA') {
+            return { status: 'error', mensaje: 'No se puede modificar una reserva que ya ha sido cancelada.' }
+        }
+
         const isOwner = session?.user && (reserva.userId === session.user.id || reserva.email === session.user.email)
         const hasToken = token && reserva.tokenCancelacion === token
 
@@ -722,6 +759,16 @@ export async function updateReserva(
 
         if (data.hora_fin <= data.hora_inicio) {
             return { status: 'error', mensaje: 'La hora de término debe ser posterior a la hora de inicio.' }
+        }
+
+        // Si los datos son exactamente iguales, no realizar otro update ni enviar correo repetido
+        const sinCambios = reserva.fecha === data.fecha &&
+            reserva.horaInicio === data.hora_inicio &&
+            reserva.horaFin === data.hora_fin &&
+            reserva.motivo === data.motivo
+
+        if (sinCambios) {
+            return { status: 'ok', mensaje: 'No se detectaron cambios en los datos de la reserva.' }
         }
 
         // Validación estricta: No permitir modificar hacia el pasado
@@ -774,7 +821,8 @@ export async function updateReserva(
             horaInicio: data.hora_inicio,
             horaFin: data.hora_fin,
             motivo: data.motivo,
-            token: reserva.tokenCancelacion
+            token: reserva.tokenCancelacion,
+            clientOrigin
         })
 
         revalidatePath('/dashboard/colaboradores/sala-reuniones')

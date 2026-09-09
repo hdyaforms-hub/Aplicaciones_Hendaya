@@ -165,22 +165,28 @@ export default function SalaReunionesClient({ initialData }: Props) {
         const token = searchParams.get('token')
         if (action && token) {
             setActionToken(token)
-            const encontrada = todasReservas.find(r => r.tokenCancelacion === token) ||
-                               reservasSemana.find(r => r.tokenCancelacion === token) || 
-                               resumen.proximas.find(r => r.tokenCancelacion === token)
-            if (encontrada) {
-                if (action === 'modificar') setEditingReserva(encontrada)
-                if (action === 'cancelar') setCancelingReserva(encontrada)
-            } else {
-                getReservaByToken(token).then(r => {
-                    if (r) {
-                        if (action === 'modificar') setEditingReserva(r)
-                        if (action === 'cancelar') setCancelingReserva(r)
+            getReservaByToken(token).then(r => {
+                if (r) {
+                    if (r.estado === 'CANCELADA') {
+                        alert(action === 'cancelar' 
+                            ? 'Esta reserva ya fue cancelada con anterioridad.' 
+                            : 'Esta reserva se encuentra cancelada y no puede ser modificada.')
+                        if (typeof window !== 'undefined' && window.location.search) {
+                            window.history.replaceState({}, '', window.location.pathname)
+                        }
+                        return
                     }
-                })
-            }
+                    if (action === 'modificar') setEditingReserva(r)
+                    if (action === 'cancelar') setCancelingReserva(r)
+                } else {
+                    alert('No se encontró la reserva solicitada o el enlace es inválido.')
+                    if (typeof window !== 'undefined' && window.location.search) {
+                        window.history.replaceState({}, '', window.location.pathname)
+                    }
+                }
+            })
         }
-    }, [searchParams, todasReservas, reservasSemana, resumen.proximas])
+    }, [searchParams])
 
     // Navegación de semanas
     const handleSemanaAnterior = () => {
@@ -287,9 +293,27 @@ export default function SalaReunionesClient({ initialData }: Props) {
         return `${fIni[2]}/${fIni[1]} al ${fFin[2]}/${fFin[1]}`
     }, [diasSemana])
 
-    // Envío de nueva reserva con validación estricta de hora futura
+    // Cierre de modales con limpieza de parámetros de URL
+    const handleCerrarModalEdicion = () => {
+        setEditingReserva(null)
+        setActionToken(null)
+        if (typeof window !== 'undefined' && window.location.search) {
+            window.history.replaceState({}, '', window.location.pathname)
+        }
+    }
+
+    const handleCerrarModalCancelacion = () => {
+        setCancelingReserva(null)
+        setActionToken(null)
+        if (typeof window !== 'undefined' && window.location.search) {
+            window.history.replaceState({}, '', window.location.pathname)
+        }
+    }
+
+    // Envío de nueva reserva con validación estricta de hora futura y captura de origin del navegador
     const handleSubmitReserva = async (e: React.FormEvent) => {
         e.preventDefault()
+        if (isSubmitting) return
         setStatusMessage(null)
 
         const now = new Date()
@@ -323,13 +347,16 @@ export default function SalaReunionesClient({ initialData }: Props) {
 
         setIsSubmitting(true)
 
+        const clientOrigin = typeof window !== 'undefined' ? window.location.origin : undefined
+
         const res = await createReserva({
             solicitante: form.solicitante,
             email: form.email,
             fecha: form.fecha,
             hora_inicio: form.hora_inicio,
             hora_fin: form.hora_fin,
-            motivo: form.motivo
+            motivo: form.motivo,
+            clientOrigin
         })
 
         setIsSubmitting(false)
@@ -347,23 +374,28 @@ export default function SalaReunionesClient({ initialData }: Props) {
         }
     }
 
-    // Confirmación de cancelación
+    // Confirmación de cancelación (cierra popup de inmediato y limpia URL)
     const handleConfirmCancel = async (id: string, token?: string) => {
+        if (isSubmitting) return
         setIsSubmitting(true)
-        const res = await cancelReserva(id, token || actionToken || undefined)
-        setIsSubmitting(false)
-        if (res.status === 'ok') {
-            setCancelingReserva(null)
-            cargarDatosSemana(inicioSemana)
-        } else {
-            alert(res.mensaje)
+        try {
+            const res = await cancelReserva(id, token || actionToken || undefined)
+            if (res.status === 'ok') {
+                handleCerrarModalCancelacion()
+                alert(res.mensaje)
+                cargarDatosSemana(inicioSemana)
+            } else {
+                alert(res.mensaje)
+            }
+        } finally {
+            setIsSubmitting(false)
         }
     }
 
-    // Confirmación de edición con validación de hora futura
+    // Confirmación de edición con validación de hora futura, cierre inmediato y limpieza de URL
     const handleConfirmUpdate = async (e: React.FormEvent) => {
         e.preventDefault()
-        if (!editingReserva) return
+        if (isSubmitting || !editingReserva) return
 
         const now = new Date()
         const pad = (n: number) => (n < 10 ? '0' + n : '' + n)
@@ -387,25 +419,29 @@ export default function SalaReunionesClient({ initialData }: Props) {
 
         setIsSubmitting(true)
 
-        const res = await updateReserva(
-            editingReserva.id,
-            {
-                fecha: editingReserva.fecha,
-                hora_inicio: editingReserva.horaInicio,
-                hora_fin: editingReserva.horaFin,
-                motivo: editingReserva.motivo
-            },
-            actionToken || editingReserva.tokenCancelacion
-        )
+        try {
+            const clientOrigin = typeof window !== 'undefined' ? window.location.origin : undefined
+            const res = await updateReserva(
+                editingReserva.id,
+                {
+                    fecha: editingReserva.fecha,
+                    hora_inicio: editingReserva.horaInicio,
+                    hora_fin: editingReserva.horaFin,
+                    motivo: editingReserva.motivo
+                },
+                actionToken || editingReserva.tokenCancelacion,
+                clientOrigin
+            )
 
-        setIsSubmitting(false)
-
-        if (res.status === 'ok') {
-            alert(res.mensaje)
-            setEditingReserva(null)
-            cargarDatosSemana(inicioSemana)
-        } else {
-            alert(res.mensaje)
+            if (res.status === 'ok') {
+                handleCerrarModalEdicion()
+                alert(res.mensaje)
+                cargarDatosSemana(inicioSemana)
+            } else {
+                alert(res.mensaje)
+            }
+        } finally {
+            setIsSubmitting(false)
         }
     }
 
@@ -1072,7 +1108,8 @@ export default function SalaReunionesClient({ initialData }: Props) {
                     <div className="fixed inset-0 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-in fade-in duration-150">
                         <div className="bg-white rounded-3xl p-6 sm:p-8 w-full max-w-md shadow-2xl relative border border-gray-100 text-gray-900">
                             <button
-                                onClick={() => setEditingReserva(null)}
+                                type="button"
+                                onClick={handleCerrarModalEdicion}
                                 className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 transition-colors cursor-pointer"
                             >
                                 ✕
@@ -1142,15 +1179,16 @@ export default function SalaReunionesClient({ initialData }: Props) {
                                 <div className="flex justify-end gap-3 pt-3">
                                     <button
                                         type="button"
-                                        onClick={() => setEditingReserva(null)}
-                                        className="px-4 py-2.5 text-sm font-semibold rounded-xl border border-gray-200 hover:bg-gray-100 text-gray-600 cursor-pointer"
+                                        disabled={isSubmitting}
+                                        onClick={handleCerrarModalEdicion}
+                                        className="px-4 py-2.5 text-sm font-semibold rounded-xl border border-gray-200 hover:bg-gray-100 text-gray-600 disabled:opacity-50 cursor-pointer"
                                     >
                                         Cancelar
                                     </button>
                                     <button
                                         type="submit"
                                         disabled={isSubmitting}
-                                        className="px-6 py-2.5 text-sm font-bold rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white shadow-md shadow-cyan-500/25 transition-all cursor-pointer"
+                                        className="px-6 py-2.5 text-sm font-bold rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white shadow-md shadow-cyan-500/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                                     >
                                         {isSubmitting ? 'Guardando...' : 'Guardar Cambios'}
                                     </button>
@@ -1164,6 +1202,13 @@ export default function SalaReunionesClient({ initialData }: Props) {
                 {cancelingReserva && (
                     <div className="fixed inset-0 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-in fade-in duration-150">
                         <div className="bg-white rounded-3xl p-6 sm:p-8 w-full max-w-sm shadow-2xl relative border border-gray-100 text-gray-900">
+                            <button
+                                type="button"
+                                onClick={handleCerrarModalCancelacion}
+                                className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 transition-colors cursor-pointer"
+                            >
+                                ✕
+                            </button>
                             <h2 className="text-xl font-bold text-gray-900 mb-2 tracking-tight flex items-center gap-2">
                                 <span>⚠️</span> Confirmar Cancelación
                             </h2>
@@ -1176,8 +1221,9 @@ export default function SalaReunionesClient({ initialData }: Props) {
                             <div className="flex justify-end gap-2.5">
                                 <button
                                     type="button"
-                                    onClick={() => setCancelingReserva(null)}
-                                    className="px-4 py-2 text-xs font-semibold rounded-xl border border-gray-200 hover:bg-gray-100 text-gray-600 cursor-pointer"
+                                    disabled={isSubmitting}
+                                    onClick={handleCerrarModalCancelacion}
+                                    className="px-4 py-2 text-xs font-semibold rounded-xl border border-gray-200 hover:bg-gray-100 text-gray-600 disabled:opacity-50 cursor-pointer"
                                 >
                                     No, mantener
                                 </button>
@@ -1185,7 +1231,7 @@ export default function SalaReunionesClient({ initialData }: Props) {
                                     type="button"
                                     disabled={isSubmitting}
                                     onClick={() => handleConfirmCancel(cancelingReserva.id, cancelingReserva.tokenCancelacion)}
-                                    className="px-5 py-2 text-xs font-bold rounded-xl bg-rose-600 hover:bg-rose-700 text-white shadow-md shadow-rose-500/25 transition-all cursor-pointer"
+                                    className="px-5 py-2 text-xs font-bold rounded-xl bg-rose-600 hover:bg-rose-700 text-white shadow-md shadow-rose-500/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                                 >
                                     {isSubmitting ? 'Cancelando...' : 'Sí, cancelar'}
                                 </button>
