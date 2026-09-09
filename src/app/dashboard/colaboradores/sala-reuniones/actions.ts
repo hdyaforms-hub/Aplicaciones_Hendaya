@@ -316,9 +316,56 @@ async function logAudit(action: string, detalle: string) {
     }
 }
 
+let tablesInitPromise: Promise<void> | null = null
+
+// Asegura que las tablas e índices existan en la base de datos (resiliente para entornos de producción)
+export async function ensureTablesExist() {
+    if (!tablesInitPromise) {
+        tablesInitPromise = (async () => {
+            try {
+                await rawPrisma.$executeRawUnsafe(`
+                    CREATE TABLE IF NOT EXISTS "reservas_sala" (
+                        id TEXT PRIMARY KEY,
+                        solicitante TEXT NOT NULL,
+                        email TEXT NOT NULL,
+                        "userId" TEXT,
+                        fecha TEXT NOT NULL,
+                        "horaInicio" TEXT NOT NULL,
+                        "horaFin" TEXT NOT NULL,
+                        motivo TEXT NOT NULL,
+                        estado TEXT NOT NULL DEFAULT 'CONFIRMADA',
+                        "tokenCancelacion" TEXT NOT NULL UNIQUE,
+                        "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                        "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
+                    );
+                `)
+                await rawPrisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "reservas_sala_fecha_idx" ON "reservas_sala"(fecha);`)
+                await rawPrisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "reservas_sala_estado_idx" ON "reservas_sala"(estado);`)
+                await rawPrisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "reservas_sala_token_idx" ON "reservas_sala"("tokenCancelacion");`)
+                await rawPrisma.$executeRawUnsafe(`
+                    CREATE TABLE IF NOT EXISTS "noticias_alimentacion" (
+                        id TEXT PRIMARY KEY,
+                        titulo TEXT NOT NULL,
+                        fuente TEXT NOT NULL,
+                        link TEXT NOT NULL,
+                        orden INTEGER NOT NULL DEFAULT 0,
+                        "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
+                    );
+                `)
+            } catch (err) {
+                console.error('[SalaReuniones] Error verificando/creando tablas:', err)
+                tablesInitPromise = null
+                throw err
+            }
+        })()
+    }
+    return tablesInitPromise
+}
+
 // Obtener todas las reservas de la base de datos
 async function fetchReservasDB(): Promise<ReservaSalaItem[]> {
     try {
+        await ensureTablesExist()
         const res = await rawPrisma.$queryRaw<any[]>`
             SELECT id, solicitante, email, "userId", fecha, "horaInicio", "horaFin", motivo, estado, "tokenCancelacion", "createdAt", "updatedAt"
             FROM "reservas_sala"
@@ -347,6 +394,7 @@ async function fetchReservasDB(): Promise<ReservaSalaItem[]> {
 // Obtener noticias
 export async function getNoticias(): Promise<NoticiaItem[]> {
     try {
+        await ensureTablesExist()
         const res = await rawPrisma.$queryRaw<any[]>`
             SELECT id, titulo, fuente, link, orden
             FROM "noticias_alimentacion"
@@ -495,6 +543,7 @@ export async function createReserva(formData: {
     motivo: string
 }) {
     try {
+        await ensureTablesExist()
         const session = await getSession()
         if (!session?.user) {
             return { status: 'error', mensaje: 'Debes iniciar sesión para realizar una reserva.' }
@@ -585,13 +634,17 @@ export async function createReserva(formData: {
         }
     } catch (e: any) {
         console.error('[SalaReuniones] Error en createReserva:', e)
-        return { status: 'error', mensaje: 'Error al procesar la reserva. Intenta nuevamente.' }
+        return { 
+            status: 'error', 
+            mensaje: `Error al procesar la reserva: ${e?.message || 'Error en base de datos. Intenta nuevamente.'}` 
+        }
     }
 }
 
 // Cancelar reserva
 export async function cancelReserva(reservaId: string, token?: string) {
     try {
+        await ensureTablesExist()
         const session = await getSession()
         const isAdmin = session?.user?.role?.name === 'admin' || session?.user?.role?.name === 'Administrador'
         const rawReservas = await fetchReservasDB()
@@ -632,9 +685,9 @@ export async function cancelReserva(reservaId: string, token?: string) {
         revalidatePath('/dashboard/colaboradores/sala-reuniones')
 
         return { status: 'ok', mensaje: 'La reserva ha sido cancelada exitosamente.' }
-    } catch (e) {
+    } catch (e: any) {
         console.error('[SalaReuniones] Error en cancelReserva:', e)
-        return { status: 'error', mensaje: 'Error al cancelar la reserva.' }
+        return { status: 'error', mensaje: `Error al cancelar la reserva: ${e?.message || 'Error en el servidor.'}` }
     }
 }
 
@@ -650,6 +703,7 @@ export async function updateReserva(
     token?: string
 ) {
     try {
+        await ensureTablesExist()
         const session = await getSession()
         const isAdmin = session?.user?.role?.name === 'admin' || session?.user?.role?.name === 'Administrador'
         const rawReservas = await fetchReservasDB()
@@ -733,9 +787,9 @@ export async function updateReserva(
         }
 
         return { status: 'ok', mensaje: 'Reserva actualizada exitosamente. Se envió un correo con los nuevos datos.' }
-    } catch (e) {
+    } catch (e: any) {
         console.error('[SalaReuniones] Error en updateReserva:', e)
-        return { status: 'error', mensaje: 'Error al modificar la reserva.' }
+        return { status: 'error', mensaje: `Error al modificar la reserva: ${e?.message || 'Error en el servidor.'}` }
     }
 }
 
