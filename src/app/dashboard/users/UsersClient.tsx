@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import UserForm from './UserForm'
 import EditUserForm from './EditUserForm'
 
@@ -67,6 +67,57 @@ type SortDirection = 'asc' | 'desc'
 export default function UsersClient({ initialUsers, roles, sucursales, areas, licitaciones = [] }: UsersClientProps) {
     const [collapsedRoles, setCollapsedRoles] = useState<Record<string, boolean>>({})
     const [sortConfig, setSortConfig] = useState<{ column: SortColumn; direction: SortDirection } | null>(null)
+    const [searchQuery, setSearchQuery] = useState('')
+    const [selectedRole, setSelectedRole] = useState('')
+
+    // Contar usuarios totales por rol para el selector
+    const userCountsByRole = useMemo(() => {
+        const counts: Record<string, number> = {}
+        initialUsers.forEach(u => {
+            counts[u.role.name] = (counts[u.role.name] || 0) + 1
+        })
+        return counts
+    }, [initialUsers])
+
+    // Lista de roles únicos combinando prop y usuarios
+    const allRoleOptions = useMemo(() => {
+        const roleSet = new Set<string>()
+        roles.forEach(r => roleSet.add(r.name))
+        initialUsers.forEach(u => roleSet.add(u.role.name))
+        return Array.from(roleSet).sort()
+    }, [roles, initialUsers])
+
+    // Filtrar usuarios por búsqueda de texto y rol seleccionado
+    const filteredUsers = useMemo(() => {
+        return initialUsers.filter(user => {
+            // Filtro por Rol
+            if (selectedRole) {
+                if (user.role.name !== selectedRole && user.role.id !== selectedRole) {
+                    return false
+                }
+            }
+
+            // Buscador por Usuario (username, nombre completo, o correo electrónico)
+            if (searchQuery.trim()) {
+                const query = searchQuery.toLowerCase().trim()
+                const matchUsername = user.username.toLowerCase().includes(query)
+                const matchName = (user.name || '').toLowerCase().includes(query)
+                const matchEmail = (user.email || '').toLowerCase().includes(query)
+                if (!matchUsername && !matchName && !matchEmail) {
+                    return false
+                }
+            }
+
+            return true
+        })
+    }, [initialUsers, selectedRole, searchQuery])
+
+    const handleClearFilters = () => {
+        setSearchQuery('')
+        setSelectedRole('')
+    }
+
+    const hasActiveFilters = searchQuery.trim() !== '' || selectedRole !== ''
 
     const toggleRole = (roleName: string) => {
         setCollapsedRoles(prev => ({
@@ -76,7 +127,7 @@ export default function UsersClient({ initialUsers, roles, sucursales, areas, li
     }
 
     const toggleCollapseAll = (collapse: boolean) => {
-        const uniqueRoles = Array.from(new Set(initialUsers.map(u => u.role.name)))
+        const uniqueRoles = Array.from(new Set(filteredUsers.map(u => u.role.name)))
         const newState: Record<string, boolean> = {}
         uniqueRoles.forEach(rName => {
             newState[rName] = collapse
@@ -92,11 +143,11 @@ export default function UsersClient({ initialUsers, roles, sucursales, areas, li
         setSortConfig({ column, direction })
     }
 
-    // Group and sort users
-    const getGroupedAndSortedUsers = () => {
+    // Group and sort filtered users
+    const usersByRole = useMemo(() => {
         const groups: Record<string, UserWithRelations[]> = {}
         
-        initialUsers.forEach(user => {
+        filteredUsers.forEach(user => {
             const roleName = user.role.name
             if (!groups[roleName]) {
                 groups[roleName] = []
@@ -140,10 +191,9 @@ export default function UsersClient({ initialUsers, roles, sucursales, areas, li
         }
 
         return groups
-    }
+    }, [filteredUsers, sortConfig])
 
-    const usersByRole = getGroupedAndSortedUsers()
-    const sortedRoleNames = Object.keys(usersByRole).sort()
+    const sortedRoleNames = useMemo(() => Object.keys(usersByRole).sort(), [usersByRole])
 
     const renderSortIcon = (column: SortColumn) => {
         if (!sortConfig || sortConfig.column !== column) {
@@ -183,6 +233,102 @@ export default function UsersClient({ initialUsers, roles, sucursales, areas, li
                     <div className="sm:ml-2">
                         <UserForm roles={roles} sucursales={sucursales} areas={areas} licitaciones={licitaciones} />
                     </div>
+                </div>
+            </div>
+
+            {/* Barra de Filtros y Búsqueda */}
+            <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
+                    {/* Buscador de Usuario */}
+                    <div className="md:col-span-7">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5 ml-1">
+                            🔍 Buscar Usuario
+                        </label>
+                        <div className="relative">
+                            <input
+                                type="text"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                placeholder="Buscar por usuario, nombre completo o correo..."
+                                className="w-full pl-10 pr-10 py-2.5 rounded-xl border border-gray-200 bg-gray-50/70 text-gray-900 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white transition-all placeholder:text-gray-400"
+                            />
+                            <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm pointer-events-none">
+                                🔎
+                            </span>
+                            {searchQuery && (
+                                <button
+                                    type="button"
+                                    onClick={() => setSearchQuery('')}
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full bg-gray-200 hover:bg-gray-300 text-gray-600 text-xs transition-colors"
+                                    title="Limpiar búsqueda"
+                                >
+                                    ✕
+                                </button>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Filtro por Rol */}
+                    <div className="md:col-span-5">
+                        <div className="flex items-center justify-between mb-1.5 ml-1">
+                            <label className="block text-xs font-bold uppercase tracking-wider text-slate-600">
+                                🛡️ Filtrar por Rol
+                            </label>
+                            {hasActiveFilters && (
+                                <button
+                                    type="button"
+                                    onClick={handleClearFilters}
+                                    className="text-[11px] font-bold text-cyan-700 hover:text-cyan-800 hover:underline flex items-center gap-1"
+                                >
+                                    <span>↺</span> Limpiar Filtros
+                                </button>
+                            )}
+                        </div>
+                        <select
+                            value={selectedRole}
+                            onChange={(e) => setSelectedRole(e.target.value)}
+                            className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 bg-gray-50/70 text-gray-900 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white transition-all"
+                        >
+                            <option value="">-- Todos los Roles ({initialUsers.length} usuarios) --</option>
+                            {allRoleOptions.map(rName => (
+                                <option key={rName} value={rName}>
+                                    {rName} ({userCountsByRole[rName] || 0})
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
+
+                {/* Contador de resultados / estado del filtro */}
+                <div className="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-gray-100 text-xs">
+                    <div className="flex items-center gap-2">
+                        <span className="font-semibold text-gray-500">Resultados:</span>
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-cyan-50 text-cyan-800 border border-cyan-200">
+                            {filteredUsers.length} {filteredUsers.length === 1 ? 'usuario' : 'usuarios'}
+                        </span>
+                        {hasActiveFilters && (
+                            <span className="text-gray-400">
+                                de {initialUsers.length} totales
+                            </span>
+                        )}
+                    </div>
+
+                    {hasActiveFilters && (
+                        <div className="flex flex-wrap items-center gap-1.5">
+                            {searchQuery && (
+                                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 text-[11px] font-medium border border-slate-200">
+                                    <span>Texto:</span> <strong>"{searchQuery}"</strong>
+                                    <button onClick={() => setSearchQuery('')} className="hover:text-red-500 ml-0.5 font-bold">✕</button>
+                                </span>
+                            )}
+                            {selectedRole && (
+                                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 text-[11px] font-medium border border-slate-200">
+                                    <span>Rol:</span> <strong>{selectedRole}</strong>
+                                    <button onClick={() => setSelectedRole('')} className="hover:text-red-500 ml-0.5 font-bold">✕</button>
+                                </span>
+                            )}
+                        </div>
+                    )}
                 </div>
             </div>
 
@@ -327,8 +473,26 @@ export default function UsersClient({ initialUsers, roles, sucursales, areas, li
             })}
 
             {sortedRoleNames.length === 0 && (
-                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-12 text-center text-gray-500">
-                    No se encontraron usuarios registrados
+                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-12 text-center">
+                    <div className="w-14 h-14 mx-auto mb-3 rounded-2xl bg-cyan-50 text-cyan-600 flex items-center justify-center text-2xl border border-cyan-100">
+                        🔍
+                    </div>
+                    <h3 className="text-base font-bold text-gray-900">
+                        {hasActiveFilters ? 'No se encontraron usuarios con los filtros aplicados' : 'No se encontraron usuarios registrados'}
+                    </h3>
+                    <p className="text-xs text-gray-500 max-w-sm mx-auto mt-1">
+                        {hasActiveFilters 
+                            ? 'Intenta modificar el término de búsqueda o selecciona otro rol en el filtro superior.'
+                            : 'Aún no hay usuarios creados en el sistema.'}
+                    </p>
+                    {hasActiveFilters && (
+                        <button
+                            onClick={handleClearFilters}
+                            className="mt-4 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs transition-all active:scale-95 shadow-2xs"
+                        >
+                            Restablecer Filtros
+                        </button>
+                    )}
                 </div>
             )}
         </div>
