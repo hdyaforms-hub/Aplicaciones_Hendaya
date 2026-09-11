@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useMemo, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { updateRole } from '../actions'
 
 type PermissionDef = {
@@ -18,7 +19,12 @@ type RoleData = {
 }
 
 export default function EditRoleForm({ role, availablePermissions }: { role: RoleData, availablePermissions: PermissionDef[] }) {
+    const [mounted, setMounted] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
+
+    useEffect(() => {
+        setMounted(true)
+    }, [])
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
     const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>({})
@@ -116,8 +122,8 @@ export default function EditRoleForm({ role, availablePermissions }: { role: Rol
         }, {} as Record<string, PermissionDef[]>)
     }, [filteredPermissions])
 
-    if (!isOpen) {
-        return (
+    return (
+        <>
             <button
                 type="button"
                 onClick={() => setIsOpen(true)}
@@ -126,12 +132,10 @@ export default function EditRoleForm({ role, availablePermissions }: { role: Rol
                 <span>✏️</span>
                 <span>Editar</span>
             </button>
-        )
-    }
 
-    return (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center z-50 p-4 animate-in fade-in duration-150">
-            <div className="bg-white rounded-3xl p-6 sm:p-8 w-full max-w-3xl shadow-2xl relative max-h-[92vh] flex flex-col animate-in zoom-in-95 duration-150">
+            {isOpen && mounted && createPortal(
+                <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center z-[9999] p-4 animate-in fade-in duration-150">
+                    <div className="bg-white rounded-3xl p-6 sm:p-8 w-full max-w-3xl shadow-2xl relative max-h-[92vh] flex flex-col animate-in zoom-in-95 duration-150">
                 <button
                     onClick={() => setIsOpen(false)}
                     className="absolute top-5 right-5 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 transition-colors"
@@ -345,7 +349,10 @@ export default function EditRoleForm({ role, availablePermissions }: { role: Rol
                         </button>
                     </div>
                 </form>
-            </div>
-        </div>
+                    </div>
+                </div>,
+                document.body
+            )}
+        </>
     )
 }

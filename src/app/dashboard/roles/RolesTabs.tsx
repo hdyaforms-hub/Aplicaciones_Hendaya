@@ -53,7 +53,7 @@ export default function RolesTabs({ roles, availablePermissions, users = [] }: P
                 </div>
 
                 {/* Tarjetas KPI Resumen */}
-                <div className="relative z-10 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mt-6 pt-6 border-t border-slate-700/60">
+                <div className="relative z-0 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mt-6 pt-6 border-t border-slate-700/60">
                     <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-700/80 p-4 rounded-2xl">
                         <div className="flex items-center justify-between">
                             <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Perfiles Totales</span>

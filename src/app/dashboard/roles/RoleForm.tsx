@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { createRole } from '../actions'
 
 type PermissionDef = {
@@ -11,7 +12,12 @@ type PermissionDef = {
 }
 
 export default function RoleForm({ availablePermissions }: { availablePermissions: PermissionDef[] }) {
+    const [mounted, setMounted] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
+
+    useEffect(() => {
+        setMounted(true)
+    }, [])
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
     const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>({})
@@ -96,8 +102,8 @@ export default function RoleForm({ availablePermissions }: { availablePermission
         }, {} as Record<string, PermissionDef[]>)
     }, [filteredPermissions])
 
-    if (!isOpen) {
-        return (
+    return (
+        <>
             <button
                 onClick={() => setIsOpen(true)}
                 className="px-5 py-2.5 bg-gradient-to-r from-cyan-600 to-sky-600 hover:from-cyan-500 hover:to-sky-500 text-white rounded-2xl shadow-lg shadow-cyan-600/30 transition-all font-bold text-sm flex items-center gap-2"
@@ -105,12 +111,10 @@ export default function RoleForm({ availablePermissions }: { availablePermission
                 <span className="text-base font-black">+</span>
                 <span>Crear Perfil</span>
             </button>
-        )
-    }
 
-    return (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center z-50 p-4 animate-in fade-in duration-150">
-            <div className="bg-white rounded-3xl p-6 sm:p-8 w-full max-w-3xl shadow-2xl relative max-h-[92vh] flex flex-col animate-in zoom-in-95 duration-150">
+            {isOpen && mounted && createPortal(
+                <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center z-[9999] p-4 animate-in fade-in duration-150">
+                    <div className="bg-white rounded-3xl p-6 sm:p-8 w-full max-w-3xl shadow-2xl relative max-h-[92vh] flex flex-col animate-in zoom-in-95 duration-150">
                 <button
                     onClick={() => setIsOpen(false)}
                     className="absolute top-5 right-5 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 transition-colors"
@@ -323,6 +327,9 @@ export default function RoleForm({ availablePermissions }: { availablePermission
                     </div>
                 </form>
             </div>
-        </div>
+        </div>,
+        document.body
+    )}
+</>
     )
 }

@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { copyRole } from '../actions'
 
 type Role = {
@@ -10,9 +11,14 @@ type Role = {
 }
 
 export default function CopyRoleForm({ role }: { role: Role }) {
+    const [mounted, setMounted] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
+
+    useEffect(() => {
+        setMounted(true)
+    }, [])
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -42,8 +48,8 @@ export default function CopyRoleForm({ role }: { role: Role }) {
                 <span>📄</span>
             </button>
 
-            {isOpen && (
-                <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+            {isOpen && mounted && createPortal(
+                <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-[9999]">
                     <div className="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden animate-in fade-in zoom-in duration-200">
                         <div className="bg-slate-50 p-6 border-b border-gray-100 flex justify-between items-center">
                             <div>
@@ -99,7 +105,8 @@ export default function CopyRoleForm({ role }: { role: Role }) {
                             </div>
                         </form>
                     </div>
-                </div>
+                </div>,
+                document.body
             )}
         </>
     )
