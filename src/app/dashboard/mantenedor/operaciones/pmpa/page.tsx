@@ -11,9 +11,10 @@ export default async function PMPAPage({
     searchParams: Promise<{ sucursal?: string, ano?: string, mes?: string, page?: string, institucion?: string, sort?: string, order?: string }>
 }) {
     const session = await getSession()
+    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
     const permissions = session?.user?.role?.permissions || []
 
-    if (!permissions.includes('view_pmpa')) {
+    if (!isAdmin && !permissions.includes('view_pmpa')) {
         redirect('/dashboard')
     }
 
@@ -33,7 +34,6 @@ export default async function PMPAPage({
     }
 
     // Check if user is Administrador to potentially bypass sucursal filtering
-    const isAdmin = session?.user?.role?.name === 'Administrador'
     const canSeeAll = isAdmin || permissions.includes('manage_sucursales')
 
     // Limpiar query where nulos

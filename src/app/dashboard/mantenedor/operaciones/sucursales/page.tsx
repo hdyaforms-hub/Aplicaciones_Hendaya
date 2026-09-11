@@ -5,9 +5,10 @@ import SucursalesDashboard from './SucursalesDashboard'
 
 export default async function SucursalesConfigPage() {
     const session = await getSession()
+    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
     const permissions = session?.user?.role?.permissions || []
 
-    if (!permissions.includes('manage_sucursales')) {
+    if (!isAdmin && !permissions.includes('manage_sucursales')) {
         redirect('/dashboard')
     }
 

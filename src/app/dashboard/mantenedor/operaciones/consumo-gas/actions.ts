@@ -6,7 +6,8 @@ import { revalidatePath } from 'next/cache'
 
 export async function getConsumoGas(filters?: { query?: string }) {
     const session = await getSession()
-    if (!session?.user?.role?.permissions.includes('view_consumo_gas')) {
+    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
+    if (!isAdmin && !session?.user?.role?.permissions?.includes('view_consumo_gas')) {
         return { error: 'No tienes permisos para ver esta información' }
     }
 
@@ -16,7 +17,6 @@ export async function getConsumoGas(filters?: { query?: string }) {
             include: { sucursales: true }
         })
         const userSucursales = dbUser?.sucursales?.map((s: any) => s.nombre) || []
-        const isAdmin = session?.user?.role?.name === 'Administrador'
 
         let whereClauseColegio: any = {}
         if (!isAdmin) {
@@ -79,7 +79,8 @@ export async function saveConsumoGas(data: {
     observacion: string
 }) {
     const session = await getSession()
-    if (!session?.user?.role?.permissions.includes('view_consumo_gas')) {
+    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
+    if (!isAdmin && !session?.user?.role?.permissions?.includes('view_consumo_gas')) {
         return { error: 'No tienes permisos para realizar esta acción' }
     }
 
@@ -133,7 +134,8 @@ export async function saveConsumoGas(data: {
 
 export async function bulkUploadConsumoGas(data: { rbd: number, litros: number, cantidad: number, meses: string }[]) {
     const session = await getSession()
-    if (!session?.user?.role?.permissions.includes('view_consumo_gas')) {
+    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
+    if (!isAdmin && !session?.user?.role?.permissions?.includes('view_consumo_gas')) {
         return { error: 'No tienes permisos para realizar esta acción' }
     }
 
@@ -185,7 +187,8 @@ export async function bulkUploadConsumoGas(data: { rbd: number, litros: number, 
 
 export async function getPendingConsumoRBDs() {
     const session = await getSession()
-    if (!session?.user?.role?.permissions.includes('view_consumo_gas')) {
+    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
+    if (!isAdmin && !session?.user?.role?.permissions?.includes('view_consumo_gas')) {
         return { error: 'No tienes permisos' }
     }
 
@@ -195,7 +198,6 @@ export async function getPendingConsumoRBDs() {
             include: { sucursales: true }
         })
         const userSucursales = dbUser?.sucursales?.map((s: any) => s.nombre) || []
-        const isAdmin = session?.user?.role?.name === 'Administrador'
 
         // 1. Get all schools
         let whereClause: any = {}
@@ -239,7 +241,8 @@ export async function getPendingConsumoRBDs() {
 
 export async function getColegiosForAutocomplete() {
     const session = await getSession()
-    if (!session?.user?.role?.permissions.includes('view_consumo_gas')) {
+    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
+    if (!isAdmin && !session?.user?.role?.permissions?.includes('view_consumo_gas')) {
         return { error: 'No tienes permisos' }
     }
 
@@ -249,7 +252,6 @@ export async function getColegiosForAutocomplete() {
             include: { sucursales: true }
         })
         const userSucursales = dbUser?.sucursales?.map((s: any) => s.nombre) || []
-        const isAdmin = session?.user?.role?.name === 'Administrador'
 
         let whereClause: any = {}
         if (!isAdmin) {
@@ -281,7 +283,8 @@ export async function getColegiosForAutocomplete() {
 
 export async function getConsumoGasHistory(rbd: number) {
     const session = await getSession()
-    if (!session?.user?.role?.permissions.includes('view_consumo_gas')) {
+    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
+    if (!isAdmin && !session?.user?.role?.permissions?.includes('view_consumo_gas')) {
         return { error: 'No tienes permisos' }
     }
 

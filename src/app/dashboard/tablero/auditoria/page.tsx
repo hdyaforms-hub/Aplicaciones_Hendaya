@@ -360,6 +360,7 @@ export default function AuditoriaPage() {
                                 <option value="Áreas -> Manipuladoras">Áreas - Manipuladoras</option>
                                 <option value="Áreas -> Calidad">Áreas - Calidad</option>
                                 <option value="Áreas -> Multas">Áreas - Multas</option>
+                                <option value="Áreas -> Prev. de riesgos">Áreas - Prev. de riesgos</option>
                                 <option value="Matriz de Riesgo">Matriz de Riesgo</option>
                                 <option value="Formularios">Formularios</option>
                                 <option value="Mantenedor">Mantenedores</option>

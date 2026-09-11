@@ -21,7 +21,8 @@ export type PMPAData = {
 
 export async function checkPMPAExists(data: PMPAData[]) {
     const session = await getSession()
-    if (!session?.user?.role?.permissions.includes('view_pmpa')) {
+    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
+    if (!isAdmin && !session?.user?.role?.permissions?.includes('view_pmpa')) {
         return { error: 'No tienes permisos para realizar esta acción' }
     }
 
@@ -51,7 +52,8 @@ export async function checkPMPAExists(data: PMPAData[]) {
 
 export async function uploadPMPAData(data: PMPAData[], overwrite: boolean) {
     const session = await getSession()
-    if (!session?.user?.role?.permissions.includes('view_pmpa')) {
+    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
+    if (!isAdmin && !session?.user?.role?.permissions?.includes('view_pmpa')) {
         return { error: 'No tienes permisos para realizar esta acción' }
     }
 
@@ -118,7 +120,8 @@ export async function uploadPMPAData(data: PMPAData[], overwrite: boolean) {
 
 export async function deletePMPAPeriod(ano: number, mes: number, sucursalName?: string) {
     const session = await getSession()
-    if (!session?.user?.role?.permissions.includes('view_pmpa')) {
+    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
+    if (!isAdmin && !session?.user?.role?.permissions?.includes('view_pmpa')) {
         return { error: 'No tienes permisos para realizar esta acción' }
     }
 

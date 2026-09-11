@@ -60,15 +60,11 @@ export default function RacionesSearch({
         if (debouncedAnio) params.set('anio', debouncedAnio)
         else params.delete('anio')
 
-        // Only reset to page 1 if the search filters changed
+        // Only navigate and reset to page 1 if the search filters changed
         if (searchChanged) {
             params.set('page', '1')
+            router.push(`/dashboard/calculadora/raciones?${params.toString()}`)
         }
-        
-        // Update ref
-        prevSearchRef.current = { debouncedLicitacion, debouncedRbd, debouncedUt, debouncedMes, debouncedAnio }
-        
-        router.push(`/dashboard/calculadora/raciones?${params.toString()}`)
     }, [debouncedLicitacion, debouncedRbd, debouncedUt, debouncedMes, debouncedAnio, router])
 
     return (

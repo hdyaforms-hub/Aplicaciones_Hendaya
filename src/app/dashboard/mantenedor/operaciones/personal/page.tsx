@@ -27,7 +27,7 @@ export default async function PersonalPage() {
         permissions.includes('manage_supervisor') ||
         permissions.includes('view_tablero_distancias')
 
-    if (!hasAnyPermission) {
+    if (!isAdmin && !hasAnyPermission) {
         redirect('/dashboard')
     }
 

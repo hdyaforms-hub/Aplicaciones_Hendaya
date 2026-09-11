@@ -6,9 +6,10 @@ import EditColegioForm from './EditColegioForm'
 
 export default async function EditColegioPage({ params }: { params: Promise<{ id: string }> }) {
     const session = await getSession()
+    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
     const permissions = session?.user?.role?.permissions || []
 
-    if (!permissions.includes('view_colegios')) {
+    if (!isAdmin && !permissions.includes('view_colegios')) {
         redirect('/dashboard')
     }
 

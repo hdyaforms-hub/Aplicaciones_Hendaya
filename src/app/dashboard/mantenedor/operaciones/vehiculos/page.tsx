@@ -5,9 +5,10 @@ import VehiculosClient from './VehiculosClient'
 
 export default async function VehiculosPage() {
     const session = await getSession()
+    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
     const permissions = session?.user?.role?.permissions || []
 
-    if (!permissions.includes('manage_vehiculos')) {
+    if (!isAdmin && !permissions.includes('manage_vehiculos')) {
         redirect('/dashboard')
     }
 

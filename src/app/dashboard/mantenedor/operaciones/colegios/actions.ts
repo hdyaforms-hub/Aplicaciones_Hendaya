@@ -18,7 +18,8 @@ export type ColegioData = {
 
 export async function checkColegiosExists(data: ColegioData[]) {
     const session = await getSession()
-    if (!session?.user?.role?.permissions.includes('view_colegios')) {
+    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
+    if (!isAdmin && !session?.user?.role?.permissions?.includes('view_colegios')) {
         return { error: 'No tienes permisos para realizar esta acción' }
     }
 
@@ -45,7 +46,8 @@ export async function checkColegiosExists(data: ColegioData[]) {
 
 export async function uploadColegiosData(data: ColegioData[], overwrite: boolean) {
     const session = await getSession()
-    if (!session?.user?.role?.permissions.includes('view_colegios')) {
+    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
+    if (!isAdmin && !session?.user?.role?.permissions?.includes('view_colegios')) {
         return { error: 'No tienes permisos para realizar esta acción' }
     }
 
@@ -110,7 +112,8 @@ export async function uploadColegiosData(data: ColegioData[], overwrite: boolean
 
 export async function updateColegio(id: string, data: Partial<ColegioData>) {
     const session = await getSession()
-    if (!session?.user?.role?.permissions.includes('view_colegios')) {
+    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
+    if (!isAdmin && !session?.user?.role?.permissions?.includes('view_colegios')) {
         return { error: 'No tienes permisos para realizar esta acción' }
     }
 
@@ -149,7 +152,8 @@ export async function updateColegio(id: string, data: Partial<ColegioData>) {
 
 export async function deleteColegioByRBD(rbd: number) {
     const session = await getSession()
-    if (!session?.user?.role?.permissions.includes('view_colegios')) {
+    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
+    if (!isAdmin && !session?.user?.role?.permissions?.includes('view_colegios')) {
         return { error: 'No tienes permisos para realizar esta acción' }
     }
 
@@ -175,7 +179,8 @@ export async function deleteColegioByRBD(rbd: number) {
 
 export async function syncJUNAEBToMatriz() {
     const session = await getSession()
-    if (!session?.user?.role?.permissions.includes('view_colegios')) {
+    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
+    if (!isAdmin && !session?.user?.role?.permissions?.includes('view_colegios')) {
         return { error: 'No tienes permisos para realizar esta acción' }
     }
 
@@ -214,8 +219,9 @@ export async function syncJUNAEBToMatriz() {
 
   
 export async function crearColegioManual(data: ColegioData) {  
-    const session = await getSession()  
-    if (!session?.user?.role?.permissions.includes('view_colegios')) return { error: 'Sin permisos' }  
+    const session = await getSession()
+    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
+    if (!isAdmin && !session?.user?.role?.permissions?.includes('view_colegios')) return { error: 'Sin permisos' }  
     try {  
         const existing = await prisma.colegios.findFirst({ where: { colRBD: Number(data.colRBD) } })  
         if (existing) return { error: 'El RBD ya existe' }  

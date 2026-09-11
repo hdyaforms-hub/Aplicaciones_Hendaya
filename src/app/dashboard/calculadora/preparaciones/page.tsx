@@ -10,9 +10,10 @@ export default async function PreparacionesPage({
     searchParams: Promise<{ nombre?: string, codigo?: string, page?: string }>
 }) {
     const session = await getSession()
+    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
     const permissions = session?.user?.role?.permissions || []
 
-    if (!permissions.includes('view_preparaciones')) {
+    if (!isAdmin && !permissions.includes('view_preparaciones')) {
         redirect('/dashboard')
     }
 

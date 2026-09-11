@@ -2054,3 +2054,25 @@ model LogParametro {
   @@map("log_parametros")
 }
 
+model PrevGravedadPreparacion {
+  id                String   @id @default(uuid())
+  licitacion        String   @db.VarChar(50)
+  numeroPreparacion Int
+  nombrePreparacion String   @db.VarChar(250)
+  codigoSubServicio String?  @db.VarChar(20)
+  nombreSubServicio String?  @db.VarChar(150)
+  gravedad          String   @default("SIN_ASIGNAR") // LEVE, MEDIO, ALTO, SIN_ASIGNAR
+  observaciones     String?  @db.Text
+  updatedBy         String?  @db.VarChar(100)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@unique([licitacion, numeroPreparacion])
+  @@index([licitacion])
+  @@index([nombrePreparacion])
+  @@index([nombreSubServicio])
+  @@index([gravedad])
+  @@map("Prev_GravedadPreparacion")
+}
+
+

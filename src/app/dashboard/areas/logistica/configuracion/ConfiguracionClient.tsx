@@ -328,7 +328,7 @@ export default function ConfiguracionClient({
                             >
                                 {initialBodegas.map(b => (
                                     <option key={b.id} value={b.id}>
-                                        {b.nombre} ({b.codigo})
+                                        {b.nombre}
                                     </option>
                                 ))}
                             </select>

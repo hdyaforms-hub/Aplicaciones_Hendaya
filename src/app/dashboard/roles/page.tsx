@@ -94,6 +94,10 @@ export default async function RolesPage() {
         { id: 'manage_calculos_ee', name: 'Cálculos de Elementos Esenciales', description: 'Permite calcular multas en base a elementos esenciales no conformes.', category: 'ÁREAS -> MULTAS' },
         { id: 'manage_descargos', name: 'Descargos de Actas', description: 'Gestionar descargos, resoluciones y no soluciones de aspectos de actas.', category: 'ÁREAS -> MULTAS' },
 
+        // ÁREAS -> PREV. DE RIESGOS
+        { id: 'view_prev_gravedad_preparacion', name: 'Gravedad en Preparación (Ver)', description: 'Acceso visual al módulo de gravedad de preparaciones.', category: 'ÁREAS -> PREV. DE RIESGOS' },
+        { id: 'manage_prev_gravedad_preparacion', name: 'Gravedad en Preparación (Gestionar)', description: 'Permite asignar y actualizar la gravedad (Leve, Medio, Alto) y sincronizar preparaciones.', category: 'ÁREAS -> PREV. DE RIESGOS' },
+
         // ÁREAS -> LOGÍSTICA
         { id: 'logistica:tablero:ver', name: 'Tablero de Despacho (Ver)', description: 'Visualizar el tablero en vivo de andenes y flujo de camiones.', category: 'ÁREAS -> LOGÍSTICA' },
         { id: 'logistica:tablero:gestionar', name: 'Gestionar Andenes', description: 'Asignar, reasignar y liberar andenes de despacho.', category: 'ÁREAS -> LOGÍSTICA' },

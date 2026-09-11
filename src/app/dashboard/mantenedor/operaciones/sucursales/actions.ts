@@ -7,7 +7,8 @@ import { revalidatePath } from 'next/cache'
 const MANTENEDOR_PATH = '/dashboard/mantenedor/operaciones/sucursales'
 
 function hasPermission(session: any) {
-    return session?.user?.role?.permissions.includes('manage_sucursales')
+    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
+    return isAdmin || session?.user?.role?.permissions?.includes('manage_sucursales')
 }
 
 // ------ LICITACIONES ------
@@ -100,7 +101,7 @@ export async function createSucursal(nombre: string, utCodes: number[], region?:
             }
         }
 
-        await prisma.sucursal.create({
+        const createdSuc = await prisma.sucursal.create({
             data: {
                 nombre,
                 region: region?.trim() || null,
@@ -109,6 +110,18 @@ export async function createSucursal(nombre: string, utCodes: number[], region?:
                 uts: { connect: utCodes.map(cod => ({ codUT: cod })) }
             }
         })
+
+        // Sincronizar en logBodega
+        const cleanCode = (nombre.startsWith('CD') ? nombre : `CD-${nombre}`)
+            .trim()
+            .toUpperCase()
+            .replace(/\s+/g, '-')
+        await (prisma as any).logBodega.upsert({
+            where: { codigo: cleanCode },
+            update: { nombre, sucursalId: createdSuc.id, direccion: direccion?.trim() || null, activa: true },
+            create: { codigo: cleanCode, nombre, sucursalId: createdSuc.id, direccion: direccion?.trim() || null, activa: true }
+        }).catch(() => {})
+
         revalidatePath(MANTENEDOR_PATH)
         return { success: true }
     } catch (e: any) {
@@ -149,6 +162,13 @@ export async function updateSucursal(id: string, nombre: string, utCodes: number
                 uts: { set: utCodes.map(cod => ({ codUT: cod })) }
             }
         })
+
+        // Sincronizar en logBodega
+        await (prisma as any).logBodega.updateMany({
+            where: { sucursalId: id },
+            data: { nombre, direccion: direccion?.trim() || null }
+        }).catch(() => {})
+
         revalidatePath(MANTENEDOR_PATH)
         return { success: true }
     } catch (e: any) {

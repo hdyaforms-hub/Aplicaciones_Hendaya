@@ -12,9 +12,10 @@ export default async function ColegiosPage({
     searchParams: Promise<{ rbd?: string, sucursal?: string, ut?: string, page?: string, sort?: string, dir?: string }>
 }) {
     const session = await getSession()
+    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
     const permissions = session?.user?.role?.permissions || []
 
-    if (!permissions.includes('view_colegios')) {
+    if (!isAdmin && !permissions.includes('view_colegios')) {
         redirect('/dashboard')
     }
 
@@ -34,7 +35,6 @@ export default async function ColegiosPage({
     if (filters.ut !== undefined) whereClause.colut = filters.ut
 
     // Check if user is Administrador to potentially bypass sucursal filtering
-    const isAdmin = session?.user?.role?.name === 'Administrador'
     const canSeeAll = isAdmin || permissions.includes('manage_sucursales')
 
     const dbUser = await (prisma.user as any).findUnique({

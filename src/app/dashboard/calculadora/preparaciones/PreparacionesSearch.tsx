@@ -21,42 +21,39 @@ export default function PreparacionesSearch({
     const debouncedNombre = useDebounce(nombre, 400)
     const debouncedLicitacion = useDebounce(licitacion, 400)
 
-    const createQueryString = useCallback(
-        (params: Record<string, string | null>, resetPage: boolean = false) => {
-            const newSearchParams = new URLSearchParams(searchParams.toString())
-            
-            for (const [key, value] of Object.entries(params)) {
-                if (value === null || value === '') {
-                    newSearchParams.delete(key)
-                } else {
-                    newSearchParams.set(key, value)
-                }
-            }
-            
-            if (resetPage) {
-                newSearchParams.set('page', '1')
-            }
-            
-            return newSearchParams.toString()
-        },
-        [searchParams]
-    )
-
-    const prevSearchRef = useRef({ debouncedNombre, debouncedLicitacion })
+    const isFirstRender = useRef(true)
 
     useEffect(() => {
-        const searchChanged = 
-            prevSearchRef.current.debouncedNombre !== debouncedNombre ||
-            prevSearchRef.current.debouncedLicitacion !== debouncedLicitacion
+        if (isFirstRender.current) {
+            isFirstRender.current = false
+            return
+        }
 
-        const query = createQueryString({
-            nombre: debouncedNombre,
-            codigo: debouncedLicitacion
-        }, searchChanged)
+        const currentNombre = searchParams.get('nombre') || ''
+        const currentCodigo = searchParams.get('codigo') || ''
 
-        prevSearchRef.current = { debouncedNombre, debouncedLicitacion }
-        router.push(`${pathname}?${query}`, { scroll: false })
-    }, [debouncedNombre, debouncedLicitacion, pathname, router, createQueryString])
+        // Solo navegar si los filtros realmente cambiaron respecto a la URL actual
+        if (debouncedNombre === currentNombre && debouncedLicitacion === currentCodigo) {
+            return
+        }
+
+        const newSearchParams = new URLSearchParams(searchParams.toString())
+        if (debouncedNombre) {
+            newSearchParams.set('nombre', debouncedNombre)
+        } else {
+            newSearchParams.delete('nombre')
+        }
+
+        if (debouncedLicitacion) {
+            newSearchParams.set('codigo', debouncedLicitacion)
+        } else {
+            newSearchParams.delete('codigo')
+        }
+
+        newSearchParams.set('page', '1')
+
+        router.push(`${pathname}?${newSearchParams.toString()}`, { scroll: false })
+    }, [debouncedNombre, debouncedLicitacion, pathname, router, searchParams])
 
     return (
         <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col sm:flex-row gap-4">

@@ -1730,6 +1730,20 @@ exports.Prisma.LogParametroScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.PrevGravedadPreparacionScalarFieldEnum = {
+  id: 'id',
+  licitacion: 'licitacion',
+  numeroPreparacion: 'numeroPreparacion',
+  nombrePreparacion: 'nombrePreparacion',
+  codigoSubServicio: 'codigoSubServicio',
+  nombreSubServicio: 'nombreSubServicio',
+  gravedad: 'gravedad',
+  observaciones: 'observaciones',
+  updatedBy: 'updatedBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1870,7 +1884,8 @@ exports.Prisma.ModelName = {
   LogEventoRuta: 'LogEventoRuta',
   LogIntegracionConfig: 'LogIntegracionConfig',
   LogIntegracionLog: 'LogIntegracionLog',
-  LogParametro: 'LogParametro'
+  LogParametro: 'LogParametro',
+  PrevGravedadPreparacion: 'PrevGravedadPreparacion'
 };
 
 /**

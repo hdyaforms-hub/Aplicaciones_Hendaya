@@ -45,6 +45,9 @@ function getModuleInfoFromPath(path: string): { modulo: string; detalle: string 
         if (path.includes('/descargos')) return { modulo: 'Áreas -> Multas', detalle: 'Accedió a Descargos de Actas' }
         return { modulo: 'Áreas -> Multas', detalle: 'Accedió a Cálculos de Elementos Esenciales' }
     }
+    if (path.startsWith('/dashboard/areas/prevencion-riesgos') || path.startsWith('/dashboard/areas/prev-riesgos')) {
+        return { modulo: 'Áreas -> Prev. de riesgos', detalle: 'Accedió a Gravedad en Preparación' }
+    }
 
     // Trabajos Preventivos
     if (path.startsWith('/dashboard/trabajos-preventivos')) {

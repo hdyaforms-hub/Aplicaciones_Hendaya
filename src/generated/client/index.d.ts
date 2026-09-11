@@ -633,6 +633,11 @@ export type LogIntegracionLog = $Result.DefaultSelection<Prisma.$LogIntegracionL
  * 
  */
 export type LogParametro = $Result.DefaultSelection<Prisma.$LogParametroPayload>
+/**
+ * Model PrevGravedadPreparacion
+ * 
+ */
+export type PrevGravedadPreparacion = $Result.DefaultSelection<Prisma.$PrevGravedadPreparacionPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -1996,6 +2001,16 @@ export class PrismaClient<
     * ```
     */
   get logParametro(): Prisma.LogParametroDelegate<ExtArgs>;
+
+  /**
+   * `prisma.prevGravedadPreparacion`: Exposes CRUD operations for the **PrevGravedadPreparacion** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PrevGravedadPreparacions
+    * const prevGravedadPreparacions = await prisma.prevGravedadPreparacion.findMany()
+    * ```
+    */
+  get prevGravedadPreparacion(): Prisma.PrevGravedadPreparacionDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -2560,7 +2575,8 @@ export namespace Prisma {
     LogEventoRuta: 'LogEventoRuta',
     LogIntegracionConfig: 'LogIntegracionConfig',
     LogIntegracionLog: 'LogIntegracionLog',
-    LogParametro: 'LogParametro'
+    LogParametro: 'LogParametro',
+    PrevGravedadPreparacion: 'PrevGravedadPreparacion'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -2576,7 +2592,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout" | "reservaSala" | "noticiaAlimentacion" | "logBodega" | "logUsuarioBodega" | "logAnden" | "logTransportista" | "logChofer" | "logCamion" | "logCliente" | "logRuta" | "logEventoRuta" | "logIntegracionConfig" | "logIntegracionLog" | "logParametro"
+      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout" | "reservaSala" | "noticiaAlimentacion" | "logBodega" | "logUsuarioBodega" | "logAnden" | "logTransportista" | "logChofer" | "logCamion" | "logCliente" | "logRuta" | "logEventoRuta" | "logIntegracionConfig" | "logIntegracionLog" | "logParametro" | "prevGravedadPreparacion"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -11257,6 +11273,76 @@ export namespace Prisma {
           count: {
             args: Prisma.LogParametroCountArgs<ExtArgs>
             result: $Utils.Optional<LogParametroCountAggregateOutputType> | number
+          }
+        }
+      }
+      PrevGravedadPreparacion: {
+        payload: Prisma.$PrevGravedadPreparacionPayload<ExtArgs>
+        fields: Prisma.PrevGravedadPreparacionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PrevGravedadPreparacionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrevGravedadPreparacionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PrevGravedadPreparacionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrevGravedadPreparacionPayload>
+          }
+          findFirst: {
+            args: Prisma.PrevGravedadPreparacionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrevGravedadPreparacionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PrevGravedadPreparacionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrevGravedadPreparacionPayload>
+          }
+          findMany: {
+            args: Prisma.PrevGravedadPreparacionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrevGravedadPreparacionPayload>[]
+          }
+          create: {
+            args: Prisma.PrevGravedadPreparacionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrevGravedadPreparacionPayload>
+          }
+          createMany: {
+            args: Prisma.PrevGravedadPreparacionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PrevGravedadPreparacionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrevGravedadPreparacionPayload>[]
+          }
+          delete: {
+            args: Prisma.PrevGravedadPreparacionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrevGravedadPreparacionPayload>
+          }
+          update: {
+            args: Prisma.PrevGravedadPreparacionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrevGravedadPreparacionPayload>
+          }
+          deleteMany: {
+            args: Prisma.PrevGravedadPreparacionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PrevGravedadPreparacionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.PrevGravedadPreparacionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrevGravedadPreparacionPayload>
+          }
+          aggregate: {
+            args: Prisma.PrevGravedadPreparacionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePrevGravedadPreparacion>
+          }
+          groupBy: {
+            args: Prisma.PrevGravedadPreparacionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PrevGravedadPreparacionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PrevGravedadPreparacionCountArgs<ExtArgs>
+            result: $Utils.Optional<PrevGravedadPreparacionCountAggregateOutputType> | number
           }
         }
       }
@@ -139637,6 +139723,990 @@ export namespace Prisma {
 
 
   /**
+   * Model PrevGravedadPreparacion
+   */
+
+  export type AggregatePrevGravedadPreparacion = {
+    _count: PrevGravedadPreparacionCountAggregateOutputType | null
+    _avg: PrevGravedadPreparacionAvgAggregateOutputType | null
+    _sum: PrevGravedadPreparacionSumAggregateOutputType | null
+    _min: PrevGravedadPreparacionMinAggregateOutputType | null
+    _max: PrevGravedadPreparacionMaxAggregateOutputType | null
+  }
+
+  export type PrevGravedadPreparacionAvgAggregateOutputType = {
+    numeroPreparacion: number | null
+  }
+
+  export type PrevGravedadPreparacionSumAggregateOutputType = {
+    numeroPreparacion: number | null
+  }
+
+  export type PrevGravedadPreparacionMinAggregateOutputType = {
+    id: string | null
+    licitacion: string | null
+    numeroPreparacion: number | null
+    nombrePreparacion: string | null
+    codigoSubServicio: string | null
+    nombreSubServicio: string | null
+    gravedad: string | null
+    observaciones: string | null
+    updatedBy: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PrevGravedadPreparacionMaxAggregateOutputType = {
+    id: string | null
+    licitacion: string | null
+    numeroPreparacion: number | null
+    nombrePreparacion: string | null
+    codigoSubServicio: string | null
+    nombreSubServicio: string | null
+    gravedad: string | null
+    observaciones: string | null
+    updatedBy: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PrevGravedadPreparacionCountAggregateOutputType = {
+    id: number
+    licitacion: number
+    numeroPreparacion: number
+    nombrePreparacion: number
+    codigoSubServicio: number
+    nombreSubServicio: number
+    gravedad: number
+    observaciones: number
+    updatedBy: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type PrevGravedadPreparacionAvgAggregateInputType = {
+    numeroPreparacion?: true
+  }
+
+  export type PrevGravedadPreparacionSumAggregateInputType = {
+    numeroPreparacion?: true
+  }
+
+  export type PrevGravedadPreparacionMinAggregateInputType = {
+    id?: true
+    licitacion?: true
+    numeroPreparacion?: true
+    nombrePreparacion?: true
+    codigoSubServicio?: true
+    nombreSubServicio?: true
+    gravedad?: true
+    observaciones?: true
+    updatedBy?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PrevGravedadPreparacionMaxAggregateInputType = {
+    id?: true
+    licitacion?: true
+    numeroPreparacion?: true
+    nombrePreparacion?: true
+    codigoSubServicio?: true
+    nombreSubServicio?: true
+    gravedad?: true
+    observaciones?: true
+    updatedBy?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PrevGravedadPreparacionCountAggregateInputType = {
+    id?: true
+    licitacion?: true
+    numeroPreparacion?: true
+    nombrePreparacion?: true
+    codigoSubServicio?: true
+    nombreSubServicio?: true
+    gravedad?: true
+    observaciones?: true
+    updatedBy?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type PrevGravedadPreparacionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PrevGravedadPreparacion to aggregate.
+     */
+    where?: PrevGravedadPreparacionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PrevGravedadPreparacions to fetch.
+     */
+    orderBy?: PrevGravedadPreparacionOrderByWithRelationInput | PrevGravedadPreparacionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PrevGravedadPreparacionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PrevGravedadPreparacions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PrevGravedadPreparacions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PrevGravedadPreparacions
+    **/
+    _count?: true | PrevGravedadPreparacionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PrevGravedadPreparacionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PrevGravedadPreparacionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PrevGravedadPreparacionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PrevGravedadPreparacionMaxAggregateInputType
+  }
+
+  export type GetPrevGravedadPreparacionAggregateType<T extends PrevGravedadPreparacionAggregateArgs> = {
+        [P in keyof T & keyof AggregatePrevGravedadPreparacion]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePrevGravedadPreparacion[P]>
+      : GetScalarType<T[P], AggregatePrevGravedadPreparacion[P]>
+  }
+
+
+
+
+  export type PrevGravedadPreparacionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PrevGravedadPreparacionWhereInput
+    orderBy?: PrevGravedadPreparacionOrderByWithAggregationInput | PrevGravedadPreparacionOrderByWithAggregationInput[]
+    by: PrevGravedadPreparacionScalarFieldEnum[] | PrevGravedadPreparacionScalarFieldEnum
+    having?: PrevGravedadPreparacionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PrevGravedadPreparacionCountAggregateInputType | true
+    _avg?: PrevGravedadPreparacionAvgAggregateInputType
+    _sum?: PrevGravedadPreparacionSumAggregateInputType
+    _min?: PrevGravedadPreparacionMinAggregateInputType
+    _max?: PrevGravedadPreparacionMaxAggregateInputType
+  }
+
+  export type PrevGravedadPreparacionGroupByOutputType = {
+    id: string
+    licitacion: string
+    numeroPreparacion: number
+    nombrePreparacion: string
+    codigoSubServicio: string | null
+    nombreSubServicio: string | null
+    gravedad: string
+    observaciones: string | null
+    updatedBy: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: PrevGravedadPreparacionCountAggregateOutputType | null
+    _avg: PrevGravedadPreparacionAvgAggregateOutputType | null
+    _sum: PrevGravedadPreparacionSumAggregateOutputType | null
+    _min: PrevGravedadPreparacionMinAggregateOutputType | null
+    _max: PrevGravedadPreparacionMaxAggregateOutputType | null
+  }
+
+  type GetPrevGravedadPreparacionGroupByPayload<T extends PrevGravedadPreparacionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PrevGravedadPreparacionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PrevGravedadPreparacionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PrevGravedadPreparacionGroupByOutputType[P]>
+            : GetScalarType<T[P], PrevGravedadPreparacionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PrevGravedadPreparacionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    licitacion?: boolean
+    numeroPreparacion?: boolean
+    nombrePreparacion?: boolean
+    codigoSubServicio?: boolean
+    nombreSubServicio?: boolean
+    gravedad?: boolean
+    observaciones?: boolean
+    updatedBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["prevGravedadPreparacion"]>
+
+  export type PrevGravedadPreparacionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    licitacion?: boolean
+    numeroPreparacion?: boolean
+    nombrePreparacion?: boolean
+    codigoSubServicio?: boolean
+    nombreSubServicio?: boolean
+    gravedad?: boolean
+    observaciones?: boolean
+    updatedBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["prevGravedadPreparacion"]>
+
+  export type PrevGravedadPreparacionSelectScalar = {
+    id?: boolean
+    licitacion?: boolean
+    numeroPreparacion?: boolean
+    nombrePreparacion?: boolean
+    codigoSubServicio?: boolean
+    nombreSubServicio?: boolean
+    gravedad?: boolean
+    observaciones?: boolean
+    updatedBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type $PrevGravedadPreparacionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PrevGravedadPreparacion"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      licitacion: string
+      numeroPreparacion: number
+      nombrePreparacion: string
+      codigoSubServicio: string | null
+      nombreSubServicio: string | null
+      gravedad: string
+      observaciones: string | null
+      updatedBy: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["prevGravedadPreparacion"]>
+    composites: {}
+  }
+
+  type PrevGravedadPreparacionGetPayload<S extends boolean | null | undefined | PrevGravedadPreparacionDefaultArgs> = $Result.GetResult<Prisma.$PrevGravedadPreparacionPayload, S>
+
+  type PrevGravedadPreparacionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<PrevGravedadPreparacionFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: PrevGravedadPreparacionCountAggregateInputType | true
+    }
+
+  export interface PrevGravedadPreparacionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PrevGravedadPreparacion'], meta: { name: 'PrevGravedadPreparacion' } }
+    /**
+     * Find zero or one PrevGravedadPreparacion that matches the filter.
+     * @param {PrevGravedadPreparacionFindUniqueArgs} args - Arguments to find a PrevGravedadPreparacion
+     * @example
+     * // Get one PrevGravedadPreparacion
+     * const prevGravedadPreparacion = await prisma.prevGravedadPreparacion.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PrevGravedadPreparacionFindUniqueArgs>(args: SelectSubset<T, PrevGravedadPreparacionFindUniqueArgs<ExtArgs>>): Prisma__PrevGravedadPreparacionClient<$Result.GetResult<Prisma.$PrevGravedadPreparacionPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one PrevGravedadPreparacion that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {PrevGravedadPreparacionFindUniqueOrThrowArgs} args - Arguments to find a PrevGravedadPreparacion
+     * @example
+     * // Get one PrevGravedadPreparacion
+     * const prevGravedadPreparacion = await prisma.prevGravedadPreparacion.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PrevGravedadPreparacionFindUniqueOrThrowArgs>(args: SelectSubset<T, PrevGravedadPreparacionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PrevGravedadPreparacionClient<$Result.GetResult<Prisma.$PrevGravedadPreparacionPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first PrevGravedadPreparacion that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PrevGravedadPreparacionFindFirstArgs} args - Arguments to find a PrevGravedadPreparacion
+     * @example
+     * // Get one PrevGravedadPreparacion
+     * const prevGravedadPreparacion = await prisma.prevGravedadPreparacion.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PrevGravedadPreparacionFindFirstArgs>(args?: SelectSubset<T, PrevGravedadPreparacionFindFirstArgs<ExtArgs>>): Prisma__PrevGravedadPreparacionClient<$Result.GetResult<Prisma.$PrevGravedadPreparacionPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first PrevGravedadPreparacion that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PrevGravedadPreparacionFindFirstOrThrowArgs} args - Arguments to find a PrevGravedadPreparacion
+     * @example
+     * // Get one PrevGravedadPreparacion
+     * const prevGravedadPreparacion = await prisma.prevGravedadPreparacion.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PrevGravedadPreparacionFindFirstOrThrowArgs>(args?: SelectSubset<T, PrevGravedadPreparacionFindFirstOrThrowArgs<ExtArgs>>): Prisma__PrevGravedadPreparacionClient<$Result.GetResult<Prisma.$PrevGravedadPreparacionPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more PrevGravedadPreparacions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PrevGravedadPreparacionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PrevGravedadPreparacions
+     * const prevGravedadPreparacions = await prisma.prevGravedadPreparacion.findMany()
+     * 
+     * // Get first 10 PrevGravedadPreparacions
+     * const prevGravedadPreparacions = await prisma.prevGravedadPreparacion.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const prevGravedadPreparacionWithIdOnly = await prisma.prevGravedadPreparacion.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PrevGravedadPreparacionFindManyArgs>(args?: SelectSubset<T, PrevGravedadPreparacionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PrevGravedadPreparacionPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a PrevGravedadPreparacion.
+     * @param {PrevGravedadPreparacionCreateArgs} args - Arguments to create a PrevGravedadPreparacion.
+     * @example
+     * // Create one PrevGravedadPreparacion
+     * const PrevGravedadPreparacion = await prisma.prevGravedadPreparacion.create({
+     *   data: {
+     *     // ... data to create a PrevGravedadPreparacion
+     *   }
+     * })
+     * 
+     */
+    create<T extends PrevGravedadPreparacionCreateArgs>(args: SelectSubset<T, PrevGravedadPreparacionCreateArgs<ExtArgs>>): Prisma__PrevGravedadPreparacionClient<$Result.GetResult<Prisma.$PrevGravedadPreparacionPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many PrevGravedadPreparacions.
+     * @param {PrevGravedadPreparacionCreateManyArgs} args - Arguments to create many PrevGravedadPreparacions.
+     * @example
+     * // Create many PrevGravedadPreparacions
+     * const prevGravedadPreparacion = await prisma.prevGravedadPreparacion.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PrevGravedadPreparacionCreateManyArgs>(args?: SelectSubset<T, PrevGravedadPreparacionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PrevGravedadPreparacions and returns the data saved in the database.
+     * @param {PrevGravedadPreparacionCreateManyAndReturnArgs} args - Arguments to create many PrevGravedadPreparacions.
+     * @example
+     * // Create many PrevGravedadPreparacions
+     * const prevGravedadPreparacion = await prisma.prevGravedadPreparacion.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PrevGravedadPreparacions and only return the `id`
+     * const prevGravedadPreparacionWithIdOnly = await prisma.prevGravedadPreparacion.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PrevGravedadPreparacionCreateManyAndReturnArgs>(args?: SelectSubset<T, PrevGravedadPreparacionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PrevGravedadPreparacionPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a PrevGravedadPreparacion.
+     * @param {PrevGravedadPreparacionDeleteArgs} args - Arguments to delete one PrevGravedadPreparacion.
+     * @example
+     * // Delete one PrevGravedadPreparacion
+     * const PrevGravedadPreparacion = await prisma.prevGravedadPreparacion.delete({
+     *   where: {
+     *     // ... filter to delete one PrevGravedadPreparacion
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PrevGravedadPreparacionDeleteArgs>(args: SelectSubset<T, PrevGravedadPreparacionDeleteArgs<ExtArgs>>): Prisma__PrevGravedadPreparacionClient<$Result.GetResult<Prisma.$PrevGravedadPreparacionPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one PrevGravedadPreparacion.
+     * @param {PrevGravedadPreparacionUpdateArgs} args - Arguments to update one PrevGravedadPreparacion.
+     * @example
+     * // Update one PrevGravedadPreparacion
+     * const prevGravedadPreparacion = await prisma.prevGravedadPreparacion.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PrevGravedadPreparacionUpdateArgs>(args: SelectSubset<T, PrevGravedadPreparacionUpdateArgs<ExtArgs>>): Prisma__PrevGravedadPreparacionClient<$Result.GetResult<Prisma.$PrevGravedadPreparacionPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more PrevGravedadPreparacions.
+     * @param {PrevGravedadPreparacionDeleteManyArgs} args - Arguments to filter PrevGravedadPreparacions to delete.
+     * @example
+     * // Delete a few PrevGravedadPreparacions
+     * const { count } = await prisma.prevGravedadPreparacion.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PrevGravedadPreparacionDeleteManyArgs>(args?: SelectSubset<T, PrevGravedadPreparacionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PrevGravedadPreparacions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PrevGravedadPreparacionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PrevGravedadPreparacions
+     * const prevGravedadPreparacion = await prisma.prevGravedadPreparacion.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PrevGravedadPreparacionUpdateManyArgs>(args: SelectSubset<T, PrevGravedadPreparacionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one PrevGravedadPreparacion.
+     * @param {PrevGravedadPreparacionUpsertArgs} args - Arguments to update or create a PrevGravedadPreparacion.
+     * @example
+     * // Update or create a PrevGravedadPreparacion
+     * const prevGravedadPreparacion = await prisma.prevGravedadPreparacion.upsert({
+     *   create: {
+     *     // ... data to create a PrevGravedadPreparacion
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PrevGravedadPreparacion we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PrevGravedadPreparacionUpsertArgs>(args: SelectSubset<T, PrevGravedadPreparacionUpsertArgs<ExtArgs>>): Prisma__PrevGravedadPreparacionClient<$Result.GetResult<Prisma.$PrevGravedadPreparacionPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of PrevGravedadPreparacions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PrevGravedadPreparacionCountArgs} args - Arguments to filter PrevGravedadPreparacions to count.
+     * @example
+     * // Count the number of PrevGravedadPreparacions
+     * const count = await prisma.prevGravedadPreparacion.count({
+     *   where: {
+     *     // ... the filter for the PrevGravedadPreparacions we want to count
+     *   }
+     * })
+    **/
+    count<T extends PrevGravedadPreparacionCountArgs>(
+      args?: Subset<T, PrevGravedadPreparacionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PrevGravedadPreparacionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PrevGravedadPreparacion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PrevGravedadPreparacionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PrevGravedadPreparacionAggregateArgs>(args: Subset<T, PrevGravedadPreparacionAggregateArgs>): Prisma.PrismaPromise<GetPrevGravedadPreparacionAggregateType<T>>
+
+    /**
+     * Group by PrevGravedadPreparacion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PrevGravedadPreparacionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PrevGravedadPreparacionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PrevGravedadPreparacionGroupByArgs['orderBy'] }
+        : { orderBy?: PrevGravedadPreparacionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PrevGravedadPreparacionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPrevGravedadPreparacionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PrevGravedadPreparacion model
+   */
+  readonly fields: PrevGravedadPreparacionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PrevGravedadPreparacion.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PrevGravedadPreparacionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PrevGravedadPreparacion model
+   */ 
+  interface PrevGravedadPreparacionFieldRefs {
+    readonly id: FieldRef<"PrevGravedadPreparacion", 'String'>
+    readonly licitacion: FieldRef<"PrevGravedadPreparacion", 'String'>
+    readonly numeroPreparacion: FieldRef<"PrevGravedadPreparacion", 'Int'>
+    readonly nombrePreparacion: FieldRef<"PrevGravedadPreparacion", 'String'>
+    readonly codigoSubServicio: FieldRef<"PrevGravedadPreparacion", 'String'>
+    readonly nombreSubServicio: FieldRef<"PrevGravedadPreparacion", 'String'>
+    readonly gravedad: FieldRef<"PrevGravedadPreparacion", 'String'>
+    readonly observaciones: FieldRef<"PrevGravedadPreparacion", 'String'>
+    readonly updatedBy: FieldRef<"PrevGravedadPreparacion", 'String'>
+    readonly createdAt: FieldRef<"PrevGravedadPreparacion", 'DateTime'>
+    readonly updatedAt: FieldRef<"PrevGravedadPreparacion", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PrevGravedadPreparacion findUnique
+   */
+  export type PrevGravedadPreparacionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrevGravedadPreparacion
+     */
+    select?: PrevGravedadPreparacionSelect<ExtArgs> | null
+    /**
+     * Filter, which PrevGravedadPreparacion to fetch.
+     */
+    where: PrevGravedadPreparacionWhereUniqueInput
+  }
+
+  /**
+   * PrevGravedadPreparacion findUniqueOrThrow
+   */
+  export type PrevGravedadPreparacionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrevGravedadPreparacion
+     */
+    select?: PrevGravedadPreparacionSelect<ExtArgs> | null
+    /**
+     * Filter, which PrevGravedadPreparacion to fetch.
+     */
+    where: PrevGravedadPreparacionWhereUniqueInput
+  }
+
+  /**
+   * PrevGravedadPreparacion findFirst
+   */
+  export type PrevGravedadPreparacionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrevGravedadPreparacion
+     */
+    select?: PrevGravedadPreparacionSelect<ExtArgs> | null
+    /**
+     * Filter, which PrevGravedadPreparacion to fetch.
+     */
+    where?: PrevGravedadPreparacionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PrevGravedadPreparacions to fetch.
+     */
+    orderBy?: PrevGravedadPreparacionOrderByWithRelationInput | PrevGravedadPreparacionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PrevGravedadPreparacions.
+     */
+    cursor?: PrevGravedadPreparacionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PrevGravedadPreparacions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PrevGravedadPreparacions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PrevGravedadPreparacions.
+     */
+    distinct?: PrevGravedadPreparacionScalarFieldEnum | PrevGravedadPreparacionScalarFieldEnum[]
+  }
+
+  /**
+   * PrevGravedadPreparacion findFirstOrThrow
+   */
+  export type PrevGravedadPreparacionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrevGravedadPreparacion
+     */
+    select?: PrevGravedadPreparacionSelect<ExtArgs> | null
+    /**
+     * Filter, which PrevGravedadPreparacion to fetch.
+     */
+    where?: PrevGravedadPreparacionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PrevGravedadPreparacions to fetch.
+     */
+    orderBy?: PrevGravedadPreparacionOrderByWithRelationInput | PrevGravedadPreparacionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PrevGravedadPreparacions.
+     */
+    cursor?: PrevGravedadPreparacionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PrevGravedadPreparacions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PrevGravedadPreparacions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PrevGravedadPreparacions.
+     */
+    distinct?: PrevGravedadPreparacionScalarFieldEnum | PrevGravedadPreparacionScalarFieldEnum[]
+  }
+
+  /**
+   * PrevGravedadPreparacion findMany
+   */
+  export type PrevGravedadPreparacionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrevGravedadPreparacion
+     */
+    select?: PrevGravedadPreparacionSelect<ExtArgs> | null
+    /**
+     * Filter, which PrevGravedadPreparacions to fetch.
+     */
+    where?: PrevGravedadPreparacionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PrevGravedadPreparacions to fetch.
+     */
+    orderBy?: PrevGravedadPreparacionOrderByWithRelationInput | PrevGravedadPreparacionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PrevGravedadPreparacions.
+     */
+    cursor?: PrevGravedadPreparacionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PrevGravedadPreparacions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PrevGravedadPreparacions.
+     */
+    skip?: number
+    distinct?: PrevGravedadPreparacionScalarFieldEnum | PrevGravedadPreparacionScalarFieldEnum[]
+  }
+
+  /**
+   * PrevGravedadPreparacion create
+   */
+  export type PrevGravedadPreparacionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrevGravedadPreparacion
+     */
+    select?: PrevGravedadPreparacionSelect<ExtArgs> | null
+    /**
+     * The data needed to create a PrevGravedadPreparacion.
+     */
+    data: XOR<PrevGravedadPreparacionCreateInput, PrevGravedadPreparacionUncheckedCreateInput>
+  }
+
+  /**
+   * PrevGravedadPreparacion createMany
+   */
+  export type PrevGravedadPreparacionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PrevGravedadPreparacions.
+     */
+    data: PrevGravedadPreparacionCreateManyInput | PrevGravedadPreparacionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PrevGravedadPreparacion createManyAndReturn
+   */
+  export type PrevGravedadPreparacionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrevGravedadPreparacion
+     */
+    select?: PrevGravedadPreparacionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many PrevGravedadPreparacions.
+     */
+    data: PrevGravedadPreparacionCreateManyInput | PrevGravedadPreparacionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PrevGravedadPreparacion update
+   */
+  export type PrevGravedadPreparacionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrevGravedadPreparacion
+     */
+    select?: PrevGravedadPreparacionSelect<ExtArgs> | null
+    /**
+     * The data needed to update a PrevGravedadPreparacion.
+     */
+    data: XOR<PrevGravedadPreparacionUpdateInput, PrevGravedadPreparacionUncheckedUpdateInput>
+    /**
+     * Choose, which PrevGravedadPreparacion to update.
+     */
+    where: PrevGravedadPreparacionWhereUniqueInput
+  }
+
+  /**
+   * PrevGravedadPreparacion updateMany
+   */
+  export type PrevGravedadPreparacionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PrevGravedadPreparacions.
+     */
+    data: XOR<PrevGravedadPreparacionUpdateManyMutationInput, PrevGravedadPreparacionUncheckedUpdateManyInput>
+    /**
+     * Filter which PrevGravedadPreparacions to update
+     */
+    where?: PrevGravedadPreparacionWhereInput
+  }
+
+  /**
+   * PrevGravedadPreparacion upsert
+   */
+  export type PrevGravedadPreparacionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrevGravedadPreparacion
+     */
+    select?: PrevGravedadPreparacionSelect<ExtArgs> | null
+    /**
+     * The filter to search for the PrevGravedadPreparacion to update in case it exists.
+     */
+    where: PrevGravedadPreparacionWhereUniqueInput
+    /**
+     * In case the PrevGravedadPreparacion found by the `where` argument doesn't exist, create a new PrevGravedadPreparacion with this data.
+     */
+    create: XOR<PrevGravedadPreparacionCreateInput, PrevGravedadPreparacionUncheckedCreateInput>
+    /**
+     * In case the PrevGravedadPreparacion was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PrevGravedadPreparacionUpdateInput, PrevGravedadPreparacionUncheckedUpdateInput>
+  }
+
+  /**
+   * PrevGravedadPreparacion delete
+   */
+  export type PrevGravedadPreparacionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrevGravedadPreparacion
+     */
+    select?: PrevGravedadPreparacionSelect<ExtArgs> | null
+    /**
+     * Filter which PrevGravedadPreparacion to delete.
+     */
+    where: PrevGravedadPreparacionWhereUniqueInput
+  }
+
+  /**
+   * PrevGravedadPreparacion deleteMany
+   */
+  export type PrevGravedadPreparacionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PrevGravedadPreparacions to delete
+     */
+    where?: PrevGravedadPreparacionWhereInput
+  }
+
+  /**
+   * PrevGravedadPreparacion without action
+   */
+  export type PrevGravedadPreparacionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrevGravedadPreparacion
+     */
+    select?: PrevGravedadPreparacionSelect<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -141628,6 +142698,23 @@ export namespace Prisma {
   };
 
   export type LogParametroScalarFieldEnum = (typeof LogParametroScalarFieldEnum)[keyof typeof LogParametroScalarFieldEnum]
+
+
+  export const PrevGravedadPreparacionScalarFieldEnum: {
+    id: 'id',
+    licitacion: 'licitacion',
+    numeroPreparacion: 'numeroPreparacion',
+    nombrePreparacion: 'nombrePreparacion',
+    codigoSubServicio: 'codigoSubServicio',
+    nombreSubServicio: 'nombreSubServicio',
+    gravedad: 'gravedad',
+    observaciones: 'observaciones',
+    updatedBy: 'updatedBy',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type PrevGravedadPreparacionScalarFieldEnum = (typeof PrevGravedadPreparacionScalarFieldEnum)[keyof typeof PrevGravedadPreparacionScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -151980,6 +153067,91 @@ export namespace Prisma {
     descripcion?: StringNullableWithAggregatesFilter<"LogParametro"> | string | null
     tipo?: StringWithAggregatesFilter<"LogParametro"> | string
     updatedAt?: DateTimeWithAggregatesFilter<"LogParametro"> | Date | string
+  }
+
+  export type PrevGravedadPreparacionWhereInput = {
+    AND?: PrevGravedadPreparacionWhereInput | PrevGravedadPreparacionWhereInput[]
+    OR?: PrevGravedadPreparacionWhereInput[]
+    NOT?: PrevGravedadPreparacionWhereInput | PrevGravedadPreparacionWhereInput[]
+    id?: StringFilter<"PrevGravedadPreparacion"> | string
+    licitacion?: StringFilter<"PrevGravedadPreparacion"> | string
+    numeroPreparacion?: IntFilter<"PrevGravedadPreparacion"> | number
+    nombrePreparacion?: StringFilter<"PrevGravedadPreparacion"> | string
+    codigoSubServicio?: StringNullableFilter<"PrevGravedadPreparacion"> | string | null
+    nombreSubServicio?: StringNullableFilter<"PrevGravedadPreparacion"> | string | null
+    gravedad?: StringFilter<"PrevGravedadPreparacion"> | string
+    observaciones?: StringNullableFilter<"PrevGravedadPreparacion"> | string | null
+    updatedBy?: StringNullableFilter<"PrevGravedadPreparacion"> | string | null
+    createdAt?: DateTimeFilter<"PrevGravedadPreparacion"> | Date | string
+    updatedAt?: DateTimeFilter<"PrevGravedadPreparacion"> | Date | string
+  }
+
+  export type PrevGravedadPreparacionOrderByWithRelationInput = {
+    id?: SortOrder
+    licitacion?: SortOrder
+    numeroPreparacion?: SortOrder
+    nombrePreparacion?: SortOrder
+    codigoSubServicio?: SortOrderInput | SortOrder
+    nombreSubServicio?: SortOrderInput | SortOrder
+    gravedad?: SortOrder
+    observaciones?: SortOrderInput | SortOrder
+    updatedBy?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PrevGravedadPreparacionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    licitacion_numeroPreparacion?: PrevGravedadPreparacionLicitacionNumeroPreparacionCompoundUniqueInput
+    AND?: PrevGravedadPreparacionWhereInput | PrevGravedadPreparacionWhereInput[]
+    OR?: PrevGravedadPreparacionWhereInput[]
+    NOT?: PrevGravedadPreparacionWhereInput | PrevGravedadPreparacionWhereInput[]
+    licitacion?: StringFilter<"PrevGravedadPreparacion"> | string
+    numeroPreparacion?: IntFilter<"PrevGravedadPreparacion"> | number
+    nombrePreparacion?: StringFilter<"PrevGravedadPreparacion"> | string
+    codigoSubServicio?: StringNullableFilter<"PrevGravedadPreparacion"> | string | null
+    nombreSubServicio?: StringNullableFilter<"PrevGravedadPreparacion"> | string | null
+    gravedad?: StringFilter<"PrevGravedadPreparacion"> | string
+    observaciones?: StringNullableFilter<"PrevGravedadPreparacion"> | string | null
+    updatedBy?: StringNullableFilter<"PrevGravedadPreparacion"> | string | null
+    createdAt?: DateTimeFilter<"PrevGravedadPreparacion"> | Date | string
+    updatedAt?: DateTimeFilter<"PrevGravedadPreparacion"> | Date | string
+  }, "id" | "licitacion_numeroPreparacion">
+
+  export type PrevGravedadPreparacionOrderByWithAggregationInput = {
+    id?: SortOrder
+    licitacion?: SortOrder
+    numeroPreparacion?: SortOrder
+    nombrePreparacion?: SortOrder
+    codigoSubServicio?: SortOrderInput | SortOrder
+    nombreSubServicio?: SortOrderInput | SortOrder
+    gravedad?: SortOrder
+    observaciones?: SortOrderInput | SortOrder
+    updatedBy?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: PrevGravedadPreparacionCountOrderByAggregateInput
+    _avg?: PrevGravedadPreparacionAvgOrderByAggregateInput
+    _max?: PrevGravedadPreparacionMaxOrderByAggregateInput
+    _min?: PrevGravedadPreparacionMinOrderByAggregateInput
+    _sum?: PrevGravedadPreparacionSumOrderByAggregateInput
+  }
+
+  export type PrevGravedadPreparacionScalarWhereWithAggregatesInput = {
+    AND?: PrevGravedadPreparacionScalarWhereWithAggregatesInput | PrevGravedadPreparacionScalarWhereWithAggregatesInput[]
+    OR?: PrevGravedadPreparacionScalarWhereWithAggregatesInput[]
+    NOT?: PrevGravedadPreparacionScalarWhereWithAggregatesInput | PrevGravedadPreparacionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"PrevGravedadPreparacion"> | string
+    licitacion?: StringWithAggregatesFilter<"PrevGravedadPreparacion"> | string
+    numeroPreparacion?: IntWithAggregatesFilter<"PrevGravedadPreparacion"> | number
+    nombrePreparacion?: StringWithAggregatesFilter<"PrevGravedadPreparacion"> | string
+    codigoSubServicio?: StringNullableWithAggregatesFilter<"PrevGravedadPreparacion"> | string | null
+    nombreSubServicio?: StringNullableWithAggregatesFilter<"PrevGravedadPreparacion"> | string | null
+    gravedad?: StringWithAggregatesFilter<"PrevGravedadPreparacion"> | string
+    observaciones?: StringNullableWithAggregatesFilter<"PrevGravedadPreparacion"> | string | null
+    updatedBy?: StringNullableWithAggregatesFilter<"PrevGravedadPreparacion"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"PrevGravedadPreparacion"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"PrevGravedadPreparacion"> | Date | string
   }
 
   export type RoleCreateInput = {
@@ -163497,6 +164669,104 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type PrevGravedadPreparacionCreateInput = {
+    id?: string
+    licitacion: string
+    numeroPreparacion: number
+    nombrePreparacion: string
+    codigoSubServicio?: string | null
+    nombreSubServicio?: string | null
+    gravedad?: string
+    observaciones?: string | null
+    updatedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PrevGravedadPreparacionUncheckedCreateInput = {
+    id?: string
+    licitacion: string
+    numeroPreparacion: number
+    nombrePreparacion: string
+    codigoSubServicio?: string | null
+    nombreSubServicio?: string | null
+    gravedad?: string
+    observaciones?: string | null
+    updatedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PrevGravedadPreparacionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licitacion?: StringFieldUpdateOperationsInput | string
+    numeroPreparacion?: IntFieldUpdateOperationsInput | number
+    nombrePreparacion?: StringFieldUpdateOperationsInput | string
+    codigoSubServicio?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreSubServicio?: NullableStringFieldUpdateOperationsInput | string | null
+    gravedad?: StringFieldUpdateOperationsInput | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PrevGravedadPreparacionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licitacion?: StringFieldUpdateOperationsInput | string
+    numeroPreparacion?: IntFieldUpdateOperationsInput | number
+    nombrePreparacion?: StringFieldUpdateOperationsInput | string
+    codigoSubServicio?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreSubServicio?: NullableStringFieldUpdateOperationsInput | string | null
+    gravedad?: StringFieldUpdateOperationsInput | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PrevGravedadPreparacionCreateManyInput = {
+    id?: string
+    licitacion: string
+    numeroPreparacion: number
+    nombrePreparacion: string
+    codigoSubServicio?: string | null
+    nombreSubServicio?: string | null
+    gravedad?: string
+    observaciones?: string | null
+    updatedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PrevGravedadPreparacionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licitacion?: StringFieldUpdateOperationsInput | string
+    numeroPreparacion?: IntFieldUpdateOperationsInput | number
+    nombrePreparacion?: StringFieldUpdateOperationsInput | string
+    codigoSubServicio?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreSubServicio?: NullableStringFieldUpdateOperationsInput | string | null
+    gravedad?: StringFieldUpdateOperationsInput | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PrevGravedadPreparacionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licitacion?: StringFieldUpdateOperationsInput | string
+    numeroPreparacion?: IntFieldUpdateOperationsInput | number
+    nombrePreparacion?: StringFieldUpdateOperationsInput | string
+    codigoSubServicio?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreSubServicio?: NullableStringFieldUpdateOperationsInput | string | null
+    gravedad?: StringFieldUpdateOperationsInput | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -170518,6 +171788,61 @@ export namespace Prisma {
     descripcion?: SortOrder
     tipo?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type PrevGravedadPreparacionLicitacionNumeroPreparacionCompoundUniqueInput = {
+    licitacion: string
+    numeroPreparacion: number
+  }
+
+  export type PrevGravedadPreparacionCountOrderByAggregateInput = {
+    id?: SortOrder
+    licitacion?: SortOrder
+    numeroPreparacion?: SortOrder
+    nombrePreparacion?: SortOrder
+    codigoSubServicio?: SortOrder
+    nombreSubServicio?: SortOrder
+    gravedad?: SortOrder
+    observaciones?: SortOrder
+    updatedBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PrevGravedadPreparacionAvgOrderByAggregateInput = {
+    numeroPreparacion?: SortOrder
+  }
+
+  export type PrevGravedadPreparacionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    licitacion?: SortOrder
+    numeroPreparacion?: SortOrder
+    nombrePreparacion?: SortOrder
+    codigoSubServicio?: SortOrder
+    nombreSubServicio?: SortOrder
+    gravedad?: SortOrder
+    observaciones?: SortOrder
+    updatedBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PrevGravedadPreparacionMinOrderByAggregateInput = {
+    id?: SortOrder
+    licitacion?: SortOrder
+    numeroPreparacion?: SortOrder
+    nombrePreparacion?: SortOrder
+    codigoSubServicio?: SortOrder
+    nombreSubServicio?: SortOrder
+    gravedad?: SortOrder
+    observaciones?: SortOrder
+    updatedBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PrevGravedadPreparacionSumOrderByAggregateInput = {
+    numeroPreparacion?: SortOrder
   }
 
   export type UserCreateNestedManyWithoutRoleInput = {
@@ -193332,6 +194657,10 @@ export namespace Prisma {
      * @deprecated Use LogParametroDefaultArgs instead
      */
     export type LogParametroArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LogParametroDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use PrevGravedadPreparacionDefaultArgs instead
+     */
+    export type PrevGravedadPreparacionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PrevGravedadPreparacionDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

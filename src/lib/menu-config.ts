@@ -58,6 +58,7 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
         icon: '🏢',
         requiredPermission: [
             'view_areas',
+            'view_prev_gravedad_preparacion',
             'logistica:tablero:ver',
             'logistica:rutas:ver',
             'logistica:metricas:ver',
@@ -174,6 +175,17 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                         name: 'Descargos de actas',
                         href: '/dashboard/areas/multas/descargos',
                         requiredPermission: 'manage_descargos'
+                    }
+                ]
+            },
+            {
+                name: 'Prev. de riesgos',
+                requiredPermission: ['view_prev_gravedad_preparacion', 'manage_prev_gravedad_preparacion'],
+                subItems: [
+                    {
+                        name: 'Gravedad en Preparación',
+                        href: '/dashboard/areas/prevencion-riesgos/gravedad-preparacion',
+                        requiredPermission: 'view_prev_gravedad_preparacion'
                     }
                 ]
             }

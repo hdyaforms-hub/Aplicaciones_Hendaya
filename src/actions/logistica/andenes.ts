@@ -6,8 +6,70 @@ import { logAuditAction } from '@/lib/audit'
 
 export async function getBodegas() {
     try {
+        // 1. Obtener todas las sucursales del sistema
+        const sucursales = await rawPrisma.sucursal.findMany({
+            orderBy: { nombre: 'asc' }
+        })
+
+        // 2. Sincronizar automáticamente cada Sucursal con LogBodega
+        for (let i = 0; i < sucursales.length; i++) {
+            const suc = sucursales[i]
+            const cleanCode = (suc.nombre.startsWith('CD') ? suc.nombre : `CD-${suc.nombre}`)
+                .trim()
+                .toUpperCase()
+                .replace(/\s+/g, '-')
+
+            const existing = await rawPrisma.logBodega.findFirst({
+                where: {
+                    OR: [
+                        { sucursalId: suc.id },
+                        { codigo: cleanCode },
+                        { nombre: suc.nombre }
+                    ]
+                }
+            })
+
+            if (!existing) {
+                await rawPrisma.logBodega.create({
+                    data: {
+                        codigo: cleanCode,
+                        nombre: suc.nombre,
+                        sucursalId: suc.id,
+                        direccion: suc.direccion || null,
+                        activa: true,
+                        orden: i + 1
+                    }
+                })
+            } else {
+                await rawPrisma.logBodega.update({
+                    where: { id: existing.id },
+                    data: {
+                        sucursalId: suc.id,
+                        nombre: suc.nombre,
+                        codigo: existing.codigo || cleanCode,
+                        direccion: suc.direccion || existing.direccion,
+                        activa: true,
+                        orden: i + 1
+                    }
+                })
+            }
+        }
+
+        // 3. Desactivar bodegas huérfanas que no correspondan a ninguna sucursal del sistema
+        const sucursalIds = sucursales.map(s => s.id)
+        await rawPrisma.logBodega.updateMany({
+            where: {
+                sucursalId: { notIn: sucursalIds }
+            },
+            data: { activa: false }
+        })
+
+        // 4. Retornar las bodegas activas correspondientes a las sucursales
         const bodegas = await rawPrisma.logBodega.findMany({
-            where: { activa: true },
+            where: {
+                activa: true,
+                sucursalId: { in: sucursalIds }
+            },
             include: {
                 _count: {
                     select: {
