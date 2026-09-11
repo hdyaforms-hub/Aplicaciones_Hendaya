@@ -67,8 +67,8 @@ export async function POST(request: Request) {
             username: user.username,
             name: user.name,
             role: {
-                name: user.role.name,
-                permissions: permissions,
+                id: user.role?.id,
+                name: user.role?.name,
             },
             sucursales: user.sucursales?.map((s: any) => s.nombre) || [],
         }

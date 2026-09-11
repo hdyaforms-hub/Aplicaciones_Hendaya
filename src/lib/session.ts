@@ -34,7 +34,12 @@ export async function decrypt(input: string): Promise<any> {
 
 export async function login(user: any) {
     const expires = new Date(Date.now() + 24 * 60 * 60 * 1000)
-    const session = await encrypt({ user, expires })
+    // Clonar y remover array masivo de permisos para no superar el límite de 4KB de cookies
+    const userToSave = JSON.parse(JSON.stringify(user))
+    if (userToSave?.role) {
+        delete userToSave.role.permissions
+    }
+    const session = await encrypt({ user: userToSave, expires })
 
     const cookieStore = await cookies()
     cookieStore.set('session', session, {
@@ -68,15 +73,6 @@ export async function getSession() {
     if (parsed.user.role) {
         const isAdmin = parsed.user.role.name === 'Administrador' || parsed.user.role.name === 'admin'
         let perms: string[] = []
-        if (Array.isArray(parsed.user.role.permissions)) {
-            perms = parsed.user.role.permissions
-        } else if (typeof parsed.user.role.permissions === 'string') {
-            try {
-                perms = JSON.parse(parsed.user.role.permissions)
-            } catch {
-                perms = parsed.user.role.permissions.split(',').map((p: string) => p.trim()).filter(Boolean)
-            }
-        }
 
         if (isAdmin) {
             const adminBasePerms = [
@@ -201,8 +197,29 @@ export async function getSession() {
                 'view_anonimizador',
                 'manage_anonimizador'
             ]
-            const permsSet = new Set([...perms, ...adminBasePerms])
-            perms = Array.from(permsSet)
+            perms = adminBasePerms
+        } else {
+            // Usuario no admin: obtener permisos desde la BD o token
+            if (Array.isArray(parsed.user.role.permissions) && parsed.user.role.permissions.length > 0) {
+                perms = parsed.user.role.permissions
+            } else if (parsed.user.id) {
+                try {
+                    const { rawPrisma } = await import('@/lib/prisma')
+                    const dbUser = await rawPrisma.user.findUnique({
+                        where: { id: parsed.user.id },
+                        include: { role: true }
+                    })
+                    if (dbUser?.role?.permissions) {
+                        try {
+                            perms = JSON.parse(dbUser.role.permissions)
+                        } catch {
+                            perms = dbUser.role.permissions.split(',').map((p: string) => p.trim()).filter(Boolean)
+                        }
+                    }
+                } catch (e) {
+                    console.error('Error cargando permisos en getSession:', e)
+                }
+            }
         }
 
         parsed.user.role.permissions = perms
@@ -222,14 +239,20 @@ export async function updateSession(request: NextRequest) {
     const expires = new Date(Date.now() + 24 * 60 * 60 * 1000)
     parsed.expires = expires
 
+    const sessionToSave = JSON.parse(JSON.stringify(parsed))
+    if (sessionToSave.user?.role) {
+        delete sessionToSave.user.role.permissions
+    }
+
     const res = NextResponse.next()
     res.cookies.set({
         name: 'session',
-        value: await encrypt(parsed),
+        value: await encrypt(sessionToSave),
         httpOnly: true,
         secure: isSecure,
         sameSite: 'lax',
         path: '/',
+        maxAge: 24 * 60 * 60,
     })
     return res
 }

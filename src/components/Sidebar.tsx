@@ -56,7 +56,7 @@ export default function Sidebar({ user, menuOrders = [] }: { user: User, menuOrd
         }
     }
 
-    const isAdmin = user.role.name === 'admin' || user.role.name === 'Administrador'
+    const isAdmin = user.role?.name === 'admin' || user.role?.name === 'Administrador'
     const permissions = isAdmin && !rawPermissions.includes('view_tablero_distancias')
         ? [...rawPermissions, 'view_tablero_distancias']
         : rawPermissions
@@ -72,9 +72,9 @@ export default function Sidebar({ user, menuOrders = [] }: { user: User, menuOrd
             }
             return item
         }).filter(item => {
-            const isAdmin = user.role.name === 'admin' || user.role.name === 'Administrador'
+            const isAdmin = user.role?.name === 'admin' || user.role?.name === 'Administrador'
             
-            const hasPermission = !item.requiredPermission || (
+            const hasPermission = isAdmin || !item.requiredPermission || (
                 Array.isArray(item.requiredPermission)
                     ? item.requiredPermission.some((p: string) => permissions.includes(p))
                     : permissions.includes(item.requiredPermission)

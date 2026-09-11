@@ -31,6 +31,24 @@ export async function getGravedadPreparaciones(filtros: PreparacionFiltros = {})
             throw new Error('No tienes permisos para ver el módulo de Gravedad en Preparación.')
         }
 
+        // Asegurar existencia de la tabla en base de datos de producción
+        await rawPrisma.$executeRawUnsafe(`
+            CREATE TABLE IF NOT EXISTS "hend_app"."Prev_GravedadPreparacion" (
+                "id" TEXT PRIMARY KEY,
+                "licitacion" VARCHAR(50) NOT NULL,
+                "numeroPreparacion" INTEGER NOT NULL,
+                "nombrePreparacion" VARCHAR(250) NOT NULL,
+                "codigoSubServicio" VARCHAR(20),
+                "nombreSubServicio" VARCHAR(150),
+                "gravedad" VARCHAR(50) NOT NULL DEFAULT 'SIN_ASIGNAR',
+                "observaciones" TEXT,
+                "updatedBy" VARCHAR(100),
+                "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                CONSTRAINT "Prev_GravedadPreparacion_licitacion_numeroPreparacion_key" UNIQUE ("licitacion", "numeroPreparacion")
+            );
+        `).catch(() => {})
+
         const page = Math.max(1, filtros.page || 1)
         const limit = 10
         const skip = (page - 1) * limit

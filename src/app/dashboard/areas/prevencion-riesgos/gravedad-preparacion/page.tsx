@@ -33,10 +33,27 @@ export default async function GravedadPreparacionPage({
 
     const canManage = isAdmin || permissions.includes('manage_prev_gravedad_preparacion')
 
-    // Auto-sincronización inicial si la tabla está vacía
-    const totalExistente = await rawPrisma.prevGravedadPreparacion.count()
-    if (totalExistente === 0) {
-        try {
+    // Auto-creación y auto-sincronización inicial si la tabla no existe o está vacía en producción
+    try {
+        await rawPrisma.$executeRawUnsafe(`
+            CREATE TABLE IF NOT EXISTS "hend_app"."Prev_GravedadPreparacion" (
+                "id" TEXT PRIMARY KEY,
+                "licitacion" VARCHAR(50) NOT NULL,
+                "numeroPreparacion" INTEGER NOT NULL,
+                "nombrePreparacion" VARCHAR(250) NOT NULL,
+                "codigoSubServicio" VARCHAR(20),
+                "nombreSubServicio" VARCHAR(150),
+                "gravedad" VARCHAR(50) NOT NULL DEFAULT 'SIN_ASIGNAR',
+                "observaciones" TEXT,
+                "updatedBy" VARCHAR(100),
+                "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                CONSTRAINT "Prev_GravedadPreparacion_licitacion_numeroPreparacion_key" UNIQUE ("licitacion", "numeroPreparacion")
+            );
+        `)
+
+        const totalExistente = await rawPrisma.prevGravedadPreparacion.count()
+        if (totalExistente === 0) {
             await rawPrisma.$executeRawUnsafe(`
                 INSERT INTO "hend_app"."Prev_GravedadPreparacion" (
                     "id", "licitacion", "numeroPreparacion", "nombrePreparacion", 
@@ -59,9 +76,9 @@ export default async function GravedadPreparacionPage({
                 ) p
                 ON CONFLICT ("licitacion", "numeroPreparacion") DO NOTHING;
             `)
-        } catch (e) {
-            console.error('Error en auto-sincronización inicial:', e)
         }
+    } catch (e) {
+        console.error('Error al inicializar tabla Prev_GravedadPreparacion:', e)
     }
 
     const resolvedParams = await searchParams
