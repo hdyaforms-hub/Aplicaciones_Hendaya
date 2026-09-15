@@ -638,6 +638,26 @@ export type LogParametro = $Result.DefaultSelection<Prisma.$LogParametroPayload>
  * 
  */
 export type PrevGravedadPreparacion = $Result.DefaultSelection<Prisma.$PrevGravedadPreparacionPayload>
+/**
+ * Model Cal_PlanillaTransporte
+ * 
+ */
+export type Cal_PlanillaTransporte = $Result.DefaultSelection<Prisma.$Cal_PlanillaTransportePayload>
+/**
+ * Model Cal_RegistroTransporte
+ * 
+ */
+export type Cal_RegistroTransporte = $Result.DefaultSelection<Prisma.$Cal_RegistroTransportePayload>
+/**
+ * Model Cal_PlanillaHigienePersonal
+ * 
+ */
+export type Cal_PlanillaHigienePersonal = $Result.DefaultSelection<Prisma.$Cal_PlanillaHigienePersonalPayload>
+/**
+ * Model Cal_RegistroHigienePersonal
+ * 
+ */
+export type Cal_RegistroHigienePersonal = $Result.DefaultSelection<Prisma.$Cal_RegistroHigienePersonalPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -2011,6 +2031,46 @@ export class PrismaClient<
     * ```
     */
   get prevGravedadPreparacion(): Prisma.PrevGravedadPreparacionDelegate<ExtArgs>;
+
+  /**
+   * `prisma.cal_PlanillaTransporte`: Exposes CRUD operations for the **Cal_PlanillaTransporte** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Cal_PlanillaTransportes
+    * const cal_PlanillaTransportes = await prisma.cal_PlanillaTransporte.findMany()
+    * ```
+    */
+  get cal_PlanillaTransporte(): Prisma.Cal_PlanillaTransporteDelegate<ExtArgs>;
+
+  /**
+   * `prisma.cal_RegistroTransporte`: Exposes CRUD operations for the **Cal_RegistroTransporte** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Cal_RegistroTransportes
+    * const cal_RegistroTransportes = await prisma.cal_RegistroTransporte.findMany()
+    * ```
+    */
+  get cal_RegistroTransporte(): Prisma.Cal_RegistroTransporteDelegate<ExtArgs>;
+
+  /**
+   * `prisma.cal_PlanillaHigienePersonal`: Exposes CRUD operations for the **Cal_PlanillaHigienePersonal** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Cal_PlanillaHigienePersonals
+    * const cal_PlanillaHigienePersonals = await prisma.cal_PlanillaHigienePersonal.findMany()
+    * ```
+    */
+  get cal_PlanillaHigienePersonal(): Prisma.Cal_PlanillaHigienePersonalDelegate<ExtArgs>;
+
+  /**
+   * `prisma.cal_RegistroHigienePersonal`: Exposes CRUD operations for the **Cal_RegistroHigienePersonal** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Cal_RegistroHigienePersonals
+    * const cal_RegistroHigienePersonals = await prisma.cal_RegistroHigienePersonal.findMany()
+    * ```
+    */
+  get cal_RegistroHigienePersonal(): Prisma.Cal_RegistroHigienePersonalDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -2576,7 +2636,11 @@ export namespace Prisma {
     LogIntegracionConfig: 'LogIntegracionConfig',
     LogIntegracionLog: 'LogIntegracionLog',
     LogParametro: 'LogParametro',
-    PrevGravedadPreparacion: 'PrevGravedadPreparacion'
+    PrevGravedadPreparacion: 'PrevGravedadPreparacion',
+    Cal_PlanillaTransporte: 'Cal_PlanillaTransporte',
+    Cal_RegistroTransporte: 'Cal_RegistroTransporte',
+    Cal_PlanillaHigienePersonal: 'Cal_PlanillaHigienePersonal',
+    Cal_RegistroHigienePersonal: 'Cal_RegistroHigienePersonal'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -2592,7 +2656,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout" | "reservaSala" | "noticiaAlimentacion" | "logBodega" | "logUsuarioBodega" | "logAnden" | "logTransportista" | "logChofer" | "logCamion" | "logCliente" | "logRuta" | "logEventoRuta" | "logIntegracionConfig" | "logIntegracionLog" | "logParametro" | "prevGravedadPreparacion"
+      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout" | "reservaSala" | "noticiaAlimentacion" | "logBodega" | "logUsuarioBodega" | "logAnden" | "logTransportista" | "logChofer" | "logCamion" | "logCliente" | "logRuta" | "logEventoRuta" | "logIntegracionConfig" | "logIntegracionLog" | "logParametro" | "prevGravedadPreparacion" | "cal_PlanillaTransporte" | "cal_RegistroTransporte" | "cal_PlanillaHigienePersonal" | "cal_RegistroHigienePersonal"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -11346,6 +11410,286 @@ export namespace Prisma {
           }
         }
       }
+      Cal_PlanillaTransporte: {
+        payload: Prisma.$Cal_PlanillaTransportePayload<ExtArgs>
+        fields: Prisma.Cal_PlanillaTransporteFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Cal_PlanillaTransporteFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_PlanillaTransportePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Cal_PlanillaTransporteFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_PlanillaTransportePayload>
+          }
+          findFirst: {
+            args: Prisma.Cal_PlanillaTransporteFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_PlanillaTransportePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Cal_PlanillaTransporteFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_PlanillaTransportePayload>
+          }
+          findMany: {
+            args: Prisma.Cal_PlanillaTransporteFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_PlanillaTransportePayload>[]
+          }
+          create: {
+            args: Prisma.Cal_PlanillaTransporteCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_PlanillaTransportePayload>
+          }
+          createMany: {
+            args: Prisma.Cal_PlanillaTransporteCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Cal_PlanillaTransporteCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_PlanillaTransportePayload>[]
+          }
+          delete: {
+            args: Prisma.Cal_PlanillaTransporteDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_PlanillaTransportePayload>
+          }
+          update: {
+            args: Prisma.Cal_PlanillaTransporteUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_PlanillaTransportePayload>
+          }
+          deleteMany: {
+            args: Prisma.Cal_PlanillaTransporteDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Cal_PlanillaTransporteUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Cal_PlanillaTransporteUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_PlanillaTransportePayload>
+          }
+          aggregate: {
+            args: Prisma.Cal_PlanillaTransporteAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCal_PlanillaTransporte>
+          }
+          groupBy: {
+            args: Prisma.Cal_PlanillaTransporteGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Cal_PlanillaTransporteGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Cal_PlanillaTransporteCountArgs<ExtArgs>
+            result: $Utils.Optional<Cal_PlanillaTransporteCountAggregateOutputType> | number
+          }
+        }
+      }
+      Cal_RegistroTransporte: {
+        payload: Prisma.$Cal_RegistroTransportePayload<ExtArgs>
+        fields: Prisma.Cal_RegistroTransporteFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Cal_RegistroTransporteFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_RegistroTransportePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Cal_RegistroTransporteFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_RegistroTransportePayload>
+          }
+          findFirst: {
+            args: Prisma.Cal_RegistroTransporteFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_RegistroTransportePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Cal_RegistroTransporteFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_RegistroTransportePayload>
+          }
+          findMany: {
+            args: Prisma.Cal_RegistroTransporteFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_RegistroTransportePayload>[]
+          }
+          create: {
+            args: Prisma.Cal_RegistroTransporteCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_RegistroTransportePayload>
+          }
+          createMany: {
+            args: Prisma.Cal_RegistroTransporteCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Cal_RegistroTransporteCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_RegistroTransportePayload>[]
+          }
+          delete: {
+            args: Prisma.Cal_RegistroTransporteDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_RegistroTransportePayload>
+          }
+          update: {
+            args: Prisma.Cal_RegistroTransporteUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_RegistroTransportePayload>
+          }
+          deleteMany: {
+            args: Prisma.Cal_RegistroTransporteDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Cal_RegistroTransporteUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Cal_RegistroTransporteUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_RegistroTransportePayload>
+          }
+          aggregate: {
+            args: Prisma.Cal_RegistroTransporteAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCal_RegistroTransporte>
+          }
+          groupBy: {
+            args: Prisma.Cal_RegistroTransporteGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Cal_RegistroTransporteGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Cal_RegistroTransporteCountArgs<ExtArgs>
+            result: $Utils.Optional<Cal_RegistroTransporteCountAggregateOutputType> | number
+          }
+        }
+      }
+      Cal_PlanillaHigienePersonal: {
+        payload: Prisma.$Cal_PlanillaHigienePersonalPayload<ExtArgs>
+        fields: Prisma.Cal_PlanillaHigienePersonalFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Cal_PlanillaHigienePersonalFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_PlanillaHigienePersonalPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Cal_PlanillaHigienePersonalFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_PlanillaHigienePersonalPayload>
+          }
+          findFirst: {
+            args: Prisma.Cal_PlanillaHigienePersonalFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_PlanillaHigienePersonalPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Cal_PlanillaHigienePersonalFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_PlanillaHigienePersonalPayload>
+          }
+          findMany: {
+            args: Prisma.Cal_PlanillaHigienePersonalFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_PlanillaHigienePersonalPayload>[]
+          }
+          create: {
+            args: Prisma.Cal_PlanillaHigienePersonalCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_PlanillaHigienePersonalPayload>
+          }
+          createMany: {
+            args: Prisma.Cal_PlanillaHigienePersonalCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Cal_PlanillaHigienePersonalCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_PlanillaHigienePersonalPayload>[]
+          }
+          delete: {
+            args: Prisma.Cal_PlanillaHigienePersonalDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_PlanillaHigienePersonalPayload>
+          }
+          update: {
+            args: Prisma.Cal_PlanillaHigienePersonalUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_PlanillaHigienePersonalPayload>
+          }
+          deleteMany: {
+            args: Prisma.Cal_PlanillaHigienePersonalDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Cal_PlanillaHigienePersonalUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Cal_PlanillaHigienePersonalUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_PlanillaHigienePersonalPayload>
+          }
+          aggregate: {
+            args: Prisma.Cal_PlanillaHigienePersonalAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCal_PlanillaHigienePersonal>
+          }
+          groupBy: {
+            args: Prisma.Cal_PlanillaHigienePersonalGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Cal_PlanillaHigienePersonalGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Cal_PlanillaHigienePersonalCountArgs<ExtArgs>
+            result: $Utils.Optional<Cal_PlanillaHigienePersonalCountAggregateOutputType> | number
+          }
+        }
+      }
+      Cal_RegistroHigienePersonal: {
+        payload: Prisma.$Cal_RegistroHigienePersonalPayload<ExtArgs>
+        fields: Prisma.Cal_RegistroHigienePersonalFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Cal_RegistroHigienePersonalFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_RegistroHigienePersonalPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Cal_RegistroHigienePersonalFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_RegistroHigienePersonalPayload>
+          }
+          findFirst: {
+            args: Prisma.Cal_RegistroHigienePersonalFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_RegistroHigienePersonalPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Cal_RegistroHigienePersonalFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_RegistroHigienePersonalPayload>
+          }
+          findMany: {
+            args: Prisma.Cal_RegistroHigienePersonalFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_RegistroHigienePersonalPayload>[]
+          }
+          create: {
+            args: Prisma.Cal_RegistroHigienePersonalCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_RegistroHigienePersonalPayload>
+          }
+          createMany: {
+            args: Prisma.Cal_RegistroHigienePersonalCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Cal_RegistroHigienePersonalCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_RegistroHigienePersonalPayload>[]
+          }
+          delete: {
+            args: Prisma.Cal_RegistroHigienePersonalDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_RegistroHigienePersonalPayload>
+          }
+          update: {
+            args: Prisma.Cal_RegistroHigienePersonalUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_RegistroHigienePersonalPayload>
+          }
+          deleteMany: {
+            args: Prisma.Cal_RegistroHigienePersonalDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Cal_RegistroHigienePersonalUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Cal_RegistroHigienePersonalUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_RegistroHigienePersonalPayload>
+          }
+          aggregate: {
+            args: Prisma.Cal_RegistroHigienePersonalAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCal_RegistroHigienePersonal>
+          }
+          groupBy: {
+            args: Prisma.Cal_RegistroHigienePersonalGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Cal_RegistroHigienePersonalGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Cal_RegistroHigienePersonalCountArgs<ExtArgs>
+            result: $Utils.Optional<Cal_RegistroHigienePersonalCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -11730,6 +12074,8 @@ export namespace Prisma {
     jefesZonales: number
     vehiculos: number
     delegaciones: number
+    planillasTransporte: number
+    planillasHigienePersonal: number
   }
 
   export type SucursalCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -11742,6 +12088,8 @@ export namespace Prisma {
     jefesZonales?: boolean | SucursalCountOutputTypeCountJefesZonalesArgs
     vehiculos?: boolean | SucursalCountOutputTypeCountVehiculosArgs
     delegaciones?: boolean | SucursalCountOutputTypeCountDelegacionesArgs
+    planillasTransporte?: boolean | SucursalCountOutputTypeCountPlanillasTransporteArgs
+    planillasHigienePersonal?: boolean | SucursalCountOutputTypeCountPlanillasHigienePersonalArgs
   }
 
   // Custom InputTypes
@@ -11816,6 +12164,20 @@ export namespace Prisma {
    */
   export type SucursalCountOutputTypeCountDelegacionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DelegacionVisualizacionWhereInput
+  }
+
+  /**
+   * SucursalCountOutputType without action
+   */
+  export type SucursalCountOutputTypeCountPlanillasTransporteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Cal_PlanillaTransporteWhereInput
+  }
+
+  /**
+   * SucursalCountOutputType without action
+   */
+  export type SucursalCountOutputTypeCountPlanillasHigienePersonalArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Cal_PlanillaHigienePersonalWhereInput
   }
 
 
@@ -13304,6 +13666,68 @@ export namespace Prisma {
    */
   export type LogIntegracionConfigCountOutputTypeCountLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: LogIntegracionLogWhereInput
+  }
+
+
+  /**
+   * Count Type Cal_PlanillaTransporteCountOutputType
+   */
+
+  export type Cal_PlanillaTransporteCountOutputType = {
+    registros: number
+  }
+
+  export type Cal_PlanillaTransporteCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    registros?: boolean | Cal_PlanillaTransporteCountOutputTypeCountRegistrosArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * Cal_PlanillaTransporteCountOutputType without action
+   */
+  export type Cal_PlanillaTransporteCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_PlanillaTransporteCountOutputType
+     */
+    select?: Cal_PlanillaTransporteCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * Cal_PlanillaTransporteCountOutputType without action
+   */
+  export type Cal_PlanillaTransporteCountOutputTypeCountRegistrosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Cal_RegistroTransporteWhereInput
+  }
+
+
+  /**
+   * Count Type Cal_PlanillaHigienePersonalCountOutputType
+   */
+
+  export type Cal_PlanillaHigienePersonalCountOutputType = {
+    registros: number
+  }
+
+  export type Cal_PlanillaHigienePersonalCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    registros?: boolean | Cal_PlanillaHigienePersonalCountOutputTypeCountRegistrosArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * Cal_PlanillaHigienePersonalCountOutputType without action
+   */
+  export type Cal_PlanillaHigienePersonalCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_PlanillaHigienePersonalCountOutputType
+     */
+    select?: Cal_PlanillaHigienePersonalCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * Cal_PlanillaHigienePersonalCountOutputType without action
+   */
+  export type Cal_PlanillaHigienePersonalCountOutputTypeCountRegistrosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Cal_RegistroHigienePersonalWhereInput
   }
 
 
@@ -27533,6 +27957,8 @@ export namespace Prisma {
     jefesZonales?: boolean | Sucursal$jefesZonalesArgs<ExtArgs>
     vehiculos?: boolean | Sucursal$vehiculosArgs<ExtArgs>
     delegaciones?: boolean | Sucursal$delegacionesArgs<ExtArgs>
+    planillasTransporte?: boolean | Sucursal$planillasTransporteArgs<ExtArgs>
+    planillasHigienePersonal?: boolean | Sucursal$planillasHigienePersonalArgs<ExtArgs>
     _count?: boolean | SucursalCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["sucursal"]>
 
@@ -27566,6 +27992,8 @@ export namespace Prisma {
     jefesZonales?: boolean | Sucursal$jefesZonalesArgs<ExtArgs>
     vehiculos?: boolean | Sucursal$vehiculosArgs<ExtArgs>
     delegaciones?: boolean | Sucursal$delegacionesArgs<ExtArgs>
+    planillasTransporte?: boolean | Sucursal$planillasTransporteArgs<ExtArgs>
+    planillasHigienePersonal?: boolean | Sucursal$planillasHigienePersonalArgs<ExtArgs>
     _count?: boolean | SucursalCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type SucursalIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -27582,6 +28010,8 @@ export namespace Prisma {
       jefesZonales: Prisma.$JefeZonalSucursalPayload<ExtArgs>[]
       vehiculos: Prisma.$VehiculoPayload<ExtArgs>[]
       delegaciones: Prisma.$DelegacionVisualizacionPayload<ExtArgs>[]
+      planillasTransporte: Prisma.$Cal_PlanillaTransportePayload<ExtArgs>[]
+      planillasHigienePersonal: Prisma.$Cal_PlanillaHigienePersonalPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -27964,6 +28394,8 @@ export namespace Prisma {
     jefesZonales<T extends Sucursal$jefesZonalesArgs<ExtArgs> = {}>(args?: Subset<T, Sucursal$jefesZonalesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JefeZonalSucursalPayload<ExtArgs>, T, "findMany"> | Null>
     vehiculos<T extends Sucursal$vehiculosArgs<ExtArgs> = {}>(args?: Subset<T, Sucursal$vehiculosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VehiculoPayload<ExtArgs>, T, "findMany"> | Null>
     delegaciones<T extends Sucursal$delegacionesArgs<ExtArgs> = {}>(args?: Subset<T, Sucursal$delegacionesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DelegacionVisualizacionPayload<ExtArgs>, T, "findMany"> | Null>
+    planillasTransporte<T extends Sucursal$planillasTransporteArgs<ExtArgs> = {}>(args?: Subset<T, Sucursal$planillasTransporteArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Cal_PlanillaTransportePayload<ExtArgs>, T, "findMany"> | Null>
+    planillasHigienePersonal<T extends Sucursal$planillasHigienePersonalArgs<ExtArgs> = {}>(args?: Subset<T, Sucursal$planillasHigienePersonalArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Cal_PlanillaHigienePersonalPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -28491,6 +28923,46 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: DelegacionVisualizacionScalarFieldEnum | DelegacionVisualizacionScalarFieldEnum[]
+  }
+
+  /**
+   * Sucursal.planillasTransporte
+   */
+  export type Sucursal$planillasTransporteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_PlanillaTransporte
+     */
+    select?: Cal_PlanillaTransporteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_PlanillaTransporteInclude<ExtArgs> | null
+    where?: Cal_PlanillaTransporteWhereInput
+    orderBy?: Cal_PlanillaTransporteOrderByWithRelationInput | Cal_PlanillaTransporteOrderByWithRelationInput[]
+    cursor?: Cal_PlanillaTransporteWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Cal_PlanillaTransporteScalarFieldEnum | Cal_PlanillaTransporteScalarFieldEnum[]
+  }
+
+  /**
+   * Sucursal.planillasHigienePersonal
+   */
+  export type Sucursal$planillasHigienePersonalArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_PlanillaHigienePersonal
+     */
+    select?: Cal_PlanillaHigienePersonalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_PlanillaHigienePersonalInclude<ExtArgs> | null
+    where?: Cal_PlanillaHigienePersonalWhereInput
+    orderBy?: Cal_PlanillaHigienePersonalOrderByWithRelationInput | Cal_PlanillaHigienePersonalOrderByWithRelationInput[]
+    cursor?: Cal_PlanillaHigienePersonalWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Cal_PlanillaHigienePersonalScalarFieldEnum | Cal_PlanillaHigienePersonalScalarFieldEnum[]
   }
 
   /**
@@ -140707,6 +141179,4410 @@ export namespace Prisma {
 
 
   /**
+   * Model Cal_PlanillaTransporte
+   */
+
+  export type AggregateCal_PlanillaTransporte = {
+    _count: Cal_PlanillaTransporteCountAggregateOutputType | null
+    _avg: Cal_PlanillaTransporteAvgAggregateOutputType | null
+    _sum: Cal_PlanillaTransporteSumAggregateOutputType | null
+    _min: Cal_PlanillaTransporteMinAggregateOutputType | null
+    _max: Cal_PlanillaTransporteMaxAggregateOutputType | null
+  }
+
+  export type Cal_PlanillaTransporteAvgAggregateOutputType = {
+    firmaCalidadDiasAtraso: number | null
+  }
+
+  export type Cal_PlanillaTransporteSumAggregateOutputType = {
+    firmaCalidadDiasAtraso: number | null
+  }
+
+  export type Cal_PlanillaTransporteMinAggregateOutputType = {
+    id: string | null
+    sucursalId: string | null
+    fecha: Date | null
+    fechaTexto: string | null
+    estado: string | null
+    firmaCalidadUser: string | null
+    firmaCalidadUserId: string | null
+    firmaCalidadFecha: Date | null
+    firmaCalidadDiasAtraso: number | null
+    firmaCalidadImg: string | null
+    firmaBodegaUser: string | null
+    firmaBodegaUserId: string | null
+    firmaBodegaFecha: Date | null
+    firmaBodegaImg: string | null
+    observacionesGenerales: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Cal_PlanillaTransporteMaxAggregateOutputType = {
+    id: string | null
+    sucursalId: string | null
+    fecha: Date | null
+    fechaTexto: string | null
+    estado: string | null
+    firmaCalidadUser: string | null
+    firmaCalidadUserId: string | null
+    firmaCalidadFecha: Date | null
+    firmaCalidadDiasAtraso: number | null
+    firmaCalidadImg: string | null
+    firmaBodegaUser: string | null
+    firmaBodegaUserId: string | null
+    firmaBodegaFecha: Date | null
+    firmaBodegaImg: string | null
+    observacionesGenerales: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Cal_PlanillaTransporteCountAggregateOutputType = {
+    id: number
+    sucursalId: number
+    fecha: number
+    fechaTexto: number
+    estado: number
+    firmaCalidadUser: number
+    firmaCalidadUserId: number
+    firmaCalidadFecha: number
+    firmaCalidadDiasAtraso: number
+    firmaCalidadImg: number
+    firmaBodegaUser: number
+    firmaBodegaUserId: number
+    firmaBodegaFecha: number
+    firmaBodegaImg: number
+    observacionesGenerales: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type Cal_PlanillaTransporteAvgAggregateInputType = {
+    firmaCalidadDiasAtraso?: true
+  }
+
+  export type Cal_PlanillaTransporteSumAggregateInputType = {
+    firmaCalidadDiasAtraso?: true
+  }
+
+  export type Cal_PlanillaTransporteMinAggregateInputType = {
+    id?: true
+    sucursalId?: true
+    fecha?: true
+    fechaTexto?: true
+    estado?: true
+    firmaCalidadUser?: true
+    firmaCalidadUserId?: true
+    firmaCalidadFecha?: true
+    firmaCalidadDiasAtraso?: true
+    firmaCalidadImg?: true
+    firmaBodegaUser?: true
+    firmaBodegaUserId?: true
+    firmaBodegaFecha?: true
+    firmaBodegaImg?: true
+    observacionesGenerales?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Cal_PlanillaTransporteMaxAggregateInputType = {
+    id?: true
+    sucursalId?: true
+    fecha?: true
+    fechaTexto?: true
+    estado?: true
+    firmaCalidadUser?: true
+    firmaCalidadUserId?: true
+    firmaCalidadFecha?: true
+    firmaCalidadDiasAtraso?: true
+    firmaCalidadImg?: true
+    firmaBodegaUser?: true
+    firmaBodegaUserId?: true
+    firmaBodegaFecha?: true
+    firmaBodegaImg?: true
+    observacionesGenerales?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Cal_PlanillaTransporteCountAggregateInputType = {
+    id?: true
+    sucursalId?: true
+    fecha?: true
+    fechaTexto?: true
+    estado?: true
+    firmaCalidadUser?: true
+    firmaCalidadUserId?: true
+    firmaCalidadFecha?: true
+    firmaCalidadDiasAtraso?: true
+    firmaCalidadImg?: true
+    firmaBodegaUser?: true
+    firmaBodegaUserId?: true
+    firmaBodegaFecha?: true
+    firmaBodegaImg?: true
+    observacionesGenerales?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type Cal_PlanillaTransporteAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Cal_PlanillaTransporte to aggregate.
+     */
+    where?: Cal_PlanillaTransporteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cal_PlanillaTransportes to fetch.
+     */
+    orderBy?: Cal_PlanillaTransporteOrderByWithRelationInput | Cal_PlanillaTransporteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Cal_PlanillaTransporteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cal_PlanillaTransportes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cal_PlanillaTransportes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Cal_PlanillaTransportes
+    **/
+    _count?: true | Cal_PlanillaTransporteCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Cal_PlanillaTransporteAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Cal_PlanillaTransporteSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Cal_PlanillaTransporteMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Cal_PlanillaTransporteMaxAggregateInputType
+  }
+
+  export type GetCal_PlanillaTransporteAggregateType<T extends Cal_PlanillaTransporteAggregateArgs> = {
+        [P in keyof T & keyof AggregateCal_PlanillaTransporte]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCal_PlanillaTransporte[P]>
+      : GetScalarType<T[P], AggregateCal_PlanillaTransporte[P]>
+  }
+
+
+
+
+  export type Cal_PlanillaTransporteGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Cal_PlanillaTransporteWhereInput
+    orderBy?: Cal_PlanillaTransporteOrderByWithAggregationInput | Cal_PlanillaTransporteOrderByWithAggregationInput[]
+    by: Cal_PlanillaTransporteScalarFieldEnum[] | Cal_PlanillaTransporteScalarFieldEnum
+    having?: Cal_PlanillaTransporteScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Cal_PlanillaTransporteCountAggregateInputType | true
+    _avg?: Cal_PlanillaTransporteAvgAggregateInputType
+    _sum?: Cal_PlanillaTransporteSumAggregateInputType
+    _min?: Cal_PlanillaTransporteMinAggregateInputType
+    _max?: Cal_PlanillaTransporteMaxAggregateInputType
+  }
+
+  export type Cal_PlanillaTransporteGroupByOutputType = {
+    id: string
+    sucursalId: string
+    fecha: Date
+    fechaTexto: string
+    estado: string
+    firmaCalidadUser: string | null
+    firmaCalidadUserId: string | null
+    firmaCalidadFecha: Date | null
+    firmaCalidadDiasAtraso: number
+    firmaCalidadImg: string | null
+    firmaBodegaUser: string | null
+    firmaBodegaUserId: string | null
+    firmaBodegaFecha: Date | null
+    firmaBodegaImg: string | null
+    observacionesGenerales: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: Cal_PlanillaTransporteCountAggregateOutputType | null
+    _avg: Cal_PlanillaTransporteAvgAggregateOutputType | null
+    _sum: Cal_PlanillaTransporteSumAggregateOutputType | null
+    _min: Cal_PlanillaTransporteMinAggregateOutputType | null
+    _max: Cal_PlanillaTransporteMaxAggregateOutputType | null
+  }
+
+  type GetCal_PlanillaTransporteGroupByPayload<T extends Cal_PlanillaTransporteGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Cal_PlanillaTransporteGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Cal_PlanillaTransporteGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Cal_PlanillaTransporteGroupByOutputType[P]>
+            : GetScalarType<T[P], Cal_PlanillaTransporteGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Cal_PlanillaTransporteSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    sucursalId?: boolean
+    fecha?: boolean
+    fechaTexto?: boolean
+    estado?: boolean
+    firmaCalidadUser?: boolean
+    firmaCalidadUserId?: boolean
+    firmaCalidadFecha?: boolean
+    firmaCalidadDiasAtraso?: boolean
+    firmaCalidadImg?: boolean
+    firmaBodegaUser?: boolean
+    firmaBodegaUserId?: boolean
+    firmaBodegaFecha?: boolean
+    firmaBodegaImg?: boolean
+    observacionesGenerales?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    sucursal?: boolean | SucursalDefaultArgs<ExtArgs>
+    registros?: boolean | Cal_PlanillaTransporte$registrosArgs<ExtArgs>
+    _count?: boolean | Cal_PlanillaTransporteCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cal_PlanillaTransporte"]>
+
+  export type Cal_PlanillaTransporteSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    sucursalId?: boolean
+    fecha?: boolean
+    fechaTexto?: boolean
+    estado?: boolean
+    firmaCalidadUser?: boolean
+    firmaCalidadUserId?: boolean
+    firmaCalidadFecha?: boolean
+    firmaCalidadDiasAtraso?: boolean
+    firmaCalidadImg?: boolean
+    firmaBodegaUser?: boolean
+    firmaBodegaUserId?: boolean
+    firmaBodegaFecha?: boolean
+    firmaBodegaImg?: boolean
+    observacionesGenerales?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    sucursal?: boolean | SucursalDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cal_PlanillaTransporte"]>
+
+  export type Cal_PlanillaTransporteSelectScalar = {
+    id?: boolean
+    sucursalId?: boolean
+    fecha?: boolean
+    fechaTexto?: boolean
+    estado?: boolean
+    firmaCalidadUser?: boolean
+    firmaCalidadUserId?: boolean
+    firmaCalidadFecha?: boolean
+    firmaCalidadDiasAtraso?: boolean
+    firmaCalidadImg?: boolean
+    firmaBodegaUser?: boolean
+    firmaBodegaUserId?: boolean
+    firmaBodegaFecha?: boolean
+    firmaBodegaImg?: boolean
+    observacionesGenerales?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type Cal_PlanillaTransporteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sucursal?: boolean | SucursalDefaultArgs<ExtArgs>
+    registros?: boolean | Cal_PlanillaTransporte$registrosArgs<ExtArgs>
+    _count?: boolean | Cal_PlanillaTransporteCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type Cal_PlanillaTransporteIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sucursal?: boolean | SucursalDefaultArgs<ExtArgs>
+  }
+
+  export type $Cal_PlanillaTransportePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Cal_PlanillaTransporte"
+    objects: {
+      sucursal: Prisma.$SucursalPayload<ExtArgs>
+      registros: Prisma.$Cal_RegistroTransportePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      sucursalId: string
+      fecha: Date
+      fechaTexto: string
+      estado: string
+      firmaCalidadUser: string | null
+      firmaCalidadUserId: string | null
+      firmaCalidadFecha: Date | null
+      firmaCalidadDiasAtraso: number
+      firmaCalidadImg: string | null
+      firmaBodegaUser: string | null
+      firmaBodegaUserId: string | null
+      firmaBodegaFecha: Date | null
+      firmaBodegaImg: string | null
+      observacionesGenerales: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["cal_PlanillaTransporte"]>
+    composites: {}
+  }
+
+  type Cal_PlanillaTransporteGetPayload<S extends boolean | null | undefined | Cal_PlanillaTransporteDefaultArgs> = $Result.GetResult<Prisma.$Cal_PlanillaTransportePayload, S>
+
+  type Cal_PlanillaTransporteCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Cal_PlanillaTransporteFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Cal_PlanillaTransporteCountAggregateInputType | true
+    }
+
+  export interface Cal_PlanillaTransporteDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Cal_PlanillaTransporte'], meta: { name: 'Cal_PlanillaTransporte' } }
+    /**
+     * Find zero or one Cal_PlanillaTransporte that matches the filter.
+     * @param {Cal_PlanillaTransporteFindUniqueArgs} args - Arguments to find a Cal_PlanillaTransporte
+     * @example
+     * // Get one Cal_PlanillaTransporte
+     * const cal_PlanillaTransporte = await prisma.cal_PlanillaTransporte.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Cal_PlanillaTransporteFindUniqueArgs>(args: SelectSubset<T, Cal_PlanillaTransporteFindUniqueArgs<ExtArgs>>): Prisma__Cal_PlanillaTransporteClient<$Result.GetResult<Prisma.$Cal_PlanillaTransportePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Cal_PlanillaTransporte that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Cal_PlanillaTransporteFindUniqueOrThrowArgs} args - Arguments to find a Cal_PlanillaTransporte
+     * @example
+     * // Get one Cal_PlanillaTransporte
+     * const cal_PlanillaTransporte = await prisma.cal_PlanillaTransporte.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Cal_PlanillaTransporteFindUniqueOrThrowArgs>(args: SelectSubset<T, Cal_PlanillaTransporteFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Cal_PlanillaTransporteClient<$Result.GetResult<Prisma.$Cal_PlanillaTransportePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Cal_PlanillaTransporte that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_PlanillaTransporteFindFirstArgs} args - Arguments to find a Cal_PlanillaTransporte
+     * @example
+     * // Get one Cal_PlanillaTransporte
+     * const cal_PlanillaTransporte = await prisma.cal_PlanillaTransporte.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Cal_PlanillaTransporteFindFirstArgs>(args?: SelectSubset<T, Cal_PlanillaTransporteFindFirstArgs<ExtArgs>>): Prisma__Cal_PlanillaTransporteClient<$Result.GetResult<Prisma.$Cal_PlanillaTransportePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Cal_PlanillaTransporte that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_PlanillaTransporteFindFirstOrThrowArgs} args - Arguments to find a Cal_PlanillaTransporte
+     * @example
+     * // Get one Cal_PlanillaTransporte
+     * const cal_PlanillaTransporte = await prisma.cal_PlanillaTransporte.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Cal_PlanillaTransporteFindFirstOrThrowArgs>(args?: SelectSubset<T, Cal_PlanillaTransporteFindFirstOrThrowArgs<ExtArgs>>): Prisma__Cal_PlanillaTransporteClient<$Result.GetResult<Prisma.$Cal_PlanillaTransportePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Cal_PlanillaTransportes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_PlanillaTransporteFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Cal_PlanillaTransportes
+     * const cal_PlanillaTransportes = await prisma.cal_PlanillaTransporte.findMany()
+     * 
+     * // Get first 10 Cal_PlanillaTransportes
+     * const cal_PlanillaTransportes = await prisma.cal_PlanillaTransporte.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const cal_PlanillaTransporteWithIdOnly = await prisma.cal_PlanillaTransporte.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Cal_PlanillaTransporteFindManyArgs>(args?: SelectSubset<T, Cal_PlanillaTransporteFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Cal_PlanillaTransportePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Cal_PlanillaTransporte.
+     * @param {Cal_PlanillaTransporteCreateArgs} args - Arguments to create a Cal_PlanillaTransporte.
+     * @example
+     * // Create one Cal_PlanillaTransporte
+     * const Cal_PlanillaTransporte = await prisma.cal_PlanillaTransporte.create({
+     *   data: {
+     *     // ... data to create a Cal_PlanillaTransporte
+     *   }
+     * })
+     * 
+     */
+    create<T extends Cal_PlanillaTransporteCreateArgs>(args: SelectSubset<T, Cal_PlanillaTransporteCreateArgs<ExtArgs>>): Prisma__Cal_PlanillaTransporteClient<$Result.GetResult<Prisma.$Cal_PlanillaTransportePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Cal_PlanillaTransportes.
+     * @param {Cal_PlanillaTransporteCreateManyArgs} args - Arguments to create many Cal_PlanillaTransportes.
+     * @example
+     * // Create many Cal_PlanillaTransportes
+     * const cal_PlanillaTransporte = await prisma.cal_PlanillaTransporte.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Cal_PlanillaTransporteCreateManyArgs>(args?: SelectSubset<T, Cal_PlanillaTransporteCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Cal_PlanillaTransportes and returns the data saved in the database.
+     * @param {Cal_PlanillaTransporteCreateManyAndReturnArgs} args - Arguments to create many Cal_PlanillaTransportes.
+     * @example
+     * // Create many Cal_PlanillaTransportes
+     * const cal_PlanillaTransporte = await prisma.cal_PlanillaTransporte.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Cal_PlanillaTransportes and only return the `id`
+     * const cal_PlanillaTransporteWithIdOnly = await prisma.cal_PlanillaTransporte.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Cal_PlanillaTransporteCreateManyAndReturnArgs>(args?: SelectSubset<T, Cal_PlanillaTransporteCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Cal_PlanillaTransportePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Cal_PlanillaTransporte.
+     * @param {Cal_PlanillaTransporteDeleteArgs} args - Arguments to delete one Cal_PlanillaTransporte.
+     * @example
+     * // Delete one Cal_PlanillaTransporte
+     * const Cal_PlanillaTransporte = await prisma.cal_PlanillaTransporte.delete({
+     *   where: {
+     *     // ... filter to delete one Cal_PlanillaTransporte
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Cal_PlanillaTransporteDeleteArgs>(args: SelectSubset<T, Cal_PlanillaTransporteDeleteArgs<ExtArgs>>): Prisma__Cal_PlanillaTransporteClient<$Result.GetResult<Prisma.$Cal_PlanillaTransportePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Cal_PlanillaTransporte.
+     * @param {Cal_PlanillaTransporteUpdateArgs} args - Arguments to update one Cal_PlanillaTransporte.
+     * @example
+     * // Update one Cal_PlanillaTransporte
+     * const cal_PlanillaTransporte = await prisma.cal_PlanillaTransporte.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Cal_PlanillaTransporteUpdateArgs>(args: SelectSubset<T, Cal_PlanillaTransporteUpdateArgs<ExtArgs>>): Prisma__Cal_PlanillaTransporteClient<$Result.GetResult<Prisma.$Cal_PlanillaTransportePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Cal_PlanillaTransportes.
+     * @param {Cal_PlanillaTransporteDeleteManyArgs} args - Arguments to filter Cal_PlanillaTransportes to delete.
+     * @example
+     * // Delete a few Cal_PlanillaTransportes
+     * const { count } = await prisma.cal_PlanillaTransporte.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Cal_PlanillaTransporteDeleteManyArgs>(args?: SelectSubset<T, Cal_PlanillaTransporteDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Cal_PlanillaTransportes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_PlanillaTransporteUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Cal_PlanillaTransportes
+     * const cal_PlanillaTransporte = await prisma.cal_PlanillaTransporte.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Cal_PlanillaTransporteUpdateManyArgs>(args: SelectSubset<T, Cal_PlanillaTransporteUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Cal_PlanillaTransporte.
+     * @param {Cal_PlanillaTransporteUpsertArgs} args - Arguments to update or create a Cal_PlanillaTransporte.
+     * @example
+     * // Update or create a Cal_PlanillaTransporte
+     * const cal_PlanillaTransporte = await prisma.cal_PlanillaTransporte.upsert({
+     *   create: {
+     *     // ... data to create a Cal_PlanillaTransporte
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Cal_PlanillaTransporte we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Cal_PlanillaTransporteUpsertArgs>(args: SelectSubset<T, Cal_PlanillaTransporteUpsertArgs<ExtArgs>>): Prisma__Cal_PlanillaTransporteClient<$Result.GetResult<Prisma.$Cal_PlanillaTransportePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Cal_PlanillaTransportes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_PlanillaTransporteCountArgs} args - Arguments to filter Cal_PlanillaTransportes to count.
+     * @example
+     * // Count the number of Cal_PlanillaTransportes
+     * const count = await prisma.cal_PlanillaTransporte.count({
+     *   where: {
+     *     // ... the filter for the Cal_PlanillaTransportes we want to count
+     *   }
+     * })
+    **/
+    count<T extends Cal_PlanillaTransporteCountArgs>(
+      args?: Subset<T, Cal_PlanillaTransporteCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Cal_PlanillaTransporteCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Cal_PlanillaTransporte.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_PlanillaTransporteAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Cal_PlanillaTransporteAggregateArgs>(args: Subset<T, Cal_PlanillaTransporteAggregateArgs>): Prisma.PrismaPromise<GetCal_PlanillaTransporteAggregateType<T>>
+
+    /**
+     * Group by Cal_PlanillaTransporte.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_PlanillaTransporteGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Cal_PlanillaTransporteGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Cal_PlanillaTransporteGroupByArgs['orderBy'] }
+        : { orderBy?: Cal_PlanillaTransporteGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Cal_PlanillaTransporteGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCal_PlanillaTransporteGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Cal_PlanillaTransporte model
+   */
+  readonly fields: Cal_PlanillaTransporteFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Cal_PlanillaTransporte.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Cal_PlanillaTransporteClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    sucursal<T extends SucursalDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SucursalDefaultArgs<ExtArgs>>): Prisma__SucursalClient<$Result.GetResult<Prisma.$SucursalPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    registros<T extends Cal_PlanillaTransporte$registrosArgs<ExtArgs> = {}>(args?: Subset<T, Cal_PlanillaTransporte$registrosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Cal_RegistroTransportePayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Cal_PlanillaTransporte model
+   */ 
+  interface Cal_PlanillaTransporteFieldRefs {
+    readonly id: FieldRef<"Cal_PlanillaTransporte", 'String'>
+    readonly sucursalId: FieldRef<"Cal_PlanillaTransporte", 'String'>
+    readonly fecha: FieldRef<"Cal_PlanillaTransporte", 'DateTime'>
+    readonly fechaTexto: FieldRef<"Cal_PlanillaTransporte", 'String'>
+    readonly estado: FieldRef<"Cal_PlanillaTransporte", 'String'>
+    readonly firmaCalidadUser: FieldRef<"Cal_PlanillaTransporte", 'String'>
+    readonly firmaCalidadUserId: FieldRef<"Cal_PlanillaTransporte", 'String'>
+    readonly firmaCalidadFecha: FieldRef<"Cal_PlanillaTransporte", 'DateTime'>
+    readonly firmaCalidadDiasAtraso: FieldRef<"Cal_PlanillaTransporte", 'Int'>
+    readonly firmaCalidadImg: FieldRef<"Cal_PlanillaTransporte", 'String'>
+    readonly firmaBodegaUser: FieldRef<"Cal_PlanillaTransporte", 'String'>
+    readonly firmaBodegaUserId: FieldRef<"Cal_PlanillaTransporte", 'String'>
+    readonly firmaBodegaFecha: FieldRef<"Cal_PlanillaTransporte", 'DateTime'>
+    readonly firmaBodegaImg: FieldRef<"Cal_PlanillaTransporte", 'String'>
+    readonly observacionesGenerales: FieldRef<"Cal_PlanillaTransporte", 'String'>
+    readonly createdAt: FieldRef<"Cal_PlanillaTransporte", 'DateTime'>
+    readonly updatedAt: FieldRef<"Cal_PlanillaTransporte", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Cal_PlanillaTransporte findUnique
+   */
+  export type Cal_PlanillaTransporteFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_PlanillaTransporte
+     */
+    select?: Cal_PlanillaTransporteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_PlanillaTransporteInclude<ExtArgs> | null
+    /**
+     * Filter, which Cal_PlanillaTransporte to fetch.
+     */
+    where: Cal_PlanillaTransporteWhereUniqueInput
+  }
+
+  /**
+   * Cal_PlanillaTransporte findUniqueOrThrow
+   */
+  export type Cal_PlanillaTransporteFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_PlanillaTransporte
+     */
+    select?: Cal_PlanillaTransporteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_PlanillaTransporteInclude<ExtArgs> | null
+    /**
+     * Filter, which Cal_PlanillaTransporte to fetch.
+     */
+    where: Cal_PlanillaTransporteWhereUniqueInput
+  }
+
+  /**
+   * Cal_PlanillaTransporte findFirst
+   */
+  export type Cal_PlanillaTransporteFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_PlanillaTransporte
+     */
+    select?: Cal_PlanillaTransporteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_PlanillaTransporteInclude<ExtArgs> | null
+    /**
+     * Filter, which Cal_PlanillaTransporte to fetch.
+     */
+    where?: Cal_PlanillaTransporteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cal_PlanillaTransportes to fetch.
+     */
+    orderBy?: Cal_PlanillaTransporteOrderByWithRelationInput | Cal_PlanillaTransporteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Cal_PlanillaTransportes.
+     */
+    cursor?: Cal_PlanillaTransporteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cal_PlanillaTransportes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cal_PlanillaTransportes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Cal_PlanillaTransportes.
+     */
+    distinct?: Cal_PlanillaTransporteScalarFieldEnum | Cal_PlanillaTransporteScalarFieldEnum[]
+  }
+
+  /**
+   * Cal_PlanillaTransporte findFirstOrThrow
+   */
+  export type Cal_PlanillaTransporteFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_PlanillaTransporte
+     */
+    select?: Cal_PlanillaTransporteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_PlanillaTransporteInclude<ExtArgs> | null
+    /**
+     * Filter, which Cal_PlanillaTransporte to fetch.
+     */
+    where?: Cal_PlanillaTransporteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cal_PlanillaTransportes to fetch.
+     */
+    orderBy?: Cal_PlanillaTransporteOrderByWithRelationInput | Cal_PlanillaTransporteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Cal_PlanillaTransportes.
+     */
+    cursor?: Cal_PlanillaTransporteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cal_PlanillaTransportes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cal_PlanillaTransportes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Cal_PlanillaTransportes.
+     */
+    distinct?: Cal_PlanillaTransporteScalarFieldEnum | Cal_PlanillaTransporteScalarFieldEnum[]
+  }
+
+  /**
+   * Cal_PlanillaTransporte findMany
+   */
+  export type Cal_PlanillaTransporteFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_PlanillaTransporte
+     */
+    select?: Cal_PlanillaTransporteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_PlanillaTransporteInclude<ExtArgs> | null
+    /**
+     * Filter, which Cal_PlanillaTransportes to fetch.
+     */
+    where?: Cal_PlanillaTransporteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cal_PlanillaTransportes to fetch.
+     */
+    orderBy?: Cal_PlanillaTransporteOrderByWithRelationInput | Cal_PlanillaTransporteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Cal_PlanillaTransportes.
+     */
+    cursor?: Cal_PlanillaTransporteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cal_PlanillaTransportes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cal_PlanillaTransportes.
+     */
+    skip?: number
+    distinct?: Cal_PlanillaTransporteScalarFieldEnum | Cal_PlanillaTransporteScalarFieldEnum[]
+  }
+
+  /**
+   * Cal_PlanillaTransporte create
+   */
+  export type Cal_PlanillaTransporteCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_PlanillaTransporte
+     */
+    select?: Cal_PlanillaTransporteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_PlanillaTransporteInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Cal_PlanillaTransporte.
+     */
+    data: XOR<Cal_PlanillaTransporteCreateInput, Cal_PlanillaTransporteUncheckedCreateInput>
+  }
+
+  /**
+   * Cal_PlanillaTransporte createMany
+   */
+  export type Cal_PlanillaTransporteCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Cal_PlanillaTransportes.
+     */
+    data: Cal_PlanillaTransporteCreateManyInput | Cal_PlanillaTransporteCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Cal_PlanillaTransporte createManyAndReturn
+   */
+  export type Cal_PlanillaTransporteCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_PlanillaTransporte
+     */
+    select?: Cal_PlanillaTransporteSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Cal_PlanillaTransportes.
+     */
+    data: Cal_PlanillaTransporteCreateManyInput | Cal_PlanillaTransporteCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_PlanillaTransporteIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Cal_PlanillaTransporte update
+   */
+  export type Cal_PlanillaTransporteUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_PlanillaTransporte
+     */
+    select?: Cal_PlanillaTransporteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_PlanillaTransporteInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Cal_PlanillaTransporte.
+     */
+    data: XOR<Cal_PlanillaTransporteUpdateInput, Cal_PlanillaTransporteUncheckedUpdateInput>
+    /**
+     * Choose, which Cal_PlanillaTransporte to update.
+     */
+    where: Cal_PlanillaTransporteWhereUniqueInput
+  }
+
+  /**
+   * Cal_PlanillaTransporte updateMany
+   */
+  export type Cal_PlanillaTransporteUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Cal_PlanillaTransportes.
+     */
+    data: XOR<Cal_PlanillaTransporteUpdateManyMutationInput, Cal_PlanillaTransporteUncheckedUpdateManyInput>
+    /**
+     * Filter which Cal_PlanillaTransportes to update
+     */
+    where?: Cal_PlanillaTransporteWhereInput
+  }
+
+  /**
+   * Cal_PlanillaTransporte upsert
+   */
+  export type Cal_PlanillaTransporteUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_PlanillaTransporte
+     */
+    select?: Cal_PlanillaTransporteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_PlanillaTransporteInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Cal_PlanillaTransporte to update in case it exists.
+     */
+    where: Cal_PlanillaTransporteWhereUniqueInput
+    /**
+     * In case the Cal_PlanillaTransporte found by the `where` argument doesn't exist, create a new Cal_PlanillaTransporte with this data.
+     */
+    create: XOR<Cal_PlanillaTransporteCreateInput, Cal_PlanillaTransporteUncheckedCreateInput>
+    /**
+     * In case the Cal_PlanillaTransporte was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Cal_PlanillaTransporteUpdateInput, Cal_PlanillaTransporteUncheckedUpdateInput>
+  }
+
+  /**
+   * Cal_PlanillaTransporte delete
+   */
+  export type Cal_PlanillaTransporteDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_PlanillaTransporte
+     */
+    select?: Cal_PlanillaTransporteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_PlanillaTransporteInclude<ExtArgs> | null
+    /**
+     * Filter which Cal_PlanillaTransporte to delete.
+     */
+    where: Cal_PlanillaTransporteWhereUniqueInput
+  }
+
+  /**
+   * Cal_PlanillaTransporte deleteMany
+   */
+  export type Cal_PlanillaTransporteDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Cal_PlanillaTransportes to delete
+     */
+    where?: Cal_PlanillaTransporteWhereInput
+  }
+
+  /**
+   * Cal_PlanillaTransporte.registros
+   */
+  export type Cal_PlanillaTransporte$registrosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_RegistroTransporte
+     */
+    select?: Cal_RegistroTransporteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_RegistroTransporteInclude<ExtArgs> | null
+    where?: Cal_RegistroTransporteWhereInput
+    orderBy?: Cal_RegistroTransporteOrderByWithRelationInput | Cal_RegistroTransporteOrderByWithRelationInput[]
+    cursor?: Cal_RegistroTransporteWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Cal_RegistroTransporteScalarFieldEnum | Cal_RegistroTransporteScalarFieldEnum[]
+  }
+
+  /**
+   * Cal_PlanillaTransporte without action
+   */
+  export type Cal_PlanillaTransporteDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_PlanillaTransporte
+     */
+    select?: Cal_PlanillaTransporteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_PlanillaTransporteInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Cal_RegistroTransporte
+   */
+
+  export type AggregateCal_RegistroTransporte = {
+    _count: Cal_RegistroTransporteCountAggregateOutputType | null
+    _min: Cal_RegistroTransporteMinAggregateOutputType | null
+    _max: Cal_RegistroTransporteMaxAggregateOutputType | null
+  }
+
+  export type Cal_RegistroTransporteMinAggregateOutputType = {
+    id: string | null
+    planillaId: string | null
+    patenteEncriptada: string | null
+    limpiezaInterior: string | null
+    limpiezaExterior: string | null
+    puertaCamara: string | null
+    piezasSinOxidacion: string | null
+    equipoCongelacion: string | null
+    equipoRefrigeracion: string | null
+    observacion: string | null
+    accionCorrectiva: string | null
+    creadoPor: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Cal_RegistroTransporteMaxAggregateOutputType = {
+    id: string | null
+    planillaId: string | null
+    patenteEncriptada: string | null
+    limpiezaInterior: string | null
+    limpiezaExterior: string | null
+    puertaCamara: string | null
+    piezasSinOxidacion: string | null
+    equipoCongelacion: string | null
+    equipoRefrigeracion: string | null
+    observacion: string | null
+    accionCorrectiva: string | null
+    creadoPor: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Cal_RegistroTransporteCountAggregateOutputType = {
+    id: number
+    planillaId: number
+    patenteEncriptada: number
+    limpiezaInterior: number
+    limpiezaExterior: number
+    puertaCamara: number
+    piezasSinOxidacion: number
+    equipoCongelacion: number
+    equipoRefrigeracion: number
+    observacion: number
+    accionCorrectiva: number
+    creadoPor: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type Cal_RegistroTransporteMinAggregateInputType = {
+    id?: true
+    planillaId?: true
+    patenteEncriptada?: true
+    limpiezaInterior?: true
+    limpiezaExterior?: true
+    puertaCamara?: true
+    piezasSinOxidacion?: true
+    equipoCongelacion?: true
+    equipoRefrigeracion?: true
+    observacion?: true
+    accionCorrectiva?: true
+    creadoPor?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Cal_RegistroTransporteMaxAggregateInputType = {
+    id?: true
+    planillaId?: true
+    patenteEncriptada?: true
+    limpiezaInterior?: true
+    limpiezaExterior?: true
+    puertaCamara?: true
+    piezasSinOxidacion?: true
+    equipoCongelacion?: true
+    equipoRefrigeracion?: true
+    observacion?: true
+    accionCorrectiva?: true
+    creadoPor?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Cal_RegistroTransporteCountAggregateInputType = {
+    id?: true
+    planillaId?: true
+    patenteEncriptada?: true
+    limpiezaInterior?: true
+    limpiezaExterior?: true
+    puertaCamara?: true
+    piezasSinOxidacion?: true
+    equipoCongelacion?: true
+    equipoRefrigeracion?: true
+    observacion?: true
+    accionCorrectiva?: true
+    creadoPor?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type Cal_RegistroTransporteAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Cal_RegistroTransporte to aggregate.
+     */
+    where?: Cal_RegistroTransporteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cal_RegistroTransportes to fetch.
+     */
+    orderBy?: Cal_RegistroTransporteOrderByWithRelationInput | Cal_RegistroTransporteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Cal_RegistroTransporteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cal_RegistroTransportes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cal_RegistroTransportes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Cal_RegistroTransportes
+    **/
+    _count?: true | Cal_RegistroTransporteCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Cal_RegistroTransporteMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Cal_RegistroTransporteMaxAggregateInputType
+  }
+
+  export type GetCal_RegistroTransporteAggregateType<T extends Cal_RegistroTransporteAggregateArgs> = {
+        [P in keyof T & keyof AggregateCal_RegistroTransporte]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCal_RegistroTransporte[P]>
+      : GetScalarType<T[P], AggregateCal_RegistroTransporte[P]>
+  }
+
+
+
+
+  export type Cal_RegistroTransporteGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Cal_RegistroTransporteWhereInput
+    orderBy?: Cal_RegistroTransporteOrderByWithAggregationInput | Cal_RegistroTransporteOrderByWithAggregationInput[]
+    by: Cal_RegistroTransporteScalarFieldEnum[] | Cal_RegistroTransporteScalarFieldEnum
+    having?: Cal_RegistroTransporteScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Cal_RegistroTransporteCountAggregateInputType | true
+    _min?: Cal_RegistroTransporteMinAggregateInputType
+    _max?: Cal_RegistroTransporteMaxAggregateInputType
+  }
+
+  export type Cal_RegistroTransporteGroupByOutputType = {
+    id: string
+    planillaId: string
+    patenteEncriptada: string
+    limpiezaInterior: string
+    limpiezaExterior: string
+    puertaCamara: string
+    piezasSinOxidacion: string
+    equipoCongelacion: string
+    equipoRefrigeracion: string
+    observacion: string | null
+    accionCorrectiva: string | null
+    creadoPor: string
+    createdAt: Date
+    updatedAt: Date
+    _count: Cal_RegistroTransporteCountAggregateOutputType | null
+    _min: Cal_RegistroTransporteMinAggregateOutputType | null
+    _max: Cal_RegistroTransporteMaxAggregateOutputType | null
+  }
+
+  type GetCal_RegistroTransporteGroupByPayload<T extends Cal_RegistroTransporteGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Cal_RegistroTransporteGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Cal_RegistroTransporteGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Cal_RegistroTransporteGroupByOutputType[P]>
+            : GetScalarType<T[P], Cal_RegistroTransporteGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Cal_RegistroTransporteSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    planillaId?: boolean
+    patenteEncriptada?: boolean
+    limpiezaInterior?: boolean
+    limpiezaExterior?: boolean
+    puertaCamara?: boolean
+    piezasSinOxidacion?: boolean
+    equipoCongelacion?: boolean
+    equipoRefrigeracion?: boolean
+    observacion?: boolean
+    accionCorrectiva?: boolean
+    creadoPor?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    planilla?: boolean | Cal_PlanillaTransporteDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cal_RegistroTransporte"]>
+
+  export type Cal_RegistroTransporteSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    planillaId?: boolean
+    patenteEncriptada?: boolean
+    limpiezaInterior?: boolean
+    limpiezaExterior?: boolean
+    puertaCamara?: boolean
+    piezasSinOxidacion?: boolean
+    equipoCongelacion?: boolean
+    equipoRefrigeracion?: boolean
+    observacion?: boolean
+    accionCorrectiva?: boolean
+    creadoPor?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    planilla?: boolean | Cal_PlanillaTransporteDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cal_RegistroTransporte"]>
+
+  export type Cal_RegistroTransporteSelectScalar = {
+    id?: boolean
+    planillaId?: boolean
+    patenteEncriptada?: boolean
+    limpiezaInterior?: boolean
+    limpiezaExterior?: boolean
+    puertaCamara?: boolean
+    piezasSinOxidacion?: boolean
+    equipoCongelacion?: boolean
+    equipoRefrigeracion?: boolean
+    observacion?: boolean
+    accionCorrectiva?: boolean
+    creadoPor?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type Cal_RegistroTransporteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    planilla?: boolean | Cal_PlanillaTransporteDefaultArgs<ExtArgs>
+  }
+  export type Cal_RegistroTransporteIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    planilla?: boolean | Cal_PlanillaTransporteDefaultArgs<ExtArgs>
+  }
+
+  export type $Cal_RegistroTransportePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Cal_RegistroTransporte"
+    objects: {
+      planilla: Prisma.$Cal_PlanillaTransportePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      planillaId: string
+      patenteEncriptada: string
+      limpiezaInterior: string
+      limpiezaExterior: string
+      puertaCamara: string
+      piezasSinOxidacion: string
+      equipoCongelacion: string
+      equipoRefrigeracion: string
+      observacion: string | null
+      accionCorrectiva: string | null
+      creadoPor: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["cal_RegistroTransporte"]>
+    composites: {}
+  }
+
+  type Cal_RegistroTransporteGetPayload<S extends boolean | null | undefined | Cal_RegistroTransporteDefaultArgs> = $Result.GetResult<Prisma.$Cal_RegistroTransportePayload, S>
+
+  type Cal_RegistroTransporteCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Cal_RegistroTransporteFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Cal_RegistroTransporteCountAggregateInputType | true
+    }
+
+  export interface Cal_RegistroTransporteDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Cal_RegistroTransporte'], meta: { name: 'Cal_RegistroTransporte' } }
+    /**
+     * Find zero or one Cal_RegistroTransporte that matches the filter.
+     * @param {Cal_RegistroTransporteFindUniqueArgs} args - Arguments to find a Cal_RegistroTransporte
+     * @example
+     * // Get one Cal_RegistroTransporte
+     * const cal_RegistroTransporte = await prisma.cal_RegistroTransporte.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Cal_RegistroTransporteFindUniqueArgs>(args: SelectSubset<T, Cal_RegistroTransporteFindUniqueArgs<ExtArgs>>): Prisma__Cal_RegistroTransporteClient<$Result.GetResult<Prisma.$Cal_RegistroTransportePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Cal_RegistroTransporte that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Cal_RegistroTransporteFindUniqueOrThrowArgs} args - Arguments to find a Cal_RegistroTransporte
+     * @example
+     * // Get one Cal_RegistroTransporte
+     * const cal_RegistroTransporte = await prisma.cal_RegistroTransporte.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Cal_RegistroTransporteFindUniqueOrThrowArgs>(args: SelectSubset<T, Cal_RegistroTransporteFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Cal_RegistroTransporteClient<$Result.GetResult<Prisma.$Cal_RegistroTransportePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Cal_RegistroTransporte that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_RegistroTransporteFindFirstArgs} args - Arguments to find a Cal_RegistroTransporte
+     * @example
+     * // Get one Cal_RegistroTransporte
+     * const cal_RegistroTransporte = await prisma.cal_RegistroTransporte.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Cal_RegistroTransporteFindFirstArgs>(args?: SelectSubset<T, Cal_RegistroTransporteFindFirstArgs<ExtArgs>>): Prisma__Cal_RegistroTransporteClient<$Result.GetResult<Prisma.$Cal_RegistroTransportePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Cal_RegistroTransporte that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_RegistroTransporteFindFirstOrThrowArgs} args - Arguments to find a Cal_RegistroTransporte
+     * @example
+     * // Get one Cal_RegistroTransporte
+     * const cal_RegistroTransporte = await prisma.cal_RegistroTransporte.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Cal_RegistroTransporteFindFirstOrThrowArgs>(args?: SelectSubset<T, Cal_RegistroTransporteFindFirstOrThrowArgs<ExtArgs>>): Prisma__Cal_RegistroTransporteClient<$Result.GetResult<Prisma.$Cal_RegistroTransportePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Cal_RegistroTransportes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_RegistroTransporteFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Cal_RegistroTransportes
+     * const cal_RegistroTransportes = await prisma.cal_RegistroTransporte.findMany()
+     * 
+     * // Get first 10 Cal_RegistroTransportes
+     * const cal_RegistroTransportes = await prisma.cal_RegistroTransporte.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const cal_RegistroTransporteWithIdOnly = await prisma.cal_RegistroTransporte.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Cal_RegistroTransporteFindManyArgs>(args?: SelectSubset<T, Cal_RegistroTransporteFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Cal_RegistroTransportePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Cal_RegistroTransporte.
+     * @param {Cal_RegistroTransporteCreateArgs} args - Arguments to create a Cal_RegistroTransporte.
+     * @example
+     * // Create one Cal_RegistroTransporte
+     * const Cal_RegistroTransporte = await prisma.cal_RegistroTransporte.create({
+     *   data: {
+     *     // ... data to create a Cal_RegistroTransporte
+     *   }
+     * })
+     * 
+     */
+    create<T extends Cal_RegistroTransporteCreateArgs>(args: SelectSubset<T, Cal_RegistroTransporteCreateArgs<ExtArgs>>): Prisma__Cal_RegistroTransporteClient<$Result.GetResult<Prisma.$Cal_RegistroTransportePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Cal_RegistroTransportes.
+     * @param {Cal_RegistroTransporteCreateManyArgs} args - Arguments to create many Cal_RegistroTransportes.
+     * @example
+     * // Create many Cal_RegistroTransportes
+     * const cal_RegistroTransporte = await prisma.cal_RegistroTransporte.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Cal_RegistroTransporteCreateManyArgs>(args?: SelectSubset<T, Cal_RegistroTransporteCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Cal_RegistroTransportes and returns the data saved in the database.
+     * @param {Cal_RegistroTransporteCreateManyAndReturnArgs} args - Arguments to create many Cal_RegistroTransportes.
+     * @example
+     * // Create many Cal_RegistroTransportes
+     * const cal_RegistroTransporte = await prisma.cal_RegistroTransporte.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Cal_RegistroTransportes and only return the `id`
+     * const cal_RegistroTransporteWithIdOnly = await prisma.cal_RegistroTransporte.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Cal_RegistroTransporteCreateManyAndReturnArgs>(args?: SelectSubset<T, Cal_RegistroTransporteCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Cal_RegistroTransportePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Cal_RegistroTransporte.
+     * @param {Cal_RegistroTransporteDeleteArgs} args - Arguments to delete one Cal_RegistroTransporte.
+     * @example
+     * // Delete one Cal_RegistroTransporte
+     * const Cal_RegistroTransporte = await prisma.cal_RegistroTransporte.delete({
+     *   where: {
+     *     // ... filter to delete one Cal_RegistroTransporte
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Cal_RegistroTransporteDeleteArgs>(args: SelectSubset<T, Cal_RegistroTransporteDeleteArgs<ExtArgs>>): Prisma__Cal_RegistroTransporteClient<$Result.GetResult<Prisma.$Cal_RegistroTransportePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Cal_RegistroTransporte.
+     * @param {Cal_RegistroTransporteUpdateArgs} args - Arguments to update one Cal_RegistroTransporte.
+     * @example
+     * // Update one Cal_RegistroTransporte
+     * const cal_RegistroTransporte = await prisma.cal_RegistroTransporte.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Cal_RegistroTransporteUpdateArgs>(args: SelectSubset<T, Cal_RegistroTransporteUpdateArgs<ExtArgs>>): Prisma__Cal_RegistroTransporteClient<$Result.GetResult<Prisma.$Cal_RegistroTransportePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Cal_RegistroTransportes.
+     * @param {Cal_RegistroTransporteDeleteManyArgs} args - Arguments to filter Cal_RegistroTransportes to delete.
+     * @example
+     * // Delete a few Cal_RegistroTransportes
+     * const { count } = await prisma.cal_RegistroTransporte.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Cal_RegistroTransporteDeleteManyArgs>(args?: SelectSubset<T, Cal_RegistroTransporteDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Cal_RegistroTransportes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_RegistroTransporteUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Cal_RegistroTransportes
+     * const cal_RegistroTransporte = await prisma.cal_RegistroTransporte.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Cal_RegistroTransporteUpdateManyArgs>(args: SelectSubset<T, Cal_RegistroTransporteUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Cal_RegistroTransporte.
+     * @param {Cal_RegistroTransporteUpsertArgs} args - Arguments to update or create a Cal_RegistroTransporte.
+     * @example
+     * // Update or create a Cal_RegistroTransporte
+     * const cal_RegistroTransporte = await prisma.cal_RegistroTransporte.upsert({
+     *   create: {
+     *     // ... data to create a Cal_RegistroTransporte
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Cal_RegistroTransporte we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Cal_RegistroTransporteUpsertArgs>(args: SelectSubset<T, Cal_RegistroTransporteUpsertArgs<ExtArgs>>): Prisma__Cal_RegistroTransporteClient<$Result.GetResult<Prisma.$Cal_RegistroTransportePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Cal_RegistroTransportes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_RegistroTransporteCountArgs} args - Arguments to filter Cal_RegistroTransportes to count.
+     * @example
+     * // Count the number of Cal_RegistroTransportes
+     * const count = await prisma.cal_RegistroTransporte.count({
+     *   where: {
+     *     // ... the filter for the Cal_RegistroTransportes we want to count
+     *   }
+     * })
+    **/
+    count<T extends Cal_RegistroTransporteCountArgs>(
+      args?: Subset<T, Cal_RegistroTransporteCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Cal_RegistroTransporteCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Cal_RegistroTransporte.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_RegistroTransporteAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Cal_RegistroTransporteAggregateArgs>(args: Subset<T, Cal_RegistroTransporteAggregateArgs>): Prisma.PrismaPromise<GetCal_RegistroTransporteAggregateType<T>>
+
+    /**
+     * Group by Cal_RegistroTransporte.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_RegistroTransporteGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Cal_RegistroTransporteGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Cal_RegistroTransporteGroupByArgs['orderBy'] }
+        : { orderBy?: Cal_RegistroTransporteGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Cal_RegistroTransporteGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCal_RegistroTransporteGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Cal_RegistroTransporte model
+   */
+  readonly fields: Cal_RegistroTransporteFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Cal_RegistroTransporte.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Cal_RegistroTransporteClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    planilla<T extends Cal_PlanillaTransporteDefaultArgs<ExtArgs> = {}>(args?: Subset<T, Cal_PlanillaTransporteDefaultArgs<ExtArgs>>): Prisma__Cal_PlanillaTransporteClient<$Result.GetResult<Prisma.$Cal_PlanillaTransportePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Cal_RegistroTransporte model
+   */ 
+  interface Cal_RegistroTransporteFieldRefs {
+    readonly id: FieldRef<"Cal_RegistroTransporte", 'String'>
+    readonly planillaId: FieldRef<"Cal_RegistroTransporte", 'String'>
+    readonly patenteEncriptada: FieldRef<"Cal_RegistroTransporte", 'String'>
+    readonly limpiezaInterior: FieldRef<"Cal_RegistroTransporte", 'String'>
+    readonly limpiezaExterior: FieldRef<"Cal_RegistroTransporte", 'String'>
+    readonly puertaCamara: FieldRef<"Cal_RegistroTransporte", 'String'>
+    readonly piezasSinOxidacion: FieldRef<"Cal_RegistroTransporte", 'String'>
+    readonly equipoCongelacion: FieldRef<"Cal_RegistroTransporte", 'String'>
+    readonly equipoRefrigeracion: FieldRef<"Cal_RegistroTransporte", 'String'>
+    readonly observacion: FieldRef<"Cal_RegistroTransporte", 'String'>
+    readonly accionCorrectiva: FieldRef<"Cal_RegistroTransporte", 'String'>
+    readonly creadoPor: FieldRef<"Cal_RegistroTransporte", 'String'>
+    readonly createdAt: FieldRef<"Cal_RegistroTransporte", 'DateTime'>
+    readonly updatedAt: FieldRef<"Cal_RegistroTransporte", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Cal_RegistroTransporte findUnique
+   */
+  export type Cal_RegistroTransporteFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_RegistroTransporte
+     */
+    select?: Cal_RegistroTransporteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_RegistroTransporteInclude<ExtArgs> | null
+    /**
+     * Filter, which Cal_RegistroTransporte to fetch.
+     */
+    where: Cal_RegistroTransporteWhereUniqueInput
+  }
+
+  /**
+   * Cal_RegistroTransporte findUniqueOrThrow
+   */
+  export type Cal_RegistroTransporteFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_RegistroTransporte
+     */
+    select?: Cal_RegistroTransporteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_RegistroTransporteInclude<ExtArgs> | null
+    /**
+     * Filter, which Cal_RegistroTransporte to fetch.
+     */
+    where: Cal_RegistroTransporteWhereUniqueInput
+  }
+
+  /**
+   * Cal_RegistroTransporte findFirst
+   */
+  export type Cal_RegistroTransporteFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_RegistroTransporte
+     */
+    select?: Cal_RegistroTransporteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_RegistroTransporteInclude<ExtArgs> | null
+    /**
+     * Filter, which Cal_RegistroTransporte to fetch.
+     */
+    where?: Cal_RegistroTransporteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cal_RegistroTransportes to fetch.
+     */
+    orderBy?: Cal_RegistroTransporteOrderByWithRelationInput | Cal_RegistroTransporteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Cal_RegistroTransportes.
+     */
+    cursor?: Cal_RegistroTransporteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cal_RegistroTransportes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cal_RegistroTransportes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Cal_RegistroTransportes.
+     */
+    distinct?: Cal_RegistroTransporteScalarFieldEnum | Cal_RegistroTransporteScalarFieldEnum[]
+  }
+
+  /**
+   * Cal_RegistroTransporte findFirstOrThrow
+   */
+  export type Cal_RegistroTransporteFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_RegistroTransporte
+     */
+    select?: Cal_RegistroTransporteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_RegistroTransporteInclude<ExtArgs> | null
+    /**
+     * Filter, which Cal_RegistroTransporte to fetch.
+     */
+    where?: Cal_RegistroTransporteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cal_RegistroTransportes to fetch.
+     */
+    orderBy?: Cal_RegistroTransporteOrderByWithRelationInput | Cal_RegistroTransporteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Cal_RegistroTransportes.
+     */
+    cursor?: Cal_RegistroTransporteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cal_RegistroTransportes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cal_RegistroTransportes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Cal_RegistroTransportes.
+     */
+    distinct?: Cal_RegistroTransporteScalarFieldEnum | Cal_RegistroTransporteScalarFieldEnum[]
+  }
+
+  /**
+   * Cal_RegistroTransporte findMany
+   */
+  export type Cal_RegistroTransporteFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_RegistroTransporte
+     */
+    select?: Cal_RegistroTransporteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_RegistroTransporteInclude<ExtArgs> | null
+    /**
+     * Filter, which Cal_RegistroTransportes to fetch.
+     */
+    where?: Cal_RegistroTransporteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cal_RegistroTransportes to fetch.
+     */
+    orderBy?: Cal_RegistroTransporteOrderByWithRelationInput | Cal_RegistroTransporteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Cal_RegistroTransportes.
+     */
+    cursor?: Cal_RegistroTransporteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cal_RegistroTransportes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cal_RegistroTransportes.
+     */
+    skip?: number
+    distinct?: Cal_RegistroTransporteScalarFieldEnum | Cal_RegistroTransporteScalarFieldEnum[]
+  }
+
+  /**
+   * Cal_RegistroTransporte create
+   */
+  export type Cal_RegistroTransporteCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_RegistroTransporte
+     */
+    select?: Cal_RegistroTransporteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_RegistroTransporteInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Cal_RegistroTransporte.
+     */
+    data: XOR<Cal_RegistroTransporteCreateInput, Cal_RegistroTransporteUncheckedCreateInput>
+  }
+
+  /**
+   * Cal_RegistroTransporte createMany
+   */
+  export type Cal_RegistroTransporteCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Cal_RegistroTransportes.
+     */
+    data: Cal_RegistroTransporteCreateManyInput | Cal_RegistroTransporteCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Cal_RegistroTransporte createManyAndReturn
+   */
+  export type Cal_RegistroTransporteCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_RegistroTransporte
+     */
+    select?: Cal_RegistroTransporteSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Cal_RegistroTransportes.
+     */
+    data: Cal_RegistroTransporteCreateManyInput | Cal_RegistroTransporteCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_RegistroTransporteIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Cal_RegistroTransporte update
+   */
+  export type Cal_RegistroTransporteUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_RegistroTransporte
+     */
+    select?: Cal_RegistroTransporteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_RegistroTransporteInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Cal_RegistroTransporte.
+     */
+    data: XOR<Cal_RegistroTransporteUpdateInput, Cal_RegistroTransporteUncheckedUpdateInput>
+    /**
+     * Choose, which Cal_RegistroTransporte to update.
+     */
+    where: Cal_RegistroTransporteWhereUniqueInput
+  }
+
+  /**
+   * Cal_RegistroTransporte updateMany
+   */
+  export type Cal_RegistroTransporteUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Cal_RegistroTransportes.
+     */
+    data: XOR<Cal_RegistroTransporteUpdateManyMutationInput, Cal_RegistroTransporteUncheckedUpdateManyInput>
+    /**
+     * Filter which Cal_RegistroTransportes to update
+     */
+    where?: Cal_RegistroTransporteWhereInput
+  }
+
+  /**
+   * Cal_RegistroTransporte upsert
+   */
+  export type Cal_RegistroTransporteUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_RegistroTransporte
+     */
+    select?: Cal_RegistroTransporteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_RegistroTransporteInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Cal_RegistroTransporte to update in case it exists.
+     */
+    where: Cal_RegistroTransporteWhereUniqueInput
+    /**
+     * In case the Cal_RegistroTransporte found by the `where` argument doesn't exist, create a new Cal_RegistroTransporte with this data.
+     */
+    create: XOR<Cal_RegistroTransporteCreateInput, Cal_RegistroTransporteUncheckedCreateInput>
+    /**
+     * In case the Cal_RegistroTransporte was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Cal_RegistroTransporteUpdateInput, Cal_RegistroTransporteUncheckedUpdateInput>
+  }
+
+  /**
+   * Cal_RegistroTransporte delete
+   */
+  export type Cal_RegistroTransporteDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_RegistroTransporte
+     */
+    select?: Cal_RegistroTransporteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_RegistroTransporteInclude<ExtArgs> | null
+    /**
+     * Filter which Cal_RegistroTransporte to delete.
+     */
+    where: Cal_RegistroTransporteWhereUniqueInput
+  }
+
+  /**
+   * Cal_RegistroTransporte deleteMany
+   */
+  export type Cal_RegistroTransporteDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Cal_RegistroTransportes to delete
+     */
+    where?: Cal_RegistroTransporteWhereInput
+  }
+
+  /**
+   * Cal_RegistroTransporte without action
+   */
+  export type Cal_RegistroTransporteDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_RegistroTransporte
+     */
+    select?: Cal_RegistroTransporteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_RegistroTransporteInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Cal_PlanillaHigienePersonal
+   */
+
+  export type AggregateCal_PlanillaHigienePersonal = {
+    _count: Cal_PlanillaHigienePersonalCountAggregateOutputType | null
+    _avg: Cal_PlanillaHigienePersonalAvgAggregateOutputType | null
+    _sum: Cal_PlanillaHigienePersonalSumAggregateOutputType | null
+    _min: Cal_PlanillaHigienePersonalMinAggregateOutputType | null
+    _max: Cal_PlanillaHigienePersonalMaxAggregateOutputType | null
+  }
+
+  export type Cal_PlanillaHigienePersonalAvgAggregateOutputType = {
+    firmaCalidadDiasAtraso: number | null
+  }
+
+  export type Cal_PlanillaHigienePersonalSumAggregateOutputType = {
+    firmaCalidadDiasAtraso: number | null
+  }
+
+  export type Cal_PlanillaHigienePersonalMinAggregateOutputType = {
+    id: string | null
+    sucursalId: string | null
+    fecha: Date | null
+    fechaTexto: string | null
+    estado: string | null
+    firmaCalidadUser: string | null
+    firmaCalidadUserId: string | null
+    firmaCalidadFecha: Date | null
+    firmaCalidadDiasAtraso: number | null
+    firmaCalidadImg: string | null
+    firmaBodegaUser: string | null
+    firmaBodegaUserId: string | null
+    firmaBodegaFecha: Date | null
+    firmaBodegaImg: string | null
+    observacionesGenerales: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Cal_PlanillaHigienePersonalMaxAggregateOutputType = {
+    id: string | null
+    sucursalId: string | null
+    fecha: Date | null
+    fechaTexto: string | null
+    estado: string | null
+    firmaCalidadUser: string | null
+    firmaCalidadUserId: string | null
+    firmaCalidadFecha: Date | null
+    firmaCalidadDiasAtraso: number | null
+    firmaCalidadImg: string | null
+    firmaBodegaUser: string | null
+    firmaBodegaUserId: string | null
+    firmaBodegaFecha: Date | null
+    firmaBodegaImg: string | null
+    observacionesGenerales: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Cal_PlanillaHigienePersonalCountAggregateOutputType = {
+    id: number
+    sucursalId: number
+    fecha: number
+    fechaTexto: number
+    estado: number
+    firmaCalidadUser: number
+    firmaCalidadUserId: number
+    firmaCalidadFecha: number
+    firmaCalidadDiasAtraso: number
+    firmaCalidadImg: number
+    firmaBodegaUser: number
+    firmaBodegaUserId: number
+    firmaBodegaFecha: number
+    firmaBodegaImg: number
+    observacionesGenerales: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type Cal_PlanillaHigienePersonalAvgAggregateInputType = {
+    firmaCalidadDiasAtraso?: true
+  }
+
+  export type Cal_PlanillaHigienePersonalSumAggregateInputType = {
+    firmaCalidadDiasAtraso?: true
+  }
+
+  export type Cal_PlanillaHigienePersonalMinAggregateInputType = {
+    id?: true
+    sucursalId?: true
+    fecha?: true
+    fechaTexto?: true
+    estado?: true
+    firmaCalidadUser?: true
+    firmaCalidadUserId?: true
+    firmaCalidadFecha?: true
+    firmaCalidadDiasAtraso?: true
+    firmaCalidadImg?: true
+    firmaBodegaUser?: true
+    firmaBodegaUserId?: true
+    firmaBodegaFecha?: true
+    firmaBodegaImg?: true
+    observacionesGenerales?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Cal_PlanillaHigienePersonalMaxAggregateInputType = {
+    id?: true
+    sucursalId?: true
+    fecha?: true
+    fechaTexto?: true
+    estado?: true
+    firmaCalidadUser?: true
+    firmaCalidadUserId?: true
+    firmaCalidadFecha?: true
+    firmaCalidadDiasAtraso?: true
+    firmaCalidadImg?: true
+    firmaBodegaUser?: true
+    firmaBodegaUserId?: true
+    firmaBodegaFecha?: true
+    firmaBodegaImg?: true
+    observacionesGenerales?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Cal_PlanillaHigienePersonalCountAggregateInputType = {
+    id?: true
+    sucursalId?: true
+    fecha?: true
+    fechaTexto?: true
+    estado?: true
+    firmaCalidadUser?: true
+    firmaCalidadUserId?: true
+    firmaCalidadFecha?: true
+    firmaCalidadDiasAtraso?: true
+    firmaCalidadImg?: true
+    firmaBodegaUser?: true
+    firmaBodegaUserId?: true
+    firmaBodegaFecha?: true
+    firmaBodegaImg?: true
+    observacionesGenerales?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type Cal_PlanillaHigienePersonalAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Cal_PlanillaHigienePersonal to aggregate.
+     */
+    where?: Cal_PlanillaHigienePersonalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cal_PlanillaHigienePersonals to fetch.
+     */
+    orderBy?: Cal_PlanillaHigienePersonalOrderByWithRelationInput | Cal_PlanillaHigienePersonalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Cal_PlanillaHigienePersonalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cal_PlanillaHigienePersonals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cal_PlanillaHigienePersonals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Cal_PlanillaHigienePersonals
+    **/
+    _count?: true | Cal_PlanillaHigienePersonalCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Cal_PlanillaHigienePersonalAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Cal_PlanillaHigienePersonalSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Cal_PlanillaHigienePersonalMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Cal_PlanillaHigienePersonalMaxAggregateInputType
+  }
+
+  export type GetCal_PlanillaHigienePersonalAggregateType<T extends Cal_PlanillaHigienePersonalAggregateArgs> = {
+        [P in keyof T & keyof AggregateCal_PlanillaHigienePersonal]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCal_PlanillaHigienePersonal[P]>
+      : GetScalarType<T[P], AggregateCal_PlanillaHigienePersonal[P]>
+  }
+
+
+
+
+  export type Cal_PlanillaHigienePersonalGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Cal_PlanillaHigienePersonalWhereInput
+    orderBy?: Cal_PlanillaHigienePersonalOrderByWithAggregationInput | Cal_PlanillaHigienePersonalOrderByWithAggregationInput[]
+    by: Cal_PlanillaHigienePersonalScalarFieldEnum[] | Cal_PlanillaHigienePersonalScalarFieldEnum
+    having?: Cal_PlanillaHigienePersonalScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Cal_PlanillaHigienePersonalCountAggregateInputType | true
+    _avg?: Cal_PlanillaHigienePersonalAvgAggregateInputType
+    _sum?: Cal_PlanillaHigienePersonalSumAggregateInputType
+    _min?: Cal_PlanillaHigienePersonalMinAggregateInputType
+    _max?: Cal_PlanillaHigienePersonalMaxAggregateInputType
+  }
+
+  export type Cal_PlanillaHigienePersonalGroupByOutputType = {
+    id: string
+    sucursalId: string
+    fecha: Date
+    fechaTexto: string
+    estado: string
+    firmaCalidadUser: string | null
+    firmaCalidadUserId: string | null
+    firmaCalidadFecha: Date | null
+    firmaCalidadDiasAtraso: number
+    firmaCalidadImg: string | null
+    firmaBodegaUser: string | null
+    firmaBodegaUserId: string | null
+    firmaBodegaFecha: Date | null
+    firmaBodegaImg: string | null
+    observacionesGenerales: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: Cal_PlanillaHigienePersonalCountAggregateOutputType | null
+    _avg: Cal_PlanillaHigienePersonalAvgAggregateOutputType | null
+    _sum: Cal_PlanillaHigienePersonalSumAggregateOutputType | null
+    _min: Cal_PlanillaHigienePersonalMinAggregateOutputType | null
+    _max: Cal_PlanillaHigienePersonalMaxAggregateOutputType | null
+  }
+
+  type GetCal_PlanillaHigienePersonalGroupByPayload<T extends Cal_PlanillaHigienePersonalGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Cal_PlanillaHigienePersonalGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Cal_PlanillaHigienePersonalGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Cal_PlanillaHigienePersonalGroupByOutputType[P]>
+            : GetScalarType<T[P], Cal_PlanillaHigienePersonalGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Cal_PlanillaHigienePersonalSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    sucursalId?: boolean
+    fecha?: boolean
+    fechaTexto?: boolean
+    estado?: boolean
+    firmaCalidadUser?: boolean
+    firmaCalidadUserId?: boolean
+    firmaCalidadFecha?: boolean
+    firmaCalidadDiasAtraso?: boolean
+    firmaCalidadImg?: boolean
+    firmaBodegaUser?: boolean
+    firmaBodegaUserId?: boolean
+    firmaBodegaFecha?: boolean
+    firmaBodegaImg?: boolean
+    observacionesGenerales?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    sucursal?: boolean | SucursalDefaultArgs<ExtArgs>
+    registros?: boolean | Cal_PlanillaHigienePersonal$registrosArgs<ExtArgs>
+    _count?: boolean | Cal_PlanillaHigienePersonalCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cal_PlanillaHigienePersonal"]>
+
+  export type Cal_PlanillaHigienePersonalSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    sucursalId?: boolean
+    fecha?: boolean
+    fechaTexto?: boolean
+    estado?: boolean
+    firmaCalidadUser?: boolean
+    firmaCalidadUserId?: boolean
+    firmaCalidadFecha?: boolean
+    firmaCalidadDiasAtraso?: boolean
+    firmaCalidadImg?: boolean
+    firmaBodegaUser?: boolean
+    firmaBodegaUserId?: boolean
+    firmaBodegaFecha?: boolean
+    firmaBodegaImg?: boolean
+    observacionesGenerales?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    sucursal?: boolean | SucursalDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cal_PlanillaHigienePersonal"]>
+
+  export type Cal_PlanillaHigienePersonalSelectScalar = {
+    id?: boolean
+    sucursalId?: boolean
+    fecha?: boolean
+    fechaTexto?: boolean
+    estado?: boolean
+    firmaCalidadUser?: boolean
+    firmaCalidadUserId?: boolean
+    firmaCalidadFecha?: boolean
+    firmaCalidadDiasAtraso?: boolean
+    firmaCalidadImg?: boolean
+    firmaBodegaUser?: boolean
+    firmaBodegaUserId?: boolean
+    firmaBodegaFecha?: boolean
+    firmaBodegaImg?: boolean
+    observacionesGenerales?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type Cal_PlanillaHigienePersonalInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sucursal?: boolean | SucursalDefaultArgs<ExtArgs>
+    registros?: boolean | Cal_PlanillaHigienePersonal$registrosArgs<ExtArgs>
+    _count?: boolean | Cal_PlanillaHigienePersonalCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type Cal_PlanillaHigienePersonalIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sucursal?: boolean | SucursalDefaultArgs<ExtArgs>
+  }
+
+  export type $Cal_PlanillaHigienePersonalPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Cal_PlanillaHigienePersonal"
+    objects: {
+      sucursal: Prisma.$SucursalPayload<ExtArgs>
+      registros: Prisma.$Cal_RegistroHigienePersonalPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      sucursalId: string
+      fecha: Date
+      fechaTexto: string
+      estado: string
+      firmaCalidadUser: string | null
+      firmaCalidadUserId: string | null
+      firmaCalidadFecha: Date | null
+      firmaCalidadDiasAtraso: number
+      firmaCalidadImg: string | null
+      firmaBodegaUser: string | null
+      firmaBodegaUserId: string | null
+      firmaBodegaFecha: Date | null
+      firmaBodegaImg: string | null
+      observacionesGenerales: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["cal_PlanillaHigienePersonal"]>
+    composites: {}
+  }
+
+  type Cal_PlanillaHigienePersonalGetPayload<S extends boolean | null | undefined | Cal_PlanillaHigienePersonalDefaultArgs> = $Result.GetResult<Prisma.$Cal_PlanillaHigienePersonalPayload, S>
+
+  type Cal_PlanillaHigienePersonalCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Cal_PlanillaHigienePersonalFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Cal_PlanillaHigienePersonalCountAggregateInputType | true
+    }
+
+  export interface Cal_PlanillaHigienePersonalDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Cal_PlanillaHigienePersonal'], meta: { name: 'Cal_PlanillaHigienePersonal' } }
+    /**
+     * Find zero or one Cal_PlanillaHigienePersonal that matches the filter.
+     * @param {Cal_PlanillaHigienePersonalFindUniqueArgs} args - Arguments to find a Cal_PlanillaHigienePersonal
+     * @example
+     * // Get one Cal_PlanillaHigienePersonal
+     * const cal_PlanillaHigienePersonal = await prisma.cal_PlanillaHigienePersonal.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Cal_PlanillaHigienePersonalFindUniqueArgs>(args: SelectSubset<T, Cal_PlanillaHigienePersonalFindUniqueArgs<ExtArgs>>): Prisma__Cal_PlanillaHigienePersonalClient<$Result.GetResult<Prisma.$Cal_PlanillaHigienePersonalPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Cal_PlanillaHigienePersonal that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Cal_PlanillaHigienePersonalFindUniqueOrThrowArgs} args - Arguments to find a Cal_PlanillaHigienePersonal
+     * @example
+     * // Get one Cal_PlanillaHigienePersonal
+     * const cal_PlanillaHigienePersonal = await prisma.cal_PlanillaHigienePersonal.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Cal_PlanillaHigienePersonalFindUniqueOrThrowArgs>(args: SelectSubset<T, Cal_PlanillaHigienePersonalFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Cal_PlanillaHigienePersonalClient<$Result.GetResult<Prisma.$Cal_PlanillaHigienePersonalPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Cal_PlanillaHigienePersonal that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_PlanillaHigienePersonalFindFirstArgs} args - Arguments to find a Cal_PlanillaHigienePersonal
+     * @example
+     * // Get one Cal_PlanillaHigienePersonal
+     * const cal_PlanillaHigienePersonal = await prisma.cal_PlanillaHigienePersonal.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Cal_PlanillaHigienePersonalFindFirstArgs>(args?: SelectSubset<T, Cal_PlanillaHigienePersonalFindFirstArgs<ExtArgs>>): Prisma__Cal_PlanillaHigienePersonalClient<$Result.GetResult<Prisma.$Cal_PlanillaHigienePersonalPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Cal_PlanillaHigienePersonal that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_PlanillaHigienePersonalFindFirstOrThrowArgs} args - Arguments to find a Cal_PlanillaHigienePersonal
+     * @example
+     * // Get one Cal_PlanillaHigienePersonal
+     * const cal_PlanillaHigienePersonal = await prisma.cal_PlanillaHigienePersonal.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Cal_PlanillaHigienePersonalFindFirstOrThrowArgs>(args?: SelectSubset<T, Cal_PlanillaHigienePersonalFindFirstOrThrowArgs<ExtArgs>>): Prisma__Cal_PlanillaHigienePersonalClient<$Result.GetResult<Prisma.$Cal_PlanillaHigienePersonalPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Cal_PlanillaHigienePersonals that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_PlanillaHigienePersonalFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Cal_PlanillaHigienePersonals
+     * const cal_PlanillaHigienePersonals = await prisma.cal_PlanillaHigienePersonal.findMany()
+     * 
+     * // Get first 10 Cal_PlanillaHigienePersonals
+     * const cal_PlanillaHigienePersonals = await prisma.cal_PlanillaHigienePersonal.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const cal_PlanillaHigienePersonalWithIdOnly = await prisma.cal_PlanillaHigienePersonal.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Cal_PlanillaHigienePersonalFindManyArgs>(args?: SelectSubset<T, Cal_PlanillaHigienePersonalFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Cal_PlanillaHigienePersonalPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Cal_PlanillaHigienePersonal.
+     * @param {Cal_PlanillaHigienePersonalCreateArgs} args - Arguments to create a Cal_PlanillaHigienePersonal.
+     * @example
+     * // Create one Cal_PlanillaHigienePersonal
+     * const Cal_PlanillaHigienePersonal = await prisma.cal_PlanillaHigienePersonal.create({
+     *   data: {
+     *     // ... data to create a Cal_PlanillaHigienePersonal
+     *   }
+     * })
+     * 
+     */
+    create<T extends Cal_PlanillaHigienePersonalCreateArgs>(args: SelectSubset<T, Cal_PlanillaHigienePersonalCreateArgs<ExtArgs>>): Prisma__Cal_PlanillaHigienePersonalClient<$Result.GetResult<Prisma.$Cal_PlanillaHigienePersonalPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Cal_PlanillaHigienePersonals.
+     * @param {Cal_PlanillaHigienePersonalCreateManyArgs} args - Arguments to create many Cal_PlanillaHigienePersonals.
+     * @example
+     * // Create many Cal_PlanillaHigienePersonals
+     * const cal_PlanillaHigienePersonal = await prisma.cal_PlanillaHigienePersonal.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Cal_PlanillaHigienePersonalCreateManyArgs>(args?: SelectSubset<T, Cal_PlanillaHigienePersonalCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Cal_PlanillaHigienePersonals and returns the data saved in the database.
+     * @param {Cal_PlanillaHigienePersonalCreateManyAndReturnArgs} args - Arguments to create many Cal_PlanillaHigienePersonals.
+     * @example
+     * // Create many Cal_PlanillaHigienePersonals
+     * const cal_PlanillaHigienePersonal = await prisma.cal_PlanillaHigienePersonal.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Cal_PlanillaHigienePersonals and only return the `id`
+     * const cal_PlanillaHigienePersonalWithIdOnly = await prisma.cal_PlanillaHigienePersonal.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Cal_PlanillaHigienePersonalCreateManyAndReturnArgs>(args?: SelectSubset<T, Cal_PlanillaHigienePersonalCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Cal_PlanillaHigienePersonalPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Cal_PlanillaHigienePersonal.
+     * @param {Cal_PlanillaHigienePersonalDeleteArgs} args - Arguments to delete one Cal_PlanillaHigienePersonal.
+     * @example
+     * // Delete one Cal_PlanillaHigienePersonal
+     * const Cal_PlanillaHigienePersonal = await prisma.cal_PlanillaHigienePersonal.delete({
+     *   where: {
+     *     // ... filter to delete one Cal_PlanillaHigienePersonal
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Cal_PlanillaHigienePersonalDeleteArgs>(args: SelectSubset<T, Cal_PlanillaHigienePersonalDeleteArgs<ExtArgs>>): Prisma__Cal_PlanillaHigienePersonalClient<$Result.GetResult<Prisma.$Cal_PlanillaHigienePersonalPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Cal_PlanillaHigienePersonal.
+     * @param {Cal_PlanillaHigienePersonalUpdateArgs} args - Arguments to update one Cal_PlanillaHigienePersonal.
+     * @example
+     * // Update one Cal_PlanillaHigienePersonal
+     * const cal_PlanillaHigienePersonal = await prisma.cal_PlanillaHigienePersonal.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Cal_PlanillaHigienePersonalUpdateArgs>(args: SelectSubset<T, Cal_PlanillaHigienePersonalUpdateArgs<ExtArgs>>): Prisma__Cal_PlanillaHigienePersonalClient<$Result.GetResult<Prisma.$Cal_PlanillaHigienePersonalPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Cal_PlanillaHigienePersonals.
+     * @param {Cal_PlanillaHigienePersonalDeleteManyArgs} args - Arguments to filter Cal_PlanillaHigienePersonals to delete.
+     * @example
+     * // Delete a few Cal_PlanillaHigienePersonals
+     * const { count } = await prisma.cal_PlanillaHigienePersonal.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Cal_PlanillaHigienePersonalDeleteManyArgs>(args?: SelectSubset<T, Cal_PlanillaHigienePersonalDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Cal_PlanillaHigienePersonals.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_PlanillaHigienePersonalUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Cal_PlanillaHigienePersonals
+     * const cal_PlanillaHigienePersonal = await prisma.cal_PlanillaHigienePersonal.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Cal_PlanillaHigienePersonalUpdateManyArgs>(args: SelectSubset<T, Cal_PlanillaHigienePersonalUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Cal_PlanillaHigienePersonal.
+     * @param {Cal_PlanillaHigienePersonalUpsertArgs} args - Arguments to update or create a Cal_PlanillaHigienePersonal.
+     * @example
+     * // Update or create a Cal_PlanillaHigienePersonal
+     * const cal_PlanillaHigienePersonal = await prisma.cal_PlanillaHigienePersonal.upsert({
+     *   create: {
+     *     // ... data to create a Cal_PlanillaHigienePersonal
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Cal_PlanillaHigienePersonal we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Cal_PlanillaHigienePersonalUpsertArgs>(args: SelectSubset<T, Cal_PlanillaHigienePersonalUpsertArgs<ExtArgs>>): Prisma__Cal_PlanillaHigienePersonalClient<$Result.GetResult<Prisma.$Cal_PlanillaHigienePersonalPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Cal_PlanillaHigienePersonals.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_PlanillaHigienePersonalCountArgs} args - Arguments to filter Cal_PlanillaHigienePersonals to count.
+     * @example
+     * // Count the number of Cal_PlanillaHigienePersonals
+     * const count = await prisma.cal_PlanillaHigienePersonal.count({
+     *   where: {
+     *     // ... the filter for the Cal_PlanillaHigienePersonals we want to count
+     *   }
+     * })
+    **/
+    count<T extends Cal_PlanillaHigienePersonalCountArgs>(
+      args?: Subset<T, Cal_PlanillaHigienePersonalCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Cal_PlanillaHigienePersonalCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Cal_PlanillaHigienePersonal.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_PlanillaHigienePersonalAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Cal_PlanillaHigienePersonalAggregateArgs>(args: Subset<T, Cal_PlanillaHigienePersonalAggregateArgs>): Prisma.PrismaPromise<GetCal_PlanillaHigienePersonalAggregateType<T>>
+
+    /**
+     * Group by Cal_PlanillaHigienePersonal.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_PlanillaHigienePersonalGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Cal_PlanillaHigienePersonalGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Cal_PlanillaHigienePersonalGroupByArgs['orderBy'] }
+        : { orderBy?: Cal_PlanillaHigienePersonalGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Cal_PlanillaHigienePersonalGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCal_PlanillaHigienePersonalGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Cal_PlanillaHigienePersonal model
+   */
+  readonly fields: Cal_PlanillaHigienePersonalFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Cal_PlanillaHigienePersonal.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Cal_PlanillaHigienePersonalClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    sucursal<T extends SucursalDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SucursalDefaultArgs<ExtArgs>>): Prisma__SucursalClient<$Result.GetResult<Prisma.$SucursalPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    registros<T extends Cal_PlanillaHigienePersonal$registrosArgs<ExtArgs> = {}>(args?: Subset<T, Cal_PlanillaHigienePersonal$registrosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Cal_RegistroHigienePersonalPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Cal_PlanillaHigienePersonal model
+   */ 
+  interface Cal_PlanillaHigienePersonalFieldRefs {
+    readonly id: FieldRef<"Cal_PlanillaHigienePersonal", 'String'>
+    readonly sucursalId: FieldRef<"Cal_PlanillaHigienePersonal", 'String'>
+    readonly fecha: FieldRef<"Cal_PlanillaHigienePersonal", 'DateTime'>
+    readonly fechaTexto: FieldRef<"Cal_PlanillaHigienePersonal", 'String'>
+    readonly estado: FieldRef<"Cal_PlanillaHigienePersonal", 'String'>
+    readonly firmaCalidadUser: FieldRef<"Cal_PlanillaHigienePersonal", 'String'>
+    readonly firmaCalidadUserId: FieldRef<"Cal_PlanillaHigienePersonal", 'String'>
+    readonly firmaCalidadFecha: FieldRef<"Cal_PlanillaHigienePersonal", 'DateTime'>
+    readonly firmaCalidadDiasAtraso: FieldRef<"Cal_PlanillaHigienePersonal", 'Int'>
+    readonly firmaCalidadImg: FieldRef<"Cal_PlanillaHigienePersonal", 'String'>
+    readonly firmaBodegaUser: FieldRef<"Cal_PlanillaHigienePersonal", 'String'>
+    readonly firmaBodegaUserId: FieldRef<"Cal_PlanillaHigienePersonal", 'String'>
+    readonly firmaBodegaFecha: FieldRef<"Cal_PlanillaHigienePersonal", 'DateTime'>
+    readonly firmaBodegaImg: FieldRef<"Cal_PlanillaHigienePersonal", 'String'>
+    readonly observacionesGenerales: FieldRef<"Cal_PlanillaHigienePersonal", 'String'>
+    readonly createdAt: FieldRef<"Cal_PlanillaHigienePersonal", 'DateTime'>
+    readonly updatedAt: FieldRef<"Cal_PlanillaHigienePersonal", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Cal_PlanillaHigienePersonal findUnique
+   */
+  export type Cal_PlanillaHigienePersonalFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_PlanillaHigienePersonal
+     */
+    select?: Cal_PlanillaHigienePersonalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_PlanillaHigienePersonalInclude<ExtArgs> | null
+    /**
+     * Filter, which Cal_PlanillaHigienePersonal to fetch.
+     */
+    where: Cal_PlanillaHigienePersonalWhereUniqueInput
+  }
+
+  /**
+   * Cal_PlanillaHigienePersonal findUniqueOrThrow
+   */
+  export type Cal_PlanillaHigienePersonalFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_PlanillaHigienePersonal
+     */
+    select?: Cal_PlanillaHigienePersonalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_PlanillaHigienePersonalInclude<ExtArgs> | null
+    /**
+     * Filter, which Cal_PlanillaHigienePersonal to fetch.
+     */
+    where: Cal_PlanillaHigienePersonalWhereUniqueInput
+  }
+
+  /**
+   * Cal_PlanillaHigienePersonal findFirst
+   */
+  export type Cal_PlanillaHigienePersonalFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_PlanillaHigienePersonal
+     */
+    select?: Cal_PlanillaHigienePersonalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_PlanillaHigienePersonalInclude<ExtArgs> | null
+    /**
+     * Filter, which Cal_PlanillaHigienePersonal to fetch.
+     */
+    where?: Cal_PlanillaHigienePersonalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cal_PlanillaHigienePersonals to fetch.
+     */
+    orderBy?: Cal_PlanillaHigienePersonalOrderByWithRelationInput | Cal_PlanillaHigienePersonalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Cal_PlanillaHigienePersonals.
+     */
+    cursor?: Cal_PlanillaHigienePersonalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cal_PlanillaHigienePersonals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cal_PlanillaHigienePersonals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Cal_PlanillaHigienePersonals.
+     */
+    distinct?: Cal_PlanillaHigienePersonalScalarFieldEnum | Cal_PlanillaHigienePersonalScalarFieldEnum[]
+  }
+
+  /**
+   * Cal_PlanillaHigienePersonal findFirstOrThrow
+   */
+  export type Cal_PlanillaHigienePersonalFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_PlanillaHigienePersonal
+     */
+    select?: Cal_PlanillaHigienePersonalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_PlanillaHigienePersonalInclude<ExtArgs> | null
+    /**
+     * Filter, which Cal_PlanillaHigienePersonal to fetch.
+     */
+    where?: Cal_PlanillaHigienePersonalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cal_PlanillaHigienePersonals to fetch.
+     */
+    orderBy?: Cal_PlanillaHigienePersonalOrderByWithRelationInput | Cal_PlanillaHigienePersonalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Cal_PlanillaHigienePersonals.
+     */
+    cursor?: Cal_PlanillaHigienePersonalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cal_PlanillaHigienePersonals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cal_PlanillaHigienePersonals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Cal_PlanillaHigienePersonals.
+     */
+    distinct?: Cal_PlanillaHigienePersonalScalarFieldEnum | Cal_PlanillaHigienePersonalScalarFieldEnum[]
+  }
+
+  /**
+   * Cal_PlanillaHigienePersonal findMany
+   */
+  export type Cal_PlanillaHigienePersonalFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_PlanillaHigienePersonal
+     */
+    select?: Cal_PlanillaHigienePersonalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_PlanillaHigienePersonalInclude<ExtArgs> | null
+    /**
+     * Filter, which Cal_PlanillaHigienePersonals to fetch.
+     */
+    where?: Cal_PlanillaHigienePersonalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cal_PlanillaHigienePersonals to fetch.
+     */
+    orderBy?: Cal_PlanillaHigienePersonalOrderByWithRelationInput | Cal_PlanillaHigienePersonalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Cal_PlanillaHigienePersonals.
+     */
+    cursor?: Cal_PlanillaHigienePersonalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cal_PlanillaHigienePersonals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cal_PlanillaHigienePersonals.
+     */
+    skip?: number
+    distinct?: Cal_PlanillaHigienePersonalScalarFieldEnum | Cal_PlanillaHigienePersonalScalarFieldEnum[]
+  }
+
+  /**
+   * Cal_PlanillaHigienePersonal create
+   */
+  export type Cal_PlanillaHigienePersonalCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_PlanillaHigienePersonal
+     */
+    select?: Cal_PlanillaHigienePersonalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_PlanillaHigienePersonalInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Cal_PlanillaHigienePersonal.
+     */
+    data: XOR<Cal_PlanillaHigienePersonalCreateInput, Cal_PlanillaHigienePersonalUncheckedCreateInput>
+  }
+
+  /**
+   * Cal_PlanillaHigienePersonal createMany
+   */
+  export type Cal_PlanillaHigienePersonalCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Cal_PlanillaHigienePersonals.
+     */
+    data: Cal_PlanillaHigienePersonalCreateManyInput | Cal_PlanillaHigienePersonalCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Cal_PlanillaHigienePersonal createManyAndReturn
+   */
+  export type Cal_PlanillaHigienePersonalCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_PlanillaHigienePersonal
+     */
+    select?: Cal_PlanillaHigienePersonalSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Cal_PlanillaHigienePersonals.
+     */
+    data: Cal_PlanillaHigienePersonalCreateManyInput | Cal_PlanillaHigienePersonalCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_PlanillaHigienePersonalIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Cal_PlanillaHigienePersonal update
+   */
+  export type Cal_PlanillaHigienePersonalUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_PlanillaHigienePersonal
+     */
+    select?: Cal_PlanillaHigienePersonalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_PlanillaHigienePersonalInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Cal_PlanillaHigienePersonal.
+     */
+    data: XOR<Cal_PlanillaHigienePersonalUpdateInput, Cal_PlanillaHigienePersonalUncheckedUpdateInput>
+    /**
+     * Choose, which Cal_PlanillaHigienePersonal to update.
+     */
+    where: Cal_PlanillaHigienePersonalWhereUniqueInput
+  }
+
+  /**
+   * Cal_PlanillaHigienePersonal updateMany
+   */
+  export type Cal_PlanillaHigienePersonalUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Cal_PlanillaHigienePersonals.
+     */
+    data: XOR<Cal_PlanillaHigienePersonalUpdateManyMutationInput, Cal_PlanillaHigienePersonalUncheckedUpdateManyInput>
+    /**
+     * Filter which Cal_PlanillaHigienePersonals to update
+     */
+    where?: Cal_PlanillaHigienePersonalWhereInput
+  }
+
+  /**
+   * Cal_PlanillaHigienePersonal upsert
+   */
+  export type Cal_PlanillaHigienePersonalUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_PlanillaHigienePersonal
+     */
+    select?: Cal_PlanillaHigienePersonalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_PlanillaHigienePersonalInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Cal_PlanillaHigienePersonal to update in case it exists.
+     */
+    where: Cal_PlanillaHigienePersonalWhereUniqueInput
+    /**
+     * In case the Cal_PlanillaHigienePersonal found by the `where` argument doesn't exist, create a new Cal_PlanillaHigienePersonal with this data.
+     */
+    create: XOR<Cal_PlanillaHigienePersonalCreateInput, Cal_PlanillaHigienePersonalUncheckedCreateInput>
+    /**
+     * In case the Cal_PlanillaHigienePersonal was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Cal_PlanillaHigienePersonalUpdateInput, Cal_PlanillaHigienePersonalUncheckedUpdateInput>
+  }
+
+  /**
+   * Cal_PlanillaHigienePersonal delete
+   */
+  export type Cal_PlanillaHigienePersonalDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_PlanillaHigienePersonal
+     */
+    select?: Cal_PlanillaHigienePersonalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_PlanillaHigienePersonalInclude<ExtArgs> | null
+    /**
+     * Filter which Cal_PlanillaHigienePersonal to delete.
+     */
+    where: Cal_PlanillaHigienePersonalWhereUniqueInput
+  }
+
+  /**
+   * Cal_PlanillaHigienePersonal deleteMany
+   */
+  export type Cal_PlanillaHigienePersonalDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Cal_PlanillaHigienePersonals to delete
+     */
+    where?: Cal_PlanillaHigienePersonalWhereInput
+  }
+
+  /**
+   * Cal_PlanillaHigienePersonal.registros
+   */
+  export type Cal_PlanillaHigienePersonal$registrosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_RegistroHigienePersonal
+     */
+    select?: Cal_RegistroHigienePersonalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_RegistroHigienePersonalInclude<ExtArgs> | null
+    where?: Cal_RegistroHigienePersonalWhereInput
+    orderBy?: Cal_RegistroHigienePersonalOrderByWithRelationInput | Cal_RegistroHigienePersonalOrderByWithRelationInput[]
+    cursor?: Cal_RegistroHigienePersonalWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Cal_RegistroHigienePersonalScalarFieldEnum | Cal_RegistroHigienePersonalScalarFieldEnum[]
+  }
+
+  /**
+   * Cal_PlanillaHigienePersonal without action
+   */
+  export type Cal_PlanillaHigienePersonalDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_PlanillaHigienePersonal
+     */
+    select?: Cal_PlanillaHigienePersonalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_PlanillaHigienePersonalInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Cal_RegistroHigienePersonal
+   */
+
+  export type AggregateCal_RegistroHigienePersonal = {
+    _count: Cal_RegistroHigienePersonalCountAggregateOutputType | null
+    _min: Cal_RegistroHigienePersonalMinAggregateOutputType | null
+    _max: Cal_RegistroHigienePersonalMaxAggregateOutputType | null
+  }
+
+  export type Cal_RegistroHigienePersonalMinAggregateOutputType = {
+    id: string | null
+    planillaId: string | null
+    nombreEncriptado: string | null
+    uniformeLimpio: string | null
+    zapatosSeguridad: string | null
+    peloCorto: string | null
+    usoJockey: string | null
+    sinJoyas: string | null
+    unasCortas: string | null
+    rasurado: string | null
+    estadoSalud: string | null
+    habitosCorrectos: string | null
+    heridas: string | null
+    observacion: string | null
+    accionCorrectiva: string | null
+    creadoPor: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Cal_RegistroHigienePersonalMaxAggregateOutputType = {
+    id: string | null
+    planillaId: string | null
+    nombreEncriptado: string | null
+    uniformeLimpio: string | null
+    zapatosSeguridad: string | null
+    peloCorto: string | null
+    usoJockey: string | null
+    sinJoyas: string | null
+    unasCortas: string | null
+    rasurado: string | null
+    estadoSalud: string | null
+    habitosCorrectos: string | null
+    heridas: string | null
+    observacion: string | null
+    accionCorrectiva: string | null
+    creadoPor: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Cal_RegistroHigienePersonalCountAggregateOutputType = {
+    id: number
+    planillaId: number
+    nombreEncriptado: number
+    uniformeLimpio: number
+    zapatosSeguridad: number
+    peloCorto: number
+    usoJockey: number
+    sinJoyas: number
+    unasCortas: number
+    rasurado: number
+    estadoSalud: number
+    habitosCorrectos: number
+    heridas: number
+    observacion: number
+    accionCorrectiva: number
+    creadoPor: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type Cal_RegistroHigienePersonalMinAggregateInputType = {
+    id?: true
+    planillaId?: true
+    nombreEncriptado?: true
+    uniformeLimpio?: true
+    zapatosSeguridad?: true
+    peloCorto?: true
+    usoJockey?: true
+    sinJoyas?: true
+    unasCortas?: true
+    rasurado?: true
+    estadoSalud?: true
+    habitosCorrectos?: true
+    heridas?: true
+    observacion?: true
+    accionCorrectiva?: true
+    creadoPor?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Cal_RegistroHigienePersonalMaxAggregateInputType = {
+    id?: true
+    planillaId?: true
+    nombreEncriptado?: true
+    uniformeLimpio?: true
+    zapatosSeguridad?: true
+    peloCorto?: true
+    usoJockey?: true
+    sinJoyas?: true
+    unasCortas?: true
+    rasurado?: true
+    estadoSalud?: true
+    habitosCorrectos?: true
+    heridas?: true
+    observacion?: true
+    accionCorrectiva?: true
+    creadoPor?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Cal_RegistroHigienePersonalCountAggregateInputType = {
+    id?: true
+    planillaId?: true
+    nombreEncriptado?: true
+    uniformeLimpio?: true
+    zapatosSeguridad?: true
+    peloCorto?: true
+    usoJockey?: true
+    sinJoyas?: true
+    unasCortas?: true
+    rasurado?: true
+    estadoSalud?: true
+    habitosCorrectos?: true
+    heridas?: true
+    observacion?: true
+    accionCorrectiva?: true
+    creadoPor?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type Cal_RegistroHigienePersonalAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Cal_RegistroHigienePersonal to aggregate.
+     */
+    where?: Cal_RegistroHigienePersonalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cal_RegistroHigienePersonals to fetch.
+     */
+    orderBy?: Cal_RegistroHigienePersonalOrderByWithRelationInput | Cal_RegistroHigienePersonalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Cal_RegistroHigienePersonalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cal_RegistroHigienePersonals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cal_RegistroHigienePersonals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Cal_RegistroHigienePersonals
+    **/
+    _count?: true | Cal_RegistroHigienePersonalCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Cal_RegistroHigienePersonalMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Cal_RegistroHigienePersonalMaxAggregateInputType
+  }
+
+  export type GetCal_RegistroHigienePersonalAggregateType<T extends Cal_RegistroHigienePersonalAggregateArgs> = {
+        [P in keyof T & keyof AggregateCal_RegistroHigienePersonal]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCal_RegistroHigienePersonal[P]>
+      : GetScalarType<T[P], AggregateCal_RegistroHigienePersonal[P]>
+  }
+
+
+
+
+  export type Cal_RegistroHigienePersonalGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Cal_RegistroHigienePersonalWhereInput
+    orderBy?: Cal_RegistroHigienePersonalOrderByWithAggregationInput | Cal_RegistroHigienePersonalOrderByWithAggregationInput[]
+    by: Cal_RegistroHigienePersonalScalarFieldEnum[] | Cal_RegistroHigienePersonalScalarFieldEnum
+    having?: Cal_RegistroHigienePersonalScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Cal_RegistroHigienePersonalCountAggregateInputType | true
+    _min?: Cal_RegistroHigienePersonalMinAggregateInputType
+    _max?: Cal_RegistroHigienePersonalMaxAggregateInputType
+  }
+
+  export type Cal_RegistroHigienePersonalGroupByOutputType = {
+    id: string
+    planillaId: string
+    nombreEncriptado: string
+    uniformeLimpio: string
+    zapatosSeguridad: string
+    peloCorto: string
+    usoJockey: string
+    sinJoyas: string
+    unasCortas: string
+    rasurado: string
+    estadoSalud: string
+    habitosCorrectos: string
+    heridas: string
+    observacion: string | null
+    accionCorrectiva: string | null
+    creadoPor: string
+    createdAt: Date
+    updatedAt: Date
+    _count: Cal_RegistroHigienePersonalCountAggregateOutputType | null
+    _min: Cal_RegistroHigienePersonalMinAggregateOutputType | null
+    _max: Cal_RegistroHigienePersonalMaxAggregateOutputType | null
+  }
+
+  type GetCal_RegistroHigienePersonalGroupByPayload<T extends Cal_RegistroHigienePersonalGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Cal_RegistroHigienePersonalGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Cal_RegistroHigienePersonalGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Cal_RegistroHigienePersonalGroupByOutputType[P]>
+            : GetScalarType<T[P], Cal_RegistroHigienePersonalGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Cal_RegistroHigienePersonalSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    planillaId?: boolean
+    nombreEncriptado?: boolean
+    uniformeLimpio?: boolean
+    zapatosSeguridad?: boolean
+    peloCorto?: boolean
+    usoJockey?: boolean
+    sinJoyas?: boolean
+    unasCortas?: boolean
+    rasurado?: boolean
+    estadoSalud?: boolean
+    habitosCorrectos?: boolean
+    heridas?: boolean
+    observacion?: boolean
+    accionCorrectiva?: boolean
+    creadoPor?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    planilla?: boolean | Cal_PlanillaHigienePersonalDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cal_RegistroHigienePersonal"]>
+
+  export type Cal_RegistroHigienePersonalSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    planillaId?: boolean
+    nombreEncriptado?: boolean
+    uniformeLimpio?: boolean
+    zapatosSeguridad?: boolean
+    peloCorto?: boolean
+    usoJockey?: boolean
+    sinJoyas?: boolean
+    unasCortas?: boolean
+    rasurado?: boolean
+    estadoSalud?: boolean
+    habitosCorrectos?: boolean
+    heridas?: boolean
+    observacion?: boolean
+    accionCorrectiva?: boolean
+    creadoPor?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    planilla?: boolean | Cal_PlanillaHigienePersonalDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cal_RegistroHigienePersonal"]>
+
+  export type Cal_RegistroHigienePersonalSelectScalar = {
+    id?: boolean
+    planillaId?: boolean
+    nombreEncriptado?: boolean
+    uniformeLimpio?: boolean
+    zapatosSeguridad?: boolean
+    peloCorto?: boolean
+    usoJockey?: boolean
+    sinJoyas?: boolean
+    unasCortas?: boolean
+    rasurado?: boolean
+    estadoSalud?: boolean
+    habitosCorrectos?: boolean
+    heridas?: boolean
+    observacion?: boolean
+    accionCorrectiva?: boolean
+    creadoPor?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type Cal_RegistroHigienePersonalInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    planilla?: boolean | Cal_PlanillaHigienePersonalDefaultArgs<ExtArgs>
+  }
+  export type Cal_RegistroHigienePersonalIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    planilla?: boolean | Cal_PlanillaHigienePersonalDefaultArgs<ExtArgs>
+  }
+
+  export type $Cal_RegistroHigienePersonalPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Cal_RegistroHigienePersonal"
+    objects: {
+      planilla: Prisma.$Cal_PlanillaHigienePersonalPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      planillaId: string
+      nombreEncriptado: string
+      uniformeLimpio: string
+      zapatosSeguridad: string
+      peloCorto: string
+      usoJockey: string
+      sinJoyas: string
+      unasCortas: string
+      rasurado: string
+      estadoSalud: string
+      habitosCorrectos: string
+      heridas: string
+      observacion: string | null
+      accionCorrectiva: string | null
+      creadoPor: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["cal_RegistroHigienePersonal"]>
+    composites: {}
+  }
+
+  type Cal_RegistroHigienePersonalGetPayload<S extends boolean | null | undefined | Cal_RegistroHigienePersonalDefaultArgs> = $Result.GetResult<Prisma.$Cal_RegistroHigienePersonalPayload, S>
+
+  type Cal_RegistroHigienePersonalCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Cal_RegistroHigienePersonalFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Cal_RegistroHigienePersonalCountAggregateInputType | true
+    }
+
+  export interface Cal_RegistroHigienePersonalDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Cal_RegistroHigienePersonal'], meta: { name: 'Cal_RegistroHigienePersonal' } }
+    /**
+     * Find zero or one Cal_RegistroHigienePersonal that matches the filter.
+     * @param {Cal_RegistroHigienePersonalFindUniqueArgs} args - Arguments to find a Cal_RegistroHigienePersonal
+     * @example
+     * // Get one Cal_RegistroHigienePersonal
+     * const cal_RegistroHigienePersonal = await prisma.cal_RegistroHigienePersonal.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Cal_RegistroHigienePersonalFindUniqueArgs>(args: SelectSubset<T, Cal_RegistroHigienePersonalFindUniqueArgs<ExtArgs>>): Prisma__Cal_RegistroHigienePersonalClient<$Result.GetResult<Prisma.$Cal_RegistroHigienePersonalPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Cal_RegistroHigienePersonal that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Cal_RegistroHigienePersonalFindUniqueOrThrowArgs} args - Arguments to find a Cal_RegistroHigienePersonal
+     * @example
+     * // Get one Cal_RegistroHigienePersonal
+     * const cal_RegistroHigienePersonal = await prisma.cal_RegistroHigienePersonal.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Cal_RegistroHigienePersonalFindUniqueOrThrowArgs>(args: SelectSubset<T, Cal_RegistroHigienePersonalFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Cal_RegistroHigienePersonalClient<$Result.GetResult<Prisma.$Cal_RegistroHigienePersonalPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Cal_RegistroHigienePersonal that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_RegistroHigienePersonalFindFirstArgs} args - Arguments to find a Cal_RegistroHigienePersonal
+     * @example
+     * // Get one Cal_RegistroHigienePersonal
+     * const cal_RegistroHigienePersonal = await prisma.cal_RegistroHigienePersonal.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Cal_RegistroHigienePersonalFindFirstArgs>(args?: SelectSubset<T, Cal_RegistroHigienePersonalFindFirstArgs<ExtArgs>>): Prisma__Cal_RegistroHigienePersonalClient<$Result.GetResult<Prisma.$Cal_RegistroHigienePersonalPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Cal_RegistroHigienePersonal that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_RegistroHigienePersonalFindFirstOrThrowArgs} args - Arguments to find a Cal_RegistroHigienePersonal
+     * @example
+     * // Get one Cal_RegistroHigienePersonal
+     * const cal_RegistroHigienePersonal = await prisma.cal_RegistroHigienePersonal.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Cal_RegistroHigienePersonalFindFirstOrThrowArgs>(args?: SelectSubset<T, Cal_RegistroHigienePersonalFindFirstOrThrowArgs<ExtArgs>>): Prisma__Cal_RegistroHigienePersonalClient<$Result.GetResult<Prisma.$Cal_RegistroHigienePersonalPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Cal_RegistroHigienePersonals that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_RegistroHigienePersonalFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Cal_RegistroHigienePersonals
+     * const cal_RegistroHigienePersonals = await prisma.cal_RegistroHigienePersonal.findMany()
+     * 
+     * // Get first 10 Cal_RegistroHigienePersonals
+     * const cal_RegistroHigienePersonals = await prisma.cal_RegistroHigienePersonal.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const cal_RegistroHigienePersonalWithIdOnly = await prisma.cal_RegistroHigienePersonal.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Cal_RegistroHigienePersonalFindManyArgs>(args?: SelectSubset<T, Cal_RegistroHigienePersonalFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Cal_RegistroHigienePersonalPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Cal_RegistroHigienePersonal.
+     * @param {Cal_RegistroHigienePersonalCreateArgs} args - Arguments to create a Cal_RegistroHigienePersonal.
+     * @example
+     * // Create one Cal_RegistroHigienePersonal
+     * const Cal_RegistroHigienePersonal = await prisma.cal_RegistroHigienePersonal.create({
+     *   data: {
+     *     // ... data to create a Cal_RegistroHigienePersonal
+     *   }
+     * })
+     * 
+     */
+    create<T extends Cal_RegistroHigienePersonalCreateArgs>(args: SelectSubset<T, Cal_RegistroHigienePersonalCreateArgs<ExtArgs>>): Prisma__Cal_RegistroHigienePersonalClient<$Result.GetResult<Prisma.$Cal_RegistroHigienePersonalPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Cal_RegistroHigienePersonals.
+     * @param {Cal_RegistroHigienePersonalCreateManyArgs} args - Arguments to create many Cal_RegistroHigienePersonals.
+     * @example
+     * // Create many Cal_RegistroHigienePersonals
+     * const cal_RegistroHigienePersonal = await prisma.cal_RegistroHigienePersonal.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Cal_RegistroHigienePersonalCreateManyArgs>(args?: SelectSubset<T, Cal_RegistroHigienePersonalCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Cal_RegistroHigienePersonals and returns the data saved in the database.
+     * @param {Cal_RegistroHigienePersonalCreateManyAndReturnArgs} args - Arguments to create many Cal_RegistroHigienePersonals.
+     * @example
+     * // Create many Cal_RegistroHigienePersonals
+     * const cal_RegistroHigienePersonal = await prisma.cal_RegistroHigienePersonal.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Cal_RegistroHigienePersonals and only return the `id`
+     * const cal_RegistroHigienePersonalWithIdOnly = await prisma.cal_RegistroHigienePersonal.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Cal_RegistroHigienePersonalCreateManyAndReturnArgs>(args?: SelectSubset<T, Cal_RegistroHigienePersonalCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Cal_RegistroHigienePersonalPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Cal_RegistroHigienePersonal.
+     * @param {Cal_RegistroHigienePersonalDeleteArgs} args - Arguments to delete one Cal_RegistroHigienePersonal.
+     * @example
+     * // Delete one Cal_RegistroHigienePersonal
+     * const Cal_RegistroHigienePersonal = await prisma.cal_RegistroHigienePersonal.delete({
+     *   where: {
+     *     // ... filter to delete one Cal_RegistroHigienePersonal
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Cal_RegistroHigienePersonalDeleteArgs>(args: SelectSubset<T, Cal_RegistroHigienePersonalDeleteArgs<ExtArgs>>): Prisma__Cal_RegistroHigienePersonalClient<$Result.GetResult<Prisma.$Cal_RegistroHigienePersonalPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Cal_RegistroHigienePersonal.
+     * @param {Cal_RegistroHigienePersonalUpdateArgs} args - Arguments to update one Cal_RegistroHigienePersonal.
+     * @example
+     * // Update one Cal_RegistroHigienePersonal
+     * const cal_RegistroHigienePersonal = await prisma.cal_RegistroHigienePersonal.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Cal_RegistroHigienePersonalUpdateArgs>(args: SelectSubset<T, Cal_RegistroHigienePersonalUpdateArgs<ExtArgs>>): Prisma__Cal_RegistroHigienePersonalClient<$Result.GetResult<Prisma.$Cal_RegistroHigienePersonalPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Cal_RegistroHigienePersonals.
+     * @param {Cal_RegistroHigienePersonalDeleteManyArgs} args - Arguments to filter Cal_RegistroHigienePersonals to delete.
+     * @example
+     * // Delete a few Cal_RegistroHigienePersonals
+     * const { count } = await prisma.cal_RegistroHigienePersonal.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Cal_RegistroHigienePersonalDeleteManyArgs>(args?: SelectSubset<T, Cal_RegistroHigienePersonalDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Cal_RegistroHigienePersonals.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_RegistroHigienePersonalUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Cal_RegistroHigienePersonals
+     * const cal_RegistroHigienePersonal = await prisma.cal_RegistroHigienePersonal.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Cal_RegistroHigienePersonalUpdateManyArgs>(args: SelectSubset<T, Cal_RegistroHigienePersonalUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Cal_RegistroHigienePersonal.
+     * @param {Cal_RegistroHigienePersonalUpsertArgs} args - Arguments to update or create a Cal_RegistroHigienePersonal.
+     * @example
+     * // Update or create a Cal_RegistroHigienePersonal
+     * const cal_RegistroHigienePersonal = await prisma.cal_RegistroHigienePersonal.upsert({
+     *   create: {
+     *     // ... data to create a Cal_RegistroHigienePersonal
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Cal_RegistroHigienePersonal we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Cal_RegistroHigienePersonalUpsertArgs>(args: SelectSubset<T, Cal_RegistroHigienePersonalUpsertArgs<ExtArgs>>): Prisma__Cal_RegistroHigienePersonalClient<$Result.GetResult<Prisma.$Cal_RegistroHigienePersonalPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Cal_RegistroHigienePersonals.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_RegistroHigienePersonalCountArgs} args - Arguments to filter Cal_RegistroHigienePersonals to count.
+     * @example
+     * // Count the number of Cal_RegistroHigienePersonals
+     * const count = await prisma.cal_RegistroHigienePersonal.count({
+     *   where: {
+     *     // ... the filter for the Cal_RegistroHigienePersonals we want to count
+     *   }
+     * })
+    **/
+    count<T extends Cal_RegistroHigienePersonalCountArgs>(
+      args?: Subset<T, Cal_RegistroHigienePersonalCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Cal_RegistroHigienePersonalCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Cal_RegistroHigienePersonal.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_RegistroHigienePersonalAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Cal_RegistroHigienePersonalAggregateArgs>(args: Subset<T, Cal_RegistroHigienePersonalAggregateArgs>): Prisma.PrismaPromise<GetCal_RegistroHigienePersonalAggregateType<T>>
+
+    /**
+     * Group by Cal_RegistroHigienePersonal.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_RegistroHigienePersonalGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Cal_RegistroHigienePersonalGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Cal_RegistroHigienePersonalGroupByArgs['orderBy'] }
+        : { orderBy?: Cal_RegistroHigienePersonalGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Cal_RegistroHigienePersonalGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCal_RegistroHigienePersonalGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Cal_RegistroHigienePersonal model
+   */
+  readonly fields: Cal_RegistroHigienePersonalFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Cal_RegistroHigienePersonal.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Cal_RegistroHigienePersonalClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    planilla<T extends Cal_PlanillaHigienePersonalDefaultArgs<ExtArgs> = {}>(args?: Subset<T, Cal_PlanillaHigienePersonalDefaultArgs<ExtArgs>>): Prisma__Cal_PlanillaHigienePersonalClient<$Result.GetResult<Prisma.$Cal_PlanillaHigienePersonalPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Cal_RegistroHigienePersonal model
+   */ 
+  interface Cal_RegistroHigienePersonalFieldRefs {
+    readonly id: FieldRef<"Cal_RegistroHigienePersonal", 'String'>
+    readonly planillaId: FieldRef<"Cal_RegistroHigienePersonal", 'String'>
+    readonly nombreEncriptado: FieldRef<"Cal_RegistroHigienePersonal", 'String'>
+    readonly uniformeLimpio: FieldRef<"Cal_RegistroHigienePersonal", 'String'>
+    readonly zapatosSeguridad: FieldRef<"Cal_RegistroHigienePersonal", 'String'>
+    readonly peloCorto: FieldRef<"Cal_RegistroHigienePersonal", 'String'>
+    readonly usoJockey: FieldRef<"Cal_RegistroHigienePersonal", 'String'>
+    readonly sinJoyas: FieldRef<"Cal_RegistroHigienePersonal", 'String'>
+    readonly unasCortas: FieldRef<"Cal_RegistroHigienePersonal", 'String'>
+    readonly rasurado: FieldRef<"Cal_RegistroHigienePersonal", 'String'>
+    readonly estadoSalud: FieldRef<"Cal_RegistroHigienePersonal", 'String'>
+    readonly habitosCorrectos: FieldRef<"Cal_RegistroHigienePersonal", 'String'>
+    readonly heridas: FieldRef<"Cal_RegistroHigienePersonal", 'String'>
+    readonly observacion: FieldRef<"Cal_RegistroHigienePersonal", 'String'>
+    readonly accionCorrectiva: FieldRef<"Cal_RegistroHigienePersonal", 'String'>
+    readonly creadoPor: FieldRef<"Cal_RegistroHigienePersonal", 'String'>
+    readonly createdAt: FieldRef<"Cal_RegistroHigienePersonal", 'DateTime'>
+    readonly updatedAt: FieldRef<"Cal_RegistroHigienePersonal", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Cal_RegistroHigienePersonal findUnique
+   */
+  export type Cal_RegistroHigienePersonalFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_RegistroHigienePersonal
+     */
+    select?: Cal_RegistroHigienePersonalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_RegistroHigienePersonalInclude<ExtArgs> | null
+    /**
+     * Filter, which Cal_RegistroHigienePersonal to fetch.
+     */
+    where: Cal_RegistroHigienePersonalWhereUniqueInput
+  }
+
+  /**
+   * Cal_RegistroHigienePersonal findUniqueOrThrow
+   */
+  export type Cal_RegistroHigienePersonalFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_RegistroHigienePersonal
+     */
+    select?: Cal_RegistroHigienePersonalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_RegistroHigienePersonalInclude<ExtArgs> | null
+    /**
+     * Filter, which Cal_RegistroHigienePersonal to fetch.
+     */
+    where: Cal_RegistroHigienePersonalWhereUniqueInput
+  }
+
+  /**
+   * Cal_RegistroHigienePersonal findFirst
+   */
+  export type Cal_RegistroHigienePersonalFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_RegistroHigienePersonal
+     */
+    select?: Cal_RegistroHigienePersonalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_RegistroHigienePersonalInclude<ExtArgs> | null
+    /**
+     * Filter, which Cal_RegistroHigienePersonal to fetch.
+     */
+    where?: Cal_RegistroHigienePersonalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cal_RegistroHigienePersonals to fetch.
+     */
+    orderBy?: Cal_RegistroHigienePersonalOrderByWithRelationInput | Cal_RegistroHigienePersonalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Cal_RegistroHigienePersonals.
+     */
+    cursor?: Cal_RegistroHigienePersonalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cal_RegistroHigienePersonals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cal_RegistroHigienePersonals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Cal_RegistroHigienePersonals.
+     */
+    distinct?: Cal_RegistroHigienePersonalScalarFieldEnum | Cal_RegistroHigienePersonalScalarFieldEnum[]
+  }
+
+  /**
+   * Cal_RegistroHigienePersonal findFirstOrThrow
+   */
+  export type Cal_RegistroHigienePersonalFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_RegistroHigienePersonal
+     */
+    select?: Cal_RegistroHigienePersonalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_RegistroHigienePersonalInclude<ExtArgs> | null
+    /**
+     * Filter, which Cal_RegistroHigienePersonal to fetch.
+     */
+    where?: Cal_RegistroHigienePersonalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cal_RegistroHigienePersonals to fetch.
+     */
+    orderBy?: Cal_RegistroHigienePersonalOrderByWithRelationInput | Cal_RegistroHigienePersonalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Cal_RegistroHigienePersonals.
+     */
+    cursor?: Cal_RegistroHigienePersonalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cal_RegistroHigienePersonals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cal_RegistroHigienePersonals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Cal_RegistroHigienePersonals.
+     */
+    distinct?: Cal_RegistroHigienePersonalScalarFieldEnum | Cal_RegistroHigienePersonalScalarFieldEnum[]
+  }
+
+  /**
+   * Cal_RegistroHigienePersonal findMany
+   */
+  export type Cal_RegistroHigienePersonalFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_RegistroHigienePersonal
+     */
+    select?: Cal_RegistroHigienePersonalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_RegistroHigienePersonalInclude<ExtArgs> | null
+    /**
+     * Filter, which Cal_RegistroHigienePersonals to fetch.
+     */
+    where?: Cal_RegistroHigienePersonalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cal_RegistroHigienePersonals to fetch.
+     */
+    orderBy?: Cal_RegistroHigienePersonalOrderByWithRelationInput | Cal_RegistroHigienePersonalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Cal_RegistroHigienePersonals.
+     */
+    cursor?: Cal_RegistroHigienePersonalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cal_RegistroHigienePersonals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cal_RegistroHigienePersonals.
+     */
+    skip?: number
+    distinct?: Cal_RegistroHigienePersonalScalarFieldEnum | Cal_RegistroHigienePersonalScalarFieldEnum[]
+  }
+
+  /**
+   * Cal_RegistroHigienePersonal create
+   */
+  export type Cal_RegistroHigienePersonalCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_RegistroHigienePersonal
+     */
+    select?: Cal_RegistroHigienePersonalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_RegistroHigienePersonalInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Cal_RegistroHigienePersonal.
+     */
+    data: XOR<Cal_RegistroHigienePersonalCreateInput, Cal_RegistroHigienePersonalUncheckedCreateInput>
+  }
+
+  /**
+   * Cal_RegistroHigienePersonal createMany
+   */
+  export type Cal_RegistroHigienePersonalCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Cal_RegistroHigienePersonals.
+     */
+    data: Cal_RegistroHigienePersonalCreateManyInput | Cal_RegistroHigienePersonalCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Cal_RegistroHigienePersonal createManyAndReturn
+   */
+  export type Cal_RegistroHigienePersonalCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_RegistroHigienePersonal
+     */
+    select?: Cal_RegistroHigienePersonalSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Cal_RegistroHigienePersonals.
+     */
+    data: Cal_RegistroHigienePersonalCreateManyInput | Cal_RegistroHigienePersonalCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_RegistroHigienePersonalIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Cal_RegistroHigienePersonal update
+   */
+  export type Cal_RegistroHigienePersonalUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_RegistroHigienePersonal
+     */
+    select?: Cal_RegistroHigienePersonalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_RegistroHigienePersonalInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Cal_RegistroHigienePersonal.
+     */
+    data: XOR<Cal_RegistroHigienePersonalUpdateInput, Cal_RegistroHigienePersonalUncheckedUpdateInput>
+    /**
+     * Choose, which Cal_RegistroHigienePersonal to update.
+     */
+    where: Cal_RegistroHigienePersonalWhereUniqueInput
+  }
+
+  /**
+   * Cal_RegistroHigienePersonal updateMany
+   */
+  export type Cal_RegistroHigienePersonalUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Cal_RegistroHigienePersonals.
+     */
+    data: XOR<Cal_RegistroHigienePersonalUpdateManyMutationInput, Cal_RegistroHigienePersonalUncheckedUpdateManyInput>
+    /**
+     * Filter which Cal_RegistroHigienePersonals to update
+     */
+    where?: Cal_RegistroHigienePersonalWhereInput
+  }
+
+  /**
+   * Cal_RegistroHigienePersonal upsert
+   */
+  export type Cal_RegistroHigienePersonalUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_RegistroHigienePersonal
+     */
+    select?: Cal_RegistroHigienePersonalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_RegistroHigienePersonalInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Cal_RegistroHigienePersonal to update in case it exists.
+     */
+    where: Cal_RegistroHigienePersonalWhereUniqueInput
+    /**
+     * In case the Cal_RegistroHigienePersonal found by the `where` argument doesn't exist, create a new Cal_RegistroHigienePersonal with this data.
+     */
+    create: XOR<Cal_RegistroHigienePersonalCreateInput, Cal_RegistroHigienePersonalUncheckedCreateInput>
+    /**
+     * In case the Cal_RegistroHigienePersonal was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Cal_RegistroHigienePersonalUpdateInput, Cal_RegistroHigienePersonalUncheckedUpdateInput>
+  }
+
+  /**
+   * Cal_RegistroHigienePersonal delete
+   */
+  export type Cal_RegistroHigienePersonalDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_RegistroHigienePersonal
+     */
+    select?: Cal_RegistroHigienePersonalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_RegistroHigienePersonalInclude<ExtArgs> | null
+    /**
+     * Filter which Cal_RegistroHigienePersonal to delete.
+     */
+    where: Cal_RegistroHigienePersonalWhereUniqueInput
+  }
+
+  /**
+   * Cal_RegistroHigienePersonal deleteMany
+   */
+  export type Cal_RegistroHigienePersonalDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Cal_RegistroHigienePersonals to delete
+     */
+    where?: Cal_RegistroHigienePersonalWhereInput
+  }
+
+  /**
+   * Cal_RegistroHigienePersonal without action
+   */
+  export type Cal_RegistroHigienePersonalDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_RegistroHigienePersonal
+     */
+    select?: Cal_RegistroHigienePersonalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Cal_RegistroHigienePersonalInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -142717,6 +147593,96 @@ export namespace Prisma {
   export type PrevGravedadPreparacionScalarFieldEnum = (typeof PrevGravedadPreparacionScalarFieldEnum)[keyof typeof PrevGravedadPreparacionScalarFieldEnum]
 
 
+  export const Cal_PlanillaTransporteScalarFieldEnum: {
+    id: 'id',
+    sucursalId: 'sucursalId',
+    fecha: 'fecha',
+    fechaTexto: 'fechaTexto',
+    estado: 'estado',
+    firmaCalidadUser: 'firmaCalidadUser',
+    firmaCalidadUserId: 'firmaCalidadUserId',
+    firmaCalidadFecha: 'firmaCalidadFecha',
+    firmaCalidadDiasAtraso: 'firmaCalidadDiasAtraso',
+    firmaCalidadImg: 'firmaCalidadImg',
+    firmaBodegaUser: 'firmaBodegaUser',
+    firmaBodegaUserId: 'firmaBodegaUserId',
+    firmaBodegaFecha: 'firmaBodegaFecha',
+    firmaBodegaImg: 'firmaBodegaImg',
+    observacionesGenerales: 'observacionesGenerales',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type Cal_PlanillaTransporteScalarFieldEnum = (typeof Cal_PlanillaTransporteScalarFieldEnum)[keyof typeof Cal_PlanillaTransporteScalarFieldEnum]
+
+
+  export const Cal_RegistroTransporteScalarFieldEnum: {
+    id: 'id',
+    planillaId: 'planillaId',
+    patenteEncriptada: 'patenteEncriptada',
+    limpiezaInterior: 'limpiezaInterior',
+    limpiezaExterior: 'limpiezaExterior',
+    puertaCamara: 'puertaCamara',
+    piezasSinOxidacion: 'piezasSinOxidacion',
+    equipoCongelacion: 'equipoCongelacion',
+    equipoRefrigeracion: 'equipoRefrigeracion',
+    observacion: 'observacion',
+    accionCorrectiva: 'accionCorrectiva',
+    creadoPor: 'creadoPor',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type Cal_RegistroTransporteScalarFieldEnum = (typeof Cal_RegistroTransporteScalarFieldEnum)[keyof typeof Cal_RegistroTransporteScalarFieldEnum]
+
+
+  export const Cal_PlanillaHigienePersonalScalarFieldEnum: {
+    id: 'id',
+    sucursalId: 'sucursalId',
+    fecha: 'fecha',
+    fechaTexto: 'fechaTexto',
+    estado: 'estado',
+    firmaCalidadUser: 'firmaCalidadUser',
+    firmaCalidadUserId: 'firmaCalidadUserId',
+    firmaCalidadFecha: 'firmaCalidadFecha',
+    firmaCalidadDiasAtraso: 'firmaCalidadDiasAtraso',
+    firmaCalidadImg: 'firmaCalidadImg',
+    firmaBodegaUser: 'firmaBodegaUser',
+    firmaBodegaUserId: 'firmaBodegaUserId',
+    firmaBodegaFecha: 'firmaBodegaFecha',
+    firmaBodegaImg: 'firmaBodegaImg',
+    observacionesGenerales: 'observacionesGenerales',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type Cal_PlanillaHigienePersonalScalarFieldEnum = (typeof Cal_PlanillaHigienePersonalScalarFieldEnum)[keyof typeof Cal_PlanillaHigienePersonalScalarFieldEnum]
+
+
+  export const Cal_RegistroHigienePersonalScalarFieldEnum: {
+    id: 'id',
+    planillaId: 'planillaId',
+    nombreEncriptado: 'nombreEncriptado',
+    uniformeLimpio: 'uniformeLimpio',
+    zapatosSeguridad: 'zapatosSeguridad',
+    peloCorto: 'peloCorto',
+    usoJockey: 'usoJockey',
+    sinJoyas: 'sinJoyas',
+    unasCortas: 'unasCortas',
+    rasurado: 'rasurado',
+    estadoSalud: 'estadoSalud',
+    habitosCorrectos: 'habitosCorrectos',
+    heridas: 'heridas',
+    observacion: 'observacion',
+    accionCorrectiva: 'accionCorrectiva',
+    creadoPor: 'creadoPor',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type Cal_RegistroHigienePersonalScalarFieldEnum = (typeof Cal_RegistroHigienePersonalScalarFieldEnum)[keyof typeof Cal_RegistroHigienePersonalScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -143928,6 +148894,8 @@ export namespace Prisma {
     jefesZonales?: JefeZonalSucursalListRelationFilter
     vehiculos?: VehiculoListRelationFilter
     delegaciones?: DelegacionVisualizacionListRelationFilter
+    planillasTransporte?: Cal_PlanillaTransporteListRelationFilter
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalListRelationFilter
   }
 
   export type SucursalOrderByWithRelationInput = {
@@ -143947,6 +148915,8 @@ export namespace Prisma {
     jefesZonales?: JefeZonalSucursalOrderByRelationAggregateInput
     vehiculos?: VehiculoOrderByRelationAggregateInput
     delegaciones?: DelegacionVisualizacionOrderByRelationAggregateInput
+    planillasTransporte?: Cal_PlanillaTransporteOrderByRelationAggregateInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalOrderByRelationAggregateInput
   }
 
   export type SucursalWhereUniqueInput = Prisma.AtLeast<{
@@ -143969,6 +148939,8 @@ export namespace Prisma {
     jefesZonales?: JefeZonalSucursalListRelationFilter
     vehiculos?: VehiculoListRelationFilter
     delegaciones?: DelegacionVisualizacionListRelationFilter
+    planillasTransporte?: Cal_PlanillaTransporteListRelationFilter
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalListRelationFilter
   }, "id" | "nombre">
 
   export type SucursalOrderByWithAggregationInput = {
@@ -153154,6 +158126,468 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"PrevGravedadPreparacion"> | Date | string
   }
 
+  export type Cal_PlanillaTransporteWhereInput = {
+    AND?: Cal_PlanillaTransporteWhereInput | Cal_PlanillaTransporteWhereInput[]
+    OR?: Cal_PlanillaTransporteWhereInput[]
+    NOT?: Cal_PlanillaTransporteWhereInput | Cal_PlanillaTransporteWhereInput[]
+    id?: StringFilter<"Cal_PlanillaTransporte"> | string
+    sucursalId?: StringFilter<"Cal_PlanillaTransporte"> | string
+    fecha?: DateTimeFilter<"Cal_PlanillaTransporte"> | Date | string
+    fechaTexto?: StringFilter<"Cal_PlanillaTransporte"> | string
+    estado?: StringFilter<"Cal_PlanillaTransporte"> | string
+    firmaCalidadUser?: StringNullableFilter<"Cal_PlanillaTransporte"> | string | null
+    firmaCalidadUserId?: StringNullableFilter<"Cal_PlanillaTransporte"> | string | null
+    firmaCalidadFecha?: DateTimeNullableFilter<"Cal_PlanillaTransporte"> | Date | string | null
+    firmaCalidadDiasAtraso?: IntFilter<"Cal_PlanillaTransporte"> | number
+    firmaCalidadImg?: StringNullableFilter<"Cal_PlanillaTransporte"> | string | null
+    firmaBodegaUser?: StringNullableFilter<"Cal_PlanillaTransporte"> | string | null
+    firmaBodegaUserId?: StringNullableFilter<"Cal_PlanillaTransporte"> | string | null
+    firmaBodegaFecha?: DateTimeNullableFilter<"Cal_PlanillaTransporte"> | Date | string | null
+    firmaBodegaImg?: StringNullableFilter<"Cal_PlanillaTransporte"> | string | null
+    observacionesGenerales?: StringNullableFilter<"Cal_PlanillaTransporte"> | string | null
+    createdAt?: DateTimeFilter<"Cal_PlanillaTransporte"> | Date | string
+    updatedAt?: DateTimeFilter<"Cal_PlanillaTransporte"> | Date | string
+    sucursal?: XOR<SucursalRelationFilter, SucursalWhereInput>
+    registros?: Cal_RegistroTransporteListRelationFilter
+  }
+
+  export type Cal_PlanillaTransporteOrderByWithRelationInput = {
+    id?: SortOrder
+    sucursalId?: SortOrder
+    fecha?: SortOrder
+    fechaTexto?: SortOrder
+    estado?: SortOrder
+    firmaCalidadUser?: SortOrderInput | SortOrder
+    firmaCalidadUserId?: SortOrderInput | SortOrder
+    firmaCalidadFecha?: SortOrderInput | SortOrder
+    firmaCalidadDiasAtraso?: SortOrder
+    firmaCalidadImg?: SortOrderInput | SortOrder
+    firmaBodegaUser?: SortOrderInput | SortOrder
+    firmaBodegaUserId?: SortOrderInput | SortOrder
+    firmaBodegaFecha?: SortOrderInput | SortOrder
+    firmaBodegaImg?: SortOrderInput | SortOrder
+    observacionesGenerales?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    sucursal?: SucursalOrderByWithRelationInput
+    registros?: Cal_RegistroTransporteOrderByRelationAggregateInput
+  }
+
+  export type Cal_PlanillaTransporteWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    sucursalId_fechaTexto?: Cal_PlanillaTransporteSucursalIdFechaTextoCompoundUniqueInput
+    AND?: Cal_PlanillaTransporteWhereInput | Cal_PlanillaTransporteWhereInput[]
+    OR?: Cal_PlanillaTransporteWhereInput[]
+    NOT?: Cal_PlanillaTransporteWhereInput | Cal_PlanillaTransporteWhereInput[]
+    sucursalId?: StringFilter<"Cal_PlanillaTransporte"> | string
+    fecha?: DateTimeFilter<"Cal_PlanillaTransporte"> | Date | string
+    fechaTexto?: StringFilter<"Cal_PlanillaTransporte"> | string
+    estado?: StringFilter<"Cal_PlanillaTransporte"> | string
+    firmaCalidadUser?: StringNullableFilter<"Cal_PlanillaTransporte"> | string | null
+    firmaCalidadUserId?: StringNullableFilter<"Cal_PlanillaTransporte"> | string | null
+    firmaCalidadFecha?: DateTimeNullableFilter<"Cal_PlanillaTransporte"> | Date | string | null
+    firmaCalidadDiasAtraso?: IntFilter<"Cal_PlanillaTransporte"> | number
+    firmaCalidadImg?: StringNullableFilter<"Cal_PlanillaTransporte"> | string | null
+    firmaBodegaUser?: StringNullableFilter<"Cal_PlanillaTransporte"> | string | null
+    firmaBodegaUserId?: StringNullableFilter<"Cal_PlanillaTransporte"> | string | null
+    firmaBodegaFecha?: DateTimeNullableFilter<"Cal_PlanillaTransporte"> | Date | string | null
+    firmaBodegaImg?: StringNullableFilter<"Cal_PlanillaTransporte"> | string | null
+    observacionesGenerales?: StringNullableFilter<"Cal_PlanillaTransporte"> | string | null
+    createdAt?: DateTimeFilter<"Cal_PlanillaTransporte"> | Date | string
+    updatedAt?: DateTimeFilter<"Cal_PlanillaTransporte"> | Date | string
+    sucursal?: XOR<SucursalRelationFilter, SucursalWhereInput>
+    registros?: Cal_RegistroTransporteListRelationFilter
+  }, "id" | "sucursalId_fechaTexto">
+
+  export type Cal_PlanillaTransporteOrderByWithAggregationInput = {
+    id?: SortOrder
+    sucursalId?: SortOrder
+    fecha?: SortOrder
+    fechaTexto?: SortOrder
+    estado?: SortOrder
+    firmaCalidadUser?: SortOrderInput | SortOrder
+    firmaCalidadUserId?: SortOrderInput | SortOrder
+    firmaCalidadFecha?: SortOrderInput | SortOrder
+    firmaCalidadDiasAtraso?: SortOrder
+    firmaCalidadImg?: SortOrderInput | SortOrder
+    firmaBodegaUser?: SortOrderInput | SortOrder
+    firmaBodegaUserId?: SortOrderInput | SortOrder
+    firmaBodegaFecha?: SortOrderInput | SortOrder
+    firmaBodegaImg?: SortOrderInput | SortOrder
+    observacionesGenerales?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: Cal_PlanillaTransporteCountOrderByAggregateInput
+    _avg?: Cal_PlanillaTransporteAvgOrderByAggregateInput
+    _max?: Cal_PlanillaTransporteMaxOrderByAggregateInput
+    _min?: Cal_PlanillaTransporteMinOrderByAggregateInput
+    _sum?: Cal_PlanillaTransporteSumOrderByAggregateInput
+  }
+
+  export type Cal_PlanillaTransporteScalarWhereWithAggregatesInput = {
+    AND?: Cal_PlanillaTransporteScalarWhereWithAggregatesInput | Cal_PlanillaTransporteScalarWhereWithAggregatesInput[]
+    OR?: Cal_PlanillaTransporteScalarWhereWithAggregatesInput[]
+    NOT?: Cal_PlanillaTransporteScalarWhereWithAggregatesInput | Cal_PlanillaTransporteScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Cal_PlanillaTransporte"> | string
+    sucursalId?: StringWithAggregatesFilter<"Cal_PlanillaTransporte"> | string
+    fecha?: DateTimeWithAggregatesFilter<"Cal_PlanillaTransporte"> | Date | string
+    fechaTexto?: StringWithAggregatesFilter<"Cal_PlanillaTransporte"> | string
+    estado?: StringWithAggregatesFilter<"Cal_PlanillaTransporte"> | string
+    firmaCalidadUser?: StringNullableWithAggregatesFilter<"Cal_PlanillaTransporte"> | string | null
+    firmaCalidadUserId?: StringNullableWithAggregatesFilter<"Cal_PlanillaTransporte"> | string | null
+    firmaCalidadFecha?: DateTimeNullableWithAggregatesFilter<"Cal_PlanillaTransporte"> | Date | string | null
+    firmaCalidadDiasAtraso?: IntWithAggregatesFilter<"Cal_PlanillaTransporte"> | number
+    firmaCalidadImg?: StringNullableWithAggregatesFilter<"Cal_PlanillaTransporte"> | string | null
+    firmaBodegaUser?: StringNullableWithAggregatesFilter<"Cal_PlanillaTransporte"> | string | null
+    firmaBodegaUserId?: StringNullableWithAggregatesFilter<"Cal_PlanillaTransporte"> | string | null
+    firmaBodegaFecha?: DateTimeNullableWithAggregatesFilter<"Cal_PlanillaTransporte"> | Date | string | null
+    firmaBodegaImg?: StringNullableWithAggregatesFilter<"Cal_PlanillaTransporte"> | string | null
+    observacionesGenerales?: StringNullableWithAggregatesFilter<"Cal_PlanillaTransporte"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Cal_PlanillaTransporte"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Cal_PlanillaTransporte"> | Date | string
+  }
+
+  export type Cal_RegistroTransporteWhereInput = {
+    AND?: Cal_RegistroTransporteWhereInput | Cal_RegistroTransporteWhereInput[]
+    OR?: Cal_RegistroTransporteWhereInput[]
+    NOT?: Cal_RegistroTransporteWhereInput | Cal_RegistroTransporteWhereInput[]
+    id?: StringFilter<"Cal_RegistroTransporte"> | string
+    planillaId?: StringFilter<"Cal_RegistroTransporte"> | string
+    patenteEncriptada?: StringFilter<"Cal_RegistroTransporte"> | string
+    limpiezaInterior?: StringFilter<"Cal_RegistroTransporte"> | string
+    limpiezaExterior?: StringFilter<"Cal_RegistroTransporte"> | string
+    puertaCamara?: StringFilter<"Cal_RegistroTransporte"> | string
+    piezasSinOxidacion?: StringFilter<"Cal_RegistroTransporte"> | string
+    equipoCongelacion?: StringFilter<"Cal_RegistroTransporte"> | string
+    equipoRefrigeracion?: StringFilter<"Cal_RegistroTransporte"> | string
+    observacion?: StringNullableFilter<"Cal_RegistroTransporte"> | string | null
+    accionCorrectiva?: StringNullableFilter<"Cal_RegistroTransporte"> | string | null
+    creadoPor?: StringFilter<"Cal_RegistroTransporte"> | string
+    createdAt?: DateTimeFilter<"Cal_RegistroTransporte"> | Date | string
+    updatedAt?: DateTimeFilter<"Cal_RegistroTransporte"> | Date | string
+    planilla?: XOR<Cal_PlanillaTransporteRelationFilter, Cal_PlanillaTransporteWhereInput>
+  }
+
+  export type Cal_RegistroTransporteOrderByWithRelationInput = {
+    id?: SortOrder
+    planillaId?: SortOrder
+    patenteEncriptada?: SortOrder
+    limpiezaInterior?: SortOrder
+    limpiezaExterior?: SortOrder
+    puertaCamara?: SortOrder
+    piezasSinOxidacion?: SortOrder
+    equipoCongelacion?: SortOrder
+    equipoRefrigeracion?: SortOrder
+    observacion?: SortOrderInput | SortOrder
+    accionCorrectiva?: SortOrderInput | SortOrder
+    creadoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    planilla?: Cal_PlanillaTransporteOrderByWithRelationInput
+  }
+
+  export type Cal_RegistroTransporteWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: Cal_RegistroTransporteWhereInput | Cal_RegistroTransporteWhereInput[]
+    OR?: Cal_RegistroTransporteWhereInput[]
+    NOT?: Cal_RegistroTransporteWhereInput | Cal_RegistroTransporteWhereInput[]
+    planillaId?: StringFilter<"Cal_RegistroTransporte"> | string
+    patenteEncriptada?: StringFilter<"Cal_RegistroTransporte"> | string
+    limpiezaInterior?: StringFilter<"Cal_RegistroTransporte"> | string
+    limpiezaExterior?: StringFilter<"Cal_RegistroTransporte"> | string
+    puertaCamara?: StringFilter<"Cal_RegistroTransporte"> | string
+    piezasSinOxidacion?: StringFilter<"Cal_RegistroTransporte"> | string
+    equipoCongelacion?: StringFilter<"Cal_RegistroTransporte"> | string
+    equipoRefrigeracion?: StringFilter<"Cal_RegistroTransporte"> | string
+    observacion?: StringNullableFilter<"Cal_RegistroTransporte"> | string | null
+    accionCorrectiva?: StringNullableFilter<"Cal_RegistroTransporte"> | string | null
+    creadoPor?: StringFilter<"Cal_RegistroTransporte"> | string
+    createdAt?: DateTimeFilter<"Cal_RegistroTransporte"> | Date | string
+    updatedAt?: DateTimeFilter<"Cal_RegistroTransporte"> | Date | string
+    planilla?: XOR<Cal_PlanillaTransporteRelationFilter, Cal_PlanillaTransporteWhereInput>
+  }, "id">
+
+  export type Cal_RegistroTransporteOrderByWithAggregationInput = {
+    id?: SortOrder
+    planillaId?: SortOrder
+    patenteEncriptada?: SortOrder
+    limpiezaInterior?: SortOrder
+    limpiezaExterior?: SortOrder
+    puertaCamara?: SortOrder
+    piezasSinOxidacion?: SortOrder
+    equipoCongelacion?: SortOrder
+    equipoRefrigeracion?: SortOrder
+    observacion?: SortOrderInput | SortOrder
+    accionCorrectiva?: SortOrderInput | SortOrder
+    creadoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: Cal_RegistroTransporteCountOrderByAggregateInput
+    _max?: Cal_RegistroTransporteMaxOrderByAggregateInput
+    _min?: Cal_RegistroTransporteMinOrderByAggregateInput
+  }
+
+  export type Cal_RegistroTransporteScalarWhereWithAggregatesInput = {
+    AND?: Cal_RegistroTransporteScalarWhereWithAggregatesInput | Cal_RegistroTransporteScalarWhereWithAggregatesInput[]
+    OR?: Cal_RegistroTransporteScalarWhereWithAggregatesInput[]
+    NOT?: Cal_RegistroTransporteScalarWhereWithAggregatesInput | Cal_RegistroTransporteScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Cal_RegistroTransporte"> | string
+    planillaId?: StringWithAggregatesFilter<"Cal_RegistroTransporte"> | string
+    patenteEncriptada?: StringWithAggregatesFilter<"Cal_RegistroTransporte"> | string
+    limpiezaInterior?: StringWithAggregatesFilter<"Cal_RegistroTransporte"> | string
+    limpiezaExterior?: StringWithAggregatesFilter<"Cal_RegistroTransporte"> | string
+    puertaCamara?: StringWithAggregatesFilter<"Cal_RegistroTransporte"> | string
+    piezasSinOxidacion?: StringWithAggregatesFilter<"Cal_RegistroTransporte"> | string
+    equipoCongelacion?: StringWithAggregatesFilter<"Cal_RegistroTransporte"> | string
+    equipoRefrigeracion?: StringWithAggregatesFilter<"Cal_RegistroTransporte"> | string
+    observacion?: StringNullableWithAggregatesFilter<"Cal_RegistroTransporte"> | string | null
+    accionCorrectiva?: StringNullableWithAggregatesFilter<"Cal_RegistroTransporte"> | string | null
+    creadoPor?: StringWithAggregatesFilter<"Cal_RegistroTransporte"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Cal_RegistroTransporte"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Cal_RegistroTransporte"> | Date | string
+  }
+
+  export type Cal_PlanillaHigienePersonalWhereInput = {
+    AND?: Cal_PlanillaHigienePersonalWhereInput | Cal_PlanillaHigienePersonalWhereInput[]
+    OR?: Cal_PlanillaHigienePersonalWhereInput[]
+    NOT?: Cal_PlanillaHigienePersonalWhereInput | Cal_PlanillaHigienePersonalWhereInput[]
+    id?: StringFilter<"Cal_PlanillaHigienePersonal"> | string
+    sucursalId?: StringFilter<"Cal_PlanillaHigienePersonal"> | string
+    fecha?: DateTimeFilter<"Cal_PlanillaHigienePersonal"> | Date | string
+    fechaTexto?: StringFilter<"Cal_PlanillaHigienePersonal"> | string
+    estado?: StringFilter<"Cal_PlanillaHigienePersonal"> | string
+    firmaCalidadUser?: StringNullableFilter<"Cal_PlanillaHigienePersonal"> | string | null
+    firmaCalidadUserId?: StringNullableFilter<"Cal_PlanillaHigienePersonal"> | string | null
+    firmaCalidadFecha?: DateTimeNullableFilter<"Cal_PlanillaHigienePersonal"> | Date | string | null
+    firmaCalidadDiasAtraso?: IntFilter<"Cal_PlanillaHigienePersonal"> | number
+    firmaCalidadImg?: StringNullableFilter<"Cal_PlanillaHigienePersonal"> | string | null
+    firmaBodegaUser?: StringNullableFilter<"Cal_PlanillaHigienePersonal"> | string | null
+    firmaBodegaUserId?: StringNullableFilter<"Cal_PlanillaHigienePersonal"> | string | null
+    firmaBodegaFecha?: DateTimeNullableFilter<"Cal_PlanillaHigienePersonal"> | Date | string | null
+    firmaBodegaImg?: StringNullableFilter<"Cal_PlanillaHigienePersonal"> | string | null
+    observacionesGenerales?: StringNullableFilter<"Cal_PlanillaHigienePersonal"> | string | null
+    createdAt?: DateTimeFilter<"Cal_PlanillaHigienePersonal"> | Date | string
+    updatedAt?: DateTimeFilter<"Cal_PlanillaHigienePersonal"> | Date | string
+    sucursal?: XOR<SucursalRelationFilter, SucursalWhereInput>
+    registros?: Cal_RegistroHigienePersonalListRelationFilter
+  }
+
+  export type Cal_PlanillaHigienePersonalOrderByWithRelationInput = {
+    id?: SortOrder
+    sucursalId?: SortOrder
+    fecha?: SortOrder
+    fechaTexto?: SortOrder
+    estado?: SortOrder
+    firmaCalidadUser?: SortOrderInput | SortOrder
+    firmaCalidadUserId?: SortOrderInput | SortOrder
+    firmaCalidadFecha?: SortOrderInput | SortOrder
+    firmaCalidadDiasAtraso?: SortOrder
+    firmaCalidadImg?: SortOrderInput | SortOrder
+    firmaBodegaUser?: SortOrderInput | SortOrder
+    firmaBodegaUserId?: SortOrderInput | SortOrder
+    firmaBodegaFecha?: SortOrderInput | SortOrder
+    firmaBodegaImg?: SortOrderInput | SortOrder
+    observacionesGenerales?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    sucursal?: SucursalOrderByWithRelationInput
+    registros?: Cal_RegistroHigienePersonalOrderByRelationAggregateInput
+  }
+
+  export type Cal_PlanillaHigienePersonalWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    sucursalId_fechaTexto?: Cal_PlanillaHigienePersonalSucursalIdFechaTextoCompoundUniqueInput
+    AND?: Cal_PlanillaHigienePersonalWhereInput | Cal_PlanillaHigienePersonalWhereInput[]
+    OR?: Cal_PlanillaHigienePersonalWhereInput[]
+    NOT?: Cal_PlanillaHigienePersonalWhereInput | Cal_PlanillaHigienePersonalWhereInput[]
+    sucursalId?: StringFilter<"Cal_PlanillaHigienePersonal"> | string
+    fecha?: DateTimeFilter<"Cal_PlanillaHigienePersonal"> | Date | string
+    fechaTexto?: StringFilter<"Cal_PlanillaHigienePersonal"> | string
+    estado?: StringFilter<"Cal_PlanillaHigienePersonal"> | string
+    firmaCalidadUser?: StringNullableFilter<"Cal_PlanillaHigienePersonal"> | string | null
+    firmaCalidadUserId?: StringNullableFilter<"Cal_PlanillaHigienePersonal"> | string | null
+    firmaCalidadFecha?: DateTimeNullableFilter<"Cal_PlanillaHigienePersonal"> | Date | string | null
+    firmaCalidadDiasAtraso?: IntFilter<"Cal_PlanillaHigienePersonal"> | number
+    firmaCalidadImg?: StringNullableFilter<"Cal_PlanillaHigienePersonal"> | string | null
+    firmaBodegaUser?: StringNullableFilter<"Cal_PlanillaHigienePersonal"> | string | null
+    firmaBodegaUserId?: StringNullableFilter<"Cal_PlanillaHigienePersonal"> | string | null
+    firmaBodegaFecha?: DateTimeNullableFilter<"Cal_PlanillaHigienePersonal"> | Date | string | null
+    firmaBodegaImg?: StringNullableFilter<"Cal_PlanillaHigienePersonal"> | string | null
+    observacionesGenerales?: StringNullableFilter<"Cal_PlanillaHigienePersonal"> | string | null
+    createdAt?: DateTimeFilter<"Cal_PlanillaHigienePersonal"> | Date | string
+    updatedAt?: DateTimeFilter<"Cal_PlanillaHigienePersonal"> | Date | string
+    sucursal?: XOR<SucursalRelationFilter, SucursalWhereInput>
+    registros?: Cal_RegistroHigienePersonalListRelationFilter
+  }, "id" | "sucursalId_fechaTexto">
+
+  export type Cal_PlanillaHigienePersonalOrderByWithAggregationInput = {
+    id?: SortOrder
+    sucursalId?: SortOrder
+    fecha?: SortOrder
+    fechaTexto?: SortOrder
+    estado?: SortOrder
+    firmaCalidadUser?: SortOrderInput | SortOrder
+    firmaCalidadUserId?: SortOrderInput | SortOrder
+    firmaCalidadFecha?: SortOrderInput | SortOrder
+    firmaCalidadDiasAtraso?: SortOrder
+    firmaCalidadImg?: SortOrderInput | SortOrder
+    firmaBodegaUser?: SortOrderInput | SortOrder
+    firmaBodegaUserId?: SortOrderInput | SortOrder
+    firmaBodegaFecha?: SortOrderInput | SortOrder
+    firmaBodegaImg?: SortOrderInput | SortOrder
+    observacionesGenerales?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: Cal_PlanillaHigienePersonalCountOrderByAggregateInput
+    _avg?: Cal_PlanillaHigienePersonalAvgOrderByAggregateInput
+    _max?: Cal_PlanillaHigienePersonalMaxOrderByAggregateInput
+    _min?: Cal_PlanillaHigienePersonalMinOrderByAggregateInput
+    _sum?: Cal_PlanillaHigienePersonalSumOrderByAggregateInput
+  }
+
+  export type Cal_PlanillaHigienePersonalScalarWhereWithAggregatesInput = {
+    AND?: Cal_PlanillaHigienePersonalScalarWhereWithAggregatesInput | Cal_PlanillaHigienePersonalScalarWhereWithAggregatesInput[]
+    OR?: Cal_PlanillaHigienePersonalScalarWhereWithAggregatesInput[]
+    NOT?: Cal_PlanillaHigienePersonalScalarWhereWithAggregatesInput | Cal_PlanillaHigienePersonalScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Cal_PlanillaHigienePersonal"> | string
+    sucursalId?: StringWithAggregatesFilter<"Cal_PlanillaHigienePersonal"> | string
+    fecha?: DateTimeWithAggregatesFilter<"Cal_PlanillaHigienePersonal"> | Date | string
+    fechaTexto?: StringWithAggregatesFilter<"Cal_PlanillaHigienePersonal"> | string
+    estado?: StringWithAggregatesFilter<"Cal_PlanillaHigienePersonal"> | string
+    firmaCalidadUser?: StringNullableWithAggregatesFilter<"Cal_PlanillaHigienePersonal"> | string | null
+    firmaCalidadUserId?: StringNullableWithAggregatesFilter<"Cal_PlanillaHigienePersonal"> | string | null
+    firmaCalidadFecha?: DateTimeNullableWithAggregatesFilter<"Cal_PlanillaHigienePersonal"> | Date | string | null
+    firmaCalidadDiasAtraso?: IntWithAggregatesFilter<"Cal_PlanillaHigienePersonal"> | number
+    firmaCalidadImg?: StringNullableWithAggregatesFilter<"Cal_PlanillaHigienePersonal"> | string | null
+    firmaBodegaUser?: StringNullableWithAggregatesFilter<"Cal_PlanillaHigienePersonal"> | string | null
+    firmaBodegaUserId?: StringNullableWithAggregatesFilter<"Cal_PlanillaHigienePersonal"> | string | null
+    firmaBodegaFecha?: DateTimeNullableWithAggregatesFilter<"Cal_PlanillaHigienePersonal"> | Date | string | null
+    firmaBodegaImg?: StringNullableWithAggregatesFilter<"Cal_PlanillaHigienePersonal"> | string | null
+    observacionesGenerales?: StringNullableWithAggregatesFilter<"Cal_PlanillaHigienePersonal"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Cal_PlanillaHigienePersonal"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Cal_PlanillaHigienePersonal"> | Date | string
+  }
+
+  export type Cal_RegistroHigienePersonalWhereInput = {
+    AND?: Cal_RegistroHigienePersonalWhereInput | Cal_RegistroHigienePersonalWhereInput[]
+    OR?: Cal_RegistroHigienePersonalWhereInput[]
+    NOT?: Cal_RegistroHigienePersonalWhereInput | Cal_RegistroHigienePersonalWhereInput[]
+    id?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    planillaId?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    nombreEncriptado?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    uniformeLimpio?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    zapatosSeguridad?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    peloCorto?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    usoJockey?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    sinJoyas?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    unasCortas?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    rasurado?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    estadoSalud?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    habitosCorrectos?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    heridas?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    observacion?: StringNullableFilter<"Cal_RegistroHigienePersonal"> | string | null
+    accionCorrectiva?: StringNullableFilter<"Cal_RegistroHigienePersonal"> | string | null
+    creadoPor?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    createdAt?: DateTimeFilter<"Cal_RegistroHigienePersonal"> | Date | string
+    updatedAt?: DateTimeFilter<"Cal_RegistroHigienePersonal"> | Date | string
+    planilla?: XOR<Cal_PlanillaHigienePersonalRelationFilter, Cal_PlanillaHigienePersonalWhereInput>
+  }
+
+  export type Cal_RegistroHigienePersonalOrderByWithRelationInput = {
+    id?: SortOrder
+    planillaId?: SortOrder
+    nombreEncriptado?: SortOrder
+    uniformeLimpio?: SortOrder
+    zapatosSeguridad?: SortOrder
+    peloCorto?: SortOrder
+    usoJockey?: SortOrder
+    sinJoyas?: SortOrder
+    unasCortas?: SortOrder
+    rasurado?: SortOrder
+    estadoSalud?: SortOrder
+    habitosCorrectos?: SortOrder
+    heridas?: SortOrder
+    observacion?: SortOrderInput | SortOrder
+    accionCorrectiva?: SortOrderInput | SortOrder
+    creadoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    planilla?: Cal_PlanillaHigienePersonalOrderByWithRelationInput
+  }
+
+  export type Cal_RegistroHigienePersonalWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: Cal_RegistroHigienePersonalWhereInput | Cal_RegistroHigienePersonalWhereInput[]
+    OR?: Cal_RegistroHigienePersonalWhereInput[]
+    NOT?: Cal_RegistroHigienePersonalWhereInput | Cal_RegistroHigienePersonalWhereInput[]
+    planillaId?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    nombreEncriptado?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    uniformeLimpio?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    zapatosSeguridad?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    peloCorto?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    usoJockey?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    sinJoyas?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    unasCortas?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    rasurado?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    estadoSalud?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    habitosCorrectos?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    heridas?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    observacion?: StringNullableFilter<"Cal_RegistroHigienePersonal"> | string | null
+    accionCorrectiva?: StringNullableFilter<"Cal_RegistroHigienePersonal"> | string | null
+    creadoPor?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    createdAt?: DateTimeFilter<"Cal_RegistroHigienePersonal"> | Date | string
+    updatedAt?: DateTimeFilter<"Cal_RegistroHigienePersonal"> | Date | string
+    planilla?: XOR<Cal_PlanillaHigienePersonalRelationFilter, Cal_PlanillaHigienePersonalWhereInput>
+  }, "id">
+
+  export type Cal_RegistroHigienePersonalOrderByWithAggregationInput = {
+    id?: SortOrder
+    planillaId?: SortOrder
+    nombreEncriptado?: SortOrder
+    uniformeLimpio?: SortOrder
+    zapatosSeguridad?: SortOrder
+    peloCorto?: SortOrder
+    usoJockey?: SortOrder
+    sinJoyas?: SortOrder
+    unasCortas?: SortOrder
+    rasurado?: SortOrder
+    estadoSalud?: SortOrder
+    habitosCorrectos?: SortOrder
+    heridas?: SortOrder
+    observacion?: SortOrderInput | SortOrder
+    accionCorrectiva?: SortOrderInput | SortOrder
+    creadoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: Cal_RegistroHigienePersonalCountOrderByAggregateInput
+    _max?: Cal_RegistroHigienePersonalMaxOrderByAggregateInput
+    _min?: Cal_RegistroHigienePersonalMinOrderByAggregateInput
+  }
+
+  export type Cal_RegistroHigienePersonalScalarWhereWithAggregatesInput = {
+    AND?: Cal_RegistroHigienePersonalScalarWhereWithAggregatesInput | Cal_RegistroHigienePersonalScalarWhereWithAggregatesInput[]
+    OR?: Cal_RegistroHigienePersonalScalarWhereWithAggregatesInput[]
+    NOT?: Cal_RegistroHigienePersonalScalarWhereWithAggregatesInput | Cal_RegistroHigienePersonalScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Cal_RegistroHigienePersonal"> | string
+    planillaId?: StringWithAggregatesFilter<"Cal_RegistroHigienePersonal"> | string
+    nombreEncriptado?: StringWithAggregatesFilter<"Cal_RegistroHigienePersonal"> | string
+    uniformeLimpio?: StringWithAggregatesFilter<"Cal_RegistroHigienePersonal"> | string
+    zapatosSeguridad?: StringWithAggregatesFilter<"Cal_RegistroHigienePersonal"> | string
+    peloCorto?: StringWithAggregatesFilter<"Cal_RegistroHigienePersonal"> | string
+    usoJockey?: StringWithAggregatesFilter<"Cal_RegistroHigienePersonal"> | string
+    sinJoyas?: StringWithAggregatesFilter<"Cal_RegistroHigienePersonal"> | string
+    unasCortas?: StringWithAggregatesFilter<"Cal_RegistroHigienePersonal"> | string
+    rasurado?: StringWithAggregatesFilter<"Cal_RegistroHigienePersonal"> | string
+    estadoSalud?: StringWithAggregatesFilter<"Cal_RegistroHigienePersonal"> | string
+    habitosCorrectos?: StringWithAggregatesFilter<"Cal_RegistroHigienePersonal"> | string
+    heridas?: StringWithAggregatesFilter<"Cal_RegistroHigienePersonal"> | string
+    observacion?: StringNullableWithAggregatesFilter<"Cal_RegistroHigienePersonal"> | string | null
+    accionCorrectiva?: StringNullableWithAggregatesFilter<"Cal_RegistroHigienePersonal"> | string | null
+    creadoPor?: StringWithAggregatesFilter<"Cal_RegistroHigienePersonal"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Cal_RegistroHigienePersonal"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Cal_RegistroHigienePersonal"> | Date | string
+  }
+
   export type RoleCreateInput = {
     id?: string
     name: string
@@ -154374,6 +159808,8 @@ export namespace Prisma {
     jefesZonales?: JefeZonalSucursalCreateNestedManyWithoutSucursalInput
     vehiculos?: VehiculoCreateNestedManyWithoutSucursalInput
     delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutSucursalInput
+    planillasTransporte?: Cal_PlanillaTransporteCreateNestedManyWithoutSucursalInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalUncheckedCreateInput = {
@@ -154393,6 +159829,8 @@ export namespace Prisma {
     jefesZonales?: JefeZonalSucursalUncheckedCreateNestedManyWithoutSucursalInput
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutSucursalInput
     delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput
+    planillasTransporte?: Cal_PlanillaTransporteUncheckedCreateNestedManyWithoutSucursalInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalUpdateInput = {
@@ -154412,6 +159850,8 @@ export namespace Prisma {
     jefesZonales?: JefeZonalSucursalUpdateManyWithoutSucursalNestedInput
     vehiculos?: VehiculoUpdateManyWithoutSucursalNestedInput
     delegaciones?: DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput
+    planillasTransporte?: Cal_PlanillaTransporteUpdateManyWithoutSucursalNestedInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUpdateManyWithoutSucursalNestedInput
   }
 
   export type SucursalUncheckedUpdateInput = {
@@ -154431,6 +159871,8 @@ export namespace Prisma {
     jefesZonales?: JefeZonalSucursalUncheckedUpdateManyWithoutSucursalNestedInput
     vehiculos?: VehiculoUncheckedUpdateManyWithoutSucursalNestedInput
     delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput
+    planillasTransporte?: Cal_PlanillaTransporteUncheckedUpdateManyWithoutSucursalNestedInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedUpdateManyWithoutSucursalNestedInput
   }
 
   export type SucursalCreateManyInput = {
@@ -164767,6 +170209,556 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type Cal_PlanillaTransporteCreateInput = {
+    id?: string
+    fecha: Date | string
+    fechaTexto: string
+    estado?: string
+    firmaCalidadUser?: string | null
+    firmaCalidadUserId?: string | null
+    firmaCalidadFecha?: Date | string | null
+    firmaCalidadDiasAtraso?: number
+    firmaCalidadImg?: string | null
+    firmaBodegaUser?: string | null
+    firmaBodegaUserId?: string | null
+    firmaBodegaFecha?: Date | string | null
+    firmaBodegaImg?: string | null
+    observacionesGenerales?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sucursal: SucursalCreateNestedOneWithoutPlanillasTransporteInput
+    registros?: Cal_RegistroTransporteCreateNestedManyWithoutPlanillaInput
+  }
+
+  export type Cal_PlanillaTransporteUncheckedCreateInput = {
+    id?: string
+    sucursalId: string
+    fecha: Date | string
+    fechaTexto: string
+    estado?: string
+    firmaCalidadUser?: string | null
+    firmaCalidadUserId?: string | null
+    firmaCalidadFecha?: Date | string | null
+    firmaCalidadDiasAtraso?: number
+    firmaCalidadImg?: string | null
+    firmaBodegaUser?: string | null
+    firmaBodegaUserId?: string | null
+    firmaBodegaFecha?: Date | string | null
+    firmaBodegaImg?: string | null
+    observacionesGenerales?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    registros?: Cal_RegistroTransporteUncheckedCreateNestedManyWithoutPlanillaInput
+  }
+
+  export type Cal_PlanillaTransporteUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaTexto?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    firmaCalidadUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaCalidadDiasAtraso?: IntFieldUpdateOperationsInput | number
+    firmaCalidadImg?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaBodegaImg?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesGenerales?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sucursal?: SucursalUpdateOneRequiredWithoutPlanillasTransporteNestedInput
+    registros?: Cal_RegistroTransporteUpdateManyWithoutPlanillaNestedInput
+  }
+
+  export type Cal_PlanillaTransporteUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sucursalId?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaTexto?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    firmaCalidadUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaCalidadDiasAtraso?: IntFieldUpdateOperationsInput | number
+    firmaCalidadImg?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaBodegaImg?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesGenerales?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    registros?: Cal_RegistroTransporteUncheckedUpdateManyWithoutPlanillaNestedInput
+  }
+
+  export type Cal_PlanillaTransporteCreateManyInput = {
+    id?: string
+    sucursalId: string
+    fecha: Date | string
+    fechaTexto: string
+    estado?: string
+    firmaCalidadUser?: string | null
+    firmaCalidadUserId?: string | null
+    firmaCalidadFecha?: Date | string | null
+    firmaCalidadDiasAtraso?: number
+    firmaCalidadImg?: string | null
+    firmaBodegaUser?: string | null
+    firmaBodegaUserId?: string | null
+    firmaBodegaFecha?: Date | string | null
+    firmaBodegaImg?: string | null
+    observacionesGenerales?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Cal_PlanillaTransporteUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaTexto?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    firmaCalidadUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaCalidadDiasAtraso?: IntFieldUpdateOperationsInput | number
+    firmaCalidadImg?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaBodegaImg?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesGenerales?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Cal_PlanillaTransporteUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sucursalId?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaTexto?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    firmaCalidadUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaCalidadDiasAtraso?: IntFieldUpdateOperationsInput | number
+    firmaCalidadImg?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaBodegaImg?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesGenerales?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Cal_RegistroTransporteCreateInput = {
+    id?: string
+    patenteEncriptada: string
+    limpiezaInterior?: string
+    limpiezaExterior?: string
+    puertaCamara?: string
+    piezasSinOxidacion?: string
+    equipoCongelacion?: string
+    equipoRefrigeracion?: string
+    observacion?: string | null
+    accionCorrectiva?: string | null
+    creadoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    planilla: Cal_PlanillaTransporteCreateNestedOneWithoutRegistrosInput
+  }
+
+  export type Cal_RegistroTransporteUncheckedCreateInput = {
+    id?: string
+    planillaId: string
+    patenteEncriptada: string
+    limpiezaInterior?: string
+    limpiezaExterior?: string
+    puertaCamara?: string
+    piezasSinOxidacion?: string
+    equipoCongelacion?: string
+    equipoRefrigeracion?: string
+    observacion?: string | null
+    accionCorrectiva?: string | null
+    creadoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Cal_RegistroTransporteUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    patenteEncriptada?: StringFieldUpdateOperationsInput | string
+    limpiezaInterior?: StringFieldUpdateOperationsInput | string
+    limpiezaExterior?: StringFieldUpdateOperationsInput | string
+    puertaCamara?: StringFieldUpdateOperationsInput | string
+    piezasSinOxidacion?: StringFieldUpdateOperationsInput | string
+    equipoCongelacion?: StringFieldUpdateOperationsInput | string
+    equipoRefrigeracion?: StringFieldUpdateOperationsInput | string
+    observacion?: NullableStringFieldUpdateOperationsInput | string | null
+    accionCorrectiva?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    planilla?: Cal_PlanillaTransporteUpdateOneRequiredWithoutRegistrosNestedInput
+  }
+
+  export type Cal_RegistroTransporteUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    planillaId?: StringFieldUpdateOperationsInput | string
+    patenteEncriptada?: StringFieldUpdateOperationsInput | string
+    limpiezaInterior?: StringFieldUpdateOperationsInput | string
+    limpiezaExterior?: StringFieldUpdateOperationsInput | string
+    puertaCamara?: StringFieldUpdateOperationsInput | string
+    piezasSinOxidacion?: StringFieldUpdateOperationsInput | string
+    equipoCongelacion?: StringFieldUpdateOperationsInput | string
+    equipoRefrigeracion?: StringFieldUpdateOperationsInput | string
+    observacion?: NullableStringFieldUpdateOperationsInput | string | null
+    accionCorrectiva?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Cal_RegistroTransporteCreateManyInput = {
+    id?: string
+    planillaId: string
+    patenteEncriptada: string
+    limpiezaInterior?: string
+    limpiezaExterior?: string
+    puertaCamara?: string
+    piezasSinOxidacion?: string
+    equipoCongelacion?: string
+    equipoRefrigeracion?: string
+    observacion?: string | null
+    accionCorrectiva?: string | null
+    creadoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Cal_RegistroTransporteUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    patenteEncriptada?: StringFieldUpdateOperationsInput | string
+    limpiezaInterior?: StringFieldUpdateOperationsInput | string
+    limpiezaExterior?: StringFieldUpdateOperationsInput | string
+    puertaCamara?: StringFieldUpdateOperationsInput | string
+    piezasSinOxidacion?: StringFieldUpdateOperationsInput | string
+    equipoCongelacion?: StringFieldUpdateOperationsInput | string
+    equipoRefrigeracion?: StringFieldUpdateOperationsInput | string
+    observacion?: NullableStringFieldUpdateOperationsInput | string | null
+    accionCorrectiva?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Cal_RegistroTransporteUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    planillaId?: StringFieldUpdateOperationsInput | string
+    patenteEncriptada?: StringFieldUpdateOperationsInput | string
+    limpiezaInterior?: StringFieldUpdateOperationsInput | string
+    limpiezaExterior?: StringFieldUpdateOperationsInput | string
+    puertaCamara?: StringFieldUpdateOperationsInput | string
+    piezasSinOxidacion?: StringFieldUpdateOperationsInput | string
+    equipoCongelacion?: StringFieldUpdateOperationsInput | string
+    equipoRefrigeracion?: StringFieldUpdateOperationsInput | string
+    observacion?: NullableStringFieldUpdateOperationsInput | string | null
+    accionCorrectiva?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Cal_PlanillaHigienePersonalCreateInput = {
+    id?: string
+    fecha: Date | string
+    fechaTexto: string
+    estado?: string
+    firmaCalidadUser?: string | null
+    firmaCalidadUserId?: string | null
+    firmaCalidadFecha?: Date | string | null
+    firmaCalidadDiasAtraso?: number
+    firmaCalidadImg?: string | null
+    firmaBodegaUser?: string | null
+    firmaBodegaUserId?: string | null
+    firmaBodegaFecha?: Date | string | null
+    firmaBodegaImg?: string | null
+    observacionesGenerales?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sucursal: SucursalCreateNestedOneWithoutPlanillasHigienePersonalInput
+    registros?: Cal_RegistroHigienePersonalCreateNestedManyWithoutPlanillaInput
+  }
+
+  export type Cal_PlanillaHigienePersonalUncheckedCreateInput = {
+    id?: string
+    sucursalId: string
+    fecha: Date | string
+    fechaTexto: string
+    estado?: string
+    firmaCalidadUser?: string | null
+    firmaCalidadUserId?: string | null
+    firmaCalidadFecha?: Date | string | null
+    firmaCalidadDiasAtraso?: number
+    firmaCalidadImg?: string | null
+    firmaBodegaUser?: string | null
+    firmaBodegaUserId?: string | null
+    firmaBodegaFecha?: Date | string | null
+    firmaBodegaImg?: string | null
+    observacionesGenerales?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    registros?: Cal_RegistroHigienePersonalUncheckedCreateNestedManyWithoutPlanillaInput
+  }
+
+  export type Cal_PlanillaHigienePersonalUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaTexto?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    firmaCalidadUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaCalidadDiasAtraso?: IntFieldUpdateOperationsInput | number
+    firmaCalidadImg?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaBodegaImg?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesGenerales?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sucursal?: SucursalUpdateOneRequiredWithoutPlanillasHigienePersonalNestedInput
+    registros?: Cal_RegistroHigienePersonalUpdateManyWithoutPlanillaNestedInput
+  }
+
+  export type Cal_PlanillaHigienePersonalUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sucursalId?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaTexto?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    firmaCalidadUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaCalidadDiasAtraso?: IntFieldUpdateOperationsInput | number
+    firmaCalidadImg?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaBodegaImg?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesGenerales?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    registros?: Cal_RegistroHigienePersonalUncheckedUpdateManyWithoutPlanillaNestedInput
+  }
+
+  export type Cal_PlanillaHigienePersonalCreateManyInput = {
+    id?: string
+    sucursalId: string
+    fecha: Date | string
+    fechaTexto: string
+    estado?: string
+    firmaCalidadUser?: string | null
+    firmaCalidadUserId?: string | null
+    firmaCalidadFecha?: Date | string | null
+    firmaCalidadDiasAtraso?: number
+    firmaCalidadImg?: string | null
+    firmaBodegaUser?: string | null
+    firmaBodegaUserId?: string | null
+    firmaBodegaFecha?: Date | string | null
+    firmaBodegaImg?: string | null
+    observacionesGenerales?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Cal_PlanillaHigienePersonalUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaTexto?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    firmaCalidadUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaCalidadDiasAtraso?: IntFieldUpdateOperationsInput | number
+    firmaCalidadImg?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaBodegaImg?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesGenerales?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Cal_PlanillaHigienePersonalUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sucursalId?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaTexto?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    firmaCalidadUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaCalidadDiasAtraso?: IntFieldUpdateOperationsInput | number
+    firmaCalidadImg?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaBodegaImg?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesGenerales?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Cal_RegistroHigienePersonalCreateInput = {
+    id?: string
+    nombreEncriptado: string
+    uniformeLimpio?: string
+    zapatosSeguridad?: string
+    peloCorto?: string
+    usoJockey?: string
+    sinJoyas?: string
+    unasCortas?: string
+    rasurado?: string
+    estadoSalud?: string
+    habitosCorrectos?: string
+    heridas?: string
+    observacion?: string | null
+    accionCorrectiva?: string | null
+    creadoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    planilla: Cal_PlanillaHigienePersonalCreateNestedOneWithoutRegistrosInput
+  }
+
+  export type Cal_RegistroHigienePersonalUncheckedCreateInput = {
+    id?: string
+    planillaId: string
+    nombreEncriptado: string
+    uniformeLimpio?: string
+    zapatosSeguridad?: string
+    peloCorto?: string
+    usoJockey?: string
+    sinJoyas?: string
+    unasCortas?: string
+    rasurado?: string
+    estadoSalud?: string
+    habitosCorrectos?: string
+    heridas?: string
+    observacion?: string | null
+    accionCorrectiva?: string | null
+    creadoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Cal_RegistroHigienePersonalUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombreEncriptado?: StringFieldUpdateOperationsInput | string
+    uniformeLimpio?: StringFieldUpdateOperationsInput | string
+    zapatosSeguridad?: StringFieldUpdateOperationsInput | string
+    peloCorto?: StringFieldUpdateOperationsInput | string
+    usoJockey?: StringFieldUpdateOperationsInput | string
+    sinJoyas?: StringFieldUpdateOperationsInput | string
+    unasCortas?: StringFieldUpdateOperationsInput | string
+    rasurado?: StringFieldUpdateOperationsInput | string
+    estadoSalud?: StringFieldUpdateOperationsInput | string
+    habitosCorrectos?: StringFieldUpdateOperationsInput | string
+    heridas?: StringFieldUpdateOperationsInput | string
+    observacion?: NullableStringFieldUpdateOperationsInput | string | null
+    accionCorrectiva?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    planilla?: Cal_PlanillaHigienePersonalUpdateOneRequiredWithoutRegistrosNestedInput
+  }
+
+  export type Cal_RegistroHigienePersonalUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    planillaId?: StringFieldUpdateOperationsInput | string
+    nombreEncriptado?: StringFieldUpdateOperationsInput | string
+    uniformeLimpio?: StringFieldUpdateOperationsInput | string
+    zapatosSeguridad?: StringFieldUpdateOperationsInput | string
+    peloCorto?: StringFieldUpdateOperationsInput | string
+    usoJockey?: StringFieldUpdateOperationsInput | string
+    sinJoyas?: StringFieldUpdateOperationsInput | string
+    unasCortas?: StringFieldUpdateOperationsInput | string
+    rasurado?: StringFieldUpdateOperationsInput | string
+    estadoSalud?: StringFieldUpdateOperationsInput | string
+    habitosCorrectos?: StringFieldUpdateOperationsInput | string
+    heridas?: StringFieldUpdateOperationsInput | string
+    observacion?: NullableStringFieldUpdateOperationsInput | string | null
+    accionCorrectiva?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Cal_RegistroHigienePersonalCreateManyInput = {
+    id?: string
+    planillaId: string
+    nombreEncriptado: string
+    uniformeLimpio?: string
+    zapatosSeguridad?: string
+    peloCorto?: string
+    usoJockey?: string
+    sinJoyas?: string
+    unasCortas?: string
+    rasurado?: string
+    estadoSalud?: string
+    habitosCorrectos?: string
+    heridas?: string
+    observacion?: string | null
+    accionCorrectiva?: string | null
+    creadoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Cal_RegistroHigienePersonalUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombreEncriptado?: StringFieldUpdateOperationsInput | string
+    uniformeLimpio?: StringFieldUpdateOperationsInput | string
+    zapatosSeguridad?: StringFieldUpdateOperationsInput | string
+    peloCorto?: StringFieldUpdateOperationsInput | string
+    usoJockey?: StringFieldUpdateOperationsInput | string
+    sinJoyas?: StringFieldUpdateOperationsInput | string
+    unasCortas?: StringFieldUpdateOperationsInput | string
+    rasurado?: StringFieldUpdateOperationsInput | string
+    estadoSalud?: StringFieldUpdateOperationsInput | string
+    habitosCorrectos?: StringFieldUpdateOperationsInput | string
+    heridas?: StringFieldUpdateOperationsInput | string
+    observacion?: NullableStringFieldUpdateOperationsInput | string | null
+    accionCorrectiva?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Cal_RegistroHigienePersonalUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    planillaId?: StringFieldUpdateOperationsInput | string
+    nombreEncriptado?: StringFieldUpdateOperationsInput | string
+    uniformeLimpio?: StringFieldUpdateOperationsInput | string
+    zapatosSeguridad?: StringFieldUpdateOperationsInput | string
+    peloCorto?: StringFieldUpdateOperationsInput | string
+    usoJockey?: StringFieldUpdateOperationsInput | string
+    sinJoyas?: StringFieldUpdateOperationsInput | string
+    unasCortas?: StringFieldUpdateOperationsInput | string
+    rasurado?: StringFieldUpdateOperationsInput | string
+    estadoSalud?: StringFieldUpdateOperationsInput | string
+    habitosCorrectos?: StringFieldUpdateOperationsInput | string
+    heridas?: StringFieldUpdateOperationsInput | string
+    observacion?: NullableStringFieldUpdateOperationsInput | string | null
+    accionCorrectiva?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -165767,6 +171759,18 @@ export namespace Prisma {
     none?: JefeZonalSucursalWhereInput
   }
 
+  export type Cal_PlanillaTransporteListRelationFilter = {
+    every?: Cal_PlanillaTransporteWhereInput
+    some?: Cal_PlanillaTransporteWhereInput
+    none?: Cal_PlanillaTransporteWhereInput
+  }
+
+  export type Cal_PlanillaHigienePersonalListRelationFilter = {
+    every?: Cal_PlanillaHigienePersonalWhereInput
+    some?: Cal_PlanillaHigienePersonalWhereInput
+    none?: Cal_PlanillaHigienePersonalWhereInput
+  }
+
   export type ListaCorreoOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -165784,6 +171788,14 @@ export namespace Prisma {
   }
 
   export type JefeZonalSucursalOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type Cal_PlanillaTransporteOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type Cal_PlanillaHigienePersonalOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -171845,6 +177857,296 @@ export namespace Prisma {
     numeroPreparacion?: SortOrder
   }
 
+  export type Cal_RegistroTransporteListRelationFilter = {
+    every?: Cal_RegistroTransporteWhereInput
+    some?: Cal_RegistroTransporteWhereInput
+    none?: Cal_RegistroTransporteWhereInput
+  }
+
+  export type Cal_RegistroTransporteOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type Cal_PlanillaTransporteSucursalIdFechaTextoCompoundUniqueInput = {
+    sucursalId: string
+    fechaTexto: string
+  }
+
+  export type Cal_PlanillaTransporteCountOrderByAggregateInput = {
+    id?: SortOrder
+    sucursalId?: SortOrder
+    fecha?: SortOrder
+    fechaTexto?: SortOrder
+    estado?: SortOrder
+    firmaCalidadUser?: SortOrder
+    firmaCalidadUserId?: SortOrder
+    firmaCalidadFecha?: SortOrder
+    firmaCalidadDiasAtraso?: SortOrder
+    firmaCalidadImg?: SortOrder
+    firmaBodegaUser?: SortOrder
+    firmaBodegaUserId?: SortOrder
+    firmaBodegaFecha?: SortOrder
+    firmaBodegaImg?: SortOrder
+    observacionesGenerales?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Cal_PlanillaTransporteAvgOrderByAggregateInput = {
+    firmaCalidadDiasAtraso?: SortOrder
+  }
+
+  export type Cal_PlanillaTransporteMaxOrderByAggregateInput = {
+    id?: SortOrder
+    sucursalId?: SortOrder
+    fecha?: SortOrder
+    fechaTexto?: SortOrder
+    estado?: SortOrder
+    firmaCalidadUser?: SortOrder
+    firmaCalidadUserId?: SortOrder
+    firmaCalidadFecha?: SortOrder
+    firmaCalidadDiasAtraso?: SortOrder
+    firmaCalidadImg?: SortOrder
+    firmaBodegaUser?: SortOrder
+    firmaBodegaUserId?: SortOrder
+    firmaBodegaFecha?: SortOrder
+    firmaBodegaImg?: SortOrder
+    observacionesGenerales?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Cal_PlanillaTransporteMinOrderByAggregateInput = {
+    id?: SortOrder
+    sucursalId?: SortOrder
+    fecha?: SortOrder
+    fechaTexto?: SortOrder
+    estado?: SortOrder
+    firmaCalidadUser?: SortOrder
+    firmaCalidadUserId?: SortOrder
+    firmaCalidadFecha?: SortOrder
+    firmaCalidadDiasAtraso?: SortOrder
+    firmaCalidadImg?: SortOrder
+    firmaBodegaUser?: SortOrder
+    firmaBodegaUserId?: SortOrder
+    firmaBodegaFecha?: SortOrder
+    firmaBodegaImg?: SortOrder
+    observacionesGenerales?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Cal_PlanillaTransporteSumOrderByAggregateInput = {
+    firmaCalidadDiasAtraso?: SortOrder
+  }
+
+  export type Cal_PlanillaTransporteRelationFilter = {
+    is?: Cal_PlanillaTransporteWhereInput
+    isNot?: Cal_PlanillaTransporteWhereInput
+  }
+
+  export type Cal_RegistroTransporteCountOrderByAggregateInput = {
+    id?: SortOrder
+    planillaId?: SortOrder
+    patenteEncriptada?: SortOrder
+    limpiezaInterior?: SortOrder
+    limpiezaExterior?: SortOrder
+    puertaCamara?: SortOrder
+    piezasSinOxidacion?: SortOrder
+    equipoCongelacion?: SortOrder
+    equipoRefrigeracion?: SortOrder
+    observacion?: SortOrder
+    accionCorrectiva?: SortOrder
+    creadoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Cal_RegistroTransporteMaxOrderByAggregateInput = {
+    id?: SortOrder
+    planillaId?: SortOrder
+    patenteEncriptada?: SortOrder
+    limpiezaInterior?: SortOrder
+    limpiezaExterior?: SortOrder
+    puertaCamara?: SortOrder
+    piezasSinOxidacion?: SortOrder
+    equipoCongelacion?: SortOrder
+    equipoRefrigeracion?: SortOrder
+    observacion?: SortOrder
+    accionCorrectiva?: SortOrder
+    creadoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Cal_RegistroTransporteMinOrderByAggregateInput = {
+    id?: SortOrder
+    planillaId?: SortOrder
+    patenteEncriptada?: SortOrder
+    limpiezaInterior?: SortOrder
+    limpiezaExterior?: SortOrder
+    puertaCamara?: SortOrder
+    piezasSinOxidacion?: SortOrder
+    equipoCongelacion?: SortOrder
+    equipoRefrigeracion?: SortOrder
+    observacion?: SortOrder
+    accionCorrectiva?: SortOrder
+    creadoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Cal_RegistroHigienePersonalListRelationFilter = {
+    every?: Cal_RegistroHigienePersonalWhereInput
+    some?: Cal_RegistroHigienePersonalWhereInput
+    none?: Cal_RegistroHigienePersonalWhereInput
+  }
+
+  export type Cal_RegistroHigienePersonalOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type Cal_PlanillaHigienePersonalSucursalIdFechaTextoCompoundUniqueInput = {
+    sucursalId: string
+    fechaTexto: string
+  }
+
+  export type Cal_PlanillaHigienePersonalCountOrderByAggregateInput = {
+    id?: SortOrder
+    sucursalId?: SortOrder
+    fecha?: SortOrder
+    fechaTexto?: SortOrder
+    estado?: SortOrder
+    firmaCalidadUser?: SortOrder
+    firmaCalidadUserId?: SortOrder
+    firmaCalidadFecha?: SortOrder
+    firmaCalidadDiasAtraso?: SortOrder
+    firmaCalidadImg?: SortOrder
+    firmaBodegaUser?: SortOrder
+    firmaBodegaUserId?: SortOrder
+    firmaBodegaFecha?: SortOrder
+    firmaBodegaImg?: SortOrder
+    observacionesGenerales?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Cal_PlanillaHigienePersonalAvgOrderByAggregateInput = {
+    firmaCalidadDiasAtraso?: SortOrder
+  }
+
+  export type Cal_PlanillaHigienePersonalMaxOrderByAggregateInput = {
+    id?: SortOrder
+    sucursalId?: SortOrder
+    fecha?: SortOrder
+    fechaTexto?: SortOrder
+    estado?: SortOrder
+    firmaCalidadUser?: SortOrder
+    firmaCalidadUserId?: SortOrder
+    firmaCalidadFecha?: SortOrder
+    firmaCalidadDiasAtraso?: SortOrder
+    firmaCalidadImg?: SortOrder
+    firmaBodegaUser?: SortOrder
+    firmaBodegaUserId?: SortOrder
+    firmaBodegaFecha?: SortOrder
+    firmaBodegaImg?: SortOrder
+    observacionesGenerales?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Cal_PlanillaHigienePersonalMinOrderByAggregateInput = {
+    id?: SortOrder
+    sucursalId?: SortOrder
+    fecha?: SortOrder
+    fechaTexto?: SortOrder
+    estado?: SortOrder
+    firmaCalidadUser?: SortOrder
+    firmaCalidadUserId?: SortOrder
+    firmaCalidadFecha?: SortOrder
+    firmaCalidadDiasAtraso?: SortOrder
+    firmaCalidadImg?: SortOrder
+    firmaBodegaUser?: SortOrder
+    firmaBodegaUserId?: SortOrder
+    firmaBodegaFecha?: SortOrder
+    firmaBodegaImg?: SortOrder
+    observacionesGenerales?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Cal_PlanillaHigienePersonalSumOrderByAggregateInput = {
+    firmaCalidadDiasAtraso?: SortOrder
+  }
+
+  export type Cal_PlanillaHigienePersonalRelationFilter = {
+    is?: Cal_PlanillaHigienePersonalWhereInput
+    isNot?: Cal_PlanillaHigienePersonalWhereInput
+  }
+
+  export type Cal_RegistroHigienePersonalCountOrderByAggregateInput = {
+    id?: SortOrder
+    planillaId?: SortOrder
+    nombreEncriptado?: SortOrder
+    uniformeLimpio?: SortOrder
+    zapatosSeguridad?: SortOrder
+    peloCorto?: SortOrder
+    usoJockey?: SortOrder
+    sinJoyas?: SortOrder
+    unasCortas?: SortOrder
+    rasurado?: SortOrder
+    estadoSalud?: SortOrder
+    habitosCorrectos?: SortOrder
+    heridas?: SortOrder
+    observacion?: SortOrder
+    accionCorrectiva?: SortOrder
+    creadoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Cal_RegistroHigienePersonalMaxOrderByAggregateInput = {
+    id?: SortOrder
+    planillaId?: SortOrder
+    nombreEncriptado?: SortOrder
+    uniformeLimpio?: SortOrder
+    zapatosSeguridad?: SortOrder
+    peloCorto?: SortOrder
+    usoJockey?: SortOrder
+    sinJoyas?: SortOrder
+    unasCortas?: SortOrder
+    rasurado?: SortOrder
+    estadoSalud?: SortOrder
+    habitosCorrectos?: SortOrder
+    heridas?: SortOrder
+    observacion?: SortOrder
+    accionCorrectiva?: SortOrder
+    creadoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Cal_RegistroHigienePersonalMinOrderByAggregateInput = {
+    id?: SortOrder
+    planillaId?: SortOrder
+    nombreEncriptado?: SortOrder
+    uniformeLimpio?: SortOrder
+    zapatosSeguridad?: SortOrder
+    peloCorto?: SortOrder
+    usoJockey?: SortOrder
+    sinJoyas?: SortOrder
+    unasCortas?: SortOrder
+    rasurado?: SortOrder
+    estadoSalud?: SortOrder
+    habitosCorrectos?: SortOrder
+    heridas?: SortOrder
+    observacion?: SortOrder
+    accionCorrectiva?: SortOrder
+    creadoPor?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
   export type UserCreateNestedManyWithoutRoleInput = {
     create?: XOR<UserCreateWithoutRoleInput, UserUncheckedCreateWithoutRoleInput> | UserCreateWithoutRoleInput[] | UserUncheckedCreateWithoutRoleInput[]
     connectOrCreate?: UserCreateOrConnectWithoutRoleInput | UserCreateOrConnectWithoutRoleInput[]
@@ -172598,6 +178900,20 @@ export namespace Prisma {
     connect?: DelegacionVisualizacionWhereUniqueInput | DelegacionVisualizacionWhereUniqueInput[]
   }
 
+  export type Cal_PlanillaTransporteCreateNestedManyWithoutSucursalInput = {
+    create?: XOR<Cal_PlanillaTransporteCreateWithoutSucursalInput, Cal_PlanillaTransporteUncheckedCreateWithoutSucursalInput> | Cal_PlanillaTransporteCreateWithoutSucursalInput[] | Cal_PlanillaTransporteUncheckedCreateWithoutSucursalInput[]
+    connectOrCreate?: Cal_PlanillaTransporteCreateOrConnectWithoutSucursalInput | Cal_PlanillaTransporteCreateOrConnectWithoutSucursalInput[]
+    createMany?: Cal_PlanillaTransporteCreateManySucursalInputEnvelope
+    connect?: Cal_PlanillaTransporteWhereUniqueInput | Cal_PlanillaTransporteWhereUniqueInput[]
+  }
+
+  export type Cal_PlanillaHigienePersonalCreateNestedManyWithoutSucursalInput = {
+    create?: XOR<Cal_PlanillaHigienePersonalCreateWithoutSucursalInput, Cal_PlanillaHigienePersonalUncheckedCreateWithoutSucursalInput> | Cal_PlanillaHigienePersonalCreateWithoutSucursalInput[] | Cal_PlanillaHigienePersonalUncheckedCreateWithoutSucursalInput[]
+    connectOrCreate?: Cal_PlanillaHigienePersonalCreateOrConnectWithoutSucursalInput | Cal_PlanillaHigienePersonalCreateOrConnectWithoutSucursalInput[]
+    createMany?: Cal_PlanillaHigienePersonalCreateManySucursalInputEnvelope
+    connect?: Cal_PlanillaHigienePersonalWhereUniqueInput | Cal_PlanillaHigienePersonalWhereUniqueInput[]
+  }
+
   export type ListaCorreoUncheckedCreateNestedManyWithoutSucursalInput = {
     create?: XOR<ListaCorreoCreateWithoutSucursalInput, ListaCorreoUncheckedCreateWithoutSucursalInput> | ListaCorreoCreateWithoutSucursalInput[] | ListaCorreoUncheckedCreateWithoutSucursalInput[]
     connectOrCreate?: ListaCorreoCreateOrConnectWithoutSucursalInput | ListaCorreoCreateOrConnectWithoutSucursalInput[]
@@ -172658,6 +178974,20 @@ export namespace Prisma {
     connectOrCreate?: DelegacionVisualizacionCreateOrConnectWithoutSucursalInput | DelegacionVisualizacionCreateOrConnectWithoutSucursalInput[]
     createMany?: DelegacionVisualizacionCreateManySucursalInputEnvelope
     connect?: DelegacionVisualizacionWhereUniqueInput | DelegacionVisualizacionWhereUniqueInput[]
+  }
+
+  export type Cal_PlanillaTransporteUncheckedCreateNestedManyWithoutSucursalInput = {
+    create?: XOR<Cal_PlanillaTransporteCreateWithoutSucursalInput, Cal_PlanillaTransporteUncheckedCreateWithoutSucursalInput> | Cal_PlanillaTransporteCreateWithoutSucursalInput[] | Cal_PlanillaTransporteUncheckedCreateWithoutSucursalInput[]
+    connectOrCreate?: Cal_PlanillaTransporteCreateOrConnectWithoutSucursalInput | Cal_PlanillaTransporteCreateOrConnectWithoutSucursalInput[]
+    createMany?: Cal_PlanillaTransporteCreateManySucursalInputEnvelope
+    connect?: Cal_PlanillaTransporteWhereUniqueInput | Cal_PlanillaTransporteWhereUniqueInput[]
+  }
+
+  export type Cal_PlanillaHigienePersonalUncheckedCreateNestedManyWithoutSucursalInput = {
+    create?: XOR<Cal_PlanillaHigienePersonalCreateWithoutSucursalInput, Cal_PlanillaHigienePersonalUncheckedCreateWithoutSucursalInput> | Cal_PlanillaHigienePersonalCreateWithoutSucursalInput[] | Cal_PlanillaHigienePersonalUncheckedCreateWithoutSucursalInput[]
+    connectOrCreate?: Cal_PlanillaHigienePersonalCreateOrConnectWithoutSucursalInput | Cal_PlanillaHigienePersonalCreateOrConnectWithoutSucursalInput[]
+    createMany?: Cal_PlanillaHigienePersonalCreateManySucursalInputEnvelope
+    connect?: Cal_PlanillaHigienePersonalWhereUniqueInput | Cal_PlanillaHigienePersonalWhereUniqueInput[]
   }
 
   export type ListaCorreoUpdateManyWithoutSucursalNestedInput = {
@@ -172785,6 +179115,34 @@ export namespace Prisma {
     deleteMany?: DelegacionVisualizacionScalarWhereInput | DelegacionVisualizacionScalarWhereInput[]
   }
 
+  export type Cal_PlanillaTransporteUpdateManyWithoutSucursalNestedInput = {
+    create?: XOR<Cal_PlanillaTransporteCreateWithoutSucursalInput, Cal_PlanillaTransporteUncheckedCreateWithoutSucursalInput> | Cal_PlanillaTransporteCreateWithoutSucursalInput[] | Cal_PlanillaTransporteUncheckedCreateWithoutSucursalInput[]
+    connectOrCreate?: Cal_PlanillaTransporteCreateOrConnectWithoutSucursalInput | Cal_PlanillaTransporteCreateOrConnectWithoutSucursalInput[]
+    upsert?: Cal_PlanillaTransporteUpsertWithWhereUniqueWithoutSucursalInput | Cal_PlanillaTransporteUpsertWithWhereUniqueWithoutSucursalInput[]
+    createMany?: Cal_PlanillaTransporteCreateManySucursalInputEnvelope
+    set?: Cal_PlanillaTransporteWhereUniqueInput | Cal_PlanillaTransporteWhereUniqueInput[]
+    disconnect?: Cal_PlanillaTransporteWhereUniqueInput | Cal_PlanillaTransporteWhereUniqueInput[]
+    delete?: Cal_PlanillaTransporteWhereUniqueInput | Cal_PlanillaTransporteWhereUniqueInput[]
+    connect?: Cal_PlanillaTransporteWhereUniqueInput | Cal_PlanillaTransporteWhereUniqueInput[]
+    update?: Cal_PlanillaTransporteUpdateWithWhereUniqueWithoutSucursalInput | Cal_PlanillaTransporteUpdateWithWhereUniqueWithoutSucursalInput[]
+    updateMany?: Cal_PlanillaTransporteUpdateManyWithWhereWithoutSucursalInput | Cal_PlanillaTransporteUpdateManyWithWhereWithoutSucursalInput[]
+    deleteMany?: Cal_PlanillaTransporteScalarWhereInput | Cal_PlanillaTransporteScalarWhereInput[]
+  }
+
+  export type Cal_PlanillaHigienePersonalUpdateManyWithoutSucursalNestedInput = {
+    create?: XOR<Cal_PlanillaHigienePersonalCreateWithoutSucursalInput, Cal_PlanillaHigienePersonalUncheckedCreateWithoutSucursalInput> | Cal_PlanillaHigienePersonalCreateWithoutSucursalInput[] | Cal_PlanillaHigienePersonalUncheckedCreateWithoutSucursalInput[]
+    connectOrCreate?: Cal_PlanillaHigienePersonalCreateOrConnectWithoutSucursalInput | Cal_PlanillaHigienePersonalCreateOrConnectWithoutSucursalInput[]
+    upsert?: Cal_PlanillaHigienePersonalUpsertWithWhereUniqueWithoutSucursalInput | Cal_PlanillaHigienePersonalUpsertWithWhereUniqueWithoutSucursalInput[]
+    createMany?: Cal_PlanillaHigienePersonalCreateManySucursalInputEnvelope
+    set?: Cal_PlanillaHigienePersonalWhereUniqueInput | Cal_PlanillaHigienePersonalWhereUniqueInput[]
+    disconnect?: Cal_PlanillaHigienePersonalWhereUniqueInput | Cal_PlanillaHigienePersonalWhereUniqueInput[]
+    delete?: Cal_PlanillaHigienePersonalWhereUniqueInput | Cal_PlanillaHigienePersonalWhereUniqueInput[]
+    connect?: Cal_PlanillaHigienePersonalWhereUniqueInput | Cal_PlanillaHigienePersonalWhereUniqueInput[]
+    update?: Cal_PlanillaHigienePersonalUpdateWithWhereUniqueWithoutSucursalInput | Cal_PlanillaHigienePersonalUpdateWithWhereUniqueWithoutSucursalInput[]
+    updateMany?: Cal_PlanillaHigienePersonalUpdateManyWithWhereWithoutSucursalInput | Cal_PlanillaHigienePersonalUpdateManyWithWhereWithoutSucursalInput[]
+    deleteMany?: Cal_PlanillaHigienePersonalScalarWhereInput | Cal_PlanillaHigienePersonalScalarWhereInput[]
+  }
+
   export type ListaCorreoUncheckedUpdateManyWithoutSucursalNestedInput = {
     create?: XOR<ListaCorreoCreateWithoutSucursalInput, ListaCorreoUncheckedCreateWithoutSucursalInput> | ListaCorreoCreateWithoutSucursalInput[] | ListaCorreoUncheckedCreateWithoutSucursalInput[]
     connectOrCreate?: ListaCorreoCreateOrConnectWithoutSucursalInput | ListaCorreoCreateOrConnectWithoutSucursalInput[]
@@ -172908,6 +179266,34 @@ export namespace Prisma {
     update?: DelegacionVisualizacionUpdateWithWhereUniqueWithoutSucursalInput | DelegacionVisualizacionUpdateWithWhereUniqueWithoutSucursalInput[]
     updateMany?: DelegacionVisualizacionUpdateManyWithWhereWithoutSucursalInput | DelegacionVisualizacionUpdateManyWithWhereWithoutSucursalInput[]
     deleteMany?: DelegacionVisualizacionScalarWhereInput | DelegacionVisualizacionScalarWhereInput[]
+  }
+
+  export type Cal_PlanillaTransporteUncheckedUpdateManyWithoutSucursalNestedInput = {
+    create?: XOR<Cal_PlanillaTransporteCreateWithoutSucursalInput, Cal_PlanillaTransporteUncheckedCreateWithoutSucursalInput> | Cal_PlanillaTransporteCreateWithoutSucursalInput[] | Cal_PlanillaTransporteUncheckedCreateWithoutSucursalInput[]
+    connectOrCreate?: Cal_PlanillaTransporteCreateOrConnectWithoutSucursalInput | Cal_PlanillaTransporteCreateOrConnectWithoutSucursalInput[]
+    upsert?: Cal_PlanillaTransporteUpsertWithWhereUniqueWithoutSucursalInput | Cal_PlanillaTransporteUpsertWithWhereUniqueWithoutSucursalInput[]
+    createMany?: Cal_PlanillaTransporteCreateManySucursalInputEnvelope
+    set?: Cal_PlanillaTransporteWhereUniqueInput | Cal_PlanillaTransporteWhereUniqueInput[]
+    disconnect?: Cal_PlanillaTransporteWhereUniqueInput | Cal_PlanillaTransporteWhereUniqueInput[]
+    delete?: Cal_PlanillaTransporteWhereUniqueInput | Cal_PlanillaTransporteWhereUniqueInput[]
+    connect?: Cal_PlanillaTransporteWhereUniqueInput | Cal_PlanillaTransporteWhereUniqueInput[]
+    update?: Cal_PlanillaTransporteUpdateWithWhereUniqueWithoutSucursalInput | Cal_PlanillaTransporteUpdateWithWhereUniqueWithoutSucursalInput[]
+    updateMany?: Cal_PlanillaTransporteUpdateManyWithWhereWithoutSucursalInput | Cal_PlanillaTransporteUpdateManyWithWhereWithoutSucursalInput[]
+    deleteMany?: Cal_PlanillaTransporteScalarWhereInput | Cal_PlanillaTransporteScalarWhereInput[]
+  }
+
+  export type Cal_PlanillaHigienePersonalUncheckedUpdateManyWithoutSucursalNestedInput = {
+    create?: XOR<Cal_PlanillaHigienePersonalCreateWithoutSucursalInput, Cal_PlanillaHigienePersonalUncheckedCreateWithoutSucursalInput> | Cal_PlanillaHigienePersonalCreateWithoutSucursalInput[] | Cal_PlanillaHigienePersonalUncheckedCreateWithoutSucursalInput[]
+    connectOrCreate?: Cal_PlanillaHigienePersonalCreateOrConnectWithoutSucursalInput | Cal_PlanillaHigienePersonalCreateOrConnectWithoutSucursalInput[]
+    upsert?: Cal_PlanillaHigienePersonalUpsertWithWhereUniqueWithoutSucursalInput | Cal_PlanillaHigienePersonalUpsertWithWhereUniqueWithoutSucursalInput[]
+    createMany?: Cal_PlanillaHigienePersonalCreateManySucursalInputEnvelope
+    set?: Cal_PlanillaHigienePersonalWhereUniqueInput | Cal_PlanillaHigienePersonalWhereUniqueInput[]
+    disconnect?: Cal_PlanillaHigienePersonalWhereUniqueInput | Cal_PlanillaHigienePersonalWhereUniqueInput[]
+    delete?: Cal_PlanillaHigienePersonalWhereUniqueInput | Cal_PlanillaHigienePersonalWhereUniqueInput[]
+    connect?: Cal_PlanillaHigienePersonalWhereUniqueInput | Cal_PlanillaHigienePersonalWhereUniqueInput[]
+    update?: Cal_PlanillaHigienePersonalUpdateWithWhereUniqueWithoutSucursalInput | Cal_PlanillaHigienePersonalUpdateWithWhereUniqueWithoutSucursalInput[]
+    updateMany?: Cal_PlanillaHigienePersonalUpdateManyWithWhereWithoutSucursalInput | Cal_PlanillaHigienePersonalUpdateManyWithWhereWithoutSucursalInput[]
+    deleteMany?: Cal_PlanillaHigienePersonalScalarWhereInput | Cal_PlanillaHigienePersonalScalarWhereInput[]
   }
 
   export type SucursalCreateNestedOneWithoutPresupuestosInput = {
@@ -177038,6 +183424,146 @@ export namespace Prisma {
     update?: XOR<XOR<LogBodegaUpdateToOneWithWhereWithoutParametrosInput, LogBodegaUpdateWithoutParametrosInput>, LogBodegaUncheckedUpdateWithoutParametrosInput>
   }
 
+  export type SucursalCreateNestedOneWithoutPlanillasTransporteInput = {
+    create?: XOR<SucursalCreateWithoutPlanillasTransporteInput, SucursalUncheckedCreateWithoutPlanillasTransporteInput>
+    connectOrCreate?: SucursalCreateOrConnectWithoutPlanillasTransporteInput
+    connect?: SucursalWhereUniqueInput
+  }
+
+  export type Cal_RegistroTransporteCreateNestedManyWithoutPlanillaInput = {
+    create?: XOR<Cal_RegistroTransporteCreateWithoutPlanillaInput, Cal_RegistroTransporteUncheckedCreateWithoutPlanillaInput> | Cal_RegistroTransporteCreateWithoutPlanillaInput[] | Cal_RegistroTransporteUncheckedCreateWithoutPlanillaInput[]
+    connectOrCreate?: Cal_RegistroTransporteCreateOrConnectWithoutPlanillaInput | Cal_RegistroTransporteCreateOrConnectWithoutPlanillaInput[]
+    createMany?: Cal_RegistroTransporteCreateManyPlanillaInputEnvelope
+    connect?: Cal_RegistroTransporteWhereUniqueInput | Cal_RegistroTransporteWhereUniqueInput[]
+  }
+
+  export type Cal_RegistroTransporteUncheckedCreateNestedManyWithoutPlanillaInput = {
+    create?: XOR<Cal_RegistroTransporteCreateWithoutPlanillaInput, Cal_RegistroTransporteUncheckedCreateWithoutPlanillaInput> | Cal_RegistroTransporteCreateWithoutPlanillaInput[] | Cal_RegistroTransporteUncheckedCreateWithoutPlanillaInput[]
+    connectOrCreate?: Cal_RegistroTransporteCreateOrConnectWithoutPlanillaInput | Cal_RegistroTransporteCreateOrConnectWithoutPlanillaInput[]
+    createMany?: Cal_RegistroTransporteCreateManyPlanillaInputEnvelope
+    connect?: Cal_RegistroTransporteWhereUniqueInput | Cal_RegistroTransporteWhereUniqueInput[]
+  }
+
+  export type SucursalUpdateOneRequiredWithoutPlanillasTransporteNestedInput = {
+    create?: XOR<SucursalCreateWithoutPlanillasTransporteInput, SucursalUncheckedCreateWithoutPlanillasTransporteInput>
+    connectOrCreate?: SucursalCreateOrConnectWithoutPlanillasTransporteInput
+    upsert?: SucursalUpsertWithoutPlanillasTransporteInput
+    connect?: SucursalWhereUniqueInput
+    update?: XOR<XOR<SucursalUpdateToOneWithWhereWithoutPlanillasTransporteInput, SucursalUpdateWithoutPlanillasTransporteInput>, SucursalUncheckedUpdateWithoutPlanillasTransporteInput>
+  }
+
+  export type Cal_RegistroTransporteUpdateManyWithoutPlanillaNestedInput = {
+    create?: XOR<Cal_RegistroTransporteCreateWithoutPlanillaInput, Cal_RegistroTransporteUncheckedCreateWithoutPlanillaInput> | Cal_RegistroTransporteCreateWithoutPlanillaInput[] | Cal_RegistroTransporteUncheckedCreateWithoutPlanillaInput[]
+    connectOrCreate?: Cal_RegistroTransporteCreateOrConnectWithoutPlanillaInput | Cal_RegistroTransporteCreateOrConnectWithoutPlanillaInput[]
+    upsert?: Cal_RegistroTransporteUpsertWithWhereUniqueWithoutPlanillaInput | Cal_RegistroTransporteUpsertWithWhereUniqueWithoutPlanillaInput[]
+    createMany?: Cal_RegistroTransporteCreateManyPlanillaInputEnvelope
+    set?: Cal_RegistroTransporteWhereUniqueInput | Cal_RegistroTransporteWhereUniqueInput[]
+    disconnect?: Cal_RegistroTransporteWhereUniqueInput | Cal_RegistroTransporteWhereUniqueInput[]
+    delete?: Cal_RegistroTransporteWhereUniqueInput | Cal_RegistroTransporteWhereUniqueInput[]
+    connect?: Cal_RegistroTransporteWhereUniqueInput | Cal_RegistroTransporteWhereUniqueInput[]
+    update?: Cal_RegistroTransporteUpdateWithWhereUniqueWithoutPlanillaInput | Cal_RegistroTransporteUpdateWithWhereUniqueWithoutPlanillaInput[]
+    updateMany?: Cal_RegistroTransporteUpdateManyWithWhereWithoutPlanillaInput | Cal_RegistroTransporteUpdateManyWithWhereWithoutPlanillaInput[]
+    deleteMany?: Cal_RegistroTransporteScalarWhereInput | Cal_RegistroTransporteScalarWhereInput[]
+  }
+
+  export type Cal_RegistroTransporteUncheckedUpdateManyWithoutPlanillaNestedInput = {
+    create?: XOR<Cal_RegistroTransporteCreateWithoutPlanillaInput, Cal_RegistroTransporteUncheckedCreateWithoutPlanillaInput> | Cal_RegistroTransporteCreateWithoutPlanillaInput[] | Cal_RegistroTransporteUncheckedCreateWithoutPlanillaInput[]
+    connectOrCreate?: Cal_RegistroTransporteCreateOrConnectWithoutPlanillaInput | Cal_RegistroTransporteCreateOrConnectWithoutPlanillaInput[]
+    upsert?: Cal_RegistroTransporteUpsertWithWhereUniqueWithoutPlanillaInput | Cal_RegistroTransporteUpsertWithWhereUniqueWithoutPlanillaInput[]
+    createMany?: Cal_RegistroTransporteCreateManyPlanillaInputEnvelope
+    set?: Cal_RegistroTransporteWhereUniqueInput | Cal_RegistroTransporteWhereUniqueInput[]
+    disconnect?: Cal_RegistroTransporteWhereUniqueInput | Cal_RegistroTransporteWhereUniqueInput[]
+    delete?: Cal_RegistroTransporteWhereUniqueInput | Cal_RegistroTransporteWhereUniqueInput[]
+    connect?: Cal_RegistroTransporteWhereUniqueInput | Cal_RegistroTransporteWhereUniqueInput[]
+    update?: Cal_RegistroTransporteUpdateWithWhereUniqueWithoutPlanillaInput | Cal_RegistroTransporteUpdateWithWhereUniqueWithoutPlanillaInput[]
+    updateMany?: Cal_RegistroTransporteUpdateManyWithWhereWithoutPlanillaInput | Cal_RegistroTransporteUpdateManyWithWhereWithoutPlanillaInput[]
+    deleteMany?: Cal_RegistroTransporteScalarWhereInput | Cal_RegistroTransporteScalarWhereInput[]
+  }
+
+  export type Cal_PlanillaTransporteCreateNestedOneWithoutRegistrosInput = {
+    create?: XOR<Cal_PlanillaTransporteCreateWithoutRegistrosInput, Cal_PlanillaTransporteUncheckedCreateWithoutRegistrosInput>
+    connectOrCreate?: Cal_PlanillaTransporteCreateOrConnectWithoutRegistrosInput
+    connect?: Cal_PlanillaTransporteWhereUniqueInput
+  }
+
+  export type Cal_PlanillaTransporteUpdateOneRequiredWithoutRegistrosNestedInput = {
+    create?: XOR<Cal_PlanillaTransporteCreateWithoutRegistrosInput, Cal_PlanillaTransporteUncheckedCreateWithoutRegistrosInput>
+    connectOrCreate?: Cal_PlanillaTransporteCreateOrConnectWithoutRegistrosInput
+    upsert?: Cal_PlanillaTransporteUpsertWithoutRegistrosInput
+    connect?: Cal_PlanillaTransporteWhereUniqueInput
+    update?: XOR<XOR<Cal_PlanillaTransporteUpdateToOneWithWhereWithoutRegistrosInput, Cal_PlanillaTransporteUpdateWithoutRegistrosInput>, Cal_PlanillaTransporteUncheckedUpdateWithoutRegistrosInput>
+  }
+
+  export type SucursalCreateNestedOneWithoutPlanillasHigienePersonalInput = {
+    create?: XOR<SucursalCreateWithoutPlanillasHigienePersonalInput, SucursalUncheckedCreateWithoutPlanillasHigienePersonalInput>
+    connectOrCreate?: SucursalCreateOrConnectWithoutPlanillasHigienePersonalInput
+    connect?: SucursalWhereUniqueInput
+  }
+
+  export type Cal_RegistroHigienePersonalCreateNestedManyWithoutPlanillaInput = {
+    create?: XOR<Cal_RegistroHigienePersonalCreateWithoutPlanillaInput, Cal_RegistroHigienePersonalUncheckedCreateWithoutPlanillaInput> | Cal_RegistroHigienePersonalCreateWithoutPlanillaInput[] | Cal_RegistroHigienePersonalUncheckedCreateWithoutPlanillaInput[]
+    connectOrCreate?: Cal_RegistroHigienePersonalCreateOrConnectWithoutPlanillaInput | Cal_RegistroHigienePersonalCreateOrConnectWithoutPlanillaInput[]
+    createMany?: Cal_RegistroHigienePersonalCreateManyPlanillaInputEnvelope
+    connect?: Cal_RegistroHigienePersonalWhereUniqueInput | Cal_RegistroHigienePersonalWhereUniqueInput[]
+  }
+
+  export type Cal_RegistroHigienePersonalUncheckedCreateNestedManyWithoutPlanillaInput = {
+    create?: XOR<Cal_RegistroHigienePersonalCreateWithoutPlanillaInput, Cal_RegistroHigienePersonalUncheckedCreateWithoutPlanillaInput> | Cal_RegistroHigienePersonalCreateWithoutPlanillaInput[] | Cal_RegistroHigienePersonalUncheckedCreateWithoutPlanillaInput[]
+    connectOrCreate?: Cal_RegistroHigienePersonalCreateOrConnectWithoutPlanillaInput | Cal_RegistroHigienePersonalCreateOrConnectWithoutPlanillaInput[]
+    createMany?: Cal_RegistroHigienePersonalCreateManyPlanillaInputEnvelope
+    connect?: Cal_RegistroHigienePersonalWhereUniqueInput | Cal_RegistroHigienePersonalWhereUniqueInput[]
+  }
+
+  export type SucursalUpdateOneRequiredWithoutPlanillasHigienePersonalNestedInput = {
+    create?: XOR<SucursalCreateWithoutPlanillasHigienePersonalInput, SucursalUncheckedCreateWithoutPlanillasHigienePersonalInput>
+    connectOrCreate?: SucursalCreateOrConnectWithoutPlanillasHigienePersonalInput
+    upsert?: SucursalUpsertWithoutPlanillasHigienePersonalInput
+    connect?: SucursalWhereUniqueInput
+    update?: XOR<XOR<SucursalUpdateToOneWithWhereWithoutPlanillasHigienePersonalInput, SucursalUpdateWithoutPlanillasHigienePersonalInput>, SucursalUncheckedUpdateWithoutPlanillasHigienePersonalInput>
+  }
+
+  export type Cal_RegistroHigienePersonalUpdateManyWithoutPlanillaNestedInput = {
+    create?: XOR<Cal_RegistroHigienePersonalCreateWithoutPlanillaInput, Cal_RegistroHigienePersonalUncheckedCreateWithoutPlanillaInput> | Cal_RegistroHigienePersonalCreateWithoutPlanillaInput[] | Cal_RegistroHigienePersonalUncheckedCreateWithoutPlanillaInput[]
+    connectOrCreate?: Cal_RegistroHigienePersonalCreateOrConnectWithoutPlanillaInput | Cal_RegistroHigienePersonalCreateOrConnectWithoutPlanillaInput[]
+    upsert?: Cal_RegistroHigienePersonalUpsertWithWhereUniqueWithoutPlanillaInput | Cal_RegistroHigienePersonalUpsertWithWhereUniqueWithoutPlanillaInput[]
+    createMany?: Cal_RegistroHigienePersonalCreateManyPlanillaInputEnvelope
+    set?: Cal_RegistroHigienePersonalWhereUniqueInput | Cal_RegistroHigienePersonalWhereUniqueInput[]
+    disconnect?: Cal_RegistroHigienePersonalWhereUniqueInput | Cal_RegistroHigienePersonalWhereUniqueInput[]
+    delete?: Cal_RegistroHigienePersonalWhereUniqueInput | Cal_RegistroHigienePersonalWhereUniqueInput[]
+    connect?: Cal_RegistroHigienePersonalWhereUniqueInput | Cal_RegistroHigienePersonalWhereUniqueInput[]
+    update?: Cal_RegistroHigienePersonalUpdateWithWhereUniqueWithoutPlanillaInput | Cal_RegistroHigienePersonalUpdateWithWhereUniqueWithoutPlanillaInput[]
+    updateMany?: Cal_RegistroHigienePersonalUpdateManyWithWhereWithoutPlanillaInput | Cal_RegistroHigienePersonalUpdateManyWithWhereWithoutPlanillaInput[]
+    deleteMany?: Cal_RegistroHigienePersonalScalarWhereInput | Cal_RegistroHigienePersonalScalarWhereInput[]
+  }
+
+  export type Cal_RegistroHigienePersonalUncheckedUpdateManyWithoutPlanillaNestedInput = {
+    create?: XOR<Cal_RegistroHigienePersonalCreateWithoutPlanillaInput, Cal_RegistroHigienePersonalUncheckedCreateWithoutPlanillaInput> | Cal_RegistroHigienePersonalCreateWithoutPlanillaInput[] | Cal_RegistroHigienePersonalUncheckedCreateWithoutPlanillaInput[]
+    connectOrCreate?: Cal_RegistroHigienePersonalCreateOrConnectWithoutPlanillaInput | Cal_RegistroHigienePersonalCreateOrConnectWithoutPlanillaInput[]
+    upsert?: Cal_RegistroHigienePersonalUpsertWithWhereUniqueWithoutPlanillaInput | Cal_RegistroHigienePersonalUpsertWithWhereUniqueWithoutPlanillaInput[]
+    createMany?: Cal_RegistroHigienePersonalCreateManyPlanillaInputEnvelope
+    set?: Cal_RegistroHigienePersonalWhereUniqueInput | Cal_RegistroHigienePersonalWhereUniqueInput[]
+    disconnect?: Cal_RegistroHigienePersonalWhereUniqueInput | Cal_RegistroHigienePersonalWhereUniqueInput[]
+    delete?: Cal_RegistroHigienePersonalWhereUniqueInput | Cal_RegistroHigienePersonalWhereUniqueInput[]
+    connect?: Cal_RegistroHigienePersonalWhereUniqueInput | Cal_RegistroHigienePersonalWhereUniqueInput[]
+    update?: Cal_RegistroHigienePersonalUpdateWithWhereUniqueWithoutPlanillaInput | Cal_RegistroHigienePersonalUpdateWithWhereUniqueWithoutPlanillaInput[]
+    updateMany?: Cal_RegistroHigienePersonalUpdateManyWithWhereWithoutPlanillaInput | Cal_RegistroHigienePersonalUpdateManyWithWhereWithoutPlanillaInput[]
+    deleteMany?: Cal_RegistroHigienePersonalScalarWhereInput | Cal_RegistroHigienePersonalScalarWhereInput[]
+  }
+
+  export type Cal_PlanillaHigienePersonalCreateNestedOneWithoutRegistrosInput = {
+    create?: XOR<Cal_PlanillaHigienePersonalCreateWithoutRegistrosInput, Cal_PlanillaHigienePersonalUncheckedCreateWithoutRegistrosInput>
+    connectOrCreate?: Cal_PlanillaHigienePersonalCreateOrConnectWithoutRegistrosInput
+    connect?: Cal_PlanillaHigienePersonalWhereUniqueInput
+  }
+
+  export type Cal_PlanillaHigienePersonalUpdateOneRequiredWithoutRegistrosNestedInput = {
+    create?: XOR<Cal_PlanillaHigienePersonalCreateWithoutRegistrosInput, Cal_PlanillaHigienePersonalUncheckedCreateWithoutRegistrosInput>
+    connectOrCreate?: Cal_PlanillaHigienePersonalCreateOrConnectWithoutRegistrosInput
+    upsert?: Cal_PlanillaHigienePersonalUpsertWithoutRegistrosInput
+    connect?: Cal_PlanillaHigienePersonalWhereUniqueInput
+    update?: XOR<XOR<Cal_PlanillaHigienePersonalUpdateToOneWithWhereWithoutRegistrosInput, Cal_PlanillaHigienePersonalUpdateWithoutRegistrosInput>, Cal_PlanillaHigienePersonalUncheckedUpdateWithoutRegistrosInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -177476,6 +184002,8 @@ export namespace Prisma {
     jefesZonales?: JefeZonalSucursalCreateNestedManyWithoutSucursalInput
     vehiculos?: VehiculoCreateNestedManyWithoutSucursalInput
     delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutSucursalInput
+    planillasTransporte?: Cal_PlanillaTransporteCreateNestedManyWithoutSucursalInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalUncheckedCreateWithoutUsersInput = {
@@ -177494,6 +184022,8 @@ export namespace Prisma {
     jefesZonales?: JefeZonalSucursalUncheckedCreateNestedManyWithoutSucursalInput
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutSucursalInput
     delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput
+    planillasTransporte?: Cal_PlanillaTransporteUncheckedCreateNestedManyWithoutSucursalInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalCreateOrConnectWithoutUsersInput = {
@@ -177861,6 +184391,8 @@ export namespace Prisma {
     jefesZonales?: JefeZonalSucursalCreateNestedManyWithoutSucursalInput
     vehiculos?: VehiculoCreateNestedManyWithoutSucursalInput
     delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutSucursalInput
+    planillasTransporte?: Cal_PlanillaTransporteCreateNestedManyWithoutSucursalInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalUncheckedCreateWithoutListasCorreoInput = {
@@ -177879,6 +184411,8 @@ export namespace Prisma {
     jefesZonales?: JefeZonalSucursalUncheckedCreateNestedManyWithoutSucursalInput
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutSucursalInput
     delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput
+    planillasTransporte?: Cal_PlanillaTransporteUncheckedCreateNestedManyWithoutSucursalInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalCreateOrConnectWithoutListasCorreoInput = {
@@ -177939,6 +184473,8 @@ export namespace Prisma {
     jefesZonales?: JefeZonalSucursalUpdateManyWithoutSucursalNestedInput
     vehiculos?: VehiculoUpdateManyWithoutSucursalNestedInput
     delegaciones?: DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput
+    planillasTransporte?: Cal_PlanillaTransporteUpdateManyWithoutSucursalNestedInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUpdateManyWithoutSucursalNestedInput
   }
 
   export type SucursalUncheckedUpdateWithoutListasCorreoInput = {
@@ -177957,6 +184493,8 @@ export namespace Prisma {
     jefesZonales?: JefeZonalSucursalUncheckedUpdateManyWithoutSucursalNestedInput
     vehiculos?: VehiculoUncheckedUpdateManyWithoutSucursalNestedInput
     delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput
+    planillasTransporte?: Cal_PlanillaTransporteUncheckedUpdateManyWithoutSucursalNestedInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedUpdateManyWithoutSucursalNestedInput
   }
 
   export type NotificacionPantallaUpsertWithWhereUniqueWithoutListaCorreoInput = {
@@ -178843,6 +185381,106 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type Cal_PlanillaTransporteCreateWithoutSucursalInput = {
+    id?: string
+    fecha: Date | string
+    fechaTexto: string
+    estado?: string
+    firmaCalidadUser?: string | null
+    firmaCalidadUserId?: string | null
+    firmaCalidadFecha?: Date | string | null
+    firmaCalidadDiasAtraso?: number
+    firmaCalidadImg?: string | null
+    firmaBodegaUser?: string | null
+    firmaBodegaUserId?: string | null
+    firmaBodegaFecha?: Date | string | null
+    firmaBodegaImg?: string | null
+    observacionesGenerales?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    registros?: Cal_RegistroTransporteCreateNestedManyWithoutPlanillaInput
+  }
+
+  export type Cal_PlanillaTransporteUncheckedCreateWithoutSucursalInput = {
+    id?: string
+    fecha: Date | string
+    fechaTexto: string
+    estado?: string
+    firmaCalidadUser?: string | null
+    firmaCalidadUserId?: string | null
+    firmaCalidadFecha?: Date | string | null
+    firmaCalidadDiasAtraso?: number
+    firmaCalidadImg?: string | null
+    firmaBodegaUser?: string | null
+    firmaBodegaUserId?: string | null
+    firmaBodegaFecha?: Date | string | null
+    firmaBodegaImg?: string | null
+    observacionesGenerales?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    registros?: Cal_RegistroTransporteUncheckedCreateNestedManyWithoutPlanillaInput
+  }
+
+  export type Cal_PlanillaTransporteCreateOrConnectWithoutSucursalInput = {
+    where: Cal_PlanillaTransporteWhereUniqueInput
+    create: XOR<Cal_PlanillaTransporteCreateWithoutSucursalInput, Cal_PlanillaTransporteUncheckedCreateWithoutSucursalInput>
+  }
+
+  export type Cal_PlanillaTransporteCreateManySucursalInputEnvelope = {
+    data: Cal_PlanillaTransporteCreateManySucursalInput | Cal_PlanillaTransporteCreateManySucursalInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type Cal_PlanillaHigienePersonalCreateWithoutSucursalInput = {
+    id?: string
+    fecha: Date | string
+    fechaTexto: string
+    estado?: string
+    firmaCalidadUser?: string | null
+    firmaCalidadUserId?: string | null
+    firmaCalidadFecha?: Date | string | null
+    firmaCalidadDiasAtraso?: number
+    firmaCalidadImg?: string | null
+    firmaBodegaUser?: string | null
+    firmaBodegaUserId?: string | null
+    firmaBodegaFecha?: Date | string | null
+    firmaBodegaImg?: string | null
+    observacionesGenerales?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    registros?: Cal_RegistroHigienePersonalCreateNestedManyWithoutPlanillaInput
+  }
+
+  export type Cal_PlanillaHigienePersonalUncheckedCreateWithoutSucursalInput = {
+    id?: string
+    fecha: Date | string
+    fechaTexto: string
+    estado?: string
+    firmaCalidadUser?: string | null
+    firmaCalidadUserId?: string | null
+    firmaCalidadFecha?: Date | string | null
+    firmaCalidadDiasAtraso?: number
+    firmaCalidadImg?: string | null
+    firmaBodegaUser?: string | null
+    firmaBodegaUserId?: string | null
+    firmaBodegaFecha?: Date | string | null
+    firmaBodegaImg?: string | null
+    observacionesGenerales?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    registros?: Cal_RegistroHigienePersonalUncheckedCreateNestedManyWithoutPlanillaInput
+  }
+
+  export type Cal_PlanillaHigienePersonalCreateOrConnectWithoutSucursalInput = {
+    where: Cal_PlanillaHigienePersonalWhereUniqueInput
+    create: XOR<Cal_PlanillaHigienePersonalCreateWithoutSucursalInput, Cal_PlanillaHigienePersonalUncheckedCreateWithoutSucursalInput>
+  }
+
+  export type Cal_PlanillaHigienePersonalCreateManySucursalInputEnvelope = {
+    data: Cal_PlanillaHigienePersonalCreateManySucursalInput | Cal_PlanillaHigienePersonalCreateManySucursalInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ListaCorreoUpsertWithWhereUniqueWithoutSucursalInput = {
     where: ListaCorreoWhereUniqueInput
     update: XOR<ListaCorreoUpdateWithoutSucursalInput, ListaCorreoUncheckedUpdateWithoutSucursalInput>
@@ -179047,6 +185685,84 @@ export namespace Prisma {
     data: XOR<DelegacionVisualizacionUpdateManyMutationInput, DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalInput>
   }
 
+  export type Cal_PlanillaTransporteUpsertWithWhereUniqueWithoutSucursalInput = {
+    where: Cal_PlanillaTransporteWhereUniqueInput
+    update: XOR<Cal_PlanillaTransporteUpdateWithoutSucursalInput, Cal_PlanillaTransporteUncheckedUpdateWithoutSucursalInput>
+    create: XOR<Cal_PlanillaTransporteCreateWithoutSucursalInput, Cal_PlanillaTransporteUncheckedCreateWithoutSucursalInput>
+  }
+
+  export type Cal_PlanillaTransporteUpdateWithWhereUniqueWithoutSucursalInput = {
+    where: Cal_PlanillaTransporteWhereUniqueInput
+    data: XOR<Cal_PlanillaTransporteUpdateWithoutSucursalInput, Cal_PlanillaTransporteUncheckedUpdateWithoutSucursalInput>
+  }
+
+  export type Cal_PlanillaTransporteUpdateManyWithWhereWithoutSucursalInput = {
+    where: Cal_PlanillaTransporteScalarWhereInput
+    data: XOR<Cal_PlanillaTransporteUpdateManyMutationInput, Cal_PlanillaTransporteUncheckedUpdateManyWithoutSucursalInput>
+  }
+
+  export type Cal_PlanillaTransporteScalarWhereInput = {
+    AND?: Cal_PlanillaTransporteScalarWhereInput | Cal_PlanillaTransporteScalarWhereInput[]
+    OR?: Cal_PlanillaTransporteScalarWhereInput[]
+    NOT?: Cal_PlanillaTransporteScalarWhereInput | Cal_PlanillaTransporteScalarWhereInput[]
+    id?: StringFilter<"Cal_PlanillaTransporte"> | string
+    sucursalId?: StringFilter<"Cal_PlanillaTransporte"> | string
+    fecha?: DateTimeFilter<"Cal_PlanillaTransporte"> | Date | string
+    fechaTexto?: StringFilter<"Cal_PlanillaTransporte"> | string
+    estado?: StringFilter<"Cal_PlanillaTransporte"> | string
+    firmaCalidadUser?: StringNullableFilter<"Cal_PlanillaTransporte"> | string | null
+    firmaCalidadUserId?: StringNullableFilter<"Cal_PlanillaTransporte"> | string | null
+    firmaCalidadFecha?: DateTimeNullableFilter<"Cal_PlanillaTransporte"> | Date | string | null
+    firmaCalidadDiasAtraso?: IntFilter<"Cal_PlanillaTransporte"> | number
+    firmaCalidadImg?: StringNullableFilter<"Cal_PlanillaTransporte"> | string | null
+    firmaBodegaUser?: StringNullableFilter<"Cal_PlanillaTransporte"> | string | null
+    firmaBodegaUserId?: StringNullableFilter<"Cal_PlanillaTransporte"> | string | null
+    firmaBodegaFecha?: DateTimeNullableFilter<"Cal_PlanillaTransporte"> | Date | string | null
+    firmaBodegaImg?: StringNullableFilter<"Cal_PlanillaTransporte"> | string | null
+    observacionesGenerales?: StringNullableFilter<"Cal_PlanillaTransporte"> | string | null
+    createdAt?: DateTimeFilter<"Cal_PlanillaTransporte"> | Date | string
+    updatedAt?: DateTimeFilter<"Cal_PlanillaTransporte"> | Date | string
+  }
+
+  export type Cal_PlanillaHigienePersonalUpsertWithWhereUniqueWithoutSucursalInput = {
+    where: Cal_PlanillaHigienePersonalWhereUniqueInput
+    update: XOR<Cal_PlanillaHigienePersonalUpdateWithoutSucursalInput, Cal_PlanillaHigienePersonalUncheckedUpdateWithoutSucursalInput>
+    create: XOR<Cal_PlanillaHigienePersonalCreateWithoutSucursalInput, Cal_PlanillaHigienePersonalUncheckedCreateWithoutSucursalInput>
+  }
+
+  export type Cal_PlanillaHigienePersonalUpdateWithWhereUniqueWithoutSucursalInput = {
+    where: Cal_PlanillaHigienePersonalWhereUniqueInput
+    data: XOR<Cal_PlanillaHigienePersonalUpdateWithoutSucursalInput, Cal_PlanillaHigienePersonalUncheckedUpdateWithoutSucursalInput>
+  }
+
+  export type Cal_PlanillaHigienePersonalUpdateManyWithWhereWithoutSucursalInput = {
+    where: Cal_PlanillaHigienePersonalScalarWhereInput
+    data: XOR<Cal_PlanillaHigienePersonalUpdateManyMutationInput, Cal_PlanillaHigienePersonalUncheckedUpdateManyWithoutSucursalInput>
+  }
+
+  export type Cal_PlanillaHigienePersonalScalarWhereInput = {
+    AND?: Cal_PlanillaHigienePersonalScalarWhereInput | Cal_PlanillaHigienePersonalScalarWhereInput[]
+    OR?: Cal_PlanillaHigienePersonalScalarWhereInput[]
+    NOT?: Cal_PlanillaHigienePersonalScalarWhereInput | Cal_PlanillaHigienePersonalScalarWhereInput[]
+    id?: StringFilter<"Cal_PlanillaHigienePersonal"> | string
+    sucursalId?: StringFilter<"Cal_PlanillaHigienePersonal"> | string
+    fecha?: DateTimeFilter<"Cal_PlanillaHigienePersonal"> | Date | string
+    fechaTexto?: StringFilter<"Cal_PlanillaHigienePersonal"> | string
+    estado?: StringFilter<"Cal_PlanillaHigienePersonal"> | string
+    firmaCalidadUser?: StringNullableFilter<"Cal_PlanillaHigienePersonal"> | string | null
+    firmaCalidadUserId?: StringNullableFilter<"Cal_PlanillaHigienePersonal"> | string | null
+    firmaCalidadFecha?: DateTimeNullableFilter<"Cal_PlanillaHigienePersonal"> | Date | string | null
+    firmaCalidadDiasAtraso?: IntFilter<"Cal_PlanillaHigienePersonal"> | number
+    firmaCalidadImg?: StringNullableFilter<"Cal_PlanillaHigienePersonal"> | string | null
+    firmaBodegaUser?: StringNullableFilter<"Cal_PlanillaHigienePersonal"> | string | null
+    firmaBodegaUserId?: StringNullableFilter<"Cal_PlanillaHigienePersonal"> | string | null
+    firmaBodegaFecha?: DateTimeNullableFilter<"Cal_PlanillaHigienePersonal"> | Date | string | null
+    firmaBodegaImg?: StringNullableFilter<"Cal_PlanillaHigienePersonal"> | string | null
+    observacionesGenerales?: StringNullableFilter<"Cal_PlanillaHigienePersonal"> | string | null
+    createdAt?: DateTimeFilter<"Cal_PlanillaHigienePersonal"> | Date | string
+    updatedAt?: DateTimeFilter<"Cal_PlanillaHigienePersonal"> | Date | string
+  }
+
   export type SucursalCreateWithoutPresupuestosInput = {
     id?: string
     nombre: string
@@ -179063,6 +185779,8 @@ export namespace Prisma {
     jefesZonales?: JefeZonalSucursalCreateNestedManyWithoutSucursalInput
     vehiculos?: VehiculoCreateNestedManyWithoutSucursalInput
     delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutSucursalInput
+    planillasTransporte?: Cal_PlanillaTransporteCreateNestedManyWithoutSucursalInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalUncheckedCreateWithoutPresupuestosInput = {
@@ -179081,6 +185799,8 @@ export namespace Prisma {
     jefesZonales?: JefeZonalSucursalUncheckedCreateNestedManyWithoutSucursalInput
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutSucursalInput
     delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput
+    planillasTransporte?: Cal_PlanillaTransporteUncheckedCreateNestedManyWithoutSucursalInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalCreateOrConnectWithoutPresupuestosInput = {
@@ -179115,6 +185835,8 @@ export namespace Prisma {
     jefesZonales?: JefeZonalSucursalUpdateManyWithoutSucursalNestedInput
     vehiculos?: VehiculoUpdateManyWithoutSucursalNestedInput
     delegaciones?: DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput
+    planillasTransporte?: Cal_PlanillaTransporteUpdateManyWithoutSucursalNestedInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUpdateManyWithoutSucursalNestedInput
   }
 
   export type SucursalUncheckedUpdateWithoutPresupuestosInput = {
@@ -179133,6 +185855,8 @@ export namespace Prisma {
     jefesZonales?: JefeZonalSucursalUncheckedUpdateManyWithoutSucursalNestedInput
     vehiculos?: VehiculoUncheckedUpdateManyWithoutSucursalNestedInput
     delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput
+    planillasTransporte?: Cal_PlanillaTransporteUncheckedUpdateManyWithoutSucursalNestedInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedUpdateManyWithoutSucursalNestedInput
   }
 
   export type LicitacionCreateWithoutUtsInput = {
@@ -179183,6 +185907,8 @@ export namespace Prisma {
     jefesZonales?: JefeZonalSucursalCreateNestedManyWithoutSucursalInput
     vehiculos?: VehiculoCreateNestedManyWithoutSucursalInput
     delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutSucursalInput
+    planillasTransporte?: Cal_PlanillaTransporteCreateNestedManyWithoutSucursalInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalUncheckedCreateWithoutUtsInput = {
@@ -179201,6 +185927,8 @@ export namespace Prisma {
     jefesZonales?: JefeZonalSucursalUncheckedCreateNestedManyWithoutSucursalInput
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutSucursalInput
     delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput
+    planillasTransporte?: Cal_PlanillaTransporteUncheckedCreateNestedManyWithoutSucursalInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalCreateOrConnectWithoutUtsInput = {
@@ -179357,6 +186085,8 @@ export namespace Prisma {
     jefesZonales?: JefeZonalSucursalUpdateManyWithoutSucursalNestedInput
     vehiculos?: VehiculoUpdateManyWithoutSucursalNestedInput
     delegaciones?: DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput
+    planillasTransporte?: Cal_PlanillaTransporteUpdateManyWithoutSucursalNestedInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUpdateManyWithoutSucursalNestedInput
   }
 
   export type SucursalUncheckedUpdateWithoutUtsInput = {
@@ -179375,6 +186105,8 @@ export namespace Prisma {
     jefesZonales?: JefeZonalSucursalUncheckedUpdateManyWithoutSucursalNestedInput
     vehiculos?: VehiculoUncheckedUpdateManyWithoutSucursalNestedInput
     delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput
+    planillasTransporte?: Cal_PlanillaTransporteUncheckedUpdateManyWithoutSucursalNestedInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedUpdateManyWithoutSucursalNestedInput
   }
 
   export type PMPAUpsertWithWhereUniqueWithoutUtInput = {
@@ -180215,6 +186947,8 @@ export namespace Prisma {
     jefesZonales?: JefeZonalSucursalCreateNestedManyWithoutSucursalInput
     vehiculos?: VehiculoCreateNestedManyWithoutSucursalInput
     delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutSucursalInput
+    planillasTransporte?: Cal_PlanillaTransporteCreateNestedManyWithoutSucursalInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalUncheckedCreateWithoutRetornoProductosSucursalEstadoInput = {
@@ -180233,6 +186967,8 @@ export namespace Prisma {
     jefesZonales?: JefeZonalSucursalUncheckedCreateNestedManyWithoutSucursalInput
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutSucursalInput
     delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput
+    planillasTransporte?: Cal_PlanillaTransporteUncheckedCreateNestedManyWithoutSucursalInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalCreateOrConnectWithoutRetornoProductosSucursalEstadoInput = {
@@ -180310,6 +187046,8 @@ export namespace Prisma {
     jefesZonales?: JefeZonalSucursalUpdateManyWithoutSucursalNestedInput
     vehiculos?: VehiculoUpdateManyWithoutSucursalNestedInput
     delegaciones?: DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput
+    planillasTransporte?: Cal_PlanillaTransporteUpdateManyWithoutSucursalNestedInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUpdateManyWithoutSucursalNestedInput
   }
 
   export type SucursalUncheckedUpdateWithoutRetornoProductosSucursalEstadoInput = {
@@ -180328,6 +187066,8 @@ export namespace Prisma {
     jefesZonales?: JefeZonalSucursalUncheckedUpdateManyWithoutSucursalNestedInput
     vehiculos?: VehiculoUncheckedUpdateManyWithoutSucursalNestedInput
     delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput
+    planillasTransporte?: Cal_PlanillaTransporteUncheckedUpdateManyWithoutSucursalNestedInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedUpdateManyWithoutSucursalNestedInput
   }
 
   export type RetornoProductosAlertaCreateWithoutMovimientosInput = {
@@ -180383,6 +187123,8 @@ export namespace Prisma {
     jefesZonales?: JefeZonalSucursalCreateNestedManyWithoutSucursalInput
     vehiculos?: VehiculoCreateNestedManyWithoutSucursalInput
     delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutSucursalInput
+    planillasTransporte?: Cal_PlanillaTransporteCreateNestedManyWithoutSucursalInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalUncheckedCreateWithoutRetornoProductosMovimientoInput = {
@@ -180401,6 +187143,8 @@ export namespace Prisma {
     jefesZonales?: JefeZonalSucursalUncheckedCreateNestedManyWithoutSucursalInput
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutSucursalInput
     delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput
+    planillasTransporte?: Cal_PlanillaTransporteUncheckedCreateNestedManyWithoutSucursalInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalCreateOrConnectWithoutRetornoProductosMovimientoInput = {
@@ -180478,6 +187222,8 @@ export namespace Prisma {
     jefesZonales?: JefeZonalSucursalUpdateManyWithoutSucursalNestedInput
     vehiculos?: VehiculoUpdateManyWithoutSucursalNestedInput
     delegaciones?: DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput
+    planillasTransporte?: Cal_PlanillaTransporteUpdateManyWithoutSucursalNestedInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUpdateManyWithoutSucursalNestedInput
   }
 
   export type SucursalUncheckedUpdateWithoutRetornoProductosMovimientoInput = {
@@ -180496,6 +187242,8 @@ export namespace Prisma {
     jefesZonales?: JefeZonalSucursalUncheckedUpdateManyWithoutSucursalNestedInput
     vehiculos?: VehiculoUncheckedUpdateManyWithoutSucursalNestedInput
     delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput
+    planillasTransporte?: Cal_PlanillaTransporteUncheckedUpdateManyWithoutSucursalNestedInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedUpdateManyWithoutSucursalNestedInput
   }
 
   export type CapCertificacionDetailCreateWithoutHeaderInput = {
@@ -181303,6 +188051,8 @@ export namespace Prisma {
     users?: UserCreateNestedManyWithoutSucursalesInput
     jefesZonales?: JefeZonalSucursalCreateNestedManyWithoutSucursalInput
     delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutSucursalInput
+    planillasTransporte?: Cal_PlanillaTransporteCreateNestedManyWithoutSucursalInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalUncheckedCreateWithoutVehiculosInput = {
@@ -181321,6 +188071,8 @@ export namespace Prisma {
     users?: UserUncheckedCreateNestedManyWithoutSucursalesInput
     jefesZonales?: JefeZonalSucursalUncheckedCreateNestedManyWithoutSucursalInput
     delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput
+    planillasTransporte?: Cal_PlanillaTransporteUncheckedCreateNestedManyWithoutSucursalInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalCreateOrConnectWithoutVehiculosInput = {
@@ -181490,6 +188242,8 @@ export namespace Prisma {
     users?: UserUpdateManyWithoutSucursalesNestedInput
     jefesZonales?: JefeZonalSucursalUpdateManyWithoutSucursalNestedInput
     delegaciones?: DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput
+    planillasTransporte?: Cal_PlanillaTransporteUpdateManyWithoutSucursalNestedInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUpdateManyWithoutSucursalNestedInput
   }
 
   export type SucursalUncheckedUpdateWithoutVehiculosInput = {
@@ -181508,6 +188262,8 @@ export namespace Prisma {
     users?: UserUncheckedUpdateManyWithoutSucursalesNestedInput
     jefesZonales?: JefeZonalSucursalUncheckedUpdateManyWithoutSucursalNestedInput
     delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput
+    planillasTransporte?: Cal_PlanillaTransporteUncheckedUpdateManyWithoutSucursalNestedInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedUpdateManyWithoutSucursalNestedInput
   }
 
   export type TipoVehiculoUpsertWithoutVehiculosInput = {
@@ -182069,6 +188825,8 @@ export namespace Prisma {
     users?: UserCreateNestedManyWithoutSucursalesInput
     vehiculos?: VehiculoCreateNestedManyWithoutSucursalInput
     delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutSucursalInput
+    planillasTransporte?: Cal_PlanillaTransporteCreateNestedManyWithoutSucursalInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalUncheckedCreateWithoutJefesZonalesInput = {
@@ -182087,6 +188845,8 @@ export namespace Prisma {
     users?: UserUncheckedCreateNestedManyWithoutSucursalesInput
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutSucursalInput
     delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput
+    planillasTransporte?: Cal_PlanillaTransporteUncheckedCreateNestedManyWithoutSucursalInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalCreateOrConnectWithoutJefesZonalesInput = {
@@ -182160,6 +188920,8 @@ export namespace Prisma {
     users?: UserUpdateManyWithoutSucursalesNestedInput
     vehiculos?: VehiculoUpdateManyWithoutSucursalNestedInput
     delegaciones?: DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput
+    planillasTransporte?: Cal_PlanillaTransporteUpdateManyWithoutSucursalNestedInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUpdateManyWithoutSucursalNestedInput
   }
 
   export type SucursalUncheckedUpdateWithoutJefesZonalesInput = {
@@ -182178,6 +188940,8 @@ export namespace Prisma {
     users?: UserUncheckedUpdateManyWithoutSucursalesNestedInput
     vehiculos?: VehiculoUncheckedUpdateManyWithoutSucursalNestedInput
     delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput
+    planillasTransporte?: Cal_PlanillaTransporteUncheckedUpdateManyWithoutSucursalNestedInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedUpdateManyWithoutSucursalNestedInput
   }
 
   export type JefeZonalCreateWithoutVehiculosInput = {
@@ -184097,6 +190861,8 @@ export namespace Prisma {
     users?: UserCreateNestedManyWithoutSucursalesInput
     jefesZonales?: JefeZonalSucursalCreateNestedManyWithoutSucursalInput
     vehiculos?: VehiculoCreateNestedManyWithoutSucursalInput
+    planillasTransporte?: Cal_PlanillaTransporteCreateNestedManyWithoutSucursalInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalUncheckedCreateWithoutDelegacionesInput = {
@@ -184115,6 +190881,8 @@ export namespace Prisma {
     users?: UserUncheckedCreateNestedManyWithoutSucursalesInput
     jefesZonales?: JefeZonalSucursalUncheckedCreateNestedManyWithoutSucursalInput
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutSucursalInput
+    planillasTransporte?: Cal_PlanillaTransporteUncheckedCreateNestedManyWithoutSucursalInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedCreateNestedManyWithoutSucursalInput
   }
 
   export type SucursalCreateOrConnectWithoutDelegacionesInput = {
@@ -184200,6 +190968,8 @@ export namespace Prisma {
     users?: UserUpdateManyWithoutSucursalesNestedInput
     jefesZonales?: JefeZonalSucursalUpdateManyWithoutSucursalNestedInput
     vehiculos?: VehiculoUpdateManyWithoutSucursalNestedInput
+    planillasTransporte?: Cal_PlanillaTransporteUpdateManyWithoutSucursalNestedInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUpdateManyWithoutSucursalNestedInput
   }
 
   export type SucursalUncheckedUpdateWithoutDelegacionesInput = {
@@ -184218,6 +190988,8 @@ export namespace Prisma {
     users?: UserUncheckedUpdateManyWithoutSucursalesNestedInput
     jefesZonales?: JefeZonalSucursalUncheckedUpdateManyWithoutSucursalNestedInput
     vehiculos?: VehiculoUncheckedUpdateManyWithoutSucursalNestedInput
+    planillasTransporte?: Cal_PlanillaTransporteUncheckedUpdateManyWithoutSucursalNestedInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedUpdateManyWithoutSucursalNestedInput
   }
 
   export type LicitacionCreateWithoutActasPlantillasInput = {
@@ -189584,6 +196356,558 @@ export namespace Prisma {
     usuarios?: LogUsuarioBodegaUncheckedUpdateManyWithoutBodegaNestedInput
   }
 
+  export type SucursalCreateWithoutPlanillasTransporteInput = {
+    id?: string
+    nombre: string
+    region?: string | null
+    comuna?: string | null
+    direccion?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    listasCorreo?: ListaCorreoCreateNestedManyWithoutSucursalInput
+    presupuestos?: PresupuestoCreateNestedManyWithoutSucursalInput
+    RetornoProductosMovimiento?: RetornoProductosMovimientoCreateNestedManyWithoutSucursalInput
+    RetornoProductosSucursalEstado?: RetornoProductosSucursalEstadoCreateNestedManyWithoutSucursalInput
+    uts?: UTCreateNestedManyWithoutSucursalInput
+    users?: UserCreateNestedManyWithoutSucursalesInput
+    jefesZonales?: JefeZonalSucursalCreateNestedManyWithoutSucursalInput
+    vehiculos?: VehiculoCreateNestedManyWithoutSucursalInput
+    delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutSucursalInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalCreateNestedManyWithoutSucursalInput
+  }
+
+  export type SucursalUncheckedCreateWithoutPlanillasTransporteInput = {
+    id?: string
+    nombre: string
+    region?: string | null
+    comuna?: string | null
+    direccion?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    listasCorreo?: ListaCorreoUncheckedCreateNestedManyWithoutSucursalInput
+    presupuestos?: PresupuestoUncheckedCreateNestedManyWithoutSucursalInput
+    RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedCreateNestedManyWithoutSucursalInput
+    RetornoProductosSucursalEstado?: RetornoProductosSucursalEstadoUncheckedCreateNestedManyWithoutSucursalInput
+    uts?: UTUncheckedCreateNestedManyWithoutSucursalInput
+    users?: UserUncheckedCreateNestedManyWithoutSucursalesInput
+    jefesZonales?: JefeZonalSucursalUncheckedCreateNestedManyWithoutSucursalInput
+    vehiculos?: VehiculoUncheckedCreateNestedManyWithoutSucursalInput
+    delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedCreateNestedManyWithoutSucursalInput
+  }
+
+  export type SucursalCreateOrConnectWithoutPlanillasTransporteInput = {
+    where: SucursalWhereUniqueInput
+    create: XOR<SucursalCreateWithoutPlanillasTransporteInput, SucursalUncheckedCreateWithoutPlanillasTransporteInput>
+  }
+
+  export type Cal_RegistroTransporteCreateWithoutPlanillaInput = {
+    id?: string
+    patenteEncriptada: string
+    limpiezaInterior?: string
+    limpiezaExterior?: string
+    puertaCamara?: string
+    piezasSinOxidacion?: string
+    equipoCongelacion?: string
+    equipoRefrigeracion?: string
+    observacion?: string | null
+    accionCorrectiva?: string | null
+    creadoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Cal_RegistroTransporteUncheckedCreateWithoutPlanillaInput = {
+    id?: string
+    patenteEncriptada: string
+    limpiezaInterior?: string
+    limpiezaExterior?: string
+    puertaCamara?: string
+    piezasSinOxidacion?: string
+    equipoCongelacion?: string
+    equipoRefrigeracion?: string
+    observacion?: string | null
+    accionCorrectiva?: string | null
+    creadoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Cal_RegistroTransporteCreateOrConnectWithoutPlanillaInput = {
+    where: Cal_RegistroTransporteWhereUniqueInput
+    create: XOR<Cal_RegistroTransporteCreateWithoutPlanillaInput, Cal_RegistroTransporteUncheckedCreateWithoutPlanillaInput>
+  }
+
+  export type Cal_RegistroTransporteCreateManyPlanillaInputEnvelope = {
+    data: Cal_RegistroTransporteCreateManyPlanillaInput | Cal_RegistroTransporteCreateManyPlanillaInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SucursalUpsertWithoutPlanillasTransporteInput = {
+    update: XOR<SucursalUpdateWithoutPlanillasTransporteInput, SucursalUncheckedUpdateWithoutPlanillasTransporteInput>
+    create: XOR<SucursalCreateWithoutPlanillasTransporteInput, SucursalUncheckedCreateWithoutPlanillasTransporteInput>
+    where?: SucursalWhereInput
+  }
+
+  export type SucursalUpdateToOneWithWhereWithoutPlanillasTransporteInput = {
+    where?: SucursalWhereInput
+    data: XOR<SucursalUpdateWithoutPlanillasTransporteInput, SucursalUncheckedUpdateWithoutPlanillasTransporteInput>
+  }
+
+  export type SucursalUpdateWithoutPlanillasTransporteInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    listasCorreo?: ListaCorreoUpdateManyWithoutSucursalNestedInput
+    presupuestos?: PresupuestoUpdateManyWithoutSucursalNestedInput
+    RetornoProductosMovimiento?: RetornoProductosMovimientoUpdateManyWithoutSucursalNestedInput
+    RetornoProductosSucursalEstado?: RetornoProductosSucursalEstadoUpdateManyWithoutSucursalNestedInput
+    uts?: UTUpdateManyWithoutSucursalNestedInput
+    users?: UserUpdateManyWithoutSucursalesNestedInput
+    jefesZonales?: JefeZonalSucursalUpdateManyWithoutSucursalNestedInput
+    vehiculos?: VehiculoUpdateManyWithoutSucursalNestedInput
+    delegaciones?: DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUpdateManyWithoutSucursalNestedInput
+  }
+
+  export type SucursalUncheckedUpdateWithoutPlanillasTransporteInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    listasCorreo?: ListaCorreoUncheckedUpdateManyWithoutSucursalNestedInput
+    presupuestos?: PresupuestoUncheckedUpdateManyWithoutSucursalNestedInput
+    RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedUpdateManyWithoutSucursalNestedInput
+    RetornoProductosSucursalEstado?: RetornoProductosSucursalEstadoUncheckedUpdateManyWithoutSucursalNestedInput
+    uts?: UTUncheckedUpdateManyWithoutSucursalNestedInput
+    users?: UserUncheckedUpdateManyWithoutSucursalesNestedInput
+    jefesZonales?: JefeZonalSucursalUncheckedUpdateManyWithoutSucursalNestedInput
+    vehiculos?: VehiculoUncheckedUpdateManyWithoutSucursalNestedInput
+    delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedUpdateManyWithoutSucursalNestedInput
+  }
+
+  export type Cal_RegistroTransporteUpsertWithWhereUniqueWithoutPlanillaInput = {
+    where: Cal_RegistroTransporteWhereUniqueInput
+    update: XOR<Cal_RegistroTransporteUpdateWithoutPlanillaInput, Cal_RegistroTransporteUncheckedUpdateWithoutPlanillaInput>
+    create: XOR<Cal_RegistroTransporteCreateWithoutPlanillaInput, Cal_RegistroTransporteUncheckedCreateWithoutPlanillaInput>
+  }
+
+  export type Cal_RegistroTransporteUpdateWithWhereUniqueWithoutPlanillaInput = {
+    where: Cal_RegistroTransporteWhereUniqueInput
+    data: XOR<Cal_RegistroTransporteUpdateWithoutPlanillaInput, Cal_RegistroTransporteUncheckedUpdateWithoutPlanillaInput>
+  }
+
+  export type Cal_RegistroTransporteUpdateManyWithWhereWithoutPlanillaInput = {
+    where: Cal_RegistroTransporteScalarWhereInput
+    data: XOR<Cal_RegistroTransporteUpdateManyMutationInput, Cal_RegistroTransporteUncheckedUpdateManyWithoutPlanillaInput>
+  }
+
+  export type Cal_RegistroTransporteScalarWhereInput = {
+    AND?: Cal_RegistroTransporteScalarWhereInput | Cal_RegistroTransporteScalarWhereInput[]
+    OR?: Cal_RegistroTransporteScalarWhereInput[]
+    NOT?: Cal_RegistroTransporteScalarWhereInput | Cal_RegistroTransporteScalarWhereInput[]
+    id?: StringFilter<"Cal_RegistroTransporte"> | string
+    planillaId?: StringFilter<"Cal_RegistroTransporte"> | string
+    patenteEncriptada?: StringFilter<"Cal_RegistroTransporte"> | string
+    limpiezaInterior?: StringFilter<"Cal_RegistroTransporte"> | string
+    limpiezaExterior?: StringFilter<"Cal_RegistroTransporte"> | string
+    puertaCamara?: StringFilter<"Cal_RegistroTransporte"> | string
+    piezasSinOxidacion?: StringFilter<"Cal_RegistroTransporte"> | string
+    equipoCongelacion?: StringFilter<"Cal_RegistroTransporte"> | string
+    equipoRefrigeracion?: StringFilter<"Cal_RegistroTransporte"> | string
+    observacion?: StringNullableFilter<"Cal_RegistroTransporte"> | string | null
+    accionCorrectiva?: StringNullableFilter<"Cal_RegistroTransporte"> | string | null
+    creadoPor?: StringFilter<"Cal_RegistroTransporte"> | string
+    createdAt?: DateTimeFilter<"Cal_RegistroTransporte"> | Date | string
+    updatedAt?: DateTimeFilter<"Cal_RegistroTransporte"> | Date | string
+  }
+
+  export type Cal_PlanillaTransporteCreateWithoutRegistrosInput = {
+    id?: string
+    fecha: Date | string
+    fechaTexto: string
+    estado?: string
+    firmaCalidadUser?: string | null
+    firmaCalidadUserId?: string | null
+    firmaCalidadFecha?: Date | string | null
+    firmaCalidadDiasAtraso?: number
+    firmaCalidadImg?: string | null
+    firmaBodegaUser?: string | null
+    firmaBodegaUserId?: string | null
+    firmaBodegaFecha?: Date | string | null
+    firmaBodegaImg?: string | null
+    observacionesGenerales?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sucursal: SucursalCreateNestedOneWithoutPlanillasTransporteInput
+  }
+
+  export type Cal_PlanillaTransporteUncheckedCreateWithoutRegistrosInput = {
+    id?: string
+    sucursalId: string
+    fecha: Date | string
+    fechaTexto: string
+    estado?: string
+    firmaCalidadUser?: string | null
+    firmaCalidadUserId?: string | null
+    firmaCalidadFecha?: Date | string | null
+    firmaCalidadDiasAtraso?: number
+    firmaCalidadImg?: string | null
+    firmaBodegaUser?: string | null
+    firmaBodegaUserId?: string | null
+    firmaBodegaFecha?: Date | string | null
+    firmaBodegaImg?: string | null
+    observacionesGenerales?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Cal_PlanillaTransporteCreateOrConnectWithoutRegistrosInput = {
+    where: Cal_PlanillaTransporteWhereUniqueInput
+    create: XOR<Cal_PlanillaTransporteCreateWithoutRegistrosInput, Cal_PlanillaTransporteUncheckedCreateWithoutRegistrosInput>
+  }
+
+  export type Cal_PlanillaTransporteUpsertWithoutRegistrosInput = {
+    update: XOR<Cal_PlanillaTransporteUpdateWithoutRegistrosInput, Cal_PlanillaTransporteUncheckedUpdateWithoutRegistrosInput>
+    create: XOR<Cal_PlanillaTransporteCreateWithoutRegistrosInput, Cal_PlanillaTransporteUncheckedCreateWithoutRegistrosInput>
+    where?: Cal_PlanillaTransporteWhereInput
+  }
+
+  export type Cal_PlanillaTransporteUpdateToOneWithWhereWithoutRegistrosInput = {
+    where?: Cal_PlanillaTransporteWhereInput
+    data: XOR<Cal_PlanillaTransporteUpdateWithoutRegistrosInput, Cal_PlanillaTransporteUncheckedUpdateWithoutRegistrosInput>
+  }
+
+  export type Cal_PlanillaTransporteUpdateWithoutRegistrosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaTexto?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    firmaCalidadUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaCalidadDiasAtraso?: IntFieldUpdateOperationsInput | number
+    firmaCalidadImg?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaBodegaImg?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesGenerales?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sucursal?: SucursalUpdateOneRequiredWithoutPlanillasTransporteNestedInput
+  }
+
+  export type Cal_PlanillaTransporteUncheckedUpdateWithoutRegistrosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sucursalId?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaTexto?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    firmaCalidadUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaCalidadDiasAtraso?: IntFieldUpdateOperationsInput | number
+    firmaCalidadImg?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaBodegaImg?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesGenerales?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SucursalCreateWithoutPlanillasHigienePersonalInput = {
+    id?: string
+    nombre: string
+    region?: string | null
+    comuna?: string | null
+    direccion?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    listasCorreo?: ListaCorreoCreateNestedManyWithoutSucursalInput
+    presupuestos?: PresupuestoCreateNestedManyWithoutSucursalInput
+    RetornoProductosMovimiento?: RetornoProductosMovimientoCreateNestedManyWithoutSucursalInput
+    RetornoProductosSucursalEstado?: RetornoProductosSucursalEstadoCreateNestedManyWithoutSucursalInput
+    uts?: UTCreateNestedManyWithoutSucursalInput
+    users?: UserCreateNestedManyWithoutSucursalesInput
+    jefesZonales?: JefeZonalSucursalCreateNestedManyWithoutSucursalInput
+    vehiculos?: VehiculoCreateNestedManyWithoutSucursalInput
+    delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutSucursalInput
+    planillasTransporte?: Cal_PlanillaTransporteCreateNestedManyWithoutSucursalInput
+  }
+
+  export type SucursalUncheckedCreateWithoutPlanillasHigienePersonalInput = {
+    id?: string
+    nombre: string
+    region?: string | null
+    comuna?: string | null
+    direccion?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    listasCorreo?: ListaCorreoUncheckedCreateNestedManyWithoutSucursalInput
+    presupuestos?: PresupuestoUncheckedCreateNestedManyWithoutSucursalInput
+    RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedCreateNestedManyWithoutSucursalInput
+    RetornoProductosSucursalEstado?: RetornoProductosSucursalEstadoUncheckedCreateNestedManyWithoutSucursalInput
+    uts?: UTUncheckedCreateNestedManyWithoutSucursalInput
+    users?: UserUncheckedCreateNestedManyWithoutSucursalesInput
+    jefesZonales?: JefeZonalSucursalUncheckedCreateNestedManyWithoutSucursalInput
+    vehiculos?: VehiculoUncheckedCreateNestedManyWithoutSucursalInput
+    delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput
+    planillasTransporte?: Cal_PlanillaTransporteUncheckedCreateNestedManyWithoutSucursalInput
+  }
+
+  export type SucursalCreateOrConnectWithoutPlanillasHigienePersonalInput = {
+    where: SucursalWhereUniqueInput
+    create: XOR<SucursalCreateWithoutPlanillasHigienePersonalInput, SucursalUncheckedCreateWithoutPlanillasHigienePersonalInput>
+  }
+
+  export type Cal_RegistroHigienePersonalCreateWithoutPlanillaInput = {
+    id?: string
+    nombreEncriptado: string
+    uniformeLimpio?: string
+    zapatosSeguridad?: string
+    peloCorto?: string
+    usoJockey?: string
+    sinJoyas?: string
+    unasCortas?: string
+    rasurado?: string
+    estadoSalud?: string
+    habitosCorrectos?: string
+    heridas?: string
+    observacion?: string | null
+    accionCorrectiva?: string | null
+    creadoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Cal_RegistroHigienePersonalUncheckedCreateWithoutPlanillaInput = {
+    id?: string
+    nombreEncriptado: string
+    uniformeLimpio?: string
+    zapatosSeguridad?: string
+    peloCorto?: string
+    usoJockey?: string
+    sinJoyas?: string
+    unasCortas?: string
+    rasurado?: string
+    estadoSalud?: string
+    habitosCorrectos?: string
+    heridas?: string
+    observacion?: string | null
+    accionCorrectiva?: string | null
+    creadoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Cal_RegistroHigienePersonalCreateOrConnectWithoutPlanillaInput = {
+    where: Cal_RegistroHigienePersonalWhereUniqueInput
+    create: XOR<Cal_RegistroHigienePersonalCreateWithoutPlanillaInput, Cal_RegistroHigienePersonalUncheckedCreateWithoutPlanillaInput>
+  }
+
+  export type Cal_RegistroHigienePersonalCreateManyPlanillaInputEnvelope = {
+    data: Cal_RegistroHigienePersonalCreateManyPlanillaInput | Cal_RegistroHigienePersonalCreateManyPlanillaInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SucursalUpsertWithoutPlanillasHigienePersonalInput = {
+    update: XOR<SucursalUpdateWithoutPlanillasHigienePersonalInput, SucursalUncheckedUpdateWithoutPlanillasHigienePersonalInput>
+    create: XOR<SucursalCreateWithoutPlanillasHigienePersonalInput, SucursalUncheckedCreateWithoutPlanillasHigienePersonalInput>
+    where?: SucursalWhereInput
+  }
+
+  export type SucursalUpdateToOneWithWhereWithoutPlanillasHigienePersonalInput = {
+    where?: SucursalWhereInput
+    data: XOR<SucursalUpdateWithoutPlanillasHigienePersonalInput, SucursalUncheckedUpdateWithoutPlanillasHigienePersonalInput>
+  }
+
+  export type SucursalUpdateWithoutPlanillasHigienePersonalInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    listasCorreo?: ListaCorreoUpdateManyWithoutSucursalNestedInput
+    presupuestos?: PresupuestoUpdateManyWithoutSucursalNestedInput
+    RetornoProductosMovimiento?: RetornoProductosMovimientoUpdateManyWithoutSucursalNestedInput
+    RetornoProductosSucursalEstado?: RetornoProductosSucursalEstadoUpdateManyWithoutSucursalNestedInput
+    uts?: UTUpdateManyWithoutSucursalNestedInput
+    users?: UserUpdateManyWithoutSucursalesNestedInput
+    jefesZonales?: JefeZonalSucursalUpdateManyWithoutSucursalNestedInput
+    vehiculos?: VehiculoUpdateManyWithoutSucursalNestedInput
+    delegaciones?: DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput
+    planillasTransporte?: Cal_PlanillaTransporteUpdateManyWithoutSucursalNestedInput
+  }
+
+  export type SucursalUncheckedUpdateWithoutPlanillasHigienePersonalInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    listasCorreo?: ListaCorreoUncheckedUpdateManyWithoutSucursalNestedInput
+    presupuestos?: PresupuestoUncheckedUpdateManyWithoutSucursalNestedInput
+    RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedUpdateManyWithoutSucursalNestedInput
+    RetornoProductosSucursalEstado?: RetornoProductosSucursalEstadoUncheckedUpdateManyWithoutSucursalNestedInput
+    uts?: UTUncheckedUpdateManyWithoutSucursalNestedInput
+    users?: UserUncheckedUpdateManyWithoutSucursalesNestedInput
+    jefesZonales?: JefeZonalSucursalUncheckedUpdateManyWithoutSucursalNestedInput
+    vehiculos?: VehiculoUncheckedUpdateManyWithoutSucursalNestedInput
+    delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput
+    planillasTransporte?: Cal_PlanillaTransporteUncheckedUpdateManyWithoutSucursalNestedInput
+  }
+
+  export type Cal_RegistroHigienePersonalUpsertWithWhereUniqueWithoutPlanillaInput = {
+    where: Cal_RegistroHigienePersonalWhereUniqueInput
+    update: XOR<Cal_RegistroHigienePersonalUpdateWithoutPlanillaInput, Cal_RegistroHigienePersonalUncheckedUpdateWithoutPlanillaInput>
+    create: XOR<Cal_RegistroHigienePersonalCreateWithoutPlanillaInput, Cal_RegistroHigienePersonalUncheckedCreateWithoutPlanillaInput>
+  }
+
+  export type Cal_RegistroHigienePersonalUpdateWithWhereUniqueWithoutPlanillaInput = {
+    where: Cal_RegistroHigienePersonalWhereUniqueInput
+    data: XOR<Cal_RegistroHigienePersonalUpdateWithoutPlanillaInput, Cal_RegistroHigienePersonalUncheckedUpdateWithoutPlanillaInput>
+  }
+
+  export type Cal_RegistroHigienePersonalUpdateManyWithWhereWithoutPlanillaInput = {
+    where: Cal_RegistroHigienePersonalScalarWhereInput
+    data: XOR<Cal_RegistroHigienePersonalUpdateManyMutationInput, Cal_RegistroHigienePersonalUncheckedUpdateManyWithoutPlanillaInput>
+  }
+
+  export type Cal_RegistroHigienePersonalScalarWhereInput = {
+    AND?: Cal_RegistroHigienePersonalScalarWhereInput | Cal_RegistroHigienePersonalScalarWhereInput[]
+    OR?: Cal_RegistroHigienePersonalScalarWhereInput[]
+    NOT?: Cal_RegistroHigienePersonalScalarWhereInput | Cal_RegistroHigienePersonalScalarWhereInput[]
+    id?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    planillaId?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    nombreEncriptado?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    uniformeLimpio?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    zapatosSeguridad?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    peloCorto?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    usoJockey?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    sinJoyas?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    unasCortas?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    rasurado?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    estadoSalud?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    habitosCorrectos?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    heridas?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    observacion?: StringNullableFilter<"Cal_RegistroHigienePersonal"> | string | null
+    accionCorrectiva?: StringNullableFilter<"Cal_RegistroHigienePersonal"> | string | null
+    creadoPor?: StringFilter<"Cal_RegistroHigienePersonal"> | string
+    createdAt?: DateTimeFilter<"Cal_RegistroHigienePersonal"> | Date | string
+    updatedAt?: DateTimeFilter<"Cal_RegistroHigienePersonal"> | Date | string
+  }
+
+  export type Cal_PlanillaHigienePersonalCreateWithoutRegistrosInput = {
+    id?: string
+    fecha: Date | string
+    fechaTexto: string
+    estado?: string
+    firmaCalidadUser?: string | null
+    firmaCalidadUserId?: string | null
+    firmaCalidadFecha?: Date | string | null
+    firmaCalidadDiasAtraso?: number
+    firmaCalidadImg?: string | null
+    firmaBodegaUser?: string | null
+    firmaBodegaUserId?: string | null
+    firmaBodegaFecha?: Date | string | null
+    firmaBodegaImg?: string | null
+    observacionesGenerales?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sucursal: SucursalCreateNestedOneWithoutPlanillasHigienePersonalInput
+  }
+
+  export type Cal_PlanillaHigienePersonalUncheckedCreateWithoutRegistrosInput = {
+    id?: string
+    sucursalId: string
+    fecha: Date | string
+    fechaTexto: string
+    estado?: string
+    firmaCalidadUser?: string | null
+    firmaCalidadUserId?: string | null
+    firmaCalidadFecha?: Date | string | null
+    firmaCalidadDiasAtraso?: number
+    firmaCalidadImg?: string | null
+    firmaBodegaUser?: string | null
+    firmaBodegaUserId?: string | null
+    firmaBodegaFecha?: Date | string | null
+    firmaBodegaImg?: string | null
+    observacionesGenerales?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Cal_PlanillaHigienePersonalCreateOrConnectWithoutRegistrosInput = {
+    where: Cal_PlanillaHigienePersonalWhereUniqueInput
+    create: XOR<Cal_PlanillaHigienePersonalCreateWithoutRegistrosInput, Cal_PlanillaHigienePersonalUncheckedCreateWithoutRegistrosInput>
+  }
+
+  export type Cal_PlanillaHigienePersonalUpsertWithoutRegistrosInput = {
+    update: XOR<Cal_PlanillaHigienePersonalUpdateWithoutRegistrosInput, Cal_PlanillaHigienePersonalUncheckedUpdateWithoutRegistrosInput>
+    create: XOR<Cal_PlanillaHigienePersonalCreateWithoutRegistrosInput, Cal_PlanillaHigienePersonalUncheckedCreateWithoutRegistrosInput>
+    where?: Cal_PlanillaHigienePersonalWhereInput
+  }
+
+  export type Cal_PlanillaHigienePersonalUpdateToOneWithWhereWithoutRegistrosInput = {
+    where?: Cal_PlanillaHigienePersonalWhereInput
+    data: XOR<Cal_PlanillaHigienePersonalUpdateWithoutRegistrosInput, Cal_PlanillaHigienePersonalUncheckedUpdateWithoutRegistrosInput>
+  }
+
+  export type Cal_PlanillaHigienePersonalUpdateWithoutRegistrosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaTexto?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    firmaCalidadUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaCalidadDiasAtraso?: IntFieldUpdateOperationsInput | number
+    firmaCalidadImg?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaBodegaImg?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesGenerales?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sucursal?: SucursalUpdateOneRequiredWithoutPlanillasHigienePersonalNestedInput
+  }
+
+  export type Cal_PlanillaHigienePersonalUncheckedUpdateWithoutRegistrosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sucursalId?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaTexto?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    firmaCalidadUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaCalidadDiasAtraso?: IntFieldUpdateOperationsInput | number
+    firmaCalidadImg?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaBodegaImg?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesGenerales?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type UserCreateManyRoleInput = {
     id?: string
     username: string
@@ -189677,6 +197001,8 @@ export namespace Prisma {
     jefesZonales?: JefeZonalSucursalUpdateManyWithoutSucursalNestedInput
     vehiculos?: VehiculoUpdateManyWithoutSucursalNestedInput
     delegaciones?: DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput
+    planillasTransporte?: Cal_PlanillaTransporteUpdateManyWithoutSucursalNestedInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUpdateManyWithoutSucursalNestedInput
   }
 
   export type SucursalUncheckedUpdateWithoutUsersInput = {
@@ -189695,6 +197021,8 @@ export namespace Prisma {
     jefesZonales?: JefeZonalSucursalUncheckedUpdateManyWithoutSucursalNestedInput
     vehiculos?: VehiculoUncheckedUpdateManyWithoutSucursalNestedInput
     delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput
+    planillasTransporte?: Cal_PlanillaTransporteUncheckedUpdateManyWithoutSucursalNestedInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedUpdateManyWithoutSucursalNestedInput
   }
 
   export type SucursalUncheckedUpdateManyWithoutUsersInput = {
@@ -190273,6 +197601,44 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type Cal_PlanillaTransporteCreateManySucursalInput = {
+    id?: string
+    fecha: Date | string
+    fechaTexto: string
+    estado?: string
+    firmaCalidadUser?: string | null
+    firmaCalidadUserId?: string | null
+    firmaCalidadFecha?: Date | string | null
+    firmaCalidadDiasAtraso?: number
+    firmaCalidadImg?: string | null
+    firmaBodegaUser?: string | null
+    firmaBodegaUserId?: string | null
+    firmaBodegaFecha?: Date | string | null
+    firmaBodegaImg?: string | null
+    observacionesGenerales?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Cal_PlanillaHigienePersonalCreateManySucursalInput = {
+    id?: string
+    fecha: Date | string
+    fechaTexto: string
+    estado?: string
+    firmaCalidadUser?: string | null
+    firmaCalidadUserId?: string | null
+    firmaCalidadFecha?: Date | string | null
+    firmaCalidadDiasAtraso?: number
+    firmaCalidadImg?: string | null
+    firmaBodegaUser?: string | null
+    firmaBodegaUserId?: string | null
+    firmaBodegaFecha?: Date | string | null
+    firmaBodegaImg?: string | null
+    observacionesGenerales?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type ListaCorreoUpdateWithoutSucursalInput = {
     id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
@@ -190537,6 +197903,124 @@ export namespace Prisma {
   export type DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Cal_PlanillaTransporteUpdateWithoutSucursalInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaTexto?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    firmaCalidadUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaCalidadDiasAtraso?: IntFieldUpdateOperationsInput | number
+    firmaCalidadImg?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaBodegaImg?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesGenerales?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    registros?: Cal_RegistroTransporteUpdateManyWithoutPlanillaNestedInput
+  }
+
+  export type Cal_PlanillaTransporteUncheckedUpdateWithoutSucursalInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaTexto?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    firmaCalidadUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaCalidadDiasAtraso?: IntFieldUpdateOperationsInput | number
+    firmaCalidadImg?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaBodegaImg?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesGenerales?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    registros?: Cal_RegistroTransporteUncheckedUpdateManyWithoutPlanillaNestedInput
+  }
+
+  export type Cal_PlanillaTransporteUncheckedUpdateManyWithoutSucursalInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaTexto?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    firmaCalidadUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaCalidadDiasAtraso?: IntFieldUpdateOperationsInput | number
+    firmaCalidadImg?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaBodegaImg?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesGenerales?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Cal_PlanillaHigienePersonalUpdateWithoutSucursalInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaTexto?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    firmaCalidadUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaCalidadDiasAtraso?: IntFieldUpdateOperationsInput | number
+    firmaCalidadImg?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaBodegaImg?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesGenerales?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    registros?: Cal_RegistroHigienePersonalUpdateManyWithoutPlanillaNestedInput
+  }
+
+  export type Cal_PlanillaHigienePersonalUncheckedUpdateWithoutSucursalInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaTexto?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    firmaCalidadUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaCalidadDiasAtraso?: IntFieldUpdateOperationsInput | number
+    firmaCalidadImg?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaBodegaImg?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesGenerales?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    registros?: Cal_RegistroHigienePersonalUncheckedUpdateManyWithoutPlanillaNestedInput
+  }
+
+  export type Cal_PlanillaHigienePersonalUncheckedUpdateManyWithoutSucursalInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaTexto?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    firmaCalidadUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaCalidadFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaCalidadDiasAtraso?: IntFieldUpdateOperationsInput | number
+    firmaCalidadImg?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUser?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    firmaBodegaFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    firmaBodegaImg?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesGenerales?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -193980,6 +201464,150 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type Cal_RegistroTransporteCreateManyPlanillaInput = {
+    id?: string
+    patenteEncriptada: string
+    limpiezaInterior?: string
+    limpiezaExterior?: string
+    puertaCamara?: string
+    piezasSinOxidacion?: string
+    equipoCongelacion?: string
+    equipoRefrigeracion?: string
+    observacion?: string | null
+    accionCorrectiva?: string | null
+    creadoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Cal_RegistroTransporteUpdateWithoutPlanillaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    patenteEncriptada?: StringFieldUpdateOperationsInput | string
+    limpiezaInterior?: StringFieldUpdateOperationsInput | string
+    limpiezaExterior?: StringFieldUpdateOperationsInput | string
+    puertaCamara?: StringFieldUpdateOperationsInput | string
+    piezasSinOxidacion?: StringFieldUpdateOperationsInput | string
+    equipoCongelacion?: StringFieldUpdateOperationsInput | string
+    equipoRefrigeracion?: StringFieldUpdateOperationsInput | string
+    observacion?: NullableStringFieldUpdateOperationsInput | string | null
+    accionCorrectiva?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Cal_RegistroTransporteUncheckedUpdateWithoutPlanillaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    patenteEncriptada?: StringFieldUpdateOperationsInput | string
+    limpiezaInterior?: StringFieldUpdateOperationsInput | string
+    limpiezaExterior?: StringFieldUpdateOperationsInput | string
+    puertaCamara?: StringFieldUpdateOperationsInput | string
+    piezasSinOxidacion?: StringFieldUpdateOperationsInput | string
+    equipoCongelacion?: StringFieldUpdateOperationsInput | string
+    equipoRefrigeracion?: StringFieldUpdateOperationsInput | string
+    observacion?: NullableStringFieldUpdateOperationsInput | string | null
+    accionCorrectiva?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Cal_RegistroTransporteUncheckedUpdateManyWithoutPlanillaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    patenteEncriptada?: StringFieldUpdateOperationsInput | string
+    limpiezaInterior?: StringFieldUpdateOperationsInput | string
+    limpiezaExterior?: StringFieldUpdateOperationsInput | string
+    puertaCamara?: StringFieldUpdateOperationsInput | string
+    piezasSinOxidacion?: StringFieldUpdateOperationsInput | string
+    equipoCongelacion?: StringFieldUpdateOperationsInput | string
+    equipoRefrigeracion?: StringFieldUpdateOperationsInput | string
+    observacion?: NullableStringFieldUpdateOperationsInput | string | null
+    accionCorrectiva?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Cal_RegistroHigienePersonalCreateManyPlanillaInput = {
+    id?: string
+    nombreEncriptado: string
+    uniformeLimpio?: string
+    zapatosSeguridad?: string
+    peloCorto?: string
+    usoJockey?: string
+    sinJoyas?: string
+    unasCortas?: string
+    rasurado?: string
+    estadoSalud?: string
+    habitosCorrectos?: string
+    heridas?: string
+    observacion?: string | null
+    accionCorrectiva?: string | null
+    creadoPor: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Cal_RegistroHigienePersonalUpdateWithoutPlanillaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombreEncriptado?: StringFieldUpdateOperationsInput | string
+    uniformeLimpio?: StringFieldUpdateOperationsInput | string
+    zapatosSeguridad?: StringFieldUpdateOperationsInput | string
+    peloCorto?: StringFieldUpdateOperationsInput | string
+    usoJockey?: StringFieldUpdateOperationsInput | string
+    sinJoyas?: StringFieldUpdateOperationsInput | string
+    unasCortas?: StringFieldUpdateOperationsInput | string
+    rasurado?: StringFieldUpdateOperationsInput | string
+    estadoSalud?: StringFieldUpdateOperationsInput | string
+    habitosCorrectos?: StringFieldUpdateOperationsInput | string
+    heridas?: StringFieldUpdateOperationsInput | string
+    observacion?: NullableStringFieldUpdateOperationsInput | string | null
+    accionCorrectiva?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Cal_RegistroHigienePersonalUncheckedUpdateWithoutPlanillaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombreEncriptado?: StringFieldUpdateOperationsInput | string
+    uniformeLimpio?: StringFieldUpdateOperationsInput | string
+    zapatosSeguridad?: StringFieldUpdateOperationsInput | string
+    peloCorto?: StringFieldUpdateOperationsInput | string
+    usoJockey?: StringFieldUpdateOperationsInput | string
+    sinJoyas?: StringFieldUpdateOperationsInput | string
+    unasCortas?: StringFieldUpdateOperationsInput | string
+    rasurado?: StringFieldUpdateOperationsInput | string
+    estadoSalud?: StringFieldUpdateOperationsInput | string
+    habitosCorrectos?: StringFieldUpdateOperationsInput | string
+    heridas?: StringFieldUpdateOperationsInput | string
+    observacion?: NullableStringFieldUpdateOperationsInput | string | null
+    accionCorrectiva?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Cal_RegistroHigienePersonalUncheckedUpdateManyWithoutPlanillaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombreEncriptado?: StringFieldUpdateOperationsInput | string
+    uniformeLimpio?: StringFieldUpdateOperationsInput | string
+    zapatosSeguridad?: StringFieldUpdateOperationsInput | string
+    peloCorto?: StringFieldUpdateOperationsInput | string
+    usoJockey?: StringFieldUpdateOperationsInput | string
+    sinJoyas?: StringFieldUpdateOperationsInput | string
+    unasCortas?: StringFieldUpdateOperationsInput | string
+    rasurado?: StringFieldUpdateOperationsInput | string
+    estadoSalud?: StringFieldUpdateOperationsInput | string
+    habitosCorrectos?: StringFieldUpdateOperationsInput | string
+    heridas?: StringFieldUpdateOperationsInput | string
+    observacion?: NullableStringFieldUpdateOperationsInput | string | null
+    accionCorrectiva?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
 
 
   /**
@@ -194161,6 +201789,14 @@ export namespace Prisma {
      * @deprecated Use LogIntegracionConfigCountOutputTypeDefaultArgs instead
      */
     export type LogIntegracionConfigCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LogIntegracionConfigCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Cal_PlanillaTransporteCountOutputTypeDefaultArgs instead
+     */
+    export type Cal_PlanillaTransporteCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Cal_PlanillaTransporteCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Cal_PlanillaHigienePersonalCountOutputTypeDefaultArgs instead
+     */
+    export type Cal_PlanillaHigienePersonalCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Cal_PlanillaHigienePersonalCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use RoleDefaultArgs instead
      */
@@ -194661,6 +202297,22 @@ export namespace Prisma {
      * @deprecated Use PrevGravedadPreparacionDefaultArgs instead
      */
     export type PrevGravedadPreparacionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PrevGravedadPreparacionDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Cal_PlanillaTransporteDefaultArgs instead
+     */
+    export type Cal_PlanillaTransporteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Cal_PlanillaTransporteDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Cal_RegistroTransporteDefaultArgs instead
+     */
+    export type Cal_RegistroTransporteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Cal_RegistroTransporteDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Cal_PlanillaHigienePersonalDefaultArgs instead
+     */
+    export type Cal_PlanillaHigienePersonalArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Cal_PlanillaHigienePersonalDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Cal_RegistroHigienePersonalDefaultArgs instead
+     */
+    export type Cal_RegistroHigienePersonalArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Cal_RegistroHigienePersonalDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

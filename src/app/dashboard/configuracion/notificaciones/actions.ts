@@ -167,6 +167,22 @@ export async function getMockDataForPreview(codigoPantalla: string) {
             Usuario: 'JUAN PÉREZ (SUPERVISOR)',
             Sucursal: 'SANTIAGO CENTRO',
             DetalleDesviaciones: `1. Patio de servicio: ¿El basurero cuenta con tapa? -> Respuesta: No. Compromiso: Adquirir tapa o basurero nuevo.\n2. Bodega: ¿La bodega está libre de plagas? -> Respuesta: No. Compromiso: Coordinar desratización.`
+        },
+        'calidad-transporte-higiene': {
+            Fecha: '15/09/2026',
+            Sucursal: 'SANTIAGO SUR',
+            UsuarioCalidad: 'PAMELA FERNÁNDEZ',
+            TotalVehiculos: '5',
+            Desviaciones: 'FLSX83: Limpieza Exterior (No Cumple) - Lavado urgente solicitado',
+            DiasAtraso: '0'
+        },
+        'calidad-higiene-personal': {
+            Fecha: '15/09/2026',
+            Sucursal: 'SANTIAGO SUR',
+            UsuarioCalidad: 'PAMELA FERNÁNDEZ',
+            TotalTrabajadores: '8',
+            Desviaciones: 'Juan Pérez: Uñas Cortas (No Cumple) - Se instruye corte inmediato',
+            DiasAtraso: '0'
         }
     }
     return mockData[codigoPantalla] || {}

@@ -41,6 +41,8 @@ function getModuleInfoFromPath(path: string): { modulo: string; detalle: string 
     if (path.startsWith('/dashboard/areas/calidad/retorno-productos')) return { modulo: 'Áreas -> Calidad', detalle: 'Accedió a Retirada de Productos' }
     if (path.startsWith('/dashboard/areas/calidad/verificador-temperaturas')) return { modulo: 'Áreas -> Calidad', detalle: 'Accedió a Verificador de Temperaturas de Productos' }
     if (path.startsWith('/dashboard/areas/calidad/subir-actas-pae')) return { modulo: 'Áreas -> Calidad', detalle: 'Accedió a Subir Actas Estándar PAE' }
+    if (path.startsWith('/dashboard/areas/calidad/transporte-higiene')) return { modulo: 'Áreas -> Calidad', detalle: 'Accedió a Registro transportista interno higiene y estado Transporte' }
+    if (path.startsWith('/dashboard/areas/calidad/higiene-personal')) return { modulo: 'Áreas -> Calidad', detalle: 'Accedió a Registro de Transportista interno Higiene Personal' }
     if (path.startsWith('/dashboard/areas/multas')) {
         if (path.includes('/descargos')) return { modulo: 'Áreas -> Multas', detalle: 'Accedió a Descargos de Actas' }
         return { modulo: 'Áreas -> Multas', detalle: 'Accedió a Cálculos de Elementos Esenciales' }

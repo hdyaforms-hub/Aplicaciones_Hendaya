@@ -49,6 +49,16 @@ const PANTALLAS: PantallaInfo[] = [
         id: 'matriz-prestador',
         name: 'Matriz de Riesgo - Prestador',
         description: 'Se envía una alerta cuando se finaliza la matriz con desviaciones a cargo del Prestador.'
+    },
+    {
+        id: 'calidad-transporte-higiene',
+        name: 'Registro Transporte e Higiene',
+        description: 'Se envía un aviso al Jefe de Bodega cuando el Encargado de Calidad firma el registro diario de transporte e higiene.'
+    },
+    {
+        id: 'calidad-higiene-personal',
+        name: 'Registro Higiene Personal Transportista',
+        description: 'Se envía un aviso al Jefe de Bodega cuando el Encargado de Calidad firma el registro diario de higiene personal de transportistas.'
     }
 ]
 
@@ -57,6 +67,22 @@ const HELP_KEYWORDS: Record<string, { tag: string, desc: string }[]> = {
         { tag: '<RBD>', desc: 'RBD (Rol Base de Datos) del establecimiento.' },
         { tag: '<Usuario>', desc: 'Nombre del usuario que realiza la acción.' },
         { tag: '<Sucursal>', desc: 'Nombre de la sucursal o bodega correspondiente.' },
+    ],
+    'Registro Transporte e Higiene': [
+        { tag: '<Fecha>', desc: 'Fecha del registro de transporte (DD/MM/AAAA).' },
+        { tag: '<Sucursal>', desc: 'Nombre de la sucursal o bodega inspeccionada.' },
+        { tag: '<UsuarioCalidad>', desc: 'Nombre del encargado de calidad que firma el registro.' },
+        { tag: '<TotalVehiculos>', desc: 'Cantidad total de vehículos registrados.' },
+        { tag: '<Desviaciones>', desc: 'Resumen de vehículos con desviaciones / No Cumple.' },
+        { tag: '<DiasAtraso>', desc: 'Días de retraso si la firma es extemporánea.' }
+    ],
+    'Registro Higiene Personal Transportista': [
+        { tag: '<Fecha>', desc: 'Fecha del registro de higiene (DD/MM/AAAA).' },
+        { tag: '<Sucursal>', desc: 'Nombre de la sucursal o bodega inspeccionada.' },
+        { tag: '<UsuarioCalidad>', desc: 'Nombre del encargado de calidad que firma el registro.' },
+        { tag: '<TotalTrabajadores>', desc: 'Cantidad total de trabajadores inspeccionados.' },
+        { tag: '<Desviaciones>', desc: 'Resumen de observaciones o desviaciones higiénicas.' },
+        { tag: '<DiasAtraso>', desc: 'Días de retraso si la firma es extemporánea.' }
     ],
     'Ingreso de Raciones': [
         { tag: '<Colegio>', desc: 'Nombre del establecimiento educacional.' },

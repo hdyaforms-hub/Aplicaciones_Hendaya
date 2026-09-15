@@ -1744,6 +1744,84 @@ exports.Prisma.PrevGravedadPreparacionScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.Cal_PlanillaTransporteScalarFieldEnum = {
+  id: 'id',
+  sucursalId: 'sucursalId',
+  fecha: 'fecha',
+  fechaTexto: 'fechaTexto',
+  estado: 'estado',
+  firmaCalidadUser: 'firmaCalidadUser',
+  firmaCalidadUserId: 'firmaCalidadUserId',
+  firmaCalidadFecha: 'firmaCalidadFecha',
+  firmaCalidadDiasAtraso: 'firmaCalidadDiasAtraso',
+  firmaCalidadImg: 'firmaCalidadImg',
+  firmaBodegaUser: 'firmaBodegaUser',
+  firmaBodegaUserId: 'firmaBodegaUserId',
+  firmaBodegaFecha: 'firmaBodegaFecha',
+  firmaBodegaImg: 'firmaBodegaImg',
+  observacionesGenerales: 'observacionesGenerales',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.Cal_RegistroTransporteScalarFieldEnum = {
+  id: 'id',
+  planillaId: 'planillaId',
+  patenteEncriptada: 'patenteEncriptada',
+  limpiezaInterior: 'limpiezaInterior',
+  limpiezaExterior: 'limpiezaExterior',
+  puertaCamara: 'puertaCamara',
+  piezasSinOxidacion: 'piezasSinOxidacion',
+  equipoCongelacion: 'equipoCongelacion',
+  equipoRefrigeracion: 'equipoRefrigeracion',
+  observacion: 'observacion',
+  accionCorrectiva: 'accionCorrectiva',
+  creadoPor: 'creadoPor',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.Cal_PlanillaHigienePersonalScalarFieldEnum = {
+  id: 'id',
+  sucursalId: 'sucursalId',
+  fecha: 'fecha',
+  fechaTexto: 'fechaTexto',
+  estado: 'estado',
+  firmaCalidadUser: 'firmaCalidadUser',
+  firmaCalidadUserId: 'firmaCalidadUserId',
+  firmaCalidadFecha: 'firmaCalidadFecha',
+  firmaCalidadDiasAtraso: 'firmaCalidadDiasAtraso',
+  firmaCalidadImg: 'firmaCalidadImg',
+  firmaBodegaUser: 'firmaBodegaUser',
+  firmaBodegaUserId: 'firmaBodegaUserId',
+  firmaBodegaFecha: 'firmaBodegaFecha',
+  firmaBodegaImg: 'firmaBodegaImg',
+  observacionesGenerales: 'observacionesGenerales',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.Cal_RegistroHigienePersonalScalarFieldEnum = {
+  id: 'id',
+  planillaId: 'planillaId',
+  nombreEncriptado: 'nombreEncriptado',
+  uniformeLimpio: 'uniformeLimpio',
+  zapatosSeguridad: 'zapatosSeguridad',
+  peloCorto: 'peloCorto',
+  usoJockey: 'usoJockey',
+  sinJoyas: 'sinJoyas',
+  unasCortas: 'unasCortas',
+  rasurado: 'rasurado',
+  estadoSalud: 'estadoSalud',
+  habitosCorrectos: 'habitosCorrectos',
+  heridas: 'heridas',
+  observacion: 'observacion',
+  accionCorrectiva: 'accionCorrectiva',
+  creadoPor: 'creadoPor',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1885,7 +1963,11 @@ exports.Prisma.ModelName = {
   LogIntegracionConfig: 'LogIntegracionConfig',
   LogIntegracionLog: 'LogIntegracionLog',
   LogParametro: 'LogParametro',
-  PrevGravedadPreparacion: 'PrevGravedadPreparacion'
+  PrevGravedadPreparacion: 'PrevGravedadPreparacion',
+  Cal_PlanillaTransporte: 'Cal_PlanillaTransporte',
+  Cal_RegistroTransporte: 'Cal_RegistroTransporte',
+  Cal_PlanillaHigienePersonal: 'Cal_PlanillaHigienePersonal',
+  Cal_RegistroHigienePersonal: 'Cal_RegistroHigienePersonal'
 };
 
 /**

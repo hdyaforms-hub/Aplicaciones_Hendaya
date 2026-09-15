@@ -135,7 +135,8 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                     const hasCalidad = user.areas?.some((a: any) => a.nombre.toLowerCase().includes('calidad'))
                     const hasPerm = user.role.permissions.includes('view_calidad') || 
                                    user.role.permissions.includes('view_retorno_productos') ||
-                                   user.role.permissions.includes('view_verificador_temperaturas')
+                                   user.role.permissions.includes('view_verificador_temperaturas') ||
+                                   user.role.permissions.includes('view_calidad_transporte_higiene')
                     return !!(isAdmin || hasCalidad || hasPerm)
                 },
                 subItems: [
@@ -159,6 +160,16 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                         name: 'Subir Actas Estándar PAE',
                         href: '/dashboard/areas/calidad/subir-actas-pae',
                         requiredPermission: 'view_calidad_subir_actas_estandar_pae'
+                    },
+                    {
+                        name: 'Registro transportista interno higiene y estado Transporte',
+                        href: '/dashboard/areas/calidad/transporte-higiene',
+                        requiredPermission: 'view_calidad_transporte_higiene'
+                    },
+                    {
+                        name: 'Registro de Transportista interno Higiene Personal',
+                        href: '/dashboard/areas/calidad/higiene-personal',
+                        requiredPermission: 'view_calidad_higiene_personal'
                     }
                 ]
             },

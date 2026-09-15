@@ -214,6 +214,7 @@ model Sucursal {
   jefesZonales                   JefeZonalSucursal[]
   vehiculos                      Vehiculo[]
   delegaciones                   DelegacionVisualizacion[]
+  planillasTransporte            Cal_PlanillaTransporte[]
 }
 
 model Presupuesto {
@@ -2052,4 +2053,76 @@ model LogParametro {
   bodega LogBodega? @relation(fields: [bodegaId], references: [id], onDelete: Cascade)
 
   @@map("log_parametros")
+}
+
+model PrevGravedadPreparacion {
+  id                String   @id @default(uuid())
+  licitacion        String   @db.VarChar(50)
+  numeroPreparacion Int
+  nombrePreparacion String   @db.VarChar(250)
+  codigoSubServicio String?  @db.VarChar(20)
+  nombreSubServicio String?  @db.VarChar(150)
+  gravedad          String   @default("SIN_ASIGNAR") // LEVE, MEDIO, ALTO, SIN_ASIGNAR
+  observaciones     String?  @db.Text
+  updatedBy         String?  @db.VarChar(100)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@unique([licitacion, numeroPreparacion])
+  @@index([licitacion])
+  @@index([nombrePreparacion])
+  @@index([nombreSubServicio])
+  @@index([gravedad])
+  @@map("Prev_GravedadPreparacion")
+}
+
+model Cal_PlanillaTransporte {
+  id                     String    @id @default(uuid())
+  sucursalId             String
+  fecha                  DateTime
+  fechaTexto             String    @db.VarChar(10) // YYYY-MM-DD
+  estado                 String    @default("ABIERTO") // ABIERTO, FIRMADO_CALIDAD, CERRADO
+  firmaCalidadUser       String?   @db.VarChar(150)
+  firmaCalidadUserId     String?
+  firmaCalidadFecha      DateTime?
+  firmaCalidadDiasAtraso Int       @default(0)
+  firmaCalidadImg        String?   @db.Text
+  firmaBodegaUser        String?   @db.VarChar(150)
+  firmaBodegaUserId      String?
+  firmaBodegaFecha       DateTime?
+  firmaBodegaImg         String?   @db.Text
+  observacionesGenerales String?   @db.Text
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
+
+  sucursal  Sucursal                 @relation(fields: [sucursalId], references: [id])
+  registros Cal_RegistroTransporte[]
+
+  @@unique([sucursalId, fechaTexto])
+  @@index([sucursalId])
+  @@index([fechaTexto])
+  @@index([estado])
+  @@map("Cal_PlanillaTransporte")
+}
+
+model Cal_RegistroTransporte {
+  id                  String   @id @default(uuid())
+  planillaId          String
+  patenteEncriptada   String   @db.Text
+  limpiezaInterior    String   @default("Cumple") @db.VarChar(20) // Cumple, No Cumple, No Aplica
+  limpiezaExterior    String   @default("Cumple") @db.VarChar(20)
+  puertaCamara        String   @default("Cumple") @db.VarChar(20)
+  piezasSinOxidacion  String   @default("Cumple") @db.VarChar(20)
+  equipoCongelacion   String   @default("Cumple") @db.VarChar(20)
+  equipoRefrigeracion String   @default("Cumple") @db.VarChar(20)
+  observacion         String?  @db.Text
+  accionCorrectiva    String?  @db.Text
+  creadoPor           String   @db.VarChar(150)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  planilla Cal_PlanillaTransporte @relation(fields: [planillaId], references: [id], onDelete: Cascade)
+
+  @@index([planillaId])
+  @@map("Cal_RegistroTransporte")
 }

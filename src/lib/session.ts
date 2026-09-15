@@ -195,7 +195,15 @@ export async function getSession() {
                 'logistica:config:clientes',
                 'logistica:integraciones:ver',
                 'view_anonimizador',
-                'manage_anonimizador'
+                'manage_anonimizador',
+                'view_calidad_transporte_higiene',
+                'manage_calidad_transporte_higiene',
+                'sign_calidad_transporte_higiene',
+                'sign_bodega_transporte_higiene',
+                'view_calidad_higiene_personal',
+                'manage_calidad_higiene_personal',
+                'sign_calidad_higiene_personal',
+                'sign_bodega_higiene_personal'
             ]
             perms = adminBasePerms
         } else {
