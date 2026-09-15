@@ -104,7 +104,59 @@ export async function getSucursalesForUser() {
 /**
  * Obtener la planilla y registros del día para la sucursal seleccionada
  */
-export async function getPlanillaDia(sucursalId: string, fechaTexto: string) {
+async function ensureTransporteTables() {
+    try {
+        await prisma.$executeRawUnsafe(`
+            CREATE TABLE IF NOT EXISTS "Cal_PlanillaTransporte" (
+                "id" TEXT PRIMARY KEY,
+                "sucursalId" TEXT NOT NULL,
+                "fecha" TIMESTAMP(3) NOT NULL,
+                "fechaTexto" VARCHAR(10) NOT NULL,
+                "estado" TEXT NOT NULL DEFAULT 'ABIERTO',
+                "firmaCalidadUser" VARCHAR(150),
+                "firmaCalidadUserId" TEXT,
+                "firmaCalidadFecha" TIMESTAMP(3),
+                "firmaCalidadDiasAtraso" INTEGER NOT NULL DEFAULT 0,
+                "firmaCalidadImg" TEXT,
+                "firmaBodegaUser" VARCHAR(150),
+                "firmaBodegaUserId" TEXT,
+                "firmaBodegaFecha" TIMESTAMP(3),
+                "firmaBodegaImg" TEXT,
+                "observacionesGenerales" TEXT,
+                "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                CONSTRAINT "Cal_PlanillaTransporte_sucursalId_fechaTexto_key" UNIQUE ("sucursalId", "fechaTexto")
+            );
+        `)
+        await prisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "Cal_PlanillaTransporte_sucursalId_idx" ON "Cal_PlanillaTransporte"("sucursalId");`)
+        await prisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "Cal_PlanillaTransporte_fechaTexto_idx" ON "Cal_PlanillaTransporte"("fechaTexto");`)
+        await prisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "Cal_PlanillaTransporte_estado_idx" ON "Cal_PlanillaTransporte"("estado");`)
+
+        await prisma.$executeRawUnsafe(`
+            CREATE TABLE IF NOT EXISTS "Cal_RegistroTransporte" (
+                "id" TEXT PRIMARY KEY,
+                "planillaId" TEXT NOT NULL,
+                "patenteEncriptada" TEXT NOT NULL,
+                "limpiezaInterior" VARCHAR(20) NOT NULL DEFAULT 'Cumple',
+                "limpiezaExterior" VARCHAR(20) NOT NULL DEFAULT 'Cumple',
+                "puertaCamara" VARCHAR(20) NOT NULL DEFAULT 'Cumple',
+                "piezasSinOxidacion" VARCHAR(20) NOT NULL DEFAULT 'Cumple',
+                "equipoCongelacion" VARCHAR(20) NOT NULL DEFAULT 'Cumple',
+                "equipoRefrigeracion" VARCHAR(20) NOT NULL DEFAULT 'Cumple',
+                "observacion" TEXT,
+                "accionCorrectiva" TEXT,
+                "creadoPor" VARCHAR(150) NOT NULL,
+                "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
+            );
+        `)
+        await prisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "Cal_RegistroTransporte_planillaId_idx" ON "Cal_RegistroTransporte"("planillaId");`)
+    } catch (err) {
+        console.error('Error auto-creating Cal_PlanillaTransporte tables:', err)
+    }
+}
+
+export async function getPlanillaDia(sucursalId: string, fechaTexto: string, isRetry: boolean = false): Promise<any> {
     const session = await getSession()
     if (!session?.user) return { error: 'No autorizado' }
 
@@ -164,6 +216,12 @@ export async function getPlanillaDia(sucursalId: string, fechaTexto: string) {
         }
     } catch (e: any) {
         console.error('Error fetching planilla:', e)
+        const isTableMissing = e?.code === 'P2021' || (e?.message && (e.message.includes('does not exist') || e.message.includes('42P01') || e.message.includes('relation')))
+        if (isTableMissing && !isRetry) {
+            console.log('Detectada ausencia de tablas Cal_PlanillaTransporte en PostgreSQL. Inicializando automáticamente...')
+            await ensureTransporteTables()
+            return getPlanillaDia(sucursalId, fechaTexto, true)
+        }
         return { error: 'Error al obtener registros de la planilla.' }
     }
 }

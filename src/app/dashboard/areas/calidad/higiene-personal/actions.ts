@@ -112,7 +112,63 @@ export async function getSucursalesHigienePersonal() {
 /**
  * Obtener la planilla y registros para una sucursal y fecha dada.
  */
-export async function getPlanillaDiaHigienePersonal(sucursalId: string, fechaTexto: string) {
+async function ensureHigienePersonalTables() {
+    try {
+        await prisma.$executeRawUnsafe(`
+            CREATE TABLE IF NOT EXISTS "Cal_PlanillaHigienePersonal" (
+                "id" TEXT PRIMARY KEY,
+                "sucursalId" TEXT NOT NULL,
+                "fecha" TIMESTAMP(3) NOT NULL,
+                "fechaTexto" VARCHAR(10) NOT NULL,
+                "estado" TEXT NOT NULL DEFAULT 'ABIERTO',
+                "firmaCalidadUser" VARCHAR(150),
+                "firmaCalidadUserId" TEXT,
+                "firmaCalidadFecha" TIMESTAMP(3),
+                "firmaCalidadDiasAtraso" INTEGER NOT NULL DEFAULT 0,
+                "firmaCalidadImg" TEXT,
+                "firmaBodegaUser" VARCHAR(150),
+                "firmaBodegaUserId" TEXT,
+                "firmaBodegaFecha" TIMESTAMP(3),
+                "firmaBodegaImg" TEXT,
+                "observacionesGenerales" TEXT,
+                "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                CONSTRAINT "Cal_PlanillaHigienePersonal_sucursalId_fechaTexto_key" UNIQUE ("sucursalId", "fechaTexto")
+            );
+        `)
+        await prisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "Cal_PlanillaHigienePersonal_sucursalId_idx" ON "Cal_PlanillaHigienePersonal"("sucursalId");`)
+        await prisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "Cal_PlanillaHigienePersonal_fechaTexto_idx" ON "Cal_PlanillaHigienePersonal"("fechaTexto");`)
+        await prisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "Cal_PlanillaHigienePersonal_estado_idx" ON "Cal_PlanillaHigienePersonal"("estado");`)
+
+        await prisma.$executeRawUnsafe(`
+            CREATE TABLE IF NOT EXISTS "Cal_RegistroHigienePersonal" (
+                "id" TEXT PRIMARY KEY,
+                "planillaId" TEXT NOT NULL,
+                "nombreEncriptado" TEXT NOT NULL,
+                "uniformeLimpio" VARCHAR(20) NOT NULL DEFAULT 'Cumple',
+                "zapatosSeguridad" VARCHAR(20) NOT NULL DEFAULT 'Cumple',
+                "peloCorto" VARCHAR(20) NOT NULL DEFAULT 'Cumple',
+                "usoJockey" VARCHAR(20) NOT NULL DEFAULT 'Cumple',
+                "sinJoyas" VARCHAR(20) NOT NULL DEFAULT 'Cumple',
+                "unasCortas" VARCHAR(20) NOT NULL DEFAULT 'Cumple',
+                "rasurado" VARCHAR(20) NOT NULL DEFAULT 'Cumple',
+                "estadoSalud" VARCHAR(50) NOT NULL DEFAULT 'No Aplica',
+                "habitosCorrectos" VARCHAR(50) NOT NULL DEFAULT 'No Aplica',
+                "heridas" VARCHAR(30) NOT NULL DEFAULT 'Ausencia',
+                "observacion" TEXT,
+                "accionCorrectiva" TEXT,
+                "creadoPor" VARCHAR(150) NOT NULL,
+                "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
+            );
+        `)
+        await prisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "Cal_RegistroHigienePersonal_planillaId_idx" ON "Cal_RegistroHigienePersonal"("planillaId");`)
+    } catch (err) {
+        console.error('Error auto-creating Cal_PlanillaHigienePersonal tables:', err)
+    }
+}
+
+export async function getPlanillaDiaHigienePersonal(sucursalId: string, fechaTexto: string, isRetry: boolean = false): Promise<any> {
     const session = await getSession()
     if (!session?.user) return { error: 'No autorizado' }
 
@@ -177,8 +233,14 @@ export async function getPlanillaDiaHigienePersonal(sucursalId: string, fechaTex
             registros: registrosDescifrados,
             diasAtraso: planilla.estado === 'ABIERTO' ? diasAtraso : planilla.firmaCalidadDiasAtraso
         }
-    } catch (e) {
+    } catch (e: any) {
         console.error('Error fetching planilla higiene personal:', e)
+        const isTableMissing = e?.code === 'P2021' || (e?.message && (e.message.includes('does not exist') || e.message.includes('42P01') || e.message.includes('relation')))
+        if (isTableMissing && !isRetry) {
+            console.log('Detectada ausencia de tablas Cal_PlanillaHigienePersonal en PostgreSQL. Inicializando automáticamente...')
+            await ensureHigienePersonalTables()
+            return getPlanillaDiaHigienePersonal(sucursalId, fechaTexto, true)
+        }
         return { error: 'Ocurrió un error al consultar los registros de higiene personal.' }
     }
 }
