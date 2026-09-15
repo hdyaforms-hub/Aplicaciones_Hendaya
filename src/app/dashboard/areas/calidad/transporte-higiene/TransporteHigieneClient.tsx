@@ -141,9 +141,9 @@ export default function TransporteHigieneClient({
 
     // Permisos
     const isAdmin = userRole === 'Administrador' || userRole === 'admin'
-    const canManage = isAdmin || userPermissions.includes('manage_calidad_transporte_higiene')
-    const canSignCalidad = isAdmin || userPermissions.includes('sign_calidad_transporte_higiene')
-    const canSignBodega = isAdmin || userPermissions.includes('sign_bodega_transporte_higiene')
+    const canManage = userPermissions.includes('manage_calidad_transporte_higiene')
+    const canSignCalidad = userPermissions.includes('sign_calidad_transporte_higiene')
+    const canSignBodega = userPermissions.includes('sign_bodega_transporte_higiene')
 
     // Cargar planilla
     const loadPlanilla = (sucId: string, fecha: string) => {

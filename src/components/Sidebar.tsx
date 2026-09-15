@@ -74,7 +74,7 @@ export default function Sidebar({ user, menuOrders = [] }: { user: User, menuOrd
         }).filter(item => {
             const isAdmin = user.role?.name === 'admin' || user.role?.name === 'Administrador'
             
-            const hasPermission = isAdmin || !item.requiredPermission || (
+            const hasPermission = !item.requiredPermission || (
                 Array.isArray(item.requiredPermission)
                     ? item.requiredPermission.some((p: string) => permissions.includes(p))
                     : permissions.includes(item.requiredPermission)

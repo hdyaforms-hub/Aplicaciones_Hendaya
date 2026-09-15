@@ -195,17 +195,33 @@ export async function getSession() {
                 'logistica:config:clientes',
                 'logistica:integraciones:ver',
                 'view_anonimizador',
-                'manage_anonimizador',
-                'view_calidad_transporte_higiene',
-                'manage_calidad_transporte_higiene',
-                'sign_calidad_transporte_higiene',
-                'sign_bodega_transporte_higiene',
-                'view_calidad_higiene_personal',
-                'manage_calidad_higiene_personal',
-                'sign_calidad_higiene_personal',
-                'sign_bodega_higiene_personal'
+                'manage_anonimizador'
             ]
-            perms = adminBasePerms
+
+            // Cargar permisos específicos configurados en base de datos para el rol
+            let dbRolePerms: string[] = []
+            if (Array.isArray(parsed.user.role?.permissions) && parsed.user.role.permissions.length > 0) {
+                dbRolePerms = parsed.user.role.permissions
+            } else if (parsed.user.id) {
+                try {
+                    const { rawPrisma } = await import('@/lib/prisma')
+                    const dbUser = await rawPrisma.user.findUnique({
+                        where: { id: parsed.user.id },
+                        include: { role: true }
+                    })
+                    if (dbUser?.role?.permissions) {
+                        try {
+                            dbRolePerms = JSON.parse(dbUser.role.permissions)
+                        } catch {
+                            dbRolePerms = dbUser.role.permissions.split(',').map((p: string) => p.trim()).filter(Boolean)
+                        }
+                    }
+                } catch (e) {
+                    console.error('Error cargando permisos de admin en getSession:', e)
+                }
+            }
+
+            perms = Array.from(new Set([...adminBasePerms, ...dbRolePerms]))
         } else {
             // Usuario no admin: obtener permisos desde la BD o token
             if (Array.isArray(parsed.user.role.permissions) && parsed.user.role.permissions.length > 0) {

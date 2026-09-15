@@ -250,7 +250,7 @@ export async function saveRegistroTransporte(data: {
     const perms = session.user.role?.permissions || []
     const isAdmin = session.user.role?.name === 'Administrador' || session.user.role?.name === 'admin'
 
-    if (!isAdmin && !perms.includes('manage_calidad_transporte_higiene')) {
+    if (!perms.includes('manage_calidad_transporte_higiene')) {
         return { error: 'No tienes permiso para gestionar registros de transporte e higiene.' }
     }
 
@@ -657,7 +657,7 @@ export async function firmarCalidadPlanilla(sucursalId: string, fechaTexto: stri
     const perms = session.user.role?.permissions || []
     const isAdmin = session.user.role?.name === 'Administrador' || session.user.role?.name === 'admin'
 
-    if (!isAdmin && !perms.includes('sign_calidad_transporte_higiene')) {
+    if (!perms.includes('sign_calidad_transporte_higiene')) {
         return { error: 'No tienes privilegios para firmar como Encargado de Calidad.' }
     }
 
@@ -729,7 +729,7 @@ export async function reenviarNotificacionBodega(sucursalId: string, fechaTexto:
     const perms = session.user.role?.permissions || []
     const isAdmin = session.user.role?.name === 'Administrador' || session.user.role?.name === 'admin'
 
-    if (!isAdmin && !perms.includes('sign_calidad_transporte_higiene')) {
+    if (!perms.includes('sign_calidad_transporte_higiene')) {
         return { error: 'No tienes privilegios para reenviar notificaciones de Calidad.' }
     }
 
@@ -783,7 +783,7 @@ export async function firmarBodegaPlanilla(sucursalId: string, fechaTexto: strin
     const perms = session.user.role?.permissions || []
     const isAdmin = session.user.role?.name === 'Administrador' || session.user.role?.name === 'admin'
 
-    if (!isAdmin && !perms.includes('sign_bodega_transporte_higiene')) {
+    if (!perms.includes('sign_bodega_transporte_higiene')) {
         return { error: 'No tienes privilegios para firmar como Jefe de Bodega.' }
     }
 

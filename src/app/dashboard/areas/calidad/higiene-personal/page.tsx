@@ -19,7 +19,7 @@ export default async function HigienePersonalPage() {
     const isAdmin = roleNameUpper === 'ADMINISTRADOR' || roleNameUpper === 'ADMIN'
     const permissions = role?.permissions || []
 
-    if (!isAdmin && !permissions.includes('view_calidad_higiene_personal')) {
+    if (!permissions.includes('view_calidad_higiene_personal')) {
         return (
             <div className="bg-red-50 border border-red-200 text-red-700 p-6 rounded-3xl">
                 <div className="flex items-center gap-3">

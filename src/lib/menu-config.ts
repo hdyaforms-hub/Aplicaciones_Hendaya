@@ -136,7 +136,8 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                     const hasPerm = user.role.permissions.includes('view_calidad') || 
                                    user.role.permissions.includes('view_retorno_productos') ||
                                    user.role.permissions.includes('view_verificador_temperaturas') ||
-                                   user.role.permissions.includes('view_calidad_transporte_higiene')
+                                   user.role.permissions.includes('view_calidad_transporte_higiene') ||
+                                   user.role.permissions.includes('view_calidad_higiene_personal')
                     return !!(isAdmin || hasCalidad || hasPerm)
                 },
                 subItems: [

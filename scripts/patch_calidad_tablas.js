@@ -110,48 +110,8 @@ async function initCalidadTables() {
 
     console.log('✓ Tablas e índices de Calidad creados / verificados exitosamente.')
 
-    // 5. Permisos para Roles Administrador
-    console.log('5. Actualizando permisos en roles de Administrador...')
-    const adminRoles = await prisma.role.findMany({
-        where: {
-            OR: [
-                { name: 'Administrador' },
-                { name: 'admin' },
-                { name: { contains: 'Admin', mode: 'insensitive' } }
-            ]
-        }
-    })
-
-    const newPerms = [
-        'view_calidad_transporte_higiene',
-        'manage_calidad_transporte_higiene',
-        'sign_calidad_transporte_higiene',
-        'sign_bodega_transporte_higiene',
-        'view_calidad_higiene_personal',
-        'manage_calidad_higiene_personal',
-        'sign_calidad_higiene_personal',
-        'sign_bodega_higiene_personal'
-    ]
-
-    for (const r of adminRoles) {
-        let current = []
-        try { current = JSON.parse(r.permissions || '[]') } catch (e) { current = [] }
-        const pSet = new Set(current)
-        let changed = false
-        for (const p of newPerms) {
-            if (!pSet.has(p)) {
-                pSet.add(p)
-                changed = true
-            }
-        }
-        if (changed) {
-            await prisma.role.update({
-                where: { id: r.id },
-                data: { permissions: JSON.stringify(Array.from(pSet)) }
-            })
-            console.log(`  ✓ Permisos agregados a rol "${r.name}"`)
-        }
-    }
+    // 5. Los permisos se configuran de manera estricta y explícita desde el panel de Roles y Perfiles.
+    console.log('5. Permisos: No se auto-asignan; deben marcarse explícitamente en Roles y Perfiles.')
 
     // 6. Plantillas de correo por defecto
     console.log('6. Verificando plantillas de correo...')

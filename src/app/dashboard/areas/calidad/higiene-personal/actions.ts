@@ -272,7 +272,7 @@ export async function saveRegistroHigienePersonal(data: {
     const perms = session.user.role?.permissions || []
     const isAdmin = session.user.role?.name === 'Administrador' || session.user.role?.name === 'admin'
 
-    if (!isAdmin && !perms.includes('manage_calidad_higiene_personal')) {
+    if (!perms.includes('manage_calidad_higiene_personal')) {
         return { error: 'No tienes privilegios para registrar o editar evaluaciones de higiene personal.' }
     }
 
@@ -689,7 +689,7 @@ export async function reenviarNotificacionBodegaHigiene(sucursalId: string, fech
     const perms = session.user.role?.permissions || []
     const isAdmin = session.user.role?.name === 'Administrador' || session.user.role?.name === 'admin'
 
-    if (!isAdmin && !perms.includes('sign_calidad_higiene_personal')) {
+    if (!perms.includes('sign_calidad_higiene_personal')) {
         return { error: 'No tienes privilegios para reenviar notificaciones de Calidad.' }
     }
 
@@ -743,7 +743,7 @@ export async function firmarCalidadHigienePersonal(sucursalId: string, fechaText
     const perms = session.user.role?.permissions || []
     const isAdmin = session.user.role?.name === 'Administrador' || session.user.role?.name === 'admin'
 
-    if (!isAdmin && !perms.includes('sign_calidad_higiene_personal')) {
+    if (!perms.includes('sign_calidad_higiene_personal')) {
         return { error: 'No tienes privilegios para firmar como Encargado de Calidad.' }
     }
 
@@ -817,7 +817,7 @@ export async function firmarBodegaHigienePersonal(sucursalId: string, fechaTexto
     const perms = session.user.role?.permissions || []
     const isAdmin = session.user.role?.name === 'Administrador' || session.user.role?.name === 'admin'
 
-    if (!isAdmin && !perms.includes('sign_bodega_higiene_personal')) {
+    if (!perms.includes('sign_bodega_higiene_personal')) {
         return { error: 'No tienes privilegios para firmar como Jefe de Bodega.' }
     }
 

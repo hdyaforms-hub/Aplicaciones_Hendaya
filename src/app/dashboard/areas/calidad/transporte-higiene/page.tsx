@@ -18,7 +18,7 @@ export default async function TransporteHigienePage() {
     const isAdmin = role?.name === 'Administrador' || role?.name === 'admin'
     const permissions = role?.permissions || []
 
-    if (!isAdmin && !permissions.includes('view_calidad_transporte_higiene')) {
+    if (!permissions.includes('view_calidad_transporte_higiene')) {
         return (
             <div className="bg-red-50 border border-red-200 text-red-700 p-6 rounded-3xl">
                 <div className="flex items-center gap-3">

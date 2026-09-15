@@ -152,9 +152,9 @@ export default function HigienePersonalClient({
 
     const roleUpper = (userRole || '').toUpperCase()
     const isAdmin = roleUpper === 'ADMIN' || roleUpper === 'ADMINISTRADOR'
-    const canManage = isAdmin || userPermissions.includes('manage_calidad_higiene_personal') || userPermissions.includes('view_calidad_higiene_personal')
-    const canSignCalidad = isAdmin || userPermissions.includes('sign_calidad_higiene_personal') || roleUpper.includes('CALIDAD')
-    const canSignBodega = isAdmin || userPermissions.includes('sign_bodega_higiene_personal') || roleUpper.includes('BODEGA')
+    const canManage = userPermissions.includes('manage_calidad_higiene_personal')
+    const canSignCalidad = userPermissions.includes('sign_calidad_higiene_personal')
+    const canSignBodega = userPermissions.includes('sign_bodega_higiene_personal')
 
     // Cargar Planilla
     const loadPlanilla = (sucId: string, fTxt: string) => {
