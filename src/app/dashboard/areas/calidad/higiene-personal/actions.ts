@@ -564,11 +564,16 @@ export async function sendNotificationToBodegaHigiene(planillaId: string): Promi
 
         const tags: Record<string, string> = {
             Fecha: planilla.fechaTexto.split('-').reverse().join('/'),
+            FechaInspeccion: planilla.fechaTexto.split('-').reverse().join('/'),
             Sucursal: planilla.sucursal.nombre,
             UsuarioCalidad: planilla.firmaCalidadUser || 'Encargado de Calidad',
+            Usuario: planilla.firmaCalidadUser || 'Encargado de Calidad',
+            TotalTrabajadores: String(totalPersonas),
             TotalPersonas: String(totalPersonas),
+            TotalTransportistas: String(totalPersonas),
             Desviaciones: desviacionesTexto,
-            DiasAtraso: String(planilla.firmaCalidadDiasAtraso || 0)
+            DiasAtraso: String(planilla.firmaCalidadDiasAtraso || 0),
+            ObservacionesGenerales: planilla.observacionesGenerales || 'Sin observaciones generales.'
         }
 
         let subject = `Cierre Registro Higiene Personal Transportistas - ${planilla.sucursal.nombre} (${tags.Fecha})`

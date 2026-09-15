@@ -170,19 +170,28 @@ export async function getMockDataForPreview(codigoPantalla: string) {
         },
         'calidad-transporte-higiene': {
             Fecha: '15/09/2026',
+            FechaInspeccion: '15/09/2026',
             Sucursal: 'SANTIAGO SUR',
             UsuarioCalidad: 'PAMELA FERNÁNDEZ',
+            Usuario: 'PAMELA FERNÁNDEZ',
             TotalVehiculos: '5',
+            TotalTransportes: '5',
             Desviaciones: 'FLSX83: Limpieza Exterior (No Cumple) - Lavado urgente solicitado',
-            DiasAtraso: '0'
+            DiasAtraso: '0',
+            ObservacionesGenerales: 'Sin novedades adicionales durante el turno.'
         },
         'calidad-higiene-personal': {
             Fecha: '15/09/2026',
+            FechaInspeccion: '15/09/2026',
             Sucursal: 'SANTIAGO SUR',
             UsuarioCalidad: 'PAMELA FERNÁNDEZ',
+            Usuario: 'PAMELA FERNÁNDEZ',
             TotalTrabajadores: '8',
+            TotalPersonas: '8',
+            TotalTransportistas: '8',
             Desviaciones: 'Juan Pérez: Uñas Cortas (No Cumple) - Se instruye corte inmediato',
-            DiasAtraso: '0'
+            DiasAtraso: '0',
+            ObservacionesGenerales: 'Todos los transportistas evaluados al inicio de la jornada.'
         }
     }
     return mockData[codigoPantalla] || {}

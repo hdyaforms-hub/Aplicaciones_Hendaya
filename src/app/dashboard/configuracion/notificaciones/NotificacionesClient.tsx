@@ -52,12 +52,12 @@ const PANTALLAS: PantallaInfo[] = [
     },
     {
         id: 'calidad-transporte-higiene',
-        name: 'Registro Transporte e Higiene',
+        name: 'Registro transportista interno higiene y estado Transporte',
         description: 'Se envía un aviso al Jefe de Bodega cuando el Encargado de Calidad firma el registro diario de transporte e higiene.'
     },
     {
         id: 'calidad-higiene-personal',
-        name: 'Registro Higiene Personal Transportista',
+        name: 'Registro de Transportista interno Higiene Personal',
         description: 'Se envía un aviso al Jefe de Bodega cuando el Encargado de Calidad firma el registro diario de higiene personal de transportistas.'
     }
 ]
@@ -68,21 +68,30 @@ const HELP_KEYWORDS: Record<string, { tag: string, desc: string }[]> = {
         { tag: '<Usuario>', desc: 'Nombre del usuario que realiza la acción.' },
         { tag: '<Sucursal>', desc: 'Nombre de la sucursal o bodega correspondiente.' },
     ],
-    'Registro Transporte e Higiene': [
-        { tag: '<Fecha>', desc: 'Fecha del registro de transporte (DD/MM/AAAA).' },
+    'Registro transportista interno higiene y estado Transporte': [
+        { tag: '<Fecha>', desc: 'Fecha del registro de inspección (DD/MM/AAAA).' },
+        { tag: '<FechaInspeccion>', desc: 'Fecha formateada de la inspección de vehículos.' },
         { tag: '<Sucursal>', desc: 'Nombre de la sucursal o bodega inspeccionada.' },
-        { tag: '<UsuarioCalidad>', desc: 'Nombre del encargado de calidad que firma el registro.' },
-        { tag: '<TotalVehiculos>', desc: 'Cantidad total de vehículos registrados.' },
-        { tag: '<Desviaciones>', desc: 'Resumen de vehículos con desviaciones / No Cumple.' },
-        { tag: '<DiasAtraso>', desc: 'Días de retraso si la firma es extemporánea.' }
+        { tag: '<UsuarioCalidad>', desc: 'Nombre del Encargado de Calidad que firma y cierra el registro.' },
+        { tag: '<Usuario>', desc: 'Nombre del usuario que realiza la firma/envío.' },
+        { tag: '<TotalVehiculos>', desc: 'Cantidad total de vehículos inspeccionados.' },
+        { tag: '<TotalTransportes>', desc: 'Cantidad total de vehículos inspeccionados (alias).' },
+        { tag: '<Desviaciones>', desc: 'Resumen detallado de vehículos con no conformidades / observaciones.' },
+        { tag: '<DiasAtraso>', desc: 'Días de retraso si la firma de calidad es extemporánea.' },
+        { tag: '<ObservacionesGenerales>', desc: 'Observaciones generales registradas en la planilla.' }
     ],
-    'Registro Higiene Personal Transportista': [
-        { tag: '<Fecha>', desc: 'Fecha del registro de higiene (DD/MM/AAAA).' },
+    'Registro de Transportista interno Higiene Personal': [
+        { tag: '<Fecha>', desc: 'Fecha del control de higiene personal (DD/MM/AAAA).' },
+        { tag: '<FechaInspeccion>', desc: 'Fecha formateada del control higiénico.' },
         { tag: '<Sucursal>', desc: 'Nombre de la sucursal o bodega inspeccionada.' },
-        { tag: '<UsuarioCalidad>', desc: 'Nombre del encargado de calidad que firma el registro.' },
-        { tag: '<TotalTrabajadores>', desc: 'Cantidad total de trabajadores inspeccionados.' },
-        { tag: '<Desviaciones>', desc: 'Resumen de observaciones o desviaciones higiénicas.' },
-        { tag: '<DiasAtraso>', desc: 'Días de retraso si la firma es extemporánea.' }
+        { tag: '<UsuarioCalidad>', desc: 'Nombre del Encargado de Calidad que firma y cierra el registro.' },
+        { tag: '<Usuario>', desc: 'Nombre del usuario que realiza la firma/envío.' },
+        { tag: '<TotalTrabajadores>', desc: 'Cantidad total de trabajadores / transportistas evaluados.' },
+        { tag: '<TotalPersonas>', desc: 'Cantidad total de trabajadores evaluados (alias).' },
+        { tag: '<TotalTransportistas>', desc: 'Total de transportistas evaluados (alias).' },
+        { tag: '<Desviaciones>', desc: 'Resumen de trabajadores con observaciones higiénicas o síntomas de salud.' },
+        { tag: '<DiasAtraso>', desc: 'Días de retraso si la firma de calidad es extemporánea.' },
+        { tag: '<ObservacionesGenerales>', desc: 'Observaciones generales registradas en la planilla.' }
     ],
     'Ingreso de Raciones': [
         { tag: '<Colegio>', desc: 'Nombre del establecimiento educacional.' },
@@ -157,6 +166,13 @@ export default function NotificacionesClient({
         mockData: any
     } | null>(null)
     const [showHelp, setShowHelp] = useState(false)
+    const [searchHelp, setSearchHelp] = useState('')
+
+    const getScreenKeywords = (pantallaId: string) => {
+        const pantalla = PANTALLAS.find(p => p.id === pantallaId)
+        if (!pantalla) return []
+        return HELP_KEYWORDS[pantalla.name] || []
+    }
 
     const handleSave = async (codigoPantalla: string, listas: string[], activa: boolean) => {
         setLoading(prev => ({ ...prev, [codigoPantalla]: true }))
@@ -293,6 +309,41 @@ export default function NotificacionesClient({
                                             onChange={(e) => setTemplateModal({...templateModal, cuerpo: e.target.value})}
                                         />
                                     </div>
+
+                                    {templateModal && getScreenKeywords(templateModal.pantallaId).length > 0 && (
+                                        <div className="bg-cyan-50/70 border border-cyan-100 rounded-xl p-3.5 space-y-2">
+                                            <div className="flex items-center justify-between">
+                                                <span className="text-[11px] font-bold text-cyan-900 uppercase tracking-wider flex items-center gap-1.5">
+                                                    <span>🏷️</span> Palabras reservadas disponibles (clic para insertar):
+                                                </span>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setShowHelp(true)}
+                                                    className="text-[11px] text-cyan-700 font-bold hover:underline flex items-center gap-1"
+                                                >
+                                                    📖 Ver Guía Completa
+                                                </button>
+                                            </div>
+                                            <div className="flex flex-wrap gap-1.5">
+                                                {getScreenKeywords(templateModal.pantallaId).map(kw => (
+                                                    <button
+                                                        key={kw.tag}
+                                                        type="button"
+                                                        onClick={() => {
+                                                            setTemplateModal(prev => prev ? {
+                                                                ...prev,
+                                                                cuerpo: prev.cuerpo ? `${prev.cuerpo} ${kw.tag}` : kw.tag
+                                                            } : null)
+                                                        }}
+                                                        className="px-2.5 py-1 bg-white hover:bg-cyan-600 hover:text-white border border-cyan-200 text-cyan-800 font-mono text-xs font-bold rounded-lg shadow-sm transition-all"
+                                                        title={`${kw.desc} (Clic para insertar en el cuerpo)`}
+                                                    >
+                                                        {kw.tag}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
                                 </>
                             ) : (
                                 <div className="bg-slate-50 border border-slate-200 rounded-xl p-6 shadow-inner space-y-4">
@@ -353,21 +404,53 @@ export default function NotificacionesClient({
                             <button onClick={() => setShowHelp(false)} className="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors">✕</button>
                         </div>
 
+                        <div className="px-8 py-3 bg-gray-50 border-b border-gray-100 flex items-center gap-3">
+                            <span className="text-gray-400">🔍</span>
+                            <input
+                                type="text"
+                                placeholder="Buscar palabra reservada (ej: <Fecha>, <TotalVehiculos>, <Desviaciones>) o por módulo..."
+                                value={searchHelp}
+                                onChange={(e) => setSearchHelp(e.target.value)}
+                                className="w-full text-sm outline-none bg-transparent placeholder-gray-400 text-gray-800 font-medium"
+                            />
+                            {searchHelp && (
+                                <button onClick={() => setSearchHelp('')} className="text-xs text-gray-400 hover:text-gray-600 font-bold">✕ Limpiar</button>
+                            )}
+                        </div>
+
                         <div className="p-8 overflow-y-auto flex-1 custom-scrollbar">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                {Object.entries(HELP_KEYWORDS).map(([module, keywords]) => (
-                                    <div key={module} className="space-y-4">
-                                        <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-cyan-600 bg-cyan-50 w-fit px-3 py-1 rounded-full">{module}</h4>
-                                        <div className="space-y-2">
-                                            {keywords.map(kw => (
-                                                <div key={kw.tag} className="flex flex-col p-3 bg-gray-50 border border-gray-100 rounded-2xl group hover:bg-white hover:border-cyan-200 hover:shadow-md transition-all">
-                                                    <code className="text-sm font-bold text-cyan-700 group-hover:scale-105 transition-transform origin-left">{kw.tag}</code>
-                                                    <span className="text-xs text-gray-500 mt-1">{kw.desc}</span>
+                                {Object.entries(HELP_KEYWORDS)
+                                    .filter(([module, keywords]) => {
+                                        if (!searchHelp.trim()) return true
+                                        const q = searchHelp.toLowerCase()
+                                        const inModule = module.toLowerCase().includes(q)
+                                        const inKeywords = keywords.some(k => k.tag.toLowerCase().includes(q) || k.desc.toLowerCase().includes(q))
+                                        return inModule || inKeywords
+                                    })
+                                    .map(([module, keywords]) => {
+                                        const filteredKws = !searchHelp.trim()
+                                            ? keywords
+                                            : keywords.filter(k => 
+                                                module.toLowerCase().includes(searchHelp.toLowerCase()) ||
+                                                k.tag.toLowerCase().includes(searchHelp.toLowerCase()) || 
+                                                k.desc.toLowerCase().includes(searchHelp.toLowerCase())
+                                            )
+                                        if (filteredKws.length === 0) return null
+                                        return (
+                                            <div key={module} className="space-y-4">
+                                                <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-cyan-600 bg-cyan-50 w-fit px-3 py-1 rounded-full">{module}</h4>
+                                                <div className="space-y-2">
+                                                    {filteredKws.map(kw => (
+                                                        <div key={kw.tag} className="flex flex-col p-3 bg-gray-50 border border-gray-100 rounded-2xl group hover:bg-white hover:border-cyan-200 hover:shadow-md transition-all">
+                                                            <code className="text-sm font-bold text-cyan-700 group-hover:scale-105 transition-transform origin-left">{kw.tag}</code>
+                                                            <span className="text-xs text-gray-500 mt-1">{kw.desc}</span>
+                                                        </div>
+                                                    ))}
                                                 </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                ))}
+                                            </div>
+                                        )
+                                    })}
                             </div>
                         </div>
 

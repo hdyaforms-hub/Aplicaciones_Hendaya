@@ -530,11 +530,15 @@ export async function sendNotificationToBodega(planillaId: string): Promise<{ su
 
         const tags: Record<string, string> = {
             Fecha: planilla.fechaTexto.split('-').reverse().join('/'),
+            FechaInspeccion: planilla.fechaTexto.split('-').reverse().join('/'),
             Sucursal: planilla.sucursal.nombre,
             UsuarioCalidad: planilla.firmaCalidadUser || 'Encargado de Calidad',
+            Usuario: planilla.firmaCalidadUser || 'Encargado de Calidad',
             TotalVehiculos: String(totalVehiculos),
+            TotalTransportes: String(totalVehiculos),
             Desviaciones: desviacionesTexto,
-            DiasAtraso: String(planilla.firmaCalidadDiasAtraso || 0)
+            DiasAtraso: String(planilla.firmaCalidadDiasAtraso || 0),
+            ObservacionesGenerales: planilla.observacionesGenerales || 'Sin observaciones generales.'
         }
 
         let subject = `Cierre Registro Transporte e Higiene - ${planilla.sucursal.nombre} (${tags.Fecha})`
