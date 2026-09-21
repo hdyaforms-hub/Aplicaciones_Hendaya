@@ -356,11 +356,12 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
     {
         name: 'Colaboradores',
         icon: '👥',
-        requiredPermission: ['view_conversacion', 'view_sala_reuniones', 'view_anonimizador'],
+        requiredPermission: ['view_conversacion', 'view_sala_reuniones', 'view_anonimizador', 'view_registro_capacitacion'],
         subItems: [
             { name: 'Conversación', href: '/dashboard/ayuda/conversacion', requiredPermission: 'view_conversacion' },
             { name: 'Reserva Sala Reuniones', href: '/dashboard/colaboradores/sala-reuniones', requiredPermission: 'view_sala_reuniones' },
-            { name: 'Anonimizador', href: '/dashboard/colaboradores/anonimizador', requiredPermission: 'view_anonimizador' }
+            { name: 'Anonimizador', href: '/dashboard/colaboradores/anonimizador', requiredPermission: 'view_anonimizador' },
+            { name: 'Registro de Capacitación', href: '/dashboard/colaboradores/registro-capacitacion', requiredPermission: 'view_registro_capacitacion' }
         ]
     },
     {

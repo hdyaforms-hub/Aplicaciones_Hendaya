@@ -2183,5 +2183,47 @@ model Cal_RegistroHigienePersonal {
   @@map("Cal_RegistroHigienePersonal")
 }
 
+model RegCap_Capacitacion {
+  id             String                @id @default(uuid())
+  fecha          DateTime              @default(now())
+  instalacion    String                @db.Text
+  licitacion     String?               @db.Text
+  sucursal       String?               @db.Text
+  horaDesde      String                @db.VarChar(10)
+  horaHasta      String                @db.VarChar(10)
+  horario        String                @db.VarChar(50)
+  relatorNombre  String                @db.Text
+  relatorCargo   String                @db.Text
+  tema           String                @db.Text
+  firmaRelator   String?               @db.Text
+  creadoPor      String?               @db.VarChar(150)
+  creadoPorId    String?
+  createdAt      DateTime              @default(now())
+  updatedAt      DateTime              @updatedAt
+
+  participantes  RegCap_Participante[]
+
+  @@index([fecha])
+  @@index([licitacion])
+  @@index([sucursal])
+  @@map("RegCap_Capacitacion")
+}
+
+model RegCap_Participante {
+  id         String              @id @default(uuid())
+  registroId String
+  numero     Int
+  nombre     String              @db.Text
+  cargo      String              @db.Text
+  rut        String              @db.Text
+  firma      String?             @db.Text
+  createdAt  DateTime            @default(now())
+
+  registro   RegCap_Capacitacion @relation(fields: [registroId], references: [id], onDelete: Cascade)
+
+  @@index([registroId])
+  @@map("RegCap_Participante")
+}
+
 
 

@@ -658,6 +658,16 @@ export type Cal_PlanillaHigienePersonal = $Result.DefaultSelection<Prisma.$Cal_P
  * 
  */
 export type Cal_RegistroHigienePersonal = $Result.DefaultSelection<Prisma.$Cal_RegistroHigienePersonalPayload>
+/**
+ * Model RegCap_Capacitacion
+ * 
+ */
+export type RegCap_Capacitacion = $Result.DefaultSelection<Prisma.$RegCap_CapacitacionPayload>
+/**
+ * Model RegCap_Participante
+ * 
+ */
+export type RegCap_Participante = $Result.DefaultSelection<Prisma.$RegCap_ParticipantePayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -2071,6 +2081,26 @@ export class PrismaClient<
     * ```
     */
   get cal_RegistroHigienePersonal(): Prisma.Cal_RegistroHigienePersonalDelegate<ExtArgs>;
+
+  /**
+   * `prisma.regCap_Capacitacion`: Exposes CRUD operations for the **RegCap_Capacitacion** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more RegCap_Capacitacions
+    * const regCap_Capacitacions = await prisma.regCap_Capacitacion.findMany()
+    * ```
+    */
+  get regCap_Capacitacion(): Prisma.RegCap_CapacitacionDelegate<ExtArgs>;
+
+  /**
+   * `prisma.regCap_Participante`: Exposes CRUD operations for the **RegCap_Participante** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more RegCap_Participantes
+    * const regCap_Participantes = await prisma.regCap_Participante.findMany()
+    * ```
+    */
+  get regCap_Participante(): Prisma.RegCap_ParticipanteDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -2640,7 +2670,9 @@ export namespace Prisma {
     Cal_PlanillaTransporte: 'Cal_PlanillaTransporte',
     Cal_RegistroTransporte: 'Cal_RegistroTransporte',
     Cal_PlanillaHigienePersonal: 'Cal_PlanillaHigienePersonal',
-    Cal_RegistroHigienePersonal: 'Cal_RegistroHigienePersonal'
+    Cal_RegistroHigienePersonal: 'Cal_RegistroHigienePersonal',
+    RegCap_Capacitacion: 'RegCap_Capacitacion',
+    RegCap_Participante: 'RegCap_Participante'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -2656,7 +2688,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout" | "reservaSala" | "noticiaAlimentacion" | "logBodega" | "logUsuarioBodega" | "logAnden" | "logTransportista" | "logChofer" | "logCamion" | "logCliente" | "logRuta" | "logEventoRuta" | "logIntegracionConfig" | "logIntegracionLog" | "logParametro" | "prevGravedadPreparacion" | "cal_PlanillaTransporte" | "cal_RegistroTransporte" | "cal_PlanillaHigienePersonal" | "cal_RegistroHigienePersonal"
+      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout" | "reservaSala" | "noticiaAlimentacion" | "logBodega" | "logUsuarioBodega" | "logAnden" | "logTransportista" | "logChofer" | "logCamion" | "logCliente" | "logRuta" | "logEventoRuta" | "logIntegracionConfig" | "logIntegracionLog" | "logParametro" | "prevGravedadPreparacion" | "cal_PlanillaTransporte" | "cal_RegistroTransporte" | "cal_PlanillaHigienePersonal" | "cal_RegistroHigienePersonal" | "regCap_Capacitacion" | "regCap_Participante"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -11690,6 +11722,146 @@ export namespace Prisma {
           }
         }
       }
+      RegCap_Capacitacion: {
+        payload: Prisma.$RegCap_CapacitacionPayload<ExtArgs>
+        fields: Prisma.RegCap_CapacitacionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.RegCap_CapacitacionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RegCap_CapacitacionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.RegCap_CapacitacionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RegCap_CapacitacionPayload>
+          }
+          findFirst: {
+            args: Prisma.RegCap_CapacitacionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RegCap_CapacitacionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.RegCap_CapacitacionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RegCap_CapacitacionPayload>
+          }
+          findMany: {
+            args: Prisma.RegCap_CapacitacionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RegCap_CapacitacionPayload>[]
+          }
+          create: {
+            args: Prisma.RegCap_CapacitacionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RegCap_CapacitacionPayload>
+          }
+          createMany: {
+            args: Prisma.RegCap_CapacitacionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.RegCap_CapacitacionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RegCap_CapacitacionPayload>[]
+          }
+          delete: {
+            args: Prisma.RegCap_CapacitacionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RegCap_CapacitacionPayload>
+          }
+          update: {
+            args: Prisma.RegCap_CapacitacionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RegCap_CapacitacionPayload>
+          }
+          deleteMany: {
+            args: Prisma.RegCap_CapacitacionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.RegCap_CapacitacionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.RegCap_CapacitacionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RegCap_CapacitacionPayload>
+          }
+          aggregate: {
+            args: Prisma.RegCap_CapacitacionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateRegCap_Capacitacion>
+          }
+          groupBy: {
+            args: Prisma.RegCap_CapacitacionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<RegCap_CapacitacionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.RegCap_CapacitacionCountArgs<ExtArgs>
+            result: $Utils.Optional<RegCap_CapacitacionCountAggregateOutputType> | number
+          }
+        }
+      }
+      RegCap_Participante: {
+        payload: Prisma.$RegCap_ParticipantePayload<ExtArgs>
+        fields: Prisma.RegCap_ParticipanteFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.RegCap_ParticipanteFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RegCap_ParticipantePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.RegCap_ParticipanteFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RegCap_ParticipantePayload>
+          }
+          findFirst: {
+            args: Prisma.RegCap_ParticipanteFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RegCap_ParticipantePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.RegCap_ParticipanteFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RegCap_ParticipantePayload>
+          }
+          findMany: {
+            args: Prisma.RegCap_ParticipanteFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RegCap_ParticipantePayload>[]
+          }
+          create: {
+            args: Prisma.RegCap_ParticipanteCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RegCap_ParticipantePayload>
+          }
+          createMany: {
+            args: Prisma.RegCap_ParticipanteCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.RegCap_ParticipanteCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RegCap_ParticipantePayload>[]
+          }
+          delete: {
+            args: Prisma.RegCap_ParticipanteDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RegCap_ParticipantePayload>
+          }
+          update: {
+            args: Prisma.RegCap_ParticipanteUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RegCap_ParticipantePayload>
+          }
+          deleteMany: {
+            args: Prisma.RegCap_ParticipanteDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.RegCap_ParticipanteUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.RegCap_ParticipanteUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RegCap_ParticipantePayload>
+          }
+          aggregate: {
+            args: Prisma.RegCap_ParticipanteAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateRegCap_Participante>
+          }
+          groupBy: {
+            args: Prisma.RegCap_ParticipanteGroupByArgs<ExtArgs>
+            result: $Utils.Optional<RegCap_ParticipanteGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.RegCap_ParticipanteCountArgs<ExtArgs>
+            result: $Utils.Optional<RegCap_ParticipanteCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -13728,6 +13900,37 @@ export namespace Prisma {
    */
   export type Cal_PlanillaHigienePersonalCountOutputTypeCountRegistrosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: Cal_RegistroHigienePersonalWhereInput
+  }
+
+
+  /**
+   * Count Type RegCap_CapacitacionCountOutputType
+   */
+
+  export type RegCap_CapacitacionCountOutputType = {
+    participantes: number
+  }
+
+  export type RegCap_CapacitacionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    participantes?: boolean | RegCap_CapacitacionCountOutputTypeCountParticipantesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * RegCap_CapacitacionCountOutputType without action
+   */
+  export type RegCap_CapacitacionCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegCap_CapacitacionCountOutputType
+     */
+    select?: RegCap_CapacitacionCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * RegCap_CapacitacionCountOutputType without action
+   */
+  export type RegCap_CapacitacionCountOutputTypeCountParticipantesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RegCap_ParticipanteWhereInput
   }
 
 
@@ -145583,6 +145786,2089 @@ export namespace Prisma {
 
 
   /**
+   * Model RegCap_Capacitacion
+   */
+
+  export type AggregateRegCap_Capacitacion = {
+    _count: RegCap_CapacitacionCountAggregateOutputType | null
+    _min: RegCap_CapacitacionMinAggregateOutputType | null
+    _max: RegCap_CapacitacionMaxAggregateOutputType | null
+  }
+
+  export type RegCap_CapacitacionMinAggregateOutputType = {
+    id: string | null
+    fecha: Date | null
+    instalacion: string | null
+    licitacion: string | null
+    sucursal: string | null
+    horaDesde: string | null
+    horaHasta: string | null
+    horario: string | null
+    relatorNombre: string | null
+    relatorCargo: string | null
+    tema: string | null
+    firmaRelator: string | null
+    creadoPor: string | null
+    creadoPorId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type RegCap_CapacitacionMaxAggregateOutputType = {
+    id: string | null
+    fecha: Date | null
+    instalacion: string | null
+    licitacion: string | null
+    sucursal: string | null
+    horaDesde: string | null
+    horaHasta: string | null
+    horario: string | null
+    relatorNombre: string | null
+    relatorCargo: string | null
+    tema: string | null
+    firmaRelator: string | null
+    creadoPor: string | null
+    creadoPorId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type RegCap_CapacitacionCountAggregateOutputType = {
+    id: number
+    fecha: number
+    instalacion: number
+    licitacion: number
+    sucursal: number
+    horaDesde: number
+    horaHasta: number
+    horario: number
+    relatorNombre: number
+    relatorCargo: number
+    tema: number
+    firmaRelator: number
+    creadoPor: number
+    creadoPorId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type RegCap_CapacitacionMinAggregateInputType = {
+    id?: true
+    fecha?: true
+    instalacion?: true
+    licitacion?: true
+    sucursal?: true
+    horaDesde?: true
+    horaHasta?: true
+    horario?: true
+    relatorNombre?: true
+    relatorCargo?: true
+    tema?: true
+    firmaRelator?: true
+    creadoPor?: true
+    creadoPorId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type RegCap_CapacitacionMaxAggregateInputType = {
+    id?: true
+    fecha?: true
+    instalacion?: true
+    licitacion?: true
+    sucursal?: true
+    horaDesde?: true
+    horaHasta?: true
+    horario?: true
+    relatorNombre?: true
+    relatorCargo?: true
+    tema?: true
+    firmaRelator?: true
+    creadoPor?: true
+    creadoPorId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type RegCap_CapacitacionCountAggregateInputType = {
+    id?: true
+    fecha?: true
+    instalacion?: true
+    licitacion?: true
+    sucursal?: true
+    horaDesde?: true
+    horaHasta?: true
+    horario?: true
+    relatorNombre?: true
+    relatorCargo?: true
+    tema?: true
+    firmaRelator?: true
+    creadoPor?: true
+    creadoPorId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type RegCap_CapacitacionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which RegCap_Capacitacion to aggregate.
+     */
+    where?: RegCap_CapacitacionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RegCap_Capacitacions to fetch.
+     */
+    orderBy?: RegCap_CapacitacionOrderByWithRelationInput | RegCap_CapacitacionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: RegCap_CapacitacionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RegCap_Capacitacions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RegCap_Capacitacions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned RegCap_Capacitacions
+    **/
+    _count?: true | RegCap_CapacitacionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: RegCap_CapacitacionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: RegCap_CapacitacionMaxAggregateInputType
+  }
+
+  export type GetRegCap_CapacitacionAggregateType<T extends RegCap_CapacitacionAggregateArgs> = {
+        [P in keyof T & keyof AggregateRegCap_Capacitacion]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateRegCap_Capacitacion[P]>
+      : GetScalarType<T[P], AggregateRegCap_Capacitacion[P]>
+  }
+
+
+
+
+  export type RegCap_CapacitacionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RegCap_CapacitacionWhereInput
+    orderBy?: RegCap_CapacitacionOrderByWithAggregationInput | RegCap_CapacitacionOrderByWithAggregationInput[]
+    by: RegCap_CapacitacionScalarFieldEnum[] | RegCap_CapacitacionScalarFieldEnum
+    having?: RegCap_CapacitacionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: RegCap_CapacitacionCountAggregateInputType | true
+    _min?: RegCap_CapacitacionMinAggregateInputType
+    _max?: RegCap_CapacitacionMaxAggregateInputType
+  }
+
+  export type RegCap_CapacitacionGroupByOutputType = {
+    id: string
+    fecha: Date
+    instalacion: string
+    licitacion: string | null
+    sucursal: string | null
+    horaDesde: string
+    horaHasta: string
+    horario: string
+    relatorNombre: string
+    relatorCargo: string
+    tema: string
+    firmaRelator: string | null
+    creadoPor: string | null
+    creadoPorId: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: RegCap_CapacitacionCountAggregateOutputType | null
+    _min: RegCap_CapacitacionMinAggregateOutputType | null
+    _max: RegCap_CapacitacionMaxAggregateOutputType | null
+  }
+
+  type GetRegCap_CapacitacionGroupByPayload<T extends RegCap_CapacitacionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<RegCap_CapacitacionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof RegCap_CapacitacionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], RegCap_CapacitacionGroupByOutputType[P]>
+            : GetScalarType<T[P], RegCap_CapacitacionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type RegCap_CapacitacionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    fecha?: boolean
+    instalacion?: boolean
+    licitacion?: boolean
+    sucursal?: boolean
+    horaDesde?: boolean
+    horaHasta?: boolean
+    horario?: boolean
+    relatorNombre?: boolean
+    relatorCargo?: boolean
+    tema?: boolean
+    firmaRelator?: boolean
+    creadoPor?: boolean
+    creadoPorId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    participantes?: boolean | RegCap_Capacitacion$participantesArgs<ExtArgs>
+    _count?: boolean | RegCap_CapacitacionCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["regCap_Capacitacion"]>
+
+  export type RegCap_CapacitacionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    fecha?: boolean
+    instalacion?: boolean
+    licitacion?: boolean
+    sucursal?: boolean
+    horaDesde?: boolean
+    horaHasta?: boolean
+    horario?: boolean
+    relatorNombre?: boolean
+    relatorCargo?: boolean
+    tema?: boolean
+    firmaRelator?: boolean
+    creadoPor?: boolean
+    creadoPorId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["regCap_Capacitacion"]>
+
+  export type RegCap_CapacitacionSelectScalar = {
+    id?: boolean
+    fecha?: boolean
+    instalacion?: boolean
+    licitacion?: boolean
+    sucursal?: boolean
+    horaDesde?: boolean
+    horaHasta?: boolean
+    horario?: boolean
+    relatorNombre?: boolean
+    relatorCargo?: boolean
+    tema?: boolean
+    firmaRelator?: boolean
+    creadoPor?: boolean
+    creadoPorId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type RegCap_CapacitacionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    participantes?: boolean | RegCap_Capacitacion$participantesArgs<ExtArgs>
+    _count?: boolean | RegCap_CapacitacionCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type RegCap_CapacitacionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $RegCap_CapacitacionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "RegCap_Capacitacion"
+    objects: {
+      participantes: Prisma.$RegCap_ParticipantePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      fecha: Date
+      instalacion: string
+      licitacion: string | null
+      sucursal: string | null
+      horaDesde: string
+      horaHasta: string
+      horario: string
+      relatorNombre: string
+      relatorCargo: string
+      tema: string
+      firmaRelator: string | null
+      creadoPor: string | null
+      creadoPorId: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["regCap_Capacitacion"]>
+    composites: {}
+  }
+
+  type RegCap_CapacitacionGetPayload<S extends boolean | null | undefined | RegCap_CapacitacionDefaultArgs> = $Result.GetResult<Prisma.$RegCap_CapacitacionPayload, S>
+
+  type RegCap_CapacitacionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<RegCap_CapacitacionFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: RegCap_CapacitacionCountAggregateInputType | true
+    }
+
+  export interface RegCap_CapacitacionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['RegCap_Capacitacion'], meta: { name: 'RegCap_Capacitacion' } }
+    /**
+     * Find zero or one RegCap_Capacitacion that matches the filter.
+     * @param {RegCap_CapacitacionFindUniqueArgs} args - Arguments to find a RegCap_Capacitacion
+     * @example
+     * // Get one RegCap_Capacitacion
+     * const regCap_Capacitacion = await prisma.regCap_Capacitacion.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends RegCap_CapacitacionFindUniqueArgs>(args: SelectSubset<T, RegCap_CapacitacionFindUniqueArgs<ExtArgs>>): Prisma__RegCap_CapacitacionClient<$Result.GetResult<Prisma.$RegCap_CapacitacionPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one RegCap_Capacitacion that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {RegCap_CapacitacionFindUniqueOrThrowArgs} args - Arguments to find a RegCap_Capacitacion
+     * @example
+     * // Get one RegCap_Capacitacion
+     * const regCap_Capacitacion = await prisma.regCap_Capacitacion.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends RegCap_CapacitacionFindUniqueOrThrowArgs>(args: SelectSubset<T, RegCap_CapacitacionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RegCap_CapacitacionClient<$Result.GetResult<Prisma.$RegCap_CapacitacionPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first RegCap_Capacitacion that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RegCap_CapacitacionFindFirstArgs} args - Arguments to find a RegCap_Capacitacion
+     * @example
+     * // Get one RegCap_Capacitacion
+     * const regCap_Capacitacion = await prisma.regCap_Capacitacion.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends RegCap_CapacitacionFindFirstArgs>(args?: SelectSubset<T, RegCap_CapacitacionFindFirstArgs<ExtArgs>>): Prisma__RegCap_CapacitacionClient<$Result.GetResult<Prisma.$RegCap_CapacitacionPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first RegCap_Capacitacion that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RegCap_CapacitacionFindFirstOrThrowArgs} args - Arguments to find a RegCap_Capacitacion
+     * @example
+     * // Get one RegCap_Capacitacion
+     * const regCap_Capacitacion = await prisma.regCap_Capacitacion.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends RegCap_CapacitacionFindFirstOrThrowArgs>(args?: SelectSubset<T, RegCap_CapacitacionFindFirstOrThrowArgs<ExtArgs>>): Prisma__RegCap_CapacitacionClient<$Result.GetResult<Prisma.$RegCap_CapacitacionPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more RegCap_Capacitacions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RegCap_CapacitacionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all RegCap_Capacitacions
+     * const regCap_Capacitacions = await prisma.regCap_Capacitacion.findMany()
+     * 
+     * // Get first 10 RegCap_Capacitacions
+     * const regCap_Capacitacions = await prisma.regCap_Capacitacion.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const regCap_CapacitacionWithIdOnly = await prisma.regCap_Capacitacion.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends RegCap_CapacitacionFindManyArgs>(args?: SelectSubset<T, RegCap_CapacitacionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RegCap_CapacitacionPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a RegCap_Capacitacion.
+     * @param {RegCap_CapacitacionCreateArgs} args - Arguments to create a RegCap_Capacitacion.
+     * @example
+     * // Create one RegCap_Capacitacion
+     * const RegCap_Capacitacion = await prisma.regCap_Capacitacion.create({
+     *   data: {
+     *     // ... data to create a RegCap_Capacitacion
+     *   }
+     * })
+     * 
+     */
+    create<T extends RegCap_CapacitacionCreateArgs>(args: SelectSubset<T, RegCap_CapacitacionCreateArgs<ExtArgs>>): Prisma__RegCap_CapacitacionClient<$Result.GetResult<Prisma.$RegCap_CapacitacionPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many RegCap_Capacitacions.
+     * @param {RegCap_CapacitacionCreateManyArgs} args - Arguments to create many RegCap_Capacitacions.
+     * @example
+     * // Create many RegCap_Capacitacions
+     * const regCap_Capacitacion = await prisma.regCap_Capacitacion.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends RegCap_CapacitacionCreateManyArgs>(args?: SelectSubset<T, RegCap_CapacitacionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many RegCap_Capacitacions and returns the data saved in the database.
+     * @param {RegCap_CapacitacionCreateManyAndReturnArgs} args - Arguments to create many RegCap_Capacitacions.
+     * @example
+     * // Create many RegCap_Capacitacions
+     * const regCap_Capacitacion = await prisma.regCap_Capacitacion.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many RegCap_Capacitacions and only return the `id`
+     * const regCap_CapacitacionWithIdOnly = await prisma.regCap_Capacitacion.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends RegCap_CapacitacionCreateManyAndReturnArgs>(args?: SelectSubset<T, RegCap_CapacitacionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RegCap_CapacitacionPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a RegCap_Capacitacion.
+     * @param {RegCap_CapacitacionDeleteArgs} args - Arguments to delete one RegCap_Capacitacion.
+     * @example
+     * // Delete one RegCap_Capacitacion
+     * const RegCap_Capacitacion = await prisma.regCap_Capacitacion.delete({
+     *   where: {
+     *     // ... filter to delete one RegCap_Capacitacion
+     *   }
+     * })
+     * 
+     */
+    delete<T extends RegCap_CapacitacionDeleteArgs>(args: SelectSubset<T, RegCap_CapacitacionDeleteArgs<ExtArgs>>): Prisma__RegCap_CapacitacionClient<$Result.GetResult<Prisma.$RegCap_CapacitacionPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one RegCap_Capacitacion.
+     * @param {RegCap_CapacitacionUpdateArgs} args - Arguments to update one RegCap_Capacitacion.
+     * @example
+     * // Update one RegCap_Capacitacion
+     * const regCap_Capacitacion = await prisma.regCap_Capacitacion.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends RegCap_CapacitacionUpdateArgs>(args: SelectSubset<T, RegCap_CapacitacionUpdateArgs<ExtArgs>>): Prisma__RegCap_CapacitacionClient<$Result.GetResult<Prisma.$RegCap_CapacitacionPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more RegCap_Capacitacions.
+     * @param {RegCap_CapacitacionDeleteManyArgs} args - Arguments to filter RegCap_Capacitacions to delete.
+     * @example
+     * // Delete a few RegCap_Capacitacions
+     * const { count } = await prisma.regCap_Capacitacion.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends RegCap_CapacitacionDeleteManyArgs>(args?: SelectSubset<T, RegCap_CapacitacionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more RegCap_Capacitacions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RegCap_CapacitacionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many RegCap_Capacitacions
+     * const regCap_Capacitacion = await prisma.regCap_Capacitacion.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends RegCap_CapacitacionUpdateManyArgs>(args: SelectSubset<T, RegCap_CapacitacionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one RegCap_Capacitacion.
+     * @param {RegCap_CapacitacionUpsertArgs} args - Arguments to update or create a RegCap_Capacitacion.
+     * @example
+     * // Update or create a RegCap_Capacitacion
+     * const regCap_Capacitacion = await prisma.regCap_Capacitacion.upsert({
+     *   create: {
+     *     // ... data to create a RegCap_Capacitacion
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the RegCap_Capacitacion we want to update
+     *   }
+     * })
+     */
+    upsert<T extends RegCap_CapacitacionUpsertArgs>(args: SelectSubset<T, RegCap_CapacitacionUpsertArgs<ExtArgs>>): Prisma__RegCap_CapacitacionClient<$Result.GetResult<Prisma.$RegCap_CapacitacionPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of RegCap_Capacitacions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RegCap_CapacitacionCountArgs} args - Arguments to filter RegCap_Capacitacions to count.
+     * @example
+     * // Count the number of RegCap_Capacitacions
+     * const count = await prisma.regCap_Capacitacion.count({
+     *   where: {
+     *     // ... the filter for the RegCap_Capacitacions we want to count
+     *   }
+     * })
+    **/
+    count<T extends RegCap_CapacitacionCountArgs>(
+      args?: Subset<T, RegCap_CapacitacionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], RegCap_CapacitacionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a RegCap_Capacitacion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RegCap_CapacitacionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends RegCap_CapacitacionAggregateArgs>(args: Subset<T, RegCap_CapacitacionAggregateArgs>): Prisma.PrismaPromise<GetRegCap_CapacitacionAggregateType<T>>
+
+    /**
+     * Group by RegCap_Capacitacion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RegCap_CapacitacionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends RegCap_CapacitacionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: RegCap_CapacitacionGroupByArgs['orderBy'] }
+        : { orderBy?: RegCap_CapacitacionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, RegCap_CapacitacionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRegCap_CapacitacionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the RegCap_Capacitacion model
+   */
+  readonly fields: RegCap_CapacitacionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for RegCap_Capacitacion.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__RegCap_CapacitacionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    participantes<T extends RegCap_Capacitacion$participantesArgs<ExtArgs> = {}>(args?: Subset<T, RegCap_Capacitacion$participantesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RegCap_ParticipantePayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the RegCap_Capacitacion model
+   */ 
+  interface RegCap_CapacitacionFieldRefs {
+    readonly id: FieldRef<"RegCap_Capacitacion", 'String'>
+    readonly fecha: FieldRef<"RegCap_Capacitacion", 'DateTime'>
+    readonly instalacion: FieldRef<"RegCap_Capacitacion", 'String'>
+    readonly licitacion: FieldRef<"RegCap_Capacitacion", 'String'>
+    readonly sucursal: FieldRef<"RegCap_Capacitacion", 'String'>
+    readonly horaDesde: FieldRef<"RegCap_Capacitacion", 'String'>
+    readonly horaHasta: FieldRef<"RegCap_Capacitacion", 'String'>
+    readonly horario: FieldRef<"RegCap_Capacitacion", 'String'>
+    readonly relatorNombre: FieldRef<"RegCap_Capacitacion", 'String'>
+    readonly relatorCargo: FieldRef<"RegCap_Capacitacion", 'String'>
+    readonly tema: FieldRef<"RegCap_Capacitacion", 'String'>
+    readonly firmaRelator: FieldRef<"RegCap_Capacitacion", 'String'>
+    readonly creadoPor: FieldRef<"RegCap_Capacitacion", 'String'>
+    readonly creadoPorId: FieldRef<"RegCap_Capacitacion", 'String'>
+    readonly createdAt: FieldRef<"RegCap_Capacitacion", 'DateTime'>
+    readonly updatedAt: FieldRef<"RegCap_Capacitacion", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * RegCap_Capacitacion findUnique
+   */
+  export type RegCap_CapacitacionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegCap_Capacitacion
+     */
+    select?: RegCap_CapacitacionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RegCap_CapacitacionInclude<ExtArgs> | null
+    /**
+     * Filter, which RegCap_Capacitacion to fetch.
+     */
+    where: RegCap_CapacitacionWhereUniqueInput
+  }
+
+  /**
+   * RegCap_Capacitacion findUniqueOrThrow
+   */
+  export type RegCap_CapacitacionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegCap_Capacitacion
+     */
+    select?: RegCap_CapacitacionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RegCap_CapacitacionInclude<ExtArgs> | null
+    /**
+     * Filter, which RegCap_Capacitacion to fetch.
+     */
+    where: RegCap_CapacitacionWhereUniqueInput
+  }
+
+  /**
+   * RegCap_Capacitacion findFirst
+   */
+  export type RegCap_CapacitacionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegCap_Capacitacion
+     */
+    select?: RegCap_CapacitacionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RegCap_CapacitacionInclude<ExtArgs> | null
+    /**
+     * Filter, which RegCap_Capacitacion to fetch.
+     */
+    where?: RegCap_CapacitacionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RegCap_Capacitacions to fetch.
+     */
+    orderBy?: RegCap_CapacitacionOrderByWithRelationInput | RegCap_CapacitacionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for RegCap_Capacitacions.
+     */
+    cursor?: RegCap_CapacitacionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RegCap_Capacitacions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RegCap_Capacitacions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RegCap_Capacitacions.
+     */
+    distinct?: RegCap_CapacitacionScalarFieldEnum | RegCap_CapacitacionScalarFieldEnum[]
+  }
+
+  /**
+   * RegCap_Capacitacion findFirstOrThrow
+   */
+  export type RegCap_CapacitacionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegCap_Capacitacion
+     */
+    select?: RegCap_CapacitacionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RegCap_CapacitacionInclude<ExtArgs> | null
+    /**
+     * Filter, which RegCap_Capacitacion to fetch.
+     */
+    where?: RegCap_CapacitacionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RegCap_Capacitacions to fetch.
+     */
+    orderBy?: RegCap_CapacitacionOrderByWithRelationInput | RegCap_CapacitacionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for RegCap_Capacitacions.
+     */
+    cursor?: RegCap_CapacitacionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RegCap_Capacitacions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RegCap_Capacitacions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RegCap_Capacitacions.
+     */
+    distinct?: RegCap_CapacitacionScalarFieldEnum | RegCap_CapacitacionScalarFieldEnum[]
+  }
+
+  /**
+   * RegCap_Capacitacion findMany
+   */
+  export type RegCap_CapacitacionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegCap_Capacitacion
+     */
+    select?: RegCap_CapacitacionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RegCap_CapacitacionInclude<ExtArgs> | null
+    /**
+     * Filter, which RegCap_Capacitacions to fetch.
+     */
+    where?: RegCap_CapacitacionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RegCap_Capacitacions to fetch.
+     */
+    orderBy?: RegCap_CapacitacionOrderByWithRelationInput | RegCap_CapacitacionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing RegCap_Capacitacions.
+     */
+    cursor?: RegCap_CapacitacionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RegCap_Capacitacions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RegCap_Capacitacions.
+     */
+    skip?: number
+    distinct?: RegCap_CapacitacionScalarFieldEnum | RegCap_CapacitacionScalarFieldEnum[]
+  }
+
+  /**
+   * RegCap_Capacitacion create
+   */
+  export type RegCap_CapacitacionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegCap_Capacitacion
+     */
+    select?: RegCap_CapacitacionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RegCap_CapacitacionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a RegCap_Capacitacion.
+     */
+    data: XOR<RegCap_CapacitacionCreateInput, RegCap_CapacitacionUncheckedCreateInput>
+  }
+
+  /**
+   * RegCap_Capacitacion createMany
+   */
+  export type RegCap_CapacitacionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many RegCap_Capacitacions.
+     */
+    data: RegCap_CapacitacionCreateManyInput | RegCap_CapacitacionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * RegCap_Capacitacion createManyAndReturn
+   */
+  export type RegCap_CapacitacionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegCap_Capacitacion
+     */
+    select?: RegCap_CapacitacionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many RegCap_Capacitacions.
+     */
+    data: RegCap_CapacitacionCreateManyInput | RegCap_CapacitacionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * RegCap_Capacitacion update
+   */
+  export type RegCap_CapacitacionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegCap_Capacitacion
+     */
+    select?: RegCap_CapacitacionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RegCap_CapacitacionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a RegCap_Capacitacion.
+     */
+    data: XOR<RegCap_CapacitacionUpdateInput, RegCap_CapacitacionUncheckedUpdateInput>
+    /**
+     * Choose, which RegCap_Capacitacion to update.
+     */
+    where: RegCap_CapacitacionWhereUniqueInput
+  }
+
+  /**
+   * RegCap_Capacitacion updateMany
+   */
+  export type RegCap_CapacitacionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update RegCap_Capacitacions.
+     */
+    data: XOR<RegCap_CapacitacionUpdateManyMutationInput, RegCap_CapacitacionUncheckedUpdateManyInput>
+    /**
+     * Filter which RegCap_Capacitacions to update
+     */
+    where?: RegCap_CapacitacionWhereInput
+  }
+
+  /**
+   * RegCap_Capacitacion upsert
+   */
+  export type RegCap_CapacitacionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegCap_Capacitacion
+     */
+    select?: RegCap_CapacitacionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RegCap_CapacitacionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the RegCap_Capacitacion to update in case it exists.
+     */
+    where: RegCap_CapacitacionWhereUniqueInput
+    /**
+     * In case the RegCap_Capacitacion found by the `where` argument doesn't exist, create a new RegCap_Capacitacion with this data.
+     */
+    create: XOR<RegCap_CapacitacionCreateInput, RegCap_CapacitacionUncheckedCreateInput>
+    /**
+     * In case the RegCap_Capacitacion was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<RegCap_CapacitacionUpdateInput, RegCap_CapacitacionUncheckedUpdateInput>
+  }
+
+  /**
+   * RegCap_Capacitacion delete
+   */
+  export type RegCap_CapacitacionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegCap_Capacitacion
+     */
+    select?: RegCap_CapacitacionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RegCap_CapacitacionInclude<ExtArgs> | null
+    /**
+     * Filter which RegCap_Capacitacion to delete.
+     */
+    where: RegCap_CapacitacionWhereUniqueInput
+  }
+
+  /**
+   * RegCap_Capacitacion deleteMany
+   */
+  export type RegCap_CapacitacionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which RegCap_Capacitacions to delete
+     */
+    where?: RegCap_CapacitacionWhereInput
+  }
+
+  /**
+   * RegCap_Capacitacion.participantes
+   */
+  export type RegCap_Capacitacion$participantesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegCap_Participante
+     */
+    select?: RegCap_ParticipanteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RegCap_ParticipanteInclude<ExtArgs> | null
+    where?: RegCap_ParticipanteWhereInput
+    orderBy?: RegCap_ParticipanteOrderByWithRelationInput | RegCap_ParticipanteOrderByWithRelationInput[]
+    cursor?: RegCap_ParticipanteWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: RegCap_ParticipanteScalarFieldEnum | RegCap_ParticipanteScalarFieldEnum[]
+  }
+
+  /**
+   * RegCap_Capacitacion without action
+   */
+  export type RegCap_CapacitacionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegCap_Capacitacion
+     */
+    select?: RegCap_CapacitacionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RegCap_CapacitacionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model RegCap_Participante
+   */
+
+  export type AggregateRegCap_Participante = {
+    _count: RegCap_ParticipanteCountAggregateOutputType | null
+    _avg: RegCap_ParticipanteAvgAggregateOutputType | null
+    _sum: RegCap_ParticipanteSumAggregateOutputType | null
+    _min: RegCap_ParticipanteMinAggregateOutputType | null
+    _max: RegCap_ParticipanteMaxAggregateOutputType | null
+  }
+
+  export type RegCap_ParticipanteAvgAggregateOutputType = {
+    numero: number | null
+  }
+
+  export type RegCap_ParticipanteSumAggregateOutputType = {
+    numero: number | null
+  }
+
+  export type RegCap_ParticipanteMinAggregateOutputType = {
+    id: string | null
+    registroId: string | null
+    numero: number | null
+    nombre: string | null
+    cargo: string | null
+    rut: string | null
+    firma: string | null
+    createdAt: Date | null
+  }
+
+  export type RegCap_ParticipanteMaxAggregateOutputType = {
+    id: string | null
+    registroId: string | null
+    numero: number | null
+    nombre: string | null
+    cargo: string | null
+    rut: string | null
+    firma: string | null
+    createdAt: Date | null
+  }
+
+  export type RegCap_ParticipanteCountAggregateOutputType = {
+    id: number
+    registroId: number
+    numero: number
+    nombre: number
+    cargo: number
+    rut: number
+    firma: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type RegCap_ParticipanteAvgAggregateInputType = {
+    numero?: true
+  }
+
+  export type RegCap_ParticipanteSumAggregateInputType = {
+    numero?: true
+  }
+
+  export type RegCap_ParticipanteMinAggregateInputType = {
+    id?: true
+    registroId?: true
+    numero?: true
+    nombre?: true
+    cargo?: true
+    rut?: true
+    firma?: true
+    createdAt?: true
+  }
+
+  export type RegCap_ParticipanteMaxAggregateInputType = {
+    id?: true
+    registroId?: true
+    numero?: true
+    nombre?: true
+    cargo?: true
+    rut?: true
+    firma?: true
+    createdAt?: true
+  }
+
+  export type RegCap_ParticipanteCountAggregateInputType = {
+    id?: true
+    registroId?: true
+    numero?: true
+    nombre?: true
+    cargo?: true
+    rut?: true
+    firma?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type RegCap_ParticipanteAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which RegCap_Participante to aggregate.
+     */
+    where?: RegCap_ParticipanteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RegCap_Participantes to fetch.
+     */
+    orderBy?: RegCap_ParticipanteOrderByWithRelationInput | RegCap_ParticipanteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: RegCap_ParticipanteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RegCap_Participantes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RegCap_Participantes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned RegCap_Participantes
+    **/
+    _count?: true | RegCap_ParticipanteCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: RegCap_ParticipanteAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: RegCap_ParticipanteSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: RegCap_ParticipanteMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: RegCap_ParticipanteMaxAggregateInputType
+  }
+
+  export type GetRegCap_ParticipanteAggregateType<T extends RegCap_ParticipanteAggregateArgs> = {
+        [P in keyof T & keyof AggregateRegCap_Participante]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateRegCap_Participante[P]>
+      : GetScalarType<T[P], AggregateRegCap_Participante[P]>
+  }
+
+
+
+
+  export type RegCap_ParticipanteGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RegCap_ParticipanteWhereInput
+    orderBy?: RegCap_ParticipanteOrderByWithAggregationInput | RegCap_ParticipanteOrderByWithAggregationInput[]
+    by: RegCap_ParticipanteScalarFieldEnum[] | RegCap_ParticipanteScalarFieldEnum
+    having?: RegCap_ParticipanteScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: RegCap_ParticipanteCountAggregateInputType | true
+    _avg?: RegCap_ParticipanteAvgAggregateInputType
+    _sum?: RegCap_ParticipanteSumAggregateInputType
+    _min?: RegCap_ParticipanteMinAggregateInputType
+    _max?: RegCap_ParticipanteMaxAggregateInputType
+  }
+
+  export type RegCap_ParticipanteGroupByOutputType = {
+    id: string
+    registroId: string
+    numero: number
+    nombre: string
+    cargo: string
+    rut: string
+    firma: string | null
+    createdAt: Date
+    _count: RegCap_ParticipanteCountAggregateOutputType | null
+    _avg: RegCap_ParticipanteAvgAggregateOutputType | null
+    _sum: RegCap_ParticipanteSumAggregateOutputType | null
+    _min: RegCap_ParticipanteMinAggregateOutputType | null
+    _max: RegCap_ParticipanteMaxAggregateOutputType | null
+  }
+
+  type GetRegCap_ParticipanteGroupByPayload<T extends RegCap_ParticipanteGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<RegCap_ParticipanteGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof RegCap_ParticipanteGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], RegCap_ParticipanteGroupByOutputType[P]>
+            : GetScalarType<T[P], RegCap_ParticipanteGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type RegCap_ParticipanteSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    registroId?: boolean
+    numero?: boolean
+    nombre?: boolean
+    cargo?: boolean
+    rut?: boolean
+    firma?: boolean
+    createdAt?: boolean
+    registro?: boolean | RegCap_CapacitacionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["regCap_Participante"]>
+
+  export type RegCap_ParticipanteSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    registroId?: boolean
+    numero?: boolean
+    nombre?: boolean
+    cargo?: boolean
+    rut?: boolean
+    firma?: boolean
+    createdAt?: boolean
+    registro?: boolean | RegCap_CapacitacionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["regCap_Participante"]>
+
+  export type RegCap_ParticipanteSelectScalar = {
+    id?: boolean
+    registroId?: boolean
+    numero?: boolean
+    nombre?: boolean
+    cargo?: boolean
+    rut?: boolean
+    firma?: boolean
+    createdAt?: boolean
+  }
+
+  export type RegCap_ParticipanteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    registro?: boolean | RegCap_CapacitacionDefaultArgs<ExtArgs>
+  }
+  export type RegCap_ParticipanteIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    registro?: boolean | RegCap_CapacitacionDefaultArgs<ExtArgs>
+  }
+
+  export type $RegCap_ParticipantePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "RegCap_Participante"
+    objects: {
+      registro: Prisma.$RegCap_CapacitacionPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      registroId: string
+      numero: number
+      nombre: string
+      cargo: string
+      rut: string
+      firma: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["regCap_Participante"]>
+    composites: {}
+  }
+
+  type RegCap_ParticipanteGetPayload<S extends boolean | null | undefined | RegCap_ParticipanteDefaultArgs> = $Result.GetResult<Prisma.$RegCap_ParticipantePayload, S>
+
+  type RegCap_ParticipanteCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<RegCap_ParticipanteFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: RegCap_ParticipanteCountAggregateInputType | true
+    }
+
+  export interface RegCap_ParticipanteDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['RegCap_Participante'], meta: { name: 'RegCap_Participante' } }
+    /**
+     * Find zero or one RegCap_Participante that matches the filter.
+     * @param {RegCap_ParticipanteFindUniqueArgs} args - Arguments to find a RegCap_Participante
+     * @example
+     * // Get one RegCap_Participante
+     * const regCap_Participante = await prisma.regCap_Participante.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends RegCap_ParticipanteFindUniqueArgs>(args: SelectSubset<T, RegCap_ParticipanteFindUniqueArgs<ExtArgs>>): Prisma__RegCap_ParticipanteClient<$Result.GetResult<Prisma.$RegCap_ParticipantePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one RegCap_Participante that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {RegCap_ParticipanteFindUniqueOrThrowArgs} args - Arguments to find a RegCap_Participante
+     * @example
+     * // Get one RegCap_Participante
+     * const regCap_Participante = await prisma.regCap_Participante.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends RegCap_ParticipanteFindUniqueOrThrowArgs>(args: SelectSubset<T, RegCap_ParticipanteFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RegCap_ParticipanteClient<$Result.GetResult<Prisma.$RegCap_ParticipantePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first RegCap_Participante that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RegCap_ParticipanteFindFirstArgs} args - Arguments to find a RegCap_Participante
+     * @example
+     * // Get one RegCap_Participante
+     * const regCap_Participante = await prisma.regCap_Participante.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends RegCap_ParticipanteFindFirstArgs>(args?: SelectSubset<T, RegCap_ParticipanteFindFirstArgs<ExtArgs>>): Prisma__RegCap_ParticipanteClient<$Result.GetResult<Prisma.$RegCap_ParticipantePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first RegCap_Participante that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RegCap_ParticipanteFindFirstOrThrowArgs} args - Arguments to find a RegCap_Participante
+     * @example
+     * // Get one RegCap_Participante
+     * const regCap_Participante = await prisma.regCap_Participante.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends RegCap_ParticipanteFindFirstOrThrowArgs>(args?: SelectSubset<T, RegCap_ParticipanteFindFirstOrThrowArgs<ExtArgs>>): Prisma__RegCap_ParticipanteClient<$Result.GetResult<Prisma.$RegCap_ParticipantePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more RegCap_Participantes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RegCap_ParticipanteFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all RegCap_Participantes
+     * const regCap_Participantes = await prisma.regCap_Participante.findMany()
+     * 
+     * // Get first 10 RegCap_Participantes
+     * const regCap_Participantes = await prisma.regCap_Participante.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const regCap_ParticipanteWithIdOnly = await prisma.regCap_Participante.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends RegCap_ParticipanteFindManyArgs>(args?: SelectSubset<T, RegCap_ParticipanteFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RegCap_ParticipantePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a RegCap_Participante.
+     * @param {RegCap_ParticipanteCreateArgs} args - Arguments to create a RegCap_Participante.
+     * @example
+     * // Create one RegCap_Participante
+     * const RegCap_Participante = await prisma.regCap_Participante.create({
+     *   data: {
+     *     // ... data to create a RegCap_Participante
+     *   }
+     * })
+     * 
+     */
+    create<T extends RegCap_ParticipanteCreateArgs>(args: SelectSubset<T, RegCap_ParticipanteCreateArgs<ExtArgs>>): Prisma__RegCap_ParticipanteClient<$Result.GetResult<Prisma.$RegCap_ParticipantePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many RegCap_Participantes.
+     * @param {RegCap_ParticipanteCreateManyArgs} args - Arguments to create many RegCap_Participantes.
+     * @example
+     * // Create many RegCap_Participantes
+     * const regCap_Participante = await prisma.regCap_Participante.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends RegCap_ParticipanteCreateManyArgs>(args?: SelectSubset<T, RegCap_ParticipanteCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many RegCap_Participantes and returns the data saved in the database.
+     * @param {RegCap_ParticipanteCreateManyAndReturnArgs} args - Arguments to create many RegCap_Participantes.
+     * @example
+     * // Create many RegCap_Participantes
+     * const regCap_Participante = await prisma.regCap_Participante.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many RegCap_Participantes and only return the `id`
+     * const regCap_ParticipanteWithIdOnly = await prisma.regCap_Participante.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends RegCap_ParticipanteCreateManyAndReturnArgs>(args?: SelectSubset<T, RegCap_ParticipanteCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RegCap_ParticipantePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a RegCap_Participante.
+     * @param {RegCap_ParticipanteDeleteArgs} args - Arguments to delete one RegCap_Participante.
+     * @example
+     * // Delete one RegCap_Participante
+     * const RegCap_Participante = await prisma.regCap_Participante.delete({
+     *   where: {
+     *     // ... filter to delete one RegCap_Participante
+     *   }
+     * })
+     * 
+     */
+    delete<T extends RegCap_ParticipanteDeleteArgs>(args: SelectSubset<T, RegCap_ParticipanteDeleteArgs<ExtArgs>>): Prisma__RegCap_ParticipanteClient<$Result.GetResult<Prisma.$RegCap_ParticipantePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one RegCap_Participante.
+     * @param {RegCap_ParticipanteUpdateArgs} args - Arguments to update one RegCap_Participante.
+     * @example
+     * // Update one RegCap_Participante
+     * const regCap_Participante = await prisma.regCap_Participante.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends RegCap_ParticipanteUpdateArgs>(args: SelectSubset<T, RegCap_ParticipanteUpdateArgs<ExtArgs>>): Prisma__RegCap_ParticipanteClient<$Result.GetResult<Prisma.$RegCap_ParticipantePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more RegCap_Participantes.
+     * @param {RegCap_ParticipanteDeleteManyArgs} args - Arguments to filter RegCap_Participantes to delete.
+     * @example
+     * // Delete a few RegCap_Participantes
+     * const { count } = await prisma.regCap_Participante.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends RegCap_ParticipanteDeleteManyArgs>(args?: SelectSubset<T, RegCap_ParticipanteDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more RegCap_Participantes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RegCap_ParticipanteUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many RegCap_Participantes
+     * const regCap_Participante = await prisma.regCap_Participante.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends RegCap_ParticipanteUpdateManyArgs>(args: SelectSubset<T, RegCap_ParticipanteUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one RegCap_Participante.
+     * @param {RegCap_ParticipanteUpsertArgs} args - Arguments to update or create a RegCap_Participante.
+     * @example
+     * // Update or create a RegCap_Participante
+     * const regCap_Participante = await prisma.regCap_Participante.upsert({
+     *   create: {
+     *     // ... data to create a RegCap_Participante
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the RegCap_Participante we want to update
+     *   }
+     * })
+     */
+    upsert<T extends RegCap_ParticipanteUpsertArgs>(args: SelectSubset<T, RegCap_ParticipanteUpsertArgs<ExtArgs>>): Prisma__RegCap_ParticipanteClient<$Result.GetResult<Prisma.$RegCap_ParticipantePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of RegCap_Participantes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RegCap_ParticipanteCountArgs} args - Arguments to filter RegCap_Participantes to count.
+     * @example
+     * // Count the number of RegCap_Participantes
+     * const count = await prisma.regCap_Participante.count({
+     *   where: {
+     *     // ... the filter for the RegCap_Participantes we want to count
+     *   }
+     * })
+    **/
+    count<T extends RegCap_ParticipanteCountArgs>(
+      args?: Subset<T, RegCap_ParticipanteCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], RegCap_ParticipanteCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a RegCap_Participante.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RegCap_ParticipanteAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends RegCap_ParticipanteAggregateArgs>(args: Subset<T, RegCap_ParticipanteAggregateArgs>): Prisma.PrismaPromise<GetRegCap_ParticipanteAggregateType<T>>
+
+    /**
+     * Group by RegCap_Participante.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RegCap_ParticipanteGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends RegCap_ParticipanteGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: RegCap_ParticipanteGroupByArgs['orderBy'] }
+        : { orderBy?: RegCap_ParticipanteGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, RegCap_ParticipanteGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRegCap_ParticipanteGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the RegCap_Participante model
+   */
+  readonly fields: RegCap_ParticipanteFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for RegCap_Participante.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__RegCap_ParticipanteClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    registro<T extends RegCap_CapacitacionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RegCap_CapacitacionDefaultArgs<ExtArgs>>): Prisma__RegCap_CapacitacionClient<$Result.GetResult<Prisma.$RegCap_CapacitacionPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the RegCap_Participante model
+   */ 
+  interface RegCap_ParticipanteFieldRefs {
+    readonly id: FieldRef<"RegCap_Participante", 'String'>
+    readonly registroId: FieldRef<"RegCap_Participante", 'String'>
+    readonly numero: FieldRef<"RegCap_Participante", 'Int'>
+    readonly nombre: FieldRef<"RegCap_Participante", 'String'>
+    readonly cargo: FieldRef<"RegCap_Participante", 'String'>
+    readonly rut: FieldRef<"RegCap_Participante", 'String'>
+    readonly firma: FieldRef<"RegCap_Participante", 'String'>
+    readonly createdAt: FieldRef<"RegCap_Participante", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * RegCap_Participante findUnique
+   */
+  export type RegCap_ParticipanteFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegCap_Participante
+     */
+    select?: RegCap_ParticipanteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RegCap_ParticipanteInclude<ExtArgs> | null
+    /**
+     * Filter, which RegCap_Participante to fetch.
+     */
+    where: RegCap_ParticipanteWhereUniqueInput
+  }
+
+  /**
+   * RegCap_Participante findUniqueOrThrow
+   */
+  export type RegCap_ParticipanteFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegCap_Participante
+     */
+    select?: RegCap_ParticipanteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RegCap_ParticipanteInclude<ExtArgs> | null
+    /**
+     * Filter, which RegCap_Participante to fetch.
+     */
+    where: RegCap_ParticipanteWhereUniqueInput
+  }
+
+  /**
+   * RegCap_Participante findFirst
+   */
+  export type RegCap_ParticipanteFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegCap_Participante
+     */
+    select?: RegCap_ParticipanteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RegCap_ParticipanteInclude<ExtArgs> | null
+    /**
+     * Filter, which RegCap_Participante to fetch.
+     */
+    where?: RegCap_ParticipanteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RegCap_Participantes to fetch.
+     */
+    orderBy?: RegCap_ParticipanteOrderByWithRelationInput | RegCap_ParticipanteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for RegCap_Participantes.
+     */
+    cursor?: RegCap_ParticipanteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RegCap_Participantes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RegCap_Participantes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RegCap_Participantes.
+     */
+    distinct?: RegCap_ParticipanteScalarFieldEnum | RegCap_ParticipanteScalarFieldEnum[]
+  }
+
+  /**
+   * RegCap_Participante findFirstOrThrow
+   */
+  export type RegCap_ParticipanteFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegCap_Participante
+     */
+    select?: RegCap_ParticipanteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RegCap_ParticipanteInclude<ExtArgs> | null
+    /**
+     * Filter, which RegCap_Participante to fetch.
+     */
+    where?: RegCap_ParticipanteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RegCap_Participantes to fetch.
+     */
+    orderBy?: RegCap_ParticipanteOrderByWithRelationInput | RegCap_ParticipanteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for RegCap_Participantes.
+     */
+    cursor?: RegCap_ParticipanteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RegCap_Participantes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RegCap_Participantes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RegCap_Participantes.
+     */
+    distinct?: RegCap_ParticipanteScalarFieldEnum | RegCap_ParticipanteScalarFieldEnum[]
+  }
+
+  /**
+   * RegCap_Participante findMany
+   */
+  export type RegCap_ParticipanteFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegCap_Participante
+     */
+    select?: RegCap_ParticipanteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RegCap_ParticipanteInclude<ExtArgs> | null
+    /**
+     * Filter, which RegCap_Participantes to fetch.
+     */
+    where?: RegCap_ParticipanteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RegCap_Participantes to fetch.
+     */
+    orderBy?: RegCap_ParticipanteOrderByWithRelationInput | RegCap_ParticipanteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing RegCap_Participantes.
+     */
+    cursor?: RegCap_ParticipanteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RegCap_Participantes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RegCap_Participantes.
+     */
+    skip?: number
+    distinct?: RegCap_ParticipanteScalarFieldEnum | RegCap_ParticipanteScalarFieldEnum[]
+  }
+
+  /**
+   * RegCap_Participante create
+   */
+  export type RegCap_ParticipanteCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegCap_Participante
+     */
+    select?: RegCap_ParticipanteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RegCap_ParticipanteInclude<ExtArgs> | null
+    /**
+     * The data needed to create a RegCap_Participante.
+     */
+    data: XOR<RegCap_ParticipanteCreateInput, RegCap_ParticipanteUncheckedCreateInput>
+  }
+
+  /**
+   * RegCap_Participante createMany
+   */
+  export type RegCap_ParticipanteCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many RegCap_Participantes.
+     */
+    data: RegCap_ParticipanteCreateManyInput | RegCap_ParticipanteCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * RegCap_Participante createManyAndReturn
+   */
+  export type RegCap_ParticipanteCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegCap_Participante
+     */
+    select?: RegCap_ParticipanteSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many RegCap_Participantes.
+     */
+    data: RegCap_ParticipanteCreateManyInput | RegCap_ParticipanteCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RegCap_ParticipanteIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * RegCap_Participante update
+   */
+  export type RegCap_ParticipanteUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegCap_Participante
+     */
+    select?: RegCap_ParticipanteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RegCap_ParticipanteInclude<ExtArgs> | null
+    /**
+     * The data needed to update a RegCap_Participante.
+     */
+    data: XOR<RegCap_ParticipanteUpdateInput, RegCap_ParticipanteUncheckedUpdateInput>
+    /**
+     * Choose, which RegCap_Participante to update.
+     */
+    where: RegCap_ParticipanteWhereUniqueInput
+  }
+
+  /**
+   * RegCap_Participante updateMany
+   */
+  export type RegCap_ParticipanteUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update RegCap_Participantes.
+     */
+    data: XOR<RegCap_ParticipanteUpdateManyMutationInput, RegCap_ParticipanteUncheckedUpdateManyInput>
+    /**
+     * Filter which RegCap_Participantes to update
+     */
+    where?: RegCap_ParticipanteWhereInput
+  }
+
+  /**
+   * RegCap_Participante upsert
+   */
+  export type RegCap_ParticipanteUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegCap_Participante
+     */
+    select?: RegCap_ParticipanteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RegCap_ParticipanteInclude<ExtArgs> | null
+    /**
+     * The filter to search for the RegCap_Participante to update in case it exists.
+     */
+    where: RegCap_ParticipanteWhereUniqueInput
+    /**
+     * In case the RegCap_Participante found by the `where` argument doesn't exist, create a new RegCap_Participante with this data.
+     */
+    create: XOR<RegCap_ParticipanteCreateInput, RegCap_ParticipanteUncheckedCreateInput>
+    /**
+     * In case the RegCap_Participante was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<RegCap_ParticipanteUpdateInput, RegCap_ParticipanteUncheckedUpdateInput>
+  }
+
+  /**
+   * RegCap_Participante delete
+   */
+  export type RegCap_ParticipanteDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegCap_Participante
+     */
+    select?: RegCap_ParticipanteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RegCap_ParticipanteInclude<ExtArgs> | null
+    /**
+     * Filter which RegCap_Participante to delete.
+     */
+    where: RegCap_ParticipanteWhereUniqueInput
+  }
+
+  /**
+   * RegCap_Participante deleteMany
+   */
+  export type RegCap_ParticipanteDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which RegCap_Participantes to delete
+     */
+    where?: RegCap_ParticipanteWhereInput
+  }
+
+  /**
+   * RegCap_Participante without action
+   */
+  export type RegCap_ParticipanteDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegCap_Participante
+     */
+    select?: RegCap_ParticipanteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RegCap_ParticipanteInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -147681,6 +149967,42 @@ export namespace Prisma {
   };
 
   export type Cal_RegistroHigienePersonalScalarFieldEnum = (typeof Cal_RegistroHigienePersonalScalarFieldEnum)[keyof typeof Cal_RegistroHigienePersonalScalarFieldEnum]
+
+
+  export const RegCap_CapacitacionScalarFieldEnum: {
+    id: 'id',
+    fecha: 'fecha',
+    instalacion: 'instalacion',
+    licitacion: 'licitacion',
+    sucursal: 'sucursal',
+    horaDesde: 'horaDesde',
+    horaHasta: 'horaHasta',
+    horario: 'horario',
+    relatorNombre: 'relatorNombre',
+    relatorCargo: 'relatorCargo',
+    tema: 'tema',
+    firmaRelator: 'firmaRelator',
+    creadoPor: 'creadoPor',
+    creadoPorId: 'creadoPorId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type RegCap_CapacitacionScalarFieldEnum = (typeof RegCap_CapacitacionScalarFieldEnum)[keyof typeof RegCap_CapacitacionScalarFieldEnum]
+
+
+  export const RegCap_ParticipanteScalarFieldEnum: {
+    id: 'id',
+    registroId: 'registroId',
+    numero: 'numero',
+    nombre: 'nombre',
+    cargo: 'cargo',
+    rut: 'rut',
+    firma: 'firma',
+    createdAt: 'createdAt'
+  };
+
+  export type RegCap_ParticipanteScalarFieldEnum = (typeof RegCap_ParticipanteScalarFieldEnum)[keyof typeof RegCap_ParticipanteScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -158586,6 +160908,188 @@ export namespace Prisma {
     creadoPor?: StringWithAggregatesFilter<"Cal_RegistroHigienePersonal"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Cal_RegistroHigienePersonal"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Cal_RegistroHigienePersonal"> | Date | string
+  }
+
+  export type RegCap_CapacitacionWhereInput = {
+    AND?: RegCap_CapacitacionWhereInput | RegCap_CapacitacionWhereInput[]
+    OR?: RegCap_CapacitacionWhereInput[]
+    NOT?: RegCap_CapacitacionWhereInput | RegCap_CapacitacionWhereInput[]
+    id?: StringFilter<"RegCap_Capacitacion"> | string
+    fecha?: DateTimeFilter<"RegCap_Capacitacion"> | Date | string
+    instalacion?: StringFilter<"RegCap_Capacitacion"> | string
+    licitacion?: StringNullableFilter<"RegCap_Capacitacion"> | string | null
+    sucursal?: StringNullableFilter<"RegCap_Capacitacion"> | string | null
+    horaDesde?: StringFilter<"RegCap_Capacitacion"> | string
+    horaHasta?: StringFilter<"RegCap_Capacitacion"> | string
+    horario?: StringFilter<"RegCap_Capacitacion"> | string
+    relatorNombre?: StringFilter<"RegCap_Capacitacion"> | string
+    relatorCargo?: StringFilter<"RegCap_Capacitacion"> | string
+    tema?: StringFilter<"RegCap_Capacitacion"> | string
+    firmaRelator?: StringNullableFilter<"RegCap_Capacitacion"> | string | null
+    creadoPor?: StringNullableFilter<"RegCap_Capacitacion"> | string | null
+    creadoPorId?: StringNullableFilter<"RegCap_Capacitacion"> | string | null
+    createdAt?: DateTimeFilter<"RegCap_Capacitacion"> | Date | string
+    updatedAt?: DateTimeFilter<"RegCap_Capacitacion"> | Date | string
+    participantes?: RegCap_ParticipanteListRelationFilter
+  }
+
+  export type RegCap_CapacitacionOrderByWithRelationInput = {
+    id?: SortOrder
+    fecha?: SortOrder
+    instalacion?: SortOrder
+    licitacion?: SortOrderInput | SortOrder
+    sucursal?: SortOrderInput | SortOrder
+    horaDesde?: SortOrder
+    horaHasta?: SortOrder
+    horario?: SortOrder
+    relatorNombre?: SortOrder
+    relatorCargo?: SortOrder
+    tema?: SortOrder
+    firmaRelator?: SortOrderInput | SortOrder
+    creadoPor?: SortOrderInput | SortOrder
+    creadoPorId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    participantes?: RegCap_ParticipanteOrderByRelationAggregateInput
+  }
+
+  export type RegCap_CapacitacionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: RegCap_CapacitacionWhereInput | RegCap_CapacitacionWhereInput[]
+    OR?: RegCap_CapacitacionWhereInput[]
+    NOT?: RegCap_CapacitacionWhereInput | RegCap_CapacitacionWhereInput[]
+    fecha?: DateTimeFilter<"RegCap_Capacitacion"> | Date | string
+    instalacion?: StringFilter<"RegCap_Capacitacion"> | string
+    licitacion?: StringNullableFilter<"RegCap_Capacitacion"> | string | null
+    sucursal?: StringNullableFilter<"RegCap_Capacitacion"> | string | null
+    horaDesde?: StringFilter<"RegCap_Capacitacion"> | string
+    horaHasta?: StringFilter<"RegCap_Capacitacion"> | string
+    horario?: StringFilter<"RegCap_Capacitacion"> | string
+    relatorNombre?: StringFilter<"RegCap_Capacitacion"> | string
+    relatorCargo?: StringFilter<"RegCap_Capacitacion"> | string
+    tema?: StringFilter<"RegCap_Capacitacion"> | string
+    firmaRelator?: StringNullableFilter<"RegCap_Capacitacion"> | string | null
+    creadoPor?: StringNullableFilter<"RegCap_Capacitacion"> | string | null
+    creadoPorId?: StringNullableFilter<"RegCap_Capacitacion"> | string | null
+    createdAt?: DateTimeFilter<"RegCap_Capacitacion"> | Date | string
+    updatedAt?: DateTimeFilter<"RegCap_Capacitacion"> | Date | string
+    participantes?: RegCap_ParticipanteListRelationFilter
+  }, "id">
+
+  export type RegCap_CapacitacionOrderByWithAggregationInput = {
+    id?: SortOrder
+    fecha?: SortOrder
+    instalacion?: SortOrder
+    licitacion?: SortOrderInput | SortOrder
+    sucursal?: SortOrderInput | SortOrder
+    horaDesde?: SortOrder
+    horaHasta?: SortOrder
+    horario?: SortOrder
+    relatorNombre?: SortOrder
+    relatorCargo?: SortOrder
+    tema?: SortOrder
+    firmaRelator?: SortOrderInput | SortOrder
+    creadoPor?: SortOrderInput | SortOrder
+    creadoPorId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: RegCap_CapacitacionCountOrderByAggregateInput
+    _max?: RegCap_CapacitacionMaxOrderByAggregateInput
+    _min?: RegCap_CapacitacionMinOrderByAggregateInput
+  }
+
+  export type RegCap_CapacitacionScalarWhereWithAggregatesInput = {
+    AND?: RegCap_CapacitacionScalarWhereWithAggregatesInput | RegCap_CapacitacionScalarWhereWithAggregatesInput[]
+    OR?: RegCap_CapacitacionScalarWhereWithAggregatesInput[]
+    NOT?: RegCap_CapacitacionScalarWhereWithAggregatesInput | RegCap_CapacitacionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"RegCap_Capacitacion"> | string
+    fecha?: DateTimeWithAggregatesFilter<"RegCap_Capacitacion"> | Date | string
+    instalacion?: StringWithAggregatesFilter<"RegCap_Capacitacion"> | string
+    licitacion?: StringNullableWithAggregatesFilter<"RegCap_Capacitacion"> | string | null
+    sucursal?: StringNullableWithAggregatesFilter<"RegCap_Capacitacion"> | string | null
+    horaDesde?: StringWithAggregatesFilter<"RegCap_Capacitacion"> | string
+    horaHasta?: StringWithAggregatesFilter<"RegCap_Capacitacion"> | string
+    horario?: StringWithAggregatesFilter<"RegCap_Capacitacion"> | string
+    relatorNombre?: StringWithAggregatesFilter<"RegCap_Capacitacion"> | string
+    relatorCargo?: StringWithAggregatesFilter<"RegCap_Capacitacion"> | string
+    tema?: StringWithAggregatesFilter<"RegCap_Capacitacion"> | string
+    firmaRelator?: StringNullableWithAggregatesFilter<"RegCap_Capacitacion"> | string | null
+    creadoPor?: StringNullableWithAggregatesFilter<"RegCap_Capacitacion"> | string | null
+    creadoPorId?: StringNullableWithAggregatesFilter<"RegCap_Capacitacion"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"RegCap_Capacitacion"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"RegCap_Capacitacion"> | Date | string
+  }
+
+  export type RegCap_ParticipanteWhereInput = {
+    AND?: RegCap_ParticipanteWhereInput | RegCap_ParticipanteWhereInput[]
+    OR?: RegCap_ParticipanteWhereInput[]
+    NOT?: RegCap_ParticipanteWhereInput | RegCap_ParticipanteWhereInput[]
+    id?: StringFilter<"RegCap_Participante"> | string
+    registroId?: StringFilter<"RegCap_Participante"> | string
+    numero?: IntFilter<"RegCap_Participante"> | number
+    nombre?: StringFilter<"RegCap_Participante"> | string
+    cargo?: StringFilter<"RegCap_Participante"> | string
+    rut?: StringFilter<"RegCap_Participante"> | string
+    firma?: StringNullableFilter<"RegCap_Participante"> | string | null
+    createdAt?: DateTimeFilter<"RegCap_Participante"> | Date | string
+    registro?: XOR<RegCap_CapacitacionRelationFilter, RegCap_CapacitacionWhereInput>
+  }
+
+  export type RegCap_ParticipanteOrderByWithRelationInput = {
+    id?: SortOrder
+    registroId?: SortOrder
+    numero?: SortOrder
+    nombre?: SortOrder
+    cargo?: SortOrder
+    rut?: SortOrder
+    firma?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    registro?: RegCap_CapacitacionOrderByWithRelationInput
+  }
+
+  export type RegCap_ParticipanteWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: RegCap_ParticipanteWhereInput | RegCap_ParticipanteWhereInput[]
+    OR?: RegCap_ParticipanteWhereInput[]
+    NOT?: RegCap_ParticipanteWhereInput | RegCap_ParticipanteWhereInput[]
+    registroId?: StringFilter<"RegCap_Participante"> | string
+    numero?: IntFilter<"RegCap_Participante"> | number
+    nombre?: StringFilter<"RegCap_Participante"> | string
+    cargo?: StringFilter<"RegCap_Participante"> | string
+    rut?: StringFilter<"RegCap_Participante"> | string
+    firma?: StringNullableFilter<"RegCap_Participante"> | string | null
+    createdAt?: DateTimeFilter<"RegCap_Participante"> | Date | string
+    registro?: XOR<RegCap_CapacitacionRelationFilter, RegCap_CapacitacionWhereInput>
+  }, "id">
+
+  export type RegCap_ParticipanteOrderByWithAggregationInput = {
+    id?: SortOrder
+    registroId?: SortOrder
+    numero?: SortOrder
+    nombre?: SortOrder
+    cargo?: SortOrder
+    rut?: SortOrder
+    firma?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: RegCap_ParticipanteCountOrderByAggregateInput
+    _avg?: RegCap_ParticipanteAvgOrderByAggregateInput
+    _max?: RegCap_ParticipanteMaxOrderByAggregateInput
+    _min?: RegCap_ParticipanteMinOrderByAggregateInput
+    _sum?: RegCap_ParticipanteSumOrderByAggregateInput
+  }
+
+  export type RegCap_ParticipanteScalarWhereWithAggregatesInput = {
+    AND?: RegCap_ParticipanteScalarWhereWithAggregatesInput | RegCap_ParticipanteScalarWhereWithAggregatesInput[]
+    OR?: RegCap_ParticipanteScalarWhereWithAggregatesInput[]
+    NOT?: RegCap_ParticipanteScalarWhereWithAggregatesInput | RegCap_ParticipanteScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"RegCap_Participante"> | string
+    registroId?: StringWithAggregatesFilter<"RegCap_Participante"> | string
+    numero?: IntWithAggregatesFilter<"RegCap_Participante"> | number
+    nombre?: StringWithAggregatesFilter<"RegCap_Participante"> | string
+    cargo?: StringWithAggregatesFilter<"RegCap_Participante"> | string
+    rut?: StringWithAggregatesFilter<"RegCap_Participante"> | string
+    firma?: StringNullableWithAggregatesFilter<"RegCap_Participante"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"RegCap_Participante"> | Date | string
   }
 
   export type RoleCreateInput = {
@@ -170759,6 +173263,219 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type RegCap_CapacitacionCreateInput = {
+    id?: string
+    fecha?: Date | string
+    instalacion: string
+    licitacion?: string | null
+    sucursal?: string | null
+    horaDesde: string
+    horaHasta: string
+    horario: string
+    relatorNombre: string
+    relatorCargo: string
+    tema: string
+    firmaRelator?: string | null
+    creadoPor?: string | null
+    creadoPorId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    participantes?: RegCap_ParticipanteCreateNestedManyWithoutRegistroInput
+  }
+
+  export type RegCap_CapacitacionUncheckedCreateInput = {
+    id?: string
+    fecha?: Date | string
+    instalacion: string
+    licitacion?: string | null
+    sucursal?: string | null
+    horaDesde: string
+    horaHasta: string
+    horario: string
+    relatorNombre: string
+    relatorCargo: string
+    tema: string
+    firmaRelator?: string | null
+    creadoPor?: string | null
+    creadoPorId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    participantes?: RegCap_ParticipanteUncheckedCreateNestedManyWithoutRegistroInput
+  }
+
+  export type RegCap_CapacitacionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    instalacion?: StringFieldUpdateOperationsInput | string
+    licitacion?: NullableStringFieldUpdateOperationsInput | string | null
+    sucursal?: NullableStringFieldUpdateOperationsInput | string | null
+    horaDesde?: StringFieldUpdateOperationsInput | string
+    horaHasta?: StringFieldUpdateOperationsInput | string
+    horario?: StringFieldUpdateOperationsInput | string
+    relatorNombre?: StringFieldUpdateOperationsInput | string
+    relatorCargo?: StringFieldUpdateOperationsInput | string
+    tema?: StringFieldUpdateOperationsInput | string
+    firmaRelator?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    participantes?: RegCap_ParticipanteUpdateManyWithoutRegistroNestedInput
+  }
+
+  export type RegCap_CapacitacionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    instalacion?: StringFieldUpdateOperationsInput | string
+    licitacion?: NullableStringFieldUpdateOperationsInput | string | null
+    sucursal?: NullableStringFieldUpdateOperationsInput | string | null
+    horaDesde?: StringFieldUpdateOperationsInput | string
+    horaHasta?: StringFieldUpdateOperationsInput | string
+    horario?: StringFieldUpdateOperationsInput | string
+    relatorNombre?: StringFieldUpdateOperationsInput | string
+    relatorCargo?: StringFieldUpdateOperationsInput | string
+    tema?: StringFieldUpdateOperationsInput | string
+    firmaRelator?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    participantes?: RegCap_ParticipanteUncheckedUpdateManyWithoutRegistroNestedInput
+  }
+
+  export type RegCap_CapacitacionCreateManyInput = {
+    id?: string
+    fecha?: Date | string
+    instalacion: string
+    licitacion?: string | null
+    sucursal?: string | null
+    horaDesde: string
+    horaHasta: string
+    horario: string
+    relatorNombre: string
+    relatorCargo: string
+    tema: string
+    firmaRelator?: string | null
+    creadoPor?: string | null
+    creadoPorId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RegCap_CapacitacionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    instalacion?: StringFieldUpdateOperationsInput | string
+    licitacion?: NullableStringFieldUpdateOperationsInput | string | null
+    sucursal?: NullableStringFieldUpdateOperationsInput | string | null
+    horaDesde?: StringFieldUpdateOperationsInput | string
+    horaHasta?: StringFieldUpdateOperationsInput | string
+    horario?: StringFieldUpdateOperationsInput | string
+    relatorNombre?: StringFieldUpdateOperationsInput | string
+    relatorCargo?: StringFieldUpdateOperationsInput | string
+    tema?: StringFieldUpdateOperationsInput | string
+    firmaRelator?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RegCap_CapacitacionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    instalacion?: StringFieldUpdateOperationsInput | string
+    licitacion?: NullableStringFieldUpdateOperationsInput | string | null
+    sucursal?: NullableStringFieldUpdateOperationsInput | string | null
+    horaDesde?: StringFieldUpdateOperationsInput | string
+    horaHasta?: StringFieldUpdateOperationsInput | string
+    horario?: StringFieldUpdateOperationsInput | string
+    relatorNombre?: StringFieldUpdateOperationsInput | string
+    relatorCargo?: StringFieldUpdateOperationsInput | string
+    tema?: StringFieldUpdateOperationsInput | string
+    firmaRelator?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RegCap_ParticipanteCreateInput = {
+    id?: string
+    numero: number
+    nombre: string
+    cargo: string
+    rut: string
+    firma?: string | null
+    createdAt?: Date | string
+    registro: RegCap_CapacitacionCreateNestedOneWithoutParticipantesInput
+  }
+
+  export type RegCap_ParticipanteUncheckedCreateInput = {
+    id?: string
+    registroId: string
+    numero: number
+    nombre: string
+    cargo: string
+    rut: string
+    firma?: string | null
+    createdAt?: Date | string
+  }
+
+  export type RegCap_ParticipanteUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numero?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    cargo?: StringFieldUpdateOperationsInput | string
+    rut?: StringFieldUpdateOperationsInput | string
+    firma?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    registro?: RegCap_CapacitacionUpdateOneRequiredWithoutParticipantesNestedInput
+  }
+
+  export type RegCap_ParticipanteUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    registroId?: StringFieldUpdateOperationsInput | string
+    numero?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    cargo?: StringFieldUpdateOperationsInput | string
+    rut?: StringFieldUpdateOperationsInput | string
+    firma?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RegCap_ParticipanteCreateManyInput = {
+    id?: string
+    registroId: string
+    numero: number
+    nombre: string
+    cargo: string
+    rut: string
+    firma?: string | null
+    createdAt?: Date | string
+  }
+
+  export type RegCap_ParticipanteUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numero?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    cargo?: StringFieldUpdateOperationsInput | string
+    rut?: StringFieldUpdateOperationsInput | string
+    firma?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RegCap_ParticipanteUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    registroId?: StringFieldUpdateOperationsInput | string
+    numero?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    cargo?: StringFieldUpdateOperationsInput | string
+    rut?: StringFieldUpdateOperationsInput | string
+    firma?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -178147,6 +180864,119 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type RegCap_ParticipanteListRelationFilter = {
+    every?: RegCap_ParticipanteWhereInput
+    some?: RegCap_ParticipanteWhereInput
+    none?: RegCap_ParticipanteWhereInput
+  }
+
+  export type RegCap_ParticipanteOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type RegCap_CapacitacionCountOrderByAggregateInput = {
+    id?: SortOrder
+    fecha?: SortOrder
+    instalacion?: SortOrder
+    licitacion?: SortOrder
+    sucursal?: SortOrder
+    horaDesde?: SortOrder
+    horaHasta?: SortOrder
+    horario?: SortOrder
+    relatorNombre?: SortOrder
+    relatorCargo?: SortOrder
+    tema?: SortOrder
+    firmaRelator?: SortOrder
+    creadoPor?: SortOrder
+    creadoPorId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RegCap_CapacitacionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    fecha?: SortOrder
+    instalacion?: SortOrder
+    licitacion?: SortOrder
+    sucursal?: SortOrder
+    horaDesde?: SortOrder
+    horaHasta?: SortOrder
+    horario?: SortOrder
+    relatorNombre?: SortOrder
+    relatorCargo?: SortOrder
+    tema?: SortOrder
+    firmaRelator?: SortOrder
+    creadoPor?: SortOrder
+    creadoPorId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RegCap_CapacitacionMinOrderByAggregateInput = {
+    id?: SortOrder
+    fecha?: SortOrder
+    instalacion?: SortOrder
+    licitacion?: SortOrder
+    sucursal?: SortOrder
+    horaDesde?: SortOrder
+    horaHasta?: SortOrder
+    horario?: SortOrder
+    relatorNombre?: SortOrder
+    relatorCargo?: SortOrder
+    tema?: SortOrder
+    firmaRelator?: SortOrder
+    creadoPor?: SortOrder
+    creadoPorId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RegCap_CapacitacionRelationFilter = {
+    is?: RegCap_CapacitacionWhereInput
+    isNot?: RegCap_CapacitacionWhereInput
+  }
+
+  export type RegCap_ParticipanteCountOrderByAggregateInput = {
+    id?: SortOrder
+    registroId?: SortOrder
+    numero?: SortOrder
+    nombre?: SortOrder
+    cargo?: SortOrder
+    rut?: SortOrder
+    firma?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type RegCap_ParticipanteAvgOrderByAggregateInput = {
+    numero?: SortOrder
+  }
+
+  export type RegCap_ParticipanteMaxOrderByAggregateInput = {
+    id?: SortOrder
+    registroId?: SortOrder
+    numero?: SortOrder
+    nombre?: SortOrder
+    cargo?: SortOrder
+    rut?: SortOrder
+    firma?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type RegCap_ParticipanteMinOrderByAggregateInput = {
+    id?: SortOrder
+    registroId?: SortOrder
+    numero?: SortOrder
+    nombre?: SortOrder
+    cargo?: SortOrder
+    rut?: SortOrder
+    firma?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type RegCap_ParticipanteSumOrderByAggregateInput = {
+    numero?: SortOrder
+  }
+
   export type UserCreateNestedManyWithoutRoleInput = {
     create?: XOR<UserCreateWithoutRoleInput, UserUncheckedCreateWithoutRoleInput> | UserCreateWithoutRoleInput[] | UserUncheckedCreateWithoutRoleInput[]
     connectOrCreate?: UserCreateOrConnectWithoutRoleInput | UserCreateOrConnectWithoutRoleInput[]
@@ -183562,6 +186392,62 @@ export namespace Prisma {
     upsert?: Cal_PlanillaHigienePersonalUpsertWithoutRegistrosInput
     connect?: Cal_PlanillaHigienePersonalWhereUniqueInput
     update?: XOR<XOR<Cal_PlanillaHigienePersonalUpdateToOneWithWhereWithoutRegistrosInput, Cal_PlanillaHigienePersonalUpdateWithoutRegistrosInput>, Cal_PlanillaHigienePersonalUncheckedUpdateWithoutRegistrosInput>
+  }
+
+  export type RegCap_ParticipanteCreateNestedManyWithoutRegistroInput = {
+    create?: XOR<RegCap_ParticipanteCreateWithoutRegistroInput, RegCap_ParticipanteUncheckedCreateWithoutRegistroInput> | RegCap_ParticipanteCreateWithoutRegistroInput[] | RegCap_ParticipanteUncheckedCreateWithoutRegistroInput[]
+    connectOrCreate?: RegCap_ParticipanteCreateOrConnectWithoutRegistroInput | RegCap_ParticipanteCreateOrConnectWithoutRegistroInput[]
+    createMany?: RegCap_ParticipanteCreateManyRegistroInputEnvelope
+    connect?: RegCap_ParticipanteWhereUniqueInput | RegCap_ParticipanteWhereUniqueInput[]
+  }
+
+  export type RegCap_ParticipanteUncheckedCreateNestedManyWithoutRegistroInput = {
+    create?: XOR<RegCap_ParticipanteCreateWithoutRegistroInput, RegCap_ParticipanteUncheckedCreateWithoutRegistroInput> | RegCap_ParticipanteCreateWithoutRegistroInput[] | RegCap_ParticipanteUncheckedCreateWithoutRegistroInput[]
+    connectOrCreate?: RegCap_ParticipanteCreateOrConnectWithoutRegistroInput | RegCap_ParticipanteCreateOrConnectWithoutRegistroInput[]
+    createMany?: RegCap_ParticipanteCreateManyRegistroInputEnvelope
+    connect?: RegCap_ParticipanteWhereUniqueInput | RegCap_ParticipanteWhereUniqueInput[]
+  }
+
+  export type RegCap_ParticipanteUpdateManyWithoutRegistroNestedInput = {
+    create?: XOR<RegCap_ParticipanteCreateWithoutRegistroInput, RegCap_ParticipanteUncheckedCreateWithoutRegistroInput> | RegCap_ParticipanteCreateWithoutRegistroInput[] | RegCap_ParticipanteUncheckedCreateWithoutRegistroInput[]
+    connectOrCreate?: RegCap_ParticipanteCreateOrConnectWithoutRegistroInput | RegCap_ParticipanteCreateOrConnectWithoutRegistroInput[]
+    upsert?: RegCap_ParticipanteUpsertWithWhereUniqueWithoutRegistroInput | RegCap_ParticipanteUpsertWithWhereUniqueWithoutRegistroInput[]
+    createMany?: RegCap_ParticipanteCreateManyRegistroInputEnvelope
+    set?: RegCap_ParticipanteWhereUniqueInput | RegCap_ParticipanteWhereUniqueInput[]
+    disconnect?: RegCap_ParticipanteWhereUniqueInput | RegCap_ParticipanteWhereUniqueInput[]
+    delete?: RegCap_ParticipanteWhereUniqueInput | RegCap_ParticipanteWhereUniqueInput[]
+    connect?: RegCap_ParticipanteWhereUniqueInput | RegCap_ParticipanteWhereUniqueInput[]
+    update?: RegCap_ParticipanteUpdateWithWhereUniqueWithoutRegistroInput | RegCap_ParticipanteUpdateWithWhereUniqueWithoutRegistroInput[]
+    updateMany?: RegCap_ParticipanteUpdateManyWithWhereWithoutRegistroInput | RegCap_ParticipanteUpdateManyWithWhereWithoutRegistroInput[]
+    deleteMany?: RegCap_ParticipanteScalarWhereInput | RegCap_ParticipanteScalarWhereInput[]
+  }
+
+  export type RegCap_ParticipanteUncheckedUpdateManyWithoutRegistroNestedInput = {
+    create?: XOR<RegCap_ParticipanteCreateWithoutRegistroInput, RegCap_ParticipanteUncheckedCreateWithoutRegistroInput> | RegCap_ParticipanteCreateWithoutRegistroInput[] | RegCap_ParticipanteUncheckedCreateWithoutRegistroInput[]
+    connectOrCreate?: RegCap_ParticipanteCreateOrConnectWithoutRegistroInput | RegCap_ParticipanteCreateOrConnectWithoutRegistroInput[]
+    upsert?: RegCap_ParticipanteUpsertWithWhereUniqueWithoutRegistroInput | RegCap_ParticipanteUpsertWithWhereUniqueWithoutRegistroInput[]
+    createMany?: RegCap_ParticipanteCreateManyRegistroInputEnvelope
+    set?: RegCap_ParticipanteWhereUniqueInput | RegCap_ParticipanteWhereUniqueInput[]
+    disconnect?: RegCap_ParticipanteWhereUniqueInput | RegCap_ParticipanteWhereUniqueInput[]
+    delete?: RegCap_ParticipanteWhereUniqueInput | RegCap_ParticipanteWhereUniqueInput[]
+    connect?: RegCap_ParticipanteWhereUniqueInput | RegCap_ParticipanteWhereUniqueInput[]
+    update?: RegCap_ParticipanteUpdateWithWhereUniqueWithoutRegistroInput | RegCap_ParticipanteUpdateWithWhereUniqueWithoutRegistroInput[]
+    updateMany?: RegCap_ParticipanteUpdateManyWithWhereWithoutRegistroInput | RegCap_ParticipanteUpdateManyWithWhereWithoutRegistroInput[]
+    deleteMany?: RegCap_ParticipanteScalarWhereInput | RegCap_ParticipanteScalarWhereInput[]
+  }
+
+  export type RegCap_CapacitacionCreateNestedOneWithoutParticipantesInput = {
+    create?: XOR<RegCap_CapacitacionCreateWithoutParticipantesInput, RegCap_CapacitacionUncheckedCreateWithoutParticipantesInput>
+    connectOrCreate?: RegCap_CapacitacionCreateOrConnectWithoutParticipantesInput
+    connect?: RegCap_CapacitacionWhereUniqueInput
+  }
+
+  export type RegCap_CapacitacionUpdateOneRequiredWithoutParticipantesNestedInput = {
+    create?: XOR<RegCap_CapacitacionCreateWithoutParticipantesInput, RegCap_CapacitacionUncheckedCreateWithoutParticipantesInput>
+    connectOrCreate?: RegCap_CapacitacionCreateOrConnectWithoutParticipantesInput
+    upsert?: RegCap_CapacitacionUpsertWithoutParticipantesInput
+    connect?: RegCap_CapacitacionWhereUniqueInput
+    update?: XOR<XOR<RegCap_CapacitacionUpdateToOneWithWhereWithoutParticipantesInput, RegCap_CapacitacionUpdateWithoutParticipantesInput>, RegCap_CapacitacionUncheckedUpdateWithoutParticipantesInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -196908,6 +199794,158 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type RegCap_ParticipanteCreateWithoutRegistroInput = {
+    id?: string
+    numero: number
+    nombre: string
+    cargo: string
+    rut: string
+    firma?: string | null
+    createdAt?: Date | string
+  }
+
+  export type RegCap_ParticipanteUncheckedCreateWithoutRegistroInput = {
+    id?: string
+    numero: number
+    nombre: string
+    cargo: string
+    rut: string
+    firma?: string | null
+    createdAt?: Date | string
+  }
+
+  export type RegCap_ParticipanteCreateOrConnectWithoutRegistroInput = {
+    where: RegCap_ParticipanteWhereUniqueInput
+    create: XOR<RegCap_ParticipanteCreateWithoutRegistroInput, RegCap_ParticipanteUncheckedCreateWithoutRegistroInput>
+  }
+
+  export type RegCap_ParticipanteCreateManyRegistroInputEnvelope = {
+    data: RegCap_ParticipanteCreateManyRegistroInput | RegCap_ParticipanteCreateManyRegistroInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type RegCap_ParticipanteUpsertWithWhereUniqueWithoutRegistroInput = {
+    where: RegCap_ParticipanteWhereUniqueInput
+    update: XOR<RegCap_ParticipanteUpdateWithoutRegistroInput, RegCap_ParticipanteUncheckedUpdateWithoutRegistroInput>
+    create: XOR<RegCap_ParticipanteCreateWithoutRegistroInput, RegCap_ParticipanteUncheckedCreateWithoutRegistroInput>
+  }
+
+  export type RegCap_ParticipanteUpdateWithWhereUniqueWithoutRegistroInput = {
+    where: RegCap_ParticipanteWhereUniqueInput
+    data: XOR<RegCap_ParticipanteUpdateWithoutRegistroInput, RegCap_ParticipanteUncheckedUpdateWithoutRegistroInput>
+  }
+
+  export type RegCap_ParticipanteUpdateManyWithWhereWithoutRegistroInput = {
+    where: RegCap_ParticipanteScalarWhereInput
+    data: XOR<RegCap_ParticipanteUpdateManyMutationInput, RegCap_ParticipanteUncheckedUpdateManyWithoutRegistroInput>
+  }
+
+  export type RegCap_ParticipanteScalarWhereInput = {
+    AND?: RegCap_ParticipanteScalarWhereInput | RegCap_ParticipanteScalarWhereInput[]
+    OR?: RegCap_ParticipanteScalarWhereInput[]
+    NOT?: RegCap_ParticipanteScalarWhereInput | RegCap_ParticipanteScalarWhereInput[]
+    id?: StringFilter<"RegCap_Participante"> | string
+    registroId?: StringFilter<"RegCap_Participante"> | string
+    numero?: IntFilter<"RegCap_Participante"> | number
+    nombre?: StringFilter<"RegCap_Participante"> | string
+    cargo?: StringFilter<"RegCap_Participante"> | string
+    rut?: StringFilter<"RegCap_Participante"> | string
+    firma?: StringNullableFilter<"RegCap_Participante"> | string | null
+    createdAt?: DateTimeFilter<"RegCap_Participante"> | Date | string
+  }
+
+  export type RegCap_CapacitacionCreateWithoutParticipantesInput = {
+    id?: string
+    fecha?: Date | string
+    instalacion: string
+    licitacion?: string | null
+    sucursal?: string | null
+    horaDesde: string
+    horaHasta: string
+    horario: string
+    relatorNombre: string
+    relatorCargo: string
+    tema: string
+    firmaRelator?: string | null
+    creadoPor?: string | null
+    creadoPorId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RegCap_CapacitacionUncheckedCreateWithoutParticipantesInput = {
+    id?: string
+    fecha?: Date | string
+    instalacion: string
+    licitacion?: string | null
+    sucursal?: string | null
+    horaDesde: string
+    horaHasta: string
+    horario: string
+    relatorNombre: string
+    relatorCargo: string
+    tema: string
+    firmaRelator?: string | null
+    creadoPor?: string | null
+    creadoPorId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RegCap_CapacitacionCreateOrConnectWithoutParticipantesInput = {
+    where: RegCap_CapacitacionWhereUniqueInput
+    create: XOR<RegCap_CapacitacionCreateWithoutParticipantesInput, RegCap_CapacitacionUncheckedCreateWithoutParticipantesInput>
+  }
+
+  export type RegCap_CapacitacionUpsertWithoutParticipantesInput = {
+    update: XOR<RegCap_CapacitacionUpdateWithoutParticipantesInput, RegCap_CapacitacionUncheckedUpdateWithoutParticipantesInput>
+    create: XOR<RegCap_CapacitacionCreateWithoutParticipantesInput, RegCap_CapacitacionUncheckedCreateWithoutParticipantesInput>
+    where?: RegCap_CapacitacionWhereInput
+  }
+
+  export type RegCap_CapacitacionUpdateToOneWithWhereWithoutParticipantesInput = {
+    where?: RegCap_CapacitacionWhereInput
+    data: XOR<RegCap_CapacitacionUpdateWithoutParticipantesInput, RegCap_CapacitacionUncheckedUpdateWithoutParticipantesInput>
+  }
+
+  export type RegCap_CapacitacionUpdateWithoutParticipantesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    instalacion?: StringFieldUpdateOperationsInput | string
+    licitacion?: NullableStringFieldUpdateOperationsInput | string | null
+    sucursal?: NullableStringFieldUpdateOperationsInput | string | null
+    horaDesde?: StringFieldUpdateOperationsInput | string
+    horaHasta?: StringFieldUpdateOperationsInput | string
+    horario?: StringFieldUpdateOperationsInput | string
+    relatorNombre?: StringFieldUpdateOperationsInput | string
+    relatorCargo?: StringFieldUpdateOperationsInput | string
+    tema?: StringFieldUpdateOperationsInput | string
+    firmaRelator?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RegCap_CapacitacionUncheckedUpdateWithoutParticipantesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    instalacion?: StringFieldUpdateOperationsInput | string
+    licitacion?: NullableStringFieldUpdateOperationsInput | string | null
+    sucursal?: NullableStringFieldUpdateOperationsInput | string | null
+    horaDesde?: StringFieldUpdateOperationsInput | string
+    horaHasta?: StringFieldUpdateOperationsInput | string
+    horario?: StringFieldUpdateOperationsInput | string
+    relatorNombre?: StringFieldUpdateOperationsInput | string
+    relatorCargo?: StringFieldUpdateOperationsInput | string
+    tema?: StringFieldUpdateOperationsInput | string
+    firmaRelator?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type UserCreateManyRoleInput = {
     id?: string
     username: string
@@ -201608,6 +204646,46 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type RegCap_ParticipanteCreateManyRegistroInput = {
+    id?: string
+    numero: number
+    nombre: string
+    cargo: string
+    rut: string
+    firma?: string | null
+    createdAt?: Date | string
+  }
+
+  export type RegCap_ParticipanteUpdateWithoutRegistroInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numero?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    cargo?: StringFieldUpdateOperationsInput | string
+    rut?: StringFieldUpdateOperationsInput | string
+    firma?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RegCap_ParticipanteUncheckedUpdateWithoutRegistroInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numero?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    cargo?: StringFieldUpdateOperationsInput | string
+    rut?: StringFieldUpdateOperationsInput | string
+    firma?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RegCap_ParticipanteUncheckedUpdateManyWithoutRegistroInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    numero?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    cargo?: StringFieldUpdateOperationsInput | string
+    rut?: StringFieldUpdateOperationsInput | string
+    firma?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
 
 
   /**
@@ -201797,6 +204875,10 @@ export namespace Prisma {
      * @deprecated Use Cal_PlanillaHigienePersonalCountOutputTypeDefaultArgs instead
      */
     export type Cal_PlanillaHigienePersonalCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Cal_PlanillaHigienePersonalCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use RegCap_CapacitacionCountOutputTypeDefaultArgs instead
+     */
+    export type RegCap_CapacitacionCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = RegCap_CapacitacionCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use RoleDefaultArgs instead
      */
@@ -202313,6 +205395,14 @@ export namespace Prisma {
      * @deprecated Use Cal_RegistroHigienePersonalDefaultArgs instead
      */
     export type Cal_RegistroHigienePersonalArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Cal_RegistroHigienePersonalDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use RegCap_CapacitacionDefaultArgs instead
+     */
+    export type RegCap_CapacitacionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = RegCap_CapacitacionDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use RegCap_ParticipanteDefaultArgs instead
+     */
+    export type RegCap_ParticipanteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = RegCap_ParticipanteDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

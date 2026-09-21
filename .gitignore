@@ -69,3 +69,4 @@ certs/
 
 # agent scratch / outputs
 Claude outputs/
+.kilo/

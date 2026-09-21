@@ -199,6 +199,8 @@ export default async function RolesPage() {
         { id: 'manage_sala_reuniones', name: 'Sala de Reuniones (Gestionar)', description: 'Crear nuevas reservas, modificar o cancelar reuniones en la sala.', category: 'COLABORADORES' },
         { id: 'view_anonimizador', name: 'Anonimizador de Planillas (Ver)', description: 'Acceso al módulo y visualización de la herramienta de anonimización de datos personales.', category: 'COLABORADORES' },
         { id: 'manage_anonimizador', name: 'Anonimizador de Planillas (Ejecutar)', description: 'Permite ejecutar el procesamiento, validar datos y descargar planillas anonimizadas y mapas de equivalencias.', category: 'COLABORADORES' },
+        { id: 'view_registro_capacitacion', name: 'Registro de Capacitación (Ver)', description: 'Acceso al módulo de capacitaciones y visualización/descarga de reportes oficiales.', category: 'COLABORADORES' },
+        { id: 'manage_registro_capacitacion', name: 'Registro de Capacitación (Gestionar)', description: 'Permite registrar nuevas capacitaciones, capturar firmas digitales de participantes y relator.', category: 'COLABORADORES' },
 
         { id: 'view_anexos', name: 'Ver Anexos', description: 'Acceso al directorio telefónico de la empresa.', category: 'AYUDA' },
         { id: 'manage_anexos', name: 'Gestionar Anexos', description: 'Acceso a crear, editar y subir de forma masiva los anexos.', category: 'AYUDA' },

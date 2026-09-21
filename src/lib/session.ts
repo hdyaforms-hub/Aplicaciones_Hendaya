@@ -195,7 +195,9 @@ export async function getSession() {
                 'logistica:config:clientes',
                 'logistica:integraciones:ver',
                 'view_anonimizador',
-                'manage_anonimizador'
+                'manage_anonimizador',
+                'view_registro_capacitacion',
+                'manage_registro_capacitacion'
             ]
 
             // Cargar permisos específicos configurados en base de datos para el rol

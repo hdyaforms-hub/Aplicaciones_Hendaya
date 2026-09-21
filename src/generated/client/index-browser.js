@@ -1822,6 +1822,36 @@ exports.Prisma.Cal_RegistroHigienePersonalScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.RegCap_CapacitacionScalarFieldEnum = {
+  id: 'id',
+  fecha: 'fecha',
+  instalacion: 'instalacion',
+  licitacion: 'licitacion',
+  sucursal: 'sucursal',
+  horaDesde: 'horaDesde',
+  horaHasta: 'horaHasta',
+  horario: 'horario',
+  relatorNombre: 'relatorNombre',
+  relatorCargo: 'relatorCargo',
+  tema: 'tema',
+  firmaRelator: 'firmaRelator',
+  creadoPor: 'creadoPor',
+  creadoPorId: 'creadoPorId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.RegCap_ParticipanteScalarFieldEnum = {
+  id: 'id',
+  registroId: 'registroId',
+  numero: 'numero',
+  nombre: 'nombre',
+  cargo: 'cargo',
+  rut: 'rut',
+  firma: 'firma',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1967,7 +1997,9 @@ exports.Prisma.ModelName = {
   Cal_PlanillaTransporte: 'Cal_PlanillaTransporte',
   Cal_RegistroTransporte: 'Cal_RegistroTransporte',
   Cal_PlanillaHigienePersonal: 'Cal_PlanillaHigienePersonal',
-  Cal_RegistroHigienePersonal: 'Cal_RegistroHigienePersonal'
+  Cal_RegistroHigienePersonal: 'Cal_RegistroHigienePersonal',
+  RegCap_Capacitacion: 'RegCap_Capacitacion',
+  RegCap_Participante: 'RegCap_Participante'
 };
 
 /**
