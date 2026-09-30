@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useState, useTransition, useMemo } from 'react'
 import { updateUserRbds, copyRbdsFromSupervisores } from './actions'
 
 type User = {
@@ -43,6 +43,27 @@ export default function AsociarRbdClient({ initialUsers, roles, colegios }: Prop
     const [expandedRoles, setExpandedRoles] = useState<Record<string, boolean>>(
         roles.reduce((acc, r) => ({ ...acc, [r.id]: true }), {})
     )
+
+    // Mapa de colegios para lookup rápido de RBD e Institución
+    const colegioMap = useMemo(() => new Map(colegios.map(c => [c.colRBD, c])), [colegios])
+
+    // Resumen de cantidad e instituciones por usuario
+    const getUserRbdSummary = (userRbds: number[]) => {
+        if (!userRbds || userRbds.length === 0) {
+            return { count: 0, instituciones: [] as string[] }
+        }
+        const instSet = new Set<string>()
+        userRbds.forEach(rbd => {
+            const col = colegioMap.get(rbd)
+            if (col && col.institucion) {
+                instSet.add(col.institucion.trim().toUpperCase())
+            }
+        })
+        return {
+            count: userRbds.length,
+            instituciones: Array.from(instSet).sort()
+        }
+    }
 
     // Modal state
     const [selectedUser, setSelectedUser] = useState<User | null>(null)
@@ -303,6 +324,7 @@ export default function AsociarRbdClient({ initialUsers, roles, colegios }: Prop
                                                     <th className="px-4 py-3">Usuario / Correo</th>
                                                     <th className="px-4 py-3">Sucursales</th>
                                                     <th className="px-4 py-3">RBDs Asociados</th>
+                                                    <th className="px-4 py-3">Cant. / Institución</th>
                                                     <th className="px-4 py-3 text-right">Acciones</th>
                                                 </tr>
                                             </thead>
@@ -345,6 +367,42 @@ export default function AsociarRbdClient({ initialUsers, roles, colegios }: Prop
                                                             ) : (
                                                                 <span className="text-slate-400 text-xs">Sin RBDs asociados</span>
                                                             )}
+                                                        </td>
+                                                        <td className="px-4 py-3.5 whitespace-nowrap">
+                                                            {(() => {
+                                                                const summary = getUserRbdSummary(user.rbds)
+                                                                if (summary.count === 0) {
+                                                                    return <span className="text-slate-400 text-xs italic">0 RBDs</span>
+                                                                }
+                                                                return (
+                                                                    <div className="space-y-1.5">
+                                                                        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-black bg-cyan-50 text-cyan-700 border border-cyan-100">
+                                                                            <span>🏫</span>
+                                                                            <span>{summary.count} {summary.count === 1 ? 'RBD' : 'RBDs'}</span>
+                                                                        </div>
+                                                                        {summary.instituciones.length > 0 ? (
+                                                                            <div className="flex flex-wrap gap-1 max-w-[200px]">
+                                                                                {summary.instituciones.map(inst => {
+                                                                                    let badgeStyle = 'bg-slate-100 text-slate-700 border-slate-200'
+                                                                                    if (inst.includes('JUNAEB')) badgeStyle = 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                                                                                    else if (inst.includes('JUNJI')) badgeStyle = 'bg-amber-50 text-amber-700 border-amber-200'
+                                                                                    else if (inst.includes('INTEGRA')) badgeStyle = 'bg-sky-50 text-sky-700 border-sky-200'
+                                                                                    return (
+                                                                                        <span
+                                                                                            key={inst}
+                                                                                            className={`px-2 py-0.5 rounded-md text-[10px] font-black tracking-wide border ${badgeStyle}`}
+                                                                                        >
+                                                                                            {inst}
+                                                                                        </span>
+                                                                                    )
+                                                                                })}
+                                                                            </div>
+                                                                        ) : (
+                                                                            <div className="text-[10px] text-slate-400 font-medium">Sin institución</div>
+                                                                        )}
+                                                                    </div>
+                                                                )
+                                                            })()}
                                                         </td>
                                                         <td className="px-4 py-3.5 text-right">
                                                             <button
