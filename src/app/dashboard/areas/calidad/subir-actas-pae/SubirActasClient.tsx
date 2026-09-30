@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useCallback } from 'react'
-import { getPaeRecords, deletePaeRecord, getSchoolDetailsByRBD, createManualPaeRecord } from './actions'
+import { getPaeRecords, deletePaeRecord, getSchoolDetailsByRBD, createManualPaeRecord, getLicitacionesActas } from './actions'
 import { Prisma } from '@/generated/client'
 import * as XLSX from 'xlsx'
 
@@ -15,6 +15,7 @@ export default function SubirActasClient() {
     const [totalPages, setTotalPages] = useState(1)
     const [averageCompliance, setAverageCompliance] = useState<number | null>(null)
     const [utCounts, setUtCounts] = useState<Record<string, number>>({})
+    const [availableLicitaciones, setAvailableLicitaciones] = useState<{ licId: number; licitacionHomologada: string | null }[]>([])
     
     // Filters
     const [page, setPage] = useState(1)
@@ -26,6 +27,16 @@ export default function SubirActasClient() {
     const [orderDir, setOrderDir] = useState<'asc' | 'desc'>('desc')
 
     const [isLoading, setIsLoading] = useState(true)
+
+    useEffect(() => {
+        async function loadLics() {
+            const res = await getLicitacionesActas()
+            if (res.success && res.data) {
+                setAvailableLicitaciones(res.data)
+            }
+        }
+        loadLics()
+    }, [])
 
     // Upload Modal State
     const [isUploadModalOpen, setIsUploadModalOpen] = useState(false)
@@ -278,15 +289,16 @@ export default function SubirActasClient() {
                     </div>
                 </div>
                 <select 
-                    className="py-2 px-4 rounded-xl border border-gray-200 outline-none focus:border-cyan-500"
+                    className="py-2 px-4 rounded-xl border border-gray-200 outline-none focus:border-cyan-500 bg-white"
                     value={licitacion || ''}
                     onChange={e => { setLicitacion(e.target.value ? Number(e.target.value) : null); setPage(1); }}
                 >
                     <option value="">Todas las licitaciones</option>
-                    <option value="1">Licitación 1</option>
-                    <option value="2">Licitación 2</option>
-                    <option value="3">Licitación 3</option>
-                    {/* These should be dynamically loaded in a real app */}
+                    {availableLicitaciones.map(l => (
+                        <option key={l.licId} value={l.licId}>
+                            {l.licitacionHomologada ? `Licitación ${l.licitacionHomologada}` : `Licitación ${l.licId}`}
+                        </option>
+                    ))}
                 </select>
                 <select 
                     className="py-2 px-4 rounded-xl border border-gray-200 outline-none focus:border-cyan-500"
@@ -733,12 +745,18 @@ export default function SubirActasClient() {
                                 </div>
                                 <div className="space-y-1">
                                     <label className="text-xs font-semibold text-gray-600 uppercase">Licitación</label>
-                                    <input 
-                                        type="number" 
+                                    <select 
                                         className="w-full px-3 py-2 rounded-xl border border-gray-200 bg-gray-50 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-200 outline-none transition-all"
                                         value={manualForm.Licitacion}
                                         onChange={(e) => setManualForm({...manualForm, Licitacion: e.target.value})}
-                                    />
+                                    >
+                                        <option value="">Seleccione licitación...</option>
+                                        {availableLicitaciones.map(l => (
+                                            <option key={l.licId} value={l.licId.toString()}>
+                                                {l.licitacionHomologada ? `Licitación ${l.licitacionHomologada}` : `Licitación ${l.licId}`}
+                                            </option>
+                                        ))}
+                                    </select>
                                 </div>
                                 <div className="space-y-1">
                                     <label className="text-xs font-semibold text-gray-600 uppercase">Fecha Supervisión</label>

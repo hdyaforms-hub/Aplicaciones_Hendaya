@@ -210,3 +210,21 @@ export async function createManualPaeRecord(data: any) {
         return { success: false, error: error.message };
     }
 }
+
+export async function getLicitacionesActas() {
+    try {
+        const licitaciones = await prisma.licitacion.findMany({
+            where: { estado: 1 },
+            select: {
+                licId: true,
+                licitacionHomologada: true
+            },
+            orderBy: { licId: 'asc' }
+        });
+        return { success: true, data: licitaciones };
+    } catch (error: any) {
+        console.error('Error fetching licitaciones for actas:', error);
+        return { success: false, data: [] };
+    }
+}
+
