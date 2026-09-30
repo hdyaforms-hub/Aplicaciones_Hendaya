@@ -79,6 +79,41 @@ export default function AsociarRbdClient({ initialUsers, roles, colegios }: Prop
     const [massivePasteError, setMassivePasteError] = useState('')
     const [massivePasteResult, setMassivePasteResult] = useState<{ totalInput: number; matched: number; notFound: number[] } | null>(null)
 
+    // Modal para inspeccionar RBDs por institución
+    const [inspectInstitution, setInspectInstitution] = useState<{
+        userName: string
+        userRole: string
+        institucion: string
+        rbds: Array<{
+            rbd: number
+            nombre: string
+            sucursal: string
+        }>
+    } | null>(null)
+    const [inspectFilter, setInspectFilter] = useState('')
+
+    const handleInspectInstitution = (user: User, inst: string) => {
+        const matchedColegios: Array<{ rbd: number; nombre: string; sucursal: string }> = []
+        user.rbds.forEach(rbd => {
+            const col = colegioMap.get(rbd)
+            if (col && col.institucion && col.institucion.trim().toUpperCase() === inst.trim().toUpperCase()) {
+                matchedColegios.push({
+                    rbd,
+                    nombre: col.nombreEstablecimiento,
+                    sucursal: col.sucursal
+                })
+            }
+        })
+
+        setInspectInstitution({
+            userName: user.name || user.username,
+            userRole: user.role.name,
+            institucion: inst,
+            rbds: matchedColegios.sort((a, b) => a.rbd - b.rbd)
+        })
+        setInspectFilter('')
+    }
+
     const [isPending, startTransition] = useTransition()
 
     // Filter users based on query
@@ -383,17 +418,20 @@ export default function AsociarRbdClient({ initialUsers, roles, colegios }: Prop
                                                                         {summary.instituciones.length > 0 ? (
                                                                             <div className="flex flex-wrap gap-1 max-w-[200px]">
                                                                                 {summary.instituciones.map(inst => {
-                                                                                    let badgeStyle = 'bg-slate-100 text-slate-700 border-slate-200'
-                                                                                    if (inst.includes('JUNAEB')) badgeStyle = 'bg-emerald-50 text-emerald-700 border-emerald-200'
-                                                                                    else if (inst.includes('JUNJI')) badgeStyle = 'bg-amber-50 text-amber-700 border-amber-200'
-                                                                                    else if (inst.includes('INTEGRA')) badgeStyle = 'bg-sky-50 text-sky-700 border-sky-200'
+                                                                                    let badgeStyle = 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'
+                                                                                    if (inst.includes('JUNAEB')) badgeStyle = 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100'
+                                                                                    else if (inst.includes('JUNJI')) badgeStyle = 'bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100'
+                                                                                    else if (inst.includes('INTEGRA')) badgeStyle = 'bg-sky-50 text-sky-700 border-sky-200 hover:bg-sky-100'
                                                                                     return (
-                                                                                        <span
+                                                                                        <button
                                                                                             key={inst}
-                                                                                            className={`px-2 py-0.5 rounded-md text-[10px] font-black tracking-wide border ${badgeStyle}`}
+                                                                                            type="button"
+                                                                                            onClick={() => handleInspectInstitution(user, inst)}
+                                                                                            className={`px-2 py-0.5 rounded-md text-[10px] font-black tracking-wide border ${badgeStyle} cursor-pointer transition-all hover:scale-105 active:scale-95 shadow-2xs hover:shadow-xs`}
+                                                                                            title={`Ver listado de RBDs de ${inst}`}
                                                                                         >
                                                                                             {inst}
-                                                                                        </span>
+                                                                                        </button>
                                                                                     )
                                                                                 })}
                                                                             </div>
@@ -655,6 +693,111 @@ export default function AsociarRbdClient({ initialUsers, roles, colegios }: Prop
                                 className="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 disabled:opacity-50 text-white font-bold rounded-xl text-sm transition-all shadow-md shadow-cyan-600/20"
                             >
                                 {isSaving ? 'Guardando...' : 'Guardar Cambios'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Modal Popup: Listado de RBDs por Institución */}
+            {inspectInstitution && (
+                <div className="fixed inset-0 bg-slate-900/50 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
+                    <div className="bg-white rounded-3xl shadow-2xl w-full max-w-lg overflow-hidden flex flex-col max-h-[80vh] animate-in fade-in zoom-in-95 duration-200">
+                        {/* Header */}
+                        <div className="p-5 sm:p-6 border-b border-gray-150 flex items-center justify-between bg-slate-50">
+                            <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 rounded-2xl bg-cyan-100 text-cyan-700 flex items-center justify-center text-lg font-bold">
+                                    🏫
+                                </div>
+                                <div>
+                                    <div className="flex items-center gap-2">
+                                        <h3 className="text-base font-black text-slate-900">
+                                            RBDs de {inspectInstitution.institucion}
+                                        </h3>
+                                        <span className="px-2 py-0.5 rounded text-[10px] font-black bg-cyan-100 text-cyan-800">
+                                            {inspectInstitution.rbds.length} colegios
+                                        </span>
+                                    </div>
+                                    <p className="text-xs text-slate-500 font-semibold mt-0.5">
+                                        Usuario: {inspectInstitution.userName} ({inspectInstitution.userRole})
+                                    </p>
+                                </div>
+                            </div>
+                            <button
+                                onClick={() => setInspectInstitution(null)}
+                                className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 font-bold flex items-center justify-center transition-colors cursor-pointer"
+                            >
+                                ✕
+                            </button>
+                        </div>
+
+                        {/* Search in popup */}
+                        <div className="p-3.5 border-b border-gray-100 bg-white">
+                            <div className="bg-slate-50 px-3 py-2 rounded-xl border border-gray-150 flex items-center gap-2">
+                                <span className="text-slate-400 text-xs">🔍</span>
+                                <input
+                                    type="text"
+                                    placeholder="Filtrar por nombre o RBD..."
+                                    value={inspectFilter}
+                                    onChange={(e) => setInspectFilter(e.target.value)}
+                                    className="w-full text-xs outline-none text-slate-700 placeholder-slate-400 bg-transparent"
+                                />
+                                {inspectFilter && (
+                                    <button
+                                        type="button"
+                                        onClick={() => setInspectFilter('')}
+                                        className="text-slate-400 hover:text-slate-600 text-xs font-bold"
+                                    >
+                                        ✕
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* List */}
+                        <div className="p-4 overflow-y-auto flex-1 divide-y divide-slate-100">
+                            {(() => {
+                                const filtered = inspectInstitution.rbds.filter(c =>
+                                    String(c.rbd).includes(inspectFilter.trim()) ||
+                                    c.nombre.toLowerCase().includes(inspectFilter.toLowerCase().trim())
+                                )
+
+                                if (filtered.length === 0) {
+                                    return (
+                                        <div className="py-8 text-center text-slate-400 text-xs font-medium">
+                                            No se encontraron RBDs con ese criterio
+                                        </div>
+                                    )
+                                }
+
+                                return filtered.map(col => (
+                                    <div key={col.rbd} className="py-2.5 flex items-center justify-between gap-3 text-xs hover:bg-slate-50/60 px-2 rounded-lg transition-colors">
+                                        <div className="flex items-center gap-2 min-w-0">
+                                            <span className="font-mono font-black text-cyan-700 bg-cyan-50 border border-cyan-100 px-2 py-0.5 rounded-lg shrink-0">
+                                                {col.rbd}
+                                            </span>
+                                            <span className="font-bold text-slate-800 truncate" title={col.nombre}>
+                                                {col.nombre}
+                                            </span>
+                                        </div>
+                                        <span className="text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded shrink-0">
+                                            {col.sucursal}
+                                        </span>
+                                    </div>
+                                ))
+                            })()}
+                        </div>
+
+                        {/* Footer */}
+                        <div className="p-4 border-t border-gray-150 flex justify-between items-center bg-slate-50">
+                            <span className="text-xs font-bold text-slate-500">
+                                Total: {inspectInstitution.rbds.length} RBDs asociados a {inspectInstitution.institucion}
+                            </span>
+                            <button
+                                onClick={() => setInspectInstitution(null)}
+                                className="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-xl text-xs transition-colors cursor-pointer"
+                            >
+                                Cerrar
                             </button>
                         </div>
                     </div>
