@@ -30,7 +30,7 @@ export default async function DashboardPage() {
     type GroupEntry = {
         ano: number
         mes: number
-        utDetails: Map<number, { hasJunaeb: boolean; hasJunji: boolean }>
+        utDetails: Map<number, { hasJunaeb: boolean; hasJunji: boolean; hasIntegra: boolean }>
     }
 
     const groups: Record<string, GroupEntry> = {}
@@ -43,16 +43,18 @@ export default async function DashboardPage() {
         const instRaw = (item.institucion && item.institucion !== 'S/D' ? item.institucion : col?.institucion || '').toUpperCase().trim()
         const isJunaeb = instRaw.includes('JUNAEB')
         const isJunji = instRaw.includes('JUNJI')
+        const isIntegra = instRaw.includes('INTEGRA')
 
         const key = `${item.ano}-${item.mes}`
         if (!groups[key]) {
             groups[key] = { ano: item.ano, mes: item.mes, utDetails: new Map() }
         }
 
-        const currentUt = groups[key].utDetails.get(ut) || { hasJunaeb: false, hasJunji: false }
+        const currentUt = groups[key].utDetails.get(ut) || { hasJunaeb: false, hasJunji: false, hasIntegra: false }
         groups[key].utDetails.set(ut, {
             hasJunaeb: currentUt.hasJunaeb || isJunaeb,
-            hasJunji: currentUt.hasJunji || isJunji
+            hasJunji: currentUt.hasJunji || isJunji,
+            hasIntegra: currentUt.hasIntegra || isIntegra
         })
     }
 
@@ -65,7 +67,8 @@ export default async function DashboardPage() {
                 .map(([code, details]) => ({
                     code,
                     hasJunaeb: details.hasJunaeb,
-                    hasJunji: details.hasJunji
+                    hasJunji: details.hasJunji,
+                    hasIntegra: details.hasIntegra
                 }))
                 .sort((a, b) => a.code - b.code)
         }))

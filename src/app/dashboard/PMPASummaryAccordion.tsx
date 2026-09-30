@@ -6,6 +6,7 @@ type UTDetail = {
     code: number
     hasJunaeb: boolean
     hasJunji: boolean
+    hasIntegra: boolean
 }
 
 type PMPAItem = {
@@ -98,6 +99,10 @@ export default function PMPASummaryAccordion({
                             <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
                             <span>JUNJI</span>
                         </span>
+                        <span className="flex items-center gap-1 text-[11px] font-semibold text-slate-700" title="Punto celeste: INTEGRA cargado">
+                            <span className="w-1.5 h-1.5 rounded-full bg-sky-500" />
+                            <span>INTEGRA</span>
+                        </span>
                     </div>
                 </div>
 
@@ -125,7 +130,8 @@ export default function PMPASummaryAccordion({
                     const hasUtMatch = p.uts.some(ut => ut.code.toString().includes(term))
                     const matchesJunaeb = 'junaeb'.includes(term) && p.uts.some(ut => ut.hasJunaeb)
                     const matchesJunji = 'junji'.includes(term) && p.uts.some(ut => ut.hasJunji)
-                    return monthName.includes(term) || hasUtMatch || p.ano.toString().includes(term) || matchesJunaeb || matchesJunji
+                    const matchesIntegra = 'integra'.includes(term) && p.uts.some(ut => ut.hasIntegra)
+                    return monthName.includes(term) || hasUtMatch || p.ano.toString().includes(term) || matchesJunaeb || matchesJunji || matchesIntegra
                 })
 
                 if (periods.length === 0 && searchTerm.trim()) return null
@@ -210,7 +216,7 @@ export default function PMPASummaryAccordion({
                                                                     <span className="text-slate-800">{ut.code}</span>
 
                                                                     {/* Micro indicadores de institución */}
-                                                                    {(ut.hasJunaeb || ut.hasJunji) && (
+                                                                    {(ut.hasJunaeb || ut.hasJunji || ut.hasIntegra) && (
                                                                         <span className="inline-flex items-center gap-0.5 ml-0.5">
                                                                             {ut.hasJunaeb && (
                                                                                 <span
@@ -222,6 +228,12 @@ export default function PMPASummaryAccordion({
                                                                                 <span
                                                                                     className="w-1.5 h-1.5 rounded-full bg-amber-400"
                                                                                     title="JUNJI cargado"
+                                                                                />
+                                                                            )}
+                                                                            {ut.hasIntegra && (
+                                                                                <span
+                                                                                    className="w-1.5 h-1.5 rounded-full bg-sky-500"
+                                                                                    title="INTEGRA cargado"
                                                                                 />
                                                                             )}
                                                                         </span>

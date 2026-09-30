@@ -17,6 +17,7 @@ export type PMPAData = {
     servicioLic: string
     raceqJunaeb: number
     servicio: string
+    institucion?: string
 }
 
 export async function checkPMPAExists(data: PMPAData[]) {
@@ -34,13 +35,18 @@ export async function checkPMPAExists(data: PMPAData[]) {
     const firstRow = data[0]
     const rbds = data.map(d => d.rbd)
 
+    const where: any = {
+        ano: firstRow.ano,
+        mes: firstRow.mes,
+        ute: firstRow.ute,
+        rbd: { in: rbds }
+    }
+    if (firstRow.institucion) {
+        where.institucion = firstRow.institucion
+    }
+
     const existing = await prisma.pMPA.findFirst({
-        where: {
-            ano: firstRow.ano,
-            mes: firstRow.mes,
-            ute: firstRow.ute,
-            rbd: { in: rbds }
-        }
+        where
     })
 
     if (existing) {
@@ -70,13 +76,18 @@ export async function uploadPMPAData(data: PMPAData[], overwrite: boolean) {
                     .filter(d => d.ano === parseInt(ano) && d.mes === parseInt(mes) && d.ute === parseInt(ute))
                     .map(d => d.rbd)
 
+                const deleteWhere: any = {
+                    ano: parseInt(ano),
+                    mes: parseInt(mes),
+                    ute: parseInt(ute),
+                    rbd: { in: rbdsInPeriod }
+                }
+                if (data[0]?.institucion) {
+                    deleteWhere.institucion = data[0].institucion
+                }
+
                 await prisma.pMPA.deleteMany({
-                    where: {
-                        ano: parseInt(ano),
-                        mes: parseInt(mes),
-                        ute: parseInt(ute),
-                        rbd: { in: rbdsInPeriod }
-                    }
+                    where: deleteWhere
                 })
             }
         }
@@ -102,7 +113,7 @@ export async function uploadPMPAData(data: PMPAData[], overwrite: boolean) {
             servicioLic: String(d.servicioLic).trim(),
             raceqJunaeb: Number(d.raceqJunaeb),
             servicio: String(d.servicio).trim(),
-            institucion: mapInstitucion.get(d.rbd) || "S/D",
+            institucion: d.institucion || mapInstitucion.get(d.rbd) || "S/D",
             uploadedBy: username
         }))
 
