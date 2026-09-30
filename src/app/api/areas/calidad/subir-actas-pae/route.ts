@@ -65,14 +65,14 @@ function getPythonBinCandidates(): string[] {
         list.push(
             'python3',
             'python',
+            '/usr/local/bin/python3',
+            '/usr/local/bin/python',
+            '/usr/bin/python3',
+            '/usr/bin/python',
             '/root/.nix-profile/bin/python3',
             '/root/.nix-profile/bin/python',
             '/nix/var/nix/profiles/default/bin/python3',
-            '/nix/var/nix/profiles/default/bin/python',
-            '/usr/bin/python3',
-            '/usr/bin/python',
-            '/usr/local/bin/python3',
-            '/usr/local/bin/python'
+            '/nix/var/nix/profiles/default/bin/python'
         );
     }
 
@@ -86,7 +86,7 @@ async function executePython(scriptPath: string, filePath: string): Promise<any>
 
     const nixBinPath = '/root/.nix-profile/bin:/nix/var/nix/profiles/default/bin:/usr/local/bin:/usr/bin:/bin';
     const currentPath = process.env.PATH || '';
-    const enhancedPath = `${nixBinPath}:${currentPath}`;
+    const enhancedPath = `${currentPath}:${nixBinPath}`;
 
     for (const bin of candidates) {
         try {
@@ -125,15 +125,17 @@ async function executePython(scriptPath: string, filePath: string): Promise<any>
                 lastStderr = err.stderr;
             }
 
-            // Si el binario no existe (ENOENT o 127), intentar el siguiente candidato
+            // Si el binario no existe o le falta el módulo requerido (ModuleNotFoundError), probar el siguiente candidato
             const isNotFound = err.code === 'ENOENT' || err.code === 127 ||
                 (typeof err.message === 'string' && (err.message.includes('not found') || err.message.includes('ENOENT')));
+            const isMissingModule = (typeof err.stderr === 'string' && err.stderr.includes('ModuleNotFoundError')) ||
+                (typeof err.message === 'string' && err.message.includes('ModuleNotFoundError'));
 
-            if (isNotFound) {
+            if (isNotFound || isMissingModule) {
                 continue;
             }
 
-            // Si el binario sí existía y el script falló por error de ejecución, no seguir probando binarios
+            // Si el binario sí existía y el script falló por error de lógica interna del PDF, no seguir probando binarios
             break;
         }
     }

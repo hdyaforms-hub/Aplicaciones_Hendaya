@@ -2,7 +2,18 @@ import sys
 import os
 import re
 import json
-import pdfplumber
+try:
+    import pdfplumber
+except ImportError:
+    import subprocess
+    try:
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "--break-system-packages", "pdfplumber"])
+    except Exception:
+        try:
+            subprocess.check_call([sys.executable, "-m", "pip", "install", "pdfplumber"])
+        except Exception:
+            pass
+    import pdfplumber
 
 def extract_data_from_pdf(pdf_path):
     data = {

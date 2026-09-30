@@ -1,5 +1,5 @@
 [deploy]
 releaseCommand = "npx prisma db push --skip-generate"
-startCommand = "next start -p $PORT"
+startCommand = "sh -c '(python3 -m pip install --break-system-packages pdfplumber || pip3 install --break-system-packages pdfplumber || pip install --break-system-packages pdfplumber || true) && next start -p $PORT'"
 healthcheckPath = "/api/health"
 healthcheckTimeout = 300

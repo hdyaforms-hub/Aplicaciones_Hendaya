@@ -52,19 +52,19 @@ export async function POST(request: Request) {
             process.platform === 'win32' ? 'python' : 'python3',
             'python3',
             'python',
+            '/usr/local/bin/python3',
+            '/usr/local/bin/python',
+            '/usr/bin/python3',
+            '/usr/bin/python',
             '/root/.nix-profile/bin/python3',
             '/root/.nix-profile/bin/python',
             '/nix/var/nix/profiles/default/bin/python3',
-            '/nix/var/nix/profiles/default/bin/python',
-            '/usr/bin/python3',
-            '/usr/bin/python',
-            '/usr/local/bin/python3',
-            '/usr/local/bin/python'
+            '/nix/var/nix/profiles/default/bin/python'
         ].filter(Boolean) as string[];
 
         const nixBinPath = '/root/.nix-profile/bin:/nix/var/nix/profiles/default/bin:/usr/local/bin:/usr/bin:/bin';
         const currentPath = process.env.PATH || '';
-        const enhancedPath = `${nixBinPath}:${currentPath}`;
+        const enhancedPath = `${currentPath}:${nixBinPath}`;
 
         let stdout = '';
         let stderr = '';
@@ -89,7 +89,9 @@ export async function POST(request: Request) {
                 if (err.stderr) stderr = err.stderr;
                 const isNotFound = err.code === 'ENOENT' || err.code === 127 ||
                     (typeof err.message === 'string' && (err.message.includes('not found') || err.message.includes('ENOENT')));
-                if (isNotFound) continue;
+                const isMissingModule = (typeof err.stderr === 'string' && err.stderr.includes('ModuleNotFoundError')) ||
+                    (typeof err.message === 'string' && err.message.includes('ModuleNotFoundError'));
+                if (isNotFound || isMissingModule) continue;
                 break;
             }
         }
