@@ -47,10 +47,41 @@ export async function POST(request: Request) {
 
         // Llamar al script de python
         const pythonScript = join(process.cwd(), 'python_scripts', 'extract_elementos.py');
-        // Ejecutable de python configurable: 'python' en Windows local, 'python3' en Railway (via PYTHON_BIN)
-        const pythonExecutable = process.env.PYTHON_BIN || 'python';
-        
-        const { stdout, stderr } = await execFileAsync(pythonExecutable, [pythonScript, filePath], { maxBuffer: 1024 * 1024 * 10 });
+        const pythonCandidates = [
+            process.env.PYTHON_BIN,
+            process.platform === 'win32' ? 'python' : 'python3',
+            'python3',
+            'python',
+            '/usr/bin/python3',
+            '/usr/local/bin/python3'
+        ].filter(Boolean) as string[];
+
+        let stdout = '';
+        let stderr = '';
+        let lastError: any = null;
+
+        for (const candidate of Array.from(new Set(pythonCandidates))) {
+            try {
+                const res = await execFileAsync(candidate, [pythonScript, filePath], { maxBuffer: 1024 * 1024 * 10 });
+                stdout = res.stdout;
+                stderr = res.stderr;
+                lastError = null;
+                break;
+            } catch (err: any) {
+                lastError = err;
+                if (err.stdout) stdout = err.stdout;
+                if (err.stderr) stderr = err.stderr;
+                const isNotFound = err.code === 'ENOENT' || err.code === 127 ||
+                    (typeof err.message === 'string' && (err.message.includes('not found') || err.message.includes('ENOENT')));
+                if (isNotFound) continue;
+                break;
+            }
+        }
+
+        if (lastError && !stdout) {
+            console.error('Error ejecutando Python para elementos esenciales:', stderr || lastError.message);
+            return NextResponse.json({ error: `Error ejecutando script de extracción: ${stderr || lastError.message}` }, { status: 500 });
+        }
         
         if (stderr) {
             console.warn('Python stderr:', stderr);

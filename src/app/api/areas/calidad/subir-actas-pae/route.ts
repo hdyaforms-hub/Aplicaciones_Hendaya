@@ -1,13 +1,133 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { exec } from 'child_process';
+import { execFile } from 'child_process';
+import { promisify } from 'util';
 import path from 'path';
 import os from 'os';
 import fs from 'fs/promises';
+import fsSync from 'fs';
 import crypto from 'crypto';
+
+const execFileAsync = promisify(execFile);
+
+// Mecanismo de auto-recuperación (self-healing) para tablas de Actas Estándar PAE en Producción
+async function ensurePaeTables() {
+    try {
+        await prisma.$executeRawUnsafe(`
+            CREATE TABLE IF NOT EXISTS "Cab_LeePdfEstandarPae" (
+                "id" TEXT PRIMARY KEY,
+                "NombreArchivoPdf" TEXT NOT NULL,
+                "Licitacion" INTEGER,
+                "Folio" TEXT NOT NULL UNIQUE,
+                "Res_Sanitaria_N" TEXT,
+                "Nombre_Num_establecimiento" TEXT,
+                "RBD" INTEGER,
+                "Region" TEXT,
+                "Comuna" TEXT,
+                "Fecha_Supervision" TIMESTAMP(3),
+                "Porcentaje_cumplimiento_final" DOUBLE PRECISION,
+                "Observaciones" TEXT,
+                "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
+            );
+        `);
+
+        await prisma.$executeRawUnsafe(`
+            CREATE TABLE IF NOT EXISTS "Det_LeePdfEstandarPae" (
+                "id" TEXT PRIMARY KEY,
+                "cabeceraId" TEXT NOT NULL,
+                "Infraestructura" TEXT,
+                "Calificacion" TEXT,
+                "Descripcion" TEXT,
+                "Comprometiendo_Inocuidad" TEXT,
+                "Tipo_NC" TEXT,
+                "Otros_Comentarios" TEXT,
+                CONSTRAINT "Det_LeePdfEstandarPae_cabeceraId_fkey" FOREIGN KEY ("cabeceraId") REFERENCES "Cab_LeePdfEstandarPae"("id") ON DELETE CASCADE ON UPDATE CASCADE
+            );
+        `);
+
+        await prisma.$executeRawUnsafe(`
+            CREATE INDEX IF NOT EXISTS "Det_LeePdfEstandarPae_cabeceraId_idx" ON "Det_LeePdfEstandarPae"("cabeceraId");
+        `);
+    } catch (err) {
+        console.warn('Advertencia en ensurePaeTables (continuando ejecución):', err);
+    }
+}
+
+function getPythonBinCandidates(): string[] {
+    const list: string[] = [];
+    if (process.env.PYTHON_BIN) list.push(process.env.PYTHON_BIN);
+
+    if (process.platform === 'win32') {
+        list.push('python', 'py', 'python3');
+    } else {
+        // En Linux (Debian/Ubuntu/Alpine en Railway/Docker), Python 3 es python3
+        list.push('python3', 'python', '/usr/bin/python3', '/usr/local/bin/python3');
+    }
+
+    return Array.from(new Set(list));
+}
+
+async function executePython(scriptPath: string, filePath: string): Promise<any> {
+    const candidates = getPythonBinCandidates();
+    let lastError: any = null;
+    let lastStderr = '';
+
+    for (const bin of candidates) {
+        try {
+            const { stdout, stderr } = await execFileAsync(bin, [scriptPath, filePath], {
+                maxBuffer: 1024 * 1024 * 15
+            });
+
+            if (stderr) {
+                lastStderr = stderr;
+            }
+
+            if (stdout) {
+                try {
+                    const parsed = JSON.parse(stdout);
+                    return parsed;
+                } catch (parseErr) {
+                    console.error(`Error parseando JSON de Python (${bin}):`, stdout);
+                }
+            }
+        } catch (err: any) {
+            lastError = err;
+
+            // Si el script devolvió un JSON en stdout antes de fallar
+            if (err.stdout) {
+                try {
+                    const parsed = JSON.parse(err.stdout);
+                    return parsed;
+                } catch (e) {}
+            }
+
+            if (err.stderr) {
+                lastStderr = err.stderr;
+            }
+
+            // Si el binario no existe (ENOENT o 127), intentar el siguiente candidato
+            const isNotFound = err.code === 'ENOENT' || err.code === 127 ||
+                (typeof err.message === 'string' && (err.message.includes('not found') || err.message.includes('ENOENT')));
+
+            if (isNotFound) {
+                continue;
+            }
+
+            // Si el binario sí existía y el script falló por error de ejecución, no seguir probando binarios
+            break;
+        }
+    }
+
+    const detail = lastStderr?.trim() || lastError?.message || 'No se pudo inicializar el entorno de Python.';
+    console.error('Fallo en la ejecución de Python para extracción:', detail);
+    return { error: `Error en extracción: ${detail}` };
+}
 
 export async function POST(req: NextRequest) {
     try {
+        await ensurePaeTables();
+
         const formData = await req.formData();
         const overrideStr = formData.get('override');
         const override = overrideStr === 'true';
@@ -20,6 +140,15 @@ export async function POST(req: NextRequest) {
 
         const results = [];
 
+        // Resolver ruta del script de extracción (src/scripts o python_scripts)
+        let scriptPath = path.join(process.cwd(), 'src', 'scripts', 'extractor_pae_headless.py');
+        if (!fsSync.existsSync(scriptPath)) {
+            const altPath = path.join(process.cwd(), 'python_scripts', 'extractor_pae_headless.py');
+            if (fsSync.existsSync(altPath)) {
+                scriptPath = altPath;
+            }
+        }
+
         for (const file of files) {
             const buffer = Buffer.from(await file.arrayBuffer());
             const tempDir = os.tmpdir();
@@ -30,7 +159,6 @@ export async function POST(req: NextRequest) {
 
             try {
                 // Execute Python script
-                const scriptPath = path.join(process.cwd(), 'src', 'scripts', 'extractor_pae_headless.py');
                 const result = await executePython(scriptPath, tempFilePath);
                 
                 if (result.error) {
@@ -40,7 +168,7 @@ export async function POST(req: NextRequest) {
 
                 const { cabecera, detalles } = result;
                 
-                if (!cabecera.Folio) {
+                if (!cabecera?.Folio) {
                     results.push({ filename: file.name, success: false, error: 'No se pudo extraer el Folio del documento.' });
                     continue;
                 }
@@ -82,7 +210,7 @@ export async function POST(req: NextRequest) {
                         Porcentaje_cumplimiento_final: cabecera.Porcentaje_cumplimiento_final,
                         Observaciones: cabecera.Observaciones,
                         detalles: {
-                            create: detalles.map((d: any) => ({
+                            create: (detalles || []).map((d: any) => ({
                                 Infraestructura: d.Infraestructura,
                                 Calificacion: d.Calificacion,
                                 Descripcion: d.Descripcion,
@@ -110,33 +238,4 @@ export async function POST(req: NextRequest) {
         console.error('Error in upload route:', error);
         return NextResponse.json({ success: false, error: error.message }, { status: 500 });
     }
-}
-
-function executePython(scriptPath: string, args: string): Promise<any> {
-    return new Promise((resolve, reject) => {
-        // Ejecutable configurable: 'python' en Windows local, 'python3' en Railway (via PYTHON_BIN)
-        const pythonBin = process.env.PYTHON_BIN || 'python';
-        const command = `${pythonBin} "${scriptPath}" "${args}"`;
-        exec(command, { maxBuffer: 1024 * 1024 * 10 }, (error, stdout, stderr) => {
-            if (error) {
-                console.error('Python execution error:', error);
-                // Attempt to parse stdout for JSON error from script
-                if (stdout) {
-                    try {
-                        const parsed = JSON.parse(stdout);
-                        return resolve(parsed); // The script output a structured error
-                    } catch (e) {}
-                }
-                return resolve({ error: 'Error al ejecutar el script de extracción.' });
-            }
-            
-            try {
-                const parsed = JSON.parse(stdout);
-                resolve(parsed);
-            } catch (e) {
-                console.error('Failed to parse Python output:', stdout);
-                resolve({ error: 'Formato de salida inválido del script de extracción.' });
-            }
-        });
-    });
 }
