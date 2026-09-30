@@ -1,0 +1,15 @@
+{
+  "$schema": "https://schema.railpack.com",
+  "provider": "node",
+  "packages": {
+    "python": "3.11"
+  },
+  "steps": {
+    "install": {
+      "commands": [
+        "...",
+        "pip install --break-system-packages pdfplumber || pip3 install --break-system-packages pdfplumber || true"
+      ]
+    }
+  }
+}
