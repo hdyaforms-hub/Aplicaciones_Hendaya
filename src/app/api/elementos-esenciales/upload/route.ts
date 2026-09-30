@@ -52,9 +52,19 @@ export async function POST(request: Request) {
             process.platform === 'win32' ? 'python' : 'python3',
             'python3',
             'python',
+            '/root/.nix-profile/bin/python3',
+            '/root/.nix-profile/bin/python',
+            '/nix/var/nix/profiles/default/bin/python3',
+            '/nix/var/nix/profiles/default/bin/python',
             '/usr/bin/python3',
-            '/usr/local/bin/python3'
+            '/usr/bin/python',
+            '/usr/local/bin/python3',
+            '/usr/local/bin/python'
         ].filter(Boolean) as string[];
+
+        const nixBinPath = '/root/.nix-profile/bin:/nix/var/nix/profiles/default/bin:/usr/local/bin:/usr/bin:/bin';
+        const currentPath = process.env.PATH || '';
+        const enhancedPath = `${nixBinPath}:${currentPath}`;
 
         let stdout = '';
         let stderr = '';
@@ -62,7 +72,13 @@ export async function POST(request: Request) {
 
         for (const candidate of Array.from(new Set(pythonCandidates))) {
             try {
-                const res = await execFileAsync(candidate, [pythonScript, filePath], { maxBuffer: 1024 * 1024 * 10 });
+                const res = await execFileAsync(candidate, [pythonScript, filePath], {
+                    maxBuffer: 1024 * 1024 * 10,
+                    env: {
+                        ...process.env,
+                        PATH: enhancedPath
+                    }
+                });
                 stdout = res.stdout;
                 stderr = res.stderr;
                 lastError = null;

@@ -61,8 +61,19 @@ function getPythonBinCandidates(): string[] {
     if (process.platform === 'win32') {
         list.push('python', 'py', 'python3');
     } else {
-        // En Linux (Debian/Ubuntu/Alpine en Railway/Docker), Python 3 es python3
-        list.push('python3', 'python', '/usr/bin/python3', '/usr/local/bin/python3');
+        // En Linux / Nixpacks / Railway / Docker
+        list.push(
+            'python3',
+            'python',
+            '/root/.nix-profile/bin/python3',
+            '/root/.nix-profile/bin/python',
+            '/nix/var/nix/profiles/default/bin/python3',
+            '/nix/var/nix/profiles/default/bin/python',
+            '/usr/bin/python3',
+            '/usr/bin/python',
+            '/usr/local/bin/python3',
+            '/usr/local/bin/python'
+        );
     }
 
     return Array.from(new Set(list));
@@ -73,10 +84,18 @@ async function executePython(scriptPath: string, filePath: string): Promise<any>
     let lastError: any = null;
     let lastStderr = '';
 
+    const nixBinPath = '/root/.nix-profile/bin:/nix/var/nix/profiles/default/bin:/usr/local/bin:/usr/bin:/bin';
+    const currentPath = process.env.PATH || '';
+    const enhancedPath = `${nixBinPath}:${currentPath}`;
+
     for (const bin of candidates) {
         try {
             const { stdout, stderr } = await execFileAsync(bin, [scriptPath, filePath], {
-                maxBuffer: 1024 * 1024 * 15
+                maxBuffer: 1024 * 1024 * 15,
+                env: {
+                    ...process.env,
+                    PATH: enhancedPath
+                }
             });
 
             if (stderr) {

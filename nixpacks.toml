@@ -1,16 +1,23 @@
 # Configuración de build para Railway (Nixpacks)
-# Instala Python 3 + pdfplumber, necesarios para el procesamiento de PDFs
-# (python_scripts/extract_elementos.py)
+# Instala Python 3 + pdfplumber para procesamiento de PDFs
+
+providers = ["...", "python"]
 
 [variables]
 NIXPACKS_NODE_VERSION = "20"
+NIXPACKS_PYTHON_VERSION = "3.11"
 
 [phases.setup]
-nixPkgs = ["...", "nodejs_20"]
-aptPkgs = ["python3", "python3-pip", "python-is-python3"]
+nixPkgs = [
+  "...",
+  "nodejs_20",
+  "python3",
+  "python3Packages.pip",
+  "python3Packages.pdfplumber"
+]
 
 [phases.install]
 cmds = [
   "npm ci",
-  "pip3 install --break-system-packages pdfplumber"
+  "python3 -m pip install -r requirements.txt --break-system-packages || pip install -r requirements.txt || true"
 ]
