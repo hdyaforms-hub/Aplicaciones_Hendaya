@@ -192,11 +192,21 @@ export default function PersonalClient({
         vigente: true
     })
 
+    // Pegado masivo de RBDs para Supervisor
+    const [showMassivePasteSuper, setShowMassivePasteSuper] = useState(false)
+    const [massivePasteSuperText, setMassivePasteSuperText] = useState('')
+    const [massivePasteSuperError, setMassivePasteSuperError] = useState('')
+    const [massivePasteSuperResult, setMassivePasteSuperResult] = useState<{ totalInput: number; matched: number; notFound: number[]; otherSucursal: number[] } | null>(null)
+
     // Reset Forms
     const resetForms = () => {
         setIsAdding(false)
         setEditingId(null)
         setFeedback(null)
+        setShowMassivePasteSuper(false)
+        setMassivePasteSuperText('')
+        setMassivePasteSuperError('')
+        setMassivePasteSuperResult(null)
         
         setZonalForm({
             nombre: '',
@@ -335,6 +345,10 @@ export default function PersonalClient({
     }
 
     const handleEditSuper = (s: any) => {
+        setShowMassivePasteSuper(false)
+        setMassivePasteSuperText('')
+        setMassivePasteSuperError('')
+        setMassivePasteSuperResult(null)
         const isDirect = !s.jefeOperacionId && !!s.jefeZonalId
         setSuperForm({
             nombre: s.nombre,
@@ -571,6 +585,79 @@ export default function PersonalClient({
         if (allowedSucursalIds.length === 0) return false // No chief chosen yet
         return allowedSucursalIds.includes(v.sucursalId)
     })
+
+    // Pegado masivo para Supervisor RBDs
+    const handleApplyMassivePasteSuper = (mode: 'add' | 'replace') => {
+        setMassivePasteSuperError('')
+        setMassivePasteSuperResult(null)
+
+        if (!massivePasteSuperText.trim()) {
+            setMassivePasteSuperError('Por favor ingresa o pega al menos un RBD.')
+            return
+        }
+
+        if (allowedSucursales.length === 0) {
+            setMassivePasteSuperError('Selecciona primero un Jefe de Operación o Jefe Zonal para determinar la sucursal de dependencia.')
+            return
+        }
+
+        const rawTokens = massivePasteSuperText.split(/[\r\n,;\t\s]+/).map(t => t.trim()).filter(Boolean)
+
+        const parsedRbds: number[] = []
+        rawTokens.forEach(token => {
+            const withoutDv = token.includes('-') ? token.split('-')[0] : token
+            const cleanStr = withoutDv.replace(/^0+/, '')
+            const num = parseInt(cleanStr, 10)
+            if (!isNaN(num) && num > 0 && !parsedRbds.includes(num)) {
+                parsedRbds.push(num)
+            }
+        })
+
+        if (parsedRbds.length === 0) {
+            setMassivePasteSuperError('No se encontraron números de RBD válidos en el texto ingresado.')
+            return
+        }
+
+        const allowedColRBDs = new Set(filteredColegiosForSupervisor.map(c => c.colRBD))
+        const allColRBDs = new Set(colegios.map(c => c.colRBD))
+
+        const matchedRbds: number[] = []
+        const otherSucursalRbds: number[] = []
+        const notFoundRbds: number[] = []
+
+        parsedRbds.forEach(r => {
+            if (allowedColRBDs.has(r)) {
+                matchedRbds.push(r)
+            } else if (allColRBDs.has(r)) {
+                otherSucursalRbds.push(r)
+            } else {
+                notFoundRbds.push(r)
+            }
+        })
+
+        if (matchedRbds.length === 0) {
+            if (otherSucursalRbds.length > 0) {
+                setMassivePasteSuperError(`Los RBDs ingresados existen pero pertenecen a otra sucursal diferente a ${allowedSucursales.join(', ').toUpperCase()}.`)
+            } else {
+                setMassivePasteSuperError(`Ninguno de los ${parsedRbds.length} RBDs ingresados coincide con colegios registrados en el sistema.`)
+            }
+            return
+        }
+
+        setSuperForm(prev => {
+            const updated = mode === 'replace' 
+                ? matchedRbds 
+                : Array.from(new Set([...prev.rbdIds, ...matchedRbds]))
+            return { ...prev, rbdIds: updated }
+        })
+
+        setMassivePasteSuperResult({
+            totalInput: parsedRbds.length,
+            matched: matchedRbds.length,
+            notFound: notFoundRbds,
+            otherSucursal: otherSucursalRbds
+        })
+    }
 
     // ---- Sort helpers ----
     const toggleSort = (
@@ -1623,7 +1710,7 @@ export default function PersonalClient({
 
                                 {/* RBDs a Auditar Checklist (filtered in cascade) */}
                                 <div className="space-y-2">
-                                    <div className="flex justify-between items-center">
+                                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
                                         <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
                                             <span>RBDs a Auditar</span>
                                             {allowedSucursales.length > 0 && (
@@ -1632,8 +1719,110 @@ export default function PersonalClient({
                                                 </span>
                                             )}
                                         </label>
-                                        <span className="text-xs text-gray-400 font-medium">{superForm.rbdIds.length} seleccionados</span>
+                                        <div className="flex items-center gap-2">
+                                            <button
+                                                type="button"
+                                                onClick={() => setShowMassivePasteSuper(prev => !prev)}
+                                                className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-gradient-to-r from-cyan-600 to-sky-600 hover:from-cyan-700 hover:to-sky-700 text-white font-bold text-xs shadow-xs shadow-cyan-500/20 transition-all cursor-pointer"
+                                            >
+                                                <span>📋</span>
+                                                <span>{showMassivePasteSuper ? 'Ocultar Pegado' : 'Pegar Varios RBDs'}</span>
+                                            </button>
+                                            <span className="text-xs text-cyan-700 bg-cyan-50 border border-cyan-100 px-2 py-0.5 rounded-full font-bold">
+                                                {superForm.rbdIds.length} seleccionados
+                                            </span>
+                                        </div>
                                     </div>
+
+                                    {/* Panel de Pegado Masivo */}
+                                    {showMassivePasteSuper && (
+                                        <div className="bg-gradient-to-br from-slate-50 to-cyan-50/30 p-3.5 rounded-xl border border-cyan-100 space-y-2.5 animate-in fade-in duration-200 text-xs">
+                                            <div className="flex justify-between items-center">
+                                                <div>
+                                                    <h5 className="font-black uppercase tracking-wider text-slate-800 flex items-center gap-1 text-[11px]">
+                                                        <span>⚡</span> Pegado Masivo de RBDs
+                                                    </h5>
+                                                    <p className="text-[11px] text-slate-500 font-medium">
+                                                        Pega una lista de RBDs de Excel (columna) o separados por comas, espacios o guion.
+                                                    </p>
+                                                </div>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setMassivePasteSuperText('')
+                                                        setMassivePasteSuperError('')
+                                                        setMassivePasteSuperResult(null)
+                                                    }}
+                                                    className="text-[11px] text-slate-400 hover:text-slate-600 font-bold cursor-pointer"
+                                                >
+                                                    Limpiar
+                                                </button>
+                                            </div>
+
+                                            <textarea
+                                                rows={3}
+                                                value={massivePasteSuperText}
+                                                onChange={(e) => {
+                                                    setMassivePasteSuperText(e.target.value)
+                                                    setMassivePasteSuperError('')
+                                                }}
+                                                placeholder="Pega aquí los RBDs, ej:&#10;888281, 995297, 995299&#10;o pega directo desde una columna de Excel..."
+                                                className="w-full text-xs font-mono p-2.5 bg-white rounded-lg border border-slate-200 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none transition-all placeholder:font-sans placeholder:text-slate-400 resize-y"
+                                            />
+
+                                            {massivePasteSuperError && (
+                                                <div className="p-2 bg-rose-50 border border-rose-200 text-rose-700 text-[11px] rounded-lg font-medium flex items-center gap-1.5">
+                                                    <span>⚠️</span>
+                                                    <span>{massivePasteSuperError}</span>
+                                                </div>
+                                            )}
+
+                                            {massivePasteSuperResult && (
+                                                <div className="p-2 bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] rounded-lg space-y-1">
+                                                    <div className="font-bold flex items-center gap-1.5">
+                                                        <span>✓</span>
+                                                        <span>Se seleccionaron {massivePasteSuperResult.matched} establecimientos coincidentes.</span>
+                                                    </div>
+                                                    {massivePasteSuperResult.otherSucursal.length > 0 && (
+                                                        <div className="text-amber-700 font-medium">
+                                                            ⚠️ {massivePasteSuperResult.otherSucursal.length} RBD(s) pertenecen a otra sucursal: {massivePasteSuperResult.otherSucursal.join(', ')}
+                                                        </div>
+                                                    )}
+                                                    {massivePasteSuperResult.notFound.length > 0 && (
+                                                        <div className="text-rose-700 font-medium">
+                                                            ❌ {massivePasteSuperResult.notFound.length} RBD(s) no existen en el sistema: {massivePasteSuperResult.notFound.join(', ')}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            )}
+
+                                            <div className="flex flex-wrap items-center gap-2 pt-0.5">
+                                                <button
+                                                    type="button"
+                                                    onClick={() => handleApplyMassivePasteSuper('add')}
+                                                    className="px-3 py-1 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg text-xs font-bold transition-all shadow-xs flex items-center gap-1 cursor-pointer"
+                                                >
+                                                    <span>➕</span>
+                                                    <span>Agregar a la selección</span>
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => handleApplyMassivePasteSuper('replace')}
+                                                    className="px-3 py-1 bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 rounded-lg text-xs font-bold transition-all flex items-center gap-1 cursor-pointer"
+                                                >
+                                                    <span>🔄</span>
+                                                    <span>Reemplazar selección</span>
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setShowMassivePasteSuper(false)}
+                                                    className="px-2.5 py-1 text-[11px] text-slate-400 hover:text-slate-600 font-bold ml-auto cursor-pointer"
+                                                >
+                                                    Cerrar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    )}
                                     <input
                                         title="Filtrar RBD"
                                         type="text" placeholder="Filtrar RBD o colegio..." value={rbdFilter} onChange={(e) => setRbdFilter(e.target.value)}
