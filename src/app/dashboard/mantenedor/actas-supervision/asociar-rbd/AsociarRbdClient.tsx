@@ -52,6 +52,12 @@ export default function AsociarRbdClient({ initialUsers, roles, colegios }: Prop
     const [selectedInstitucion, setSelectedInstitucion] = useState('')
     const [isSaving, setIsSaving] = useState(false)
 
+    // Estado para pegado masivo de RBDs
+    const [showMassivePaste, setShowMassivePaste] = useState(false)
+    const [massivePasteText, setMassivePasteText] = useState('')
+    const [massivePasteError, setMassivePasteError] = useState('')
+    const [massivePasteResult, setMassivePasteResult] = useState<{ totalInput: number; matched: number; notFound: number[] } | null>(null)
+
     const [isPending, startTransition] = useTransition()
 
     // Filter users based on query
@@ -81,6 +87,10 @@ export default function AsociarRbdClient({ initialUsers, roles, colegios }: Prop
         setSearchColegio('')
         setSelectedSucursal('')
         setSelectedInstitucion('')
+        setShowMassivePaste(false)
+        setMassivePasteText('')
+        setMassivePasteError('')
+        setMassivePasteResult(null)
     }
 
     const handleCloseEdit = () => {
@@ -88,6 +98,60 @@ export default function AsociarRbdClient({ initialUsers, roles, colegios }: Prop
         setSelectedRbds([])
         setSelectedSucursal('')
         setSelectedInstitucion('')
+        setShowMassivePaste(false)
+        setMassivePasteText('')
+        setMassivePasteError('')
+        setMassivePasteResult(null)
+    }
+
+    const handleApplyMassivePaste = (mode: 'add' | 'replace') => {
+        setMassivePasteError('')
+        setMassivePasteResult(null)
+
+        if (!massivePasteText.trim()) {
+            setMassivePasteError('Por favor ingresa o pega al menos un RBD.')
+            return
+        }
+
+        // Divide por saltos de línea, comas, punto y coma, tabulaciones o espacios
+        const rawTokens = massivePasteText.split(/[\r\n,;\t\s]+/).map(t => t.trim()).filter(Boolean)
+
+        const parsedRbds: number[] = []
+        rawTokens.forEach(token => {
+            // Remueve dígito verificador y guión (ej: 000998503-4 -> 998503)
+            const withoutDv = token.includes('-') ? token.split('-')[0] : token
+            const cleanStr = withoutDv.replace(/^0+/, '')
+            const num = parseInt(cleanStr, 10)
+            if (!isNaN(num) && num > 0 && !parsedRbds.includes(num)) {
+                parsedRbds.push(num)
+            }
+        })
+
+        if (parsedRbds.length === 0) {
+            setMassivePasteError('No se encontraron números de RBD válidos en el texto ingresado.')
+            return
+        }
+
+        const validColRBDs = new Set(colegios.map(c => c.colRBD))
+        const foundRbds = parsedRbds.filter(r => validColRBDs.has(r))
+        const notFoundRbds = parsedRbds.filter(r => !validColRBDs.has(r))
+
+        if (foundRbds.length === 0) {
+            setMassivePasteError(`Ninguno de los ${parsedRbds.length} RBDs ingresados coincide con colegios registrados en el sistema.`)
+            return
+        }
+
+        if (mode === 'replace') {
+            setSelectedRbds(foundRbds)
+        } else {
+            setSelectedRbds(prev => Array.from(new Set([...prev, ...foundRbds])))
+        }
+
+        setMassivePasteResult({
+            totalInput: parsedRbds.length,
+            matched: foundRbds.length,
+            notFound: notFoundRbds
+        })
     }
 
     const handleToggleRbd = (rbd: number) => {
@@ -366,13 +430,108 @@ export default function AsociarRbdClient({ initialUsers, roles, colegios }: Prop
                                 </div>
                             </div>
 
-                            {/* Summary count */}
-                            <div className="flex justify-between items-center text-xs font-bold text-slate-500">
+                            {/* Summary count & Massive Paste Toggle */}
+                            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 text-xs font-bold text-slate-500">
                                 <span>Total Colegios: {colegios.length}</span>
-                                <span className="text-cyan-600 bg-cyan-50 px-2.5 py-0.5 rounded-full">
-                                    {selectedRbds.length} seleccionados
-                                </span>
+                                <div className="flex items-center gap-2">
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowMassivePaste(prev => !prev)}
+                                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-cyan-600 to-sky-600 hover:from-cyan-700 hover:to-sky-700 text-white font-bold text-xs shadow-sm shadow-cyan-500/20 transition-all cursor-pointer"
+                                    >
+                                        <span>📋</span>
+                                        <span>{showMassivePaste ? 'Ocultar Pegado Masivo' : 'Pegar Varios RBDs'}</span>
+                                    </button>
+                                    <span className="text-cyan-600 bg-cyan-50 px-2.5 py-1 rounded-full border border-cyan-100 font-bold">
+                                        {selectedRbds.length} seleccionados
+                                    </span>
+                                </div>
                             </div>
+
+                            {/* Panel de Pegado Masivo */}
+                            {showMassivePaste && (
+                                <div className="bg-gradient-to-br from-slate-50 to-cyan-50/30 p-4 rounded-2xl border border-cyan-100 shadow-xs space-y-3 animate-in fade-in duration-200">
+                                    <div className="flex justify-between items-center">
+                                        <div>
+                                            <h4 className="text-xs font-black uppercase tracking-wider text-slate-800 flex items-center gap-1.5">
+                                                <span>⚡</span> Pegado Masivo de RBDs
+                                            </h4>
+                                            <p className="text-[11px] text-slate-500 font-medium mt-0.5">
+                                                Pega tus RBDs copiados de Excel (columna) o separados por comas, espacios o guion.
+                                            </p>
+                                        </div>
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setMassivePasteText('')
+                                                setMassivePasteError('')
+                                                setMassivePasteResult(null)
+                                            }}
+                                            className="text-[11px] text-slate-400 hover:text-slate-600 font-bold cursor-pointer"
+                                        >
+                                            Limpiar
+                                        </button>
+                                    </div>
+
+                                    <textarea
+                                        rows={3}
+                                        value={massivePasteText}
+                                        onChange={(e) => {
+                                            setMassivePasteText(e.target.value)
+                                            setMassivePasteError('')
+                                        }}
+                                        placeholder="Pega aquí los RBDs, ej:&#10;31, 32, 379&#10;o pega directo de una columna de Excel (998503-4, 140301...)"
+                                        className="w-full text-xs font-mono p-3 bg-white rounded-xl border border-slate-200 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all placeholder:font-sans placeholder:text-slate-400 resize-y"
+                                    />
+
+                                    {massivePasteError && (
+                                        <div className="p-2.5 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xl font-medium flex items-center gap-2">
+                                            <span>⚠️</span>
+                                            <span>{massivePasteError}</span>
+                                        </div>
+                                    )}
+
+                                    {massivePasteResult && (
+                                        <div className="p-2.5 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs rounded-xl space-y-1">
+                                            <div className="font-bold flex items-center gap-1.5">
+                                                <span>✓</span>
+                                                <span>Se seleccionaron {massivePasteResult.matched} establecimientos coincidentes en el sistema.</span>
+                                            </div>
+                                            {massivePasteResult.notFound.length > 0 && (
+                                                <div className="text-[11px] text-amber-700 font-medium">
+                                                    ⚠️ {massivePasteResult.notFound.length} RBD(s) no encontrados en la base de datos: {massivePasteResult.notFound.join(', ')}
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+
+                                    <div className="flex flex-wrap items-center gap-2 pt-1">
+                                        <button
+                                            type="button"
+                                            onClick={() => handleApplyMassivePaste('add')}
+                                            className="px-3.5 py-1.5 bg-cyan-600 hover:bg-cyan-700 text-white rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
+                                        >
+                                            <span>➕</span>
+                                            <span>Agregar a la selección actual</span>
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => handleApplyMassivePaste('replace')}
+                                            className="px-3.5 py-1.5 bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer"
+                                        >
+                                            <span>🔄</span>
+                                            <span>Reemplazar selección actual</span>
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowMassivePaste(false)}
+                                            className="px-3 py-1.5 text-xs text-slate-400 hover:text-slate-600 font-bold ml-auto cursor-pointer"
+                                        >
+                                            Cerrar panel
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
 
                             {/* Select All Checkbox */}
                             <div className="flex items-center justify-between px-3 py-2.5 bg-slate-50 rounded-xl border border-slate-100 text-sm">
