@@ -118,31 +118,68 @@ export async function updateColegio(id: string, data: Partial<ColegioData>) {
     }
 
     try {
+        const current = await prisma.colegios.findUnique({ where: { id } })
+        if (!current) {
+            return { error: 'Colegio no encontrado.' }
+        }
+
+        const newInstitucion = data.institucion !== undefined 
+            ? data.institucion.trim().toUpperCase() 
+            : current.institucion?.trim().toUpperCase()
+
         await prisma.colegios.update({
             where: { id },
             data: {
-                institucion: data.institucion,
-                sucursal: data.sucursal,
-                nombreEstablecimiento: data.nombreEstablecimiento,
-                direccionEstablecimiento: data.direccionEstablecimiento,
-                comuna: data.comuna,
+                institucion: data.institucion !== undefined ? data.institucion.trim() : current.institucion,
+                sucursal: data.sucursal !== undefined ? data.sucursal.trim() : current.sucursal,
+                nombreEstablecimiento: data.nombreEstablecimiento !== undefined ? data.nombreEstablecimiento.trim() : current.nombreEstablecimiento,
+                direccionEstablecimiento: data.direccionEstablecimiento !== undefined ? data.direccionEstablecimiento.trim() : current.direccionEstablecimiento,
+                comuna: data.comuna !== undefined ? data.comuna.trim() : current.comuna,
             }
         })
 
-        // Sincronizar cambios a ColegiosMatriz si existe
-        const current = await prisma.colegios.findUnique({ where: { id } })
-        if (current) {
-            await prisma.colegiosMatriz.updateMany({
-                where: { colRBD: current.colRBD },
-                data: {
-                    nombreEstablecimiento: data.nombreEstablecimiento || current.nombreEstablecimiento,
-                    institucion: data.institucion || current.institucion,
-                    sucursal: data.sucursal || current.sucursal,
-                }
+        // Sincronizar inmediatamente con ColegiosMatriz (Módulo Matriz de Riesgo / Colegios Activos)
+        if (newInstitucion !== 'JUNAEB') {
+            // Si la institución ya no es JUNAEB (ej. JUNJI o INTEGRA), debe desaparecer de la matriz de riesgo
+            await prisma.colegiosMatriz.deleteMany({
+                where: { colRBD: current.colRBD }
             })
+        } else {
+            // Si es JUNAEB, asegurar que exista y esté actualizado en ColegiosMatriz
+            const existingMatriz = await prisma.colegiosMatriz.findUnique({
+                where: { colRBD: current.colRBD }
+            })
+
+            const nombreFinal = (data.nombreEstablecimiento || current.nombreEstablecimiento).trim()
+            const sucursalFinal = (data.sucursal || current.sucursal).trim()
+
+            if (!existingMatriz) {
+                await prisma.colegiosMatriz.create({
+                    data: {
+                        colRBD: current.colRBD,
+                        nombreEstablecimiento: nombreFinal,
+                        institucion: 'JUNAEB',
+                        sucursal: sucursalFinal,
+                        colut: current.colut,
+                        isActive: true
+                    }
+                })
+            } else {
+                await prisma.colegiosMatriz.update({
+                    where: { colRBD: current.colRBD },
+                    data: {
+                        nombreEstablecimiento: nombreFinal,
+                        institucion: 'JUNAEB',
+                        sucursal: sucursalFinal,
+                        colut: current.colut
+                    }
+                })
+            }
         }
 
         revalidatePath('/dashboard/mantenedor/operaciones/colegios')
+        revalidatePath('/dashboard/mantenedor/matriz-riesgo/colegios-activos')
+        revalidatePath('/dashboard/matriz-riesgo')
         return { success: true }
     } catch (e) {
         console.error("Error updating colegio:", e)
@@ -170,6 +207,8 @@ export async function deleteColegioByRBD(rbd: number) {
         })
 
         revalidatePath('/dashboard/mantenedor/operaciones/colegios')
+        revalidatePath('/dashboard/mantenedor/matriz-riesgo/colegios-activos')
+        revalidatePath('/dashboard/matriz-riesgo')
         return { success: true }
     } catch (error) {
         console.error('Error eliminando colegio por RBD:', error)
@@ -185,32 +224,76 @@ export async function syncJUNAEBToMatriz() {
     }
 
     try {
-        const junaebColegios = await prisma.colegios.findMany({
-            where: { institucion: 'JUNAEB' }
-        })
+        const allColegios = await prisma.colegios.findMany()
 
-        let count = 0
+        const junaebColegios = allColegios.filter(c => c.institucion?.trim().toUpperCase() === 'JUNAEB')
+        const nonJunaebColegios = allColegios.filter(c => c.institucion?.trim().toUpperCase() !== 'JUNAEB')
+        const nonJunaebRbds = nonJunaebColegios.map(c => c.colRBD)
+
+        // 1. Eliminar de ColegiosMatriz cualquier colegio que ahora sea JUNJI, INTEGRA u otra institución distinta a JUNAEB
+        let removedCount = 0
+        if (nonJunaebRbds.length > 0) {
+            const deleteResult = await prisma.colegiosMatriz.deleteMany({
+                where: { colRBD: { in: nonJunaebRbds } }
+            })
+            removedCount = deleteResult.count
+        }
+
+        // 2. Insertar o actualizar colegios JUNAEB en ColegiosMatriz
+        let addedCount = 0
+        let updatedCount = 0
         for (const col of junaebColegios) {
             const existing = await prisma.colegiosMatriz.findUnique({
                 where: { colRBD: col.colRBD }
             })
 
+            const nombreTrim = col.nombreEstablecimiento?.trim() || ''
+            const sucursalTrim = col.sucursal?.trim() || ''
+
             if (!existing) {
                 await prisma.colegiosMatriz.create({
                     data: {
                         colRBD: col.colRBD,
-                        nombreEstablecimiento: col.nombreEstablecimiento,
-                        institucion: col.institucion,
-                        sucursal: col.sucursal,
+                        nombreEstablecimiento: nombreTrim,
+                        institucion: 'JUNAEB',
+                        sucursal: sucursalTrim,
                         colut: col.colut,
                         isActive: true
                     }
                 })
-                count++
+                addedCount++
+            } else {
+                if (
+                    existing.institucion !== 'JUNAEB' ||
+                    existing.nombreEstablecimiento !== nombreTrim ||
+                    existing.sucursal !== sucursalTrim ||
+                    existing.colut !== col.colut
+                ) {
+                    await prisma.colegiosMatriz.update({
+                        where: { colRBD: col.colRBD },
+                        data: {
+                            nombreEstablecimiento: nombreTrim,
+                            institucion: 'JUNAEB',
+                            sucursal: sucursalTrim,
+                            colut: col.colut
+                        }
+                    })
+                    updatedCount++
+                }
             }
         }
 
-        return { success: true, count }
+        revalidatePath('/dashboard/mantenedor/operaciones/colegios')
+        revalidatePath('/dashboard/mantenedor/matriz-riesgo/colegios-activos')
+        revalidatePath('/dashboard/matriz-riesgo')
+
+        return { 
+            success: true, 
+            count: addedCount, 
+            addedCount, 
+            updatedCount, 
+            removedCount 
+        }
     } catch (error) {
         console.error('Error sincronizando colegios JUNAEB:', error)
         return { error: 'Error al sincronizar con Matriz.' }

@@ -33,7 +33,7 @@ export async function searchColegios(query: string) {
 
     const isNumeric = !isNaN(Number(query))
 
-    const isAdmin = session?.user?.role?.name === 'Administrador'
+    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
     
     try {
         let allowedUTs: number[] = []
@@ -78,6 +78,22 @@ export async function searchColegios(query: string) {
     }
 }
 
+const INTEGRA_SERVICE_REGEX = /^(.*?)\s+(Co|D|A|O|C|T)$/i
+
+function parseIntegraPrograma(prog: string) {
+    const match = prog.trim().match(INTEGRA_SERVICE_REGEX)
+    if (match) {
+        return {
+            basePrograma: match[1].trim(),
+            servicioCode: match[2].toUpperCase() // 'D', 'A', 'O', 'CO', 'C', 'T'
+        }
+    }
+    return {
+        basePrograma: prog.trim(),
+        servicioCode: ''
+    }
+}
+
 export async function checkPmpaDisponibilidad(rbd: number, year: number, month: number) {
     const session = await getSession()
     if (!session?.user?.role?.permissions.includes('view_ingreso_raciones') && !session?.user?.role?.permissions.includes('view_pmpa')) {
@@ -85,21 +101,30 @@ export async function checkPmpaDisponibilidad(rbd: number, year: number, month: 
     }
 
     try {
-        const dbUser = await (prisma.user as any).findUnique({
-            where: { id: session?.user?.id as string },
-            include: { sucursales: true }
-        })
-        const userSucursales = dbUser?.sucursales?.map((s: any) => s.nombre) || []
+        const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
+        let colegio: any = null
 
-        const uts = await prisma.uT.findMany({
-            where: { sucursal: { nombre: { in: userSucursales } } },
-            select: { codUT: true }
-        })
-        const allowedUTs = uts.map(ut => ut.codUT)
+        if (isAdmin) {
+            colegio = await prisma.colegios.findFirst({
+                where: { colRBD: rbd }
+            })
+        } else {
+            const dbUser = await (prisma.user as any).findUnique({
+                where: { id: session?.user?.id as string },
+                include: { sucursales: true }
+            })
+            const userSucursales = dbUser?.sucursales?.map((s: any) => s.nombre) || []
 
-        const colegio = await prisma.colegios.findFirst({
-            where: { colRBD: rbd, colut: { in: allowedUTs } }
-        })
+            const uts = await prisma.uT.findMany({
+                where: { sucursal: { nombre: { in: userSucursales } } },
+                select: { codUT: true }
+            })
+            const allowedUTs = uts.map(ut => ut.codUT)
+
+            colegio = await prisma.colegios.findFirst({
+                where: { colRBD: rbd, colut: { in: allowedUTs } }
+            })
+        }
 
         if (!colegio) {
             return { error: 'No tienes acceso a este establecimiento.' }
@@ -119,16 +144,31 @@ export async function checkPmpaDisponibilidad(rbd: number, year: number, month: 
             return { error: 'No se encontraron registros con raciones asignadas (> 0) para este periodo en el PMPA.' }
         }
 
+        const isIntegra = colegio.institucion?.trim().toUpperCase() === 'INTEGRA' || 
+                          pmpaRecords.some((r: any) => r.institucion?.trim().toUpperCase() === 'INTEGRA')
+
         // Obtener pares únicos de programa y estrato
-        const validPairs = validRecords.map((r: any) => ({
-            programa: r.programa as string,
-            estrato: r.estrato as string
-        }))
+        const validPairs = validRecords.map((r: any) => {
+            if (isIntegra) {
+                const { basePrograma } = parseIntegraPrograma(r.programa as string)
+                return {
+                    programa: basePrograma,
+                    estrato: r.estrato as string
+                }
+            }
+            return {
+                programa: r.programa as string,
+                estrato: r.estrato as string
+            }
+        })
 
         // Eliminar duplicados de los pares
-        const uniquePairs = Array.from(new Set(validPairs.map(p => JSON.stringify(p)))).map(p => JSON.parse(p))
+        const uniquePairs = Array.from(new Set(validPairs.map((p: any) => JSON.stringify(p)))).map((p: any) => JSON.parse(p))
 
-        const programas = Array.from(new Set(uniquePairs.map(p => p.programa)))
+        const programas = Array.from(new Set(uniquePairs.map((p: any) => p.programa as string)))
+        if (isIntegra) {
+            programas.sort((a, b) => a.localeCompare(b))
+        }
 
         return {
             programas,
@@ -174,29 +214,59 @@ export async function getPmpaAssignmentsAndLastRecord(rbd: number, ano: number, 
     }
 
     try {
-        const dbUser = await (prisma.user as any).findUnique({
-            where: { id: session?.user?.id as string },
-            include: { sucursales: true }
-        })
-        const userSucursales = dbUser?.sucursales?.map((s: any) => s.nombre) || []
+        const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
+        let colegio: any = null
 
-        const uts = await prisma.uT.findMany({
-            where: { sucursal: { nombre: { in: userSucursales } } },
-            select: { codUT: true }
-        })
-        const allowedUTs = uts.map(ut => ut.codUT)
+        if (isAdmin) {
+            colegio = await prisma.colegios.findFirst({
+                where: { colRBD: rbd }
+            })
+        } else {
+            const dbUser = await (prisma.user as any).findUnique({
+                where: { id: session?.user?.id as string },
+                include: { sucursales: true }
+            })
+            const userSucursales = dbUser?.sucursales?.map((s: any) => s.nombre) || []
 
-        const colegio = await prisma.colegios.findFirst({
-            where: { colRBD: rbd, colut: { in: allowedUTs } }
-        })
+            const uts = await prisma.uT.findMany({
+                where: { sucursal: { nombre: { in: userSucursales } } },
+                select: { codUT: true }
+            })
+            const allowedUTs = uts.map(ut => ut.codUT)
+
+            colegio = await prisma.colegios.findFirst({
+                where: { colRBD: rbd, colut: { in: allowedUTs } }
+            })
+        }
 
         if (!colegio) {
             return { error: 'No tienes acceso a las asignaciones de este establecimiento.' }
         }
 
-        const pmpaRecords = await prisma.pMPA.findMany({
-            where: { rbd, ano: ano, mes: mes, programa, estrato }
-        })
+        let isIntegra = colegio.institucion?.trim().toUpperCase() === 'INTEGRA'
+        if (!isIntegra) {
+            const anyIntegra = await prisma.pMPA.findFirst({
+                where: { rbd, institucion: { equals: 'INTEGRA', mode: 'insensitive' } }
+            })
+            if (anyIntegra) {
+                isIntegra = true
+            }
+        }
+
+        let pmpaRecords: any[] = []
+        if (isIntegra) {
+            const rawRecords = await prisma.pMPA.findMany({
+                where: { rbd, ano: ano, mes: mes, estrato }
+            })
+            pmpaRecords = rawRecords.filter(r => {
+                const { basePrograma } = parseIntegraPrograma(r.programa)
+                return basePrograma.toUpperCase() === programa.toUpperCase()
+            })
+        } else {
+            pmpaRecords = await prisma.pMPA.findMany({
+                where: { rbd, ano: ano, mes: mes, programa, estrato }
+            })
+        }
 
         if (pmpaRecords.length === 0) {
             return { error: 'No se encontraron asignaciones para esta configuración en PMPA.' }
@@ -212,12 +282,30 @@ export async function getPmpaAssignmentsAndLastRecord(rbd: number, ano: number, 
         }
 
         for (const record of pmpaRecords) {
-            if (record.servicio === 'D') asignados.desayunoAsig += record.raceqJunaeb
-            if (record.servicio === 'A') asignados.almuerzoAsig += record.raceqJunaeb
-            if (record.servicio === 'O') asignados.onceAsig += record.raceqJunaeb
-            if (record.servicio === 'CO') asignados.colacionAsig += record.raceqJunaeb
-            if (record.servicio === 'C') asignados.cenaAsig += record.raceqJunaeb
-            if (record.servicio === 'T') asignados.tercerServicioAsig += record.raceqJunaeb
+            if (isIntegra) {
+                const { servicioCode } = parseIntegraPrograma(record.programa)
+                if (servicioCode === 'D') asignados.desayunoAsig += record.raceqJunaeb
+                else if (servicioCode === 'A') asignados.almuerzoAsig += record.raceqJunaeb
+                else if (servicioCode === 'O') asignados.onceAsig += record.raceqJunaeb
+                else if (servicioCode === 'CO') asignados.colacionAsig += record.raceqJunaeb
+                else if (servicioCode === 'C') asignados.cenaAsig += record.raceqJunaeb
+                else if (servicioCode === 'T') asignados.tercerServicioAsig += record.raceqJunaeb
+                else {
+                    if (record.servicio === 'D') asignados.desayunoAsig += record.raceqJunaeb
+                    else if (record.servicio === 'A' || record.servicio === 'AP') asignados.almuerzoAsig += record.raceqJunaeb
+                    else if (record.servicio === 'O') asignados.onceAsig += record.raceqJunaeb
+                    else if (record.servicio === 'CO' || record.servicio === 'CP') asignados.colacionAsig += record.raceqJunaeb
+                    else if (record.servicio === 'C') asignados.cenaAsig += record.raceqJunaeb
+                    else if (record.servicio === 'T') asignados.tercerServicioAsig += record.raceqJunaeb
+                }
+            } else {
+                if (record.servicio === 'D' || record.servicio === 'DP') asignados.desayunoAsig += record.raceqJunaeb
+                if (record.servicio === 'A' || record.servicio === 'AP') asignados.almuerzoAsig += record.raceqJunaeb
+                if (record.servicio === 'O' || record.servicio === 'OP') asignados.onceAsig += record.raceqJunaeb
+                if (record.servicio === 'CO' || record.servicio === 'CP') asignados.colacionAsig += record.raceqJunaeb
+                if (record.servicio === 'C') asignados.cenaAsig += record.raceqJunaeb
+                if (record.servicio === 'T') asignados.tercerServicioAsig += record.raceqJunaeb
+            }
         }
 
         // Consultar si existe un registro específico para esta fecha
@@ -261,21 +349,30 @@ export async function saveIngRacion(data: IngRacionFormData, forceUpdate: boolea
     }
 
     try {
-        const dbUser = await (prisma.user as any).findUnique({
-            where: { id: session?.user?.id as string },
-            include: { sucursales: true }
-        })
-        const userSucursales = dbUser?.sucursales?.map((s: any) => s.nombre) || []
+        const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
+        let colegio: any = null
 
-        const uts = await prisma.uT.findMany({
-            where: { sucursal: { nombre: { in: userSucursales } } },
-            select: { codUT: true }
-        })
-        const allowedUTs = uts.map(ut => ut.codUT)
+        if (isAdmin) {
+            colegio = await prisma.colegios.findFirst({
+                where: { colRBD: data.rbd }
+            })
+        } else {
+            const dbUser = await (prisma.user as any).findUnique({
+                where: { id: session?.user?.id as string },
+                include: { sucursales: true }
+            })
+            const userSucursales = dbUser?.sucursales?.map((s: any) => s.nombre) || []
 
-        const colegio = await prisma.colegios.findFirst({
-            where: { colRBD: data.rbd, colut: { in: allowedUTs } }
-        })
+            const uts = await prisma.uT.findMany({
+                where: { sucursal: { nombre: { in: userSucursales } } },
+                select: { codUT: true }
+            })
+            const allowedUTs = uts.map(ut => ut.codUT)
+
+            colegio = await prisma.colegios.findFirst({
+                where: { colRBD: data.rbd, colut: { in: allowedUTs } }
+            })
+        }
 
         if (!colegio) {
             return { error: 'No tienes permisos para guardar en este establecimiento.' }

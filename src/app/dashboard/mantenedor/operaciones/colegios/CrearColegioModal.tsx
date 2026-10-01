@@ -95,6 +95,7 @@ export default function CrearColegioModal() {
                                     <select name="institucion" value={formData.institucion} onChange={handleChange} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500">
                                         <option value="JUNAEB">JUNAEB</option>
                                         <option value="JUNJI">JUNJI</option>
+                                        <option value="INTEGRA">INTEGRA</option>
                                     </select>
                                 </div>
                                 <div>

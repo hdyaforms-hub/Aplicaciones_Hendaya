@@ -35,14 +35,17 @@ export default function ColegiosActions() {
     }
 
     const handleSync = async () => {
-        if (!confirm("¿Desea sincronizar todos los colegios JUNAEB que aún no están en la matriz?")) return
+        if (!confirm("¿Desea sincronizar los colegios con la matriz de riesgo?\n\n- Se agregarán los colegios JUNAEB faltantes.\n- Se actualizarán los datos de colegios existentes.\n- Se removerán de la matriz los colegios que hayan cambiado a JUNJI, INTEGRA u otra institución.")) return
 
         setIsSyncing(true)
         const res = await syncJUNAEBToMatriz()
         setIsSyncing(false)
 
         if (res.success) {
-            alert(`Sincronización completada. Se añadieron ${res.count} colegios.`)
+            const added = res.addedCount ?? res.count ?? 0
+            const updated = res.updatedCount ?? 0
+            const removed = res.removedCount ?? 0
+            alert(`Sincronización completada con éxito:\n\n• Colegios agregados: ${added}\n• Colegios actualizados: ${updated}\n• Colegios removidos (no JUNAEB): ${removed}`)
             router.refresh()
         } else {
             alert(res.error || "Error al sincronizar")

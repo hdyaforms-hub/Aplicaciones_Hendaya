@@ -10,6 +10,7 @@ type ColegioResult = {
     colRBDDV: string
     nombreEstablecimiento: string
     comuna: string
+    institucion?: string
 }
 
 export default function IngresoRacionesClient() {
@@ -145,11 +146,7 @@ export default function IngresoRacionesClient() {
 
         if (!dateStr || !selectedColegio) return
 
-        const date = new Date(dateStr)
-        const utcDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000)
-
-        const year = utcDate.getFullYear()
-        const month = utcDate.getMonth() + 1
+        const [year, month] = dateStr.split('-').map(Number)
 
         setPmpaStatus('loading')
         setPmpaError('')
@@ -179,8 +176,13 @@ export default function IngresoRacionesClient() {
             const relevant = validPairs
                 .filter(p => p.programa === selectedPrograma)
                 .map(p => p.estrato)
-            setFilteredEstratos(Array.from(new Set(relevant)))
-            setSelectedEstrato('') // Reset estrato when program changes
+            const uniqueEstratos = Array.from(new Set(relevant))
+            setFilteredEstratos(uniqueEstratos)
+            if (uniqueEstratos.length === 1) {
+                setSelectedEstrato(uniqueEstratos[0])
+            } else {
+                setSelectedEstrato('')
+            }
         } else {
             setFilteredEstratos([])
             setSelectedEstrato('')
@@ -192,10 +194,7 @@ export default function IngresoRacionesClient() {
         const fetchAsignados = async () => {
             if (selectedPrograma && selectedEstrato && selectedColegio && fechaTraba) {
                 setAsignadosLoading(true)
-                const date = new Date(fechaTraba)
-                const utcDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000)
-                const year = utcDate.getFullYear()
-                const month = utcDate.getMonth() + 1
+                const [year, month] = fechaTraba.split('-').map(Number)
 
                 const res = await getPmpaAssignmentsAndLastRecord(selectedColegio.colRBD, year, month, selectedPrograma, selectedEstrato, fechaTraba)
                 if (res.error) {
@@ -247,16 +246,15 @@ export default function IngresoRacionesClient() {
         setIsSaving(true)
         setSaveMessage({ type: '', text: '' })
 
-        const date = new Date(fechaTraba)
-        const utcDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000)
+        const [year, month] = fechaTraba.split('-').map(Number)
 
         const payload = {
             ubicacion: location ? `${location.lat},${location.lng}` : 'Sin ubicación',
             fechaIngreso: fechaTraba,
             rbd: selectedColegio.colRBD,
             nombreEstablecimiento: selectedColegio.nombreEstablecimiento,
-            ano: utcDate.getFullYear(),
-            mes: utcDate.getMonth() + 1,
+            ano: year,
+            mes: month,
             programa: selectedPrograma,
             estrato: selectedEstrato,
             desayunoIng: Number(desayunoIng) || 0,
@@ -367,8 +365,19 @@ export default function IngresoRacionesClient() {
                                     <span className="px-2 py-0.5 bg-green-50 text-green-700 rounded-md text-[10px] font-black uppercase tracking-wider border border-green-100 italic">Seleccionado</span>
                                 </div>
                                 <div className="font-bold text-gray-800 mt-1 text-lg leading-tight">{selectedColegio.nombreEstablecimiento}</div>
-                                <div className="text-xs font-bold text-gray-400 mt-1 uppercase tracking-widest flex items-center gap-1">
+                                <div className="text-xs font-bold text-gray-400 mt-1 uppercase tracking-widest flex items-center gap-1.5 flex-wrap">
                                     <span>📍</span> {selectedColegio.comuna} • UT {selectedColegio.colut}
+                                    {selectedColegio.institucion && (
+                                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                                            selectedColegio.institucion.toUpperCase() === 'INTEGRA' 
+                                                ? 'bg-amber-100 text-amber-800 border border-amber-200' 
+                                                : selectedColegio.institucion.toUpperCase() === 'JUNJI'
+                                                ? 'bg-purple-100 text-purple-800 border border-purple-200'
+                                                : 'bg-blue-100 text-blue-800 border border-blue-200'
+                                        }`}>
+                                            {selectedColegio.institucion}
+                                        </span>
+                                    )}
                                 </div>
                             </div>
                             

@@ -13,15 +13,16 @@ export default function EditColegioForm({ colegio }: { colegio: ColegioRecord })
     const [error, setError] = useState('')
     const [success, setSuccess] = useState('')
 
+    const initialInstitucion = colegio.institucion ? colegio.institucion.trim().toUpperCase() : 'JUNAEB'
     const [formData, setFormData] = useState({
-        institucion: colegio.institucion,
+        institucion: ['JUNAEB', 'JUNJI', 'INTEGRA'].includes(initialInstitucion) ? initialInstitucion : (colegio.institucion || 'JUNAEB'),
         sucursal: colegio.sucursal,
         nombreEstablecimiento: colegio.nombreEstablecimiento,
         direccionEstablecimiento: colegio.direccionEstablecimiento,
         comuna: colegio.comuna
     })
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
     }
 
@@ -54,13 +55,19 @@ export default function EditColegioForm({ colegio }: { colegio: ColegioRecord })
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Institución</label>
-                    <input
-                        type="text"
+                    <select
                         name="institucion"
                         value={formData.institucion}
                         onChange={handleChange}
-                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-gray-900"
-                    />
+                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-gray-900 font-medium cursor-pointer"
+                    >
+                        <option value="JUNAEB">JUNAEB</option>
+                        <option value="JUNJI">JUNJI</option>
+                        <option value="INTEGRA">INTEGRA</option>
+                        {formData.institucion && !['JUNAEB', 'JUNJI', 'INTEGRA'].includes(formData.institucion.toUpperCase()) && (
+                            <option value={formData.institucion}>{formData.institucion}</option>
+                        )}
+                    </select>
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Sucursal</label>
