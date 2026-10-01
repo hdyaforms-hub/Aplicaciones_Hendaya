@@ -42,7 +42,7 @@ export default function ColegiosActions() {
         setIsSyncing(false)
 
         if (res.success) {
-            const added = res.addedCount ?? res.count ?? 0
+            const added = res.addedCount ?? 0
             const updated = res.updatedCount ?? 0
             const removed = res.removedCount ?? 0
             alert(`Sincronización completada con éxito:\n\n• Colegios agregados: ${added}\n• Colegios actualizados: ${updated}\n• Colegios removidos (no JUNAEB): ${removed}`)
