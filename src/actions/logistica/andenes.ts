@@ -14,7 +14,7 @@ export async function getBodegas() {
         // 2. Sincronizar automáticamente cada Sucursal con LogBodega
         for (let i = 0; i < sucursales.length; i++) {
             const suc = sucursales[i]
-            const cleanCode = (suc.nombre.startsWith('CD') ? suc.nombre : `CD-${suc.nombre}`)
+            const cleanCode = suc.nombre
                 .trim()
                 .toUpperCase()
                 .replace(/\s+/g, '-')

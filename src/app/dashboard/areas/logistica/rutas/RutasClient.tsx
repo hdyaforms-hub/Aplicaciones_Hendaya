@@ -69,7 +69,7 @@ export default function RutasClient({
             'Fecha',
             'Hora Programada',
             'Estado',
-            'Bodega',
+            'Sucursal',
             'Andén',
             'Patente Camión',
             'Tipo Camión',
@@ -188,13 +188,13 @@ export default function RutasClient({
             <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm space-y-3">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
                     <div>
-                        <label className="block text-xs font-bold text-gray-700 mb-1">Bodega / CD:</label>
+                        <label className="block text-xs font-bold text-gray-700 mb-1">Sucursal:</label>
                         <select
                             value={bodegaId}
                             onChange={e => setBodegaId(e.target.value)}
                             className="w-full px-3 py-2 text-xs font-semibold rounded-xl bg-gray-50 border border-gray-200 text-gray-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-cyan-500/20"
                         >
-                            <option value="ALL">Todas las Bodegas</option>
+                            <option value="ALL">Todas las Sucursales</option>
                             {initialBodegas.map(b => (
                                 <option key={b.id} value={b.id}>
                                     {b.nombre}
@@ -291,7 +291,12 @@ export default function RutasClient({
                                 return (
                                     <tr key={r.id} className="hover:bg-gray-50/60 transition-colors">
                                         <td className="py-3.5 px-4 font-mono font-black text-cyan-700">
-                                            {r.numeroRuta}
+                                            <div>{r.numeroRuta}</div>
+                                            {r.bodega?.nombre && (
+                                                <span className="text-[10px] font-sans font-bold text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded border border-gray-200 inline-block mt-0.5" title="Sucursal asignada">
+                                                    🏢 {r.bodega.nombre}
+                                                </span>
+                                            )}
                                         </td>
                                         <td className="py-3.5 px-4 font-mono text-gray-700">
                                             {r.fechaRuta} <span className="text-gray-400 font-normal">({r.horaProgramada})</span>

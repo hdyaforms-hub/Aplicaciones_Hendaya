@@ -285,7 +285,7 @@ export default function ConfiguracionClient({
             {/* SELECTOR DE PESTAÑAS ESTILO HENDAYA */}
             <div className="flex flex-wrap items-center gap-1.5 bg-gray-100/80 p-1.5 rounded-2xl border border-gray-200">
                 {[
-                    { id: 'andenes', label: 'Bodegas & Andenes', icon: Warehouse },
+                    { id: 'andenes', label: 'Sucursales & Andenes', icon: Warehouse },
                     { id: 'choferes', label: 'Choferes & Telegram', icon: Users },
                     { id: 'camiones', label: 'Camiones & Patentes', icon: Truck },
                     { id: 'transportistas', label: 'Transportistas', icon: Briefcase },
@@ -315,16 +315,16 @@ export default function ConfiguracionClient({
                 })}
             </div>
 
-            {/* TAB 1: BODEGAS & ANDENES */}
+            {/* TAB 1: SUCURSALES & ANDENES */}
             {tab === 'andenes' && (
                 <div className="space-y-4">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-gray-200 shadow-sm">
                         <div className="flex items-center gap-3">
-                            <label className="text-xs font-bold text-gray-700">Bodega / CD:</label>
+                            <label className="text-xs font-bold text-gray-700">Sucursal:</label>
                             <select
                                 value={bodegaActivaId}
                                 onChange={e => handleBodegaChange(e.target.value)}
-                                className="px-3 py-1.5 text-xs font-bold rounded-xl bg-gray-50 border border-gray-200 text-cyan-700 focus:bg-white"
+                                className="px-3 py-1.5 text-xs font-bold rounded-xl bg-gray-50 border border-gray-200 text-cyan-700 focus:bg-white cursor-pointer"
                             >
                                 {initialBodegas.map(b => (
                                     <option key={b.id} value={b.id}>

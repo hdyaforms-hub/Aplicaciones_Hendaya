@@ -65,9 +65,9 @@ export default function MetricasClient({
                 </div>
 
                 <div className="flex flex-wrap items-center gap-3">
-                    <div className="flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-xl border border-gray-200">
+                    <div className="flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-xl border border-gray-200" title="Filtrar por Sucursal">
                         <Warehouse className="w-4 h-4 text-gray-500" />
-                        <span className="text-xs font-bold text-gray-600">Bodega:</span>
+                        <span className="text-xs font-bold text-gray-600">Sucursal:</span>
                         <select
                             value={bodegaId}
                             onChange={e => {
@@ -76,7 +76,7 @@ export default function MetricasClient({
                             }}
                             className="bg-transparent text-xs font-bold text-gray-900 focus:outline-none cursor-pointer"
                         >
-                            <option value="ALL">Todas las Bodegas</option>
+                            <option value="ALL">Todas las Sucursales</option>
                             {initialBodegas.map(b => (
                                 <option key={b.id} value={b.id}>
                                     {b.nombre}

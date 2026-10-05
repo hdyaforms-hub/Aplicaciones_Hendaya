@@ -265,10 +265,10 @@ export default function TableroClient({
             {/* BARRA DE FILTROS Y CONTROLES OPERATIVOS */}
             <div className="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-4">
                 <div className="flex flex-wrap items-center gap-3">
-                    {/* Selector de Bodega */}
-                    <div className="flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-xl border border-gray-200">
+                    {/* Selector de Sucursal (Organización y Sucursales) */}
+                    <div className="flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-xl border border-gray-200" title="Seleccionar Sucursal">
                         <Warehouse className="w-4 h-4 text-gray-500" />
-                        <span className="text-xs font-bold text-gray-600">Bodega:</span>
+                        <span className="text-xs font-bold text-gray-600">Sucursal:</span>
                         <select
                             value={bodegaId}
                             onChange={e => {

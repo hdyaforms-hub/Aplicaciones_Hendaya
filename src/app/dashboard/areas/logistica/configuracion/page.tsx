@@ -13,7 +13,7 @@ import ConfiguracionClient from './ConfiguracionClient'
 
 export const metadata: Metadata = {
     title: 'Configuración Logística | Hendaya',
-    description: 'Administración de bodegas, andenes, choferes, camiones, transportistas y parámetros logísticos.'
+    description: 'Administración de sucursales, andenes, choferes, camiones, transportistas y parámetros logísticos.'
 }
 
 export const dynamic = 'force-dynamic'
