@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     TrendingUp,
     Clock,
@@ -11,6 +11,7 @@ import {
     BarChart3
 } from 'lucide-react'
 import { getMetricasDespacho } from '@/actions/logistica/metricas'
+import { getBodegas } from '@/actions/logistica/andenes'
 
 interface Props {
     initialBodegas: any[]
@@ -23,6 +24,18 @@ export default function MetricasClient({
     initialMetricas,
     initialFecha
 }: Props) {
+    const [bodegas, setBodegas] = useState(initialBodegas)
+
+    useEffect(() => {
+        if (bodegas.length === 0) {
+            getBodegas().then(res => {
+                if (res.bodegas && res.bodegas.length > 0) {
+                    setBodegas(res.bodegas)
+                }
+            })
+        }
+    }, [bodegas.length])
+
     const [bodegaId, setBodegaId] = useState('ALL')
     const [fecha, setFecha] = useState(initialFecha)
     const [kpis, setKpis] = useState(initialMetricas?.kpis || {})
@@ -77,7 +90,7 @@ export default function MetricasClient({
                             className="bg-transparent text-xs font-bold text-gray-900 focus:outline-none cursor-pointer"
                         >
                             <option value="ALL">Todas las Sucursales</option>
-                            {initialBodegas.map(b => (
+                            {bodegas.map(b => (
                                 <option key={b.id} value={b.id}>
                                     {b.nombre}
                                 </option>

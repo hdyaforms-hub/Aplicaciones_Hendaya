@@ -4,6 +4,7 @@ import { rawPrisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { logAuditAction } from '@/lib/audit'
 import { dispararEventoN8N, reintentarEnvioLogN8N } from '@/lib/logistica/n8n-dispatcher'
+import { ensureLogisticaTables } from '@/lib/logistica/selfHealing'
 
 // ==========================================
 // 1. CHOFERES
@@ -11,6 +12,7 @@ import { dispararEventoN8N, reintentarEnvioLogN8N } from '@/lib/logistica/n8n-di
 
 export async function getChoferes(filtros: { search?: string; transportistaId?: string } = {}) {
     try {
+        await ensureLogisticaTables()
         const where: any = { activo: true }
         if (filtros.transportistaId && filtros.transportistaId !== 'ALL') {
             where.transportistaId = filtros.transportistaId
@@ -95,6 +97,7 @@ export async function guardarChofer(data: {
 
 export async function getCamiones(filtros: { search?: string; transportistaId?: string } = {}) {
     try {
+        await ensureLogisticaTables()
         const where: any = { activo: true }
         if (filtros.transportistaId && filtros.transportistaId !== 'ALL') {
             where.transportistaId = filtros.transportistaId
@@ -173,6 +176,7 @@ export async function guardarCamion(data: {
 
 export async function getTransportistas() {
     try {
+        await ensureLogisticaTables()
         const transportistas = await rawPrisma.logTransportista.findMany({
             where: { activo: true },
             include: {
@@ -245,6 +249,7 @@ export async function guardarTransportista(data: {
 
 export async function getClientes() {
     try {
+        await ensureLogisticaTables()
         const clientes = await rawPrisma.logCliente.findMany({
             where: { activo: true },
             orderBy: { razonSocial: 'asc' }
@@ -312,6 +317,7 @@ export async function guardarCliente(data: {
 
 export async function getParametros() {
     try {
+        await ensureLogisticaTables()
         const parametros = await rawPrisma.logParametro.findMany({
             orderBy: { clave: 'asc' }
         })
@@ -353,6 +359,7 @@ export async function guardarParametro(clave: string, valor: string, descripcion
 
 export async function getIntegracionConfig() {
     try {
+        await ensureLogisticaTables()
         const config = await rawPrisma.logIntegracionConfig.findFirst()
         const logs = await rawPrisma.logIntegracionLog.findMany({
             orderBy: { createdAt: 'desc' },

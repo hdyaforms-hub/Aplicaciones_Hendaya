@@ -21,7 +21,7 @@ import {
     Check,
     Send
 } from 'lucide-react'
-import { getAndenes } from '@/actions/logistica/andenes'
+import { getBodegas, getAndenes } from '@/actions/logistica/andenes'
 import {
     getRutas,
     getRutaDetalle,
@@ -55,7 +55,21 @@ export default function TableroClient({
     catalogos
 }: Props) {
     const [isPending, startTransition] = useTransition()
+    const [bodegas, setBodegas] = useState(initialBodegas)
     const [bodegaId, setBodegaId] = useState(initialBodegas[0]?.id || '')
+
+    useEffect(() => {
+        if (bodegas.length === 0) {
+            getBodegas().then(res => {
+                if (res.bodegas && res.bodegas.length > 0) {
+                    setBodegas(res.bodegas)
+                    if (!bodegaId) {
+                        setBodegaId(res.bodegas[0].id)
+                    }
+                }
+            })
+        }
+    }, [bodegas.length, bodegaId])
     const [fecha, setFecha] = useState(initialFecha)
     const [searchTerm, setSearchTerm] = useState('')
 
@@ -277,11 +291,15 @@ export default function TableroClient({
                             }}
                             className="bg-transparent text-xs font-bold text-gray-900 focus:outline-none cursor-pointer"
                         >
-                            {initialBodegas.map(b => (
-                                <option key={b.id} value={b.id}>
-                                    {b.nombre}
-                                </option>
-                            ))}
+                            {bodegas.length === 0 ? (
+                                <option value="">No hay sucursales disponibles</option>
+                            ) : (
+                                bodegas.map(b => (
+                                    <option key={b.id} value={b.id}>
+                                        {b.nombre}
+                                    </option>
+                                ))
+                            )}
                         </select>
                     </div>
 

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     Search,
     Download,
@@ -12,6 +12,7 @@ import {
     Clock,
     AlertTriangle
 } from 'lucide-react'
+import { getBodegas } from '@/actions/logistica/andenes'
 import {
     getRutas,
     getRutaDetalle,
@@ -32,7 +33,19 @@ export default function RutasClient({
     canForzarEstado,
     canCancelar
 }: Props) {
+    const [bodegas, setBodegas] = useState(initialBodegas)
     const [rutas, setRutas] = useState<any[]>(initialRutas)
+
+    useEffect(() => {
+        if (bodegas.length === 0) {
+            getBodegas().then(res => {
+                if (res.bodegas && res.bodegas.length > 0) {
+                    setBodegas(res.bodegas)
+                }
+            })
+        }
+    }, [bodegas.length])
+
     const [bodegaId, setBodegaId] = useState<string>('ALL')
     const [estado, setEstado] = useState<string>('ALL')
     const [fechaDesde, setFechaDesde] = useState<string>('')
@@ -195,7 +208,7 @@ export default function RutasClient({
                             className="w-full px-3 py-2 text-xs font-semibold rounded-xl bg-gray-50 border border-gray-200 text-gray-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-cyan-500/20"
                         >
                             <option value="ALL">Todas las Sucursales</option>
-                            {initialBodegas.map(b => (
+                            {bodegas.map(b => (
                                 <option key={b.id} value={b.id}>
                                     {b.nombre}
                                 </option>

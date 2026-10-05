@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     Warehouse,
     Truck,
@@ -18,6 +18,7 @@ import {
     Send
 } from 'lucide-react'
 import {
+    getBodegas,
     crearAnden,
     actualizarAnden,
     eliminarAnden,
@@ -54,7 +55,24 @@ export default function ConfiguracionClient({
     initialParametros
 }: Props) {
     const [tab, setTab] = useState<TabType>('andenes')
+    const [bodegas, setBodegas] = useState(initialBodegas)
     const [bodegaActivaId, setBodegaActivaId] = useState(initialBodegas[0]?.id || '')
+
+    useEffect(() => {
+        if (bodegas.length === 0) {
+            getBodegas().then(res => {
+                if (res.bodegas && res.bodegas.length > 0) {
+                    setBodegas(res.bodegas)
+                    if (!bodegaActivaId) {
+                        setBodegaActivaId(res.bodegas[0].id)
+                        getAndenes(res.bodegas[0].id).then(andRes => {
+                            if (andRes.andenes) setAndenes(andRes.andenes)
+                        })
+                    }
+                }
+            })
+        }
+    }, [bodegas.length, bodegaActivaId])
 
     const [andenes, setAndenes] = useState(initialAndenes)
     const [choferes, setChoferes] = useState(initialChoferes)
@@ -326,11 +344,15 @@ export default function ConfiguracionClient({
                                 onChange={e => handleBodegaChange(e.target.value)}
                                 className="px-3 py-1.5 text-xs font-bold rounded-xl bg-gray-50 border border-gray-200 text-cyan-700 focus:bg-white cursor-pointer"
                             >
-                                {initialBodegas.map(b => (
-                                    <option key={b.id} value={b.id}>
-                                        {b.nombre}
-                                    </option>
-                                ))}
+                                {bodegas.length === 0 ? (
+                                    <option value="">No hay sucursales disponibles</option>
+                                ) : (
+                                    bodegas.map(b => (
+                                        <option key={b.id} value={b.id}>
+                                            {b.nombre}
+                                        </option>
+                                    ))
+                                )}
                             </select>
                         </div>
 

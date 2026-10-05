@@ -4,6 +4,7 @@ import { rawPrisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { logAuditAction } from '@/lib/audit'
 import { dispararEventoN8N } from '@/lib/logistica/n8n-dispatcher'
+import { ensureLogisticaTables } from '@/lib/logistica/selfHealing'
 import crypto from 'crypto'
 
 export interface NuevaRutaInput {
@@ -59,10 +60,14 @@ export async function getRutas(filtros: {
     take?: number
 }) {
     try {
+        await ensureLogisticaTables()
         const where: any = {}
 
         if (filtros.bodegaId && filtros.bodegaId !== 'ALL') {
-            where.bodegaId = filtros.bodegaId
+            const b = await rawPrisma.logBodega.findFirst({
+                where: { OR: [{ id: filtros.bodegaId }, { sucursalId: filtros.bodegaId }] }
+            }).catch(() => null)
+            where.bodegaId = b?.id || filtros.bodegaId
         }
 
         if (filtros.fechaRuta) {
@@ -147,12 +152,22 @@ export async function getRutaDetalle(id: string) {
  */
 export async function crearRuta(input: NuevaRutaInput) {
     try {
+        await ensureLogisticaTables()
         const session = await getSession()
         const username = session?.user?.username || 'sistema'
         const userId = session?.user?.id
 
         if (!input.bodegaId || !input.choferId || !input.camionId || !input.fechaRuta || !input.horaProgramada) {
             return { success: false, error: 'Faltan campos obligatorios para registrar la ruta.' }
+        }
+
+        // Resolver si input.bodegaId es id de sucursal o id de logBodega
+        let targetBodegaId = input.bodegaId
+        const b = await rawPrisma.logBodega.findFirst({
+            where: { OR: [{ id: input.bodegaId }, { sucursalId: input.bodegaId }] }
+        }).catch(() => null)
+        if (b) {
+            targetBodegaId = b.id
         }
 
         // Obtener transportista si el camión o chofer lo tienen y no se especificó
@@ -183,7 +198,7 @@ export async function crearRuta(input: NuevaRutaInput) {
         const ruta = await rawPrisma.logRuta.create({
             data: {
                 numeroRuta,
-                bodegaId: input.bodegaId,
+                bodegaId: targetBodegaId,
                 choferId: input.choferId,
                 camionId: input.camionId,
                 transportistaId: transportistaId || null,

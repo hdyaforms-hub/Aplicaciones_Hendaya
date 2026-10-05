@@ -3,86 +3,146 @@
 import { rawPrisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { logAuditAction } from '@/lib/audit'
+import { ensureLogisticaTables } from '@/lib/logistica/selfHealing'
 
 export async function getBodegas() {
     try {
+        // 0. Auto-recuperación de tablas en producción
+        await ensureLogisticaTables()
+
         // 1. Obtener todas las sucursales del sistema
         const sucursales = await rawPrisma.sucursal.findMany({
             orderBy: { nombre: 'asc' }
-        })
+        }).catch(() => [])
 
-        // 2. Sincronizar automáticamente cada Sucursal con LogBodega
-        for (let i = 0; i < sucursales.length; i++) {
-            const suc = sucursales[i]
-            const cleanCode = suc.nombre
-                .trim()
-                .toUpperCase()
-                .replace(/\s+/g, '-')
+        // Fallback garantizado basado en sucursales
+        const fallbackBodegas = sucursales.map((s, idx) => ({
+            id: s.id,
+            codigo: s.nombre.trim().toUpperCase().replace(/\s+/g, '-'),
+            nombre: s.nombre,
+            sucursalId: s.id,
+            direccion: s.direccion || null,
+            activa: true,
+            orden: idx + 1,
+            _count: { andenes: 0, rutas: 0 }
+        }))
 
-            const existing = await rawPrisma.logBodega.findFirst({
-                where: {
-                    OR: [
-                        { sucursalId: suc.id },
-                        { codigo: cleanCode },
-                        { nombre: suc.nombre }
-                    ]
-                }
-            })
+        // 2. Intentar obtener y sincronizar bodegas de logística
+        try {
+            const sucursalIds = sucursales.map(s => s.id)
 
-            if (!existing) {
-                await rawPrisma.logBodega.create({
-                    data: {
-                        codigo: cleanCode,
-                        nombre: suc.nombre,
-                        sucursalId: suc.id,
-                        direccion: suc.direccion || null,
-                        activa: true,
-                        orden: i + 1
+            // Sincronizar sucursales con log_bodegas
+            for (let i = 0; i < sucursales.length; i++) {
+                const suc = sucursales[i]
+                const cleanCode = suc.nombre
+                    .trim()
+                    .toUpperCase()
+                    .replace(/\s+/g, '-')
+
+                const existing = await rawPrisma.logBodega.findFirst({
+                    where: {
+                        OR: [
+                            { sucursalId: suc.id },
+                            { codigo: cleanCode },
+                            { nombre: suc.nombre }
+                        ]
                     }
                 })
-            } else {
-                await rawPrisma.logBodega.update({
-                    where: { id: existing.id },
-                    data: {
-                        sucursalId: suc.id,
-                        nombre: suc.nombre,
-                        codigo: existing.codigo || cleanCode,
-                        direccion: suc.direccion || existing.direccion,
-                        activa: true,
-                        orden: i + 1
-                    }
+
+                if (!existing) {
+                    await rawPrisma.logBodega.create({
+                        data: {
+                            codigo: cleanCode,
+                            nombre: suc.nombre,
+                            sucursalId: suc.id,
+                            direccion: suc.direccion || null,
+                            activa: true,
+                            orden: i + 1
+                        }
+                    })
+                } else {
+                    await rawPrisma.logBodega.update({
+                        where: { id: existing.id },
+                        data: {
+                            sucursalId: suc.id,
+                            nombre: suc.nombre,
+                            direccion: suc.direccion || existing.direccion,
+                            activa: true,
+                            orden: i + 1
+                        }
+                    })
+                }
+            }
+
+            // Desactivar bodegas huérfanas que no pertenezcan a ninguna sucursal
+            if (sucursalIds.length > 0) {
+                await rawPrisma.logBodega.updateMany({
+                    where: {
+                        sucursalId: { notIn: sucursalIds }
+                    },
+                    data: { activa: false }
                 })
             }
+
+            const bodegas = await rawPrisma.logBodega.findMany({
+                where: {
+                    activa: true,
+                    ...(sucursalIds.length > 0 ? { sucursalId: { in: sucursalIds } } : {})
+                },
+                include: {
+                    _count: {
+                        select: {
+                            andenes: true,
+                            rutas: true
+                        }
+                    }
+                },
+                orderBy: { orden: 'asc' }
+            })
+
+            if (bodegas.length > 0) {
+                return { success: true, bodegas }
+            }
+        } catch (syncErr) {
+            console.warn('[getBodegas] Advertencia durante sincronización de LogBodega:', syncErr)
         }
 
-        // 3. Desactivar bodegas huérfanas que no correspondan a ninguna sucursal del sistema
-        const sucursalIds = sucursales.map(s => s.id)
-        await rawPrisma.logBodega.updateMany({
-            where: {
-                sucursalId: { notIn: sucursalIds }
-            },
-            data: { activa: false }
-        })
+        // Si la tabla log_bodegas no devolvió registros pero hay sucursales, retornar fallback de sucursales
+        if (fallbackBodegas.length > 0) {
+            return { success: true, bodegas: fallbackBodegas }
+        }
 
-        // 4. Retornar las bodegas activas correspondientes a las sucursales
-        const bodegas = await rawPrisma.logBodega.findMany({
-            where: {
-                activa: true,
-                sucursalId: { in: sucursalIds }
-            },
-            include: {
-                _count: {
-                    select: {
-                        andenes: true,
-                        rutas: true
-                    }
-                }
-            },
+        // Si no hubiera sucursales registradas, intentar leer directamente logBodega
+        const directBodegas = await rawPrisma.logBodega.findMany({
+            where: { activa: true },
+            include: { _count: { select: { andenes: true, rutas: true } } },
             orderBy: { orden: 'asc' }
-        })
-        return { success: true, bodegas }
+        }).catch(() => [])
+
+        return { success: true, bodegas: directBodegas }
     } catch (error: any) {
         console.error('Error al obtener bodegas:', error)
+        // Intentar último rescate directo de sucursales
+        try {
+            const emergencySucursales = await rawPrisma.sucursal.findMany({
+                orderBy: { nombre: 'asc' }
+            })
+            if (emergencySucursales.length > 0) {
+                return {
+                    success: true,
+                    bodegas: emergencySucursales.map((s, idx) => ({
+                        id: s.id,
+                        codigo: s.nombre.trim().toUpperCase().replace(/\s+/g, '-'),
+                        nombre: s.nombre,
+                        sucursalId: s.id,
+                        direccion: s.direccion || null,
+                        activa: true,
+                        orden: idx + 1,
+                        _count: { andenes: 0, rutas: 0 }
+                    }))
+                }
+            }
+        } catch {}
         return { success: false, error: error?.message, bodegas: [] }
     }
 }
@@ -90,9 +150,25 @@ export async function getBodegas() {
 export async function getAndenes(bodegaId: string) {
     try {
         if (!bodegaId) return { success: true, andenes: [] }
+        await ensureLogisticaTables()
 
-        const andenes = await rawPrisma.logAnden.findMany({
-            where: { bodegaId, activo: true },
+        // Resolver si bodegaId corresponde a un sucursalId o a un logBodega.id
+        let resolvedBodegaId = bodegaId
+        const bodegaMatch = await rawPrisma.logBodega.findFirst({
+            where: {
+                OR: [
+                    { id: bodegaId },
+                    { sucursalId: bodegaId }
+                ]
+            }
+        }).catch(() => null)
+
+        if (bodegaMatch) {
+            resolvedBodegaId = bodegaMatch.id
+        }
+
+        let andenes = await rawPrisma.logAnden.findMany({
+            where: { bodegaId: resolvedBodegaId, activo: true },
             include: {
                 rutas: {
                     where: {
@@ -108,7 +184,52 @@ export async function getAndenes(bodegaId: string) {
                 }
             },
             orderBy: { orden: 'asc' }
-        })
+        }).catch(() => [])
+
+        // Si no existen andenes para esta bodega, crear automáticamente 2 andenes iniciales
+        if (andenes.length === 0 && bodegaMatch) {
+            try {
+                await rawPrisma.logAnden.createMany({
+                    data: [
+                        {
+                            bodegaId: resolvedBodegaId,
+                            codigo: 'AND-01',
+                            nombre: 'Andén 01 - Carga General',
+                            tipoCarga: 'GENERAL',
+                            estadoOperativo: 'DISPONIBLE',
+                            orden: 1,
+                            activo: true
+                        },
+                        {
+                            bodegaId: resolvedBodegaId,
+                            codigo: 'AND-02',
+                            nombre: 'Andén 02 - Carga General',
+                            tipoCarga: 'GENERAL',
+                            estadoOperativo: 'DISPONIBLE',
+                            orden: 2,
+                            activo: true
+                        }
+                    ]
+                })
+
+                andenes = await rawPrisma.logAnden.findMany({
+                    where: { bodegaId: resolvedBodegaId, activo: true },
+                    include: {
+                        rutas: {
+                            where: { estado: { in: ['EN_ANDEN', 'EN_PROCESO'] } },
+                            include: {
+                                chofer: true,
+                                camion: true,
+                                cliente: true,
+                                transportista: true
+                            },
+                            take: 1
+                        }
+                    },
+                    orderBy: { orden: 'asc' }
+                }).catch(() => [])
+            } catch {}
+        }
 
         // Formatear información para el tablero en vivo
         const formatted = andenes.map((anden) => {
@@ -199,13 +320,23 @@ export async function crearAnden(data: {
     orden?: number
 }) {
     try {
+        await ensureLogisticaTables()
         const session = await getSession()
         const username = session?.user?.username || 'sistema'
         const userId = session?.user?.id
 
+        // Resolver si data.bodegaId es id de sucursal o id de logBodega
+        let targetBodegaId = data.bodegaId
+        const b = await rawPrisma.logBodega.findFirst({
+            where: { OR: [{ id: data.bodegaId }, { sucursalId: data.bodegaId }] }
+        }).catch(() => null)
+        if (b) {
+            targetBodegaId = b.id
+        }
+
         const nuevo = await rawPrisma.logAnden.create({
             data: {
-                bodegaId: data.bodegaId,
+                bodegaId: targetBodegaId,
                 codigo: data.codigo.trim().toUpperCase(),
                 nombre: data.nombre.trim(),
                 tipoCarga: data.tipoCarga || 'GENERAL',
