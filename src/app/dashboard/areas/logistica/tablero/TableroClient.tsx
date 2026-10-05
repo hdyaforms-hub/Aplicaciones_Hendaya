@@ -94,6 +94,7 @@ export default function TableroClient({
     const [isPending, startTransition] = useTransition()
     const [bodegas, setBodegas] = useState(initialBodegas)
     const [bodegaId, setBodegaId] = useState(initialBodegas[0]?.id || '')
+    const bodegaActiva = bodegas.find(b => b.id === bodegaId) || bodegas[0]
 
     useEffect(() => {
         if (bodegas.length === 0) {
@@ -146,12 +147,14 @@ export default function TableroClient({
         return () => clearInterval(interval)
     }, [autoRefresh, refreshInterval, bodegaId, fecha])
 
-    const refrescarDatosSilencioso = async () => {
-        if (!bodegaId) return
+    const refrescarDatosSilencioso = async (targetBodegaId?: string, targetFecha?: string) => {
+        const currentBodegaId = targetBodegaId || bodegaId
+        const currentFecha = targetFecha || fecha
+        if (!currentBodegaId) return
         try {
             const [resAndenes, resRutas] = await Promise.all([
-                getAndenes(bodegaId),
-                getRutas({ bodegaId, fechaRuta: fecha })
+                getAndenes(currentBodegaId),
+                getRutas({ bodegaId: currentBodegaId, fechaRuta: currentFecha })
             ])
             if (resAndenes.andenes) setAndenes(resAndenes.andenes)
             if (resRutas.rutas) setRutas(resRutas.rutas)
@@ -160,11 +163,18 @@ export default function TableroClient({
         }
     }
 
+    const handleCambioSucursal = (newBodegaId: string) => {
+        setBodegaId(newBodegaId)
+        startTransition(async () => {
+            await refrescarDatosSilencioso(newBodegaId, fecha)
+        })
+    }
+
     const refrescarDatosManual = () => {
         startTransition(async () => {
-            await refrescarDatosSilencioso()
+            await refrescarDatosSilencioso(bodegaId, fecha)
             setCountdown(refreshInterval)
-            setToast({ tipo: 'ok', texto: 'Datos actualizados correctamente.' })
+            setToast({ tipo: 'ok', texto: `Datos actualizados para ${bodegaActiva?.nombre || 'la sucursal'}.` })
             setTimeout(() => setToast(null), 3000)
         })
     }
@@ -322,10 +332,7 @@ export default function TableroClient({
                         <span className="text-xs font-bold text-gray-600">Sucursal:</span>
                         <select
                             value={bodegaId}
-                            onChange={e => {
-                                setBodegaId(e.target.value)
-                                refrescarDatosSilencioso()
-                            }}
+                            onChange={e => handleCambioSucursal(e.target.value)}
                             className="bg-transparent text-xs font-bold text-gray-900 focus:outline-none cursor-pointer"
                         >
                             {bodegas.length === 0 ? (
@@ -441,7 +448,10 @@ export default function TableroClient({
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-100 pb-3">
                     <h2 className="text-sm font-bold text-gray-900 flex items-center gap-2 uppercase tracking-wider">
                         <Warehouse className="w-4 h-4 text-cyan-600" />
-                        Muelles y Andenes de Carga ({andenes.length})
+                        <span>Muelles y Andenes de Carga — {bodegaActiva?.nombre || 'Sucursal'}</span>
+                        <span className="text-xs font-mono font-bold px-2 py-0.5 rounded-full bg-cyan-100 text-cyan-800 lowercase">
+                            {andenes.length} {andenes.length === 1 ? 'andén' : 'andenes'}
+                        </span>
                     </h2>
                     <div className="flex items-center gap-4 text-xs font-semibold text-gray-600">
                         <span className="flex items-center gap-1.5">
@@ -459,8 +469,15 @@ export default function TableroClient({
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {andenes.map(anden => {
+                {andenes.length === 0 ? (
+                    <div className="p-10 text-center bg-gray-50/60 rounded-2xl border border-dashed border-gray-200 space-y-2">
+                        <Warehouse className="w-8 h-8 text-gray-300 mx-auto" />
+                        <p className="text-xs font-bold text-gray-600">No hay andenes configurados para {bodegaActiva?.nombre}</p>
+                        <p className="text-[11px] text-gray-400">Puedes administrarlos en el menú Catálogos y Parámetros Logísticos</p>
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        {andenes.map(anden => {
                         const isDisp = anden.estadoOperativo === 'DISPONIBLE'
                         const isOcup = anden.estadoOperativo === 'OCUPADO'
                         const ruta = anden.rutaActiva
@@ -602,7 +619,8 @@ export default function TableroClient({
                         )
                     })}
                 </div>
-            </div>
+            )}
+        </div>
 
             {/* SECCIÓN 2: COLUMNAS DE FLUJO KANBAN */}
             <div className="space-y-4">
