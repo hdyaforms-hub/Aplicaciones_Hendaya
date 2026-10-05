@@ -2225,5 +2225,31 @@ model RegCap_Participante {
   @@map("RegCap_Participante")
 }
 
+model Cal_ResSan_Registro {
+  id                    String   @id @default(uuid())
+  licitacion            String?
+  licId                 Int?
+  anio                  Int
+  ut                    Int
+  institucion           String
+  rbd                   Int
+  rbdDv                 String?
+  nombreEstablecimiento String
+  comuna                String
+  estadoResolucion      String   @default("No Aplica") // 'Si' | 'No' | 'No Aplica'
+  numeroResolucion      String?
+  documentoUrl          String?  @db.Text
+  documentoNombre       String?
+  observaciones         String?  @db.Text
+  updatedBy             String?
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
 
-
+  @@unique([rbd, anio])
+  @@index([anio])
+  @@index([licitacion])
+  @@index([ut])
+  @@index([rbd])
+  @@index([estadoResolucion])
+  @@map("Cal_ResSan_Registro")
+}

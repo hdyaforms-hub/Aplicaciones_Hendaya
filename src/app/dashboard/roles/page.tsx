@@ -93,6 +93,8 @@ export default async function RolesPage() {
         { id: 'manage_calidad_transporte_higiene', name: 'Transporte e Higiene (Gestionar)', description: 'Permite registrar y modificar inspecciones de vehículos en la planilla diaria.', category: 'ÁREAS -> CALIDAD' },
         { id: 'sign_calidad_transporte_higiene', name: 'Transporte e Higiene (Firma Calidad)', description: 'Permite firmar y cerrar la planilla diaria como Encargado de Calidad.', category: 'ÁREAS -> CALIDAD' },
         { id: 'sign_bodega_transporte_higiene', name: 'Transporte e Higiene (Firma Jefe de Bodega)', description: 'Permite validar y firmar la planilla diaria como Jefe de Bodega.', category: 'ÁREAS -> CALIDAD' },
+        { id: 'view_calidad_resolucion_sanitaria', name: 'Resolución Sanitaria (Ver)', description: 'Acceso visual al módulo de Resolución Sanitaria en Calidad.', category: 'ÁREAS -> CALIDAD' },
+        { id: 'manage_calidad_resolucion_sanitaria', name: 'Resolución Sanitaria (Gestionar)', description: 'Permite editar estados (Si/No/No Aplica), número de resolución y adjuntar documentos.', category: 'ÁREAS -> CALIDAD' },
         { id: 'view_calidad_higiene_personal', name: 'Higiene Personal (Ver)', description: 'Acceso visual al módulo Registro de Transportista interno Higiene Personal.', category: 'ÁREAS -> CALIDAD' },
         { id: 'manage_calidad_higiene_personal', name: 'Higiene Personal (Gestionar)', description: 'Permite registrar y modificar inspecciones de trabajadores en la planilla diaria.', category: 'ÁREAS -> CALIDAD' },
         { id: 'sign_calidad_higiene_personal', name: 'Higiene Personal (Firma Calidad)', description: 'Permite firmar y cerrar la planilla diaria como Encargado de Calidad.', category: 'ÁREAS -> CALIDAD' },

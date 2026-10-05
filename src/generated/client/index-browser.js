@@ -1852,6 +1852,27 @@ exports.Prisma.RegCap_ParticipanteScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.Cal_ResSan_RegistroScalarFieldEnum = {
+  id: 'id',
+  licitacion: 'licitacion',
+  licId: 'licId',
+  anio: 'anio',
+  ut: 'ut',
+  institucion: 'institucion',
+  rbd: 'rbd',
+  rbdDv: 'rbdDv',
+  nombreEstablecimiento: 'nombreEstablecimiento',
+  comuna: 'comuna',
+  estadoResolucion: 'estadoResolucion',
+  numeroResolucion: 'numeroResolucion',
+  documentoUrl: 'documentoUrl',
+  documentoNombre: 'documentoNombre',
+  observaciones: 'observaciones',
+  updatedBy: 'updatedBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1999,7 +2020,8 @@ exports.Prisma.ModelName = {
   Cal_PlanillaHigienePersonal: 'Cal_PlanillaHigienePersonal',
   Cal_RegistroHigienePersonal: 'Cal_RegistroHigienePersonal',
   RegCap_Capacitacion: 'RegCap_Capacitacion',
-  RegCap_Participante: 'RegCap_Participante'
+  RegCap_Participante: 'RegCap_Participante',
+  Cal_ResSan_Registro: 'Cal_ResSan_Registro'
 };
 
 /**

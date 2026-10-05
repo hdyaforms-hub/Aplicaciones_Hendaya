@@ -1,7 +1,7 @@
 'use server'
 
 import { getSession } from '@/lib/session'
-import { getAuditLogs, getAuditUsers, AuditFilterParams } from '@/lib/audit'
+import { getAuditLogs, getAuditUsers, getAuditRoles, AuditFilterParams } from '@/lib/audit'
 import { rawPrisma } from '@/lib/prisma'
 
 export async function fetchAuditLogsAction(params: AuditFilterParams) {
@@ -18,6 +18,12 @@ export async function fetchAuditLogsAction(params: AuditFilterParams) {
     }
 
     return await getAuditLogs(params)
+}
+
+export async function fetchAuditRolesAction() {
+    const session = await getSession()
+    if (!session?.user) return []
+    return await getAuditRoles()
 }
 
 export async function fetchAuditUsersAction() {

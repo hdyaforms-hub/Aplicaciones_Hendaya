@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { fetchAuditLogsAction, fetchAuditUsersAction, fetchAllAuditLogsForExport } from './actions'
+import { fetchAuditLogsAction, fetchAuditUsersAction, fetchAuditRolesAction, fetchAllAuditLogsForExport } from './actions'
 
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
@@ -16,16 +16,32 @@ type AuditLogItem = {
     detalle: string
     ip: string | null
     createdAt: string | Date
+    roleName?: string
+    fullName?: string | null
 }
 
 type UserOption = {
+    id: string
     username: string
     name: string
+    fullName: string
+    roleId: string
+    roleName: string
+}
+
+type RoleOption = {
+    id: string
+    name: string
+    description?: string | null
+    _count?: {
+        users: number
+    }
 }
 
 export default function AuditoriaPage() {
     const [logs, setLogs] = useState<AuditLogItem[]>([])
     const [users, setUsers] = useState<UserOption[]>([])
+    const [roles, setRoles] = useState<RoleOption[]>([])
     const [loading, setLoading] = useState<boolean>(true)
     const [exporting, setExporting] = useState<boolean>(false)
     const [exportingType, setExportingType] = useState<'pdf' | 'excel' | null>(null)
@@ -34,6 +50,7 @@ export default function AuditoriaPage() {
     // Filtros
     const [dateFrom, setDateFrom] = useState<string>('')
     const [dateTo, setDateTo] = useState<string>('')
+    const [selectedRole, setSelectedRole] = useState<string>('ALL')
     const [selectedUser, setSelectedUser] = useState<string>('ALL')
     const [selectedModulo, setSelectedModulo] = useState<string>('ALL')
     const [searchQuery, setSearchQuery] = useState<string>('')
@@ -44,18 +61,34 @@ export default function AuditoriaPage() {
     const [totalRecords, setTotalRecords] = useState<number>(0)
     const limit = 25
 
-    // Cargar lista de usuarios al montar
+    // Cargar listas de usuarios y roles al montar
     useEffect(() => {
-        async function loadUsers() {
+        async function loadMeta() {
             try {
-                const uList = await fetchAuditUsersAction()
-                setUsers(uList)
+                const [uList, rList] = await Promise.all([
+                    fetchAuditUsersAction(),
+                    fetchAuditRolesAction()
+                ])
+                setUsers(uList as UserOption[])
+                setRoles(rList as RoleOption[])
             } catch (e) {
-                console.error('Error al cargar usuarios:', e)
+                console.error('Error al cargar metadatos de auditoría:', e)
             }
         }
-        loadUsers()
+        loadMeta()
     }, [])
+
+    // Usuarios filtrados dinámicamente según el rol seleccionado
+    const filteredUsers = selectedRole === 'ALL'
+        ? users
+        : users.filter((u) => u.roleId === selectedRole)
+
+    // Cambio de rol
+    const handleRoleChange = (newRole: string) => {
+        setSelectedRole(newRole)
+        setSelectedUser('ALL') // Restablecer usuario para auditar a todo el grupo del rol
+        setCurrentPage(1)
+    }
 
     // Función para obtener logs
     const loadLogs = useCallback(async () => {
@@ -65,6 +98,7 @@ export default function AuditoriaPage() {
             const data = await fetchAuditLogsAction({
                 dateFrom: dateFrom || undefined,
                 dateTo: dateTo || undefined,
+                roleId: selectedRole,
                 username: selectedUser,
                 modulo: selectedModulo,
                 search: searchQuery,
@@ -72,7 +106,7 @@ export default function AuditoriaPage() {
                 limit,
             })
 
-            setLogs(data.logs)
+            setLogs(data.logs as AuditLogItem[])
             setTotalPages(data.totalPages || 1)
             setTotalRecords(data.total || 0)
         } catch (err: any) {
@@ -80,7 +114,7 @@ export default function AuditoriaPage() {
         } finally {
             setLoading(false)
         }
-    }, [dateFrom, dateTo, selectedUser, selectedModulo, searchQuery, currentPage])
+    }, [dateFrom, dateTo, selectedRole, selectedUser, selectedModulo, searchQuery, currentPage])
 
     useEffect(() => {
         loadLogs()
@@ -95,6 +129,7 @@ export default function AuditoriaPage() {
     const handleResetFilters = () => {
         setDateFrom('')
         setDateTo('')
+        setSelectedRole('ALL')
         setSelectedUser('ALL')
         setSelectedModulo('ALL')
         setSearchQuery('')
@@ -110,15 +145,20 @@ export default function AuditoriaPage() {
             const allLogs = await fetchAllAuditLogsForExport({
                 dateFrom: dateFrom || undefined,
                 dateTo: dateTo || undefined,
+                roleId: selectedRole,
                 username: selectedUser,
                 modulo: selectedModulo,
                 search: searchQuery,
             })
 
+            const selectedRoleObj = roles.find((r) => r.id === selectedRole)
+            const roleLabel = selectedRoleObj ? selectedRoleObj.name : 'Todos'
+
             const excelData = allLogs.map((log: any, index: number) => ({
                 N: index + 1,
                 'Fecha y Hora': new Date(log.createdAt).toLocaleString('es-CL'),
-                Usuario: log.username,
+                Usuario: log.fullName ? `${log.fullName} (${log.username})` : log.username,
+                Rol: log.roleName || 'N/A',
                 Módulo: log.modulo,
                 Acción: log.action,
                 Detalle: log.detalle,
@@ -133,6 +173,7 @@ export default function AuditoriaPage() {
             worksheet['!cols'] = [
                 { wch: 6 },
                 { wch: 20 },
+                { wch: 28 },
                 { wch: 20 },
                 { wch: 25 },
                 { wch: 18 },
@@ -141,7 +182,9 @@ export default function AuditoriaPage() {
             ]
 
             const nowStr = new Date().toISOString().slice(0, 10)
-            XLSX.writeFile(workbook, `Auditoria_Hendaya_${selectedUser !== 'ALL' ? selectedUser : 'General'}_${nowStr}.xlsx`)
+            const roleSuffix = selectedRole !== 'ALL' ? `_Rol-${roleLabel.replace(/[\s/]/g, '_')}` : ''
+            const userSuffix = selectedUser !== 'ALL' ? `_${selectedUser}` : ''
+            XLSX.writeFile(workbook, `Auditoria_Hendaya${roleSuffix}${userSuffix || '_General'}_${nowStr}.xlsx`)
         } catch (err: any) {
             alert('Error al generar Excel: ' + err?.message)
         } finally {
@@ -159,10 +202,14 @@ export default function AuditoriaPage() {
             const allLogs = await fetchAllAuditLogsForExport({
                 dateFrom: dateFrom || undefined,
                 dateTo: dateTo || undefined,
+                roleId: selectedRole,
                 username: selectedUser,
                 modulo: selectedModulo,
                 search: searchQuery,
             })
+
+            const selectedRoleObj = roles.find((r) => r.id === selectedRole)
+            const roleLabel = selectedRoleObj ? selectedRoleObj.name : 'Todos los roles'
 
             const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' })
 
@@ -187,6 +234,7 @@ export default function AuditoriaPage() {
 
             doc.setFont('helvetica', 'normal')
             const filterSummary = [
+                `Rol: ${roleLabel}`,
                 `Usuario: ${selectedUser === 'ALL' ? 'Todos los usuarios' : selectedUser}`,
                 `Desde: ${dateFrom || 'Sin límite'}`,
                 `Hasta: ${dateTo || 'Sin límite'}`,
@@ -199,7 +247,8 @@ export default function AuditoriaPage() {
             const tableRows = allLogs.map((log: any, index: number) => [
                 (index + 1).toString(),
                 new Date(log.createdAt).toLocaleString('es-CL'),
-                log.username,
+                log.fullName ? `${log.fullName}\n(${log.username})` : log.username,
+                log.roleName || 'N/A',
                 log.modulo,
                 log.action,
                 log.detalle
@@ -207,23 +256,26 @@ export default function AuditoriaPage() {
 
             autoTable(doc, {
                 startY: 44,
-                head: [['#', 'Fecha y Hora', 'Usuario', 'Módulo', 'Acción', 'Detalle']],
+                head: [['#', 'Fecha y Hora', 'Usuario', 'Rol', 'Módulo', 'Acción', 'Detalle']],
                 body: tableRows,
                 styles: { fontSize: 8, cellPadding: 2.5 },
                 headStyles: { fillColor: [6, 182, 212], textColor: 255, fontStyle: 'bold' }, // cyan-500
                 alternateRowStyles: { fillColor: [248, 250, 252] },
                 columnStyles: {
-                    0: { cellWidth: 10 },
-                    1: { cellWidth: 38 },
+                    0: { cellWidth: 8 },
+                    1: { cellWidth: 32 },
                     2: { cellWidth: 35 },
-                    3: { cellWidth: 45 },
-                    4: { cellWidth: 30 },
-                    5: { cellWidth: 'auto' }
+                    3: { cellWidth: 26 },
+                    4: { cellWidth: 34 },
+                    5: { cellWidth: 25 },
+                    6: { cellWidth: 'auto' }
                 }
             })
 
             const nowStr = new Date().toISOString().slice(0, 10)
-            doc.save(`Auditoria_Hendaya_${selectedUser !== 'ALL' ? selectedUser : 'General'}_${nowStr}.pdf`)
+            const roleSuffix = selectedRole !== 'ALL' ? `_Rol-${roleLabel.replace(/[\s/]/g, '_')}` : ''
+            const userSuffix = selectedUser !== 'ALL' ? `_${selectedUser}` : ''
+            doc.save(`Auditoria_Hendaya${roleSuffix}${userSuffix || '_General'}_${nowStr}.pdf`)
         } catch (err: any) {
             alert('Error al generar PDF: ' + err?.message)
         } finally {
@@ -293,7 +345,7 @@ export default function AuditoriaPage() {
                         <h3 className="text-sm font-bold text-gray-700 uppercase tracking-wider flex items-center gap-2">
                             <span>🔍</span> Criterios de Selección y Filtro
                         </h3>
-                        {(dateFrom || dateTo || selectedUser !== 'ALL' || selectedModulo !== 'ALL' || searchQuery) && (
+                        {(dateFrom || dateTo || selectedRole !== 'ALL' || selectedUser !== 'ALL' || selectedModulo !== 'ALL' || searchQuery) && (
                             <button
                                 type="button"
                                 onClick={handleResetFilters}
@@ -304,7 +356,7 @@ export default function AuditoriaPage() {
                         )}
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4">
                         {/* Fecha Desde */}
                         <div>
                             <label className="block text-xs font-bold text-gray-600 mb-1">Fecha Desde</label>
@@ -327,16 +379,47 @@ export default function AuditoriaPage() {
                             />
                         </div>
 
+                        {/* Selección de Rol */}
+                        <div>
+                            <label className="block text-xs font-bold text-gray-600 mb-1 flex items-center justify-between">
+                                <span>Rol / Grupo</span>
+                                {selectedRole !== 'ALL' && (
+                                    <span className="text-[10px] text-cyan-600 font-bold bg-cyan-50 px-1.5 py-0.5 rounded">Activo</span>
+                                )}
+                            </label>
+                            <select
+                                value={selectedRole}
+                                onChange={(e) => handleRoleChange(e.target.value)}
+                                className="w-full px-3.5 py-2 text-sm rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-black font-semibold"
+                            >
+                                <option value="ALL">-- Todos los Roles --</option>
+                                {roles.map((r) => (
+                                    <option key={r.id} value={r.id}>
+                                        {r.name} {r._count ? `(${r._count.users})` : ''}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+
                         {/* Selección de Usuario */}
                         <div>
-                            <label className="block text-xs font-bold text-gray-600 mb-1">Usuario</label>
+                            <label className="block text-xs font-bold text-gray-600 mb-1 flex items-center justify-between">
+                                <span>Usuario</span>
+                                {selectedRole !== 'ALL' && (
+                                    <span className="text-[10px] text-gray-400 font-medium">{filteredUsers.length} en rol</span>
+                                )}
+                            </label>
                             <select
                                 value={selectedUser}
                                 onChange={(e) => setSelectedUser(e.target.value)}
                                 className="w-full px-3.5 py-2 text-sm rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-black font-semibold"
                             >
-                                <option value="ALL">-- Todos los Usuarios --</option>
-                                {users.map((u) => (
+                                <option value="ALL">
+                                    {selectedRole === 'ALL'
+                                        ? '-- Todos los Usuarios --'
+                                        : `-- Todos de este Rol (${roles.find((r) => r.id === selectedRole)?.name || ''}) --`}
+                                </option>
+                                {filteredUsers.map((u) => (
                                     <option key={u.username} value={u.username}>
                                         {u.name}
                                     </option>
@@ -376,14 +459,14 @@ export default function AuditoriaPage() {
                             <div className="flex gap-2">
                                 <input
                                     type="text"
-                                    placeholder="Ej: Login, PMPA, OT..."
+                                    placeholder="Ej: Login, OT..."
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
-                                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-black font-semibold"
+                                    className="w-full px-3 py-2 text-sm rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-black font-semibold"
                                 />
                                 <button
                                     type="submit"
-                                    className="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-xl font-bold shadow-md shadow-cyan-600/20 transition-all text-sm shrink-0"
+                                    className="px-3.5 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-xl font-bold shadow-md shadow-cyan-600/20 transition-all text-sm shrink-0"
                                 >
                                     Filtrar
                                 </button>
@@ -407,6 +490,11 @@ export default function AuditoriaPage() {
                         <h3 className="font-bold text-gray-900 text-lg">Registros de Actividad</h3>
                         <p className="text-xs text-gray-500 mt-0.5">
                             Mostrando {logs.length} de {totalRecords} eventos registrados
+                            {selectedRole !== 'ALL' && (
+                                <span className="ml-2 font-semibold text-cyan-700 bg-cyan-50 px-2 py-0.5 rounded-md border border-cyan-200">
+                                    Rol: {roles.find((r) => r.id === selectedRole)?.name || 'Seleccionado'}
+                                </span>
+                            )}
                         </p>
                     </div>
                 </div>
@@ -417,6 +505,7 @@ export default function AuditoriaPage() {
                             <tr>
                                 <th className="py-3.5 px-4">Fecha y Hora</th>
                                 <th className="py-3.5 px-4">Usuario</th>
+                                <th className="py-3.5 px-4">Rol</th>
                                 <th className="py-3.5 px-4">Módulo</th>
                                 <th className="py-3.5 px-4">Acción</th>
                                 <th className="py-3.5 px-4">Detalle / Actividad</th>
@@ -425,7 +514,7 @@ export default function AuditoriaPage() {
                         <tbody className="divide-y divide-gray-100 font-medium">
                             {loading ? (
                                 <tr>
-                                    <td colSpan={5} className="py-12 text-center text-gray-400">
+                                    <td colSpan={6} className="py-12 text-center text-gray-400">
                                         <div className="flex flex-col items-center gap-2">
                                             <span className="text-2xl animate-spin">🌀</span>
                                             <span>Cargando datos de auditoría...</span>
@@ -434,11 +523,11 @@ export default function AuditoriaPage() {
                                 </tr>
                             ) : logs.length === 0 ? (
                                 <tr>
-                                    <td colSpan={5} className="py-12 text-center text-gray-400">
+                                    <td colSpan={6} className="py-12 text-center text-gray-400">
                                         <div className="flex flex-col items-center gap-2">
                                             <span className="text-3xl">📁</span>
                                             <span className="font-semibold text-gray-600">No se encontraron registros de auditoría</span>
-                                            <span className="text-xs text-gray-400">Prueba cambiando los criterios de selección (fechas o usuario).</span>
+                                            <span className="text-xs text-gray-400">Prueba cambiando los criterios de selección (rol, usuario o fechas).</span>
                                         </div>
                                     </td>
                                 </tr>
@@ -455,13 +544,24 @@ export default function AuditoriaPage() {
                                                 second: '2-digit'
                                             })}
                                         </td>
-                                        <td className="py-3.5 px-4 whitespace-nowrap font-bold text-gray-900">
-                                            <div className="flex items-center gap-2">
-                                                <div className="w-7 h-7 rounded-full bg-cyan-100 text-cyan-800 font-bold text-xs flex items-center justify-center border border-cyan-200">
+                                        <td className="py-3.5 px-4 whitespace-nowrap">
+                                            <div className="flex items-center gap-2.5">
+                                                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-slate-800 to-cyan-900 text-cyan-300 font-black text-xs flex items-center justify-center border border-cyan-500/20 shadow-sm shrink-0">
                                                     {log.username.substring(0, 2).toUpperCase()}
                                                 </div>
-                                                <span>{log.username}</span>
+                                                <div className="flex flex-col">
+                                                    <span className="font-bold text-gray-900 text-sm">{log.fullName || log.username}</span>
+                                                    {log.fullName && (
+                                                        <span className="text-[11px] text-gray-400 font-mono">@{log.username}</span>
+                                                    )}
+                                                </div>
                                             </div>
+                                        </td>
+                                        <td className="py-3.5 px-4 whitespace-nowrap">
+                                            <span className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-bold rounded-lg bg-slate-100 text-slate-700 border border-slate-200">
+                                                <span className="text-[10px] text-cyan-600">🛡️</span>
+                                                {log.roleName || 'N/A'}
+                                            </span>
                                         </td>
                                         <td className="py-3.5 px-4 whitespace-nowrap text-xs">
                                             <span className="px-2.5 py-1 rounded-lg bg-gray-100 text-gray-700 font-semibold border border-gray-200">

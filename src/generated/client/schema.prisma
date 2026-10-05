@@ -215,6 +215,7 @@ model Sucursal {
   vehiculos                      Vehiculo[]
   delegaciones                   DelegacionVisualizacion[]
   planillasTransporte            Cal_PlanillaTransporte[]
+  planillasHigienePersonal       Cal_PlanillaHigienePersonal[]
 }
 
 model Presupuesto {
@@ -2125,4 +2126,130 @@ model Cal_RegistroTransporte {
 
   @@index([planillaId])
   @@map("Cal_RegistroTransporte")
+}
+
+model Cal_PlanillaHigienePersonal {
+  id                     String    @id @default(uuid())
+  sucursalId             String
+  fecha                  DateTime
+  fechaTexto             String    @db.VarChar(10) // YYYY-MM-DD
+  estado                 String    @default("ABIERTO") // ABIERTO, FIRMADO_CALIDAD, CERRADO
+  firmaCalidadUser       String?   @db.VarChar(150)
+  firmaCalidadUserId     String?
+  firmaCalidadFecha      DateTime?
+  firmaCalidadDiasAtraso Int       @default(0)
+  firmaCalidadImg        String?   @db.Text
+  firmaBodegaUser        String?   @db.VarChar(150)
+  firmaBodegaUserId      String?
+  firmaBodegaFecha       DateTime?
+  firmaBodegaImg         String?   @db.Text
+  observacionesGenerales String?   @db.Text
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
+
+  sucursal  Sucursal                      @relation(fields: [sucursalId], references: [id])
+  registros Cal_RegistroHigienePersonal[]
+
+  @@unique([sucursalId, fechaTexto])
+  @@index([sucursalId])
+  @@index([fechaTexto])
+  @@index([estado])
+  @@map("Cal_PlanillaHigienePersonal")
+}
+
+model Cal_RegistroHigienePersonal {
+  id               String   @id @default(uuid())
+  planillaId       String
+  nombreEncriptado String   @db.Text
+  uniformeLimpio   String   @default("Cumple") @db.VarChar(20) // Cumple, No Cumple, No Aplica
+  zapatosSeguridad String   @default("Cumple") @db.VarChar(20) // Cumple, No Cumple, No Aplica
+  peloCorto        String   @default("Cumple") @db.VarChar(20) // Cumple, No Cumple, No Aplica
+  usoJockey        String   @default("Cumple") @db.VarChar(20) // Cumple, No Cumple, No Aplica
+  sinJoyas         String   @default("Cumple") @db.VarChar(20) // Cumple, No Cumple, No Aplica
+  unasCortas       String   @default("Cumple") @db.VarChar(20) // Cumple, No Cumple, No Aplica
+  rasurado         String   @default("Cumple") @db.VarChar(20) // Cumple, No Cumple, No Aplica
+  estadoSalud      String   @default("No Aplica") @db.VarChar(50) // No Aplica, Diarrea, Vómitos, Fiebre, Resfrio, Lesión en la piel
+  habitosCorrectos String   @default("No Aplica") @db.VarChar(50) // No Aplica, Telefono, Audifonos, Mascar Chicle, Estornudar, Escupir, Hálito alcoholico
+  heridas          String   @default("Ausencia") @db.VarChar(30) // Ausencia, Presencia
+  observacion      String?  @db.Text
+  accionCorrectiva String?  @db.Text
+  creadoPor        String   @db.VarChar(150)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  planilla Cal_PlanillaHigienePersonal @relation(fields: [planillaId], references: [id], onDelete: Cascade)
+
+  @@index([planillaId])
+  @@map("Cal_RegistroHigienePersonal")
+}
+
+model RegCap_Capacitacion {
+  id            String   @id @default(uuid())
+  fecha         DateTime @default(now())
+  instalacion   String   @db.Text
+  licitacion    String?  @db.Text
+  sucursal      String?  @db.Text
+  horaDesde     String   @db.VarChar(10)
+  horaHasta     String   @db.VarChar(10)
+  horario       String   @db.VarChar(50)
+  relatorNombre String   @db.Text
+  relatorCargo  String   @db.Text
+  tema          String   @db.Text
+  firmaRelator  String?  @db.Text
+  creadoPor     String?  @db.VarChar(150)
+  creadoPorId   String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  participantes RegCap_Participante[]
+
+  @@index([fecha])
+  @@index([licitacion])
+  @@index([sucursal])
+  @@map("RegCap_Capacitacion")
+}
+
+model RegCap_Participante {
+  id         String   @id @default(uuid())
+  registroId String
+  numero     Int
+  nombre     String   @db.Text
+  cargo      String   @db.Text
+  rut        String   @db.Text
+  firma      String?  @db.Text
+  createdAt  DateTime @default(now())
+
+  registro RegCap_Capacitacion @relation(fields: [registroId], references: [id], onDelete: Cascade)
+
+  @@index([registroId])
+  @@map("RegCap_Participante")
+}
+
+model Cal_ResSan_Registro {
+  id                    String   @id @default(uuid())
+  licitacion            String?
+  licId                 Int?
+  anio                  Int
+  ut                    Int
+  institucion           String
+  rbd                   Int
+  rbdDv                 String?
+  nombreEstablecimiento String
+  comuna                String
+  estadoResolucion      String   @default("No Aplica") // 'Si' | 'No' | 'No Aplica'
+  numeroResolucion      String?
+  documentoUrl          String?  @db.Text
+  documentoNombre       String?
+  observaciones         String?  @db.Text
+  updatedBy             String?
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@unique([rbd, anio])
+  @@index([anio])
+  @@index([licitacion])
+  @@index([ut])
+  @@index([rbd])
+  @@index([estadoResolucion])
+  @@map("Cal_ResSan_Registro")
 }

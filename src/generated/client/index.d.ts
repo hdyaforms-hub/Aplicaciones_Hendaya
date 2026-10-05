@@ -668,6 +668,11 @@ export type RegCap_Capacitacion = $Result.DefaultSelection<Prisma.$RegCap_Capaci
  * 
  */
 export type RegCap_Participante = $Result.DefaultSelection<Prisma.$RegCap_ParticipantePayload>
+/**
+ * Model Cal_ResSan_Registro
+ * 
+ */
+export type Cal_ResSan_Registro = $Result.DefaultSelection<Prisma.$Cal_ResSan_RegistroPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -2101,6 +2106,16 @@ export class PrismaClient<
     * ```
     */
   get regCap_Participante(): Prisma.RegCap_ParticipanteDelegate<ExtArgs>;
+
+  /**
+   * `prisma.cal_ResSan_Registro`: Exposes CRUD operations for the **Cal_ResSan_Registro** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Cal_ResSan_Registros
+    * const cal_ResSan_Registros = await prisma.cal_ResSan_Registro.findMany()
+    * ```
+    */
+  get cal_ResSan_Registro(): Prisma.Cal_ResSan_RegistroDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -2672,7 +2687,8 @@ export namespace Prisma {
     Cal_PlanillaHigienePersonal: 'Cal_PlanillaHigienePersonal',
     Cal_RegistroHigienePersonal: 'Cal_RegistroHigienePersonal',
     RegCap_Capacitacion: 'RegCap_Capacitacion',
-    RegCap_Participante: 'RegCap_Participante'
+    RegCap_Participante: 'RegCap_Participante',
+    Cal_ResSan_Registro: 'Cal_ResSan_Registro'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -2688,7 +2704,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout" | "reservaSala" | "noticiaAlimentacion" | "logBodega" | "logUsuarioBodega" | "logAnden" | "logTransportista" | "logChofer" | "logCamion" | "logCliente" | "logRuta" | "logEventoRuta" | "logIntegracionConfig" | "logIntegracionLog" | "logParametro" | "prevGravedadPreparacion" | "cal_PlanillaTransporte" | "cal_RegistroTransporte" | "cal_PlanillaHigienePersonal" | "cal_RegistroHigienePersonal" | "regCap_Capacitacion" | "regCap_Participante"
+      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout" | "reservaSala" | "noticiaAlimentacion" | "logBodega" | "logUsuarioBodega" | "logAnden" | "logTransportista" | "logChofer" | "logCamion" | "logCliente" | "logRuta" | "logEventoRuta" | "logIntegracionConfig" | "logIntegracionLog" | "logParametro" | "prevGravedadPreparacion" | "cal_PlanillaTransporte" | "cal_RegistroTransporte" | "cal_PlanillaHigienePersonal" | "cal_RegistroHigienePersonal" | "regCap_Capacitacion" | "regCap_Participante" | "cal_ResSan_Registro"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -11859,6 +11875,76 @@ export namespace Prisma {
           count: {
             args: Prisma.RegCap_ParticipanteCountArgs<ExtArgs>
             result: $Utils.Optional<RegCap_ParticipanteCountAggregateOutputType> | number
+          }
+        }
+      }
+      Cal_ResSan_Registro: {
+        payload: Prisma.$Cal_ResSan_RegistroPayload<ExtArgs>
+        fields: Prisma.Cal_ResSan_RegistroFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Cal_ResSan_RegistroFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_ResSan_RegistroPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Cal_ResSan_RegistroFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_ResSan_RegistroPayload>
+          }
+          findFirst: {
+            args: Prisma.Cal_ResSan_RegistroFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_ResSan_RegistroPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Cal_ResSan_RegistroFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_ResSan_RegistroPayload>
+          }
+          findMany: {
+            args: Prisma.Cal_ResSan_RegistroFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_ResSan_RegistroPayload>[]
+          }
+          create: {
+            args: Prisma.Cal_ResSan_RegistroCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_ResSan_RegistroPayload>
+          }
+          createMany: {
+            args: Prisma.Cal_ResSan_RegistroCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Cal_ResSan_RegistroCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_ResSan_RegistroPayload>[]
+          }
+          delete: {
+            args: Prisma.Cal_ResSan_RegistroDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_ResSan_RegistroPayload>
+          }
+          update: {
+            args: Prisma.Cal_ResSan_RegistroUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_ResSan_RegistroPayload>
+          }
+          deleteMany: {
+            args: Prisma.Cal_ResSan_RegistroDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Cal_ResSan_RegistroUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Cal_ResSan_RegistroUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Cal_ResSan_RegistroPayload>
+          }
+          aggregate: {
+            args: Prisma.Cal_ResSan_RegistroAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCal_ResSan_Registro>
+          }
+          groupBy: {
+            args: Prisma.Cal_ResSan_RegistroGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Cal_ResSan_RegistroGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Cal_ResSan_RegistroCountArgs<ExtArgs>
+            result: $Utils.Optional<Cal_ResSan_RegistroCountAggregateOutputType> | number
           }
         }
       }
@@ -147869,6 +147955,1086 @@ export namespace Prisma {
 
 
   /**
+   * Model Cal_ResSan_Registro
+   */
+
+  export type AggregateCal_ResSan_Registro = {
+    _count: Cal_ResSan_RegistroCountAggregateOutputType | null
+    _avg: Cal_ResSan_RegistroAvgAggregateOutputType | null
+    _sum: Cal_ResSan_RegistroSumAggregateOutputType | null
+    _min: Cal_ResSan_RegistroMinAggregateOutputType | null
+    _max: Cal_ResSan_RegistroMaxAggregateOutputType | null
+  }
+
+  export type Cal_ResSan_RegistroAvgAggregateOutputType = {
+    licId: number | null
+    anio: number | null
+    ut: number | null
+    rbd: number | null
+  }
+
+  export type Cal_ResSan_RegistroSumAggregateOutputType = {
+    licId: number | null
+    anio: number | null
+    ut: number | null
+    rbd: number | null
+  }
+
+  export type Cal_ResSan_RegistroMinAggregateOutputType = {
+    id: string | null
+    licitacion: string | null
+    licId: number | null
+    anio: number | null
+    ut: number | null
+    institucion: string | null
+    rbd: number | null
+    rbdDv: string | null
+    nombreEstablecimiento: string | null
+    comuna: string | null
+    estadoResolucion: string | null
+    numeroResolucion: string | null
+    documentoUrl: string | null
+    documentoNombre: string | null
+    observaciones: string | null
+    updatedBy: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Cal_ResSan_RegistroMaxAggregateOutputType = {
+    id: string | null
+    licitacion: string | null
+    licId: number | null
+    anio: number | null
+    ut: number | null
+    institucion: string | null
+    rbd: number | null
+    rbdDv: string | null
+    nombreEstablecimiento: string | null
+    comuna: string | null
+    estadoResolucion: string | null
+    numeroResolucion: string | null
+    documentoUrl: string | null
+    documentoNombre: string | null
+    observaciones: string | null
+    updatedBy: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Cal_ResSan_RegistroCountAggregateOutputType = {
+    id: number
+    licitacion: number
+    licId: number
+    anio: number
+    ut: number
+    institucion: number
+    rbd: number
+    rbdDv: number
+    nombreEstablecimiento: number
+    comuna: number
+    estadoResolucion: number
+    numeroResolucion: number
+    documentoUrl: number
+    documentoNombre: number
+    observaciones: number
+    updatedBy: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type Cal_ResSan_RegistroAvgAggregateInputType = {
+    licId?: true
+    anio?: true
+    ut?: true
+    rbd?: true
+  }
+
+  export type Cal_ResSan_RegistroSumAggregateInputType = {
+    licId?: true
+    anio?: true
+    ut?: true
+    rbd?: true
+  }
+
+  export type Cal_ResSan_RegistroMinAggregateInputType = {
+    id?: true
+    licitacion?: true
+    licId?: true
+    anio?: true
+    ut?: true
+    institucion?: true
+    rbd?: true
+    rbdDv?: true
+    nombreEstablecimiento?: true
+    comuna?: true
+    estadoResolucion?: true
+    numeroResolucion?: true
+    documentoUrl?: true
+    documentoNombre?: true
+    observaciones?: true
+    updatedBy?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Cal_ResSan_RegistroMaxAggregateInputType = {
+    id?: true
+    licitacion?: true
+    licId?: true
+    anio?: true
+    ut?: true
+    institucion?: true
+    rbd?: true
+    rbdDv?: true
+    nombreEstablecimiento?: true
+    comuna?: true
+    estadoResolucion?: true
+    numeroResolucion?: true
+    documentoUrl?: true
+    documentoNombre?: true
+    observaciones?: true
+    updatedBy?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Cal_ResSan_RegistroCountAggregateInputType = {
+    id?: true
+    licitacion?: true
+    licId?: true
+    anio?: true
+    ut?: true
+    institucion?: true
+    rbd?: true
+    rbdDv?: true
+    nombreEstablecimiento?: true
+    comuna?: true
+    estadoResolucion?: true
+    numeroResolucion?: true
+    documentoUrl?: true
+    documentoNombre?: true
+    observaciones?: true
+    updatedBy?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type Cal_ResSan_RegistroAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Cal_ResSan_Registro to aggregate.
+     */
+    where?: Cal_ResSan_RegistroWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cal_ResSan_Registros to fetch.
+     */
+    orderBy?: Cal_ResSan_RegistroOrderByWithRelationInput | Cal_ResSan_RegistroOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Cal_ResSan_RegistroWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cal_ResSan_Registros from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cal_ResSan_Registros.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Cal_ResSan_Registros
+    **/
+    _count?: true | Cal_ResSan_RegistroCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Cal_ResSan_RegistroAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Cal_ResSan_RegistroSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Cal_ResSan_RegistroMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Cal_ResSan_RegistroMaxAggregateInputType
+  }
+
+  export type GetCal_ResSan_RegistroAggregateType<T extends Cal_ResSan_RegistroAggregateArgs> = {
+        [P in keyof T & keyof AggregateCal_ResSan_Registro]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCal_ResSan_Registro[P]>
+      : GetScalarType<T[P], AggregateCal_ResSan_Registro[P]>
+  }
+
+
+
+
+  export type Cal_ResSan_RegistroGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Cal_ResSan_RegistroWhereInput
+    orderBy?: Cal_ResSan_RegistroOrderByWithAggregationInput | Cal_ResSan_RegistroOrderByWithAggregationInput[]
+    by: Cal_ResSan_RegistroScalarFieldEnum[] | Cal_ResSan_RegistroScalarFieldEnum
+    having?: Cal_ResSan_RegistroScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Cal_ResSan_RegistroCountAggregateInputType | true
+    _avg?: Cal_ResSan_RegistroAvgAggregateInputType
+    _sum?: Cal_ResSan_RegistroSumAggregateInputType
+    _min?: Cal_ResSan_RegistroMinAggregateInputType
+    _max?: Cal_ResSan_RegistroMaxAggregateInputType
+  }
+
+  export type Cal_ResSan_RegistroGroupByOutputType = {
+    id: string
+    licitacion: string | null
+    licId: number | null
+    anio: number
+    ut: number
+    institucion: string
+    rbd: number
+    rbdDv: string | null
+    nombreEstablecimiento: string
+    comuna: string
+    estadoResolucion: string
+    numeroResolucion: string | null
+    documentoUrl: string | null
+    documentoNombre: string | null
+    observaciones: string | null
+    updatedBy: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: Cal_ResSan_RegistroCountAggregateOutputType | null
+    _avg: Cal_ResSan_RegistroAvgAggregateOutputType | null
+    _sum: Cal_ResSan_RegistroSumAggregateOutputType | null
+    _min: Cal_ResSan_RegistroMinAggregateOutputType | null
+    _max: Cal_ResSan_RegistroMaxAggregateOutputType | null
+  }
+
+  type GetCal_ResSan_RegistroGroupByPayload<T extends Cal_ResSan_RegistroGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Cal_ResSan_RegistroGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Cal_ResSan_RegistroGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Cal_ResSan_RegistroGroupByOutputType[P]>
+            : GetScalarType<T[P], Cal_ResSan_RegistroGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Cal_ResSan_RegistroSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    licitacion?: boolean
+    licId?: boolean
+    anio?: boolean
+    ut?: boolean
+    institucion?: boolean
+    rbd?: boolean
+    rbdDv?: boolean
+    nombreEstablecimiento?: boolean
+    comuna?: boolean
+    estadoResolucion?: boolean
+    numeroResolucion?: boolean
+    documentoUrl?: boolean
+    documentoNombre?: boolean
+    observaciones?: boolean
+    updatedBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["cal_ResSan_Registro"]>
+
+  export type Cal_ResSan_RegistroSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    licitacion?: boolean
+    licId?: boolean
+    anio?: boolean
+    ut?: boolean
+    institucion?: boolean
+    rbd?: boolean
+    rbdDv?: boolean
+    nombreEstablecimiento?: boolean
+    comuna?: boolean
+    estadoResolucion?: boolean
+    numeroResolucion?: boolean
+    documentoUrl?: boolean
+    documentoNombre?: boolean
+    observaciones?: boolean
+    updatedBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["cal_ResSan_Registro"]>
+
+  export type Cal_ResSan_RegistroSelectScalar = {
+    id?: boolean
+    licitacion?: boolean
+    licId?: boolean
+    anio?: boolean
+    ut?: boolean
+    institucion?: boolean
+    rbd?: boolean
+    rbdDv?: boolean
+    nombreEstablecimiento?: boolean
+    comuna?: boolean
+    estadoResolucion?: boolean
+    numeroResolucion?: boolean
+    documentoUrl?: boolean
+    documentoNombre?: boolean
+    observaciones?: boolean
+    updatedBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type $Cal_ResSan_RegistroPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Cal_ResSan_Registro"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      licitacion: string | null
+      licId: number | null
+      anio: number
+      ut: number
+      institucion: string
+      rbd: number
+      rbdDv: string | null
+      nombreEstablecimiento: string
+      comuna: string
+      estadoResolucion: string
+      numeroResolucion: string | null
+      documentoUrl: string | null
+      documentoNombre: string | null
+      observaciones: string | null
+      updatedBy: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["cal_ResSan_Registro"]>
+    composites: {}
+  }
+
+  type Cal_ResSan_RegistroGetPayload<S extends boolean | null | undefined | Cal_ResSan_RegistroDefaultArgs> = $Result.GetResult<Prisma.$Cal_ResSan_RegistroPayload, S>
+
+  type Cal_ResSan_RegistroCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Cal_ResSan_RegistroFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Cal_ResSan_RegistroCountAggregateInputType | true
+    }
+
+  export interface Cal_ResSan_RegistroDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Cal_ResSan_Registro'], meta: { name: 'Cal_ResSan_Registro' } }
+    /**
+     * Find zero or one Cal_ResSan_Registro that matches the filter.
+     * @param {Cal_ResSan_RegistroFindUniqueArgs} args - Arguments to find a Cal_ResSan_Registro
+     * @example
+     * // Get one Cal_ResSan_Registro
+     * const cal_ResSan_Registro = await prisma.cal_ResSan_Registro.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Cal_ResSan_RegistroFindUniqueArgs>(args: SelectSubset<T, Cal_ResSan_RegistroFindUniqueArgs<ExtArgs>>): Prisma__Cal_ResSan_RegistroClient<$Result.GetResult<Prisma.$Cal_ResSan_RegistroPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Cal_ResSan_Registro that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Cal_ResSan_RegistroFindUniqueOrThrowArgs} args - Arguments to find a Cal_ResSan_Registro
+     * @example
+     * // Get one Cal_ResSan_Registro
+     * const cal_ResSan_Registro = await prisma.cal_ResSan_Registro.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Cal_ResSan_RegistroFindUniqueOrThrowArgs>(args: SelectSubset<T, Cal_ResSan_RegistroFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Cal_ResSan_RegistroClient<$Result.GetResult<Prisma.$Cal_ResSan_RegistroPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Cal_ResSan_Registro that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_ResSan_RegistroFindFirstArgs} args - Arguments to find a Cal_ResSan_Registro
+     * @example
+     * // Get one Cal_ResSan_Registro
+     * const cal_ResSan_Registro = await prisma.cal_ResSan_Registro.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Cal_ResSan_RegistroFindFirstArgs>(args?: SelectSubset<T, Cal_ResSan_RegistroFindFirstArgs<ExtArgs>>): Prisma__Cal_ResSan_RegistroClient<$Result.GetResult<Prisma.$Cal_ResSan_RegistroPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Cal_ResSan_Registro that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_ResSan_RegistroFindFirstOrThrowArgs} args - Arguments to find a Cal_ResSan_Registro
+     * @example
+     * // Get one Cal_ResSan_Registro
+     * const cal_ResSan_Registro = await prisma.cal_ResSan_Registro.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Cal_ResSan_RegistroFindFirstOrThrowArgs>(args?: SelectSubset<T, Cal_ResSan_RegistroFindFirstOrThrowArgs<ExtArgs>>): Prisma__Cal_ResSan_RegistroClient<$Result.GetResult<Prisma.$Cal_ResSan_RegistroPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Cal_ResSan_Registros that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_ResSan_RegistroFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Cal_ResSan_Registros
+     * const cal_ResSan_Registros = await prisma.cal_ResSan_Registro.findMany()
+     * 
+     * // Get first 10 Cal_ResSan_Registros
+     * const cal_ResSan_Registros = await prisma.cal_ResSan_Registro.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const cal_ResSan_RegistroWithIdOnly = await prisma.cal_ResSan_Registro.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Cal_ResSan_RegistroFindManyArgs>(args?: SelectSubset<T, Cal_ResSan_RegistroFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Cal_ResSan_RegistroPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Cal_ResSan_Registro.
+     * @param {Cal_ResSan_RegistroCreateArgs} args - Arguments to create a Cal_ResSan_Registro.
+     * @example
+     * // Create one Cal_ResSan_Registro
+     * const Cal_ResSan_Registro = await prisma.cal_ResSan_Registro.create({
+     *   data: {
+     *     // ... data to create a Cal_ResSan_Registro
+     *   }
+     * })
+     * 
+     */
+    create<T extends Cal_ResSan_RegistroCreateArgs>(args: SelectSubset<T, Cal_ResSan_RegistroCreateArgs<ExtArgs>>): Prisma__Cal_ResSan_RegistroClient<$Result.GetResult<Prisma.$Cal_ResSan_RegistroPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Cal_ResSan_Registros.
+     * @param {Cal_ResSan_RegistroCreateManyArgs} args - Arguments to create many Cal_ResSan_Registros.
+     * @example
+     * // Create many Cal_ResSan_Registros
+     * const cal_ResSan_Registro = await prisma.cal_ResSan_Registro.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Cal_ResSan_RegistroCreateManyArgs>(args?: SelectSubset<T, Cal_ResSan_RegistroCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Cal_ResSan_Registros and returns the data saved in the database.
+     * @param {Cal_ResSan_RegistroCreateManyAndReturnArgs} args - Arguments to create many Cal_ResSan_Registros.
+     * @example
+     * // Create many Cal_ResSan_Registros
+     * const cal_ResSan_Registro = await prisma.cal_ResSan_Registro.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Cal_ResSan_Registros and only return the `id`
+     * const cal_ResSan_RegistroWithIdOnly = await prisma.cal_ResSan_Registro.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Cal_ResSan_RegistroCreateManyAndReturnArgs>(args?: SelectSubset<T, Cal_ResSan_RegistroCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Cal_ResSan_RegistroPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Cal_ResSan_Registro.
+     * @param {Cal_ResSan_RegistroDeleteArgs} args - Arguments to delete one Cal_ResSan_Registro.
+     * @example
+     * // Delete one Cal_ResSan_Registro
+     * const Cal_ResSan_Registro = await prisma.cal_ResSan_Registro.delete({
+     *   where: {
+     *     // ... filter to delete one Cal_ResSan_Registro
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Cal_ResSan_RegistroDeleteArgs>(args: SelectSubset<T, Cal_ResSan_RegistroDeleteArgs<ExtArgs>>): Prisma__Cal_ResSan_RegistroClient<$Result.GetResult<Prisma.$Cal_ResSan_RegistroPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Cal_ResSan_Registro.
+     * @param {Cal_ResSan_RegistroUpdateArgs} args - Arguments to update one Cal_ResSan_Registro.
+     * @example
+     * // Update one Cal_ResSan_Registro
+     * const cal_ResSan_Registro = await prisma.cal_ResSan_Registro.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Cal_ResSan_RegistroUpdateArgs>(args: SelectSubset<T, Cal_ResSan_RegistroUpdateArgs<ExtArgs>>): Prisma__Cal_ResSan_RegistroClient<$Result.GetResult<Prisma.$Cal_ResSan_RegistroPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Cal_ResSan_Registros.
+     * @param {Cal_ResSan_RegistroDeleteManyArgs} args - Arguments to filter Cal_ResSan_Registros to delete.
+     * @example
+     * // Delete a few Cal_ResSan_Registros
+     * const { count } = await prisma.cal_ResSan_Registro.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Cal_ResSan_RegistroDeleteManyArgs>(args?: SelectSubset<T, Cal_ResSan_RegistroDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Cal_ResSan_Registros.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_ResSan_RegistroUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Cal_ResSan_Registros
+     * const cal_ResSan_Registro = await prisma.cal_ResSan_Registro.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Cal_ResSan_RegistroUpdateManyArgs>(args: SelectSubset<T, Cal_ResSan_RegistroUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Cal_ResSan_Registro.
+     * @param {Cal_ResSan_RegistroUpsertArgs} args - Arguments to update or create a Cal_ResSan_Registro.
+     * @example
+     * // Update or create a Cal_ResSan_Registro
+     * const cal_ResSan_Registro = await prisma.cal_ResSan_Registro.upsert({
+     *   create: {
+     *     // ... data to create a Cal_ResSan_Registro
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Cal_ResSan_Registro we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Cal_ResSan_RegistroUpsertArgs>(args: SelectSubset<T, Cal_ResSan_RegistroUpsertArgs<ExtArgs>>): Prisma__Cal_ResSan_RegistroClient<$Result.GetResult<Prisma.$Cal_ResSan_RegistroPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Cal_ResSan_Registros.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_ResSan_RegistroCountArgs} args - Arguments to filter Cal_ResSan_Registros to count.
+     * @example
+     * // Count the number of Cal_ResSan_Registros
+     * const count = await prisma.cal_ResSan_Registro.count({
+     *   where: {
+     *     // ... the filter for the Cal_ResSan_Registros we want to count
+     *   }
+     * })
+    **/
+    count<T extends Cal_ResSan_RegistroCountArgs>(
+      args?: Subset<T, Cal_ResSan_RegistroCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Cal_ResSan_RegistroCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Cal_ResSan_Registro.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_ResSan_RegistroAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Cal_ResSan_RegistroAggregateArgs>(args: Subset<T, Cal_ResSan_RegistroAggregateArgs>): Prisma.PrismaPromise<GetCal_ResSan_RegistroAggregateType<T>>
+
+    /**
+     * Group by Cal_ResSan_Registro.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Cal_ResSan_RegistroGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Cal_ResSan_RegistroGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Cal_ResSan_RegistroGroupByArgs['orderBy'] }
+        : { orderBy?: Cal_ResSan_RegistroGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Cal_ResSan_RegistroGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCal_ResSan_RegistroGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Cal_ResSan_Registro model
+   */
+  readonly fields: Cal_ResSan_RegistroFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Cal_ResSan_Registro.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Cal_ResSan_RegistroClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Cal_ResSan_Registro model
+   */ 
+  interface Cal_ResSan_RegistroFieldRefs {
+    readonly id: FieldRef<"Cal_ResSan_Registro", 'String'>
+    readonly licitacion: FieldRef<"Cal_ResSan_Registro", 'String'>
+    readonly licId: FieldRef<"Cal_ResSan_Registro", 'Int'>
+    readonly anio: FieldRef<"Cal_ResSan_Registro", 'Int'>
+    readonly ut: FieldRef<"Cal_ResSan_Registro", 'Int'>
+    readonly institucion: FieldRef<"Cal_ResSan_Registro", 'String'>
+    readonly rbd: FieldRef<"Cal_ResSan_Registro", 'Int'>
+    readonly rbdDv: FieldRef<"Cal_ResSan_Registro", 'String'>
+    readonly nombreEstablecimiento: FieldRef<"Cal_ResSan_Registro", 'String'>
+    readonly comuna: FieldRef<"Cal_ResSan_Registro", 'String'>
+    readonly estadoResolucion: FieldRef<"Cal_ResSan_Registro", 'String'>
+    readonly numeroResolucion: FieldRef<"Cal_ResSan_Registro", 'String'>
+    readonly documentoUrl: FieldRef<"Cal_ResSan_Registro", 'String'>
+    readonly documentoNombre: FieldRef<"Cal_ResSan_Registro", 'String'>
+    readonly observaciones: FieldRef<"Cal_ResSan_Registro", 'String'>
+    readonly updatedBy: FieldRef<"Cal_ResSan_Registro", 'String'>
+    readonly createdAt: FieldRef<"Cal_ResSan_Registro", 'DateTime'>
+    readonly updatedAt: FieldRef<"Cal_ResSan_Registro", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Cal_ResSan_Registro findUnique
+   */
+  export type Cal_ResSan_RegistroFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_ResSan_Registro
+     */
+    select?: Cal_ResSan_RegistroSelect<ExtArgs> | null
+    /**
+     * Filter, which Cal_ResSan_Registro to fetch.
+     */
+    where: Cal_ResSan_RegistroWhereUniqueInput
+  }
+
+  /**
+   * Cal_ResSan_Registro findUniqueOrThrow
+   */
+  export type Cal_ResSan_RegistroFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_ResSan_Registro
+     */
+    select?: Cal_ResSan_RegistroSelect<ExtArgs> | null
+    /**
+     * Filter, which Cal_ResSan_Registro to fetch.
+     */
+    where: Cal_ResSan_RegistroWhereUniqueInput
+  }
+
+  /**
+   * Cal_ResSan_Registro findFirst
+   */
+  export type Cal_ResSan_RegistroFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_ResSan_Registro
+     */
+    select?: Cal_ResSan_RegistroSelect<ExtArgs> | null
+    /**
+     * Filter, which Cal_ResSan_Registro to fetch.
+     */
+    where?: Cal_ResSan_RegistroWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cal_ResSan_Registros to fetch.
+     */
+    orderBy?: Cal_ResSan_RegistroOrderByWithRelationInput | Cal_ResSan_RegistroOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Cal_ResSan_Registros.
+     */
+    cursor?: Cal_ResSan_RegistroWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cal_ResSan_Registros from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cal_ResSan_Registros.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Cal_ResSan_Registros.
+     */
+    distinct?: Cal_ResSan_RegistroScalarFieldEnum | Cal_ResSan_RegistroScalarFieldEnum[]
+  }
+
+  /**
+   * Cal_ResSan_Registro findFirstOrThrow
+   */
+  export type Cal_ResSan_RegistroFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_ResSan_Registro
+     */
+    select?: Cal_ResSan_RegistroSelect<ExtArgs> | null
+    /**
+     * Filter, which Cal_ResSan_Registro to fetch.
+     */
+    where?: Cal_ResSan_RegistroWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cal_ResSan_Registros to fetch.
+     */
+    orderBy?: Cal_ResSan_RegistroOrderByWithRelationInput | Cal_ResSan_RegistroOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Cal_ResSan_Registros.
+     */
+    cursor?: Cal_ResSan_RegistroWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cal_ResSan_Registros from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cal_ResSan_Registros.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Cal_ResSan_Registros.
+     */
+    distinct?: Cal_ResSan_RegistroScalarFieldEnum | Cal_ResSan_RegistroScalarFieldEnum[]
+  }
+
+  /**
+   * Cal_ResSan_Registro findMany
+   */
+  export type Cal_ResSan_RegistroFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_ResSan_Registro
+     */
+    select?: Cal_ResSan_RegistroSelect<ExtArgs> | null
+    /**
+     * Filter, which Cal_ResSan_Registros to fetch.
+     */
+    where?: Cal_ResSan_RegistroWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cal_ResSan_Registros to fetch.
+     */
+    orderBy?: Cal_ResSan_RegistroOrderByWithRelationInput | Cal_ResSan_RegistroOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Cal_ResSan_Registros.
+     */
+    cursor?: Cal_ResSan_RegistroWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cal_ResSan_Registros from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cal_ResSan_Registros.
+     */
+    skip?: number
+    distinct?: Cal_ResSan_RegistroScalarFieldEnum | Cal_ResSan_RegistroScalarFieldEnum[]
+  }
+
+  /**
+   * Cal_ResSan_Registro create
+   */
+  export type Cal_ResSan_RegistroCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_ResSan_Registro
+     */
+    select?: Cal_ResSan_RegistroSelect<ExtArgs> | null
+    /**
+     * The data needed to create a Cal_ResSan_Registro.
+     */
+    data: XOR<Cal_ResSan_RegistroCreateInput, Cal_ResSan_RegistroUncheckedCreateInput>
+  }
+
+  /**
+   * Cal_ResSan_Registro createMany
+   */
+  export type Cal_ResSan_RegistroCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Cal_ResSan_Registros.
+     */
+    data: Cal_ResSan_RegistroCreateManyInput | Cal_ResSan_RegistroCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Cal_ResSan_Registro createManyAndReturn
+   */
+  export type Cal_ResSan_RegistroCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_ResSan_Registro
+     */
+    select?: Cal_ResSan_RegistroSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Cal_ResSan_Registros.
+     */
+    data: Cal_ResSan_RegistroCreateManyInput | Cal_ResSan_RegistroCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Cal_ResSan_Registro update
+   */
+  export type Cal_ResSan_RegistroUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_ResSan_Registro
+     */
+    select?: Cal_ResSan_RegistroSelect<ExtArgs> | null
+    /**
+     * The data needed to update a Cal_ResSan_Registro.
+     */
+    data: XOR<Cal_ResSan_RegistroUpdateInput, Cal_ResSan_RegistroUncheckedUpdateInput>
+    /**
+     * Choose, which Cal_ResSan_Registro to update.
+     */
+    where: Cal_ResSan_RegistroWhereUniqueInput
+  }
+
+  /**
+   * Cal_ResSan_Registro updateMany
+   */
+  export type Cal_ResSan_RegistroUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Cal_ResSan_Registros.
+     */
+    data: XOR<Cal_ResSan_RegistroUpdateManyMutationInput, Cal_ResSan_RegistroUncheckedUpdateManyInput>
+    /**
+     * Filter which Cal_ResSan_Registros to update
+     */
+    where?: Cal_ResSan_RegistroWhereInput
+  }
+
+  /**
+   * Cal_ResSan_Registro upsert
+   */
+  export type Cal_ResSan_RegistroUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_ResSan_Registro
+     */
+    select?: Cal_ResSan_RegistroSelect<ExtArgs> | null
+    /**
+     * The filter to search for the Cal_ResSan_Registro to update in case it exists.
+     */
+    where: Cal_ResSan_RegistroWhereUniqueInput
+    /**
+     * In case the Cal_ResSan_Registro found by the `where` argument doesn't exist, create a new Cal_ResSan_Registro with this data.
+     */
+    create: XOR<Cal_ResSan_RegistroCreateInput, Cal_ResSan_RegistroUncheckedCreateInput>
+    /**
+     * In case the Cal_ResSan_Registro was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Cal_ResSan_RegistroUpdateInput, Cal_ResSan_RegistroUncheckedUpdateInput>
+  }
+
+  /**
+   * Cal_ResSan_Registro delete
+   */
+  export type Cal_ResSan_RegistroDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_ResSan_Registro
+     */
+    select?: Cal_ResSan_RegistroSelect<ExtArgs> | null
+    /**
+     * Filter which Cal_ResSan_Registro to delete.
+     */
+    where: Cal_ResSan_RegistroWhereUniqueInput
+  }
+
+  /**
+   * Cal_ResSan_Registro deleteMany
+   */
+  export type Cal_ResSan_RegistroDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Cal_ResSan_Registros to delete
+     */
+    where?: Cal_ResSan_RegistroWhereInput
+  }
+
+  /**
+   * Cal_ResSan_Registro without action
+   */
+  export type Cal_ResSan_RegistroDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cal_ResSan_Registro
+     */
+    select?: Cal_ResSan_RegistroSelect<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -150003,6 +151169,30 @@ export namespace Prisma {
   };
 
   export type RegCap_ParticipanteScalarFieldEnum = (typeof RegCap_ParticipanteScalarFieldEnum)[keyof typeof RegCap_ParticipanteScalarFieldEnum]
+
+
+  export const Cal_ResSan_RegistroScalarFieldEnum: {
+    id: 'id',
+    licitacion: 'licitacion',
+    licId: 'licId',
+    anio: 'anio',
+    ut: 'ut',
+    institucion: 'institucion',
+    rbd: 'rbd',
+    rbdDv: 'rbdDv',
+    nombreEstablecimiento: 'nombreEstablecimiento',
+    comuna: 'comuna',
+    estadoResolucion: 'estadoResolucion',
+    numeroResolucion: 'numeroResolucion',
+    documentoUrl: 'documentoUrl',
+    documentoNombre: 'documentoNombre',
+    observaciones: 'observaciones',
+    updatedBy: 'updatedBy',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type Cal_ResSan_RegistroScalarFieldEnum = (typeof Cal_ResSan_RegistroScalarFieldEnum)[keyof typeof Cal_ResSan_RegistroScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -161090,6 +162280,126 @@ export namespace Prisma {
     rut?: StringWithAggregatesFilter<"RegCap_Participante"> | string
     firma?: StringNullableWithAggregatesFilter<"RegCap_Participante"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"RegCap_Participante"> | Date | string
+  }
+
+  export type Cal_ResSan_RegistroWhereInput = {
+    AND?: Cal_ResSan_RegistroWhereInput | Cal_ResSan_RegistroWhereInput[]
+    OR?: Cal_ResSan_RegistroWhereInput[]
+    NOT?: Cal_ResSan_RegistroWhereInput | Cal_ResSan_RegistroWhereInput[]
+    id?: StringFilter<"Cal_ResSan_Registro"> | string
+    licitacion?: StringNullableFilter<"Cal_ResSan_Registro"> | string | null
+    licId?: IntNullableFilter<"Cal_ResSan_Registro"> | number | null
+    anio?: IntFilter<"Cal_ResSan_Registro"> | number
+    ut?: IntFilter<"Cal_ResSan_Registro"> | number
+    institucion?: StringFilter<"Cal_ResSan_Registro"> | string
+    rbd?: IntFilter<"Cal_ResSan_Registro"> | number
+    rbdDv?: StringNullableFilter<"Cal_ResSan_Registro"> | string | null
+    nombreEstablecimiento?: StringFilter<"Cal_ResSan_Registro"> | string
+    comuna?: StringFilter<"Cal_ResSan_Registro"> | string
+    estadoResolucion?: StringFilter<"Cal_ResSan_Registro"> | string
+    numeroResolucion?: StringNullableFilter<"Cal_ResSan_Registro"> | string | null
+    documentoUrl?: StringNullableFilter<"Cal_ResSan_Registro"> | string | null
+    documentoNombre?: StringNullableFilter<"Cal_ResSan_Registro"> | string | null
+    observaciones?: StringNullableFilter<"Cal_ResSan_Registro"> | string | null
+    updatedBy?: StringNullableFilter<"Cal_ResSan_Registro"> | string | null
+    createdAt?: DateTimeFilter<"Cal_ResSan_Registro"> | Date | string
+    updatedAt?: DateTimeFilter<"Cal_ResSan_Registro"> | Date | string
+  }
+
+  export type Cal_ResSan_RegistroOrderByWithRelationInput = {
+    id?: SortOrder
+    licitacion?: SortOrderInput | SortOrder
+    licId?: SortOrderInput | SortOrder
+    anio?: SortOrder
+    ut?: SortOrder
+    institucion?: SortOrder
+    rbd?: SortOrder
+    rbdDv?: SortOrderInput | SortOrder
+    nombreEstablecimiento?: SortOrder
+    comuna?: SortOrder
+    estadoResolucion?: SortOrder
+    numeroResolucion?: SortOrderInput | SortOrder
+    documentoUrl?: SortOrderInput | SortOrder
+    documentoNombre?: SortOrderInput | SortOrder
+    observaciones?: SortOrderInput | SortOrder
+    updatedBy?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Cal_ResSan_RegistroWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    rbd_anio?: Cal_ResSan_RegistroRbdAnioCompoundUniqueInput
+    AND?: Cal_ResSan_RegistroWhereInput | Cal_ResSan_RegistroWhereInput[]
+    OR?: Cal_ResSan_RegistroWhereInput[]
+    NOT?: Cal_ResSan_RegistroWhereInput | Cal_ResSan_RegistroWhereInput[]
+    licitacion?: StringNullableFilter<"Cal_ResSan_Registro"> | string | null
+    licId?: IntNullableFilter<"Cal_ResSan_Registro"> | number | null
+    anio?: IntFilter<"Cal_ResSan_Registro"> | number
+    ut?: IntFilter<"Cal_ResSan_Registro"> | number
+    institucion?: StringFilter<"Cal_ResSan_Registro"> | string
+    rbd?: IntFilter<"Cal_ResSan_Registro"> | number
+    rbdDv?: StringNullableFilter<"Cal_ResSan_Registro"> | string | null
+    nombreEstablecimiento?: StringFilter<"Cal_ResSan_Registro"> | string
+    comuna?: StringFilter<"Cal_ResSan_Registro"> | string
+    estadoResolucion?: StringFilter<"Cal_ResSan_Registro"> | string
+    numeroResolucion?: StringNullableFilter<"Cal_ResSan_Registro"> | string | null
+    documentoUrl?: StringNullableFilter<"Cal_ResSan_Registro"> | string | null
+    documentoNombre?: StringNullableFilter<"Cal_ResSan_Registro"> | string | null
+    observaciones?: StringNullableFilter<"Cal_ResSan_Registro"> | string | null
+    updatedBy?: StringNullableFilter<"Cal_ResSan_Registro"> | string | null
+    createdAt?: DateTimeFilter<"Cal_ResSan_Registro"> | Date | string
+    updatedAt?: DateTimeFilter<"Cal_ResSan_Registro"> | Date | string
+  }, "id" | "rbd_anio">
+
+  export type Cal_ResSan_RegistroOrderByWithAggregationInput = {
+    id?: SortOrder
+    licitacion?: SortOrderInput | SortOrder
+    licId?: SortOrderInput | SortOrder
+    anio?: SortOrder
+    ut?: SortOrder
+    institucion?: SortOrder
+    rbd?: SortOrder
+    rbdDv?: SortOrderInput | SortOrder
+    nombreEstablecimiento?: SortOrder
+    comuna?: SortOrder
+    estadoResolucion?: SortOrder
+    numeroResolucion?: SortOrderInput | SortOrder
+    documentoUrl?: SortOrderInput | SortOrder
+    documentoNombre?: SortOrderInput | SortOrder
+    observaciones?: SortOrderInput | SortOrder
+    updatedBy?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: Cal_ResSan_RegistroCountOrderByAggregateInput
+    _avg?: Cal_ResSan_RegistroAvgOrderByAggregateInput
+    _max?: Cal_ResSan_RegistroMaxOrderByAggregateInput
+    _min?: Cal_ResSan_RegistroMinOrderByAggregateInput
+    _sum?: Cal_ResSan_RegistroSumOrderByAggregateInput
+  }
+
+  export type Cal_ResSan_RegistroScalarWhereWithAggregatesInput = {
+    AND?: Cal_ResSan_RegistroScalarWhereWithAggregatesInput | Cal_ResSan_RegistroScalarWhereWithAggregatesInput[]
+    OR?: Cal_ResSan_RegistroScalarWhereWithAggregatesInput[]
+    NOT?: Cal_ResSan_RegistroScalarWhereWithAggregatesInput | Cal_ResSan_RegistroScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Cal_ResSan_Registro"> | string
+    licitacion?: StringNullableWithAggregatesFilter<"Cal_ResSan_Registro"> | string | null
+    licId?: IntNullableWithAggregatesFilter<"Cal_ResSan_Registro"> | number | null
+    anio?: IntWithAggregatesFilter<"Cal_ResSan_Registro"> | number
+    ut?: IntWithAggregatesFilter<"Cal_ResSan_Registro"> | number
+    institucion?: StringWithAggregatesFilter<"Cal_ResSan_Registro"> | string
+    rbd?: IntWithAggregatesFilter<"Cal_ResSan_Registro"> | number
+    rbdDv?: StringNullableWithAggregatesFilter<"Cal_ResSan_Registro"> | string | null
+    nombreEstablecimiento?: StringWithAggregatesFilter<"Cal_ResSan_Registro"> | string
+    comuna?: StringWithAggregatesFilter<"Cal_ResSan_Registro"> | string
+    estadoResolucion?: StringWithAggregatesFilter<"Cal_ResSan_Registro"> | string
+    numeroResolucion?: StringNullableWithAggregatesFilter<"Cal_ResSan_Registro"> | string | null
+    documentoUrl?: StringNullableWithAggregatesFilter<"Cal_ResSan_Registro"> | string | null
+    documentoNombre?: StringNullableWithAggregatesFilter<"Cal_ResSan_Registro"> | string | null
+    observaciones?: StringNullableWithAggregatesFilter<"Cal_ResSan_Registro"> | string | null
+    updatedBy?: StringNullableWithAggregatesFilter<"Cal_ResSan_Registro"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Cal_ResSan_Registro"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Cal_ResSan_Registro"> | Date | string
   }
 
   export type RoleCreateInput = {
@@ -173476,6 +174786,153 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type Cal_ResSan_RegistroCreateInput = {
+    id?: string
+    licitacion?: string | null
+    licId?: number | null
+    anio: number
+    ut: number
+    institucion: string
+    rbd: number
+    rbdDv?: string | null
+    nombreEstablecimiento: string
+    comuna: string
+    estadoResolucion?: string
+    numeroResolucion?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    observaciones?: string | null
+    updatedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Cal_ResSan_RegistroUncheckedCreateInput = {
+    id?: string
+    licitacion?: string | null
+    licId?: number | null
+    anio: number
+    ut: number
+    institucion: string
+    rbd: number
+    rbdDv?: string | null
+    nombreEstablecimiento: string
+    comuna: string
+    estadoResolucion?: string
+    numeroResolucion?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    observaciones?: string | null
+    updatedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Cal_ResSan_RegistroUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licitacion?: NullableStringFieldUpdateOperationsInput | string | null
+    licId?: NullableIntFieldUpdateOperationsInput | number | null
+    anio?: IntFieldUpdateOperationsInput | number
+    ut?: IntFieldUpdateOperationsInput | number
+    institucion?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    rbdDv?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreEstablecimiento?: StringFieldUpdateOperationsInput | string
+    comuna?: StringFieldUpdateOperationsInput | string
+    estadoResolucion?: StringFieldUpdateOperationsInput | string
+    numeroResolucion?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Cal_ResSan_RegistroUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licitacion?: NullableStringFieldUpdateOperationsInput | string | null
+    licId?: NullableIntFieldUpdateOperationsInput | number | null
+    anio?: IntFieldUpdateOperationsInput | number
+    ut?: IntFieldUpdateOperationsInput | number
+    institucion?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    rbdDv?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreEstablecimiento?: StringFieldUpdateOperationsInput | string
+    comuna?: StringFieldUpdateOperationsInput | string
+    estadoResolucion?: StringFieldUpdateOperationsInput | string
+    numeroResolucion?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Cal_ResSan_RegistroCreateManyInput = {
+    id?: string
+    licitacion?: string | null
+    licId?: number | null
+    anio: number
+    ut: number
+    institucion: string
+    rbd: number
+    rbdDv?: string | null
+    nombreEstablecimiento: string
+    comuna: string
+    estadoResolucion?: string
+    numeroResolucion?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    observaciones?: string | null
+    updatedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Cal_ResSan_RegistroUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licitacion?: NullableStringFieldUpdateOperationsInput | string | null
+    licId?: NullableIntFieldUpdateOperationsInput | number | null
+    anio?: IntFieldUpdateOperationsInput | number
+    ut?: IntFieldUpdateOperationsInput | number
+    institucion?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    rbdDv?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreEstablecimiento?: StringFieldUpdateOperationsInput | string
+    comuna?: StringFieldUpdateOperationsInput | string
+    estadoResolucion?: StringFieldUpdateOperationsInput | string
+    numeroResolucion?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Cal_ResSan_RegistroUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licitacion?: NullableStringFieldUpdateOperationsInput | string | null
+    licId?: NullableIntFieldUpdateOperationsInput | number | null
+    anio?: IntFieldUpdateOperationsInput | number
+    ut?: IntFieldUpdateOperationsInput | number
+    institucion?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    rbdDv?: NullableStringFieldUpdateOperationsInput | string | null
+    nombreEstablecimiento?: StringFieldUpdateOperationsInput | string
+    comuna?: StringFieldUpdateOperationsInput | string
+    estadoResolucion?: StringFieldUpdateOperationsInput | string
+    numeroResolucion?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -180975,6 +182432,88 @@ export namespace Prisma {
 
   export type RegCap_ParticipanteSumOrderByAggregateInput = {
     numero?: SortOrder
+  }
+
+  export type Cal_ResSan_RegistroRbdAnioCompoundUniqueInput = {
+    rbd: number
+    anio: number
+  }
+
+  export type Cal_ResSan_RegistroCountOrderByAggregateInput = {
+    id?: SortOrder
+    licitacion?: SortOrder
+    licId?: SortOrder
+    anio?: SortOrder
+    ut?: SortOrder
+    institucion?: SortOrder
+    rbd?: SortOrder
+    rbdDv?: SortOrder
+    nombreEstablecimiento?: SortOrder
+    comuna?: SortOrder
+    estadoResolucion?: SortOrder
+    numeroResolucion?: SortOrder
+    documentoUrl?: SortOrder
+    documentoNombre?: SortOrder
+    observaciones?: SortOrder
+    updatedBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Cal_ResSan_RegistroAvgOrderByAggregateInput = {
+    licId?: SortOrder
+    anio?: SortOrder
+    ut?: SortOrder
+    rbd?: SortOrder
+  }
+
+  export type Cal_ResSan_RegistroMaxOrderByAggregateInput = {
+    id?: SortOrder
+    licitacion?: SortOrder
+    licId?: SortOrder
+    anio?: SortOrder
+    ut?: SortOrder
+    institucion?: SortOrder
+    rbd?: SortOrder
+    rbdDv?: SortOrder
+    nombreEstablecimiento?: SortOrder
+    comuna?: SortOrder
+    estadoResolucion?: SortOrder
+    numeroResolucion?: SortOrder
+    documentoUrl?: SortOrder
+    documentoNombre?: SortOrder
+    observaciones?: SortOrder
+    updatedBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Cal_ResSan_RegistroMinOrderByAggregateInput = {
+    id?: SortOrder
+    licitacion?: SortOrder
+    licId?: SortOrder
+    anio?: SortOrder
+    ut?: SortOrder
+    institucion?: SortOrder
+    rbd?: SortOrder
+    rbdDv?: SortOrder
+    nombreEstablecimiento?: SortOrder
+    comuna?: SortOrder
+    estadoResolucion?: SortOrder
+    numeroResolucion?: SortOrder
+    documentoUrl?: SortOrder
+    documentoNombre?: SortOrder
+    observaciones?: SortOrder
+    updatedBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Cal_ResSan_RegistroSumOrderByAggregateInput = {
+    licId?: SortOrder
+    anio?: SortOrder
+    ut?: SortOrder
+    rbd?: SortOrder
   }
 
   export type UserCreateNestedManyWithoutRoleInput = {
@@ -205403,6 +206942,10 @@ export namespace Prisma {
      * @deprecated Use RegCap_ParticipanteDefaultArgs instead
      */
     export type RegCap_ParticipanteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = RegCap_ParticipanteDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Cal_ResSan_RegistroDefaultArgs instead
+     */
+    export type Cal_ResSan_RegistroArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Cal_ResSan_RegistroDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

@@ -3,6 +3,11 @@
 import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { revalidatePath } from 'next/cache'
+import { 
+    syncSingleColegioToResolucionSanitaria, 
+    deleteColegioFromResolucionSanitaria, 
+    syncColegiosToResolucionSanitaria 
+} from '@/lib/calidad/resolucion-sanitaria'
 
 export type ColegioData = {
     colut: number
@@ -101,8 +106,12 @@ export async function uploadColegiosData(data: ColegioData[], overwrite: boolean
             }
         }
 
+        // Sincronizar colegios a Resolución Sanitaria
+        await syncColegiosToResolucionSanitaria()
+
         revalidatePath('/dashboard/mantenedor/operaciones/colegios')
         revalidatePath('/dashboard/mantenedor/operaciones/personal')
+        revalidatePath('/dashboard/areas/calidad/resolucion-sanitaria')
         return { success: true, count: dataToInsert.length }
     } catch (error: any) {
         console.error('Error insertando datos Colegios:', error)
@@ -177,9 +186,20 @@ export async function updateColegio(id: string, data: Partial<ColegioData>) {
             }
         }
 
+        // Sincronizar con Resolución Sanitaria
+        await syncSingleColegioToResolucionSanitaria({
+            colRBD: current.colRBD,
+            colut: current.colut,
+            nombreEstablecimiento: data.nombreEstablecimiento || current.nombreEstablecimiento,
+            institucion: data.institucion || current.institucion,
+            comuna: data.comuna || current.comuna,
+            colRBDDV: current.colRBDDV
+        })
+
         revalidatePath('/dashboard/mantenedor/operaciones/colegios')
         revalidatePath('/dashboard/mantenedor/matriz-riesgo/colegios-activos')
         revalidatePath('/dashboard/matriz-riesgo')
+        revalidatePath('/dashboard/areas/calidad/resolucion-sanitaria')
         return { success: true }
     } catch (e) {
         console.error("Error updating colegio:", e)
@@ -206,9 +226,13 @@ export async function deleteColegioByRBD(rbd: number) {
             data: { isActive: false }
         })
 
+        // 3. Eliminar de Resolución Sanitaria
+        await deleteColegioFromResolucionSanitaria(rbd)
+
         revalidatePath('/dashboard/mantenedor/operaciones/colegios')
         revalidatePath('/dashboard/mantenedor/matriz-riesgo/colegios-activos')
         revalidatePath('/dashboard/matriz-riesgo')
+        revalidatePath('/dashboard/areas/calidad/resolucion-sanitaria')
         return { success: true }
     } catch (error) {
         console.error('Error eliminando colegio por RBD:', error)
@@ -310,8 +334,17 @@ export async function crearColegioManual(data: ColegioData) {
         if (existing) return { error: 'El RBD ya existe' }  
         await prisma.colegios.create({ data: { ...data, colRBD: Number(data.colRBD), colut: Number(data.colut), sucursal: data.sucursal.trim(), nombreEstablecimiento: data.nombreEstablecimiento.trim(), uploadedBy: session.user.username as string } })  
         if (data.institucion === 'JUNAEB') { await prisma.colegiosMatriz.create({ data: { colRBD: Number(data.colRBD), nombreEstablecimiento: data.nombreEstablecimiento.trim(), institucion: data.institucion, sucursal: data.sucursal.trim(), colut: Number(data.colut), isActive: true } }) }  
+        await syncSingleColegioToResolucionSanitaria({
+            colRBD: Number(data.colRBD),
+            colut: Number(data.colut),
+            nombreEstablecimiento: data.nombreEstablecimiento.trim(),
+            institucion: data.institucion.trim(),
+            comuna: data.comuna ? data.comuna.trim() : '',
+            colRBDDV: data.colRBDDV
+        })
         revalidatePath('/dashboard/mantenedor/operaciones/colegios')  
         revalidatePath('/dashboard/mantenedor/operaciones/personal')  
+        revalidatePath('/dashboard/areas/calidad/resolucion-sanitaria')  
         return { success: true }  
     } catch (e) { return { error: 'Error al crear' } }  
 } 

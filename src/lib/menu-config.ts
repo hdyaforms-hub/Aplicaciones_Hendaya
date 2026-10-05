@@ -137,10 +137,16 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                                    user.role.permissions.includes('view_retorno_productos') ||
                                    user.role.permissions.includes('view_verificador_temperaturas') ||
                                    user.role.permissions.includes('view_calidad_transporte_higiene') ||
-                                   user.role.permissions.includes('view_calidad_higiene_personal')
+                                   user.role.permissions.includes('view_calidad_higiene_personal') ||
+                                   user.role.permissions.includes('view_calidad_resolucion_sanitaria')
                     return !!(isAdmin || hasCalidad || hasPerm)
                 },
                 subItems: [
+                    {
+                        name: 'Resolución Sanitaria',
+                        href: '/dashboard/areas/calidad/resolucion-sanitaria',
+                        requiredPermission: 'view_calidad_resolucion_sanitaria'
+                    },
                     { 
                         name: 'Retirada de Productos', 
                         href: '/dashboard/areas/calidad/retorno-productos', 
