@@ -19,8 +19,45 @@ import {
     Package,
     Timer,
     Check,
-    Send
+    Send,
+    Snowflake,
+    Zap
 } from 'lucide-react'
+
+function getTipoCargaConfig(tipo?: string) {
+    const t = tipo?.toUpperCase() || 'GENERAL'
+    switch (t) {
+        case 'REFRIGERADO':
+            return {
+                label: 'Refrigerado',
+                icon: Snowflake,
+                badgeBg: 'bg-sky-50 text-sky-700 border-sky-200/90',
+                borderTop: 'border-t-4 border-t-sky-500'
+            }
+        case 'CONGELADO':
+            return {
+                label: 'Congelado',
+                icon: Snowflake,
+                badgeBg: 'bg-indigo-50 text-indigo-700 border-indigo-200/90',
+                borderTop: 'border-t-4 border-t-indigo-600'
+            }
+        case 'EXCLUSIVO':
+        case 'EXPRESS':
+            return {
+                label: 'Express',
+                icon: Zap,
+                badgeBg: 'bg-amber-50 text-amber-800 border-amber-200/90',
+                borderTop: 'border-t-4 border-t-amber-500'
+            }
+        default:
+            return {
+                label: 'General',
+                icon: Package,
+                badgeBg: 'bg-slate-50 text-slate-700 border-slate-200',
+                borderTop: 'border-t-4 border-t-slate-400'
+            }
+    }
+}
 import { getBodegas, getAndenes } from '@/actions/logistica/andenes'
 import {
     getRutas,
@@ -434,11 +471,13 @@ export default function TableroClient({
                             minutosEnAnden = Math.max(0, Math.floor(diffMs / 60000))
                         }
                         const alertaDemora = minutosEnAnden >= 45
+                        const tipoConfig = getTipoCargaConfig(anden.tipoCarga)
+                        const TipoIcon = tipoConfig.icon
 
                         return (
                             <div
                                 key={anden.id}
-                                className={`rounded-2xl p-4 border transition-all flex flex-col justify-between space-y-3 ${
+                                className={`rounded-2xl p-4 border transition-all flex flex-col justify-between space-y-3 ${tipoConfig.borderTop} ${
                                     isDisp
                                         ? 'bg-emerald-50/40 border-emerald-200/80 hover:border-emerald-300'
                                         : isOcup
@@ -449,12 +488,21 @@ export default function TableroClient({
                                 }`}
                             >
                                 <div className="space-y-2">
-                                    <div className="flex items-center justify-between">
-                                        <span className="text-xs font-mono font-black px-2.5 py-1 rounded-lg bg-white border border-gray-200 text-gray-900 shadow-2xs">
-                                            {anden.codigo}
-                                        </span>
+                                    <div className="flex items-center justify-between gap-1.5">
+                                        <div className="flex items-center gap-1.5 flex-wrap">
+                                            <span className="text-xs font-mono font-black px-2.5 py-1 rounded-lg bg-white border border-gray-200 text-gray-900 shadow-2xs">
+                                                {anden.codigo}
+                                            </span>
+                                            <span
+                                                className={`inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-md border ${tipoConfig.badgeBg}`}
+                                                title={`Tipo: ${tipoConfig.label}`}
+                                            >
+                                                <TipoIcon className="w-3 h-3 shrink-0" />
+                                                {tipoConfig.label}
+                                            </span>
+                                        </div>
                                         <span
-                                            className={`text-[10px] font-black tracking-wide px-2.5 py-0.5 rounded-full border ${
+                                            className={`text-[10px] font-black tracking-wide px-2.5 py-0.5 rounded-full border shrink-0 ${
                                                 isDisp
                                                     ? 'bg-emerald-100 text-emerald-800 border-emerald-200'
                                                     : isOcup
@@ -469,8 +517,7 @@ export default function TableroClient({
                                     </div>
 
                                     <div>
-                                        <h3 className="font-bold text-gray-900 text-sm">{anden.nombre}</h3>
-                                        <p className="text-[11px] font-medium text-gray-500">{anden.tipoCarga}</p>
+                                        <h3 className="font-bold text-gray-900 text-sm leading-snug">{anden.nombre}</h3>
                                     </div>
 
                                     {/* DETALLES DE CAMIÓN OCUPANTE */}

@@ -16,8 +16,50 @@ import {
     Search,
     Phone,
     Send,
-    MapPin
+    MapPin,
+    Snowflake,
+    Zap,
+    Package
 } from 'lucide-react'
+
+function getTipoCargaConfig(tipo?: string) {
+    const t = tipo?.toUpperCase() || 'GENERAL'
+    switch (t) {
+        case 'REFRIGERADO':
+            return {
+                label: 'Refrigerado',
+                icon: Snowflake,
+                badgeBg: 'bg-sky-50 text-sky-700 border-sky-200/90',
+                borderTop: 'border-t-4 border-t-sky-500',
+                hoverBorder: 'hover:border-sky-300'
+            }
+        case 'CONGELADO':
+            return {
+                label: 'Congelado',
+                icon: Snowflake,
+                badgeBg: 'bg-indigo-50 text-indigo-700 border-indigo-200/90',
+                borderTop: 'border-t-4 border-t-indigo-600',
+                hoverBorder: 'hover:border-indigo-300'
+            }
+        case 'EXCLUSIVO':
+        case 'EXPRESS':
+            return {
+                label: 'Express',
+                icon: Zap,
+                badgeBg: 'bg-amber-50 text-amber-800 border-amber-200/90',
+                borderTop: 'border-t-4 border-t-amber-500',
+                hoverBorder: 'hover:border-amber-300'
+            }
+        default:
+            return {
+                label: 'General',
+                icon: Package,
+                badgeBg: 'bg-slate-50 text-slate-700 border-slate-200',
+                borderTop: 'border-t-4 border-t-slate-400',
+                hoverBorder: 'hover:border-slate-300'
+            }
+    }
+}
 import {
     getBodegas,
     crearAnden,
@@ -416,36 +458,49 @@ export default function ConfiguracionClient({
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                             {andenes.map(a => {
-                            const isDisp = a.estadoOperativo === 'DISPONIBLE'
-                            const isOcup = a.estadoOperativo === 'OCUPADO'
-                            const isBloq = a.estadoOperativo === 'BLOQUEADO' || a.estadoOperativo === 'MANTENCION'
+                                const isDisp = a.estadoOperativo === 'DISPONIBLE'
+                                const isOcup = a.estadoOperativo === 'OCUPADO'
+                                const isBloq = a.estadoOperativo === 'BLOQUEADO' || a.estadoOperativo === 'MANTENCION'
+                                const tipoConfig = getTipoCargaConfig(a.tipoCarga)
+                                const TipoIcon = tipoConfig.icon
 
-                            return (
-                                <div
-                                    key={a.id}
-                                    className="bg-white rounded-2xl p-5 border border-gray-200 shadow-sm flex flex-col justify-between space-y-4 hover:border-cyan-300 transition-all"
-                                >
-                                    <div className="space-y-2">
-                                        <div className="flex items-center justify-between">
-                                            <span className="text-xs font-mono font-black px-2.5 py-1 rounded-lg bg-gray-100 text-gray-900 border border-gray-200">
-                                                {a.codigo}
-                                            </span>
-                                            <span
-                                                className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border ${
-                                                    isDisp
-                                                        ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
-                                                        : isOcup
-                                                        ? 'bg-sky-50 text-sky-700 border-sky-200'
-                                                        : 'bg-rose-50 text-rose-700 border-rose-200'
-                                                }`}
-                                            >
-                                                {a.estadoOperativo}
-                                            </span>
+                                return (
+                                    <div
+                                        key={a.id}
+                                        className={`bg-white rounded-2xl p-5 border border-gray-200 shadow-xs flex flex-col justify-between space-y-4 ${tipoConfig.borderTop} ${tipoConfig.hoverBorder} hover:shadow-md transition-all relative overflow-hidden`}
+                                    >
+                                        <div className="space-y-3">
+                                            <div className="flex items-center justify-between gap-2">
+                                                <div className="flex items-center gap-1.5 flex-wrap">
+                                                    <span className="text-xs font-mono font-black px-2.5 py-1 rounded-lg bg-gray-100 text-gray-900 border border-gray-200">
+                                                        {a.codigo}
+                                                    </span>
+                                                    <span
+                                                        className={`inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-lg border ${tipoConfig.badgeBg}`}
+                                                        title={`Tipo de Carga: ${tipoConfig.label}`}
+                                                    >
+                                                        <TipoIcon className="w-3 h-3 shrink-0" />
+                                                        {tipoConfig.label}
+                                                    </span>
+                                                </div>
+                                                <span
+                                                    className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border shrink-0 ${
+                                                        isDisp
+                                                            ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                                                            : isOcup
+                                                            ? 'bg-sky-50 text-sky-700 border-sky-200'
+                                                            : 'bg-rose-50 text-rose-700 border-rose-200'
+                                                    }`}
+                                                >
+                                                    {a.estadoOperativo}
+                                                </span>
+                                            </div>
+
+                                            <div>
+                                                <h3 className="font-bold text-gray-900 text-sm leading-snug">{a.nombre}</h3>
+                                                <p className="text-[11px] text-gray-400 font-mono mt-0.5">Orden: #{a.orden || 1}</p>
+                                            </div>
                                         </div>
-
-                                        <h3 className="font-bold text-gray-900 text-sm">{a.nombre}</h3>
-                                        <p className="text-xs text-gray-500 font-medium">Tipo: {a.tipoCarga}</p>
-                                    </div>
 
                                     <div className="pt-3 border-t border-gray-100 flex items-center justify-between">
                                         <div className="flex items-center gap-1.5">
