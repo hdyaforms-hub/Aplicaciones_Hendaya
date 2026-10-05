@@ -114,6 +114,20 @@ const SYSTEM_PRESETS = [
         description: 'Actas de supervisión, matriz de riesgo 2026, kilometraje y multas EE.',
         layoutType: 'grid-2x2' as LayoutSkeletonType,
         slots: ['actas-supervision', 'matriz-riesgo', 'kilometraje-supervisores', 'multas-ee']
+    },
+    {
+        id: 'sys-calidad',
+        name: '🔬 Vista Calidad Integral',
+        description: 'Resolución Sanitaria, Higiene de Transporte, Higiene Personal y Verificador de Temperaturas.',
+        layoutType: 'grid-2x2' as LayoutSkeletonType,
+        slots: ['resolucion-sanitaria', 'calidad-transporte-higiene', 'calidad-higiene-personal', 'verificador-temperaturas']
+    },
+    {
+        id: 'sys-nuevos-modulos',
+        name: '🚀 Vista Lo Último Fabricado',
+        description: 'Resolución Sanitaria, Despacho Logístico, Prevención de Riesgos, Capacitaciones, Gramaje y Descargos.',
+        layoutType: 'grid-3x2' as LayoutSkeletonType,
+        slots: ['resolucion-sanitaria', 'logistica-despacho', 'prevencion-gravedad-preparacion', 'capacitaciones-personal', 'captura-gramaje', 'descargos-multas-ee']
     }
 ]
 

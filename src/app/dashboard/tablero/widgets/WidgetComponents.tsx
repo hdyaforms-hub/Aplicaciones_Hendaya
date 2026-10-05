@@ -587,6 +587,468 @@ export function WidgetGestorDocumental({ data }: { data: any }) {
     )
 }
 
+// 16. Widget Resolución Sanitaria
+export function WidgetResolucionSanitaria({ data }: { data: any }) {
+    const res = data?.resolucionSanitaria || {
+        totalColegios: 0,
+        conResolucion: 0,
+        sinResolucion: 0,
+        noAplica: 0,
+        porcentaje: 0,
+        conDocumento: 0
+    }
+
+    return (
+        <div className="h-full flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-2">
+                <div>
+                    <span className="text-2xl font-bold text-white">{res.porcentaje}%</span>
+                    <span className="text-xs text-slate-400 ml-1.5">Con Resolución Oficial</span>
+                </div>
+                <span className="px-2.5 py-1 text-xs rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-semibold flex items-center gap-1">
+                    <span>📋</span> {res.totalColegios} Colegios
+                </span>
+            </div>
+
+            {/* Barra de Progreso */}
+            <div className="w-full bg-slate-800 rounded-full h-2.5 overflow-hidden my-1">
+                <div
+                    className="bg-gradient-to-r from-emerald-500 to-teal-400 h-2.5 rounded-full transition-all duration-500"
+                    style={{ width: `${Math.min(100, Math.max(0, res.porcentaje))}%` }}
+                ></div>
+            </div>
+
+            {/* Métricas clave */}
+            <div className="grid grid-cols-3 gap-2 my-2 text-center">
+                <div className="p-2 rounded-lg bg-emerald-950/40 border border-emerald-500/30">
+                    <div className="text-xs text-emerald-400 font-medium">🟢 Si</div>
+                    <div className="text-lg font-bold text-white mt-0.5">{res.conResolucion}</div>
+                </div>
+                <div className="p-2 rounded-lg bg-rose-950/40 border border-rose-500/30">
+                    <div className="text-xs text-rose-400 font-medium">🔴 No</div>
+                    <div className="text-lg font-bold text-white mt-0.5">{res.sinResolucion}</div>
+                </div>
+                <div className="p-2 rounded-lg bg-slate-800/60 border border-slate-700/50">
+                    <div className="text-xs text-slate-400 font-medium">⚪ No Aplica</div>
+                    <div className="text-lg font-bold text-white mt-0.5">{res.noAplica}</div>
+                </div>
+            </div>
+
+            <div className="text-[11px] text-slate-400 pt-2 border-t border-slate-800 flex justify-between items-center">
+                <span className="flex items-center gap-1">
+                    <span>📁</span> {res.conDocumento} Certificados adjuntos
+                </span>
+                <span className="text-cyan-400 font-medium">Módulo Calidad</span>
+            </div>
+        </div>
+    )
+}
+
+// 17. Widget Higiene y Estado de Transporte
+export function WidgetCalidadTransporte({ data }: { data: any }) {
+    const tr = data?.calidadTransporte || {
+        totalPlanillas: 0,
+        abiertas: 0,
+        cerradas: 0,
+        pctCumplimiento: 0,
+        inspeccionesRecientes: []
+    }
+
+    return (
+        <div className="h-full flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-2">
+                <div>
+                    <span className="text-2xl font-bold text-white">{tr.pctCumplimiento}%</span>
+                    <span className="text-xs text-slate-400 ml-1.5">Conformidad Flota</span>
+                </div>
+                <span className="px-2.5 py-1 text-xs rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-semibold">
+                    🚚 {tr.totalPlanillas} Planillas
+                </span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2 my-1">
+                <div className="p-2 rounded-lg bg-emerald-950/30 border border-emerald-500/20 flex items-center justify-between">
+                    <span className="text-xs text-slate-300">Cerradas/Firmadas:</span>
+                    <span className="text-sm font-bold text-emerald-400">{tr.cerradas}</span>
+                </div>
+                <div className="p-2 rounded-lg bg-amber-950/30 border border-amber-500/20 flex items-center justify-between">
+                    <span className="text-xs text-slate-300">En Curso/Abiertas:</span>
+                    <span className="text-sm font-bold text-amber-400">{tr.abiertas}</span>
+                </div>
+            </div>
+
+            {/* Listado de inspecciones */}
+            <div className="space-y-1 my-1">
+                {tr.inspeccionesRecientes?.slice(0, 2).map((ins: any, idx: number) => (
+                    <div key={idx} className="flex items-center justify-between text-xs p-1.5 rounded bg-slate-800/50 border border-slate-700/40">
+                        <span className="text-slate-300 truncate max-w-[140px]">{ins.sucursal}</span>
+                        <span className="px-1.5 py-0.5 text-[10px] rounded font-bold bg-slate-700 text-cyan-300">
+                            {ins.estado}
+                        </span>
+                    </div>
+                ))}
+            </div>
+
+            <div className="text-[11px] text-slate-400 pt-2 border-t border-slate-800 flex justify-between">
+                <span>Inspección visual y cámara</span>
+                <span className="text-emerald-400 font-medium">Control Calidad</span>
+            </div>
+        </div>
+    )
+}
+
+// 18. Widget Higiene Personal Transportistas
+export function WidgetCalidadHigienePersonal({ data }: { data: any }) {
+    const hp = data?.calidadHigienePersonal || {
+        totalEvaluaciones: 0,
+        conformes: 0,
+        observadas: 0,
+        pctAprobacion: 0
+    }
+
+    return (
+        <div className="h-full flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-2">
+                <div>
+                    <span className="text-2xl font-bold text-white">{hp.pctAprobacion}%</span>
+                    <span className="text-xs text-slate-400 ml-1.5">Aprobación Higiene</span>
+                </div>
+                <span className="px-2.5 py-1 text-xs rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-semibold">
+                    👤 {hp.totalEvaluaciones} Evaluaciones
+                </span>
+            </div>
+
+            <div className="w-full bg-slate-800 rounded-full h-2.5 overflow-hidden my-2">
+                <div
+                    className="bg-gradient-to-r from-indigo-500 to-sky-400 h-2.5 rounded-full"
+                    style={{ width: `${Math.min(100, Math.max(0, hp.pctAprobacion))}%` }}
+                ></div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 my-2 text-center">
+                <div className="p-2.5 rounded-xl bg-slate-800/70 border border-slate-700/60">
+                    <span className="text-xs text-slate-400">Personal Conforme</span>
+                    <div className="text-xl font-black text-emerald-400 mt-0.5">{hp.conformes}</div>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-800/70 border border-slate-700/60">
+                    <span className="text-xs text-slate-400">Con Observaciones</span>
+                    <div className="text-xl font-black text-rose-400 mt-0.5">{hp.observadas}</div>
+                </div>
+            </div>
+
+            <div className="text-[11px] text-slate-400 pt-2 border-t border-slate-800 flex justify-between">
+                <span>Uniforme, presentación y aseo</span>
+                <span className="text-indigo-400 font-medium">BPM Transporte</span>
+            </div>
+        </div>
+    )
+}
+
+// 19. Widget Retirada y Retorno de Productos
+export function WidgetRetornoProductos({ data }: { data: any }) {
+    const ret = data?.retornoProductos || {
+        alertasActivas: 0,
+        totalRetenidosKg: 0,
+        casosRecientes: []
+    }
+
+    return (
+        <div className="h-full flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-2">
+                <div>
+                    <span className="text-2xl font-bold text-white">{ret.alertasActivas}</span>
+                    <span className="text-xs text-slate-400 ml-1.5">Alertas Sanitarias</span>
+                </div>
+                <span className={`px-2.5 py-1 text-xs rounded-full font-semibold border ${
+                    ret.alertasActivas > 0 ? 'bg-amber-500/20 text-amber-300 border-amber-500/30' : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
+                }`}>
+                    {ret.alertasActivas > 0 ? '⚠️ En Cuarentena' : '🛡️ Sin Alertas'}
+                </span>
+            </div>
+
+            <div className="p-2.5 rounded-xl bg-slate-800/70 border border-slate-700/60 my-1">
+                <div className="flex items-center justify-between text-xs">
+                    <span className="text-slate-400">Total Kilos en Retención:</span>
+                    <span className="font-bold text-amber-400 text-sm">{ret.totalRetenidosKg} kg</span>
+                </div>
+            </div>
+
+            <div className="space-y-1 my-1">
+                {ret.casosRecientes?.slice(0, 2).map((c: any, idx: number) => (
+                    <div key={idx} className="flex items-center justify-between text-xs p-1.5 rounded bg-slate-800/40 border border-slate-700/40">
+                        <div className="truncate max-w-[150px]">
+                            <span className="text-slate-200 font-semibold">{c.producto}</span>
+                            <span className="text-[10px] text-slate-400 block">{c.motivo}</span>
+                        </div>
+                        <span className="px-1.5 py-0.5 text-[10px] rounded bg-amber-500/20 text-amber-300 font-bold">
+                            {c.estado}
+                        </span>
+                    </div>
+                ))}
+            </div>
+
+            <div className="text-[11px] text-slate-400 pt-2 border-t border-slate-800 flex justify-between">
+                <span>Protocolo de inocuidad Hendaya</span>
+                <span className="text-amber-400 font-medium">Trazabilidad</span>
+            </div>
+        </div>
+    )
+}
+
+// 20. Widget Tablero de Despacho y Rutas (Logística)
+export function WidgetLogisticaDespacho({ data }: { data: any }) {
+    const log = data?.logisticaDespacho || {
+        rutasTotal: 0,
+        rutasEnTransito: 0,
+        rutasCompletadas: 0,
+        camionesActivos: 0,
+        choferesActivos: 0,
+        eventosHoy: 0
+    }
+
+    return (
+        <div className="h-full flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-2">
+                <div>
+                    <span className="text-2xl font-bold text-white">{log.rutasCompletadas} / {log.rutasTotal}</span>
+                    <span className="text-xs text-slate-400 ml-1.5">Rutas Entregadas</span>
+                </div>
+                <span className="px-2.5 py-1 text-xs rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30 font-semibold flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
+                    {log.rutasEnTransito} En Tránsito
+                </span>
+            </div>
+
+            <div className="grid grid-cols-3 gap-2 my-2 text-center">
+                <div className="p-2 rounded-xl bg-slate-800/70 border border-slate-700/60">
+                    <div className="text-xs text-slate-400">🚛 Camiones</div>
+                    <div className="text-lg font-bold text-white mt-0.5">{log.camionesActivos}</div>
+                </div>
+                <div className="p-2 rounded-xl bg-slate-800/70 border border-slate-700/60">
+                    <div className="text-xs text-slate-400">👨‍✈️ Choferes</div>
+                    <div className="text-lg font-bold text-white mt-0.5">{log.choferesActivos}</div>
+                </div>
+                <div className="p-2 rounded-xl bg-slate-800/70 border border-slate-700/60">
+                    <div className="text-xs text-slate-400">📍 Eventos</div>
+                    <div className="text-lg font-bold text-sky-400 mt-0.5">{log.eventosHoy}</div>
+                </div>
+            </div>
+
+            <div className="text-[11px] text-slate-400 pt-2 border-t border-slate-800 flex justify-between">
+                <span>Monitoreo GPS y despacho en vivo</span>
+                <span className="text-blue-400 font-medium">Logística Central</span>
+            </div>
+        </div>
+    )
+}
+
+// 21. Widget Prevención de Riesgos: Gravedad en Preparación
+export function WidgetPrevencionRiesgos({ data }: { data: any }) {
+    const prev = data?.prevencionRiesgos || {
+        totalIncidentes: 0,
+        leves: 0,
+        graves: 0,
+        criticos: 0,
+        atendidosPct: 0
+    }
+
+    return (
+        <div className="h-full flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-2">
+                <div>
+                    <span className="text-2xl font-bold text-white">{prev.atendidosPct}%</span>
+                    <span className="text-xs text-slate-400 ml-1.5">Resolución Preventiva</span>
+                </div>
+                <span className="px-2.5 py-1 text-xs rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30 font-semibold">
+                    ⚠️ {prev.totalIncidentes} Casos
+                </span>
+            </div>
+
+            <div className="grid grid-cols-3 gap-2 my-2 text-center">
+                <div className="p-2 rounded-xl bg-emerald-950/40 border border-emerald-500/30">
+                    <div className="text-[11px] text-emerald-400 font-semibold">Leves</div>
+                    <div className="text-lg font-black text-white mt-0.5">{prev.leves}</div>
+                </div>
+                <div className="p-2 rounded-xl bg-amber-950/40 border border-amber-500/30">
+                    <div className="text-[11px] text-amber-400 font-semibold">Graves</div>
+                    <div className="text-lg font-black text-white mt-0.5">{prev.graves}</div>
+                </div>
+                <div className="p-2 rounded-xl bg-rose-950/40 border border-rose-500/30">
+                    <div className="text-[11px] text-rose-400 font-semibold">Críticos</div>
+                    <div className="text-lg font-black text-rose-400 mt-0.5">{prev.criticos}</div>
+                </div>
+            </div>
+
+            <div className="text-[11px] text-slate-400 pt-2 border-t border-slate-800 flex justify-between">
+                <span>Incidentes operacionales en cocina</span>
+                <span className="text-rose-400 font-medium">Prev. de Riesgos</span>
+            </div>
+        </div>
+    )
+}
+
+// 22. Widget Capacitaciones del Personal
+export function WidgetCapacitaciones({ data }: { data: any }) {
+    const cap = data?.capacitaciones || {
+        totalCapacitaciones: 0,
+        participantes: 0,
+        aprobadas: 0,
+        promedioHoras: 0
+    }
+
+    return (
+        <div className="h-full flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-2">
+                <div>
+                    <span className="text-2xl font-bold text-white">{cap.participantes}</span>
+                    <span className="text-xs text-slate-400 ml-1.5">Colaboradores Capacitados</span>
+                </div>
+                <span className="px-2.5 py-1 text-xs rounded-full bg-violet-500/20 text-violet-300 border border-violet-500/30 font-semibold">
+                    🎓 {cap.totalCapacitaciones} Cursos
+                </span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2 my-2 text-center">
+                <div className="p-2.5 rounded-xl bg-slate-800/70 border border-slate-700/60">
+                    <span className="text-xs text-slate-400">Cursos Aprobados</span>
+                    <div className="text-xl font-black text-emerald-400 mt-0.5">{cap.aprobadas}</div>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-800/70 border border-slate-700/60">
+                    <span className="text-xs text-slate-400">Promedio Horas</span>
+                    <div className="text-xl font-black text-violet-400 mt-0.5">{cap.promedioHoras} hrs</div>
+                </div>
+            </div>
+
+            <div className="text-[11px] text-slate-400 pt-2 border-t border-slate-800 flex justify-between">
+                <span>Formación continua y BPM</span>
+                <span className="text-violet-400 font-medium">Recursos Humanos</span>
+            </div>
+        </div>
+    )
+}
+
+// 23. Widget Reserva de Salas de Reuniones
+export function WidgetReservaSalas({ data }: { data: any }) {
+    const sal = data?.reservaSalas || {
+        reservasHoy: 0,
+        salasActivas: 0,
+        proximas: []
+    }
+
+    return (
+        <div className="h-full flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-2">
+                <div>
+                    <span className="text-2xl font-bold text-white">{sal.reservasHoy}</span>
+                    <span className="text-xs text-slate-400 ml-1.5">Reuniones Hoy</span>
+                </div>
+                <span className="px-2.5 py-1 text-xs rounded-full bg-teal-500/20 text-teal-300 border border-teal-500/30 font-semibold">
+                    🏢 {sal.salasActivas} Salas Activas
+                </span>
+            </div>
+
+            <div className="space-y-1.5 my-1">
+                {sal.proximas?.slice(0, 2).map((r: any, idx: number) => (
+                    <div key={idx} className="p-2 rounded-xl bg-slate-800/60 border border-slate-700/50 flex items-center justify-between text-xs">
+                        <div className="truncate max-w-[160px]">
+                            <span className="font-bold text-white block">{r.sala}</span>
+                            <span className="text-[10px] text-slate-400">{r.responsable}</span>
+                        </div>
+                        <span className="px-2 py-0.5 rounded text-[11px] font-semibold bg-teal-500/20 text-teal-300">
+                            {r.horario}
+                        </span>
+                    </div>
+                ))}
+            </div>
+
+            <div className="text-[11px] text-slate-400 pt-2 border-t border-slate-800 flex justify-between">
+                <span>Gestión de espacios corporativos</span>
+                <span className="text-teal-400 font-medium">Salas Hendaya</span>
+            </div>
+        </div>
+    )
+}
+
+// 24. Widget Certificación y Gramaje
+export function WidgetCapturaGramaje({ data }: { data: any }) {
+    const gr = data?.capturaGramaje || {
+        totalCertificaciones: 0,
+        colegiosMuestreados: 0,
+        pctConformidad: 0
+    }
+
+    return (
+        <div className="h-full flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-2">
+                <div>
+                    <span className="text-2xl font-bold text-white">{gr.pctConformidad}%</span>
+                    <span className="text-xs text-slate-400 ml-1.5">Conformidad Gramaje</span>
+                </div>
+                <span className="px-2.5 py-1 text-xs rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 font-semibold">
+                    ⚖️ {gr.totalCertificaciones} Muestreos
+                </span>
+            </div>
+
+            <div className="w-full bg-slate-800 rounded-full h-2.5 overflow-hidden my-2">
+                <div
+                    className="bg-gradient-to-r from-amber-500 to-emerald-400 h-2.5 rounded-full"
+                    style={{ width: `${Math.min(100, Math.max(0, gr.pctConformidad))}%` }}
+                ></div>
+            </div>
+
+            <div className="p-3 rounded-xl bg-slate-800/70 border border-slate-700/60 my-1 flex items-center justify-between">
+                <span className="text-xs text-slate-300">Colegios Muestreados:</span>
+                <span className="text-base font-bold text-white">{gr.colegiosMuestreados} EE</span>
+            </div>
+
+            <div className="text-[11px] text-slate-400 pt-2 border-t border-slate-800 flex justify-between">
+                <span>Pesaje en cocinas por manipuladoras</span>
+                <span className="text-amber-400 font-medium">Gramaje Minuta</span>
+            </div>
+        </div>
+    )
+}
+
+// 25. Widget Descargos de Multas
+export function WidgetDescargosMultas({ data }: { data: any }) {
+    const dm = data?.descargosMultas || {
+        totalDescargos: 0,
+        utmApeladas: 0,
+        enTramite: 0,
+        aprobados: 0
+    }
+
+    return (
+        <div className="h-full flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-2">
+                <div>
+                    <span className="text-2xl font-bold text-white">{dm.utmApeladas} UTM</span>
+                    <span className="text-xs text-slate-400 ml-1.5">En Proceso Apelación</span>
+                </div>
+                <span className="px-2.5 py-1 text-xs rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30 font-semibold">
+                    ⚖️ {dm.totalDescargos} Descargos
+                </span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2 my-2 text-center">
+                <div className="p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-500/30">
+                    <span className="text-xs text-emerald-400 font-semibold">Aprobados JUNAEB</span>
+                    <div className="text-lg font-bold text-white mt-0.5">{dm.aprobados}</div>
+                </div>
+                <div className="p-2.5 rounded-xl bg-amber-950/40 border border-amber-500/30">
+                    <span className="text-xs text-amber-400 font-semibold">En Trámite</span>
+                    <div className="text-lg font-bold text-white mt-0.5">{dm.enTramite}</div>
+                </div>
+            </div>
+
+            <div className="text-[11px] text-slate-400 pt-2 border-t border-slate-800 flex justify-between">
+                <span>Defensas y descargos legales</span>
+                <span className="text-rose-400 font-medium">Gestión Multas</span>
+            </div>
+        </div>
+    )
+}
+
 // CATÁLOGO MAESTRO DE WIDGETS
 export const AVAILABLE_WIDGETS_CATALOG: WidgetCatalogItem[] = [
     {
@@ -597,6 +1059,96 @@ export const AVAILABLE_WIDGETS_CATALOG: WidgetCatalogItem[] = [
         icon: '⚡',
         badge: 'General',
         component: WidgetKpisEjecutivo
+    },
+    {
+        id: 'resolucion-sanitaria',
+        title: 'Resolución Sanitaria Colegios',
+        category: 'Calidad y Temperaturas',
+        description: 'Seguimiento anual de resolución sanitaria por RBD: Si, No y No Aplica.',
+        icon: '📋',
+        badge: 'Nuevo',
+        component: WidgetResolucionSanitaria
+    },
+    {
+        id: 'calidad-transporte-higiene',
+        title: 'Higiene y Estado de Transporte',
+        category: 'Calidad y Temperaturas',
+        description: 'Control de higiene de vehículos de despacho, planillas y firmas de calidad.',
+        icon: '🚚',
+        badge: 'Nuevo',
+        component: WidgetCalidadTransporte
+    },
+    {
+        id: 'calidad-higiene-personal',
+        title: 'Higiene Personal de Choferes',
+        category: 'Calidad y Temperaturas',
+        description: 'Evaluación de indumentaria, presentación y aseo de personal transportista.',
+        icon: '👤',
+        badge: 'Nuevo',
+        component: WidgetCalidadHigienePersonal
+    },
+    {
+        id: 'retorno-productos-alertas',
+        title: 'Retirada y Retorno de Productos',
+        category: 'Calidad y Temperaturas',
+        description: 'Monitoreo de alertas sanitarias, lotes retenidos y trazabilidad preventiva.',
+        icon: '🛡️',
+        badge: 'Nuevo',
+        component: WidgetRetornoProductos
+    },
+    {
+        id: 'logistica-despacho',
+        title: 'Tablero de Despacho y Rutas',
+        category: 'Abastecimiento y Logística',
+        description: 'Control de rutas de despacho diarias, camiones en tránsito y eventos GPS.',
+        icon: '🚛',
+        badge: 'Nuevo',
+        component: WidgetLogisticaDespacho
+    },
+    {
+        id: 'prevencion-gravedad-preparacion',
+        title: 'Gravedad en Preparación',
+        category: 'Supervisión y Terreno',
+        description: 'Incidentes operacionales clasificados por gravedad (Leves, Graves y Críticos).',
+        icon: '⚠️',
+        badge: 'Nuevo',
+        component: WidgetPrevencionRiesgos
+    },
+    {
+        id: 'capacitaciones-personal',
+        title: 'Registro de Capacitaciones',
+        category: 'Gestión y Auditoría',
+        description: 'Capacitaciones ejecutadas, horas formativas y manipuladoras acreditadas.',
+        icon: '🎓',
+        badge: 'Nuevo',
+        component: WidgetCapacitaciones
+    },
+    {
+        id: 'reserva-salas-reuniones',
+        title: 'Reserva de Salas de Reuniones',
+        category: 'Gestión y Auditoría',
+        description: 'Ocupación de salas en tiempo real, horarios y próximas reuniones agendadas.',
+        icon: '🏢',
+        badge: 'Nuevo',
+        component: WidgetReservaSalas
+    },
+    {
+        id: 'captura-gramaje',
+        title: 'Certificación de Gramaje',
+        category: 'Operaciones y Mantenimiento',
+        description: 'Pesaje y muestreo de raciones en colegios vs estándar nutricional.',
+        icon: '⚖️',
+        badge: 'Nuevo',
+        component: WidgetCapturaGramaje
+    },
+    {
+        id: 'descargos-multas-ee',
+        title: 'Descargos de Multas y Actas',
+        category: 'Operaciones y Mantenimiento',
+        description: 'Seguimiento de descargos ante JUNAEB, UTM apeladas y resoluciones.',
+        icon: '🏛️',
+        badge: 'Nuevo',
+        component: WidgetDescargosMultas
     },
     {
         id: 'pmpa-raciones',
