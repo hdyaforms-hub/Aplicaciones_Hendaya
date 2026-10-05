@@ -15,7 +15,8 @@ import {
     Trash2,
     Search,
     Phone,
-    Send
+    Send,
+    MapPin
 } from 'lucide-react'
 import {
     getBodegas,
@@ -57,6 +58,7 @@ export default function ConfiguracionClient({
     const [tab, setTab] = useState<TabType>('andenes')
     const [bodegas, setBodegas] = useState(initialBodegas)
     const [bodegaActivaId, setBodegaActivaId] = useState(initialBodegas[0]?.id || '')
+    const bodegaActiva = bodegas.find(b => b.id === bodegaActivaId) || bodegas[0]
 
     useEffect(() => {
         if (bodegas.length === 0) {
@@ -271,8 +273,8 @@ export default function ConfiguracionClient({
 
     return (
         <div className="space-y-6 animate-in fade-in duration-500 max-w-[1600px] mx-auto">
-            {/* CABECERA ESTÁNDAR HENDAYA */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
+            {/* CABECERA ESTÁNDAR HENDAYA CON SELECTOR GLOBAL DE SUCURSAL POR SOBRE LAS CABECERAS */}
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-cyan-50 to-sky-50 rounded-bl-full -z-10 opacity-70" />
                 <div>
                     <h1 className="text-2xl font-black text-gray-900 tracking-tight flex items-center gap-3">
@@ -280,8 +282,36 @@ export default function ConfiguracionClient({
                         Catálogos y Parámetros Logísticos
                     </h1>
                     <p className="text-gray-500 mt-1 text-sm font-medium">
-                        Gestión centralizada de infraestructura de andenes, choferes, camiones y parámetros de despacho.
+                        Gestión centralizada de infraestructura de andenes, flota, destinos y parámetros por sucursal.
                     </p>
+                </div>
+
+                {/* SELECTOR GLOBAL DE SUCURSAL (BODEGA / CD) POR SOBRE LAS CABECERAS */}
+                <div className="flex items-center gap-3 bg-gradient-to-r from-cyan-500/10 via-sky-500/10 to-transparent p-2.5 px-4 rounded-2xl border border-cyan-200/80 shadow-xs">
+                    <div className="p-2 bg-gradient-to-br from-cyan-600 to-sky-600 text-white rounded-xl shadow-xs">
+                        <Warehouse className="w-5 h-5" />
+                    </div>
+                    <div>
+                        <div className="text-[10px] font-black uppercase tracking-wider text-cyan-900 flex items-center gap-1.5">
+                            <span>Sucursal (Bodega / CD)</span>
+                            <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                        </div>
+                        <select
+                            value={bodegaActivaId}
+                            onChange={e => handleBodegaChange(e.target.value)}
+                            className="mt-0.5 text-sm font-extrabold text-gray-900 bg-transparent focus:outline-none cursor-pointer pr-4"
+                        >
+                            {bodegas.length === 0 ? (
+                                <option value="">Cargando sucursales...</option>
+                            ) : (
+                                bodegas.map(b => (
+                                    <option key={b.id} value={b.id}>
+                                        {b.nombre}
+                                    </option>
+                                ))
+                            )}
+                        </select>
+                    </div>
                 </div>
             </div>
 
@@ -303,7 +333,7 @@ export default function ConfiguracionClient({
             {/* SELECTOR DE PESTAÑAS ESTILO HENDAYA */}
             <div className="flex flex-wrap items-center gap-1.5 bg-gray-100/80 p-1.5 rounded-2xl border border-gray-200">
                 {[
-                    { id: 'andenes', label: 'Sucursales & Andenes', icon: Warehouse },
+                    { id: 'andenes', label: 'Andenes', icon: Warehouse },
                     { id: 'choferes', label: 'Choferes & Telegram', icon: Users },
                     { id: 'camiones', label: 'Camiones & Patentes', icon: Truck },
                     { id: 'transportistas', label: 'Transportistas', icon: Briefcase },
@@ -333,27 +363,28 @@ export default function ConfiguracionClient({
                 })}
             </div>
 
-            {/* TAB 1: SUCURSALES & ANDENES */}
+            {/* TAB 1: ANDENES DE LA SUCURSAL */}
             {tab === 'andenes' && (
                 <div className="space-y-4">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-gray-200 shadow-sm">
                         <div className="flex items-center gap-3">
-                            <label className="text-xs font-bold text-gray-700">Sucursal:</label>
-                            <select
-                                value={bodegaActivaId}
-                                onChange={e => handleBodegaChange(e.target.value)}
-                                className="px-3 py-1.5 text-xs font-bold rounded-xl bg-gray-50 border border-gray-200 text-cyan-700 focus:bg-white cursor-pointer"
-                            >
-                                {bodegas.length === 0 ? (
-                                    <option value="">No hay sucursales disponibles</option>
-                                ) : (
-                                    bodegas.map(b => (
-                                        <option key={b.id} value={b.id}>
-                                            {b.nombre}
-                                        </option>
-                                    ))
+                            <div className="p-2 bg-cyan-50 rounded-xl border border-cyan-100 text-cyan-700">
+                                <Warehouse className="w-4 h-4" />
+                            </div>
+                            <div>
+                                <div className="text-xs font-bold text-gray-900 flex items-center gap-2">
+                                    <span>Andenes pertenecientes a {bodegaActiva?.nombre || 'la Sucursal'}</span>
+                                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-cyan-100 text-cyan-800 font-bold">
+                                        {andenes.length} {andenes.length === 1 ? 'andén' : 'andenes'}
+                                    </span>
+                                </div>
+                                {bodegaActiva?.direccion && (
+                                    <p className="text-[11px] text-gray-500 font-medium flex items-center gap-1 mt-0.5">
+                                        <MapPin className="w-3 h-3 text-gray-400" />
+                                        {bodegaActiva.direccion}
+                                    </p>
                                 )}
-                            </select>
+                            </div>
                         </div>
 
                         <button
@@ -366,8 +397,25 @@ export default function ConfiguracionClient({
                         </button>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                        {andenes.map(a => {
+                    {andenes.length === 0 ? (
+                        <div className="bg-white rounded-2xl p-12 border border-gray-200 text-center space-y-3">
+                            <Warehouse className="w-10 h-10 text-gray-300 mx-auto" />
+                            <h4 className="text-sm font-bold text-gray-800">No hay andenes configurados en {bodegaActiva?.nombre}</h4>
+                            <p className="text-xs text-gray-500 max-w-sm mx-auto">
+                                Esta sucursal aún no tiene andenes registrados. Puedes agregar un nuevo andén haciendo clic en el botón siguiente.
+                            </p>
+                            <button
+                                type="button"
+                                onClick={() => setModal({ tipo: 'andenes' })}
+                                className="inline-flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-xl bg-slate-900 text-white hover:bg-slate-800 transition"
+                            >
+                                <Plus className="w-4 h-4 text-cyan-400" />
+                                Crear Primer Andén
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                            {andenes.map(a => {
                             const isDisp = a.estadoOperativo === 'DISPONIBLE'
                             const isOcup = a.estadoOperativo === 'OCUPADO'
                             const isBloq = a.estadoOperativo === 'BLOQUEADO' || a.estadoOperativo === 'MANTENCION'
@@ -446,7 +494,8 @@ export default function ConfiguracionClient({
                                 </div>
                             )
                         })}
-                    </div>
+                        </div>
+                    )}
                 </div>
             )}
 
@@ -754,6 +803,12 @@ export default function ConfiguracionClient({
                         {/* FORMULARIO ANDÉN */}
                         {modal.tipo === 'andenes' && (
                             <form onSubmit={submitAnden} className="space-y-3">
+                                <div className="p-3 bg-cyan-50/80 border border-cyan-100 rounded-xl flex items-center gap-2 text-xs text-cyan-900 font-medium">
+                                    <Warehouse className="w-4 h-4 text-cyan-700 shrink-0" />
+                                    <span>
+                                        Sucursal asignada: <strong className="font-extrabold text-cyan-950">{bodegaActiva?.nombre}</strong>
+                                    </span>
+                                </div>
                                 <div>
                                     <label className="block text-xs font-bold text-gray-700 mb-1">Código del Andén (ej: AND-05)</label>
                                     <input
