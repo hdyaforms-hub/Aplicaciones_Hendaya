@@ -26,7 +26,7 @@ export default async function RetornoProductosPage() {
     const hasPerm = dbUser.role?.permissions.includes('view_retorno_productos')
 
     // Validar permiso de visualización general
-    if (!(isAdmin || hasCalidad || hasSucursal || hasPerm)) {
+    if (!isAdmin && !hasPerm) {
         redirect('/dashboard')
     }
 

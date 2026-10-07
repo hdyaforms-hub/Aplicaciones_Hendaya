@@ -151,13 +151,7 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                     { 
                         name: 'Retirada de Productos', 
                         href: '/dashboard/areas/calidad/retorno-productos', 
-                        requiredPermission: null,
-                        showCondition: (user: any) => {
-                            const isAdmin = user.role.name === 'Administrador' || user.role.name === 'admin'
-                            const hasCalidad = user.areas?.some((a: any) => a.nombre.toLowerCase().includes('calidad'))
-                            const hasPerm = user.role.permissions.includes('view_retorno_productos')
-                            return !!(isAdmin || hasCalidad || hasPerm)
-                        }
+                        requiredPermission: 'view_retorno_productos'
                     },
                     {
                         name: 'Verificador de Temperaturas',
