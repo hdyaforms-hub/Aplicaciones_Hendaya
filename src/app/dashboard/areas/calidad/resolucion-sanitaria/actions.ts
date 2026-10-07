@@ -294,8 +294,38 @@ export async function getResolucionSanitariaRecords(params: ResolucionSanitariaF
     const currentYear = new Date().getFullYear()
     const allYears = Array.from(new Set([currentYear - 1, currentYear, currentYear + 1, ...existingYears])).sort((a, b) => b - a)
 
+    // Buscar si existe registro del año anterior para cada colegio en la página actual
+    const rbds = records.map(r => r.rbd)
+    const prevYearRecords = await prisma.cal_ResSan_Registro.findMany({
+        where: {
+            rbd: { in: rbds },
+            anio: anio - 1
+        },
+        select: {
+            id: true,
+            rbd: true,
+            anio: true,
+            estadoResolucion: true,
+            numeroResolucion: true,
+            fechaResolucion: true,
+            documentoUrl: true,
+            documentoNombre: true,
+            documentoSubidoPor: true,
+            observaciones: true
+        }
+    })
+    const prevMap = new Map<number, (typeof prevYearRecords)[0]>()
+    for (const prev of prevYearRecords) {
+        prevMap.set(prev.rbd, prev)
+    }
+
+    const recordsWithPrev = records.map(r => ({
+        ...r,
+        previousYearRecord: prevMap.get(r.rbd) || null
+    }))
+
     return {
-        records,
+        records: recordsWithPrev,
         total,
         totalPages: Math.ceil(total / pageSize),
         page,
@@ -319,12 +349,13 @@ export async function getResolucionSanitariaRecords(params: ResolucionSanitariaF
 }
 
 /**
- * Actualiza el estado y número de resolución sanitaria de un colegio.
+ * Actualiza el estado, número y fecha de resolución sanitaria de un colegio.
  */
 export async function updateResolucionSanitariaRecord(params: {
     id: string
     estadoResolucion: string
     numeroResolucion?: string | null
+    fechaResolucion?: string | Date | null
     observaciones?: string | null
 }) {
     const session = await getSession()
@@ -340,7 +371,7 @@ export async function updateResolucionSanitariaRecord(params: {
         throw new Error('No tienes permisos para editar la resolución sanitaria')
     }
 
-    const { id, estadoResolucion, numeroResolucion, observaciones } = params
+    const { id, estadoResolucion, numeroResolucion, fechaResolucion, observaciones } = params
 
     if (estadoResolucion === 'Si' && (!numeroResolucion || numeroResolucion.trim() === '')) {
         throw new Error('El N° de Resolución Sanitaria es obligatorio cuando el estado es "Si"')
@@ -377,11 +408,24 @@ export async function updateResolucionSanitariaRecord(params: {
         }
     }
 
+    let parsedFecha: Date | null = null
+    if (estadoResolucion === 'Si' && fechaResolucion) {
+        if (typeof fechaResolucion === 'string') {
+            const raw = fechaResolucion.trim()
+            if (raw) {
+                parsedFecha = new Date(raw.includes('T') ? raw : `${raw}T12:00:00Z`)
+            }
+        } else if (fechaResolucion instanceof Date) {
+            parsedFecha = fechaResolucion
+        }
+    }
+
     const updated = await prisma.cal_ResSan_Registro.update({
         where: { id },
         data: {
             estadoResolucion,
             numeroResolucion: estadoResolucion === 'Si' ? numeroResolucion?.trim() : null,
+            fechaResolucion: estadoResolucion === 'Si' ? parsedFecha : null,
             observaciones: observaciones ? observaciones.trim() : null,
             updatedBy: session.user.username as string
         }
@@ -393,7 +437,7 @@ export async function updateResolucionSanitariaRecord(params: {
         userId: session.user.id || null,
         action: 'EDICION_RESOLUCION_SANITARIA',
         modulo: 'Áreas -> Calidad',
-        detalle: `Actualizó Resolución Sanitaria RBD ${current.rbd} (${current.nombreEstablecimiento}) Año ${current.anio}: Estado='${estadoResolucion}', N°='${estadoResolucion === 'Si' ? numeroResolucion?.trim() : 'N/A'}'`
+        detalle: `Actualizó Resolución Sanitaria RBD ${current.rbd} (${current.nombreEstablecimiento}) Año ${current.anio}: Estado='${estadoResolucion}', N°='${estadoResolucion === 'Si' ? numeroResolucion?.trim() : 'N/A'}', Fecha='${parsedFecha ? parsedFecha.toISOString().split('T')[0] : 'N/A'}'`
     })
 
     revalidatePath('/dashboard/areas/calidad/resolucion-sanitaria')
@@ -476,6 +520,7 @@ export async function uploadResolucionDocumento(formData: FormData) {
         data: {
             documentoUrl: publicUrl,
             documentoNombre: file.name,
+            documentoSubidoPor: session.user.username as string,
             updatedBy: session.user.username as string
         }
     })
@@ -548,6 +593,7 @@ export async function deleteResolucionDocumento(id: string) {
         data: {
             documentoUrl: null,
             documentoNombre: null,
+            documentoSubidoPor: null,
             updatedBy: session.user.username as string
         }
     })
@@ -559,6 +605,181 @@ export async function deleteResolucionDocumento(id: string) {
         action: 'ELIMINAR_DOCUMENTO_RESOLUCION',
         modulo: 'Áreas -> Calidad',
         detalle: `Eliminó documento "${prevDoc}" de Resolución Sanitaria RBD ${current.rbd} (${current.nombreEstablecimiento}) Año ${current.anio}`
+    })
+
+    revalidatePath('/dashboard/areas/calidad/resolucion-sanitaria')
+    return { success: true, record: updated }
+}
+
+/**
+ * Copia los datos de resolución sanitaria del año anterior (estado, número y archivo adjunto).
+ * 
+ * Reglas de negocio:
+ * 1. Valida que exista el registro para el año anterior (anio - 1).
+ * 2. Si el año anterior tiene estado "Si", valida si cuenta con archivo adjunto:
+ *    - Si dice "Si" y no tiene adjunto en el año anterior, exige obligatoriamente subir el archivo en la petición.
+ *      Si no se sube el archivo, la copia se rechaza.
+ *    - Si dice "Si" y sí tiene adjunto previo, se copia el archivo existente (o se reemplaza si el usuario envió uno nuevo).
+ * 3. Si el año anterior tiene estado "No" o "No Aplica", no requiere adjunto y copia el estado correspondiente.
+ */
+export async function copiarResolucionAnioAnterior(formData: FormData) {
+    const session = await getSession()
+    if (!session?.user) {
+        throw new Error('No autorizado')
+    }
+
+    const isAdmin = session.user.role?.name === 'Administrador' || session.user.role?.name === 'admin'
+    const permissions = session.user.role?.permissions || []
+    const hasCalidadArea = (session.user as any)?.areas?.some((a: any) => a.nombre?.toLowerCase().includes('calidad'))
+
+    if (!isAdmin && !hasCalidadArea && !permissions.includes('manage_calidad_resolucion_sanitaria')) {
+        throw new Error('No tienes permisos para modificar resoluciones sanitarias')
+    }
+
+    const id = formData.get('id') as string
+    const file = formData.get('file') as File | null
+
+    if (!id) {
+        throw new Error('ID de registro objetivo no proporcionado')
+    }
+
+    const current = await prisma.cal_ResSan_Registro.findUnique({
+        where: { id }
+    })
+
+    if (!current) {
+        throw new Error('Registro del año actual no encontrado')
+    }
+
+    if (!isAdmin) {
+        const dbUser = await prisma.user.findUnique({
+            where: { id: session.user.id },
+            include: { sucursales: true }
+        })
+        const userSucursales = Array.from(new Set([
+            ...(session.user.sucursales || []),
+            ...(dbUser?.sucursales?.map((s: any) => s.nombre.trim()) || [])
+        ])).filter(Boolean)
+
+        const col = await prisma.colegios.findFirst({
+            where: { colRBD: current.rbd },
+            select: { sucursal: true }
+        })
+        const matchesSucursal = userSucursales.some(s => 
+            s.toLowerCase() === col?.sucursal?.toLowerCase()
+        )
+
+        if (!matchesSucursal) {
+            throw new Error('No tienes permisos para modificar colegios fuera de tus sucursales asignadas')
+        }
+    }
+
+    // Buscar registro del año inmediatamente anterior
+    const prevRecord = await prisma.cal_ResSan_Registro.findFirst({
+        where: {
+            rbd: current.rbd,
+            anio: current.anio - 1
+        }
+    })
+
+    if (!prevRecord) {
+        throw new Error(`No existe registro del año anterior (${current.anio - 1}) para el RBD ${current.rbd}`)
+    }
+
+    let finalDocUrl: string | null = null
+    let finalDocNombre: string | null = null
+    let finalDocSubidoPor: string | null = null
+
+    if (prevRecord.estadoResolucion === 'Si') {
+        const hasPrevDoc = Boolean(prevRecord.documentoUrl)
+        const hasNewFile = Boolean(file && file.size > 0 && file.name)
+
+        // Validación estricta solicitada: si dice SI y no tiene adjunto anterior, DEBE solicitar el archivo;
+        // si no suben archivo no se debe dejar realizar la copia.
+        if (!hasPrevDoc && !hasNewFile) {
+            throw new Error('El año anterior tiene resolución "Si" pero no posee archivo adjunto. Debe adjuntar el documento obligatoriamente para poder realizar la copia.')
+        }
+
+        if (hasNewFile && file) {
+            // Guardar el nuevo archivo proporcionado por el usuario
+            const targetFolder = uploadPath('resoluciones-sanitarias')
+            await mkdir(targetFolder, { recursive: true })
+
+            const cleanFileName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_')
+            const fileName = `RBD_${current.rbd}_${current.anio}_${Date.now()}_${cleanFileName}`
+            const fullPath = join(targetFolder, fileName)
+
+            const bytes = await file.arrayBuffer()
+            const buffer = Buffer.from(bytes)
+            await writeFile(fullPath, buffer)
+
+            finalDocUrl = `/uploads/resoluciones-sanitarias/${fileName}`
+            finalDocNombre = file.name
+            finalDocSubidoPor = session.user.username as string
+
+            // Auto-recuperación: Si el año anterior carecía de documento, actualizarlo también con este archivo
+            if (!hasPrevDoc) {
+                await prisma.cal_ResSan_Registro.update({
+                    where: { id: prevRecord.id },
+                    data: {
+                        documentoUrl: finalDocUrl,
+                        documentoNombre: finalDocNombre,
+                        documentoSubidoPor: finalDocSubidoPor,
+                        updatedBy: session.user.username as string
+                    }
+                }).catch(() => {})
+            }
+        } else if (hasPrevDoc) {
+            // Reutilizar o clonar el archivo adjunto existente del año anterior
+            finalDocNombre = prevRecord.documentoNombre || 'Resolución Sanitaria'
+            finalDocSubidoPor = session.user.username as string
+
+            try {
+                const targetFolder = uploadPath('resoluciones-sanitarias')
+                await mkdir(targetFolder, { recursive: true })
+                const prevFileName = prevRecord.documentoUrl!.split('/').pop() || ''
+                const prevDiskPath = join(targetFolder, prevFileName)
+
+                if (existsSync(prevDiskPath)) {
+                    const newFileName = `RBD_${current.rbd}_${current.anio}_${Date.now()}_copia_${prevFileName}`
+                    const newDiskPath = join(targetFolder, newFileName)
+                    const { copyFile } = await import('fs/promises')
+                    await copyFile(prevDiskPath, newDiskPath)
+                    finalDocUrl = `/uploads/resoluciones-sanitarias/${newFileName}`
+                } else {
+                    finalDocUrl = prevRecord.documentoUrl
+                }
+            } catch {
+                finalDocUrl = prevRecord.documentoUrl
+            }
+        }
+    } else {
+        // Para "No" o "No Aplica", no se heredan documentos
+        finalDocUrl = null
+        finalDocNombre = null
+        finalDocSubidoPor = null
+    }
+
+    const updated = await prisma.cal_ResSan_Registro.update({
+        where: { id: current.id },
+        data: {
+            estadoResolucion: prevRecord.estadoResolucion,
+            numeroResolucion: prevRecord.estadoResolucion === 'Si' ? prevRecord.numeroResolucion : null,
+            fechaResolucion: prevRecord.estadoResolucion === 'Si' ? prevRecord.fechaResolucion : null,
+            documentoUrl: finalDocUrl,
+            documentoNombre: finalDocNombre,
+            documentoSubidoPor: finalDocSubidoPor,
+            observaciones: prevRecord.observaciones || current.observaciones,
+            updatedBy: session.user.username as string
+        }
+    })
+
+    await logAuditAction({
+        username: session.user.username as string,
+        userId: session.user.id || null,
+        action: 'COPIAR_RESOLUCION_ANIO_ANTERIOR',
+        modulo: 'Áreas -> Calidad',
+        detalle: `Copió datos del año ${prevRecord.anio} al año ${current.anio} para RBD ${current.rbd} (${current.nombreEstablecimiento}): Estado='${prevRecord.estadoResolucion}', N°='${prevRecord.numeroResolucion || 'N/A'}'`
     })
 
     revalidatePath('/dashboard/areas/calidad/resolucion-sanitaria')

@@ -20,7 +20,7 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
     {
         name: 'Tableros y Avances',
         icon: '📈',
-        requiredPermission: ['view_tablero', 'view_tablero_pan', 'view_tablero_gas', 'view_tablero_retiro', 'view_tablero_elementos', 'view_tablero_multas_ee', 'view_tablero_organigrama', 'view_tablero_distancias', 'view_tablero_actas', 'view_tablero_auditoria', 'view_tablero_verificador_temperaturas', 'view_tablero_widgets'],
+        requiredPermission: ['view_tablero', 'view_tablero_pan', 'view_tablero_gas', 'view_tablero_retiro', 'view_tablero_elementos', 'view_tablero_multas_ee', 'view_tablero_organigrama', 'view_tablero_distancias', 'view_tablero_actas', 'view_tablero_auditoria', 'view_tablero_verificador_temperaturas', 'view_tablero_widgets', 'view_tablero_resolucion_sanitaria'],
         subItems: [
             { name: 'Avance PMPA', href: '/dashboard/tablero', requiredPermission: 'view_tablero' },
             { name: 'Widgets', href: '/dashboard/tablero/widgets', requiredPermission: 'view_tablero_widgets' },
@@ -33,6 +33,7 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
             { name: 'Tablero de Kilometraje', href: '/dashboard/tablero/kilometraje', requiredPermission: 'view_tablero_distancias' },
             { name: 'Tablero Actas', href: '/dashboard/tablero/actas', requiredPermission: 'view_tablero_actas' },
             { name: 'Verificador de temperaturas', href: '/dashboard/tablero/verificador-temperaturas', requiredPermission: 'view_tablero_verificador_temperaturas' },
+            { name: 'Resolución Sanitaria', href: '/dashboard/tablero/resolucion-sanitaria', requiredPermission: 'view_tablero_resolucion_sanitaria' },
             { name: 'Auditoría', href: '/dashboard/tablero/auditoria', requiredPermission: 'view_tablero_auditoria' }
         ]
     },

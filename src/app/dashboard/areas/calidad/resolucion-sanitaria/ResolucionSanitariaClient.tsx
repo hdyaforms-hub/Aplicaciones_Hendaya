@@ -6,10 +6,24 @@ import {
     updateResolucionSanitariaRecord,
     uploadResolucionDocumento,
     deleteResolucionDocumento,
+    copiarResolucionAnioAnterior,
     syncColegiosManualAction,
     ejecutarCargaMasivaResolucionSanitariaAction,
     ResolucionSanitariaFilter
 } from './actions'
+
+type PreviousYearInfo = {
+    id: string
+    rbd: number
+    anio: number
+    estadoResolucion: string
+    numeroResolucion: string | null
+    fechaResolucion?: Date | string | null
+    documentoUrl: string | null
+    documentoNombre: string | null
+    documentoSubidoPor: string | null
+    observaciones: string | null
+}
 
 type ResolucionItem = {
     id: string
@@ -21,14 +35,30 @@ type ResolucionItem = {
     rbd: number
     rbdDv: string | null
     nombreEstablecimiento: string
+    sucursal?: string | null
     comuna: string
     estadoResolucion: string
     numeroResolucion: string | null
+    fechaResolucion?: Date | string | null
     documentoUrl: string | null
     documentoNombre: string | null
+    documentoSubidoPor: string | null
     observaciones: string | null
     updatedBy: string | null
     updatedAt: Date | string
+    previousYearRecord?: PreviousYearInfo | null
+}
+
+function formatFecha(val: Date | string | null | undefined): string {
+    if (!val) return '-'
+    try {
+        const str = typeof val === 'string' ? val : val.toISOString()
+        const [year, month, day] = str.split('T')[0].split('-')
+        if (!year || !month || !day) return '-'
+        return `${day}/${month}/${year}`
+    } catch {
+        return '-'
+    }
 }
 
 type Stats = {
@@ -87,6 +117,7 @@ export default function ResolucionSanitariaClient({ canManage }: Props) {
     const [editingItem, setEditingItem] = useState<ResolucionItem | null>(null)
     const [editEstado, setEditEstado] = useState<string>('No Aplica')
     const [editNumero, setEditNumero] = useState<string>('')
+    const [editFecha, setEditFecha] = useState<string>('')
     const [editObservaciones, setEditObservaciones] = useState<string>('')
     const [editFile, setEditFile] = useState<File | null>(null)
     const [saving, setSaving] = useState<boolean>(false)
@@ -99,6 +130,15 @@ export default function ResolucionSanitariaClient({ canManage }: Props) {
     const [uploadItem, setUploadItem] = useState<ResolucionItem | null>(null)
     const [uploadingFile, setUploadingFile] = useState<File | null>(null)
     const [isUploading, setIsUploading] = useState<boolean>(false)
+
+    // Modal para copiar año anterior
+    const [copyItem, setCopyItem] = useState<{
+        current: ResolucionItem
+        prev: PreviousYearInfo
+    } | null>(null)
+    const [copyFile, setCopyFile] = useState<File | null>(null)
+    const [isCopying, setIsCopying] = useState<boolean>(false)
+    const [copyError, setCopyError] = useState<string>('')
 
     // Sincronización manual y carga masiva
     const [isSyncing, startSync] = useTransition()
@@ -197,6 +237,7 @@ export default function ResolucionSanitariaClient({ canManage }: Props) {
         setEditingItem(item)
         setEditEstado(item.estadoResolucion || 'No Aplica')
         setEditNumero(item.numeroResolucion || '')
+        setEditFecha(item.fechaResolucion ? new Date(item.fechaResolucion).toISOString().split('T')[0] : '')
         setEditObservaciones(item.observaciones || '')
         setEditFile(null)
         setModalError('')
@@ -220,6 +261,7 @@ export default function ResolucionSanitariaClient({ canManage }: Props) {
                 id: editingItem.id,
                 estadoResolucion: editEstado,
                 numeroResolucion: editEstado === 'Si' ? editNumero : null,
+                fechaResolucion: editEstado === 'Si' && editFecha ? editFecha : null,
                 observaciones: editObservaciones
             })
 
@@ -271,6 +313,51 @@ export default function ResolucionSanitariaClient({ canManage }: Props) {
             loadData()
         } catch (err: any) {
             showNotify('error', err?.message || 'Error al eliminar el documento')
+        }
+    }
+
+    // Abrir modal de copiar año anterior
+    const handleOpenCopy = (item: ResolucionItem) => {
+        if (!item.previousYearRecord) return
+        setCopyItem({
+            current: item,
+            prev: item.previousYearRecord
+        })
+        setCopyFile(null)
+        setCopyError('')
+    }
+
+    // Ejecutar copia del año anterior
+    const handleExecuteCopy = async (e: React.FormEvent) => {
+        e.preventDefault()
+        if (!copyItem) return
+
+        // Regla: si el año anterior tiene estado "Si" y no tiene adjunto previo,
+        // es OBLIGATORIO seleccionar un archivo; de lo contrario no se permite realizar la copia.
+        const prevHasFile = Boolean(copyItem.prev.documentoUrl)
+        if (copyItem.prev.estadoResolucion === 'Si' && !prevHasFile && !copyFile) {
+            setCopyError('El registro del año anterior tiene estado "SI" pero no cuenta con archivo adjunto. Debe adjuntar obligatoriamente el documento para poder realizar la copia.')
+            return
+        }
+
+        setIsCopying(true)
+        setCopyError('')
+
+        try {
+            const formData = new FormData()
+            formData.append('id', copyItem.current.id)
+            if (copyFile) {
+                formData.append('file', copyFile)
+            }
+
+            await copiarResolucionAnioAnterior(formData)
+            showNotify('success', `Datos copiados exitosamente desde el año ${copyItem.prev.anio} para RBD ${copyItem.current.rbd}`)
+            setCopyItem(null)
+            loadData()
+        } catch (err: any) {
+            setCopyError(err?.message || 'Error al copiar los datos del año anterior')
+        } finally {
+            setIsCopying(false)
         }
     }
 
@@ -813,8 +900,14 @@ export default function ResolucionSanitariaClient({ canManage }: Props) {
                                 <th onClick={() => handleSort('numeroResolucion')} className="py-3.5 px-4 cursor-pointer hover:bg-gray-100 transition-colors">
                                     N° Resolución {renderSortIcon('numeroResolucion')}
                                 </th>
+                                <th onClick={() => handleSort('fechaResolucion')} className="py-3.5 px-4 cursor-pointer hover:bg-gray-100 transition-colors">
+                                    Fecha Resolución Sanitaria {renderSortIcon('fechaResolucion')}
+                                </th>
                                 <th className="py-3.5 px-4">
                                     Documento
+                                </th>
+                                <th className="py-3.5 px-4">
+                                    Subido Por
                                 </th>
                                 {canManage && (
                                     <th className="py-3.5 px-4 text-center">
@@ -826,7 +919,7 @@ export default function ResolucionSanitariaClient({ canManage }: Props) {
                         <tbody className="divide-y divide-gray-100 font-medium">
                             {loading ? (
                                 <tr>
-                                    <td colSpan={canManage ? 11 : 10} className="py-12 text-center text-gray-400">
+                                    <td colSpan={canManage ? 13 : 12} className="py-12 text-center text-gray-400">
                                         <div className="flex flex-col items-center gap-2">
                                             <span className="text-2xl animate-spin">🌀</span>
                                             <span>Cargando datos de resoluciones sanitarias...</span>
@@ -835,7 +928,7 @@ export default function ResolucionSanitariaClient({ canManage }: Props) {
                                 </tr>
                             ) : records.length === 0 ? (
                                 <tr>
-                                    <td colSpan={canManage ? 11 : 10} className="py-12 text-center text-gray-400">
+                                    <td colSpan={canManage ? 13 : 12} className="py-12 text-center text-gray-400">
                                         <div className="flex flex-col items-center gap-2">
                                             <span className="text-3xl">📁</span>
                                             <span className="font-semibold text-gray-700">No se encontraron registros</span>
@@ -897,6 +990,13 @@ export default function ResolucionSanitariaClient({ canManage }: Props) {
                                                 <span className="text-gray-300">-</span>
                                             )}
                                         </td>
+                                        <td className="py-3.5 px-4 whitespace-nowrap text-xs font-mono font-semibold text-gray-700">
+                                            {item.estadoResolucion === 'Si' && item.fechaResolucion ? (
+                                                formatFecha(item.fechaResolucion)
+                                            ) : (
+                                                <span className="text-gray-300">-</span>
+                                            )}
+                                        </td>
                                         <td className="py-3.5 px-4 whitespace-nowrap text-xs">
                                             {item.documentoUrl ? (
                                                 <div className="flex items-center gap-2">
@@ -938,15 +1038,40 @@ export default function ResolucionSanitariaClient({ canManage }: Props) {
                                                 )
                                             )}
                                         </td>
+                                        <td className="py-3.5 px-4 whitespace-nowrap text-xs">
+                                            {item.documentoUrl ? (
+                                                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800 border border-slate-200 w-fit">
+                                                    <span className="text-slate-400">👤</span>
+                                                    <span className="font-semibold text-slate-700">
+                                                        {item.documentoSubidoPor || item.updatedBy || 'Usuario no registrado'}
+                                                    </span>
+                                                </div>
+                                            ) : (
+                                                <span className="text-gray-300">-</span>
+                                            )}
+                                        </td>
                                         {canManage && (
                                             <td className="py-3.5 px-4 whitespace-nowrap text-center">
-                                                <button
-                                                    onClick={() => handleOpenEdit(item)}
-                                                    className="px-3 py-1.5 bg-slate-100 hover:bg-cyan-600 hover:text-white text-slate-700 font-bold rounded-xl text-xs transition-all shadow-sm"
-                                                    title="Editar estado y número de resolución sanitaria"
-                                                >
-                                                    ✏️ Editar
-                                                </button>
+                                                <div className="flex items-center justify-center gap-2">
+                                                    <button
+                                                        onClick={() => handleOpenEdit(item)}
+                                                        className="px-3 py-1.5 bg-slate-100 hover:bg-cyan-600 hover:text-white text-slate-700 font-bold rounded-xl text-xs transition-all shadow-sm flex items-center gap-1 cursor-pointer"
+                                                        title="Editar estado y número de resolución sanitaria"
+                                                    >
+                                                        <span>✏️</span>
+                                                        <span>Editar</span>
+                                                    </button>
+                                                    {item.previousYearRecord && (
+                                                        <button
+                                                            onClick={() => handleOpenCopy(item)}
+                                                            className="px-3 py-1.5 bg-indigo-50 hover:bg-indigo-600 hover:text-white text-indigo-700 font-bold rounded-xl text-xs transition-all shadow-sm border border-indigo-200 hover:border-indigo-600 flex items-center gap-1 cursor-pointer"
+                                                            title={`Copiar datos del año ${item.anio - 1}`}
+                                                        >
+                                                            <span>📋</span>
+                                                            <span>Copiar año anterior</span>
+                                                        </button>
+                                                    )}
+                                                </div>
                                             </td>
                                         )}
                                     </tr>
@@ -1062,6 +1187,22 @@ export default function ResolucionSanitariaClient({ canManage }: Props) {
                                     <p className="text-[11px] text-gray-400 mt-1">
                                         Indica el folio o número oficial emitido por la autoridad sanitaria.
                                     </p>
+
+                                    {/* Fecha Resolución Sanitaria */}
+                                    <div className="mt-3">
+                                        <label className="block text-xs font-bold text-gray-700 uppercase mb-1">
+                                            Fecha de Resolución Sanitaria
+                                        </label>
+                                        <input
+                                            type="date"
+                                            value={editFecha}
+                                            onChange={(e) => setEditFecha(e.target.value)}
+                                            className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 font-semibold bg-white"
+                                        />
+                                        <p className="text-[11px] text-gray-400 mt-1">
+                                            Fecha oficial emitida por la autoridad sanitaria.
+                                        </p>
+                                    </div>
                                 </div>
                             )}
 
@@ -1368,6 +1509,255 @@ export default function ResolucionSanitariaClient({ canManage }: Props) {
                                 >
                                     <span>{cargaMasivaLoading ? '⌛' : '🚀'}</span>
                                     {cargaMasivaLoading ? 'Procesando archivo...' : 'Procesar Carga Masiva'}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+
+            {/* Modal: Copiar Año Anterior */}
+            {copyItem && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+                    <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 w-full max-w-xl overflow-hidden animate-in zoom-in-95 duration-200">
+                        {/* Cabecera */}
+                        <div className="bg-gradient-to-r from-indigo-700 to-indigo-900 px-6 py-5 text-white flex items-center justify-between">
+                            <div>
+                                <h3 className="text-lg font-black tracking-tight flex items-center gap-2">
+                                    <span>📋</span> Copiar Año Anterior
+                                </h3>
+                                <p className="text-xs text-indigo-200 mt-0.5 font-medium">
+                                    RBD {copyItem.current.rbd} &bull; {copyItem.current.nombreEstablecimiento} &bull; {copyItem.current.comuna}
+                                </p>
+                            </div>
+                            <button
+                                type="button"
+                                onClick={() => setCopyItem(null)}
+                                className="text-indigo-200 hover:text-white p-1 rounded-lg transition-colors cursor-pointer text-xl"
+                            >
+                                ✕
+                            </button>
+                        </div>
+
+                        {/* Formulario */}
+                        <form onSubmit={handleExecuteCopy} className="p-6 space-y-4">
+                            {copyError && (
+                                <div className="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold flex items-start gap-2.5">
+                                    <span className="text-base leading-none">⚠️</span>
+                                    <span>{copyError}</span>
+                                </div>
+                            )}
+
+                            {/* Comparación Origen vs Destino */}
+                            <div className="grid grid-cols-2 gap-3">
+                                {/* Año Anterior (Origen) */}
+                                <div className="p-3.5 rounded-2xl bg-indigo-50/70 border border-indigo-100 space-y-2">
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-[10px] font-bold text-indigo-700 uppercase tracking-wider">
+                                            Origen (Año {copyItem.prev.anio})
+                                        </span>
+                                        <span className="text-xs font-mono font-bold text-indigo-900 bg-white px-2 py-0.5 rounded-full border border-indigo-200">
+                                            {copyItem.prev.anio}
+                                        </span>
+                                    </div>
+                                    <div className="space-y-1 text-xs">
+                                        <div className="flex items-center justify-between">
+                                            <span className="text-gray-500 font-medium">Resolución:</span>
+                                            {copyItem.prev.estadoResolucion === 'Si' && (
+                                                <span className="px-2 py-0.5 text-xs font-bold rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
+                                                    🟢 Si
+                                                </span>
+                                            )}
+                                            {copyItem.prev.estadoResolucion === 'No' && (
+                                                <span className="px-2 py-0.5 text-xs font-bold rounded-full bg-rose-100 text-rose-800 border border-rose-200">
+                                                    🔴 No
+                                                </span>
+                                            )}
+                                            {copyItem.prev.estadoResolucion === 'No Aplica' && (
+                                                <span className="px-2 py-0.5 text-xs font-bold rounded-full bg-slate-100 text-slate-700 border border-slate-200">
+                                                    ⚪ No Aplica
+                                                </span>
+                                            )}
+                                        </div>
+                                        <div className="flex items-center justify-between">
+                                            <span className="text-gray-500 font-medium">N° Res.:</span>
+                                            <span className="font-mono font-bold text-gray-800">
+                                                {copyItem.prev.numeroResolucion || 'N/A'}
+                                            </span>
+                                        </div>
+                                        <div className="flex items-center justify-between">
+                                            <span className="text-gray-500 font-medium">Fecha Res.:</span>
+                                            <span className="font-mono font-bold text-gray-800">
+                                                {copyItem.prev.fechaResolucion ? formatFecha(copyItem.prev.fechaResolucion) : 'N/A'}
+                                            </span>
+                                        </div>
+                                        <div className="flex items-center justify-between">
+                                            <span className="text-gray-500 font-medium">Adjunto:</span>
+                                            <span className="font-semibold text-gray-800 truncate max-w-[120px]">
+                                                {copyItem.prev.documentoUrl ? (
+                                                    <span className="text-emerald-700 flex items-center gap-1 font-bold">
+                                                        <span>📎</span> Sí posee
+                                                    </span>
+                                                ) : (
+                                                    <span className="text-rose-600 font-bold">Sin archivo</span>
+                                                )}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Año Actual (Destino) */}
+                                <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-[10px] font-bold text-slate-600 uppercase tracking-wider">
+                                            Destino (Año {copyItem.current.anio})
+                                        </span>
+                                        <span className="text-xs font-mono font-bold text-slate-800 bg-white px-2 py-0.5 rounded-full border border-slate-200">
+                                            {copyItem.current.anio}
+                                        </span>
+                                    </div>
+                                    <div className="space-y-1 text-xs">
+                                        <div className="flex items-center justify-between">
+                                            <span className="text-gray-500 font-medium">Resolución:</span>
+                                            <span className="font-semibold text-gray-700">
+                                                {copyItem.current.estadoResolucion || 'No Aplica'}
+                                            </span>
+                                        </div>
+                                        <div className="flex items-center justify-between">
+                                            <span className="text-gray-500 font-medium">N° Res.:</span>
+                                            <span className="font-mono text-gray-600">
+                                                {copyItem.current.numeroResolucion || '-'}
+                                            </span>
+                                        </div>
+                                        <div className="flex items-center justify-between">
+                                            <span className="text-gray-500 font-medium">Fecha Res.:</span>
+                                            <span className="font-mono text-gray-600">
+                                                {copyItem.current.fechaResolucion ? formatFecha(copyItem.current.fechaResolucion) : '-'}
+                                            </span>
+                                        </div>
+                                        <div className="flex items-center justify-between">
+                                            <span className="text-gray-500 font-medium">Adjunto:</span>
+                                            <span className="text-gray-600">
+                                                {copyItem.current.documentoUrl ? 'Reemplazará' : 'Heredará'}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Validación Condicional según requerimientos */}
+                            {copyItem.prev.estadoResolucion === 'Si' && !copyItem.prev.documentoUrl ? (
+                                <div className="p-4 rounded-2xl bg-amber-50 border-2 border-amber-300 space-y-3">
+                                    <div className="flex items-start gap-2.5">
+                                        <span className="text-2xl leading-none">⚠️</span>
+                                        <div>
+                                            <h4 className="text-xs font-bold text-amber-900 uppercase tracking-wide">
+                                                Archivo Adjunto Requerido Obligatoriamente
+                                            </h4>
+                                            <p className="text-xs text-amber-800 mt-0.5">
+                                                La resolución sanitaria del año {copyItem.prev.anio} tiene respuesta <strong>&quot;SI&quot;</strong>, pero <strong>no posee archivo adjunto</strong>.
+                                                Para autorizar la copia al año {copyItem.current.anio}, <strong>debe subir el documento correspondiente</strong>.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-xs font-bold text-gray-700 uppercase mb-1">
+                                            Seleccionar Documento (*.pdf o imagen) <span className="text-rose-500">*</span>
+                                        </label>
+                                        <input
+                                            type="file"
+                                            required
+                                            accept=".pdf,image/*"
+                                            onChange={(e) => setCopyFile(e.target.files?.[0] || null)}
+                                            className="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-indigo-600 file:text-white hover:file:bg-indigo-700 file:cursor-pointer cursor-pointer border border-amber-300 rounded-xl p-1 bg-white"
+                                        />
+                                        {!copyFile && (
+                                            <p className="text-[11px] font-semibold text-rose-600 mt-1 flex items-center gap-1">
+                                                <span>⛔</span> No se puede realizar la copia sin adjuntar el documento.
+                                            </p>
+                                        )}
+                                        {copyFile && (
+                                            <p className="text-[11px] font-semibold text-emerald-700 mt-1 flex items-center gap-1">
+                                                <span>✅</span> Archivo seleccionado: {copyFile.name} ({(copyFile.size / 1024 / 1024).toFixed(2)} MB)
+                                            </p>
+                                        )}
+                                    </div>
+                                </div>
+                            ) : copyItem.prev.estadoResolucion === 'Si' && copyItem.prev.documentoUrl ? (
+                                <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 space-y-3">
+                                    <div className="flex items-start gap-2.5">
+                                        <span className="text-xl leading-none">✅</span>
+                                        <div>
+                                            <h4 className="text-xs font-bold text-emerald-900 uppercase tracking-wide">
+                                                Documento disponible del año anterior
+                                            </h4>
+                                            <p className="text-xs text-emerald-800 mt-0.5">
+                                                Se copiará automáticamente el estado <strong>&quot;SI&quot;</strong>, N° de resolución <strong>{copyItem.prev.numeroResolucion || 'N/A'}</strong> y el archivo:
+                                            </p>
+                                            <div className="flex items-center gap-2 mt-1">
+                                                <span className="text-xs font-bold text-indigo-800 flex items-center gap-1">
+                                                    <span>📎</span> {copyItem.prev.documentoNombre || 'Resolución Sanitaria'}
+                                                </span>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setPreviewDoc({
+                                                        url: copyItem.prev.documentoUrl as string,
+                                                        nombre: copyItem.prev.documentoNombre || 'Resolución Sanitaria',
+                                                        rbd: copyItem.prev.rbd,
+                                                        establecimiento: copyItem.current.nombreEstablecimiento
+                                                    })}
+                                                    className="text-xs text-indigo-600 hover:text-indigo-800 font-bold underline cursor-pointer"
+                                                >
+                                                    (Ver previo)
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="pt-2 border-t border-emerald-200/60">
+                                        <label className="block text-xs font-bold text-gray-700 uppercase mb-1">
+                                            ¿Deseas reemplazar el archivo por uno nuevo? (Opcional)
+                                        </label>
+                                        <input
+                                            type="file"
+                                            accept=".pdf,image/*"
+                                            onChange={(e) => setCopyFile(e.target.files?.[0] || null)}
+                                            className="w-full text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-slate-200 file:text-slate-800 hover:file:bg-slate-300 file:cursor-pointer cursor-pointer border border-emerald-200 rounded-xl p-1 bg-white"
+                                        />
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="p-4 rounded-2xl bg-slate-100 border border-slate-200 space-y-1">
+                                    <p className="text-xs font-bold text-gray-800 flex items-center gap-1.5">
+                                        <span>ℹ️</span> Copia de estado {copyItem.prev.estadoResolucion}
+                                    </p>
+                                    <p className="text-xs text-gray-600">
+                                        Se actualizará el registro del año {copyItem.current.anio} con el estado <strong>&quot;{copyItem.prev.estadoResolucion}&quot;</strong> del año {copyItem.prev.anio}. No requiere documento adjunto.
+                                    </p>
+                                </div>
+                            )}
+
+                            {/* Botones de acción */}
+                            <div className="flex items-center justify-end gap-3 pt-3 border-t border-gray-100">
+                                <button
+                                    type="button"
+                                    onClick={() => setCopyItem(null)}
+                                    disabled={isCopying}
+                                    className="px-4 py-2 text-xs font-bold text-gray-600 hover:bg-gray-100 rounded-xl cursor-pointer"
+                                >
+                                    Cancelar
+                                </button>
+                                <button
+                                    type="submit"
+                                    disabled={
+                                        isCopying || 
+                                        (copyItem.prev.estadoResolucion === 'Si' && !copyItem.prev.documentoUrl && !copyFile)
+                                    }
+                                    className="px-5 py-2.5 text-xs font-bold bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-xl shadow-md shadow-indigo-600/30 flex items-center gap-2 cursor-pointer transition-all"
+                                >
+                                    <span>{isCopying ? '⌛' : '📋'}</span>
+                                    {isCopying ? 'Copiando...' : 'Confirmar y Copiar'}
                                 </button>
                             </div>
                         </form>

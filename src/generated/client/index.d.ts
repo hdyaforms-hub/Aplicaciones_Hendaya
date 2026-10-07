@@ -147990,11 +147990,14 @@ export namespace Prisma {
     rbd: number | null
     rbdDv: string | null
     nombreEstablecimiento: string | null
+    sucursal: string | null
     comuna: string | null
     estadoResolucion: string | null
     numeroResolucion: string | null
+    fechaResolucion: Date | null
     documentoUrl: string | null
     documentoNombre: string | null
+    documentoSubidoPor: string | null
     observaciones: string | null
     updatedBy: string | null
     createdAt: Date | null
@@ -148011,11 +148014,14 @@ export namespace Prisma {
     rbd: number | null
     rbdDv: string | null
     nombreEstablecimiento: string | null
+    sucursal: string | null
     comuna: string | null
     estadoResolucion: string | null
     numeroResolucion: string | null
+    fechaResolucion: Date | null
     documentoUrl: string | null
     documentoNombre: string | null
+    documentoSubidoPor: string | null
     observaciones: string | null
     updatedBy: string | null
     createdAt: Date | null
@@ -148032,11 +148038,14 @@ export namespace Prisma {
     rbd: number
     rbdDv: number
     nombreEstablecimiento: number
+    sucursal: number
     comuna: number
     estadoResolucion: number
     numeroResolucion: number
+    fechaResolucion: number
     documentoUrl: number
     documentoNombre: number
+    documentoSubidoPor: number
     observaciones: number
     updatedBy: number
     createdAt: number
@@ -148069,11 +148078,14 @@ export namespace Prisma {
     rbd?: true
     rbdDv?: true
     nombreEstablecimiento?: true
+    sucursal?: true
     comuna?: true
     estadoResolucion?: true
     numeroResolucion?: true
+    fechaResolucion?: true
     documentoUrl?: true
     documentoNombre?: true
+    documentoSubidoPor?: true
     observaciones?: true
     updatedBy?: true
     createdAt?: true
@@ -148090,11 +148102,14 @@ export namespace Prisma {
     rbd?: true
     rbdDv?: true
     nombreEstablecimiento?: true
+    sucursal?: true
     comuna?: true
     estadoResolucion?: true
     numeroResolucion?: true
+    fechaResolucion?: true
     documentoUrl?: true
     documentoNombre?: true
+    documentoSubidoPor?: true
     observaciones?: true
     updatedBy?: true
     createdAt?: true
@@ -148111,11 +148126,14 @@ export namespace Prisma {
     rbd?: true
     rbdDv?: true
     nombreEstablecimiento?: true
+    sucursal?: true
     comuna?: true
     estadoResolucion?: true
     numeroResolucion?: true
+    fechaResolucion?: true
     documentoUrl?: true
     documentoNombre?: true
+    documentoSubidoPor?: true
     observaciones?: true
     updatedBy?: true
     createdAt?: true
@@ -148219,11 +148237,14 @@ export namespace Prisma {
     rbd: number
     rbdDv: string | null
     nombreEstablecimiento: string
+    sucursal: string | null
     comuna: string
     estadoResolucion: string
     numeroResolucion: string | null
+    fechaResolucion: Date | null
     documentoUrl: string | null
     documentoNombre: string | null
+    documentoSubidoPor: string | null
     observaciones: string | null
     updatedBy: string | null
     createdAt: Date
@@ -148259,11 +148280,14 @@ export namespace Prisma {
     rbd?: boolean
     rbdDv?: boolean
     nombreEstablecimiento?: boolean
+    sucursal?: boolean
     comuna?: boolean
     estadoResolucion?: boolean
     numeroResolucion?: boolean
+    fechaResolucion?: boolean
     documentoUrl?: boolean
     documentoNombre?: boolean
+    documentoSubidoPor?: boolean
     observaciones?: boolean
     updatedBy?: boolean
     createdAt?: boolean
@@ -148280,11 +148304,14 @@ export namespace Prisma {
     rbd?: boolean
     rbdDv?: boolean
     nombreEstablecimiento?: boolean
+    sucursal?: boolean
     comuna?: boolean
     estadoResolucion?: boolean
     numeroResolucion?: boolean
+    fechaResolucion?: boolean
     documentoUrl?: boolean
     documentoNombre?: boolean
+    documentoSubidoPor?: boolean
     observaciones?: boolean
     updatedBy?: boolean
     createdAt?: boolean
@@ -148301,11 +148328,14 @@ export namespace Prisma {
     rbd?: boolean
     rbdDv?: boolean
     nombreEstablecimiento?: boolean
+    sucursal?: boolean
     comuna?: boolean
     estadoResolucion?: boolean
     numeroResolucion?: boolean
+    fechaResolucion?: boolean
     documentoUrl?: boolean
     documentoNombre?: boolean
+    documentoSubidoPor?: boolean
     observaciones?: boolean
     updatedBy?: boolean
     createdAt?: boolean
@@ -148326,11 +148356,14 @@ export namespace Prisma {
       rbd: number
       rbdDv: string | null
       nombreEstablecimiento: string
+      sucursal: string | null
       comuna: string
       estadoResolucion: string
       numeroResolucion: string | null
+      fechaResolucion: Date | null
       documentoUrl: string | null
       documentoNombre: string | null
+      documentoSubidoPor: string | null
       observaciones: string | null
       updatedBy: string | null
       createdAt: Date
@@ -148737,11 +148770,14 @@ export namespace Prisma {
     readonly rbd: FieldRef<"Cal_ResSan_Registro", 'Int'>
     readonly rbdDv: FieldRef<"Cal_ResSan_Registro", 'String'>
     readonly nombreEstablecimiento: FieldRef<"Cal_ResSan_Registro", 'String'>
+    readonly sucursal: FieldRef<"Cal_ResSan_Registro", 'String'>
     readonly comuna: FieldRef<"Cal_ResSan_Registro", 'String'>
     readonly estadoResolucion: FieldRef<"Cal_ResSan_Registro", 'String'>
     readonly numeroResolucion: FieldRef<"Cal_ResSan_Registro", 'String'>
+    readonly fechaResolucion: FieldRef<"Cal_ResSan_Registro", 'DateTime'>
     readonly documentoUrl: FieldRef<"Cal_ResSan_Registro", 'String'>
     readonly documentoNombre: FieldRef<"Cal_ResSan_Registro", 'String'>
+    readonly documentoSubidoPor: FieldRef<"Cal_ResSan_Registro", 'String'>
     readonly observaciones: FieldRef<"Cal_ResSan_Registro", 'String'>
     readonly updatedBy: FieldRef<"Cal_ResSan_Registro", 'String'>
     readonly createdAt: FieldRef<"Cal_ResSan_Registro", 'DateTime'>
@@ -151181,11 +151217,14 @@ export namespace Prisma {
     rbd: 'rbd',
     rbdDv: 'rbdDv',
     nombreEstablecimiento: 'nombreEstablecimiento',
+    sucursal: 'sucursal',
     comuna: 'comuna',
     estadoResolucion: 'estadoResolucion',
     numeroResolucion: 'numeroResolucion',
+    fechaResolucion: 'fechaResolucion',
     documentoUrl: 'documentoUrl',
     documentoNombre: 'documentoNombre',
+    documentoSubidoPor: 'documentoSubidoPor',
     observaciones: 'observaciones',
     updatedBy: 'updatedBy',
     createdAt: 'createdAt',
@@ -162295,11 +162334,14 @@ export namespace Prisma {
     rbd?: IntFilter<"Cal_ResSan_Registro"> | number
     rbdDv?: StringNullableFilter<"Cal_ResSan_Registro"> | string | null
     nombreEstablecimiento?: StringFilter<"Cal_ResSan_Registro"> | string
+    sucursal?: StringNullableFilter<"Cal_ResSan_Registro"> | string | null
     comuna?: StringFilter<"Cal_ResSan_Registro"> | string
     estadoResolucion?: StringFilter<"Cal_ResSan_Registro"> | string
     numeroResolucion?: StringNullableFilter<"Cal_ResSan_Registro"> | string | null
+    fechaResolucion?: DateTimeNullableFilter<"Cal_ResSan_Registro"> | Date | string | null
     documentoUrl?: StringNullableFilter<"Cal_ResSan_Registro"> | string | null
     documentoNombre?: StringNullableFilter<"Cal_ResSan_Registro"> | string | null
+    documentoSubidoPor?: StringNullableFilter<"Cal_ResSan_Registro"> | string | null
     observaciones?: StringNullableFilter<"Cal_ResSan_Registro"> | string | null
     updatedBy?: StringNullableFilter<"Cal_ResSan_Registro"> | string | null
     createdAt?: DateTimeFilter<"Cal_ResSan_Registro"> | Date | string
@@ -162316,11 +162358,14 @@ export namespace Prisma {
     rbd?: SortOrder
     rbdDv?: SortOrderInput | SortOrder
     nombreEstablecimiento?: SortOrder
+    sucursal?: SortOrderInput | SortOrder
     comuna?: SortOrder
     estadoResolucion?: SortOrder
     numeroResolucion?: SortOrderInput | SortOrder
+    fechaResolucion?: SortOrderInput | SortOrder
     documentoUrl?: SortOrderInput | SortOrder
     documentoNombre?: SortOrderInput | SortOrder
+    documentoSubidoPor?: SortOrderInput | SortOrder
     observaciones?: SortOrderInput | SortOrder
     updatedBy?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -162341,11 +162386,14 @@ export namespace Prisma {
     rbd?: IntFilter<"Cal_ResSan_Registro"> | number
     rbdDv?: StringNullableFilter<"Cal_ResSan_Registro"> | string | null
     nombreEstablecimiento?: StringFilter<"Cal_ResSan_Registro"> | string
+    sucursal?: StringNullableFilter<"Cal_ResSan_Registro"> | string | null
     comuna?: StringFilter<"Cal_ResSan_Registro"> | string
     estadoResolucion?: StringFilter<"Cal_ResSan_Registro"> | string
     numeroResolucion?: StringNullableFilter<"Cal_ResSan_Registro"> | string | null
+    fechaResolucion?: DateTimeNullableFilter<"Cal_ResSan_Registro"> | Date | string | null
     documentoUrl?: StringNullableFilter<"Cal_ResSan_Registro"> | string | null
     documentoNombre?: StringNullableFilter<"Cal_ResSan_Registro"> | string | null
+    documentoSubidoPor?: StringNullableFilter<"Cal_ResSan_Registro"> | string | null
     observaciones?: StringNullableFilter<"Cal_ResSan_Registro"> | string | null
     updatedBy?: StringNullableFilter<"Cal_ResSan_Registro"> | string | null
     createdAt?: DateTimeFilter<"Cal_ResSan_Registro"> | Date | string
@@ -162362,11 +162410,14 @@ export namespace Prisma {
     rbd?: SortOrder
     rbdDv?: SortOrderInput | SortOrder
     nombreEstablecimiento?: SortOrder
+    sucursal?: SortOrderInput | SortOrder
     comuna?: SortOrder
     estadoResolucion?: SortOrder
     numeroResolucion?: SortOrderInput | SortOrder
+    fechaResolucion?: SortOrderInput | SortOrder
     documentoUrl?: SortOrderInput | SortOrder
     documentoNombre?: SortOrderInput | SortOrder
+    documentoSubidoPor?: SortOrderInput | SortOrder
     observaciones?: SortOrderInput | SortOrder
     updatedBy?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -162391,11 +162442,14 @@ export namespace Prisma {
     rbd?: IntWithAggregatesFilter<"Cal_ResSan_Registro"> | number
     rbdDv?: StringNullableWithAggregatesFilter<"Cal_ResSan_Registro"> | string | null
     nombreEstablecimiento?: StringWithAggregatesFilter<"Cal_ResSan_Registro"> | string
+    sucursal?: StringNullableWithAggregatesFilter<"Cal_ResSan_Registro"> | string | null
     comuna?: StringWithAggregatesFilter<"Cal_ResSan_Registro"> | string
     estadoResolucion?: StringWithAggregatesFilter<"Cal_ResSan_Registro"> | string
     numeroResolucion?: StringNullableWithAggregatesFilter<"Cal_ResSan_Registro"> | string | null
+    fechaResolucion?: DateTimeNullableWithAggregatesFilter<"Cal_ResSan_Registro"> | Date | string | null
     documentoUrl?: StringNullableWithAggregatesFilter<"Cal_ResSan_Registro"> | string | null
     documentoNombre?: StringNullableWithAggregatesFilter<"Cal_ResSan_Registro"> | string | null
+    documentoSubidoPor?: StringNullableWithAggregatesFilter<"Cal_ResSan_Registro"> | string | null
     observaciones?: StringNullableWithAggregatesFilter<"Cal_ResSan_Registro"> | string | null
     updatedBy?: StringNullableWithAggregatesFilter<"Cal_ResSan_Registro"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Cal_ResSan_Registro"> | Date | string
@@ -174796,11 +174850,14 @@ export namespace Prisma {
     rbd: number
     rbdDv?: string | null
     nombreEstablecimiento: string
+    sucursal?: string | null
     comuna: string
     estadoResolucion?: string
     numeroResolucion?: string | null
+    fechaResolucion?: Date | string | null
     documentoUrl?: string | null
     documentoNombre?: string | null
+    documentoSubidoPor?: string | null
     observaciones?: string | null
     updatedBy?: string | null
     createdAt?: Date | string
@@ -174817,11 +174874,14 @@ export namespace Prisma {
     rbd: number
     rbdDv?: string | null
     nombreEstablecimiento: string
+    sucursal?: string | null
     comuna: string
     estadoResolucion?: string
     numeroResolucion?: string | null
+    fechaResolucion?: Date | string | null
     documentoUrl?: string | null
     documentoNombre?: string | null
+    documentoSubidoPor?: string | null
     observaciones?: string | null
     updatedBy?: string | null
     createdAt?: Date | string
@@ -174838,11 +174898,14 @@ export namespace Prisma {
     rbd?: IntFieldUpdateOperationsInput | number
     rbdDv?: NullableStringFieldUpdateOperationsInput | string | null
     nombreEstablecimiento?: StringFieldUpdateOperationsInput | string
+    sucursal?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: StringFieldUpdateOperationsInput | string
     estadoResolucion?: StringFieldUpdateOperationsInput | string
     numeroResolucion?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaResolucion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoSubidoPor?: NullableStringFieldUpdateOperationsInput | string | null
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     updatedBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -174859,11 +174922,14 @@ export namespace Prisma {
     rbd?: IntFieldUpdateOperationsInput | number
     rbdDv?: NullableStringFieldUpdateOperationsInput | string | null
     nombreEstablecimiento?: StringFieldUpdateOperationsInput | string
+    sucursal?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: StringFieldUpdateOperationsInput | string
     estadoResolucion?: StringFieldUpdateOperationsInput | string
     numeroResolucion?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaResolucion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoSubidoPor?: NullableStringFieldUpdateOperationsInput | string | null
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     updatedBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -174880,11 +174946,14 @@ export namespace Prisma {
     rbd: number
     rbdDv?: string | null
     nombreEstablecimiento: string
+    sucursal?: string | null
     comuna: string
     estadoResolucion?: string
     numeroResolucion?: string | null
+    fechaResolucion?: Date | string | null
     documentoUrl?: string | null
     documentoNombre?: string | null
+    documentoSubidoPor?: string | null
     observaciones?: string | null
     updatedBy?: string | null
     createdAt?: Date | string
@@ -174901,11 +174970,14 @@ export namespace Prisma {
     rbd?: IntFieldUpdateOperationsInput | number
     rbdDv?: NullableStringFieldUpdateOperationsInput | string | null
     nombreEstablecimiento?: StringFieldUpdateOperationsInput | string
+    sucursal?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: StringFieldUpdateOperationsInput | string
     estadoResolucion?: StringFieldUpdateOperationsInput | string
     numeroResolucion?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaResolucion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoSubidoPor?: NullableStringFieldUpdateOperationsInput | string | null
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     updatedBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -174922,11 +174994,14 @@ export namespace Prisma {
     rbd?: IntFieldUpdateOperationsInput | number
     rbdDv?: NullableStringFieldUpdateOperationsInput | string | null
     nombreEstablecimiento?: StringFieldUpdateOperationsInput | string
+    sucursal?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: StringFieldUpdateOperationsInput | string
     estadoResolucion?: StringFieldUpdateOperationsInput | string
     numeroResolucion?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaResolucion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoSubidoPor?: NullableStringFieldUpdateOperationsInput | string | null
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     updatedBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -182449,11 +182524,14 @@ export namespace Prisma {
     rbd?: SortOrder
     rbdDv?: SortOrder
     nombreEstablecimiento?: SortOrder
+    sucursal?: SortOrder
     comuna?: SortOrder
     estadoResolucion?: SortOrder
     numeroResolucion?: SortOrder
+    fechaResolucion?: SortOrder
     documentoUrl?: SortOrder
     documentoNombre?: SortOrder
+    documentoSubidoPor?: SortOrder
     observaciones?: SortOrder
     updatedBy?: SortOrder
     createdAt?: SortOrder
@@ -182477,11 +182555,14 @@ export namespace Prisma {
     rbd?: SortOrder
     rbdDv?: SortOrder
     nombreEstablecimiento?: SortOrder
+    sucursal?: SortOrder
     comuna?: SortOrder
     estadoResolucion?: SortOrder
     numeroResolucion?: SortOrder
+    fechaResolucion?: SortOrder
     documentoUrl?: SortOrder
     documentoNombre?: SortOrder
+    documentoSubidoPor?: SortOrder
     observaciones?: SortOrder
     updatedBy?: SortOrder
     createdAt?: SortOrder
@@ -182498,11 +182579,14 @@ export namespace Prisma {
     rbd?: SortOrder
     rbdDv?: SortOrder
     nombreEstablecimiento?: SortOrder
+    sucursal?: SortOrder
     comuna?: SortOrder
     estadoResolucion?: SortOrder
     numeroResolucion?: SortOrder
+    fechaResolucion?: SortOrder
     documentoUrl?: SortOrder
     documentoNombre?: SortOrder
+    documentoSubidoPor?: SortOrder
     observaciones?: SortOrder
     updatedBy?: SortOrder
     createdAt?: SortOrder

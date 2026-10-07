@@ -24,6 +24,7 @@ function getModuleInfoFromPath(path: string): { modulo: string; detalle: string 
         if (path.includes('/kilometraje')) return { modulo: 'Tableros y Avances', detalle: 'Accedió a Tablero de Kilometraje' }
         if (path.includes('/actas')) return { modulo: 'Tableros y Avances', detalle: 'Accedió a Tablero de Actas' }
         if (path.includes('/verificador-temperaturas')) return { modulo: 'Tableros y Avances', detalle: 'Accedió a Tablero Verificador de Temperaturas' }
+        if (path.includes('/resolucion-sanitaria')) return { modulo: 'Tableros y Avances', detalle: 'Accedió a Tablero de Resolución Sanitaria (Evolución Histórica)' }
         return { modulo: 'Tableros y Avances', detalle: 'Accedió a Avance PMPA' }
     }
 

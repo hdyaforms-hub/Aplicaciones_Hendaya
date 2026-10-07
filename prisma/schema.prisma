@@ -2235,11 +2235,14 @@ model Cal_ResSan_Registro {
   rbd                   Int
   rbdDv                 String?
   nombreEstablecimiento String
+  sucursal              String?
   comuna                String
-  estadoResolucion      String   @default("No Aplica") // 'Si' | 'No' | 'No Aplica'
+  estadoResolucion      String    @default("No Aplica") // 'Si' | 'No' | 'No Aplica'
   numeroResolucion      String?
-  documentoUrl          String?  @db.Text
+  fechaResolucion       DateTime?
+  documentoUrl          String?   @db.Text
   documentoNombre       String?
+  documentoSubidoPor    String?
   observaciones         String?  @db.Text
   updatedBy             String?
   createdAt             DateTime @default(now())
@@ -2250,6 +2253,7 @@ model Cal_ResSan_Registro {
   @@index([licitacion])
   @@index([ut])
   @@index([rbd])
+  @@index([sucursal])
   @@index([estadoResolucion])
   @@map("Cal_ResSan_Registro")
 }
