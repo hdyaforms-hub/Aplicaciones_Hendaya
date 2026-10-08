@@ -2,10 +2,11 @@ import { getSession } from '@/lib/session'
 import { redirect } from 'next/navigation'
 import { getGlobalConfig } from '@/lib/global-config'
 import GlobalConfigClient from './GlobalConfigClient'
+import { getSucursalesGlobalConfigAction } from './actions'
 
 export const metadata = {
     title: 'Configuración Global | Hendaya',
-    description: 'Parámetros globales del sistema y duración de sesión'
+    description: 'Parámetros globales del sistema, duración de sesión y disponibilidad de sala de reuniones'
 }
 
 export default async function GlobalConfigPage() {
@@ -18,8 +19,9 @@ export default async function GlobalConfigPage() {
     }
 
     const config = await getGlobalConfig()
+    const sucursales = await getSucursalesGlobalConfigAction()
 
     return (
-        <GlobalConfigClient initialConfig={config} />
+        <GlobalConfigClient initialConfig={config} initialSucursales={sucursales} />
     )
 }

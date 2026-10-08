@@ -18,8 +18,20 @@ export interface ReservaSalaItem {
     motivo: string
     estado: string // CONFIRMADA | CANCELADA
     tokenCancelacion: string
+    sucursalId?: string | null
+    sucursalNombre?: string | null
     createdAt: Date
     updatedAt: Date
+}
+
+export interface SucursalSalaItem {
+    id: string
+    nombre: string
+    region?: string | null
+    comuna?: string | null
+    isCompartida?: boolean
+    salaPrincipalNombre?: string
+    compartidaCon?: string[]
 }
 
 export interface NoticiaItem {
@@ -52,6 +64,8 @@ export interface SalaDataResponse {
         email: string
         role: string
     } | null
+    sucursalesDisponibles: SucursalSalaItem[]
+    sucursalActiva: SucursalSalaItem | null
 }
 
 const NOTICIAS_DEFAULT: Omit<NoticiaItem, 'id'>[] = [
@@ -189,6 +203,7 @@ async function sendReservaConfirmationEmail({
     horaFin,
     motivo,
     token,
+    sucursalNombre,
     clientOrigin
 }: {
     to: string
@@ -198,6 +213,7 @@ async function sendReservaConfirmationEmail({
     horaFin: string
     motivo: string
     token: string
+    sucursalNombre?: string | null
     clientOrigin?: string
 }): Promise<{ success: boolean; warning?: string }> {
     try {
@@ -229,6 +245,7 @@ async function sendReservaConfirmationEmail({
                 <p style="font-size: 16px; margin-bottom: 16px;">Hola <b>${solicitante}</b>,</p>
                 <p style="font-size: 15px; margin-bottom: 16px;">Tu reserva de la Sala de Reuniones fue confirmada:</p>
                 <ul style="font-size: 15px; line-height: 1.8; margin-bottom: 24px;">
+                    ${sucursalNombre ? `<li><b>Sucursal:</b> ${sucursalNombre}</li>` : ''}
                     <li><b>Fecha:</b> ${fecha}</li>
                     <li><b>Horario:</b> ${horaInicio} a ${horaFin}</li>
                     <li><b>Motivo:</b> ${motivo}</li>
@@ -248,7 +265,7 @@ async function sendReservaConfirmationEmail({
         await transporter.sendMail({
             from: `"Sala de Reuniones Hendaya" <${emailConfig.email}>`,
             to,
-            subject: `Confirmación de Reserva: Sala de Reuniones (${fecha} ${horaInicio} - ${horaFin})`,
+            subject: `Confirmación de Reserva: Sala de Reuniones ${sucursalNombre ? `(${sucursalNombre}) ` : ''}(${fecha} ${horaInicio} - ${horaFin})`,
             html
         })
 
@@ -270,7 +287,8 @@ async function sendReservaCancellationEmail({
     fecha,
     horaInicio,
     horaFin,
-    motivo
+    motivo,
+    sucursalNombre
 }: {
     to: string
     solicitante: string
@@ -278,6 +296,7 @@ async function sendReservaCancellationEmail({
     horaInicio: string
     horaFin: string
     motivo: string
+    sucursalNombre?: string | null
 }) {
     try {
         const emailConfig = await rawPrisma.emailConfig.findUnique({ where: { id: 'global' } })
@@ -299,6 +318,7 @@ async function sendReservaCancellationEmail({
                 <p style="font-size: 16px; margin-bottom: 16px;">Hola <b>${solicitante}</b>,</p>
                 <p style="font-size: 15px; margin-bottom: 16px; color: #dc2626;">Tu reserva de la Sala de Reuniones ha sido <b>CANCELADA</b>:</p>
                 <ul style="font-size: 15px; line-height: 1.8; margin-bottom: 24px;">
+                    ${sucursalNombre ? `<li><b>Sucursal:</b> ${sucursalNombre}</li>` : ''}
                     <li><b>Fecha:</b> ${fecha}</li>
                     <li><b>Horario:</b> ${horaInicio} a ${horaFin}</li>
                     <li><b>Motivo:</b> ${motivo}</li>
@@ -312,7 +332,7 @@ async function sendReservaCancellationEmail({
         await transporter.sendMail({
             from: `"Sala de Reuniones Hendaya" <${emailConfig.email}>`,
             to,
-            subject: `Cancelación de Reserva: Sala de Reuniones (${fecha} ${horaInicio} - ${horaFin})`,
+            subject: `Cancelación de Reserva: Sala de Reuniones ${sucursalNombre ? `(${sucursalNombre}) ` : ''}(${fecha} ${horaInicio} - ${horaFin})`,
             html
         })
     } catch (e) {
@@ -360,13 +380,21 @@ export async function ensureTablesExist() {
                         motivo TEXT NOT NULL,
                         estado TEXT NOT NULL DEFAULT 'CONFIRMADA',
                         "tokenCancelacion" TEXT NOT NULL UNIQUE,
+                        "sucursalId" TEXT,
+                        "sucursalNombre" TEXT,
                         "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
                         "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
                     );
                 `)
+                await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Sucursal" ADD COLUMN IF NOT EXISTS "tieneSalaReuniones" BOOLEAN NOT NULL DEFAULT false;`)
+                await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Sucursal" ADD COLUMN IF NOT EXISTS "salaCompartidaId" TEXT;`)
+                await rawPrisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "sucursal_sala_compartida_idx" ON "Sucursal"("salaCompartidaId");`)
+                await rawPrisma.$executeRawUnsafe(`ALTER TABLE "reservas_sala" ADD COLUMN IF NOT EXISTS "sucursalId" TEXT;`)
+                await rawPrisma.$executeRawUnsafe(`ALTER TABLE "reservas_sala" ADD COLUMN IF NOT EXISTS "sucursalNombre" TEXT;`)
                 await rawPrisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "reservas_sala_fecha_idx" ON "reservas_sala"(fecha);`)
                 await rawPrisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "reservas_sala_estado_idx" ON "reservas_sala"(estado);`)
                 await rawPrisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "reservas_sala_token_idx" ON "reservas_sala"("tokenCancelacion");`)
+                await rawPrisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "reservas_sala_sucursal_idx" ON "reservas_sala"("sucursalId");`)
                 await rawPrisma.$executeRawUnsafe(`
                     CREATE TABLE IF NOT EXISTS "noticias_alimentacion" (
                         id TEXT PRIMARY KEY,
@@ -376,6 +404,13 @@ export async function ensureTablesExist() {
                         orden INTEGER NOT NULL DEFAULT 0,
                         "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
                     );
+                `)
+                // Auto-healing para asociar reservas históricas sin sucursal a la primera sucursal activa
+                await rawPrisma.$executeRawUnsafe(`
+                    UPDATE "reservas_sala"
+                    SET "sucursalId" = (SELECT id FROM "Sucursal" WHERE "tieneSalaReuniones" = true ORDER BY nombre ASC LIMIT 1),
+                        "sucursalNombre" = (SELECT nombre FROM "Sucursal" WHERE "tieneSalaReuniones" = true ORDER BY nombre ASC LIMIT 1)
+                    WHERE "sucursalId" IS NULL AND EXISTS (SELECT 1 FROM "Sucursal" WHERE "tieneSalaReuniones" = true);
                 `)
             } catch (err) {
                 console.error('[SalaReuniones] Error verificando/creando tablas:', err)
@@ -387,15 +422,76 @@ export async function ensureTablesExist() {
     return tablesInitPromise
 }
 
-// Obtener todas las reservas de la base de datos
-async function fetchReservasDB(): Promise<ReservaSalaItem[]> {
+export interface SucursalClusterInfo {
+    clusterIds: string[]
+    clusterNombres: string[]
+    isCompartida: boolean
+    salaPrincipalNombre: string
+    sucursalesCompartidasNombres: string[]
+}
+
+// Obtener el cluster de sucursales que comparten la misma sala física
+export async function getSucursalClusterInfo(sucursalId: string): Promise<SucursalClusterInfo> {
+    try {
+        const rows = await rawPrisma.$queryRaw<any[]>`
+            SELECT id, nombre, "salaCompartidaId" FROM "Sucursal"
+        `
+        const target = rows.find(r => r.id === sucursalId)
+        if (!target) {
+            return {
+                clusterIds: [sucursalId],
+                clusterNombres: [],
+                isCompartida: false,
+                salaPrincipalNombre: '',
+                sucursalesCompartidasNombres: []
+            }
+        }
+
+        // Nodo raíz de la sala física compartida
+        const rootId = target.salaCompartidaId || target.id
+        const rootSucursal = rows.find(r => r.id === rootId) || target
+
+        // Cluster formado por la sucursal anfitriona y todas las que apunten a ella
+        const cluster = rows.filter(r => r.id === rootId || r.salaCompartidaId === rootId)
+        const clusterIds = cluster.map(r => r.id)
+        const clusterNombres = cluster.map(r => r.nombre)
+        const sucursalesCompartidasNombres = cluster.filter(r => r.id !== target.id).map(r => r.nombre)
+
+        return {
+            clusterIds,
+            clusterNombres,
+            isCompartida: clusterIds.length > 1,
+            salaPrincipalNombre: rootSucursal.nombre,
+            sucursalesCompartidasNombres
+        }
+    } catch (err) {
+        console.error('[SalaReuniones] Error obteniendo cluster de sucursal:', err)
+        return {
+            clusterIds: [sucursalId],
+            clusterNombres: [],
+            isCompartida: false,
+            salaPrincipalNombre: '',
+            sucursalesCompartidasNombres: []
+        }
+    }
+}
+
+// Obtener reservas de la base de datos (filtradas por el cluster de la sucursal seleccionada si aplica)
+async function fetchReservasDB(sucursalId?: string): Promise<ReservaSalaItem[]> {
     try {
         await ensureTablesExist()
-        const res = await rawPrisma.$queryRaw<any[]>`
-            SELECT id, solicitante, email, "userId", fecha, "horaInicio", "horaFin", motivo, estado, "tokenCancelacion", "createdAt", "updatedAt"
+        let query = `
+            SELECT id, solicitante, email, "userId", fecha, "horaInicio", "horaFin", motivo, estado, "tokenCancelacion", "sucursalId", "sucursalNombre", "createdAt", "updatedAt"
             FROM "reservas_sala"
-            ORDER BY fecha ASC, "horaInicio" ASC
         `
+        const params: any[] = []
+        if (sucursalId) {
+            const cluster = await getSucursalClusterInfo(sucursalId)
+            query += ` WHERE "sucursalId" = ANY($1)`
+            params.push(cluster.clusterIds)
+        }
+        query += ` ORDER BY fecha ASC, "horaInicio" ASC`
+        const res = await rawPrisma.$queryRawUnsafe<any[]>(query, ...params)
         return res.map(r => ({
             id: r.id,
             solicitante: r.solicitante,
@@ -407,6 +503,8 @@ async function fetchReservasDB(): Promise<ReservaSalaItem[]> {
             motivo: r.motivo,
             estado: r.estado,
             tokenCancelacion: r.tokenCancelacion,
+            sucursalId: r.sucursalId || null,
+            sucursalNombre: r.sucursalNombre || null,
             createdAt: new Date(r.createdAt),
             updatedAt: new Date(r.updatedAt)
         }))
@@ -454,10 +552,129 @@ export async function getNoticias(): Promise<NoticiaItem[]> {
     }
 }
 
-// Obtener datos completos de la semana y cálculo de KPIs
-export async function getSalaData(inicioSemanaISO: string): Promise<SalaDataResponse> {
+// Obtener datos completos de la semana, sucursales permitidas y cálculo de KPIs
+export async function getSalaData(inicioSemanaISO: string, sucursalIdParam?: string): Promise<SalaDataResponse> {
+    await ensureTablesExist()
     const session = await getSession()
-    const rawReservas = await fetchReservasDB()
+
+    // 1. Obtener usuario de la base de datos con sus roles y sucursales asociadas a su perfil
+    let dbUser: any = null
+    if (session?.user?.id) {
+        dbUser = await rawPrisma.user.findUnique({
+            where: { id: session.user.id },
+            select: {
+                id: true,
+                name: true,
+                username: true,
+                email: true,
+                role: { select: { name: true } },
+                sucursales: {
+                    select: {
+                        id: true,
+                        nombre: true,
+                        region: true,
+                        comuna: true,
+                        tieneSalaReuniones: true
+                    }
+                }
+            }
+        })
+    } else if (session?.user?.username) {
+        dbUser = await rawPrisma.user.findFirst({
+            where: { username: session.user.username },
+            select: {
+                id: true,
+                name: true,
+                username: true,
+                email: true,
+                role: { select: { name: true } },
+                sucursales: {
+                    select: {
+                        id: true,
+                        nombre: true,
+                        region: true,
+                        comuna: true,
+                        tieneSalaReuniones: true
+                    }
+                }
+            }
+        })
+    }
+
+    // Si el usuario es admin y en la BD no tiene correo o tiene el placeholder antiguo, sincronizar con el oficial
+    if (dbUser && dbUser.username === 'admin' && (!dbUser.email || dbUser.email === 'admin@hendaya.cl')) {
+        try {
+            await rawPrisma.user.update({
+                where: { id: dbUser.id },
+                data: { email: 'doctohdya@hendayasac.cl' }
+            })
+            dbUser.email = 'doctohdya@hendayasac.cl'
+        } catch (err) {
+            console.error('[SalaReuniones] Error actualizando correo de admin:', err)
+        }
+    }
+
+    // 2. Obtener todas las sucursales del sistema para mapear disponibilidad y salas compartidas
+    const todasSucursales = await rawPrisma.$queryRaw<any[]>`
+        SELECT id, nombre, region, comuna, COALESCE("tieneSalaReuniones", false) as "tieneSalaReuniones", "salaCompartidaId"
+        FROM "Sucursal"
+        ORDER BY nombre ASC
+    `
+
+    // Filtrar aquellas que cuentan con sala propia ("Sí") o que comparten sala con otra sucursal
+    const sucursalesConSala = todasSucursales.filter(s => Boolean(s.tieneSalaReuniones) || Boolean(s.salaCompartidaId))
+
+    // Helper para enriquecer cada sucursal con datos del cluster de salas compartidas
+    const enriquecerSucursal = (s: any): SucursalSalaItem => {
+        const rootId = s.salaCompartidaId || s.id
+        const cluster = todasSucursales.filter(other => other.id === rootId || other.salaCompartidaId === rootId)
+        const compartidaCon = cluster.filter(other => other.id !== s.id).map(other => other.nombre)
+        const rootBranch = todasSucursales.find(other => other.id === rootId)
+
+        return {
+            id: s.id,
+            nombre: s.nombre,
+            region: s.region,
+            comuna: s.comuna,
+            isCompartida: compartidaCon.length > 0,
+            salaPrincipalNombre: rootBranch?.nombre || s.nombre,
+            compartidaCon
+        }
+    }
+
+    // 3. Regla de negocio:
+    // "si el usuario que se conecto la lista solo debe mostrar la sucursal que tiene asociado a su perfil"
+    const userRoleName = (dbUser?.role?.name || session?.user?.role?.name || '').toLowerCase()
+    const isAdmin = userRoleName.includes('admin') || userRoleName.includes('administrador')
+    const userSucursales: any[] = dbUser?.sucursales || []
+    const userSucursalIds = userSucursales.map((s: any) => s.id)
+
+    let sucursalesDisponibles: SucursalSalaItem[] = []
+
+    if (userSucursalIds.length > 0) {
+        // El usuario tiene sucursales asignadas en su perfil:
+        // Solo debe mostrar las sucursales asignadas a su perfil que cuenten con sala de reuniones habilitada o compartida
+        sucursalesDisponibles = sucursalesConSala
+            .filter(s => userSucursalIds.includes(s.id))
+            .map(enriquecerSucursal)
+    } else if (isAdmin) {
+        // Administrador sin asignación restringida de perfil: visualiza todas las sucursales con sala habilitada
+        sucursalesDisponibles = sucursalesConSala.map(enriquecerSucursal)
+    } else {
+        // Usuario sin sucursales asociadas en su perfil
+        sucursalesDisponibles = []
+    }
+
+    // 4. Determinar la sucursal activa seleccionada
+    let sucursalActiva: SucursalSalaItem | null = null
+    if (sucursalIdParam && sucursalesDisponibles.some(s => s.id === sucursalIdParam)) {
+        sucursalActiva = sucursalesDisponibles.find(s => s.id === sucursalIdParam) || null
+    } else if (sucursalesDisponibles.length > 0) {
+        sucursalActiva = sucursalesDisponibles[0]
+    }
+
+    // 5. Cargar reservas correspondientes a la sucursal activa
+    const rawReservas = sucursalActiva ? await fetchReservasDB(sucursalActiva.id) : []
     const confirmadas = rawReservas.filter(r => r.estado === 'CONFIRMADA')
 
     // 7 Días de la semana recibida
@@ -479,11 +696,11 @@ export async function getSalaData(inicioSemanaISO: string): Promise<SalaDataResp
     // Fecha y hora actual en zona horaria de Chile (America/Santiago)
     const { fechaActual: hoyISO, horaActual } = getNowSantiago()
 
-    // KPI 1: Estado ahora
+    // KPI 1: Estado ahora en la sucursal activa
     const reservaActual = confirmadas.find(r => r.fecha === hoyISO && r.horaInicio <= horaActual && horaActual < r.horaFin)
     const estadoAhora: 'libre' | 'ocupada' = reservaActual ? 'ocupada' : 'libre'
 
-    // KPI 2: Reservas hoy
+    // KPI 2: Reservas hoy en la sucursal activa
     const reservasHoy = confirmadas.filter(r => r.fecha === hoyISO).length
 
     // KPI 3 & Columna Próximas: Próximas reservas a partir de ahora
@@ -512,33 +729,6 @@ export async function getSalaData(inicioSemanaISO: string): Promise<SalaDataResp
 
     const noticias = await getNoticias()
 
-    // Obtener información fresca del usuario conectado directo de la base de datos
-    let dbUser: { id: string, name: string | null, username: string, email: string | null, role: { name: string } | null } | null = null
-    if (session?.user?.id) {
-        dbUser = await rawPrisma.user.findUnique({
-            where: { id: session.user.id },
-            select: { id: true, name: true, username: true, email: true, role: { select: { name: true } } }
-        })
-    } else if (session?.user?.username) {
-        dbUser = await rawPrisma.user.findFirst({
-            where: { username: session.user.username },
-            select: { id: true, name: true, username: true, email: true, role: { select: { name: true } } }
-        })
-    }
-
-    // Si el usuario es admin y en la BD no tiene correo o tiene el placeholder antiguo, sincronizar con el oficial
-    if (dbUser && dbUser.username === 'admin' && (!dbUser.email || dbUser.email === 'admin@hendaya.cl')) {
-        try {
-            await rawPrisma.user.update({
-                where: { id: dbUser.id },
-                data: { email: 'doctohdya@hendayasac.cl' }
-            })
-            dbUser.email = 'doctohdya@hendayasac.cl'
-        } catch (err) {
-            console.error('[SalaReuniones] Error actualizando correo de admin:', err)
-        }
-    }
-
     return {
         diasSemana,
         reservasSemana,
@@ -565,11 +755,13 @@ export async function getSalaData(inicioSemanaISO: string): Promise<SalaDataResp
             name: session.user.name || session.user.username,
             email: session.user.email || '',
             role: session.user.role?.name || ''
-        } : null)
+        } : null),
+        sucursalesDisponibles,
+        sucursalActiva
     }
 }
 
-// Crear nueva reserva
+// Crear nueva reserva en la sucursal indicada
 export async function createReserva(formData: {
     solicitante: string
     email: string
@@ -577,6 +769,7 @@ export async function createReserva(formData: {
     hora_inicio: string
     hora_fin: string
     motivo: string
+    sucursalId: string
     clientOrigin?: string
 }) {
     try {
@@ -586,15 +779,32 @@ export async function createReserva(formData: {
             return { status: 'error', mensaje: 'Debes iniciar sesión para realizar una reserva.' }
         }
 
-        let { solicitante, email, fecha, hora_inicio, hora_fin, motivo, clientOrigin } = formData
+        let { solicitante, email, fecha, hora_inicio, hora_fin, motivo, sucursalId, clientOrigin } = formData
 
         if (session?.user?.username === 'admin' && (!email || email === 'admin@hendaya.cl')) {
             email = 'doctohdya@hendayasac.cl'
         }
 
-        if (!solicitante || !email || !fecha || !hora_inicio || !hora_fin || !motivo) {
-            return { status: 'error', mensaje: 'Todos los campos son obligatorios.' }
+        if (!solicitante || !email || !fecha || !hora_inicio || !hora_fin || !motivo || !sucursalId) {
+            return { status: 'error', mensaje: 'Todos los campos son obligatorios, incluyendo la selección de la sucursal.' }
         }
+
+        // Obtener datos de la sucursal y validar que tenga sala de reuniones activa o compartida
+        const sucursales = await rawPrisma.$queryRaw<any[]>`
+            SELECT id, nombre, "tieneSalaReuniones", "salaCompartidaId"
+            FROM "Sucursal"
+            WHERE id = ${sucursalId}
+            LIMIT 1
+        `
+        const sucursal = sucursales[0]
+        if (!sucursal) {
+            return { status: 'error', mensaje: 'La sucursal seleccionada no existe en el sistema.' }
+        }
+        if (!sucursal.tieneSalaReuniones && !sucursal.salaCompartidaId) {
+            return { status: 'error', mensaje: `La sucursal "${sucursal.nombre}" no cuenta con sala de reuniones habilitada.` }
+        }
+
+        const sucursalNombre = sucursal.nombre
 
         // Validación estricta: No permitir reservar en horas o fechas pasadas
         const { fechaActual, horaActual } = getNowSantiago()
@@ -616,8 +826,8 @@ export async function createReserva(formData: {
             return { status: 'error', mensaje: 'La hora de término debe ser posterior a la hora de inicio.' }
         }
 
-        // Validar no solapamiento con reservas confirmadas
-        const existentes = await fetchReservasDB()
+        // Validar no solapamiento con reservas confirmadas de la misma sucursal (o cluster de sala compartida)
+        const existentes = await fetchReservasDB(sucursalId)
         const conflicto = existentes.find(r => 
             r.estado === 'CONFIRMADA' &&
             r.fecha === fecha &&
@@ -628,9 +838,12 @@ export async function createReserva(formData: {
         )
 
         if (conflicto) {
+            const origenTexto = conflicto.sucursalNombre && conflicto.sucursalNombre !== sucursalNombre
+                ? ` (reservada en ${conflicto.sucursalNombre})`
+                : ''
             return {
                 status: 'error',
-                mensaje: `Horario no disponible: ya está reservado de ${conflicto.horaInicio} a ${conflicto.horaFin} por ${conflicto.solicitante}.`
+                mensaje: `Horario no disponible en ${sucursalNombre}: ya está reservado de ${conflicto.horaInicio} a ${conflicto.horaFin} por ${conflicto.solicitante}${origenTexto}.`
             }
         }
 
@@ -639,14 +852,14 @@ export async function createReserva(formData: {
         const userId = session.user.id || null
 
         await rawPrisma.$executeRawUnsafe(`
-            INSERT INTO "reservas_sala" (id, solicitante, email, "userId", fecha, "horaInicio", "horaFin", motivo, estado, "tokenCancelacion", "createdAt", "updatedAt")
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, NOW(), NOW())
-        `, id, solicitante, email, userId, fecha, hora_inicio, hora_fin, motivo, 'CONFIRMADA', token)
+            INSERT INTO "reservas_sala" (id, solicitante, email, "userId", fecha, "horaInicio", "horaFin", motivo, estado, "tokenCancelacion", "sucursalId", "sucursalNombre", "createdAt", "updatedAt")
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, NOW(), NOW())
+        `, id, solicitante, email, userId, fecha, hora_inicio, hora_fin, motivo, 'CONFIRMADA', token, sucursalId, sucursalNombre)
 
         // Registrar en Auditoría
         await logAudit(
             'CREAR_RESERVA_SALA',
-            `Reserva confirmada para ${solicitante} (${email}) el ${fecha} de ${hora_inicio} a ${hora_fin}. Motivo: ${motivo}`
+            `Reserva confirmada en ${sucursalNombre} para ${solicitante} (${email}) el ${fecha} de ${hora_inicio} a ${hora_fin}. Motivo: ${motivo}`
         )
 
         // Enviar Correo de Confirmación de forma nativa
@@ -658,6 +871,7 @@ export async function createReserva(formData: {
             horaFin: hora_fin,
             motivo,
             token,
+            sucursalNombre,
             clientOrigin
         })
 
@@ -666,13 +880,13 @@ export async function createReserva(formData: {
         if (!mailRes.success && mailRes.warning) {
             return {
                 status: 'ok',
-                mensaje: `¡Reserva creada exitosamente en el sistema! (Aviso de correo: ${mailRes.warning})`
+                mensaje: `¡Reserva creada exitosamente en ${sucursalNombre}! (Aviso de correo: ${mailRes.warning})`
             }
         }
 
         return {
             status: 'ok',
-            mensaje: '¡Reserva realizada con éxito! Se ha enviado la confirmación a tu correo.'
+            mensaje: `¡Reserva realizada con éxito en ${sucursalNombre}! Se ha enviado la confirmación a tu correo.`
         }
     } catch (e: any) {
         console.error('[SalaReuniones] Error en createReserva:', e)
@@ -717,7 +931,7 @@ export async function cancelReserva(reservaId: string, token?: string) {
 
         await logAudit(
             'CANCELAR_RESERVA_SALA',
-            `Reserva cancelada de ${reserva.solicitante} para el ${reserva.fecha} (${reserva.horaInicio} - ${reserva.horaFin})`
+            `Reserva cancelada de ${reserva.solicitante} en ${reserva.sucursalNombre || 'Sala'} para el ${reserva.fecha} (${reserva.horaInicio} - ${reserva.horaFin})`
         )
 
         sendReservaCancellationEmail({
@@ -726,7 +940,8 @@ export async function cancelReserva(reservaId: string, token?: string) {
             fecha: reserva.fecha,
             horaInicio: reserva.horaInicio,
             horaFin: reserva.horaFin,
-            motivo: reserva.motivo
+            motivo: reserva.motivo,
+            sucursalNombre: reserva.sucursalNombre
         }).catch(err => console.error('Error enviando mail cancelación:', err))
 
         revalidatePath('/dashboard/colaboradores/sala-reuniones')
@@ -802,8 +1017,9 @@ export async function updateReserva(
             }
         }
 
-        // Validar que no colisione con otra reserva
-        const conflicto = rawReservas.find(r => 
+        // Validar que no colisione con otra reserva de LA MISMA SUCURSAL (o cluster compartido)
+        const existentesSucursal = await fetchReservasDB(reserva.sucursalId || undefined)
+        const conflicto = existentesSucursal.find(r => 
             r.id !== reserva.id &&
             r.estado === 'CONFIRMADA' &&
             r.fecha === data.fecha &&
@@ -811,9 +1027,12 @@ export async function updateReserva(
         )
 
         if (conflicto) {
+            const origenTexto = conflicto.sucursalNombre && conflicto.sucursalNombre !== (reserva.sucursalNombre || '')
+                ? ` (registrada en ${conflicto.sucursalNombre})`
+                : ''
             return {
                 status: 'error',
-                mensaje: `El horario solicitado choca con otra reserva (${conflicto.horaInicio} - ${conflicto.horaFin} por ${conflicto.solicitante}).`
+                mensaje: `El horario solicitado choca con otra reserva en ${reserva.sucursalNombre || 'la sucursal'}${origenTexto} (${conflicto.horaInicio} - ${conflicto.horaFin} por ${conflicto.solicitante}).`
             }
         }
 
@@ -825,7 +1044,7 @@ export async function updateReserva(
 
         await logAudit(
             'MODIFICAR_RESERVA_SALA',
-            `Reserva modificada de ${reserva.solicitante} al ${data.fecha} (${data.hora_inicio} - ${data.hora_fin}). Motivo: ${data.motivo}`
+            `Reserva modificada de ${reserva.solicitante} en ${reserva.sucursalNombre || 'Sala'} al ${data.fecha} (${data.hora_inicio} - ${data.hora_fin}). Motivo: ${data.motivo}`
         )
 
         // Enviar correo de actualización
@@ -837,6 +1056,7 @@ export async function updateReserva(
             horaFin: data.hora_fin,
             motivo: data.motivo,
             token: reserva.tokenCancelacion,
+            sucursalNombre: reserva.sucursalNombre,
             clientOrigin
         })
 
@@ -866,3 +1086,4 @@ export async function getReservaByToken(token: string): Promise<ReservaSalaItem 
         return null
     }
 }
+

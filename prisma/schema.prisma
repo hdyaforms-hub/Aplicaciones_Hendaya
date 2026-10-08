@@ -203,6 +203,7 @@ model Sucursal {
   region                         String?
   comuna                         String?
   direccion                      String?
+  tieneSalaReuniones             Boolean                          @default(false)
   createdAt                      DateTime                         @default(now())
   updatedAt                      DateTime                         @updatedAt
   listasCorreo                   ListaCorreo[]
@@ -216,6 +217,10 @@ model Sucursal {
   delegaciones                   DelegacionVisualizacion[]
   planillasTransporte            Cal_PlanillaTransporte[]
   planillasHigienePersonal       Cal_PlanillaHigienePersonal[]
+  reservasSala                   ReservaSala[]
+  salaCompartidaId               String?
+  salaCompartida                 Sucursal?                        @relation("SucursalCompartida", fields: [salaCompartidaId], references: [id])
+  sucursalesQueCompartenSala     Sucursal[]                       @relation("SucursalCompartida")
 }
 
 model Presupuesto {
@@ -1789,12 +1794,16 @@ model ReservaSala {
   motivo           String   @db.Text
   estado           String   @default("CONFIRMADA") // CONFIRMADA | CANCELADA
   tokenCancelacion String   @unique @default(uuid())
+  sucursalId       String?
+  sucursalNombre   String?
+  sucursal         Sucursal? @relation(fields: [sucursalId], references: [id])
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 
   @@index([fecha])
   @@index([estado])
   @@index([tokenCancelacion])
+  @@index([sucursalId])
   @@map("reservas_sala")
 }
 

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { ReservaSalaItem, NoticiaItem, SalaDataResponse, createReserva, cancelReserva, updateReserva, getSalaData, getReservaByToken } from './actions'
+import { ReservaSalaItem, NoticiaItem, SalaDataResponse, SucursalSalaItem, createReserva, cancelReserva, updateReserva, getSalaData, getReservaByToken } from './actions'
 
 interface Props {
     initialData: SalaDataResponse
@@ -46,6 +46,12 @@ export default function SalaReunionesClient({ initialData }: Props) {
     const [noticias] = useState<NoticiaItem[]>(initialData.noticias)
     const [currentUser, setCurrentUser] = useState(initialData.currentUser)
 
+    // Estado para gestión y selección de sucursales habilitadas
+    const [sucursalesDisponibles, setSucursalesDisponibles] = useState<SucursalSalaItem[]>(initialData.sucursalesDisponibles || [])
+    const [sucursalSeleccionadaId, setSucursalSeleccionadaId] = useState<string>(() => {
+        return initialData.sucursalActiva?.id || (initialData.sucursalesDisponibles?.[0]?.id || '')
+    })
+
     // Modo de vista: 'semanal' o 'mensual'
     const [vistaModo, setVistaModo] = useState<'semanal' | 'mensual'>('semanal')
     const [mesActivo, setMesActivo] = useState<{ year: number, month: number }>(() => {
@@ -71,11 +77,17 @@ export default function SalaReunionesClient({ initialData }: Props) {
         fecha: hoyISO,
         hora_inicio: '11:00',
         hora_fin: '12:00',
-        motivo: ''
+        motivo: '',
+        sucursalId: initialData.sucursalActiva?.id || (initialData.sucursalesDisponibles?.[0]?.id || '')
     })
 
     // Función para abrir modal con fecha y horario futuro predeterminado
     const abrirNuevaReserva = (fechaPreseleccionada?: string) => {
+        if (sucursalesDisponibles.length === 0) {
+            alert('No hay salas de reuniones disponibles para tu perfil o las sucursales asignadas tienen la opción deshabilitada (No) en Configuración Global.')
+            return
+        }
+
         const now = new Date()
         const pad = (n: number) => (n < 10 ? '0' + n : '' + n)
         const fecha = fechaPreseleccionada || hoyISO
@@ -97,7 +109,8 @@ export default function SalaReunionesClient({ initialData }: Props) {
             fecha,
             hora_inicio: horaIni,
             hora_fin: horaFin,
-            motivo: ''
+            motivo: '',
+            sucursalId: sucursalSeleccionadaId || (sucursalesDisponibles[0]?.id || '')
         })
         setStatusMessage(null)
         setIsModalOpen(true)
@@ -133,10 +146,11 @@ export default function SalaReunionesClient({ initialData }: Props) {
         return () => clearInterval(interval)
     }, [])
 
-    // Cargar datos de la semana actual
-    const cargarDatosSemana = useCallback(async (semanaISO: string) => {
+    // Cargar datos de la semana actual para la sucursal seleccionada
+    const cargarDatosSemana = useCallback(async (semanaISO: string, overrideSucursalId?: string) => {
         try {
-            const data = await getSalaData(semanaISO)
+            const idTarget = overrideSucursalId !== undefined ? overrideSucursalId : sucursalSeleccionadaId
+            const data = await getSalaData(semanaISO, idTarget)
             setDiasSemana(data.diasSemana)
             setReservasSemana(data.reservasSemana)
             if (data.todasReservas) {
@@ -146,18 +160,31 @@ export default function SalaReunionesClient({ initialData }: Props) {
             if (data.currentUser) {
                 setCurrentUser(data.currentUser)
             }
+            if (data.sucursalesDisponibles) {
+                setSucursalesDisponibles(data.sucursalesDisponibles)
+            }
+            if (data.sucursalActiva) {
+                setSucursalSeleccionadaId(data.sucursalActiva.id)
+            }
         } catch (e) {
             console.error('Error refrescando datos de la sala:', e)
         }
-    }, [])
+    }, [sucursalSeleccionadaId])
+
+    // Cambio interactivo de sucursal en la lista desplegable
+    const handleCambioSucursal = async (nuevaId: string) => {
+        setSucursalSeleccionadaId(nuevaId)
+        setForm(prev => ({ ...prev, sucursalId: nuevaId }))
+        await cargarDatosSemana(inicioSemana, nuevaId)
+    }
 
     // Polling periódico cada 20s para mantener el estado sincronizado en tiempo real
     useEffect(() => {
         const interval = setInterval(() => {
-            cargarDatosSemana(inicioSemana)
+            cargarDatosSemana(inicioSemana, sucursalSeleccionadaId)
         }, 20000)
         return () => clearInterval(interval)
-    }, [inicioSemana, cargarDatosSemana])
+    }, [inicioSemana, sucursalSeleccionadaId, cargarDatosSemana])
 
     // Detectar si el usuario llega por enlace de correo (?action=modificar&token=... o ?action=cancelar&token=...)
     useEffect(() => {
@@ -192,19 +219,19 @@ export default function SalaReunionesClient({ initialData }: Props) {
     const handleSemanaAnterior = () => {
         const prev = addDaysISO(inicioSemana, -7)
         setInicioSemana(prev)
-        cargarDatosSemana(prev)
+        cargarDatosSemana(prev, sucursalSeleccionadaId)
     }
 
     const handleSemanaSiguiente = () => {
         const next = addDaysISO(inicioSemana, 7)
         setInicioSemana(next)
-        cargarDatosSemana(next)
+        cargarDatosSemana(next, sucursalSeleccionadaId)
     }
 
     const handleVolverHoy = () => {
         const hoy = getMondayISO(new Date())
         setInicioSemana(hoy)
-        cargarDatosSemana(hoy)
+        cargarDatosSemana(hoy, sucursalSeleccionadaId)
     }
 
     // Navegación mensual
@@ -345,6 +372,14 @@ export default function SalaReunionesClient({ initialData }: Props) {
             return
         }
 
+        if (!form.sucursalId) {
+            setStatusMessage({
+                text: 'Debes seleccionar una sucursal para realizar la reserva.',
+                type: 'error'
+            })
+            return
+        }
+
         setIsSubmitting(true)
 
         const clientOrigin = typeof window !== 'undefined' ? window.location.origin : undefined
@@ -356,6 +391,7 @@ export default function SalaReunionesClient({ initialData }: Props) {
             hora_inicio: form.hora_inicio,
             hora_fin: form.hora_fin,
             motivo: form.motivo,
+            sucursalId: form.sucursalId,
             clientOrigin
         })
 
@@ -364,7 +400,7 @@ export default function SalaReunionesClient({ initialData }: Props) {
         if (res.status === 'ok') {
             setStatusMessage({ text: res.mensaje, type: 'success' })
             setForm(prev => ({ ...prev, motivo: '' }))
-            cargarDatosSemana(inicioSemana)
+            cargarDatosSemana(inicioSemana, form.sucursalId)
             setTimeout(() => {
                 setIsModalOpen(false)
                 setStatusMessage(null)
@@ -489,6 +525,89 @@ export default function SalaReunionesClient({ initialData }: Props) {
                     </div>
                 </div>
 
+                {/* SELECTOR / LISTA DESPLEGABLE DE SUCURSALES (FILTRADA POR PERFIL Y DISPONIBILIDAD) */}
+                <div className="bg-white rounded-3xl p-5 shadow-sm border border-gray-100 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                    <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-2xl bg-cyan-50 text-cyan-700 flex items-center justify-center text-xl border border-cyan-200/80 shadow-2xs">
+                            🏢
+                        </div>
+                        <div>
+                            <div className="text-xs font-black uppercase tracking-wider text-cyan-900 flex items-center gap-1.5">
+                                <span>Sucursal de Sala de Reuniones</span>
+                                {sucursalesDisponibles.length === 1 && (
+                                    <span className="text-[10px] bg-emerald-50 text-emerald-700 font-extrabold px-2 py-0.5 rounded-full border border-emerald-200">
+                                        Asociada a tu perfil
+                                    </span>
+                                )}
+                            </div>
+                            <p className="text-xs text-gray-500 mt-0.5">
+                                {sucursalesDisponibles.length === 0
+                                    ? 'No cuentas con sucursales habilitadas con sala de reuniones.'
+                                    : sucursalesDisponibles.length === 1
+                                    ? 'Mostrando el calendario y disponibilidad de tu sucursal asignada.'
+                                    : 'Selecciona la sucursal para consultar disponibilidad y agendar reuniones:'}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="w-full md:w-auto flex items-center gap-2.5">
+                        {sucursalesDisponibles.length === 0 ? (
+                            <div className="px-4 py-2.5 rounded-xl bg-amber-50 text-amber-800 border border-amber-200 text-xs font-bold flex items-center gap-2">
+                                <span>⚠️</span>
+                                <span>Sin sala asignada en tu perfil</span>
+                            </div>
+                        ) : sucursalesDisponibles.length === 1 ? (
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                                <div className="flex items-center gap-2.5 bg-gray-50 px-4 py-2.5 rounded-xl border border-gray-200 text-gray-900 shadow-2xs">
+                                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                    <span className="font-black text-xs sm:text-sm text-cyan-950">{sucursalesDisponibles[0].nombre}</span>
+                                    {sucursalesDisponibles[0].comuna && (
+                                        <span className="text-[11px] text-gray-500 font-medium">({sucursalesDisponibles[0].comuna})</span>
+                                    )}
+                                </div>
+                                {sucursalesDisponibles[0].isCompartida && sucursalesDisponibles[0].compartidaCon && sucursalesDisponibles[0].compartidaCon.length > 0 && (
+                                    <div className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-cyan-50/90 border border-cyan-200 text-cyan-900 text-xs font-bold shadow-2xs" title={`Esta sucursal comparte físicamente la misma sala con: ${sucursalesDisponibles[0].compartidaCon.join(', ')}`}>
+                                        <span>🔗</span>
+                                        <span>Sala compartida con <b>{sucursalesDisponibles[0].compartidaCon.join(', ')}</b></span>
+                                    </div>
+                                )}
+                            </div>
+                        ) : (
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-2 w-full md:w-auto">
+                                <div className="flex items-center gap-2 w-full md:w-auto">
+                                    <label htmlFor="select-sucursal-sala" className="text-xs font-bold text-gray-600 shrink-0">
+                                        Sucursal:
+                                    </label>
+                                    <select
+                                        id="select-sucursal-sala"
+                                        value={sucursalSeleccionadaId}
+                                        onChange={(e) => handleCambioSucursal(e.target.value)}
+                                        className="w-full md:w-64 bg-white hover:bg-gray-50 border border-cyan-400 text-gray-900 text-xs sm:text-sm font-bold rounded-xl px-3.5 py-2.5 shadow-xs focus:outline-none focus:ring-2 focus:ring-cyan-500 cursor-pointer"
+                                    >
+                                        {sucursalesDisponibles.map((s) => (
+                                            <option key={s.id} value={s.id}>
+                                                {s.nombre} {s.comuna ? `(${s.comuna})` : ''} {s.isCompartida ? `🔗 (Compartida)` : ''}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                                {(() => {
+                                    const activeObj = sucursalesDisponibles.find(s => s.id === sucursalSeleccionadaId) || sucursalesDisponibles[0]
+                                    if (activeObj?.isCompartida && activeObj.compartidaCon && activeObj.compartidaCon.length > 0) {
+                                        return (
+                                            <div className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-cyan-50/90 border border-cyan-200 text-cyan-900 text-xs font-bold shadow-2xs" title={`Esta sucursal comparte físicamente la misma sala con: ${activeObj.compartidaCon.join(', ')}`}>
+                                                <span>🔗</span>
+                                                <span>Sala compartida con <b>{activeObj.compartidaCon.join(', ')}</b></span>
+                                            </div>
+                                        )
+                                    }
+                                    return null
+                                })()}
+                            </div>
+                        )}
+                    </div>
+                </div>
+
                 {/* 4 TARJETAS DE INDICADORES (KPIs) CON ESTILO CORPORATIVO */}
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
                     {/* KPI 1: ESTADO AHORA */}
@@ -521,7 +640,9 @@ export default function SalaReunionesClient({ initialData }: Props) {
                         <div className="text-2xl font-black text-cyan-700 mt-2.5">
                             {resumen.reservasHoy}
                         </div>
-                        <div className="text-xs text-gray-500 mt-1 font-medium">en la sala</div>
+                        <div className="text-xs text-gray-500 mt-1 font-medium truncate" title={sucursalesDisponibles.find(s => s.id === sucursalSeleccionadaId)?.nombre || 'en la sala'}>
+                            {sucursalesDisponibles.find(s => s.id === sucursalSeleccionadaId)?.nombre || 'en la sala'}
+                        </div>
                     </div>
 
                     {/* KPI 3: PROXIMA RESERVA */}
@@ -729,8 +850,15 @@ export default function SalaReunionesClient({ initialData }: Props) {
                                                                 </div>
                                                             )}
                                                         </div>
-                                                        <div className="text-gray-900 font-bold mt-1 truncate" title={r.solicitante}>
-                                                            {r.solicitante}
+                                                        <div className="flex items-center justify-between gap-1 mt-1">
+                                                            <span className="text-gray-900 font-bold truncate" title={r.solicitante}>
+                                                                {r.solicitante}
+                                                            </span>
+                                                            {r.sucursalNombre && (
+                                                                <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-cyan-100/90 text-cyan-900 border border-cyan-200 shrink-0" title={`Sucursal: ${r.sucursalNombre}`}>
+                                                                    {r.sucursalNombre}
+                                                                </span>
+                                                            )}
                                                         </div>
                                                         <div className="text-gray-600 text-[11px] truncate mt-0.5 font-medium" title={r.motivo}>
                                                             {r.motivo}
@@ -847,8 +975,15 @@ export default function SalaReunionesClient({ initialData }: Props) {
                                                                     </div>
                                                                 )}
                                                             </div>
-                                                            <div className="text-gray-800 font-semibold truncate leading-tight mt-0.5">
-                                                                {r.solicitante}
+                                                            <div className="flex items-center justify-between gap-1 mt-0.5">
+                                                                <span className="text-gray-800 font-semibold truncate leading-tight">
+                                                                    {r.solicitante}
+                                                                </span>
+                                                                {r.sucursalNombre && (
+                                                                    <span className="text-[8px] font-bold px-1 py-0.2 rounded bg-cyan-100/90 text-cyan-900 border border-cyan-200 shrink-0" title={`Sucursal: ${r.sucursalNombre}`}>
+                                                                        {r.sucursalNombre}
+                                                                    </span>
+                                                                )}
                                                             </div>
                                                         </div>
                                                     )
@@ -903,8 +1038,13 @@ export default function SalaReunionesClient({ initialData }: Props) {
                                             className="flex items-center justify-between bg-gray-50/80 hover:bg-gray-100/80 border border-gray-200/80 rounded-2xl px-4 py-3 transition-colors shadow-2xs"
                                         >
                                             <div className="min-w-0 flex-1 pr-3">
-                                                <div className="text-sm text-gray-900 font-bold truncate">
-                                                    {r.solicitante}
+                                                <div className="text-sm text-gray-900 font-bold truncate flex items-center gap-1.5">
+                                                    <span>{r.solicitante}</span>
+                                                    {r.sucursalNombre && (
+                                                        <span className="text-[10px] bg-cyan-50 text-cyan-800 font-extrabold px-1.5 py-0.5 rounded border border-cyan-200">
+                                                            {r.sucursalNombre}
+                                                        </span>
+                                                    )}
                                                 </div>
                                                 <div className="text-xs text-gray-500 truncate mt-0.5">
                                                     {r.motivo}
@@ -1003,6 +1143,42 @@ export default function SalaReunionesClient({ initialData }: Props) {
                             </h2>
 
                             <form onSubmit={handleSubmitReserva} className="space-y-4">
+                                {/* Campo Sucursal */}
+                                <div>
+                                    <label className="text-xs font-bold text-gray-700 block mb-1">Sucursal *</label>
+                                    {sucursalesDisponibles.length <= 1 ? (
+                                        <div className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-100 text-gray-800 font-bold text-sm select-none shadow-xs flex items-center justify-between">
+                                            <span>{sucursalesDisponibles[0]?.nombre || 'Sin sucursal asignada'}</span>
+                                            <span className="text-[10px] text-cyan-800 bg-cyan-100 px-2 py-0.5 rounded-md font-extrabold">Tu Sucursal</span>
+                                        </div>
+                                    ) : (
+                                        <select
+                                            required
+                                            value={form.sucursalId}
+                                            onChange={(e) => setForm(prev => ({ ...prev, sucursalId: e.target.value }))}
+                                            className="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 bg-white text-gray-900 font-bold text-sm shadow-xs cursor-pointer"
+                                        >
+                                            {sucursalesDisponibles.map(s => (
+                                                <option key={s.id} value={s.id}>
+                                                    {s.nombre} {s.comuna ? `(${s.comuna})` : ''} {s.isCompartida ? `🔗 (Compartida)` : ''}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    )}
+                                    {(() => {
+                                        const selSuc = sucursalesDisponibles.find(s => s.id === form.sucursalId) || sucursalesDisponibles[0]
+                                        if (selSuc?.isCompartida && selSuc.compartidaCon && selSuc.compartidaCon.length > 0) {
+                                            return (
+                                                <div className="mt-1.5 flex items-center gap-1.5 text-[11px] font-semibold text-cyan-800 bg-cyan-50 px-2.5 py-1 rounded-lg border border-cyan-200">
+                                                    <span>🔗</span>
+                                                    <span>Comparte sala física con: <b>{selSuc.compartidaCon.join(', ')}</b></span>
+                                                </div>
+                                            )
+                                        }
+                                        return null
+                                    })()}
+                                </div>
+
                                 <div>
                                     <label className="text-xs font-bold text-gray-700 block mb-1">Nombre</label>
                                     <input

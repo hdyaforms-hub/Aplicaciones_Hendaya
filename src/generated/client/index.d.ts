@@ -12334,6 +12334,8 @@ export namespace Prisma {
     delegaciones: number
     planillasTransporte: number
     planillasHigienePersonal: number
+    reservasSala: number
+    sucursalesQueCompartenSala: number
   }
 
   export type SucursalCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -12348,6 +12350,8 @@ export namespace Prisma {
     delegaciones?: boolean | SucursalCountOutputTypeCountDelegacionesArgs
     planillasTransporte?: boolean | SucursalCountOutputTypeCountPlanillasTransporteArgs
     planillasHigienePersonal?: boolean | SucursalCountOutputTypeCountPlanillasHigienePersonalArgs
+    reservasSala?: boolean | SucursalCountOutputTypeCountReservasSalaArgs
+    sucursalesQueCompartenSala?: boolean | SucursalCountOutputTypeCountSucursalesQueCompartenSalaArgs
   }
 
   // Custom InputTypes
@@ -12436,6 +12440,20 @@ export namespace Prisma {
    */
   export type SucursalCountOutputTypeCountPlanillasHigienePersonalArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: Cal_PlanillaHigienePersonalWhereInput
+  }
+
+  /**
+   * SucursalCountOutputType without action
+   */
+  export type SucursalCountOutputTypeCountReservasSalaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReservaSalaWhereInput
+  }
+
+  /**
+   * SucursalCountOutputType without action
+   */
+  export type SucursalCountOutputTypeCountSucursalesQueCompartenSalaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SucursalWhereInput
   }
 
 
@@ -28073,8 +28091,10 @@ export namespace Prisma {
     region: string | null
     comuna: string | null
     direccion: string | null
+    tieneSalaReuniones: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
+    salaCompartidaId: string | null
   }
 
   export type SucursalMaxAggregateOutputType = {
@@ -28083,8 +28103,10 @@ export namespace Prisma {
     region: string | null
     comuna: string | null
     direccion: string | null
+    tieneSalaReuniones: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
+    salaCompartidaId: string | null
   }
 
   export type SucursalCountAggregateOutputType = {
@@ -28093,8 +28115,10 @@ export namespace Prisma {
     region: number
     comuna: number
     direccion: number
+    tieneSalaReuniones: number
     createdAt: number
     updatedAt: number
+    salaCompartidaId: number
     _all: number
   }
 
@@ -28105,8 +28129,10 @@ export namespace Prisma {
     region?: true
     comuna?: true
     direccion?: true
+    tieneSalaReuniones?: true
     createdAt?: true
     updatedAt?: true
+    salaCompartidaId?: true
   }
 
   export type SucursalMaxAggregateInputType = {
@@ -28115,8 +28141,10 @@ export namespace Prisma {
     region?: true
     comuna?: true
     direccion?: true
+    tieneSalaReuniones?: true
     createdAt?: true
     updatedAt?: true
+    salaCompartidaId?: true
   }
 
   export type SucursalCountAggregateInputType = {
@@ -28125,8 +28153,10 @@ export namespace Prisma {
     region?: true
     comuna?: true
     direccion?: true
+    tieneSalaReuniones?: true
     createdAt?: true
     updatedAt?: true
+    salaCompartidaId?: true
     _all?: true
   }
 
@@ -28208,8 +28238,10 @@ export namespace Prisma {
     region: string | null
     comuna: string | null
     direccion: string | null
+    tieneSalaReuniones: boolean
     createdAt: Date
     updatedAt: Date
+    salaCompartidaId: string | null
     _count: SucursalCountAggregateOutputType | null
     _min: SucursalMinAggregateOutputType | null
     _max: SucursalMaxAggregateOutputType | null
@@ -28235,8 +28267,10 @@ export namespace Prisma {
     region?: boolean
     comuna?: boolean
     direccion?: boolean
+    tieneSalaReuniones?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    salaCompartidaId?: boolean
     listasCorreo?: boolean | Sucursal$listasCorreoArgs<ExtArgs>
     presupuestos?: boolean | Sucursal$presupuestosArgs<ExtArgs>
     RetornoProductosMovimiento?: boolean | Sucursal$RetornoProductosMovimientoArgs<ExtArgs>
@@ -28248,6 +28282,9 @@ export namespace Prisma {
     delegaciones?: boolean | Sucursal$delegacionesArgs<ExtArgs>
     planillasTransporte?: boolean | Sucursal$planillasTransporteArgs<ExtArgs>
     planillasHigienePersonal?: boolean | Sucursal$planillasHigienePersonalArgs<ExtArgs>
+    reservasSala?: boolean | Sucursal$reservasSalaArgs<ExtArgs>
+    salaCompartida?: boolean | Sucursal$salaCompartidaArgs<ExtArgs>
+    sucursalesQueCompartenSala?: boolean | Sucursal$sucursalesQueCompartenSalaArgs<ExtArgs>
     _count?: boolean | SucursalCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["sucursal"]>
 
@@ -28257,8 +28294,11 @@ export namespace Prisma {
     region?: boolean
     comuna?: boolean
     direccion?: boolean
+    tieneSalaReuniones?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    salaCompartidaId?: boolean
+    salaCompartida?: boolean | Sucursal$salaCompartidaArgs<ExtArgs>
   }, ExtArgs["result"]["sucursal"]>
 
   export type SucursalSelectScalar = {
@@ -28267,8 +28307,10 @@ export namespace Prisma {
     region?: boolean
     comuna?: boolean
     direccion?: boolean
+    tieneSalaReuniones?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    salaCompartidaId?: boolean
   }
 
   export type SucursalInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -28283,9 +28325,14 @@ export namespace Prisma {
     delegaciones?: boolean | Sucursal$delegacionesArgs<ExtArgs>
     planillasTransporte?: boolean | Sucursal$planillasTransporteArgs<ExtArgs>
     planillasHigienePersonal?: boolean | Sucursal$planillasHigienePersonalArgs<ExtArgs>
+    reservasSala?: boolean | Sucursal$reservasSalaArgs<ExtArgs>
+    salaCompartida?: boolean | Sucursal$salaCompartidaArgs<ExtArgs>
+    sucursalesQueCompartenSala?: boolean | Sucursal$sucursalesQueCompartenSalaArgs<ExtArgs>
     _count?: boolean | SucursalCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type SucursalIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type SucursalIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    salaCompartida?: boolean | Sucursal$salaCompartidaArgs<ExtArgs>
+  }
 
   export type $SucursalPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Sucursal"
@@ -28301,6 +28348,9 @@ export namespace Prisma {
       delegaciones: Prisma.$DelegacionVisualizacionPayload<ExtArgs>[]
       planillasTransporte: Prisma.$Cal_PlanillaTransportePayload<ExtArgs>[]
       planillasHigienePersonal: Prisma.$Cal_PlanillaHigienePersonalPayload<ExtArgs>[]
+      reservasSala: Prisma.$ReservaSalaPayload<ExtArgs>[]
+      salaCompartida: Prisma.$SucursalPayload<ExtArgs> | null
+      sucursalesQueCompartenSala: Prisma.$SucursalPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -28308,8 +28358,10 @@ export namespace Prisma {
       region: string | null
       comuna: string | null
       direccion: string | null
+      tieneSalaReuniones: boolean
       createdAt: Date
       updatedAt: Date
+      salaCompartidaId: string | null
     }, ExtArgs["result"]["sucursal"]>
     composites: {}
   }
@@ -28685,6 +28737,9 @@ export namespace Prisma {
     delegaciones<T extends Sucursal$delegacionesArgs<ExtArgs> = {}>(args?: Subset<T, Sucursal$delegacionesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DelegacionVisualizacionPayload<ExtArgs>, T, "findMany"> | Null>
     planillasTransporte<T extends Sucursal$planillasTransporteArgs<ExtArgs> = {}>(args?: Subset<T, Sucursal$planillasTransporteArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Cal_PlanillaTransportePayload<ExtArgs>, T, "findMany"> | Null>
     planillasHigienePersonal<T extends Sucursal$planillasHigienePersonalArgs<ExtArgs> = {}>(args?: Subset<T, Sucursal$planillasHigienePersonalArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Cal_PlanillaHigienePersonalPayload<ExtArgs>, T, "findMany"> | Null>
+    reservasSala<T extends Sucursal$reservasSalaArgs<ExtArgs> = {}>(args?: Subset<T, Sucursal$reservasSalaArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReservaSalaPayload<ExtArgs>, T, "findMany"> | Null>
+    salaCompartida<T extends Sucursal$salaCompartidaArgs<ExtArgs> = {}>(args?: Subset<T, Sucursal$salaCompartidaArgs<ExtArgs>>): Prisma__SucursalClient<$Result.GetResult<Prisma.$SucursalPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    sucursalesQueCompartenSala<T extends Sucursal$sucursalesQueCompartenSalaArgs<ExtArgs> = {}>(args?: Subset<T, Sucursal$sucursalesQueCompartenSalaArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SucursalPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -28719,8 +28774,10 @@ export namespace Prisma {
     readonly region: FieldRef<"Sucursal", 'String'>
     readonly comuna: FieldRef<"Sucursal", 'String'>
     readonly direccion: FieldRef<"Sucursal", 'String'>
+    readonly tieneSalaReuniones: FieldRef<"Sucursal", 'Boolean'>
     readonly createdAt: FieldRef<"Sucursal", 'DateTime'>
     readonly updatedAt: FieldRef<"Sucursal", 'DateTime'>
+    readonly salaCompartidaId: FieldRef<"Sucursal", 'String'>
   }
     
 
@@ -28942,6 +28999,10 @@ export namespace Prisma {
      */
     data: SucursalCreateManyInput | SucursalCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SucursalIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -29252,6 +29313,61 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: Cal_PlanillaHigienePersonalScalarFieldEnum | Cal_PlanillaHigienePersonalScalarFieldEnum[]
+  }
+
+  /**
+   * Sucursal.reservasSala
+   */
+  export type Sucursal$reservasSalaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReservaSala
+     */
+    select?: ReservaSalaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReservaSalaInclude<ExtArgs> | null
+    where?: ReservaSalaWhereInput
+    orderBy?: ReservaSalaOrderByWithRelationInput | ReservaSalaOrderByWithRelationInput[]
+    cursor?: ReservaSalaWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ReservaSalaScalarFieldEnum | ReservaSalaScalarFieldEnum[]
+  }
+
+  /**
+   * Sucursal.salaCompartida
+   */
+  export type Sucursal$salaCompartidaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sucursal
+     */
+    select?: SucursalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SucursalInclude<ExtArgs> | null
+    where?: SucursalWhereInput
+  }
+
+  /**
+   * Sucursal.sucursalesQueCompartenSala
+   */
+  export type Sucursal$sucursalesQueCompartenSalaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sucursal
+     */
+    select?: SucursalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SucursalInclude<ExtArgs> | null
+    where?: SucursalWhereInput
+    orderBy?: SucursalOrderByWithRelationInput | SucursalOrderByWithRelationInput[]
+    cursor?: SucursalWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SucursalScalarFieldEnum | SucursalScalarFieldEnum[]
   }
 
   /**
@@ -125999,6 +126115,8 @@ export namespace Prisma {
     motivo: string | null
     estado: string | null
     tokenCancelacion: string | null
+    sucursalId: string | null
+    sucursalNombre: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -126014,6 +126132,8 @@ export namespace Prisma {
     motivo: string | null
     estado: string | null
     tokenCancelacion: string | null
+    sucursalId: string | null
+    sucursalNombre: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -126029,6 +126149,8 @@ export namespace Prisma {
     motivo: number
     estado: number
     tokenCancelacion: number
+    sucursalId: number
+    sucursalNombre: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -126046,6 +126168,8 @@ export namespace Prisma {
     motivo?: true
     estado?: true
     tokenCancelacion?: true
+    sucursalId?: true
+    sucursalNombre?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -126061,6 +126185,8 @@ export namespace Prisma {
     motivo?: true
     estado?: true
     tokenCancelacion?: true
+    sucursalId?: true
+    sucursalNombre?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -126076,6 +126202,8 @@ export namespace Prisma {
     motivo?: true
     estado?: true
     tokenCancelacion?: true
+    sucursalId?: true
+    sucursalNombre?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -126164,6 +126292,8 @@ export namespace Prisma {
     motivo: string
     estado: string
     tokenCancelacion: string
+    sucursalId: string | null
+    sucursalNombre: string | null
     createdAt: Date
     updatedAt: Date
     _count: ReservaSalaCountAggregateOutputType | null
@@ -126196,8 +126326,11 @@ export namespace Prisma {
     motivo?: boolean
     estado?: boolean
     tokenCancelacion?: boolean
+    sucursalId?: boolean
+    sucursalNombre?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    sucursal?: boolean | ReservaSala$sucursalArgs<ExtArgs>
   }, ExtArgs["result"]["reservaSala"]>
 
   export type ReservaSalaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -126211,8 +126344,11 @@ export namespace Prisma {
     motivo?: boolean
     estado?: boolean
     tokenCancelacion?: boolean
+    sucursalId?: boolean
+    sucursalNombre?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    sucursal?: boolean | ReservaSala$sucursalArgs<ExtArgs>
   }, ExtArgs["result"]["reservaSala"]>
 
   export type ReservaSalaSelectScalar = {
@@ -126226,14 +126362,24 @@ export namespace Prisma {
     motivo?: boolean
     estado?: boolean
     tokenCancelacion?: boolean
+    sucursalId?: boolean
+    sucursalNombre?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
+  export type ReservaSalaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sucursal?: boolean | ReservaSala$sucursalArgs<ExtArgs>
+  }
+  export type ReservaSalaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sucursal?: boolean | ReservaSala$sucursalArgs<ExtArgs>
+  }
 
   export type $ReservaSalaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "ReservaSala"
-    objects: {}
+    objects: {
+      sucursal: Prisma.$SucursalPayload<ExtArgs> | null
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       solicitante: string
@@ -126245,6 +126391,8 @@ export namespace Prisma {
       motivo: string
       estado: string
       tokenCancelacion: string
+      sucursalId: string | null
+      sucursalNombre: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["reservaSala"]>
@@ -126611,6 +126759,7 @@ export namespace Prisma {
    */
   export interface Prisma__ReservaSalaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    sucursal<T extends ReservaSala$sucursalArgs<ExtArgs> = {}>(args?: Subset<T, ReservaSala$sucursalArgs<ExtArgs>>): Prisma__SucursalClient<$Result.GetResult<Prisma.$SucursalPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -126650,6 +126799,8 @@ export namespace Prisma {
     readonly motivo: FieldRef<"ReservaSala", 'String'>
     readonly estado: FieldRef<"ReservaSala", 'String'>
     readonly tokenCancelacion: FieldRef<"ReservaSala", 'String'>
+    readonly sucursalId: FieldRef<"ReservaSala", 'String'>
+    readonly sucursalNombre: FieldRef<"ReservaSala", 'String'>
     readonly createdAt: FieldRef<"ReservaSala", 'DateTime'>
     readonly updatedAt: FieldRef<"ReservaSala", 'DateTime'>
   }
@@ -126665,6 +126816,10 @@ export namespace Prisma {
      */
     select?: ReservaSalaSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReservaSalaInclude<ExtArgs> | null
+    /**
      * Filter, which ReservaSala to fetch.
      */
     where: ReservaSalaWhereUniqueInput
@@ -126679,6 +126834,10 @@ export namespace Prisma {
      */
     select?: ReservaSalaSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReservaSalaInclude<ExtArgs> | null
+    /**
      * Filter, which ReservaSala to fetch.
      */
     where: ReservaSalaWhereUniqueInput
@@ -126692,6 +126851,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the ReservaSala
      */
     select?: ReservaSalaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReservaSalaInclude<ExtArgs> | null
     /**
      * Filter, which ReservaSala to fetch.
      */
@@ -126737,6 +126900,10 @@ export namespace Prisma {
      */
     select?: ReservaSalaSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReservaSalaInclude<ExtArgs> | null
+    /**
      * Filter, which ReservaSala to fetch.
      */
     where?: ReservaSalaWhereInput
@@ -126781,6 +126948,10 @@ export namespace Prisma {
      */
     select?: ReservaSalaSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReservaSalaInclude<ExtArgs> | null
+    /**
      * Filter, which ReservaSalas to fetch.
      */
     where?: ReservaSalaWhereInput
@@ -126820,6 +126991,10 @@ export namespace Prisma {
      */
     select?: ReservaSalaSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReservaSalaInclude<ExtArgs> | null
+    /**
      * The data needed to create a ReservaSala.
      */
     data: XOR<ReservaSalaCreateInput, ReservaSalaUncheckedCreateInput>
@@ -126849,6 +127024,10 @@ export namespace Prisma {
      */
     data: ReservaSalaCreateManyInput | ReservaSalaCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReservaSalaIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -126859,6 +127038,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the ReservaSala
      */
     select?: ReservaSalaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReservaSalaInclude<ExtArgs> | null
     /**
      * The data needed to update a ReservaSala.
      */
@@ -126892,6 +127075,10 @@ export namespace Prisma {
      */
     select?: ReservaSalaSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReservaSalaInclude<ExtArgs> | null
+    /**
      * The filter to search for the ReservaSala to update in case it exists.
      */
     where: ReservaSalaWhereUniqueInput
@@ -126914,6 +127101,10 @@ export namespace Prisma {
      */
     select?: ReservaSalaSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReservaSalaInclude<ExtArgs> | null
+    /**
      * Filter which ReservaSala to delete.
      */
     where: ReservaSalaWhereUniqueInput
@@ -126930,6 +127121,21 @@ export namespace Prisma {
   }
 
   /**
+   * ReservaSala.sucursal
+   */
+  export type ReservaSala$sucursalArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sucursal
+     */
+    select?: SucursalSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SucursalInclude<ExtArgs> | null
+    where?: SucursalWhereInput
+  }
+
+  /**
    * ReservaSala without action
    */
   export type ReservaSalaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -126937,6 +127143,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the ReservaSala
      */
     select?: ReservaSalaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReservaSalaInclude<ExtArgs> | null
   }
 
 
@@ -149297,8 +149507,10 @@ export namespace Prisma {
     region: 'region',
     comuna: 'comuna',
     direccion: 'direccion',
+    tieneSalaReuniones: 'tieneSalaReuniones',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    salaCompartidaId: 'salaCompartidaId'
   };
 
   export type SucursalScalarFieldEnum = (typeof SucursalScalarFieldEnum)[keyof typeof SucursalScalarFieldEnum]
@@ -150852,6 +151064,8 @@ export namespace Prisma {
     motivo: 'motivo',
     estado: 'estado',
     tokenCancelacion: 'tokenCancelacion',
+    sucursalId: 'sucursalId',
+    sucursalNombre: 'sucursalNombre',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -152434,8 +152648,10 @@ export namespace Prisma {
     region?: StringNullableFilter<"Sucursal"> | string | null
     comuna?: StringNullableFilter<"Sucursal"> | string | null
     direccion?: StringNullableFilter<"Sucursal"> | string | null
+    tieneSalaReuniones?: BoolFilter<"Sucursal"> | boolean
     createdAt?: DateTimeFilter<"Sucursal"> | Date | string
     updatedAt?: DateTimeFilter<"Sucursal"> | Date | string
+    salaCompartidaId?: StringNullableFilter<"Sucursal"> | string | null
     listasCorreo?: ListaCorreoListRelationFilter
     presupuestos?: PresupuestoListRelationFilter
     RetornoProductosMovimiento?: RetornoProductosMovimientoListRelationFilter
@@ -152447,6 +152663,9 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionListRelationFilter
     planillasTransporte?: Cal_PlanillaTransporteListRelationFilter
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalListRelationFilter
+    reservasSala?: ReservaSalaListRelationFilter
+    salaCompartida?: XOR<SucursalNullableRelationFilter, SucursalWhereInput> | null
+    sucursalesQueCompartenSala?: SucursalListRelationFilter
   }
 
   export type SucursalOrderByWithRelationInput = {
@@ -152455,8 +152674,10 @@ export namespace Prisma {
     region?: SortOrderInput | SortOrder
     comuna?: SortOrderInput | SortOrder
     direccion?: SortOrderInput | SortOrder
+    tieneSalaReuniones?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    salaCompartidaId?: SortOrderInput | SortOrder
     listasCorreo?: ListaCorreoOrderByRelationAggregateInput
     presupuestos?: PresupuestoOrderByRelationAggregateInput
     RetornoProductosMovimiento?: RetornoProductosMovimientoOrderByRelationAggregateInput
@@ -152468,6 +152689,9 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionOrderByRelationAggregateInput
     planillasTransporte?: Cal_PlanillaTransporteOrderByRelationAggregateInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalOrderByRelationAggregateInput
+    reservasSala?: ReservaSalaOrderByRelationAggregateInput
+    salaCompartida?: SucursalOrderByWithRelationInput
+    sucursalesQueCompartenSala?: SucursalOrderByRelationAggregateInput
   }
 
   export type SucursalWhereUniqueInput = Prisma.AtLeast<{
@@ -152479,8 +152703,10 @@ export namespace Prisma {
     region?: StringNullableFilter<"Sucursal"> | string | null
     comuna?: StringNullableFilter<"Sucursal"> | string | null
     direccion?: StringNullableFilter<"Sucursal"> | string | null
+    tieneSalaReuniones?: BoolFilter<"Sucursal"> | boolean
     createdAt?: DateTimeFilter<"Sucursal"> | Date | string
     updatedAt?: DateTimeFilter<"Sucursal"> | Date | string
+    salaCompartidaId?: StringNullableFilter<"Sucursal"> | string | null
     listasCorreo?: ListaCorreoListRelationFilter
     presupuestos?: PresupuestoListRelationFilter
     RetornoProductosMovimiento?: RetornoProductosMovimientoListRelationFilter
@@ -152492,6 +152718,9 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionListRelationFilter
     planillasTransporte?: Cal_PlanillaTransporteListRelationFilter
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalListRelationFilter
+    reservasSala?: ReservaSalaListRelationFilter
+    salaCompartida?: XOR<SucursalNullableRelationFilter, SucursalWhereInput> | null
+    sucursalesQueCompartenSala?: SucursalListRelationFilter
   }, "id" | "nombre">
 
   export type SucursalOrderByWithAggregationInput = {
@@ -152500,8 +152729,10 @@ export namespace Prisma {
     region?: SortOrderInput | SortOrder
     comuna?: SortOrderInput | SortOrder
     direccion?: SortOrderInput | SortOrder
+    tieneSalaReuniones?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    salaCompartidaId?: SortOrderInput | SortOrder
     _count?: SucursalCountOrderByAggregateInput
     _max?: SucursalMaxOrderByAggregateInput
     _min?: SucursalMinOrderByAggregateInput
@@ -152516,8 +152747,10 @@ export namespace Prisma {
     region?: StringNullableWithAggregatesFilter<"Sucursal"> | string | null
     comuna?: StringNullableWithAggregatesFilter<"Sucursal"> | string | null
     direccion?: StringNullableWithAggregatesFilter<"Sucursal"> | string | null
+    tieneSalaReuniones?: BoolWithAggregatesFilter<"Sucursal"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Sucursal"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Sucursal"> | Date | string
+    salaCompartidaId?: StringNullableWithAggregatesFilter<"Sucursal"> | string | null
   }
 
   export type PresupuestoWhereInput = {
@@ -160429,8 +160662,11 @@ export namespace Prisma {
     motivo?: StringFilter<"ReservaSala"> | string
     estado?: StringFilter<"ReservaSala"> | string
     tokenCancelacion?: StringFilter<"ReservaSala"> | string
+    sucursalId?: StringNullableFilter<"ReservaSala"> | string | null
+    sucursalNombre?: StringNullableFilter<"ReservaSala"> | string | null
     createdAt?: DateTimeFilter<"ReservaSala"> | Date | string
     updatedAt?: DateTimeFilter<"ReservaSala"> | Date | string
+    sucursal?: XOR<SucursalNullableRelationFilter, SucursalWhereInput> | null
   }
 
   export type ReservaSalaOrderByWithRelationInput = {
@@ -160444,8 +160680,11 @@ export namespace Prisma {
     motivo?: SortOrder
     estado?: SortOrder
     tokenCancelacion?: SortOrder
+    sucursalId?: SortOrderInput | SortOrder
+    sucursalNombre?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    sucursal?: SucursalOrderByWithRelationInput
   }
 
   export type ReservaSalaWhereUniqueInput = Prisma.AtLeast<{
@@ -160462,8 +160701,11 @@ export namespace Prisma {
     horaFin?: StringFilter<"ReservaSala"> | string
     motivo?: StringFilter<"ReservaSala"> | string
     estado?: StringFilter<"ReservaSala"> | string
+    sucursalId?: StringNullableFilter<"ReservaSala"> | string | null
+    sucursalNombre?: StringNullableFilter<"ReservaSala"> | string | null
     createdAt?: DateTimeFilter<"ReservaSala"> | Date | string
     updatedAt?: DateTimeFilter<"ReservaSala"> | Date | string
+    sucursal?: XOR<SucursalNullableRelationFilter, SucursalWhereInput> | null
   }, "id" | "tokenCancelacion">
 
   export type ReservaSalaOrderByWithAggregationInput = {
@@ -160477,6 +160719,8 @@ export namespace Prisma {
     motivo?: SortOrder
     estado?: SortOrder
     tokenCancelacion?: SortOrder
+    sucursalId?: SortOrderInput | SortOrder
+    sucursalNombre?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ReservaSalaCountOrderByAggregateInput
@@ -160498,6 +160742,8 @@ export namespace Prisma {
     motivo?: StringWithAggregatesFilter<"ReservaSala"> | string
     estado?: StringWithAggregatesFilter<"ReservaSala"> | string
     tokenCancelacion?: StringWithAggregatesFilter<"ReservaSala"> | string
+    sucursalId?: StringNullableWithAggregatesFilter<"ReservaSala"> | string | null
+    sucursalNombre?: StringNullableWithAggregatesFilter<"ReservaSala"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"ReservaSala"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"ReservaSala"> | Date | string
   }
@@ -163665,6 +163911,7 @@ export namespace Prisma {
     region?: string | null
     comuna?: string | null
     direccion?: string | null
+    tieneSalaReuniones?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     listasCorreo?: ListaCorreoCreateNestedManyWithoutSucursalInput
@@ -163678,6 +163925,9 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutSucursalInput
     planillasTransporte?: Cal_PlanillaTransporteCreateNestedManyWithoutSucursalInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalCreateNestedManyWithoutSucursalInput
+    reservasSala?: ReservaSalaCreateNestedManyWithoutSucursalInput
+    salaCompartida?: SucursalCreateNestedOneWithoutSucursalesQueCompartenSalaInput
+    sucursalesQueCompartenSala?: SucursalCreateNestedManyWithoutSalaCompartidaInput
   }
 
   export type SucursalUncheckedCreateInput = {
@@ -163686,8 +163936,10 @@ export namespace Prisma {
     region?: string | null
     comuna?: string | null
     direccion?: string | null
+    tieneSalaReuniones?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    salaCompartidaId?: string | null
     listasCorreo?: ListaCorreoUncheckedCreateNestedManyWithoutSucursalInput
     presupuestos?: PresupuestoUncheckedCreateNestedManyWithoutSucursalInput
     RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedCreateNestedManyWithoutSucursalInput
@@ -163699,6 +163951,8 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput
     planillasTransporte?: Cal_PlanillaTransporteUncheckedCreateNestedManyWithoutSucursalInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedCreateNestedManyWithoutSucursalInput
+    reservasSala?: ReservaSalaUncheckedCreateNestedManyWithoutSucursalInput
+    sucursalesQueCompartenSala?: SucursalUncheckedCreateNestedManyWithoutSalaCompartidaInput
   }
 
   export type SucursalUpdateInput = {
@@ -163707,6 +163961,7 @@ export namespace Prisma {
     region?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: NullableStringFieldUpdateOperationsInput | string | null
     direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    tieneSalaReuniones?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     listasCorreo?: ListaCorreoUpdateManyWithoutSucursalNestedInput
@@ -163720,6 +163975,9 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput
     planillasTransporte?: Cal_PlanillaTransporteUpdateManyWithoutSucursalNestedInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalUpdateManyWithoutSucursalNestedInput
+    reservasSala?: ReservaSalaUpdateManyWithoutSucursalNestedInput
+    salaCompartida?: SucursalUpdateOneWithoutSucursalesQueCompartenSalaNestedInput
+    sucursalesQueCompartenSala?: SucursalUpdateManyWithoutSalaCompartidaNestedInput
   }
 
   export type SucursalUncheckedUpdateInput = {
@@ -163728,8 +163986,10 @@ export namespace Prisma {
     region?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: NullableStringFieldUpdateOperationsInput | string | null
     direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    tieneSalaReuniones?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    salaCompartidaId?: NullableStringFieldUpdateOperationsInput | string | null
     listasCorreo?: ListaCorreoUncheckedUpdateManyWithoutSucursalNestedInput
     presupuestos?: PresupuestoUncheckedUpdateManyWithoutSucursalNestedInput
     RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedUpdateManyWithoutSucursalNestedInput
@@ -163741,6 +164001,8 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput
     planillasTransporte?: Cal_PlanillaTransporteUncheckedUpdateManyWithoutSucursalNestedInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedUpdateManyWithoutSucursalNestedInput
+    reservasSala?: ReservaSalaUncheckedUpdateManyWithoutSucursalNestedInput
+    sucursalesQueCompartenSala?: SucursalUncheckedUpdateManyWithoutSalaCompartidaNestedInput
   }
 
   export type SucursalCreateManyInput = {
@@ -163749,8 +164011,10 @@ export namespace Prisma {
     region?: string | null
     comuna?: string | null
     direccion?: string | null
+    tieneSalaReuniones?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    salaCompartidaId?: string | null
   }
 
   export type SucursalUpdateManyMutationInput = {
@@ -163759,6 +164023,7 @@ export namespace Prisma {
     region?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: NullableStringFieldUpdateOperationsInput | string | null
     direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    tieneSalaReuniones?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -163769,8 +164034,10 @@ export namespace Prisma {
     region?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: NullableStringFieldUpdateOperationsInput | string | null
     direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    tieneSalaReuniones?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    salaCompartidaId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PresupuestoCreateInput = {
@@ -172678,8 +172945,10 @@ export namespace Prisma {
     motivo: string
     estado?: string
     tokenCancelacion?: string
+    sucursalNombre?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    sucursal?: SucursalCreateNestedOneWithoutReservasSalaInput
   }
 
   export type ReservaSalaUncheckedCreateInput = {
@@ -172693,6 +172962,8 @@ export namespace Prisma {
     motivo: string
     estado?: string
     tokenCancelacion?: string
+    sucursalId?: string | null
+    sucursalNombre?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -172708,8 +172979,10 @@ export namespace Prisma {
     motivo?: StringFieldUpdateOperationsInput | string
     estado?: StringFieldUpdateOperationsInput | string
     tokenCancelacion?: StringFieldUpdateOperationsInput | string
+    sucursalNombre?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sucursal?: SucursalUpdateOneWithoutReservasSalaNestedInput
   }
 
   export type ReservaSalaUncheckedUpdateInput = {
@@ -172723,6 +172996,8 @@ export namespace Prisma {
     motivo?: StringFieldUpdateOperationsInput | string
     estado?: StringFieldUpdateOperationsInput | string
     tokenCancelacion?: StringFieldUpdateOperationsInput | string
+    sucursalId?: NullableStringFieldUpdateOperationsInput | string | null
+    sucursalNombre?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -172738,6 +173013,8 @@ export namespace Prisma {
     motivo: string
     estado?: string
     tokenCancelacion?: string
+    sucursalId?: string | null
+    sucursalNombre?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -172753,6 +173030,7 @@ export namespace Prisma {
     motivo?: StringFieldUpdateOperationsInput | string
     estado?: StringFieldUpdateOperationsInput | string
     tokenCancelacion?: StringFieldUpdateOperationsInput | string
+    sucursalNombre?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -172768,6 +173046,8 @@ export namespace Prisma {
     motivo?: StringFieldUpdateOperationsInput | string
     estado?: StringFieldUpdateOperationsInput | string
     tokenCancelacion?: StringFieldUpdateOperationsInput | string
+    sucursalId?: NullableStringFieldUpdateOperationsInput | string | null
+    sucursalNombre?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -176020,6 +176300,12 @@ export namespace Prisma {
     none?: Cal_PlanillaHigienePersonalWhereInput
   }
 
+  export type ReservaSalaListRelationFilter = {
+    every?: ReservaSalaWhereInput
+    some?: ReservaSalaWhereInput
+    none?: ReservaSalaWhereInput
+  }
+
   export type ListaCorreoOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -176048,14 +176334,20 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type ReservaSalaOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type SucursalCountOrderByAggregateInput = {
     id?: SortOrder
     nombre?: SortOrder
     region?: SortOrder
     comuna?: SortOrder
     direccion?: SortOrder
+    tieneSalaReuniones?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    salaCompartidaId?: SortOrder
   }
 
   export type SucursalMaxOrderByAggregateInput = {
@@ -176064,8 +176356,10 @@ export namespace Prisma {
     region?: SortOrder
     comuna?: SortOrder
     direccion?: SortOrder
+    tieneSalaReuniones?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    salaCompartidaId?: SortOrder
   }
 
   export type SucursalMinOrderByAggregateInput = {
@@ -176074,8 +176368,10 @@ export namespace Prisma {
     region?: SortOrder
     comuna?: SortOrder
     direccion?: SortOrder
+    tieneSalaReuniones?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    salaCompartidaId?: SortOrder
   }
 
   export type SucursalRelationFilter = {
@@ -181298,6 +181594,8 @@ export namespace Prisma {
     motivo?: SortOrder
     estado?: SortOrder
     tokenCancelacion?: SortOrder
+    sucursalId?: SortOrder
+    sucursalNombre?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -181313,6 +181611,8 @@ export namespace Prisma {
     motivo?: SortOrder
     estado?: SortOrder
     tokenCancelacion?: SortOrder
+    sucursalId?: SortOrder
+    sucursalNombre?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -181328,6 +181628,8 @@ export namespace Prisma {
     motivo?: SortOrder
     estado?: SortOrder
     tokenCancelacion?: SortOrder
+    sucursalId?: SortOrder
+    sucursalNombre?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -183367,6 +183669,26 @@ export namespace Prisma {
     connect?: Cal_PlanillaHigienePersonalWhereUniqueInput | Cal_PlanillaHigienePersonalWhereUniqueInput[]
   }
 
+  export type ReservaSalaCreateNestedManyWithoutSucursalInput = {
+    create?: XOR<ReservaSalaCreateWithoutSucursalInput, ReservaSalaUncheckedCreateWithoutSucursalInput> | ReservaSalaCreateWithoutSucursalInput[] | ReservaSalaUncheckedCreateWithoutSucursalInput[]
+    connectOrCreate?: ReservaSalaCreateOrConnectWithoutSucursalInput | ReservaSalaCreateOrConnectWithoutSucursalInput[]
+    createMany?: ReservaSalaCreateManySucursalInputEnvelope
+    connect?: ReservaSalaWhereUniqueInput | ReservaSalaWhereUniqueInput[]
+  }
+
+  export type SucursalCreateNestedOneWithoutSucursalesQueCompartenSalaInput = {
+    create?: XOR<SucursalCreateWithoutSucursalesQueCompartenSalaInput, SucursalUncheckedCreateWithoutSucursalesQueCompartenSalaInput>
+    connectOrCreate?: SucursalCreateOrConnectWithoutSucursalesQueCompartenSalaInput
+    connect?: SucursalWhereUniqueInput
+  }
+
+  export type SucursalCreateNestedManyWithoutSalaCompartidaInput = {
+    create?: XOR<SucursalCreateWithoutSalaCompartidaInput, SucursalUncheckedCreateWithoutSalaCompartidaInput> | SucursalCreateWithoutSalaCompartidaInput[] | SucursalUncheckedCreateWithoutSalaCompartidaInput[]
+    connectOrCreate?: SucursalCreateOrConnectWithoutSalaCompartidaInput | SucursalCreateOrConnectWithoutSalaCompartidaInput[]
+    createMany?: SucursalCreateManySalaCompartidaInputEnvelope
+    connect?: SucursalWhereUniqueInput | SucursalWhereUniqueInput[]
+  }
+
   export type ListaCorreoUncheckedCreateNestedManyWithoutSucursalInput = {
     create?: XOR<ListaCorreoCreateWithoutSucursalInput, ListaCorreoUncheckedCreateWithoutSucursalInput> | ListaCorreoCreateWithoutSucursalInput[] | ListaCorreoUncheckedCreateWithoutSucursalInput[]
     connectOrCreate?: ListaCorreoCreateOrConnectWithoutSucursalInput | ListaCorreoCreateOrConnectWithoutSucursalInput[]
@@ -183441,6 +183763,20 @@ export namespace Prisma {
     connectOrCreate?: Cal_PlanillaHigienePersonalCreateOrConnectWithoutSucursalInput | Cal_PlanillaHigienePersonalCreateOrConnectWithoutSucursalInput[]
     createMany?: Cal_PlanillaHigienePersonalCreateManySucursalInputEnvelope
     connect?: Cal_PlanillaHigienePersonalWhereUniqueInput | Cal_PlanillaHigienePersonalWhereUniqueInput[]
+  }
+
+  export type ReservaSalaUncheckedCreateNestedManyWithoutSucursalInput = {
+    create?: XOR<ReservaSalaCreateWithoutSucursalInput, ReservaSalaUncheckedCreateWithoutSucursalInput> | ReservaSalaCreateWithoutSucursalInput[] | ReservaSalaUncheckedCreateWithoutSucursalInput[]
+    connectOrCreate?: ReservaSalaCreateOrConnectWithoutSucursalInput | ReservaSalaCreateOrConnectWithoutSucursalInput[]
+    createMany?: ReservaSalaCreateManySucursalInputEnvelope
+    connect?: ReservaSalaWhereUniqueInput | ReservaSalaWhereUniqueInput[]
+  }
+
+  export type SucursalUncheckedCreateNestedManyWithoutSalaCompartidaInput = {
+    create?: XOR<SucursalCreateWithoutSalaCompartidaInput, SucursalUncheckedCreateWithoutSalaCompartidaInput> | SucursalCreateWithoutSalaCompartidaInput[] | SucursalUncheckedCreateWithoutSalaCompartidaInput[]
+    connectOrCreate?: SucursalCreateOrConnectWithoutSalaCompartidaInput | SucursalCreateOrConnectWithoutSalaCompartidaInput[]
+    createMany?: SucursalCreateManySalaCompartidaInputEnvelope
+    connect?: SucursalWhereUniqueInput | SucursalWhereUniqueInput[]
   }
 
   export type ListaCorreoUpdateManyWithoutSucursalNestedInput = {
@@ -183596,6 +183932,44 @@ export namespace Prisma {
     deleteMany?: Cal_PlanillaHigienePersonalScalarWhereInput | Cal_PlanillaHigienePersonalScalarWhereInput[]
   }
 
+  export type ReservaSalaUpdateManyWithoutSucursalNestedInput = {
+    create?: XOR<ReservaSalaCreateWithoutSucursalInput, ReservaSalaUncheckedCreateWithoutSucursalInput> | ReservaSalaCreateWithoutSucursalInput[] | ReservaSalaUncheckedCreateWithoutSucursalInput[]
+    connectOrCreate?: ReservaSalaCreateOrConnectWithoutSucursalInput | ReservaSalaCreateOrConnectWithoutSucursalInput[]
+    upsert?: ReservaSalaUpsertWithWhereUniqueWithoutSucursalInput | ReservaSalaUpsertWithWhereUniqueWithoutSucursalInput[]
+    createMany?: ReservaSalaCreateManySucursalInputEnvelope
+    set?: ReservaSalaWhereUniqueInput | ReservaSalaWhereUniqueInput[]
+    disconnect?: ReservaSalaWhereUniqueInput | ReservaSalaWhereUniqueInput[]
+    delete?: ReservaSalaWhereUniqueInput | ReservaSalaWhereUniqueInput[]
+    connect?: ReservaSalaWhereUniqueInput | ReservaSalaWhereUniqueInput[]
+    update?: ReservaSalaUpdateWithWhereUniqueWithoutSucursalInput | ReservaSalaUpdateWithWhereUniqueWithoutSucursalInput[]
+    updateMany?: ReservaSalaUpdateManyWithWhereWithoutSucursalInput | ReservaSalaUpdateManyWithWhereWithoutSucursalInput[]
+    deleteMany?: ReservaSalaScalarWhereInput | ReservaSalaScalarWhereInput[]
+  }
+
+  export type SucursalUpdateOneWithoutSucursalesQueCompartenSalaNestedInput = {
+    create?: XOR<SucursalCreateWithoutSucursalesQueCompartenSalaInput, SucursalUncheckedCreateWithoutSucursalesQueCompartenSalaInput>
+    connectOrCreate?: SucursalCreateOrConnectWithoutSucursalesQueCompartenSalaInput
+    upsert?: SucursalUpsertWithoutSucursalesQueCompartenSalaInput
+    disconnect?: SucursalWhereInput | boolean
+    delete?: SucursalWhereInput | boolean
+    connect?: SucursalWhereUniqueInput
+    update?: XOR<XOR<SucursalUpdateToOneWithWhereWithoutSucursalesQueCompartenSalaInput, SucursalUpdateWithoutSucursalesQueCompartenSalaInput>, SucursalUncheckedUpdateWithoutSucursalesQueCompartenSalaInput>
+  }
+
+  export type SucursalUpdateManyWithoutSalaCompartidaNestedInput = {
+    create?: XOR<SucursalCreateWithoutSalaCompartidaInput, SucursalUncheckedCreateWithoutSalaCompartidaInput> | SucursalCreateWithoutSalaCompartidaInput[] | SucursalUncheckedCreateWithoutSalaCompartidaInput[]
+    connectOrCreate?: SucursalCreateOrConnectWithoutSalaCompartidaInput | SucursalCreateOrConnectWithoutSalaCompartidaInput[]
+    upsert?: SucursalUpsertWithWhereUniqueWithoutSalaCompartidaInput | SucursalUpsertWithWhereUniqueWithoutSalaCompartidaInput[]
+    createMany?: SucursalCreateManySalaCompartidaInputEnvelope
+    set?: SucursalWhereUniqueInput | SucursalWhereUniqueInput[]
+    disconnect?: SucursalWhereUniqueInput | SucursalWhereUniqueInput[]
+    delete?: SucursalWhereUniqueInput | SucursalWhereUniqueInput[]
+    connect?: SucursalWhereUniqueInput | SucursalWhereUniqueInput[]
+    update?: SucursalUpdateWithWhereUniqueWithoutSalaCompartidaInput | SucursalUpdateWithWhereUniqueWithoutSalaCompartidaInput[]
+    updateMany?: SucursalUpdateManyWithWhereWithoutSalaCompartidaInput | SucursalUpdateManyWithWhereWithoutSalaCompartidaInput[]
+    deleteMany?: SucursalScalarWhereInput | SucursalScalarWhereInput[]
+  }
+
   export type ListaCorreoUncheckedUpdateManyWithoutSucursalNestedInput = {
     create?: XOR<ListaCorreoCreateWithoutSucursalInput, ListaCorreoUncheckedCreateWithoutSucursalInput> | ListaCorreoCreateWithoutSucursalInput[] | ListaCorreoUncheckedCreateWithoutSucursalInput[]
     connectOrCreate?: ListaCorreoCreateOrConnectWithoutSucursalInput | ListaCorreoCreateOrConnectWithoutSucursalInput[]
@@ -183747,6 +184121,34 @@ export namespace Prisma {
     update?: Cal_PlanillaHigienePersonalUpdateWithWhereUniqueWithoutSucursalInput | Cal_PlanillaHigienePersonalUpdateWithWhereUniqueWithoutSucursalInput[]
     updateMany?: Cal_PlanillaHigienePersonalUpdateManyWithWhereWithoutSucursalInput | Cal_PlanillaHigienePersonalUpdateManyWithWhereWithoutSucursalInput[]
     deleteMany?: Cal_PlanillaHigienePersonalScalarWhereInput | Cal_PlanillaHigienePersonalScalarWhereInput[]
+  }
+
+  export type ReservaSalaUncheckedUpdateManyWithoutSucursalNestedInput = {
+    create?: XOR<ReservaSalaCreateWithoutSucursalInput, ReservaSalaUncheckedCreateWithoutSucursalInput> | ReservaSalaCreateWithoutSucursalInput[] | ReservaSalaUncheckedCreateWithoutSucursalInput[]
+    connectOrCreate?: ReservaSalaCreateOrConnectWithoutSucursalInput | ReservaSalaCreateOrConnectWithoutSucursalInput[]
+    upsert?: ReservaSalaUpsertWithWhereUniqueWithoutSucursalInput | ReservaSalaUpsertWithWhereUniqueWithoutSucursalInput[]
+    createMany?: ReservaSalaCreateManySucursalInputEnvelope
+    set?: ReservaSalaWhereUniqueInput | ReservaSalaWhereUniqueInput[]
+    disconnect?: ReservaSalaWhereUniqueInput | ReservaSalaWhereUniqueInput[]
+    delete?: ReservaSalaWhereUniqueInput | ReservaSalaWhereUniqueInput[]
+    connect?: ReservaSalaWhereUniqueInput | ReservaSalaWhereUniqueInput[]
+    update?: ReservaSalaUpdateWithWhereUniqueWithoutSucursalInput | ReservaSalaUpdateWithWhereUniqueWithoutSucursalInput[]
+    updateMany?: ReservaSalaUpdateManyWithWhereWithoutSucursalInput | ReservaSalaUpdateManyWithWhereWithoutSucursalInput[]
+    deleteMany?: ReservaSalaScalarWhereInput | ReservaSalaScalarWhereInput[]
+  }
+
+  export type SucursalUncheckedUpdateManyWithoutSalaCompartidaNestedInput = {
+    create?: XOR<SucursalCreateWithoutSalaCompartidaInput, SucursalUncheckedCreateWithoutSalaCompartidaInput> | SucursalCreateWithoutSalaCompartidaInput[] | SucursalUncheckedCreateWithoutSalaCompartidaInput[]
+    connectOrCreate?: SucursalCreateOrConnectWithoutSalaCompartidaInput | SucursalCreateOrConnectWithoutSalaCompartidaInput[]
+    upsert?: SucursalUpsertWithWhereUniqueWithoutSalaCompartidaInput | SucursalUpsertWithWhereUniqueWithoutSalaCompartidaInput[]
+    createMany?: SucursalCreateManySalaCompartidaInputEnvelope
+    set?: SucursalWhereUniqueInput | SucursalWhereUniqueInput[]
+    disconnect?: SucursalWhereUniqueInput | SucursalWhereUniqueInput[]
+    delete?: SucursalWhereUniqueInput | SucursalWhereUniqueInput[]
+    connect?: SucursalWhereUniqueInput | SucursalWhereUniqueInput[]
+    update?: SucursalUpdateWithWhereUniqueWithoutSalaCompartidaInput | SucursalUpdateWithWhereUniqueWithoutSalaCompartidaInput[]
+    updateMany?: SucursalUpdateManyWithWhereWithoutSalaCompartidaInput | SucursalUpdateManyWithWhereWithoutSalaCompartidaInput[]
+    deleteMany?: SucursalScalarWhereInput | SucursalScalarWhereInput[]
   }
 
   export type SucursalCreateNestedOneWithoutPresupuestosInput = {
@@ -187011,6 +187413,22 @@ export namespace Prisma {
     update?: XOR<XOR<CarpetaDocumentalUpdateToOneWithWhereWithoutPrivilegiosInput, CarpetaDocumentalUpdateWithoutPrivilegiosInput>, CarpetaDocumentalUncheckedUpdateWithoutPrivilegiosInput>
   }
 
+  export type SucursalCreateNestedOneWithoutReservasSalaInput = {
+    create?: XOR<SucursalCreateWithoutReservasSalaInput, SucursalUncheckedCreateWithoutReservasSalaInput>
+    connectOrCreate?: SucursalCreateOrConnectWithoutReservasSalaInput
+    connect?: SucursalWhereUniqueInput
+  }
+
+  export type SucursalUpdateOneWithoutReservasSalaNestedInput = {
+    create?: XOR<SucursalCreateWithoutReservasSalaInput, SucursalUncheckedCreateWithoutReservasSalaInput>
+    connectOrCreate?: SucursalCreateOrConnectWithoutReservasSalaInput
+    upsert?: SucursalUpsertWithoutReservasSalaInput
+    disconnect?: SucursalWhereInput | boolean
+    delete?: SucursalWhereInput | boolean
+    connect?: SucursalWhereUniqueInput
+    update?: XOR<XOR<SucursalUpdateToOneWithWhereWithoutReservasSalaInput, SucursalUpdateWithoutReservasSalaInput>, SucursalUncheckedUpdateWithoutReservasSalaInput>
+  }
+
   export type LogAndenCreateNestedManyWithoutBodegaInput = {
     create?: XOR<LogAndenCreateWithoutBodegaInput, LogAndenUncheckedCreateWithoutBodegaInput> | LogAndenCreateWithoutBodegaInput[] | LogAndenUncheckedCreateWithoutBodegaInput[]
     connectOrCreate?: LogAndenCreateOrConnectWithoutBodegaInput | LogAndenCreateOrConnectWithoutBodegaInput[]
@@ -188501,6 +188919,7 @@ export namespace Prisma {
     region?: string | null
     comuna?: string | null
     direccion?: string | null
+    tieneSalaReuniones?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     listasCorreo?: ListaCorreoCreateNestedManyWithoutSucursalInput
@@ -188513,6 +188932,9 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutSucursalInput
     planillasTransporte?: Cal_PlanillaTransporteCreateNestedManyWithoutSucursalInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalCreateNestedManyWithoutSucursalInput
+    reservasSala?: ReservaSalaCreateNestedManyWithoutSucursalInput
+    salaCompartida?: SucursalCreateNestedOneWithoutSucursalesQueCompartenSalaInput
+    sucursalesQueCompartenSala?: SucursalCreateNestedManyWithoutSalaCompartidaInput
   }
 
   export type SucursalUncheckedCreateWithoutUsersInput = {
@@ -188521,8 +188943,10 @@ export namespace Prisma {
     region?: string | null
     comuna?: string | null
     direccion?: string | null
+    tieneSalaReuniones?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    salaCompartidaId?: string | null
     listasCorreo?: ListaCorreoUncheckedCreateNestedManyWithoutSucursalInput
     presupuestos?: PresupuestoUncheckedCreateNestedManyWithoutSucursalInput
     RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedCreateNestedManyWithoutSucursalInput
@@ -188533,6 +188957,8 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput
     planillasTransporte?: Cal_PlanillaTransporteUncheckedCreateNestedManyWithoutSucursalInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedCreateNestedManyWithoutSucursalInput
+    reservasSala?: ReservaSalaUncheckedCreateNestedManyWithoutSucursalInput
+    sucursalesQueCompartenSala?: SucursalUncheckedCreateNestedManyWithoutSalaCompartidaInput
   }
 
   export type SucursalCreateOrConnectWithoutUsersInput = {
@@ -188711,8 +189137,10 @@ export namespace Prisma {
     region?: StringNullableFilter<"Sucursal"> | string | null
     comuna?: StringNullableFilter<"Sucursal"> | string | null
     direccion?: StringNullableFilter<"Sucursal"> | string | null
+    tieneSalaReuniones?: BoolFilter<"Sucursal"> | boolean
     createdAt?: DateTimeFilter<"Sucursal"> | Date | string
     updatedAt?: DateTimeFilter<"Sucursal"> | Date | string
+    salaCompartidaId?: StringNullableFilter<"Sucursal"> | string | null
   }
 
   export type FormDefinitionUpsertWithWhereUniqueWithoutAllowedUsersInput = {
@@ -188890,6 +189318,7 @@ export namespace Prisma {
     region?: string | null
     comuna?: string | null
     direccion?: string | null
+    tieneSalaReuniones?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     presupuestos?: PresupuestoCreateNestedManyWithoutSucursalInput
@@ -188902,6 +189331,9 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutSucursalInput
     planillasTransporte?: Cal_PlanillaTransporteCreateNestedManyWithoutSucursalInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalCreateNestedManyWithoutSucursalInput
+    reservasSala?: ReservaSalaCreateNestedManyWithoutSucursalInput
+    salaCompartida?: SucursalCreateNestedOneWithoutSucursalesQueCompartenSalaInput
+    sucursalesQueCompartenSala?: SucursalCreateNestedManyWithoutSalaCompartidaInput
   }
 
   export type SucursalUncheckedCreateWithoutListasCorreoInput = {
@@ -188910,8 +189342,10 @@ export namespace Prisma {
     region?: string | null
     comuna?: string | null
     direccion?: string | null
+    tieneSalaReuniones?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    salaCompartidaId?: string | null
     presupuestos?: PresupuestoUncheckedCreateNestedManyWithoutSucursalInput
     RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedCreateNestedManyWithoutSucursalInput
     RetornoProductosSucursalEstado?: RetornoProductosSucursalEstadoUncheckedCreateNestedManyWithoutSucursalInput
@@ -188922,6 +189356,8 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput
     planillasTransporte?: Cal_PlanillaTransporteUncheckedCreateNestedManyWithoutSucursalInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedCreateNestedManyWithoutSucursalInput
+    reservasSala?: ReservaSalaUncheckedCreateNestedManyWithoutSucursalInput
+    sucursalesQueCompartenSala?: SucursalUncheckedCreateNestedManyWithoutSalaCompartidaInput
   }
 
   export type SucursalCreateOrConnectWithoutListasCorreoInput = {
@@ -188972,6 +189408,7 @@ export namespace Prisma {
     region?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: NullableStringFieldUpdateOperationsInput | string | null
     direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    tieneSalaReuniones?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     presupuestos?: PresupuestoUpdateManyWithoutSucursalNestedInput
@@ -188984,6 +189421,9 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput
     planillasTransporte?: Cal_PlanillaTransporteUpdateManyWithoutSucursalNestedInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalUpdateManyWithoutSucursalNestedInput
+    reservasSala?: ReservaSalaUpdateManyWithoutSucursalNestedInput
+    salaCompartida?: SucursalUpdateOneWithoutSucursalesQueCompartenSalaNestedInput
+    sucursalesQueCompartenSala?: SucursalUpdateManyWithoutSalaCompartidaNestedInput
   }
 
   export type SucursalUncheckedUpdateWithoutListasCorreoInput = {
@@ -188992,8 +189432,10 @@ export namespace Prisma {
     region?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: NullableStringFieldUpdateOperationsInput | string | null
     direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    tieneSalaReuniones?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    salaCompartidaId?: NullableStringFieldUpdateOperationsInput | string | null
     presupuestos?: PresupuestoUncheckedUpdateManyWithoutSucursalNestedInput
     RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedUpdateManyWithoutSucursalNestedInput
     RetornoProductosSucursalEstado?: RetornoProductosSucursalEstadoUncheckedUpdateManyWithoutSucursalNestedInput
@@ -189004,6 +189446,8 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput
     planillasTransporte?: Cal_PlanillaTransporteUncheckedUpdateManyWithoutSucursalNestedInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedUpdateManyWithoutSucursalNestedInput
+    reservasSala?: ReservaSalaUncheckedUpdateManyWithoutSucursalNestedInput
+    sucursalesQueCompartenSala?: SucursalUncheckedUpdateManyWithoutSalaCompartidaNestedInput
   }
 
   export type NotificacionPantallaUpsertWithWhereUniqueWithoutListaCorreoInput = {
@@ -189990,6 +190434,159 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ReservaSalaCreateWithoutSucursalInput = {
+    id?: string
+    solicitante: string
+    email: string
+    userId?: string | null
+    fecha: string
+    horaInicio: string
+    horaFin: string
+    motivo: string
+    estado?: string
+    tokenCancelacion?: string
+    sucursalNombre?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ReservaSalaUncheckedCreateWithoutSucursalInput = {
+    id?: string
+    solicitante: string
+    email: string
+    userId?: string | null
+    fecha: string
+    horaInicio: string
+    horaFin: string
+    motivo: string
+    estado?: string
+    tokenCancelacion?: string
+    sucursalNombre?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ReservaSalaCreateOrConnectWithoutSucursalInput = {
+    where: ReservaSalaWhereUniqueInput
+    create: XOR<ReservaSalaCreateWithoutSucursalInput, ReservaSalaUncheckedCreateWithoutSucursalInput>
+  }
+
+  export type ReservaSalaCreateManySucursalInputEnvelope = {
+    data: ReservaSalaCreateManySucursalInput | ReservaSalaCreateManySucursalInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SucursalCreateWithoutSucursalesQueCompartenSalaInput = {
+    id?: string
+    nombre: string
+    region?: string | null
+    comuna?: string | null
+    direccion?: string | null
+    tieneSalaReuniones?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    listasCorreo?: ListaCorreoCreateNestedManyWithoutSucursalInput
+    presupuestos?: PresupuestoCreateNestedManyWithoutSucursalInput
+    RetornoProductosMovimiento?: RetornoProductosMovimientoCreateNestedManyWithoutSucursalInput
+    RetornoProductosSucursalEstado?: RetornoProductosSucursalEstadoCreateNestedManyWithoutSucursalInput
+    uts?: UTCreateNestedManyWithoutSucursalInput
+    users?: UserCreateNestedManyWithoutSucursalesInput
+    jefesZonales?: JefeZonalSucursalCreateNestedManyWithoutSucursalInput
+    vehiculos?: VehiculoCreateNestedManyWithoutSucursalInput
+    delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutSucursalInput
+    planillasTransporte?: Cal_PlanillaTransporteCreateNestedManyWithoutSucursalInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalCreateNestedManyWithoutSucursalInput
+    reservasSala?: ReservaSalaCreateNestedManyWithoutSucursalInput
+    salaCompartida?: SucursalCreateNestedOneWithoutSucursalesQueCompartenSalaInput
+  }
+
+  export type SucursalUncheckedCreateWithoutSucursalesQueCompartenSalaInput = {
+    id?: string
+    nombre: string
+    region?: string | null
+    comuna?: string | null
+    direccion?: string | null
+    tieneSalaReuniones?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    salaCompartidaId?: string | null
+    listasCorreo?: ListaCorreoUncheckedCreateNestedManyWithoutSucursalInput
+    presupuestos?: PresupuestoUncheckedCreateNestedManyWithoutSucursalInput
+    RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedCreateNestedManyWithoutSucursalInput
+    RetornoProductosSucursalEstado?: RetornoProductosSucursalEstadoUncheckedCreateNestedManyWithoutSucursalInput
+    uts?: UTUncheckedCreateNestedManyWithoutSucursalInput
+    users?: UserUncheckedCreateNestedManyWithoutSucursalesInput
+    jefesZonales?: JefeZonalSucursalUncheckedCreateNestedManyWithoutSucursalInput
+    vehiculos?: VehiculoUncheckedCreateNestedManyWithoutSucursalInput
+    delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput
+    planillasTransporte?: Cal_PlanillaTransporteUncheckedCreateNestedManyWithoutSucursalInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedCreateNestedManyWithoutSucursalInput
+    reservasSala?: ReservaSalaUncheckedCreateNestedManyWithoutSucursalInput
+  }
+
+  export type SucursalCreateOrConnectWithoutSucursalesQueCompartenSalaInput = {
+    where: SucursalWhereUniqueInput
+    create: XOR<SucursalCreateWithoutSucursalesQueCompartenSalaInput, SucursalUncheckedCreateWithoutSucursalesQueCompartenSalaInput>
+  }
+
+  export type SucursalCreateWithoutSalaCompartidaInput = {
+    id?: string
+    nombre: string
+    region?: string | null
+    comuna?: string | null
+    direccion?: string | null
+    tieneSalaReuniones?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    listasCorreo?: ListaCorreoCreateNestedManyWithoutSucursalInput
+    presupuestos?: PresupuestoCreateNestedManyWithoutSucursalInput
+    RetornoProductosMovimiento?: RetornoProductosMovimientoCreateNestedManyWithoutSucursalInput
+    RetornoProductosSucursalEstado?: RetornoProductosSucursalEstadoCreateNestedManyWithoutSucursalInput
+    uts?: UTCreateNestedManyWithoutSucursalInput
+    users?: UserCreateNestedManyWithoutSucursalesInput
+    jefesZonales?: JefeZonalSucursalCreateNestedManyWithoutSucursalInput
+    vehiculos?: VehiculoCreateNestedManyWithoutSucursalInput
+    delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutSucursalInput
+    planillasTransporte?: Cal_PlanillaTransporteCreateNestedManyWithoutSucursalInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalCreateNestedManyWithoutSucursalInput
+    reservasSala?: ReservaSalaCreateNestedManyWithoutSucursalInput
+    sucursalesQueCompartenSala?: SucursalCreateNestedManyWithoutSalaCompartidaInput
+  }
+
+  export type SucursalUncheckedCreateWithoutSalaCompartidaInput = {
+    id?: string
+    nombre: string
+    region?: string | null
+    comuna?: string | null
+    direccion?: string | null
+    tieneSalaReuniones?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    listasCorreo?: ListaCorreoUncheckedCreateNestedManyWithoutSucursalInput
+    presupuestos?: PresupuestoUncheckedCreateNestedManyWithoutSucursalInput
+    RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedCreateNestedManyWithoutSucursalInput
+    RetornoProductosSucursalEstado?: RetornoProductosSucursalEstadoUncheckedCreateNestedManyWithoutSucursalInput
+    uts?: UTUncheckedCreateNestedManyWithoutSucursalInput
+    users?: UserUncheckedCreateNestedManyWithoutSucursalesInput
+    jefesZonales?: JefeZonalSucursalUncheckedCreateNestedManyWithoutSucursalInput
+    vehiculos?: VehiculoUncheckedCreateNestedManyWithoutSucursalInput
+    delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput
+    planillasTransporte?: Cal_PlanillaTransporteUncheckedCreateNestedManyWithoutSucursalInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedCreateNestedManyWithoutSucursalInput
+    reservasSala?: ReservaSalaUncheckedCreateNestedManyWithoutSucursalInput
+    sucursalesQueCompartenSala?: SucursalUncheckedCreateNestedManyWithoutSalaCompartidaInput
+  }
+
+  export type SucursalCreateOrConnectWithoutSalaCompartidaInput = {
+    where: SucursalWhereUniqueInput
+    create: XOR<SucursalCreateWithoutSalaCompartidaInput, SucursalUncheckedCreateWithoutSalaCompartidaInput>
+  }
+
+  export type SucursalCreateManySalaCompartidaInputEnvelope = {
+    data: SucursalCreateManySalaCompartidaInput | SucursalCreateManySalaCompartidaInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ListaCorreoUpsertWithWhereUniqueWithoutSucursalInput = {
     where: ListaCorreoWhereUniqueInput
     update: XOR<ListaCorreoUpdateWithoutSucursalInput, ListaCorreoUncheckedUpdateWithoutSucursalInput>
@@ -190272,12 +190869,124 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Cal_PlanillaHigienePersonal"> | Date | string
   }
 
+  export type ReservaSalaUpsertWithWhereUniqueWithoutSucursalInput = {
+    where: ReservaSalaWhereUniqueInput
+    update: XOR<ReservaSalaUpdateWithoutSucursalInput, ReservaSalaUncheckedUpdateWithoutSucursalInput>
+    create: XOR<ReservaSalaCreateWithoutSucursalInput, ReservaSalaUncheckedCreateWithoutSucursalInput>
+  }
+
+  export type ReservaSalaUpdateWithWhereUniqueWithoutSucursalInput = {
+    where: ReservaSalaWhereUniqueInput
+    data: XOR<ReservaSalaUpdateWithoutSucursalInput, ReservaSalaUncheckedUpdateWithoutSucursalInput>
+  }
+
+  export type ReservaSalaUpdateManyWithWhereWithoutSucursalInput = {
+    where: ReservaSalaScalarWhereInput
+    data: XOR<ReservaSalaUpdateManyMutationInput, ReservaSalaUncheckedUpdateManyWithoutSucursalInput>
+  }
+
+  export type ReservaSalaScalarWhereInput = {
+    AND?: ReservaSalaScalarWhereInput | ReservaSalaScalarWhereInput[]
+    OR?: ReservaSalaScalarWhereInput[]
+    NOT?: ReservaSalaScalarWhereInput | ReservaSalaScalarWhereInput[]
+    id?: StringFilter<"ReservaSala"> | string
+    solicitante?: StringFilter<"ReservaSala"> | string
+    email?: StringFilter<"ReservaSala"> | string
+    userId?: StringNullableFilter<"ReservaSala"> | string | null
+    fecha?: StringFilter<"ReservaSala"> | string
+    horaInicio?: StringFilter<"ReservaSala"> | string
+    horaFin?: StringFilter<"ReservaSala"> | string
+    motivo?: StringFilter<"ReservaSala"> | string
+    estado?: StringFilter<"ReservaSala"> | string
+    tokenCancelacion?: StringFilter<"ReservaSala"> | string
+    sucursalId?: StringNullableFilter<"ReservaSala"> | string | null
+    sucursalNombre?: StringNullableFilter<"ReservaSala"> | string | null
+    createdAt?: DateTimeFilter<"ReservaSala"> | Date | string
+    updatedAt?: DateTimeFilter<"ReservaSala"> | Date | string
+  }
+
+  export type SucursalUpsertWithoutSucursalesQueCompartenSalaInput = {
+    update: XOR<SucursalUpdateWithoutSucursalesQueCompartenSalaInput, SucursalUncheckedUpdateWithoutSucursalesQueCompartenSalaInput>
+    create: XOR<SucursalCreateWithoutSucursalesQueCompartenSalaInput, SucursalUncheckedCreateWithoutSucursalesQueCompartenSalaInput>
+    where?: SucursalWhereInput
+  }
+
+  export type SucursalUpdateToOneWithWhereWithoutSucursalesQueCompartenSalaInput = {
+    where?: SucursalWhereInput
+    data: XOR<SucursalUpdateWithoutSucursalesQueCompartenSalaInput, SucursalUncheckedUpdateWithoutSucursalesQueCompartenSalaInput>
+  }
+
+  export type SucursalUpdateWithoutSucursalesQueCompartenSalaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    tieneSalaReuniones?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    listasCorreo?: ListaCorreoUpdateManyWithoutSucursalNestedInput
+    presupuestos?: PresupuestoUpdateManyWithoutSucursalNestedInput
+    RetornoProductosMovimiento?: RetornoProductosMovimientoUpdateManyWithoutSucursalNestedInput
+    RetornoProductosSucursalEstado?: RetornoProductosSucursalEstadoUpdateManyWithoutSucursalNestedInput
+    uts?: UTUpdateManyWithoutSucursalNestedInput
+    users?: UserUpdateManyWithoutSucursalesNestedInput
+    jefesZonales?: JefeZonalSucursalUpdateManyWithoutSucursalNestedInput
+    vehiculos?: VehiculoUpdateManyWithoutSucursalNestedInput
+    delegaciones?: DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput
+    planillasTransporte?: Cal_PlanillaTransporteUpdateManyWithoutSucursalNestedInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUpdateManyWithoutSucursalNestedInput
+    reservasSala?: ReservaSalaUpdateManyWithoutSucursalNestedInput
+    salaCompartida?: SucursalUpdateOneWithoutSucursalesQueCompartenSalaNestedInput
+  }
+
+  export type SucursalUncheckedUpdateWithoutSucursalesQueCompartenSalaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    tieneSalaReuniones?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    salaCompartidaId?: NullableStringFieldUpdateOperationsInput | string | null
+    listasCorreo?: ListaCorreoUncheckedUpdateManyWithoutSucursalNestedInput
+    presupuestos?: PresupuestoUncheckedUpdateManyWithoutSucursalNestedInput
+    RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedUpdateManyWithoutSucursalNestedInput
+    RetornoProductosSucursalEstado?: RetornoProductosSucursalEstadoUncheckedUpdateManyWithoutSucursalNestedInput
+    uts?: UTUncheckedUpdateManyWithoutSucursalNestedInput
+    users?: UserUncheckedUpdateManyWithoutSucursalesNestedInput
+    jefesZonales?: JefeZonalSucursalUncheckedUpdateManyWithoutSucursalNestedInput
+    vehiculos?: VehiculoUncheckedUpdateManyWithoutSucursalNestedInput
+    delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput
+    planillasTransporte?: Cal_PlanillaTransporteUncheckedUpdateManyWithoutSucursalNestedInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedUpdateManyWithoutSucursalNestedInput
+    reservasSala?: ReservaSalaUncheckedUpdateManyWithoutSucursalNestedInput
+  }
+
+  export type SucursalUpsertWithWhereUniqueWithoutSalaCompartidaInput = {
+    where: SucursalWhereUniqueInput
+    update: XOR<SucursalUpdateWithoutSalaCompartidaInput, SucursalUncheckedUpdateWithoutSalaCompartidaInput>
+    create: XOR<SucursalCreateWithoutSalaCompartidaInput, SucursalUncheckedCreateWithoutSalaCompartidaInput>
+  }
+
+  export type SucursalUpdateWithWhereUniqueWithoutSalaCompartidaInput = {
+    where: SucursalWhereUniqueInput
+    data: XOR<SucursalUpdateWithoutSalaCompartidaInput, SucursalUncheckedUpdateWithoutSalaCompartidaInput>
+  }
+
+  export type SucursalUpdateManyWithWhereWithoutSalaCompartidaInput = {
+    where: SucursalScalarWhereInput
+    data: XOR<SucursalUpdateManyMutationInput, SucursalUncheckedUpdateManyWithoutSalaCompartidaInput>
+  }
+
   export type SucursalCreateWithoutPresupuestosInput = {
     id?: string
     nombre: string
     region?: string | null
     comuna?: string | null
     direccion?: string | null
+    tieneSalaReuniones?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     listasCorreo?: ListaCorreoCreateNestedManyWithoutSucursalInput
@@ -190290,6 +190999,9 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutSucursalInput
     planillasTransporte?: Cal_PlanillaTransporteCreateNestedManyWithoutSucursalInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalCreateNestedManyWithoutSucursalInput
+    reservasSala?: ReservaSalaCreateNestedManyWithoutSucursalInput
+    salaCompartida?: SucursalCreateNestedOneWithoutSucursalesQueCompartenSalaInput
+    sucursalesQueCompartenSala?: SucursalCreateNestedManyWithoutSalaCompartidaInput
   }
 
   export type SucursalUncheckedCreateWithoutPresupuestosInput = {
@@ -190298,8 +191010,10 @@ export namespace Prisma {
     region?: string | null
     comuna?: string | null
     direccion?: string | null
+    tieneSalaReuniones?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    salaCompartidaId?: string | null
     listasCorreo?: ListaCorreoUncheckedCreateNestedManyWithoutSucursalInput
     RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedCreateNestedManyWithoutSucursalInput
     RetornoProductosSucursalEstado?: RetornoProductosSucursalEstadoUncheckedCreateNestedManyWithoutSucursalInput
@@ -190310,6 +191024,8 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput
     planillasTransporte?: Cal_PlanillaTransporteUncheckedCreateNestedManyWithoutSucursalInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedCreateNestedManyWithoutSucursalInput
+    reservasSala?: ReservaSalaUncheckedCreateNestedManyWithoutSucursalInput
+    sucursalesQueCompartenSala?: SucursalUncheckedCreateNestedManyWithoutSalaCompartidaInput
   }
 
   export type SucursalCreateOrConnectWithoutPresupuestosInput = {
@@ -190334,6 +191050,7 @@ export namespace Prisma {
     region?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: NullableStringFieldUpdateOperationsInput | string | null
     direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    tieneSalaReuniones?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     listasCorreo?: ListaCorreoUpdateManyWithoutSucursalNestedInput
@@ -190346,6 +191063,9 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput
     planillasTransporte?: Cal_PlanillaTransporteUpdateManyWithoutSucursalNestedInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalUpdateManyWithoutSucursalNestedInput
+    reservasSala?: ReservaSalaUpdateManyWithoutSucursalNestedInput
+    salaCompartida?: SucursalUpdateOneWithoutSucursalesQueCompartenSalaNestedInput
+    sucursalesQueCompartenSala?: SucursalUpdateManyWithoutSalaCompartidaNestedInput
   }
 
   export type SucursalUncheckedUpdateWithoutPresupuestosInput = {
@@ -190354,8 +191074,10 @@ export namespace Prisma {
     region?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: NullableStringFieldUpdateOperationsInput | string | null
     direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    tieneSalaReuniones?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    salaCompartidaId?: NullableStringFieldUpdateOperationsInput | string | null
     listasCorreo?: ListaCorreoUncheckedUpdateManyWithoutSucursalNestedInput
     RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedUpdateManyWithoutSucursalNestedInput
     RetornoProductosSucursalEstado?: RetornoProductosSucursalEstadoUncheckedUpdateManyWithoutSucursalNestedInput
@@ -190366,6 +191088,8 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput
     planillasTransporte?: Cal_PlanillaTransporteUncheckedUpdateManyWithoutSucursalNestedInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedUpdateManyWithoutSucursalNestedInput
+    reservasSala?: ReservaSalaUncheckedUpdateManyWithoutSucursalNestedInput
+    sucursalesQueCompartenSala?: SucursalUncheckedUpdateManyWithoutSalaCompartidaNestedInput
   }
 
   export type LicitacionCreateWithoutUtsInput = {
@@ -190406,6 +191130,7 @@ export namespace Prisma {
     region?: string | null
     comuna?: string | null
     direccion?: string | null
+    tieneSalaReuniones?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     listasCorreo?: ListaCorreoCreateNestedManyWithoutSucursalInput
@@ -190418,6 +191143,9 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutSucursalInput
     planillasTransporte?: Cal_PlanillaTransporteCreateNestedManyWithoutSucursalInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalCreateNestedManyWithoutSucursalInput
+    reservasSala?: ReservaSalaCreateNestedManyWithoutSucursalInput
+    salaCompartida?: SucursalCreateNestedOneWithoutSucursalesQueCompartenSalaInput
+    sucursalesQueCompartenSala?: SucursalCreateNestedManyWithoutSalaCompartidaInput
   }
 
   export type SucursalUncheckedCreateWithoutUtsInput = {
@@ -190426,8 +191154,10 @@ export namespace Prisma {
     region?: string | null
     comuna?: string | null
     direccion?: string | null
+    tieneSalaReuniones?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    salaCompartidaId?: string | null
     listasCorreo?: ListaCorreoUncheckedCreateNestedManyWithoutSucursalInput
     presupuestos?: PresupuestoUncheckedCreateNestedManyWithoutSucursalInput
     RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedCreateNestedManyWithoutSucursalInput
@@ -190438,6 +191168,8 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput
     planillasTransporte?: Cal_PlanillaTransporteUncheckedCreateNestedManyWithoutSucursalInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedCreateNestedManyWithoutSucursalInput
+    reservasSala?: ReservaSalaUncheckedCreateNestedManyWithoutSucursalInput
+    sucursalesQueCompartenSala?: SucursalUncheckedCreateNestedManyWithoutSalaCompartidaInput
   }
 
   export type SucursalCreateOrConnectWithoutUtsInput = {
@@ -190584,6 +191316,7 @@ export namespace Prisma {
     region?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: NullableStringFieldUpdateOperationsInput | string | null
     direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    tieneSalaReuniones?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     listasCorreo?: ListaCorreoUpdateManyWithoutSucursalNestedInput
@@ -190596,6 +191329,9 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput
     planillasTransporte?: Cal_PlanillaTransporteUpdateManyWithoutSucursalNestedInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalUpdateManyWithoutSucursalNestedInput
+    reservasSala?: ReservaSalaUpdateManyWithoutSucursalNestedInput
+    salaCompartida?: SucursalUpdateOneWithoutSucursalesQueCompartenSalaNestedInput
+    sucursalesQueCompartenSala?: SucursalUpdateManyWithoutSalaCompartidaNestedInput
   }
 
   export type SucursalUncheckedUpdateWithoutUtsInput = {
@@ -190604,8 +191340,10 @@ export namespace Prisma {
     region?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: NullableStringFieldUpdateOperationsInput | string | null
     direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    tieneSalaReuniones?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    salaCompartidaId?: NullableStringFieldUpdateOperationsInput | string | null
     listasCorreo?: ListaCorreoUncheckedUpdateManyWithoutSucursalNestedInput
     presupuestos?: PresupuestoUncheckedUpdateManyWithoutSucursalNestedInput
     RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedUpdateManyWithoutSucursalNestedInput
@@ -190616,6 +191354,8 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput
     planillasTransporte?: Cal_PlanillaTransporteUncheckedUpdateManyWithoutSucursalNestedInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedUpdateManyWithoutSucursalNestedInput
+    reservasSala?: ReservaSalaUncheckedUpdateManyWithoutSucursalNestedInput
+    sucursalesQueCompartenSala?: SucursalUncheckedUpdateManyWithoutSalaCompartidaNestedInput
   }
 
   export type PMPAUpsertWithWhereUniqueWithoutUtInput = {
@@ -191446,6 +192186,7 @@ export namespace Prisma {
     region?: string | null
     comuna?: string | null
     direccion?: string | null
+    tieneSalaReuniones?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     listasCorreo?: ListaCorreoCreateNestedManyWithoutSucursalInput
@@ -191458,6 +192199,9 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutSucursalInput
     planillasTransporte?: Cal_PlanillaTransporteCreateNestedManyWithoutSucursalInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalCreateNestedManyWithoutSucursalInput
+    reservasSala?: ReservaSalaCreateNestedManyWithoutSucursalInput
+    salaCompartida?: SucursalCreateNestedOneWithoutSucursalesQueCompartenSalaInput
+    sucursalesQueCompartenSala?: SucursalCreateNestedManyWithoutSalaCompartidaInput
   }
 
   export type SucursalUncheckedCreateWithoutRetornoProductosSucursalEstadoInput = {
@@ -191466,8 +192210,10 @@ export namespace Prisma {
     region?: string | null
     comuna?: string | null
     direccion?: string | null
+    tieneSalaReuniones?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    salaCompartidaId?: string | null
     listasCorreo?: ListaCorreoUncheckedCreateNestedManyWithoutSucursalInput
     presupuestos?: PresupuestoUncheckedCreateNestedManyWithoutSucursalInput
     RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedCreateNestedManyWithoutSucursalInput
@@ -191478,6 +192224,8 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput
     planillasTransporte?: Cal_PlanillaTransporteUncheckedCreateNestedManyWithoutSucursalInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedCreateNestedManyWithoutSucursalInput
+    reservasSala?: ReservaSalaUncheckedCreateNestedManyWithoutSucursalInput
+    sucursalesQueCompartenSala?: SucursalUncheckedCreateNestedManyWithoutSalaCompartidaInput
   }
 
   export type SucursalCreateOrConnectWithoutRetornoProductosSucursalEstadoInput = {
@@ -191545,6 +192293,7 @@ export namespace Prisma {
     region?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: NullableStringFieldUpdateOperationsInput | string | null
     direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    tieneSalaReuniones?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     listasCorreo?: ListaCorreoUpdateManyWithoutSucursalNestedInput
@@ -191557,6 +192306,9 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput
     planillasTransporte?: Cal_PlanillaTransporteUpdateManyWithoutSucursalNestedInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalUpdateManyWithoutSucursalNestedInput
+    reservasSala?: ReservaSalaUpdateManyWithoutSucursalNestedInput
+    salaCompartida?: SucursalUpdateOneWithoutSucursalesQueCompartenSalaNestedInput
+    sucursalesQueCompartenSala?: SucursalUpdateManyWithoutSalaCompartidaNestedInput
   }
 
   export type SucursalUncheckedUpdateWithoutRetornoProductosSucursalEstadoInput = {
@@ -191565,8 +192317,10 @@ export namespace Prisma {
     region?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: NullableStringFieldUpdateOperationsInput | string | null
     direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    tieneSalaReuniones?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    salaCompartidaId?: NullableStringFieldUpdateOperationsInput | string | null
     listasCorreo?: ListaCorreoUncheckedUpdateManyWithoutSucursalNestedInput
     presupuestos?: PresupuestoUncheckedUpdateManyWithoutSucursalNestedInput
     RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedUpdateManyWithoutSucursalNestedInput
@@ -191577,6 +192331,8 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput
     planillasTransporte?: Cal_PlanillaTransporteUncheckedUpdateManyWithoutSucursalNestedInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedUpdateManyWithoutSucursalNestedInput
+    reservasSala?: ReservaSalaUncheckedUpdateManyWithoutSucursalNestedInput
+    sucursalesQueCompartenSala?: SucursalUncheckedUpdateManyWithoutSalaCompartidaNestedInput
   }
 
   export type RetornoProductosAlertaCreateWithoutMovimientosInput = {
@@ -191622,6 +192378,7 @@ export namespace Prisma {
     region?: string | null
     comuna?: string | null
     direccion?: string | null
+    tieneSalaReuniones?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     listasCorreo?: ListaCorreoCreateNestedManyWithoutSucursalInput
@@ -191634,6 +192391,9 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutSucursalInput
     planillasTransporte?: Cal_PlanillaTransporteCreateNestedManyWithoutSucursalInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalCreateNestedManyWithoutSucursalInput
+    reservasSala?: ReservaSalaCreateNestedManyWithoutSucursalInput
+    salaCompartida?: SucursalCreateNestedOneWithoutSucursalesQueCompartenSalaInput
+    sucursalesQueCompartenSala?: SucursalCreateNestedManyWithoutSalaCompartidaInput
   }
 
   export type SucursalUncheckedCreateWithoutRetornoProductosMovimientoInput = {
@@ -191642,8 +192402,10 @@ export namespace Prisma {
     region?: string | null
     comuna?: string | null
     direccion?: string | null
+    tieneSalaReuniones?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    salaCompartidaId?: string | null
     listasCorreo?: ListaCorreoUncheckedCreateNestedManyWithoutSucursalInput
     presupuestos?: PresupuestoUncheckedCreateNestedManyWithoutSucursalInput
     RetornoProductosSucursalEstado?: RetornoProductosSucursalEstadoUncheckedCreateNestedManyWithoutSucursalInput
@@ -191654,6 +192416,8 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput
     planillasTransporte?: Cal_PlanillaTransporteUncheckedCreateNestedManyWithoutSucursalInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedCreateNestedManyWithoutSucursalInput
+    reservasSala?: ReservaSalaUncheckedCreateNestedManyWithoutSucursalInput
+    sucursalesQueCompartenSala?: SucursalUncheckedCreateNestedManyWithoutSalaCompartidaInput
   }
 
   export type SucursalCreateOrConnectWithoutRetornoProductosMovimientoInput = {
@@ -191721,6 +192485,7 @@ export namespace Prisma {
     region?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: NullableStringFieldUpdateOperationsInput | string | null
     direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    tieneSalaReuniones?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     listasCorreo?: ListaCorreoUpdateManyWithoutSucursalNestedInput
@@ -191733,6 +192498,9 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput
     planillasTransporte?: Cal_PlanillaTransporteUpdateManyWithoutSucursalNestedInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalUpdateManyWithoutSucursalNestedInput
+    reservasSala?: ReservaSalaUpdateManyWithoutSucursalNestedInput
+    salaCompartida?: SucursalUpdateOneWithoutSucursalesQueCompartenSalaNestedInput
+    sucursalesQueCompartenSala?: SucursalUpdateManyWithoutSalaCompartidaNestedInput
   }
 
   export type SucursalUncheckedUpdateWithoutRetornoProductosMovimientoInput = {
@@ -191741,8 +192509,10 @@ export namespace Prisma {
     region?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: NullableStringFieldUpdateOperationsInput | string | null
     direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    tieneSalaReuniones?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    salaCompartidaId?: NullableStringFieldUpdateOperationsInput | string | null
     listasCorreo?: ListaCorreoUncheckedUpdateManyWithoutSucursalNestedInput
     presupuestos?: PresupuestoUncheckedUpdateManyWithoutSucursalNestedInput
     RetornoProductosSucursalEstado?: RetornoProductosSucursalEstadoUncheckedUpdateManyWithoutSucursalNestedInput
@@ -191753,6 +192523,8 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput
     planillasTransporte?: Cal_PlanillaTransporteUncheckedUpdateManyWithoutSucursalNestedInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedUpdateManyWithoutSucursalNestedInput
+    reservasSala?: ReservaSalaUncheckedUpdateManyWithoutSucursalNestedInput
+    sucursalesQueCompartenSala?: SucursalUncheckedUpdateManyWithoutSalaCompartidaNestedInput
   }
 
   export type CapCertificacionDetailCreateWithoutHeaderInput = {
@@ -192550,6 +193322,7 @@ export namespace Prisma {
     region?: string | null
     comuna?: string | null
     direccion?: string | null
+    tieneSalaReuniones?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     listasCorreo?: ListaCorreoCreateNestedManyWithoutSucursalInput
@@ -192562,6 +193335,9 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutSucursalInput
     planillasTransporte?: Cal_PlanillaTransporteCreateNestedManyWithoutSucursalInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalCreateNestedManyWithoutSucursalInput
+    reservasSala?: ReservaSalaCreateNestedManyWithoutSucursalInput
+    salaCompartida?: SucursalCreateNestedOneWithoutSucursalesQueCompartenSalaInput
+    sucursalesQueCompartenSala?: SucursalCreateNestedManyWithoutSalaCompartidaInput
   }
 
   export type SucursalUncheckedCreateWithoutVehiculosInput = {
@@ -192570,8 +193346,10 @@ export namespace Prisma {
     region?: string | null
     comuna?: string | null
     direccion?: string | null
+    tieneSalaReuniones?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    salaCompartidaId?: string | null
     listasCorreo?: ListaCorreoUncheckedCreateNestedManyWithoutSucursalInput
     presupuestos?: PresupuestoUncheckedCreateNestedManyWithoutSucursalInput
     RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedCreateNestedManyWithoutSucursalInput
@@ -192582,6 +193360,8 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput
     planillasTransporte?: Cal_PlanillaTransporteUncheckedCreateNestedManyWithoutSucursalInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedCreateNestedManyWithoutSucursalInput
+    reservasSala?: ReservaSalaUncheckedCreateNestedManyWithoutSucursalInput
+    sucursalesQueCompartenSala?: SucursalUncheckedCreateNestedManyWithoutSalaCompartidaInput
   }
 
   export type SucursalCreateOrConnectWithoutVehiculosInput = {
@@ -192741,6 +193521,7 @@ export namespace Prisma {
     region?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: NullableStringFieldUpdateOperationsInput | string | null
     direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    tieneSalaReuniones?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     listasCorreo?: ListaCorreoUpdateManyWithoutSucursalNestedInput
@@ -192753,6 +193534,9 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput
     planillasTransporte?: Cal_PlanillaTransporteUpdateManyWithoutSucursalNestedInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalUpdateManyWithoutSucursalNestedInput
+    reservasSala?: ReservaSalaUpdateManyWithoutSucursalNestedInput
+    salaCompartida?: SucursalUpdateOneWithoutSucursalesQueCompartenSalaNestedInput
+    sucursalesQueCompartenSala?: SucursalUpdateManyWithoutSalaCompartidaNestedInput
   }
 
   export type SucursalUncheckedUpdateWithoutVehiculosInput = {
@@ -192761,8 +193545,10 @@ export namespace Prisma {
     region?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: NullableStringFieldUpdateOperationsInput | string | null
     direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    tieneSalaReuniones?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    salaCompartidaId?: NullableStringFieldUpdateOperationsInput | string | null
     listasCorreo?: ListaCorreoUncheckedUpdateManyWithoutSucursalNestedInput
     presupuestos?: PresupuestoUncheckedUpdateManyWithoutSucursalNestedInput
     RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedUpdateManyWithoutSucursalNestedInput
@@ -192773,6 +193559,8 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput
     planillasTransporte?: Cal_PlanillaTransporteUncheckedUpdateManyWithoutSucursalNestedInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedUpdateManyWithoutSucursalNestedInput
+    reservasSala?: ReservaSalaUncheckedUpdateManyWithoutSucursalNestedInput
+    sucursalesQueCompartenSala?: SucursalUncheckedUpdateManyWithoutSalaCompartidaNestedInput
   }
 
   export type TipoVehiculoUpsertWithoutVehiculosInput = {
@@ -193324,6 +194112,7 @@ export namespace Prisma {
     region?: string | null
     comuna?: string | null
     direccion?: string | null
+    tieneSalaReuniones?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     listasCorreo?: ListaCorreoCreateNestedManyWithoutSucursalInput
@@ -193336,6 +194125,9 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutSucursalInput
     planillasTransporte?: Cal_PlanillaTransporteCreateNestedManyWithoutSucursalInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalCreateNestedManyWithoutSucursalInput
+    reservasSala?: ReservaSalaCreateNestedManyWithoutSucursalInput
+    salaCompartida?: SucursalCreateNestedOneWithoutSucursalesQueCompartenSalaInput
+    sucursalesQueCompartenSala?: SucursalCreateNestedManyWithoutSalaCompartidaInput
   }
 
   export type SucursalUncheckedCreateWithoutJefesZonalesInput = {
@@ -193344,8 +194136,10 @@ export namespace Prisma {
     region?: string | null
     comuna?: string | null
     direccion?: string | null
+    tieneSalaReuniones?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    salaCompartidaId?: string | null
     listasCorreo?: ListaCorreoUncheckedCreateNestedManyWithoutSucursalInput
     presupuestos?: PresupuestoUncheckedCreateNestedManyWithoutSucursalInput
     RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedCreateNestedManyWithoutSucursalInput
@@ -193356,6 +194150,8 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput
     planillasTransporte?: Cal_PlanillaTransporteUncheckedCreateNestedManyWithoutSucursalInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedCreateNestedManyWithoutSucursalInput
+    reservasSala?: ReservaSalaUncheckedCreateNestedManyWithoutSucursalInput
+    sucursalesQueCompartenSala?: SucursalUncheckedCreateNestedManyWithoutSalaCompartidaInput
   }
 
   export type SucursalCreateOrConnectWithoutJefesZonalesInput = {
@@ -193419,6 +194215,7 @@ export namespace Prisma {
     region?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: NullableStringFieldUpdateOperationsInput | string | null
     direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    tieneSalaReuniones?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     listasCorreo?: ListaCorreoUpdateManyWithoutSucursalNestedInput
@@ -193431,6 +194228,9 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput
     planillasTransporte?: Cal_PlanillaTransporteUpdateManyWithoutSucursalNestedInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalUpdateManyWithoutSucursalNestedInput
+    reservasSala?: ReservaSalaUpdateManyWithoutSucursalNestedInput
+    salaCompartida?: SucursalUpdateOneWithoutSucursalesQueCompartenSalaNestedInput
+    sucursalesQueCompartenSala?: SucursalUpdateManyWithoutSalaCompartidaNestedInput
   }
 
   export type SucursalUncheckedUpdateWithoutJefesZonalesInput = {
@@ -193439,8 +194239,10 @@ export namespace Prisma {
     region?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: NullableStringFieldUpdateOperationsInput | string | null
     direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    tieneSalaReuniones?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    salaCompartidaId?: NullableStringFieldUpdateOperationsInput | string | null
     listasCorreo?: ListaCorreoUncheckedUpdateManyWithoutSucursalNestedInput
     presupuestos?: PresupuestoUncheckedUpdateManyWithoutSucursalNestedInput
     RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedUpdateManyWithoutSucursalNestedInput
@@ -193451,6 +194253,8 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput
     planillasTransporte?: Cal_PlanillaTransporteUncheckedUpdateManyWithoutSucursalNestedInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedUpdateManyWithoutSucursalNestedInput
+    reservasSala?: ReservaSalaUncheckedUpdateManyWithoutSucursalNestedInput
+    sucursalesQueCompartenSala?: SucursalUncheckedUpdateManyWithoutSalaCompartidaNestedInput
   }
 
   export type JefeZonalCreateWithoutVehiculosInput = {
@@ -195360,6 +196164,7 @@ export namespace Prisma {
     region?: string | null
     comuna?: string | null
     direccion?: string | null
+    tieneSalaReuniones?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     listasCorreo?: ListaCorreoCreateNestedManyWithoutSucursalInput
@@ -195372,6 +196177,9 @@ export namespace Prisma {
     vehiculos?: VehiculoCreateNestedManyWithoutSucursalInput
     planillasTransporte?: Cal_PlanillaTransporteCreateNestedManyWithoutSucursalInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalCreateNestedManyWithoutSucursalInput
+    reservasSala?: ReservaSalaCreateNestedManyWithoutSucursalInput
+    salaCompartida?: SucursalCreateNestedOneWithoutSucursalesQueCompartenSalaInput
+    sucursalesQueCompartenSala?: SucursalCreateNestedManyWithoutSalaCompartidaInput
   }
 
   export type SucursalUncheckedCreateWithoutDelegacionesInput = {
@@ -195380,8 +196188,10 @@ export namespace Prisma {
     region?: string | null
     comuna?: string | null
     direccion?: string | null
+    tieneSalaReuniones?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    salaCompartidaId?: string | null
     listasCorreo?: ListaCorreoUncheckedCreateNestedManyWithoutSucursalInput
     presupuestos?: PresupuestoUncheckedCreateNestedManyWithoutSucursalInput
     RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedCreateNestedManyWithoutSucursalInput
@@ -195392,6 +196202,8 @@ export namespace Prisma {
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutSucursalInput
     planillasTransporte?: Cal_PlanillaTransporteUncheckedCreateNestedManyWithoutSucursalInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedCreateNestedManyWithoutSucursalInput
+    reservasSala?: ReservaSalaUncheckedCreateNestedManyWithoutSucursalInput
+    sucursalesQueCompartenSala?: SucursalUncheckedCreateNestedManyWithoutSalaCompartidaInput
   }
 
   export type SucursalCreateOrConnectWithoutDelegacionesInput = {
@@ -195467,6 +196279,7 @@ export namespace Prisma {
     region?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: NullableStringFieldUpdateOperationsInput | string | null
     direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    tieneSalaReuniones?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     listasCorreo?: ListaCorreoUpdateManyWithoutSucursalNestedInput
@@ -195479,6 +196292,9 @@ export namespace Prisma {
     vehiculos?: VehiculoUpdateManyWithoutSucursalNestedInput
     planillasTransporte?: Cal_PlanillaTransporteUpdateManyWithoutSucursalNestedInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalUpdateManyWithoutSucursalNestedInput
+    reservasSala?: ReservaSalaUpdateManyWithoutSucursalNestedInput
+    salaCompartida?: SucursalUpdateOneWithoutSucursalesQueCompartenSalaNestedInput
+    sucursalesQueCompartenSala?: SucursalUpdateManyWithoutSalaCompartidaNestedInput
   }
 
   export type SucursalUncheckedUpdateWithoutDelegacionesInput = {
@@ -195487,8 +196303,10 @@ export namespace Prisma {
     region?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: NullableStringFieldUpdateOperationsInput | string | null
     direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    tieneSalaReuniones?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    salaCompartidaId?: NullableStringFieldUpdateOperationsInput | string | null
     listasCorreo?: ListaCorreoUncheckedUpdateManyWithoutSucursalNestedInput
     presupuestos?: PresupuestoUncheckedUpdateManyWithoutSucursalNestedInput
     RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedUpdateManyWithoutSucursalNestedInput
@@ -195499,6 +196317,8 @@ export namespace Prisma {
     vehiculos?: VehiculoUncheckedUpdateManyWithoutSucursalNestedInput
     planillasTransporte?: Cal_PlanillaTransporteUncheckedUpdateManyWithoutSucursalNestedInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedUpdateManyWithoutSucursalNestedInput
+    reservasSala?: ReservaSalaUncheckedUpdateManyWithoutSucursalNestedInput
+    sucursalesQueCompartenSala?: SucursalUncheckedUpdateManyWithoutSalaCompartidaNestedInput
   }
 
   export type LicitacionCreateWithoutActasPlantillasInput = {
@@ -198635,6 +199455,118 @@ export namespace Prisma {
     actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type SucursalCreateWithoutReservasSalaInput = {
+    id?: string
+    nombre: string
+    region?: string | null
+    comuna?: string | null
+    direccion?: string | null
+    tieneSalaReuniones?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    listasCorreo?: ListaCorreoCreateNestedManyWithoutSucursalInput
+    presupuestos?: PresupuestoCreateNestedManyWithoutSucursalInput
+    RetornoProductosMovimiento?: RetornoProductosMovimientoCreateNestedManyWithoutSucursalInput
+    RetornoProductosSucursalEstado?: RetornoProductosSucursalEstadoCreateNestedManyWithoutSucursalInput
+    uts?: UTCreateNestedManyWithoutSucursalInput
+    users?: UserCreateNestedManyWithoutSucursalesInput
+    jefesZonales?: JefeZonalSucursalCreateNestedManyWithoutSucursalInput
+    vehiculos?: VehiculoCreateNestedManyWithoutSucursalInput
+    delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutSucursalInput
+    planillasTransporte?: Cal_PlanillaTransporteCreateNestedManyWithoutSucursalInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalCreateNestedManyWithoutSucursalInput
+    salaCompartida?: SucursalCreateNestedOneWithoutSucursalesQueCompartenSalaInput
+    sucursalesQueCompartenSala?: SucursalCreateNestedManyWithoutSalaCompartidaInput
+  }
+
+  export type SucursalUncheckedCreateWithoutReservasSalaInput = {
+    id?: string
+    nombre: string
+    region?: string | null
+    comuna?: string | null
+    direccion?: string | null
+    tieneSalaReuniones?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    salaCompartidaId?: string | null
+    listasCorreo?: ListaCorreoUncheckedCreateNestedManyWithoutSucursalInput
+    presupuestos?: PresupuestoUncheckedCreateNestedManyWithoutSucursalInput
+    RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedCreateNestedManyWithoutSucursalInput
+    RetornoProductosSucursalEstado?: RetornoProductosSucursalEstadoUncheckedCreateNestedManyWithoutSucursalInput
+    uts?: UTUncheckedCreateNestedManyWithoutSucursalInput
+    users?: UserUncheckedCreateNestedManyWithoutSucursalesInput
+    jefesZonales?: JefeZonalSucursalUncheckedCreateNestedManyWithoutSucursalInput
+    vehiculos?: VehiculoUncheckedCreateNestedManyWithoutSucursalInput
+    delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput
+    planillasTransporte?: Cal_PlanillaTransporteUncheckedCreateNestedManyWithoutSucursalInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedCreateNestedManyWithoutSucursalInput
+    sucursalesQueCompartenSala?: SucursalUncheckedCreateNestedManyWithoutSalaCompartidaInput
+  }
+
+  export type SucursalCreateOrConnectWithoutReservasSalaInput = {
+    where: SucursalWhereUniqueInput
+    create: XOR<SucursalCreateWithoutReservasSalaInput, SucursalUncheckedCreateWithoutReservasSalaInput>
+  }
+
+  export type SucursalUpsertWithoutReservasSalaInput = {
+    update: XOR<SucursalUpdateWithoutReservasSalaInput, SucursalUncheckedUpdateWithoutReservasSalaInput>
+    create: XOR<SucursalCreateWithoutReservasSalaInput, SucursalUncheckedCreateWithoutReservasSalaInput>
+    where?: SucursalWhereInput
+  }
+
+  export type SucursalUpdateToOneWithWhereWithoutReservasSalaInput = {
+    where?: SucursalWhereInput
+    data: XOR<SucursalUpdateWithoutReservasSalaInput, SucursalUncheckedUpdateWithoutReservasSalaInput>
+  }
+
+  export type SucursalUpdateWithoutReservasSalaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    tieneSalaReuniones?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    listasCorreo?: ListaCorreoUpdateManyWithoutSucursalNestedInput
+    presupuestos?: PresupuestoUpdateManyWithoutSucursalNestedInput
+    RetornoProductosMovimiento?: RetornoProductosMovimientoUpdateManyWithoutSucursalNestedInput
+    RetornoProductosSucursalEstado?: RetornoProductosSucursalEstadoUpdateManyWithoutSucursalNestedInput
+    uts?: UTUpdateManyWithoutSucursalNestedInput
+    users?: UserUpdateManyWithoutSucursalesNestedInput
+    jefesZonales?: JefeZonalSucursalUpdateManyWithoutSucursalNestedInput
+    vehiculos?: VehiculoUpdateManyWithoutSucursalNestedInput
+    delegaciones?: DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput
+    planillasTransporte?: Cal_PlanillaTransporteUpdateManyWithoutSucursalNestedInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUpdateManyWithoutSucursalNestedInput
+    salaCompartida?: SucursalUpdateOneWithoutSucursalesQueCompartenSalaNestedInput
+    sucursalesQueCompartenSala?: SucursalUpdateManyWithoutSalaCompartidaNestedInput
+  }
+
+  export type SucursalUncheckedUpdateWithoutReservasSalaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    tieneSalaReuniones?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    salaCompartidaId?: NullableStringFieldUpdateOperationsInput | string | null
+    listasCorreo?: ListaCorreoUncheckedUpdateManyWithoutSucursalNestedInput
+    presupuestos?: PresupuestoUncheckedUpdateManyWithoutSucursalNestedInput
+    RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedUpdateManyWithoutSucursalNestedInput
+    RetornoProductosSucursalEstado?: RetornoProductosSucursalEstadoUncheckedUpdateManyWithoutSucursalNestedInput
+    uts?: UTUncheckedUpdateManyWithoutSucursalNestedInput
+    users?: UserUncheckedUpdateManyWithoutSucursalesNestedInput
+    jefesZonales?: JefeZonalSucursalUncheckedUpdateManyWithoutSucursalNestedInput
+    vehiculos?: VehiculoUncheckedUpdateManyWithoutSucursalNestedInput
+    delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput
+    planillasTransporte?: Cal_PlanillaTransporteUncheckedUpdateManyWithoutSucursalNestedInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedUpdateManyWithoutSucursalNestedInput
+    sucursalesQueCompartenSala?: SucursalUncheckedUpdateManyWithoutSalaCompartidaNestedInput
+  }
+
   export type LogAndenCreateWithoutBodegaInput = {
     id?: string
     codigo: string
@@ -200871,6 +201803,7 @@ export namespace Prisma {
     region?: string | null
     comuna?: string | null
     direccion?: string | null
+    tieneSalaReuniones?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     listasCorreo?: ListaCorreoCreateNestedManyWithoutSucursalInput
@@ -200883,6 +201816,9 @@ export namespace Prisma {
     vehiculos?: VehiculoCreateNestedManyWithoutSucursalInput
     delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutSucursalInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalCreateNestedManyWithoutSucursalInput
+    reservasSala?: ReservaSalaCreateNestedManyWithoutSucursalInput
+    salaCompartida?: SucursalCreateNestedOneWithoutSucursalesQueCompartenSalaInput
+    sucursalesQueCompartenSala?: SucursalCreateNestedManyWithoutSalaCompartidaInput
   }
 
   export type SucursalUncheckedCreateWithoutPlanillasTransporteInput = {
@@ -200891,8 +201827,10 @@ export namespace Prisma {
     region?: string | null
     comuna?: string | null
     direccion?: string | null
+    tieneSalaReuniones?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    salaCompartidaId?: string | null
     listasCorreo?: ListaCorreoUncheckedCreateNestedManyWithoutSucursalInput
     presupuestos?: PresupuestoUncheckedCreateNestedManyWithoutSucursalInput
     RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedCreateNestedManyWithoutSucursalInput
@@ -200903,6 +201841,8 @@ export namespace Prisma {
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutSucursalInput
     delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedCreateNestedManyWithoutSucursalInput
+    reservasSala?: ReservaSalaUncheckedCreateNestedManyWithoutSucursalInput
+    sucursalesQueCompartenSala?: SucursalUncheckedCreateNestedManyWithoutSalaCompartidaInput
   }
 
   export type SucursalCreateOrConnectWithoutPlanillasTransporteInput = {
@@ -200969,6 +201909,7 @@ export namespace Prisma {
     region?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: NullableStringFieldUpdateOperationsInput | string | null
     direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    tieneSalaReuniones?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     listasCorreo?: ListaCorreoUpdateManyWithoutSucursalNestedInput
@@ -200981,6 +201922,9 @@ export namespace Prisma {
     vehiculos?: VehiculoUpdateManyWithoutSucursalNestedInput
     delegaciones?: DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalUpdateManyWithoutSucursalNestedInput
+    reservasSala?: ReservaSalaUpdateManyWithoutSucursalNestedInput
+    salaCompartida?: SucursalUpdateOneWithoutSucursalesQueCompartenSalaNestedInput
+    sucursalesQueCompartenSala?: SucursalUpdateManyWithoutSalaCompartidaNestedInput
   }
 
   export type SucursalUncheckedUpdateWithoutPlanillasTransporteInput = {
@@ -200989,8 +201933,10 @@ export namespace Prisma {
     region?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: NullableStringFieldUpdateOperationsInput | string | null
     direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    tieneSalaReuniones?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    salaCompartidaId?: NullableStringFieldUpdateOperationsInput | string | null
     listasCorreo?: ListaCorreoUncheckedUpdateManyWithoutSucursalNestedInput
     presupuestos?: PresupuestoUncheckedUpdateManyWithoutSucursalNestedInput
     RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedUpdateManyWithoutSucursalNestedInput
@@ -201001,6 +201947,8 @@ export namespace Prisma {
     vehiculos?: VehiculoUncheckedUpdateManyWithoutSucursalNestedInput
     delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedUpdateManyWithoutSucursalNestedInput
+    reservasSala?: ReservaSalaUncheckedUpdateManyWithoutSucursalNestedInput
+    sucursalesQueCompartenSala?: SucursalUncheckedUpdateManyWithoutSalaCompartidaNestedInput
   }
 
   export type Cal_RegistroTransporteUpsertWithWhereUniqueWithoutPlanillaInput = {
@@ -201141,6 +202089,7 @@ export namespace Prisma {
     region?: string | null
     comuna?: string | null
     direccion?: string | null
+    tieneSalaReuniones?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     listasCorreo?: ListaCorreoCreateNestedManyWithoutSucursalInput
@@ -201153,6 +202102,9 @@ export namespace Prisma {
     vehiculos?: VehiculoCreateNestedManyWithoutSucursalInput
     delegaciones?: DelegacionVisualizacionCreateNestedManyWithoutSucursalInput
     planillasTransporte?: Cal_PlanillaTransporteCreateNestedManyWithoutSucursalInput
+    reservasSala?: ReservaSalaCreateNestedManyWithoutSucursalInput
+    salaCompartida?: SucursalCreateNestedOneWithoutSucursalesQueCompartenSalaInput
+    sucursalesQueCompartenSala?: SucursalCreateNestedManyWithoutSalaCompartidaInput
   }
 
   export type SucursalUncheckedCreateWithoutPlanillasHigienePersonalInput = {
@@ -201161,8 +202113,10 @@ export namespace Prisma {
     region?: string | null
     comuna?: string | null
     direccion?: string | null
+    tieneSalaReuniones?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    salaCompartidaId?: string | null
     listasCorreo?: ListaCorreoUncheckedCreateNestedManyWithoutSucursalInput
     presupuestos?: PresupuestoUncheckedCreateNestedManyWithoutSucursalInput
     RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedCreateNestedManyWithoutSucursalInput
@@ -201173,6 +202127,8 @@ export namespace Prisma {
     vehiculos?: VehiculoUncheckedCreateNestedManyWithoutSucursalInput
     delegaciones?: DelegacionVisualizacionUncheckedCreateNestedManyWithoutSucursalInput
     planillasTransporte?: Cal_PlanillaTransporteUncheckedCreateNestedManyWithoutSucursalInput
+    reservasSala?: ReservaSalaUncheckedCreateNestedManyWithoutSucursalInput
+    sucursalesQueCompartenSala?: SucursalUncheckedCreateNestedManyWithoutSalaCompartidaInput
   }
 
   export type SucursalCreateOrConnectWithoutPlanillasHigienePersonalInput = {
@@ -201247,6 +202203,7 @@ export namespace Prisma {
     region?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: NullableStringFieldUpdateOperationsInput | string | null
     direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    tieneSalaReuniones?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     listasCorreo?: ListaCorreoUpdateManyWithoutSucursalNestedInput
@@ -201259,6 +202216,9 @@ export namespace Prisma {
     vehiculos?: VehiculoUpdateManyWithoutSucursalNestedInput
     delegaciones?: DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput
     planillasTransporte?: Cal_PlanillaTransporteUpdateManyWithoutSucursalNestedInput
+    reservasSala?: ReservaSalaUpdateManyWithoutSucursalNestedInput
+    salaCompartida?: SucursalUpdateOneWithoutSucursalesQueCompartenSalaNestedInput
+    sucursalesQueCompartenSala?: SucursalUpdateManyWithoutSalaCompartidaNestedInput
   }
 
   export type SucursalUncheckedUpdateWithoutPlanillasHigienePersonalInput = {
@@ -201267,8 +202227,10 @@ export namespace Prisma {
     region?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: NullableStringFieldUpdateOperationsInput | string | null
     direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    tieneSalaReuniones?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    salaCompartidaId?: NullableStringFieldUpdateOperationsInput | string | null
     listasCorreo?: ListaCorreoUncheckedUpdateManyWithoutSucursalNestedInput
     presupuestos?: PresupuestoUncheckedUpdateManyWithoutSucursalNestedInput
     RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedUpdateManyWithoutSucursalNestedInput
@@ -201279,6 +202241,8 @@ export namespace Prisma {
     vehiculos?: VehiculoUncheckedUpdateManyWithoutSucursalNestedInput
     delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput
     planillasTransporte?: Cal_PlanillaTransporteUncheckedUpdateManyWithoutSucursalNestedInput
+    reservasSala?: ReservaSalaUncheckedUpdateManyWithoutSucursalNestedInput
+    sucursalesQueCompartenSala?: SucursalUncheckedUpdateManyWithoutSalaCompartidaNestedInput
   }
 
   export type Cal_RegistroHigienePersonalUpsertWithWhereUniqueWithoutPlanillaInput = {
@@ -201652,6 +202616,7 @@ export namespace Prisma {
     region?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: NullableStringFieldUpdateOperationsInput | string | null
     direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    tieneSalaReuniones?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     listasCorreo?: ListaCorreoUpdateManyWithoutSucursalNestedInput
@@ -201664,6 +202629,9 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput
     planillasTransporte?: Cal_PlanillaTransporteUpdateManyWithoutSucursalNestedInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalUpdateManyWithoutSucursalNestedInput
+    reservasSala?: ReservaSalaUpdateManyWithoutSucursalNestedInput
+    salaCompartida?: SucursalUpdateOneWithoutSucursalesQueCompartenSalaNestedInput
+    sucursalesQueCompartenSala?: SucursalUpdateManyWithoutSalaCompartidaNestedInput
   }
 
   export type SucursalUncheckedUpdateWithoutUsersInput = {
@@ -201672,8 +202640,10 @@ export namespace Prisma {
     region?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: NullableStringFieldUpdateOperationsInput | string | null
     direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    tieneSalaReuniones?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    salaCompartidaId?: NullableStringFieldUpdateOperationsInput | string | null
     listasCorreo?: ListaCorreoUncheckedUpdateManyWithoutSucursalNestedInput
     presupuestos?: PresupuestoUncheckedUpdateManyWithoutSucursalNestedInput
     RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedUpdateManyWithoutSucursalNestedInput
@@ -201684,6 +202654,8 @@ export namespace Prisma {
     delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput
     planillasTransporte?: Cal_PlanillaTransporteUncheckedUpdateManyWithoutSucursalNestedInput
     planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedUpdateManyWithoutSucursalNestedInput
+    reservasSala?: ReservaSalaUncheckedUpdateManyWithoutSucursalNestedInput
+    sucursalesQueCompartenSala?: SucursalUncheckedUpdateManyWithoutSalaCompartidaNestedInput
   }
 
   export type SucursalUncheckedUpdateManyWithoutUsersInput = {
@@ -201692,8 +202664,10 @@ export namespace Prisma {
     region?: NullableStringFieldUpdateOperationsInput | string | null
     comuna?: NullableStringFieldUpdateOperationsInput | string | null
     direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    tieneSalaReuniones?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    salaCompartidaId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type FormDefinitionUpdateWithoutAllowedUsersInput = {
@@ -202300,6 +203274,33 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type ReservaSalaCreateManySucursalInput = {
+    id?: string
+    solicitante: string
+    email: string
+    userId?: string | null
+    fecha: string
+    horaInicio: string
+    horaFin: string
+    motivo: string
+    estado?: string
+    tokenCancelacion?: string
+    sucursalNombre?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SucursalCreateManySalaCompartidaInput = {
+    id?: string
+    nombre: string
+    region?: string | null
+    comuna?: string | null
+    direccion?: string | null
+    tieneSalaReuniones?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type ListaCorreoUpdateWithoutSucursalInput = {
     id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
@@ -202682,6 +203683,113 @@ export namespace Prisma {
     firmaBodegaFecha?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     firmaBodegaImg?: NullableStringFieldUpdateOperationsInput | string | null
     observacionesGenerales?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReservaSalaUpdateWithoutSucursalInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    solicitante?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha?: StringFieldUpdateOperationsInput | string
+    horaInicio?: StringFieldUpdateOperationsInput | string
+    horaFin?: StringFieldUpdateOperationsInput | string
+    motivo?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    tokenCancelacion?: StringFieldUpdateOperationsInput | string
+    sucursalNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReservaSalaUncheckedUpdateWithoutSucursalInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    solicitante?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha?: StringFieldUpdateOperationsInput | string
+    horaInicio?: StringFieldUpdateOperationsInput | string
+    horaFin?: StringFieldUpdateOperationsInput | string
+    motivo?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    tokenCancelacion?: StringFieldUpdateOperationsInput | string
+    sucursalNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReservaSalaUncheckedUpdateManyWithoutSucursalInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    solicitante?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha?: StringFieldUpdateOperationsInput | string
+    horaInicio?: StringFieldUpdateOperationsInput | string
+    horaFin?: StringFieldUpdateOperationsInput | string
+    motivo?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    tokenCancelacion?: StringFieldUpdateOperationsInput | string
+    sucursalNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SucursalUpdateWithoutSalaCompartidaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    tieneSalaReuniones?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    listasCorreo?: ListaCorreoUpdateManyWithoutSucursalNestedInput
+    presupuestos?: PresupuestoUpdateManyWithoutSucursalNestedInput
+    RetornoProductosMovimiento?: RetornoProductosMovimientoUpdateManyWithoutSucursalNestedInput
+    RetornoProductosSucursalEstado?: RetornoProductosSucursalEstadoUpdateManyWithoutSucursalNestedInput
+    uts?: UTUpdateManyWithoutSucursalNestedInput
+    users?: UserUpdateManyWithoutSucursalesNestedInput
+    jefesZonales?: JefeZonalSucursalUpdateManyWithoutSucursalNestedInput
+    vehiculos?: VehiculoUpdateManyWithoutSucursalNestedInput
+    delegaciones?: DelegacionVisualizacionUpdateManyWithoutSucursalNestedInput
+    planillasTransporte?: Cal_PlanillaTransporteUpdateManyWithoutSucursalNestedInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUpdateManyWithoutSucursalNestedInput
+    reservasSala?: ReservaSalaUpdateManyWithoutSucursalNestedInput
+    sucursalesQueCompartenSala?: SucursalUpdateManyWithoutSalaCompartidaNestedInput
+  }
+
+  export type SucursalUncheckedUpdateWithoutSalaCompartidaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    tieneSalaReuniones?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    listasCorreo?: ListaCorreoUncheckedUpdateManyWithoutSucursalNestedInput
+    presupuestos?: PresupuestoUncheckedUpdateManyWithoutSucursalNestedInput
+    RetornoProductosMovimiento?: RetornoProductosMovimientoUncheckedUpdateManyWithoutSucursalNestedInput
+    RetornoProductosSucursalEstado?: RetornoProductosSucursalEstadoUncheckedUpdateManyWithoutSucursalNestedInput
+    uts?: UTUncheckedUpdateManyWithoutSucursalNestedInput
+    users?: UserUncheckedUpdateManyWithoutSucursalesNestedInput
+    jefesZonales?: JefeZonalSucursalUncheckedUpdateManyWithoutSucursalNestedInput
+    vehiculos?: VehiculoUncheckedUpdateManyWithoutSucursalNestedInput
+    delegaciones?: DelegacionVisualizacionUncheckedUpdateManyWithoutSucursalNestedInput
+    planillasTransporte?: Cal_PlanillaTransporteUncheckedUpdateManyWithoutSucursalNestedInput
+    planillasHigienePersonal?: Cal_PlanillaHigienePersonalUncheckedUpdateManyWithoutSucursalNestedInput
+    reservasSala?: ReservaSalaUncheckedUpdateManyWithoutSucursalNestedInput
+    sucursalesQueCompartenSala?: SucursalUncheckedUpdateManyWithoutSalaCompartidaNestedInput
+  }
+
+  export type SucursalUncheckedUpdateManyWithoutSalaCompartidaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    comuna?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    tieneSalaReuniones?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

@@ -62,10 +62,18 @@ async function main() {
         );
     `)
 
-    console.log('2. Creando índices para reservas_sala...')
+    console.log('2. Creando índices y actualizando columnas para reservas_sala y Sucursal...')
+    await prisma.$executeRawUnsafe(`ALTER TABLE "Sucursal" ADD COLUMN IF NOT EXISTS "tieneSalaReuniones" BOOLEAN NOT NULL DEFAULT false;`)
+    await prisma.$executeRawUnsafe(`ALTER TABLE "Sucursal" ADD COLUMN IF NOT EXISTS "salaCompartidaId" TEXT;`)
+    await prisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "sucursal_sala_compartida_idx" ON "Sucursal"("salaCompartidaId");`)
+    await prisma.$executeRawUnsafe(`ALTER TABLE "reservas_sala" ADD COLUMN IF NOT EXISTS "sucursalId" TEXT;`)
+    await prisma.$executeRawUnsafe(`ALTER TABLE "reservas_sala" ADD COLUMN IF NOT EXISTS "sucursal" TEXT;`)
+    await prisma.$executeRawUnsafe(`ALTER TABLE "reservas_sala" ADD COLUMN IF NOT EXISTS "sucursalNombre" TEXT;`)
     await prisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "reservas_sala_fecha_idx" ON "reservas_sala"(fecha);`)
     await prisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "reservas_sala_estado_idx" ON "reservas_sala"(estado);`)
     await prisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "reservas_sala_token_idx" ON "reservas_sala"("tokenCancelacion");`)
+    await prisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "reservas_sala_sucursal_idx" ON "reservas_sala"("sucursalId");`)
+    await prisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "reservas_sala_sucursal_nombre_idx" ON "reservas_sala"("sucursal");`)
 
     // 2. Tabla noticias_alimentacion
     console.log('3. Creando tabla noticias_alimentacion si no existe...')

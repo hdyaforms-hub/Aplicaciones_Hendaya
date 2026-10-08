@@ -203,6 +203,7 @@ model Sucursal {
   region                         String?
   comuna                         String?
   direccion                      String?
+  tieneSalaReuniones             Boolean                          @default(false)
   createdAt                      DateTime                         @default(now())
   updatedAt                      DateTime                         @updatedAt
   listasCorreo                   ListaCorreo[]
@@ -216,6 +217,7 @@ model Sucursal {
   delegaciones                   DelegacionVisualizacion[]
   planillasTransporte            Cal_PlanillaTransporte[]
   planillasHigienePersonal       Cal_PlanillaHigienePersonal[]
+  reservasSala                   ReservaSala[]
 }
 
 model Presupuesto {
@@ -1779,22 +1781,26 @@ model UserWidgetLayout {
 // ============================================================================
 
 model ReservaSala {
-  id               String   @id @default(uuid())
+  id               String    @id @default(uuid())
   solicitante      String
   email            String
   userId           String?
   fecha            String // YYYY-MM-DD
   horaInicio       String // HH:MM
   horaFin          String // HH:MM
-  motivo           String   @db.Text
-  estado           String   @default("CONFIRMADA") // CONFIRMADA | CANCELADA
-  tokenCancelacion String   @unique @default(uuid())
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  motivo           String    @db.Text
+  estado           String    @default("CONFIRMADA") // CONFIRMADA | CANCELADA
+  tokenCancelacion String    @unique @default(uuid())
+  sucursalId       String?
+  sucursalNombre   String?
+  sucursal         Sucursal? @relation(fields: [sucursalId], references: [id])
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
 
   @@index([fecha])
   @@index([estado])
   @@index([tokenCancelacion])
+  @@index([sucursalId])
   @@map("reservas_sala")
 }
 
@@ -2226,7 +2232,7 @@ model RegCap_Participante {
 }
 
 model Cal_ResSan_Registro {
-  id                    String   @id @default(uuid())
+  id                    String    @id @default(uuid())
   licitacion            String?
   licId                 Int?
   anio                  Int
@@ -2235,21 +2241,25 @@ model Cal_ResSan_Registro {
   rbd                   Int
   rbdDv                 String?
   nombreEstablecimiento String
+  sucursal              String?
   comuna                String
-  estadoResolucion      String   @default("No Aplica") // 'Si' | 'No' | 'No Aplica'
+  estadoResolucion      String    @default("No Aplica") // 'Si' | 'No' | 'No Aplica'
   numeroResolucion      String?
-  documentoUrl          String?  @db.Text
+  fechaResolucion       DateTime?
+  documentoUrl          String?   @db.Text
   documentoNombre       String?
-  observaciones         String?  @db.Text
+  documentoSubidoPor    String?
+  observaciones         String?   @db.Text
   updatedBy             String?
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
 
   @@unique([rbd, anio])
   @@index([anio])
   @@index([licitacion])
   @@index([ut])
   @@index([rbd])
+  @@index([sucursal])
   @@index([estadoResolucion])
   @@map("Cal_ResSan_Registro")
 }

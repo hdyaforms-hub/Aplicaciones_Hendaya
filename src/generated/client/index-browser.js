@@ -293,8 +293,10 @@ exports.Prisma.SucursalScalarFieldEnum = {
   region: 'region',
   comuna: 'comuna',
   direccion: 'direccion',
+  tieneSalaReuniones: 'tieneSalaReuniones',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  salaCompartidaId: 'salaCompartidaId'
 };
 
 exports.Prisma.PresupuestoScalarFieldEnum = {
@@ -1560,6 +1562,8 @@ exports.Prisma.ReservaSalaScalarFieldEnum = {
   motivo: 'motivo',
   estado: 'estado',
   tokenCancelacion: 'tokenCancelacion',
+  sucursalId: 'sucursalId',
+  sucursalNombre: 'sucursalNombre',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
