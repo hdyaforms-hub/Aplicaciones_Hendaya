@@ -70,7 +70,7 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
         ],
         subItems: [
             {
-                name: 'Personal',
+                name: 'Recursos Humanos',
                 requiredPermission: ['view_personal_asistencia', 'manage_personal_asistencia_carga'],
                 subItems: [
                     {
@@ -284,7 +284,7 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
         requiredPermission: ['view_colegios', 'view_productos', 'view_pmpa', 'view_consumo_gas', 'view_preparaciones', 'view_minutas', 'view_raciones', 'view_codigo_causa', 'manage_sucursales', 'manage_areas', 'manage_vehiculos', 'manage_zonales', 'manage_jefe_operacion', 'manage_supervisor', 'manage_manipuladoras_masiva', 'manage_colegios_matriz', 'manage_nueva_matriz', 'manage_actas_supervision', 'manage_doc_configuracion', 'manage_doc_carpetas', 'manage_doc_privilegios', 'manage_personal_criterios'],
         subItems: [
             {
-                name: 'Personal',
+                name: 'Recursos Humanos',
                 requiredPermission: 'manage_personal_criterios',
                 subItems: [
                     {

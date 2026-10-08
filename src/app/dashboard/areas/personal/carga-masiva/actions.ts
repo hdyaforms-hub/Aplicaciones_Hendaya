@@ -116,28 +116,29 @@ async function procesarBufferWorkbook(
         return { success: false, totalFilas: 0, nuevos: 0, actualizados: 0, sinCambios: 0, errores: 0, error: 'La hoja de cálculo no contiene filas con datos' }
     }
 
-    // 1. Crear cabecera Pers_Asis_Carga
-    const cargaCabecera = await (rawPrisma as any).pers_Asis_Carga.create({
-        data: {
-            nombreArchivo: archivoNombre,
-            totalRegistros: rows.length,
-            nuevosRegistros: 0,
-            actualizadosRegistros: 0,
-            erroresRegistros: 0,
-            cargadoPor: usuarioNombre,
-            cargadoPorId: usuarioId || null,
-            observaciones: rutaOrigen ? `Origen: ${rutaOrigen}` : null
-        }
+    // 1. Verificación preventiva contra cargas duplicadas
+    const cargaPrevia = await (rawPrisma as any).pers_Asis_Carga.findFirst({
+        where: { nombreArchivo: archivoNombre },
+        orderBy: { createdAt: 'desc' }
     })
 
-    let nuevosCount = 0
-    let actualizadosCount = 0
-    let sinCambiosCount = 0
+    // 2. Pre-análisis de filas para determinar si hay registros nuevos o cambios
+    interface OperacionFila {
+        tipo: 'NUEVO' | 'ACTUALIZAR' | 'SIN_CAMBIOS' | 'ERROR'
+        errorMsg?: string
+        existenteId?: string
+        dataNuevo?: any
+        dataActualizar?: any
+    }
+
+    const operaciones: OperacionFila[] = []
+    let potencialesNuevos = 0
+    let potencialesActualizados = 0
+    let potencialesSinCambios = 0
     let erroresCount = 0
     const detallesErrores: string[] = []
     const ahora = new Date()
 
-    // 2. Procesar filas
     for (let i = 0; i < rows.length; i++) {
         const row = rows[i]
 
@@ -152,6 +153,7 @@ async function procesarBufferWorkbook(
         if (!rawRut || !rawFecha) {
             erroresCount++
             detallesErrores.push(`Fila ${i + 2}: Rut o Fecha vacíos`)
+            operaciones.push({ tipo: 'ERROR', errorMsg: `Fila ${i + 2}: Rut o Fecha vacíos` })
             continue
         }
 
@@ -159,6 +161,7 @@ async function procesarBufferWorkbook(
         if (!cleanRutVal) {
             erroresCount++
             detallesErrores.push(`Fila ${i + 2}: Formato de RUT inválido (${rawRut})`)
+            operaciones.push({ tipo: 'ERROR', errorMsg: `Fila ${i + 2}: Formato de RUT inválido` })
             continue
         }
 
@@ -167,14 +170,11 @@ async function procesarBufferWorkbook(
         if (!parsedFecha) {
             erroresCount++
             detallesErrores.push(`Fila ${i + 2}: Formato de Fecha no reconocible (${rawFecha})`)
+            operaciones.push({ tipo: 'ERROR', errorMsg: `Fila ${i + 2}: Fecha no reconocible` })
             continue
         }
 
         const { rbd, establecimiento } = parseGrupoRBD(rawGrupo)
-
-        const rutEnc = encryptPersonalText(rawRut)
-        const apellidosEnc = encryptPersonalText(rawApellidos)
-        const nombreEnc = encryptPersonalText(rawNombre)
 
         try {
             const existente = await (rawPrisma as any).pers_Asis_Registro.findUnique({
@@ -188,9 +188,14 @@ async function procesarBufferWorkbook(
             })
 
             if (!existente) {
-                await (rawPrisma as any).pers_Asis_Registro.create({
-                    data: {
-                        cargaId: cargaCabecera.id,
+                potencialesNuevos++
+                const rutEnc = encryptPersonalText(rawRut)
+                const apellidosEnc = encryptPersonalText(rawApellidos)
+                const nombreEnc = encryptPersonalText(rawNombre)
+
+                operaciones.push({
+                    tipo: 'NUEVO',
+                    dataNuevo: {
                         rutEnc,
                         rutHash,
                         apellidosEnc,
@@ -207,7 +212,6 @@ async function procesarBufferWorkbook(
                         numActualizaciones: 0
                     }
                 })
-                nuevosCount++
             } else {
                 const prevApellidos = decryptPersonalText(existente.apellidosEnc)
                 const prevNombre = decryptPersonalText(existente.nombreEnc)
@@ -221,6 +225,11 @@ async function procesarBufferWorkbook(
                     (existente.grupoOriginal || '').trim() !== String(rawGrupo || '').trim()
 
                 if (hayDiferencias) {
+                    potencialesActualizados++
+                    const rutEnc = encryptPersonalText(rawRut)
+                    const apellidosEnc = encryptPersonalText(rawApellidos)
+                    const nombreEnc = encryptPersonalText(rawNombre)
+
                     let historial = []
                     try {
                         if (existente.historialActualizaciones) {
@@ -233,7 +242,6 @@ async function procesarBufferWorkbook(
                     historial.push({
                         fecha: ahora.toISOString(),
                         actualizadoPor: usuarioNombre,
-                        cargaId: cargaCabecera.id,
                         cambios: {
                             cargoAnterior: existente.cargo,
                             cargoNuevo: rawCargo,
@@ -242,10 +250,10 @@ async function procesarBufferWorkbook(
                         }
                     })
 
-                    await (rawPrisma as any).pers_Asis_Registro.update({
-                        where: { id: existente.id },
-                        data: {
-                            cargaId: cargaCabecera.id,
+                    operaciones.push({
+                        tipo: 'ACTUALIZAR',
+                        existenteId: existente.id,
+                        dataActualizar: {
                             rutEnc,
                             apellidosEnc,
                             nombreEnc,
@@ -260,27 +268,77 @@ async function procesarBufferWorkbook(
                             historialActualizaciones: JSON.stringify(historial)
                         }
                     })
-                    actualizadosCount++
                 } else {
-                    sinCambiosCount++
+                    potencialesSinCambios++
+                    operaciones.push({ tipo: 'SIN_CAMBIOS' })
                 }
             }
         } catch (errRow: any) {
-            console.error(`Error procesando fila ${i + 2}:`, errRow)
             erroresCount++
-            detallesErrores.push(`Fila ${i + 2}: ${errRow.message || 'Error en base de datos'}`)
+            detallesErrores.push(`Fila ${i + 2}: ${errRow.message || 'Error al validar registro'}`)
+            operaciones.push({ tipo: 'ERROR', errorMsg: errRow.message })
         }
     }
 
-    // 3. Actualizar conteos en cabecera
-    await (rawPrisma as any).pers_Asis_Carga.update({
-        where: { id: cargaCabecera.id },
+    // 3. Validación estricta: Si no hay registros nuevos ni actualizados, BLOQUEAR LA CARGA
+    if (potencialesNuevos === 0 && potencialesActualizados === 0) {
+        if (cargaPrevia) {
+            const fechaStr = new Date(cargaPrevia.createdAt).toLocaleString('es-CL')
+            return {
+                success: false,
+                totalFilas: rows.length,
+                nuevos: 0,
+                actualizados: 0,
+                sinCambios: potencialesSinCambios,
+                errores: erroresCount,
+                error: `Esta planilla ya fue cargada anteriormente el ${fechaStr} por ${cargaPrevia.cargadoPor}. No se permite cargar la misma planilla más de una vez ya que no contiene registros nuevos ni modificaciones pendientes.`
+            }
+        } else {
+            return {
+                success: false,
+                totalFilas: rows.length,
+                nuevos: 0,
+                actualizados: 0,
+                sinCambios: potencialesSinCambios,
+                errores: erroresCount,
+                error: `Todos los registros (${potencialesSinCambios}) de esta planilla ya se encuentran registrados en el sistema sin diferencias pendientes. No se realizó ninguna carga redundante.`
+            }
+        }
+    }
+
+    // 4. Si hay cambios o registros nuevos legítimos, crear la cabecera Pers_Asis_Carga
+    const cargaCabecera = await (rawPrisma as any).pers_Asis_Carga.create({
         data: {
-            nuevosRegistros: nuevosCount,
-            actualizadosRegistros: actualizadosCount,
-            erroresRegistros: erroresCount
+            nombreArchivo: archivoNombre,
+            totalRegistros: rows.length,
+            nuevosRegistros: potencialesNuevos,
+            actualizadosRegistros: potencialesActualizados,
+            erroresRegistros: erroresCount,
+            cargadoPor: usuarioNombre,
+            cargadoPorId: usuarioId || null,
+            observaciones: rutaOrigen ? `Origen: ${rutaOrigen}` : null
         }
     })
+
+    // 5. Aplicar operaciones en lote
+    for (const op of operaciones) {
+        if (op.tipo === 'NUEVO' && op.dataNuevo) {
+            await (rawPrisma as any).pers_Asis_Registro.create({
+                data: {
+                    ...op.dataNuevo,
+                    cargaId: cargaCabecera.id
+                }
+            })
+        } else if (op.tipo === 'ACTUALIZAR' && op.dataActualizar && op.existenteId) {
+            await (rawPrisma as any).pers_Asis_Registro.update({
+                where: { id: op.existenteId },
+                data: {
+                    ...op.dataActualizar,
+                    cargaId: cargaCabecera.id
+                }
+            })
+        }
+    }
 
     revalidatePath(PATH_CARGA)
     revalidatePath(PATH_ASISTENCIA)
@@ -289,9 +347,9 @@ async function procesarBufferWorkbook(
         success: true,
         cargaId: cargaCabecera.id,
         totalFilas: rows.length,
-        nuevos: nuevosCount,
-        actualizados: actualizadosCount,
-        sinCambios: sinCambiosCount,
+        nuevos: potencialesNuevos,
+        actualizados: potencialesActualizados,
+        sinCambios: potencialesSinCambios,
         errores: erroresCount,
         detallesErrores: detallesErrores.slice(0, 15)
     }

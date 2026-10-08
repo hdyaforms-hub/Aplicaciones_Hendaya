@@ -6,16 +6,11 @@ import {
     Users,
     Search,
     Calendar,
-    Filter,
     Download,
-    CheckCircle2,
-    Clock,
     Building2,
-    ShieldAlert,
     RefreshCw,
     X,
     Check,
-    ChevronDown,
     UploadCloud,
     SlidersHorizontal,
     Info
@@ -222,23 +217,22 @@ export default function AsistenciaClient({
         xlsx.writeFile(wb, `Reporte_Asistencia_${new Date().toISOString().slice(0, 10)}.xlsx`)
     }
 
-    // Métricas
     const conCriterio = registrosFiltrados.filter(r => r.criterioId !== null).length
     const sinCriterio = registrosFiltrados.filter(r => r.criterioId === null).length
 
     return (
-        <div className="p-6 max-w-7xl mx-auto space-y-6">
-            {/* Header */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-gradient-to-r from-slate-900 via-sky-950 to-slate-900 p-6 rounded-2xl shadow-xl border border-sky-800/40 text-white">
+        <div className="space-y-6 max-w-7xl mx-auto p-6">
+            {/* Header Estándar Claro */}
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                 <div>
-                    <div className="flex items-center gap-2 text-sky-400 font-semibold text-xs tracking-wider uppercase mb-1">
+                    <div className="flex items-center gap-2 text-cyan-600 font-semibold text-xs tracking-wider uppercase mb-1">
                         <Users className="w-4 h-4" />
-                        <span>Áreas · Personal</span>
+                        <span>Áreas · Recursos Humanos</span>
                     </div>
-                    <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white flex items-center gap-3">
+                    <h1 className="text-2xl font-bold text-gray-900 tracking-tight flex items-center gap-3">
                         Módulo de Asistencia
                     </h1>
-                    <p className="text-sm text-slate-300 mt-1 max-w-2xl">
+                    <p className="text-sm text-gray-500 mt-1 max-w-2xl">
                         Visualización y gestión diaria de ausencias del personal. Asocia directamente los motivos de ausentismo o tipificación a cada colaborador y establecimiento.
                     </p>
                 </div>
@@ -246,22 +240,22 @@ export default function AsistenciaClient({
                     <button
                         onClick={recargarDatos}
                         disabled={isPending}
-                        className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 rounded-xl border border-slate-700 text-xs font-medium transition-colors"
+                        className="flex items-center gap-1.5 px-3.5 py-2 bg-white hover:bg-gray-50 text-gray-700 rounded-xl border border-gray-200 text-xs font-semibold transition-colors shadow-sm"
                         title="Recargar datos"
                     >
-                        <RefreshCw className={`w-3.5 h-3.5 ${isPending ? 'animate-spin text-sky-400' : ''}`} />
+                        <RefreshCw className={`w-3.5 h-3.5 ${isPending ? 'animate-spin text-cyan-600' : 'text-gray-500'}`} />
                         <span>Refrescar</span>
                     </button>
                     <button
                         onClick={exportarExcel}
-                        className="flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600/80 hover:bg-emerald-500 text-white rounded-xl text-xs font-medium transition-colors shadow-md shadow-emerald-900/30"
+                        className="flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold transition-colors shadow-sm"
                     >
                         <Download className="w-3.5 h-3.5" />
                         <span>Exportar Excel</span>
                     </button>
                     <Link
                         href="/dashboard/areas/personal/carga-masiva"
-                        className="flex items-center gap-1.5 px-3.5 py-2 bg-sky-500 hover:bg-sky-400 text-white rounded-xl text-xs font-medium transition-colors shadow-md shadow-sky-900/30"
+                        className="flex items-center gap-1.5 px-3.5 py-2 bg-gradient-to-r from-cyan-600 to-sky-600 hover:from-cyan-700 hover:to-sky-700 text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-cyan-600/20"
                     >
                         <UploadCloud className="w-3.5 h-3.5" />
                         <span>Carga Masiva</span>
@@ -271,45 +265,45 @@ export default function AsistenciaClient({
 
             {/* Aviso de RBDs restringidos para el usuario */}
             {!isAdmin && userRbds.length > 0 && (
-                <div className="flex items-center gap-2 p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl text-amber-300 text-xs">
-                    <Info className="w-4 h-4 flex-shrink-0" />
+                <div className="flex items-center gap-2 p-3.5 bg-amber-50 border border-amber-200 rounded-xl text-amber-800 text-xs shadow-sm">
+                    <Info className="w-4 h-4 flex-shrink-0 text-amber-600" />
                     <span>
-                        Acceso restringido: Solo puedes visualizar los <strong>{userRbds.length}</strong> establecimientos (RBDs) asignados a tu cuenta de usuario.
+                        Acceso restringido: Solo puedes visualizar los <strong>{userRbds.length}</strong> establecimientos (RBDs) autorizados para tu cuenta de usuario.
                     </span>
                 </div>
             )}
 
-            {/* Barra de KPIs / Métricas rápidas */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <div className="bg-slate-900/70 border border-slate-800 p-4 rounded-xl">
-                    <span className="text-xs uppercase font-medium text-slate-400">Total Mostrados</span>
-                    <p className="text-2xl font-bold text-white mt-1">{registrosFiltrados.length}</p>
+            {/* Tarjetas de KPIs */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div className="bg-white border border-gray-100 shadow-sm p-4 rounded-2xl">
+                    <span className="text-xs uppercase font-semibold text-gray-500">Total Mostrados</span>
+                    <p className="text-2xl font-extrabold text-gray-900 mt-1">{registrosFiltrados.length}</p>
                 </div>
-                <div className="bg-slate-900/70 border border-slate-800 p-4 rounded-xl">
-                    <span className="text-xs uppercase font-medium text-emerald-400">Con Criterio Asignado</span>
-                    <p className="text-2xl font-bold text-emerald-400 mt-1">{conCriterio}</p>
+                <div className="bg-white border border-emerald-100 shadow-sm p-4 rounded-2xl">
+                    <span className="text-xs uppercase font-semibold text-emerald-700">Con Criterio Asignado</span>
+                    <p className="text-2xl font-extrabold text-emerald-600 mt-1">{conCriterio}</p>
                 </div>
-                <div className="bg-slate-900/70 border border-slate-800 p-4 rounded-xl">
-                    <span className="text-xs uppercase font-medium text-amber-400">Pendientes (Sin Criterio)</span>
-                    <p className="text-2xl font-bold text-amber-400 mt-1">{sinCriterio}</p>
+                <div className="bg-white border border-amber-100 shadow-sm p-4 rounded-2xl">
+                    <span className="text-xs uppercase font-semibold text-amber-700">Pendientes (Sin Criterio)</span>
+                    <p className="text-2xl font-extrabold text-amber-600 mt-1">{sinCriterio}</p>
                 </div>
-                <div className="bg-slate-900/70 border border-slate-800 p-4 rounded-xl">
-                    <span className="text-xs uppercase font-medium text-sky-400">Criterios Disponibles</span>
-                    <p className="text-2xl font-bold text-sky-400 mt-1">{criteriosActivos.length}</p>
+                <div className="bg-white border border-sky-100 shadow-sm p-4 rounded-2xl">
+                    <span className="text-xs uppercase font-semibold text-sky-700">Criterios Activos</span>
+                    <p className="text-2xl font-extrabold text-cyan-600 mt-1">{criteriosActivos.length}</p>
                 </div>
             </div>
 
             {/* Filtros Inteligentes */}
-            <div className="bg-slate-900/90 border border-slate-800 rounded-2xl shadow-xl p-5 space-y-4">
-                <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-300">
-                        <SlidersHorizontal className="w-4 h-4 text-sky-400" />
+            <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-5 space-y-4">
+                <div className="flex items-center justify-between border-b border-gray-100 pb-3">
+                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-700">
+                        <SlidersHorizontal className="w-4 h-4 text-cyan-600" />
                         <span>Filtros de Búsqueda Avanzada</span>
                     </div>
                     {(busquedaRbdNombre || filtroRbdSeleccionado || filtroFecha || filtroRut || filtroNombre || filtroCriterio !== 'TODOS') && (
                         <button
                             onClick={limpiarFiltros}
-                            className="text-xs text-rose-400 hover:text-rose-300 flex items-center gap-1 font-medium"
+                            className="text-xs text-rose-600 hover:text-rose-700 flex items-center gap-1 font-semibold transition-colors"
                         >
                             <X className="w-3.5 h-3.5" />
                             <span>Limpiar filtros</span>
@@ -318,13 +312,13 @@ export default function AsistenciaClient({
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
-                    {/* Filtro 1: Búsqueda Autocompletativa RBD / Nombre Colegio */}
+                    {/* Filtro 1: Autocompletado RBD / Nombre */}
                     <div className="relative">
-                        <label className="text-[11px] font-semibold text-slate-400 uppercase block mb-1">
+                        <label className="text-[11px] font-semibold text-gray-600 uppercase block mb-1">
                             RBD / Establecimiento
                         </label>
                         <div className="relative">
-                            <Building2 className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                            <Building2 className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
                             <input
                                 type="text"
                                 value={busquedaRbdNombre}
@@ -335,7 +329,7 @@ export default function AsistenciaClient({
                                 }}
                                 onFocus={() => setIsRbdDropdownOpen(true)}
                                 placeholder="Escribe RBD o Colegio..."
-                                className="w-full pl-9 pr-7 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                                className="w-full pl-9 pr-7 py-2 bg-white border border-gray-200 rounded-xl text-xs text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
                             />
                             {busquedaRbdNombre && (
                                 <button
@@ -343,27 +337,27 @@ export default function AsistenciaClient({
                                         setBusquedaRbdNombre('')
                                         setFiltroRbdSeleccionado(null)
                                     }}
-                                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
+                                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                                 >
                                     <X className="w-3.5 h-3.5" />
                                 </button>
                             )}
                         </div>
 
-                        {/* Dropdown autocompletado inteligente */}
+                        {/* Dropdown autocompletado */}
                         {isRbdDropdownOpen && (
-                            <div className="absolute z-30 left-0 right-0 mt-1 bg-slate-850 border border-slate-700 rounded-xl shadow-2xl max-h-60 overflow-y-auto divide-y divide-slate-800 animate-in fade-in">
-                                <div className="p-2 bg-slate-900 text-[10px] uppercase font-bold text-slate-400 flex justify-between">
+                            <div className="absolute z-30 left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-xl max-h-60 overflow-y-auto divide-y divide-gray-100 animate-in fade-in">
+                                <div className="p-2 bg-gray-50 text-[10px] uppercase font-bold text-gray-500 flex justify-between">
                                     <span>Establecimientos Sugeridos</span>
                                     <button
                                         onClick={() => setIsRbdDropdownOpen(false)}
-                                        className="text-slate-400 hover:text-white"
+                                        className="text-gray-400 hover:text-gray-700"
                                     >
                                         Cerrar
                                     </button>
                                 </div>
                                 {establecimientosSugeridos.length === 0 ? (
-                                    <div className="p-3 text-xs text-slate-500 text-center">
+                                    <div className="p-3 text-xs text-gray-400 text-center">
                                         No se encontraron colegios con este término
                                     </div>
                                 ) : (
@@ -376,10 +370,10 @@ export default function AsistenciaClient({
                                                 setFiltroRbdSeleccionado(item.rbd)
                                                 setIsRbdDropdownOpen(false)
                                             }}
-                                            className="w-full text-left px-3 py-2 text-xs text-slate-300 hover:bg-sky-500/20 hover:text-white flex items-center justify-between transition-colors"
+                                            className="w-full text-left px-3 py-2 text-xs text-gray-700 hover:bg-cyan-50 hover:text-cyan-900 flex items-center justify-between transition-colors"
                                         >
                                             <span className="truncate pr-2 font-medium">{item.establecimiento}</span>
-                                            <span className="font-mono text-[11px] bg-slate-800 px-1.5 py-0.5 rounded text-sky-400 border border-slate-700">
+                                            <span className="font-mono text-[11px] bg-gray-100 px-1.5 py-0.5 rounded text-cyan-700 border border-gray-200">
                                                 {item.rbd}
                                             </span>
                                         </button>
@@ -391,23 +385,23 @@ export default function AsistenciaClient({
 
                     {/* Filtro 2: Fecha */}
                     <div>
-                        <label className="text-[11px] font-semibold text-slate-400 uppercase block mb-1">
+                        <label className="text-[11px] font-semibold text-gray-600 uppercase block mb-1">
                             Fecha
                         </label>
                         <div className="relative">
-                            <Calendar className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                            <Calendar className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
                             <input
                                 type="date"
                                 value={filtroFecha}
                                 onChange={e => { setFiltroFecha(e.target.value); setPaginaActual(1); }}
-                                className="w-full pl-9 pr-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                                className="w-full pl-9 pr-3 py-2 bg-white border border-gray-200 rounded-xl text-xs text-gray-900 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
                             />
                         </div>
                     </div>
 
                     {/* Filtro 3: RUT */}
                     <div>
-                        <label className="text-[11px] font-semibold text-slate-400 uppercase block mb-1">
+                        <label className="text-[11px] font-semibold text-gray-600 uppercase block mb-1">
                             RUT
                         </label>
                         <input
@@ -415,36 +409,36 @@ export default function AsistenciaClient({
                             value={filtroRut}
                             onChange={e => { setFiltroRut(e.target.value); setPaginaActual(1); }}
                             placeholder="Ej: 12345678-9"
-                            className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 font-mono"
+                            className="w-full px-3 py-2 bg-white border border-gray-200 rounded-xl text-xs text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 font-mono"
                         />
                     </div>
 
                     {/* Filtro 4: Nombre */}
                     <div>
-                        <label className="text-[11px] font-semibold text-slate-400 uppercase block mb-1">
-                            Colaborador (Nombre / Apellidos)
+                        <label className="text-[11px] font-semibold text-gray-600 uppercase block mb-1">
+                            Colaborador
                         </label>
                         <div className="relative">
-                            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                            <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
                             <input
                                 type="text"
                                 value={filtroNombre}
                                 onChange={e => { setFiltroNombre(e.target.value); setPaginaActual(1); }}
                                 placeholder="Buscar nombre..."
-                                className="w-full pl-9 pr-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                                className="w-full pl-9 pr-3 py-2 bg-white border border-gray-200 rounded-xl text-xs text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
                             />
                         </div>
                     </div>
 
-                    {/* Filtro 5: Criterios de Ausencias */}
+                    {/* Filtro 5: Criterios */}
                     <div>
-                        <label className="text-[11px] font-semibold text-slate-400 uppercase block mb-1">
+                        <label className="text-[11px] font-semibold text-gray-600 uppercase block mb-1">
                             Criterios de Ausencias
                         </label>
                         <select
                             value={filtroCriterio}
                             onChange={e => { setFiltroCriterio(e.target.value); setPaginaActual(1); }}
-                            className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
+                            className="w-full px-3 py-2 bg-white border border-gray-200 rounded-xl text-xs text-gray-900 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
                         >
                             <option value="TODOS">Todos los Criterios</option>
                             <option value="SIN_CRITERIO">⚠️ Sin Criterio (Pendientes)</option>
@@ -458,9 +452,9 @@ export default function AsistenciaClient({
                 </div>
             </div>
 
-            {/* Tabla de Registros */}
-            <div className="bg-slate-900/90 border border-slate-800 rounded-2xl shadow-xl overflow-hidden backdrop-blur-sm">
-                <div className="p-4 border-b border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400">
+            {/* Tabla de Registros Estándar Claro */}
+            <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+                <div className="p-4 border-b border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-500 bg-gray-50/50">
                     <div>
                         Mostrando registros <strong>{Math.min(registrosFiltrados.length, (paginaActual - 1) * porPagina + 1)}</strong> - <strong>{Math.min(registrosFiltrados.length, paginaActual * porPagina)}</strong> de <strong>{registrosFiltrados.length}</strong>
                     </div>
@@ -470,17 +464,17 @@ export default function AsistenciaClient({
                         <button
                             onClick={() => setPaginaActual(p => Math.max(1, p - 1))}
                             disabled={paginaActual === 1}
-                            className="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 disabled:opacity-40 rounded-lg text-slate-300 border border-slate-700"
+                            className="px-2.5 py-1 bg-white hover:bg-gray-50 disabled:opacity-40 rounded-lg text-gray-700 border border-gray-200 font-medium shadow-2xs"
                         >
                             Anterior
                         </button>
-                        <span className="font-medium text-slate-300">
+                        <span className="font-semibold text-gray-700">
                             Página {paginaActual} de {totalPaginas}
                         </span>
                         <button
                             onClick={() => setPaginaActual(p => Math.min(totalPaginas, p + 1))}
                             disabled={paginaActual >= totalPaginas}
-                            className="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 disabled:opacity-40 rounded-lg text-slate-300 border border-slate-700"
+                            className="px-2.5 py-1 bg-white hover:bg-gray-50 disabled:opacity-40 rounded-lg text-gray-700 border border-gray-200 font-medium shadow-2xs"
                         >
                             Siguiente
                         </button>
@@ -488,8 +482,8 @@ export default function AsistenciaClient({
                 </div>
 
                 <div className="overflow-x-auto">
-                    <table className="w-full text-left text-xs text-slate-300">
-                        <thead className="bg-slate-800/60 font-semibold uppercase text-slate-400 border-b border-slate-800 tracking-wider">
+                    <table className="w-full text-left text-xs text-gray-700">
+                        <thead className="bg-gray-50 font-semibold uppercase text-gray-500 border-b border-gray-200 tracking-wider">
                             <tr>
                                 <th className="px-4 py-3.5 whitespace-nowrap">Fecha</th>
                                 <th className="px-4 py-3.5 whitespace-nowrap">RBD</th>
@@ -499,15 +493,15 @@ export default function AsistenciaClient({
                                 <th className="px-4 py-3.5 whitespace-nowrap">Cargo</th>
                                 <th className="px-4 py-3.5 whitespace-nowrap">Permiso Parcial</th>
                                 <th className="px-4 py-3.5 whitespace-nowrap">Trazabilidad Carga</th>
-                                <th className="px-4 py-3.5 whitespace-nowrap min-w-[240px] text-sky-400 font-bold">
+                                <th className="px-4 py-3.5 whitespace-nowrap min-w-[240px] text-cyan-700 font-bold">
                                     Criterio de Ausencia
                                 </th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-slate-800/60">
+                        <tbody className="divide-y divide-gray-100">
                             {registrosPaginados.length === 0 ? (
                                 <tr>
-                                    <td colSpan={9} className="text-center py-14 text-slate-500">
+                                    <td colSpan={9} className="text-center py-14 text-gray-400">
                                         No se encontraron registros de asistencia que coincidan con los filtros aplicados.
                                     </td>
                                 </tr>
@@ -515,50 +509,50 @@ export default function AsistenciaClient({
                                 registrosPaginados.map(r => {
                                     const isSaved = guardadoStatus[r.id]
                                     return (
-                                        <tr key={r.id} className="hover:bg-slate-800/40 transition-colors">
+                                        <tr key={r.id} className="hover:bg-gray-50/80 transition-colors">
                                             {/* Fecha */}
-                                            <td className="px-4 py-3 whitespace-nowrap font-mono font-medium text-slate-300">
+                                            <td className="px-4 py-3 whitespace-nowrap font-mono font-medium text-gray-800">
                                                 {r.fechaTexto || r.fecha}
                                             </td>
 
                                             {/* RBD */}
-                                            <td className="px-4 py-3 whitespace-nowrap font-mono font-bold text-sky-400">
+                                            <td className="px-4 py-3 whitespace-nowrap font-mono font-bold text-cyan-700">
                                                 {r.rbd}
                                             </td>
 
                                             {/* Establecimiento */}
                                             <td className="px-4 py-3 max-w-[200px] truncate" title={r.establecimiento}>
-                                                <span className="font-semibold text-white">{r.establecimiento}</span>
+                                                <span className="font-semibold text-gray-900">{r.establecimiento}</span>
                                             </td>
 
                                             {/* RUT (Desencriptado) */}
-                                            <td className="px-4 py-3 whitespace-nowrap font-mono text-slate-200">
+                                            <td className="px-4 py-3 whitespace-nowrap font-mono text-gray-800 font-medium">
                                                 {r.rut}
                                             </td>
 
                                             {/* Nombre y Apellidos (Desencriptados) */}
-                                            <td className="px-4 py-3 whitespace-nowrap font-medium text-white">
+                                            <td className="px-4 py-3 whitespace-nowrap font-semibold text-gray-900">
                                                 {r.nombreCompleto}
                                             </td>
 
                                             {/* Cargo */}
-                                            <td className="px-4 py-3 whitespace-nowrap text-slate-400">
-                                                {r.cargo || <span className="italic text-slate-600">-</span>}
+                                            <td className="px-4 py-3 whitespace-nowrap text-gray-600">
+                                                {r.cargo || <span className="italic text-gray-400">-</span>}
                                             </td>
 
                                             {/* Permiso Parcial */}
-                                            <td className="px-4 py-3 whitespace-nowrap text-slate-400">
-                                                {r.permisoParcial || <span className="italic text-slate-600">-</span>}
+                                            <td className="px-4 py-3 whitespace-nowrap text-gray-600">
+                                                {r.permisoParcial || <span className="italic text-gray-400">-</span>}
                                             </td>
 
                                             {/* Trazabilidad Carga */}
-                                            <td className="px-4 py-3 whitespace-nowrap text-[11px] text-slate-400">
+                                            <td className="px-4 py-3 whitespace-nowrap text-[11px] text-gray-500">
                                                 <div>
-                                                    <span className="text-slate-300">Cargado: </span>
+                                                    <span className="text-gray-400">Cargado: </span>
                                                     <span>{r.creadoPor}</span>
                                                 </div>
                                                 {r.numActualizaciones > 0 && r.actualizadoPor && (
-                                                    <div className="text-sky-400/90 text-[10px] mt-0.5">
+                                                    <div className="text-cyan-700 text-[10px] mt-0.5 font-medium">
                                                         <span>Act: {r.actualizadoPor} ({r.numActualizaciones})</span>
                                                     </div>
                                                 )}
@@ -570,24 +564,24 @@ export default function AsistenciaClient({
                                                     <select
                                                         value={r.criterioId ?? ''}
                                                         onChange={e => handleCriterioChange(r.id, e.target.value)}
-                                                        className={`w-full px-2.5 py-1.5 rounded-xl text-xs font-semibold border transition-all focus:outline-none focus:ring-2 focus:ring-sky-500 cursor-pointer ${
+                                                        className={`w-full px-2.5 py-1.5 rounded-xl text-xs font-semibold border transition-all focus:outline-none focus:ring-2 focus:ring-cyan-500 cursor-pointer ${
                                                             r.criterioId
-                                                                ? 'bg-slate-800 text-white border-sky-500/50 shadow-sm'
-                                                                : 'bg-amber-950/30 text-amber-300 border-amber-600/40 hover:border-amber-500'
+                                                                ? 'bg-white text-gray-900 border-gray-300 shadow-2xs'
+                                                                : 'bg-amber-50 text-amber-800 border-amber-300 hover:border-amber-400'
                                                         }`}
                                                         style={{
-                                                            borderLeftColor: r.criterioColor || (r.criterioId ? '#0ea5e9' : '#f59e0b'),
+                                                            borderLeftColor: r.criterioColor || (r.criterioId ? '#0891b2' : '#f59e0b'),
                                                             borderLeftWidth: '4px'
                                                         }}
                                                     >
-                                                        <option value="" className="bg-slate-900 text-amber-400">
+                                                        <option value="" className="text-amber-700">
                                                             -- Seleccionar Criterio --
                                                         </option>
                                                         {criteriosActivos.map(crit => (
                                                             <option
                                                                 key={crit.id}
                                                                 value={crit.id}
-                                                                className="bg-slate-900 text-white"
+                                                                className="text-gray-900"
                                                             >
                                                                 {crit.nombre}
                                                             </option>
@@ -597,7 +591,7 @@ export default function AsistenciaClient({
                                                     {/* Micro indicador de guardado */}
                                                     {isSaved && (
                                                         <span
-                                                            className="text-emerald-400 flex items-center gap-0.5 animate-in fade-in"
+                                                            className="text-emerald-600 flex items-center gap-0.5 animate-in fade-in"
                                                             title="Guardado exitosamente"
                                                         >
                                                             <Check className="w-4 h-4 stroke-[3]" />
@@ -614,7 +608,7 @@ export default function AsistenciaClient({
                 </div>
 
                 {/* Footer paginación */}
-                <div className="p-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+                <div className="p-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500 bg-gray-50/50">
                     <span>
                         Total filtrados: <strong>{registrosFiltrados.length}</strong> registros
                     </span>
@@ -622,7 +616,7 @@ export default function AsistenciaClient({
                         <button
                             onClick={() => setPaginaActual(p => Math.max(1, p - 1))}
                             disabled={paginaActual === 1}
-                            className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 disabled:opacity-40 rounded-lg text-slate-300 border border-slate-700"
+                            className="px-3 py-1.5 bg-white hover:bg-gray-50 disabled:opacity-40 rounded-lg text-gray-700 border border-gray-200 font-semibold shadow-2xs"
                         >
                             Anterior
                         </button>
@@ -632,7 +626,7 @@ export default function AsistenciaClient({
                         <button
                             onClick={() => setPaginaActual(p => Math.min(totalPaginas, p + 1))}
                             disabled={paginaActual >= totalPaginas}
-                            className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 disabled:opacity-40 rounded-lg text-slate-300 border border-slate-700"
+                            className="px-3 py-1.5 bg-white hover:bg-gray-50 disabled:opacity-40 rounded-lg text-gray-700 border border-gray-200 font-semibold shadow-2xs"
                         >
                             Siguiente
                         </button>
