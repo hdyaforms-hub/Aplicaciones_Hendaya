@@ -149626,6 +149626,7 @@ export namespace Prisma {
     descripcion: string | null
     color: string | null
     activo: boolean | null
+    solicitaDocumento: boolean | null
     orden: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -149637,6 +149638,7 @@ export namespace Prisma {
     descripcion: string | null
     color: string | null
     activo: boolean | null
+    solicitaDocumento: boolean | null
     orden: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -149648,6 +149650,7 @@ export namespace Prisma {
     descripcion: number
     color: number
     activo: number
+    solicitaDocumento: number
     orden: number
     createdAt: number
     updatedAt: number
@@ -149669,6 +149672,7 @@ export namespace Prisma {
     descripcion?: true
     color?: true
     activo?: true
+    solicitaDocumento?: true
     orden?: true
     createdAt?: true
     updatedAt?: true
@@ -149680,6 +149684,7 @@ export namespace Prisma {
     descripcion?: true
     color?: true
     activo?: true
+    solicitaDocumento?: true
     orden?: true
     createdAt?: true
     updatedAt?: true
@@ -149691,6 +149696,7 @@ export namespace Prisma {
     descripcion?: true
     color?: true
     activo?: true
+    solicitaDocumento?: true
     orden?: true
     createdAt?: true
     updatedAt?: true
@@ -149789,6 +149795,7 @@ export namespace Prisma {
     descripcion: string | null
     color: string | null
     activo: boolean
+    solicitaDocumento: boolean
     orden: number
     createdAt: Date
     updatedAt: Date
@@ -149819,6 +149826,7 @@ export namespace Prisma {
     descripcion?: boolean
     color?: boolean
     activo?: boolean
+    solicitaDocumento?: boolean
     orden?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -149832,6 +149840,7 @@ export namespace Prisma {
     descripcion?: boolean
     color?: boolean
     activo?: boolean
+    solicitaDocumento?: boolean
     orden?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -149843,6 +149852,7 @@ export namespace Prisma {
     descripcion?: boolean
     color?: boolean
     activo?: boolean
+    solicitaDocumento?: boolean
     orden?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -149865,6 +149875,7 @@ export namespace Prisma {
       descripcion: string | null
       color: string | null
       activo: boolean
+      solicitaDocumento: boolean
       orden: number
       createdAt: Date
       updatedAt: Date
@@ -150267,6 +150278,7 @@ export namespace Prisma {
     readonly descripcion: FieldRef<"Pers_Asis_Criterio", 'String'>
     readonly color: FieldRef<"Pers_Asis_Criterio", 'String'>
     readonly activo: FieldRef<"Pers_Asis_Criterio", 'Boolean'>
+    readonly solicitaDocumento: FieldRef<"Pers_Asis_Criterio", 'Boolean'>
     readonly orden: FieldRef<"Pers_Asis_Criterio", 'Int'>
     readonly createdAt: FieldRef<"Pers_Asis_Criterio", 'DateTime'>
     readonly updatedAt: FieldRef<"Pers_Asis_Criterio", 'DateTime'>
@@ -151772,6 +151784,10 @@ export namespace Prisma {
     criterioObservacion: string | null
     criterioAsignadoPor: string | null
     criterioAsignadoAt: Date | null
+    documentoUrl: string | null
+    documentoNombre: string | null
+    documentoSubidoAt: Date | null
+    documentoSubidoPor: string | null
     creadoPor: string | null
     creadoPorId: string | null
     fechaCreacion: Date | null
@@ -151802,6 +151818,10 @@ export namespace Prisma {
     criterioObservacion: string | null
     criterioAsignadoPor: string | null
     criterioAsignadoAt: Date | null
+    documentoUrl: string | null
+    documentoNombre: string | null
+    documentoSubidoAt: Date | null
+    documentoSubidoPor: string | null
     creadoPor: string | null
     creadoPorId: string | null
     fechaCreacion: Date | null
@@ -151832,6 +151852,10 @@ export namespace Prisma {
     criterioObservacion: number
     criterioAsignadoPor: number
     criterioAsignadoAt: number
+    documentoUrl: number
+    documentoNombre: number
+    documentoSubidoAt: number
+    documentoSubidoPor: number
     creadoPor: number
     creadoPorId: number
     fechaCreacion: number
@@ -151874,6 +151898,10 @@ export namespace Prisma {
     criterioObservacion?: true
     criterioAsignadoPor?: true
     criterioAsignadoAt?: true
+    documentoUrl?: true
+    documentoNombre?: true
+    documentoSubidoAt?: true
+    documentoSubidoPor?: true
     creadoPor?: true
     creadoPorId?: true
     fechaCreacion?: true
@@ -151904,6 +151932,10 @@ export namespace Prisma {
     criterioObservacion?: true
     criterioAsignadoPor?: true
     criterioAsignadoAt?: true
+    documentoUrl?: true
+    documentoNombre?: true
+    documentoSubidoAt?: true
+    documentoSubidoPor?: true
     creadoPor?: true
     creadoPorId?: true
     fechaCreacion?: true
@@ -151934,6 +151966,10 @@ export namespace Prisma {
     criterioObservacion?: true
     criterioAsignadoPor?: true
     criterioAsignadoAt?: true
+    documentoUrl?: true
+    documentoNombre?: true
+    documentoSubidoAt?: true
+    documentoSubidoPor?: true
     creadoPor?: true
     creadoPorId?: true
     fechaCreacion?: true
@@ -152051,6 +152087,10 @@ export namespace Prisma {
     criterioObservacion: string | null
     criterioAsignadoPor: string | null
     criterioAsignadoAt: Date | null
+    documentoUrl: string | null
+    documentoNombre: string | null
+    documentoSubidoAt: Date | null
+    documentoSubidoPor: string | null
     creadoPor: string
     creadoPorId: string | null
     fechaCreacion: Date
@@ -152100,6 +152140,10 @@ export namespace Prisma {
     criterioObservacion?: boolean
     criterioAsignadoPor?: boolean
     criterioAsignadoAt?: boolean
+    documentoUrl?: boolean
+    documentoNombre?: boolean
+    documentoSubidoAt?: boolean
+    documentoSubidoPor?: boolean
     creadoPor?: boolean
     creadoPorId?: boolean
     fechaCreacion?: boolean
@@ -152132,6 +152176,10 @@ export namespace Prisma {
     criterioObservacion?: boolean
     criterioAsignadoPor?: boolean
     criterioAsignadoAt?: boolean
+    documentoUrl?: boolean
+    documentoNombre?: boolean
+    documentoSubidoAt?: boolean
+    documentoSubidoPor?: boolean
     creadoPor?: boolean
     creadoPorId?: boolean
     fechaCreacion?: boolean
@@ -152164,6 +152212,10 @@ export namespace Prisma {
     criterioObservacion?: boolean
     criterioAsignadoPor?: boolean
     criterioAsignadoAt?: boolean
+    documentoUrl?: boolean
+    documentoNombre?: boolean
+    documentoSubidoAt?: boolean
+    documentoSubidoPor?: boolean
     creadoPor?: boolean
     creadoPorId?: boolean
     fechaCreacion?: boolean
@@ -152209,6 +152261,10 @@ export namespace Prisma {
       criterioObservacion: string | null
       criterioAsignadoPor: string | null
       criterioAsignadoAt: Date | null
+      documentoUrl: string | null
+      documentoNombre: string | null
+      documentoSubidoAt: Date | null
+      documentoSubidoPor: string | null
       creadoPor: string
       creadoPorId: string | null
       fechaCreacion: Date
@@ -152631,6 +152687,10 @@ export namespace Prisma {
     readonly criterioObservacion: FieldRef<"Pers_Asis_Registro", 'String'>
     readonly criterioAsignadoPor: FieldRef<"Pers_Asis_Registro", 'String'>
     readonly criterioAsignadoAt: FieldRef<"Pers_Asis_Registro", 'DateTime'>
+    readonly documentoUrl: FieldRef<"Pers_Asis_Registro", 'String'>
+    readonly documentoNombre: FieldRef<"Pers_Asis_Registro", 'String'>
+    readonly documentoSubidoAt: FieldRef<"Pers_Asis_Registro", 'DateTime'>
+    readonly documentoSubidoPor: FieldRef<"Pers_Asis_Registro", 'String'>
     readonly creadoPor: FieldRef<"Pers_Asis_Registro", 'String'>
     readonly creadoPorId: FieldRef<"Pers_Asis_Registro", 'String'>
     readonly fechaCreacion: FieldRef<"Pers_Asis_Registro", 'DateTime'>
@@ -155177,6 +155237,7 @@ export namespace Prisma {
     descripcion: 'descripcion',
     color: 'color',
     activo: 'activo',
+    solicitaDocumento: 'solicitaDocumento',
     orden: 'orden',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -155224,6 +155285,10 @@ export namespace Prisma {
     criterioObservacion: 'criterioObservacion',
     criterioAsignadoPor: 'criterioAsignadoPor',
     criterioAsignadoAt: 'criterioAsignadoAt',
+    documentoUrl: 'documentoUrl',
+    documentoNombre: 'documentoNombre',
+    documentoSubidoAt: 'documentoSubidoAt',
+    documentoSubidoPor: 'documentoSubidoPor',
     creadoPor: 'creadoPor',
     creadoPorId: 'creadoPorId',
     fechaCreacion: 'fechaCreacion',
@@ -166502,6 +166567,7 @@ export namespace Prisma {
     descripcion?: StringNullableFilter<"Pers_Asis_Criterio"> | string | null
     color?: StringNullableFilter<"Pers_Asis_Criterio"> | string | null
     activo?: BoolFilter<"Pers_Asis_Criterio"> | boolean
+    solicitaDocumento?: BoolFilter<"Pers_Asis_Criterio"> | boolean
     orden?: IntFilter<"Pers_Asis_Criterio"> | number
     createdAt?: DateTimeFilter<"Pers_Asis_Criterio"> | Date | string
     updatedAt?: DateTimeFilter<"Pers_Asis_Criterio"> | Date | string
@@ -166514,6 +166580,7 @@ export namespace Prisma {
     descripcion?: SortOrderInput | SortOrder
     color?: SortOrderInput | SortOrder
     activo?: SortOrder
+    solicitaDocumento?: SortOrder
     orden?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -166529,6 +166596,7 @@ export namespace Prisma {
     descripcion?: StringNullableFilter<"Pers_Asis_Criterio"> | string | null
     color?: StringNullableFilter<"Pers_Asis_Criterio"> | string | null
     activo?: BoolFilter<"Pers_Asis_Criterio"> | boolean
+    solicitaDocumento?: BoolFilter<"Pers_Asis_Criterio"> | boolean
     orden?: IntFilter<"Pers_Asis_Criterio"> | number
     createdAt?: DateTimeFilter<"Pers_Asis_Criterio"> | Date | string
     updatedAt?: DateTimeFilter<"Pers_Asis_Criterio"> | Date | string
@@ -166541,6 +166609,7 @@ export namespace Prisma {
     descripcion?: SortOrderInput | SortOrder
     color?: SortOrderInput | SortOrder
     activo?: SortOrder
+    solicitaDocumento?: SortOrder
     orden?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -166560,6 +166629,7 @@ export namespace Prisma {
     descripcion?: StringNullableWithAggregatesFilter<"Pers_Asis_Criterio"> | string | null
     color?: StringNullableWithAggregatesFilter<"Pers_Asis_Criterio"> | string | null
     activo?: BoolWithAggregatesFilter<"Pers_Asis_Criterio"> | boolean
+    solicitaDocumento?: BoolWithAggregatesFilter<"Pers_Asis_Criterio"> | boolean
     orden?: IntWithAggregatesFilter<"Pers_Asis_Criterio"> | number
     createdAt?: DateTimeWithAggregatesFilter<"Pers_Asis_Criterio"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Pers_Asis_Criterio"> | Date | string
@@ -166693,6 +166763,10 @@ export namespace Prisma {
     criterioObservacion?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
     criterioAsignadoPor?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
     criterioAsignadoAt?: DateTimeNullableFilter<"Pers_Asis_Registro"> | Date | string | null
+    documentoUrl?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    documentoNombre?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    documentoSubidoAt?: DateTimeNullableFilter<"Pers_Asis_Registro"> | Date | string | null
+    documentoSubidoPor?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
     creadoPor?: StringFilter<"Pers_Asis_Registro"> | string
     creadoPorId?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
     fechaCreacion?: DateTimeFilter<"Pers_Asis_Registro"> | Date | string
@@ -166725,6 +166799,10 @@ export namespace Prisma {
     criterioObservacion?: SortOrderInput | SortOrder
     criterioAsignadoPor?: SortOrderInput | SortOrder
     criterioAsignadoAt?: SortOrderInput | SortOrder
+    documentoUrl?: SortOrderInput | SortOrder
+    documentoNombre?: SortOrderInput | SortOrder
+    documentoSubidoAt?: SortOrderInput | SortOrder
+    documentoSubidoPor?: SortOrderInput | SortOrder
     creadoPor?: SortOrder
     creadoPorId?: SortOrderInput | SortOrder
     fechaCreacion?: SortOrder
@@ -166761,6 +166839,10 @@ export namespace Prisma {
     criterioObservacion?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
     criterioAsignadoPor?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
     criterioAsignadoAt?: DateTimeNullableFilter<"Pers_Asis_Registro"> | Date | string | null
+    documentoUrl?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    documentoNombre?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    documentoSubidoAt?: DateTimeNullableFilter<"Pers_Asis_Registro"> | Date | string | null
+    documentoSubidoPor?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
     creadoPor?: StringFilter<"Pers_Asis_Registro"> | string
     creadoPorId?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
     fechaCreacion?: DateTimeFilter<"Pers_Asis_Registro"> | Date | string
@@ -166793,6 +166875,10 @@ export namespace Prisma {
     criterioObservacion?: SortOrderInput | SortOrder
     criterioAsignadoPor?: SortOrderInput | SortOrder
     criterioAsignadoAt?: SortOrderInput | SortOrder
+    documentoUrl?: SortOrderInput | SortOrder
+    documentoNombre?: SortOrderInput | SortOrder
+    documentoSubidoAt?: SortOrderInput | SortOrder
+    documentoSubidoPor?: SortOrderInput | SortOrder
     creadoPor?: SortOrder
     creadoPorId?: SortOrderInput | SortOrder
     fechaCreacion?: SortOrder
@@ -166831,6 +166917,10 @@ export namespace Prisma {
     criterioObservacion?: StringNullableWithAggregatesFilter<"Pers_Asis_Registro"> | string | null
     criterioAsignadoPor?: StringNullableWithAggregatesFilter<"Pers_Asis_Registro"> | string | null
     criterioAsignadoAt?: DateTimeNullableWithAggregatesFilter<"Pers_Asis_Registro"> | Date | string | null
+    documentoUrl?: StringNullableWithAggregatesFilter<"Pers_Asis_Registro"> | string | null
+    documentoNombre?: StringNullableWithAggregatesFilter<"Pers_Asis_Registro"> | string | null
+    documentoSubidoAt?: DateTimeNullableWithAggregatesFilter<"Pers_Asis_Registro"> | Date | string | null
+    documentoSubidoPor?: StringNullableWithAggregatesFilter<"Pers_Asis_Registro"> | string | null
     creadoPor?: StringWithAggregatesFilter<"Pers_Asis_Registro"> | string
     creadoPorId?: StringNullableWithAggregatesFilter<"Pers_Asis_Registro"> | string | null
     fechaCreacion?: DateTimeWithAggregatesFilter<"Pers_Asis_Registro"> | Date | string
@@ -179435,6 +179525,7 @@ export namespace Prisma {
     descripcion?: string | null
     color?: string | null
     activo?: boolean
+    solicitaDocumento?: boolean
     orden?: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -179447,6 +179538,7 @@ export namespace Prisma {
     descripcion?: string | null
     color?: string | null
     activo?: boolean
+    solicitaDocumento?: boolean
     orden?: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -179459,6 +179551,7 @@ export namespace Prisma {
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     color?: NullableStringFieldUpdateOperationsInput | string | null
     activo?: BoolFieldUpdateOperationsInput | boolean
+    solicitaDocumento?: BoolFieldUpdateOperationsInput | boolean
     orden?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -179471,6 +179564,7 @@ export namespace Prisma {
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     color?: NullableStringFieldUpdateOperationsInput | string | null
     activo?: BoolFieldUpdateOperationsInput | boolean
+    solicitaDocumento?: BoolFieldUpdateOperationsInput | boolean
     orden?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -179483,6 +179577,7 @@ export namespace Prisma {
     descripcion?: string | null
     color?: string | null
     activo?: boolean
+    solicitaDocumento?: boolean
     orden?: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -179494,6 +179589,7 @@ export namespace Prisma {
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     color?: NullableStringFieldUpdateOperationsInput | string | null
     activo?: BoolFieldUpdateOperationsInput | boolean
+    solicitaDocumento?: BoolFieldUpdateOperationsInput | boolean
     orden?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -179505,6 +179601,7 @@ export namespace Prisma {
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     color?: NullableStringFieldUpdateOperationsInput | string | null
     activo?: BoolFieldUpdateOperationsInput | boolean
+    solicitaDocumento?: BoolFieldUpdateOperationsInput | boolean
     orden?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -179656,6 +179753,10 @@ export namespace Prisma {
     criterioObservacion?: string | null
     criterioAsignadoPor?: string | null
     criterioAsignadoAt?: Date | string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    documentoSubidoAt?: Date | string | null
+    documentoSubidoPor?: string | null
     creadoPor: string
     creadoPorId?: string | null
     fechaCreacion?: Date | string
@@ -179688,6 +179789,10 @@ export namespace Prisma {
     criterioObservacion?: string | null
     criterioAsignadoPor?: string | null
     criterioAsignadoAt?: Date | string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    documentoSubidoAt?: Date | string | null
+    documentoSubidoPor?: string | null
     creadoPor: string
     creadoPorId?: string | null
     fechaCreacion?: Date | string
@@ -179716,6 +179821,10 @@ export namespace Prisma {
     criterioObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     criterioAsignadoPor?: NullableStringFieldUpdateOperationsInput | string | null
     criterioAsignadoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoSubidoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    documentoSubidoPor?: NullableStringFieldUpdateOperationsInput | string | null
     creadoPor?: StringFieldUpdateOperationsInput | string
     creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
     fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -179748,6 +179857,10 @@ export namespace Prisma {
     criterioObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     criterioAsignadoPor?: NullableStringFieldUpdateOperationsInput | string | null
     criterioAsignadoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoSubidoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    documentoSubidoPor?: NullableStringFieldUpdateOperationsInput | string | null
     creadoPor?: StringFieldUpdateOperationsInput | string
     creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
     fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -179778,6 +179891,10 @@ export namespace Prisma {
     criterioObservacion?: string | null
     criterioAsignadoPor?: string | null
     criterioAsignadoAt?: Date | string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    documentoSubidoAt?: Date | string | null
+    documentoSubidoPor?: string | null
     creadoPor: string
     creadoPorId?: string | null
     fechaCreacion?: Date | string
@@ -179806,6 +179923,10 @@ export namespace Prisma {
     criterioObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     criterioAsignadoPor?: NullableStringFieldUpdateOperationsInput | string | null
     criterioAsignadoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoSubidoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    documentoSubidoPor?: NullableStringFieldUpdateOperationsInput | string | null
     creadoPor?: StringFieldUpdateOperationsInput | string
     creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
     fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -179836,6 +179957,10 @@ export namespace Prisma {
     criterioObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     criterioAsignadoPor?: NullableStringFieldUpdateOperationsInput | string | null
     criterioAsignadoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoSubidoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    documentoSubidoPor?: NullableStringFieldUpdateOperationsInput | string | null
     creadoPor?: StringFieldUpdateOperationsInput | string
     creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
     fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -187478,6 +187603,7 @@ export namespace Prisma {
     descripcion?: SortOrder
     color?: SortOrder
     activo?: SortOrder
+    solicitaDocumento?: SortOrder
     orden?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -187493,6 +187619,7 @@ export namespace Prisma {
     descripcion?: SortOrder
     color?: SortOrder
     activo?: SortOrder
+    solicitaDocumento?: SortOrder
     orden?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -187504,6 +187631,7 @@ export namespace Prisma {
     descripcion?: SortOrder
     color?: SortOrder
     activo?: SortOrder
+    solicitaDocumento?: SortOrder
     orden?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -187615,6 +187743,10 @@ export namespace Prisma {
     criterioObservacion?: SortOrder
     criterioAsignadoPor?: SortOrder
     criterioAsignadoAt?: SortOrder
+    documentoUrl?: SortOrder
+    documentoNombre?: SortOrder
+    documentoSubidoAt?: SortOrder
+    documentoSubidoPor?: SortOrder
     creadoPor?: SortOrder
     creadoPorId?: SortOrder
     fechaCreacion?: SortOrder
@@ -187650,6 +187782,10 @@ export namespace Prisma {
     criterioObservacion?: SortOrder
     criterioAsignadoPor?: SortOrder
     criterioAsignadoAt?: SortOrder
+    documentoUrl?: SortOrder
+    documentoNombre?: SortOrder
+    documentoSubidoAt?: SortOrder
+    documentoSubidoPor?: SortOrder
     creadoPor?: SortOrder
     creadoPorId?: SortOrder
     fechaCreacion?: SortOrder
@@ -187680,6 +187816,10 @@ export namespace Prisma {
     criterioObservacion?: SortOrder
     criterioAsignadoPor?: SortOrder
     criterioAsignadoAt?: SortOrder
+    documentoUrl?: SortOrder
+    documentoNombre?: SortOrder
+    documentoSubidoAt?: SortOrder
+    documentoSubidoPor?: SortOrder
     creadoPor?: SortOrder
     creadoPorId?: SortOrder
     fechaCreacion?: SortOrder
@@ -207460,6 +207600,10 @@ export namespace Prisma {
     criterioObservacion?: string | null
     criterioAsignadoPor?: string | null
     criterioAsignadoAt?: Date | string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    documentoSubidoAt?: Date | string | null
+    documentoSubidoPor?: string | null
     creadoPor: string
     creadoPorId?: string | null
     fechaCreacion?: Date | string
@@ -207490,6 +207634,10 @@ export namespace Prisma {
     criterioObservacion?: string | null
     criterioAsignadoPor?: string | null
     criterioAsignadoAt?: Date | string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    documentoSubidoAt?: Date | string | null
+    documentoSubidoPor?: string | null
     creadoPor: string
     creadoPorId?: string | null
     fechaCreacion?: Date | string
@@ -207549,6 +207697,10 @@ export namespace Prisma {
     criterioObservacion?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
     criterioAsignadoPor?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
     criterioAsignadoAt?: DateTimeNullableFilter<"Pers_Asis_Registro"> | Date | string | null
+    documentoUrl?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    documentoNombre?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    documentoSubidoAt?: DateTimeNullableFilter<"Pers_Asis_Registro"> | Date | string | null
+    documentoSubidoPor?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
     creadoPor?: StringFilter<"Pers_Asis_Registro"> | string
     creadoPorId?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
     fechaCreacion?: DateTimeFilter<"Pers_Asis_Registro"> | Date | string
@@ -207577,6 +207729,10 @@ export namespace Prisma {
     criterioObservacion?: string | null
     criterioAsignadoPor?: string | null
     criterioAsignadoAt?: Date | string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    documentoSubidoAt?: Date | string | null
+    documentoSubidoPor?: string | null
     creadoPor: string
     creadoPorId?: string | null
     fechaCreacion?: Date | string
@@ -207607,6 +207763,10 @@ export namespace Prisma {
     criterioObservacion?: string | null
     criterioAsignadoPor?: string | null
     criterioAsignadoAt?: Date | string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    documentoSubidoAt?: Date | string | null
+    documentoSubidoPor?: string | null
     creadoPor: string
     creadoPorId?: string | null
     fechaCreacion?: Date | string
@@ -207692,6 +207852,7 @@ export namespace Prisma {
     descripcion?: string | null
     color?: string | null
     activo?: boolean
+    solicitaDocumento?: boolean
     orden?: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -207703,6 +207864,7 @@ export namespace Prisma {
     descripcion?: string | null
     color?: string | null
     activo?: boolean
+    solicitaDocumento?: boolean
     orden?: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -207777,6 +207939,7 @@ export namespace Prisma {
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     color?: NullableStringFieldUpdateOperationsInput | string | null
     activo?: BoolFieldUpdateOperationsInput | boolean
+    solicitaDocumento?: BoolFieldUpdateOperationsInput | boolean
     orden?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -207788,6 +207951,7 @@ export namespace Prisma {
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     color?: NullableStringFieldUpdateOperationsInput | string | null
     activo?: BoolFieldUpdateOperationsInput | boolean
+    solicitaDocumento?: BoolFieldUpdateOperationsInput | boolean
     orden?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -212694,6 +212858,10 @@ export namespace Prisma {
     criterioObservacion?: string | null
     criterioAsignadoPor?: string | null
     criterioAsignadoAt?: Date | string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    documentoSubidoAt?: Date | string | null
+    documentoSubidoPor?: string | null
     creadoPor: string
     creadoPorId?: string | null
     fechaCreacion?: Date | string
@@ -212722,6 +212890,10 @@ export namespace Prisma {
     criterioObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     criterioAsignadoPor?: NullableStringFieldUpdateOperationsInput | string | null
     criterioAsignadoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoSubidoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    documentoSubidoPor?: NullableStringFieldUpdateOperationsInput | string | null
     creadoPor?: StringFieldUpdateOperationsInput | string
     creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
     fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -212752,6 +212924,10 @@ export namespace Prisma {
     criterioObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     criterioAsignadoPor?: NullableStringFieldUpdateOperationsInput | string | null
     criterioAsignadoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoSubidoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    documentoSubidoPor?: NullableStringFieldUpdateOperationsInput | string | null
     creadoPor?: StringFieldUpdateOperationsInput | string
     creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
     fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -212781,6 +212957,10 @@ export namespace Prisma {
     criterioObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     criterioAsignadoPor?: NullableStringFieldUpdateOperationsInput | string | null
     criterioAsignadoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoSubidoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    documentoSubidoPor?: NullableStringFieldUpdateOperationsInput | string | null
     creadoPor?: StringFieldUpdateOperationsInput | string
     creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
     fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -212810,6 +212990,10 @@ export namespace Prisma {
     criterioObservacion?: string | null
     criterioAsignadoPor?: string | null
     criterioAsignadoAt?: Date | string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    documentoSubidoAt?: Date | string | null
+    documentoSubidoPor?: string | null
     creadoPor: string
     creadoPorId?: string | null
     fechaCreacion?: Date | string
@@ -212838,6 +213022,10 @@ export namespace Prisma {
     criterioObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     criterioAsignadoPor?: NullableStringFieldUpdateOperationsInput | string | null
     criterioAsignadoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoSubidoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    documentoSubidoPor?: NullableStringFieldUpdateOperationsInput | string | null
     creadoPor?: StringFieldUpdateOperationsInput | string
     creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
     fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -212868,6 +213056,10 @@ export namespace Prisma {
     criterioObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     criterioAsignadoPor?: NullableStringFieldUpdateOperationsInput | string | null
     criterioAsignadoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoSubidoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    documentoSubidoPor?: NullableStringFieldUpdateOperationsInput | string | null
     creadoPor?: StringFieldUpdateOperationsInput | string
     creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
     fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -212897,6 +213089,10 @@ export namespace Prisma {
     criterioObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     criterioAsignadoPor?: NullableStringFieldUpdateOperationsInput | string | null
     criterioAsignadoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    documentoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    documentoSubidoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    documentoSubidoPor?: NullableStringFieldUpdateOperationsInput | string | null
     creadoPor?: StringFieldUpdateOperationsInput | string
     creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
     fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string

@@ -2268,15 +2268,16 @@ model Cal_ResSan_Registro {
 }
 
 model Pers_Asis_Criterio {
-  id          String   @id @default(uuid())
-  nombre      String   @unique
-  descripcion String?
-  color       String?  @default("#0891b2")
-  activo      Boolean  @default(true)
-  orden       Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  registros   Pers_Asis_Registro[]
+  id                 String   @id @default(uuid())
+  nombre             String   @unique
+  descripcion        String?
+  color              String?  @default("#0891b2")
+  activo             Boolean  @default(true)
+  solicitaDocumento  Boolean  @default(false)
+  orden              Int      @default(0)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  registros          Pers_Asis_Registro[]
 
   @@map("Pers_Asis_Criterio")
 }
@@ -2320,6 +2321,10 @@ model Pers_Asis_Registro {
   criterioObservacion      String?              @db.Text
   criterioAsignadoPor      String?
   criterioAsignadoAt       DateTime?
+  documentoUrl             String?
+  documentoNombre          String?
+  documentoSubidoAt        DateTime?
+  documentoSubidoPor       String?
   creadoPor                String
   creadoPorId              String?
   fechaCreacion            DateTime             @default(now())

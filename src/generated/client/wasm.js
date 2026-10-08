@@ -1886,6 +1886,7 @@ exports.Prisma.Pers_Asis_CriterioScalarFieldEnum = {
   descripcion: 'descripcion',
   color: 'color',
   activo: 'activo',
+  solicitaDocumento: 'solicitaDocumento',
   orden: 'orden',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -1927,6 +1928,10 @@ exports.Prisma.Pers_Asis_RegistroScalarFieldEnum = {
   criterioObservacion: 'criterioObservacion',
   criterioAsignadoPor: 'criterioAsignadoPor',
   criterioAsignadoAt: 'criterioAsignadoAt',
+  documentoUrl: 'documentoUrl',
+  documentoNombre: 'documentoNombre',
+  documentoSubidoAt: 'documentoSubidoAt',
+  documentoSubidoPor: 'documentoSubidoPor',
   creadoPor: 'creadoPor',
   creadoPorId: 'creadoPorId',
   fechaCreacion: 'fechaCreacion',
