@@ -4,7 +4,21 @@ import bcrypt from 'bcryptjs'
 import { encrypt } from '@/lib/session'
 import { logAuditAction } from '@/lib/audit'
 
-// Force recompilation timestamp: 2026-07-28 11:35:45
+let sucursalColumnsEnsured = false
+
+async function ensureSucursalSalaColumns() {
+    if (sucursalColumnsEnsured) return
+    try {
+        await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Sucursal" ADD COLUMN IF NOT EXISTS "tieneSalaReuniones" BOOLEAN NOT NULL DEFAULT false;`)
+        await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Sucursal" ADD COLUMN IF NOT EXISTS "salaCompartidaId" TEXT;`)
+        await rawPrisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "sucursal_sala_compartida_idx" ON "Sucursal"("salaCompartidaId");`)
+        sucursalColumnsEnsured = true
+    } catch (e) {
+        console.error('Error auto-healing Sucursal sala columns:', e)
+    }
+}
+
+// Force recompilation timestamp: 2026-10-08 13:52:00
 export async function POST(request: Request) {
     console.log('*** POST /api/auth/login CALLED ***')
     try {
@@ -22,15 +36,38 @@ export async function POST(request: Request) {
 
         console.log(`Intentando login para usuario: ${cleanUsername}`)
 
-        const user = await rawPrisma.user.findFirst({
-            where: {
-                username: {
-                    equals: cleanUsername,
-                    mode: 'insensitive'
-                }
-            },
-            include: { role: true, sucursales: true },
-        })
+        await ensureSucursalSalaColumns()
+
+        let user: any = null
+        try {
+            user = await rawPrisma.user.findFirst({
+                where: {
+                    username: {
+                        equals: cleanUsername,
+                        mode: 'insensitive'
+                    }
+                },
+                include: { role: true, sucursales: true },
+            })
+        } catch (dbErr: any) {
+            // Auto-recuperación si la base de datos de producción aún no tiene las columnas físicas
+            if (dbErr?.message?.includes('tieneSalaReuniones') || dbErr?.message?.includes('salaCompartidaId')) {
+                await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Sucursal" ADD COLUMN IF NOT EXISTS "tieneSalaReuniones" BOOLEAN NOT NULL DEFAULT false;`)
+                await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Sucursal" ADD COLUMN IF NOT EXISTS "salaCompartidaId" TEXT;`)
+                await rawPrisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "sucursal_sala_compartida_idx" ON "Sucursal"("salaCompartidaId");`)
+                user = await rawPrisma.user.findFirst({
+                    where: {
+                        username: {
+                            equals: cleanUsername,
+                            mode: 'insensitive'
+                        }
+                    },
+                    include: { role: true, sucursales: true },
+                })
+            } else {
+                throw dbErr
+            }
+        }
 
         if (!user) {
             console.log(`Usuario no encontrado: ${cleanUsername}`)
