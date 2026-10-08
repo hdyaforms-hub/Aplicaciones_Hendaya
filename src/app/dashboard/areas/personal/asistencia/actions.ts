@@ -25,6 +25,7 @@ export interface AsistenciaRegistroDTO {
     fechaTexto: string
     rbd: number
     establecimiento: string
+    supervisorNombre: string
     grupoOriginal: string
     cargo: string | null
     permisoParcial: string | null
@@ -101,6 +102,21 @@ export async function getAsistenciaRegistrosAction(filtros?: {
         const criterios: any[] = await (rawPrisma as any).pers_Asis_Criterio.findMany()
         const criterioColorMap = new Map<string, string | null>(criterios.map((c: any) => [c.id, c.color]))
 
+        // Obtener supervisores asociados a RBDs
+        const supervisoresRbds: any[] = await (rawPrisma as any).supervisorRbd.findMany({
+            include: {
+                supervisor: {
+                    select: { nombre: true, apellido: true }
+                }
+            }
+        })
+        const supervisorMap = new Map<number, string>()
+        for (const s of supervisoresRbds) {
+            if (s.supervisor) {
+                supervisorMap.set(s.rbd, `${s.supervisor.nombre} ${s.supervisor.apellido}`.trim())
+            }
+        }
+
         // Desencriptar datos sensibles en memoria
         const result: AsistenciaRegistroDTO[] = registros.map((r: any) => {
             const rut = decryptPersonalText(r.rutEnc)
@@ -118,6 +134,7 @@ export async function getAsistenciaRegistrosAction(filtros?: {
                 fechaTexto: r.fecha,
                 rbd: r.rbd,
                 establecimiento: r.establecimiento,
+                supervisorNombre: supervisorMap.get(r.rbd) || 'Sin Asignar',
                 grupoOriginal: r.grupoOriginal || '',
                 cargo: r.cargo,
                 permisoParcial: r.permisoParcial,

@@ -63,31 +63,52 @@ export function decryptPersonalText(cipherText: string): string {
     if (!cipherText || !cipherText.trim()) return ''
     const trimmed = cipherText.trim()
 
-    // Si no tiene prefijo, devolver texto plano (retrocompatibilidad)
-    if (!trimmed.startsWith('ENC_PERS::') && !trimmed.startsWith('ENC_NOM::')) {
-        return trimmed
+    // Si tiene formato ENC_PERS:: o ENC_NOM::
+    if (trimmed.startsWith('ENC_PERS::') || trimmed.startsWith('ENC_NOM::')) {
+        try {
+            const parts = trimmed.split('::')
+            if (parts.length === 4) {
+                const iv = Buffer.from(parts[1], 'hex')
+                const authTag = Buffer.from(parts[2], 'hex')
+                const encryptedHex = parts[3]
+
+                const key = getKey()
+                const decipher = crypto.createDecipheriv(ALGORITHM, key, iv)
+                decipher.setAuthTag(authTag)
+
+                let decrypted = decipher.update(encryptedHex, 'hex', 'utf8')
+                decrypted += decipher.final('utf8')
+                return decrypted
+            }
+        } catch (error) {
+            console.error('Error al descifrar dato personal (::):', error)
+            return trimmed
+        }
     }
 
-    try {
-        const parts = trimmed.split('::')
-        if (parts.length !== 4) return trimmed
+    // Formato iv:authTag:encrypted (3 partes separadas por dos puntos)
+    if (trimmed.includes(':')) {
+        const colonParts = trimmed.split(':')
+        if (colonParts.length === 3 && colonParts[0].length === 24 && colonParts[1].length === 32) {
+            try {
+                const iv = Buffer.from(colonParts[0], 'hex')
+                const authTag = Buffer.from(colonParts[1], 'hex')
+                const encryptedHex = colonParts[2]
 
-        const iv = Buffer.from(parts[1], 'hex')
-        const authTag = Buffer.from(parts[2], 'hex')
-        const encryptedHex = parts[3]
+                const key = getKey()
+                const decipher = crypto.createDecipheriv(ALGORITHM, key, iv)
+                decipher.setAuthTag(authTag)
 
-        const key = getKey()
-        const decipher = crypto.createDecipheriv(ALGORITHM, key, iv)
-        decipher.setAuthTag(authTag)
-
-        let decrypted = decipher.update(encryptedHex, 'hex', 'utf8')
-        decrypted += decipher.final('utf8')
-
-        return decrypted
-    } catch (error) {
-        console.error('Error al descifrar dato personal:', error)
-        return '*** ERROR DESCIFRADO ***'
+                let decrypted = decipher.update(encryptedHex, 'hex', 'utf8')
+                decrypted += decipher.final('utf8')
+                return decrypted
+            } catch (err) {
+                console.error('Error al descifrar dato personal (:):', err)
+            }
+        }
     }
+
+    return trimmed
 }
 
 /**

@@ -440,3 +440,30 @@ export async function getHistorialCargasAction() {
         return { success: false, error: error.message || 'Error al obtener historial de cargas' }
     }
 }
+
+export async function eliminarCargaMasivaAction(cargaId: string): Promise<{ success: boolean; error?: string; eliminados?: number }> {
+    if (!await checkPermission()) {
+        return { success: false, error: 'No tienes permisos para eliminar cargas de asistencia' }
+    }
+    await ensurePersonalAsistenciaTables()
+
+    try {
+        // 1. Eliminar todos los registros de Pers_Asis_Registro asociados a esta cargaId
+        const delRegistros = await (rawPrisma as any).pers_Asis_Registro.deleteMany({
+            where: { cargaId }
+        })
+
+        // 2. Eliminar la cabecera en Pers_Asis_Carga
+        await (rawPrisma as any).pers_Asis_Carga.delete({
+            where: { id: cargaId }
+        })
+
+        revalidatePath(PATH_CARGA)
+        revalidatePath(PATH_ASISTENCIA)
+
+        return { success: true, eliminados: delRegistros.count }
+    } catch (error: any) {
+        console.error('Error al eliminar carga masiva:', error)
+        return { success: false, error: error.message || 'Error al eliminar la carga' }
+    }
+}

@@ -5,6 +5,7 @@ import {
     procesarArchivoExcelSubidoAction,
     procesarDesdeRutaServidorAction,
     getHistorialCargasAction,
+    eliminarCargaMasivaAction,
     ResultadoProcesamiento
 } from './actions'
 import {
@@ -18,7 +19,8 @@ import {
     History,
     ArrowRight,
     FileText,
-    AlertCircle
+    AlertCircle,
+    Trash2
 } from 'lucide-react'
 import Link from 'next/link'
 
@@ -44,7 +46,28 @@ export default function CargaMasivaClient({ initialCargas }: { initialCargas: Ca
     const [isPending, startTransition] = useTransition()
     const [lastResult, setLastResult] = useState<ResultadoProcesamiento | null>(null)
     const [errorMsg, setErrorMsg] = useState<string | null>(null)
+    const [successMsg, setSuccessMsg] = useState<string | null>(null)
     const fileInputRef = useRef<HTMLInputElement>(null)
+
+    const handleEliminarCarga = async (cargaId: string, archivoNombre: string) => {
+        if (!confirm(`¿Estás seguro de eliminar la carga "${archivoNombre}" y TODOS sus registros asociados de asistencia? Esta acción corregirá la base de datos eliminando los registros cargados.`)) {
+            return
+        }
+
+        setErrorMsg(null)
+        setSuccessMsg(null)
+
+        startTransition(async () => {
+            const res = await eliminarCargaMasivaAction(cargaId)
+            if (res.success) {
+                setCargas(prev => prev.filter(c => c.id !== cargaId))
+                setSuccessMsg(`Carga "${archivoNombre}" eliminada correctamente (${res.eliminados || 0} registros removidos).`)
+                setTimeout(() => setSuccessMsg(null), 4000)
+            } else {
+                setErrorMsg(res.error || 'No se pudo eliminar la carga')
+            }
+        })
+    }
 
     const handleFileSelect = (file: File) => {
         if (!file.name.endsWith('.xlsx') && !file.name.endsWith('.xls')) {
@@ -298,6 +321,14 @@ export default function CargaMasivaClient({ initialCargas }: { initialCargas: Ca
                     </div>
                 )}
 
+                {/* Mensaje de Éxito */}
+                {successMsg && (
+                    <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-xs flex items-center gap-3 animate-in fade-in">
+                        <CheckCircle2 className="w-5 h-5 flex-shrink-0 text-emerald-600" />
+                        <span className="font-semibold">{successMsg}</span>
+                    </div>
+                )}
+
                 {/* Botón de Ejecución */}
                 <div className="pt-2 flex justify-end">
                     <button
@@ -406,12 +437,13 @@ export default function CargaMasivaClient({ initialCargas }: { initialCargas: Ca
                                 <th className="px-6 py-3.5 text-center">Actualizados</th>
                                 <th className="px-6 py-3.5">Subido Por</th>
                                 <th className="px-6 py-3.5">Fecha y Hora</th>
+                                <th className="px-6 py-3.5 text-right">Acciones</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100">
                             {cargas.length === 0 ? (
                                 <tr>
-                                    <td colSpan={7} className="text-center py-10 text-gray-400">
+                                    <td colSpan={8} className="text-center py-10 text-gray-400">
                                         Aún no se han realizado cargas masivas de asistencia.
                                     </td>
                                 </tr>
@@ -450,6 +482,16 @@ export default function CargaMasivaClient({ initialCargas }: { initialCargas: Ca
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-xs text-gray-500">
                                             {new Date(c.createdAt).toLocaleString('es-CL')}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-right">
+                                            <button
+                                                onClick={() => handleEliminarCarga(c.id, c.archivoNombre)}
+                                                disabled={isPending}
+                                                className="p-1.5 text-gray-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors border border-transparent hover:border-rose-200"
+                                                title="Eliminar carga y registros asociados"
+                                            >
+                                                <Trash2 className="w-4 h-4" />
+                                            </button>
                                         </td>
                                     </tr>
                                 ))

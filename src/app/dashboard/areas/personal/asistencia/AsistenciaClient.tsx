@@ -199,10 +199,10 @@ export default function AsistenciaClient({
             'Fecha': r.fechaTexto || r.fecha,
             'RBD': r.rbd,
             'Establecimiento': r.establecimiento,
+            'Supervisor': r.supervisorNombre,
             'RUT': r.rut,
             'Colaborador': r.nombreCompleto,
             'Cargo': r.cargo || '',
-            'Permiso Parcial': r.permisoParcial || '',
             'Criterio Ausencia': r.criterioNombre || 'SIN CRITERIO',
             'Cargado Por': r.creadoPor,
             'Fecha Carga': new Date(r.fechaCreacion).toLocaleString('es-CL'),
@@ -253,13 +253,6 @@ export default function AsistenciaClient({
                         <Download className="w-3.5 h-3.5" />
                         <span>Exportar Excel</span>
                     </button>
-                    <Link
-                        href="/dashboard/areas/personal/carga-masiva"
-                        className="flex items-center gap-1.5 px-3.5 py-2 bg-gradient-to-r from-cyan-600 to-sky-600 hover:from-cyan-700 hover:to-sky-700 text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-cyan-600/20"
-                    >
-                        <UploadCloud className="w-3.5 h-3.5" />
-                        <span>Carga Masiva</span>
-                    </Link>
                 </div>
             </div>
 
@@ -488,10 +481,10 @@ export default function AsistenciaClient({
                                 <th className="px-4 py-3.5 whitespace-nowrap">Fecha</th>
                                 <th className="px-4 py-3.5 whitespace-nowrap">RBD</th>
                                 <th className="px-4 py-3.5 whitespace-nowrap">Establecimiento</th>
+                                <th className="px-4 py-3.5 whitespace-nowrap">Supervisor</th>
                                 <th className="px-4 py-3.5 whitespace-nowrap">RUT</th>
                                 <th className="px-4 py-3.5 whitespace-nowrap">Colaborador</th>
                                 <th className="px-4 py-3.5 whitespace-nowrap">Cargo</th>
-                                <th className="px-4 py-3.5 whitespace-nowrap">Permiso Parcial</th>
                                 <th className="px-4 py-3.5 whitespace-nowrap">Trazabilidad Carga</th>
                                 <th className="px-4 py-3.5 whitespace-nowrap min-w-[240px] text-cyan-700 font-bold">
                                     Criterio de Ausencia
@@ -521,8 +514,15 @@ export default function AsistenciaClient({
                                             </td>
 
                                             {/* Establecimiento */}
-                                            <td className="px-4 py-3 max-w-[200px] truncate" title={r.establecimiento}>
+                                            <td className="px-4 py-3 max-w-[180px] truncate" title={r.establecimiento}>
                                                 <span className="font-semibold text-gray-900">{r.establecimiento}</span>
+                                            </td>
+
+                                            {/* Supervisor */}
+                                            <td className="px-4 py-3 whitespace-nowrap">
+                                                <span className="text-xs font-medium text-cyan-800 bg-cyan-50 px-2 py-0.5 rounded-md border border-cyan-100">
+                                                    {r.supervisorNombre}
+                                                </span>
                                             </td>
 
                                             {/* RUT (Desencriptado) */}
@@ -538,11 +538,6 @@ export default function AsistenciaClient({
                                             {/* Cargo */}
                                             <td className="px-4 py-3 whitespace-nowrap text-gray-600">
                                                 {r.cargo || <span className="italic text-gray-400">-</span>}
-                                            </td>
-
-                                            {/* Permiso Parcial */}
-                                            <td className="px-4 py-3 whitespace-nowrap text-gray-600">
-                                                {r.permisoParcial || <span className="italic text-gray-400">-</span>}
                                             </td>
 
                                             {/* Trazabilidad Carga */}
