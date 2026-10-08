@@ -13,7 +13,10 @@ import {
     Check,
     UploadCloud,
     SlidersHorizontal,
-    Info
+    Info,
+    ArrowUpDown,
+    ArrowUp,
+    ArrowDown
 } from 'lucide-react'
 import Link from 'next/link'
 import * as xlsx from 'xlsx'
@@ -64,7 +67,22 @@ export default function AsistenciaClient({
 
     // Paginación
     const [paginaActual, setPaginaActual] = useState(1)
-    const porPagina = 25
+    const porPagina = 10
+
+    // Ordenamiento
+    type SortField = 'fecha' | 'rbd' | 'establecimiento' | 'supervisorNombre' | 'rut' | 'nombreCompleto' | 'cargo' | 'criterioNombre'
+    const [sortField, setSortField] = useState<SortField>('fecha')
+    const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc')
+
+    const handleSort = (field: SortField) => {
+        if (sortField === field) {
+            setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc')
+        } else {
+            setSortField(field)
+            setSortDirection('asc')
+        }
+        setPaginaActual(1)
+    }
 
     // Opciones activas de criterios para el select
     const criteriosActivos = useMemo(() => {
@@ -123,13 +141,35 @@ export default function AsistenciaClient({
         })
     }, [registros, filtroRbdSeleccionado, busquedaRbdNombre, filtroFecha, filtroRut, filtroNombre, filtroCriterio])
 
+    // Ordenamiento de registros filtrados
+    const registrosOrdenados = useMemo(() => {
+        return [...registrosFiltrados].sort((a, b) => {
+            let valA: any = a[sortField]
+            let valB: any = b[sortField]
+
+            if (valA === null || valA === undefined) valA = ''
+            if (valB === null || valB === undefined) valB = ''
+
+            if (sortField === 'rbd') {
+                const numA = Number(valA) || 0
+                const numB = Number(valB) || 0
+                return sortDirection === 'asc' ? numA - numB : numB - numA
+            }
+
+            const strA = String(valA).toLowerCase()
+            const strB = String(valB).toLowerCase()
+            const cmp = strA.localeCompare(strB, 'es', { numeric: true, sensitivity: 'base' })
+            return sortDirection === 'asc' ? cmp : -cmp
+        })
+    }, [registrosFiltrados, sortField, sortDirection])
+
     // Registros de la página actual
     const registrosPaginados = useMemo(() => {
         const start = (paginaActual - 1) * porPagina
-        return registrosFiltrados.slice(start, start + porPagina)
-    }, [registrosFiltrados, paginaActual, porPagina])
+        return registrosOrdenados.slice(start, start + porPagina)
+    }, [registrosOrdenados, paginaActual, porPagina])
 
-    const totalPaginas = Math.ceil(registrosFiltrados.length / porPagina) || 1
+    const totalPaginas = Math.ceil(registrosOrdenados.length / porPagina) || 1
 
     // Manejar cambio de Criterio de Ausencia en vivo
     const handleCriterioChange = async (registroId: string, nuevoCriterioIdStr: string) => {
@@ -213,8 +253,8 @@ export default function AsistenciaClient({
 
         const ws = xlsx.utils.json_to_sheet(datosExport)
         const wb = xlsx.utils.book_new()
-        xlsx.utils.book_append_sheet(wb, ws, 'Asistencia')
-        xlsx.writeFile(wb, `Reporte_Asistencia_${new Date().toISOString().slice(0, 10)}.xlsx`)
+        xlsx.utils.book_append_sheet(wb, ws, 'Ausentismo')
+        xlsx.writeFile(wb, `Reporte_Ausentismo_${new Date().toISOString().slice(0, 10)}.xlsx`)
     }
 
     const conCriterio = registrosFiltrados.filter(r => r.criterioId !== null).length
@@ -230,7 +270,7 @@ export default function AsistenciaClient({
                         <span>Áreas · Recursos Humanos</span>
                     </div>
                     <h1 className="text-2xl font-bold text-gray-900 tracking-tight flex items-center gap-3">
-                        Módulo de Asistencia
+                        Módulo de Ausentismo
                     </h1>
                     <p className="text-sm text-gray-500 mt-1 max-w-2xl">
                         Visualización y gestión diaria de ausencias del personal. Asocia directamente los motivos de ausentismo o tipificación a cada colaborador y establecimiento.
@@ -478,16 +518,183 @@ export default function AsistenciaClient({
                     <table className="w-full text-left text-xs text-gray-700">
                         <thead className="bg-gray-50 font-semibold uppercase text-gray-500 border-b border-gray-200 tracking-wider">
                             <tr>
-                                <th className="px-4 py-3.5 whitespace-nowrap">Fecha</th>
-                                <th className="px-4 py-3.5 whitespace-nowrap">RBD</th>
-                                <th className="px-4 py-3.5 whitespace-nowrap">Establecimiento</th>
-                                <th className="px-4 py-3.5 whitespace-nowrap">Supervisor</th>
-                                <th className="px-4 py-3.5 whitespace-nowrap">RUT</th>
-                                <th className="px-4 py-3.5 whitespace-nowrap">Colaborador</th>
-                                <th className="px-4 py-3.5 whitespace-nowrap">Cargo</th>
+                                {/* Fecha */}
+                                <th
+                                    onClick={() => handleSort('fecha')}
+                                    className="px-4 py-3.5 whitespace-nowrap cursor-pointer select-none transition-colors group hover:bg-gray-100"
+                                    title={`Ordenar por Fecha (${sortField === 'fecha' ? (sortDirection === 'asc' ? 'Descendente' : 'Ascendente') : 'Ascendente'})`}
+                                >
+                                    <div className="flex items-center gap-1.5">
+                                        <span className={sortField === 'fecha' ? 'text-cyan-800 font-bold' : ''}>Fecha</span>
+                                        <span className="inline-flex">
+                                            {sortField === 'fecha' ? (
+                                                sortDirection === 'asc' ? (
+                                                    <ArrowUp className="w-3.5 h-3.5 text-cyan-600 stroke-[2.5]" />
+                                                ) : (
+                                                    <ArrowDown className="w-3.5 h-3.5 text-cyan-600 stroke-[2.5]" />
+                                                )
+                                            ) : (
+                                                <ArrowUpDown className="w-3.5 h-3.5 text-gray-400 opacity-40 group-hover:opacity-100 transition-opacity" />
+                                            )}
+                                        </span>
+                                    </div>
+                                </th>
+
+                                {/* RBD */}
+                                <th
+                                    onClick={() => handleSort('rbd')}
+                                    className="px-4 py-3.5 whitespace-nowrap cursor-pointer select-none transition-colors group hover:bg-gray-100"
+                                    title={`Ordenar por RBD (${sortField === 'rbd' ? (sortDirection === 'asc' ? 'Descendente' : 'Ascendente') : 'Ascendente'})`}
+                                >
+                                    <div className="flex items-center gap-1.5">
+                                        <span className={sortField === 'rbd' ? 'text-cyan-800 font-bold' : ''}>RBD</span>
+                                        <span className="inline-flex">
+                                            {sortField === 'rbd' ? (
+                                                sortDirection === 'asc' ? (
+                                                    <ArrowUp className="w-3.5 h-3.5 text-cyan-600 stroke-[2.5]" />
+                                                ) : (
+                                                    <ArrowDown className="w-3.5 h-3.5 text-cyan-600 stroke-[2.5]" />
+                                                )
+                                            ) : (
+                                                <ArrowUpDown className="w-3.5 h-3.5 text-gray-400 opacity-40 group-hover:opacity-100 transition-opacity" />
+                                            )}
+                                        </span>
+                                    </div>
+                                </th>
+
+                                {/* Establecimiento */}
+                                <th
+                                    onClick={() => handleSort('establecimiento')}
+                                    className="px-4 py-3.5 whitespace-nowrap cursor-pointer select-none transition-colors group hover:bg-gray-100"
+                                    title={`Ordenar por Establecimiento (${sortField === 'establecimiento' ? (sortDirection === 'asc' ? 'Descendente' : 'Ascendente') : 'Ascendente'})`}
+                                >
+                                    <div className="flex items-center gap-1.5">
+                                        <span className={sortField === 'establecimiento' ? 'text-cyan-800 font-bold' : ''}>Establecimiento</span>
+                                        <span className="inline-flex">
+                                            {sortField === 'establecimiento' ? (
+                                                sortDirection === 'asc' ? (
+                                                    <ArrowUp className="w-3.5 h-3.5 text-cyan-600 stroke-[2.5]" />
+                                                ) : (
+                                                    <ArrowDown className="w-3.5 h-3.5 text-cyan-600 stroke-[2.5]" />
+                                                )
+                                            ) : (
+                                                <ArrowUpDown className="w-3.5 h-3.5 text-gray-400 opacity-40 group-hover:opacity-100 transition-opacity" />
+                                            )}
+                                        </span>
+                                    </div>
+                                </th>
+
+                                {/* Supervisor */}
+                                <th
+                                    onClick={() => handleSort('supervisorNombre')}
+                                    className="px-4 py-3.5 whitespace-nowrap cursor-pointer select-none transition-colors group hover:bg-gray-100"
+                                    title={`Ordenar por Supervisor (${sortField === 'supervisorNombre' ? (sortDirection === 'asc' ? 'Descendente' : 'Ascendente') : 'Ascendente'})`}
+                                >
+                                    <div className="flex items-center gap-1.5">
+                                        <span className={sortField === 'supervisorNombre' ? 'text-cyan-800 font-bold' : ''}>Supervisor</span>
+                                        <span className="inline-flex">
+                                            {sortField === 'supervisorNombre' ? (
+                                                sortDirection === 'asc' ? (
+                                                    <ArrowUp className="w-3.5 h-3.5 text-cyan-600 stroke-[2.5]" />
+                                                ) : (
+                                                    <ArrowDown className="w-3.5 h-3.5 text-cyan-600 stroke-[2.5]" />
+                                                )
+                                            ) : (
+                                                <ArrowUpDown className="w-3.5 h-3.5 text-gray-400 opacity-40 group-hover:opacity-100 transition-opacity" />
+                                            )}
+                                        </span>
+                                    </div>
+                                </th>
+
+                                {/* RUT */}
+                                <th
+                                    onClick={() => handleSort('rut')}
+                                    className="px-4 py-3.5 whitespace-nowrap cursor-pointer select-none transition-colors group hover:bg-gray-100"
+                                    title={`Ordenar por RUT (${sortField === 'rut' ? (sortDirection === 'asc' ? 'Descendente' : 'Ascendente') : 'Ascendente'})`}
+                                >
+                                    <div className="flex items-center gap-1.5">
+                                        <span className={sortField === 'rut' ? 'text-cyan-800 font-bold' : ''}>RUT</span>
+                                        <span className="inline-flex">
+                                            {sortField === 'rut' ? (
+                                                sortDirection === 'asc' ? (
+                                                    <ArrowUp className="w-3.5 h-3.5 text-cyan-600 stroke-[2.5]" />
+                                                ) : (
+                                                    <ArrowDown className="w-3.5 h-3.5 text-cyan-600 stroke-[2.5]" />
+                                                )
+                                            ) : (
+                                                <ArrowUpDown className="w-3.5 h-3.5 text-gray-400 opacity-40 group-hover:opacity-100 transition-opacity" />
+                                            )}
+                                        </span>
+                                    </div>
+                                </th>
+
+                                {/* Colaborador */}
+                                <th
+                                    onClick={() => handleSort('nombreCompleto')}
+                                    className="px-4 py-3.5 whitespace-nowrap cursor-pointer select-none transition-colors group hover:bg-gray-100"
+                                    title={`Ordenar por Colaborador (${sortField === 'nombreCompleto' ? (sortDirection === 'asc' ? 'Descendente' : 'Ascendente') : 'Ascendente'})`}
+                                >
+                                    <div className="flex items-center gap-1.5">
+                                        <span className={sortField === 'nombreCompleto' ? 'text-cyan-800 font-bold' : ''}>Colaborador</span>
+                                        <span className="inline-flex">
+                                            {sortField === 'nombreCompleto' ? (
+                                                sortDirection === 'asc' ? (
+                                                    <ArrowUp className="w-3.5 h-3.5 text-cyan-600 stroke-[2.5]" />
+                                                ) : (
+                                                    <ArrowDown className="w-3.5 h-3.5 text-cyan-600 stroke-[2.5]" />
+                                                )
+                                            ) : (
+                                                <ArrowUpDown className="w-3.5 h-3.5 text-gray-400 opacity-40 group-hover:opacity-100 transition-opacity" />
+                                            )}
+                                        </span>
+                                    </div>
+                                </th>
+
+                                {/* Cargo */}
+                                <th
+                                    onClick={() => handleSort('cargo')}
+                                    className="px-4 py-3.5 whitespace-nowrap cursor-pointer select-none transition-colors group hover:bg-gray-100"
+                                    title={`Ordenar por Cargo (${sortField === 'cargo' ? (sortDirection === 'asc' ? 'Descendente' : 'Ascendente') : 'Ascendente'})`}
+                                >
+                                    <div className="flex items-center gap-1.5">
+                                        <span className={sortField === 'cargo' ? 'text-cyan-800 font-bold' : ''}>Cargo</span>
+                                        <span className="inline-flex">
+                                            {sortField === 'cargo' ? (
+                                                sortDirection === 'asc' ? (
+                                                    <ArrowUp className="w-3.5 h-3.5 text-cyan-600 stroke-[2.5]" />
+                                                ) : (
+                                                    <ArrowDown className="w-3.5 h-3.5 text-cyan-600 stroke-[2.5]" />
+                                                )
+                                            ) : (
+                                                <ArrowUpDown className="w-3.5 h-3.5 text-gray-400 opacity-40 group-hover:opacity-100 transition-opacity" />
+                                            )}
+                                        </span>
+                                    </div>
+                                </th>
+
+                                {/* Trazabilidad Carga */}
                                 <th className="px-4 py-3.5 whitespace-nowrap">Trazabilidad Carga</th>
-                                <th className="px-4 py-3.5 whitespace-nowrap min-w-[240px] text-cyan-700 font-bold">
-                                    Criterio de Ausencia
+
+                                {/* Criterio de Ausencia */}
+                                <th
+                                    onClick={() => handleSort('criterioNombre')}
+                                    className="px-4 py-3.5 whitespace-nowrap min-w-[240px] cursor-pointer select-none transition-colors group hover:bg-gray-100 text-cyan-700 font-bold"
+                                    title={`Ordenar por Criterio (${sortField === 'criterioNombre' ? (sortDirection === 'asc' ? 'Descendente' : 'Ascendente') : 'Ascendente'})`}
+                                >
+                                    <div className="flex items-center gap-1.5">
+                                        <span className={sortField === 'criterioNombre' ? 'text-cyan-800 font-bold' : ''}>Criterio de Ausencia</span>
+                                        <span className="inline-flex">
+                                            {sortField === 'criterioNombre' ? (
+                                                sortDirection === 'asc' ? (
+                                                    <ArrowUp className="w-3.5 h-3.5 text-cyan-600 stroke-[2.5]" />
+                                                ) : (
+                                                    <ArrowDown className="w-3.5 h-3.5 text-cyan-600 stroke-[2.5]" />
+                                                )
+                                            ) : (
+                                                <ArrowUpDown className="w-3.5 h-3.5 text-gray-400 opacity-40 group-hover:opacity-100 transition-opacity" />
+                                            )}
+                                        </span>
+                                    </div>
                                 </th>
                             </tr>
                         </thead>
@@ -495,7 +702,7 @@ export default function AsistenciaClient({
                             {registrosPaginados.length === 0 ? (
                                 <tr>
                                     <td colSpan={9} className="text-center py-14 text-gray-400">
-                                        No se encontraron registros de asistencia que coincidan con los filtros aplicados.
+                                        No se encontraron registros de ausentismo que coincidan con los filtros aplicados.
                                     </td>
                                 </tr>
                             ) : (

@@ -74,7 +74,7 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                 requiredPermission: ['view_personal_asistencia', 'manage_personal_asistencia_carga'],
                 subItems: [
                     {
-                        name: 'Asistencia',
+                        name: 'Ausentismo',
                         href: '/dashboard/areas/personal/asistencia',
                         requiredPermission: 'view_personal_asistencia'
                     },

@@ -172,7 +172,7 @@ export default function CargaMasivaClient({ initialCargas }: { initialCargas: Ca
                     href="/dashboard/areas/personal/asistencia"
                     className="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold px-4 py-2.5 rounded-xl transition-all shadow-md shadow-slate-900/10 text-sm"
                 >
-                    <span>Ir a Módulo Asistencia</span>
+                    <span>Ir a Módulo Ausentismo</span>
                     <ArrowRight className="w-4 h-4" />
                 </Link>
             </div>
@@ -370,7 +370,7 @@ export default function CargaMasivaClient({ initialCargas }: { initialCargas: Ca
                             href="/dashboard/areas/personal/asistencia"
                             className="text-xs bg-cyan-600 hover:bg-cyan-700 text-white font-semibold px-3 py-1.5 rounded-lg transition-colors"
                         >
-                            Ver en Asistencia
+                            Ver en Ausentismo
                         </Link>
                     </div>
 
