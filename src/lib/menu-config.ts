@@ -64,9 +64,27 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
             'logistica:rutas:ver',
             'logistica:metricas:ver',
             'logistica:config:ver',
-            'logistica:integraciones:ver'
+            'logistica:integraciones:ver',
+            'view_personal_asistencia',
+            'manage_personal_asistencia_carga'
         ],
         subItems: [
+            {
+                name: 'Personal',
+                requiredPermission: ['view_personal_asistencia', 'manage_personal_asistencia_carga'],
+                subItems: [
+                    {
+                        name: 'Asistencia',
+                        href: '/dashboard/areas/personal/asistencia',
+                        requiredPermission: 'view_personal_asistencia'
+                    },
+                    {
+                        name: 'Carga masiva de asistencia',
+                        href: '/dashboard/areas/personal/carga-masiva',
+                        requiredPermission: 'manage_personal_asistencia_carga'
+                    }
+                ]
+            },
             {
                 name: 'Logística',
                 requiredPermission: [
@@ -263,8 +281,19 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
     {
         name: 'Mantenedor',
         icon: '⚙️',
-        requiredPermission: ['view_colegios', 'view_productos', 'view_pmpa', 'view_consumo_gas', 'view_preparaciones', 'view_minutas', 'view_raciones', 'view_codigo_causa', 'manage_sucursales', 'manage_areas', 'manage_vehiculos', 'manage_zonales', 'manage_jefe_operacion', 'manage_supervisor', 'manage_manipuladoras_masiva', 'manage_colegios_matriz', 'manage_nueva_matriz', 'manage_actas_supervision', 'manage_doc_configuracion', 'manage_doc_carpetas', 'manage_doc_privilegios'],
+        requiredPermission: ['view_colegios', 'view_productos', 'view_pmpa', 'view_consumo_gas', 'view_preparaciones', 'view_minutas', 'view_raciones', 'view_codigo_causa', 'manage_sucursales', 'manage_areas', 'manage_vehiculos', 'manage_zonales', 'manage_jefe_operacion', 'manage_supervisor', 'manage_manipuladoras_masiva', 'manage_colegios_matriz', 'manage_nueva_matriz', 'manage_actas_supervision', 'manage_doc_configuracion', 'manage_doc_carpetas', 'manage_doc_privilegios', 'manage_personal_criterios'],
         subItems: [
+            {
+                name: 'Personal',
+                requiredPermission: 'manage_personal_criterios',
+                subItems: [
+                    {
+                        name: 'Criterios de Ausencias',
+                        href: '/dashboard/mantenedor/personal/criterios-ausencias',
+                        requiredPermission: 'manage_personal_criterios'
+                    }
+                ]
+            },
             {
                 name: 'Gestor Documental',
                 requiredPermission: ['manage_doc_configuracion', 'manage_doc_carpetas', 'manage_doc_privilegios'],

@@ -673,6 +673,21 @@ export type RegCap_Participante = $Result.DefaultSelection<Prisma.$RegCap_Partic
  * 
  */
 export type Cal_ResSan_Registro = $Result.DefaultSelection<Prisma.$Cal_ResSan_RegistroPayload>
+/**
+ * Model Pers_Asis_Criterio
+ * 
+ */
+export type Pers_Asis_Criterio = $Result.DefaultSelection<Prisma.$Pers_Asis_CriterioPayload>
+/**
+ * Model Pers_Asis_Carga
+ * 
+ */
+export type Pers_Asis_Carga = $Result.DefaultSelection<Prisma.$Pers_Asis_CargaPayload>
+/**
+ * Model Pers_Asis_Registro
+ * 
+ */
+export type Pers_Asis_Registro = $Result.DefaultSelection<Prisma.$Pers_Asis_RegistroPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -2116,6 +2131,36 @@ export class PrismaClient<
     * ```
     */
   get cal_ResSan_Registro(): Prisma.Cal_ResSan_RegistroDelegate<ExtArgs>;
+
+  /**
+   * `prisma.pers_Asis_Criterio`: Exposes CRUD operations for the **Pers_Asis_Criterio** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Pers_Asis_Criterios
+    * const pers_Asis_Criterios = await prisma.pers_Asis_Criterio.findMany()
+    * ```
+    */
+  get pers_Asis_Criterio(): Prisma.Pers_Asis_CriterioDelegate<ExtArgs>;
+
+  /**
+   * `prisma.pers_Asis_Carga`: Exposes CRUD operations for the **Pers_Asis_Carga** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Pers_Asis_Cargas
+    * const pers_Asis_Cargas = await prisma.pers_Asis_Carga.findMany()
+    * ```
+    */
+  get pers_Asis_Carga(): Prisma.Pers_Asis_CargaDelegate<ExtArgs>;
+
+  /**
+   * `prisma.pers_Asis_Registro`: Exposes CRUD operations for the **Pers_Asis_Registro** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Pers_Asis_Registros
+    * const pers_Asis_Registros = await prisma.pers_Asis_Registro.findMany()
+    * ```
+    */
+  get pers_Asis_Registro(): Prisma.Pers_Asis_RegistroDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -2688,7 +2733,10 @@ export namespace Prisma {
     Cal_RegistroHigienePersonal: 'Cal_RegistroHigienePersonal',
     RegCap_Capacitacion: 'RegCap_Capacitacion',
     RegCap_Participante: 'RegCap_Participante',
-    Cal_ResSan_Registro: 'Cal_ResSan_Registro'
+    Cal_ResSan_Registro: 'Cal_ResSan_Registro',
+    Pers_Asis_Criterio: 'Pers_Asis_Criterio',
+    Pers_Asis_Carga: 'Pers_Asis_Carga',
+    Pers_Asis_Registro: 'Pers_Asis_Registro'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -2704,7 +2752,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout" | "reservaSala" | "noticiaAlimentacion" | "logBodega" | "logUsuarioBodega" | "logAnden" | "logTransportista" | "logChofer" | "logCamion" | "logCliente" | "logRuta" | "logEventoRuta" | "logIntegracionConfig" | "logIntegracionLog" | "logParametro" | "prevGravedadPreparacion" | "cal_PlanillaTransporte" | "cal_RegistroTransporte" | "cal_PlanillaHigienePersonal" | "cal_RegistroHigienePersonal" | "regCap_Capacitacion" | "regCap_Participante" | "cal_ResSan_Registro"
+      modelProps: "role" | "user" | "pMPA" | "colegios" | "ingRacion" | "productos" | "emailConfig" | "configuracionGlobal" | "listaCorreo" | "notificacionPantalla" | "plantillaCorreo" | "multaServicio" | "licitacion" | "aspectoEE" | "sucursal" | "presupuesto" | "solicitudPan" | "uT" | "solicitudGas" | "retiroSaldoHeader" | "retiroSaldoDetail" | "mat_ConsumoGas" | "formDefinition" | "area" | "formSchedule" | "formSubmission" | "mat_ConsumoGasHistory" | "anexo" | "matrizRiesgo2026" | "colegiosMatriz" | "matrizConfigPregunta" | "matrizConfigSemestre" | "matrizMitigacion" | "trabajoPreventivo" | "retornoProductosAlerta" | "retornoProductosSucursalEstado" | "retornoProductosMovimiento" | "retornoProductosAlertaHistorialEliminado" | "preparaciones" | "minutas" | "raciones" | "capCertificacionHeader" | "capCertificacionDetail" | "elementosEsenciales_Cab" | "elementosEsenciales_Det" | "uTM" | "multas_Elementos_Esenciales_Cab" | "multas_Elementos_Esenciales_Det" | "descargos_Cab" | "descargos_Det" | "descargaPaeLog" | "paeOnlineCab" | "paeOnlineDet" | "codigoCausa" | "tipoVehiculo" | "vehiculo" | "jefeZonal" | "jefeZonalLicitacion" | "jefeZonalSucursal" | "jefeZonalVehiculo" | "jefeOperacion" | "jefeOperacionVehiculo" | "supervisor" | "supervisorVehiculo" | "supervisorRbd" | "distanciaCache" | "consumoApiGoogle" | "cab_LeePdfEstandarPae" | "det_LeePdfEstandarPae" | "matrizT_Cabecera" | "matrizT_Detalle" | "matrizT_RespuestasCabecera" | "matrizT_RespuestasDetalle" | "formatoCartaSostenedor" | "delegacionVisualizacion" | "menuItemOrder" | "auditLog" | "actaSupervisionPlantilla" | "actaSupervisionRespuesta" | "vTCamara" | "vTConfiguracionCamara" | "vTRegistroCabecera" | "vTRegistroDetalle" | "vTProductoCatalogo" | "vTVerificacionDiaria" | "vTVerificacionSemanal" | "collabConversation" | "collabMessage" | "collabProject" | "collabTask" | "collabAppointment" | "collabKanbanColumn" | "collabNote" | "collabGanttChart" | "collabGanttItem" | "collabGanttBaseline" | "collabGanttBaselineItem" | "collabProjectActivityLog" | "collabMention" | "collabWhiteboard" | "collabWhiteboardElement" | "collabPresence" | "collabMessageReaction" | "collabPoll" | "collabPollVote" | "collabKudo" | "configuracionDocumental" | "carpetaDocumental" | "privilegioDocumental" | "userWidgetLayout" | "reservaSala" | "noticiaAlimentacion" | "logBodega" | "logUsuarioBodega" | "logAnden" | "logTransportista" | "logChofer" | "logCamion" | "logCliente" | "logRuta" | "logEventoRuta" | "logIntegracionConfig" | "logIntegracionLog" | "logParametro" | "prevGravedadPreparacion" | "cal_PlanillaTransporte" | "cal_RegistroTransporte" | "cal_PlanillaHigienePersonal" | "cal_RegistroHigienePersonal" | "regCap_Capacitacion" | "regCap_Participante" | "cal_ResSan_Registro" | "pers_Asis_Criterio" | "pers_Asis_Carga" | "pers_Asis_Registro"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -11948,6 +11996,216 @@ export namespace Prisma {
           }
         }
       }
+      Pers_Asis_Criterio: {
+        payload: Prisma.$Pers_Asis_CriterioPayload<ExtArgs>
+        fields: Prisma.Pers_Asis_CriterioFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Pers_Asis_CriterioFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Pers_Asis_CriterioPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Pers_Asis_CriterioFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Pers_Asis_CriterioPayload>
+          }
+          findFirst: {
+            args: Prisma.Pers_Asis_CriterioFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Pers_Asis_CriterioPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Pers_Asis_CriterioFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Pers_Asis_CriterioPayload>
+          }
+          findMany: {
+            args: Prisma.Pers_Asis_CriterioFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Pers_Asis_CriterioPayload>[]
+          }
+          create: {
+            args: Prisma.Pers_Asis_CriterioCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Pers_Asis_CriterioPayload>
+          }
+          createMany: {
+            args: Prisma.Pers_Asis_CriterioCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Pers_Asis_CriterioCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Pers_Asis_CriterioPayload>[]
+          }
+          delete: {
+            args: Prisma.Pers_Asis_CriterioDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Pers_Asis_CriterioPayload>
+          }
+          update: {
+            args: Prisma.Pers_Asis_CriterioUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Pers_Asis_CriterioPayload>
+          }
+          deleteMany: {
+            args: Prisma.Pers_Asis_CriterioDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Pers_Asis_CriterioUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Pers_Asis_CriterioUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Pers_Asis_CriterioPayload>
+          }
+          aggregate: {
+            args: Prisma.Pers_Asis_CriterioAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePers_Asis_Criterio>
+          }
+          groupBy: {
+            args: Prisma.Pers_Asis_CriterioGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Pers_Asis_CriterioGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Pers_Asis_CriterioCountArgs<ExtArgs>
+            result: $Utils.Optional<Pers_Asis_CriterioCountAggregateOutputType> | number
+          }
+        }
+      }
+      Pers_Asis_Carga: {
+        payload: Prisma.$Pers_Asis_CargaPayload<ExtArgs>
+        fields: Prisma.Pers_Asis_CargaFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Pers_Asis_CargaFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Pers_Asis_CargaPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Pers_Asis_CargaFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Pers_Asis_CargaPayload>
+          }
+          findFirst: {
+            args: Prisma.Pers_Asis_CargaFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Pers_Asis_CargaPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Pers_Asis_CargaFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Pers_Asis_CargaPayload>
+          }
+          findMany: {
+            args: Prisma.Pers_Asis_CargaFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Pers_Asis_CargaPayload>[]
+          }
+          create: {
+            args: Prisma.Pers_Asis_CargaCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Pers_Asis_CargaPayload>
+          }
+          createMany: {
+            args: Prisma.Pers_Asis_CargaCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Pers_Asis_CargaCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Pers_Asis_CargaPayload>[]
+          }
+          delete: {
+            args: Prisma.Pers_Asis_CargaDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Pers_Asis_CargaPayload>
+          }
+          update: {
+            args: Prisma.Pers_Asis_CargaUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Pers_Asis_CargaPayload>
+          }
+          deleteMany: {
+            args: Prisma.Pers_Asis_CargaDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Pers_Asis_CargaUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Pers_Asis_CargaUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Pers_Asis_CargaPayload>
+          }
+          aggregate: {
+            args: Prisma.Pers_Asis_CargaAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePers_Asis_Carga>
+          }
+          groupBy: {
+            args: Prisma.Pers_Asis_CargaGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Pers_Asis_CargaGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Pers_Asis_CargaCountArgs<ExtArgs>
+            result: $Utils.Optional<Pers_Asis_CargaCountAggregateOutputType> | number
+          }
+        }
+      }
+      Pers_Asis_Registro: {
+        payload: Prisma.$Pers_Asis_RegistroPayload<ExtArgs>
+        fields: Prisma.Pers_Asis_RegistroFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Pers_Asis_RegistroFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Pers_Asis_RegistroPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Pers_Asis_RegistroFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Pers_Asis_RegistroPayload>
+          }
+          findFirst: {
+            args: Prisma.Pers_Asis_RegistroFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Pers_Asis_RegistroPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Pers_Asis_RegistroFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Pers_Asis_RegistroPayload>
+          }
+          findMany: {
+            args: Prisma.Pers_Asis_RegistroFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Pers_Asis_RegistroPayload>[]
+          }
+          create: {
+            args: Prisma.Pers_Asis_RegistroCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Pers_Asis_RegistroPayload>
+          }
+          createMany: {
+            args: Prisma.Pers_Asis_RegistroCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Pers_Asis_RegistroCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Pers_Asis_RegistroPayload>[]
+          }
+          delete: {
+            args: Prisma.Pers_Asis_RegistroDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Pers_Asis_RegistroPayload>
+          }
+          update: {
+            args: Prisma.Pers_Asis_RegistroUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Pers_Asis_RegistroPayload>
+          }
+          deleteMany: {
+            args: Prisma.Pers_Asis_RegistroDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Pers_Asis_RegistroUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Pers_Asis_RegistroUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Pers_Asis_RegistroPayload>
+          }
+          aggregate: {
+            args: Prisma.Pers_Asis_RegistroAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePers_Asis_Registro>
+          }
+          groupBy: {
+            args: Prisma.Pers_Asis_RegistroGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Pers_Asis_RegistroGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Pers_Asis_RegistroCountArgs<ExtArgs>
+            result: $Utils.Optional<Pers_Asis_RegistroCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -14035,6 +14293,68 @@ export namespace Prisma {
    */
   export type RegCap_CapacitacionCountOutputTypeCountParticipantesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: RegCap_ParticipanteWhereInput
+  }
+
+
+  /**
+   * Count Type Pers_Asis_CriterioCountOutputType
+   */
+
+  export type Pers_Asis_CriterioCountOutputType = {
+    registros: number
+  }
+
+  export type Pers_Asis_CriterioCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    registros?: boolean | Pers_Asis_CriterioCountOutputTypeCountRegistrosArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * Pers_Asis_CriterioCountOutputType without action
+   */
+  export type Pers_Asis_CriterioCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_CriterioCountOutputType
+     */
+    select?: Pers_Asis_CriterioCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * Pers_Asis_CriterioCountOutputType without action
+   */
+  export type Pers_Asis_CriterioCountOutputTypeCountRegistrosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Pers_Asis_RegistroWhereInput
+  }
+
+
+  /**
+   * Count Type Pers_Asis_CargaCountOutputType
+   */
+
+  export type Pers_Asis_CargaCountOutputType = {
+    registros: number
+  }
+
+  export type Pers_Asis_CargaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    registros?: boolean | Pers_Asis_CargaCountOutputTypeCountRegistrosArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * Pers_Asis_CargaCountOutputType without action
+   */
+  export type Pers_Asis_CargaCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_CargaCountOutputType
+     */
+    select?: Pers_Asis_CargaCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * Pers_Asis_CargaCountOutputType without action
+   */
+  export type Pers_Asis_CargaCountOutputTypeCountRegistrosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Pers_Asis_RegistroWhereInput
   }
 
 
@@ -149281,6 +149601,3409 @@ export namespace Prisma {
 
 
   /**
+   * Model Pers_Asis_Criterio
+   */
+
+  export type AggregatePers_Asis_Criterio = {
+    _count: Pers_Asis_CriterioCountAggregateOutputType | null
+    _avg: Pers_Asis_CriterioAvgAggregateOutputType | null
+    _sum: Pers_Asis_CriterioSumAggregateOutputType | null
+    _min: Pers_Asis_CriterioMinAggregateOutputType | null
+    _max: Pers_Asis_CriterioMaxAggregateOutputType | null
+  }
+
+  export type Pers_Asis_CriterioAvgAggregateOutputType = {
+    orden: number | null
+  }
+
+  export type Pers_Asis_CriterioSumAggregateOutputType = {
+    orden: number | null
+  }
+
+  export type Pers_Asis_CriterioMinAggregateOutputType = {
+    id: string | null
+    nombre: string | null
+    descripcion: string | null
+    color: string | null
+    activo: boolean | null
+    orden: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Pers_Asis_CriterioMaxAggregateOutputType = {
+    id: string | null
+    nombre: string | null
+    descripcion: string | null
+    color: string | null
+    activo: boolean | null
+    orden: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Pers_Asis_CriterioCountAggregateOutputType = {
+    id: number
+    nombre: number
+    descripcion: number
+    color: number
+    activo: number
+    orden: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type Pers_Asis_CriterioAvgAggregateInputType = {
+    orden?: true
+  }
+
+  export type Pers_Asis_CriterioSumAggregateInputType = {
+    orden?: true
+  }
+
+  export type Pers_Asis_CriterioMinAggregateInputType = {
+    id?: true
+    nombre?: true
+    descripcion?: true
+    color?: true
+    activo?: true
+    orden?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Pers_Asis_CriterioMaxAggregateInputType = {
+    id?: true
+    nombre?: true
+    descripcion?: true
+    color?: true
+    activo?: true
+    orden?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Pers_Asis_CriterioCountAggregateInputType = {
+    id?: true
+    nombre?: true
+    descripcion?: true
+    color?: true
+    activo?: true
+    orden?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type Pers_Asis_CriterioAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Pers_Asis_Criterio to aggregate.
+     */
+    where?: Pers_Asis_CriterioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Pers_Asis_Criterios to fetch.
+     */
+    orderBy?: Pers_Asis_CriterioOrderByWithRelationInput | Pers_Asis_CriterioOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Pers_Asis_CriterioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Pers_Asis_Criterios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Pers_Asis_Criterios.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Pers_Asis_Criterios
+    **/
+    _count?: true | Pers_Asis_CriterioCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Pers_Asis_CriterioAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Pers_Asis_CriterioSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Pers_Asis_CriterioMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Pers_Asis_CriterioMaxAggregateInputType
+  }
+
+  export type GetPers_Asis_CriterioAggregateType<T extends Pers_Asis_CriterioAggregateArgs> = {
+        [P in keyof T & keyof AggregatePers_Asis_Criterio]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePers_Asis_Criterio[P]>
+      : GetScalarType<T[P], AggregatePers_Asis_Criterio[P]>
+  }
+
+
+
+
+  export type Pers_Asis_CriterioGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Pers_Asis_CriterioWhereInput
+    orderBy?: Pers_Asis_CriterioOrderByWithAggregationInput | Pers_Asis_CriterioOrderByWithAggregationInput[]
+    by: Pers_Asis_CriterioScalarFieldEnum[] | Pers_Asis_CriterioScalarFieldEnum
+    having?: Pers_Asis_CriterioScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Pers_Asis_CriterioCountAggregateInputType | true
+    _avg?: Pers_Asis_CriterioAvgAggregateInputType
+    _sum?: Pers_Asis_CriterioSumAggregateInputType
+    _min?: Pers_Asis_CriterioMinAggregateInputType
+    _max?: Pers_Asis_CriterioMaxAggregateInputType
+  }
+
+  export type Pers_Asis_CriterioGroupByOutputType = {
+    id: string
+    nombre: string
+    descripcion: string | null
+    color: string | null
+    activo: boolean
+    orden: number
+    createdAt: Date
+    updatedAt: Date
+    _count: Pers_Asis_CriterioCountAggregateOutputType | null
+    _avg: Pers_Asis_CriterioAvgAggregateOutputType | null
+    _sum: Pers_Asis_CriterioSumAggregateOutputType | null
+    _min: Pers_Asis_CriterioMinAggregateOutputType | null
+    _max: Pers_Asis_CriterioMaxAggregateOutputType | null
+  }
+
+  type GetPers_Asis_CriterioGroupByPayload<T extends Pers_Asis_CriterioGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Pers_Asis_CriterioGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Pers_Asis_CriterioGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Pers_Asis_CriterioGroupByOutputType[P]>
+            : GetScalarType<T[P], Pers_Asis_CriterioGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Pers_Asis_CriterioSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nombre?: boolean
+    descripcion?: boolean
+    color?: boolean
+    activo?: boolean
+    orden?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    registros?: boolean | Pers_Asis_Criterio$registrosArgs<ExtArgs>
+    _count?: boolean | Pers_Asis_CriterioCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["pers_Asis_Criterio"]>
+
+  export type Pers_Asis_CriterioSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nombre?: boolean
+    descripcion?: boolean
+    color?: boolean
+    activo?: boolean
+    orden?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["pers_Asis_Criterio"]>
+
+  export type Pers_Asis_CriterioSelectScalar = {
+    id?: boolean
+    nombre?: boolean
+    descripcion?: boolean
+    color?: boolean
+    activo?: boolean
+    orden?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type Pers_Asis_CriterioInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    registros?: boolean | Pers_Asis_Criterio$registrosArgs<ExtArgs>
+    _count?: boolean | Pers_Asis_CriterioCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type Pers_Asis_CriterioIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $Pers_Asis_CriterioPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Pers_Asis_Criterio"
+    objects: {
+      registros: Prisma.$Pers_Asis_RegistroPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      nombre: string
+      descripcion: string | null
+      color: string | null
+      activo: boolean
+      orden: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["pers_Asis_Criterio"]>
+    composites: {}
+  }
+
+  type Pers_Asis_CriterioGetPayload<S extends boolean | null | undefined | Pers_Asis_CriterioDefaultArgs> = $Result.GetResult<Prisma.$Pers_Asis_CriterioPayload, S>
+
+  type Pers_Asis_CriterioCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Pers_Asis_CriterioFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Pers_Asis_CriterioCountAggregateInputType | true
+    }
+
+  export interface Pers_Asis_CriterioDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Pers_Asis_Criterio'], meta: { name: 'Pers_Asis_Criterio' } }
+    /**
+     * Find zero or one Pers_Asis_Criterio that matches the filter.
+     * @param {Pers_Asis_CriterioFindUniqueArgs} args - Arguments to find a Pers_Asis_Criterio
+     * @example
+     * // Get one Pers_Asis_Criterio
+     * const pers_Asis_Criterio = await prisma.pers_Asis_Criterio.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Pers_Asis_CriterioFindUniqueArgs>(args: SelectSubset<T, Pers_Asis_CriterioFindUniqueArgs<ExtArgs>>): Prisma__Pers_Asis_CriterioClient<$Result.GetResult<Prisma.$Pers_Asis_CriterioPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Pers_Asis_Criterio that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Pers_Asis_CriterioFindUniqueOrThrowArgs} args - Arguments to find a Pers_Asis_Criterio
+     * @example
+     * // Get one Pers_Asis_Criterio
+     * const pers_Asis_Criterio = await prisma.pers_Asis_Criterio.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Pers_Asis_CriterioFindUniqueOrThrowArgs>(args: SelectSubset<T, Pers_Asis_CriterioFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Pers_Asis_CriterioClient<$Result.GetResult<Prisma.$Pers_Asis_CriterioPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Pers_Asis_Criterio that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Pers_Asis_CriterioFindFirstArgs} args - Arguments to find a Pers_Asis_Criterio
+     * @example
+     * // Get one Pers_Asis_Criterio
+     * const pers_Asis_Criterio = await prisma.pers_Asis_Criterio.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Pers_Asis_CriterioFindFirstArgs>(args?: SelectSubset<T, Pers_Asis_CriterioFindFirstArgs<ExtArgs>>): Prisma__Pers_Asis_CriterioClient<$Result.GetResult<Prisma.$Pers_Asis_CriterioPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Pers_Asis_Criterio that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Pers_Asis_CriterioFindFirstOrThrowArgs} args - Arguments to find a Pers_Asis_Criterio
+     * @example
+     * // Get one Pers_Asis_Criterio
+     * const pers_Asis_Criterio = await prisma.pers_Asis_Criterio.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Pers_Asis_CriterioFindFirstOrThrowArgs>(args?: SelectSubset<T, Pers_Asis_CriterioFindFirstOrThrowArgs<ExtArgs>>): Prisma__Pers_Asis_CriterioClient<$Result.GetResult<Prisma.$Pers_Asis_CriterioPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Pers_Asis_Criterios that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Pers_Asis_CriterioFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Pers_Asis_Criterios
+     * const pers_Asis_Criterios = await prisma.pers_Asis_Criterio.findMany()
+     * 
+     * // Get first 10 Pers_Asis_Criterios
+     * const pers_Asis_Criterios = await prisma.pers_Asis_Criterio.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const pers_Asis_CriterioWithIdOnly = await prisma.pers_Asis_Criterio.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Pers_Asis_CriterioFindManyArgs>(args?: SelectSubset<T, Pers_Asis_CriterioFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Pers_Asis_CriterioPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Pers_Asis_Criterio.
+     * @param {Pers_Asis_CriterioCreateArgs} args - Arguments to create a Pers_Asis_Criterio.
+     * @example
+     * // Create one Pers_Asis_Criterio
+     * const Pers_Asis_Criterio = await prisma.pers_Asis_Criterio.create({
+     *   data: {
+     *     // ... data to create a Pers_Asis_Criterio
+     *   }
+     * })
+     * 
+     */
+    create<T extends Pers_Asis_CriterioCreateArgs>(args: SelectSubset<T, Pers_Asis_CriterioCreateArgs<ExtArgs>>): Prisma__Pers_Asis_CriterioClient<$Result.GetResult<Prisma.$Pers_Asis_CriterioPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Pers_Asis_Criterios.
+     * @param {Pers_Asis_CriterioCreateManyArgs} args - Arguments to create many Pers_Asis_Criterios.
+     * @example
+     * // Create many Pers_Asis_Criterios
+     * const pers_Asis_Criterio = await prisma.pers_Asis_Criterio.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Pers_Asis_CriterioCreateManyArgs>(args?: SelectSubset<T, Pers_Asis_CriterioCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Pers_Asis_Criterios and returns the data saved in the database.
+     * @param {Pers_Asis_CriterioCreateManyAndReturnArgs} args - Arguments to create many Pers_Asis_Criterios.
+     * @example
+     * // Create many Pers_Asis_Criterios
+     * const pers_Asis_Criterio = await prisma.pers_Asis_Criterio.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Pers_Asis_Criterios and only return the `id`
+     * const pers_Asis_CriterioWithIdOnly = await prisma.pers_Asis_Criterio.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Pers_Asis_CriterioCreateManyAndReturnArgs>(args?: SelectSubset<T, Pers_Asis_CriterioCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Pers_Asis_CriterioPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Pers_Asis_Criterio.
+     * @param {Pers_Asis_CriterioDeleteArgs} args - Arguments to delete one Pers_Asis_Criterio.
+     * @example
+     * // Delete one Pers_Asis_Criterio
+     * const Pers_Asis_Criterio = await prisma.pers_Asis_Criterio.delete({
+     *   where: {
+     *     // ... filter to delete one Pers_Asis_Criterio
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Pers_Asis_CriterioDeleteArgs>(args: SelectSubset<T, Pers_Asis_CriterioDeleteArgs<ExtArgs>>): Prisma__Pers_Asis_CriterioClient<$Result.GetResult<Prisma.$Pers_Asis_CriterioPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Pers_Asis_Criterio.
+     * @param {Pers_Asis_CriterioUpdateArgs} args - Arguments to update one Pers_Asis_Criterio.
+     * @example
+     * // Update one Pers_Asis_Criterio
+     * const pers_Asis_Criterio = await prisma.pers_Asis_Criterio.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Pers_Asis_CriterioUpdateArgs>(args: SelectSubset<T, Pers_Asis_CriterioUpdateArgs<ExtArgs>>): Prisma__Pers_Asis_CriterioClient<$Result.GetResult<Prisma.$Pers_Asis_CriterioPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Pers_Asis_Criterios.
+     * @param {Pers_Asis_CriterioDeleteManyArgs} args - Arguments to filter Pers_Asis_Criterios to delete.
+     * @example
+     * // Delete a few Pers_Asis_Criterios
+     * const { count } = await prisma.pers_Asis_Criterio.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Pers_Asis_CriterioDeleteManyArgs>(args?: SelectSubset<T, Pers_Asis_CriterioDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Pers_Asis_Criterios.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Pers_Asis_CriterioUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Pers_Asis_Criterios
+     * const pers_Asis_Criterio = await prisma.pers_Asis_Criterio.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Pers_Asis_CriterioUpdateManyArgs>(args: SelectSubset<T, Pers_Asis_CriterioUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Pers_Asis_Criterio.
+     * @param {Pers_Asis_CriterioUpsertArgs} args - Arguments to update or create a Pers_Asis_Criterio.
+     * @example
+     * // Update or create a Pers_Asis_Criterio
+     * const pers_Asis_Criterio = await prisma.pers_Asis_Criterio.upsert({
+     *   create: {
+     *     // ... data to create a Pers_Asis_Criterio
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Pers_Asis_Criterio we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Pers_Asis_CriterioUpsertArgs>(args: SelectSubset<T, Pers_Asis_CriterioUpsertArgs<ExtArgs>>): Prisma__Pers_Asis_CriterioClient<$Result.GetResult<Prisma.$Pers_Asis_CriterioPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Pers_Asis_Criterios.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Pers_Asis_CriterioCountArgs} args - Arguments to filter Pers_Asis_Criterios to count.
+     * @example
+     * // Count the number of Pers_Asis_Criterios
+     * const count = await prisma.pers_Asis_Criterio.count({
+     *   where: {
+     *     // ... the filter for the Pers_Asis_Criterios we want to count
+     *   }
+     * })
+    **/
+    count<T extends Pers_Asis_CriterioCountArgs>(
+      args?: Subset<T, Pers_Asis_CriterioCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Pers_Asis_CriterioCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Pers_Asis_Criterio.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Pers_Asis_CriterioAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Pers_Asis_CriterioAggregateArgs>(args: Subset<T, Pers_Asis_CriterioAggregateArgs>): Prisma.PrismaPromise<GetPers_Asis_CriterioAggregateType<T>>
+
+    /**
+     * Group by Pers_Asis_Criterio.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Pers_Asis_CriterioGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Pers_Asis_CriterioGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Pers_Asis_CriterioGroupByArgs['orderBy'] }
+        : { orderBy?: Pers_Asis_CriterioGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Pers_Asis_CriterioGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPers_Asis_CriterioGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Pers_Asis_Criterio model
+   */
+  readonly fields: Pers_Asis_CriterioFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Pers_Asis_Criterio.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Pers_Asis_CriterioClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    registros<T extends Pers_Asis_Criterio$registrosArgs<ExtArgs> = {}>(args?: Subset<T, Pers_Asis_Criterio$registrosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Pers_Asis_RegistroPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Pers_Asis_Criterio model
+   */ 
+  interface Pers_Asis_CriterioFieldRefs {
+    readonly id: FieldRef<"Pers_Asis_Criterio", 'String'>
+    readonly nombre: FieldRef<"Pers_Asis_Criterio", 'String'>
+    readonly descripcion: FieldRef<"Pers_Asis_Criterio", 'String'>
+    readonly color: FieldRef<"Pers_Asis_Criterio", 'String'>
+    readonly activo: FieldRef<"Pers_Asis_Criterio", 'Boolean'>
+    readonly orden: FieldRef<"Pers_Asis_Criterio", 'Int'>
+    readonly createdAt: FieldRef<"Pers_Asis_Criterio", 'DateTime'>
+    readonly updatedAt: FieldRef<"Pers_Asis_Criterio", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Pers_Asis_Criterio findUnique
+   */
+  export type Pers_Asis_CriterioFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Criterio
+     */
+    select?: Pers_Asis_CriterioSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_CriterioInclude<ExtArgs> | null
+    /**
+     * Filter, which Pers_Asis_Criterio to fetch.
+     */
+    where: Pers_Asis_CriterioWhereUniqueInput
+  }
+
+  /**
+   * Pers_Asis_Criterio findUniqueOrThrow
+   */
+  export type Pers_Asis_CriterioFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Criterio
+     */
+    select?: Pers_Asis_CriterioSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_CriterioInclude<ExtArgs> | null
+    /**
+     * Filter, which Pers_Asis_Criterio to fetch.
+     */
+    where: Pers_Asis_CriterioWhereUniqueInput
+  }
+
+  /**
+   * Pers_Asis_Criterio findFirst
+   */
+  export type Pers_Asis_CriterioFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Criterio
+     */
+    select?: Pers_Asis_CriterioSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_CriterioInclude<ExtArgs> | null
+    /**
+     * Filter, which Pers_Asis_Criterio to fetch.
+     */
+    where?: Pers_Asis_CriterioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Pers_Asis_Criterios to fetch.
+     */
+    orderBy?: Pers_Asis_CriterioOrderByWithRelationInput | Pers_Asis_CriterioOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Pers_Asis_Criterios.
+     */
+    cursor?: Pers_Asis_CriterioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Pers_Asis_Criterios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Pers_Asis_Criterios.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Pers_Asis_Criterios.
+     */
+    distinct?: Pers_Asis_CriterioScalarFieldEnum | Pers_Asis_CriterioScalarFieldEnum[]
+  }
+
+  /**
+   * Pers_Asis_Criterio findFirstOrThrow
+   */
+  export type Pers_Asis_CriterioFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Criterio
+     */
+    select?: Pers_Asis_CriterioSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_CriterioInclude<ExtArgs> | null
+    /**
+     * Filter, which Pers_Asis_Criterio to fetch.
+     */
+    where?: Pers_Asis_CriterioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Pers_Asis_Criterios to fetch.
+     */
+    orderBy?: Pers_Asis_CriterioOrderByWithRelationInput | Pers_Asis_CriterioOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Pers_Asis_Criterios.
+     */
+    cursor?: Pers_Asis_CriterioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Pers_Asis_Criterios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Pers_Asis_Criterios.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Pers_Asis_Criterios.
+     */
+    distinct?: Pers_Asis_CriterioScalarFieldEnum | Pers_Asis_CriterioScalarFieldEnum[]
+  }
+
+  /**
+   * Pers_Asis_Criterio findMany
+   */
+  export type Pers_Asis_CriterioFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Criterio
+     */
+    select?: Pers_Asis_CriterioSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_CriterioInclude<ExtArgs> | null
+    /**
+     * Filter, which Pers_Asis_Criterios to fetch.
+     */
+    where?: Pers_Asis_CriterioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Pers_Asis_Criterios to fetch.
+     */
+    orderBy?: Pers_Asis_CriterioOrderByWithRelationInput | Pers_Asis_CriterioOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Pers_Asis_Criterios.
+     */
+    cursor?: Pers_Asis_CriterioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Pers_Asis_Criterios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Pers_Asis_Criterios.
+     */
+    skip?: number
+    distinct?: Pers_Asis_CriterioScalarFieldEnum | Pers_Asis_CriterioScalarFieldEnum[]
+  }
+
+  /**
+   * Pers_Asis_Criterio create
+   */
+  export type Pers_Asis_CriterioCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Criterio
+     */
+    select?: Pers_Asis_CriterioSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_CriterioInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Pers_Asis_Criterio.
+     */
+    data: XOR<Pers_Asis_CriterioCreateInput, Pers_Asis_CriterioUncheckedCreateInput>
+  }
+
+  /**
+   * Pers_Asis_Criterio createMany
+   */
+  export type Pers_Asis_CriterioCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Pers_Asis_Criterios.
+     */
+    data: Pers_Asis_CriterioCreateManyInput | Pers_Asis_CriterioCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Pers_Asis_Criterio createManyAndReturn
+   */
+  export type Pers_Asis_CriterioCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Criterio
+     */
+    select?: Pers_Asis_CriterioSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Pers_Asis_Criterios.
+     */
+    data: Pers_Asis_CriterioCreateManyInput | Pers_Asis_CriterioCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Pers_Asis_Criterio update
+   */
+  export type Pers_Asis_CriterioUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Criterio
+     */
+    select?: Pers_Asis_CriterioSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_CriterioInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Pers_Asis_Criterio.
+     */
+    data: XOR<Pers_Asis_CriterioUpdateInput, Pers_Asis_CriterioUncheckedUpdateInput>
+    /**
+     * Choose, which Pers_Asis_Criterio to update.
+     */
+    where: Pers_Asis_CriterioWhereUniqueInput
+  }
+
+  /**
+   * Pers_Asis_Criterio updateMany
+   */
+  export type Pers_Asis_CriterioUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Pers_Asis_Criterios.
+     */
+    data: XOR<Pers_Asis_CriterioUpdateManyMutationInput, Pers_Asis_CriterioUncheckedUpdateManyInput>
+    /**
+     * Filter which Pers_Asis_Criterios to update
+     */
+    where?: Pers_Asis_CriterioWhereInput
+  }
+
+  /**
+   * Pers_Asis_Criterio upsert
+   */
+  export type Pers_Asis_CriterioUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Criterio
+     */
+    select?: Pers_Asis_CriterioSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_CriterioInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Pers_Asis_Criterio to update in case it exists.
+     */
+    where: Pers_Asis_CriterioWhereUniqueInput
+    /**
+     * In case the Pers_Asis_Criterio found by the `where` argument doesn't exist, create a new Pers_Asis_Criterio with this data.
+     */
+    create: XOR<Pers_Asis_CriterioCreateInput, Pers_Asis_CriterioUncheckedCreateInput>
+    /**
+     * In case the Pers_Asis_Criterio was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Pers_Asis_CriterioUpdateInput, Pers_Asis_CriterioUncheckedUpdateInput>
+  }
+
+  /**
+   * Pers_Asis_Criterio delete
+   */
+  export type Pers_Asis_CriterioDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Criterio
+     */
+    select?: Pers_Asis_CriterioSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_CriterioInclude<ExtArgs> | null
+    /**
+     * Filter which Pers_Asis_Criterio to delete.
+     */
+    where: Pers_Asis_CriterioWhereUniqueInput
+  }
+
+  /**
+   * Pers_Asis_Criterio deleteMany
+   */
+  export type Pers_Asis_CriterioDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Pers_Asis_Criterios to delete
+     */
+    where?: Pers_Asis_CriterioWhereInput
+  }
+
+  /**
+   * Pers_Asis_Criterio.registros
+   */
+  export type Pers_Asis_Criterio$registrosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Registro
+     */
+    select?: Pers_Asis_RegistroSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_RegistroInclude<ExtArgs> | null
+    where?: Pers_Asis_RegistroWhereInput
+    orderBy?: Pers_Asis_RegistroOrderByWithRelationInput | Pers_Asis_RegistroOrderByWithRelationInput[]
+    cursor?: Pers_Asis_RegistroWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Pers_Asis_RegistroScalarFieldEnum | Pers_Asis_RegistroScalarFieldEnum[]
+  }
+
+  /**
+   * Pers_Asis_Criterio without action
+   */
+  export type Pers_Asis_CriterioDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Criterio
+     */
+    select?: Pers_Asis_CriterioSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_CriterioInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Pers_Asis_Carga
+   */
+
+  export type AggregatePers_Asis_Carga = {
+    _count: Pers_Asis_CargaCountAggregateOutputType | null
+    _avg: Pers_Asis_CargaAvgAggregateOutputType | null
+    _sum: Pers_Asis_CargaSumAggregateOutputType | null
+    _min: Pers_Asis_CargaMinAggregateOutputType | null
+    _max: Pers_Asis_CargaMaxAggregateOutputType | null
+  }
+
+  export type Pers_Asis_CargaAvgAggregateOutputType = {
+    totalRegistros: number | null
+    nuevosRegistros: number | null
+    actualizadosRegistros: number | null
+    erroresRegistros: number | null
+  }
+
+  export type Pers_Asis_CargaSumAggregateOutputType = {
+    totalRegistros: number | null
+    nuevosRegistros: number | null
+    actualizadosRegistros: number | null
+    erroresRegistros: number | null
+  }
+
+  export type Pers_Asis_CargaMinAggregateOutputType = {
+    id: string | null
+    nombreArchivo: string | null
+    totalRegistros: number | null
+    nuevosRegistros: number | null
+    actualizadosRegistros: number | null
+    erroresRegistros: number | null
+    cargadoPor: string | null
+    cargadoPorId: string | null
+    fechaCarga: Date | null
+    actualizadoPor: string | null
+    actualizadoPorId: string | null
+    ultimaActualizacion: Date | null
+    observaciones: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Pers_Asis_CargaMaxAggregateOutputType = {
+    id: string | null
+    nombreArchivo: string | null
+    totalRegistros: number | null
+    nuevosRegistros: number | null
+    actualizadosRegistros: number | null
+    erroresRegistros: number | null
+    cargadoPor: string | null
+    cargadoPorId: string | null
+    fechaCarga: Date | null
+    actualizadoPor: string | null
+    actualizadoPorId: string | null
+    ultimaActualizacion: Date | null
+    observaciones: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Pers_Asis_CargaCountAggregateOutputType = {
+    id: number
+    nombreArchivo: number
+    totalRegistros: number
+    nuevosRegistros: number
+    actualizadosRegistros: number
+    erroresRegistros: number
+    cargadoPor: number
+    cargadoPorId: number
+    fechaCarga: number
+    actualizadoPor: number
+    actualizadoPorId: number
+    ultimaActualizacion: number
+    observaciones: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type Pers_Asis_CargaAvgAggregateInputType = {
+    totalRegistros?: true
+    nuevosRegistros?: true
+    actualizadosRegistros?: true
+    erroresRegistros?: true
+  }
+
+  export type Pers_Asis_CargaSumAggregateInputType = {
+    totalRegistros?: true
+    nuevosRegistros?: true
+    actualizadosRegistros?: true
+    erroresRegistros?: true
+  }
+
+  export type Pers_Asis_CargaMinAggregateInputType = {
+    id?: true
+    nombreArchivo?: true
+    totalRegistros?: true
+    nuevosRegistros?: true
+    actualizadosRegistros?: true
+    erroresRegistros?: true
+    cargadoPor?: true
+    cargadoPorId?: true
+    fechaCarga?: true
+    actualizadoPor?: true
+    actualizadoPorId?: true
+    ultimaActualizacion?: true
+    observaciones?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Pers_Asis_CargaMaxAggregateInputType = {
+    id?: true
+    nombreArchivo?: true
+    totalRegistros?: true
+    nuevosRegistros?: true
+    actualizadosRegistros?: true
+    erroresRegistros?: true
+    cargadoPor?: true
+    cargadoPorId?: true
+    fechaCarga?: true
+    actualizadoPor?: true
+    actualizadoPorId?: true
+    ultimaActualizacion?: true
+    observaciones?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Pers_Asis_CargaCountAggregateInputType = {
+    id?: true
+    nombreArchivo?: true
+    totalRegistros?: true
+    nuevosRegistros?: true
+    actualizadosRegistros?: true
+    erroresRegistros?: true
+    cargadoPor?: true
+    cargadoPorId?: true
+    fechaCarga?: true
+    actualizadoPor?: true
+    actualizadoPorId?: true
+    ultimaActualizacion?: true
+    observaciones?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type Pers_Asis_CargaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Pers_Asis_Carga to aggregate.
+     */
+    where?: Pers_Asis_CargaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Pers_Asis_Cargas to fetch.
+     */
+    orderBy?: Pers_Asis_CargaOrderByWithRelationInput | Pers_Asis_CargaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Pers_Asis_CargaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Pers_Asis_Cargas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Pers_Asis_Cargas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Pers_Asis_Cargas
+    **/
+    _count?: true | Pers_Asis_CargaCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Pers_Asis_CargaAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Pers_Asis_CargaSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Pers_Asis_CargaMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Pers_Asis_CargaMaxAggregateInputType
+  }
+
+  export type GetPers_Asis_CargaAggregateType<T extends Pers_Asis_CargaAggregateArgs> = {
+        [P in keyof T & keyof AggregatePers_Asis_Carga]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePers_Asis_Carga[P]>
+      : GetScalarType<T[P], AggregatePers_Asis_Carga[P]>
+  }
+
+
+
+
+  export type Pers_Asis_CargaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Pers_Asis_CargaWhereInput
+    orderBy?: Pers_Asis_CargaOrderByWithAggregationInput | Pers_Asis_CargaOrderByWithAggregationInput[]
+    by: Pers_Asis_CargaScalarFieldEnum[] | Pers_Asis_CargaScalarFieldEnum
+    having?: Pers_Asis_CargaScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Pers_Asis_CargaCountAggregateInputType | true
+    _avg?: Pers_Asis_CargaAvgAggregateInputType
+    _sum?: Pers_Asis_CargaSumAggregateInputType
+    _min?: Pers_Asis_CargaMinAggregateInputType
+    _max?: Pers_Asis_CargaMaxAggregateInputType
+  }
+
+  export type Pers_Asis_CargaGroupByOutputType = {
+    id: string
+    nombreArchivo: string
+    totalRegistros: number
+    nuevosRegistros: number
+    actualizadosRegistros: number
+    erroresRegistros: number
+    cargadoPor: string
+    cargadoPorId: string | null
+    fechaCarga: Date
+    actualizadoPor: string | null
+    actualizadoPorId: string | null
+    ultimaActualizacion: Date
+    observaciones: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: Pers_Asis_CargaCountAggregateOutputType | null
+    _avg: Pers_Asis_CargaAvgAggregateOutputType | null
+    _sum: Pers_Asis_CargaSumAggregateOutputType | null
+    _min: Pers_Asis_CargaMinAggregateOutputType | null
+    _max: Pers_Asis_CargaMaxAggregateOutputType | null
+  }
+
+  type GetPers_Asis_CargaGroupByPayload<T extends Pers_Asis_CargaGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Pers_Asis_CargaGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Pers_Asis_CargaGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Pers_Asis_CargaGroupByOutputType[P]>
+            : GetScalarType<T[P], Pers_Asis_CargaGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Pers_Asis_CargaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nombreArchivo?: boolean
+    totalRegistros?: boolean
+    nuevosRegistros?: boolean
+    actualizadosRegistros?: boolean
+    erroresRegistros?: boolean
+    cargadoPor?: boolean
+    cargadoPorId?: boolean
+    fechaCarga?: boolean
+    actualizadoPor?: boolean
+    actualizadoPorId?: boolean
+    ultimaActualizacion?: boolean
+    observaciones?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    registros?: boolean | Pers_Asis_Carga$registrosArgs<ExtArgs>
+    _count?: boolean | Pers_Asis_CargaCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["pers_Asis_Carga"]>
+
+  export type Pers_Asis_CargaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nombreArchivo?: boolean
+    totalRegistros?: boolean
+    nuevosRegistros?: boolean
+    actualizadosRegistros?: boolean
+    erroresRegistros?: boolean
+    cargadoPor?: boolean
+    cargadoPorId?: boolean
+    fechaCarga?: boolean
+    actualizadoPor?: boolean
+    actualizadoPorId?: boolean
+    ultimaActualizacion?: boolean
+    observaciones?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["pers_Asis_Carga"]>
+
+  export type Pers_Asis_CargaSelectScalar = {
+    id?: boolean
+    nombreArchivo?: boolean
+    totalRegistros?: boolean
+    nuevosRegistros?: boolean
+    actualizadosRegistros?: boolean
+    erroresRegistros?: boolean
+    cargadoPor?: boolean
+    cargadoPorId?: boolean
+    fechaCarga?: boolean
+    actualizadoPor?: boolean
+    actualizadoPorId?: boolean
+    ultimaActualizacion?: boolean
+    observaciones?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type Pers_Asis_CargaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    registros?: boolean | Pers_Asis_Carga$registrosArgs<ExtArgs>
+    _count?: boolean | Pers_Asis_CargaCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type Pers_Asis_CargaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $Pers_Asis_CargaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Pers_Asis_Carga"
+    objects: {
+      registros: Prisma.$Pers_Asis_RegistroPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      nombreArchivo: string
+      totalRegistros: number
+      nuevosRegistros: number
+      actualizadosRegistros: number
+      erroresRegistros: number
+      cargadoPor: string
+      cargadoPorId: string | null
+      fechaCarga: Date
+      actualizadoPor: string | null
+      actualizadoPorId: string | null
+      ultimaActualizacion: Date
+      observaciones: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["pers_Asis_Carga"]>
+    composites: {}
+  }
+
+  type Pers_Asis_CargaGetPayload<S extends boolean | null | undefined | Pers_Asis_CargaDefaultArgs> = $Result.GetResult<Prisma.$Pers_Asis_CargaPayload, S>
+
+  type Pers_Asis_CargaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Pers_Asis_CargaFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Pers_Asis_CargaCountAggregateInputType | true
+    }
+
+  export interface Pers_Asis_CargaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Pers_Asis_Carga'], meta: { name: 'Pers_Asis_Carga' } }
+    /**
+     * Find zero or one Pers_Asis_Carga that matches the filter.
+     * @param {Pers_Asis_CargaFindUniqueArgs} args - Arguments to find a Pers_Asis_Carga
+     * @example
+     * // Get one Pers_Asis_Carga
+     * const pers_Asis_Carga = await prisma.pers_Asis_Carga.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Pers_Asis_CargaFindUniqueArgs>(args: SelectSubset<T, Pers_Asis_CargaFindUniqueArgs<ExtArgs>>): Prisma__Pers_Asis_CargaClient<$Result.GetResult<Prisma.$Pers_Asis_CargaPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Pers_Asis_Carga that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Pers_Asis_CargaFindUniqueOrThrowArgs} args - Arguments to find a Pers_Asis_Carga
+     * @example
+     * // Get one Pers_Asis_Carga
+     * const pers_Asis_Carga = await prisma.pers_Asis_Carga.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Pers_Asis_CargaFindUniqueOrThrowArgs>(args: SelectSubset<T, Pers_Asis_CargaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Pers_Asis_CargaClient<$Result.GetResult<Prisma.$Pers_Asis_CargaPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Pers_Asis_Carga that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Pers_Asis_CargaFindFirstArgs} args - Arguments to find a Pers_Asis_Carga
+     * @example
+     * // Get one Pers_Asis_Carga
+     * const pers_Asis_Carga = await prisma.pers_Asis_Carga.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Pers_Asis_CargaFindFirstArgs>(args?: SelectSubset<T, Pers_Asis_CargaFindFirstArgs<ExtArgs>>): Prisma__Pers_Asis_CargaClient<$Result.GetResult<Prisma.$Pers_Asis_CargaPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Pers_Asis_Carga that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Pers_Asis_CargaFindFirstOrThrowArgs} args - Arguments to find a Pers_Asis_Carga
+     * @example
+     * // Get one Pers_Asis_Carga
+     * const pers_Asis_Carga = await prisma.pers_Asis_Carga.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Pers_Asis_CargaFindFirstOrThrowArgs>(args?: SelectSubset<T, Pers_Asis_CargaFindFirstOrThrowArgs<ExtArgs>>): Prisma__Pers_Asis_CargaClient<$Result.GetResult<Prisma.$Pers_Asis_CargaPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Pers_Asis_Cargas that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Pers_Asis_CargaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Pers_Asis_Cargas
+     * const pers_Asis_Cargas = await prisma.pers_Asis_Carga.findMany()
+     * 
+     * // Get first 10 Pers_Asis_Cargas
+     * const pers_Asis_Cargas = await prisma.pers_Asis_Carga.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const pers_Asis_CargaWithIdOnly = await prisma.pers_Asis_Carga.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Pers_Asis_CargaFindManyArgs>(args?: SelectSubset<T, Pers_Asis_CargaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Pers_Asis_CargaPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Pers_Asis_Carga.
+     * @param {Pers_Asis_CargaCreateArgs} args - Arguments to create a Pers_Asis_Carga.
+     * @example
+     * // Create one Pers_Asis_Carga
+     * const Pers_Asis_Carga = await prisma.pers_Asis_Carga.create({
+     *   data: {
+     *     // ... data to create a Pers_Asis_Carga
+     *   }
+     * })
+     * 
+     */
+    create<T extends Pers_Asis_CargaCreateArgs>(args: SelectSubset<T, Pers_Asis_CargaCreateArgs<ExtArgs>>): Prisma__Pers_Asis_CargaClient<$Result.GetResult<Prisma.$Pers_Asis_CargaPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Pers_Asis_Cargas.
+     * @param {Pers_Asis_CargaCreateManyArgs} args - Arguments to create many Pers_Asis_Cargas.
+     * @example
+     * // Create many Pers_Asis_Cargas
+     * const pers_Asis_Carga = await prisma.pers_Asis_Carga.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Pers_Asis_CargaCreateManyArgs>(args?: SelectSubset<T, Pers_Asis_CargaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Pers_Asis_Cargas and returns the data saved in the database.
+     * @param {Pers_Asis_CargaCreateManyAndReturnArgs} args - Arguments to create many Pers_Asis_Cargas.
+     * @example
+     * // Create many Pers_Asis_Cargas
+     * const pers_Asis_Carga = await prisma.pers_Asis_Carga.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Pers_Asis_Cargas and only return the `id`
+     * const pers_Asis_CargaWithIdOnly = await prisma.pers_Asis_Carga.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Pers_Asis_CargaCreateManyAndReturnArgs>(args?: SelectSubset<T, Pers_Asis_CargaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Pers_Asis_CargaPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Pers_Asis_Carga.
+     * @param {Pers_Asis_CargaDeleteArgs} args - Arguments to delete one Pers_Asis_Carga.
+     * @example
+     * // Delete one Pers_Asis_Carga
+     * const Pers_Asis_Carga = await prisma.pers_Asis_Carga.delete({
+     *   where: {
+     *     // ... filter to delete one Pers_Asis_Carga
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Pers_Asis_CargaDeleteArgs>(args: SelectSubset<T, Pers_Asis_CargaDeleteArgs<ExtArgs>>): Prisma__Pers_Asis_CargaClient<$Result.GetResult<Prisma.$Pers_Asis_CargaPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Pers_Asis_Carga.
+     * @param {Pers_Asis_CargaUpdateArgs} args - Arguments to update one Pers_Asis_Carga.
+     * @example
+     * // Update one Pers_Asis_Carga
+     * const pers_Asis_Carga = await prisma.pers_Asis_Carga.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Pers_Asis_CargaUpdateArgs>(args: SelectSubset<T, Pers_Asis_CargaUpdateArgs<ExtArgs>>): Prisma__Pers_Asis_CargaClient<$Result.GetResult<Prisma.$Pers_Asis_CargaPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Pers_Asis_Cargas.
+     * @param {Pers_Asis_CargaDeleteManyArgs} args - Arguments to filter Pers_Asis_Cargas to delete.
+     * @example
+     * // Delete a few Pers_Asis_Cargas
+     * const { count } = await prisma.pers_Asis_Carga.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Pers_Asis_CargaDeleteManyArgs>(args?: SelectSubset<T, Pers_Asis_CargaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Pers_Asis_Cargas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Pers_Asis_CargaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Pers_Asis_Cargas
+     * const pers_Asis_Carga = await prisma.pers_Asis_Carga.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Pers_Asis_CargaUpdateManyArgs>(args: SelectSubset<T, Pers_Asis_CargaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Pers_Asis_Carga.
+     * @param {Pers_Asis_CargaUpsertArgs} args - Arguments to update or create a Pers_Asis_Carga.
+     * @example
+     * // Update or create a Pers_Asis_Carga
+     * const pers_Asis_Carga = await prisma.pers_Asis_Carga.upsert({
+     *   create: {
+     *     // ... data to create a Pers_Asis_Carga
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Pers_Asis_Carga we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Pers_Asis_CargaUpsertArgs>(args: SelectSubset<T, Pers_Asis_CargaUpsertArgs<ExtArgs>>): Prisma__Pers_Asis_CargaClient<$Result.GetResult<Prisma.$Pers_Asis_CargaPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Pers_Asis_Cargas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Pers_Asis_CargaCountArgs} args - Arguments to filter Pers_Asis_Cargas to count.
+     * @example
+     * // Count the number of Pers_Asis_Cargas
+     * const count = await prisma.pers_Asis_Carga.count({
+     *   where: {
+     *     // ... the filter for the Pers_Asis_Cargas we want to count
+     *   }
+     * })
+    **/
+    count<T extends Pers_Asis_CargaCountArgs>(
+      args?: Subset<T, Pers_Asis_CargaCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Pers_Asis_CargaCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Pers_Asis_Carga.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Pers_Asis_CargaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Pers_Asis_CargaAggregateArgs>(args: Subset<T, Pers_Asis_CargaAggregateArgs>): Prisma.PrismaPromise<GetPers_Asis_CargaAggregateType<T>>
+
+    /**
+     * Group by Pers_Asis_Carga.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Pers_Asis_CargaGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Pers_Asis_CargaGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Pers_Asis_CargaGroupByArgs['orderBy'] }
+        : { orderBy?: Pers_Asis_CargaGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Pers_Asis_CargaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPers_Asis_CargaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Pers_Asis_Carga model
+   */
+  readonly fields: Pers_Asis_CargaFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Pers_Asis_Carga.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Pers_Asis_CargaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    registros<T extends Pers_Asis_Carga$registrosArgs<ExtArgs> = {}>(args?: Subset<T, Pers_Asis_Carga$registrosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Pers_Asis_RegistroPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Pers_Asis_Carga model
+   */ 
+  interface Pers_Asis_CargaFieldRefs {
+    readonly id: FieldRef<"Pers_Asis_Carga", 'String'>
+    readonly nombreArchivo: FieldRef<"Pers_Asis_Carga", 'String'>
+    readonly totalRegistros: FieldRef<"Pers_Asis_Carga", 'Int'>
+    readonly nuevosRegistros: FieldRef<"Pers_Asis_Carga", 'Int'>
+    readonly actualizadosRegistros: FieldRef<"Pers_Asis_Carga", 'Int'>
+    readonly erroresRegistros: FieldRef<"Pers_Asis_Carga", 'Int'>
+    readonly cargadoPor: FieldRef<"Pers_Asis_Carga", 'String'>
+    readonly cargadoPorId: FieldRef<"Pers_Asis_Carga", 'String'>
+    readonly fechaCarga: FieldRef<"Pers_Asis_Carga", 'DateTime'>
+    readonly actualizadoPor: FieldRef<"Pers_Asis_Carga", 'String'>
+    readonly actualizadoPorId: FieldRef<"Pers_Asis_Carga", 'String'>
+    readonly ultimaActualizacion: FieldRef<"Pers_Asis_Carga", 'DateTime'>
+    readonly observaciones: FieldRef<"Pers_Asis_Carga", 'String'>
+    readonly createdAt: FieldRef<"Pers_Asis_Carga", 'DateTime'>
+    readonly updatedAt: FieldRef<"Pers_Asis_Carga", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Pers_Asis_Carga findUnique
+   */
+  export type Pers_Asis_CargaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Carga
+     */
+    select?: Pers_Asis_CargaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_CargaInclude<ExtArgs> | null
+    /**
+     * Filter, which Pers_Asis_Carga to fetch.
+     */
+    where: Pers_Asis_CargaWhereUniqueInput
+  }
+
+  /**
+   * Pers_Asis_Carga findUniqueOrThrow
+   */
+  export type Pers_Asis_CargaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Carga
+     */
+    select?: Pers_Asis_CargaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_CargaInclude<ExtArgs> | null
+    /**
+     * Filter, which Pers_Asis_Carga to fetch.
+     */
+    where: Pers_Asis_CargaWhereUniqueInput
+  }
+
+  /**
+   * Pers_Asis_Carga findFirst
+   */
+  export type Pers_Asis_CargaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Carga
+     */
+    select?: Pers_Asis_CargaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_CargaInclude<ExtArgs> | null
+    /**
+     * Filter, which Pers_Asis_Carga to fetch.
+     */
+    where?: Pers_Asis_CargaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Pers_Asis_Cargas to fetch.
+     */
+    orderBy?: Pers_Asis_CargaOrderByWithRelationInput | Pers_Asis_CargaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Pers_Asis_Cargas.
+     */
+    cursor?: Pers_Asis_CargaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Pers_Asis_Cargas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Pers_Asis_Cargas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Pers_Asis_Cargas.
+     */
+    distinct?: Pers_Asis_CargaScalarFieldEnum | Pers_Asis_CargaScalarFieldEnum[]
+  }
+
+  /**
+   * Pers_Asis_Carga findFirstOrThrow
+   */
+  export type Pers_Asis_CargaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Carga
+     */
+    select?: Pers_Asis_CargaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_CargaInclude<ExtArgs> | null
+    /**
+     * Filter, which Pers_Asis_Carga to fetch.
+     */
+    where?: Pers_Asis_CargaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Pers_Asis_Cargas to fetch.
+     */
+    orderBy?: Pers_Asis_CargaOrderByWithRelationInput | Pers_Asis_CargaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Pers_Asis_Cargas.
+     */
+    cursor?: Pers_Asis_CargaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Pers_Asis_Cargas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Pers_Asis_Cargas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Pers_Asis_Cargas.
+     */
+    distinct?: Pers_Asis_CargaScalarFieldEnum | Pers_Asis_CargaScalarFieldEnum[]
+  }
+
+  /**
+   * Pers_Asis_Carga findMany
+   */
+  export type Pers_Asis_CargaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Carga
+     */
+    select?: Pers_Asis_CargaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_CargaInclude<ExtArgs> | null
+    /**
+     * Filter, which Pers_Asis_Cargas to fetch.
+     */
+    where?: Pers_Asis_CargaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Pers_Asis_Cargas to fetch.
+     */
+    orderBy?: Pers_Asis_CargaOrderByWithRelationInput | Pers_Asis_CargaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Pers_Asis_Cargas.
+     */
+    cursor?: Pers_Asis_CargaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Pers_Asis_Cargas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Pers_Asis_Cargas.
+     */
+    skip?: number
+    distinct?: Pers_Asis_CargaScalarFieldEnum | Pers_Asis_CargaScalarFieldEnum[]
+  }
+
+  /**
+   * Pers_Asis_Carga create
+   */
+  export type Pers_Asis_CargaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Carga
+     */
+    select?: Pers_Asis_CargaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_CargaInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Pers_Asis_Carga.
+     */
+    data: XOR<Pers_Asis_CargaCreateInput, Pers_Asis_CargaUncheckedCreateInput>
+  }
+
+  /**
+   * Pers_Asis_Carga createMany
+   */
+  export type Pers_Asis_CargaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Pers_Asis_Cargas.
+     */
+    data: Pers_Asis_CargaCreateManyInput | Pers_Asis_CargaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Pers_Asis_Carga createManyAndReturn
+   */
+  export type Pers_Asis_CargaCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Carga
+     */
+    select?: Pers_Asis_CargaSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Pers_Asis_Cargas.
+     */
+    data: Pers_Asis_CargaCreateManyInput | Pers_Asis_CargaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Pers_Asis_Carga update
+   */
+  export type Pers_Asis_CargaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Carga
+     */
+    select?: Pers_Asis_CargaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_CargaInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Pers_Asis_Carga.
+     */
+    data: XOR<Pers_Asis_CargaUpdateInput, Pers_Asis_CargaUncheckedUpdateInput>
+    /**
+     * Choose, which Pers_Asis_Carga to update.
+     */
+    where: Pers_Asis_CargaWhereUniqueInput
+  }
+
+  /**
+   * Pers_Asis_Carga updateMany
+   */
+  export type Pers_Asis_CargaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Pers_Asis_Cargas.
+     */
+    data: XOR<Pers_Asis_CargaUpdateManyMutationInput, Pers_Asis_CargaUncheckedUpdateManyInput>
+    /**
+     * Filter which Pers_Asis_Cargas to update
+     */
+    where?: Pers_Asis_CargaWhereInput
+  }
+
+  /**
+   * Pers_Asis_Carga upsert
+   */
+  export type Pers_Asis_CargaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Carga
+     */
+    select?: Pers_Asis_CargaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_CargaInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Pers_Asis_Carga to update in case it exists.
+     */
+    where: Pers_Asis_CargaWhereUniqueInput
+    /**
+     * In case the Pers_Asis_Carga found by the `where` argument doesn't exist, create a new Pers_Asis_Carga with this data.
+     */
+    create: XOR<Pers_Asis_CargaCreateInput, Pers_Asis_CargaUncheckedCreateInput>
+    /**
+     * In case the Pers_Asis_Carga was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Pers_Asis_CargaUpdateInput, Pers_Asis_CargaUncheckedUpdateInput>
+  }
+
+  /**
+   * Pers_Asis_Carga delete
+   */
+  export type Pers_Asis_CargaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Carga
+     */
+    select?: Pers_Asis_CargaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_CargaInclude<ExtArgs> | null
+    /**
+     * Filter which Pers_Asis_Carga to delete.
+     */
+    where: Pers_Asis_CargaWhereUniqueInput
+  }
+
+  /**
+   * Pers_Asis_Carga deleteMany
+   */
+  export type Pers_Asis_CargaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Pers_Asis_Cargas to delete
+     */
+    where?: Pers_Asis_CargaWhereInput
+  }
+
+  /**
+   * Pers_Asis_Carga.registros
+   */
+  export type Pers_Asis_Carga$registrosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Registro
+     */
+    select?: Pers_Asis_RegistroSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_RegistroInclude<ExtArgs> | null
+    where?: Pers_Asis_RegistroWhereInput
+    orderBy?: Pers_Asis_RegistroOrderByWithRelationInput | Pers_Asis_RegistroOrderByWithRelationInput[]
+    cursor?: Pers_Asis_RegistroWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Pers_Asis_RegistroScalarFieldEnum | Pers_Asis_RegistroScalarFieldEnum[]
+  }
+
+  /**
+   * Pers_Asis_Carga without action
+   */
+  export type Pers_Asis_CargaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Carga
+     */
+    select?: Pers_Asis_CargaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_CargaInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Pers_Asis_Registro
+   */
+
+  export type AggregatePers_Asis_Registro = {
+    _count: Pers_Asis_RegistroCountAggregateOutputType | null
+    _avg: Pers_Asis_RegistroAvgAggregateOutputType | null
+    _sum: Pers_Asis_RegistroSumAggregateOutputType | null
+    _min: Pers_Asis_RegistroMinAggregateOutputType | null
+    _max: Pers_Asis_RegistroMaxAggregateOutputType | null
+  }
+
+  export type Pers_Asis_RegistroAvgAggregateOutputType = {
+    rbd: number | null
+    numActualizaciones: number | null
+  }
+
+  export type Pers_Asis_RegistroSumAggregateOutputType = {
+    rbd: number | null
+    numActualizaciones: number | null
+  }
+
+  export type Pers_Asis_RegistroMinAggregateOutputType = {
+    id: string | null
+    cargaId: string | null
+    rutEnc: string | null
+    rutHash: string | null
+    apellidosEnc: string | null
+    nombreEnc: string | null
+    fecha: string | null
+    rbd: number | null
+    establecimiento: string | null
+    grupoOriginal: string | null
+    cargo: string | null
+    permisoParcial: string | null
+    criterioId: string | null
+    criterioNombre: string | null
+    criterioObservacion: string | null
+    criterioAsignadoPor: string | null
+    criterioAsignadoAt: Date | null
+    creadoPor: string | null
+    creadoPorId: string | null
+    fechaCreacion: Date | null
+    actualizadoPor: string | null
+    actualizadoPorId: string | null
+    fechaActualizacion: Date | null
+    numActualizaciones: number | null
+    historialActualizaciones: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Pers_Asis_RegistroMaxAggregateOutputType = {
+    id: string | null
+    cargaId: string | null
+    rutEnc: string | null
+    rutHash: string | null
+    apellidosEnc: string | null
+    nombreEnc: string | null
+    fecha: string | null
+    rbd: number | null
+    establecimiento: string | null
+    grupoOriginal: string | null
+    cargo: string | null
+    permisoParcial: string | null
+    criterioId: string | null
+    criterioNombre: string | null
+    criterioObservacion: string | null
+    criterioAsignadoPor: string | null
+    criterioAsignadoAt: Date | null
+    creadoPor: string | null
+    creadoPorId: string | null
+    fechaCreacion: Date | null
+    actualizadoPor: string | null
+    actualizadoPorId: string | null
+    fechaActualizacion: Date | null
+    numActualizaciones: number | null
+    historialActualizaciones: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type Pers_Asis_RegistroCountAggregateOutputType = {
+    id: number
+    cargaId: number
+    rutEnc: number
+    rutHash: number
+    apellidosEnc: number
+    nombreEnc: number
+    fecha: number
+    rbd: number
+    establecimiento: number
+    grupoOriginal: number
+    cargo: number
+    permisoParcial: number
+    criterioId: number
+    criterioNombre: number
+    criterioObservacion: number
+    criterioAsignadoPor: number
+    criterioAsignadoAt: number
+    creadoPor: number
+    creadoPorId: number
+    fechaCreacion: number
+    actualizadoPor: number
+    actualizadoPorId: number
+    fechaActualizacion: number
+    numActualizaciones: number
+    historialActualizaciones: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type Pers_Asis_RegistroAvgAggregateInputType = {
+    rbd?: true
+    numActualizaciones?: true
+  }
+
+  export type Pers_Asis_RegistroSumAggregateInputType = {
+    rbd?: true
+    numActualizaciones?: true
+  }
+
+  export type Pers_Asis_RegistroMinAggregateInputType = {
+    id?: true
+    cargaId?: true
+    rutEnc?: true
+    rutHash?: true
+    apellidosEnc?: true
+    nombreEnc?: true
+    fecha?: true
+    rbd?: true
+    establecimiento?: true
+    grupoOriginal?: true
+    cargo?: true
+    permisoParcial?: true
+    criterioId?: true
+    criterioNombre?: true
+    criterioObservacion?: true
+    criterioAsignadoPor?: true
+    criterioAsignadoAt?: true
+    creadoPor?: true
+    creadoPorId?: true
+    fechaCreacion?: true
+    actualizadoPor?: true
+    actualizadoPorId?: true
+    fechaActualizacion?: true
+    numActualizaciones?: true
+    historialActualizaciones?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Pers_Asis_RegistroMaxAggregateInputType = {
+    id?: true
+    cargaId?: true
+    rutEnc?: true
+    rutHash?: true
+    apellidosEnc?: true
+    nombreEnc?: true
+    fecha?: true
+    rbd?: true
+    establecimiento?: true
+    grupoOriginal?: true
+    cargo?: true
+    permisoParcial?: true
+    criterioId?: true
+    criterioNombre?: true
+    criterioObservacion?: true
+    criterioAsignadoPor?: true
+    criterioAsignadoAt?: true
+    creadoPor?: true
+    creadoPorId?: true
+    fechaCreacion?: true
+    actualizadoPor?: true
+    actualizadoPorId?: true
+    fechaActualizacion?: true
+    numActualizaciones?: true
+    historialActualizaciones?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type Pers_Asis_RegistroCountAggregateInputType = {
+    id?: true
+    cargaId?: true
+    rutEnc?: true
+    rutHash?: true
+    apellidosEnc?: true
+    nombreEnc?: true
+    fecha?: true
+    rbd?: true
+    establecimiento?: true
+    grupoOriginal?: true
+    cargo?: true
+    permisoParcial?: true
+    criterioId?: true
+    criterioNombre?: true
+    criterioObservacion?: true
+    criterioAsignadoPor?: true
+    criterioAsignadoAt?: true
+    creadoPor?: true
+    creadoPorId?: true
+    fechaCreacion?: true
+    actualizadoPor?: true
+    actualizadoPorId?: true
+    fechaActualizacion?: true
+    numActualizaciones?: true
+    historialActualizaciones?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type Pers_Asis_RegistroAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Pers_Asis_Registro to aggregate.
+     */
+    where?: Pers_Asis_RegistroWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Pers_Asis_Registros to fetch.
+     */
+    orderBy?: Pers_Asis_RegistroOrderByWithRelationInput | Pers_Asis_RegistroOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Pers_Asis_RegistroWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Pers_Asis_Registros from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Pers_Asis_Registros.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Pers_Asis_Registros
+    **/
+    _count?: true | Pers_Asis_RegistroCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Pers_Asis_RegistroAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Pers_Asis_RegistroSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Pers_Asis_RegistroMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Pers_Asis_RegistroMaxAggregateInputType
+  }
+
+  export type GetPers_Asis_RegistroAggregateType<T extends Pers_Asis_RegistroAggregateArgs> = {
+        [P in keyof T & keyof AggregatePers_Asis_Registro]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePers_Asis_Registro[P]>
+      : GetScalarType<T[P], AggregatePers_Asis_Registro[P]>
+  }
+
+
+
+
+  export type Pers_Asis_RegistroGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Pers_Asis_RegistroWhereInput
+    orderBy?: Pers_Asis_RegistroOrderByWithAggregationInput | Pers_Asis_RegistroOrderByWithAggregationInput[]
+    by: Pers_Asis_RegistroScalarFieldEnum[] | Pers_Asis_RegistroScalarFieldEnum
+    having?: Pers_Asis_RegistroScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Pers_Asis_RegistroCountAggregateInputType | true
+    _avg?: Pers_Asis_RegistroAvgAggregateInputType
+    _sum?: Pers_Asis_RegistroSumAggregateInputType
+    _min?: Pers_Asis_RegistroMinAggregateInputType
+    _max?: Pers_Asis_RegistroMaxAggregateInputType
+  }
+
+  export type Pers_Asis_RegistroGroupByOutputType = {
+    id: string
+    cargaId: string | null
+    rutEnc: string
+    rutHash: string
+    apellidosEnc: string
+    nombreEnc: string
+    fecha: string
+    rbd: number
+    establecimiento: string
+    grupoOriginal: string | null
+    cargo: string | null
+    permisoParcial: string | null
+    criterioId: string | null
+    criterioNombre: string | null
+    criterioObservacion: string | null
+    criterioAsignadoPor: string | null
+    criterioAsignadoAt: Date | null
+    creadoPor: string
+    creadoPorId: string | null
+    fechaCreacion: Date
+    actualizadoPor: string | null
+    actualizadoPorId: string | null
+    fechaActualizacion: Date | null
+    numActualizaciones: number
+    historialActualizaciones: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: Pers_Asis_RegistroCountAggregateOutputType | null
+    _avg: Pers_Asis_RegistroAvgAggregateOutputType | null
+    _sum: Pers_Asis_RegistroSumAggregateOutputType | null
+    _min: Pers_Asis_RegistroMinAggregateOutputType | null
+    _max: Pers_Asis_RegistroMaxAggregateOutputType | null
+  }
+
+  type GetPers_Asis_RegistroGroupByPayload<T extends Pers_Asis_RegistroGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Pers_Asis_RegistroGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Pers_Asis_RegistroGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Pers_Asis_RegistroGroupByOutputType[P]>
+            : GetScalarType<T[P], Pers_Asis_RegistroGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Pers_Asis_RegistroSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cargaId?: boolean
+    rutEnc?: boolean
+    rutHash?: boolean
+    apellidosEnc?: boolean
+    nombreEnc?: boolean
+    fecha?: boolean
+    rbd?: boolean
+    establecimiento?: boolean
+    grupoOriginal?: boolean
+    cargo?: boolean
+    permisoParcial?: boolean
+    criterioId?: boolean
+    criterioNombre?: boolean
+    criterioObservacion?: boolean
+    criterioAsignadoPor?: boolean
+    criterioAsignadoAt?: boolean
+    creadoPor?: boolean
+    creadoPorId?: boolean
+    fechaCreacion?: boolean
+    actualizadoPor?: boolean
+    actualizadoPorId?: boolean
+    fechaActualizacion?: boolean
+    numActualizaciones?: boolean
+    historialActualizaciones?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    carga?: boolean | Pers_Asis_Registro$cargaArgs<ExtArgs>
+    criterio?: boolean | Pers_Asis_Registro$criterioArgs<ExtArgs>
+  }, ExtArgs["result"]["pers_Asis_Registro"]>
+
+  export type Pers_Asis_RegistroSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cargaId?: boolean
+    rutEnc?: boolean
+    rutHash?: boolean
+    apellidosEnc?: boolean
+    nombreEnc?: boolean
+    fecha?: boolean
+    rbd?: boolean
+    establecimiento?: boolean
+    grupoOriginal?: boolean
+    cargo?: boolean
+    permisoParcial?: boolean
+    criterioId?: boolean
+    criterioNombre?: boolean
+    criterioObservacion?: boolean
+    criterioAsignadoPor?: boolean
+    criterioAsignadoAt?: boolean
+    creadoPor?: boolean
+    creadoPorId?: boolean
+    fechaCreacion?: boolean
+    actualizadoPor?: boolean
+    actualizadoPorId?: boolean
+    fechaActualizacion?: boolean
+    numActualizaciones?: boolean
+    historialActualizaciones?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    carga?: boolean | Pers_Asis_Registro$cargaArgs<ExtArgs>
+    criterio?: boolean | Pers_Asis_Registro$criterioArgs<ExtArgs>
+  }, ExtArgs["result"]["pers_Asis_Registro"]>
+
+  export type Pers_Asis_RegistroSelectScalar = {
+    id?: boolean
+    cargaId?: boolean
+    rutEnc?: boolean
+    rutHash?: boolean
+    apellidosEnc?: boolean
+    nombreEnc?: boolean
+    fecha?: boolean
+    rbd?: boolean
+    establecimiento?: boolean
+    grupoOriginal?: boolean
+    cargo?: boolean
+    permisoParcial?: boolean
+    criterioId?: boolean
+    criterioNombre?: boolean
+    criterioObservacion?: boolean
+    criterioAsignadoPor?: boolean
+    criterioAsignadoAt?: boolean
+    creadoPor?: boolean
+    creadoPorId?: boolean
+    fechaCreacion?: boolean
+    actualizadoPor?: boolean
+    actualizadoPorId?: boolean
+    fechaActualizacion?: boolean
+    numActualizaciones?: boolean
+    historialActualizaciones?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type Pers_Asis_RegistroInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    carga?: boolean | Pers_Asis_Registro$cargaArgs<ExtArgs>
+    criterio?: boolean | Pers_Asis_Registro$criterioArgs<ExtArgs>
+  }
+  export type Pers_Asis_RegistroIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    carga?: boolean | Pers_Asis_Registro$cargaArgs<ExtArgs>
+    criterio?: boolean | Pers_Asis_Registro$criterioArgs<ExtArgs>
+  }
+
+  export type $Pers_Asis_RegistroPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Pers_Asis_Registro"
+    objects: {
+      carga: Prisma.$Pers_Asis_CargaPayload<ExtArgs> | null
+      criterio: Prisma.$Pers_Asis_CriterioPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      cargaId: string | null
+      rutEnc: string
+      rutHash: string
+      apellidosEnc: string
+      nombreEnc: string
+      fecha: string
+      rbd: number
+      establecimiento: string
+      grupoOriginal: string | null
+      cargo: string | null
+      permisoParcial: string | null
+      criterioId: string | null
+      criterioNombre: string | null
+      criterioObservacion: string | null
+      criterioAsignadoPor: string | null
+      criterioAsignadoAt: Date | null
+      creadoPor: string
+      creadoPorId: string | null
+      fechaCreacion: Date
+      actualizadoPor: string | null
+      actualizadoPorId: string | null
+      fechaActualizacion: Date | null
+      numActualizaciones: number
+      historialActualizaciones: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["pers_Asis_Registro"]>
+    composites: {}
+  }
+
+  type Pers_Asis_RegistroGetPayload<S extends boolean | null | undefined | Pers_Asis_RegistroDefaultArgs> = $Result.GetResult<Prisma.$Pers_Asis_RegistroPayload, S>
+
+  type Pers_Asis_RegistroCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Pers_Asis_RegistroFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Pers_Asis_RegistroCountAggregateInputType | true
+    }
+
+  export interface Pers_Asis_RegistroDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Pers_Asis_Registro'], meta: { name: 'Pers_Asis_Registro' } }
+    /**
+     * Find zero or one Pers_Asis_Registro that matches the filter.
+     * @param {Pers_Asis_RegistroFindUniqueArgs} args - Arguments to find a Pers_Asis_Registro
+     * @example
+     * // Get one Pers_Asis_Registro
+     * const pers_Asis_Registro = await prisma.pers_Asis_Registro.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Pers_Asis_RegistroFindUniqueArgs>(args: SelectSubset<T, Pers_Asis_RegistroFindUniqueArgs<ExtArgs>>): Prisma__Pers_Asis_RegistroClient<$Result.GetResult<Prisma.$Pers_Asis_RegistroPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Pers_Asis_Registro that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Pers_Asis_RegistroFindUniqueOrThrowArgs} args - Arguments to find a Pers_Asis_Registro
+     * @example
+     * // Get one Pers_Asis_Registro
+     * const pers_Asis_Registro = await prisma.pers_Asis_Registro.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Pers_Asis_RegistroFindUniqueOrThrowArgs>(args: SelectSubset<T, Pers_Asis_RegistroFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Pers_Asis_RegistroClient<$Result.GetResult<Prisma.$Pers_Asis_RegistroPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Pers_Asis_Registro that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Pers_Asis_RegistroFindFirstArgs} args - Arguments to find a Pers_Asis_Registro
+     * @example
+     * // Get one Pers_Asis_Registro
+     * const pers_Asis_Registro = await prisma.pers_Asis_Registro.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Pers_Asis_RegistroFindFirstArgs>(args?: SelectSubset<T, Pers_Asis_RegistroFindFirstArgs<ExtArgs>>): Prisma__Pers_Asis_RegistroClient<$Result.GetResult<Prisma.$Pers_Asis_RegistroPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Pers_Asis_Registro that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Pers_Asis_RegistroFindFirstOrThrowArgs} args - Arguments to find a Pers_Asis_Registro
+     * @example
+     * // Get one Pers_Asis_Registro
+     * const pers_Asis_Registro = await prisma.pers_Asis_Registro.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Pers_Asis_RegistroFindFirstOrThrowArgs>(args?: SelectSubset<T, Pers_Asis_RegistroFindFirstOrThrowArgs<ExtArgs>>): Prisma__Pers_Asis_RegistroClient<$Result.GetResult<Prisma.$Pers_Asis_RegistroPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Pers_Asis_Registros that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Pers_Asis_RegistroFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Pers_Asis_Registros
+     * const pers_Asis_Registros = await prisma.pers_Asis_Registro.findMany()
+     * 
+     * // Get first 10 Pers_Asis_Registros
+     * const pers_Asis_Registros = await prisma.pers_Asis_Registro.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const pers_Asis_RegistroWithIdOnly = await prisma.pers_Asis_Registro.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Pers_Asis_RegistroFindManyArgs>(args?: SelectSubset<T, Pers_Asis_RegistroFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Pers_Asis_RegistroPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Pers_Asis_Registro.
+     * @param {Pers_Asis_RegistroCreateArgs} args - Arguments to create a Pers_Asis_Registro.
+     * @example
+     * // Create one Pers_Asis_Registro
+     * const Pers_Asis_Registro = await prisma.pers_Asis_Registro.create({
+     *   data: {
+     *     // ... data to create a Pers_Asis_Registro
+     *   }
+     * })
+     * 
+     */
+    create<T extends Pers_Asis_RegistroCreateArgs>(args: SelectSubset<T, Pers_Asis_RegistroCreateArgs<ExtArgs>>): Prisma__Pers_Asis_RegistroClient<$Result.GetResult<Prisma.$Pers_Asis_RegistroPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Pers_Asis_Registros.
+     * @param {Pers_Asis_RegistroCreateManyArgs} args - Arguments to create many Pers_Asis_Registros.
+     * @example
+     * // Create many Pers_Asis_Registros
+     * const pers_Asis_Registro = await prisma.pers_Asis_Registro.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Pers_Asis_RegistroCreateManyArgs>(args?: SelectSubset<T, Pers_Asis_RegistroCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Pers_Asis_Registros and returns the data saved in the database.
+     * @param {Pers_Asis_RegistroCreateManyAndReturnArgs} args - Arguments to create many Pers_Asis_Registros.
+     * @example
+     * // Create many Pers_Asis_Registros
+     * const pers_Asis_Registro = await prisma.pers_Asis_Registro.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Pers_Asis_Registros and only return the `id`
+     * const pers_Asis_RegistroWithIdOnly = await prisma.pers_Asis_Registro.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Pers_Asis_RegistroCreateManyAndReturnArgs>(args?: SelectSubset<T, Pers_Asis_RegistroCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Pers_Asis_RegistroPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Pers_Asis_Registro.
+     * @param {Pers_Asis_RegistroDeleteArgs} args - Arguments to delete one Pers_Asis_Registro.
+     * @example
+     * // Delete one Pers_Asis_Registro
+     * const Pers_Asis_Registro = await prisma.pers_Asis_Registro.delete({
+     *   where: {
+     *     // ... filter to delete one Pers_Asis_Registro
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Pers_Asis_RegistroDeleteArgs>(args: SelectSubset<T, Pers_Asis_RegistroDeleteArgs<ExtArgs>>): Prisma__Pers_Asis_RegistroClient<$Result.GetResult<Prisma.$Pers_Asis_RegistroPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Pers_Asis_Registro.
+     * @param {Pers_Asis_RegistroUpdateArgs} args - Arguments to update one Pers_Asis_Registro.
+     * @example
+     * // Update one Pers_Asis_Registro
+     * const pers_Asis_Registro = await prisma.pers_Asis_Registro.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Pers_Asis_RegistroUpdateArgs>(args: SelectSubset<T, Pers_Asis_RegistroUpdateArgs<ExtArgs>>): Prisma__Pers_Asis_RegistroClient<$Result.GetResult<Prisma.$Pers_Asis_RegistroPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Pers_Asis_Registros.
+     * @param {Pers_Asis_RegistroDeleteManyArgs} args - Arguments to filter Pers_Asis_Registros to delete.
+     * @example
+     * // Delete a few Pers_Asis_Registros
+     * const { count } = await prisma.pers_Asis_Registro.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Pers_Asis_RegistroDeleteManyArgs>(args?: SelectSubset<T, Pers_Asis_RegistroDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Pers_Asis_Registros.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Pers_Asis_RegistroUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Pers_Asis_Registros
+     * const pers_Asis_Registro = await prisma.pers_Asis_Registro.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Pers_Asis_RegistroUpdateManyArgs>(args: SelectSubset<T, Pers_Asis_RegistroUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Pers_Asis_Registro.
+     * @param {Pers_Asis_RegistroUpsertArgs} args - Arguments to update or create a Pers_Asis_Registro.
+     * @example
+     * // Update or create a Pers_Asis_Registro
+     * const pers_Asis_Registro = await prisma.pers_Asis_Registro.upsert({
+     *   create: {
+     *     // ... data to create a Pers_Asis_Registro
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Pers_Asis_Registro we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Pers_Asis_RegistroUpsertArgs>(args: SelectSubset<T, Pers_Asis_RegistroUpsertArgs<ExtArgs>>): Prisma__Pers_Asis_RegistroClient<$Result.GetResult<Prisma.$Pers_Asis_RegistroPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Pers_Asis_Registros.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Pers_Asis_RegistroCountArgs} args - Arguments to filter Pers_Asis_Registros to count.
+     * @example
+     * // Count the number of Pers_Asis_Registros
+     * const count = await prisma.pers_Asis_Registro.count({
+     *   where: {
+     *     // ... the filter for the Pers_Asis_Registros we want to count
+     *   }
+     * })
+    **/
+    count<T extends Pers_Asis_RegistroCountArgs>(
+      args?: Subset<T, Pers_Asis_RegistroCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Pers_Asis_RegistroCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Pers_Asis_Registro.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Pers_Asis_RegistroAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Pers_Asis_RegistroAggregateArgs>(args: Subset<T, Pers_Asis_RegistroAggregateArgs>): Prisma.PrismaPromise<GetPers_Asis_RegistroAggregateType<T>>
+
+    /**
+     * Group by Pers_Asis_Registro.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Pers_Asis_RegistroGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Pers_Asis_RegistroGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Pers_Asis_RegistroGroupByArgs['orderBy'] }
+        : { orderBy?: Pers_Asis_RegistroGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Pers_Asis_RegistroGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPers_Asis_RegistroGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Pers_Asis_Registro model
+   */
+  readonly fields: Pers_Asis_RegistroFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Pers_Asis_Registro.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Pers_Asis_RegistroClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    carga<T extends Pers_Asis_Registro$cargaArgs<ExtArgs> = {}>(args?: Subset<T, Pers_Asis_Registro$cargaArgs<ExtArgs>>): Prisma__Pers_Asis_CargaClient<$Result.GetResult<Prisma.$Pers_Asis_CargaPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    criterio<T extends Pers_Asis_Registro$criterioArgs<ExtArgs> = {}>(args?: Subset<T, Pers_Asis_Registro$criterioArgs<ExtArgs>>): Prisma__Pers_Asis_CriterioClient<$Result.GetResult<Prisma.$Pers_Asis_CriterioPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Pers_Asis_Registro model
+   */ 
+  interface Pers_Asis_RegistroFieldRefs {
+    readonly id: FieldRef<"Pers_Asis_Registro", 'String'>
+    readonly cargaId: FieldRef<"Pers_Asis_Registro", 'String'>
+    readonly rutEnc: FieldRef<"Pers_Asis_Registro", 'String'>
+    readonly rutHash: FieldRef<"Pers_Asis_Registro", 'String'>
+    readonly apellidosEnc: FieldRef<"Pers_Asis_Registro", 'String'>
+    readonly nombreEnc: FieldRef<"Pers_Asis_Registro", 'String'>
+    readonly fecha: FieldRef<"Pers_Asis_Registro", 'String'>
+    readonly rbd: FieldRef<"Pers_Asis_Registro", 'Int'>
+    readonly establecimiento: FieldRef<"Pers_Asis_Registro", 'String'>
+    readonly grupoOriginal: FieldRef<"Pers_Asis_Registro", 'String'>
+    readonly cargo: FieldRef<"Pers_Asis_Registro", 'String'>
+    readonly permisoParcial: FieldRef<"Pers_Asis_Registro", 'String'>
+    readonly criterioId: FieldRef<"Pers_Asis_Registro", 'String'>
+    readonly criterioNombre: FieldRef<"Pers_Asis_Registro", 'String'>
+    readonly criterioObservacion: FieldRef<"Pers_Asis_Registro", 'String'>
+    readonly criterioAsignadoPor: FieldRef<"Pers_Asis_Registro", 'String'>
+    readonly criterioAsignadoAt: FieldRef<"Pers_Asis_Registro", 'DateTime'>
+    readonly creadoPor: FieldRef<"Pers_Asis_Registro", 'String'>
+    readonly creadoPorId: FieldRef<"Pers_Asis_Registro", 'String'>
+    readonly fechaCreacion: FieldRef<"Pers_Asis_Registro", 'DateTime'>
+    readonly actualizadoPor: FieldRef<"Pers_Asis_Registro", 'String'>
+    readonly actualizadoPorId: FieldRef<"Pers_Asis_Registro", 'String'>
+    readonly fechaActualizacion: FieldRef<"Pers_Asis_Registro", 'DateTime'>
+    readonly numActualizaciones: FieldRef<"Pers_Asis_Registro", 'Int'>
+    readonly historialActualizaciones: FieldRef<"Pers_Asis_Registro", 'String'>
+    readonly createdAt: FieldRef<"Pers_Asis_Registro", 'DateTime'>
+    readonly updatedAt: FieldRef<"Pers_Asis_Registro", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Pers_Asis_Registro findUnique
+   */
+  export type Pers_Asis_RegistroFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Registro
+     */
+    select?: Pers_Asis_RegistroSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_RegistroInclude<ExtArgs> | null
+    /**
+     * Filter, which Pers_Asis_Registro to fetch.
+     */
+    where: Pers_Asis_RegistroWhereUniqueInput
+  }
+
+  /**
+   * Pers_Asis_Registro findUniqueOrThrow
+   */
+  export type Pers_Asis_RegistroFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Registro
+     */
+    select?: Pers_Asis_RegistroSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_RegistroInclude<ExtArgs> | null
+    /**
+     * Filter, which Pers_Asis_Registro to fetch.
+     */
+    where: Pers_Asis_RegistroWhereUniqueInput
+  }
+
+  /**
+   * Pers_Asis_Registro findFirst
+   */
+  export type Pers_Asis_RegistroFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Registro
+     */
+    select?: Pers_Asis_RegistroSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_RegistroInclude<ExtArgs> | null
+    /**
+     * Filter, which Pers_Asis_Registro to fetch.
+     */
+    where?: Pers_Asis_RegistroWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Pers_Asis_Registros to fetch.
+     */
+    orderBy?: Pers_Asis_RegistroOrderByWithRelationInput | Pers_Asis_RegistroOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Pers_Asis_Registros.
+     */
+    cursor?: Pers_Asis_RegistroWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Pers_Asis_Registros from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Pers_Asis_Registros.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Pers_Asis_Registros.
+     */
+    distinct?: Pers_Asis_RegistroScalarFieldEnum | Pers_Asis_RegistroScalarFieldEnum[]
+  }
+
+  /**
+   * Pers_Asis_Registro findFirstOrThrow
+   */
+  export type Pers_Asis_RegistroFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Registro
+     */
+    select?: Pers_Asis_RegistroSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_RegistroInclude<ExtArgs> | null
+    /**
+     * Filter, which Pers_Asis_Registro to fetch.
+     */
+    where?: Pers_Asis_RegistroWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Pers_Asis_Registros to fetch.
+     */
+    orderBy?: Pers_Asis_RegistroOrderByWithRelationInput | Pers_Asis_RegistroOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Pers_Asis_Registros.
+     */
+    cursor?: Pers_Asis_RegistroWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Pers_Asis_Registros from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Pers_Asis_Registros.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Pers_Asis_Registros.
+     */
+    distinct?: Pers_Asis_RegistroScalarFieldEnum | Pers_Asis_RegistroScalarFieldEnum[]
+  }
+
+  /**
+   * Pers_Asis_Registro findMany
+   */
+  export type Pers_Asis_RegistroFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Registro
+     */
+    select?: Pers_Asis_RegistroSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_RegistroInclude<ExtArgs> | null
+    /**
+     * Filter, which Pers_Asis_Registros to fetch.
+     */
+    where?: Pers_Asis_RegistroWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Pers_Asis_Registros to fetch.
+     */
+    orderBy?: Pers_Asis_RegistroOrderByWithRelationInput | Pers_Asis_RegistroOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Pers_Asis_Registros.
+     */
+    cursor?: Pers_Asis_RegistroWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Pers_Asis_Registros from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Pers_Asis_Registros.
+     */
+    skip?: number
+    distinct?: Pers_Asis_RegistroScalarFieldEnum | Pers_Asis_RegistroScalarFieldEnum[]
+  }
+
+  /**
+   * Pers_Asis_Registro create
+   */
+  export type Pers_Asis_RegistroCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Registro
+     */
+    select?: Pers_Asis_RegistroSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_RegistroInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Pers_Asis_Registro.
+     */
+    data: XOR<Pers_Asis_RegistroCreateInput, Pers_Asis_RegistroUncheckedCreateInput>
+  }
+
+  /**
+   * Pers_Asis_Registro createMany
+   */
+  export type Pers_Asis_RegistroCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Pers_Asis_Registros.
+     */
+    data: Pers_Asis_RegistroCreateManyInput | Pers_Asis_RegistroCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Pers_Asis_Registro createManyAndReturn
+   */
+  export type Pers_Asis_RegistroCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Registro
+     */
+    select?: Pers_Asis_RegistroSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Pers_Asis_Registros.
+     */
+    data: Pers_Asis_RegistroCreateManyInput | Pers_Asis_RegistroCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_RegistroIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Pers_Asis_Registro update
+   */
+  export type Pers_Asis_RegistroUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Registro
+     */
+    select?: Pers_Asis_RegistroSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_RegistroInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Pers_Asis_Registro.
+     */
+    data: XOR<Pers_Asis_RegistroUpdateInput, Pers_Asis_RegistroUncheckedUpdateInput>
+    /**
+     * Choose, which Pers_Asis_Registro to update.
+     */
+    where: Pers_Asis_RegistroWhereUniqueInput
+  }
+
+  /**
+   * Pers_Asis_Registro updateMany
+   */
+  export type Pers_Asis_RegistroUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Pers_Asis_Registros.
+     */
+    data: XOR<Pers_Asis_RegistroUpdateManyMutationInput, Pers_Asis_RegistroUncheckedUpdateManyInput>
+    /**
+     * Filter which Pers_Asis_Registros to update
+     */
+    where?: Pers_Asis_RegistroWhereInput
+  }
+
+  /**
+   * Pers_Asis_Registro upsert
+   */
+  export type Pers_Asis_RegistroUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Registro
+     */
+    select?: Pers_Asis_RegistroSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_RegistroInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Pers_Asis_Registro to update in case it exists.
+     */
+    where: Pers_Asis_RegistroWhereUniqueInput
+    /**
+     * In case the Pers_Asis_Registro found by the `where` argument doesn't exist, create a new Pers_Asis_Registro with this data.
+     */
+    create: XOR<Pers_Asis_RegistroCreateInput, Pers_Asis_RegistroUncheckedCreateInput>
+    /**
+     * In case the Pers_Asis_Registro was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Pers_Asis_RegistroUpdateInput, Pers_Asis_RegistroUncheckedUpdateInput>
+  }
+
+  /**
+   * Pers_Asis_Registro delete
+   */
+  export type Pers_Asis_RegistroDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Registro
+     */
+    select?: Pers_Asis_RegistroSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_RegistroInclude<ExtArgs> | null
+    /**
+     * Filter which Pers_Asis_Registro to delete.
+     */
+    where: Pers_Asis_RegistroWhereUniqueInput
+  }
+
+  /**
+   * Pers_Asis_Registro deleteMany
+   */
+  export type Pers_Asis_RegistroDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Pers_Asis_Registros to delete
+     */
+    where?: Pers_Asis_RegistroWhereInput
+  }
+
+  /**
+   * Pers_Asis_Registro.carga
+   */
+  export type Pers_Asis_Registro$cargaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Carga
+     */
+    select?: Pers_Asis_CargaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_CargaInclude<ExtArgs> | null
+    where?: Pers_Asis_CargaWhereInput
+  }
+
+  /**
+   * Pers_Asis_Registro.criterio
+   */
+  export type Pers_Asis_Registro$criterioArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Criterio
+     */
+    select?: Pers_Asis_CriterioSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_CriterioInclude<ExtArgs> | null
+    where?: Pers_Asis_CriterioWhereInput
+  }
+
+  /**
+   * Pers_Asis_Registro without action
+   */
+  export type Pers_Asis_RegistroDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pers_Asis_Registro
+     */
+    select?: Pers_Asis_RegistroSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Pers_Asis_RegistroInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -151446,6 +155169,74 @@ export namespace Prisma {
   };
 
   export type Cal_ResSan_RegistroScalarFieldEnum = (typeof Cal_ResSan_RegistroScalarFieldEnum)[keyof typeof Cal_ResSan_RegistroScalarFieldEnum]
+
+
+  export const Pers_Asis_CriterioScalarFieldEnum: {
+    id: 'id',
+    nombre: 'nombre',
+    descripcion: 'descripcion',
+    color: 'color',
+    activo: 'activo',
+    orden: 'orden',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type Pers_Asis_CriterioScalarFieldEnum = (typeof Pers_Asis_CriterioScalarFieldEnum)[keyof typeof Pers_Asis_CriterioScalarFieldEnum]
+
+
+  export const Pers_Asis_CargaScalarFieldEnum: {
+    id: 'id',
+    nombreArchivo: 'nombreArchivo',
+    totalRegistros: 'totalRegistros',
+    nuevosRegistros: 'nuevosRegistros',
+    actualizadosRegistros: 'actualizadosRegistros',
+    erroresRegistros: 'erroresRegistros',
+    cargadoPor: 'cargadoPor',
+    cargadoPorId: 'cargadoPorId',
+    fechaCarga: 'fechaCarga',
+    actualizadoPor: 'actualizadoPor',
+    actualizadoPorId: 'actualizadoPorId',
+    ultimaActualizacion: 'ultimaActualizacion',
+    observaciones: 'observaciones',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type Pers_Asis_CargaScalarFieldEnum = (typeof Pers_Asis_CargaScalarFieldEnum)[keyof typeof Pers_Asis_CargaScalarFieldEnum]
+
+
+  export const Pers_Asis_RegistroScalarFieldEnum: {
+    id: 'id',
+    cargaId: 'cargaId',
+    rutEnc: 'rutEnc',
+    rutHash: 'rutHash',
+    apellidosEnc: 'apellidosEnc',
+    nombreEnc: 'nombreEnc',
+    fecha: 'fecha',
+    rbd: 'rbd',
+    establecimiento: 'establecimiento',
+    grupoOriginal: 'grupoOriginal',
+    cargo: 'cargo',
+    permisoParcial: 'permisoParcial',
+    criterioId: 'criterioId',
+    criterioNombre: 'criterioNombre',
+    criterioObservacion: 'criterioObservacion',
+    criterioAsignadoPor: 'criterioAsignadoPor',
+    criterioAsignadoAt: 'criterioAsignadoAt',
+    creadoPor: 'creadoPor',
+    creadoPorId: 'creadoPorId',
+    fechaCreacion: 'fechaCreacion',
+    actualizadoPor: 'actualizadoPor',
+    actualizadoPorId: 'actualizadoPorId',
+    fechaActualizacion: 'fechaActualizacion',
+    numActualizaciones: 'numActualizaciones',
+    historialActualizaciones: 'historialActualizaciones',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type Pers_Asis_RegistroScalarFieldEnum = (typeof Pers_Asis_RegistroScalarFieldEnum)[keyof typeof Pers_Asis_RegistroScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -162700,6 +166491,356 @@ export namespace Prisma {
     updatedBy?: StringNullableWithAggregatesFilter<"Cal_ResSan_Registro"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Cal_ResSan_Registro"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Cal_ResSan_Registro"> | Date | string
+  }
+
+  export type Pers_Asis_CriterioWhereInput = {
+    AND?: Pers_Asis_CriterioWhereInput | Pers_Asis_CriterioWhereInput[]
+    OR?: Pers_Asis_CriterioWhereInput[]
+    NOT?: Pers_Asis_CriterioWhereInput | Pers_Asis_CriterioWhereInput[]
+    id?: StringFilter<"Pers_Asis_Criterio"> | string
+    nombre?: StringFilter<"Pers_Asis_Criterio"> | string
+    descripcion?: StringNullableFilter<"Pers_Asis_Criterio"> | string | null
+    color?: StringNullableFilter<"Pers_Asis_Criterio"> | string | null
+    activo?: BoolFilter<"Pers_Asis_Criterio"> | boolean
+    orden?: IntFilter<"Pers_Asis_Criterio"> | number
+    createdAt?: DateTimeFilter<"Pers_Asis_Criterio"> | Date | string
+    updatedAt?: DateTimeFilter<"Pers_Asis_Criterio"> | Date | string
+    registros?: Pers_Asis_RegistroListRelationFilter
+  }
+
+  export type Pers_Asis_CriterioOrderByWithRelationInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    descripcion?: SortOrderInput | SortOrder
+    color?: SortOrderInput | SortOrder
+    activo?: SortOrder
+    orden?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    registros?: Pers_Asis_RegistroOrderByRelationAggregateInput
+  }
+
+  export type Pers_Asis_CriterioWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    nombre?: string
+    AND?: Pers_Asis_CriterioWhereInput | Pers_Asis_CriterioWhereInput[]
+    OR?: Pers_Asis_CriterioWhereInput[]
+    NOT?: Pers_Asis_CriterioWhereInput | Pers_Asis_CriterioWhereInput[]
+    descripcion?: StringNullableFilter<"Pers_Asis_Criterio"> | string | null
+    color?: StringNullableFilter<"Pers_Asis_Criterio"> | string | null
+    activo?: BoolFilter<"Pers_Asis_Criterio"> | boolean
+    orden?: IntFilter<"Pers_Asis_Criterio"> | number
+    createdAt?: DateTimeFilter<"Pers_Asis_Criterio"> | Date | string
+    updatedAt?: DateTimeFilter<"Pers_Asis_Criterio"> | Date | string
+    registros?: Pers_Asis_RegistroListRelationFilter
+  }, "id" | "nombre">
+
+  export type Pers_Asis_CriterioOrderByWithAggregationInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    descripcion?: SortOrderInput | SortOrder
+    color?: SortOrderInput | SortOrder
+    activo?: SortOrder
+    orden?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: Pers_Asis_CriterioCountOrderByAggregateInput
+    _avg?: Pers_Asis_CriterioAvgOrderByAggregateInput
+    _max?: Pers_Asis_CriterioMaxOrderByAggregateInput
+    _min?: Pers_Asis_CriterioMinOrderByAggregateInput
+    _sum?: Pers_Asis_CriterioSumOrderByAggregateInput
+  }
+
+  export type Pers_Asis_CriterioScalarWhereWithAggregatesInput = {
+    AND?: Pers_Asis_CriterioScalarWhereWithAggregatesInput | Pers_Asis_CriterioScalarWhereWithAggregatesInput[]
+    OR?: Pers_Asis_CriterioScalarWhereWithAggregatesInput[]
+    NOT?: Pers_Asis_CriterioScalarWhereWithAggregatesInput | Pers_Asis_CriterioScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Pers_Asis_Criterio"> | string
+    nombre?: StringWithAggregatesFilter<"Pers_Asis_Criterio"> | string
+    descripcion?: StringNullableWithAggregatesFilter<"Pers_Asis_Criterio"> | string | null
+    color?: StringNullableWithAggregatesFilter<"Pers_Asis_Criterio"> | string | null
+    activo?: BoolWithAggregatesFilter<"Pers_Asis_Criterio"> | boolean
+    orden?: IntWithAggregatesFilter<"Pers_Asis_Criterio"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"Pers_Asis_Criterio"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Pers_Asis_Criterio"> | Date | string
+  }
+
+  export type Pers_Asis_CargaWhereInput = {
+    AND?: Pers_Asis_CargaWhereInput | Pers_Asis_CargaWhereInput[]
+    OR?: Pers_Asis_CargaWhereInput[]
+    NOT?: Pers_Asis_CargaWhereInput | Pers_Asis_CargaWhereInput[]
+    id?: StringFilter<"Pers_Asis_Carga"> | string
+    nombreArchivo?: StringFilter<"Pers_Asis_Carga"> | string
+    totalRegistros?: IntFilter<"Pers_Asis_Carga"> | number
+    nuevosRegistros?: IntFilter<"Pers_Asis_Carga"> | number
+    actualizadosRegistros?: IntFilter<"Pers_Asis_Carga"> | number
+    erroresRegistros?: IntFilter<"Pers_Asis_Carga"> | number
+    cargadoPor?: StringFilter<"Pers_Asis_Carga"> | string
+    cargadoPorId?: StringNullableFilter<"Pers_Asis_Carga"> | string | null
+    fechaCarga?: DateTimeFilter<"Pers_Asis_Carga"> | Date | string
+    actualizadoPor?: StringNullableFilter<"Pers_Asis_Carga"> | string | null
+    actualizadoPorId?: StringNullableFilter<"Pers_Asis_Carga"> | string | null
+    ultimaActualizacion?: DateTimeFilter<"Pers_Asis_Carga"> | Date | string
+    observaciones?: StringNullableFilter<"Pers_Asis_Carga"> | string | null
+    createdAt?: DateTimeFilter<"Pers_Asis_Carga"> | Date | string
+    updatedAt?: DateTimeFilter<"Pers_Asis_Carga"> | Date | string
+    registros?: Pers_Asis_RegistroListRelationFilter
+  }
+
+  export type Pers_Asis_CargaOrderByWithRelationInput = {
+    id?: SortOrder
+    nombreArchivo?: SortOrder
+    totalRegistros?: SortOrder
+    nuevosRegistros?: SortOrder
+    actualizadosRegistros?: SortOrder
+    erroresRegistros?: SortOrder
+    cargadoPor?: SortOrder
+    cargadoPorId?: SortOrderInput | SortOrder
+    fechaCarga?: SortOrder
+    actualizadoPor?: SortOrderInput | SortOrder
+    actualizadoPorId?: SortOrderInput | SortOrder
+    ultimaActualizacion?: SortOrder
+    observaciones?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    registros?: Pers_Asis_RegistroOrderByRelationAggregateInput
+  }
+
+  export type Pers_Asis_CargaWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: Pers_Asis_CargaWhereInput | Pers_Asis_CargaWhereInput[]
+    OR?: Pers_Asis_CargaWhereInput[]
+    NOT?: Pers_Asis_CargaWhereInput | Pers_Asis_CargaWhereInput[]
+    nombreArchivo?: StringFilter<"Pers_Asis_Carga"> | string
+    totalRegistros?: IntFilter<"Pers_Asis_Carga"> | number
+    nuevosRegistros?: IntFilter<"Pers_Asis_Carga"> | number
+    actualizadosRegistros?: IntFilter<"Pers_Asis_Carga"> | number
+    erroresRegistros?: IntFilter<"Pers_Asis_Carga"> | number
+    cargadoPor?: StringFilter<"Pers_Asis_Carga"> | string
+    cargadoPorId?: StringNullableFilter<"Pers_Asis_Carga"> | string | null
+    fechaCarga?: DateTimeFilter<"Pers_Asis_Carga"> | Date | string
+    actualizadoPor?: StringNullableFilter<"Pers_Asis_Carga"> | string | null
+    actualizadoPorId?: StringNullableFilter<"Pers_Asis_Carga"> | string | null
+    ultimaActualizacion?: DateTimeFilter<"Pers_Asis_Carga"> | Date | string
+    observaciones?: StringNullableFilter<"Pers_Asis_Carga"> | string | null
+    createdAt?: DateTimeFilter<"Pers_Asis_Carga"> | Date | string
+    updatedAt?: DateTimeFilter<"Pers_Asis_Carga"> | Date | string
+    registros?: Pers_Asis_RegistroListRelationFilter
+  }, "id">
+
+  export type Pers_Asis_CargaOrderByWithAggregationInput = {
+    id?: SortOrder
+    nombreArchivo?: SortOrder
+    totalRegistros?: SortOrder
+    nuevosRegistros?: SortOrder
+    actualizadosRegistros?: SortOrder
+    erroresRegistros?: SortOrder
+    cargadoPor?: SortOrder
+    cargadoPorId?: SortOrderInput | SortOrder
+    fechaCarga?: SortOrder
+    actualizadoPor?: SortOrderInput | SortOrder
+    actualizadoPorId?: SortOrderInput | SortOrder
+    ultimaActualizacion?: SortOrder
+    observaciones?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: Pers_Asis_CargaCountOrderByAggregateInput
+    _avg?: Pers_Asis_CargaAvgOrderByAggregateInput
+    _max?: Pers_Asis_CargaMaxOrderByAggregateInput
+    _min?: Pers_Asis_CargaMinOrderByAggregateInput
+    _sum?: Pers_Asis_CargaSumOrderByAggregateInput
+  }
+
+  export type Pers_Asis_CargaScalarWhereWithAggregatesInput = {
+    AND?: Pers_Asis_CargaScalarWhereWithAggregatesInput | Pers_Asis_CargaScalarWhereWithAggregatesInput[]
+    OR?: Pers_Asis_CargaScalarWhereWithAggregatesInput[]
+    NOT?: Pers_Asis_CargaScalarWhereWithAggregatesInput | Pers_Asis_CargaScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Pers_Asis_Carga"> | string
+    nombreArchivo?: StringWithAggregatesFilter<"Pers_Asis_Carga"> | string
+    totalRegistros?: IntWithAggregatesFilter<"Pers_Asis_Carga"> | number
+    nuevosRegistros?: IntWithAggregatesFilter<"Pers_Asis_Carga"> | number
+    actualizadosRegistros?: IntWithAggregatesFilter<"Pers_Asis_Carga"> | number
+    erroresRegistros?: IntWithAggregatesFilter<"Pers_Asis_Carga"> | number
+    cargadoPor?: StringWithAggregatesFilter<"Pers_Asis_Carga"> | string
+    cargadoPorId?: StringNullableWithAggregatesFilter<"Pers_Asis_Carga"> | string | null
+    fechaCarga?: DateTimeWithAggregatesFilter<"Pers_Asis_Carga"> | Date | string
+    actualizadoPor?: StringNullableWithAggregatesFilter<"Pers_Asis_Carga"> | string | null
+    actualizadoPorId?: StringNullableWithAggregatesFilter<"Pers_Asis_Carga"> | string | null
+    ultimaActualizacion?: DateTimeWithAggregatesFilter<"Pers_Asis_Carga"> | Date | string
+    observaciones?: StringNullableWithAggregatesFilter<"Pers_Asis_Carga"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Pers_Asis_Carga"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Pers_Asis_Carga"> | Date | string
+  }
+
+  export type Pers_Asis_RegistroWhereInput = {
+    AND?: Pers_Asis_RegistroWhereInput | Pers_Asis_RegistroWhereInput[]
+    OR?: Pers_Asis_RegistroWhereInput[]
+    NOT?: Pers_Asis_RegistroWhereInput | Pers_Asis_RegistroWhereInput[]
+    id?: StringFilter<"Pers_Asis_Registro"> | string
+    cargaId?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    rutEnc?: StringFilter<"Pers_Asis_Registro"> | string
+    rutHash?: StringFilter<"Pers_Asis_Registro"> | string
+    apellidosEnc?: StringFilter<"Pers_Asis_Registro"> | string
+    nombreEnc?: StringFilter<"Pers_Asis_Registro"> | string
+    fecha?: StringFilter<"Pers_Asis_Registro"> | string
+    rbd?: IntFilter<"Pers_Asis_Registro"> | number
+    establecimiento?: StringFilter<"Pers_Asis_Registro"> | string
+    grupoOriginal?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    cargo?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    permisoParcial?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    criterioId?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    criterioNombre?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    criterioObservacion?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    criterioAsignadoPor?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    criterioAsignadoAt?: DateTimeNullableFilter<"Pers_Asis_Registro"> | Date | string | null
+    creadoPor?: StringFilter<"Pers_Asis_Registro"> | string
+    creadoPorId?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    fechaCreacion?: DateTimeFilter<"Pers_Asis_Registro"> | Date | string
+    actualizadoPor?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    actualizadoPorId?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    fechaActualizacion?: DateTimeNullableFilter<"Pers_Asis_Registro"> | Date | string | null
+    numActualizaciones?: IntFilter<"Pers_Asis_Registro"> | number
+    historialActualizaciones?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    createdAt?: DateTimeFilter<"Pers_Asis_Registro"> | Date | string
+    updatedAt?: DateTimeFilter<"Pers_Asis_Registro"> | Date | string
+    carga?: XOR<Pers_Asis_CargaNullableRelationFilter, Pers_Asis_CargaWhereInput> | null
+    criterio?: XOR<Pers_Asis_CriterioNullableRelationFilter, Pers_Asis_CriterioWhereInput> | null
+  }
+
+  export type Pers_Asis_RegistroOrderByWithRelationInput = {
+    id?: SortOrder
+    cargaId?: SortOrderInput | SortOrder
+    rutEnc?: SortOrder
+    rutHash?: SortOrder
+    apellidosEnc?: SortOrder
+    nombreEnc?: SortOrder
+    fecha?: SortOrder
+    rbd?: SortOrder
+    establecimiento?: SortOrder
+    grupoOriginal?: SortOrderInput | SortOrder
+    cargo?: SortOrderInput | SortOrder
+    permisoParcial?: SortOrderInput | SortOrder
+    criterioId?: SortOrderInput | SortOrder
+    criterioNombre?: SortOrderInput | SortOrder
+    criterioObservacion?: SortOrderInput | SortOrder
+    criterioAsignadoPor?: SortOrderInput | SortOrder
+    criterioAsignadoAt?: SortOrderInput | SortOrder
+    creadoPor?: SortOrder
+    creadoPorId?: SortOrderInput | SortOrder
+    fechaCreacion?: SortOrder
+    actualizadoPor?: SortOrderInput | SortOrder
+    actualizadoPorId?: SortOrderInput | SortOrder
+    fechaActualizacion?: SortOrderInput | SortOrder
+    numActualizaciones?: SortOrder
+    historialActualizaciones?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    carga?: Pers_Asis_CargaOrderByWithRelationInput
+    criterio?: Pers_Asis_CriterioOrderByWithRelationInput
+  }
+
+  export type Pers_Asis_RegistroWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    rutHash_fecha_rbd?: Pers_Asis_RegistroRutHashFechaRbdCompoundUniqueInput
+    AND?: Pers_Asis_RegistroWhereInput | Pers_Asis_RegistroWhereInput[]
+    OR?: Pers_Asis_RegistroWhereInput[]
+    NOT?: Pers_Asis_RegistroWhereInput | Pers_Asis_RegistroWhereInput[]
+    cargaId?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    rutEnc?: StringFilter<"Pers_Asis_Registro"> | string
+    rutHash?: StringFilter<"Pers_Asis_Registro"> | string
+    apellidosEnc?: StringFilter<"Pers_Asis_Registro"> | string
+    nombreEnc?: StringFilter<"Pers_Asis_Registro"> | string
+    fecha?: StringFilter<"Pers_Asis_Registro"> | string
+    rbd?: IntFilter<"Pers_Asis_Registro"> | number
+    establecimiento?: StringFilter<"Pers_Asis_Registro"> | string
+    grupoOriginal?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    cargo?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    permisoParcial?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    criterioId?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    criterioNombre?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    criterioObservacion?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    criterioAsignadoPor?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    criterioAsignadoAt?: DateTimeNullableFilter<"Pers_Asis_Registro"> | Date | string | null
+    creadoPor?: StringFilter<"Pers_Asis_Registro"> | string
+    creadoPorId?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    fechaCreacion?: DateTimeFilter<"Pers_Asis_Registro"> | Date | string
+    actualizadoPor?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    actualizadoPorId?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    fechaActualizacion?: DateTimeNullableFilter<"Pers_Asis_Registro"> | Date | string | null
+    numActualizaciones?: IntFilter<"Pers_Asis_Registro"> | number
+    historialActualizaciones?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    createdAt?: DateTimeFilter<"Pers_Asis_Registro"> | Date | string
+    updatedAt?: DateTimeFilter<"Pers_Asis_Registro"> | Date | string
+    carga?: XOR<Pers_Asis_CargaNullableRelationFilter, Pers_Asis_CargaWhereInput> | null
+    criterio?: XOR<Pers_Asis_CriterioNullableRelationFilter, Pers_Asis_CriterioWhereInput> | null
+  }, "id" | "rutHash_fecha_rbd">
+
+  export type Pers_Asis_RegistroOrderByWithAggregationInput = {
+    id?: SortOrder
+    cargaId?: SortOrderInput | SortOrder
+    rutEnc?: SortOrder
+    rutHash?: SortOrder
+    apellidosEnc?: SortOrder
+    nombreEnc?: SortOrder
+    fecha?: SortOrder
+    rbd?: SortOrder
+    establecimiento?: SortOrder
+    grupoOriginal?: SortOrderInput | SortOrder
+    cargo?: SortOrderInput | SortOrder
+    permisoParcial?: SortOrderInput | SortOrder
+    criterioId?: SortOrderInput | SortOrder
+    criterioNombre?: SortOrderInput | SortOrder
+    criterioObservacion?: SortOrderInput | SortOrder
+    criterioAsignadoPor?: SortOrderInput | SortOrder
+    criterioAsignadoAt?: SortOrderInput | SortOrder
+    creadoPor?: SortOrder
+    creadoPorId?: SortOrderInput | SortOrder
+    fechaCreacion?: SortOrder
+    actualizadoPor?: SortOrderInput | SortOrder
+    actualizadoPorId?: SortOrderInput | SortOrder
+    fechaActualizacion?: SortOrderInput | SortOrder
+    numActualizaciones?: SortOrder
+    historialActualizaciones?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: Pers_Asis_RegistroCountOrderByAggregateInput
+    _avg?: Pers_Asis_RegistroAvgOrderByAggregateInput
+    _max?: Pers_Asis_RegistroMaxOrderByAggregateInput
+    _min?: Pers_Asis_RegistroMinOrderByAggregateInput
+    _sum?: Pers_Asis_RegistroSumOrderByAggregateInput
+  }
+
+  export type Pers_Asis_RegistroScalarWhereWithAggregatesInput = {
+    AND?: Pers_Asis_RegistroScalarWhereWithAggregatesInput | Pers_Asis_RegistroScalarWhereWithAggregatesInput[]
+    OR?: Pers_Asis_RegistroScalarWhereWithAggregatesInput[]
+    NOT?: Pers_Asis_RegistroScalarWhereWithAggregatesInput | Pers_Asis_RegistroScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Pers_Asis_Registro"> | string
+    cargaId?: StringNullableWithAggregatesFilter<"Pers_Asis_Registro"> | string | null
+    rutEnc?: StringWithAggregatesFilter<"Pers_Asis_Registro"> | string
+    rutHash?: StringWithAggregatesFilter<"Pers_Asis_Registro"> | string
+    apellidosEnc?: StringWithAggregatesFilter<"Pers_Asis_Registro"> | string
+    nombreEnc?: StringWithAggregatesFilter<"Pers_Asis_Registro"> | string
+    fecha?: StringWithAggregatesFilter<"Pers_Asis_Registro"> | string
+    rbd?: IntWithAggregatesFilter<"Pers_Asis_Registro"> | number
+    establecimiento?: StringWithAggregatesFilter<"Pers_Asis_Registro"> | string
+    grupoOriginal?: StringNullableWithAggregatesFilter<"Pers_Asis_Registro"> | string | null
+    cargo?: StringNullableWithAggregatesFilter<"Pers_Asis_Registro"> | string | null
+    permisoParcial?: StringNullableWithAggregatesFilter<"Pers_Asis_Registro"> | string | null
+    criterioId?: StringNullableWithAggregatesFilter<"Pers_Asis_Registro"> | string | null
+    criterioNombre?: StringNullableWithAggregatesFilter<"Pers_Asis_Registro"> | string | null
+    criterioObservacion?: StringNullableWithAggregatesFilter<"Pers_Asis_Registro"> | string | null
+    criterioAsignadoPor?: StringNullableWithAggregatesFilter<"Pers_Asis_Registro"> | string | null
+    criterioAsignadoAt?: DateTimeNullableWithAggregatesFilter<"Pers_Asis_Registro"> | Date | string | null
+    creadoPor?: StringWithAggregatesFilter<"Pers_Asis_Registro"> | string
+    creadoPorId?: StringNullableWithAggregatesFilter<"Pers_Asis_Registro"> | string | null
+    fechaCreacion?: DateTimeWithAggregatesFilter<"Pers_Asis_Registro"> | Date | string
+    actualizadoPor?: StringNullableWithAggregatesFilter<"Pers_Asis_Registro"> | string | null
+    actualizadoPorId?: StringNullableWithAggregatesFilter<"Pers_Asis_Registro"> | string | null
+    fechaActualizacion?: DateTimeNullableWithAggregatesFilter<"Pers_Asis_Registro"> | Date | string | null
+    numActualizaciones?: IntWithAggregatesFilter<"Pers_Asis_Registro"> | number
+    historialActualizaciones?: StringNullableWithAggregatesFilter<"Pers_Asis_Registro"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Pers_Asis_Registro"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Pers_Asis_Registro"> | Date | string
   }
 
   export type RoleCreateInput = {
@@ -175288,6 +179429,425 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type Pers_Asis_CriterioCreateInput = {
+    id?: string
+    nombre: string
+    descripcion?: string | null
+    color?: string | null
+    activo?: boolean
+    orden?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    registros?: Pers_Asis_RegistroCreateNestedManyWithoutCriterioInput
+  }
+
+  export type Pers_Asis_CriterioUncheckedCreateInput = {
+    id?: string
+    nombre: string
+    descripcion?: string | null
+    color?: string | null
+    activo?: boolean
+    orden?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    registros?: Pers_Asis_RegistroUncheckedCreateNestedManyWithoutCriterioInput
+  }
+
+  export type Pers_Asis_CriterioUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    orden?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    registros?: Pers_Asis_RegistroUpdateManyWithoutCriterioNestedInput
+  }
+
+  export type Pers_Asis_CriterioUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    orden?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    registros?: Pers_Asis_RegistroUncheckedUpdateManyWithoutCriterioNestedInput
+  }
+
+  export type Pers_Asis_CriterioCreateManyInput = {
+    id?: string
+    nombre: string
+    descripcion?: string | null
+    color?: string | null
+    activo?: boolean
+    orden?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Pers_Asis_CriterioUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    orden?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Pers_Asis_CriterioUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    orden?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Pers_Asis_CargaCreateInput = {
+    id?: string
+    nombreArchivo: string
+    totalRegistros?: number
+    nuevosRegistros?: number
+    actualizadosRegistros?: number
+    erroresRegistros?: number
+    cargadoPor: string
+    cargadoPorId?: string | null
+    fechaCarga?: Date | string
+    actualizadoPor?: string | null
+    actualizadoPorId?: string | null
+    ultimaActualizacion?: Date | string
+    observaciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    registros?: Pers_Asis_RegistroCreateNestedManyWithoutCargaInput
+  }
+
+  export type Pers_Asis_CargaUncheckedCreateInput = {
+    id?: string
+    nombreArchivo: string
+    totalRegistros?: number
+    nuevosRegistros?: number
+    actualizadosRegistros?: number
+    erroresRegistros?: number
+    cargadoPor: string
+    cargadoPorId?: string | null
+    fechaCarga?: Date | string
+    actualizadoPor?: string | null
+    actualizadoPorId?: string | null
+    ultimaActualizacion?: Date | string
+    observaciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    registros?: Pers_Asis_RegistroUncheckedCreateNestedManyWithoutCargaInput
+  }
+
+  export type Pers_Asis_CargaUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombreArchivo?: StringFieldUpdateOperationsInput | string
+    totalRegistros?: IntFieldUpdateOperationsInput | number
+    nuevosRegistros?: IntFieldUpdateOperationsInput | number
+    actualizadosRegistros?: IntFieldUpdateOperationsInput | number
+    erroresRegistros?: IntFieldUpdateOperationsInput | number
+    cargadoPor?: StringFieldUpdateOperationsInput | string
+    cargadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCarga?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    actualizadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    ultimaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    registros?: Pers_Asis_RegistroUpdateManyWithoutCargaNestedInput
+  }
+
+  export type Pers_Asis_CargaUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombreArchivo?: StringFieldUpdateOperationsInput | string
+    totalRegistros?: IntFieldUpdateOperationsInput | number
+    nuevosRegistros?: IntFieldUpdateOperationsInput | number
+    actualizadosRegistros?: IntFieldUpdateOperationsInput | number
+    erroresRegistros?: IntFieldUpdateOperationsInput | number
+    cargadoPor?: StringFieldUpdateOperationsInput | string
+    cargadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCarga?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    actualizadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    ultimaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    registros?: Pers_Asis_RegistroUncheckedUpdateManyWithoutCargaNestedInput
+  }
+
+  export type Pers_Asis_CargaCreateManyInput = {
+    id?: string
+    nombreArchivo: string
+    totalRegistros?: number
+    nuevosRegistros?: number
+    actualizadosRegistros?: number
+    erroresRegistros?: number
+    cargadoPor: string
+    cargadoPorId?: string | null
+    fechaCarga?: Date | string
+    actualizadoPor?: string | null
+    actualizadoPorId?: string | null
+    ultimaActualizacion?: Date | string
+    observaciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Pers_Asis_CargaUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombreArchivo?: StringFieldUpdateOperationsInput | string
+    totalRegistros?: IntFieldUpdateOperationsInput | number
+    nuevosRegistros?: IntFieldUpdateOperationsInput | number
+    actualizadosRegistros?: IntFieldUpdateOperationsInput | number
+    erroresRegistros?: IntFieldUpdateOperationsInput | number
+    cargadoPor?: StringFieldUpdateOperationsInput | string
+    cargadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCarga?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    actualizadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    ultimaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Pers_Asis_CargaUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombreArchivo?: StringFieldUpdateOperationsInput | string
+    totalRegistros?: IntFieldUpdateOperationsInput | number
+    nuevosRegistros?: IntFieldUpdateOperationsInput | number
+    actualizadosRegistros?: IntFieldUpdateOperationsInput | number
+    erroresRegistros?: IntFieldUpdateOperationsInput | number
+    cargadoPor?: StringFieldUpdateOperationsInput | string
+    cargadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCarga?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    actualizadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    ultimaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Pers_Asis_RegistroCreateInput = {
+    id?: string
+    rutEnc: string
+    rutHash: string
+    apellidosEnc: string
+    nombreEnc: string
+    fecha: string
+    rbd: number
+    establecimiento: string
+    grupoOriginal?: string | null
+    cargo?: string | null
+    permisoParcial?: string | null
+    criterioNombre?: string | null
+    criterioObservacion?: string | null
+    criterioAsignadoPor?: string | null
+    criterioAsignadoAt?: Date | string | null
+    creadoPor: string
+    creadoPorId?: string | null
+    fechaCreacion?: Date | string
+    actualizadoPor?: string | null
+    actualizadoPorId?: string | null
+    fechaActualizacion?: Date | string | null
+    numActualizaciones?: number
+    historialActualizaciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    carga?: Pers_Asis_CargaCreateNestedOneWithoutRegistrosInput
+    criterio?: Pers_Asis_CriterioCreateNestedOneWithoutRegistrosInput
+  }
+
+  export type Pers_Asis_RegistroUncheckedCreateInput = {
+    id?: string
+    cargaId?: string | null
+    rutEnc: string
+    rutHash: string
+    apellidosEnc: string
+    nombreEnc: string
+    fecha: string
+    rbd: number
+    establecimiento: string
+    grupoOriginal?: string | null
+    cargo?: string | null
+    permisoParcial?: string | null
+    criterioId?: string | null
+    criterioNombre?: string | null
+    criterioObservacion?: string | null
+    criterioAsignadoPor?: string | null
+    criterioAsignadoAt?: Date | string | null
+    creadoPor: string
+    creadoPorId?: string | null
+    fechaCreacion?: Date | string
+    actualizadoPor?: string | null
+    actualizadoPorId?: string | null
+    fechaActualizacion?: Date | string | null
+    numActualizaciones?: number
+    historialActualizaciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Pers_Asis_RegistroUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rutEnc?: StringFieldUpdateOperationsInput | string
+    rutHash?: StringFieldUpdateOperationsInput | string
+    apellidosEnc?: StringFieldUpdateOperationsInput | string
+    nombreEnc?: StringFieldUpdateOperationsInput | string
+    fecha?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    establecimiento?: StringFieldUpdateOperationsInput | string
+    grupoOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    permisoParcial?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioObservacion?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioAsignadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioAsignadoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    actualizadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaActualizacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    numActualizaciones?: IntFieldUpdateOperationsInput | number
+    historialActualizaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    carga?: Pers_Asis_CargaUpdateOneWithoutRegistrosNestedInput
+    criterio?: Pers_Asis_CriterioUpdateOneWithoutRegistrosNestedInput
+  }
+
+  export type Pers_Asis_RegistroUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cargaId?: NullableStringFieldUpdateOperationsInput | string | null
+    rutEnc?: StringFieldUpdateOperationsInput | string
+    rutHash?: StringFieldUpdateOperationsInput | string
+    apellidosEnc?: StringFieldUpdateOperationsInput | string
+    nombreEnc?: StringFieldUpdateOperationsInput | string
+    fecha?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    establecimiento?: StringFieldUpdateOperationsInput | string
+    grupoOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    permisoParcial?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioId?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioObservacion?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioAsignadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioAsignadoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    actualizadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaActualizacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    numActualizaciones?: IntFieldUpdateOperationsInput | number
+    historialActualizaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Pers_Asis_RegistroCreateManyInput = {
+    id?: string
+    cargaId?: string | null
+    rutEnc: string
+    rutHash: string
+    apellidosEnc: string
+    nombreEnc: string
+    fecha: string
+    rbd: number
+    establecimiento: string
+    grupoOriginal?: string | null
+    cargo?: string | null
+    permisoParcial?: string | null
+    criterioId?: string | null
+    criterioNombre?: string | null
+    criterioObservacion?: string | null
+    criterioAsignadoPor?: string | null
+    criterioAsignadoAt?: Date | string | null
+    creadoPor: string
+    creadoPorId?: string | null
+    fechaCreacion?: Date | string
+    actualizadoPor?: string | null
+    actualizadoPorId?: string | null
+    fechaActualizacion?: Date | string | null
+    numActualizaciones?: number
+    historialActualizaciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Pers_Asis_RegistroUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rutEnc?: StringFieldUpdateOperationsInput | string
+    rutHash?: StringFieldUpdateOperationsInput | string
+    apellidosEnc?: StringFieldUpdateOperationsInput | string
+    nombreEnc?: StringFieldUpdateOperationsInput | string
+    fecha?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    establecimiento?: StringFieldUpdateOperationsInput | string
+    grupoOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    permisoParcial?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioObservacion?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioAsignadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioAsignadoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    actualizadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaActualizacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    numActualizaciones?: IntFieldUpdateOperationsInput | number
+    historialActualizaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Pers_Asis_RegistroUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cargaId?: NullableStringFieldUpdateOperationsInput | string | null
+    rutEnc?: StringFieldUpdateOperationsInput | string
+    rutHash?: StringFieldUpdateOperationsInput | string
+    apellidosEnc?: StringFieldUpdateOperationsInput | string
+    nombreEnc?: StringFieldUpdateOperationsInput | string
+    fecha?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    establecimiento?: StringFieldUpdateOperationsInput | string
+    grupoOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    permisoParcial?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioId?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioObservacion?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioAsignadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioAsignadoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    actualizadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaActualizacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    numActualizaciones?: IntFieldUpdateOperationsInput | number
+    historialActualizaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -182902,6 +187462,241 @@ export namespace Prisma {
     rbd?: SortOrder
   }
 
+  export type Pers_Asis_RegistroListRelationFilter = {
+    every?: Pers_Asis_RegistroWhereInput
+    some?: Pers_Asis_RegistroWhereInput
+    none?: Pers_Asis_RegistroWhereInput
+  }
+
+  export type Pers_Asis_RegistroOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type Pers_Asis_CriterioCountOrderByAggregateInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    descripcion?: SortOrder
+    color?: SortOrder
+    activo?: SortOrder
+    orden?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Pers_Asis_CriterioAvgOrderByAggregateInput = {
+    orden?: SortOrder
+  }
+
+  export type Pers_Asis_CriterioMaxOrderByAggregateInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    descripcion?: SortOrder
+    color?: SortOrder
+    activo?: SortOrder
+    orden?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Pers_Asis_CriterioMinOrderByAggregateInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    descripcion?: SortOrder
+    color?: SortOrder
+    activo?: SortOrder
+    orden?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Pers_Asis_CriterioSumOrderByAggregateInput = {
+    orden?: SortOrder
+  }
+
+  export type Pers_Asis_CargaCountOrderByAggregateInput = {
+    id?: SortOrder
+    nombreArchivo?: SortOrder
+    totalRegistros?: SortOrder
+    nuevosRegistros?: SortOrder
+    actualizadosRegistros?: SortOrder
+    erroresRegistros?: SortOrder
+    cargadoPor?: SortOrder
+    cargadoPorId?: SortOrder
+    fechaCarga?: SortOrder
+    actualizadoPor?: SortOrder
+    actualizadoPorId?: SortOrder
+    ultimaActualizacion?: SortOrder
+    observaciones?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Pers_Asis_CargaAvgOrderByAggregateInput = {
+    totalRegistros?: SortOrder
+    nuevosRegistros?: SortOrder
+    actualizadosRegistros?: SortOrder
+    erroresRegistros?: SortOrder
+  }
+
+  export type Pers_Asis_CargaMaxOrderByAggregateInput = {
+    id?: SortOrder
+    nombreArchivo?: SortOrder
+    totalRegistros?: SortOrder
+    nuevosRegistros?: SortOrder
+    actualizadosRegistros?: SortOrder
+    erroresRegistros?: SortOrder
+    cargadoPor?: SortOrder
+    cargadoPorId?: SortOrder
+    fechaCarga?: SortOrder
+    actualizadoPor?: SortOrder
+    actualizadoPorId?: SortOrder
+    ultimaActualizacion?: SortOrder
+    observaciones?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Pers_Asis_CargaMinOrderByAggregateInput = {
+    id?: SortOrder
+    nombreArchivo?: SortOrder
+    totalRegistros?: SortOrder
+    nuevosRegistros?: SortOrder
+    actualizadosRegistros?: SortOrder
+    erroresRegistros?: SortOrder
+    cargadoPor?: SortOrder
+    cargadoPorId?: SortOrder
+    fechaCarga?: SortOrder
+    actualizadoPor?: SortOrder
+    actualizadoPorId?: SortOrder
+    ultimaActualizacion?: SortOrder
+    observaciones?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Pers_Asis_CargaSumOrderByAggregateInput = {
+    totalRegistros?: SortOrder
+    nuevosRegistros?: SortOrder
+    actualizadosRegistros?: SortOrder
+    erroresRegistros?: SortOrder
+  }
+
+  export type Pers_Asis_CargaNullableRelationFilter = {
+    is?: Pers_Asis_CargaWhereInput | null
+    isNot?: Pers_Asis_CargaWhereInput | null
+  }
+
+  export type Pers_Asis_CriterioNullableRelationFilter = {
+    is?: Pers_Asis_CriterioWhereInput | null
+    isNot?: Pers_Asis_CriterioWhereInput | null
+  }
+
+  export type Pers_Asis_RegistroRutHashFechaRbdCompoundUniqueInput = {
+    rutHash: string
+    fecha: string
+    rbd: number
+  }
+
+  export type Pers_Asis_RegistroCountOrderByAggregateInput = {
+    id?: SortOrder
+    cargaId?: SortOrder
+    rutEnc?: SortOrder
+    rutHash?: SortOrder
+    apellidosEnc?: SortOrder
+    nombreEnc?: SortOrder
+    fecha?: SortOrder
+    rbd?: SortOrder
+    establecimiento?: SortOrder
+    grupoOriginal?: SortOrder
+    cargo?: SortOrder
+    permisoParcial?: SortOrder
+    criterioId?: SortOrder
+    criterioNombre?: SortOrder
+    criterioObservacion?: SortOrder
+    criterioAsignadoPor?: SortOrder
+    criterioAsignadoAt?: SortOrder
+    creadoPor?: SortOrder
+    creadoPorId?: SortOrder
+    fechaCreacion?: SortOrder
+    actualizadoPor?: SortOrder
+    actualizadoPorId?: SortOrder
+    fechaActualizacion?: SortOrder
+    numActualizaciones?: SortOrder
+    historialActualizaciones?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Pers_Asis_RegistroAvgOrderByAggregateInput = {
+    rbd?: SortOrder
+    numActualizaciones?: SortOrder
+  }
+
+  export type Pers_Asis_RegistroMaxOrderByAggregateInput = {
+    id?: SortOrder
+    cargaId?: SortOrder
+    rutEnc?: SortOrder
+    rutHash?: SortOrder
+    apellidosEnc?: SortOrder
+    nombreEnc?: SortOrder
+    fecha?: SortOrder
+    rbd?: SortOrder
+    establecimiento?: SortOrder
+    grupoOriginal?: SortOrder
+    cargo?: SortOrder
+    permisoParcial?: SortOrder
+    criterioId?: SortOrder
+    criterioNombre?: SortOrder
+    criterioObservacion?: SortOrder
+    criterioAsignadoPor?: SortOrder
+    criterioAsignadoAt?: SortOrder
+    creadoPor?: SortOrder
+    creadoPorId?: SortOrder
+    fechaCreacion?: SortOrder
+    actualizadoPor?: SortOrder
+    actualizadoPorId?: SortOrder
+    fechaActualizacion?: SortOrder
+    numActualizaciones?: SortOrder
+    historialActualizaciones?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Pers_Asis_RegistroMinOrderByAggregateInput = {
+    id?: SortOrder
+    cargaId?: SortOrder
+    rutEnc?: SortOrder
+    rutHash?: SortOrder
+    apellidosEnc?: SortOrder
+    nombreEnc?: SortOrder
+    fecha?: SortOrder
+    rbd?: SortOrder
+    establecimiento?: SortOrder
+    grupoOriginal?: SortOrder
+    cargo?: SortOrder
+    permisoParcial?: SortOrder
+    criterioId?: SortOrder
+    criterioNombre?: SortOrder
+    criterioObservacion?: SortOrder
+    criterioAsignadoPor?: SortOrder
+    criterioAsignadoAt?: SortOrder
+    creadoPor?: SortOrder
+    creadoPorId?: SortOrder
+    fechaCreacion?: SortOrder
+    actualizadoPor?: SortOrder
+    actualizadoPorId?: SortOrder
+    fechaActualizacion?: SortOrder
+    numActualizaciones?: SortOrder
+    historialActualizaciones?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type Pers_Asis_RegistroSumOrderByAggregateInput = {
+    rbd?: SortOrder
+    numActualizaciones?: SortOrder
+  }
+
   export type UserCreateNestedManyWithoutRoleInput = {
     create?: XOR<UserCreateWithoutRoleInput, UserUncheckedCreateWithoutRoleInput> | UserCreateWithoutRoleInput[] | UserUncheckedCreateWithoutRoleInput[]
     connectOrCreate?: UserCreateOrConnectWithoutRoleInput | UserCreateOrConnectWithoutRoleInput[]
@@ -188489,6 +193284,122 @@ export namespace Prisma {
     upsert?: RegCap_CapacitacionUpsertWithoutParticipantesInput
     connect?: RegCap_CapacitacionWhereUniqueInput
     update?: XOR<XOR<RegCap_CapacitacionUpdateToOneWithWhereWithoutParticipantesInput, RegCap_CapacitacionUpdateWithoutParticipantesInput>, RegCap_CapacitacionUncheckedUpdateWithoutParticipantesInput>
+  }
+
+  export type Pers_Asis_RegistroCreateNestedManyWithoutCriterioInput = {
+    create?: XOR<Pers_Asis_RegistroCreateWithoutCriterioInput, Pers_Asis_RegistroUncheckedCreateWithoutCriterioInput> | Pers_Asis_RegistroCreateWithoutCriterioInput[] | Pers_Asis_RegistroUncheckedCreateWithoutCriterioInput[]
+    connectOrCreate?: Pers_Asis_RegistroCreateOrConnectWithoutCriterioInput | Pers_Asis_RegistroCreateOrConnectWithoutCriterioInput[]
+    createMany?: Pers_Asis_RegistroCreateManyCriterioInputEnvelope
+    connect?: Pers_Asis_RegistroWhereUniqueInput | Pers_Asis_RegistroWhereUniqueInput[]
+  }
+
+  export type Pers_Asis_RegistroUncheckedCreateNestedManyWithoutCriterioInput = {
+    create?: XOR<Pers_Asis_RegistroCreateWithoutCriterioInput, Pers_Asis_RegistroUncheckedCreateWithoutCriterioInput> | Pers_Asis_RegistroCreateWithoutCriterioInput[] | Pers_Asis_RegistroUncheckedCreateWithoutCriterioInput[]
+    connectOrCreate?: Pers_Asis_RegistroCreateOrConnectWithoutCriterioInput | Pers_Asis_RegistroCreateOrConnectWithoutCriterioInput[]
+    createMany?: Pers_Asis_RegistroCreateManyCriterioInputEnvelope
+    connect?: Pers_Asis_RegistroWhereUniqueInput | Pers_Asis_RegistroWhereUniqueInput[]
+  }
+
+  export type Pers_Asis_RegistroUpdateManyWithoutCriterioNestedInput = {
+    create?: XOR<Pers_Asis_RegistroCreateWithoutCriterioInput, Pers_Asis_RegistroUncheckedCreateWithoutCriterioInput> | Pers_Asis_RegistroCreateWithoutCriterioInput[] | Pers_Asis_RegistroUncheckedCreateWithoutCriterioInput[]
+    connectOrCreate?: Pers_Asis_RegistroCreateOrConnectWithoutCriterioInput | Pers_Asis_RegistroCreateOrConnectWithoutCriterioInput[]
+    upsert?: Pers_Asis_RegistroUpsertWithWhereUniqueWithoutCriterioInput | Pers_Asis_RegistroUpsertWithWhereUniqueWithoutCriterioInput[]
+    createMany?: Pers_Asis_RegistroCreateManyCriterioInputEnvelope
+    set?: Pers_Asis_RegistroWhereUniqueInput | Pers_Asis_RegistroWhereUniqueInput[]
+    disconnect?: Pers_Asis_RegistroWhereUniqueInput | Pers_Asis_RegistroWhereUniqueInput[]
+    delete?: Pers_Asis_RegistroWhereUniqueInput | Pers_Asis_RegistroWhereUniqueInput[]
+    connect?: Pers_Asis_RegistroWhereUniqueInput | Pers_Asis_RegistroWhereUniqueInput[]
+    update?: Pers_Asis_RegistroUpdateWithWhereUniqueWithoutCriterioInput | Pers_Asis_RegistroUpdateWithWhereUniqueWithoutCriterioInput[]
+    updateMany?: Pers_Asis_RegistroUpdateManyWithWhereWithoutCriterioInput | Pers_Asis_RegistroUpdateManyWithWhereWithoutCriterioInput[]
+    deleteMany?: Pers_Asis_RegistroScalarWhereInput | Pers_Asis_RegistroScalarWhereInput[]
+  }
+
+  export type Pers_Asis_RegistroUncheckedUpdateManyWithoutCriterioNestedInput = {
+    create?: XOR<Pers_Asis_RegistroCreateWithoutCriterioInput, Pers_Asis_RegistroUncheckedCreateWithoutCriterioInput> | Pers_Asis_RegistroCreateWithoutCriterioInput[] | Pers_Asis_RegistroUncheckedCreateWithoutCriterioInput[]
+    connectOrCreate?: Pers_Asis_RegistroCreateOrConnectWithoutCriterioInput | Pers_Asis_RegistroCreateOrConnectWithoutCriterioInput[]
+    upsert?: Pers_Asis_RegistroUpsertWithWhereUniqueWithoutCriterioInput | Pers_Asis_RegistroUpsertWithWhereUniqueWithoutCriterioInput[]
+    createMany?: Pers_Asis_RegistroCreateManyCriterioInputEnvelope
+    set?: Pers_Asis_RegistroWhereUniqueInput | Pers_Asis_RegistroWhereUniqueInput[]
+    disconnect?: Pers_Asis_RegistroWhereUniqueInput | Pers_Asis_RegistroWhereUniqueInput[]
+    delete?: Pers_Asis_RegistroWhereUniqueInput | Pers_Asis_RegistroWhereUniqueInput[]
+    connect?: Pers_Asis_RegistroWhereUniqueInput | Pers_Asis_RegistroWhereUniqueInput[]
+    update?: Pers_Asis_RegistroUpdateWithWhereUniqueWithoutCriterioInput | Pers_Asis_RegistroUpdateWithWhereUniqueWithoutCriterioInput[]
+    updateMany?: Pers_Asis_RegistroUpdateManyWithWhereWithoutCriterioInput | Pers_Asis_RegistroUpdateManyWithWhereWithoutCriterioInput[]
+    deleteMany?: Pers_Asis_RegistroScalarWhereInput | Pers_Asis_RegistroScalarWhereInput[]
+  }
+
+  export type Pers_Asis_RegistroCreateNestedManyWithoutCargaInput = {
+    create?: XOR<Pers_Asis_RegistroCreateWithoutCargaInput, Pers_Asis_RegistroUncheckedCreateWithoutCargaInput> | Pers_Asis_RegistroCreateWithoutCargaInput[] | Pers_Asis_RegistroUncheckedCreateWithoutCargaInput[]
+    connectOrCreate?: Pers_Asis_RegistroCreateOrConnectWithoutCargaInput | Pers_Asis_RegistroCreateOrConnectWithoutCargaInput[]
+    createMany?: Pers_Asis_RegistroCreateManyCargaInputEnvelope
+    connect?: Pers_Asis_RegistroWhereUniqueInput | Pers_Asis_RegistroWhereUniqueInput[]
+  }
+
+  export type Pers_Asis_RegistroUncheckedCreateNestedManyWithoutCargaInput = {
+    create?: XOR<Pers_Asis_RegistroCreateWithoutCargaInput, Pers_Asis_RegistroUncheckedCreateWithoutCargaInput> | Pers_Asis_RegistroCreateWithoutCargaInput[] | Pers_Asis_RegistroUncheckedCreateWithoutCargaInput[]
+    connectOrCreate?: Pers_Asis_RegistroCreateOrConnectWithoutCargaInput | Pers_Asis_RegistroCreateOrConnectWithoutCargaInput[]
+    createMany?: Pers_Asis_RegistroCreateManyCargaInputEnvelope
+    connect?: Pers_Asis_RegistroWhereUniqueInput | Pers_Asis_RegistroWhereUniqueInput[]
+  }
+
+  export type Pers_Asis_RegistroUpdateManyWithoutCargaNestedInput = {
+    create?: XOR<Pers_Asis_RegistroCreateWithoutCargaInput, Pers_Asis_RegistroUncheckedCreateWithoutCargaInput> | Pers_Asis_RegistroCreateWithoutCargaInput[] | Pers_Asis_RegistroUncheckedCreateWithoutCargaInput[]
+    connectOrCreate?: Pers_Asis_RegistroCreateOrConnectWithoutCargaInput | Pers_Asis_RegistroCreateOrConnectWithoutCargaInput[]
+    upsert?: Pers_Asis_RegistroUpsertWithWhereUniqueWithoutCargaInput | Pers_Asis_RegistroUpsertWithWhereUniqueWithoutCargaInput[]
+    createMany?: Pers_Asis_RegistroCreateManyCargaInputEnvelope
+    set?: Pers_Asis_RegistroWhereUniqueInput | Pers_Asis_RegistroWhereUniqueInput[]
+    disconnect?: Pers_Asis_RegistroWhereUniqueInput | Pers_Asis_RegistroWhereUniqueInput[]
+    delete?: Pers_Asis_RegistroWhereUniqueInput | Pers_Asis_RegistroWhereUniqueInput[]
+    connect?: Pers_Asis_RegistroWhereUniqueInput | Pers_Asis_RegistroWhereUniqueInput[]
+    update?: Pers_Asis_RegistroUpdateWithWhereUniqueWithoutCargaInput | Pers_Asis_RegistroUpdateWithWhereUniqueWithoutCargaInput[]
+    updateMany?: Pers_Asis_RegistroUpdateManyWithWhereWithoutCargaInput | Pers_Asis_RegistroUpdateManyWithWhereWithoutCargaInput[]
+    deleteMany?: Pers_Asis_RegistroScalarWhereInput | Pers_Asis_RegistroScalarWhereInput[]
+  }
+
+  export type Pers_Asis_RegistroUncheckedUpdateManyWithoutCargaNestedInput = {
+    create?: XOR<Pers_Asis_RegistroCreateWithoutCargaInput, Pers_Asis_RegistroUncheckedCreateWithoutCargaInput> | Pers_Asis_RegistroCreateWithoutCargaInput[] | Pers_Asis_RegistroUncheckedCreateWithoutCargaInput[]
+    connectOrCreate?: Pers_Asis_RegistroCreateOrConnectWithoutCargaInput | Pers_Asis_RegistroCreateOrConnectWithoutCargaInput[]
+    upsert?: Pers_Asis_RegistroUpsertWithWhereUniqueWithoutCargaInput | Pers_Asis_RegistroUpsertWithWhereUniqueWithoutCargaInput[]
+    createMany?: Pers_Asis_RegistroCreateManyCargaInputEnvelope
+    set?: Pers_Asis_RegistroWhereUniqueInput | Pers_Asis_RegistroWhereUniqueInput[]
+    disconnect?: Pers_Asis_RegistroWhereUniqueInput | Pers_Asis_RegistroWhereUniqueInput[]
+    delete?: Pers_Asis_RegistroWhereUniqueInput | Pers_Asis_RegistroWhereUniqueInput[]
+    connect?: Pers_Asis_RegistroWhereUniqueInput | Pers_Asis_RegistroWhereUniqueInput[]
+    update?: Pers_Asis_RegistroUpdateWithWhereUniqueWithoutCargaInput | Pers_Asis_RegistroUpdateWithWhereUniqueWithoutCargaInput[]
+    updateMany?: Pers_Asis_RegistroUpdateManyWithWhereWithoutCargaInput | Pers_Asis_RegistroUpdateManyWithWhereWithoutCargaInput[]
+    deleteMany?: Pers_Asis_RegistroScalarWhereInput | Pers_Asis_RegistroScalarWhereInput[]
+  }
+
+  export type Pers_Asis_CargaCreateNestedOneWithoutRegistrosInput = {
+    create?: XOR<Pers_Asis_CargaCreateWithoutRegistrosInput, Pers_Asis_CargaUncheckedCreateWithoutRegistrosInput>
+    connectOrCreate?: Pers_Asis_CargaCreateOrConnectWithoutRegistrosInput
+    connect?: Pers_Asis_CargaWhereUniqueInput
+  }
+
+  export type Pers_Asis_CriterioCreateNestedOneWithoutRegistrosInput = {
+    create?: XOR<Pers_Asis_CriterioCreateWithoutRegistrosInput, Pers_Asis_CriterioUncheckedCreateWithoutRegistrosInput>
+    connectOrCreate?: Pers_Asis_CriterioCreateOrConnectWithoutRegistrosInput
+    connect?: Pers_Asis_CriterioWhereUniqueInput
+  }
+
+  export type Pers_Asis_CargaUpdateOneWithoutRegistrosNestedInput = {
+    create?: XOR<Pers_Asis_CargaCreateWithoutRegistrosInput, Pers_Asis_CargaUncheckedCreateWithoutRegistrosInput>
+    connectOrCreate?: Pers_Asis_CargaCreateOrConnectWithoutRegistrosInput
+    upsert?: Pers_Asis_CargaUpsertWithoutRegistrosInput
+    disconnect?: Pers_Asis_CargaWhereInput | boolean
+    delete?: Pers_Asis_CargaWhereInput | boolean
+    connect?: Pers_Asis_CargaWhereUniqueInput
+    update?: XOR<XOR<Pers_Asis_CargaUpdateToOneWithWhereWithoutRegistrosInput, Pers_Asis_CargaUpdateWithoutRegistrosInput>, Pers_Asis_CargaUncheckedUpdateWithoutRegistrosInput>
+  }
+
+  export type Pers_Asis_CriterioUpdateOneWithoutRegistrosNestedInput = {
+    create?: XOR<Pers_Asis_CriterioCreateWithoutRegistrosInput, Pers_Asis_CriterioUncheckedCreateWithoutRegistrosInput>
+    connectOrCreate?: Pers_Asis_CriterioCreateOrConnectWithoutRegistrosInput
+    upsert?: Pers_Asis_CriterioUpsertWithoutRegistrosInput
+    disconnect?: Pers_Asis_CriterioWhereInput | boolean
+    delete?: Pers_Asis_CriterioWhereInput | boolean
+    connect?: Pers_Asis_CriterioWhereUniqueInput
+    update?: XOR<XOR<Pers_Asis_CriterioUpdateToOneWithWhereWithoutRegistrosInput, Pers_Asis_CriterioUpdateWithoutRegistrosInput>, Pers_Asis_CriterioUncheckedUpdateWithoutRegistrosInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -202533,6 +207444,355 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type Pers_Asis_RegistroCreateWithoutCriterioInput = {
+    id?: string
+    rutEnc: string
+    rutHash: string
+    apellidosEnc: string
+    nombreEnc: string
+    fecha: string
+    rbd: number
+    establecimiento: string
+    grupoOriginal?: string | null
+    cargo?: string | null
+    permisoParcial?: string | null
+    criterioNombre?: string | null
+    criterioObservacion?: string | null
+    criterioAsignadoPor?: string | null
+    criterioAsignadoAt?: Date | string | null
+    creadoPor: string
+    creadoPorId?: string | null
+    fechaCreacion?: Date | string
+    actualizadoPor?: string | null
+    actualizadoPorId?: string | null
+    fechaActualizacion?: Date | string | null
+    numActualizaciones?: number
+    historialActualizaciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    carga?: Pers_Asis_CargaCreateNestedOneWithoutRegistrosInput
+  }
+
+  export type Pers_Asis_RegistroUncheckedCreateWithoutCriterioInput = {
+    id?: string
+    cargaId?: string | null
+    rutEnc: string
+    rutHash: string
+    apellidosEnc: string
+    nombreEnc: string
+    fecha: string
+    rbd: number
+    establecimiento: string
+    grupoOriginal?: string | null
+    cargo?: string | null
+    permisoParcial?: string | null
+    criterioNombre?: string | null
+    criterioObservacion?: string | null
+    criterioAsignadoPor?: string | null
+    criterioAsignadoAt?: Date | string | null
+    creadoPor: string
+    creadoPorId?: string | null
+    fechaCreacion?: Date | string
+    actualizadoPor?: string | null
+    actualizadoPorId?: string | null
+    fechaActualizacion?: Date | string | null
+    numActualizaciones?: number
+    historialActualizaciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Pers_Asis_RegistroCreateOrConnectWithoutCriterioInput = {
+    where: Pers_Asis_RegistroWhereUniqueInput
+    create: XOR<Pers_Asis_RegistroCreateWithoutCriterioInput, Pers_Asis_RegistroUncheckedCreateWithoutCriterioInput>
+  }
+
+  export type Pers_Asis_RegistroCreateManyCriterioInputEnvelope = {
+    data: Pers_Asis_RegistroCreateManyCriterioInput | Pers_Asis_RegistroCreateManyCriterioInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type Pers_Asis_RegistroUpsertWithWhereUniqueWithoutCriterioInput = {
+    where: Pers_Asis_RegistroWhereUniqueInput
+    update: XOR<Pers_Asis_RegistroUpdateWithoutCriterioInput, Pers_Asis_RegistroUncheckedUpdateWithoutCriterioInput>
+    create: XOR<Pers_Asis_RegistroCreateWithoutCriterioInput, Pers_Asis_RegistroUncheckedCreateWithoutCriterioInput>
+  }
+
+  export type Pers_Asis_RegistroUpdateWithWhereUniqueWithoutCriterioInput = {
+    where: Pers_Asis_RegistroWhereUniqueInput
+    data: XOR<Pers_Asis_RegistroUpdateWithoutCriterioInput, Pers_Asis_RegistroUncheckedUpdateWithoutCriterioInput>
+  }
+
+  export type Pers_Asis_RegistroUpdateManyWithWhereWithoutCriterioInput = {
+    where: Pers_Asis_RegistroScalarWhereInput
+    data: XOR<Pers_Asis_RegistroUpdateManyMutationInput, Pers_Asis_RegistroUncheckedUpdateManyWithoutCriterioInput>
+  }
+
+  export type Pers_Asis_RegistroScalarWhereInput = {
+    AND?: Pers_Asis_RegistroScalarWhereInput | Pers_Asis_RegistroScalarWhereInput[]
+    OR?: Pers_Asis_RegistroScalarWhereInput[]
+    NOT?: Pers_Asis_RegistroScalarWhereInput | Pers_Asis_RegistroScalarWhereInput[]
+    id?: StringFilter<"Pers_Asis_Registro"> | string
+    cargaId?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    rutEnc?: StringFilter<"Pers_Asis_Registro"> | string
+    rutHash?: StringFilter<"Pers_Asis_Registro"> | string
+    apellidosEnc?: StringFilter<"Pers_Asis_Registro"> | string
+    nombreEnc?: StringFilter<"Pers_Asis_Registro"> | string
+    fecha?: StringFilter<"Pers_Asis_Registro"> | string
+    rbd?: IntFilter<"Pers_Asis_Registro"> | number
+    establecimiento?: StringFilter<"Pers_Asis_Registro"> | string
+    grupoOriginal?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    cargo?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    permisoParcial?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    criterioId?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    criterioNombre?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    criterioObservacion?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    criterioAsignadoPor?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    criterioAsignadoAt?: DateTimeNullableFilter<"Pers_Asis_Registro"> | Date | string | null
+    creadoPor?: StringFilter<"Pers_Asis_Registro"> | string
+    creadoPorId?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    fechaCreacion?: DateTimeFilter<"Pers_Asis_Registro"> | Date | string
+    actualizadoPor?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    actualizadoPorId?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    fechaActualizacion?: DateTimeNullableFilter<"Pers_Asis_Registro"> | Date | string | null
+    numActualizaciones?: IntFilter<"Pers_Asis_Registro"> | number
+    historialActualizaciones?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    createdAt?: DateTimeFilter<"Pers_Asis_Registro"> | Date | string
+    updatedAt?: DateTimeFilter<"Pers_Asis_Registro"> | Date | string
+  }
+
+  export type Pers_Asis_RegistroCreateWithoutCargaInput = {
+    id?: string
+    rutEnc: string
+    rutHash: string
+    apellidosEnc: string
+    nombreEnc: string
+    fecha: string
+    rbd: number
+    establecimiento: string
+    grupoOriginal?: string | null
+    cargo?: string | null
+    permisoParcial?: string | null
+    criterioNombre?: string | null
+    criterioObservacion?: string | null
+    criterioAsignadoPor?: string | null
+    criterioAsignadoAt?: Date | string | null
+    creadoPor: string
+    creadoPorId?: string | null
+    fechaCreacion?: Date | string
+    actualizadoPor?: string | null
+    actualizadoPorId?: string | null
+    fechaActualizacion?: Date | string | null
+    numActualizaciones?: number
+    historialActualizaciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    criterio?: Pers_Asis_CriterioCreateNestedOneWithoutRegistrosInput
+  }
+
+  export type Pers_Asis_RegistroUncheckedCreateWithoutCargaInput = {
+    id?: string
+    rutEnc: string
+    rutHash: string
+    apellidosEnc: string
+    nombreEnc: string
+    fecha: string
+    rbd: number
+    establecimiento: string
+    grupoOriginal?: string | null
+    cargo?: string | null
+    permisoParcial?: string | null
+    criterioId?: string | null
+    criterioNombre?: string | null
+    criterioObservacion?: string | null
+    criterioAsignadoPor?: string | null
+    criterioAsignadoAt?: Date | string | null
+    creadoPor: string
+    creadoPorId?: string | null
+    fechaCreacion?: Date | string
+    actualizadoPor?: string | null
+    actualizadoPorId?: string | null
+    fechaActualizacion?: Date | string | null
+    numActualizaciones?: number
+    historialActualizaciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Pers_Asis_RegistroCreateOrConnectWithoutCargaInput = {
+    where: Pers_Asis_RegistroWhereUniqueInput
+    create: XOR<Pers_Asis_RegistroCreateWithoutCargaInput, Pers_Asis_RegistroUncheckedCreateWithoutCargaInput>
+  }
+
+  export type Pers_Asis_RegistroCreateManyCargaInputEnvelope = {
+    data: Pers_Asis_RegistroCreateManyCargaInput | Pers_Asis_RegistroCreateManyCargaInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type Pers_Asis_RegistroUpsertWithWhereUniqueWithoutCargaInput = {
+    where: Pers_Asis_RegistroWhereUniqueInput
+    update: XOR<Pers_Asis_RegistroUpdateWithoutCargaInput, Pers_Asis_RegistroUncheckedUpdateWithoutCargaInput>
+    create: XOR<Pers_Asis_RegistroCreateWithoutCargaInput, Pers_Asis_RegistroUncheckedCreateWithoutCargaInput>
+  }
+
+  export type Pers_Asis_RegistroUpdateWithWhereUniqueWithoutCargaInput = {
+    where: Pers_Asis_RegistroWhereUniqueInput
+    data: XOR<Pers_Asis_RegistroUpdateWithoutCargaInput, Pers_Asis_RegistroUncheckedUpdateWithoutCargaInput>
+  }
+
+  export type Pers_Asis_RegistroUpdateManyWithWhereWithoutCargaInput = {
+    where: Pers_Asis_RegistroScalarWhereInput
+    data: XOR<Pers_Asis_RegistroUpdateManyMutationInput, Pers_Asis_RegistroUncheckedUpdateManyWithoutCargaInput>
+  }
+
+  export type Pers_Asis_CargaCreateWithoutRegistrosInput = {
+    id?: string
+    nombreArchivo: string
+    totalRegistros?: number
+    nuevosRegistros?: number
+    actualizadosRegistros?: number
+    erroresRegistros?: number
+    cargadoPor: string
+    cargadoPorId?: string | null
+    fechaCarga?: Date | string
+    actualizadoPor?: string | null
+    actualizadoPorId?: string | null
+    ultimaActualizacion?: Date | string
+    observaciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Pers_Asis_CargaUncheckedCreateWithoutRegistrosInput = {
+    id?: string
+    nombreArchivo: string
+    totalRegistros?: number
+    nuevosRegistros?: number
+    actualizadosRegistros?: number
+    erroresRegistros?: number
+    cargadoPor: string
+    cargadoPorId?: string | null
+    fechaCarga?: Date | string
+    actualizadoPor?: string | null
+    actualizadoPorId?: string | null
+    ultimaActualizacion?: Date | string
+    observaciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Pers_Asis_CargaCreateOrConnectWithoutRegistrosInput = {
+    where: Pers_Asis_CargaWhereUniqueInput
+    create: XOR<Pers_Asis_CargaCreateWithoutRegistrosInput, Pers_Asis_CargaUncheckedCreateWithoutRegistrosInput>
+  }
+
+  export type Pers_Asis_CriterioCreateWithoutRegistrosInput = {
+    id?: string
+    nombre: string
+    descripcion?: string | null
+    color?: string | null
+    activo?: boolean
+    orden?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Pers_Asis_CriterioUncheckedCreateWithoutRegistrosInput = {
+    id?: string
+    nombre: string
+    descripcion?: string | null
+    color?: string | null
+    activo?: boolean
+    orden?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Pers_Asis_CriterioCreateOrConnectWithoutRegistrosInput = {
+    where: Pers_Asis_CriterioWhereUniqueInput
+    create: XOR<Pers_Asis_CriterioCreateWithoutRegistrosInput, Pers_Asis_CriterioUncheckedCreateWithoutRegistrosInput>
+  }
+
+  export type Pers_Asis_CargaUpsertWithoutRegistrosInput = {
+    update: XOR<Pers_Asis_CargaUpdateWithoutRegistrosInput, Pers_Asis_CargaUncheckedUpdateWithoutRegistrosInput>
+    create: XOR<Pers_Asis_CargaCreateWithoutRegistrosInput, Pers_Asis_CargaUncheckedCreateWithoutRegistrosInput>
+    where?: Pers_Asis_CargaWhereInput
+  }
+
+  export type Pers_Asis_CargaUpdateToOneWithWhereWithoutRegistrosInput = {
+    where?: Pers_Asis_CargaWhereInput
+    data: XOR<Pers_Asis_CargaUpdateWithoutRegistrosInput, Pers_Asis_CargaUncheckedUpdateWithoutRegistrosInput>
+  }
+
+  export type Pers_Asis_CargaUpdateWithoutRegistrosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombreArchivo?: StringFieldUpdateOperationsInput | string
+    totalRegistros?: IntFieldUpdateOperationsInput | number
+    nuevosRegistros?: IntFieldUpdateOperationsInput | number
+    actualizadosRegistros?: IntFieldUpdateOperationsInput | number
+    erroresRegistros?: IntFieldUpdateOperationsInput | number
+    cargadoPor?: StringFieldUpdateOperationsInput | string
+    cargadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCarga?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    actualizadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    ultimaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Pers_Asis_CargaUncheckedUpdateWithoutRegistrosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombreArchivo?: StringFieldUpdateOperationsInput | string
+    totalRegistros?: IntFieldUpdateOperationsInput | number
+    nuevosRegistros?: IntFieldUpdateOperationsInput | number
+    actualizadosRegistros?: IntFieldUpdateOperationsInput | number
+    erroresRegistros?: IntFieldUpdateOperationsInput | number
+    cargadoPor?: StringFieldUpdateOperationsInput | string
+    cargadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCarga?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    actualizadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    ultimaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Pers_Asis_CriterioUpsertWithoutRegistrosInput = {
+    update: XOR<Pers_Asis_CriterioUpdateWithoutRegistrosInput, Pers_Asis_CriterioUncheckedUpdateWithoutRegistrosInput>
+    create: XOR<Pers_Asis_CriterioCreateWithoutRegistrosInput, Pers_Asis_CriterioUncheckedCreateWithoutRegistrosInput>
+    where?: Pers_Asis_CriterioWhereInput
+  }
+
+  export type Pers_Asis_CriterioUpdateToOneWithWhereWithoutRegistrosInput = {
+    where?: Pers_Asis_CriterioWhereInput
+    data: XOR<Pers_Asis_CriterioUpdateWithoutRegistrosInput, Pers_Asis_CriterioUncheckedUpdateWithoutRegistrosInput>
+  }
+
+  export type Pers_Asis_CriterioUpdateWithoutRegistrosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    orden?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Pers_Asis_CriterioUncheckedUpdateWithoutRegistrosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    orden?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type UserCreateManyRoleInput = {
     id?: string
     username: string
@@ -207417,6 +212677,238 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type Pers_Asis_RegistroCreateManyCriterioInput = {
+    id?: string
+    cargaId?: string | null
+    rutEnc: string
+    rutHash: string
+    apellidosEnc: string
+    nombreEnc: string
+    fecha: string
+    rbd: number
+    establecimiento: string
+    grupoOriginal?: string | null
+    cargo?: string | null
+    permisoParcial?: string | null
+    criterioNombre?: string | null
+    criterioObservacion?: string | null
+    criterioAsignadoPor?: string | null
+    criterioAsignadoAt?: Date | string | null
+    creadoPor: string
+    creadoPorId?: string | null
+    fechaCreacion?: Date | string
+    actualizadoPor?: string | null
+    actualizadoPorId?: string | null
+    fechaActualizacion?: Date | string | null
+    numActualizaciones?: number
+    historialActualizaciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Pers_Asis_RegistroUpdateWithoutCriterioInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rutEnc?: StringFieldUpdateOperationsInput | string
+    rutHash?: StringFieldUpdateOperationsInput | string
+    apellidosEnc?: StringFieldUpdateOperationsInput | string
+    nombreEnc?: StringFieldUpdateOperationsInput | string
+    fecha?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    establecimiento?: StringFieldUpdateOperationsInput | string
+    grupoOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    permisoParcial?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioObservacion?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioAsignadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioAsignadoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    actualizadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaActualizacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    numActualizaciones?: IntFieldUpdateOperationsInput | number
+    historialActualizaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    carga?: Pers_Asis_CargaUpdateOneWithoutRegistrosNestedInput
+  }
+
+  export type Pers_Asis_RegistroUncheckedUpdateWithoutCriterioInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cargaId?: NullableStringFieldUpdateOperationsInput | string | null
+    rutEnc?: StringFieldUpdateOperationsInput | string
+    rutHash?: StringFieldUpdateOperationsInput | string
+    apellidosEnc?: StringFieldUpdateOperationsInput | string
+    nombreEnc?: StringFieldUpdateOperationsInput | string
+    fecha?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    establecimiento?: StringFieldUpdateOperationsInput | string
+    grupoOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    permisoParcial?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioObservacion?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioAsignadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioAsignadoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    actualizadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaActualizacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    numActualizaciones?: IntFieldUpdateOperationsInput | number
+    historialActualizaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Pers_Asis_RegistroUncheckedUpdateManyWithoutCriterioInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cargaId?: NullableStringFieldUpdateOperationsInput | string | null
+    rutEnc?: StringFieldUpdateOperationsInput | string
+    rutHash?: StringFieldUpdateOperationsInput | string
+    apellidosEnc?: StringFieldUpdateOperationsInput | string
+    nombreEnc?: StringFieldUpdateOperationsInput | string
+    fecha?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    establecimiento?: StringFieldUpdateOperationsInput | string
+    grupoOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    permisoParcial?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioObservacion?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioAsignadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioAsignadoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    actualizadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaActualizacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    numActualizaciones?: IntFieldUpdateOperationsInput | number
+    historialActualizaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Pers_Asis_RegistroCreateManyCargaInput = {
+    id?: string
+    rutEnc: string
+    rutHash: string
+    apellidosEnc: string
+    nombreEnc: string
+    fecha: string
+    rbd: number
+    establecimiento: string
+    grupoOriginal?: string | null
+    cargo?: string | null
+    permisoParcial?: string | null
+    criterioId?: string | null
+    criterioNombre?: string | null
+    criterioObservacion?: string | null
+    criterioAsignadoPor?: string | null
+    criterioAsignadoAt?: Date | string | null
+    creadoPor: string
+    creadoPorId?: string | null
+    fechaCreacion?: Date | string
+    actualizadoPor?: string | null
+    actualizadoPorId?: string | null
+    fechaActualizacion?: Date | string | null
+    numActualizaciones?: number
+    historialActualizaciones?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Pers_Asis_RegistroUpdateWithoutCargaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rutEnc?: StringFieldUpdateOperationsInput | string
+    rutHash?: StringFieldUpdateOperationsInput | string
+    apellidosEnc?: StringFieldUpdateOperationsInput | string
+    nombreEnc?: StringFieldUpdateOperationsInput | string
+    fecha?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    establecimiento?: StringFieldUpdateOperationsInput | string
+    grupoOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    permisoParcial?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioObservacion?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioAsignadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioAsignadoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    actualizadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaActualizacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    numActualizaciones?: IntFieldUpdateOperationsInput | number
+    historialActualizaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    criterio?: Pers_Asis_CriterioUpdateOneWithoutRegistrosNestedInput
+  }
+
+  export type Pers_Asis_RegistroUncheckedUpdateWithoutCargaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rutEnc?: StringFieldUpdateOperationsInput | string
+    rutHash?: StringFieldUpdateOperationsInput | string
+    apellidosEnc?: StringFieldUpdateOperationsInput | string
+    nombreEnc?: StringFieldUpdateOperationsInput | string
+    fecha?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    establecimiento?: StringFieldUpdateOperationsInput | string
+    grupoOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    permisoParcial?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioId?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioObservacion?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioAsignadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioAsignadoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    actualizadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaActualizacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    numActualizaciones?: IntFieldUpdateOperationsInput | number
+    historialActualizaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Pers_Asis_RegistroUncheckedUpdateManyWithoutCargaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rutEnc?: StringFieldUpdateOperationsInput | string
+    rutHash?: StringFieldUpdateOperationsInput | string
+    apellidosEnc?: StringFieldUpdateOperationsInput | string
+    nombreEnc?: StringFieldUpdateOperationsInput | string
+    fecha?: StringFieldUpdateOperationsInput | string
+    rbd?: IntFieldUpdateOperationsInput | number
+    establecimiento?: StringFieldUpdateOperationsInput | string
+    grupoOriginal?: NullableStringFieldUpdateOperationsInput | string | null
+    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+    permisoParcial?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioId?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioNombre?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioObservacion?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioAsignadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    criterioAsignadoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    creadoPor?: StringFieldUpdateOperationsInput | string
+    creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    actualizadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaActualizacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    numActualizaciones?: IntFieldUpdateOperationsInput | number
+    historialActualizaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
 
 
   /**
@@ -207610,6 +213102,14 @@ export namespace Prisma {
      * @deprecated Use RegCap_CapacitacionCountOutputTypeDefaultArgs instead
      */
     export type RegCap_CapacitacionCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = RegCap_CapacitacionCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Pers_Asis_CriterioCountOutputTypeDefaultArgs instead
+     */
+    export type Pers_Asis_CriterioCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Pers_Asis_CriterioCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Pers_Asis_CargaCountOutputTypeDefaultArgs instead
+     */
+    export type Pers_Asis_CargaCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Pers_Asis_CargaCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use RoleDefaultArgs instead
      */
@@ -208138,6 +213638,18 @@ export namespace Prisma {
      * @deprecated Use Cal_ResSan_RegistroDefaultArgs instead
      */
     export type Cal_ResSan_RegistroArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Cal_ResSan_RegistroDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Pers_Asis_CriterioDefaultArgs instead
+     */
+    export type Pers_Asis_CriterioArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Pers_Asis_CriterioDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Pers_Asis_CargaDefaultArgs instead
+     */
+    export type Pers_Asis_CargaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Pers_Asis_CargaDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Pers_Asis_RegistroDefaultArgs instead
+     */
+    export type Pers_Asis_RegistroArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Pers_Asis_RegistroDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

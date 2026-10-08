@@ -129,8 +129,10 @@ export default async function RolesPage() {
         { id: 'logistica:config:camiones', name: 'Administrar Camiones', description: 'Gestionar patentes, tipo de vehículo y capacidad de carga.', category: 'ÁREAS -> LOGÍSTICA -> CONFIGURACIÓN' },
         { id: 'logistica:config:transportistas', name: 'Administrar Transportistas', description: 'Gestionar empresas transportistas externas o flota interna.', category: 'ÁREAS -> LOGÍSTICA -> CONFIGURACIÓN' },
         { id: 'logistica:config:clientes', name: 'Administrar Clientes / Destinos', description: 'Gestionar clientes, direcciones de entrega y comunas.', category: 'ÁREAS -> LOGÍSTICA -> CONFIGURACIÓN' },
-        { id: 'logistica:integraciones:ver', name: 'Integraciones n8n / Webhooks', description: 'Configurar webhook saliente, secret tokens y ver bitácora de eventos.', category: 'ÁREAS -> LOGÍSTICA -> CONFIGURACIÓN' },
- 
+        // ÁREAS -> PERSONAL
+        { id: 'view_personal_asistencia', name: 'Asistencia (Ver y Gestionar)', description: 'Permite consultar ausencias por RBD asignado y asociar criterios de ausentismo.', category: 'ÁREAS -> PERSONAL' },
+        { id: 'manage_personal_asistencia_carga', name: 'Carga Masiva de Asistencia', description: 'Permite subir y actualizar planillas Excel de ausentismo/asistencia con datos encriptados.', category: 'ÁREAS -> PERSONAL' },
+
         { id: 'view_matriz_riesgo', name: 'Ver Matriz de Riesgo', description: 'Acceso al menú principal de matrices de riesgo.', category: 'MATRIZ DE RIESGO' },
         { id: 'fill_nueva_matriz', name: 'Ingresar nueva Matriz', description: 'Responder encuestas basadas en plantillas dinámicas de matrices de riesgo.', category: 'MATRIZ DE RIESGO -> INGRESAR NUEVA MATRIZ' },
  
@@ -149,6 +151,7 @@ export default async function RolesPage() {
  
         { id: 'view_productos', name: 'Mantenedor de Productos', description: 'Acceso a mantenedor y carga masiva de Productos.', category: 'MANTENEDORES' },
         { id: 'manage_areas', name: 'Área', description: 'Creación y administración de áreas de la compañía.', category: 'MANTENEDORES' },
+        { id: 'manage_personal_criterios', name: 'Criterios de Ausencias', description: 'Permite administrar los criterios o motivos de ausentismo del personal.', category: 'MANTENEDORES -> PERSONAL' },
  
         { id: 'manage_actas_supervision', name: 'Crear Acta de Supervisión', description: 'Crear, editar, copiar y administrar plantillas de Actas de Supervisión.', category: 'MANTENEDORES -> ACTAS DE SUPERVISIÓN' },
         { id: 'manage_user_rbds', name: 'Asociar RBD a usuario', description: 'Permite asociar y gestionar los RBDs autorizados para cada usuario.', category: 'MANTENEDORES -> ACTAS DE SUPERVISIÓN' },

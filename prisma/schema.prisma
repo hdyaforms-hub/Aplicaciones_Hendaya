@@ -2266,3 +2266,79 @@ model Cal_ResSan_Registro {
   @@index([estadoResolucion])
   @@map("Cal_ResSan_Registro")
 }
+
+model Pers_Asis_Criterio {
+  id          String   @id @default(uuid())
+  nombre      String   @unique
+  descripcion String?
+  color       String?  @default("#0891b2")
+  activo      Boolean  @default(true)
+  orden       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  registros   Pers_Asis_Registro[]
+
+  @@map("Pers_Asis_Criterio")
+}
+
+model Pers_Asis_Carga {
+  id                    String   @id @default(uuid())
+  nombreArchivo         String
+  totalRegistros        Int      @default(0)
+  nuevosRegistros       Int      @default(0)
+  actualizadosRegistros Int      @default(0)
+  erroresRegistros      Int      @default(0)
+  cargadoPor            String
+  cargadoPorId          String?
+  fechaCarga            DateTime @default(now())
+  actualizadoPor        String?
+  actualizadoPorId      String?
+  ultimaActualizacion   DateTime @default(now())
+  observaciones         String?  @db.Text
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  registros             Pers_Asis_Registro[]
+
+  @@map("Pers_Asis_Carga")
+}
+
+model Pers_Asis_Registro {
+  id                       String               @id @default(uuid())
+  cargaId                  String?
+  rutEnc                   String               @db.Text
+  rutHash                  String
+  apellidosEnc             String               @db.Text
+  nombreEnc                String               @db.Text
+  fecha                    String
+  rbd                      Int
+  establecimiento          String
+  grupoOriginal            String?
+  cargo                    String?
+  permisoParcial           String?
+  criterioId               String?
+  criterioNombre           String?
+  criterioObservacion      String?              @db.Text
+  criterioAsignadoPor      String?
+  criterioAsignadoAt       DateTime?
+  creadoPor                String
+  creadoPorId              String?
+  fechaCreacion            DateTime             @default(now())
+  actualizadoPor           String?
+  actualizadoPorId         String?
+  fechaActualizacion       DateTime?
+  numActualizaciones       Int                  @default(0)
+  historialActualizaciones String?              @db.Text
+  createdAt                DateTime             @default(now())
+  updatedAt                DateTime             @updatedAt
+
+  carga                    Pers_Asis_Carga?     @relation(fields: [cargaId], references: [id])
+  criterio                 Pers_Asis_Criterio?  @relation(fields: [criterioId], references: [id])
+
+  @@unique([rutHash, fecha, rbd], map: "pers_asis_reg_unique_rut_fecha_rbd")
+  @@index([rbd], map: "pers_asis_reg_rbd_idx")
+  @@index([fecha], map: "pers_asis_reg_fecha_idx")
+  @@index([rutHash], map: "pers_asis_reg_ruthash_idx")
+  @@index([criterioId], map: "pers_asis_reg_criterio_idx")
+  @@map("Pers_Asis_Registro")
+}
+

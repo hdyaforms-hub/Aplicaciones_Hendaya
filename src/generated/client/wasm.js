@@ -1880,6 +1880,65 @@ exports.Prisma.Cal_ResSan_RegistroScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.Pers_Asis_CriterioScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  descripcion: 'descripcion',
+  color: 'color',
+  activo: 'activo',
+  orden: 'orden',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.Pers_Asis_CargaScalarFieldEnum = {
+  id: 'id',
+  nombreArchivo: 'nombreArchivo',
+  totalRegistros: 'totalRegistros',
+  nuevosRegistros: 'nuevosRegistros',
+  actualizadosRegistros: 'actualizadosRegistros',
+  erroresRegistros: 'erroresRegistros',
+  cargadoPor: 'cargadoPor',
+  cargadoPorId: 'cargadoPorId',
+  fechaCarga: 'fechaCarga',
+  actualizadoPor: 'actualizadoPor',
+  actualizadoPorId: 'actualizadoPorId',
+  ultimaActualizacion: 'ultimaActualizacion',
+  observaciones: 'observaciones',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.Pers_Asis_RegistroScalarFieldEnum = {
+  id: 'id',
+  cargaId: 'cargaId',
+  rutEnc: 'rutEnc',
+  rutHash: 'rutHash',
+  apellidosEnc: 'apellidosEnc',
+  nombreEnc: 'nombreEnc',
+  fecha: 'fecha',
+  rbd: 'rbd',
+  establecimiento: 'establecimiento',
+  grupoOriginal: 'grupoOriginal',
+  cargo: 'cargo',
+  permisoParcial: 'permisoParcial',
+  criterioId: 'criterioId',
+  criterioNombre: 'criterioNombre',
+  criterioObservacion: 'criterioObservacion',
+  criterioAsignadoPor: 'criterioAsignadoPor',
+  criterioAsignadoAt: 'criterioAsignadoAt',
+  creadoPor: 'creadoPor',
+  creadoPorId: 'creadoPorId',
+  fechaCreacion: 'fechaCreacion',
+  actualizadoPor: 'actualizadoPor',
+  actualizadoPorId: 'actualizadoPorId',
+  fechaActualizacion: 'fechaActualizacion',
+  numActualizaciones: 'numActualizaciones',
+  historialActualizaciones: 'historialActualizaciones',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -2028,7 +2087,10 @@ exports.Prisma.ModelName = {
   Cal_RegistroHigienePersonal: 'Cal_RegistroHigienePersonal',
   RegCap_Capacitacion: 'RegCap_Capacitacion',
   RegCap_Participante: 'RegCap_Participante',
-  Cal_ResSan_Registro: 'Cal_ResSan_Registro'
+  Cal_ResSan_Registro: 'Cal_ResSan_Registro',
+  Pers_Asis_Criterio: 'Pers_Asis_Criterio',
+  Pers_Asis_Carga: 'Pers_Asis_Carga',
+  Pers_Asis_Registro: 'Pers_Asis_Registro'
 };
 
 /**

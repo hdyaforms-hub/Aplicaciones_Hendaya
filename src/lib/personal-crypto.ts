@@ -33,14 +33,38 @@ export function encryptNombre(rawNombre: string): string {
 }
 
 /**
- * Descifra el valor del nombre almacenado en la base de datos para mostrarlo en pantalla o reporte.
+ * Cifra un dato personal sensible (Rut, Nombre, Apellido) con AES-256-GCM.
+ * Formato resultante: ENC_PERS::<iv_hex>::<authTag_hex>::<encrypted_hex>
  */
-export function decryptNombre(cipherText: string): string {
+export function encryptPersonalText(rawText: string): string {
+    if (!rawText || !rawText.trim()) return ''
+    const clean = rawText.trim()
+
+    try {
+        const key = getKey()
+        const iv = crypto.randomBytes(12) // 96 bits para AES-GCM
+        const cipher = crypto.createCipheriv(ALGORITHM, key, iv)
+
+        let encrypted = cipher.update(clean, 'utf8', 'hex')
+        encrypted += cipher.final('hex')
+        const authTag = cipher.getAuthTag().toString('hex')
+
+        return `ENC_PERS::${iv.toString('hex')}::${authTag}::${encrypted}`
+    } catch (error) {
+        console.error('Error al cifrar dato personal:', error)
+        return clean
+    }
+}
+
+/**
+ * Descifra un dato personal previamente cifrado con AES-256-GCM.
+ */
+export function decryptPersonalText(cipherText: string): string {
     if (!cipherText || !cipherText.trim()) return ''
     const trimmed = cipherText.trim()
 
-    // Si no tiene el prefijo de cifrado, es un nombre no cifrado (retrocompatibilidad)
-    if (!trimmed.startsWith('ENC_NOM::')) {
+    // Si no tiene prefijo, devolver texto plano (retrocompatibilidad)
+    if (!trimmed.startsWith('ENC_PERS::') && !trimmed.startsWith('ENC_NOM::')) {
         return trimmed
     }
 
@@ -61,7 +85,32 @@ export function decryptNombre(cipherText: string): string {
 
         return decrypted
     } catch (error) {
-        console.error('Error al descifrar nombre:', error)
+        console.error('Error al descifrar dato personal:', error)
         return '*** ERROR DESCIFRADO ***'
     }
 }
+
+/**
+ * Alias de compatibilidad para código existente que utiliza decryptNombre
+ */
+export const decryptNombre = decryptPersonalText
+
+
+/**
+ * Normaliza un RUT chileno eliminando puntos, espacios y pasando el dígito verificador a mayúscula.
+ * Ejemplo: "16.410.779-5" -> "16410779-5"
+ */
+export function cleanRut(rut: string): string {
+    if (!rut) return ''
+    return rut.replace(/\./g, '').replace(/\s+/g, '').toUpperCase().trim()
+}
+
+/**
+ * Genera un Hash SHA-256 no reversible del RUT limpio para permitir comparaciones de unicidad y búsquedas seguras en BD.
+ */
+export function hashRut(rut: string): string {
+    const cleaned = cleanRut(rut)
+    if (!cleaned) return ''
+    return crypto.createHash('sha256').update(cleaned).digest('hex')
+}
+
