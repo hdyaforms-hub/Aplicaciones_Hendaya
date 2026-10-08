@@ -18,24 +18,43 @@ async function checkPermission() {
     return perms.includes('manage_personal_asistencia_carga')
 }
 
-// Extrae RBD y Establecimiento desde la columna "Grupo", ej: "(10516) EL LLANO DE PIRQUE"
+// Extrae RBD y Establecimiento desde la columna "Grupo", ej: "(10516) EL LLANO DE PIRQUE", "(888197-9) JORGE QUEVEDO", "888197-9 JORGE QUEVEDO"
 function parseGrupoRBD(grupoRaw: string | number | null | undefined): { rbd: number; establecimiento: string } {
     if (!grupoRaw) return { rbd: 0, establecimiento: 'Sin Establecimiento' }
     const str = String(grupoRaw).trim()
-    const match = str.match(/\((\d+)\)\s*(.*)/)
-    if (match) {
+
+    // 1. Con paréntesis: ej "(888197-9) JORGE QUEVEDO" o "(10516) EL LLANO DE PIRQUE"
+    // Omite guion y dígito verificador (-0..9, -k, -K) dentro del paréntesis
+    const matchParen = str.match(/^\(\s*(\d+)(?:-[\dkK])?\s*\)\s*(.*)/)
+    if (matchParen) {
+        const rbdNum = parseInt(matchParen[1], 10)
         return {
-            rbd: parseInt(match[1], 10),
-            establecimiento: match[2]?.trim() || `RBD ${match[1]}`
+            rbd: rbdNum,
+            establecimiento: matchParen[2]?.trim() || `RBD ${rbdNum}`
         }
     }
-    const matchNumber = str.match(/^(\d+)\s*(.*)/)
+
+    // 2. Sin paréntesis al inicio: ej "888197-9 JORGE QUEVEDO" o "10516 EL LLANO"
+    const matchNumber = str.match(/^(\d+)(?:-[\dkK])?\s*(.*)/)
     if (matchNumber) {
+        const rbdNum = parseInt(matchNumber[1], 10)
         return {
-            rbd: parseInt(matchNumber[1], 10),
-            establecimiento: matchNumber[2]?.trim() || `RBD ${matchNumber[1]}`
+            rbd: rbdNum,
+            establecimiento: matchNumber[2]?.trim() || `RBD ${rbdNum}`
         }
     }
+
+    // 3. Fallback: buscar cualquier patrón con paréntesis en cualquier posición del texto
+    const matchAnyParen = str.match(/\(\s*(\d+)(?:-[\dkK])?\s*\)/)
+    if (matchAnyParen) {
+        const rbdNum = parseInt(matchAnyParen[1], 10)
+        const resto = str.replace(matchAnyParen[0], '').trim()
+        return {
+            rbd: rbdNum,
+            establecimiento: resto || `RBD ${rbdNum}`
+        }
+    }
+
     return { rbd: 0, establecimiento: str }
 }
 

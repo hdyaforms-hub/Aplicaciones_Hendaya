@@ -111,6 +111,20 @@ export async function ensurePersonalAsistenciaTables() {
             `, crit.nombre, crit.color, crit.descripcion, crit.orden)
         }
 
+        // Auto-reparación idempotente: si existen registros donde rbd = 0 y el grupo contenía dígito verificador
+        try {
+            await rawPrisma.$executeRawUnsafe(`
+                UPDATE "Pers_Asis_Registro"
+                SET 
+                    rbd = (substring("grupoOriginal" from '\\(?([0-9]+)(?:-[0-9kK])?\\)?'))::integer,
+                    establecimiento = NULLIF(TRIM(regexp_replace("grupoOriginal", '^\\s*\\([0-9]+(?:-[0-9kK])?\\)\\s*', '')), '')
+                WHERE rbd = 0 
+                  AND "grupoOriginal" ~ '\\(?([0-9]+)(?:-[0-9kK])?\\)?';
+            `)
+        } catch {
+            // Silencioso si no aplica
+        }
+
         initialized = true
     } catch (error) {
         console.error('Error during ensurePersonalAsistenciaTables self-healing:', error)
