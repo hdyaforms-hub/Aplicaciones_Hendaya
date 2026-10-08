@@ -19,7 +19,7 @@ async function checkPermission() {
 }
 
 // Extrae RBD y Establecimiento desde la columna "Grupo", ej: "(10516) EL LLANO DE PIRQUE"
-export function parseGrupoRBD(grupoRaw: string | number | null | undefined): { rbd: number; establecimiento: string } {
+function parseGrupoRBD(grupoRaw: string | number | null | undefined): { rbd: number; establecimiento: string } {
     if (!grupoRaw) return { rbd: 0, establecimiento: 'Sin Establecimiento' }
     const str = String(grupoRaw).trim()
     const match = str.match(/\((\d+)\)\s*(.*)/)
@@ -40,7 +40,7 @@ export function parseGrupoRBD(grupoRaw: string | number | null | undefined): { r
 }
 
 // Normaliza fecha del excel a formato 'YYYY-MM-DD'
-export function parseExcelFecha(rawFecha: any): { dateStr: string } | null {
+function parseExcelFecha(rawFecha: any): { dateStr: string } | null {
     if (!rawFecha) return null
 
     if (rawFecha instanceof Date && !isNaN(rawFecha.getTime())) {
