@@ -159,7 +159,7 @@ export default function CargaMasivaClient({ initialCargas }: { initialCargas: Ca
                 <div>
                     <div className="flex items-center gap-2 text-cyan-600 font-semibold text-xs tracking-wider uppercase mb-1">
                         <FileSpreadsheet className="w-4 h-4" />
-                        <span>Áreas · Recursos Humanos</span>
+                        <span>Áreas · Recursos Humanos · Asistencia</span>
                     </div>
                     <h1 className="text-2xl font-bold text-gray-900 tracking-tight flex items-center gap-3">
                         Carga Masiva de Asistencia

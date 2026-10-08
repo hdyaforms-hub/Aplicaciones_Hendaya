@@ -31,6 +31,7 @@ export async function createCriterioAction(formData: {
     descripcion?: string
     color?: string
     activo?: boolean
+    solicitaDocumento?: boolean
 }) {
     if (!await checkPermission()) {
         return { success: false, error: 'No tienes permisos para gestionar criterios de ausencias' }
@@ -55,7 +56,8 @@ export async function createCriterioAction(formData: {
                 nombre: cleanNombre,
                 descripcion: formData.descripcion?.trim() || null,
                 color: formData.color || '#0ea5e9',
-                activo: formData.activo !== undefined ? formData.activo : true
+                activo: formData.activo !== undefined ? formData.activo : true,
+                solicitaDocumento: Boolean(formData.solicitaDocumento)
             }
         })
 
@@ -73,6 +75,7 @@ export async function updateCriterioAction(id: string, formData: {
     descripcion?: string
     color?: string
     activo?: boolean
+    solicitaDocumento?: boolean
 }) {
     if (!await checkPermission()) {
         return { success: false, error: 'No tienes permisos para gestionar criterios de ausencias' }
@@ -101,7 +104,8 @@ export async function updateCriterioAction(id: string, formData: {
                 nombre: cleanNombre,
                 descripcion: formData.descripcion !== undefined ? (formData.descripcion.trim() || null) : undefined,
                 color: formData.color,
-                activo: formData.activo
+                activo: formData.activo,
+                solicitaDocumento: formData.solicitaDocumento !== undefined ? Boolean(formData.solicitaDocumento) : undefined
             }
         })
 
@@ -137,6 +141,26 @@ export async function toggleCriterioActivoAction(id: string, activo: boolean) {
     } catch (error: any) {
         console.error('Error toggling Pers_Asis_Criterio:', error)
         return { success: false, error: error.message || 'Error al cambiar estado' }
+    }
+}
+
+export async function toggleCriterioSolicitaDocAction(id: string, solicitaDocumento: boolean) {
+    if (!await checkPermission()) {
+        return { success: false, error: 'No tienes permisos para gestionar criterios de ausencias' }
+    }
+    await ensurePersonalAsistenciaTables()
+
+    try {
+        const item = await (rawPrisma as any).pers_Asis_Criterio.update({
+            where: { id },
+            data: { solicitaDocumento }
+        })
+        revalidatePath(PATH)
+        revalidatePath('/dashboard/areas/personal/asistencia')
+        return { success: true, data: item }
+    } catch (error: any) {
+        console.error('Error toggling solicitaDocumento:', error)
+        return { success: false, error: error.message || 'Error al cambiar opción de documento' }
     }
 }
 

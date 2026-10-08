@@ -30,6 +30,7 @@ export async function ensurePersonalAsistenciaTables() {
                 descripcion TEXT,
                 color TEXT DEFAULT '#0891b2',
                 activo BOOLEAN NOT NULL DEFAULT true,
+                "solicitaDocumento" BOOLEAN NOT NULL DEFAULT false,
                 orden INTEGER NOT NULL DEFAULT 0,
                 "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -77,6 +78,10 @@ export async function ensurePersonalAsistenciaTables() {
                 "criterioObservacion" TEXT,
                 "criterioAsignadoPor" TEXT,
                 "criterioAsignadoAt" TIMESTAMP(3),
+                "documentoUrl" TEXT,
+                "documentoNombre" TEXT,
+                "documentoSubidoAt" TIMESTAMP(3),
+                "documentoSubidoPor" TEXT,
                 "creadoPor" TEXT NOT NULL,
                 "creadoPorId" TEXT,
                 "fechaCreacion" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -89,6 +94,13 @@ export async function ensurePersonalAsistenciaTables() {
                 "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
             );
         `)
+
+        // Auto-migraciones idempotentes para columnas nuevas
+        await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Asis_Criterio" ADD COLUMN IF NOT EXISTS "solicitaDocumento" BOOLEAN NOT NULL DEFAULT false;`)
+        await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Asis_Registro" ADD COLUMN IF NOT EXISTS "documentoUrl" TEXT;`)
+        await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Asis_Registro" ADD COLUMN IF NOT EXISTS "documentoNombre" TEXT;`)
+        await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Asis_Registro" ADD COLUMN IF NOT EXISTS "documentoSubidoAt" TIMESTAMP(3);`)
+        await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Asis_Registro" ADD COLUMN IF NOT EXISTS "documentoSubidoPor" TEXT;`)
 
         // Índices y restricciones
         await rawPrisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "pers_asis_reg_rbd_idx" ON "Pers_Asis_Registro"(rbd);`)

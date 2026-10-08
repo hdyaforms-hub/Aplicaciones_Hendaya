@@ -74,14 +74,20 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                 requiredPermission: ['view_personal_asistencia', 'manage_personal_asistencia_carga'],
                 subItems: [
                     {
-                        name: 'Ausentismo',
-                        href: '/dashboard/areas/personal/asistencia',
-                        requiredPermission: 'view_personal_asistencia'
-                    },
-                    {
-                        name: 'Carga masiva de asistencia',
-                        href: '/dashboard/areas/personal/carga-masiva',
-                        requiredPermission: 'manage_personal_asistencia_carga'
+                        name: 'Asistencia',
+                        requiredPermission: ['view_personal_asistencia', 'manage_personal_asistencia_carga'],
+                        subItems: [
+                            {
+                                name: 'Ausentismo',
+                                href: '/dashboard/areas/personal/asistencia',
+                                requiredPermission: 'view_personal_asistencia'
+                            },
+                            {
+                                name: 'Carga masiva de asistencia',
+                                href: '/dashboard/areas/personal/carga-masiva',
+                                requiredPermission: 'manage_personal_asistencia_carga'
+                            }
+                        ]
                     }
                 ]
             },

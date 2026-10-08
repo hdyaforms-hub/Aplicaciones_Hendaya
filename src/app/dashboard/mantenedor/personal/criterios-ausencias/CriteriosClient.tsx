@@ -5,9 +5,10 @@ import {
     createCriterioAction,
     updateCriterioAction,
     toggleCriterioActivoAction,
+    toggleCriterioSolicitaDocAction,
     deleteCriterioAction
 } from './actions'
-import { Plus, Search, Edit2, Trash2, CheckCircle2, XCircle, Tag, Sparkles, AlertCircle } from 'lucide-react'
+import { Plus, Search, Edit2, Trash2, CheckCircle2, XCircle, Tag, Sparkles, AlertCircle, Paperclip } from 'lucide-react'
 
 interface Criterio {
     id: string
@@ -15,6 +16,7 @@ interface Criterio {
     descripcion: string | null
     color: string | null
     activo: boolean
+    solicitaDocumento?: boolean
     createdAt: Date | string
     updatedAt: Date | string
 }
@@ -37,6 +39,7 @@ export default function CriteriosClient({ initialCriterios }: { initialCriterios
     const [descripcion, setDescripcion] = useState('')
     const [color, setColor] = useState('#0284c7')
     const [activo, setActivo] = useState(true)
+    const [solicitaDocumento, setSolicitaDocumento] = useState(false)
     const [errorMsg, setErrorMsg] = useState<string | null>(null)
     const [successMsg, setSuccessMsg] = useState<string | null>(null)
 
@@ -46,6 +49,7 @@ export default function CriteriosClient({ initialCriterios }: { initialCriterios
         setDescripcion('')
         setColor('#0284c7')
         setActivo(true)
+        setSolicitaDocumento(false)
         setErrorMsg(null)
         setIsModalOpen(true)
     }
@@ -56,6 +60,7 @@ export default function CriteriosClient({ initialCriterios }: { initialCriterios
         setDescripcion(item.descripcion || '')
         setColor(item.color || '#0284c7')
         setActivo(item.activo)
+        setSolicitaDocumento(Boolean(item.solicitaDocumento))
         setErrorMsg(null)
         setIsModalOpen(true)
     }
@@ -75,7 +80,8 @@ export default function CriteriosClient({ initialCriterios }: { initialCriterios
                     nombre,
                     descripcion,
                     color,
-                    activo
+                    activo,
+                    solicitaDocumento
                 })
                 if (res.success && res.data) {
                     setCriterios(prev => prev.map(c => c.id === editingItem.id ? (res.data as any) : c))
@@ -90,7 +96,8 @@ export default function CriteriosClient({ initialCriterios }: { initialCriterios
                     nombre,
                     descripcion,
                     color,
-                    activo
+                    activo,
+                    solicitaDocumento
                 })
                 if (res.success && res.data) {
                     setCriterios(prev => [...prev, res.data as any].sort((a, b) => a.nombre.localeCompare(b.nombre)))
@@ -111,6 +118,17 @@ export default function CriteriosClient({ initialCriterios }: { initialCriterios
                 setCriterios(prev => prev.map(c => c.id === id ? { ...c, activo: !current } : c))
             } else {
                 alert(res.error || 'Error al alternar estado')
+            }
+        })
+    }
+
+    const handleToggleSolicitaDoc = (id: string, current: boolean) => {
+        startTransition(async () => {
+            const res = await toggleCriterioSolicitaDocAction(id, !current)
+            if (res.success && res.data) {
+                setCriterios(prev => prev.map(c => c.id === id ? { ...c, solicitaDocumento: !current } : c))
+            } else {
+                alert(res.error || 'Error al alternar opción de documento adjunto')
             }
         })
     }
@@ -229,6 +247,7 @@ export default function CriteriosClient({ initialCriterios }: { initialCriterios
                                 <th className="px-6 py-3.5">Color / Etiqueta</th>
                                 <th className="px-6 py-3.5">Nombre Criterio</th>
                                 <th className="px-6 py-3.5">Descripción</th>
+                                <th className="px-6 py-3.5 text-center">Solicita Documento</th>
                                 <th className="px-6 py-3.5 text-center">Estado</th>
                                 <th className="px-6 py-3.5 text-right">Acciones</th>
                             </tr>
@@ -236,7 +255,7 @@ export default function CriteriosClient({ initialCriterios }: { initialCriterios
                         <tbody className="divide-y divide-gray-100">
                             {filtered.length === 0 ? (
                                 <tr>
-                                    <td colSpan={5} className="text-center py-12 text-gray-400">
+                                    <td colSpan={6} className="text-center py-12 text-gray-400">
                                         No se encontraron criterios de ausencia coincidentes.
                                     </td>
                                 </tr>
@@ -263,6 +282,31 @@ export default function CriteriosClient({ initialCriterios }: { initialCriterios
                                             <span className="text-xs text-gray-600 line-clamp-2">
                                                 {c.descripcion || <span className="italic text-gray-400">Sin descripción</span>}
                                             </span>
+                                        </td>
+                                        {/* Check interactivo Solicita Documento Adjunto */}
+                                        <td className="px-6 py-4 text-center whitespace-nowrap">
+                                            <button
+                                                type="button"
+                                                onClick={() => handleToggleSolicitaDoc(c.id, Boolean(c.solicitaDocumento))}
+                                                disabled={isPending}
+                                                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all ${
+                                                    c.solicitaDocumento
+                                                        ? 'bg-cyan-50 text-cyan-800 border-cyan-200 hover:bg-cyan-100 shadow-2xs'
+                                                        : 'bg-gray-50 text-gray-500 border-gray-200 hover:bg-gray-100'
+                                                }`}
+                                                title={c.solicitaDocumento ? 'Haz clic para desactivar solicitud de documento' : 'Haz clic para activar solicitud de documento'}
+                                            >
+                                                <input
+                                                    type="checkbox"
+                                                    checked={Boolean(c.solicitaDocumento)}
+                                                    readOnly
+                                                    className="w-3.5 h-3.5 rounded text-cyan-600 pointer-events-none"
+                                                />
+                                                <span className="flex items-center gap-1">
+                                                    <Paperclip className="w-3.5 h-3.5" />
+                                                    <span>{c.solicitaDocumento ? 'Requiere Adjunto' : 'Opcional / No'}</span>
+                                                </span>
+                                            </button>
                                         </td>
                                         <td className="px-6 py-4 text-center whitespace-nowrap">
                                             <button
@@ -398,13 +442,31 @@ export default function CriteriosClient({ initialCriterios }: { initialCriterios
                                 </div>
                             </div>
 
-                            <div className="pt-2">
-                                <label className="flex items-center gap-3 cursor-pointer">
+                            <div className="pt-2 border-t border-gray-100 space-y-3">
+                                <label className="flex items-start gap-3 cursor-pointer p-3 rounded-xl bg-cyan-50/60 border border-cyan-100 hover:bg-cyan-50 transition-colors">
+                                    <input
+                                        type="checkbox"
+                                        checked={solicitaDocumento}
+                                        onChange={e => setSolicitaDocumento(e.target.checked)}
+                                        className="w-4 h-4 mt-0.5 rounded text-cyan-600 border-gray-300 focus:ring-cyan-500 cursor-pointer"
+                                    />
+                                    <div>
+                                        <span className="text-sm text-gray-900 font-bold flex items-center gap-1.5">
+                                            <Paperclip className="w-4 h-4 text-cyan-600" />
+                                            Solicita documento adjunto
+                                        </span>
+                                        <span className="text-xs text-gray-500 block mt-0.5">
+                                            Si está activo, al seleccionar este criterio en el módulo de Ausentismo se abrirá automáticamente una ventana para adjuntar el respaldo o certificado.
+                                        </span>
+                                    </div>
+                                </label>
+
+                                <label className="flex items-center gap-3 cursor-pointer px-1">
                                     <input
                                         type="checkbox"
                                         checked={activo}
                                         onChange={e => setActivo(e.target.checked)}
-                                        className="w-4 h-4 rounded text-cyan-600 border-gray-300 focus:ring-cyan-500"
+                                        className="w-4 h-4 rounded text-cyan-600 border-gray-300 focus:ring-cyan-500 cursor-pointer"
                                     />
                                     <span className="text-sm text-gray-700 font-medium">
                                         Criterio Activo (disponible para asignación)

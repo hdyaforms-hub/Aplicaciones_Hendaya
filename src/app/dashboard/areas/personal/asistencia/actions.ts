@@ -5,6 +5,10 @@ import { getSession } from '@/lib/session'
 import { revalidatePath } from 'next/cache'
 import { decryptPersonalText } from '@/lib/personal-crypto'
 import { ensurePersonalAsistenciaTables } from '@/lib/personal-db-init'
+import fs from 'fs'
+import path from 'path'
+import { v4 as uuidv4 } from 'uuid'
+import { uploadPath } from '@/lib/storage'
 
 const PATH_ASISTENCIA = '/dashboard/areas/personal/asistencia'
 
@@ -32,6 +36,10 @@ export interface AsistenciaRegistroDTO {
     criterioId: string | null
     criterioNombre: string | null
     criterioColor?: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    documentoSubidoAt?: string | null
+    documentoSubidoPor?: string | null
     creadoPor: string
     fechaCreacion: string
     actualizadoPor: string | null
@@ -141,6 +149,10 @@ export async function getAsistenciaRegistrosAction(filtros?: {
                 criterioId: r.criterioId,
                 criterioNombre: r.criterioNombre,
                 criterioColor: r.criterioId ? (criterioColorMap.get(r.criterioId) || '#64748b') : null,
+                documentoUrl: r.documentoUrl || null,
+                documentoNombre: r.documentoNombre || null,
+                documentoSubidoAt: r.documentoSubidoAt ? new Date(r.documentoSubidoAt).toISOString() : null,
+                documentoSubidoPor: r.documentoSubidoPor || null,
                 creadoPor: r.creadoPor,
                 fechaCreacion: r.fechaCreacion ? new Date(r.fechaCreacion).toISOString() : '',
                 actualizadoPor: r.actualizadoPor,
@@ -235,5 +247,132 @@ export async function getEstablecimientosAutocompletadoAction() {
     } catch (error: any) {
         console.error('Error fetching distinct establecimientos:', error)
         return { success: false, error: error.message, data: [] }
+    }
+}
+
+export async function adjuntarDocumentoAsistenciaAction(formData: FormData): Promise<{
+    success: boolean
+    error?: string
+    data?: {
+        registroId: string
+        documentoUrl: string
+        documentoNombre: string
+        criterioId: string | null
+        criterioNombre: string | null
+        actualizadoPor: string
+        fechaActualizacion: string
+    }
+}> {
+    if (!await checkPermission()) {
+        return { success: false, error: 'No tienes permisos para modificar registros de asistencia' }
+    }
+    await ensurePersonalAsistenciaTables()
+
+    const session = await getSession()
+    const usuarioNombre = session?.user?.nombre || session?.user?.email || 'Usuario'
+
+    const registroId = formData.get('registroId') as string
+    const criterioId = (formData.get('criterioId') as string) || null
+    const file = formData.get('file') as File | null
+
+    if (!registroId) {
+        return { success: false, error: 'ID de registro no especificado' }
+    }
+    if (!file || !(file instanceof File) || file.size === 0) {
+        return { success: false, error: 'Debes seleccionar un archivo válido para adjuntar' }
+    }
+
+    try {
+        const uploadDir = uploadPath('ausentismo')
+        if (!fs.existsSync(uploadDir)) {
+            fs.mkdirSync(uploadDir, { recursive: true })
+        }
+
+        const safeOriginalName = path.basename(file.name).replace(/[^a-zA-Z0-9._-]/g, '_')
+        const uniqueFileName = `${Date.now()}_${uuidv4().slice(0, 8)}_${safeOriginalName}`
+        const filePath = path.join(uploadDir, uniqueFileName)
+
+        const bytes = await file.arrayBuffer()
+        const buffer = Buffer.from(bytes)
+        fs.writeFileSync(filePath, buffer)
+
+        const documentoUrl = `/uploads/ausentismo/${uniqueFileName}`
+
+        // Obtener nombre del criterio si viene
+        let criterioNombre: string | null = null
+        if (criterioId) {
+            const crit = await (rawPrisma as any).pers_Asis_Criterio.findUnique({
+                where: { id: criterioId }
+            })
+            if (crit) {
+                criterioNombre = crit.nombre
+            }
+        }
+
+        const updated = await (rawPrisma as any).pers_Asis_Registro.update({
+            where: { id: registroId },
+            data: {
+                criterioId,
+                criterioNombre,
+                criterioAsignadoPor: usuarioNombre,
+                criterioAsignadoAt: new Date(),
+                documentoUrl,
+                documentoNombre: file.name,
+                documentoSubidoAt: new Date(),
+                documentoSubidoPor: usuarioNombre,
+                actualizadoPor: usuarioNombre,
+                fechaActualizacion: new Date(),
+                numActualizaciones: { increment: 1 }
+            }
+        })
+
+        revalidatePath(PATH_ASISTENCIA)
+
+        return {
+            success: true,
+            data: {
+                registroId: updated.id,
+                documentoUrl,
+                documentoNombre: file.name,
+                criterioId: updated.criterioId,
+                criterioNombre: updated.criterioNombre,
+                actualizadoPor: updated.actualizadoPor,
+                fechaActualizacion: updated.fechaActualizacion ? new Date(updated.fechaActualizacion).toISOString() : new Date().toISOString()
+            }
+        }
+    } catch (error: any) {
+        console.error('Error attaching documento asistencia:', error)
+        return { success: false, error: error.message || 'Error al guardar archivo adjunto' }
+    }
+}
+
+export async function eliminarDocumentoAsistenciaAction(registroId: string) {
+    if (!await checkPermission()) {
+        return { success: false, error: 'No tienes permisos para modificar registros de asistencia' }
+    }
+    await ensurePersonalAsistenciaTables()
+
+    const session = await getSession()
+    const usuarioNombre = session?.user?.nombre || session?.user?.email || 'Usuario'
+
+    try {
+        await (rawPrisma as any).pers_Asis_Registro.update({
+            where: { id: registroId },
+            data: {
+                documentoUrl: null,
+                documentoNombre: null,
+                documentoSubidoAt: null,
+                documentoSubidoPor: null,
+                actualizadoPor: usuarioNombre,
+                fechaActualizacion: new Date(),
+                numActualizaciones: { increment: 1 }
+            }
+        })
+
+        revalidatePath(PATH_ASISTENCIA)
+        return { success: true }
+    } catch (error: any) {
+        console.error('Error removing document:', error)
+        return { success: false, error: error.message || 'Error al eliminar documento' }
     }
 }
