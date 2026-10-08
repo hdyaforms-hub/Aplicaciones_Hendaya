@@ -309,22 +309,43 @@ export async function adjuntarDocumentoAsistenciaAction(formData: FormData): Pro
             }
         }
 
-        const updated = await (rawPrisma as any).pers_Asis_Registro.update({
-            where: { id: registroId },
-            data: {
-                criterioId,
-                criterioNombre,
-                criterioAsignadoPor: usuarioNombre,
-                criterioAsignadoAt: new Date(),
-                documentoUrl,
-                documentoNombre: file.name,
-                documentoSubidoAt: new Date(),
-                documentoSubidoPor: usuarioNombre,
-                actualizadoPor: usuarioNombre,
-                fechaActualizacion: new Date(),
-                numActualizaciones: { increment: 1 }
-            }
-        })
+        let updated: any
+        try {
+            updated = await (rawPrisma as any).pers_Asis_Registro.update({
+                where: { id: registroId },
+                data: {
+                    criterioId,
+                    criterioNombre,
+                    criterioAsignadoPor: usuarioNombre,
+                    criterioAsignadoAt: new Date(),
+                    documentoUrl,
+                    documentoNombre: file.name,
+                    documentoSubidoAt: new Date(),
+                    documentoSubidoPor: usuarioNombre,
+                    actualizadoPor: usuarioNombre,
+                    fechaActualizacion: new Date(),
+                    numActualizaciones: { increment: 1 }
+                }
+            })
+        } catch {
+            await rawPrisma.$executeRawUnsafe(`
+                UPDATE "Pers_Asis_Registro"
+                SET "criterioId" = $1,
+                    "criterioNombre" = $2,
+                    "criterioAsignadoPor" = $3,
+                    "criterioAsignadoAt" = CURRENT_TIMESTAMP,
+                    "documentoUrl" = $4,
+                    "documentoNombre" = $5,
+                    "documentoSubidoAt" = CURRENT_TIMESTAMP,
+                    "documentoSubidoPor" = $3,
+                    "actualizadoPor" = $3,
+                    "fechaActualizacion" = CURRENT_TIMESTAMP,
+                    "numActualizaciones" = "numActualizaciones" + 1
+                WHERE id = $6
+            `, criterioId, criterioNombre, usuarioNombre, documentoUrl, file.name, registroId)
+            const rows: any = await rawPrisma.$queryRawUnsafe(`SELECT * FROM "Pers_Asis_Registro" WHERE id = $1 LIMIT 1`, registroId)
+            updated = Array.isArray(rows) && rows[0] ? rows[0] : { id: registroId, criterioId, criterioNombre, actualizadoPor: usuarioNombre, fechaActualizacion: new Date() }
+        }
 
         revalidatePath(PATH_ASISTENCIA)
 
@@ -356,18 +377,32 @@ export async function eliminarDocumentoAsistenciaAction(registroId: string) {
     const usuarioNombre = session?.user?.nombre || session?.user?.email || 'Usuario'
 
     try {
-        await (rawPrisma as any).pers_Asis_Registro.update({
-            where: { id: registroId },
-            data: {
-                documentoUrl: null,
-                documentoNombre: null,
-                documentoSubidoAt: null,
-                documentoSubidoPor: null,
-                actualizadoPor: usuarioNombre,
-                fechaActualizacion: new Date(),
-                numActualizaciones: { increment: 1 }
-            }
-        })
+        try {
+            await (rawPrisma as any).pers_Asis_Registro.update({
+                where: { id: registroId },
+                data: {
+                    documentoUrl: null,
+                    documentoNombre: null,
+                    documentoSubidoAt: null,
+                    documentoSubidoPor: null,
+                    actualizadoPor: usuarioNombre,
+                    fechaActualizacion: new Date(),
+                    numActualizaciones: { increment: 1 }
+                }
+            })
+        } catch {
+            await rawPrisma.$executeRawUnsafe(`
+                UPDATE "Pers_Asis_Registro"
+                SET "documentoUrl" = NULL,
+                    "documentoNombre" = NULL,
+                    "documentoSubidoAt" = NULL,
+                    "documentoSubidoPor" = NULL,
+                    "actualizadoPor" = $1,
+                    "fechaActualizacion" = CURRENT_TIMESTAMP,
+                    "numActualizaciones" = "numActualizaciones" + 1
+                WHERE id = $2
+            `, usuarioNombre, registroId)
+        }
 
         revalidatePath(PATH_ASISTENCIA)
         return { success: true }
