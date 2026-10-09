@@ -4,7 +4,7 @@ const crypto = require('crypto')
 
 const CRITERIOS_DEFAULT = [
     { nombre: 'AUSENCIA', color: '#dc2626', descripcion: 'Inasistencia sin justificación reportada', orden: 1 },
-    { nombre: 'LICENCIA', color: '#ea580c', descripcion: 'Licencia médica informada', orden: 2 },
+    { nombre: 'LICENCIA', color: '#ea580c', descripcion: 'Licencia médica informada', orden: 2, solicitaDocumento: true },
     { nombre: 'NO APARECE EN GEOVICTORIA', color: '#eab308', descripcion: 'Colaborador no registrado o sin marcaje en sistema Geovictoria', orden: 3 },
     { nombre: 'PERMISO CON GOCE', color: '#16a34a', descripcion: 'Permiso autorizado con goce de remuneraciones', orden: 4 },
     { nombre: 'PERMISO DEFUNCIÓN', color: '#475569', descripcion: 'Permiso por duelo o defunción familiar', orden: 5 },
@@ -93,8 +93,14 @@ async function main() {
         );
     `)
 
-    // 4. Creación de índices
-    console.log('4. Creando índices optimizados para Pers_Asis_Registro...')
+    // 4. Creación de índices y columnas adicionales (idempotente)
+    console.log('4. Creando índices y actualizando columnas en Pers_Asis_Registro y Pers_Asis_Criterio...')
+    await prisma.$executeRawUnsafe(`ALTER TABLE "Pers_Asis_Criterio" ADD COLUMN IF NOT EXISTS "solicitaDocumento" BOOLEAN NOT NULL DEFAULT false;`)
+    await prisma.$executeRawUnsafe(`ALTER TABLE "Pers_Asis_Registro" ADD COLUMN IF NOT EXISTS "documentoUrl" TEXT;`)
+    await prisma.$executeRawUnsafe(`ALTER TABLE "Pers_Asis_Registro" ADD COLUMN IF NOT EXISTS "documentoNombre" TEXT;`)
+    await prisma.$executeRawUnsafe(`ALTER TABLE "Pers_Asis_Registro" ADD COLUMN IF NOT EXISTS "documentoSubidoAt" TIMESTAMP(3);`)
+    await prisma.$executeRawUnsafe(`ALTER TABLE "Pers_Asis_Registro" ADD COLUMN IF NOT EXISTS "documentoSubidoPor" TEXT;`)
+
     await prisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "pers_asis_reg_rbd_idx" ON "Pers_Asis_Registro"(rbd);`)
     await prisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "pers_asis_reg_fecha_idx" ON "Pers_Asis_Registro"(fecha);`)
     await prisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "pers_asis_reg_ruthash_idx" ON "Pers_Asis_Registro"("rutHash");`)
@@ -106,11 +112,14 @@ async function main() {
     for (const c of CRITERIOS_DEFAULT) {
         const id = crypto.randomUUID()
         await prisma.$executeRawUnsafe(`
-            INSERT INTO "Pers_Asis_Criterio" (id, nombre, color, descripcion, activo, orden, "createdAt", "updatedAt")
-            VALUES ($1, $2, $3, $4, true, $5, NOW(), NOW())
+            INSERT INTO "Pers_Asis_Criterio" (id, nombre, color, descripcion, activo, "solicitaDocumento", orden, "createdAt", "updatedAt")
+            VALUES ($1, $2, $3, $4, true, $5, $6, NOW(), NOW())
             ON CONFLICT (nombre) DO UPDATE 
-            SET color = EXCLUDED.color, descripcion = EXCLUDED.descripcion, orden = EXCLUDED.orden;
-        `, id, c.nombre, c.color, c.descripcion, c.orden)
+            SET color = EXCLUDED.color, 
+                descripcion = EXCLUDED.descripcion, 
+                orden = EXCLUDED.orden,
+                "solicitaDocumento" = EXCLUDED."solicitaDocumento";
+        `, id, c.nombre, c.color, c.descripcion, Boolean(c.solicitaDocumento), c.orden)
     }
 
     console.log('--- [Producción] Tablas e índices creados y sembrados con éxito ---')

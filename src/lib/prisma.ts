@@ -49,13 +49,56 @@ async function getRoleBasedRbdFilter(): Promise<number[] | null> {
     }
 }
 
+function applyRbdFilter(where: any, rbdField: string, allowed: number[]) {
+    if (!where) {
+        return { [rbdField]: { in: allowed } }
+    }
+
+    const currentVal = where[rbdField]
+
+    if (currentVal === undefined) {
+        return { ...where, [rbdField]: { in: allowed } }
+    }
+
+    if (typeof currentVal === 'number' || typeof currentVal === 'string') {
+        const num = Number(currentVal)
+        if (allowed.includes(num)) {
+            return where
+        } else {
+            return { ...where, [rbdField]: { in: [] } }
+        }
+    }
+
+    if (typeof currentVal === 'object' && currentVal !== null) {
+        if (Array.isArray(currentVal.in)) {
+            const intersected = currentVal.in.filter((x: any) => allowed.includes(Number(x)))
+            return { ...where, [rbdField]: { ...currentVal, in: intersected } }
+        }
+        if (currentVal.equals !== undefined) {
+            const num = Number(currentVal.equals)
+            if (allowed.includes(num)) {
+                return where
+            } else {
+                return { ...where, [rbdField]: { in: [] } }
+            }
+        }
+    }
+
+    return {
+        AND: [
+            where,
+            { [rbdField]: { in: allowed } }
+        ]
+    }
+}
+
 function withRbdFilter(rbdField: string) {
     return {
         async findMany({ args, query }: any) {
             const allowed = await getRoleBasedRbdFilter()
             if (allowed !== null) {
                 args = args || {}
-                args.where = { ...(args.where || {}), [rbdField]: { in: allowed } }
+                args.where = applyRbdFilter(args.where, rbdField, allowed)
             }
             return query(args)
         },
@@ -63,7 +106,15 @@ function withRbdFilter(rbdField: string) {
             const allowed = await getRoleBasedRbdFilter()
             if (allowed !== null) {
                 args = args || {}
-                args.where = { ...(args.where || {}), [rbdField]: { in: allowed } }
+                args.where = applyRbdFilter(args.where, rbdField, allowed)
+            }
+            return query(args)
+        },
+        async findFirstOrThrow({ args, query }: any) {
+            const allowed = await getRoleBasedRbdFilter()
+            if (allowed !== null) {
+                args = args || {}
+                args.where = applyRbdFilter(args.where, rbdField, allowed)
             }
             return query(args)
         },
@@ -71,7 +122,7 @@ function withRbdFilter(rbdField: string) {
             const allowed = await getRoleBasedRbdFilter()
             if (allowed !== null) {
                 args = args || {}
-                args.where = { ...(args.where || {}), [rbdField]: { in: allowed } }
+                args.where = applyRbdFilter(args.where, rbdField, allowed)
             }
             return query(args)
         },
@@ -79,7 +130,7 @@ function withRbdFilter(rbdField: string) {
             const allowed = await getRoleBasedRbdFilter()
             if (allowed !== null) {
                 args = args || {}
-                args.where = { ...(args.where || {}), [rbdField]: { in: allowed } }
+                args.where = applyRbdFilter(args.where, rbdField, allowed)
             }
             return query(args)
         },
@@ -87,7 +138,7 @@ function withRbdFilter(rbdField: string) {
             const allowed = await getRoleBasedRbdFilter()
             if (allowed !== null) {
                 args = args || {}
-                args.where = { ...(args.where || {}), [rbdField]: { in: allowed } }
+                args.where = applyRbdFilter(args.where, rbdField, allowed)
             }
             return query(args)
         }

@@ -176,8 +176,23 @@ export async function asignarCriterioAction(registroId: string, criterioId: stri
 
     const session = await getSession()
     const usuarioNombre = session?.user?.nombre || session?.user?.email || 'Usuario'
+    const roleName = session?.user?.role?.name?.toLowerCase() || ''
+    const isAdmin = roleName.includes('admin') || roleName.includes('gerencia')
 
     try {
+        // Si el usuario no es administrador y el registro ya tiene un criterio asignado, bloquear modificaciones
+        if (!isAdmin) {
+            const currentReg = await (rawPrisma as any).pers_Asis_Registro.findUnique({
+                where: { id: registroId },
+                select: { criterioId: true, criterioNombre: true }
+            })
+            if (currentReg && currentReg.criterioId !== null && currentReg.criterioId !== criterioId) {
+                return {
+                    success: false,
+                    error: 'Este registro ya tiene un criterio asignado y ha sido bloqueado. Solo un administrador puede modificarlo.'
+                }
+            }
+        }
         let criterioNombre: string | null = null
         if (criterioId) {
             const crit = await (rawPrisma as any).pers_Asis_Criterio.findUnique({
@@ -271,6 +286,9 @@ export async function adjuntarDocumentoAsistenciaAction(formData: FormData): Pro
     const session = await getSession()
     const usuarioNombre = session?.user?.nombre || session?.user?.email || 'Usuario'
 
+    const roleName = session?.user?.role?.name?.toLowerCase() || ''
+    const isAdmin = roleName.includes('admin') || roleName.includes('gerencia')
+
     const registroId = formData.get('registroId') as string
     const criterioId = (formData.get('criterioId') as string) || null
     const file = formData.get('file') as File | null
@@ -280,6 +298,20 @@ export async function adjuntarDocumentoAsistenciaAction(formData: FormData): Pro
     }
     if (!file || !(file instanceof File) || file.size === 0) {
         return { success: false, error: 'Debes seleccionar un archivo válido para adjuntar' }
+    }
+
+    // Si el usuario no es admin y el registro ya tiene criterio asignado, solo el admin puede adjuntar post-cierre
+    if (!isAdmin) {
+        const currentReg = await (rawPrisma as any).pers_Asis_Registro.findUnique({
+            where: { id: registroId },
+            select: { criterioId: true }
+        })
+        if (currentReg && currentReg.criterioId !== null) {
+            return {
+                success: false,
+                error: 'Este registro ya tiene un criterio asignado y está bloqueado. Solo un administrador puede adjuntar documentos posteriormente.'
+            }
+        }
     }
 
     try {
@@ -375,6 +407,12 @@ export async function eliminarDocumentoAsistenciaAction(registroId: string) {
 
     const session = await getSession()
     const usuarioNombre = session?.user?.nombre || session?.user?.email || 'Usuario'
+    const roleName = session?.user?.role?.name?.toLowerCase() || ''
+    const isAdmin = roleName.includes('admin') || roleName.includes('gerencia')
+
+    if (!isAdmin) {
+        return { success: false, error: 'Solo un administrador puede eliminar archivos de respaldo de un registro bloqueado.' }
+    }
 
     try {
         try {

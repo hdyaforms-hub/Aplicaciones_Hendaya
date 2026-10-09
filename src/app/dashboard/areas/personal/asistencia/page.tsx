@@ -25,7 +25,8 @@ export default async function AsistenciaPage() {
     const establecimientos = estabRes.success && estabRes.data ? estabRes.data : []
 
     const userRbds = Array.isArray(session?.user?.rbds) ? session.user.rbds.map(Number) : []
-    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
+    const roleName = session?.user?.role?.name?.toLowerCase() || ''
+    const isAdmin = roleName.includes('admin') || roleName.includes('gerencia')
 
     return (
         <AsistenciaClient

@@ -26,7 +26,8 @@ import {
     Paperclip,
     FileText,
     Trash2,
-    AlertCircle
+    AlertCircle,
+    Lock
 } from 'lucide-react'
 import Link from 'next/link'
 import * as xlsx from 'xlsx'
@@ -240,6 +241,12 @@ export default function AsistenciaClient({
 
     // Interceptar selección si el criterio solicita documento
     const handleCriterioSelect = (registroId: string, nuevoCriterioIdStr: string) => {
+        const reg = registros.find(r => r.id === registroId)
+        if (!isAdmin && reg?.criterioId) {
+            alert('Este registro ya tiene un criterio asignado y se encuentra bloqueado. Solo un administrador puede modificarlo.')
+            return
+        }
+
         if (!nuevoCriterioIdStr) {
             handleCriterioChange(registroId, '')
             return
@@ -247,7 +254,6 @@ export default function AsistenciaClient({
 
         const crit = criterios.find(c => c.id === nuevoCriterioIdStr)
         if (crit && crit.solicitaDocumento) {
-            const reg = registros.find(r => r.id === registroId)
             if (reg) {
                 setArchivoAdjunto(null)
                 setDocError(null)
@@ -263,7 +269,18 @@ export default function AsistenciaClient({
         }
     }
 
+    const handleConfirmarSinDocumento = () => {
+        if (!modalAdjunto.registro || !modalAdjunto.criterioId) return
+        handleCriterioChange(modalAdjunto.registro.id, modalAdjunto.criterioId)
+        setModalAdjunto({ isOpen: false, registro: null, criterioId: null, criterioNombre: null })
+        setArchivoAdjunto(null)
+    }
+
     const openModalAdjuntoDirecto = (r: AsistenciaRegistroDTO) => {
+        if (!isAdmin && r.criterioId) {
+            alert('El registro ya fue finalizado y se encuentra bloqueado. Si requieres adjuntar un documento de respaldo, debes solicitárselo al Administrador.')
+            return
+        }
         const crit = criterios.find(c => c.id === r.criterioId)
         setArchivoAdjunto(null)
         setDocError(null)
@@ -920,15 +937,23 @@ export default function AsistenciaClient({
                                                         <select
                                                             value={r.criterioId ?? ''}
                                                             onChange={e => handleCriterioSelect(r.id, e.target.value)}
-                                                            className={`w-full px-2.5 py-1.5 rounded-xl text-xs font-semibold border transition-all focus:outline-none focus:ring-2 focus:ring-cyan-500 cursor-pointer ${
-                                                                r.criterioId
-                                                                    ? 'bg-white text-gray-900 border-gray-300 shadow-2xs'
-                                                                    : 'bg-amber-50 text-amber-800 border-amber-300 hover:border-amber-400'
+                                                            disabled={!isAdmin && Boolean(r.criterioId)}
+                                                            className={`w-full px-2.5 py-1.5 rounded-xl text-xs font-semibold border transition-all focus:outline-none focus:ring-2 focus:ring-cyan-500 ${
+                                                                !isAdmin && r.criterioId
+                                                                    ? 'bg-gray-100 text-gray-700 border-gray-300 cursor-not-allowed opacity-90 shadow-none'
+                                                                    : r.criterioId
+                                                                        ? 'bg-white text-gray-900 border-gray-300 shadow-2xs cursor-pointer'
+                                                                        : 'bg-amber-50 text-amber-800 border-amber-300 hover:border-amber-400 cursor-pointer'
                                                             }`}
                                                             style={{
                                                                 borderLeftColor: r.criterioColor || (r.criterioId ? '#0891b2' : '#f59e0b'),
                                                                 borderLeftWidth: '4px'
                                                             }}
+                                                            title={
+                                                                !isAdmin && r.criterioId
+                                                                    ? 'Criterio bloqueado tras ser asignado. Solo un administrador puede modificarlo.'
+                                                                    : ''
+                                                            }
                                                         >
                                                             <option value="" className="text-amber-700">
                                                                 -- Seleccionar Criterio --
@@ -944,14 +969,23 @@ export default function AsistenciaClient({
                                                             ))}
                                                         </select>
 
-                                                        {/* Micro indicador de guardado */}
-                                                        {isSaved && (
+                                                        {/* Indicador de bloqueo o guardado */}
+                                                        {!isAdmin && r.criterioId ? (
                                                             <span
-                                                                className="text-emerald-600 flex items-center gap-0.5 animate-in fade-in"
-                                                                title="Guardado exitosamente"
+                                                                className="text-amber-700 bg-amber-50 border border-amber-200 p-1.5 rounded-lg flex items-center justify-center flex-shrink-0"
+                                                                title="Criterio bloqueado (solo admin puede modificar)"
                                                             >
-                                                                <Check className="w-4 h-4 stroke-[3]" />
+                                                                <Lock className="w-3.5 h-3.5" />
                                                             </span>
+                                                        ) : (
+                                                            isSaved && (
+                                                                <span
+                                                                    className="text-emerald-600 flex items-center gap-0.5 animate-in fade-in"
+                                                                    title="Guardado exitosamente"
+                                                                >
+                                                                    <Check className="w-4 h-4 stroke-[3]" />
+                                                                </span>
+                                                            )
                                                         )}
                                                     </div>
 
@@ -968,36 +1002,49 @@ export default function AsistenciaClient({
                                                                 <Paperclip className="w-3.5 h-3.5 text-cyan-700 flex-shrink-0" />
                                                                 <span className="truncate">{r.documentoNombre || 'Ver Respaldo'}</span>
                                                             </a>
-                                                            <div className="flex items-center gap-1">
-                                                                <button
-                                                                    type="button"
-                                                                    onClick={() => openModalAdjuntoDirecto(r)}
-                                                                    className="text-cyan-700 hover:text-cyan-900 p-0.5 hover:bg-cyan-100 rounded"
-                                                                    title="Reemplazar archivo"
-                                                                >
-                                                                    <UploadCloud className="w-3 h-3" />
-                                                                </button>
-                                                                <button
-                                                                    type="button"
-                                                                    onClick={() => handleEliminarDocumento(r.id)}
-                                                                    className="text-rose-500 hover:text-rose-700 p-0.5 hover:bg-rose-50 rounded"
-                                                                    title="Eliminar archivo"
-                                                                >
-                                                                    <Trash2 className="w-3 h-3" />
-                                                                </button>
-                                                            </div>
+                                                            {isAdmin && (
+                                                                <div className="flex items-center gap-1">
+                                                                    <button
+                                                                        type="button"
+                                                                        onClick={() => openModalAdjuntoDirecto(r)}
+                                                                        className="text-cyan-700 hover:text-cyan-900 p-0.5 hover:bg-cyan-100 rounded"
+                                                                        title="Reemplazar archivo (Solo Admin)"
+                                                                    >
+                                                                        <UploadCloud className="w-3 h-3" />
+                                                                    </button>
+                                                                    <button
+                                                                        type="button"
+                                                                        onClick={() => handleEliminarDocumento(r.id)}
+                                                                        className="text-rose-500 hover:text-rose-700 p-0.5 hover:bg-rose-50 rounded"
+                                                                        title="Eliminar archivo (Solo Admin)"
+                                                                    >
+                                                                        <Trash2 className="w-3 h-3" />
+                                                                    </button>
+                                                                </div>
+                                                            )}
                                                         </div>
                                                     ) : (
                                                         // Si el criterio actual solicita documento y aún no tiene
                                                         r.criterioId && criteriosMap.get(r.criterioId)?.solicitaDocumento ? (
-                                                            <button
-                                                                type="button"
-                                                                onClick={() => openModalAdjuntoDirecto(r)}
-                                                                className="flex items-center justify-center gap-1 text-[11px] font-semibold text-amber-800 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded-lg px-2 py-1 transition-colors"
-                                                            >
-                                                                <Paperclip className="w-3 h-3 text-amber-600" />
-                                                                <span>⚠️ Adjuntar respaldo obligatorio</span>
-                                                            </button>
+                                                            isAdmin ? (
+                                                                <button
+                                                                    type="button"
+                                                                    onClick={() => openModalAdjuntoDirecto(r)}
+                                                                    className="flex items-center justify-center gap-1.5 text-[11px] font-semibold text-sky-800 bg-sky-50 hover:bg-sky-100 border border-sky-200 rounded-lg px-2.5 py-1 transition-colors shadow-2xs"
+                                                                    title="Adjuntar documento o archivo de respaldo (Solo Administrador)"
+                                                                >
+                                                                    <Paperclip className="w-3.5 h-3.5 text-sky-600" />
+                                                                    <span>📎 Adjuntar respaldo (Admin)</span>
+                                                                </button>
+                                                            ) : (
+                                                                <div
+                                                                    className="flex items-center justify-center gap-1.5 text-[11px] font-medium text-gray-500 bg-gray-50 border border-gray-200 rounded-lg px-2 py-1 select-none"
+                                                                    title="Sin respaldo adjunto. El registro está bloqueado; solicite a un administrador para adjuntar un documento."
+                                                                >
+                                                                    <Lock className="w-3 h-3 text-gray-400" />
+                                                                    <span>Sin respaldo (Bloqueado)</span>
+                                                                </div>
+                                                            )
                                                         ) : null
                                                     )}
                                                 </div>
@@ -1048,7 +1095,7 @@ export default function AsistenciaClient({
                                 </span>
                                 <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
                                     <Paperclip className="w-5 h-5 text-cyan-600" />
-                                    <span>Adjuntar Documento de Respaldo</span>
+                                    <span>Adjuntar Documento de Respaldo (Opcional)</span>
                                 </h3>
                             </div>
                             <button
@@ -1082,7 +1129,7 @@ export default function AsistenciaClient({
                                     <span className="font-semibold text-gray-800">({modalAdjunto.registro.rbd}) {modalAdjunto.registro.establecimiento}</span>
                                 </div>
                                 <div className="flex justify-between items-center pt-1 border-t border-gray-200/60 mt-1">
-                                    <span className="text-gray-500">Criterio a Asignar:</span>
+                                    <span className="text-gray-500">Criterio Asignado:</span>
                                     <span className="font-bold text-cyan-700 bg-cyan-50 px-2 py-0.5 rounded border border-cyan-100">
                                         {modalAdjunto.criterioNombre}
                                     </span>
@@ -1090,13 +1137,13 @@ export default function AsistenciaClient({
                             </div>
 
                             <p className="text-xs text-gray-500">
-                                Este criterio está configurado para <strong>requerir documento adjunto</strong> (licencia médica, certificado, comprobante o permiso). Adjunta el archivo a continuación para validar la justificación:
+                                El criterio ya quedó registrado. Si dispones del documento de respaldo (licencia médica, certificado o comprobante), puedes adjuntarlo ahora. <strong>Adjuntar este archivo es opcional</strong>.
                             </p>
 
                             {/* Campo de archivo */}
                             <div>
                                 <label className="block text-xs font-semibold text-gray-700 uppercase mb-1">
-                                    Seleccionar Archivo (PDF, Imagen, Word) <span className="text-red-500">*</span>
+                                    Seleccionar Archivo (Opcional - PDF, Imagen, Word)
                                 </label>
                                 <div className="relative border-2 border-dashed border-gray-300 hover:border-cyan-500 rounded-xl p-5 text-center transition-colors bg-gray-50/50">
                                     <input
@@ -1107,7 +1154,6 @@ export default function AsistenciaClient({
                                             setArchivoAdjunto(file || null)
                                             setDocError(null)
                                         }}
-                                        required
                                         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                                     />
                                     <div className="flex flex-col items-center pointer-events-none">
@@ -1136,29 +1182,44 @@ export default function AsistenciaClient({
                             <div className="pt-3 flex justify-end gap-2 border-t border-gray-100">
                                 <button
                                     type="button"
-                                    onClick={() => setModalAdjunto({ isOpen: false, registro: null, criterioId: null, criterioNombre: null })}
+                                    onClick={() => {
+                                        setModalAdjunto({ isOpen: false, registro: null, criterioId: null, criterioNombre: null })
+                                        setArchivoAdjunto(null)
+                                    }}
                                     disabled={uploadingDoc}
                                     className="px-4 py-2 text-xs text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-xl transition-colors font-semibold"
                                 >
                                     Cancelar
                                 </button>
-                                <button
-                                    type="submit"
-                                    disabled={uploadingDoc || !archivoAdjunto}
-                                    className="px-5 py-2 bg-gradient-to-r from-cyan-600 to-sky-600 hover:from-cyan-700 hover:to-sky-700 disabled:opacity-50 text-white font-bold text-xs rounded-xl shadow-md shadow-cyan-600/20 transition-all flex items-center gap-2"
-                                >
-                                    {uploadingDoc ? (
-                                        <>
-                                            <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-                                            <span>Subiendo...</span>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Paperclip className="w-3.5 h-3.5" />
-                                            <span>Guardar y Adjuntar</span>
-                                        </>
-                                    )}
-                                </button>
+                                {archivoAdjunto ? (
+                                    <button
+                                        type="submit"
+                                        disabled={uploadingDoc}
+                                        className="px-5 py-2 bg-gradient-to-r from-cyan-600 to-sky-600 hover:from-cyan-700 hover:to-sky-700 disabled:opacity-50 text-white font-bold text-xs rounded-xl shadow-md shadow-cyan-600/20 transition-all flex items-center gap-2"
+                                    >
+                                        {uploadingDoc ? (
+                                            <>
+                                                <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                                                <span>Subiendo...</span>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Paperclip className="w-3.5 h-3.5" />
+                                                <span>Guardar y Adjuntar Respaldo</span>
+                                            </>
+                                        )}
+                                    </button>
+                                ) : (
+                                    <button
+                                        type="button"
+                                        onClick={handleConfirmarSinDocumento}
+                                        className="px-4 py-2 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white font-bold text-xs rounded-xl shadow-md shadow-amber-600/20 transition-all flex items-center gap-1.5"
+                                        title="Confirmar criterio sin adjunto y bloquear el registro"
+                                    >
+                                        <Lock className="w-3.5 h-3.5" />
+                                        <span>Confirmar sin Respaldo (Bloquear)</span>
+                                    </button>
+                                )}
                             </div>
                         </form>
                     </div>

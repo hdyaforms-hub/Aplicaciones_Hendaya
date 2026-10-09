@@ -1,6 +1,6 @@
 'use server'
 
-import { prisma } from '@/lib/prisma'
+import { prisma, rawPrisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import nodemailer from 'nodemailer'
 import crypto from 'crypto'
@@ -130,7 +130,7 @@ export async function checkPmpaDisponibilidad(rbd: number, year: number, month: 
             return { error: 'No tienes acceso a este establecimiento.' }
         }
 
-        const pmpaRecords = await prisma.pMPA.findMany({
+        const pmpaRecords = await rawPrisma.pMPA.findMany({
             where: { rbd, ano: year, mes: month }
         })
 
@@ -245,7 +245,7 @@ export async function getPmpaAssignmentsAndLastRecord(rbd: number, ano: number, 
 
         let isIntegra = colegio.institucion?.trim().toUpperCase() === 'INTEGRA'
         if (!isIntegra) {
-            const anyIntegra = await prisma.pMPA.findFirst({
+            const anyIntegra = await rawPrisma.pMPA.findFirst({
                 where: { rbd, institucion: { equals: 'INTEGRA', mode: 'insensitive' } }
             })
             if (anyIntegra) {
@@ -255,7 +255,7 @@ export async function getPmpaAssignmentsAndLastRecord(rbd: number, ano: number, 
 
         let pmpaRecords: any[] = []
         if (isIntegra) {
-            const rawRecords = await prisma.pMPA.findMany({
+            const rawRecords = await rawPrisma.pMPA.findMany({
                 where: { rbd, ano: ano, mes: mes, estrato }
             })
             pmpaRecords = rawRecords.filter(r => {
@@ -263,7 +263,7 @@ export async function getPmpaAssignmentsAndLastRecord(rbd: number, ano: number, 
                 return basePrograma.toUpperCase() === programa.toUpperCase()
             })
         } else {
-            pmpaRecords = await prisma.pMPA.findMany({
+            pmpaRecords = await rawPrisma.pMPA.findMany({
                 where: { rbd, ano: ano, mes: mes, programa, estrato }
             })
         }
@@ -312,13 +312,13 @@ export async function getPmpaAssignmentsAndLastRecord(rbd: number, ano: number, 
         let currentRecord = null
         if (fechaIngreso) {
             const utcFecha = new Date(`${fechaIngreso}T12:00:00Z`)
-            currentRecord = await prisma.ingRacion.findFirst({
+            currentRecord = await rawPrisma.ingRacion.findFirst({
                 where: { rbd, fechaIngreso: utcFecha, programa, estrato }
             })
         }
 
         // Consultar el último registro en la tabla IngRacion (historial)
-        const lastRecord = await prisma.ingRacion.findFirst({
+        const lastRecord = await rawPrisma.ingRacion.findFirst({
             where: { rbd, programa, estrato },
             orderBy: { fechaIngreso: 'desc' }
         })
@@ -388,7 +388,7 @@ export async function saveIngRacion(data: IngRacionFormData, forceUpdate: boolea
         const utcFechaIngreso = new Date(`${data.fechaIngreso}T12:00:00Z`)
 
         // Duplicate Check
-        const existingRecord = await prisma.ingRacion.findFirst({
+        const existingRecord = await rawPrisma.ingRacion.findFirst({
             where: {
                 fechaIngreso: utcFechaIngreso,
                 rbd: data.rbd,
@@ -404,7 +404,7 @@ export async function saveIngRacion(data: IngRacionFormData, forceUpdate: boolea
         }
 
         if (existingRecord && forceUpdate) {
-            const actualizada = await prisma.ingRacion.update({
+            const actualizada = await rawPrisma.ingRacion.update({
                 where: { id: existingRecord.id },
                 data: {
                     usuario: session.user.username as string,
@@ -422,7 +422,7 @@ export async function saveIngRacion(data: IngRacionFormData, forceUpdate: boolea
             return { success: true, racion: actualizada }
         }
 
-        const nuevaRacion = await prisma.ingRacion.create({
+        const nuevaRacion = await rawPrisma.ingRacion.create({
             data: {
                 usuario: session.user.username as string,
                 ubicacion: data.ubicacion,
