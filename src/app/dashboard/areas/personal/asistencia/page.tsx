@@ -2,6 +2,7 @@ import { getSession } from '@/lib/session'
 import { redirect } from 'next/navigation'
 import { getAsistenciaRegistrosAction, getEstablecimientosAutocompletadoAction } from './actions'
 import { getCriteriosAction } from '@/app/dashboard/mantenedor/personal/criterios-ausencias/actions'
+import { getUserEffectiveRbds } from '@/lib/authFilters'
 import AsistenciaClient from './AsistenciaClient'
 
 export const dynamic = 'force-dynamic'
@@ -14,19 +15,19 @@ export default async function AsistenciaPage() {
         redirect('/dashboard')
     }
 
-    const [regRes, critRes, estabRes] = await Promise.all([
+    const [regRes, critRes, estabRes, authorizedRbds] = await Promise.all([
         getAsistenciaRegistrosAction(),
         getCriteriosAction(),
-        getEstablecimientosAutocompletadoAction()
+        getEstablecimientosAutocompletadoAction(),
+        getUserEffectiveRbds()
     ])
 
     const registros = regRes.success && regRes.data ? regRes.data : []
     const criterios = critRes.success && critRes.data ? critRes.data : []
     const establecimientos = estabRes.success && estabRes.data ? estabRes.data : []
 
-    const userRbds = Array.isArray(session?.user?.rbds) ? session.user.rbds.map(Number) : []
-    const roleName = session?.user?.role?.name?.toLowerCase() || ''
-    const isAdmin = roleName.includes('admin') || roleName.includes('gerencia')
+    const isAdmin = authorizedRbds === null
+    const userRbds = authorizedRbds ?? []
 
     return (
         <AsistenciaClient

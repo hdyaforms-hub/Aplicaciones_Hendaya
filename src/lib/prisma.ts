@@ -21,10 +21,30 @@ async function getRoleBasedRbdFilter(): Promise<number[] | null> {
         if (session.user.id) {
             const dbUser = await rawPrisma.user.findUnique({
                 where: { id: session.user.id },
-                select: { rbds: true }
+                select: { rbds: true, email: true, username: true, name: true }
             })
-            if (dbUser) {
+            if (dbUser && dbUser.rbds.length > 0) {
                 userRbds = dbUser.rbds
+            } else if (dbUser) {
+                const sups = await rawPrisma.supervisor.findMany({
+                    where: {
+                        OR: [
+                            ...(dbUser.email ? [{ correo: { equals: dbUser.email, mode: 'insensitive' as const } }] : []),
+                            ...(dbUser.username ? [{ correo: { contains: dbUser.username, mode: 'insensitive' as const } }] : []),
+                            ...(dbUser.name ? [{ nombre: { equals: dbUser.name, mode: 'insensitive' as const } }] : [])
+                        ]
+                    },
+                    include: { rbdsAuditar: true }
+                })
+                const collected: number[] = []
+                for (const s of sups) {
+                    for (const r of s.rbdsAuditar) {
+                        collected.push(r.rbd)
+                    }
+                }
+                if (collected.length > 0) {
+                    userRbds = collected
+                }
             }
         }
 

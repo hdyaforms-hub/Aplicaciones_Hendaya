@@ -9,6 +9,7 @@ import fs from 'fs'
 import path from 'path'
 import { v4 as uuidv4 } from 'uuid'
 import { uploadPath } from '@/lib/storage'
+import { getUserEffectiveRbds } from '@/lib/authFilters'
 
 const PATH_ASISTENCIA = '/dashboard/areas/personal/asistencia'
 
@@ -59,19 +60,27 @@ export async function getAsistenciaRegistrosAction(filtros?: {
     await ensurePersonalAsistenciaTables()
 
     const session = await getSession()
-    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
-    const userRbds: number[] = Array.isArray(session?.user?.rbds) ? session.user.rbds.map(Number) : []
+    if (!session || !session.user) {
+        return { success: false, error: 'No autorizado', data: [] }
+    }
 
+    const authorizedRbds = await getUserEffectiveRbds()
     const where: any = {}
 
     // 1. Restricción por RBD del usuario
-    if (!isAdmin && userRbds.length > 0) {
-        if (filtros?.rbd && userRbds.includes(filtros.rbd)) {
-            where.rbd = filtros.rbd
+    if (authorizedRbds !== null) {
+        if (authorizedRbds.length === 0) {
+            // Usuario no administrador sin RBDs asignados -> no puede ver registros
+            where.rbd = -999999
+        } else if (filtros?.rbd) {
+            // Si filtra por un RBD específico, solo puede verlo si está en sus asignados
+            where.rbd = authorizedRbds.includes(filtros.rbd) ? filtros.rbd : -999999
         } else {
-            where.rbd = { in: userRbds }
+            // Si no especifica RBD, ve todos los colegios asignados
+            where.rbd = { in: authorizedRbds }
         }
     } else if (filtros?.rbd) {
+        // Administrador / Gerencia con filtro específico
         where.rbd = filtros.rbd
     }
 
@@ -176,17 +185,26 @@ export async function asignarCriterioAction(registroId: string, criterioId: stri
 
     const session = await getSession()
     const usuarioNombre = session?.user?.nombre || session?.user?.email || 'Usuario'
-    const roleName = session?.user?.role?.name?.toLowerCase() || ''
-    const isAdmin = roleName.includes('admin') || roleName.includes('gerencia')
+    const authorizedRbds = await getUserEffectiveRbds()
+    const isAdmin = authorizedRbds === null
 
     try {
         // Si el usuario no es administrador y el registro ya tiene un criterio asignado, bloquear modificaciones
         if (!isAdmin) {
             const currentReg = await (rawPrisma as any).pers_Asis_Registro.findUnique({
                 where: { id: registroId },
-                select: { criterioId: true, criterioNombre: true }
+                select: { rbd: true, criterioId: true, criterioNombre: true }
             })
-            if (currentReg && currentReg.criterioId !== null && currentReg.criterioId !== criterioId) {
+            if (!currentReg) {
+                return { success: false, error: 'Registro no encontrado' }
+            }
+            if (!authorizedRbds || !authorizedRbds.includes(currentReg.rbd)) {
+                return {
+                    success: false,
+                    error: 'No tienes autorización para modificar registros de este establecimiento'
+                }
+            }
+            if (currentReg.criterioId !== null && currentReg.criterioId !== criterioId) {
                 return {
                     success: false,
                     error: 'Este registro ya tiene un criterio asignado y ha sido bloqueado. Solo un administrador puede modificarlo.'
@@ -237,13 +255,19 @@ export async function asignarCriterioAction(registroId: string, criterioId: stri
 export async function getEstablecimientosAutocompletadoAction() {
     await ensurePersonalAsistenciaTables()
     const session = await getSession()
-    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
-    const userRbds: number[] = Array.isArray(session?.user?.rbds) ? session.user.rbds.map(Number) : []
+    if (!session || !session.user) {
+        return { success: false, error: 'No autorizado', data: [] }
+    }
+
+    const authorizedRbds = await getUserEffectiveRbds()
 
     try {
         const where: any = {}
-        if (!isAdmin && userRbds.length > 0) {
-            where.rbd = { in: userRbds }
+        if (authorizedRbds !== null) {
+            if (authorizedRbds.length === 0) {
+                return { success: true, data: [] }
+            }
+            where.rbd = { in: authorizedRbds }
         }
 
         const distinctEstablecimientos: any[] = await (rawPrisma as any).pers_Asis_Registro.findMany({
@@ -285,9 +309,8 @@ export async function adjuntarDocumentoAsistenciaAction(formData: FormData): Pro
 
     const session = await getSession()
     const usuarioNombre = session?.user?.nombre || session?.user?.email || 'Usuario'
-
-    const roleName = session?.user?.role?.name?.toLowerCase() || ''
-    const isAdmin = roleName.includes('admin') || roleName.includes('gerencia')
+    const authorizedRbds = await getUserEffectiveRbds()
+    const isAdmin = authorizedRbds === null
 
     const registroId = formData.get('registroId') as string
     const criterioId = (formData.get('criterioId') as string) || null
@@ -300,13 +323,22 @@ export async function adjuntarDocumentoAsistenciaAction(formData: FormData): Pro
         return { success: false, error: 'Debes seleccionar un archivo válido para adjuntar' }
     }
 
-    // Si el usuario no es admin y el registro ya tiene criterio asignado, solo el admin puede adjuntar post-cierre
+    // Si el usuario no es admin, verificar pertenencia a RBD autorizado y bloqueo de criterio
     if (!isAdmin) {
         const currentReg = await (rawPrisma as any).pers_Asis_Registro.findUnique({
             where: { id: registroId },
-            select: { criterioId: true }
+            select: { rbd: true, criterioId: true }
         })
-        if (currentReg && currentReg.criterioId !== null) {
+        if (!currentReg) {
+            return { success: false, error: 'Registro no encontrado' }
+        }
+        if (!authorizedRbds || !authorizedRbds.includes(currentReg.rbd)) {
+            return {
+                success: false,
+                error: 'No tienes autorización para adjuntar documentos en este establecimiento'
+            }
+        }
+        if (currentReg.criterioId !== null) {
             return {
                 success: false,
                 error: 'Este registro ya tiene un criterio asignado y está bloqueado. Solo un administrador puede adjuntar documentos posteriormente.'

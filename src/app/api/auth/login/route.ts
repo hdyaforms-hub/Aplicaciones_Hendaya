@@ -112,6 +112,7 @@ export async function POST(request: Request) {
                 name: user.role?.name,
             },
             sucursales: user.sucursales?.map((s: any) => s.nombre) || [],
+            rbds: user.rbds || [],
         }
 
         if (user.mustChangePassword) {
