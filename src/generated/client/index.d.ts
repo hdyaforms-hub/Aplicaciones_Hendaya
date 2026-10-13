@@ -150663,6 +150663,9 @@ export namespace Prisma {
     nuevosRegistros: number | null
     actualizadosRegistros: number | null
     erroresRegistros: number | null
+    estado: string | null
+    cerradoPor: string | null
+    cerradoAt: Date | null
     cargadoPor: string | null
     cargadoPorId: string | null
     fechaCarga: Date | null
@@ -150681,6 +150684,9 @@ export namespace Prisma {
     nuevosRegistros: number | null
     actualizadosRegistros: number | null
     erroresRegistros: number | null
+    estado: string | null
+    cerradoPor: string | null
+    cerradoAt: Date | null
     cargadoPor: string | null
     cargadoPorId: string | null
     fechaCarga: Date | null
@@ -150699,6 +150705,9 @@ export namespace Prisma {
     nuevosRegistros: number
     actualizadosRegistros: number
     erroresRegistros: number
+    estado: number
+    cerradoPor: number
+    cerradoAt: number
     cargadoPor: number
     cargadoPorId: number
     fechaCarga: number
@@ -150733,6 +150742,9 @@ export namespace Prisma {
     nuevosRegistros?: true
     actualizadosRegistros?: true
     erroresRegistros?: true
+    estado?: true
+    cerradoPor?: true
+    cerradoAt?: true
     cargadoPor?: true
     cargadoPorId?: true
     fechaCarga?: true
@@ -150751,6 +150763,9 @@ export namespace Prisma {
     nuevosRegistros?: true
     actualizadosRegistros?: true
     erroresRegistros?: true
+    estado?: true
+    cerradoPor?: true
+    cerradoAt?: true
     cargadoPor?: true
     cargadoPorId?: true
     fechaCarga?: true
@@ -150769,6 +150784,9 @@ export namespace Prisma {
     nuevosRegistros?: true
     actualizadosRegistros?: true
     erroresRegistros?: true
+    estado?: true
+    cerradoPor?: true
+    cerradoAt?: true
     cargadoPor?: true
     cargadoPorId?: true
     fechaCarga?: true
@@ -150874,6 +150892,9 @@ export namespace Prisma {
     nuevosRegistros: number
     actualizadosRegistros: number
     erroresRegistros: number
+    estado: string
+    cerradoPor: string | null
+    cerradoAt: Date | null
     cargadoPor: string
     cargadoPorId: string | null
     fechaCarga: Date
@@ -150911,6 +150932,9 @@ export namespace Prisma {
     nuevosRegistros?: boolean
     actualizadosRegistros?: boolean
     erroresRegistros?: boolean
+    estado?: boolean
+    cerradoPor?: boolean
+    cerradoAt?: boolean
     cargadoPor?: boolean
     cargadoPorId?: boolean
     fechaCarga?: boolean
@@ -150931,6 +150955,9 @@ export namespace Prisma {
     nuevosRegistros?: boolean
     actualizadosRegistros?: boolean
     erroresRegistros?: boolean
+    estado?: boolean
+    cerradoPor?: boolean
+    cerradoAt?: boolean
     cargadoPor?: boolean
     cargadoPorId?: boolean
     fechaCarga?: boolean
@@ -150949,6 +150976,9 @@ export namespace Prisma {
     nuevosRegistros?: boolean
     actualizadosRegistros?: boolean
     erroresRegistros?: boolean
+    estado?: boolean
+    cerradoPor?: boolean
+    cerradoAt?: boolean
     cargadoPor?: boolean
     cargadoPorId?: boolean
     fechaCarga?: boolean
@@ -150978,6 +151008,9 @@ export namespace Prisma {
       nuevosRegistros: number
       actualizadosRegistros: number
       erroresRegistros: number
+      estado: string
+      cerradoPor: string | null
+      cerradoAt: Date | null
       cargadoPor: string
       cargadoPorId: string | null
       fechaCarga: Date
@@ -151387,6 +151420,9 @@ export namespace Prisma {
     readonly nuevosRegistros: FieldRef<"Pers_Asis_Carga", 'Int'>
     readonly actualizadosRegistros: FieldRef<"Pers_Asis_Carga", 'Int'>
     readonly erroresRegistros: FieldRef<"Pers_Asis_Carga", 'Int'>
+    readonly estado: FieldRef<"Pers_Asis_Carga", 'String'>
+    readonly cerradoPor: FieldRef<"Pers_Asis_Carga", 'String'>
+    readonly cerradoAt: FieldRef<"Pers_Asis_Carga", 'DateTime'>
     readonly cargadoPor: FieldRef<"Pers_Asis_Carga", 'String'>
     readonly cargadoPorId: FieldRef<"Pers_Asis_Carga", 'String'>
     readonly fechaCarga: FieldRef<"Pers_Asis_Carga", 'DateTime'>
@@ -151788,6 +151824,9 @@ export namespace Prisma {
     documentoNombre: string | null
     documentoSubidoAt: Date | null
     documentoSubidoPor: string | null
+    estado: string | null
+    cerradoPor: string | null
+    cerradoAt: Date | null
     creadoPor: string | null
     creadoPorId: string | null
     fechaCreacion: Date | null
@@ -151822,6 +151861,9 @@ export namespace Prisma {
     documentoNombre: string | null
     documentoSubidoAt: Date | null
     documentoSubidoPor: string | null
+    estado: string | null
+    cerradoPor: string | null
+    cerradoAt: Date | null
     creadoPor: string | null
     creadoPorId: string | null
     fechaCreacion: Date | null
@@ -151856,6 +151898,9 @@ export namespace Prisma {
     documentoNombre: number
     documentoSubidoAt: number
     documentoSubidoPor: number
+    estado: number
+    cerradoPor: number
+    cerradoAt: number
     creadoPor: number
     creadoPorId: number
     fechaCreacion: number
@@ -151902,6 +151947,9 @@ export namespace Prisma {
     documentoNombre?: true
     documentoSubidoAt?: true
     documentoSubidoPor?: true
+    estado?: true
+    cerradoPor?: true
+    cerradoAt?: true
     creadoPor?: true
     creadoPorId?: true
     fechaCreacion?: true
@@ -151936,6 +151984,9 @@ export namespace Prisma {
     documentoNombre?: true
     documentoSubidoAt?: true
     documentoSubidoPor?: true
+    estado?: true
+    cerradoPor?: true
+    cerradoAt?: true
     creadoPor?: true
     creadoPorId?: true
     fechaCreacion?: true
@@ -151970,6 +152021,9 @@ export namespace Prisma {
     documentoNombre?: true
     documentoSubidoAt?: true
     documentoSubidoPor?: true
+    estado?: true
+    cerradoPor?: true
+    cerradoAt?: true
     creadoPor?: true
     creadoPorId?: true
     fechaCreacion?: true
@@ -152091,6 +152145,9 @@ export namespace Prisma {
     documentoNombre: string | null
     documentoSubidoAt: Date | null
     documentoSubidoPor: string | null
+    estado: string
+    cerradoPor: string | null
+    cerradoAt: Date | null
     creadoPor: string
     creadoPorId: string | null
     fechaCreacion: Date
@@ -152144,6 +152201,9 @@ export namespace Prisma {
     documentoNombre?: boolean
     documentoSubidoAt?: boolean
     documentoSubidoPor?: boolean
+    estado?: boolean
+    cerradoPor?: boolean
+    cerradoAt?: boolean
     creadoPor?: boolean
     creadoPorId?: boolean
     fechaCreacion?: boolean
@@ -152180,6 +152240,9 @@ export namespace Prisma {
     documentoNombre?: boolean
     documentoSubidoAt?: boolean
     documentoSubidoPor?: boolean
+    estado?: boolean
+    cerradoPor?: boolean
+    cerradoAt?: boolean
     creadoPor?: boolean
     creadoPorId?: boolean
     fechaCreacion?: boolean
@@ -152216,6 +152279,9 @@ export namespace Prisma {
     documentoNombre?: boolean
     documentoSubidoAt?: boolean
     documentoSubidoPor?: boolean
+    estado?: boolean
+    cerradoPor?: boolean
+    cerradoAt?: boolean
     creadoPor?: boolean
     creadoPorId?: boolean
     fechaCreacion?: boolean
@@ -152265,6 +152331,9 @@ export namespace Prisma {
       documentoNombre: string | null
       documentoSubidoAt: Date | null
       documentoSubidoPor: string | null
+      estado: string
+      cerradoPor: string | null
+      cerradoAt: Date | null
       creadoPor: string
       creadoPorId: string | null
       fechaCreacion: Date
@@ -152691,6 +152760,9 @@ export namespace Prisma {
     readonly documentoNombre: FieldRef<"Pers_Asis_Registro", 'String'>
     readonly documentoSubidoAt: FieldRef<"Pers_Asis_Registro", 'DateTime'>
     readonly documentoSubidoPor: FieldRef<"Pers_Asis_Registro", 'String'>
+    readonly estado: FieldRef<"Pers_Asis_Registro", 'String'>
+    readonly cerradoPor: FieldRef<"Pers_Asis_Registro", 'String'>
+    readonly cerradoAt: FieldRef<"Pers_Asis_Registro", 'DateTime'>
     readonly creadoPor: FieldRef<"Pers_Asis_Registro", 'String'>
     readonly creadoPorId: FieldRef<"Pers_Asis_Registro", 'String'>
     readonly fechaCreacion: FieldRef<"Pers_Asis_Registro", 'DateTime'>
@@ -155253,6 +155325,9 @@ export namespace Prisma {
     nuevosRegistros: 'nuevosRegistros',
     actualizadosRegistros: 'actualizadosRegistros',
     erroresRegistros: 'erroresRegistros',
+    estado: 'estado',
+    cerradoPor: 'cerradoPor',
+    cerradoAt: 'cerradoAt',
     cargadoPor: 'cargadoPor',
     cargadoPorId: 'cargadoPorId',
     fechaCarga: 'fechaCarga',
@@ -155289,6 +155364,9 @@ export namespace Prisma {
     documentoNombre: 'documentoNombre',
     documentoSubidoAt: 'documentoSubidoAt',
     documentoSubidoPor: 'documentoSubidoPor',
+    estado: 'estado',
+    cerradoPor: 'cerradoPor',
+    cerradoAt: 'cerradoAt',
     creadoPor: 'creadoPor',
     creadoPorId: 'creadoPorId',
     fechaCreacion: 'fechaCreacion',
@@ -166645,6 +166723,9 @@ export namespace Prisma {
     nuevosRegistros?: IntFilter<"Pers_Asis_Carga"> | number
     actualizadosRegistros?: IntFilter<"Pers_Asis_Carga"> | number
     erroresRegistros?: IntFilter<"Pers_Asis_Carga"> | number
+    estado?: StringFilter<"Pers_Asis_Carga"> | string
+    cerradoPor?: StringNullableFilter<"Pers_Asis_Carga"> | string | null
+    cerradoAt?: DateTimeNullableFilter<"Pers_Asis_Carga"> | Date | string | null
     cargadoPor?: StringFilter<"Pers_Asis_Carga"> | string
     cargadoPorId?: StringNullableFilter<"Pers_Asis_Carga"> | string | null
     fechaCarga?: DateTimeFilter<"Pers_Asis_Carga"> | Date | string
@@ -166664,6 +166745,9 @@ export namespace Prisma {
     nuevosRegistros?: SortOrder
     actualizadosRegistros?: SortOrder
     erroresRegistros?: SortOrder
+    estado?: SortOrder
+    cerradoPor?: SortOrderInput | SortOrder
+    cerradoAt?: SortOrderInput | SortOrder
     cargadoPor?: SortOrder
     cargadoPorId?: SortOrderInput | SortOrder
     fechaCarga?: SortOrder
@@ -166686,6 +166770,9 @@ export namespace Prisma {
     nuevosRegistros?: IntFilter<"Pers_Asis_Carga"> | number
     actualizadosRegistros?: IntFilter<"Pers_Asis_Carga"> | number
     erroresRegistros?: IntFilter<"Pers_Asis_Carga"> | number
+    estado?: StringFilter<"Pers_Asis_Carga"> | string
+    cerradoPor?: StringNullableFilter<"Pers_Asis_Carga"> | string | null
+    cerradoAt?: DateTimeNullableFilter<"Pers_Asis_Carga"> | Date | string | null
     cargadoPor?: StringFilter<"Pers_Asis_Carga"> | string
     cargadoPorId?: StringNullableFilter<"Pers_Asis_Carga"> | string | null
     fechaCarga?: DateTimeFilter<"Pers_Asis_Carga"> | Date | string
@@ -166705,6 +166792,9 @@ export namespace Prisma {
     nuevosRegistros?: SortOrder
     actualizadosRegistros?: SortOrder
     erroresRegistros?: SortOrder
+    estado?: SortOrder
+    cerradoPor?: SortOrderInput | SortOrder
+    cerradoAt?: SortOrderInput | SortOrder
     cargadoPor?: SortOrder
     cargadoPorId?: SortOrderInput | SortOrder
     fechaCarga?: SortOrder
@@ -166731,6 +166821,9 @@ export namespace Prisma {
     nuevosRegistros?: IntWithAggregatesFilter<"Pers_Asis_Carga"> | number
     actualizadosRegistros?: IntWithAggregatesFilter<"Pers_Asis_Carga"> | number
     erroresRegistros?: IntWithAggregatesFilter<"Pers_Asis_Carga"> | number
+    estado?: StringWithAggregatesFilter<"Pers_Asis_Carga"> | string
+    cerradoPor?: StringNullableWithAggregatesFilter<"Pers_Asis_Carga"> | string | null
+    cerradoAt?: DateTimeNullableWithAggregatesFilter<"Pers_Asis_Carga"> | Date | string | null
     cargadoPor?: StringWithAggregatesFilter<"Pers_Asis_Carga"> | string
     cargadoPorId?: StringNullableWithAggregatesFilter<"Pers_Asis_Carga"> | string | null
     fechaCarga?: DateTimeWithAggregatesFilter<"Pers_Asis_Carga"> | Date | string
@@ -166767,6 +166860,9 @@ export namespace Prisma {
     documentoNombre?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
     documentoSubidoAt?: DateTimeNullableFilter<"Pers_Asis_Registro"> | Date | string | null
     documentoSubidoPor?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    estado?: StringFilter<"Pers_Asis_Registro"> | string
+    cerradoPor?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    cerradoAt?: DateTimeNullableFilter<"Pers_Asis_Registro"> | Date | string | null
     creadoPor?: StringFilter<"Pers_Asis_Registro"> | string
     creadoPorId?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
     fechaCreacion?: DateTimeFilter<"Pers_Asis_Registro"> | Date | string
@@ -166803,6 +166899,9 @@ export namespace Prisma {
     documentoNombre?: SortOrderInput | SortOrder
     documentoSubidoAt?: SortOrderInput | SortOrder
     documentoSubidoPor?: SortOrderInput | SortOrder
+    estado?: SortOrder
+    cerradoPor?: SortOrderInput | SortOrder
+    cerradoAt?: SortOrderInput | SortOrder
     creadoPor?: SortOrder
     creadoPorId?: SortOrderInput | SortOrder
     fechaCreacion?: SortOrder
@@ -166843,6 +166942,9 @@ export namespace Prisma {
     documentoNombre?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
     documentoSubidoAt?: DateTimeNullableFilter<"Pers_Asis_Registro"> | Date | string | null
     documentoSubidoPor?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    estado?: StringFilter<"Pers_Asis_Registro"> | string
+    cerradoPor?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    cerradoAt?: DateTimeNullableFilter<"Pers_Asis_Registro"> | Date | string | null
     creadoPor?: StringFilter<"Pers_Asis_Registro"> | string
     creadoPorId?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
     fechaCreacion?: DateTimeFilter<"Pers_Asis_Registro"> | Date | string
@@ -166879,6 +166981,9 @@ export namespace Prisma {
     documentoNombre?: SortOrderInput | SortOrder
     documentoSubidoAt?: SortOrderInput | SortOrder
     documentoSubidoPor?: SortOrderInput | SortOrder
+    estado?: SortOrder
+    cerradoPor?: SortOrderInput | SortOrder
+    cerradoAt?: SortOrderInput | SortOrder
     creadoPor?: SortOrder
     creadoPorId?: SortOrderInput | SortOrder
     fechaCreacion?: SortOrder
@@ -166921,6 +167026,9 @@ export namespace Prisma {
     documentoNombre?: StringNullableWithAggregatesFilter<"Pers_Asis_Registro"> | string | null
     documentoSubidoAt?: DateTimeNullableWithAggregatesFilter<"Pers_Asis_Registro"> | Date | string | null
     documentoSubidoPor?: StringNullableWithAggregatesFilter<"Pers_Asis_Registro"> | string | null
+    estado?: StringWithAggregatesFilter<"Pers_Asis_Registro"> | string
+    cerradoPor?: StringNullableWithAggregatesFilter<"Pers_Asis_Registro"> | string | null
+    cerradoAt?: DateTimeNullableWithAggregatesFilter<"Pers_Asis_Registro"> | Date | string | null
     creadoPor?: StringWithAggregatesFilter<"Pers_Asis_Registro"> | string
     creadoPorId?: StringNullableWithAggregatesFilter<"Pers_Asis_Registro"> | string | null
     fechaCreacion?: DateTimeWithAggregatesFilter<"Pers_Asis_Registro"> | Date | string
@@ -179614,6 +179722,9 @@ export namespace Prisma {
     nuevosRegistros?: number
     actualizadosRegistros?: number
     erroresRegistros?: number
+    estado?: string
+    cerradoPor?: string | null
+    cerradoAt?: Date | string | null
     cargadoPor: string
     cargadoPorId?: string | null
     fechaCarga?: Date | string
@@ -179633,6 +179744,9 @@ export namespace Prisma {
     nuevosRegistros?: number
     actualizadosRegistros?: number
     erroresRegistros?: number
+    estado?: string
+    cerradoPor?: string | null
+    cerradoAt?: Date | string | null
     cargadoPor: string
     cargadoPorId?: string | null
     fechaCarga?: Date | string
@@ -179652,6 +179766,9 @@ export namespace Prisma {
     nuevosRegistros?: IntFieldUpdateOperationsInput | number
     actualizadosRegistros?: IntFieldUpdateOperationsInput | number
     erroresRegistros?: IntFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    cerradoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    cerradoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     cargadoPor?: StringFieldUpdateOperationsInput | string
     cargadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
     fechaCarga?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -179671,6 +179788,9 @@ export namespace Prisma {
     nuevosRegistros?: IntFieldUpdateOperationsInput | number
     actualizadosRegistros?: IntFieldUpdateOperationsInput | number
     erroresRegistros?: IntFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    cerradoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    cerradoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     cargadoPor?: StringFieldUpdateOperationsInput | string
     cargadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
     fechaCarga?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -179690,6 +179810,9 @@ export namespace Prisma {
     nuevosRegistros?: number
     actualizadosRegistros?: number
     erroresRegistros?: number
+    estado?: string
+    cerradoPor?: string | null
+    cerradoAt?: Date | string | null
     cargadoPor: string
     cargadoPorId?: string | null
     fechaCarga?: Date | string
@@ -179708,6 +179831,9 @@ export namespace Prisma {
     nuevosRegistros?: IntFieldUpdateOperationsInput | number
     actualizadosRegistros?: IntFieldUpdateOperationsInput | number
     erroresRegistros?: IntFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    cerradoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    cerradoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     cargadoPor?: StringFieldUpdateOperationsInput | string
     cargadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
     fechaCarga?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -179726,6 +179852,9 @@ export namespace Prisma {
     nuevosRegistros?: IntFieldUpdateOperationsInput | number
     actualizadosRegistros?: IntFieldUpdateOperationsInput | number
     erroresRegistros?: IntFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    cerradoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    cerradoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     cargadoPor?: StringFieldUpdateOperationsInput | string
     cargadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
     fechaCarga?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -179757,6 +179886,9 @@ export namespace Prisma {
     documentoNombre?: string | null
     documentoSubidoAt?: Date | string | null
     documentoSubidoPor?: string | null
+    estado?: string
+    cerradoPor?: string | null
+    cerradoAt?: Date | string | null
     creadoPor: string
     creadoPorId?: string | null
     fechaCreacion?: Date | string
@@ -179793,6 +179925,9 @@ export namespace Prisma {
     documentoNombre?: string | null
     documentoSubidoAt?: Date | string | null
     documentoSubidoPor?: string | null
+    estado?: string
+    cerradoPor?: string | null
+    cerradoAt?: Date | string | null
     creadoPor: string
     creadoPorId?: string | null
     fechaCreacion?: Date | string
@@ -179825,6 +179960,9 @@ export namespace Prisma {
     documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
     documentoSubidoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     documentoSubidoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    cerradoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    cerradoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     creadoPor?: StringFieldUpdateOperationsInput | string
     creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
     fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -179861,6 +179999,9 @@ export namespace Prisma {
     documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
     documentoSubidoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     documentoSubidoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    cerradoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    cerradoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     creadoPor?: StringFieldUpdateOperationsInput | string
     creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
     fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -179895,6 +180036,9 @@ export namespace Prisma {
     documentoNombre?: string | null
     documentoSubidoAt?: Date | string | null
     documentoSubidoPor?: string | null
+    estado?: string
+    cerradoPor?: string | null
+    cerradoAt?: Date | string | null
     creadoPor: string
     creadoPorId?: string | null
     fechaCreacion?: Date | string
@@ -179927,6 +180071,9 @@ export namespace Prisma {
     documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
     documentoSubidoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     documentoSubidoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    cerradoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    cerradoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     creadoPor?: StringFieldUpdateOperationsInput | string
     creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
     fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -179961,6 +180108,9 @@ export namespace Prisma {
     documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
     documentoSubidoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     documentoSubidoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    cerradoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    cerradoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     creadoPor?: StringFieldUpdateOperationsInput | string
     creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
     fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -187648,6 +187798,9 @@ export namespace Prisma {
     nuevosRegistros?: SortOrder
     actualizadosRegistros?: SortOrder
     erroresRegistros?: SortOrder
+    estado?: SortOrder
+    cerradoPor?: SortOrder
+    cerradoAt?: SortOrder
     cargadoPor?: SortOrder
     cargadoPorId?: SortOrder
     fechaCarga?: SortOrder
@@ -187673,6 +187826,9 @@ export namespace Prisma {
     nuevosRegistros?: SortOrder
     actualizadosRegistros?: SortOrder
     erroresRegistros?: SortOrder
+    estado?: SortOrder
+    cerradoPor?: SortOrder
+    cerradoAt?: SortOrder
     cargadoPor?: SortOrder
     cargadoPorId?: SortOrder
     fechaCarga?: SortOrder
@@ -187691,6 +187847,9 @@ export namespace Prisma {
     nuevosRegistros?: SortOrder
     actualizadosRegistros?: SortOrder
     erroresRegistros?: SortOrder
+    estado?: SortOrder
+    cerradoPor?: SortOrder
+    cerradoAt?: SortOrder
     cargadoPor?: SortOrder
     cargadoPorId?: SortOrder
     fechaCarga?: SortOrder
@@ -187747,6 +187906,9 @@ export namespace Prisma {
     documentoNombre?: SortOrder
     documentoSubidoAt?: SortOrder
     documentoSubidoPor?: SortOrder
+    estado?: SortOrder
+    cerradoPor?: SortOrder
+    cerradoAt?: SortOrder
     creadoPor?: SortOrder
     creadoPorId?: SortOrder
     fechaCreacion?: SortOrder
@@ -187786,6 +187948,9 @@ export namespace Prisma {
     documentoNombre?: SortOrder
     documentoSubidoAt?: SortOrder
     documentoSubidoPor?: SortOrder
+    estado?: SortOrder
+    cerradoPor?: SortOrder
+    cerradoAt?: SortOrder
     creadoPor?: SortOrder
     creadoPorId?: SortOrder
     fechaCreacion?: SortOrder
@@ -187820,6 +187985,9 @@ export namespace Prisma {
     documentoNombre?: SortOrder
     documentoSubidoAt?: SortOrder
     documentoSubidoPor?: SortOrder
+    estado?: SortOrder
+    cerradoPor?: SortOrder
+    cerradoAt?: SortOrder
     creadoPor?: SortOrder
     creadoPorId?: SortOrder
     fechaCreacion?: SortOrder
@@ -207604,6 +207772,9 @@ export namespace Prisma {
     documentoNombre?: string | null
     documentoSubidoAt?: Date | string | null
     documentoSubidoPor?: string | null
+    estado?: string
+    cerradoPor?: string | null
+    cerradoAt?: Date | string | null
     creadoPor: string
     creadoPorId?: string | null
     fechaCreacion?: Date | string
@@ -207638,6 +207809,9 @@ export namespace Prisma {
     documentoNombre?: string | null
     documentoSubidoAt?: Date | string | null
     documentoSubidoPor?: string | null
+    estado?: string
+    cerradoPor?: string | null
+    cerradoAt?: Date | string | null
     creadoPor: string
     creadoPorId?: string | null
     fechaCreacion?: Date | string
@@ -207701,6 +207875,9 @@ export namespace Prisma {
     documentoNombre?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
     documentoSubidoAt?: DateTimeNullableFilter<"Pers_Asis_Registro"> | Date | string | null
     documentoSubidoPor?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    estado?: StringFilter<"Pers_Asis_Registro"> | string
+    cerradoPor?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
+    cerradoAt?: DateTimeNullableFilter<"Pers_Asis_Registro"> | Date | string | null
     creadoPor?: StringFilter<"Pers_Asis_Registro"> | string
     creadoPorId?: StringNullableFilter<"Pers_Asis_Registro"> | string | null
     fechaCreacion?: DateTimeFilter<"Pers_Asis_Registro"> | Date | string
@@ -207733,6 +207910,9 @@ export namespace Prisma {
     documentoNombre?: string | null
     documentoSubidoAt?: Date | string | null
     documentoSubidoPor?: string | null
+    estado?: string
+    cerradoPor?: string | null
+    cerradoAt?: Date | string | null
     creadoPor: string
     creadoPorId?: string | null
     fechaCreacion?: Date | string
@@ -207767,6 +207947,9 @@ export namespace Prisma {
     documentoNombre?: string | null
     documentoSubidoAt?: Date | string | null
     documentoSubidoPor?: string | null
+    estado?: string
+    cerradoPor?: string | null
+    cerradoAt?: Date | string | null
     creadoPor: string
     creadoPorId?: string | null
     fechaCreacion?: Date | string
@@ -207812,6 +207995,9 @@ export namespace Prisma {
     nuevosRegistros?: number
     actualizadosRegistros?: number
     erroresRegistros?: number
+    estado?: string
+    cerradoPor?: string | null
+    cerradoAt?: Date | string | null
     cargadoPor: string
     cargadoPorId?: string | null
     fechaCarga?: Date | string
@@ -207830,6 +208016,9 @@ export namespace Prisma {
     nuevosRegistros?: number
     actualizadosRegistros?: number
     erroresRegistros?: number
+    estado?: string
+    cerradoPor?: string | null
+    cerradoAt?: Date | string | null
     cargadoPor: string
     cargadoPorId?: string | null
     fechaCarga?: Date | string
@@ -207893,6 +208082,9 @@ export namespace Prisma {
     nuevosRegistros?: IntFieldUpdateOperationsInput | number
     actualizadosRegistros?: IntFieldUpdateOperationsInput | number
     erroresRegistros?: IntFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    cerradoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    cerradoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     cargadoPor?: StringFieldUpdateOperationsInput | string
     cargadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
     fechaCarga?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -207911,6 +208103,9 @@ export namespace Prisma {
     nuevosRegistros?: IntFieldUpdateOperationsInput | number
     actualizadosRegistros?: IntFieldUpdateOperationsInput | number
     erroresRegistros?: IntFieldUpdateOperationsInput | number
+    estado?: StringFieldUpdateOperationsInput | string
+    cerradoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    cerradoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     cargadoPor?: StringFieldUpdateOperationsInput | string
     cargadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
     fechaCarga?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -212862,6 +213057,9 @@ export namespace Prisma {
     documentoNombre?: string | null
     documentoSubidoAt?: Date | string | null
     documentoSubidoPor?: string | null
+    estado?: string
+    cerradoPor?: string | null
+    cerradoAt?: Date | string | null
     creadoPor: string
     creadoPorId?: string | null
     fechaCreacion?: Date | string
@@ -212894,6 +213092,9 @@ export namespace Prisma {
     documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
     documentoSubidoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     documentoSubidoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    cerradoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    cerradoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     creadoPor?: StringFieldUpdateOperationsInput | string
     creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
     fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -212928,6 +213129,9 @@ export namespace Prisma {
     documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
     documentoSubidoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     documentoSubidoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    cerradoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    cerradoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     creadoPor?: StringFieldUpdateOperationsInput | string
     creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
     fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -212961,6 +213165,9 @@ export namespace Prisma {
     documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
     documentoSubidoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     documentoSubidoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    cerradoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    cerradoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     creadoPor?: StringFieldUpdateOperationsInput | string
     creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
     fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -212994,6 +213201,9 @@ export namespace Prisma {
     documentoNombre?: string | null
     documentoSubidoAt?: Date | string | null
     documentoSubidoPor?: string | null
+    estado?: string
+    cerradoPor?: string | null
+    cerradoAt?: Date | string | null
     creadoPor: string
     creadoPorId?: string | null
     fechaCreacion?: Date | string
@@ -213026,6 +213236,9 @@ export namespace Prisma {
     documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
     documentoSubidoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     documentoSubidoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    cerradoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    cerradoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     creadoPor?: StringFieldUpdateOperationsInput | string
     creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
     fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -213060,6 +213273,9 @@ export namespace Prisma {
     documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
     documentoSubidoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     documentoSubidoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    cerradoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    cerradoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     creadoPor?: StringFieldUpdateOperationsInput | string
     creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
     fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -213093,6 +213309,9 @@ export namespace Prisma {
     documentoNombre?: NullableStringFieldUpdateOperationsInput | string | null
     documentoSubidoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     documentoSubidoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    cerradoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    cerradoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     creadoPor?: StringFieldUpdateOperationsInput | string
     creadoPorId?: NullableStringFieldUpdateOperationsInput | string | null
     fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string

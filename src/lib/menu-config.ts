@@ -66,16 +66,29 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
             'logistica:config:ver',
             'logistica:integraciones:ver',
             'view_personal_asistencia',
-            'manage_personal_asistencia_carga'
+            'view_personal_horas_extras',
+            'manage_personal_asistencia_admin',
+            'manage_personal_horas_extras_admin',
+            'manage_personal_asistencia_carga',
+            'manage_personal_dotacion_carga',
+            'manage_personal_horas_extras_carga'
         ],
         subItems: [
             {
                 name: 'Recursos Humanos',
-                requiredPermission: ['view_personal_asistencia', 'manage_personal_asistencia_carga'],
+                requiredPermission: [
+                    'view_personal_asistencia',
+                    'view_personal_horas_extras',
+                    'manage_personal_asistencia_admin',
+                    'manage_personal_horas_extras_admin',
+                    'manage_personal_asistencia_carga',
+                    'manage_personal_dotacion_carga',
+                    'manage_personal_horas_extras_carga'
+                ],
                 subItems: [
                     {
                         name: 'Asistencia',
-                        requiredPermission: ['view_personal_asistencia', 'manage_personal_asistencia_carga'],
+                        requiredPermission: ['view_personal_asistencia', 'view_personal_horas_extras'],
                         subItems: [
                             {
                                 name: 'Ausentismo',
@@ -83,9 +96,46 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                                 requiredPermission: 'view_personal_asistencia'
                             },
                             {
-                                name: 'Carga masiva de asistencia',
+                                name: 'Hrs Extras',
+                                href: '/dashboard/areas/personal/asistencia/horas-extras',
+                                requiredPermission: 'view_personal_horas_extras'
+                            }
+                        ]
+                    },
+                    {
+                        name: 'Administración',
+                        requiredPermission: ['manage_personal_asistencia_admin', 'manage_personal_horas_extras_admin'],
+                        subItems: [
+                            {
+                                name: 'Adm. Ausentismo',
+                                href: '/dashboard/areas/personal/administracion/ausentismo',
+                                requiredPermission: 'manage_personal_asistencia_admin'
+                            },
+                            {
+                                name: 'Adm. de Hrs Extras',
+                                href: '/dashboard/areas/personal/administracion/horas-extras',
+                                requiredPermission: 'manage_personal_horas_extras_admin'
+                            }
+                        ]
+                    },
+                    {
+                        name: 'Carga masiva',
+                        requiredPermission: ['manage_personal_asistencia_carga', 'manage_personal_dotacion_carga', 'manage_personal_horas_extras_carga'],
+                        subItems: [
+                            {
+                                name: 'Ausentismo',
                                 href: '/dashboard/areas/personal/carga-masiva',
                                 requiredPermission: 'manage_personal_asistencia_carga'
+                            },
+                            {
+                                name: 'Dotación',
+                                href: '/dashboard/areas/personal/dotacion',
+                                requiredPermission: 'manage_personal_dotacion_carga'
+                            },
+                            {
+                                name: 'Horas Extras',
+                                href: '/dashboard/areas/personal/horas-extras',
+                                requiredPermission: 'manage_personal_horas_extras_carga'
                             }
                         ]
                     }

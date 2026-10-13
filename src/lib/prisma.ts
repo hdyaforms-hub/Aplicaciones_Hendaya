@@ -48,10 +48,12 @@ async function getRoleBasedRbdFilter(): Promise<number[] | null> {
             }
         }
 
-        const roleName = session.user.role?.name?.toLowerCase() || ''
+        const roleName = session.user.role?.name?.toLowerCase().trim() || ''
+        const isAdmin = roleName === 'admin' || roleName === 'administrador' || roleName === 'super admin' || roleName === 'superadministrador'
 
-        if (roleName.includes('admin') || roleName.includes('multas') || roleName.includes('gerencia')) return null
-        if (roleName.includes('supervisor') || userRbds.length > 0) return userRbds
+        if (isAdmin || roleName.includes('multas') || roleName.includes('gerencia')) return null
+        if (userRbds.length > 0) return userRbds
+        if (roleName.includes('supervisor')) return userRbds
         
         if (roleName.includes('jefe zonal') || roleName.includes('jefe de operacion') || roleName.includes('operaciones')) {
             const sucursales = session.user.sucursales || []

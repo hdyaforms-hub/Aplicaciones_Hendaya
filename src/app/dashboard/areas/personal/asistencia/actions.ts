@@ -46,6 +46,9 @@ export interface AsistenciaRegistroDTO {
     actualizadoPor: string | null
     fechaActualizacion: string | null
     numActualizaciones: number
+    estado?: string | null
+    cerradoPor?: string | null
+    cerradoAt?: string | null
 }
 
 export async function getAsistenciaRegistrosAction(filtros?: {
@@ -66,6 +69,9 @@ export async function getAsistenciaRegistrosAction(filtros?: {
 
     const authorizedRbds = await getUserEffectiveRbds()
     const where: any = {}
+
+    // 0. Solo registros de períodos ABIERTOS (los cerrados se gestionan en Adm. Ausentismo)
+    where.NOT = { estado: 'CERRADO' }
 
     // 1. Restricción por RBD del usuario
     if (authorizedRbds !== null) {
@@ -166,7 +172,10 @@ export async function getAsistenciaRegistrosAction(filtros?: {
                 fechaCreacion: r.fechaCreacion ? new Date(r.fechaCreacion).toISOString() : '',
                 actualizadoPor: r.actualizadoPor,
                 fechaActualizacion: r.fechaActualizacion ? new Date(r.fechaActualizacion).toISOString() : null,
-                numActualizaciones: r.numActualizaciones || 0
+                numActualizaciones: r.numActualizaciones || 0,
+                estado: r.estado || 'ABIERTO',
+                cerradoPor: r.cerradoPor || null,
+                cerradoAt: r.cerradoAt ? new Date(r.cerradoAt).toISOString() : null
             }
         })
 
@@ -189,15 +198,21 @@ export async function asignarCriterioAction(registroId: string, criterioId: stri
     const isAdmin = authorizedRbds === null
 
     try {
+        const currentReg = await (rawPrisma as any).pers_Asis_Registro.findUnique({
+            where: { id: registroId },
+            select: { rbd: true, criterioId: true, criterioNombre: true, estado: true }
+        })
+        if (!currentReg) {
+            return { success: false, error: 'Registro no encontrado' }
+        }
+        if (currentReg.estado === 'CERRADO') {
+            return {
+                success: false,
+                error: 'El período correspondiente a este registro se encuentra cerrado. No se permiten modificaciones.'
+            }
+        }
         // Si el usuario no es administrador y el registro ya tiene un criterio asignado, bloquear modificaciones
         if (!isAdmin) {
-            const currentReg = await (rawPrisma as any).pers_Asis_Registro.findUnique({
-                where: { id: registroId },
-                select: { rbd: true, criterioId: true, criterioNombre: true }
-            })
-            if (!currentReg) {
-                return { success: false, error: 'Registro no encontrado' }
-            }
             if (!authorizedRbds || !authorizedRbds.includes(currentReg.rbd)) {
                 return {
                     success: false,
@@ -279,9 +294,38 @@ export async function getEstablecimientosAutocompletadoAction() {
             distinct: ['rbd']
         })
 
+        const mapEstablecimientos = new Map<number, string>()
+        for (const item of distinctEstablecimientos) {
+            if (item.rbd && item.establecimiento) {
+                mapEstablecimientos.set(item.rbd, item.establecimiento)
+            }
+        }
+
+        // Si el usuario tiene RBDs autorizados específicos, asegurar que todos figuren con su nombre oficial
+        if (authorizedRbds !== null && authorizedRbds.length > 0) {
+            try {
+                const cols: any[] = await (rawPrisma as any).colegios.findMany({
+                    where: { colRBD: { in: authorizedRbds } },
+                    select: { colRBD: true, nombreEstablecimiento: true }
+                })
+                for (const c of cols) {
+                    if (c.colRBD && !mapEstablecimientos.has(c.colRBD)) {
+                        mapEstablecimientos.set(c.colRBD, c.nombreEstablecimiento)
+                    }
+                }
+            } catch (err) {
+                console.error('Error fetching colegios asignados:', err)
+            }
+        }
+
+        const list = Array.from(mapEstablecimientos.entries()).map(([rbd, establecimiento]) => ({
+            rbd,
+            establecimiento
+        }))
+
         return {
             success: true,
-            data: distinctEstablecimientos.sort((a: any, b: any) => a.establecimiento.localeCompare(b.establecimiento))
+            data: list.sort((a, b) => a.establecimiento.localeCompare(b.establecimiento))
         }
     } catch (error: any) {
         console.error('Error fetching distinct establecimientos:', error)

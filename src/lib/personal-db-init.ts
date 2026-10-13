@@ -102,11 +102,22 @@ export async function ensurePersonalAsistenciaTables() {
         await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Asis_Registro" ADD COLUMN IF NOT EXISTS "documentoSubidoAt" TIMESTAMP(3);`)
         await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Asis_Registro" ADD COLUMN IF NOT EXISTS "documentoSubidoPor" TEXT;`)
 
+        // Control y cierre de períodos
+        await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Asis_Carga" ADD COLUMN IF NOT EXISTS "estado" TEXT NOT NULL DEFAULT 'ABIERTO';`)
+        await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Asis_Carga" ADD COLUMN IF NOT EXISTS "cerradoPor" TEXT;`)
+        await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Asis_Carga" ADD COLUMN IF NOT EXISTS "cerradoAt" TIMESTAMP(3);`)
+
+        await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Asis_Registro" ADD COLUMN IF NOT EXISTS "estado" TEXT NOT NULL DEFAULT 'ABIERTO';`)
+        await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Asis_Registro" ADD COLUMN IF NOT EXISTS "cerradoPor" TEXT;`)
+        await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Asis_Registro" ADD COLUMN IF NOT EXISTS "cerradoAt" TIMESTAMP(3);`)
+
         // Índices y restricciones
         await rawPrisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "pers_asis_reg_rbd_idx" ON "Pers_Asis_Registro"(rbd);`)
         await rawPrisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "pers_asis_reg_fecha_idx" ON "Pers_Asis_Registro"(fecha);`)
         await rawPrisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "pers_asis_reg_ruthash_idx" ON "Pers_Asis_Registro"("rutHash");`)
         await rawPrisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "pers_asis_reg_criterio_idx" ON "Pers_Asis_Registro"("criterioId");`)
+        await rawPrisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "pers_asis_reg_estado_idx" ON "Pers_Asis_Registro"("estado");`)
+        await rawPrisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "pers_asis_carga_estado_idx" ON "Pers_Asis_Carga"("estado");`)
         await rawPrisma.$executeRawUnsafe(`
             CREATE UNIQUE INDEX IF NOT EXISTS "pers_asis_reg_unique_rut_fecha_rbd" 
             ON "Pers_Asis_Registro"("rutHash", fecha, rbd);

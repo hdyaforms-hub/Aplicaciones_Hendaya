@@ -456,13 +456,6 @@ export default function AsistenciaClient({
                         <RefreshCw className={`w-3.5 h-3.5 ${isPending ? 'animate-spin text-cyan-600' : 'text-gray-500'}`} />
                         <span>Refrescar</span>
                     </button>
-                    <button
-                        onClick={exportarExcel}
-                        className="flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold transition-colors shadow-sm"
-                    >
-                        <Download className="w-3.5 h-3.5" />
-                        <span>Exportar Excel</span>
-                    </button>
                 </div>
             </div>
 
@@ -471,7 +464,15 @@ export default function AsistenciaClient({
                 <div className="flex items-center gap-2 p-3.5 bg-amber-50 border border-amber-200 rounded-xl text-amber-800 text-xs shadow-sm">
                     <Info className="w-4 h-4 flex-shrink-0 text-amber-600" />
                     <span>
-                        Acceso restringido: Solo puedes visualizar los <strong>{userRbds.length}</strong> establecimientos (RBDs) autorizados para tu cuenta de usuario.
+                        Acceso restringido: Solo puedes visualizar los <strong>{userRbds.length}</strong> establecimientos (RBDs) autorizados para tu cuenta de usuario según el mantenedor <strong>Asociar RBD a usuarios</strong>.
+                    </span>
+                </div>
+            )}
+            {!isAdmin && userRbds.length === 0 && (
+                <div className="flex items-center gap-2 p-3.5 bg-rose-50 border border-rose-200 rounded-xl text-rose-800 text-xs shadow-sm">
+                    <AlertCircle className="w-4 h-4 flex-shrink-0 text-rose-600" />
+                    <span>
+                        Sin colegios autorizados: Tu cuenta de usuario aún no tiene establecimientos asignados. Solicita a un Administrador que te asocie los RBDs correspondientes en el módulo <strong>Asociar RBD a usuarios</strong>.
                     </span>
                 </div>
             )}
