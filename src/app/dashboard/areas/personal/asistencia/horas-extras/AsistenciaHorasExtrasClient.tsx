@@ -25,6 +25,7 @@ import {
     ArrowUp,
     ArrowDown
 } from 'lucide-react'
+import { formatHorasMinutos, formatHorasMinutosTexto, parseMinutosHhee } from '@/lib/personal-time-format'
 
 interface EstablecimientoOption {
     rbd: number
@@ -165,7 +166,7 @@ export default function AsistenciaHorasExtrasClient({
     // Métricas
     const totalAplica = useMemo(() => registros.filter(r => r.aplica).length, [registros])
     const totalNoAplica = useMemo(() => registros.filter(r => !r.aplica).length, [registros])
-    const totalHorasHhee = useMemo(() => registros.reduce((acc, r) => acc + (r.aplica ? r.hhee : 0), 0), [registros])
+    const totalMinutosHhee = useMemo(() => registros.reduce((acc, r) => acc + (r.aplica ? parseMinutosHhee(r.hhee) : 0), 0), [registros])
 
     const totalPaginas = Math.ceil(totalRegistros / pageSize) || 1
 
@@ -242,7 +243,9 @@ export default function AsistenciaHorasExtrasClient({
                 </div>
                 <div className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
                     <span className="text-[11px] font-semibold text-cyan-600 uppercase tracking-wider">Total Horas Aprobadas</span>
-                    <p className="text-2xl font-bold text-cyan-700 mt-1">{totalHorasHhee.toFixed(1)} hrs</p>
+                    <p className="text-2xl font-bold text-cyan-700 mt-1">
+                        {Math.floor(totalMinutosHhee / 60)}h {totalMinutosHhee % 60}m
+                    </p>
                 </div>
             </div>
 
@@ -548,13 +551,20 @@ export default function AsistenciaHorasExtrasClient({
                                         </td>
 
                                         {/* Horas Extras */}
-                                        <td className="py-3 px-3 text-center">
-                                            <div className="flex flex-col">
-                                                <span className="font-bold text-cyan-700 text-xs">
-                                                    {r.hhee} hrs
+                                        <td className="py-3 px-3 text-center whitespace-nowrap">
+                                            <div className="flex flex-col items-center justify-center">
+                                                <span className="font-bold text-cyan-800 text-xs font-mono">
+                                                    {formatHorasMinutos(r.hhee)}
                                                 </span>
+                                                {r.hhee > 0 && (
+                                                    <span className="text-[10px] text-cyan-600 font-medium">
+                                                        {formatHorasMinutosTexto(r.hhee)}
+                                                    </span>
+                                                )}
                                                 {r.atraso > 0 && (
-                                                    <span className="text-[10px] text-rose-500">Atraso: {r.atraso} hrs</span>
+                                                    <span className="text-[10px] text-rose-500 font-medium mt-0.5">
+                                                        Atraso: {formatHorasMinutos(r.atraso)}
+                                                    </span>
                                                 )}
                                             </div>
                                         </td>

@@ -34,6 +34,7 @@ import {
     History
 } from 'lucide-react'
 import * as xlsx from 'xlsx'
+import { formatHorasMinutos, formatHorasMinutosTexto, parseMinutosHhee } from '@/lib/personal-time-format'
 
 interface EstablecimientoOption {
     rbd: number
@@ -309,8 +310,8 @@ export default function AdmHorasExtrasClient({
             'Entró': r.entro || '',
             'Salió': r.salio || '',
             'Turno': r.turno || '',
-            'HHEE': r.hhee,
-            'Atraso': r.atraso,
+            'HHEE': formatHorasMinutos(r.hhee),
+            'Atraso': r.atraso > 0 ? formatHorasMinutos(r.atraso) : '00:00 hrs',
             '¿Aplica HHEE?': r.aplica ? 'SÍ (Aplica)' : 'NO (No Aplica)',
             'Modificado Por': r.aplicaModificadoPor || 'Por Defecto (No Aplica)',
             'Fecha Modificación': r.aplicaModificadoAt ? new Date(r.aplicaModificadoAt).toLocaleString('es-CL') : '',
@@ -341,7 +342,7 @@ export default function AdmHorasExtrasClient({
     // Métricas
     const totalAplica = useMemo(() => registros.filter(r => r.aplica).length, [registros])
     const totalNoAplica = useMemo(() => registros.filter(r => !r.aplica).length, [registros])
-    const totalHhee = useMemo(() => registros.reduce((acc, r) => acc + (r.aplica ? r.hhee : 0), 0), [registros])
+    const totalMinutosHhee = useMemo(() => registros.reduce((acc, r) => acc + (r.aplica ? parseMinutosHhee(r.hhee) : 0), 0), [registros])
     const totalPaginas = Math.ceil(totalRegistros / pageSize) || 1
 
     return (
@@ -703,7 +704,9 @@ export default function AdmHorasExtrasClient({
                         </div>
                         <div className="bg-white p-3.5 rounded-xl border border-gray-100 shadow-sm">
                             <span className="text-[11px] font-semibold text-cyan-600 uppercase tracking-wider">Horas HHEE Aprobadas</span>
-                            <p className="text-xl font-bold text-cyan-700 mt-0.5">{totalHhee.toFixed(1)} hrs</p>
+                            <p className="text-xl font-bold text-cyan-700 mt-0.5">
+                                {Math.floor(totalMinutosHhee / 60)}h {totalMinutosHhee % 60}m
+                            </p>
                         </div>
                         <div className="bg-white p-3.5 rounded-xl border border-gray-100 shadow-sm">
                             <span className="text-[11px] font-semibold text-rose-600 uppercase tracking-wider">Períodos Cerrados</span>
@@ -1051,13 +1054,20 @@ export default function AdmHorasExtrasClient({
                                                     </td>
 
                                                     {/* Horas Extras */}
-                                                    <td className="py-3 px-3 text-center">
-                                                        <div className="flex flex-col">
-                                                            <span className="font-bold text-cyan-700 text-xs">
-                                                                {r.hhee} hrs
+                                                    <td className="py-3 px-3 text-center whitespace-nowrap">
+                                                        <div className="flex flex-col items-center justify-center">
+                                                            <span className="font-bold text-cyan-800 text-xs font-mono">
+                                                                {formatHorasMinutos(r.hhee)}
                                                             </span>
+                                                            {r.hhee > 0 && (
+                                                                <span className="text-[10px] text-cyan-600 font-medium">
+                                                                    {formatHorasMinutosTexto(r.hhee)}
+                                                                </span>
+                                                            )}
                                                             {r.atraso > 0 && (
-                                                                <span className="text-[10px] text-rose-500">Atraso: {r.atraso} hrs</span>
+                                                                <span className="text-[10px] text-rose-500 font-medium mt-0.5">
+                                                                    Atraso: {formatHorasMinutos(r.atraso)}
+                                                                </span>
                                                             )}
                                                         </div>
                                                     </td>

@@ -10,6 +10,7 @@ import {
     eliminarHorasExtrasAction,
     exportarHorasExtrasExcelAction
 } from './actions'
+import { formatHorasMinutos, formatHorasMinutosTexto } from '@/lib/personal-time-format'
 import {
     Clock,
     UploadCloud,
@@ -895,11 +896,11 @@ export default function HorasExtrasClient({ initialData, userRole }: Props) {
                                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
                                     <div>
                                         <span className="text-cyan-800 block text-[11px]">HHEE Calculadas:</span>
-                                        <span className="font-mono font-bold text-cyan-950">{selectedItem.hhee.toFixed(4)}</span>
+                                        <span className="font-mono font-bold text-cyan-950">{formatHorasMinutos(selectedItem.hhee)} ({formatHorasMinutosTexto(selectedItem.hhee)})</span>
                                     </div>
                                     <div>
                                         <span className="text-cyan-800 block text-[11px]">HHEE con Atraso:</span>
-                                        <span className="font-mono font-bold text-cyan-950">{selectedItem.hheeAtraso.toFixed(4)}</span>
+                                        <span className="font-mono font-bold text-cyan-950">{formatHorasMinutos(selectedItem.hheeAtraso)} ({formatHorasMinutosTexto(selectedItem.hheeAtraso)})</span>
                                     </div>
                                     <div>
                                         <span className="text-cyan-800 block text-[11px]">Horas Rex Oficiales:</span>
