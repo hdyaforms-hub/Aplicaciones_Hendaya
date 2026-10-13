@@ -5,6 +5,7 @@ import { getSession } from '@/lib/session'
 import { revalidatePath } from 'next/cache'
 import { decryptPersonalText, cleanRut, hashRut } from '@/lib/personal-crypto'
 import { ensurePersonalHextraTables } from '@/lib/personal-hextra-db-init'
+import { puedeUsuarioCerrarPeriodosRH } from '@/lib/personal-cuentas-db-init'
 import { getUserEffectiveRbds } from '@/lib/authFilters'
 import { logAuditAction } from '@/lib/audit'
 
@@ -339,6 +340,12 @@ export async function getHistorialCargasHextraAction(): Promise<{ success: boole
     }
 }
 
+export async function checkPuedeGestionarPeriodosHextraAction(): Promise<boolean> {
+    const session = await getSession()
+    if (!session?.user?.id) return false
+    return await puedeUsuarioCerrarPeriodosRH(session.user.id)
+}
+
 export async function cambiarEstadoPeriodoCargaHextraAction(cargaId: string, nuevoEstado: 'ABIERTO' | 'CERRADO') {
     if (!await checkAdminPermission()) {
         return { success: false, error: 'No tienes permisos para modificar el estado del período' }
@@ -349,6 +356,19 @@ export async function cambiarEstadoPeriodoCargaHextraAction(cargaId: string, nue
     const usuarioNombre = session?.user?.nombre || session?.user?.email || 'Usuario'
     const usuarioId = session?.user?.id || null
     const ahora = new Date()
+
+    if (!usuarioId) {
+        return { success: false, error: 'Sesión no válida o usuario no autenticado' }
+    }
+
+    // REGLA: Si es un usuario que no tenga el check marcado en Adm. de Cuenta, no puede cerrar o abrir periodos
+    const puedeCerrar = await puedeUsuarioCerrarPeriodosRH(usuarioId)
+    if (!puedeCerrar) {
+        return {
+            success: false,
+            error: 'No tienes autorización para cerrar o abrir períodos en los módulos de Recursos Humanos. Solicita la activación de este permiso en "Adm. de cuenta".'
+        }
+    }
 
     try {
         const rows: any[] = await rawPrisma.$queryRawUnsafe(

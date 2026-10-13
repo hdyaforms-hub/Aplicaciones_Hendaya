@@ -104,7 +104,7 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                     },
                     {
                         name: 'Administración',
-                        requiredPermission: ['manage_personal_asistencia_admin', 'manage_personal_horas_extras_admin'],
+                        requiredPermission: ['manage_personal_asistencia_admin', 'manage_personal_horas_extras_admin', 'manage_personal_cuentas_admin'],
                         subItems: [
                             {
                                 name: 'Adm. Ausentismo',
@@ -115,6 +115,11 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                                 name: 'Adm. de Hrs Extras',
                                 href: '/dashboard/areas/personal/administracion/horas-extras',
                                 requiredPermission: 'manage_personal_horas_extras_admin'
+                            },
+                            {
+                                name: 'Adm. de cuenta',
+                                href: '/dashboard/areas/personal/administracion/cuentas',
+                                requiredPermission: 'manage_personal_cuentas_admin'
                             }
                         ]
                     },

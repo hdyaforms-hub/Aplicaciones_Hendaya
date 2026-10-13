@@ -56,6 +56,7 @@ interface AdmAusentismoClientProps {
     establecimientos: EstablecimientoItem[]
     userRbds: number[]
     isAdmin: boolean
+    puedeGestionarPeriodos?: boolean
 }
 
 export default function AdmAusentismoClient({
@@ -64,7 +65,8 @@ export default function AdmAusentismoClient({
     criterios,
     establecimientos,
     userRbds,
-    isAdmin
+    isAdmin,
+    puedeGestionarPeriodos = false
 }: AdmAusentismoClientProps) {
     // Pestañas activas: 'cargas' (Historial Documentos) | 'registros' (Historial de Registros)
     const [tabActivo, setTabActivo] = useState<'cargas' | 'registros'>('cargas')
@@ -298,6 +300,19 @@ export default function AdmAusentismoClient({
             setMensajeFeedback({ tipo: 'error', texto: res.error || 'No se pudo actualizar el criterio.' })
             setTimeout(() => setMensajeFeedback(null), 4000)
         }
+    }
+
+    // Control de apertura de modal con verificación de facultades
+    const abrirModalPeriodo = (carga: CargaHistorialDTO, accion: 'CERRAR' | 'ABRIR') => {
+        if (!puedeGestionarPeriodos) {
+            setMensajeFeedback({
+                tipo: 'error',
+                texto: 'Acceso Denegado: No tienes autorización para cerrar o abrir períodos en los módulos de Recursos Humanos. Esta facultad se habilita en "Adm. de cuenta".'
+            })
+            setTimeout(() => setMensajeFeedback(null), 5000)
+            return
+        }
+        setModalPeriodo({ isOpen: true, carga, accion })
     }
 
     // Ejecutar Apertura / Cierre de Período
@@ -653,18 +668,26 @@ export default function AdmAusentismoClient({
 
                                                             {esCerrado ? (
                                                                 <button
-                                                                    onClick={() => setModalPeriodo({ isOpen: true, carga: c, accion: 'ABRIR' })}
-                                                                    className="flex items-center gap-1 px-2.5 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 font-semibold rounded-lg text-[11px] transition-colors"
-                                                                    title="Reabrir período para permitir modificaciones"
+                                                                    onClick={() => abrirModalPeriodo(c, 'ABRIR')}
+                                                                    className={`flex items-center gap-1 px-2.5 py-1.5 font-semibold rounded-lg text-[11px] transition-colors ${
+                                                                        !puedeGestionarPeriodos
+                                                                            ? 'bg-gray-100 text-gray-400 border border-gray-200 cursor-not-allowed'
+                                                                            : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200'
+                                                                    }`}
+                                                                    title={!puedeGestionarPeriodos ? 'No tienes autorización para abrir períodos (Requiere check en Adm. de cuenta)' : 'Reabrir período para permitir modificaciones'}
                                                                 >
                                                                     <Unlock className="w-3 h-3" />
                                                                     <span>Abrir</span>
                                                                 </button>
                                                             ) : (
                                                                 <button
-                                                                    onClick={() => setModalPeriodo({ isOpen: true, carga: c, accion: 'CERRAR' })}
-                                                                    className="flex items-center gap-1 px-2.5 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 font-semibold rounded-lg text-[11px] transition-colors"
-                                                                    title="Cerrar período y congelar registros cargados"
+                                                                    onClick={() => abrirModalPeriodo(c, 'CERRAR')}
+                                                                    className={`flex items-center gap-1 px-2.5 py-1.5 font-semibold rounded-lg text-[11px] transition-colors ${
+                                                                        !puedeGestionarPeriodos
+                                                                            ? 'bg-gray-100 text-gray-400 border border-gray-200 cursor-not-allowed'
+                                                                            : 'bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200'
+                                                                    }`}
+                                                                    title={!puedeGestionarPeriodos ? 'No tienes autorización para cerrar períodos (Requiere check en Adm. de cuenta)' : 'Cerrar período y congelar registros cargados'}
                                                                 >
                                                                     <Lock className="w-3 h-3" />
                                                                     <span>Cerrar período</span>

@@ -135,6 +135,7 @@ export default async function RolesPage() {
         // ÁREAS -> RECURSOS HUMANOS -> ADMINISTRACIÓN
         { id: 'manage_personal_asistencia_admin', name: 'Adm. Ausentismo', description: 'Permite administrar períodos de ausentismo (cerrar/abrir), consultar historial de documentos cargados y supervisores, exportar a Excel y gestionar criterios.', category: 'ÁREAS -> RECURSOS HUMANOS -> ADMINISTRACIÓN' },
         { id: 'manage_personal_horas_extras_admin', name: 'Adm. de Hrs Extras', description: 'Permite administrar períodos de Horas Extras (abrir/cerrar), gestionar Aplica / No aplica, consultar historial y exportar a Excel.', category: 'ÁREAS -> RECURSOS HUMANOS -> ADMINISTRACIÓN' },
+        { id: 'manage_personal_cuentas_admin', name: 'Adm. de cuenta', description: 'Permite visualizar y autorizar cuentas de Recursos Humanos para el cierre y reapertura de períodos en la plataforma.', category: 'ÁREAS -> RECURSOS HUMANOS -> ADMINISTRACIÓN' },
         // ÁREAS -> RECURSOS HUMANOS -> CARGA MASIVA
         { id: 'manage_personal_asistencia_carga', name: 'Ausentismo', description: 'Permite subir y actualizar planillas Excel de ausentismo con datos encriptados.', category: 'ÁREAS -> RECURSOS HUMANOS -> CARGA MASIVA' },
         { id: 'manage_personal_dotacion_carga', name: 'Dotación', description: 'Permite cargar, reemplazar y consultar la dotación de personal con datos encriptados.', category: 'ÁREAS -> RECURSOS HUMANOS -> CARGA MASIVA' },

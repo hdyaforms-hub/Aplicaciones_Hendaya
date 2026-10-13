@@ -4,6 +4,7 @@ import { getAdmAusentismoRegistrosAction, getHistorialCargasAction } from './act
 import { getCriteriosAction } from '@/app/dashboard/mantenedor/personal/criterios-ausencias/actions'
 import { getEstablecimientosAutocompletadoAction } from '@/app/dashboard/areas/personal/asistencia/actions'
 import { getUserEffectiveRbds } from '@/lib/authFilters'
+import { puedeUsuarioCerrarPeriodosRH } from '@/lib/personal-cuentas-db-init'
 import AdmAusentismoClient from './AdmAusentismoClient'
 
 export const dynamic = 'force-dynamic'
@@ -16,12 +17,13 @@ export default async function AdmAusentismoPage() {
         redirect('/dashboard')
     }
 
-    const [regRes, cargasRes, critRes, estabRes, authorizedRbds] = await Promise.all([
+    const [regRes, cargasRes, critRes, estabRes, authorizedRbds, puedeCerrar] = await Promise.all([
         getAdmAusentismoRegistrosAction(),
         getHistorialCargasAction(),
         getCriteriosAction(),
         getEstablecimientosAutocompletadoAction(),
-        getUserEffectiveRbds()
+        getUserEffectiveRbds(),
+        puedeUsuarioCerrarPeriodosRH(session.user.id)
     ])
 
     const registros = regRes.success && regRes.data ? regRes.data : []
@@ -40,6 +42,7 @@ export default async function AdmAusentismoPage() {
             establecimientos={establecimientos}
             userRbds={userRbds}
             isAdmin={isAdmin}
+            puedeGestionarPeriodos={puedeCerrar}
         />
     )
 }
