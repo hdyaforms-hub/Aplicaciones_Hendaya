@@ -46,7 +46,7 @@ export async function POST(request: Request) {
             })
         }
 
-        // 3. Normalizar tildes y 'ñ' / 'n' (ej: dmunoz vs dmuñoz, o dmunoz@hendayasac.cl)
+        // 3. Normalizar tildes y 'ñ' / 'n' (tolerar caracteres especiales y formato correo)
         if (!user && cleanUsername) {
             const norm = (s: string | null | undefined) => (s || '')
                 .toLowerCase()
