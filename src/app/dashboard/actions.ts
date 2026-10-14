@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import bcrypt from 'bcryptjs'
 import { revalidatePath } from 'next/cache'
+import { sanitizeUsername } from '@/lib/validation'
 
 export async function createUser(formData: FormData) {
     const session = await getSession()
@@ -13,7 +14,8 @@ export async function createUser(formData: FormData) {
         return { error: 'No tienes permisos para crear usuarios' }
     }
 
-    const username = formData.get('username') as string
+    const rawUsername = formData.get('username') as string
+    const username = sanitizeUsername(rawUsername)
     const name = formData.get('name') as string
     const email = formData.get('email') as string
     const password = formData.get('password') as string

@@ -25,3 +25,14 @@ export function validateChileanRut(rut: string): boolean {
 
     return finalDv === dv
 }
+
+export function sanitizeUsername(username: string): string {
+    if (!username) return ''
+    return username
+        .toLowerCase()
+        .trim()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '') // Elimina acentos y diacríticos
+        .replace(/ñ/g, 'n')               // Reemplaza 'ñ' por 'n'
+        .replace(/[^a-z0-9_.]/g, '')      // Remueve espacios y caracteres no estándar
+}

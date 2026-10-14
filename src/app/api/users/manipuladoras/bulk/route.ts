@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import bcrypt from 'bcryptjs'
+import { sanitizeUsername } from '@/lib/validation'
 
 export async function POST(request: Request) {
     try {
@@ -43,7 +44,8 @@ export async function POST(request: Request) {
 
         for (const row of rows) {
             const nombreCompleto = row['NombreCompleto']
-            const nombreUsuario = row['NombreUsuario']
+            const rawNombreUsuario = row['NombreUsuario']
+            const nombreUsuario = sanitizeUsername(String(rawNombreUsuario || ''))
             const correo = row['CorreoElectronico']
             const nombreSucursalesStr = row['SucursalesPermitidas']
             const rbdStr = row['EstablecimientoTrabajo'] // could be multiple? assumed comma-separated or single

@@ -10,6 +10,10 @@ robocopy "d:\Programas\AplicacionWeb" "d:\Sitios\Hendaya" /MIR /XD .git node_mod
 
 echo ===== COMPILANDO SITIO DE PRODUCCIÓN =====
 cd /d "d:\Sitios\Hendaya"
+if exist ".next\cache" (
+    echo Limpiando cache previa de compilacion...
+    rmdir /s /q ".next\cache"
+)
 call npm install
 call npx prisma generate
 call npm run build

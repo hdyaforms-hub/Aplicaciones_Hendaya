@@ -33,34 +33,64 @@ export async function POST(request: Request) {
         }
 
         const cleanUsername = username.trim()
+        const prefix = cleanUsername.includes('@') ? cleanUsername.split('@')[0] : ''
 
         console.log(`Intentando login para usuario: ${cleanUsername}`)
 
-        await ensureSucursalSalaColumns()
-
         let user: any = null
         try {
+            // 1. Búsqueda directa por username, email o prefijo del correo
+            const whereConditions: any[] = [
+                { username: { equals: cleanUsername, mode: 'insensitive' } },
+                { email: { equals: cleanUsername, mode: 'insensitive' } }
+            ]
+            if (prefix) {
+                whereConditions.push({ username: { equals: prefix, mode: 'insensitive' } })
+            }
+
             user = await rawPrisma.user.findFirst({
-                where: {
-                    username: {
-                        equals: cleanUsername,
-                        mode: 'insensitive'
-                    }
-                },
+                where: { OR: whereConditions },
                 include: { role: true, sucursales: true },
             })
+
+            // 2. Si no se encontró, búsqueda normalizada (tolerando 'ñ'/'n', tildes y prefijos de correo)
+            if (!user) {
+                const norm = (s: string | null | undefined) => (s || '')
+                    .toLowerCase()
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .replace(/ñ/g, 'n')
+                    .trim()
+
+                const cleanNorm = norm(cleanUsername)
+                const prefixNorm = prefix ? norm(prefix) : ''
+
+                const allUsers = await rawPrisma.user.findMany({
+                    where: { isDeleted: false },
+                    include: { role: true, sucursales: true }
+                })
+
+                user = allUsers.find(u => {
+                    const uUserNorm = norm(u.username)
+                    const uEmailNorm = norm(u.email)
+                    const uEmailPrefixNorm = u.email && u.email.includes('@') ? norm(u.email.split('@')[0]) : ''
+
+                    return uUserNorm === cleanNorm ||
+                           uEmailNorm === cleanNorm ||
+                           (prefixNorm && uUserNorm === prefixNorm) ||
+                           (prefixNorm && uEmailPrefixNorm === prefixNorm)
+                }) || null
+            }
         } catch (dbErr: any) {
-            // Auto-recuperación si la base de datos de producción aún no tiene las columnas físicas
+            // Auto-recuperación si la base de datos aún no tiene las columnas físicas
             if (dbErr?.message?.includes('tieneSalaReuniones') || dbErr?.message?.includes('salaCompartidaId')) {
-                await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Sucursal" ADD COLUMN IF NOT EXISTS "tieneSalaReuniones" BOOLEAN NOT NULL DEFAULT false;`)
-                await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Sucursal" ADD COLUMN IF NOT EXISTS "salaCompartidaId" TEXT;`)
-                await rawPrisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "sucursal_sala_compartida_idx" ON "Sucursal"("salaCompartidaId");`)
+                await ensureSucursalSalaColumns()
                 user = await rawPrisma.user.findFirst({
                     where: {
-                        username: {
-                            equals: cleanUsername,
-                            mode: 'insensitive'
-                        }
+                        OR: [
+                            { username: { equals: cleanUsername, mode: 'insensitive' } },
+                            { email: { equals: cleanUsername, mode: 'insensitive' } }
+                        ]
                     },
                     include: { role: true, sucursales: true },
                 })
@@ -72,7 +102,7 @@ export async function POST(request: Request) {
         if (!user) {
             console.log(`Usuario no encontrado: ${cleanUsername}`)
             return NextResponse.json(
-                { message: 'Credenciales inválidas' },
+                { message: 'Credenciales inválidas. Verifica tu usuario o correo electrónico.' },
                 { status: 401 }
             )
         }
@@ -90,19 +120,22 @@ export async function POST(request: Request) {
         if (!passwordMatch) {
             console.log(`Password incorrecto para usuario: ${cleanUsername}`)
             return NextResponse.json(
-                { message: 'Credenciales inválidas' },
+                { message: 'Credenciales inválidas. Contraseña incorrecta.' },
                 { status: 401 }
             )
         }
 
         let permissions: string[] = []
-        try {
-            permissions = JSON.parse(user.role.permissions)
-        } catch (e) {
-            const raw = (user.role.permissions || '').replace(/[\[\]"]/g, '')
-            permissions = raw.split(',').map((p: string) => p.trim()).filter(Boolean)
+        if (user.role?.permissions) {
+            try {
+                permissions = JSON.parse(user.role.permissions)
+            } catch (e) {
+                const raw = (user.role.permissions || '').replace(/[\[\]"]/g, '')
+                permissions = raw.split(',').map((p: string) => p.trim()).filter(Boolean)
+            }
         }
 
+        // Estructura de sesión liviana para respetar el límite estricto de 4KB de cookies en navegadores
         const sessionData = {
             id: user.id,
             username: user.username,
@@ -112,13 +145,18 @@ export async function POST(request: Request) {
                 name: user.role?.name,
             },
             sucursales: user.sucursales?.map((s: any) => s.nombre) || [],
-            rbds: user.rbds || [],
         }
 
         if (user.mustChangePassword) {
             console.log(`Usuario debe cambiar contraseña: ${cleanUsername}`)
             return NextResponse.json(
-                { message: 'Debe cambiar su contraseña por seguridad', mustChangePassword: true, tempUser: user.username },
+                {
+                    message: 'Debe cambiar su contraseña por seguridad',
+                    mustChangePassword: true,
+                    tempUser: user.username,
+                    userId: user.id,
+                    userName: user.name || user.username
+                },
                 { status: 202 }
             )
         }
@@ -126,7 +164,7 @@ export async function POST(request: Request) {
         const expires = new Date(Date.now() + 24 * 60 * 60 * 1000)
         const sessionToken = await encrypt({ user: sessionData, expires })
 
-        console.log(`Login exitoso para: ${cleanUsername}`)
+        console.log(`Login exitoso para: ${cleanUsername} (${user.username})`)
 
         await logAuditAction({
             username: user.username,
@@ -141,7 +179,14 @@ export async function POST(request: Request) {
             { status: 200 }
         )
 
-        const isSecure = process.env.COOKIE_SECURE === 'true'
+        // Detección automática y confiable de protocolo HTTPS para no rechazar cookies en conexiones HTTP
+        const protoHeader = request.headers.get('x-forwarded-proto') || ''
+        const reqIsHttps = protoHeader.toLowerCase() === 'https' || request.url.startsWith('https://')
+        const cookieSecureEnv = process.env.COOKIE_SECURE
+        const isSecure = cookieSecureEnv !== undefined 
+            ? cookieSecureEnv === 'true' 
+            : reqIsHttps
+
         response.cookies.set('session', sessionToken, {
             httpOnly: true,
             secure: isSecure,

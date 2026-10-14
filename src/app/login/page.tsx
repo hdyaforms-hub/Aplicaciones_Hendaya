@@ -11,6 +11,15 @@ export default function LoginPage() {
     const [loading, setLoading] = useState(false)
     const [timeoutAlert, setTimeoutAlert] = useState(false)
 
+    // Estados para el cambio de clave obligatorio
+    const [requirePasswordChange, setRequirePasswordChange] = useState(false)
+    const [tempUser, setTempUser] = useState('')
+    const [userId, setUserId] = useState('')
+    const [userName, setUserName] = useState('')
+    const [newPassword, setNewPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
+    const [showPassword, setShowPassword] = useState(false)
+
     useEffect(() => {
         if (typeof window !== 'undefined') {
             const params = new URLSearchParams(window.location.search)
@@ -20,12 +29,6 @@ export default function LoginPage() {
         }
     }, [])
 
-    // Nuevos estados para el cambio de clave
-    const [requirePasswordChange, setRequirePasswordChange] = useState(false)
-    const [newPassword, setNewPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
-    const [showPassword, setShowPassword] = useState(false)
-
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault()
         setError('')
@@ -34,23 +37,30 @@ export default function LoginPage() {
         try {
             const res = await fetch('/api/auth/login', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    'Pragma': 'no-cache'
+                },
                 body: JSON.stringify({ username: username.trim(), password }),
                 credentials: 'same-origin',
+                cache: 'no-store',
             })
 
             console.log('[Login] Response status:', res.status)
-            console.log('[Login] Response ok:', res.ok)
 
             if (res.status === 202) {
                 const data = await res.json()
                 if (data.mustChangePassword) {
                     setRequirePasswordChange(true)
+                    setTempUser(data.tempUser || username.trim())
+                    setUserId(data.userId || '')
+                    setUserName(data.userName || data.tempUser || username.trim())
                     setError('')
                 }
             } else if (res.ok) {
                 console.log('[Login] Login exitoso, redirigiendo a /dashboard...')
-                window.location.href = '/dashboard'
+                window.location.replace('/dashboard')
             } else {
                 const data = await res.json()
                 console.log('[Login] Error:', data)
@@ -68,6 +78,11 @@ export default function LoginPage() {
         e.preventDefault()
         setError('')
 
+        if (newPassword.length < 6) {
+            setError('La nueva contraseña debe tener al menos 6 caracteres')
+            return
+        }
+
         if (newPassword !== confirmPassword) {
             setError('Las contraseñas no coinciden')
             return
@@ -78,21 +93,40 @@ export default function LoginPage() {
         try {
             const res = await fetch('/api/auth/change-password', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, currentPassword: password, newPassword }),
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    'Pragma': 'no-cache'
+                },
+                body: JSON.stringify({ 
+                    userId,
+                    username: tempUser || username.trim(), 
+                    currentPassword: password, 
+                    newPassword 
+                }),
+                credentials: 'same-origin',
+                cache: 'no-store',
             })
 
             if (res.ok) {
-                window.location.href = '/dashboard'
+                console.log('[Login] Contraseña cambiada exitosamente, ingresando...')
+                window.location.replace('/dashboard')
             } else {
                 const data = await res.json()
                 setError(data.message || 'Error al cambiar la contraseña')
             }
-        } catch (err) {
-            setError('Error de conexión o fallo interno del servidor')
+        } catch (err: any) {
+            setError('Error de conexión o fallo interno del servidor: ' + (err?.message || ''))
         } finally {
             setLoading(false)
         }
+    }
+
+    const resetToLogin = () => {
+        setRequirePasswordChange(false)
+        setNewPassword('')
+        setConfirmPassword('')
+        setError('')
     }
 
     return (
@@ -104,18 +138,35 @@ export default function LoginPage() {
             </div>
 
             <div className="relative w-full max-w-md z-10 backdrop-blur-xl bg-white/10 border border-white/20 p-8 rounded-3xl shadow-[0_8px_32px_0_rgba(0,0,0,0.37)]">
-                <div className="text-center mb-10">
-                    <div className="mb-8">
+                <div className="text-center mb-8">
+                    <div className="mb-6">
                         <h1 className="text-5xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-sky-400 inline-block drop-shadow-[0_0_20px_rgba(6,182,212,0.4)]">
                             HENDAYA
                         </h1>
                     </div>
-                    <h2 className="text-3xl font-extrabold text-white tracking-tight">
-                        Bienvenido de nuevo
-                    </h2>
-                    <p className="mt-2 text-sm text-gray-300">
-                        Ingresa tus credenciales para acceder al portal
-                    </p>
+                    
+                    {!requirePasswordChange ? (
+                        <>
+                            <h2 className="text-3xl font-extrabold text-white tracking-tight">
+                                Bienvenido de nuevo
+                            </h2>
+                            <p className="mt-2 text-sm text-gray-300">
+                                Ingresa tus credenciales para acceder al portal
+                            </p>
+                        </>
+                    ) : (
+                        <>
+                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-semibold mb-2">
+                                <span>🛡️</span> Primer Acceso al Sistema
+                            </div>
+                            <h2 className="text-2xl font-extrabold text-white tracking-tight">
+                                Actualizar Contraseña
+                            </h2>
+                            <p className="mt-1 text-sm text-sky-200">
+                                Por seguridad, debes definir tu nueva clave personal
+                            </p>
+                        </>
+                    )}
                 </div>
 
                 {!requirePasswordChange ? (
@@ -138,7 +189,7 @@ export default function LoginPage() {
                                 htmlFor="username"
                                 className="block text-sm font-medium text-gray-200 mb-2"
                             >
-                                Usuario
+                                Usuario o Correo
                             </label>
                             <input
                                 id="username"
@@ -146,7 +197,7 @@ export default function LoginPage() {
                                 required
                                 autoComplete="username"
                                 className="w-full px-5 py-3 rounded-xl bg-black/20 border border-white/10 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-200"
-                                placeholder="Ej: usuario"
+                                placeholder="Ej: dmunoz o dmunozc@hendayasac.cl"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
                             />
@@ -175,11 +226,6 @@ export default function LoginPage() {
                             id="btn-login-submit"
                             type="submit"
                             disabled={loading}
-                            onClick={(e) => {
-                                if (e.currentTarget.form) {
-                                    // fallback explícito en caso de conflicto con extensiones del navegador
-                                }
-                            }}
                             className={`w-full py-3 px-4 rounded-xl text-white font-medium text-lg bg-gradient-to-r from-cyan-500 to-sky-500 hover:from-cyan-400 hover:to-sky-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-900 shadow-lg shadow-cyan-500/30 transform transition-all duration-200 ${loading ? 'opacity-75 cursor-not-allowed scale-95' : 'hover:scale-[1.02] active:scale-95'
                                 }`}
                         >
@@ -197,16 +243,24 @@ export default function LoginPage() {
                         </button>
                     </form>
                 ) : (
-                    <form onSubmit={handleChangePassword} className="space-y-6">
+                    <form onSubmit={handleChangePassword} className="space-y-5">
                         {error && (
                             <div className="p-4 rounded-xl bg-red-500/20 border border-red-500/50 text-red-100 text-sm animate-pulse">
                                 {error}
                             </div>
                         )}
-                        <div className="text-center mb-6">
-                            <p className="text-sm text-sky-200 font-medium">Por razones de seguridad, debes cambiar tu contraseña por defecto para poder ingresar.</p>
+
+                        {/* Tarjeta de información del usuario */}
+                        <div className="bg-cyan-950/40 border border-cyan-500/30 rounded-2xl p-4 text-xs text-cyan-100 flex items-center justify-between shadow-inner">
+                            <div>
+                                <p className="text-gray-400 text-[11px]">Usuario autenticado</p>
+                                <p className="font-semibold text-white text-sm">{userName || username}</p>
+                            </div>
+                            <span className="font-mono text-cyan-300 bg-cyan-900/60 px-2.5 py-1 rounded-lg border border-cyan-400/20 text-xs">
+                                @{tempUser || username}
+                            </span>
                         </div>
-                        
+
                         <div className="relative">
                             <label className="block text-sm font-medium text-gray-200 mb-2">
                                 Nueva Contraseña
@@ -214,8 +268,9 @@ export default function LoginPage() {
                             <input
                                 type={showPassword ? "text" : "password"}
                                 required
+                                minLength={6}
                                 className="w-full px-5 py-3 rounded-xl bg-black/20 border border-white/10 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-200 pr-12"
-                                placeholder="Escribe tu nueva clave"
+                                placeholder="Mínimo 6 caracteres"
                                 value={newPassword}
                                 onChange={(e) => setNewPassword(e.target.value)}
                             />
@@ -244,6 +299,7 @@ export default function LoginPage() {
                             <input
                                 type={showPassword ? "text" : "password"}
                                 required
+                                minLength={6}
                                 className="w-full px-5 py-3 rounded-xl bg-black/20 border border-white/10 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-200"
                                 placeholder="Repite tu nueva clave"
                                 value={confirmPassword}
@@ -256,12 +312,26 @@ export default function LoginPage() {
                             disabled={loading}
                             className={`w-full py-3 px-4 rounded-xl text-white font-medium text-lg bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-gray-900 shadow-lg shadow-emerald-500/30 transform transition-all duration-200 ${loading ? 'opacity-75 cursor-not-allowed scale-95' : 'hover:scale-[1.02] active:scale-95'}`}
                         >
-                            {loading ? 'Actualizando...' : 'Cambiar Contraseña e Ingresar'}
+                            {loading ? (
+                                <span className="flex items-center justify-center">
+                                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    Guardando y Conectando...
+                                </span>
+                            ) : (
+                                'Guardar Nueva Contraseña y Entrar'
+                            )}
                         </button>
                         
-                        <div className="text-center mt-4">
-                           <button type="button" onClick={() => { setRequirePasswordChange(false); setPassword(''); }} className="text-sm text-gray-400 hover:text-white underline">
-                               Volver al inicio de sesión
+                        <div className="text-center mt-3">
+                           <button 
+                               type="button" 
+                               onClick={resetToLogin} 
+                               className="text-xs text-gray-400 hover:text-white transition-colors underline"
+                           >
+                               ← Volver al inicio de sesión
                            </button>
                         </div>
                     </form>

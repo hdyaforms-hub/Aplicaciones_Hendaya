@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { revalidatePath } from 'next/cache'
 import bcrypt from 'bcryptjs'
+import { sanitizeUsername } from '@/lib/validation'
 
 const PATH = '/dashboard/mantenedor/operaciones/personal'
 
@@ -492,16 +493,19 @@ export async function createUserFromHierarchy(data: {
         }
 
         // 3. Generar Username
-        const nombreStr = data.nombre.trim().toLowerCase()
-        const apellidoParts = data.apellido.trim().toLowerCase().split(/\s+/)
+        const apellidoParts = data.apellido.trim().split(/\s+/)
         const apellidoPaterno = apellidoParts[0] || ''
         const apellidoMaterno = apellidoParts.length > 1 ? apellidoParts[1] : ''
 
+        const cleanNombre = sanitizeUsername(data.nombre)
+        const cleanPaterno = sanitizeUsername(apellidoPaterno)
+        const cleanMaterno = sanitizeUsername(apellidoMaterno)
+
         let baseUsername = ''
-        if (nombreStr.length > 0) {
-            baseUsername = nombreStr[0] + apellidoPaterno
+        if (cleanNombre.length > 0) {
+            baseUsername = cleanNombre[0] + cleanPaterno
         } else {
-            baseUsername = apellidoPaterno
+            baseUsername = cleanPaterno
         }
 
         // Resolver colisiones
@@ -509,8 +513,8 @@ export async function createUserFromHierarchy(data: {
         let existingUser = await prisma.user.findUnique({ where: { username: finalUsername } })
 
         if (existingUser) {
-            if (apellidoMaterno.length > 0) {
-                finalUsername = baseUsername + apellidoMaterno[0]
+            if (cleanMaterno.length > 0) {
+                finalUsername = baseUsername + cleanMaterno[0]
             } else {
                 finalUsername = baseUsername + '1'
             }
@@ -518,7 +522,7 @@ export async function createUserFromHierarchy(data: {
             existingUser = await prisma.user.findUnique({ where: { username: finalUsername } })
             let counter = 2
             while (existingUser) {
-                finalUsername = baseUsername + (apellidoMaterno.length > 0 ? apellidoMaterno[0] : '') + counter
+                finalUsername = baseUsername + (cleanMaterno.length > 0 ? cleanMaterno[0] : '') + counter
                 existingUser = await prisma.user.findUnique({ where: { username: finalUsername } })
                 counter++
             }
@@ -624,25 +628,28 @@ export async function replaceWorkerInHierarchy(
             return { error: 'No se encontró el área "OPERACIONES" en el sistema.' }
         }
 
-        const nombreStr = nombre.toLowerCase()
-        const apellidoParts = apellido.toLowerCase().split(/\s+/)
+        const apellidoParts = apellido.trim().split(/\s+/)
         const apellidoPaterno = apellidoParts[0] || ''
         const apellidoMaterno = apellidoParts.length > 1 ? apellidoParts[1] : ''
 
-        let baseUsername = nombreStr.length > 0 ? nombreStr[0] + apellidoPaterno : apellidoPaterno
+        const cleanNombre = sanitizeUsername(nombre)
+        const cleanPaterno = sanitizeUsername(apellidoPaterno)
+        const cleanMaterno = sanitizeUsername(apellidoMaterno)
+
+        let baseUsername = cleanNombre.length > 0 ? cleanNombre[0] + cleanPaterno : cleanPaterno
         let finalUsername = baseUsername
         let existingUser = await prisma.user.findUnique({ where: { username: finalUsername } })
 
         if (existingUser) {
-            if (apellidoMaterno.length > 0) {
-                finalUsername = baseUsername + apellidoMaterno[0]
+            if (cleanMaterno.length > 0) {
+                finalUsername = baseUsername + cleanMaterno[0]
             } else {
                 finalUsername = baseUsername + '1'
             }
             existingUser = await prisma.user.findUnique({ where: { username: finalUsername } })
             let counter = 2
             while (existingUser) {
-                finalUsername = baseUsername + (apellidoMaterno.length > 0 ? apellidoMaterno[0] : '') + counter
+                finalUsername = baseUsername + (cleanMaterno.length > 0 ? cleanMaterno[0] : '') + counter
                 existingUser = await prisma.user.findUnique({ where: { username: finalUsername } })
                 counter++
             }

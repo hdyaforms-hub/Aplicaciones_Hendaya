@@ -31,16 +31,41 @@ export async function proxy(req: NextRequest) {
     
     if (!decodedSession && !isPublicRoute && path.startsWith('/dashboard')) {
         console.log(`[PROXY] -> Redirecting to /login (unauthenticated access to ${path})`)
-        return NextResponse.redirect(new URL('/login', req.nextUrl))
+        const response = NextResponse.redirect(new URL('/login', req.nextUrl))
+        // Limpiar automáticamente la cookie residual expirada o corrupta para no acumular basura
+        if (session) {
+            response.cookies.delete('session')
+        }
+        response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0')
+        return response
     }
 
-    // 5. Redirigir a dashboard si ya hay sesión e intenta ir a login
-    if (decodedSession && path === '/login') {
-        console.log(`[PROXY] -> Redirecting to /dashboard (authenticated access to /login)`)
-        return NextResponse.redirect(new URL('/dashboard', req.nextUrl))
+    // 5. Manejo en la pantalla de login:
+    if (path === '/login') {
+        const hasLogoutReason = req.nextUrl.searchParams.has('reason') || req.nextUrl.searchParams.has('logout')
+        
+        // Si viene por timeout o logout, o la cookie es inválida, limpiarla de inmediato
+        if (hasLogoutReason || (!decodedSession && session)) {
+            const response = NextResponse.next()
+            response.cookies.delete('session')
+            response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0')
+            return response
+        }
+
+        // Si ya hay una sesión válida y no es logout forzado, ir a dashboard
+        if (decodedSession && !hasLogoutReason) {
+            console.log(`[PROXY] -> Redirecting to /dashboard (authenticated access to /login)`)
+            const response = NextResponse.redirect(new URL('/dashboard', req.nextUrl))
+            response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0')
+            return response
+        }
     }
 
-    return NextResponse.next()
+    const response = NextResponse.next()
+    if (path.startsWith('/dashboard') || path === '/login') {
+        response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0')
+    }
+    return response
 }
 
 // Configurar en qué rutas se ejecutará el proxy

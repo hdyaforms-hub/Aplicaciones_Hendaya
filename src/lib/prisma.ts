@@ -8,7 +8,7 @@ declare global {
 }
 
 export const rawPrisma = globalThis.rawPrismaGlobal ?? new PrismaClient()
-if (process.env.NODE_ENV !== 'production') globalThis.rawPrismaGlobal = rawPrisma
+globalThis.rawPrismaGlobal = rawPrisma
 
 async function getRoleBasedRbdFilter(): Promise<number[] | null> {
     try {
@@ -180,4 +180,5 @@ const prismaClientSingleton = () => {
     })
 }
 
-export const prisma = prismaClientSingleton()
+export const prisma = globalThis.prismaGlobal ?? prismaClientSingleton()
+globalThis.prismaGlobal = prisma
