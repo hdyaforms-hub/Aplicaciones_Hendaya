@@ -3,6 +3,7 @@
 import { prisma, rawPrisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import nodemailer from 'nodemailer'
+import { resolveListaDestinatarios } from '@/lib/distribution-lists'
 import crypto from 'crypto'
 
 const ENCRYPTION_KEY = crypto.createHash('sha256').update(String(process.env.SESSION_SECRET || 'super-secret-key-change-me')).digest('base64').substring(0, 32)
@@ -471,30 +472,25 @@ async function processNotificacionesRacion(racion: any, nombreSucursalColegio: s
         })
         if (configs.length === 0) return { warning: 'No hay notificaciones activas.' }
 
-        const destinos = configs
-            .map(c => c.listaCorreo)
-            .filter(lista => !lista.sucursalId || lista.sucursal?.nombre === nombreSucursalColegio)
-
-        if (destinos.length === 0) return { warning: 'No hay listas para esta sucursal.' }
-
-        const plantilla = await prisma.plantillaCorreo.findUnique({
-            where: { codigoPantalla: 'ingreso-raciones' }
-        })
-
         let correosTo: string[] = []
         let correosCc: string[] = []
 
-        destinos.forEach(lista => {
-            try {
-                const para = JSON.parse(lista.para || '[]')
-                const cc = JSON.parse(lista.cc || '[]')
-                if (Array.isArray(para)) correosTo.push(...para)
-                if (Array.isArray(cc)) correosCc.push(...cc)
-            } catch (e) {}
+        configs.forEach(c => {
+            const resolved = resolveListaDestinatarios(c.listaCorreo, {
+                nombre: nombreSucursalColegio
+            })
+            correosTo.push(...resolved.to)
+            correosCc.push(...resolved.cc)
         })
 
         correosTo = Array.from(new Set(correosTo))
         correosCc = Array.from(new Set(correosCc))
+
+        if (correosTo.length === 0) return { warning: 'No hay destinatarios asignados para esta sucursal.' }
+
+        const plantilla = await prisma.plantillaCorreo.findUnique({
+            where: { codigoPantalla: 'ingreso-raciones' }
+        })
 
         let subject = plantilla?.asunto || "Ingreso de Ración RBD N° <RBD> - <Colegio> en Suc: <Sucursal>"
         let body = plantilla?.cuerpo || `Se informa que se ha ingresado una nueva ración con la siguiente descripción:

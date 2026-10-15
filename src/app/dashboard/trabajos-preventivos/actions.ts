@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { revalidatePath } from 'next/cache'
 import nodemailer from 'nodemailer'
+import { resolveListaDestinatarios } from '@/lib/distribution-lists'
 import path from 'path'
 import fs from 'fs'
 import { uploadPath } from '@/lib/storage'
@@ -152,16 +153,21 @@ async function processNotificacionesTrabajo(trabajo: any, sucursalNombre: string
 
         if (configs.length === 0) return { warning: 'No hay notificaciones activas para este módulo.' }
 
-        const destinos = configs.map(c => c.listaCorreo).filter(lista => {
-            if (!lista.sucursalId) return true
-            if (sucursalNombre && lista.sucursal?.nombre) {
-                return lista.sucursal.nombre.toLowerCase().includes(sucursalNombre.toLowerCase()) || 
-                       sucursalNombre.toLowerCase().includes(lista.sucursal.nombre.toLowerCase())
-            }
-            return false
+        let to: string[] = []
+        let cc: string[] = []
+
+        configs.forEach(c => {
+            const resolved = resolveListaDestinatarios(c.listaCorreo, {
+                nombre: sucursalNombre
+            })
+            to.push(...resolved.to)
+            cc.push(...resolved.cc)
         })
 
-        if (destinos.length === 0) return { warning: `No hay listas de correo para la sucursal "${sucursalNombre}".` }
+        to = Array.from(new Set(to)).filter(e => e.includes('@'))
+        cc = Array.from(new Set(cc)).filter(e => e.includes('@'))
+
+        if (to.length === 0) return { warning: `No hay listas de correo con destinatarios asignados para la sucursal "${sucursalNombre}".` }
 
         let plantilla = await prisma.plantillaCorreo.findUnique({ where: { codigoPantalla } })
         
@@ -207,20 +213,6 @@ Sistema Hendaya.`
         subject = replaceTags(subject)
         body = replaceTags(body)
 
-        let to: string[] = []
-        let cc: string[] = []
-
-        destinos.forEach(lista => {
-            try {
-                const p = JSON.parse(lista.para || '[]')
-                const c = JSON.parse(lista.cc || '[]')
-                if (Array.isArray(p)) to.push(...p)
-                if (Array.isArray(c)) cc.push(...c)
-            } catch (e) {}
-        })
-
-        to = Array.from(new Set(to)).filter(e => e.includes('@'))
-        cc = Array.from(new Set(cc)).filter(e => e.includes('@'))
 
         if (to.length > 0) {
             const emailConfig = await prisma.emailConfig.findFirst({ where: { id: "global" } })

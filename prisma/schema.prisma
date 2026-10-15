@@ -136,6 +136,7 @@ model ListaCorreo {
   para           String
   cc             String?
   sucursalId     String?
+  porSucursal    String?                // JSON estructurado con destinatarios específicos por sucursal: { [sucursalId]: { para: string[], cc: string[] } }
   createdAt      DateTime               @default(now())
   updatedAt      DateTime               @updatedAt
   sucursal       Sucursal?              @relation(fields: [sucursalId], references: [id])

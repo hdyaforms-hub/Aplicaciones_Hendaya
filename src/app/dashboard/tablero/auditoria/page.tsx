@@ -1,11 +1,34 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { fetchAuditLogsAction, fetchAuditUsersAction, fetchAuditRolesAction, fetchAllAuditLogsForExport } from './actions'
+import { fetchAuditLogsAction, fetchAuditUsersAction, fetchAuditRolesAction, fetchAuditModulesAction, fetchAllAuditLogsForExport } from './actions'
 
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
 import * as XLSX from 'xlsx'
+
+const DEFAULT_MODULOS = [
+    'Autenticación',
+    'Inicio',
+    'Tableros y Avances',
+    'Aplicaciones',
+    'Gestor Documental',
+    'Actas',
+    'Áreas -> Recursos Humanos',
+    'Áreas -> Logística',
+    'Áreas -> Operaciones',
+    'Áreas -> Manipuladoras',
+    'Áreas -> Calidad',
+    'Áreas -> Multas',
+    'Áreas -> Prev. de riesgos',
+    'Matriz de Riesgo',
+    'Formularios',
+    'Reportes',
+    'Mantenedor',
+    'Configuración',
+    'Colaboradores',
+    'Ayuda'
+]
 
 type AuditLogItem = {
     id: string
@@ -42,6 +65,7 @@ export default function AuditoriaPage() {
     const [logs, setLogs] = useState<AuditLogItem[]>([])
     const [users, setUsers] = useState<UserOption[]>([])
     const [roles, setRoles] = useState<RoleOption[]>([])
+    const [modulesList, setModulesList] = useState<string[]>(DEFAULT_MODULOS)
     const [loading, setLoading] = useState<boolean>(true)
     const [exporting, setExporting] = useState<boolean>(false)
     const [exportingType, setExportingType] = useState<'pdf' | 'excel' | null>(null)
@@ -61,16 +85,20 @@ export default function AuditoriaPage() {
     const [totalRecords, setTotalRecords] = useState<number>(0)
     const limit = 25
 
-    // Cargar listas de usuarios y roles al montar
+    // Cargar listas de usuarios, roles y módulos al montar
     useEffect(() => {
         async function loadMeta() {
             try {
-                const [uList, rList] = await Promise.all([
+                const [uList, rList, mList] = await Promise.all([
                     fetchAuditUsersAction(),
-                    fetchAuditRolesAction()
+                    fetchAuditRolesAction(),
+                    fetchAuditModulesAction()
                 ])
                 setUsers(uList as UserOption[])
                 setRoles(rList as RoleOption[])
+                if (mList && mList.length > 0) {
+                    setModulesList(mList)
+                }
             } catch (e) {
                 console.error('Error al cargar metadatos de auditoría:', e)
             }
@@ -435,21 +463,12 @@ export default function AuditoriaPage() {
                                 onChange={(e) => setSelectedModulo(e.target.value)}
                                 className="w-full px-3.5 py-2 text-sm rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-gray-50 text-black font-semibold"
                             >
-                                <option value="ALL">-- Todos los Módulos --</option>
-                                <option value="Autenticación">Autenticación (Login/Logout)</option>
-                                <option value="Tableros y Avances">Tableros y Avances</option>
-                                <option value="Aplicaciones">Aplicaciones</option>
-                                <option value="Áreas -> Operaciones">Áreas - Operaciones</option>
-                                <option value="Áreas -> Manipuladoras">Áreas - Manipuladoras</option>
-                                <option value="Áreas -> Calidad">Áreas - Calidad</option>
-                                <option value="Áreas -> Multas">Áreas - Multas</option>
-                                <option value="Áreas -> Prev. de riesgos">Áreas - Prev. de riesgos</option>
-                                <option value="Matriz de Riesgo">Matriz de Riesgo</option>
-                                <option value="Formularios">Formularios</option>
-                                <option value="Mantenedor">Mantenedores</option>
-                                <option value="Administración">Administración & Roles</option>
-                                <option value="Reportes">Reportes</option>
-                                <option value="Ayuda">Ayuda</option>
+                                <option value="ALL">-- Todos los Módulos ({modulesList.length}) --</option>
+                                {modulesList.map((mod) => (
+                                    <option key={mod} value={mod}>
+                                        {mod}
+                                    </option>
+                                ))}
                             </select>
                         </div>
 

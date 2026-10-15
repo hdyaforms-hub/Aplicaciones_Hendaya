@@ -3,6 +3,7 @@
 import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { revalidatePath } from 'next/cache'
+import { resolveListaDestinatarios } from '@/lib/distribution-lists'
 import nodemailer from 'nodemailer'
 import crypto from 'crypto'
 
@@ -300,27 +301,23 @@ async function processNotificacionesGas(solicitud: any, sucursalIdColegio: strin
         console.log(`[DEBUG NOTIFICACIONES GAS] Configuraciones encontradas: ${configs.length}`)
         if (configs.length === 0) return { warning: 'No hay notificaciones activas configuradas en el sistema para esta acción.' }
 
-        const destinos = configs
-            .map(c => c.listaCorreo)
-            .filter(lista => {
-                // Si la lista es global (sin sucursalId), se envía.
-                if (!lista.sucursalId) return true;
-                
-                // Si coinciden los sucursalId, se envía.
-                if (sucursalIdColegio && lista.sucursalId === sucursalIdColegio) return true;
+        let correosTo: string[] = []
+        let correosCc: string[] = []
 
-                // Fallback por nombre (por si acaso hay inconsistencias en el seeding de sucursalId)
-                if (nombreSucursalString && lista.sucursal?.nombre) {
-                    const s1 = lista.sucursal.nombre.toLowerCase();
-                    const s2 = nombreSucursalString.toLowerCase();
-                    if (s1.includes(s2) || s2.includes(s1)) return true;
-                }
-
-                return false;
+        configs.forEach(c => {
+            const resolved = resolveListaDestinatarios(c.listaCorreo, {
+                id: sucursalIdColegio,
+                nombre: nombreSucursalString
             })
+            correosTo.push(...resolved.to)
+            correosCc.push(...resolved.cc)
+        })
 
-        console.log(`[DEBUG NOTIFICACIONES GAS] Destinatarios previos: ${configs.length}, Destinatarios filtrados: ${destinos.length}`)
-        if (destinos.length === 0) return { warning: `No hay listas de correo asignadas para la sucursal "${nombreSucursalString || 'Global'}".` }
+        correosTo = Array.from(new Set(correosTo)).filter(email => email.includes('@'))
+        correosCc = Array.from(new Set(correosCc)).filter(email => email.includes('@'))
+
+        console.log(`[DEBUG NOTIFICACIONES GAS] Destinatarios finales: TO=${correosTo.length}, CC=${correosCc.length}`)
+        if (correosTo.length === 0) return { warning: `No hay listas de correo con destinatarios asignados para la sucursal "${nombreSucursalString || 'Global'}".` }
 
         const plantilla = await prisma.plantillaCorreo.findUnique({
             where: { codigoPantalla }
@@ -374,24 +371,6 @@ Sistema de Solicitudes.`
         subject = replaceTags(subject)
         body = replaceTags(body)
 
-        let correosTo: string[] = []
-        let correosCc: string[] = []
-
-        destinos.forEach(lista => {
-            try {
-                const para = JSON.parse(lista.para || '[]')
-                const cc = JSON.parse(lista.cc || '[]')
-                if (Array.isArray(para)) correosTo.push(...para)
-                if (Array.isArray(cc)) correosCc.push(...cc)
-            } catch (e) {
-                console.error(`[DEBUG NOTIFICACIONES GAS] Error parseando correos de lista ${lista.nombre}:`, e)
-            }
-        })
-
-        correosTo = Array.from(new Set(correosTo)).filter(email => email.includes('@'))
-        correosCc = Array.from(new Set(correosCc)).filter(email => email.includes('@'))
-
-        console.log(`[DEBUG NOTIFICACIONES GAS] Destinatarios finales: TO=${correosTo.length}, CC=${correosCc.length}`)
 
         if (correosTo.length > 0) {
             const emailConfig = await prisma.emailConfig.findFirst({ where: { id: "global" } })

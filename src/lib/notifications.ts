@@ -1,6 +1,8 @@
 import nodemailer from 'nodemailer'
 import crypto from 'crypto'
-import { prisma } from './prisma'
+import { prisma, rawPrisma } from './prisma'
+import { ensureNotificationConditionalColumns } from './notifications-db-init'
+import { resolveListaDestinatarios, resolveSucursalFromRbd } from './distribution-lists'
 
 const ENCRYPTION_KEY = crypto.createHash('sha256').update(String(process.env.SESSION_SECRET || 'super-secret-key-change-me')).digest('base64').substring(0, 32)
 
@@ -176,12 +178,75 @@ export async function sendGenericaNotification({
     tags?: Record<string, string>
 }) {
     try {
-        const configs = await prisma.notificacionPantalla.findMany({
-            where: { codigoPantalla, activa: true },
-            include: { listaCorreo: true }
+        // Resolver la sucursal objetivo del evento a partir de las etiquetas (tags)
+        let targetSucursalName = tags['Sucursal'] || tags['sucursal'] || tags['SUCURSAL'] || tags['SucursalOrigen'] || tags['SucursalDestino'] || ''
+        const targetRbd = tags['RBD'] || tags['rbd'] || tags['Rbd'] || tags['RbdOrigen'] || tags['RbdDestino'] || null
+
+        let targetSucursal: { id?: string, nombre: string } | null = null
+        if (targetSucursalName) {
+            targetSucursal = { nombre: targetSucursalName }
+        } else if (targetRbd) {
+            targetSucursal = await resolveSucursalFromRbd(targetRbd)
+            if (targetSucursal?.nombre) {
+                targetSucursalName = targetSucursal.nombre
+            }
+        }
+
+        const rawConfigs: any[] = await rawPrisma.$queryRawUnsafe(`
+            SELECT np.id, np."codigoPantalla", np."listaCorreoId", np.activa,
+                   np."condicionTag", np."condicionOperador", np."condicionValor",
+                   lc.id as "lc_id", lc.nombre as "lc_nombre", lc.para as "lc_para", lc.cc as "lc_cc",
+                   lc."sucursalId" as "lc_sucursalId", lc."porSucursal" as "lc_porSucursal",
+                   s.nombre as "lc_sucursalNombre"
+            FROM "NotificacionPantalla" np
+            JOIN "ListaCorreo" lc ON lc.id = np."listaCorreoId"
+            LEFT JOIN "Sucursal" s ON s.id = lc."sucursalId"
+            WHERE np."codigoPantalla" = $1 AND np.activa = true;
+        `, codigoPantalla)
+
+        if (rawConfigs.length === 0) return { warning: 'No hay listas configuradas para esta pantalla.' }
+
+        const cleanStr = (s: string) => 
+            s.normalize('NFD')
+             .replace(/[\u0300-\u036f]/g, '')
+             .replace(/[_\s]+/g, ' ')
+             .trim()
+             .toUpperCase()
+
+        // Evaluar reglas condicionales universales sobre las etiquetas recibidas
+        const configs = rawConfigs.filter(c => {
+            const op = (c.condicionOperador || 'ALWAYS').toUpperCase()
+            const tagKey = c.condicionTag ? c.condicionTag.replace(/[<>]/g, '').trim().toLowerCase() : ''
+            const expectedVal = c.condicionValor ? cleanStr(c.condicionValor) : ''
+
+            // Si la regla está configurada como ALWAYS o no define tag/valor, se envía incondicionalmente
+            if (op === 'ALWAYS' || !tagKey || !expectedVal) {
+                return true
+            }
+
+            // Buscar la etiqueta en los tags de forma insensible a mayúsculas, minúsculas y acentos
+            const matchedTag = Object.keys(tags).find(k => k.toLowerCase() === tagKey)
+            let actualVal = matchedTag ? cleanStr(String(tags[matchedTag])) : ''
+
+            // Fallback inteligente: si la condición busca <Sucursal> y el tag original no la traía pero se resolvió del RBD
+            if (!actualVal && (tagKey === 'sucursal' || tagKey === 'sucursalorigen') && targetSucursalName) {
+                actualVal = cleanStr(targetSucursalName)
+            }
+
+            if (op === 'EQUALS') {
+                return actualVal === expectedVal
+            } else if (op === 'CONTAINS') {
+                return actualVal.includes(expectedVal)
+            } else if (op === 'NOT_EQUALS') {
+                return actualVal !== expectedVal
+            }
+            return true
         })
 
-        if (configs.length === 0) return { warning: 'No hay listas configuradas para esta pantalla.' }
+        if (configs.length === 0) {
+            console.log(`[sendGenericaNotification] Pantalla ${codigoPantalla}: ninguna lista cumplió las reglas condicionales`, tags)
+            return { warning: 'Ninguna lista activa cumplió las reglas condicionales para este evento.' }
+        }
 
         // Buscar si existe una plantilla personalizada
         const plantilla = await prisma.plantillaCorreo.findUnique({
@@ -199,15 +264,19 @@ export async function sendGenericaNotification({
             Object.entries(tags).forEach(([key, value]) => {
                 const regex = new RegExp(`<${key}>`, 'gi')
                 finalSubject = finalSubject.replace(regex, value)
-                // Para el cuerpo, si el valor tiene saltos de línea, los convertimos a BR
                 const valueWithBr = value.replace(/\n/g, '<br/>')
                 finalBody = finalBody.replace(regex, valueWithBr)
             })
+
+            // Inyectar sucursal resuelta si la plantilla la usa y no venía en los tags iniciales
+            if (targetSucursalName && !tags['Sucursal']) {
+                finalSubject = finalSubject.replace(/<Sucursal>/gi, targetSucursalName)
+                finalBody = finalBody.replace(/<Sucursal>/gi, targetSucursalName)
+            }
             
             // Convertir saltos de línea del cuerpo de la plantilla a <br/>
             finalBody = finalBody.replace(/\n/g, '<br/>')
 
-            // Si es plantilla personalizada, convertimos el cuerpo a un mini-HTML si no tiene etiquetas envolventes
             if (!finalBody.includes('<div') && !finalBody.includes('<p')) {
                 finalBody = `
                     <div style="font-family: sans-serif; padding: 20px; border: 1px solid #eee; border-radius: 10px; max-width: 600px; margin: auto;">
@@ -236,17 +305,31 @@ export async function sendGenericaNotification({
             }
         })
 
+        let sentAny = false
         for (const config of configs) {
-            const para = JSON.parse(config.listaCorreo.para)
-            const cc = config.listaCorreo.cc ? JSON.parse(config.listaCorreo.cc) : []
+            const resolved = resolveListaDestinatarios({
+                id: config.lc_id,
+                nombre: config.lc_nombre,
+                para: config.lc_para,
+                cc: config.lc_cc,
+                sucursalId: config.lc_sucursalId,
+                sucursal: config.lc_sucursalNombre ? { id: config.lc_sucursalId, nombre: config.lc_sucursalNombre } : null,
+                porSucursal: config.lc_porSucursal
+            }, targetSucursal)
+
+            if (resolved.to.length === 0) {
+                console.log(`[sendGenericaNotification] Lista "${config.lc_nombre}" no arrojó destinatarios para la sucursal "${targetSucursalName || 'Global'}".`)
+                continue
+            }
 
             await transporter.sendMail({
                 from: `"Hendaya Alertas" <${emailConfig.email}>`,
-                to: para.join(','),
-                cc: cc.join(','),
+                to: resolved.to.join(','),
+                cc: resolved.cc.length > 0 ? resolved.cc.join(',') : undefined,
                 subject: finalSubject,
                 html: finalBody
             })
+            sentAny = true
         }
         return { success: true }
     } catch (e) {

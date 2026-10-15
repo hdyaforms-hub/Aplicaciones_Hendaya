@@ -4,6 +4,7 @@
 import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { revalidatePath } from 'next/cache'
+import { resolveListaDestinatarios } from '@/lib/distribution-lists'
 
 /**
  * Gets the next sequential folio in format 0000000001
@@ -238,32 +239,25 @@ async function processRetiroNotificaciones(retiro: any, nombreUsuario: string) {
 
         if (configs.length === 0) return { warning: 'No hay notificaciones activas configuradas en el sistema para esta acción.' }
 
-        const destinos = configs
-            .map(c => c.listaCorreo)
-            .filter(lista => !lista.sucursalId || lista.sucursal?.nombre === retiro.sucursal)
-
-        if (destinos.length === 0) return { warning: `No hay listas de correo asignadas para la sucursal "${retiro.sucursal || 'Global'}".` }
-
-        const plantilla = await prisma.plantillaCorreo.findUnique({
-            where: { codigoPantalla: 'retiro-saldos' }
-        })
-
         let correosTo: string[] = []
         let correosCc: string[] = []
 
-        destinos.forEach(lista => {
-            try {
-                const para = JSON.parse(lista.para || '[]')
-                const cc = JSON.parse(lista.cc || '[]')
-                if (Array.isArray(para)) correosTo.push(...para)
-                if (Array.isArray(cc)) correosCc.push(...cc)
-            } catch (e) {
-                console.error("Error parseando correos de lista:", lista.nombre)
-            }
+        configs.forEach(c => {
+            const resolved = resolveListaDestinatarios(c.listaCorreo, {
+                nombre: retiro.sucursal
+            })
+            correosTo.push(...resolved.to)
+            correosCc.push(...resolved.cc)
         })
 
         correosTo = Array.from(new Set(correosTo))
         correosCc = Array.from(new Set(correosCc))
+
+        if (correosTo.length === 0) return { warning: `No hay listas de correo con destinatarios asignados para la sucursal "${retiro.sucursal || 'Global'}".` }
+
+        const plantilla = await prisma.plantillaCorreo.findUnique({
+            where: { codigoPantalla: 'retiro-saldos' }
+        })
 
         let subject = plantilla?.asunto || `Retiro de Saldo Folio <Folio> - RBD <RBD>`
         let body = plantilla?.cuerpo || `Se informa de un nuevo registro:

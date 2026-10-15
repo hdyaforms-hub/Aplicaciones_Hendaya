@@ -210,6 +210,7 @@ exports.Prisma.ListaCorreoScalarFieldEnum = {
   para: 'para',
   cc: 'cc',
   sucursalId: 'sucursalId',
+  porSucursal: 'porSucursal',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

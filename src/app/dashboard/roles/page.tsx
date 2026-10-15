@@ -132,6 +132,7 @@ export default async function RolesPage() {
         // ÁREAS -> RECURSOS HUMANOS -> ASISTENCIA
         { id: 'view_personal_asistencia', name: 'Ausentismo (Ver y Gestionar)', description: 'Permite consultar ausencias por RBD asignado y asociar criterios de ausentismo.', category: 'ÁREAS -> RECURSOS HUMANOS -> ASISTENCIA' },
         { id: 'view_personal_horas_extras', name: 'Hrs Extras (Ver y Gestionar)', description: 'Permite consultar horas extras por RBD asignado e indicar Aplica / No aplica en períodos abiertos.', category: 'ÁREAS -> RECURSOS HUMANOS -> ASISTENCIA' },
+        { id: 'manage_personal_cambio_rbd', name: 'Cambio de RBD (Ver y Gestionar)', description: 'Permite consultar colaboradores de dotación y registrar cambios de RBD (Anexos de traslado o Comisión de servicio).', category: 'ÁREAS -> RECURSOS HUMANOS -> ASISTENCIA' },
         // ÁREAS -> RECURSOS HUMANOS -> ADMINISTRACIÓN
         { id: 'manage_personal_asistencia_admin', name: 'Adm. Ausentismo', description: 'Permite administrar períodos de ausentismo (cerrar/abrir), consultar historial de documentos cargados y supervisores, exportar a Excel y gestionar criterios.', category: 'ÁREAS -> RECURSOS HUMANOS -> ADMINISTRACIÓN' },
         { id: 'manage_personal_horas_extras_admin', name: 'Adm. de Hrs Extras', description: 'Permite administrar períodos de Horas Extras (abrir/cerrar), gestionar Aplica / No aplica, consultar historial y exportar a Excel.', category: 'ÁREAS -> RECURSOS HUMANOS -> ADMINISTRACIÓN' },

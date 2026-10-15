@@ -139,6 +139,7 @@ export async function getSession() {
                 'manage_areas',
                 'view_personal_asistencia',
                 'view_personal_horas_extras',
+                'manage_personal_cambio_rbd',
                 'manage_personal_asistencia_admin',
                 'manage_personal_horas_extras_admin',
                 'manage_personal_cuentas_admin',

@@ -67,6 +67,7 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
             'logistica:integraciones:ver',
             'view_personal_asistencia',
             'view_personal_horas_extras',
+            'manage_personal_cambio_rbd',
             'manage_personal_asistencia_admin',
             'manage_personal_horas_extras_admin',
             'manage_personal_asistencia_carga',
@@ -79,6 +80,7 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                 requiredPermission: [
                     'view_personal_asistencia',
                     'view_personal_horas_extras',
+                    'manage_personal_cambio_rbd',
                     'manage_personal_asistencia_admin',
                     'manage_personal_horas_extras_admin',
                     'manage_personal_asistencia_carga',
@@ -88,7 +90,7 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                 subItems: [
                     {
                         name: 'Asistencia',
-                        requiredPermission: ['view_personal_asistencia', 'view_personal_horas_extras'],
+                        requiredPermission: ['view_personal_asistencia', 'view_personal_horas_extras', 'manage_personal_cambio_rbd'],
                         subItems: [
                             {
                                 name: 'Ausentismo',
@@ -99,6 +101,11 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                                 name: 'Hrs Extras',
                                 href: '/dashboard/areas/personal/asistencia/horas-extras',
                                 requiredPermission: 'view_personal_horas_extras'
+                            },
+                            {
+                                name: 'Cambio de RBD',
+                                href: '/dashboard/areas/personal/asistencia/cambio-rbd',
+                                requiredPermission: 'manage_personal_cambio_rbd'
                             }
                         ]
                     },

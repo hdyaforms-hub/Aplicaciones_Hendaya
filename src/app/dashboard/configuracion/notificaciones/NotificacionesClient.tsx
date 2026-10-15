@@ -59,6 +59,11 @@ const PANTALLAS: PantallaInfo[] = [
         id: 'calidad-higiene-personal',
         name: 'Registro de Transportista interno Higiene Personal',
         description: 'Se envía un aviso al Jefe de Bodega cuando el Encargado de Calidad firma el registro diario de higiene personal de transportistas.'
+    },
+    {
+        id: 'cambio-rbd-personal',
+        name: 'Cambio de RBD (Personal)',
+        description: 'Se envía un aviso al momento de registrar un cambio de RBD de una manipuladora (Anexo de traslado o Comisión de servicio).'
     }
 ]
 
@@ -67,6 +72,20 @@ const HELP_KEYWORDS: Record<string, { tag: string, desc: string }[]> = {
         { tag: '<RBD>', desc: 'RBD (Rol Base de Datos) del establecimiento.' },
         { tag: '<Usuario>', desc: 'Nombre del usuario que realiza la acción.' },
         { tag: '<Sucursal>', desc: 'Nombre de la sucursal o bodega correspondiente.' },
+    ],
+    'Cambio de RBD (Personal)': [
+        { tag: '<Rut>', desc: 'RUT de la colaboradora o manipuladora.' },
+        { tag: '<Nombre>', desc: 'Nombre completo de la manipuladora.' },
+        { tag: '<RbdOrigen>', desc: 'RBD de origen del establecimiento.' },
+        { tag: '<ColegioOrigen>', desc: 'Nombre del establecimiento educacional de origen.' },
+        { tag: '<SucursalOrigen>', desc: 'Sucursal o zona operativa de origen.' },
+        { tag: '<RbdDestino>', desc: 'RBD de destino al que se traslada.' },
+        { tag: '<ColegioDestino>', desc: 'Nombre del establecimiento educacional de destino.' },
+        { tag: '<TipoCambio>', desc: 'Tipo de traslado (Anexos de traslado o Comisión de servicio).' },
+        { tag: '<FechaDesde>', desc: 'Fecha de inicio del cambio o traslado (DD/MM/AAAA).' },
+        { tag: '<FechaHasta>', desc: 'Fecha de término (aplica para Comisión de servicio).' },
+        { tag: '<Supervisor>', desc: 'Nombre del supervisor a cargo.' },
+        { tag: '<Usuario>', desc: 'Usuario que gestionó el cambio de RBD en el sistema.' }
     ],
     'Registro transportista interno higiene y estado Transporte': [
         { tag: '<Fecha>', desc: 'Fecha del registro de inspección (DD/MM/AAAA).' },
@@ -147,13 +166,38 @@ const HELP_KEYWORDS: Record<string, { tag: string, desc: string }[]> = {
     ]
 }
 
+type ListaCorreoItem = {
+    id: string
+    nombre: string
+    descripcion?: string | null
+    para?: string | null
+    cc?: string | null
+    sucursalId?: string | null
+    porSucursal?: string | null
+    sucursal?: { id: string, nombre: string } | null
+}
+
+const PANTALLA_META: Record<string, { icon: string, color: string }> = {
+    'cambio-rbd-personal': { icon: '🔄', color: 'from-cyan-500 to-sky-600' },
+    'ingreso-raciones': { icon: '📊', color: 'from-blue-500 to-indigo-600' },
+    'solicitud-pan': { icon: '🍞', color: 'from-amber-500 to-orange-600' },
+    'retiro-saldos': { icon: '📦', color: 'from-purple-500 to-violet-600' },
+    'solicitud-gas': { icon: '⛽', color: 'from-orange-500 to-amber-600' },
+    'solicitud-gas-exceso': { icon: '🚨', color: 'from-red-500 to-rose-600' },
+    'form-submission-pdf': { icon: '📑', color: 'from-emerald-500 to-teal-600' },
+    'RETORNO_PRODUCTOS': { icon: '⚠️', color: 'from-rose-500 to-pink-600' },
+    'matriz-prestador': { icon: '🛡️', color: 'from-indigo-500 to-blue-600' },
+    'calidad-transporte-higiene': { icon: '🚛', color: 'from-teal-500 to-cyan-600' },
+    'calidad-higiene-personal': { icon: '🧼', color: 'from-sky-500 to-cyan-600' },
+}
+
 export default function NotificacionesClient({ 
     configuraciones, 
     listasCorreo,
     plantillas
 }: { 
     configuraciones: any[]
-    listasCorreo: { id: string, nombre: string }[]
+    listasCorreo: ListaCorreoItem[]
     plantillas: any[]
 }) {
     const [loading, setLoading] = useState<Record<string, boolean>>({})
@@ -166,7 +210,10 @@ export default function NotificacionesClient({
         mockData: any
     } | null>(null)
     const [showHelp, setShowHelp] = useState(false)
+    const [showConditionalHelp, setShowConditionalHelp] = useState(false)
     const [searchHelp, setSearchHelp] = useState('')
+    const [searchQuery, setSearchQuery] = useState('')
+    const [filterTab, setFilterTab] = useState<'all' | 'active' | 'withRules'>('all')
 
     const getScreenKeywords = (pantallaId: string) => {
         const pantalla = PANTALLAS.find(p => p.id === pantallaId)
@@ -174,12 +221,12 @@ export default function NotificacionesClient({
         return HELP_KEYWORDS[pantalla.name] || []
     }
 
-    const handleSave = async (codigoPantalla: string, listas: string[], activa: boolean) => {
+    const handleSave = async (codigoPantalla: string, listas: any[], activa: boolean) => {
         setLoading(prev => ({ ...prev, [codigoPantalla]: true }))
         try {
             const result = await saveScreenNotification(codigoPantalla, listas, activa)
             if (result.success) {
-                alert('Configuración guardada correctamente.')
+                alert('Configuración y reglas guardadas correctamente.')
             } else {
                 alert(result.error || 'Hubo un error al guardar.')
             }
@@ -232,35 +279,134 @@ export default function NotificacionesClient({
         return result
     }
 
+    // Estadísticas y filtrado
+    const activeScreensCount = PANTALLAS.filter(p => {
+        const cfgs = configuraciones.filter(c => c.codigoPantalla === p.id)
+        return cfgs.length > 0 && cfgs[0].activa
+    }).length
+
+    const rulesScreensCount = PANTALLAS.filter(p => {
+        const cfgs = configuraciones.filter(c => c.codigoPantalla === p.id)
+        return cfgs.some(c => c.condicionOperador && c.condicionOperador !== 'ALWAYS')
+    }).length
+
+    const filteredPantallas = PANTALLAS.filter(p => {
+        const matchesQuery = p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                             p.description.toLowerCase().includes(searchQuery.toLowerCase())
+        if (!matchesQuery) return false
+
+        const cfgs = configuraciones.filter(c => c.codigoPantalla === p.id)
+        const isActiva = cfgs.length > 0 && cfgs[0].activa
+        const hasRules = cfgs.some(c => c.condicionOperador && c.condicionOperador !== 'ALWAYS')
+
+        if (filterTab === 'active') return isActiva
+        if (filterTab === 'withRules') return hasRules
+        return true
+    })
+
     return (
-        <div className="overflow-x-auto p-4 space-y-4">
-            <div className="flex justify-between items-center bg-white p-4 rounded-2xl border border-gray-100 shadow-sm">
+        <div className="p-4 sm:p-6 space-y-6 max-w-7xl mx-auto">
+            {/* CABECERA SUPERIOR */}
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-5 rounded-3xl border border-slate-200/80 shadow-xs">
                 <div>
-                    <h2 className="text-xl font-bold text-gray-800">✉️ Configuración de Alertas</h2>
-                    <p className="text-xs text-gray-500">Administra qué listas de correo reciben avisos de cada proceso.</p>
+                    <h2 className="text-xl font-black text-slate-900 flex items-center gap-2 tracking-tight">
+                        <span>✉️</span> Notificaciones por Pantalla y Módulos
+                    </h2>
+                    <p className="text-xs text-slate-500 mt-0.5">
+                        Asocia listas de distribución a cada evento del sistema y personaliza reglas condicionales dinámicas con amplitud y comodidad.
+                    </p>
                 </div>
-                <button 
-                    onClick={() => setShowHelp(true)}
-                    className="w-10 h-10 bg-cyan-50 text-cyan-600 rounded-full flex items-center justify-center font-black text-xl hover:bg-cyan-100 transition-all shadow-sm border border-cyan-100"
-                    title="Ver palabras reservadas"
-                >
-                    ?
-                </button>
+                <div className="flex items-center gap-2.5 shrink-0 w-full sm:w-auto">
+                    <button 
+                        onClick={() => setShowConditionalHelp(true)}
+                        className="flex-1 sm:flex-initial px-4 py-2.5 bg-gradient-to-r from-cyan-600 to-sky-600 hover:from-cyan-700 hover:to-sky-700 text-white rounded-2xl font-bold text-xs shadow-md shadow-cyan-600/20 transition-all flex items-center justify-center gap-2 hover:scale-102 active:scale-98"
+                        title="Aprende cómo configurar listas de correo condicionales por etiqueta"
+                    >
+                        <span>💡</span>
+                        <span>Guía de Notificaciones Condicionales</span>
+                    </button>
+                    <button 
+                        onClick={() => setShowHelp(true)}
+                        className="w-10 h-10 bg-cyan-50 text-cyan-700 rounded-2xl flex items-center justify-center font-black text-base hover:bg-cyan-100 transition-all border border-cyan-200 shrink-0"
+                        title="Ver catálogo de palabras reservadas"
+                    >
+                        ?
+                    </button>
+                </div>
             </div>
 
-            <table className="w-full text-left text-sm text-gray-700">
-                <thead className="bg-gray-100 text-gray-600 rounded-t-lg">
-                    <tr>
-                        <th className="px-5 py-4 font-semibold rounded-tl-lg">Pantalla / Módulo</th>
-                        <th className="px-5 py-4 font-semibold">Listas de Distribución</th>
-                        <th className="px-5 py-4 font-semibold">Estado</th>
-                        <th className="px-5 py-4 font-semibold rounded-tr-lg">Acción</th>
-                    </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-100">
-                    {PANTALLAS.map(pantalla => {
+            {/* BARRA DE BÚSQUEDA Y FILTRADO */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-slate-50/70 p-3 rounded-2xl border border-slate-200/80">
+                <div className="flex-1 relative">
+                    <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm">🔍</span>
+                    <input
+                        type="text"
+                        placeholder="Buscar pantalla o módulo (ej: Cambio de RBD, Raciones, Gas, Pan, Transporte)..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="w-full pl-10 pr-8 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 placeholder-slate-400 outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 transition-all"
+                    />
+                    {searchQuery && (
+                        <button
+                            onClick={() => setSearchQuery('')}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400 hover:text-slate-600 font-bold"
+                        >
+                            ✕
+                        </button>
+                    )}
+                </div>
+
+                <div className="flex items-center gap-1.5 overflow-x-auto shrink-0">
+                    <button
+                        onClick={() => setFilterTab('all')}
+                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                            filterTab === 'all'
+                                ? 'bg-slate-900 text-white shadow-xs'
+                                : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
+                        }`}
+                    >
+                        Todos ({PANTALLAS.length})
+                    </button>
+                    <button
+                        onClick={() => setFilterTab('active')}
+                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                            filterTab === 'active'
+                                ? 'bg-cyan-600 text-white shadow-xs'
+                                : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
+                        }`}
+                    >
+                        Activos ({activeScreensCount})
+                    </button>
+                    <button
+                        onClick={() => setFilterTab('withRules')}
+                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                            filterTab === 'withRules'
+                                ? 'bg-amber-600 text-white shadow-xs'
+                                : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
+                        }`}
+                    >
+                        Con Reglas ({rulesScreensCount})
+                    </button>
+                </div>
+            </div>
+
+            {/* LISTADO DE MÓDULOS EN TARJETAS AMPLIAS */}
+            {filteredPantallas.length === 0 ? (
+                <div className="bg-white rounded-3xl border border-slate-200 p-12 text-center space-y-3">
+                    <div className="text-4xl">🔍</div>
+                    <h3 className="text-base font-bold text-slate-700">No se encontraron pantallas con los filtros aplicados</h3>
+                    <p className="text-xs text-slate-400">Intenta buscar con otros términos o restablece los filtros.</p>
+                    <button
+                        onClick={() => { setSearchQuery(''); setFilterTab('all'); }}
+                        className="px-4 py-2 bg-slate-900 text-white text-xs font-bold rounded-xl hover:bg-slate-800 transition-all"
+                    >
+                        Restablecer Filtros
+                    </button>
+                </div>
+            ) : (
+                <div className="space-y-6">
+                    {filteredPantallas.map(pantalla => {
                         const configPantalla = configuraciones.filter(c => c.codigoPantalla === pantalla.id)
-                        const defaultListasIds = configPantalla.map(c => c.listaCorreoId)
                         const defaultActiva = configPantalla.length > 0 ? configPantalla[0].activa : true
 
                         return (
@@ -268,16 +414,17 @@ export default function NotificacionesClient({
                                 key={pantalla.id}
                                 pantalla={pantalla}
                                 listasCorreo={listasCorreo}
-                                defaultListasIds={defaultListasIds}
+                                configPantalla={configPantalla}
                                 defaultActiva={defaultActiva}
                                 onSave={handleSave}
                                 isSaving={loading[pantalla.id] || false}
                                 onEditTemplate={() => openTemplateModal(pantalla.id)}
+                                keywords={getScreenKeywords(pantalla.id)}
                             />
                         )
                     })}
-                </tbody>
-            </table>
+                </div>
+            )}
 
             {templateModal && templateModal.isOpen && (
                 <div className="fixed inset-0 bg-black/50 z-[100] flex items-center justify-center p-4 backdrop-blur-sm animate-in fade-in duration-200">
@@ -460,6 +607,163 @@ export default function NotificacionesClient({
                     </div>
                 </div>
             )}
+
+            {/* MODAL GUÍA DE REGLAS CONDICIONALES UNIVERSALES */}
+            {showConditionalHelp && (
+                <div className="fixed inset-0 bg-black/60 z-[110] flex items-center justify-center p-4 backdrop-blur-sm animate-in fade-in duration-200">
+                    <div className="bg-white rounded-3xl shadow-2xl w-full max-w-3xl overflow-hidden flex flex-col max-h-[92vh] border border-slate-200">
+                        {/* CABECERA */}
+                        <div className="p-6 bg-gradient-to-r from-slate-900 via-cyan-950 to-slate-900 text-white flex justify-between items-center border-b border-slate-800">
+                            <div>
+                                <div className="flex items-center gap-2 mb-1">
+                                    <span className="px-2.5 py-0.5 bg-cyan-500/20 text-cyan-300 text-[10px] font-bold rounded-full uppercase tracking-wider border border-cyan-500/30">
+                                        Motor Universal • Hendaya
+                                    </span>
+                                </div>
+                                <h3 className="text-xl font-black flex items-center gap-2">
+                                    <span>💡</span> Guía de Notificaciones Condicionales
+                                </h3>
+                                <p className="text-xs text-slate-300 mt-0.5">
+                                    Aprende cómo filtrar y enviar correos automáticamente a diferentes listas según lo que ocurra en cualquier pantalla.
+                                </p>
+                            </div>
+                            <button 
+                                onClick={() => setShowConditionalHelp(false)} 
+                                className="p-2 text-slate-400 hover:text-white rounded-xl hover:bg-slate-800 text-lg transition-colors"
+                            >
+                                ✕
+                            </button>
+                        </div>
+
+                        {/* CUERPO DE LA GUÍA */}
+                        <div className="p-6 overflow-y-auto space-y-6 flex-1 text-slate-700 text-xs">
+                            {/* 1. QUÉ ES */}
+                            <div className="bg-cyan-50/50 border border-cyan-200 rounded-2xl p-4 space-y-1.5">
+                                <h4 className="font-bold text-sm text-cyan-950 flex items-center gap-1.5">
+                                    <span>🎯</span> ¿Para qué sirven las Notificaciones Condicionales?
+                                </h4>
+                                <p className="leading-relaxed text-slate-600">
+                                    Permiten que un mismo evento o módulo despache correos a <b>distintos destinatarios</b> en función de las opciones que seleccione el usuario (por ejemplo: si es traslado definitivo o comisión temporal, si es Copiapó o Santiago, o si es alta prioridad).
+                                </p>
+                            </div>
+
+                            {/* 2. CASO PRÁCTICO EN CAMBIO DE RBD */}
+                            <div className="border border-slate-200 rounded-2xl p-4 bg-white shadow-xs space-y-3">
+                                <div className="flex items-center justify-between">
+                                    <h4 className="font-bold text-sm text-slate-900 flex items-center gap-1.5">
+                                        <span>🔄</span> Ejemplo Real: Módulo "Cambio de RBD"
+                                    </h4>
+                                    <span className="text-[10px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded font-mono font-bold">
+                                        cambio-rbd-personal
+                                    </span>
+                                </div>
+
+                                <p className="text-slate-600 leading-relaxed">
+                                    En este módulo existen 2 tipos de movimientos: <b>Comisión de servicio</b> y <b>Anexos de traslado</b>.
+                                </p>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+                                    <div className="p-3 bg-amber-50/80 border border-amber-200 rounded-xl space-y-1">
+                                        <span className="font-bold text-amber-900 block text-xs">Para Comisión de Servicio:</span>
+                                        <p className="text-[11px] text-amber-800">
+                                            Asocia la lista que incluye a los <b>Usuarios A y B</b> y define la regla:
+                                        </p>
+                                        <div className="font-mono text-[11px] bg-white p-1.5 rounded border border-amber-200 text-amber-900 font-bold">
+                                            &lt;TipoCambio&gt; = COMISION_SERVICIO
+                                        </div>
+                                    </div>
+
+                                    <div className="p-3 bg-cyan-50/80 border border-cyan-200 rounded-xl space-y-1">
+                                        <span className="font-bold text-cyan-900 block text-xs">Para Anexos de Traslado:</span>
+                                        <p className="text-[11px] text-cyan-800">
+                                            Asocia la lista que incluye solo al <b>Usuario B</b> y define la regla:
+                                        </p>
+                                        <div className="font-mono text-[11px] bg-white p-1.5 rounded border border-cyan-200 text-cyan-900 font-bold">
+                                            &lt;TipoCambio&gt; = ANEXO_TRASLADO
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* 3. APLICACIÓN EN MÓDULOS FUTUROS */}
+                            <div className="border border-slate-200 rounded-2xl p-4 bg-white shadow-xs space-y-3">
+                                <h4 className="font-bold text-sm text-slate-900 flex items-center gap-1.5">
+                                    <span>🚀</span> ¿Cómo usarlo en cualquier Módulo Nuevo del Futuro?
+                                </h4>
+                                <p className="text-slate-600 leading-relaxed">
+                                    El motor es <b>100% universal</b>. Cualquier etiqueta que el módulo nuevo genere puede ser utilizada como criterio de filtrado sin necesidad de reprogramar:
+                                </p>
+
+                                <div className="space-y-2">
+                                    <div className="p-2.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between">
+                                        <div>
+                                            <span className="font-bold text-slate-800 block text-[11px]">Módulo de Permisos / Licencias</span>
+                                            <span className="text-[10px] text-slate-500">Filtrar para avisar a RRHH solo cuando sea médica</span>
+                                        </div>
+                                        <code className="text-[11px] font-bold text-cyan-700 bg-white px-2 py-1 rounded border border-slate-200">
+                                            &lt;TipoLicencia&gt; = MEDICA
+                                        </code>
+                                    </div>
+
+                                    <div className="p-2.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between">
+                                        <div>
+                                            <span className="font-bold text-slate-800 block text-[11px]">Módulo de Calidad o Incidentes</span>
+                                            <span className="text-[10px] text-slate-500">Filtrar para avisar a Gerencia solo en alertas graves</span>
+                                        </div>
+                                        <code className="text-[11px] font-bold text-cyan-700 bg-white px-2 py-1 rounded border border-slate-200">
+                                            &lt;Criticidad&gt; = ALTA
+                                        </code>
+                                    </div>
+
+                                    <div className="p-2.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between">
+                                        <div>
+                                            <span className="font-bold text-slate-800 block text-[11px]">Módulo por Sucursales</span>
+                                            <span className="text-[10px] text-slate-500">Filtrar destinatarios de la bodega de Copiapó</span>
+                                        </div>
+                                        <code className="text-[11px] font-bold text-cyan-700 bg-white px-2 py-1 rounded border border-slate-200">
+                                            &lt;Sucursal&gt; = CD COPIAPO
+                                        </code>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* 4. TABLA DE OPERADORES */}
+                            <div className="border border-slate-200 rounded-2xl p-4 bg-white shadow-xs space-y-2">
+                                <h4 className="font-bold text-sm text-slate-900 flex items-center gap-1.5">
+                                    <span>⚙️</span> Operadores de Condición Disponibles
+                                </h4>
+                                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px]">
+                                    <div className="p-2 bg-slate-50 rounded-lg border border-slate-200">
+                                        <b className="text-slate-800 block">Enviar Siempre:</b>
+                                        <span className="text-slate-500">Comportamiento habitual sin filtro.</span>
+                                    </div>
+                                    <div className="p-2 bg-slate-50 rounded-lg border border-slate-200">
+                                        <b className="text-slate-800 block">Igual a (=):</b>
+                                        <span className="text-slate-500">Coincidencia exacta del valor.</span>
+                                    </div>
+                                    <div className="p-2 bg-slate-50 rounded-lg border border-slate-200">
+                                        <b className="text-slate-800 block">Contiene texto:</b>
+                                        <span className="text-slate-500">Si contiene parte de la palabra.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* PIE */}
+                        <div className="p-4 px-6 border-t border-slate-200 bg-slate-50 flex items-center justify-between">
+                            <span className="text-[11px] text-slate-500 font-medium">
+                                Los cambios surten efecto de inmediato al pulsar "Guardar" en cada pantalla.
+                            </span>
+                            <button 
+                                onClick={() => setShowConditionalHelp(false)} 
+                                className="px-6 py-2 bg-slate-900 text-white rounded-xl font-bold text-xs hover:bg-slate-800 transition-all shadow-md"
+                            >
+                                Entendido
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
@@ -467,113 +771,458 @@ export default function NotificacionesClient({
 function ConfigRow({ 
     pantalla, 
     listasCorreo, 
-    defaultListasIds, 
+    configPantalla, 
     defaultActiva, 
     onSave, 
     isSaving,
-    onEditTemplate
+    onEditTemplate,
+    keywords
 }: {
     pantalla: PantallaInfo
-    listasCorreo: { id: string, nombre: string }[]
-    defaultListasIds: string[]
+    listasCorreo: ListaCorreoItem[]
+    configPantalla: any[]
     defaultActiva: boolean
-    onSave: (id: string, listas: string[], activa: boolean) => void
+    onSave: (id: string, listas: any[], activa: boolean) => void
     isSaving: boolean
     onEditTemplate: () => void
+    keywords: { tag: string, desc: string }[]
 }) {
-    const [selectedListas, setSelectedListas] = useState<string[]>(defaultListasIds)
+    // Mapa de configuración por cada lista disponible
+    const [listasState, setListasState] = useState<Record<string, {
+        selected: boolean
+        condicionTag: string
+        condicionOperador: string
+        condicionValor: string
+    }>>(() => {
+        const map: Record<string, any> = {}
+        listasCorreo.forEach(l => {
+            const existing = configPantalla.find(c => c.listaCorreoId === l.id)
+            map[l.id] = {
+                selected: !!existing,
+                condicionTag: existing?.condicionTag || '',
+                condicionOperador: existing?.condicionOperador || 'ALWAYS',
+                condicionValor: existing?.condicionValor || ''
+            }
+        })
+        return map
+    })
+
+    const [editingListId, setEditingListId] = useState<string | null>(null)
     const [activa, setActiva] = useState(defaultActiva)
 
     const handleToggleLista = (id: string) => {
-        setSelectedListas(prev => 
-            prev.includes(id) ? prev.filter(listaId => listaId !== id) : [...prev, id]
-        )
+        setListasState(prev => ({
+            ...prev,
+            [id]: {
+                ...prev[id],
+                selected: !prev[id]?.selected
+            }
+        }))
+    }
+
+    const handleUpdateRule = (id: string, updates: Partial<{ condicionTag: string, condicionOperador: string, condicionValor: string }>) => {
+        setListasState(prev => ({
+            ...prev,
+            [id]: {
+                ...prev[id],
+                ...updates
+            }
+        }))
+    }
+
+    const handleSaveClick = () => {
+        const payload = Object.entries(listasState)
+            .filter(([_, cfg]) => cfg.selected)
+            .map(([listaCorreoId, cfg]) => ({
+                listaCorreoId,
+                condicionTag: cfg.condicionTag.trim() || null,
+                condicionOperador: cfg.condicionOperador || 'ALWAYS',
+                condicionValor: cfg.condicionValor.trim() || null
+            }))
+
+        onSave(pantalla.id, payload, activa)
+    }
+
+    const selectedCount = Object.values(listasState).filter(c => c.selected).length
+    const rulesCount = Object.values(listasState).filter(c => c.selected && c.condicionOperador !== 'ALWAYS' && c.condicionTag && c.condicionValor).length
+
+    const meta = PANTALLA_META[pantalla.id] || { icon: '📧', color: 'from-slate-600 to-slate-800' }
+
+    const countEmails = (str?: string | null) => {
+        if (!str) return 0
+        return str.split(',').map(s => s.trim()).filter(Boolean).length
+    }
+
+    const getOperatorLabel = (op: string) => {
+        switch (op) {
+            case 'EQUALS': return '='
+            case 'CONTAINS': return 'contiene'
+            case 'NOT_EQUALS': return '≠'
+            default: return 'siempre'
+        }
     }
 
     return (
-        <tr className="hover:bg-slate-50 transition-colors">
-            <td className="px-5 py-5 border-b border-gray-100 align-top">
-                <div className="font-semibold text-gray-900 text-base">{pantalla.name}</div>
-                <div className="text-gray-500 text-xs mt-1">{pantalla.description}</div>
-                <div className="mt-3">
-                    <button type="button" onClick={onEditTemplate} className="text-xs font-semibold text-cyan-600 hover:text-cyan-800 flex items-center gap-1 transition-colors bg-cyan-50 px-2 py-1 rounded inline-block">
+        <div className="bg-white rounded-3xl border border-slate-200/90 shadow-sm overflow-hidden transition-all duration-200 hover:shadow-md hover:border-slate-300">
+            {/* CABECERA DE LA TARJETA DEL MÓDULO */}
+            <div className="p-5 sm:p-6 bg-gradient-to-b from-slate-50/80 to-white border-b border-slate-100 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                <div className="flex items-start gap-4">
+                    <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${meta.color} flex items-center justify-center text-2xl shadow-md text-white shrink-0`}>
+                        {meta.icon}
+                    </div>
+                    <div>
+                        <div className="flex flex-wrap items-center gap-2">
+                            <h3 className="text-base font-black text-slate-900 tracking-tight">
+                                {pantalla.name}
+                            </h3>
+                            {activa && selectedCount > 0 ? (
+                                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-100 text-emerald-800 border border-emerald-200 flex items-center gap-1">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
+                                    Activo
+                                </span>
+                            ) : (
+                                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-slate-100 text-slate-500 border border-slate-200">
+                                    Pausado
+                                </span>
+                            )}
+                            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-cyan-50 text-cyan-800 border border-cyan-200">
+                                {selectedCount} {selectedCount === 1 ? 'lista vinculada' : 'listas vinculadas'}
+                            </span>
+                            {rulesCount > 0 && (
+                                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200 flex items-center gap-1">
+                                    <span>⚙️</span> {rulesCount} {rulesCount === 1 ? 'con regla' : 'con reglas'}
+                                </span>
+                            )}
+                        </div>
+                        <p className="text-xs text-slate-500 mt-1 max-w-2xl leading-relaxed">
+                            {pantalla.description}
+                        </p>
+                    </div>
+                </div>
+
+                {/* ACCIONES DE CABECERA */}
+                <div className="flex flex-wrap items-center gap-2.5 self-end lg:self-auto shrink-0">
+                    <button 
+                        type="button" 
+                        onClick={onEditTemplate} 
+                        className="px-3.5 py-2 bg-slate-50 hover:bg-cyan-50 text-slate-700 hover:text-cyan-800 rounded-xl border border-slate-200 hover:border-cyan-200 text-xs font-bold transition-all flex items-center gap-1.5 shadow-2xs"
+                    >
                         <span>✏️</span> Editar Formato Plantilla
                     </button>
+
+                    <div className="flex items-center gap-2 bg-slate-100/80 px-3 py-1.5 rounded-xl border border-slate-200">
+                        <button 
+                            onClick={() => setActiva(!activa)}
+                            disabled={selectedCount === 0}
+                            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${activa && selectedCount > 0 ? 'bg-cyan-500' : 'bg-gray-300'} ${selectedCount === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                            title={selectedCount === 0 ? 'Selecciona al menos una lista para activar' : (activa ? 'Pausar avisos' : 'Activar avisos')}
+                        >
+                            <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${activa && selectedCount > 0 ? 'translate-x-6' : 'translate-x-1'}`} />
+                        </button>
+                        <span className="text-[11px] font-bold text-slate-700 select-none">
+                            {selectedCount === 0 ? 'Sin listas' : (activa ? 'Avisos Activos' : 'Pausado')}
+                        </span>
+                    </div>
+
+                    <button
+                        onClick={handleSaveClick}
+                        disabled={isSaving}
+                        className="flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-slate-900 to-slate-800 hover:from-cyan-900 hover:to-slate-900 text-white font-bold rounded-xl shadow-md transition-all disabled:opacity-50 text-xs hover:scale-102 active:scale-98"
+                    >
+                        {isSaving ? (
+                            <span className="animate-spin text-sm">↻</span>
+                        ) : (
+                            <span className="text-sm">💾</span>
+                        )}
+                        <span>{isSaving ? 'Guardando...' : 'Guardar'}</span>
+                    </button>
                 </div>
-            </td>
-            <td className="px-5 py-5 border-b border-gray-100 min-w-[200px]">
+            </div>
+
+            {/* SECCIÓN AMPLIA DE LISTAS DE DISTRIBUCIÓN */}
+            <div className="p-5 sm:p-6 space-y-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs">
+                    <span className="font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+                        <span>📋</span> Listas de Distribución Disponibles ({selectedCount} de {listasCorreo.length} activadas):
+                    </span>
+                    <span className="text-slate-400 text-[11px]">
+                        Haz clic en una lista para marcarla o desmarcarla. Puedes añadir condiciones a cada una.
+                    </span>
+                </div>
+
                 {listasCorreo.length === 0 ? (
-                    <span className="text-red-500 text-xs">No hay listas de correo configuradas</span>
+                    <div className="p-6 bg-slate-50 border border-dashed border-slate-200 rounded-2xl text-center text-slate-500 text-xs">
+                        No hay listas de correo configuradas en el sistema. Puedes crearlas en el menú lateral en "Listas de Distribución".
+                    </div>
                 ) : (
-                    <div className="flex flex-col gap-2 relative max-h-40 overflow-y-auto pr-2 custom-scrollbar">
-                        {listasCorreo.map(lista => (
-                            <label key={lista.id} className="flex items-center gap-2 cursor-pointer group">
-                                <input 
-                                    type="checkbox" 
-                                    className="hidden"
-                                    checked={selectedListas.includes(lista.id)}
-                                    onChange={() => handleToggleLista(lista.id)}
-                                />
-                                <span className={`w-5 h-5 rounded-md border flex items-center justify-center transition-all ${
-                                    selectedListas.includes(lista.id) 
-                                        ? 'bg-cyan-500 border-cyan-500 text-white' 
-                                        : 'bg-white border-gray-300 group-hover:border-cyan-400'
-                                }`}>
-                                    {selectedListas.includes(lista.id) && (
-                                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                                        </svg>
+                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3.5">
+                        {listasCorreo.map(lista => {
+                            const cfg = listasState[lista.id] || { selected: false, condicionTag: '', condicionOperador: 'ALWAYS', condicionValor: '' }
+                            const hasCondition = cfg.condicionOperador !== 'ALWAYS' && cfg.condicionTag && cfg.condicionValor
+                            const isEditingThis = editingListId === lista.id
+
+                            return (
+                                <div 
+                                    key={lista.id} 
+                                    className={`rounded-2xl border transition-all p-4 flex flex-col justify-between gap-3 ${
+                                        cfg.selected 
+                                            ? 'bg-gradient-to-br from-cyan-50/40 via-white to-sky-50/30 border-cyan-400 shadow-sm ring-1 ring-cyan-200/50' 
+                                            : 'bg-slate-50/50 border-slate-200/80 hover:border-slate-300 hover:bg-white text-slate-500'
+                                    }`}
+                                >
+                                    <div>
+                                        <div className="flex items-start gap-3">
+                                            <label className="flex items-start gap-3 cursor-pointer select-none group flex-1">
+                                                <input 
+                                                    type="checkbox" 
+                                                    className="hidden"
+                                                    checked={cfg.selected}
+                                                    onChange={() => handleToggleLista(lista.id)}
+                                                />
+                                                <span className={`w-5 h-5 mt-0.5 rounded-lg border-2 flex items-center justify-center transition-all shrink-0 ${
+                                                    cfg.selected 
+                                                        ? 'bg-cyan-500 border-cyan-500 text-white shadow-xs' 
+                                                        : 'bg-white border-slate-300 group-hover:border-cyan-400'
+                                                }`}>
+                                                    {cfg.selected && (
+                                                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3.5} d="M5 13l4 4L19 7" />
+                                                        </svg>
+                                                    )}
+                                                </span>
+                                                <div className="flex-1 min-w-0">
+                                                    <div className={`text-sm leading-snug break-words ${cfg.selected ? 'font-black text-slate-900' : 'font-semibold text-slate-700'}`}>
+                                                        {lista.nombre}
+                                                    </div>
+                                                    {lista.descripcion && (
+                                                        <p className="text-[11px] text-slate-400 line-clamp-1 mt-0.5">
+                                                            {lista.descripcion}
+                                                        </p>
+                                                    )}
+                                                </div>
+                                            </label>
+                                        </div>
+
+                                        {/* Sucursal y cantidad de destinatarios */}
+                                        <div className="flex flex-wrap items-center gap-1.5 mt-2.5 ml-8">
+                                            {(() => {
+                                                let zonesCount = 0
+                                                try {
+                                                    if (lista.porSucursal) {
+                                                        const p = typeof lista.porSucursal === 'string' ? JSON.parse(lista.porSucursal) : lista.porSucursal
+                                                        zonesCount = Object.keys(p || {}).length
+                                                    }
+                                                } catch {}
+                                                if (zonesCount > 0) {
+                                                    return (
+                                                        <span className="px-2 py-0.5 bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-md text-[10px] font-bold">
+                                                            🏢 Multi-Sucursal ({zonesCount} zonas)
+                                                        </span>
+                                                    )
+                                                }
+                                                return null
+                                            })()}
+                                            {lista.sucursal?.nombre && (
+                                                <span className="px-2 py-0.5 bg-sky-50 text-sky-700 border border-sky-100 rounded-md text-[10px] font-bold">
+                                                    📍 {lista.sucursal.nombre}
+                                                </span>
+                                            )}
+                                            <span className="px-2 py-0.5 bg-slate-100 text-slate-600 rounded-md text-[10px] font-medium">
+                                                ✉️ {countEmails(lista.para)} PARA {lista.cc ? `• ${countEmails(lista.cc)} CC` : ''}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    {/* ZONA DE CONDICIÓN SI ESTÁ MARCADA */}
+                                    {cfg.selected && (
+                                        <div className="pt-2.5 border-t border-slate-100 space-y-2">
+                                            <div className="flex items-center justify-between gap-2">
+                                                {hasCondition ? (
+                                                    <div className="flex-1 min-w-0">
+                                                        <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-cyan-100 text-cyan-950 border border-cyan-300 rounded-xl text-[11px] font-mono font-bold max-w-full truncate" title={`Regla: Si <${cfg.condicionTag}> ${getOperatorLabel(cfg.condicionOperador)} "${cfg.condicionValor}"`}>
+                                                            <span>⚙️</span> Si &lt;{cfg.condicionTag}&gt; {getOperatorLabel(cfg.condicionOperador)} "{cfg.condicionValor}"
+                                                        </span>
+                                                    </div>
+                                                ) : (
+                                                    <span className="text-[11px] text-emerald-700 font-bold flex items-center gap-1">
+                                                        <span>🟢</span> Siempre (Sin filtro)
+                                                    </span>
+                                                )}
+
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setEditingListId(isEditingThis ? null : lista.id)}
+                                                    className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all border shrink-0 ${
+                                                        isEditingThis 
+                                                            ? 'bg-slate-900 text-white border-slate-900 shadow-xs' 
+                                                            : hasCondition
+                                                                ? 'bg-cyan-50 text-cyan-800 border-cyan-200 hover:bg-cyan-100'
+                                                                : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'
+                                                    }`}
+                                                >
+                                                    {isEditingThis ? 'Cerrar' : (hasCondition ? '✏️ Modificar' : '➕ Condición')}
+                                                </button>
+                                            </div>
+
+                                            {/* DRAWER AMPLIO DE CONFIGURACIÓN */}
+                                            {isEditingThis && (
+                                                <div className="p-3.5 bg-white border-2 border-cyan-400 rounded-2xl shadow-lg space-y-3 animate-in fade-in zoom-in-95 duration-150">
+                                                    <div className="flex items-center justify-between border-b border-cyan-100 pb-2">
+                                                        <span className="text-xs font-black text-cyan-950 flex items-center gap-1">
+                                                            <span>⚙️</span> Regla de Envío para: <span className="text-cyan-700 font-bold">"{lista.nombre}"</span>
+                                                        </span>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => setEditingListId(null)}
+                                                            className="text-slate-400 hover:text-slate-600 font-bold text-xs"
+                                                        >
+                                                            ✕
+                                                        </button>
+                                                    </div>
+
+                                                    <div className="space-y-2.5">
+                                                        {/* CAMPO 1: TAG */}
+                                                        <div>
+                                                            <div className="flex items-center justify-between mb-1">
+                                                                <label className="text-[11px] font-bold text-slate-700">
+                                                                    1. Etiqueta / Campo dinámico:
+                                                                </label>
+                                                                <span className="text-[10px] text-cyan-700 font-medium">Ej: &lt;TipoCambio&gt;</span>
+                                                            </div>
+                                                            <input
+                                                                type="text"
+                                                                list={`tags-${pantalla.id}`}
+                                                                placeholder="Escribe o selecciona etiqueta (ej: TipoCambio)"
+                                                                value={cfg.condicionTag}
+                                                                onChange={(e) => handleUpdateRule(lista.id, { condicionTag: e.target.value.replace(/[<>]/g, '') })}
+                                                                className="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-xl bg-slate-50/50 font-mono text-slate-900 font-bold focus:bg-white focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20"
+                                                            />
+                                                            <datalist id={`tags-${pantalla.id}`}>
+                                                                {keywords.map(kw => (
+                                                                    <option key={kw.tag} value={kw.tag.replace(/[<>]/g, '')}>{kw.desc}</option>
+                                                                ))}
+                                                            </datalist>
+
+                                                            {/* TAGS RÁPIDOS SUGERIDOS */}
+                                                            {keywords.length > 0 && (
+                                                                <div className="flex flex-wrap items-center gap-1 mt-1.5">
+                                                                    <span className="text-[10px] text-slate-400 font-bold">Sugeridos:</span>
+                                                                    {keywords.slice(0, 5).map(kw => {
+                                                                        const raw = kw.tag.replace(/[<>]/g, '')
+                                                                        return (
+                                                                            <button
+                                                                                key={kw.tag}
+                                                                                type="button"
+                                                                                onClick={() => handleUpdateRule(lista.id, { condicionTag: raw })}
+                                                                                className={`px-1.5 py-0.5 rounded text-[10px] font-mono font-bold transition-all border ${
+                                                                                    cfg.condicionTag.toLowerCase() === raw.toLowerCase()
+                                                                                        ? 'bg-cyan-600 text-white border-cyan-600'
+                                                                                        : 'bg-slate-100 text-slate-600 border-slate-200 hover:bg-cyan-50 hover:text-cyan-800'
+                                                                                }`}
+                                                                            >
+                                                                                {kw.tag}
+                                                                            </button>
+                                                                        )
+                                                                    })}
+                                                                </div>
+                                                            )}
+                                                        </div>
+
+                                                        {/* CAMPO 2: OPERADOR */}
+                                                        <div>
+                                                            <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                                                                2. Condición lógica (Operador):
+                                                            </label>
+                                                            <select
+                                                                value={cfg.condicionOperador}
+                                                                onChange={(e) => handleUpdateRule(lista.id, { condicionOperador: e.target.value })}
+                                                                className="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-xl bg-slate-50/50 font-medium text-slate-900 focus:bg-white focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20"
+                                                            >
+                                                                <option value="ALWAYS">🟢 Enviar Siempre (Sin filtro condicional)</option>
+                                                                <option value="EQUALS">Igual exactamente a (=)</option>
+                                                                <option value="CONTAINS">Contiene el texto indicado</option>
+                                                                <option value="NOT_EQUALS">Diferente de (≠)</option>
+                                                            </select>
+                                                        </div>
+
+                                                        {/* CAMPO 3: VALOR */}
+                                                        <div>
+                                                            <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                                                                3. Valor que debe cumplir:
+                                                            </label>
+                                                            <input
+                                                                type="text"
+                                                                placeholder="Ej: Comisión de Servicio, Anexos de Traslado..."
+                                                                value={cfg.condicionValor}
+                                                                onChange={(e) => handleUpdateRule(lista.id, { condicionValor: e.target.value })}
+                                                                disabled={cfg.condicionOperador === 'ALWAYS'}
+                                                                className="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-xl bg-slate-50/50 font-bold text-slate-900 disabled:opacity-40 disabled:bg-slate-100 focus:bg-white focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20"
+                                                            />
+
+                                                            {/* ATAJOS RÁPIDOS PARA CAMBIO DE RBD */}
+                                                            {pantalla.id === 'cambio-rbd-personal' && cfg.condicionOperador !== 'ALWAYS' && (
+                                                                <div className="flex flex-wrap items-center gap-1.5 mt-1.5">
+                                                                    <span className="text-[10px] text-slate-400 font-bold">Valores comunes:</span>
+                                                                    <button
+                                                                        type="button"
+                                                                        onClick={() => handleUpdateRule(lista.id, { condicionTag: 'TipoCambio', condicionValor: 'Comisión de Servicio' })}
+                                                                        className="px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-50 text-amber-800 border border-amber-200 hover:bg-amber-100"
+                                                                    >
+                                                                        Comisión de Servicio
+                                                                    </button>
+                                                                    <button
+                                                                        type="button"
+                                                                        onClick={() => handleUpdateRule(lista.id, { condicionTag: 'TipoCambio', condicionValor: 'Anexos de traslado' })}
+                                                                        className="px-2 py-0.5 rounded text-[10px] font-semibold bg-cyan-50 text-cyan-800 border border-cyan-200 hover:bg-cyan-100"
+                                                                    >
+                                                                        Anexos de traslado
+                                                                    </button>
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    </div>
+
+                                                    {/* EXPLICACIÓN HUMANA DE LA REGLA */}
+                                                    <div className="p-2.5 bg-cyan-50/80 border border-cyan-200 rounded-xl text-[11px] text-cyan-900 leading-snug">
+                                                        {cfg.condicionOperador === 'ALWAYS' || !cfg.condicionTag || !cfg.condicionValor ? (
+                                                            <span>💡 <b>Envío normal:</b> Esta lista recibirá correos siempre que se ejecute una acción en este módulo.</span>
+                                                        ) : (
+                                                            <span>
+                                                                💡 <b>Regla activa:</b> Esta lista recibirá correo <u>solo cuando</u> el tag <b>&lt;{cfg.condicionTag}&gt;</b> {getOperatorLabel(cfg.condicionOperador)} <b>"{cfg.condicionValor}"</b>.
+                                                            </span>
+                                                        )}
+                                                    </div>
+
+                                                    {/* ACCIONES DEL DRAWER */}
+                                                    <div className="flex items-center justify-between pt-1">
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => {
+                                                                handleUpdateRule(lista.id, { condicionTag: '', condicionOperador: 'ALWAYS', condicionValor: '' })
+                                                                setEditingListId(null)
+                                                            }}
+                                                            className="text-[11px] text-red-600 hover:underline font-bold"
+                                                        >
+                                                            Quitar regla (Enviar siempre)
+                                                        </button>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => setEditingListId(null)}
+                                                            className="px-4 py-1.5 bg-cyan-700 hover:bg-cyan-800 text-white rounded-xl text-xs font-bold shadow-xs transition-all hover:scale-102"
+                                                        >
+                                                            ✓ Aplicar Regla
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
                                     )}
-                                </span>
-                                <span className={`${selectedListas.includes(lista.id) ? 'font-medium text-gray-800' : 'text-gray-600'}`}>
-                                    {lista.nombre}
-                                </span>
-                            </label>
-                        ))}
+                                </div>
+                            )
+                        })}
                     </div>
                 )}
-            </td>
-            <td className="px-5 py-5 border-b border-gray-100 align-top">
-                <button 
-                    onClick={() => setActiva(!activa)}
-                    disabled={selectedListas.length === 0}
-                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${activa && selectedListas.length > 0 ? 'bg-cyan-500' : 'bg-gray-300'} ${selectedListas.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
-                >
-                    <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${activa && selectedListas.length > 0 ? 'translate-x-6' : 'translate-x-1'}`} />
-                </button>
-                <div className="text-xs text-gray-500 mt-1 font-medium select-none">
-                    {selectedListas.length === 0 ? 'Inactivo (Sin Listas)' : (activa ? 'Emitiendo Avisos' : 'Avisos Pausados')}
-                </div>
-            </td>
-            <td className="px-5 py-5 border-b border-gray-100 align-top">
-                <button
-                    onClick={() => onSave(pantalla.id, selectedListas, activa)}
-                    disabled={isSaving}
-                    className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-slate-800 to-slate-700 hover:from-slate-700 hover:to-slate-600 text-white font-medium rounded-xl shadow-sm hover:shadow-md transition-all disabled:opacity-50 disabled:cursor-not-allowed text-sm"
-                >
-                    {isSaving ? (
-                        <span className="animate-spin text-sm">↻</span>
-                    ) : (
-                        <span className="text-sm">💾</span>
-                    )}
-                    {isSaving ? 'Guardando...' : 'Guardar'}
-                </button>
-            </td>
-            <style jsx>{`
-                .custom-scrollbar::-webkit-scrollbar {
-                    width: 4px;
-                }
-                .custom-scrollbar::-webkit-scrollbar-track {
-                    background: transparent;
-                }
-                .custom-scrollbar::-webkit-scrollbar-thumb {
-                    background: #cbd5e1;
-                    border-radius: 4px;
-                }
-                .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-                    background: #94a3b8;
-                }
-            `}</style>
-        </tr>
+            </div>
+        </div>
     )
 }

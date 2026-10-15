@@ -169,9 +169,14 @@ export async function getAuditLogs(params: AuditFilterParams) {
             andConditions.push({ username: params.username })
         }
 
-        // Filtro por módulo
+        // Filtro por módulo (soporta coincidencia exacta o por categoría padre)
         if (params.modulo && params.modulo !== 'ALL') {
-            andConditions.push({ modulo: params.modulo })
+            andConditions.push({
+                OR: [
+                    { modulo: params.modulo },
+                    { modulo: { startsWith: params.modulo } }
+                ]
+            })
         }
 
         // Filtro por búsqueda general (detalle, acción, módulo o usuario)
@@ -254,3 +259,49 @@ export async function getAuditLogs(params: AuditFilterParams) {
         return { logs: [], total: 0, page: 1, totalPages: 1 }
     }
 }
+
+/**
+ * Obtiene la lista unificada de todos los módulos disponibles en la plataforma y registrados en auditoría.
+ */
+export async function getAuditModules(): Promise<string[]> {
+    const defaultModules = [
+        'Autenticación',
+        'Inicio',
+        'Tableros y Avances',
+        'Aplicaciones',
+        'Gestor Documental',
+        'Actas',
+        'Áreas -> Recursos Humanos',
+        'Áreas -> Logística',
+        'Áreas -> Operaciones',
+        'Áreas -> Manipuladoras',
+        'Áreas -> Calidad',
+        'Áreas -> Multas',
+        'Áreas -> Prev. de riesgos',
+        'Matriz de Riesgo',
+        'Formularios',
+        'Reportes',
+        'Mantenedor',
+        'Configuración',
+        'Colaboradores',
+        'Ayuda'
+    ]
+
+    try {
+        const dbRecords = await rawPrisma.auditLog.findMany({
+            select: { modulo: true },
+            distinct: ['modulo'],
+            orderBy: { modulo: 'asc' }
+        })
+
+        const dbModules = dbRecords.map(r => r.modulo).filter(Boolean) as string[]
+
+        // Unificar lista predefinida con módulos dinámicos de la base de datos
+        const merged = Array.from(new Set([...defaultModules, ...dbModules]))
+        return merged.sort((a, b) => a.localeCompare(b, 'es', { sensitivity: 'base' }))
+    } catch (error) {
+        console.error('Error al obtener módulos de auditoría:', error)
+        return defaultModules
+    }
+}
+

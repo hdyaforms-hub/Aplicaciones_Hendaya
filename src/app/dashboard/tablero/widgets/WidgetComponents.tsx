@@ -13,6 +13,7 @@ export type WidgetCategory =
     | 'Supervisión y Terreno'
     | 'Gestión y Auditoría'
     | 'KPIs Rápidos'
+    | 'Recursos Humanos y Personal'
 
 export interface WidgetCatalogItem {
     id: string
@@ -1049,8 +1050,371 @@ export function WidgetDescargosMultas({ data }: { data: any }) {
     )
 }
 
+// 26. Widget Recursos Humanos: Asistencia y Ausentismo
+export function WidgetAsistenciaPersonal({ data }: { data: any }) {
+    const asis = data?.asistenciaPersonal || {
+        totalAusencias: 28,
+        justificados: 19,
+        licencias: 12,
+        permisos: 5,
+        conDocumentoPct: 68,
+        criteriosTop: [
+            { criterio: 'Licencia Médica', cantidad: 12, color: '#EF4444' },
+            { criterio: 'Permiso Particular', cantidad: 5, color: '#F59E0B' },
+            { criterio: 'Falla Técnica Tablet', cantidad: 7, color: '#0EA5E9' },
+            { criterio: 'Sin Bam / Conectividad', cantidad: 4, color: '#8B5CF6' }
+        ]
+    }
+
+    return (
+        <div className="h-full flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-1.5">
+                <div>
+                    <span className="text-2xl font-bold text-white">{asis.totalAusencias}</span>
+                    <span className="text-xs text-slate-400 ml-1.5">Ausencias Reportadas</span>
+                </div>
+                <span className="px-2.5 py-1 text-xs rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-semibold">
+                    📄 {asis.conDocumentoPct}% con Respaldo
+                </span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2 my-1 text-center">
+                <div className="p-2 rounded-xl bg-red-950/40 border border-red-500/30">
+                    <span className="text-[11px] text-red-400 font-semibold">Licencias Médicas</span>
+                    <div className="text-base font-bold text-white mt-0.5">{asis.licencias}</div>
+                </div>
+                <div className="p-2 rounded-xl bg-amber-950/40 border border-amber-500/30">
+                    <span className="text-[11px] text-amber-400 font-semibold">Permisos con/sin goce</span>
+                    <div className="text-base font-bold text-white mt-0.5">{asis.permisos}</div>
+                </div>
+            </div>
+
+            <div className="space-y-1.5 my-1">
+                {asis.criteriosTop.slice(0, 3).map((item: any, idx: number) => (
+                    <div key={idx} className="flex items-center justify-between text-xs">
+                        <div className="flex items-center gap-1.5 truncate max-w-[170px]">
+                            <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: item.color || '#0EA5E9' }}></span>
+                            <span className="text-slate-300 truncate">{item.criterio}</span>
+                        </div>
+                        <span className="font-semibold text-white shrink-0">{item.cantidad} casos</span>
+                    </div>
+                ))}
+            </div>
+
+            <div className="text-[11px] text-slate-400 pt-2 border-t border-slate-800 flex justify-between">
+                <span>Justificación Geovictoria</span>
+                <span className="text-sky-400 font-medium">Asistencia RRHH</span>
+            </div>
+        </div>
+    )
+}
+
+// 27. Widget Recursos Humanos: Horas Extras (HHEE)
+export function WidgetHorasExtrasPersonal({ data }: { data: any }) {
+    const he = data?.horasExtras || {
+        totalHoras: 164.5,
+        montoTotal: 785400,
+        totalRegistros: 42,
+        aprobadas: 35,
+        pendientes: 7,
+        pctAprobacion: 84,
+        promedioAtrasoMin: 14
+    }
+
+    return (
+        <div className="h-full flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-1.5">
+                <div>
+                    <span className="text-2xl font-bold text-white">{he.totalHoras} hrs</span>
+                    <span className="text-xs text-slate-400 ml-1.5">HHEE Acumuladas</span>
+                </div>
+                <span className="px-2.5 py-1 text-xs rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-semibold">
+                    💰 ${(he.montoTotal || 0).toLocaleString('es-CL')}
+                </span>
+            </div>
+
+            <div className="w-full bg-slate-800 rounded-full h-2.5 overflow-hidden my-1">
+                <div
+                    className="bg-gradient-to-r from-cyan-500 to-emerald-400 h-2.5 rounded-full"
+                    style={{ width: `${Math.min(100, Math.max(0, he.pctAprobacion))}%` }}
+                ></div>
+            </div>
+
+            <div className="grid grid-cols-3 gap-1.5 my-1 text-center">
+                <div className="p-2 rounded-xl bg-slate-800/80 border border-slate-700/60">
+                    <span className="text-[10px] text-slate-400 block">Aprobadas</span>
+                    <span className="text-sm font-bold text-emerald-400">{he.aprobadas}</span>
+                </div>
+                <div className="p-2 rounded-xl bg-slate-800/80 border border-slate-700/60">
+                    <span className="text-[10px] text-slate-400 block">En Revisión</span>
+                    <span className="text-sm font-bold text-amber-400">{he.pendientes}</span>
+                </div>
+                <div className="p-2 rounded-xl bg-slate-800/80 border border-slate-700/60">
+                    <span className="text-[10px] text-slate-400 block">Atraso Prom.</span>
+                    <span className="text-sm font-bold text-white">{he.promedioAtrasoMin}m</span>
+                </div>
+            </div>
+
+            <div className="text-[11px] text-slate-400 pt-2 border-t border-slate-800 flex justify-between">
+                <span>{he.totalRegistros} turnos computados</span>
+                <span className="text-cyan-400 font-medium">HHEE Aprobación</span>
+            </div>
+        </div>
+    )
+}
+
+// 28. Widget Recursos Humanos: Dotación de Personal
+export function WidgetDotacionPersonal({ data }: { data: any }) {
+    const dot = data?.dotacionPersonal || {
+        totalColaboradores: 415,
+        colegiosCubiertos: 188,
+        manipuladoras: 338,
+        choferes: 22,
+        maestrosAuxiliares: 40,
+        otrosCargos: 15,
+        distribucionCargos: [
+            { cargo: 'Manipuladoras', cantidad: 338 },
+            { cargo: 'Auxiliares / Maestros', cantidad: 40 },
+            { cargo: 'Choferes / Transporte', cantidad: 22 },
+            { cargo: 'Otros / Administrativos', cantidad: 15 }
+        ]
+    }
+
+    return (
+        <div className="h-full flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-1.5">
+                <div>
+                    <span className="text-2xl font-bold text-white">{dot.totalColaboradores}</span>
+                    <span className="text-xs text-slate-400 ml-1.5">Colaboradores Activos</span>
+                </div>
+                <span className="px-2.5 py-1 text-xs rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 font-semibold">
+                    🏫 {dot.colegiosCubiertos} RBDs
+                </span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2 my-1">
+                <div className="p-2.5 rounded-xl bg-slate-800/70 border border-slate-700/60 flex items-center justify-between">
+                    <div>
+                        <span className="text-[11px] text-slate-400 block">👩‍🍳 Manipuladoras</span>
+                        <span className="text-base font-bold text-white">{dot.manipuladoras}</span>
+                    </div>
+                    <span className="text-xs text-emerald-400 font-semibold">{Math.round((dot.manipuladoras / (dot.totalColaboradores || 1)) * 100)}%</span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-800/70 border border-slate-700/60 flex items-center justify-between">
+                    <div>
+                        <span className="text-[11px] text-slate-400 block">🚛 Choferes</span>
+                        <span className="text-base font-bold text-white">{dot.choferes}</span>
+                    </div>
+                    <span className="text-xs text-sky-400 font-semibold">{Math.round((dot.choferes / (dot.totalColaboradores || 1)) * 100)}%</span>
+                </div>
+            </div>
+
+            <div className="p-2 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-between text-xs">
+                <span className="text-slate-400">Auxiliares, Maestros y Otros:</span>
+                <span className="font-bold text-white">{dot.maestrosAuxiliares + dot.otrosCargos} personas</span>
+            </div>
+
+            <div className="text-[11px] text-slate-400 pt-2 border-t border-slate-800 flex justify-between">
+                <span>Nómina activa y asignaciones</span>
+                <span className="text-purple-400 font-medium">Dotación Hendaya</span>
+            </div>
+        </div>
+    )
+}
+
+// 29. Widget Gestión de Formularios Dinámicos
+export function WidgetFormulariosDinamicos({ data }: { data: any }) {
+    const f = data?.formulariosDinamicos || {
+        totalFormularios: 8,
+        activos: 8,
+        totalRespuestas: 142,
+        formulariosPopulares: [
+            { titulo: 'Inspección de Equipos y Sanitización', respuestas: 64 },
+            { titulo: 'Verificación de Bodega y Stock', respuestas: 48 },
+            { titulo: 'Encuesta de Satisfacción Colegios', respuestas: 30 }
+        ]
+    }
+
+    return (
+        <div className="h-full flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-1.5">
+                <div>
+                    <span className="text-2xl font-bold text-white">{f.totalRespuestas}</span>
+                    <span className="text-xs text-slate-400 ml-1.5">Respuestas en Terreno</span>
+                </div>
+                <span className="px-2.5 py-1 text-xs rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-semibold">
+                    📝 {f.totalFormularios} Formularios
+                </span>
+            </div>
+
+            <div className="space-y-1.5 my-1">
+                {f.formulariosPopulares.map((fp: any, idx: number) => (
+                    <div key={idx} className="p-2 rounded-xl bg-slate-800/60 border border-slate-700/50 flex items-center justify-between text-xs">
+                        <span className="text-slate-200 font-medium truncate max-w-[200px]" title={fp.titulo}>
+                            {fp.titulo}
+                        </span>
+                        <span className="font-bold text-indigo-400 shrink-0 ml-2">{fp.respuestas} envíos</span>
+                    </div>
+                ))}
+            </div>
+
+            <div className="text-[11px] text-slate-400 pt-2 border-t border-slate-800 flex justify-between">
+                <span>Captura móvil en terreno</span>
+                <span className="text-indigo-400 font-medium">Formularios Dinámicos</span>
+            </div>
+        </div>
+    )
+}
+
+// 30. Widget Actas de Supervisión JUNAEB
+export function WidgetActasJunaeb({ data }: { data: any }) {
+    const act = data?.actasJunaeb || {
+        totalActas: 36,
+        firmadas: 29,
+        enBorrador: 7,
+        plantillasActivas: 6,
+        distribucionPlantilla: [
+            { nombre: 'Acta Supervisión Comedor', cantidad: 18 },
+            { nombre: 'Acta Bodega y Alimentos', cantidad: 11 },
+            { nombre: 'Acta Higiene y Personal', cantidad: 7 }
+        ]
+    }
+
+    return (
+        <div className="h-full flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-1.5">
+                <div>
+                    <span className="text-2xl font-bold text-white">{act.totalActas}</span>
+                    <span className="text-xs text-slate-400 ml-1.5">Actas Emitidas</span>
+                </div>
+                <span className="px-2.5 py-1 text-xs rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-semibold">
+                    ✍️ {act.firmadas} Firmadas
+                </span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2 my-1">
+                <div className="p-2 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-center">
+                    <span className="text-[11px] text-emerald-400 block">Firmadas Digitalmente</span>
+                    <span className="text-lg font-bold text-white">{act.firmadas}</span>
+                </div>
+                <div className="p-2 rounded-xl bg-slate-800/80 border border-slate-700/60 text-center">
+                    <span className="text-[11px] text-slate-400 block">En Borrador</span>
+                    <span className="text-lg font-bold text-amber-400">{act.enBorrador}</span>
+                </div>
+            </div>
+
+            <div className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-xs flex items-center justify-between">
+                <span className="text-slate-400">Plantillas Oficiales Activas:</span>
+                <span className="font-bold text-white">{act.plantillasActivas} formatos</span>
+            </div>
+
+            <div className="text-[11px] text-slate-400 pt-2 border-t border-slate-800 flex justify-between">
+                <span>Fiscalización y respaldo formal</span>
+                <span className="text-emerald-400 font-medium">Actas JUNAEB</span>
+            </div>
+        </div>
+    )
+}
+
+// 31. Widget Anonimizador de Datos Personales
+export function WidgetAnonimizador({ data }: { data: any }) {
+    const anon = data?.anonimizador || {
+        registrosProtegidos: 415,
+        algoritmoSeguro: 'AES-256-CBC + SHA-256',
+        cumplimientoNormativo: 100
+    }
+
+    return (
+        <div className="h-full flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-1.5">
+                <div>
+                    <span className="text-2xl font-bold text-white">{anon.registrosProtegidos}</span>
+                    <span className="text-xs text-slate-400 ml-1.5">RUTs Protegidos</span>
+                </div>
+                <span className="px-2.5 py-1 text-xs rounded-full bg-teal-500/20 text-teal-300 border border-teal-500/30 font-semibold">
+                    🔒 Cifrado AES-256
+                </span>
+            </div>
+
+            <div className="p-3 rounded-2xl bg-teal-950/30 border border-teal-500/30 my-1">
+                <div className="flex items-center gap-2 mb-1">
+                    <span className="text-teal-400 text-sm">🛡️</span>
+                    <span className="text-xs font-bold text-teal-300">Protección de Datos Personales</span>
+                </div>
+                <p className="text-[11px] text-slate-300 leading-relaxed">
+                    Nóminas y datos personales de manipuladoras resguardados mediante hashes irreversibles y cifrado en reposo.
+                </p>
+            </div>
+
+            <div className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-xs flex items-center justify-between">
+                <span className="text-slate-400">Cumplimiento Normativo:</span>
+                <span className="font-bold text-emerald-400">100% Blindado</span>
+            </div>
+
+            <div className="text-[11px] text-slate-400 pt-2 border-t border-slate-800 flex justify-between">
+                <span>Módulo de Colaboradores</span>
+                <span className="text-teal-400 font-medium">Anonimizador</span>
+            </div>
+        </div>
+    )
+}
+
 // CATÁLOGO MAESTRO DE WIDGETS
 export const AVAILABLE_WIDGETS_CATALOG: WidgetCatalogItem[] = [
+    {
+        id: 'asistencia-personal',
+        title: 'Ausentismo y Asistencia de Personal',
+        category: 'Recursos Humanos y Personal',
+        description: 'Monitoreo de inasistencias reportadas, licencias médicas, permisos y justificaciones documentadas.',
+        icon: '👥',
+        badge: 'RRHH',
+        component: WidgetAsistenciaPersonal
+    },
+    {
+        id: 'horas-extras-personal',
+        title: 'Horas Extras y Atrasos (HHEE)',
+        category: 'Recursos Humanos y Personal',
+        description: 'Total de horas extras acumuladas, monto proyectado a pagar y porcentaje aprobado vs rechazado.',
+        icon: '⏱️',
+        badge: 'HHEE',
+        component: WidgetHorasExtrasPersonal
+    },
+    {
+        id: 'dotacion-personal',
+        title: 'Dotación Activa de Personal',
+        category: 'Recursos Humanos y Personal',
+        description: 'Conteo de colaboradores activos por cargo (Manipuladoras, Choferes, Maestros) y cobertura por RBDs.',
+        icon: '📋',
+        badge: 'Dotación',
+        component: WidgetDotacionPersonal
+    },
+    {
+        id: 'formularios-dinamicos',
+        title: 'Formularios Dinámicos y Encuestas',
+        category: 'Gestión y Auditoría',
+        description: 'Seguimiento de formularios activos, respuestas recibidas y participación en terreno.',
+        icon: '📝',
+        badge: 'Formularios',
+        component: WidgetFormulariosDinamicos
+    },
+    {
+        id: 'actas-junaeb-generadas',
+        title: 'Generación y Descarga de Actas JUNAEB',
+        category: 'Supervisión y Terreno',
+        description: 'Actas oficiales emitidas, estado de firmas digitales y plantillas de supervisión activas.',
+        icon: '📄',
+        badge: 'Actas',
+        component: WidgetActasJunaeb
+    },
+    {
+        id: 'anonimizador-planillas',
+        title: 'Anonimizador de Datos Personales',
+        category: 'Gestión y Auditoría',
+        description: 'Control de cifrado y anonimización de nóminas para cumplimiento de ley de datos personales.',
+        icon: '🔒',
+        badge: 'Seguridad',
+        component: WidgetAnonimizador
+    },
     {
         id: 'kpis-ejecutivo',
         title: 'KPIs Ejecutivos Consolidados',

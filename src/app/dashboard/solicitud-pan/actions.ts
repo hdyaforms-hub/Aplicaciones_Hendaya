@@ -3,6 +3,7 @@
 import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import nodemailer from 'nodemailer'
+import { resolveListaDestinatarios } from '@/lib/distribution-lists'
 import crypto from 'crypto'
 
 const ENCRYPTION_KEY = crypto.createHash('sha256').update(String(process.env.SESSION_SECRET || 'super-secret-key-change-me')).digest('base64').substring(0, 32)
@@ -163,42 +164,29 @@ async function processNotificaciones(solicitud: any, nombreSucursalColegio: stri
 
         if (configs.length === 0) return { warning: 'No hay notificaciones activas configuradas en el sistema para esta acción.' }; // No hay notificaciones configuradas o están desactivadas
 
-        /**
-         * Lógica de filtrado:
-         * Si la Lista de Correo tiene una sucursal específica, solo enviamos si coincide
-         * con la sucursal del colegio (nombreSucursalColegio).
-         * Si la Lista de Correo es "Global" (no tiene sucursal asociada), se envía siempre.
-         */
-        const destinos = configs
-            .map(c => c.listaCorreo)
-            .filter(lista => !lista.sucursalId || lista.sucursal?.nombre === nombreSucursalColegio)
+        let correosTo: string[] = []
+        let correosCc: string[] = []
 
-        if (destinos.length === 0) return { warning: `No hay listas de correo asignadas para la sucursal "${nombreSucursalColegio || 'Global'}".` }; // No aplicaba ninguna lista a esta sucursal
+        configs.forEach(c => {
+            const resolved = resolveListaDestinatarios(c.listaCorreo, {
+                nombre: nombreSucursalColegio
+            })
+            correosTo.push(...resolved.to)
+            correosCc.push(...resolved.cc)
+        })
+
+        // Eliminar duplicados
+        correosTo = Array.from(new Set(correosTo))
+        correosCc = Array.from(new Set(correosCc))
+
+        if (correosTo.length === 0) return { warning: `No hay listas de correo con destinatarios asignados para la sucursal "${nombreSucursalColegio || 'Global'}".` };
 
         // Obtener la plantilla configurada
         const plantilla = await prisma.plantillaCorreo.findUnique({
             where: { codigoPantalla: 'solicitud-pan' }
         });
 
-        console.log(`[SIMULACIÓN CORREO] Se preparan correos de 'Solicitud de Pan' para ${destinos.length} listas.`);
-        
-        let correosTo: string[] = []
-        let correosCc: string[] = []
-
-        destinos.forEach(lista => {
-            try {
-                const para = JSON.parse(lista.para || '[]');
-                const cc = JSON.parse(lista.cc || '[]');
-                if (Array.isArray(para)) correosTo.push(...para)
-                if (Array.isArray(cc)) correosCc.push(...cc)
-            } catch (e) {
-                console.error("Error parseando correos de lista:", lista.nombre)
-            }
-        });
-
-        // Eliminar duplicados
-        correosTo = Array.from(new Set(correosTo))
-        correosCc = Array.from(new Set(correosCc))
+        console.log(`[SIMULACIÓN CORREO] Se preparan correos de 'Solicitud de Pan' para ${configs.length} listas.`);
 
         // Parse and Replace Template variables
         let subject = plantilla?.asunto || "Solicitud de Pan del RBD N° <RBD> - Solicitud: <Usuario> en Suc: <Sucursal>";

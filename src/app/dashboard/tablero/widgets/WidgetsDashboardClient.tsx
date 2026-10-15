@@ -123,11 +123,25 @@ const SYSTEM_PRESETS = [
         slots: ['resolucion-sanitaria', 'calidad-transporte-higiene', 'calidad-higiene-personal', 'verificador-temperaturas']
     },
     {
+        id: 'sys-recursos-humanos',
+        name: '👥 Vista Recursos Humanos y Dotación',
+        description: 'Monitoreo integral de Ausentismo, Horas Extras (HHEE), Dotación activa de personal y Capacitaciones.',
+        layoutType: 'grid-2x2' as LayoutSkeletonType,
+        slots: ['asistencia-personal', 'horas-extras-personal', 'dotacion-personal', 'capacitaciones-personal']
+    },
+    {
+        id: 'sys-formularios-gestion',
+        name: '📝 Vista Formularios Dinámicos y Terreno',
+        description: 'Formularios móviles, respuestas recibidas, generación de Actas JUNAEB y seguridad de planillas.',
+        layoutType: 'grid-2x2' as LayoutSkeletonType,
+        slots: ['formularios-dinamicos', 'actas-junaeb-generadas', 'anonimizador-planillas', 'auditoria-actividad']
+    },
+    {
         id: 'sys-nuevos-modulos',
         name: '🚀 Vista Lo Último Fabricado',
-        description: 'Resolución Sanitaria, Despacho Logístico, Prevención de Riesgos, Capacitaciones, Gramaje y Descargos.',
+        description: 'Ausentismo RRHH, Horas Extras, Dotación, Formularios Dinámicos, Actas JUNAEB y Despacho.',
         layoutType: 'grid-3x2' as LayoutSkeletonType,
-        slots: ['resolucion-sanitaria', 'logistica-despacho', 'prevencion-gravedad-preparacion', 'capacitaciones-personal', 'captura-gramaje', 'descargos-multas-ee']
+        slots: ['asistencia-personal', 'horas-extras-personal', 'dotacion-personal', 'formularios-dinamicos', 'actas-junaeb-generadas', 'logistica-despacho']
     }
 ]
 
@@ -433,6 +447,7 @@ export default function WidgetsDashboardClient({ initialLayouts, initialData, cu
     // Categorías del catálogo
     const categories: { key: string; label: string }[] = [
         { key: 'ALL', label: 'Todos los Widgets' },
+        { key: 'Recursos Humanos y Personal', label: 'Recursos Humanos y Personal' },
         { key: 'KPIs Rápidos', label: 'KPIs Rápidos' },
         { key: 'Abastecimiento y Logística', label: 'Abastecimiento y Logística' },
         { key: 'Operaciones y Mantenimiento', label: 'Operaciones y Mantenimiento' },

@@ -34,11 +34,43 @@ function getModuleInfoFromPath(path: string): { modulo: string; detalle: string 
     if (path.startsWith('/dashboard/solicitud-gas')) return { modulo: 'Aplicaciones', detalle: 'Accedió a Solicitud de Gas' }
     if (path.startsWith('/dashboard/retiro-saldos')) return { modulo: 'Aplicaciones', detalle: 'Accedió a Retiro de Saldos' }
 
+    // Gestor Documental
+    if (path.startsWith('/dashboard/documentos')) return { modulo: 'Gestor Documental', detalle: 'Accedió a Gestor Documental' }
+
+    // Actas
+    if (path.startsWith('/dashboard/actas')) {
+        if (path.includes('/generar-acta')) return { modulo: 'Actas', detalle: 'Accedió a Generar Acta JUNAEB' }
+        if (path.includes('/descargar-actas')) return { modulo: 'Actas', detalle: 'Accedió a Descargar Actas' }
+        return { modulo: 'Actas', detalle: 'Accedió a Actas' }
+    }
+
+    // Áreas -> Recursos Humanos (Personal)
+    if (path.startsWith('/dashboard/areas/personal')) {
+        if (path.includes('/asistencia/cambio-rbd')) return { modulo: 'Áreas -> Recursos Humanos', detalle: 'Accedió a Cambio de RBD (Personal)' }
+        if (path.includes('/asistencia/horas-extras') || path.includes('/horas-extras')) return { modulo: 'Áreas -> Recursos Humanos', detalle: 'Accedió a Horas Extras (HHEE)' }
+        if (path.includes('/asistencia')) return { modulo: 'Áreas -> Recursos Humanos', detalle: 'Accedió a Ausentismo y Asistencia' }
+        if (path.includes('/dotacion')) return { modulo: 'Áreas -> Recursos Humanos', detalle: 'Accedió a Dotación de Personal' }
+        if (path.includes('/administracion')) return { modulo: 'Áreas -> Recursos Humanos', detalle: 'Accedió a Administración de RRHH' }
+        if (path.includes('/carga-masiva')) return { modulo: 'Áreas -> Recursos Humanos', detalle: 'Accedió a Carga Masiva de RRHH' }
+        return { modulo: 'Áreas -> Recursos Humanos', detalle: 'Accedió a Recursos Humanos' }
+    }
+
+    // Áreas -> Logística
+    if (path.startsWith('/dashboard/areas/logistica')) {
+        if (path.includes('/tablero')) return { modulo: 'Áreas -> Logística', detalle: 'Accedió a Tablero de Despacho Logístico' }
+        if (path.includes('/rutas')) return { modulo: 'Áreas -> Logística', detalle: 'Accedió a Historial de Rutas de Despacho' }
+        if (path.includes('/metricas')) return { modulo: 'Áreas -> Logística', detalle: 'Accedió a Métricas de Despacho' }
+        if (path.includes('/configuracion')) return { modulo: 'Áreas -> Logística', detalle: 'Accedió a Configuración Logística' }
+        if (path.includes('/integraciones')) return { modulo: 'Áreas -> Logística', detalle: 'Accedió a Integraciones (n8n)' }
+        return { modulo: 'Áreas -> Logística', detalle: 'Accedió a Logística' }
+    }
+
     // Áreas
     if (path.startsWith('/dashboard/areas/operaciones/elementos-esenciales')) return { modulo: 'Áreas -> Operaciones', detalle: 'Accedió a Carga de Elementos Esenciales' }
     if (path.startsWith('/dashboard/areas/operaciones/descargas-pae')) return { modulo: 'Áreas -> Operaciones', detalle: 'Accedió a Descargas PAE Online' }
     if (path.startsWith('/dashboard/areas/operaciones/cargar-pae')) return { modulo: 'Áreas -> Operaciones', detalle: 'Accedió a Cargar PaeOnline' }
     if (path.startsWith('/dashboard/areas/manipuladoras')) return { modulo: 'Áreas -> Manipuladoras', detalle: 'Accedió a Cálculo de Gramaje' }
+    if (path.startsWith('/dashboard/areas/calidad/resolucion-sanitaria')) return { modulo: 'Áreas -> Calidad', detalle: 'Accedió a Resolución Sanitaria' }
     if (path.startsWith('/dashboard/areas/calidad/retorno-productos')) return { modulo: 'Áreas -> Calidad', detalle: 'Accedió a Retirada de Productos' }
     if (path.startsWith('/dashboard/areas/calidad/verificador-temperaturas')) return { modulo: 'Áreas -> Calidad', detalle: 'Accedió a Verificador de Temperaturas de Productos' }
     if (path.startsWith('/dashboard/areas/calidad/subir-actas-pae')) return { modulo: 'Áreas -> Calidad', detalle: 'Accedió a Subir Actas Estándar PAE' }
