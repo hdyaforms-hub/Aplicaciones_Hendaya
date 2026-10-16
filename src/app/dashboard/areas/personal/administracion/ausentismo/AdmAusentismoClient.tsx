@@ -33,9 +33,12 @@ import {
     AlertCircle,
     CheckCircle2,
     ChevronRight,
-    Filter
+    Filter,
+    Eye,
+    Paperclip
 } from 'lucide-react'
 import * as xlsx from 'xlsx'
+import DocumentoPreviewModal, { DocumentoPreviewData } from '@/components/DocumentoPreviewModal'
 
 interface CriterioItem {
     id: string
@@ -70,6 +73,9 @@ export default function AdmAusentismoClient({
 }: AdmAusentismoClientProps) {
     // Pestañas activas: 'cargas' (Historial Documentos) | 'registros' (Historial de Registros)
     const [tabActivo, setTabActivo] = useState<'cargas' | 'registros'>('cargas')
+
+    // Estado del modal de vista previa de documentos
+    const [previewDoc, setPreviewDoc] = useState<DocumentoPreviewData | null>(null)
 
     const [registros, setRegistros] = useState<AdmAsistenciaRegistroDTO[]>(initialRegistros)
     const [cargas, setCargas] = useState<CargaHistorialDTO[]>(initialCargas)
@@ -362,6 +368,7 @@ export default function AdmAusentismoClient({
             'Estado Período': r.estado,
             'Planilla Origen': r.cargaNombreArchivo || 'Sin Carga',
             'Criterio Ausencia': r.criterioNombre || 'SIN CRITERIO',
+            'Documento Respaldo': r.documentoNombre || (r.documentoUrl ? 'Sí' : 'No'),
             'Cargado Por': r.creadoPor,
             'Fecha Carga': r.fechaCreacion ? new Date(r.fechaCreacion).toLocaleString('es-CL') : '',
             'Actualizado Por': r.actualizadoPor || '',
@@ -1030,6 +1037,7 @@ export default function AdmAusentismoClient({
                                                     {renderSortIconRegistros('criterioNombre')}
                                                 </div>
                                             </th>
+                                            <th className="py-3 px-3 text-center">Respaldo / Adjunto</th>
                                             <th className="py-3 px-3">Trazabilidad / Auditoría</th>
                                         </tr>
                                     </thead>
@@ -1116,6 +1124,35 @@ export default function AdmAusentismoClient({
                                                                     </span>
                                                                 )}
                                                             </div>
+                                                        )}
+                                                    </td>
+
+                                                    {/* Documento Respaldo */}
+                                                    <td className="py-3 px-3 text-center whitespace-nowrap">
+                                                        {r.documentoUrl ? (
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => setPreviewDoc({
+                                                                    url: r.documentoUrl!,
+                                                                    nombre: r.documentoNombre || 'Documento_Respaldo',
+                                                                    colaborador: r.nombreCompleto,
+                                                                    rut: r.rut,
+                                                                    rbd: r.rbd,
+                                                                    establecimiento: r.establecimiento,
+                                                                    fecha: r.fecha,
+                                                                    criterio: r.criterioNombre,
+                                                                    criterioColor: r.criterioColor,
+                                                                    subidoPor: r.documentoSubidoPor,
+                                                                    subidoAt: r.documentoSubidoAt
+                                                                })}
+                                                                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl text-xs font-bold bg-cyan-50 hover:bg-cyan-100 text-cyan-800 border border-cyan-200 transition-all shadow-2xs hover:scale-[1.02] cursor-pointer"
+                                                                title={`Vista previa: ${r.documentoNombre || 'Ver Respaldo'}`}
+                                                            >
+                                                                <Eye className="w-3.5 h-3.5 text-cyan-600" />
+                                                                <span className="truncate max-w-[120px]">{r.documentoNombre || 'Ver Respaldo'}</span>
+                                                            </button>
+                                                        ) : (
+                                                            <span className="text-[11px] text-gray-400 font-medium italic">Sin adjunto</span>
                                                         )}
                                                     </td>
 
@@ -1240,6 +1277,12 @@ export default function AdmAusentismoClient({
                     </div>
                 </div>
             )}
+
+            {/* Modal de Vista Previa de Documento Adjunto */}
+            <DocumentoPreviewModal
+                documento={previewDoc}
+                onClose={() => setPreviewDoc(null)}
+            />
         </div>
     )
 }

@@ -27,10 +27,12 @@ import {
     FileText,
     Trash2,
     AlertCircle,
-    Lock
+    Lock,
+    Eye
 } from 'lucide-react'
 import Link from 'next/link'
 import * as xlsx from 'xlsx'
+import DocumentoPreviewModal, { DocumentoPreviewData } from '@/components/DocumentoPreviewModal'
 
 interface CriterioItem {
     id: string
@@ -120,6 +122,9 @@ export default function AsistenciaClient({
     const [archivoAdjunto, setArchivoAdjunto] = useState<File | null>(null)
     const [uploadingDoc, setUploadingDoc] = useState(false)
     const [docError, setDocError] = useState<string | null>(null)
+
+    // Estado del modal de vista previa de documentos
+    const [previewDoc, setPreviewDoc] = useState<DocumentoPreviewData | null>(null)
 
     // Establecimientos filtrados para autocompletado inteligente
     const establecimientosSugeridos = useMemo(() => {
@@ -990,39 +995,72 @@ export default function AsistenciaClient({
                                                         )}
                                                     </div>
 
-                                                    {/* Indicador de documento adjunto */}
+                                                    {/* Indicador y botón de vista previa de documento adjunto */}
                                                     {r.documentoUrl ? (
-                                                        <div className="flex items-center justify-between text-[11px] bg-cyan-50/70 border border-cyan-200/60 rounded-lg px-2 py-1 text-cyan-900">
-                                                            <a
-                                                                href={r.documentoUrl}
-                                                                target="_blank"
-                                                                rel="noopener noreferrer"
-                                                                className="flex items-center gap-1.5 hover:underline font-semibold truncate max-w-[190px]"
-                                                                title={`Ver documento: ${r.documentoNombre || 'Respaldo'}`}
+                                                        <div className="flex items-center justify-between text-[11px] bg-cyan-50/80 border border-cyan-200/80 rounded-lg px-2 py-1 text-cyan-950 gap-1.5 shadow-2xs">
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => setPreviewDoc({
+                                                                    url: r.documentoUrl!,
+                                                                    nombre: r.documentoNombre || 'Documento_Respaldo',
+                                                                    colaborador: r.nombreCompleto,
+                                                                    rut: r.rut,
+                                                                    rbd: r.rbd,
+                                                                    establecimiento: r.establecimiento,
+                                                                    fecha: r.fecha,
+                                                                    criterio: r.criterioNombre,
+                                                                    criterioColor: r.criterioColor,
+                                                                    subidoPor: r.documentoSubidoPor,
+                                                                    subidoAt: r.documentoSubidoAt
+                                                                })}
+                                                                className="flex items-center gap-1.5 hover:text-cyan-700 hover:underline font-bold truncate max-w-[170px] text-left transition-colors"
+                                                                title={`Vista previa del documento: ${r.documentoNombre || 'Respaldo'}`}
                                                             >
                                                                 <Paperclip className="w-3.5 h-3.5 text-cyan-700 flex-shrink-0" />
                                                                 <span className="truncate">{r.documentoNombre || 'Ver Respaldo'}</span>
-                                                            </a>
-                                                            {isAdmin && (
-                                                                <div className="flex items-center gap-1">
-                                                                    <button
-                                                                        type="button"
-                                                                        onClick={() => openModalAdjuntoDirecto(r)}
-                                                                        className="text-cyan-700 hover:text-cyan-900 p-0.5 hover:bg-cyan-100 rounded"
-                                                                        title="Reemplazar archivo (Solo Admin)"
-                                                                    >
-                                                                        <UploadCloud className="w-3 h-3" />
-                                                                    </button>
-                                                                    <button
-                                                                        type="button"
-                                                                        onClick={() => handleEliminarDocumento(r.id)}
-                                                                        className="text-rose-500 hover:text-rose-700 p-0.5 hover:bg-rose-50 rounded"
-                                                                        title="Eliminar archivo (Solo Admin)"
-                                                                    >
-                                                                        <Trash2 className="w-3 h-3" />
-                                                                    </button>
-                                                                </div>
-                                                            )}
+                                                            </button>
+                                                            <div className="flex items-center gap-1 shrink-0">
+                                                                <button
+                                                                    type="button"
+                                                                    onClick={() => setPreviewDoc({
+                                                                        url: r.documentoUrl!,
+                                                                        nombre: r.documentoNombre || 'Documento_Respaldo',
+                                                                        colaborador: r.nombreCompleto,
+                                                                        rut: r.rut,
+                                                                        rbd: r.rbd,
+                                                                        establecimiento: r.establecimiento,
+                                                                        fecha: r.fecha,
+                                                                        criterio: r.criterioNombre,
+                                                                        criterioColor: r.criterioColor,
+                                                                        subidoPor: r.documentoSubidoPor,
+                                                                        subidoAt: r.documentoSubidoAt
+                                                                    })}
+                                                                    className="p-1 text-cyan-700 hover:text-cyan-950 hover:bg-cyan-100 rounded transition-colors"
+                                                                    title="Abrir Vista Previa"
+                                                                >
+                                                                    <Eye className="w-3.5 h-3.5" />
+                                                                </button>
+                                                                {isAdmin && (
+                                                                    <>
+                                                                        <button
+                                                                            type="button"
+                                                                            onClick={() => openModalAdjuntoDirecto(r)}
+                                                                            className="text-cyan-700 hover:text-cyan-900 p-1 hover:bg-cyan-100 rounded transition-colors"
+                                                                            title="Reemplazar archivo (Solo Admin)"
+                                                                        >
+                                                                            <UploadCloud className="w-3 h-3" />
+                                                                        </button>
+                                                                        <button
+                                                                            type="button"
+                                                                            onClick={() => handleEliminarDocumento(r.id)}
+                                                                            className="text-rose-500 hover:text-rose-700 p-1 hover:bg-rose-50 rounded transition-colors"
+                                                                            title="Eliminar archivo (Solo Admin)"
+                                                                        >
+                                                                            <Trash2 className="w-3 h-3" />
+                                                                        </button>
+                                                                    </>
+                                                                )}
+                                                            </div>
                                                         </div>
                                                     ) : (
                                                         // Si el criterio actual solicita documento y aún no tiene
@@ -1226,6 +1264,12 @@ export default function AsistenciaClient({
                     </div>
                 </div>
             )}
+
+            {/* Modal de Vista Previa de Documento Adjunto */}
+            <DocumentoPreviewModal
+                documento={previewDoc}
+                onClose={() => setPreviewDoc(null)}
+            />
         </div>
     )
 }
