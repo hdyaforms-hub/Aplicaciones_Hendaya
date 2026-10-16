@@ -205,7 +205,34 @@ export async function POST(req: NextRequest) {
                 }
 
                 // Format data
-                const fechaDate = cabecera.Fecha_Supervision ? new Date(cabecera.Fecha_Supervision) : null;
+                const parsePaeDate = (dateStr: string | null | undefined): Date | null => {
+                    if (!dateStr) return null;
+                    const cleanStr = String(dateStr).trim();
+                    if (!cleanStr) return null;
+
+                    // Match YYYY-MM-DD or YYYY/MM/DD
+                    const isoMatch = cleanStr.match(/^(\d{4})[-\/.](\d{1,2})[-\/.](\d{1,2})/);
+                    if (isoMatch) {
+                        const y = parseInt(isoMatch[1], 10);
+                        const m = parseInt(isoMatch[2], 10);
+                        const d = parseInt(isoMatch[3], 10);
+                        return new Date(Date.UTC(y, m - 1, d, 12, 0, 0));
+                    }
+
+                    // Match DD-MM-YYYY or DD/MM/YYYY
+                    const dmyMatch = cleanStr.match(/^(\d{1,2})[-\/.](\d{1,2})[-\/.](\d{4})/);
+                    if (dmyMatch) {
+                        const d = parseInt(dmyMatch[1], 10);
+                        const m = parseInt(dmyMatch[2], 10);
+                        const y = parseInt(dmyMatch[3], 10);
+                        return new Date(Date.UTC(y, m - 1, d, 12, 0, 0));
+                    }
+
+                    const parsed = new Date(cleanStr);
+                    return isNaN(parsed.getTime()) ? null : parsed;
+                };
+
+                const fechaDate = parsePaeDate(cabecera.Fecha_Supervision);
                 const licitacionInt = cabecera.Licitacion ? parseInt(cabecera.Licitacion) : null;
                 const rbdInt = cabecera.RBD ? parseInt(cabecera.RBD) : null;
 

@@ -9,7 +9,21 @@ type PaeRecord = Prisma.Cab_LeePdfEstandarPaeGetPayload<{
     include: { detalles: true }
 }>
 
-export default function SubirActasClient() {
+export function formatPaeDate(val: string | Date | null | undefined): string {
+    if (!val) return '-'
+    if (typeof val === 'string') {
+        const match = val.match(/^(\d{4})[-\/.](\d{1,2})[-\/.](\d{1,2})/)
+        if (match) {
+            const [, y, m, d] = match
+            return `${d.padStart(2, '0')}/${m.padStart(2, '0')}/${y}`
+        }
+    }
+    const d = new Date(val)
+    if (isNaN(d.getTime())) return '-'
+    return d.toLocaleDateString('es-CL', { timeZone: 'UTC' })
+}
+
+export default function SubirActasClient({ isAdmin = false }: { isAdmin?: boolean }) {
     const [records, setRecords] = useState<PaeRecord[]>([])
     const [total, setTotal] = useState(0)
     const [totalPages, setTotalPages] = useState(1)
@@ -17,9 +31,14 @@ export default function SubirActasClient() {
     const [utCounts, setUtCounts] = useState<Record<string, number>>({})
     const [availableLicitaciones, setAvailableLicitaciones] = useState<{ licId: number; licitacionHomologada: string | null }[]>([])
     
+    // Delete State (Admin only)
+    const [recordToDelete, setRecordToDelete] = useState<PaeRecord | null>(null)
+    const [deletingId, setDeletingId] = useState<string | null>(null)
+    
     // Filters
     const [page, setPage] = useState(1)
     const [search, setSearch] = useState('')
+    const [folio, setFolio] = useState('')
     const [licitacion, setLicitacion] = useState<number | null>(null)
     const [mes, setMes] = useState<number | null>(null)
     const [anio, setAnio] = useState<number | null>(new Date().getFullYear())
@@ -71,6 +90,7 @@ export default function SubirActasClient() {
                 pageSize: 10,
                 search,
                 licitacion,
+                folio,
                 mes,
                 anio,
                 orderBy,
@@ -86,11 +106,32 @@ export default function SubirActasClient() {
         } finally {
             setIsLoading(false)
         }
-    }, [page, search, licitacion, mes, anio, orderBy, orderDir])
+    }, [page, search, licitacion, folio, mes, anio, orderBy, orderDir])
 
     useEffect(() => {
         fetchRecords()
     }, [fetchRecords])
+
+    const handleDeleteRecord = async () => {
+        if (!recordToDelete) return
+        setDeletingId(recordToDelete.id)
+        try {
+            const res = await deletePaeRecord(recordToDelete.id)
+            if (res.success) {
+                if (selectedRecord?.id === recordToDelete.id) {
+                    setSelectedRecord(null)
+                }
+                setRecordToDelete(null)
+                fetchRecords()
+            } else {
+                alert(res.error || 'Error al eliminar el acta')
+            }
+        } catch (e: any) {
+            alert(e.message || 'Error inesperado al intentar eliminar')
+        } finally {
+            setDeletingId(null)
+        }
+    }
 
     const handleSort = (column: string) => {
         if (orderBy === column) {
@@ -210,7 +251,7 @@ export default function SubirActasClient() {
             Establecimiento: r.Nombre_Num_establecimiento,
             Comuna: r.Comuna,
             Región: r.Region,
-            Fecha_Supervisión: r.Fecha_Supervision ? new Date(r.Fecha_Supervision).toLocaleDateString('es-CL') : '',
+            Fecha_Supervisión: formatPaeDate(r.Fecha_Supervision),
             Cumplimiento: r.Porcentaje_cumplimiento_final ? `${r.Porcentaje_cumplimiento_final}%` : ''
         }))
         const ws = XLSX.utils.json_to_sheet(data)
@@ -276,20 +317,41 @@ export default function SubirActasClient() {
 
             {/* Filters */}
             <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex flex-wrap gap-4 items-center">
-                <div className="flex-1 min-w-[250px]">
+                <div className="flex-1 min-w-[220px]">
                     <div className="relative">
                         <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">🔍</span>
                         <input 
                             type="text" 
                             placeholder="Buscar por RBD o nombre..." 
-                            className="w-full pl-10 pr-4 py-2 rounded-xl border border-gray-200 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-200 outline-none transition-all"
+                            className="w-full pl-10 pr-4 py-2 rounded-xl border border-gray-200 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-200 outline-none transition-all text-sm"
                             value={search}
                             onChange={e => { setSearch(e.target.value); setPage(1); }}
                         />
                     </div>
                 </div>
+                <div className="w-full sm:w-48 min-w-[150px]">
+                    <div className="relative">
+                        <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">🏷️</span>
+                        <input 
+                            type="text" 
+                            placeholder="Filtrar por Folio..." 
+                            className="w-full pl-9 pr-7 py-2 rounded-xl border border-gray-200 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-200 outline-none transition-all text-sm"
+                            value={folio}
+                            onChange={e => { setFolio(e.target.value); setPage(1); }}
+                        />
+                        {folio && (
+                            <button 
+                                onClick={() => { setFolio(''); setPage(1); }}
+                                className="absolute inset-y-0 right-2.5 flex items-center text-gray-400 hover:text-gray-600 text-xs font-bold"
+                                title="Limpiar folio"
+                            >
+                                ✕
+                            </button>
+                        )}
+                    </div>
+                </div>
                 <select 
-                    className="py-2 px-4 rounded-xl border border-gray-200 outline-none focus:border-cyan-500 bg-white"
+                    className="py-2 px-4 rounded-xl border border-gray-200 outline-none focus:border-cyan-500 bg-white text-sm"
                     value={licitacion || ''}
                     onChange={e => { setLicitacion(e.target.value ? Number(e.target.value) : null); setPage(1); }}
                 >
@@ -301,7 +363,7 @@ export default function SubirActasClient() {
                     ))}
                 </select>
                 <select 
-                    className="py-2 px-4 rounded-xl border border-gray-200 outline-none focus:border-cyan-500"
+                    className="py-2 px-4 rounded-xl border border-gray-200 outline-none focus:border-cyan-500 text-sm"
                     value={mes || ''}
                     onChange={e => { setMes(e.target.value ? Number(e.target.value) : null); setPage(1); }}
                 >
@@ -309,7 +371,7 @@ export default function SubirActasClient() {
                     {currentMonths.map(m => <option key={m.val} value={m.val}>{m.label}</option>)}
                 </select>
                 <select 
-                    className="py-2 px-4 rounded-xl border border-gray-200 outline-none focus:border-cyan-500"
+                    className="py-2 px-4 rounded-xl border border-gray-200 outline-none focus:border-cyan-500 text-sm"
                     value={anio || ''}
                     onChange={e => { setAnio(e.target.value ? Number(e.target.value) : null); setPage(1); }}
                 >
@@ -318,6 +380,23 @@ export default function SubirActasClient() {
                     <option value="2026">2026</option>
                     <option value="2027">2027</option>
                 </select>
+
+                {(search || folio || licitacion !== null || mes !== null || anio !== new Date().getFullYear()) && (
+                    <button
+                        onClick={() => {
+                            setSearch('');
+                            setFolio('');
+                            setLicitacion(null);
+                            setMes(null);
+                            setAnio(new Date().getFullYear());
+                            setPage(1);
+                        }}
+                        className="py-2 px-3 text-xs font-semibold text-rose-600 hover:text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 rounded-xl transition-colors flex items-center gap-1.5"
+                        title="Limpiar todos los filtros"
+                    >
+                        <span>✕</span> Limpiar Filtros
+                    </button>
+                )}
             </div>
 
             {/* Dashboard Cards */}
@@ -329,7 +408,7 @@ export default function SubirActasClient() {
                             <p className="text-xs text-gray-400 font-bold uppercase tracking-wider">Detalle del Establecimiento</p>
                             <div className="grid grid-cols-2 gap-2 text-sm">
                                 <span className="text-gray-500 font-medium">RBD:</span> <span className="font-bold text-cyan-700">{singleRecord.RBD}</span>
-                                <span className="text-gray-500 font-medium">Fecha:</span> <span className="font-semibold text-gray-900">{singleRecord.Fecha_Supervision ? new Date(singleRecord.Fecha_Supervision).toLocaleDateString('es-CL') : ''}</span>
+                                <span className="text-gray-500 font-medium">Fecha:</span> <span className="font-semibold text-gray-900">{formatPaeDate(singleRecord.Fecha_Supervision)}</span>
                                 <span className="text-gray-500 font-medium col-span-2">Establecimiento:</span>
                                 <span className="font-bold text-gray-900 col-span-2 text-xs leading-snug">{singleRecord.Nombre_Num_establecimiento}</span>
                             </div>
@@ -428,19 +507,24 @@ export default function SubirActasClient() {
                                 <th className="px-6 py-4 cursor-pointer group hover:bg-cyan-50/50 hover:text-cyan-900 transition-colors" onClick={() => handleSort('Porcentaje_cumplimiento_final')}>
                                     % Cumplimiento <SortIcon column="Porcentaje_cumplimiento_final" />
                                 </th>
+                                {isAdmin && (
+                                    <th className="px-6 py-4 text-center font-bold text-gray-500 uppercase tracking-wider">
+                                        Acción
+                                    </th>
+                                )}
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-50 text-sm">
                             {isLoading ? (
                                 <tr>
-                                    <td colSpan={7} className="px-6 py-12 text-center text-gray-400">
+                                    <td colSpan={isAdmin ? 8 : 7} className="px-6 py-12 text-center text-gray-400">
                                         <div className="animate-spin inline-block w-6 h-6 border-2 border-current border-t-transparent text-cyan-600 rounded-full mb-2"></div>
                                         <p className="font-bold text-xs">Cargando datos...</p>
                                     </td>
                                 </tr>
                             ) : records.length === 0 ? (
                                 <tr>
-                                    <td colSpan={7} className="px-6 py-12 text-center text-gray-400">
+                                    <td colSpan={isAdmin ? 8 : 7} className="px-6 py-12 text-center text-gray-400">
                                         <p className="font-bold text-sm">No se encontraron actas con los filtros aplicados.</p>
                                     </td>
                                 </tr>
@@ -473,7 +557,7 @@ export default function SubirActasClient() {
                                                 {record.Licitacion ? `Lic. ${record.Licitacion}` : '-'}
                                             </td>
                                             <td className="px-6 py-4 text-gray-600 text-xs font-medium">
-                                                {record.Fecha_Supervision ? new Date(record.Fecha_Supervision).toLocaleDateString('es-CL') : '-'}
+                                                {formatPaeDate(record.Fecha_Supervision)}
                                             </td>
                                             <td className="px-6 py-4">
                                                 <div className="flex items-center gap-2">
@@ -488,6 +572,17 @@ export default function SubirActasClient() {
                                                     </span>
                                                 </div>
                                             </td>
+                                            {isAdmin && (
+                                                <td className="px-6 py-4 text-center" onClick={(e) => e.stopPropagation()}>
+                                                    <button
+                                                        onClick={() => setRecordToDelete(record)}
+                                                        className="px-2.5 py-1.5 rounded-xl text-rose-600 hover:text-white hover:bg-rose-600 border border-rose-200 transition-all text-xs font-bold inline-flex items-center gap-1 shadow-2xs"
+                                                        title="Eliminar acta (Solo Administrador)"
+                                                    >
+                                                        <span>🗑️</span> Eliminar
+                                                    </button>
+                                                </td>
+                                            )}
                                         </tr>
                                     )
                                 })
@@ -611,14 +706,29 @@ export default function SubirActasClient() {
                                 </h3>
                                 <p className="text-sm text-gray-500 mt-1">{selectedRecord.NombreArchivoPdf}</p>
                             </div>
-                            <button onClick={() => setSelectedRecord(null)} className="text-gray-400 hover:text-gray-600 text-xl font-bold">✕</button>
+                            <div className="flex items-center gap-3">
+                                {isAdmin && (
+                                    <button
+                                        onClick={() => setRecordToDelete(selectedRecord)}
+                                        className="px-3.5 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 font-bold rounded-xl border border-rose-200 transition-colors flex items-center gap-1.5 text-xs shadow-2xs"
+                                        title="Eliminar esta acta (Solo Administrador)"
+                                    >
+                                        <span>🗑️</span> Eliminar Acta
+                                    </button>
+                                )}
+                                <button onClick={() => setSelectedRecord(null)} className="text-gray-400 hover:text-gray-600 text-xl font-bold p-1">✕</button>
+                            </div>
                         </div>
                         
                         <div className="p-6 overflow-y-auto flex-1">
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
                                 <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
                                     <p className="text-xs text-gray-500 uppercase font-bold">Establecimiento</p>
                                     <p className="font-medium text-gray-900">{selectedRecord.Nombre_Num_establecimiento}</p>
+                                </div>
+                                <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
+                                    <p className="text-xs text-gray-500 uppercase font-bold">Fecha Supervisión</p>
+                                    <p className="font-medium text-cyan-700 font-bold">{formatPaeDate(selectedRecord.Fecha_Supervision)}</p>
                                 </div>
                                 <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
                                     <p className="text-xs text-gray-500 uppercase font-bold">Res. Sanitaria</p>
@@ -803,6 +913,51 @@ export default function SubirActasClient() {
                                 className="px-6 py-2 font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                             >
                                 {isSubmittingManual ? 'Guardando...' : 'Guardar Acta'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Confirm Delete Modal (Admin only) */}
+            {recordToDelete && (
+                <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-60 flex items-center justify-center p-4">
+                    <div className="bg-white rounded-2xl w-full max-w-md shadow-2xl overflow-hidden border border-rose-100 animate-in fade-in zoom-in-95 duration-150">
+                        <div className="p-6 text-center">
+                            <div className="w-14 h-14 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl shadow-inner">
+                                🗑️
+                            </div>
+                            <h3 className="text-lg font-bold text-gray-900">
+                                ¿Eliminar Acta Estándar PAE?
+                            </h3>
+                            <p className="text-sm text-gray-500 mt-2">
+                                Estás a punto de eliminar el acta con <span className="font-bold text-gray-800">Folio {recordToDelete.Folio}</span> correspondiente a <span className="font-semibold text-gray-700">{recordToDelete.Nombre_Num_establecimiento || 'Establecimiento'}</span>.
+                            </p>
+                            <p className="text-xs text-rose-600 font-semibold bg-rose-50 p-2.5 rounded-xl border border-rose-200 mt-3">
+                                ⚠️ Esta acción eliminará la cabecera y todos sus aspectos auditados de forma permanente.
+                            </p>
+                        </div>
+                        <div className="p-4 bg-gray-50 border-t border-gray-100 flex justify-end gap-3">
+                            <button
+                                onClick={() => setRecordToDelete(null)}
+                                disabled={deletingId !== null}
+                                className="px-4 py-2 font-medium text-gray-600 hover:bg-gray-200 rounded-xl transition-colors text-sm"
+                            >
+                                Cancelar
+                            </button>
+                            <button
+                                onClick={handleDeleteRecord}
+                                disabled={deletingId !== null}
+                                className="px-5 py-2 font-bold text-white bg-rose-600 hover:bg-rose-700 rounded-xl transition-colors text-sm shadow-sm flex items-center gap-2 disabled:opacity-50"
+                            >
+                                {deletingId ? (
+                                    <>
+                                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                        Eliminando...
+                                    </>
+                                ) : (
+                                    'Sí, Eliminar'
+                                )}
                             </button>
                         </div>
                     </div>

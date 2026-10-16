@@ -7,7 +7,12 @@
  * Regla: Resguardo absoluto de datos existentes, sin DROP TABLE ni migraciones destructivas.
  */
 
-const { PrismaClient } = require('@prisma/client');
+let PrismaClient;
+try {
+    PrismaClient = require('../src/generated/client').PrismaClient;
+} catch {
+    PrismaClient = require('./src/generated/client').PrismaClient;
+}
 const prisma = new PrismaClient();
 
 async function main() {

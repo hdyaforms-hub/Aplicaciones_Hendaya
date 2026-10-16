@@ -46,11 +46,16 @@ def extract_data_from_pdf(pdf_path):
             if folio_match:
                 data['Folio'] = folio_match.group(1)
                 
-            fecha_match = re.search(r'Fecha\s*Supervis[^\s:]*:\s*([_\d]+)\s*/\s*([_\d]+)\s*/\s*([_\d]+)', first_page_text, re.IGNORECASE)
+            # Extracción por Regex primero
+            fecha_match = re.search(r'Fecha\s*Supervis[^\s:_]*[:\s]+([_\d]+)\s*[\/\.-]\s*([_\d]+)\s*[\/\.-]\s*([_\d]+)', first_page_text, re.IGNORECASE)
+            if not fecha_match:
+                fecha_match = re.search(r'Fecha\s*Supervis[^\s:]*:\s*([_\d]+)\s*/\s*([_\d]+)\s*/\s*([_\d]+)', first_page_text, re.IGNORECASE)
             if fecha_match:
-                d = fecha_match.group(1).replace('_', '')
-                m = fecha_match.group(2).replace('_', '')
-                y = fecha_match.group(3).replace('_', '')
+                d = fecha_match.group(1).replace('_', '').strip().zfill(2)
+                m = fecha_match.group(2).replace('_', '').strip().zfill(2)
+                y = fecha_match.group(3).replace('_', '').strip()
+                if len(y) == 2:
+                    y = f"20{y}"
                 data['Fecha_Supervision'] = f"{y}-{m}-{d}" # Format YYYY-MM-DD for easier parsing in Node
 
             # Extracción por Tablas para el resto de info general
@@ -79,10 +84,15 @@ def extract_data_from_pdf(pdf_path):
                 if not data['Fecha_Supervision']:
                     raw_date = find_in_table(header_table, 'Fecha Supervis')
                     if raw_date:
-                        # try to format it if it looks like dd/mm/yyyy
-                        match = re.search(r'(\d{2})/(\d{2})/(\d{4})', raw_date)
+                        # try to format it if it looks like dd/mm/yyyy or dd-mm-yyyy
+                        match = re.search(r'(\d{1,2})[\/\.-](\d{1,2})[\/\.-](\d{2,4})', raw_date)
                         if match:
-                            data['Fecha_Supervision'] = f"{match.group(3)}-{match.group(2)}-{match.group(1)}"
+                            d = match.group(1).zfill(2)
+                            m = match.group(2).zfill(2)
+                            y = match.group(3)
+                            if len(y) == 2:
+                                y = f"20{y}"
+                            data['Fecha_Supervision'] = f"{y}-{m}-{d}"
                         else:
                             data['Fecha_Supervision'] = raw_date
 

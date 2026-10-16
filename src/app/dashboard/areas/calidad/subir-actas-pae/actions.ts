@@ -2,6 +2,7 @@
 
 import { prisma } from '@/lib/prisma'
 import { Prisma } from '@/generated/client'
+import { getSession } from '@/lib/session'
 
 export async function getPaeRecords(params: {
     page?: number;
@@ -30,13 +31,14 @@ export async function getPaeRecords(params: {
 
     const where: Prisma.Cab_LeePdfEstandarPaeWhereInput = {};
 
-    if (search) {
+    if (search && search.trim()) {
+        const term = search.trim();
         where.OR = [
-            { Nombre_Num_establecimiento: { contains: search } },
+            { Nombre_Num_establecimiento: { contains: term, mode: 'insensitive' } },
         ];
         // If search is numeric, also search by RBD
-        if (!isNaN(Number(search))) {
-            where.OR.push({ RBD: Number(search) });
+        if (!isNaN(Number(term))) {
+            where.OR.push({ RBD: Number(term) });
         }
     }
 
@@ -44,24 +46,23 @@ export async function getPaeRecords(params: {
         where.Licitacion = licitacion;
     }
 
-    if (folio) {
-        where.Folio = { contains: folio };
+    if (folio && folio.trim()) {
+        where.Folio = { contains: folio.trim(), mode: 'insensitive' };
     }
 
     if (mes || anio) {
-        // Date filtering in Prisma can be tricky, simpler approach for exact month/year
-        // Requires a date range: start of month to end of month
+        // Date filtering in UTC to prevent timezone skew
         let start: Date | null = null;
         let end: Date | null = null;
 
         const currentYear = anio || new Date().getFullYear();
 
         if (mes) {
-            start = new Date(currentYear, mes - 1, 1);
-            end = new Date(currentYear, mes, 0, 23, 59, 59, 999);
+            start = new Date(Date.UTC(currentYear, mes - 1, 1, 0, 0, 0));
+            end = new Date(Date.UTC(currentYear, mes, 0, 23, 59, 59, 999));
         } else if (anio) {
-            start = new Date(currentYear, 0, 1);
-            end = new Date(currentYear, 11, 31, 23, 59, 59, 999);
+            start = new Date(Date.UTC(currentYear, 0, 1, 0, 0, 0));
+            end = new Date(Date.UTC(currentYear, 11, 31, 23, 59, 59, 999));
         }
 
         if (start && end) {
@@ -137,6 +138,12 @@ export async function getPaeRecords(params: {
 
 export async function deletePaeRecord(id: string) {
     try {
+        const session = await getSession();
+        const isAdmin = session?.user?.role?.name === 'admin' || session?.user?.role?.name === 'Administrador';
+        if (!isAdmin) {
+            return { success: false, error: 'No tienes permisos de Administrador para eliminar registros de actas.' };
+        }
+
         await prisma.cab_LeePdfEstandarPae.delete({
             where: { id }
         });
@@ -191,6 +198,31 @@ export async function createManualPaeRecord(data: any) {
             return { success: false, error: 'El Folio ya existe en la base de datos.' };
         }
 
+        const parsePaeDate = (dateStr: string | null | undefined): Date | null => {
+            if (!dateStr) return null;
+            const cleanStr = String(dateStr).trim();
+            if (!cleanStr) return null;
+
+            const isoMatch = cleanStr.match(/^(\d{4})[-\/.](\d{1,2})[-\/.](\d{1,2})/);
+            if (isoMatch) {
+                const y = parseInt(isoMatch[1], 10);
+                const m = parseInt(isoMatch[2], 10);
+                const d = parseInt(isoMatch[3], 10);
+                return new Date(Date.UTC(y, m - 1, d, 12, 0, 0));
+            }
+
+            const dmyMatch = cleanStr.match(/^(\d{1,2})[-\/.](\d{1,2})[-\/.](\d{4})/);
+            if (dmyMatch) {
+                const d = parseInt(dmyMatch[1], 10);
+                const m = parseInt(dmyMatch[2], 10);
+                const y = parseInt(dmyMatch[3], 10);
+                return new Date(Date.UTC(y, m - 1, d, 12, 0, 0));
+            }
+
+            const parsed = new Date(cleanStr);
+            return isNaN(parsed.getTime()) ? null : parsed;
+        };
+
         const record = await prisma.cab_LeePdfEstandarPae.create({
             data: {
                 NombreArchivoPdf: 'Ingreso Manual',
@@ -199,7 +231,7 @@ export async function createManualPaeRecord(data: any) {
                 Nombre_Num_establecimiento,
                 RBD: RBD ? parseInt(RBD) : null,
                 Comuna,
-                Fecha_Supervision: Fecha_Supervision ? new Date(Fecha_Supervision) : null,
+                Fecha_Supervision: parsePaeDate(Fecha_Supervision),
                 Porcentaje_cumplimiento_final: Porcentaje_cumplimiento_final ? parseFloat(Porcentaje_cumplimiento_final) : null,
                 Observaciones
             }
