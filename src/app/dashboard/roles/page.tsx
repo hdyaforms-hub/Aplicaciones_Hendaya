@@ -63,6 +63,7 @@ export default async function RolesPage() {
         { id: 'view_tablero_widgets', name: 'Tablero Widgets Personalizables', description: 'Acceso y personalización de tableros dinámicos con widgets configurables.', category: 'TABLEROS' },
         { id: 'view_tablero_resolucion_sanitaria', name: 'Tablero Resolución Sanitaria', description: 'Visualización analítica y evolución histórica de resoluciones sanitarias por RBD a lo largo de los años.', category: 'TABLEROS' },
         { id: 'view_tablero_auditoria', name: 'Tablero Auditoría', description: 'Visualización y exportación de auditoría de actividad de usuarios.', category: 'TABLEROS' },
+        { id: 'view_tablero_monitoreo_avances', name: 'Tablero Monitoreo de Avances', description: 'Acceso y supervisión al tablero semafórico de avances de matrices y actas por usuario.', category: 'TABLEROS' },
         
         { id: 'view_ingreso_raciones', name: 'Ingreso de Raciones', description: 'Gestión y auditoría de raciones por colegio.', category: 'APLICACIONES' },
         { id: 'view_solicitud_pan', name: 'Solicitud de Pan', description: 'Acceso a la aplicación de Solicitud de Pan.', category: 'APLICACIONES' },
@@ -158,6 +159,7 @@ export default async function RolesPage() {
         { id: 'view_estado_avance', name: 'Estado de Avance', description: 'Visualizar el estado de avance de la matriz de riesgo.', category: 'MATRIZ DE RIESGO -> DETALLE MATRIZ' },
         { id: 'view_auditoria', name: 'Auditoría Externa', description: 'Vista global completa de hallazgos y evidencias para auditores.', category: 'MATRIZ DE RIESGO -> DETALLE MATRIZ' },
  
+        { id: 'manage_mantenedor_monitoreo', name: 'Mantenedor de Monitoreo', description: 'Permite configurar periodicidades de matrices de riesgo, actas de supervisión y roles monitoreados.', category: 'MANTENEDORES' },
         { id: 'view_productos', name: 'Mantenedor de Productos', description: 'Acceso a mantenedor y carga masiva de Productos.', category: 'MANTENEDORES' },
         { id: 'manage_areas', name: 'Área', description: 'Creación y administración de áreas de la compañía.', category: 'MANTENEDORES' },
         { id: 'manage_personal_criterios', name: 'Criterios de Ausencias', description: 'Permite administrar los criterios o motivos de ausentismo del personal.', category: 'MANTENEDORES -> RECURSOS HUMANOS' },
