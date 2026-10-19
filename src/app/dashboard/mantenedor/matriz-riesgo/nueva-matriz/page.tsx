@@ -1,5 +1,6 @@
 import { getSession } from '@/lib/session'
 import { redirect } from 'next/navigation'
+import { prisma } from '@/lib/prisma'
 import { getLicitaciones, getMatrices } from './actions'
 import NuevaMatrizDashboard from './NuevaMatrizDashboard'
 
@@ -9,13 +10,21 @@ export default async function NuevaMatrizPage() {
         redirect('/dashboard')
     }
 
-    const { licitaciones } = await getLicitaciones()
-    const { matrices } = await getMatrices()
+    const [{ licitaciones }, { matrices }, rolesDb] = await Promise.all([
+        getLicitaciones(),
+        getMatrices(),
+        prisma.role.findMany({
+            select: { id: true, name: true },
+            orderBy: { name: 'asc' }
+        })
+    ])
 
     return (
         <NuevaMatrizDashboard
             initialLicitaciones={licitaciones || []}
-            initialMatrices={matrices || []}
+            initialMatrices={(matrices as any) || []}
+            availableRoles={rolesDb || []}
         />
     )
 }
+

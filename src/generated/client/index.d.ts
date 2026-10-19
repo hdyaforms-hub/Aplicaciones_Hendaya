@@ -22592,6 +22592,7 @@ export namespace Prisma {
     para: string | null
     cc: string | null
     sucursalId: string | null
+    porSucursal: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -22603,6 +22604,7 @@ export namespace Prisma {
     para: string | null
     cc: string | null
     sucursalId: string | null
+    porSucursal: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -22614,6 +22616,7 @@ export namespace Prisma {
     para: number
     cc: number
     sucursalId: number
+    porSucursal: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -22627,6 +22630,7 @@ export namespace Prisma {
     para?: true
     cc?: true
     sucursalId?: true
+    porSucursal?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -22638,6 +22642,7 @@ export namespace Prisma {
     para?: true
     cc?: true
     sucursalId?: true
+    porSucursal?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -22649,6 +22654,7 @@ export namespace Prisma {
     para?: true
     cc?: true
     sucursalId?: true
+    porSucursal?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -22733,6 +22739,7 @@ export namespace Prisma {
     para: string
     cc: string | null
     sucursalId: string | null
+    porSucursal: string | null
     createdAt: Date
     updatedAt: Date
     _count: ListaCorreoCountAggregateOutputType | null
@@ -22761,6 +22768,7 @@ export namespace Prisma {
     para?: boolean
     cc?: boolean
     sucursalId?: boolean
+    porSucursal?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     sucursal?: boolean | ListaCorreo$sucursalArgs<ExtArgs>
@@ -22775,6 +22783,7 @@ export namespace Prisma {
     para?: boolean
     cc?: boolean
     sucursalId?: boolean
+    porSucursal?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     sucursal?: boolean | ListaCorreo$sucursalArgs<ExtArgs>
@@ -22787,6 +22796,7 @@ export namespace Prisma {
     para?: boolean
     cc?: boolean
     sucursalId?: boolean
+    porSucursal?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
@@ -22813,6 +22823,7 @@ export namespace Prisma {
       para: string
       cc: string | null
       sucursalId: string | null
+      porSucursal: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["listaCorreo"]>
@@ -23216,6 +23227,7 @@ export namespace Prisma {
     readonly para: FieldRef<"ListaCorreo", 'String'>
     readonly cc: FieldRef<"ListaCorreo", 'String'>
     readonly sucursalId: FieldRef<"ListaCorreo", 'String'>
+    readonly porSucursal: FieldRef<"ListaCorreo", 'String'>
     readonly createdAt: FieldRef<"ListaCorreo", 'DateTime'>
     readonly updatedAt: FieldRef<"ListaCorreo", 'DateTime'>
   }
@@ -84671,6 +84683,7 @@ export namespace Prisma {
     titulo: string | null
     estado: boolean | null
     instrucciones: string | null
+    rolesPerfiles: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -84682,6 +84695,7 @@ export namespace Prisma {
     titulo: string | null
     estado: boolean | null
     instrucciones: string | null
+    rolesPerfiles: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -84693,6 +84707,7 @@ export namespace Prisma {
     titulo: number
     estado: number
     instrucciones: number
+    rolesPerfiles: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -84716,6 +84731,7 @@ export namespace Prisma {
     titulo?: true
     estado?: true
     instrucciones?: true
+    rolesPerfiles?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -84727,6 +84743,7 @@ export namespace Prisma {
     titulo?: true
     estado?: true
     instrucciones?: true
+    rolesPerfiles?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -84738,6 +84755,7 @@ export namespace Prisma {
     titulo?: true
     estado?: true
     instrucciones?: true
+    rolesPerfiles?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -84836,6 +84854,7 @@ export namespace Prisma {
     titulo: string
     estado: boolean
     instrucciones: string | null
+    rolesPerfiles: string | null
     createdAt: Date
     updatedAt: Date
     _count: MatrizT_CabeceraCountAggregateOutputType | null
@@ -84866,6 +84885,7 @@ export namespace Prisma {
     titulo?: boolean
     estado?: boolean
     instrucciones?: boolean
+    rolesPerfiles?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     licitacion?: boolean | LicitacionDefaultArgs<ExtArgs>
@@ -84882,6 +84902,7 @@ export namespace Prisma {
     titulo?: boolean
     estado?: boolean
     instrucciones?: boolean
+    rolesPerfiles?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     licitacion?: boolean | LicitacionDefaultArgs<ExtArgs>
@@ -84894,6 +84915,7 @@ export namespace Prisma {
     titulo?: boolean
     estado?: boolean
     instrucciones?: boolean
+    rolesPerfiles?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
@@ -84924,6 +84946,7 @@ export namespace Prisma {
       titulo: string
       estado: boolean
       instrucciones: string | null
+      rolesPerfiles: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["matrizT_Cabecera"]>
@@ -85329,6 +85352,7 @@ export namespace Prisma {
     readonly titulo: FieldRef<"MatrizT_Cabecera", 'String'>
     readonly estado: FieldRef<"MatrizT_Cabecera", 'Boolean'>
     readonly instrucciones: FieldRef<"MatrizT_Cabecera", 'String'>
+    readonly rolesPerfiles: FieldRef<"MatrizT_Cabecera", 'String'>
     readonly createdAt: FieldRef<"MatrizT_Cabecera", 'DateTime'>
     readonly updatedAt: FieldRef<"MatrizT_Cabecera", 'DateTime'>
   }
@@ -153292,6 +153316,7 @@ export namespace Prisma {
     para: 'para',
     cc: 'cc',
     sucursalId: 'sucursalId',
+    porSucursal: 'porSucursal',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -154252,6 +154277,7 @@ export namespace Prisma {
     titulo: 'titulo',
     estado: 'estado',
     instrucciones: 'instrucciones',
+    rolesPerfiles: 'rolesPerfiles',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -156207,6 +156233,7 @@ export namespace Prisma {
     para?: StringFilter<"ListaCorreo"> | string
     cc?: StringNullableFilter<"ListaCorreo"> | string | null
     sucursalId?: StringNullableFilter<"ListaCorreo"> | string | null
+    porSucursal?: StringNullableFilter<"ListaCorreo"> | string | null
     createdAt?: DateTimeFilter<"ListaCorreo"> | Date | string
     updatedAt?: DateTimeFilter<"ListaCorreo"> | Date | string
     sucursal?: XOR<SucursalNullableRelationFilter, SucursalWhereInput> | null
@@ -156220,6 +156247,7 @@ export namespace Prisma {
     para?: SortOrder
     cc?: SortOrderInput | SortOrder
     sucursalId?: SortOrderInput | SortOrder
+    porSucursal?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     sucursal?: SucursalOrderByWithRelationInput
@@ -156236,6 +156264,7 @@ export namespace Prisma {
     para?: StringFilter<"ListaCorreo"> | string
     cc?: StringNullableFilter<"ListaCorreo"> | string | null
     sucursalId?: StringNullableFilter<"ListaCorreo"> | string | null
+    porSucursal?: StringNullableFilter<"ListaCorreo"> | string | null
     createdAt?: DateTimeFilter<"ListaCorreo"> | Date | string
     updatedAt?: DateTimeFilter<"ListaCorreo"> | Date | string
     sucursal?: XOR<SucursalNullableRelationFilter, SucursalWhereInput> | null
@@ -156249,6 +156278,7 @@ export namespace Prisma {
     para?: SortOrder
     cc?: SortOrderInput | SortOrder
     sucursalId?: SortOrderInput | SortOrder
+    porSucursal?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ListaCorreoCountOrderByAggregateInput
@@ -156266,6 +156296,7 @@ export namespace Prisma {
     para?: StringWithAggregatesFilter<"ListaCorreo"> | string
     cc?: StringNullableWithAggregatesFilter<"ListaCorreo"> | string | null
     sucursalId?: StringNullableWithAggregatesFilter<"ListaCorreo"> | string | null
+    porSucursal?: StringNullableWithAggregatesFilter<"ListaCorreo"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"ListaCorreo"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"ListaCorreo"> | Date | string
   }
@@ -161183,6 +161214,7 @@ export namespace Prisma {
     titulo?: StringFilter<"MatrizT_Cabecera"> | string
     estado?: BoolFilter<"MatrizT_Cabecera"> | boolean
     instrucciones?: StringNullableFilter<"MatrizT_Cabecera"> | string | null
+    rolesPerfiles?: StringNullableFilter<"MatrizT_Cabecera"> | string | null
     createdAt?: DateTimeFilter<"MatrizT_Cabecera"> | Date | string
     updatedAt?: DateTimeFilter<"MatrizT_Cabecera"> | Date | string
     licitacion?: XOR<LicitacionRelationFilter, LicitacionWhereInput>
@@ -161198,6 +161230,7 @@ export namespace Prisma {
     titulo?: SortOrder
     estado?: SortOrder
     instrucciones?: SortOrderInput | SortOrder
+    rolesPerfiles?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     licitacion?: LicitacionOrderByWithRelationInput
@@ -161216,6 +161249,7 @@ export namespace Prisma {
     titulo?: StringFilter<"MatrizT_Cabecera"> | string
     estado?: BoolFilter<"MatrizT_Cabecera"> | boolean
     instrucciones?: StringNullableFilter<"MatrizT_Cabecera"> | string | null
+    rolesPerfiles?: StringNullableFilter<"MatrizT_Cabecera"> | string | null
     createdAt?: DateTimeFilter<"MatrizT_Cabecera"> | Date | string
     updatedAt?: DateTimeFilter<"MatrizT_Cabecera"> | Date | string
     licitacion?: XOR<LicitacionRelationFilter, LicitacionWhereInput>
@@ -161231,6 +161265,7 @@ export namespace Prisma {
     titulo?: SortOrder
     estado?: SortOrder
     instrucciones?: SortOrderInput | SortOrder
+    rolesPerfiles?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: MatrizT_CabeceraCountOrderByAggregateInput
@@ -161250,6 +161285,7 @@ export namespace Prisma {
     titulo?: StringWithAggregatesFilter<"MatrizT_Cabecera"> | string
     estado?: BoolWithAggregatesFilter<"MatrizT_Cabecera"> | boolean
     instrucciones?: StringNullableWithAggregatesFilter<"MatrizT_Cabecera"> | string | null
+    rolesPerfiles?: StringNullableWithAggregatesFilter<"MatrizT_Cabecera"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"MatrizT_Cabecera"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"MatrizT_Cabecera"> | Date | string
   }
@@ -167853,6 +167889,7 @@ export namespace Prisma {
     descripcion?: string | null
     para: string
     cc?: string | null
+    porSucursal?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     sucursal?: SucursalCreateNestedOneWithoutListasCorreoInput
@@ -167866,6 +167903,7 @@ export namespace Prisma {
     para: string
     cc?: string | null
     sucursalId?: string | null
+    porSucursal?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     notificaciones?: NotificacionPantallaUncheckedCreateNestedManyWithoutListaCorreoInput
@@ -167877,6 +167915,7 @@ export namespace Prisma {
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     para?: StringFieldUpdateOperationsInput | string
     cc?: NullableStringFieldUpdateOperationsInput | string | null
+    porSucursal?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sucursal?: SucursalUpdateOneWithoutListasCorreoNestedInput
@@ -167890,6 +167929,7 @@ export namespace Prisma {
     para?: StringFieldUpdateOperationsInput | string
     cc?: NullableStringFieldUpdateOperationsInput | string | null
     sucursalId?: NullableStringFieldUpdateOperationsInput | string | null
+    porSucursal?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     notificaciones?: NotificacionPantallaUncheckedUpdateManyWithoutListaCorreoNestedInput
@@ -167902,6 +167942,7 @@ export namespace Prisma {
     para: string
     cc?: string | null
     sucursalId?: string | null
+    porSucursal?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -167912,6 +167953,7 @@ export namespace Prisma {
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     para?: StringFieldUpdateOperationsInput | string
     cc?: NullableStringFieldUpdateOperationsInput | string | null
+    porSucursal?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -167923,6 +167965,7 @@ export namespace Prisma {
     para?: StringFieldUpdateOperationsInput | string
     cc?: NullableStringFieldUpdateOperationsInput | string | null
     sucursalId?: NullableStringFieldUpdateOperationsInput | string | null
+    porSucursal?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -173446,6 +173489,7 @@ export namespace Prisma {
     titulo: string
     estado?: boolean
     instrucciones?: string | null
+    rolesPerfiles?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     licitacion: LicitacionCreateNestedOneWithoutMatricesInput
@@ -173461,6 +173505,7 @@ export namespace Prisma {
     titulo: string
     estado?: boolean
     instrucciones?: string | null
+    rolesPerfiles?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     detalles?: MatrizT_DetalleUncheckedCreateNestedManyWithoutCabeceraInput
@@ -173474,6 +173519,7 @@ export namespace Prisma {
     titulo?: StringFieldUpdateOperationsInput | string
     estado?: BoolFieldUpdateOperationsInput | boolean
     instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    rolesPerfiles?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     licitacion?: LicitacionUpdateOneRequiredWithoutMatricesNestedInput
@@ -173489,6 +173535,7 @@ export namespace Prisma {
     titulo?: StringFieldUpdateOperationsInput | string
     estado?: BoolFieldUpdateOperationsInput | boolean
     instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    rolesPerfiles?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     detalles?: MatrizT_DetalleUncheckedUpdateManyWithoutCabeceraNestedInput
@@ -173503,6 +173550,7 @@ export namespace Prisma {
     titulo: string
     estado?: boolean
     instrucciones?: string | null
+    rolesPerfiles?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -173513,6 +173561,7 @@ export namespace Prisma {
     titulo?: StringFieldUpdateOperationsInput | string
     estado?: BoolFieldUpdateOperationsInput | boolean
     instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    rolesPerfiles?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -173524,6 +173573,7 @@ export namespace Prisma {
     titulo?: StringFieldUpdateOperationsInput | string
     estado?: BoolFieldUpdateOperationsInput | boolean
     instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    rolesPerfiles?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -180843,6 +180893,7 @@ export namespace Prisma {
     para?: SortOrder
     cc?: SortOrder
     sucursalId?: SortOrder
+    porSucursal?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -180854,6 +180905,7 @@ export namespace Prisma {
     para?: SortOrder
     cc?: SortOrder
     sucursalId?: SortOrder
+    porSucursal?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -180865,6 +180917,7 @@ export namespace Prisma {
     para?: SortOrder
     cc?: SortOrder
     sucursalId?: SortOrder
+    porSucursal?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -184233,6 +184286,7 @@ export namespace Prisma {
     titulo?: SortOrder
     estado?: SortOrder
     instrucciones?: SortOrder
+    rolesPerfiles?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -184249,6 +184303,7 @@ export namespace Prisma {
     titulo?: SortOrder
     estado?: SortOrder
     instrucciones?: SortOrder
+    rolesPerfiles?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -184260,6 +184315,7 @@ export namespace Prisma {
     titulo?: SortOrder
     estado?: SortOrder
     instrucciones?: SortOrder
+    rolesPerfiles?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -194703,6 +194759,7 @@ export namespace Prisma {
     descripcion?: string | null
     para: string
     cc?: string | null
+    porSucursal?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     sucursal?: SucursalCreateNestedOneWithoutListasCorreoInput
@@ -194715,6 +194772,7 @@ export namespace Prisma {
     para: string
     cc?: string | null
     sucursalId?: string | null
+    porSucursal?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -194741,6 +194799,7 @@ export namespace Prisma {
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     para?: StringFieldUpdateOperationsInput | string
     cc?: NullableStringFieldUpdateOperationsInput | string | null
+    porSucursal?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sucursal?: SucursalUpdateOneWithoutListasCorreoNestedInput
@@ -194753,6 +194812,7 @@ export namespace Prisma {
     para?: StringFieldUpdateOperationsInput | string
     cc?: NullableStringFieldUpdateOperationsInput | string | null
     sucursalId?: NullableStringFieldUpdateOperationsInput | string | null
+    porSucursal?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -194880,6 +194940,7 @@ export namespace Prisma {
     titulo: string
     estado?: boolean
     instrucciones?: string | null
+    rolesPerfiles?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     detalles?: MatrizT_DetalleCreateNestedManyWithoutCabeceraInput
@@ -194893,6 +194954,7 @@ export namespace Prisma {
     titulo: string
     estado?: boolean
     instrucciones?: string | null
+    rolesPerfiles?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     detalles?: MatrizT_DetalleUncheckedCreateNestedManyWithoutCabeceraInput
@@ -195151,6 +195213,7 @@ export namespace Prisma {
     titulo?: StringFilter<"MatrizT_Cabecera"> | string
     estado?: BoolFilter<"MatrizT_Cabecera"> | boolean
     instrucciones?: StringNullableFilter<"MatrizT_Cabecera"> | string | null
+    rolesPerfiles?: StringNullableFilter<"MatrizT_Cabecera"> | string | null
     createdAt?: DateTimeFilter<"MatrizT_Cabecera"> | Date | string
     updatedAt?: DateTimeFilter<"MatrizT_Cabecera"> | Date | string
   }
@@ -195289,6 +195352,7 @@ export namespace Prisma {
     descripcion?: string | null
     para: string
     cc?: string | null
+    porSucursal?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     notificaciones?: NotificacionPantallaCreateNestedManyWithoutListaCorreoInput
@@ -195300,6 +195364,7 @@ export namespace Prisma {
     descripcion?: string | null
     para: string
     cc?: string | null
+    porSucursal?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     notificaciones?: NotificacionPantallaUncheckedCreateNestedManyWithoutListaCorreoInput
@@ -195832,6 +195897,7 @@ export namespace Prisma {
     para?: StringFilter<"ListaCorreo"> | string
     cc?: StringNullableFilter<"ListaCorreo"> | string | null
     sucursalId?: StringNullableFilter<"ListaCorreo"> | string | null
+    porSucursal?: StringNullableFilter<"ListaCorreo"> | string | null
     createdAt?: DateTimeFilter<"ListaCorreo"> | Date | string
     updatedAt?: DateTimeFilter<"ListaCorreo"> | Date | string
   }
@@ -200831,6 +200897,7 @@ export namespace Prisma {
     titulo: string
     estado?: boolean
     instrucciones?: string | null
+    rolesPerfiles?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     licitacion: LicitacionCreateNestedOneWithoutMatricesInput
@@ -200845,6 +200912,7 @@ export namespace Prisma {
     titulo: string
     estado?: boolean
     instrucciones?: string | null
+    rolesPerfiles?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     respuestas?: MatrizT_RespuestasCabeceraUncheckedCreateNestedManyWithoutCabeceraInput
@@ -200897,6 +200965,7 @@ export namespace Prisma {
     titulo?: StringFieldUpdateOperationsInput | string
     estado?: BoolFieldUpdateOperationsInput | boolean
     instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    rolesPerfiles?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     licitacion?: LicitacionUpdateOneRequiredWithoutMatricesNestedInput
@@ -200911,6 +200980,7 @@ export namespace Prisma {
     titulo?: StringFieldUpdateOperationsInput | string
     estado?: BoolFieldUpdateOperationsInput | boolean
     instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    rolesPerfiles?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     respuestas?: MatrizT_RespuestasCabeceraUncheckedUpdateManyWithoutCabeceraNestedInput
@@ -200950,6 +201020,7 @@ export namespace Prisma {
     titulo: string
     estado?: boolean
     instrucciones?: string | null
+    rolesPerfiles?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     licitacion: LicitacionCreateNestedOneWithoutMatricesInput
@@ -200964,6 +201035,7 @@ export namespace Prisma {
     titulo: string
     estado?: boolean
     instrucciones?: string | null
+    rolesPerfiles?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     detalles?: MatrizT_DetalleUncheckedCreateNestedManyWithoutCabeceraInput
@@ -201016,6 +201088,7 @@ export namespace Prisma {
     titulo?: StringFieldUpdateOperationsInput | string
     estado?: BoolFieldUpdateOperationsInput | boolean
     instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    rolesPerfiles?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     licitacion?: LicitacionUpdateOneRequiredWithoutMatricesNestedInput
@@ -201030,6 +201103,7 @@ export namespace Prisma {
     titulo?: StringFieldUpdateOperationsInput | string
     estado?: BoolFieldUpdateOperationsInput | boolean
     instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    rolesPerfiles?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     detalles?: MatrizT_DetalleUncheckedUpdateManyWithoutCabeceraNestedInput
@@ -201270,6 +201344,7 @@ export namespace Prisma {
     titulo: string
     estado?: boolean
     instrucciones?: string | null
+    rolesPerfiles?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     licitacion: LicitacionCreateNestedOneWithoutMatricesInput
@@ -201284,6 +201359,7 @@ export namespace Prisma {
     titulo: string
     estado?: boolean
     instrucciones?: string | null
+    rolesPerfiles?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     detalles?: MatrizT_DetalleUncheckedCreateNestedManyWithoutCabeceraInput
@@ -201312,6 +201388,7 @@ export namespace Prisma {
     titulo?: StringFieldUpdateOperationsInput | string
     estado?: BoolFieldUpdateOperationsInput | boolean
     instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    rolesPerfiles?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     licitacion?: LicitacionUpdateOneRequiredWithoutMatricesNestedInput
@@ -201326,6 +201403,7 @@ export namespace Prisma {
     titulo?: StringFieldUpdateOperationsInput | string
     estado?: BoolFieldUpdateOperationsInput | boolean
     instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    rolesPerfiles?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     detalles?: MatrizT_DetalleUncheckedUpdateManyWithoutCabeceraNestedInput
@@ -208491,6 +208569,7 @@ export namespace Prisma {
     titulo: string
     estado?: boolean
     instrucciones?: string | null
+    rolesPerfiles?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -208634,6 +208713,7 @@ export namespace Prisma {
     titulo?: StringFieldUpdateOperationsInput | string
     estado?: BoolFieldUpdateOperationsInput | boolean
     instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    rolesPerfiles?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     detalles?: MatrizT_DetalleUpdateManyWithoutCabeceraNestedInput
@@ -208647,6 +208727,7 @@ export namespace Prisma {
     titulo?: StringFieldUpdateOperationsInput | string
     estado?: BoolFieldUpdateOperationsInput | boolean
     instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    rolesPerfiles?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     detalles?: MatrizT_DetalleUncheckedUpdateManyWithoutCabeceraNestedInput
@@ -208660,6 +208741,7 @@ export namespace Prisma {
     titulo?: StringFieldUpdateOperationsInput | string
     estado?: BoolFieldUpdateOperationsInput | boolean
     instrucciones?: NullableStringFieldUpdateOperationsInput | string | null
+    rolesPerfiles?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -208794,6 +208876,7 @@ export namespace Prisma {
     descripcion?: string | null
     para: string
     cc?: string | null
+    porSucursal?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -208926,6 +209009,7 @@ export namespace Prisma {
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     para?: StringFieldUpdateOperationsInput | string
     cc?: NullableStringFieldUpdateOperationsInput | string | null
+    porSucursal?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     notificaciones?: NotificacionPantallaUpdateManyWithoutListaCorreoNestedInput
@@ -208937,6 +209021,7 @@ export namespace Prisma {
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     para?: StringFieldUpdateOperationsInput | string
     cc?: NullableStringFieldUpdateOperationsInput | string | null
+    porSucursal?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     notificaciones?: NotificacionPantallaUncheckedUpdateManyWithoutListaCorreoNestedInput
@@ -208948,6 +209033,7 @@ export namespace Prisma {
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     para?: StringFieldUpdateOperationsInput | string
     cc?: NullableStringFieldUpdateOperationsInput | string | null
+    porSucursal?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

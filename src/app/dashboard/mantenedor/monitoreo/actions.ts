@@ -25,6 +25,7 @@ export interface MonitoreoDataResponse {
         titulo: string
         anio: number
         licitacionNombre?: string
+        rolesPerfiles?: string[]
         estado: boolean
     }>
     actas: Array<{
@@ -84,13 +85,24 @@ export async function getMonitoreoConfigData(): Promise<MonitoreoDataResponse> {
             orderBy: [{ anio: 'desc' }, { titulo: 'asc' }]
         })
 
-        const matrices = matricesDb.map(m => ({
-            id: m.id,
-            titulo: m.titulo,
-            anio: m.anio,
-            licitacionNombre: m.licitacion?.licitacionHomologada || `Lic. #${m.licId}`,
-            estado: m.estado
-        }))
+        const matrices = matricesDb.map(m => {
+            let rolesAsignados: string[] = []
+            try {
+                const parsed = JSON.parse(m.rolesPerfiles || '[]')
+                rolesAsignados = Array.isArray(parsed) ? parsed : (m.rolesPerfiles ? [m.rolesPerfiles] : [])
+            } catch {
+                rolesAsignados = (m.rolesPerfiles || '').split(',').map((s: string) => s.trim()).filter(Boolean)
+            }
+
+            return {
+                id: m.id,
+                titulo: m.titulo,
+                anio: m.anio,
+                licitacionNombre: m.licitacion?.licitacionHomologada || `Lic. #${m.licId}`,
+                rolesPerfiles: rolesAsignados,
+                estado: m.estado
+            }
+        })
 
         // 2. Obtener Actas de Supervisión vigentes
         const actasDb = await rawPrisma.actaSupervisionPlantilla.findMany({

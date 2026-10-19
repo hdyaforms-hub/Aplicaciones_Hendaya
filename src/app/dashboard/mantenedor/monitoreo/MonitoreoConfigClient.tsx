@@ -289,10 +289,26 @@ export default function MonitoreoConfigClient({ initialData }: Props) {
                                             </td>
                                             <td className="py-3.5 px-4">
                                                 <div className="font-bold text-slate-900">{m.titulo}</div>
-                                                <span className="text-xs text-emerald-600 font-medium inline-flex items-center gap-1 mt-0.5">
-                                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                                                    Vigente
-                                                </span>
+                                                <div className="flex items-center gap-2 mt-1 flex-wrap">
+                                                    <span className="text-xs text-emerald-600 font-medium inline-flex items-center gap-1">
+                                                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                                                        Vigente
+                                                    </span>
+                                                    {m.rolesPerfiles && m.rolesPerfiles.length > 0 ? (
+                                                        <div className="flex flex-wrap gap-1 items-center">
+                                                            <span className="text-[10px] text-slate-400 font-semibold">Roles:</span>
+                                                            {m.rolesPerfiles.map((r, i) => (
+                                                                <span key={i} className="text-[10px] px-2 py-0.5 rounded-md bg-sky-50 text-sky-700 border border-sky-200 font-semibold">
+                                                                    {r}
+                                                                </span>
+                                                            ))}
+                                                        </div>
+                                                    ) : (
+                                                        <span className="text-[10px] text-slate-400 font-medium">
+                                                            • Todos los roles
+                                                        </span>
+                                                    )}
+                                                </div>
                                             </td>
                                             <td className="py-3.5 px-4 text-xs text-slate-600">
                                                 <div className="font-semibold text-slate-800">{m.licitacionNombre}</div>

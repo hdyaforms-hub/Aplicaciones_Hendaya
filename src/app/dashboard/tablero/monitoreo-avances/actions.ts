@@ -424,13 +424,25 @@ export async function getMonitoreoAvancesData(mes?: number, anio?: number): Prom
         }
 
         // 6. Cargar respuestas dentro de las ventanas temporales del mes histórico / actual
-        const actasPlantillasDb = await rawPrisma.actaSupervisionPlantilla.findMany({
-            where: { estado: true },
-            select: { id: true, rolesPerfiles: true }
-        })
+        const [actasPlantillasDb, matricesPlantillasDb] = await Promise.all([
+            rawPrisma.actaSupervisionPlantilla.findMany({
+                where: { estado: true },
+                select: { id: true, rolesPerfiles: true }
+            }),
+            rawPrisma.matrizT_Cabecera.findMany({
+                where: { estado: true },
+                select: { id: true, rolesPerfiles: true }
+            })
+        ])
+
         const actasRolesMap = new Map<string, string | null>()
         for (const ap of actasPlantillasDb) {
             actasRolesMap.set(ap.id, ap.rolesPerfiles)
+        }
+
+        const matricesRolesMap = new Map<string, string | null>()
+        for (const mp of matricesPlantillasDb) {
+            matricesRolesMap.set(mp.id, mp.rolesPerfiles)
         }
 
         // Agrupamos ventanas temporales según targetDate (mes histórico o actual)
@@ -490,6 +502,10 @@ export async function getMonitoreoAvancesData(mes?: number, anio?: number): Prom
             const itemsParaColaborador = itemsConfigInfo.filter((item: any) => {
                 if (item.tipo === 'ACTA') {
                     const rolesPerfiles = actasRolesMap.get(item.plantillaId)
+                    return isUserRoleAllowedForActa(rolesPerfiles, u.role.name, u.role.id)
+                }
+                if (item.tipo === 'MATRIZ') {
+                    const rolesPerfiles = matricesRolesMap.get(item.plantillaId)
                     return isUserRoleAllowedForActa(rolesPerfiles, u.role.name, u.role.id)
                 }
                 return true

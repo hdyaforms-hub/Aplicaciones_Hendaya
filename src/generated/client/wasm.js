@@ -1019,6 +1019,7 @@ exports.Prisma.MatrizT_CabeceraScalarFieldEnum = {
   titulo: 'titulo',
   estado: 'estado',
   instrucciones: 'instrucciones',
+  rolesPerfiles: 'rolesPerfiles',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

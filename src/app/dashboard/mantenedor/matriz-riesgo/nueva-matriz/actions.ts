@@ -1,8 +1,9 @@
 'use server'
 
-import { prisma } from '@/lib/prisma'
+import { prisma, rawPrisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { revalidatePath } from 'next/cache'
+import { ensureMonitoreoTables } from '@/lib/monitoreo-db-init'
 
 export async function getLicitaciones() {
     try {
@@ -19,6 +20,7 @@ export async function getLicitaciones() {
 
 export async function getMatrices() {
     try {
+        await ensureMonitoreoTables()
         const matrices = await prisma.matrizT_Cabecera.findMany({
             include: {
                 licitacion: true,
@@ -54,13 +56,29 @@ export async function getMatrix(id: string) {
     }
 }
 
-export async function saveMatrixHeader(data: { id?: string, licId: number, anio: number, titulo: string, estado: boolean }) {
+export async function saveMatrixHeader(data: { 
+    id?: string
+    licId: number
+    anio: number
+    titulo: string
+    estado: boolean
+    rolesPerfiles?: string[] | string | null 
+}) {
     const session = await getSession()
     if (!session?.user?.role?.permissions.includes('manage_nueva_matriz')) {
         return { error: 'No tienes permisos para esta acción.' }
     }
 
     try {
+        await ensureMonitoreoTables()
+
+        let formattedRoles: string | null = null
+        if (Array.isArray(data.rolesPerfiles)) {
+            formattedRoles = JSON.stringify(data.rolesPerfiles)
+        } else if (typeof data.rolesPerfiles === 'string') {
+            formattedRoles = data.rolesPerfiles
+        }
+
         if (data.id) {
             // Check if answered
             const answersCount = await prisma.matrizT_RespuestasCabecera.count({
@@ -69,7 +87,7 @@ export async function saveMatrixHeader(data: { id?: string, licId: number, anio:
             if (answersCount > 0) {
                 const currentMatrix = await prisma.matrizT_Cabecera.findUnique({ where: { id: data.id } });
                 if (currentMatrix && (currentMatrix.licId !== Number(data.licId) || currentMatrix.anio !== Number(data.anio) || currentMatrix.titulo !== data.titulo)) {
-                    return { error: 'Esta matriz ya tiene respuestas. Solo puede modificar su Estado (Vigente/No Vigente), no su título ni licitación.' }
+                    return { error: 'Esta matriz ya tiene respuestas. Solo puede modificar su Estado (Vigente/No Vigente) y Roles Asignados, no su título ni licitación.' }
                 }
             }
 
@@ -79,7 +97,8 @@ export async function saveMatrixHeader(data: { id?: string, licId: number, anio:
                     licId: Number(data.licId),
                     anio: Number(data.anio),
                     titulo: data.titulo,
-                    estado: data.estado
+                    estado: data.estado,
+                    rolesPerfiles: formattedRoles
                 }
             })
             revalidatePath('/dashboard/mantenedor/matriz-riesgo/nueva-matriz')
@@ -90,7 +109,8 @@ export async function saveMatrixHeader(data: { id?: string, licId: number, anio:
                     licId: Number(data.licId),
                     anio: Number(data.anio),
                     titulo: data.titulo,
-                    estado: data.estado
+                    estado: data.estado,
+                    rolesPerfiles: formattedRoles
                 }
             })
             revalidatePath('/dashboard/mantenedor/matriz-riesgo/nueva-matriz')
@@ -167,7 +187,8 @@ export async function duplicateMatrix(id: string, newLicId: number, newTitulo: s
                 anio: newAnio,
                 titulo: newTitulo,
                 estado: newEstado,
-                instrucciones: source.instrucciones
+                instrucciones: source.instrucciones,
+                rolesPerfiles: source.rolesPerfiles
             }
         })
 
@@ -375,7 +396,8 @@ export async function exportMatrixTemplate(id: string) {
                 licId: matrix.licId,
                 licitacionHomologada: matrix.licitacion?.licitacionHomologada,
                 estado: matrix.estado,
-                instrucciones: matrix.instrucciones
+                instrucciones: matrix.instrucciones,
+                rolesPerfiles: matrix.rolesPerfiles
             },
             detalles: (matrix.detalles || []).map(d => ({
                 preguntaNombre: d.preguntaNombre,
@@ -438,6 +460,7 @@ export async function importMatrixTemplate(data: {
     anio?: number
     estado?: boolean
     instrucciones?: string | null
+    rolesPerfiles?: string | null
     detalles?: any[]
     formatosCarta?: any[]
 }) {
@@ -486,7 +509,8 @@ export async function importMatrixTemplate(data: {
                 licId: targetLicId,
                 anio: anioFinal,
                 estado: data.estado !== false,
-                instrucciones: data.instrucciones || null
+                instrucciones: data.instrucciones || null,
+                rolesPerfiles: data.rolesPerfiles || null
             }
         })
 

@@ -136,7 +136,7 @@ model ListaCorreo {
   para           String
   cc             String?
   sucursalId     String?
-  porSucursal    String?                // JSON estructurado con destinatarios específicos por sucursal: { [sucursalId]: { para: string[], cc: string[] } }
+  porSucursal    String? // JSON estructurado con destinatarios específicos por sucursal: { [sucursalId]: { para: string[], cc: string[] } }
   createdAt      DateTime               @default(now())
   updatedAt      DateTime               @updatedAt
   sucursal       Sucursal?              @relation(fields: [sucursalId], references: [id])
@@ -1056,6 +1056,7 @@ model MatrizT_Cabecera {
   titulo        String
   estado        Boolean  @default(true) // true = Vigente, false = No vigente
   instrucciones String?  @db.Text
+  rolesPerfiles String?  @db.Text // Roles autorizados para llenar la matriz (JSON array string)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
@@ -2290,6 +2291,9 @@ model Pers_Asis_Carga {
   nuevosRegistros       Int                  @default(0)
   actualizadosRegistros Int                  @default(0)
   erroresRegistros      Int                  @default(0)
+  estado                String               @default("ABIERTO")
+  cerradoPor            String?
+  cerradoAt             DateTime?
   cargadoPor            String
   cargadoPorId          String?
   fechaCarga            DateTime             @default(now())
@@ -2301,6 +2305,7 @@ model Pers_Asis_Carga {
   updatedAt             DateTime             @updatedAt
   registros             Pers_Asis_Registro[]
 
+  @@index([estado], map: "pers_asis_carga_estado_idx")
   @@map("Pers_Asis_Carga")
 }
 
@@ -2326,6 +2331,9 @@ model Pers_Asis_Registro {
   documentoNombre          String?
   documentoSubidoAt        DateTime?
   documentoSubidoPor       String?
+  estado                   String    @default("ABIERTO")
+  cerradoPor               String?
+  cerradoAt                DateTime?
   creadoPor                String
   creadoPorId              String?
   fechaCreacion            DateTime  @default(now())
@@ -2345,5 +2353,6 @@ model Pers_Asis_Registro {
   @@index([fecha], map: "pers_asis_reg_fecha_idx")
   @@index([rutHash], map: "pers_asis_reg_ruthash_idx")
   @@index([criterioId], map: "pers_asis_reg_criterio_idx")
+  @@index([estado], map: "pers_asis_reg_estado_idx")
   @@map("Pers_Asis_Registro")
 }

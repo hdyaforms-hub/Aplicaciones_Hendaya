@@ -50,6 +50,11 @@ export async function ensureMonitoreoTables() {
             CREATE INDEX IF NOT EXISTS "idx_monitoreo_item_tipo" ON "monitoreo_item_config" ("tipo");
         `)
 
+        // 3. Garantizar columna rolesPerfiles en MatrizT_Cabecera para asignación de roles a nivel de cabecera
+        await rawPrisma.$executeRawUnsafe(`
+            ALTER TABLE "MatrizT_Cabecera" ADD COLUMN IF NOT EXISTS "rolesPerfiles" TEXT;
+        `)
+
         initialized = true
     } catch (error) {
         console.error('Error al inicializar tablas de monitoreo (self-healing):', error)

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { 
@@ -19,12 +19,18 @@ type Licitacion = {
     estado: number
 }
 
+type RoleOption = {
+    id: string
+    name: string
+}
+
 type Matriz = {
     id: string
     licId: number
     anio: number
     titulo: string
     estado: boolean
+    rolesPerfiles?: string | null
     licitacion: Licitacion
     _count: {
         respuestas: number
@@ -34,11 +40,13 @@ type Matriz = {
 interface NuevaMatrizDashboardProps {
     initialLicitaciones: Licitacion[]
     initialMatrices: Matriz[]
+    availableRoles?: RoleOption[]
 }
 
 export default function NuevaMatrizDashboard({
     initialLicitaciones,
-    initialMatrices
+    initialMatrices,
+    availableRoles = []
 }: NuevaMatrizDashboardProps) {
     const router = useRouter()
     const [matrices, setMatrices] = useState<Matriz[]>(initialMatrices)
@@ -51,6 +59,40 @@ export default function NuevaMatrizDashboard({
     const [anio, setAnio] = useState<string>('')
     const [titulo, setTitulo] = useState<string>('')
     const [estado, setEstado] = useState<boolean>(true)
+    const [selectedRoles, setSelectedRoles] = useState<string[]>([])
+    const [isRolesOpen, setIsRolesOpen] = useState(false)
+    const [rolesSearch, setRolesSearch] = useState('')
+    const rolesDropdownRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+            if (rolesDropdownRef.current && !rolesDropdownRef.current.contains(event.target as Node)) {
+                setIsRolesOpen(false)
+            }
+        }
+        document.addEventListener('mousedown', handleClickOutside)
+        return () => document.removeEventListener('mousedown', handleClickOutside)
+    }, [])
+
+    const toggleRole = (roleName: string) => {
+        setSelectedRoles(prev => 
+            prev.includes(roleName)
+                ? prev.filter(r => r !== roleName)
+                : [...prev, roleName]
+        )
+    }
+
+    const handleSelectAllRoles = () => {
+        setSelectedRoles(availableRoles.map(r => r.name))
+    }
+
+    const handleClearRoles = () => {
+        setSelectedRoles([])
+    }
+
+    const filteredRoles = availableRoles.filter(r => 
+        r.name.toLowerCase().includes(rolesSearch.toLowerCase().trim())
+    )
 
     const [loading, setLoading] = useState(false)
     const [actionId, setActionId] = useState<string | null>(null)
@@ -80,6 +122,9 @@ export default function NuevaMatrizDashboard({
         setAnio('')
         setTitulo('')
         setEstado(true)
+        setSelectedRoles([])
+        setIsRolesOpen(false)
+        setRolesSearch('')
         setMessage(null)
     }
 
@@ -89,6 +134,14 @@ export default function NuevaMatrizDashboard({
         setAnio(matriz.anio.toString())
         setTitulo(matriz.titulo)
         setEstado(matriz.estado)
+        try {
+            const parsed = JSON.parse(matriz.rolesPerfiles || '[]')
+            setSelectedRoles(Array.isArray(parsed) ? parsed : (matriz.rolesPerfiles ? [matriz.rolesPerfiles] : []))
+        } catch {
+            setSelectedRoles(matriz.rolesPerfiles ? [matriz.rolesPerfiles] : [])
+        }
+        setIsRolesOpen(false)
+        setRolesSearch('')
         window.scrollTo({ top: 0, behavior: 'smooth' })
     }
 
@@ -107,7 +160,8 @@ export default function NuevaMatrizDashboard({
             licId: Number(licId),
             anio: Number(anio),
             titulo,
-            estado
+            estado,
+            rolesPerfiles: selectedRoles
         })
 
         setLoading(false)
@@ -375,88 +429,207 @@ export default function NuevaMatrizDashboard({
                     </div>
                 )}
 
-                <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-4 gap-6 items-end">
-                    {/* Licitacion dropdown */}
-                    <div className="space-y-2">
-                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider pl-1">Licitación *</label>
-                        <select
-                            value={licId}
-                            onChange={(e) => setLicId(e.target.value)}
-                            className="w-full p-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none text-black font-semibold text-sm"
-                            required
-                        >
-                            <option value="">Seleccione...</option>
-                            {licitaciones.map(l => (
-                                <option key={l.licId} value={l.licId}>
-                                    {l.licitacionHomologada || `Licitación ${l.licId}`}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-
-                    {/* Año input */}
-                    <div className="space-y-2">
-                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider pl-1">Año *</label>
-                        <input
-                            type="number"
-                            min="2020"
-                            max="2050"
-                            value={anio}
-                            onChange={(e) => setAnio(e.target.value)}
-                            placeholder="Ej: 2026"
-                            className="w-full p-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none text-black font-semibold text-sm"
-                            required
-                        />
-                    </div>
-
-                    {/* Título input */}
-                    <div className="space-y-2">
-                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider pl-1">Título de la Matriz *</label>
-                        <input
-                            type="text"
-                            value={titulo}
-                            onChange={(e) => setTitulo(e.target.value)}
-                            placeholder="Ej: Segundo Semestre / 2026"
-                            className="w-full p-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none text-black font-semibold text-sm"
-                            required
-                        />
-                    </div>
-
-                    {/* Estado toggle & submit */}
-                    <div className="flex items-center justify-between gap-4">
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    {/* Fila 1: Licitación, Año y Título */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {/* Licitacion dropdown */}
                         <div className="space-y-2">
-                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider pl-1">Estado</label>
-                            <div className="flex items-center gap-3">
-                                <button
-                                    type="button"
-                                    onClick={() => setEstado(!estado)}
-                                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${estado ? 'bg-emerald-500' : 'bg-gray-200'}`}
-                                >
-                                    <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${estado ? 'translate-x-6' : 'translate-x-1'}`} />
-                                </button>
-                                <span className={`text-xs font-bold ${estado ? 'text-emerald-700' : 'text-gray-400'}`}>
-                                    {estado ? 'VIGENTE' : 'NO VIGENTE'}
-                                </span>
-                            </div>
+                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider pl-1">Licitación *</label>
+                            <select
+                                value={licId}
+                                onChange={(e) => setLicId(e.target.value)}
+                                className="w-full p-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none text-slate-800 font-semibold text-sm shadow-sm"
+                                required
+                            >
+                                <option value="">Seleccione...</option>
+                                {licitaciones.map(l => (
+                                    <option key={l.licId} value={l.licId}>
+                                        {l.licitacionHomologada || `Licitación ${l.licId}`}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
 
-                        <div className="flex gap-2 shrink-0">
-                            {selectedId && (
-                                <button
-                                    type="button"
-                                    onClick={handleReset}
-                                    className="px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-bold text-sm transition-colors"
-                                >
-                                    Cancelar
-                                </button>
-                            )}
-                            <button
-                                type="submit"
-                                disabled={loading}
-                                className="px-6 py-3 bg-cyan-600 hover:bg-cyan-700 text-white rounded-xl font-bold text-sm transition-colors shadow-md shadow-cyan-500/10 disabled:opacity-50"
+                        {/* Año input */}
+                        <div className="space-y-2">
+                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider pl-1">Año *</label>
+                            <input
+                                type="number"
+                                min="2020"
+                                max="2050"
+                                value={anio}
+                                onChange={(e) => setAnio(e.target.value)}
+                                placeholder="Ej: 2026"
+                                className="w-full p-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none text-slate-800 font-semibold text-sm shadow-sm"
+                                required
+                            />
+                        </div>
+
+                        {/* Título input */}
+                        <div className="space-y-2">
+                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider pl-1">Título de la Matriz *</label>
+                            <input
+                                type="text"
+                                value={titulo}
+                                onChange={(e) => setTitulo(e.target.value)}
+                                placeholder="Ej: Segundo Semestre / 2026"
+                                className="w-full p-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none text-slate-800 font-semibold text-sm shadow-sm"
+                                required
+                            />
+                        </div>
+                    </div>
+
+                    {/* Fila 2: Roles Autorizados (Multi-select) y Estado/Acciones */}
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end pt-2 border-t border-slate-100">
+                        {/* Selector Múltiple de Roles */}
+                        <div className="lg:col-span-7 space-y-2 relative" ref={rolesDropdownRef}>
+                            <div className="flex items-center justify-between">
+                                <label className="block text-xs font-bold text-slate-600 uppercase tracking-wider pl-1 flex items-center gap-1.5">
+                                    <span>👥</span> Roles Autorizados para Llenado (Monitoreo)
+                                </label>
+                                <span className="text-[11px] text-slate-400 font-medium">
+                                    {selectedRoles.length === 0 ? 'Sin restricción (Todos los roles)' : `${selectedRoles.length} seleccionado(s)`}
+                                </span>
+                            </div>
+
+                            {/* Botón Trigger del Dropdown */}
+                            <div
+                                onClick={() => setIsRolesOpen(!isRolesOpen)}
+                                className="w-full min-h-[46px] p-2 bg-white border border-gray-200 hover:border-cyan-400 rounded-xl cursor-pointer flex flex-wrap items-center justify-between gap-1.5 transition-all shadow-sm focus-within:ring-2 focus-within:ring-cyan-500"
                             >
-                                {loading ? 'Procesando...' : selectedId ? 'Guardar Cambios' : 'Crear y Continuar ➔'}
-                            </button>
+                                <div className="flex flex-wrap gap-1.5 items-center flex-1">
+                                    {selectedRoles.length === 0 ? (
+                                        <span className="text-slate-400 text-xs pl-1 font-medium flex items-center gap-1.5">
+                                            <span>🌐</span> Todos los roles autorizados (Clic para seleccionar roles específicos)
+                                        </span>
+                                    ) : (
+                                        selectedRoles.map((roleName) => (
+                                            <span
+                                                key={roleName}
+                                                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold bg-sky-50 text-sky-800 border border-sky-200 shadow-2xs"
+                                            >
+                                                <span>👤</span>
+                                                {roleName}
+                                                <button
+                                                    type="button"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation()
+                                                        toggleRole(roleName)
+                                                    }}
+                                                    className="hover:text-red-600 ml-1 rounded-full text-slate-400 hover:bg-sky-100 p-0.5 transition-colors"
+                                                    title="Quitar rol"
+                                                >
+                                                    ✕
+                                                </button>
+                                            </span>
+                                        ))
+                                    )}
+                                </div>
+                                <div className="flex items-center gap-1 text-slate-400 px-1 shrink-0">
+                                    <span className="text-xs">{isRolesOpen ? '▲' : '▼'}</span>
+                                </div>
+                            </div>
+
+                            {/* Popover desplegable con buscador */}
+                            {isRolesOpen && (
+                                <div className="absolute left-0 right-0 top-full mt-1.5 bg-white border border-slate-200 rounded-2xl shadow-2xl z-40 p-3 max-h-72 overflow-hidden flex flex-col animate-in fade-in-50 zoom-in-95 duration-150">
+                                    <div className="flex items-center gap-2 mb-2 pb-2 border-b border-slate-100">
+                                        <input
+                                            type="text"
+                                            value={rolesSearch}
+                                            onChange={(e) => setRolesSearch(e.target.value)}
+                                            placeholder="Filtrar rol por nombre..."
+                                            className="flex-1 px-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg outline-none focus:ring-1 focus:ring-cyan-500 text-slate-800"
+                                            autoFocus
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={handleSelectAllRoles}
+                                            className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-md text-[11px] font-bold shrink-0 transition-colors"
+                                        >
+                                            Todos
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={handleClearRoles}
+                                            className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-md text-[11px] font-bold shrink-0 transition-colors"
+                                        >
+                                            Limpiar
+                                        </button>
+                                    </div>
+
+                                    <div className="overflow-y-auto space-y-1 flex-1 pr-1">
+                                        {filteredRoles.length === 0 ? (
+                                            <p className="text-xs text-slate-400 p-3 text-center">No se encontraron roles con ese filtro.</p>
+                                        ) : (
+                                            filteredRoles.map(r => {
+                                                const isSelected = selectedRoles.includes(r.name)
+                                                return (
+                                                    <label
+                                                        key={r.id}
+                                                        className={`flex items-center justify-between p-2 rounded-xl text-xs font-semibold cursor-pointer transition-colors ${
+                                                            isSelected ? 'bg-sky-50 text-sky-900 border border-sky-100 font-bold' : 'hover:bg-slate-50 text-slate-700'
+                                                        }`}
+                                                    >
+                                                        <div className="flex items-center gap-2.5">
+                                                            <input
+                                                                type="checkbox"
+                                                                checked={isSelected}
+                                                                onChange={() => toggleRole(r.name)}
+                                                                className="rounded border-slate-300 text-sky-600 focus:ring-sky-500 h-4 w-4"
+                                                            />
+                                                            <span>{r.name}</span>
+                                                        </div>
+                                                        {isSelected && (
+                                                            <span className="text-[10px] bg-sky-200/60 text-sky-800 px-1.5 py-0.5 rounded font-extrabold">
+                                                                Asignado
+                                                            </span>
+                                                        )}
+                                                    </label>
+                                                )
+                                            })
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Estado toggle & submit */}
+                        <div className="lg:col-span-5 flex items-center justify-between gap-4">
+                            <div className="space-y-2">
+                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider pl-1">Estado</label>
+                                <div className="flex items-center gap-3">
+                                    <button
+                                        type="button"
+                                        onClick={() => setEstado(!estado)}
+                                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${estado ? 'bg-emerald-500' : 'bg-gray-200'}`}
+                                    >
+                                        <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${estado ? 'translate-x-6' : 'translate-x-1'}`} />
+                                    </button>
+                                    <span className={`text-xs font-bold ${estado ? 'text-emerald-700' : 'text-gray-400'}`}>
+                                        {estado ? 'VIGENTE' : 'NO VIGENTE'}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div className="flex gap-2 shrink-0">
+                                {selectedId && (
+                                    <button
+                                        type="button"
+                                        onClick={handleReset}
+                                        className="px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-bold text-sm transition-colors cursor-pointer"
+                                    >
+                                        Cancelar
+                                    </button>
+                                )}
+                                <button
+                                    type="submit"
+                                    disabled={loading}
+                                    className="px-6 py-3 bg-cyan-600 hover:bg-cyan-700 text-white rounded-xl font-bold text-sm transition-colors shadow-md shadow-cyan-500/10 disabled:opacity-50 cursor-pointer"
+                                >
+                                    {loading ? 'Procesando...' : selectedId ? 'Guardar Cambios' : 'Crear y Continuar ➔'}
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -498,15 +671,43 @@ export default function NuevaMatrizDashboard({
                                     </td>
                                     <td className="px-6 py-4 font-medium text-slate-600">{m.anio}</td>
                                     <td className="px-6 py-4">
-                                        <Link
-                                            href={`/dashboard/mantenedor/matriz-riesgo/nueva-matriz/${m.id}`}
-                                            className="font-black text-cyan-600 hover:text-cyan-800 hover:underline flex items-center gap-1.5 transition-all"
-                                        >
-                                            <span>{m.titulo}</span>
-                                            <span className="text-[10px] bg-cyan-50 text-cyan-700 px-2 py-0.5 rounded-full font-semibold border border-cyan-100 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                🛠️ Editar plantilla
-                                            </span>
-                                        </Link>
+                                        <div>
+                                            <Link
+                                                href={`/dashboard/mantenedor/matriz-riesgo/nueva-matriz/${m.id}`}
+                                                className="font-black text-cyan-600 hover:text-cyan-800 hover:underline flex items-center gap-1.5 transition-all"
+                                            >
+                                                <span>{m.titulo}</span>
+                                                <span className="text-[10px] bg-cyan-50 text-cyan-700 px-2 py-0.5 rounded-full font-semibold border border-cyan-100 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                    🛠️ Editar plantilla
+                                                </span>
+                                            </Link>
+                                            {m.rolesPerfiles ? (() => {
+                                                try {
+                                                    const parsed = JSON.parse(m.rolesPerfiles)
+                                                    if (Array.isArray(parsed) && parsed.length > 0) {
+                                                        return (
+                                                            <div className="flex flex-wrap items-center gap-1 mt-1.5">
+                                                                <span className="text-[10px] font-bold text-slate-400">Roles:</span>
+                                                                {parsed.map((r, i) => (
+                                                                    <span key={i} className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-sky-50 text-sky-700 border border-sky-200">
+                                                                        👤 {r}
+                                                                    </span>
+                                                                ))}
+                                                            </div>
+                                                        )
+                                                    }
+                                                } catch {}
+                                                return (
+                                                    <span className="text-[10px] text-slate-400 mt-1 block">
+                                                        Roles: Todos los roles habilitados
+                                                    </span>
+                                                )
+                                            })() : (
+                                                <span className="text-[10px] text-slate-400 mt-1 block">
+                                                    Roles: Todos los roles habilitados
+                                                </span>
+                                            )}
+                                        </div>
                                     </td>
                                     <td className="px-6 py-4">
                                         <button 
