@@ -117,8 +117,7 @@ export async function getAsistenciaRegistrosAction(filtros?: {
                 { fecha: 'desc' },
                 { rbd: 'asc' },
                 { id: 'asc' }
-            ],
-            take: 2000
+            ]
         })
 
         // Obtener criterios para mapa de colores

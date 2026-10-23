@@ -56,54 +56,72 @@ export function encryptPersonalText(rawText: string): string {
     }
 }
 
+// Claves candidatas para descifrado resiliente (soporta clave activa y claves históricas/fallback)
+function getCandidateKeys(): Buffer[] {
+    const keys: Buffer[] = [getKey()]
+    const fallbacks = [
+        'hendaya-personal-crypto-key-2026-secure',
+        'hendaya-personal-secret-key-32b!'
+    ]
+    for (const fb of fallbacks) {
+        const fbKey = crypto.createHash('sha256').update(fb).digest()
+        if (!keys.some(k => k.equals(fbKey))) {
+            keys.push(fbKey)
+        }
+    }
+    return keys
+}
+
 /**
  * Descifra un dato personal previamente cifrado con AES-256-GCM.
+ * Soporta de manera resiliente tanto formato con prefijo ENC_PERS:: como formato directo iv:tag:data.
  */
 export function decryptPersonalText(cipherText: string): string {
     if (!cipherText || !cipherText.trim()) return ''
     const trimmed = cipherText.trim()
+    const candidateKeys = getCandidateKeys()
 
-    // Si tiene formato ENC_PERS:: o ENC_NOM::
+    // 1. Si tiene formato con prefijo ENC_PERS:: o ENC_NOM::
     if (trimmed.startsWith('ENC_PERS::') || trimmed.startsWith('ENC_NOM::')) {
-        try {
-            const parts = trimmed.split('::')
-            if (parts.length === 4) {
-                const iv = Buffer.from(parts[1], 'hex')
-                const authTag = Buffer.from(parts[2], 'hex')
-                const encryptedHex = parts[3]
+        const parts = trimmed.split('::')
+        if (parts.length === 4) {
+            const iv = Buffer.from(parts[1], 'hex')
+            const authTag = Buffer.from(parts[2], 'hex')
+            const encryptedHex = parts[3]
 
-                const key = getKey()
-                const decipher = crypto.createDecipheriv(ALGORITHM, key, iv)
-                decipher.setAuthTag(authTag)
-
-                let decrypted = decipher.update(encryptedHex, 'hex', 'utf8')
-                decrypted += decipher.final('utf8')
-                return decrypted
+            for (const key of candidateKeys) {
+                try {
+                    const decipher = crypto.createDecipheriv(ALGORITHM, key, iv)
+                    decipher.setAuthTag(authTag)
+                    let decrypted = decipher.update(encryptedHex, 'hex', 'utf8')
+                    decrypted += decipher.final('utf8')
+                    return decrypted
+                } catch {
+                    // Continuar con la siguiente clave candidata
+                }
             }
-        } catch (error) {
-            console.error('Error al descifrar dato personal (::):', error)
             return trimmed
         }
     }
 
-    // Formato iv:authTag:encrypted (3 partes separadas por dos puntos)
+    // 2. Formato iv:authTag:encrypted (3 partes separadas por dos puntos)
     if (trimmed.includes(':')) {
         const colonParts = trimmed.split(':')
         if (colonParts.length === 3 && colonParts[0].length === 24 && colonParts[1].length === 32) {
-            try {
-                const iv = Buffer.from(colonParts[0], 'hex')
-                const authTag = Buffer.from(colonParts[1], 'hex')
-                const encryptedHex = colonParts[2]
+            const iv = Buffer.from(colonParts[0], 'hex')
+            const authTag = Buffer.from(colonParts[1], 'hex')
+            const encryptedHex = colonParts[2]
 
-                const key = getKey()
-                const decipher = crypto.createDecipheriv(ALGORITHM, key, iv)
-                decipher.setAuthTag(authTag)
-
-                let decrypted = decipher.update(encryptedHex, 'hex', 'utf8')
-                decrypted += decipher.final('utf8')
-                return decrypted
-            } catch (err) {
-                console.error('Error al descifrar dato personal (:):', err)
+            for (const key of candidateKeys) {
+                try {
+                    const decipher = crypto.createDecipheriv(ALGORITHM, key, iv)
+                    decipher.setAuthTag(authTag)
+                    let decrypted = decipher.update(encryptedHex, 'hex', 'utf8')
+                    decrypted += decipher.final('utf8')
+                    return decrypted
+                } catch {
+                    // Continuar con la siguiente clave candidata
+                }
             }
         }
     }

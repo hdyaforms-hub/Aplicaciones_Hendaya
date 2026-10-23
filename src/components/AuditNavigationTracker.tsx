@@ -47,6 +47,9 @@ function getModuleInfoFromPath(path: string): { modulo: string; detalle: string 
 
     // Áreas -> Recursos Humanos (Personal)
     if (path.startsWith('/dashboard/areas/personal')) {
+        if (path.includes('/asistencia/atrasos-adelantos')) return { modulo: 'Áreas -> Recursos Humanos', detalle: 'Accedió a Atrasos y Adelantos (Asistencia)' }
+        if (path.includes('/administracion/atrasos-adelantos')) return { modulo: 'Áreas -> Recursos Humanos', detalle: 'Accedió a Adm. Atrasos y Adelantos' }
+        if (path.includes('/atrasos-adelantos')) return { modulo: 'Áreas -> Recursos Humanos', detalle: 'Accedió a Carga Masiva de Atrasos y Adelantos' }
         if (path.includes('/asistencia/cambio-rbd')) return { modulo: 'Áreas -> Recursos Humanos', detalle: 'Accedió a Cambio de RBD (Personal)' }
         if (path.includes('/asistencia/horas-extras') || path.includes('/horas-extras')) return { modulo: 'Áreas -> Recursos Humanos', detalle: 'Accedió a Horas Extras (HHEE)' }
         if (path.includes('/asistencia')) return { modulo: 'Áreas -> Recursos Humanos', detalle: 'Accedió a Ausentismo y Asistencia' }

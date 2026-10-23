@@ -137,8 +137,7 @@ export async function getAdmAusentismoRegistrosAction(filtros?: {
                 { fecha: 'desc' },
                 { rbd: 'asc' },
                 { id: 'asc' }
-            ],
-            take: 3000
+            ]
         })
 
         // Obtener criterios para colores

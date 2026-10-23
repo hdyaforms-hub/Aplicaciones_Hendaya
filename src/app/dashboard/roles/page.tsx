@@ -133,15 +133,18 @@ export default async function RolesPage() {
         // ÁREAS -> RECURSOS HUMANOS -> ASISTENCIA
         { id: 'view_personal_asistencia', name: 'Ausentismo (Ver y Gestionar)', description: 'Permite consultar ausencias por RBD asignado y asociar criterios de ausentismo.', category: 'ÁREAS -> RECURSOS HUMANOS -> ASISTENCIA' },
         { id: 'view_personal_horas_extras', name: 'Hrs Extras (Ver y Gestionar)', description: 'Permite consultar horas extras por RBD asignado e indicar Aplica / No aplica en períodos abiertos.', category: 'ÁREAS -> RECURSOS HUMANOS -> ASISTENCIA' },
+        { id: 'view_personal_atrasos', name: 'Atrasos y Adelantos (Ver y Gestionar)', description: 'Permite consultar atrasos y adelantos por RBD asignado e indicar si aplica o no descuento y justificación.', category: 'ÁREAS -> RECURSOS HUMANOS -> ASISTENCIA' },
         { id: 'manage_personal_cambio_rbd', name: 'Cambio de RBD (Ver y Gestionar)', description: 'Permite consultar colaboradores de dotación y registrar cambios de RBD (Anexos de traslado o Comisión de servicio).', category: 'ÁREAS -> RECURSOS HUMANOS -> ASISTENCIA' },
         // ÁREAS -> RECURSOS HUMANOS -> ADMINISTRACIÓN
         { id: 'manage_personal_asistencia_admin', name: 'Adm. Ausentismo', description: 'Permite administrar períodos de ausentismo (cerrar/abrir), consultar historial de documentos cargados y supervisores, exportar a Excel y gestionar criterios.', category: 'ÁREAS -> RECURSOS HUMANOS -> ADMINISTRACIÓN' },
         { id: 'manage_personal_horas_extras_admin', name: 'Adm. de Hrs Extras', description: 'Permite administrar períodos de Horas Extras (abrir/cerrar), gestionar Aplica / No aplica, consultar historial y exportar a Excel.', category: 'ÁREAS -> RECURSOS HUMANOS -> ADMINISTRACIÓN' },
+        { id: 'manage_personal_atrasos_admin', name: 'Adm. Atrasos y Adelantos', description: 'Permite administrar períodos de Atrasos y Adelantos (abrir/cerrar), gestionar descuentos, consultar historial y exportar a Excel.', category: 'ÁREAS -> RECURSOS HUMANOS -> ADMINISTRACIÓN' },
         { id: 'manage_personal_cuentas_admin', name: 'Adm. de cuenta', description: 'Permite visualizar y autorizar cuentas de Recursos Humanos para el cierre y reapertura de períodos en la plataforma.', category: 'ÁREAS -> RECURSOS HUMANOS -> ADMINISTRACIÓN' },
         // ÁREAS -> RECURSOS HUMANOS -> CARGA MASIVA
         { id: 'manage_personal_asistencia_carga', name: 'Ausentismo', description: 'Permite subir y actualizar planillas Excel de ausentismo con datos encriptados.', category: 'ÁREAS -> RECURSOS HUMANOS -> CARGA MASIVA' },
         { id: 'manage_personal_dotacion_carga', name: 'Dotación', description: 'Permite cargar, reemplazar y consultar la dotación de personal con datos encriptados.', category: 'ÁREAS -> RECURSOS HUMANOS -> CARGA MASIVA' },
         { id: 'manage_personal_horas_extras_carga', name: 'Horas Extras', description: 'Permite cargar, actualizar y consultar la planilla de horas extras de personal con datos encriptados.', category: 'ÁREAS -> RECURSOS HUMANOS -> CARGA MASIVA' },
+        { id: 'manage_personal_atrasos_carga', name: 'Atrasos y Adelantos', description: 'Permite cargar, actualizar y consultar la planilla masiva de atrasos y adelantos con datos encriptados.', category: 'ÁREAS -> RECURSOS HUMANOS -> CARGA MASIVA' },
 
         { id: 'view_matriz_riesgo', name: 'Ver Matriz de Riesgo', description: 'Acceso al menú principal de matrices de riesgo.', category: 'MATRIZ DE RIESGO' },
         { id: 'fill_nueva_matriz', name: 'Ingresar nueva Matriz', description: 'Responder encuestas basadas en plantillas dinámicas de matrices de riesgo.', category: 'MATRIZ DE RIESGO -> INGRESAR NUEVA MATRIZ' },

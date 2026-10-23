@@ -68,12 +68,15 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
             'logistica:integraciones:ver',
             'view_personal_asistencia',
             'view_personal_horas_extras',
+            'view_personal_atrasos',
             'manage_personal_cambio_rbd',
             'manage_personal_asistencia_admin',
             'manage_personal_horas_extras_admin',
+            'manage_personal_atrasos_admin',
             'manage_personal_asistencia_carga',
             'manage_personal_dotacion_carga',
-            'manage_personal_horas_extras_carga'
+            'manage_personal_horas_extras_carga',
+            'manage_personal_atrasos_carga'
         ],
         subItems: [
             {
@@ -81,17 +84,20 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                 requiredPermission: [
                     'view_personal_asistencia',
                     'view_personal_horas_extras',
+                    'view_personal_atrasos',
                     'manage_personal_cambio_rbd',
                     'manage_personal_asistencia_admin',
                     'manage_personal_horas_extras_admin',
+                    'manage_personal_atrasos_admin',
                     'manage_personal_asistencia_carga',
                     'manage_personal_dotacion_carga',
-                    'manage_personal_horas_extras_carga'
+                    'manage_personal_horas_extras_carga',
+                    'manage_personal_atrasos_carga'
                 ],
                 subItems: [
                     {
                         name: 'Asistencia',
-                        requiredPermission: ['view_personal_asistencia', 'view_personal_horas_extras', 'manage_personal_cambio_rbd'],
+                        requiredPermission: ['view_personal_asistencia', 'view_personal_horas_extras', 'view_personal_atrasos', 'manage_personal_cambio_rbd'],
                         subItems: [
                             {
                                 name: 'Ausentismo',
@@ -104,6 +110,11 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                                 requiredPermission: 'view_personal_horas_extras'
                             },
                             {
+                                name: 'Atrasos y Adelantos',
+                                href: '/dashboard/areas/personal/asistencia/atrasos-adelantos',
+                                requiredPermission: 'view_personal_atrasos'
+                            },
+                            {
                                 name: 'Cambio de RBD',
                                 href: '/dashboard/areas/personal/asistencia/cambio-rbd',
                                 requiredPermission: 'manage_personal_cambio_rbd'
@@ -112,7 +123,7 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                     },
                     {
                         name: 'Administración',
-                        requiredPermission: ['manage_personal_asistencia_admin', 'manage_personal_horas_extras_admin', 'manage_personal_cuentas_admin'],
+                        requiredPermission: ['manage_personal_asistencia_admin', 'manage_personal_horas_extras_admin', 'manage_personal_atrasos_admin', 'manage_personal_cuentas_admin'],
                         subItems: [
                             {
                                 name: 'Adm. Ausentismo',
@@ -125,6 +136,11 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                                 requiredPermission: 'manage_personal_horas_extras_admin'
                             },
                             {
+                                name: 'Adm. Atrasos y Adelantos',
+                                href: '/dashboard/areas/personal/administracion/atrasos-adelantos',
+                                requiredPermission: 'manage_personal_atrasos_admin'
+                            },
+                            {
                                 name: 'Adm. de cuenta',
                                 href: '/dashboard/areas/personal/administracion/cuentas',
                                 requiredPermission: 'manage_personal_cuentas_admin'
@@ -133,7 +149,7 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                     },
                     {
                         name: 'Carga masiva',
-                        requiredPermission: ['manage_personal_asistencia_carga', 'manage_personal_dotacion_carga', 'manage_personal_horas_extras_carga'],
+                        requiredPermission: ['manage_personal_asistencia_carga', 'manage_personal_dotacion_carga', 'manage_personal_horas_extras_carga', 'manage_personal_atrasos_carga'],
                         subItems: [
                             {
                                 name: 'Ausentismo',
@@ -149,6 +165,11 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                                 name: 'Horas Extras',
                                 href: '/dashboard/areas/personal/horas-extras',
                                 requiredPermission: 'manage_personal_horas_extras_carga'
+                            },
+                            {
+                                name: 'Atrasos y Adelantos',
+                                href: '/dashboard/areas/personal/atrasos-adelantos',
+                                requiredPermission: 'manage_personal_atrasos_carga'
                             }
                         ]
                     }
