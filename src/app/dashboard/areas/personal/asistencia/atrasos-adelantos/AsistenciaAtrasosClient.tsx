@@ -25,7 +25,10 @@ import {
     Info,
     ArrowUpDown,
     ArrowUp,
-    ArrowDown
+    ArrowDown,
+    Lock,
+    LogIn,
+    LogOut
 } from 'lucide-react'
 
 interface InitialData {
@@ -36,6 +39,7 @@ interface InitialData {
     sucursales: string[]
     supervisores: string[]
     establecimientos: { rbd: number; establecimiento: string }[]
+    tipoActual?: 'ADELANTO' | 'ATRASO'
     resumen?: {
         totalRegistros: number
         totalMinutosAtraso: number
@@ -52,6 +56,7 @@ interface Props {
 }
 
 export default function AsistenciaAtrasosClient({ initialData, userRbds, isAdmin }: Props) {
+    const [tipoActivo, setTipoActivo] = useState<'ADELANTO' | 'ATRASO'>(initialData.tipoActual || 'ADELANTO')
     const [data, setData] = useState<InitialData>(initialData)
     const [isPending, startTransition] = useTransition()
 
@@ -89,16 +94,19 @@ export default function AsistenciaAtrasosClient({ initialData, userRbds, isAdmin
 
     // Feedback visual de guardado por registro
     const [guardadoStatus, setGuardadoStatus] = useState<{ [id: string]: boolean }>({})
+    const [togglingId, setTogglingId] = useState<string | null>(null)
     const [mensajeFeedback, setMensajeFeedback] = useState<{ tipo: 'success' | 'error'; texto: string } | null>(null)
 
     const fetchData = (
         newPage = pagina,
         newSortBy = sortBy,
         newSortDir = sortDir,
-        newPageSize = pageSize
+        newPageSize = pageSize,
+        targetTipo = tipoActivo
     ) => {
         startTransition(async () => {
             const res = await getAsistenciaAtrasosAction({
+                tipo: targetTipo,
                 search: search.trim() || undefined,
                 sucursal: filtroSucursal !== 'TODAS' ? filtroSucursal : undefined,
                 supervisor: filtroSupervisor !== 'TODOS' ? filtroSupervisor : undefined,
@@ -121,6 +129,7 @@ export default function AsistenciaAtrasosClient({ initialData, userRbds, isAdmin
                     sucursales: res.sucursales,
                     supervisores: res.supervisores,
                     establecimientos: res.establecimientos,
+                    tipoActual: res.tipoActual || targetTipo,
                     resumen: res.resumen
                 })
                 setPagina(newPage)
@@ -131,6 +140,13 @@ export default function AsistenciaAtrasosClient({ initialData, userRbds, isAdmin
                 setMensajeFeedback({ tipo: 'error', texto: res.error })
             }
         })
+    }
+
+    const handleCambioTipo = (nuevoTipo: 'ADELANTO' | 'ATRASO') => {
+        if (nuevoTipo === tipoActivo) return
+        setTipoActivo(nuevoTipo)
+        setPagina(1)
+        fetchData(1, sortBy, sortDir, pageSize, nuevoTipo)
     }
 
     const handleSort = (field: string) => {
@@ -160,6 +176,7 @@ export default function AsistenciaAtrasosClient({ initialData, userRbds, isAdmin
         setFiltroJustificado('TODOS')
         startTransition(async () => {
             const res = await getAsistenciaAtrasosAction({
+                tipo: tipoActivo,
                 page: 1,
                 pageSize,
                 sortBy,
@@ -174,6 +191,7 @@ export default function AsistenciaAtrasosClient({ initialData, userRbds, isAdmin
                     sucursales: res.sucursales,
                     supervisores: res.supervisores,
                     establecimientos: res.establecimientos,
+                    tipoActual: res.tipoActual || tipoActivo,
                     resumen: res.resumen
                 })
                 setPagina(1)
@@ -181,38 +199,87 @@ export default function AsistenciaAtrasosClient({ initialData, userRbds, isAdmin
         })
     }
 
-    // Toggle rápido de Aplica Descuento
+    // Toggle rápido de Aplica Descuento (botón deslizante para celular y escritorio)
     const handleToggleAplica = async (registro: AsistenciaAtrasosRegistroDTO) => {
+        if (registro.estado === 'CERRADO') {
+            alert('El período correspondiente a esta planilla se encuentra CERRADO. No es posible modificar registros en un período cerrado.')
+            return
+        }
+
+        if (!isAdmin && registro.aplicaModificadoPor) {
+            alert(`Este registro ya fue modificado previamente por ${registro.aplicaModificadoPor} y se encuentra bloqueado. Para corregir o rectificar el estado, debe solicitarlo a través del módulo de Administración.`)
+            return
+        }
+
         const nuevoValor = !registro.aplicaDescuento
-        // Optimistic update
+        const diff = nuevoValor ? 1 : -1
+
+        // Optimistic update en la grilla y en el contador de la tarjeta KPI
         setData(prev => ({
             ...prev,
-            data: prev.data.map(r => r.id === registro.id ? { ...r, aplicaDescuento: nuevoValor } : r)
+            data: prev.data.map(r => r.id === registro.id ? {
+                ...r,
+                aplicaDescuento: nuevoValor,
+                aplicaModificadoPor: r.aplicaModificadoPor || 'Tú',
+                aplicaModificadoAt: new Date().toISOString()
+            } : r),
+            resumen: prev.resumen ? {
+                ...prev.resumen,
+                totalAplicaDescuento: Math.max(0, (prev.resumen.totalAplicaDescuento ?? 0) + diff)
+            } : prev.resumen
         }))
+        setTogglingId(registro.id)
 
-        const res = await actualizarGestionAtrasoAction(
-            registro.id,
-            nuevoValor,
-            registro.justificado || undefined,
-            registro.observacion || undefined
-        )
+        try {
+            const res = await actualizarGestionAtrasoAction(
+                registro.id,
+                nuevoValor,
+                registro.justificado || undefined,
+                registro.observacion || undefined
+            )
 
-        if (res.success) {
-            setGuardadoStatus(prev => ({ ...prev, [registro.id]: true }))
-            setTimeout(() => {
-                setGuardadoStatus(prev => {
-                    const copy = { ...prev }
-                    delete copy[registro.id]
-                    return copy
-                })
-            }, 2000)
-        } else {
-            // Revertir
+            if (res.success) {
+                if (res.aplicaModificadoPor) {
+                    setData(prev => ({
+                        ...prev,
+                        data: prev.data.map(r => r.id === registro.id ? {
+                            ...r,
+                            aplicaModificadoPor: res.aplicaModificadoPor || r.aplicaModificadoPor
+                        } : r)
+                    }))
+                }
+                setGuardadoStatus(prev => ({ ...prev, [registro.id]: true }))
+                setTimeout(() => {
+                    setGuardadoStatus(prev => {
+                        const copy = { ...prev }
+                        delete copy[registro.id]
+                        return copy
+                    })
+                }, 2000)
+            } else {
+                // Revertir optimismo en caso de error
+                setData(prev => ({
+                    ...prev,
+                    data: prev.data.map(r => r.id === registro.id ? { ...r, aplicaDescuento: registro.aplicaDescuento } : r),
+                    resumen: prev.resumen ? {
+                        ...prev.resumen,
+                        totalAplicaDescuento: Math.max(0, (prev.resumen.totalAplicaDescuento ?? 0) - diff)
+                    } : prev.resumen
+                }))
+                alert(res.error || 'Error al actualizar estado')
+            }
+        } catch (err: any) {
             setData(prev => ({
                 ...prev,
-                data: prev.data.map(r => r.id === registro.id ? { ...r, aplicaDescuento: registro.aplicaDescuento } : r)
+                data: prev.data.map(r => r.id === registro.id ? { ...r, aplicaDescuento: registro.aplicaDescuento } : r),
+                resumen: prev.resumen ? {
+                    ...prev.resumen,
+                    totalAplicaDescuento: Math.max(0, (prev.resumen.totalAplicaDescuento ?? 0) - diff)
+                } : prev.resumen
             }))
-            alert(res.error || 'Error al actualizar estado')
+            alert(err?.message || 'Error de conexión al servidor')
+        } finally {
+            setTogglingId(null)
         }
     }
 
@@ -220,6 +287,11 @@ export default function AsistenciaAtrasosClient({ initialData, userRbds, isAdmin
     const handleSaveModal = async (e: React.FormEvent) => {
         e.preventDefault()
         if (!modalEdit.registro) return
+
+        if (!isAdmin && modalEdit.registro.aplicaModificadoPor) {
+            alert(`Este registro ya fue modificado previamente por ${modalEdit.registro.aplicaModificadoPor} y se encuentra bloqueado. Para corregir o rectificar, debe ser gestionado desde el módulo de Administración.`)
+            return
+        }
 
         startTransition(async () => {
             const res = await actualizarGestionAtrasoAction(
@@ -335,33 +407,81 @@ export default function AsistenciaAtrasosClient({ initialData, userRbds, isAdmin
                 </div>
             )}
 
+            {/* Selector Principal de Tipo: Adelanto vs Atrasos */}
+            <div className="flex items-center gap-2 border-b border-gray-200">
+                <button
+                    onClick={() => handleCambioTipo('ADELANTO')}
+                    className={`flex items-center gap-2 pb-3 px-4 font-bold text-sm border-b-2 transition-all cursor-pointer ${
+                        tipoActivo === 'ADELANTO'
+                            ? 'border-cyan-600 text-cyan-700'
+                            : 'border-transparent text-gray-500 hover:text-gray-800 hover:border-gray-300'
+                    }`}
+                >
+                    <LogOut className={`w-4 h-4 ${tipoActivo === 'ADELANTO' ? 'text-cyan-600' : 'text-gray-400'}`} />
+                    <span>Adelanto</span>
+                    <span className={`text-[11px] px-2 py-0.5 rounded-full font-semibold ${
+                        tipoActivo === 'ADELANTO' ? 'bg-cyan-100 text-cyan-800' : 'bg-gray-100 text-gray-600'
+                    }`}>
+                        Salidas Anticipadas
+                    </span>
+                </button>
+                <button
+                    onClick={() => handleCambioTipo('ATRASO')}
+                    className={`flex items-center gap-2 pb-3 px-4 font-bold text-sm border-b-2 transition-all cursor-pointer ${
+                        tipoActivo === 'ATRASO'
+                            ? 'border-cyan-600 text-cyan-700'
+                            : 'border-transparent text-gray-500 hover:text-gray-800 hover:border-gray-300'
+                    }`}
+                >
+                    <LogIn className={`w-4 h-4 ${tipoActivo === 'ATRASO' ? 'text-cyan-600' : 'text-gray-400'}`} />
+                    <span>Atrasos</span>
+                    <span className={`text-[11px] px-2 py-0.5 rounded-full font-semibold ${
+                        tipoActivo === 'ATRASO' ? 'bg-cyan-100 text-cyan-800' : 'bg-gray-100 text-gray-600'
+                    }`}>
+                        Entradas Tardías
+                    </span>
+                </button>
+            </div>
+
             {/* Tarjetas de KPIs */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm">
-                    <span className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider">Total Registros</span>
+                    <span className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider">
+                        {tipoActivo === 'ADELANTO' ? 'Total Adelantos' : 'Total Atrasos'}
+                    </span>
                     <p className="text-2xl font-bold text-gray-900 mt-1">{data.total.toLocaleString('es-CL')}</p>
                     <span className="text-[10px] text-gray-400 mt-0.5 block">En períodos abiertos</span>
                 </div>
-                <div className="bg-white p-4 rounded-2xl border border-rose-100 shadow-sm">
-                    <span className="text-[11px] font-semibold text-rose-600 uppercase tracking-wider">Minutos de Atraso</span>
-                    <p className="text-2xl font-bold text-rose-700 mt-1">
-                        {totalAtrasoMin.toLocaleString('es-CL')}
-                        <span className="text-xs font-normal text-rose-500 ml-1">min</span>
-                    </p>
-                    <span className="text-[10px] text-rose-500 mt-0.5 block">{formatMinutesToHours(totalAtrasoMin)}</span>
-                </div>
-                <div className="bg-white p-4 rounded-2xl border border-amber-100 shadow-sm">
-                    <span className="text-[11px] font-semibold text-amber-600 uppercase tracking-wider">Salidas Anticipadas</span>
-                    <p className="text-2xl font-bold text-amber-700 mt-1">
-                        {totalAdelantoMin.toLocaleString('es-CL')}
-                        <span className="text-xs font-normal text-amber-500 ml-1">min</span>
-                    </p>
-                    <span className="text-[10px] text-amber-500 mt-0.5 block">{formatMinutesToHours(totalAdelantoMin)}</span>
-                </div>
+                {tipoActivo === 'ADELANTO' ? (
+                    <div className="bg-white p-4 rounded-2xl border border-amber-100 shadow-sm">
+                        <span className="text-[11px] font-semibold text-amber-600 uppercase tracking-wider">Salidas Anticipadas</span>
+                        <p className="text-2xl font-bold text-amber-700 mt-1">
+                            {totalAdelantoMin.toLocaleString('es-CL')}
+                            <span className="text-xs font-normal text-amber-500 ml-1">min</span>
+                        </p>
+                        <span className="text-[10px] text-amber-500 mt-0.5 block">{formatMinutesToHours(totalAdelantoMin)}</span>
+                    </div>
+                ) : (
+                    <div className="bg-white p-4 rounded-2xl border border-rose-100 shadow-sm">
+                        <span className="text-[11px] font-semibold text-rose-600 uppercase tracking-wider">Minutos de Atraso</span>
+                        <p className="text-2xl font-bold text-rose-700 mt-1">
+                            {totalAtrasoMin.toLocaleString('es-CL')}
+                            <span className="text-xs font-normal text-rose-500 ml-1">min</span>
+                        </p>
+                        <span className="text-[10px] text-rose-500 mt-0.5 block">{formatMinutesToHours(totalAtrasoMin)}</span>
+                    </div>
+                )}
                 <div className="bg-white p-4 rounded-2xl border border-cyan-100 shadow-sm">
                     <span className="text-[11px] font-semibold text-cyan-600 uppercase tracking-wider">Aplica Descuento</span>
                     <p className="text-2xl font-bold text-cyan-700 mt-1">{aplicandoDescCount.toLocaleString('es-CL')}</p>
                     <span className="text-[10px] text-cyan-500 mt-0.5 block">Registros con descuento</span>
+                </div>
+                <div className="bg-white p-4 rounded-2xl border border-emerald-100 shadow-sm">
+                    <span className="text-[11px] font-semibold text-emerald-600 uppercase tracking-wider">Justificados</span>
+                    <p className="text-2xl font-bold text-emerald-700 mt-1">
+                        {(data.resumen?.totalJustificados ?? data.data.filter(r => !!r.justificado || r.minutosJustificados > 0).length).toLocaleString('es-CL')}
+                    </p>
+                    <span className="text-[10px] text-emerald-500 mt-0.5 block">Registros con justificación</span>
                 </div>
             </div>
 
@@ -526,19 +646,28 @@ export default function AsistenciaAtrasosClient({ initialData, userRbds, isAdmin
                                         {sortBy === 'rbd' ? (sortDir === 'asc' ? <ArrowUp className="w-3 h-3 text-cyan-600" /> : <ArrowDown className="w-3 h-3 text-cyan-600" />) : <ArrowUpDown className="w-3 h-3 text-gray-400" />}
                                     </div>
                                 </th>
-                                <th className="py-3 px-3">Entrada / Salida</th>
-                                <th className="py-3 px-3 text-center cursor-pointer hover:bg-gray-100 transition-colors" onClick={() => handleSort('minutosAtraso')}>
-                                    <div className="flex items-center justify-center gap-1">
-                                        <span>Atraso</span>
-                                        {sortBy === 'minutosAtraso' ? (sortDir === 'asc' ? <ArrowUp className="w-3 h-3 text-cyan-600" /> : <ArrowDown className="w-3 h-3 text-cyan-600" />) : <ArrowUpDown className="w-3 h-3 text-gray-400" />}
-                                    </div>
-                                </th>
-                                <th className="py-3 px-3 text-center cursor-pointer hover:bg-gray-100 transition-colors" onClick={() => handleSort('minutosAdelanto')}>
-                                    <div className="flex items-center justify-center gap-1">
-                                        <span>Adelanto</span>
-                                        {sortBy === 'minutosAdelanto' ? (sortDir === 'asc' ? <ArrowUp className="w-3 h-3 text-cyan-600" /> : <ArrowDown className="w-3 h-3 text-cyan-600" />) : <ArrowUpDown className="w-3 h-3 text-gray-400" />}
-                                    </div>
-                                </th>
+                                {tipoActivo === 'ADELANTO' ? (
+                                    <>
+                                        <th className="py-3 px-3">Fin Turno / Salida Real</th>
+                                        <th className="py-3 px-3 text-center cursor-pointer hover:bg-gray-100 transition-colors" onClick={() => handleSort('minutosAdelanto')}>
+                                            <div className="flex items-center justify-center gap-1">
+                                                <span>Adelanto</span>
+                                                {sortBy === 'minutosAdelanto' ? (sortDir === 'asc' ? <ArrowUp className="w-3 h-3 text-cyan-600" /> : <ArrowDown className="w-3 h-3 text-cyan-600" />) : <ArrowUpDown className="w-3 h-3 text-gray-400" />}
+                                            </div>
+                                        </th>
+                                    </>
+                                ) : (
+                                    <>
+                                        <th className="py-3 px-3">Turno / Llegada Real</th>
+                                        <th className="py-3 px-3 text-center">Holgura</th>
+                                        <th className="py-3 px-3 text-center cursor-pointer hover:bg-gray-100 transition-colors" onClick={() => handleSort('minutosAtraso')}>
+                                            <div className="flex items-center justify-center gap-1">
+                                                <span>Atraso</span>
+                                                {sortBy === 'minutosAtraso' ? (sortDir === 'asc' ? <ArrowUp className="w-3 h-3 text-cyan-600" /> : <ArrowDown className="w-3 h-3 text-cyan-600" />) : <ArrowUpDown className="w-3 h-3 text-gray-400" />}
+                                            </div>
+                                        </th>
+                                    </>
+                                )}
                                 <th className="py-3 px-3 text-center">¿Aplica Descuento?</th>
                                 <th className="py-3 px-3">Justificación y Obs.</th>
                                 <th className="py-3 px-3 text-center">Gestión</th>
@@ -547,9 +676,11 @@ export default function AsistenciaAtrasosClient({ initialData, userRbds, isAdmin
                         <tbody className="divide-y divide-gray-100 text-gray-700">
                             {data.data.length === 0 ? (
                                 <tr>
-                                    <td colSpan={10} className="py-12 text-center text-gray-400">
+                                    <td colSpan={tipoActivo === 'ADELANTO' ? 9 : 10} className="py-12 text-center text-gray-400">
                                         <Timer className="w-10 h-10 mx-auto mb-2 text-gray-300" />
-                                        <p className="font-medium text-gray-600">No se encontraron atrasos ni salidas anticipadas</p>
+                                        <p className="font-medium text-gray-600">
+                                            No se encontraron {tipoActivo === 'ADELANTO' ? 'adelantos ni salidas anticipadas' : 'atrasos ni entradas tardías'}
+                                        </p>
                                         <p className="text-xs text-gray-400 mt-0.5">No hay registros abiertos para los filtros o colegios seleccionados.</p>
                                     </td>
                                 </tr>
@@ -574,65 +705,116 @@ export default function AsistenciaAtrasosClient({ initialData, userRbds, isAdmin
                                                 {r.establecimiento || 'Sin Nombre'}
                                             </div>
                                         </td>
-                                        <td className="py-2.5 px-3 whitespace-nowrap text-[11px] text-gray-600">
-                                            {r.horaFinTurno || r.salioTurno ? (
-                                                <div>Fin Turno: <strong className="text-gray-900">{r.horaFinTurno || r.salioTurno}</strong></div>
-                                            ) : null}
-                                            {r.entro ? (
-                                                <div>Entró: <strong className="text-gray-900">{r.entro}</strong></div>
-                                            ) : null}
-                                            <div>Salió: <strong className="text-gray-900">{r.salio || '-'}</strong></div>
-                                        </td>
-                                        <td className="py-2.5 px-3 text-center whitespace-nowrap">
-                                            {r.minutosAtraso > 0 ? (
-                                                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-rose-50 text-rose-700 border border-rose-200">
-                                                    {r.minutosAtraso} min
-                                                </span>
-                                            ) : (
-                                                <span className="text-gray-400">-</span>
-                                            )}
-                                        </td>
-                                        <td className="py-2.5 px-3 text-center whitespace-nowrap">
-                                            {r.minutosAdelanto > 0 ? (
-                                                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200">
-                                                    {r.minutosAdelanto} min
-                                                </span>
-                                            ) : (
-                                                <span className="text-gray-400">-</span>
-                                            )}
-                                            {r.minutosJustificados > 0 && (
-                                                <span className="block text-[10px] text-emerald-600 font-semibold mt-0.5" title="Minutos justificados">
-                                                    ✓ {r.minutosJustificados}m just.
-                                                </span>
-                                            )}
-                                        </td>
-                                        <td className="py-2.5 px-3 text-center whitespace-nowrap">
-                                            <button
-                                                onClick={() => handleToggleAplica(r)}
-                                                className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold transition-all shadow-xs ${
-                                                    r.aplicaDescuento
-                                                        ? 'bg-rose-100 text-rose-800 border border-rose-300 hover:bg-rose-200'
-                                                        : 'bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100'
-                                                }`}
-                                                title="Haz clic para alternar si aplica o no descuento"
-                                            >
-                                                {r.aplicaDescuento ? (
-                                                    <>
-                                                        <Check className="w-3 h-3 text-rose-600" />
-                                                        <span>APLICA</span>
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        <X className="w-3 h-3 text-emerald-600" />
-                                                        <span>NO APLICA</span>
-                                                    </>
-                                                )}
-                                            </button>
-                                            {guardadoStatus[r.id] && (
-                                                <span className="text-[10px] text-emerald-600 font-semibold block mt-0.5">
-                                                    ✓ Guardado
-                                                </span>
-                                            )}
+                                        {tipoActivo === 'ADELANTO' ? (
+                                            <>
+                                                <td className="py-2.5 px-3 text-xs">
+                                                    <div className="text-gray-900 font-medium">Fin: {r.horaFinTurno || r.salioTurno || r.turno || '-'}</div>
+                                                    <div className="text-[11px] text-gray-500">Salida: {r.horaSalida || r.salio || '-'}</div>
+                                                </td>
+                                                <td className="py-2.5 px-3 text-center whitespace-nowrap">
+                                                    {r.minutosAdelanto > 0 ? (
+                                                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200">
+                                                            {r.minutosAdelanto} min
+                                                        </span>
+                                                    ) : (
+                                                        <span className="text-gray-400">-</span>
+                                                    )}
+                                                    {r.minutosJustificados > 0 && (
+                                                        <span className="block text-[10px] text-emerald-600 font-semibold mt-0.5" title="Minutos justificados">
+                                                            ✓ {r.minutosJustificados}m just.
+                                                        </span>
+                                                    )}
+                                                </td>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <td className="py-2.5 px-3 text-xs">
+                                                    <div className="text-gray-900 font-medium">Turno: {r.horaInicioTurno || r.turno || '-'}</div>
+                                                    <div className="text-[11px] text-gray-500">Llegada: {r.horaLlegada || r.entro || '-'}</div>
+                                                </td>
+                                                <td className="py-2.5 px-3 text-center whitespace-nowrap">
+                                                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-gray-100 text-gray-700">
+                                                        {r.holguraMin ?? 0}m
+                                                    </span>
+                                                </td>
+                                                <td className="py-2.5 px-3 text-center whitespace-nowrap">
+                                                    {r.minutosAtraso > 0 ? (
+                                                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-rose-50 text-rose-700 border border-rose-200">
+                                                            {r.minutosAtraso} min
+                                                        </span>
+                                                    ) : (
+                                                        <span className="text-gray-400">-</span>
+                                                    )}
+                                                    {r.minutosJustificados > 0 && (
+                                                        <span className="block text-[10px] text-emerald-600 font-semibold mt-0.5" title="Minutos justificados">
+                                                            ✓ {r.minutosJustificados}m just.
+                                                        </span>
+                                                    )}
+                                                </td>
+                                            </>
+                                        )}
+                                        <td className="py-2.5 px-3 text-center whitespace-nowrap min-w-[110px]">
+                                            {(() => {
+                                                const isBloqueado = (!isAdmin && Boolean(r.aplicaModificadoPor)) || r.estado === 'CERRADO'
+                                                return (
+                                                    <div className="flex flex-col items-center justify-center gap-0.5 py-0.5">
+                                                        <button
+                                                            type="button"
+                                                            role="switch"
+                                                            aria-checked={r.aplicaDescuento}
+                                                            disabled={isBloqueado || togglingId === r.id}
+                                                            onClick={() => handleToggleAplica(r)}
+                                                            className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-1 select-none ${
+                                                                r.aplicaDescuento ? 'bg-rose-600' : 'bg-slate-300 hover:bg-slate-400'
+                                                            } ${isBloqueado ? 'opacity-40 cursor-not-allowed' : ''} ${togglingId === r.id ? 'opacity-70 cursor-wait' : ''}`}
+                                                            title={
+                                                                r.estado === 'CERRADO'
+                                                                    ? 'Período cerrado (solo lectura)'
+                                                                    : !isAdmin && r.aplicaModificadoPor
+                                                                    ? `Registro bloqueado: Modificado por ${r.aplicaModificadoPor}. Solo un administrador puede corregirlo.`
+                                                                    : r.aplicaDescuento
+                                                                    ? 'Descuento activo: Clic o toca para cambiar a NO APLICA'
+                                                                    : 'Sin descuento: Clic o toca para cambiar a APLICA'
+                                                            }
+                                                        >
+                                                            <span className="sr-only">Alternar descuento</span>
+                                                            <span
+                                                                aria-hidden="true"
+                                                                className={`pointer-events-none inline-flex h-5 w-5 transform items-center justify-center rounded-full bg-white shadow-md ring-0 transition duration-200 ease-in-out ${
+                                                                    r.aplicaDescuento ? 'translate-x-5' : 'translate-x-0'
+                                                                }`}
+                                                            >
+                                                                {togglingId === r.id ? (
+                                                                    <RefreshCw className="w-2.5 h-2.5 text-gray-500 animate-spin" />
+                                                                ) : r.aplicaDescuento ? (
+                                                                    <span className="w-1.5 h-1.5 rounded-full bg-rose-600" />
+                                                                ) : (
+                                                                    <span className="w-1.5 h-1.5 rounded-full bg-slate-400" />
+                                                                )}
+                                                            </span>
+                                                        </button>
+                                                        <span className={`text-[10px] font-bold tracking-tight select-none mt-0.5 ${
+                                                            r.aplicaDescuento ? 'text-rose-700' : 'text-slate-500'
+                                                        }`}>
+                                                            {r.aplicaDescuento ? 'APLICA' : 'NO APLICA'}
+                                                        </span>
+                                                        {!isAdmin && r.aplicaModificadoPor && (
+                                                            <span
+                                                                className="inline-flex items-center gap-1 text-[9px] font-bold text-amber-700 bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded-md mt-0.5 select-none"
+                                                                title={`Modificado por ${r.aplicaModificadoPor}. Solo Administración puede cambiarlo.`}
+                                                            >
+                                                                <Lock className="w-2.5 h-2.5 text-amber-600 flex-shrink-0" />
+                                                                <span>Bloqueado</span>
+                                                            </span>
+                                                        )}
+                                                        {guardadoStatus[r.id] && (
+                                                            <span className="text-[9px] font-semibold text-emerald-600 flex items-center gap-0.5 animate-pulse">
+                                                                ✓ Guardado
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                )
+                                            })()}
                                         </td>
                                         <td className="py-2.5 px-3">
                                             <div className="font-medium text-gray-900 truncate max-w-xs" title={r.justificado || ''}>
@@ -645,19 +827,32 @@ export default function AsistenciaAtrasosClient({ initialData, userRbds, isAdmin
                                             )}
                                         </td>
                                         <td className="py-2.5 px-3 text-center whitespace-nowrap">
-                                            <button
-                                                onClick={() => setModalEdit({
-                                                    isOpen: true,
-                                                    registro: r,
-                                                    aplicaDescuento: r.aplicaDescuento,
-                                                    justificado: r.justificado || '',
-                                                    observacion: r.observacion || ''
-                                                })}
-                                                className="p-1.5 hover:bg-gray-100 rounded-lg text-gray-500 hover:text-cyan-700 transition-colors"
-                                                title="Editar justificación y descuento"
-                                            >
-                                                <Edit3 className="w-4 h-4" />
-                                            </button>
+                                            {(!isAdmin && Boolean(r.aplicaModificadoPor)) || r.estado === 'CERRADO' ? (
+                                                <span
+                                                    className="inline-flex p-1.5 rounded-lg text-amber-700 bg-amber-50 border border-amber-200 cursor-not-allowed"
+                                                    title={
+                                                        r.estado === 'CERRADO'
+                                                            ? 'Período cerrado (solo lectura)'
+                                                            : `Registro bloqueado tras ser gestionado por ${r.aplicaModificadoPor}. Solo un administrador puede modificarlo.`
+                                                    }
+                                                >
+                                                    <Lock className="w-4 h-4 text-amber-600" />
+                                                </span>
+                                            ) : (
+                                                <button
+                                                    onClick={() => setModalEdit({
+                                                        isOpen: true,
+                                                        registro: r,
+                                                        aplicaDescuento: r.aplicaDescuento,
+                                                        justificado: r.justificado || '',
+                                                        observacion: r.observacion || ''
+                                                    })}
+                                                    className="p-1.5 hover:bg-gray-100 rounded-lg text-gray-500 hover:text-cyan-700 transition-colors"
+                                                    title="Editar justificación y descuento"
+                                                >
+                                                    <Edit3 className="w-4 h-4" />
+                                                </button>
+                                            )}
                                         </td>
                                     </tr>
                                 ))
@@ -720,14 +915,37 @@ export default function AsistenciaAtrasosClient({ initialData, userRbds, isAdmin
 
                         <form onSubmit={handleSaveModal} className="space-y-4 text-xs">
                             <div className="p-3 bg-gray-50 rounded-xl space-y-1">
-                                <div className="flex justify-between">
-                                    <span className="text-gray-500">Minutos Atraso:</span>
-                                    <strong className="text-rose-700">{modalEdit.registro.minutosAtraso} min</strong>
-                                </div>
-                                <div className="flex justify-between">
-                                    <span className="text-gray-500">Minutos Adelanto:</span>
-                                    <strong className="text-amber-700">{modalEdit.registro.minutosAdelanto} min</strong>
-                                </div>
+                                {modalEdit.registro.tipo === 'ADELANTO' ? (
+                                    <>
+                                        <div className="flex justify-between">
+                                            <span className="text-gray-500">Fin Turno / Salida:</span>
+                                            <strong className="text-gray-800">
+                                                {modalEdit.registro.horaFinTurno || modalEdit.registro.salioTurno || modalEdit.registro.turno || '-'} / {modalEdit.registro.horaSalida || modalEdit.registro.salio || '-'}
+                                            </strong>
+                                        </div>
+                                        <div className="flex justify-between">
+                                            <span className="text-gray-500">Minutos Adelanto:</span>
+                                            <strong className="text-amber-700">{modalEdit.registro.minutosAdelanto} min</strong>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <div className="flex justify-between">
+                                            <span className="text-gray-500">Turno / Llegada:</span>
+                                            <strong className="text-gray-800">
+                                                {modalEdit.registro.horaInicioTurno || modalEdit.registro.turno || '-'} / {modalEdit.registro.horaLlegada || modalEdit.registro.entro || '-'}
+                                            </strong>
+                                        </div>
+                                        <div className="flex justify-between">
+                                            <span className="text-gray-500">Minutos Atraso:</span>
+                                            <strong className="text-rose-700">{modalEdit.registro.minutosAtraso} min</strong>
+                                        </div>
+                                        <div className="flex justify-between">
+                                            <span className="text-gray-500">Holgura:</span>
+                                            <strong className="text-gray-700">{modalEdit.registro.holguraMin ?? 0} min</strong>
+                                        </div>
+                                    </>
+                                )}
                                 <div className="flex justify-between">
                                     <span className="text-gray-500">Establecimiento:</span>
                                     <strong className="text-gray-800">RBD {modalEdit.registro.rbd}</strong>

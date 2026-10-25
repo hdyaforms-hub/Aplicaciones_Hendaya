@@ -78,19 +78,29 @@ export async function ensurePersonalAtrasosTables() {
         `)
 
         // 2.b. Auto-recuperación idempotente para añadir columnas nuevas si la tabla ya existía
+        await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Atrasos_Carga" ADD COLUMN IF NOT EXISTS "tipo" TEXT NOT NULL DEFAULT 'ADELANTO';`)
+        await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Atrasos_Registro" ADD COLUMN IF NOT EXISTS "tipo" TEXT NOT NULL DEFAULT 'ADELANTO';`)
         await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Atrasos_Registro" ADD COLUMN IF NOT EXISTS "horaFinTurno" TEXT;`)
+        await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Atrasos_Registro" ADD COLUMN IF NOT EXISTS "horaInicioTurno" TEXT;`)
+        await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Atrasos_Registro" ADD COLUMN IF NOT EXISTS "horaLlegada" TEXT;`)
+        await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Atrasos_Registro" ADD COLUMN IF NOT EXISTS "holguraMin" INTEGER DEFAULT 0;`)
+        await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Atrasos_Registro" ADD COLUMN IF NOT EXISTS "grupoMarcacion" TEXT;`)
         await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Atrasos_Registro" ADD COLUMN IF NOT EXISTS "minutosJustificados" DOUBLE PRECISION DEFAULT 0;`)
         await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Atrasos_Registro" ADD COLUMN IF NOT EXISTS "justificadoPor" TEXT;`)
         await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Atrasos_Registro" ADD COLUMN IF NOT EXISTS "centroCostos" TEXT;`)
         await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Atrasos_Registro" ADD COLUMN IF NOT EXISTS "grupoUsuario" TEXT;`)
 
-        // 3. Índice Único para upsert estricto: evita cargas duplicadas y actualiza registros por (identificadorHash, fecha)
+        // 3. Índice Único para upsert estricto: evita cargas duplicadas y actualiza registros por (identificadorHash, fecha, tipo)
+        // Permite que un colaborador pueda tener tanto un Adelanto como un Atraso en la misma fecha sin colisión
+        await rawPrisma.$executeRawUnsafe(`DROP INDEX IF EXISTS "pers_atrasos_reg_id_fecha_unique";`)
         await rawPrisma.$executeRawUnsafe(`
-            CREATE UNIQUE INDEX IF NOT EXISTS "pers_atrasos_reg_id_fecha_unique" 
-            ON "Pers_Atrasos_Registro"("identificadorHash", fecha);
+            CREATE UNIQUE INDEX IF NOT EXISTS "pers_atrasos_reg_id_fecha_tipo_unique" 
+            ON "Pers_Atrasos_Registro"("identificadorHash", fecha, tipo);
         `)
 
         // 4. Índices de aceleración de consultas
+        await rawPrisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "pers_atrasos_reg_tipo_idx" ON "Pers_Atrasos_Registro"(tipo);`)
+        await rawPrisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "pers_atrasos_carga_tipo_idx" ON "Pers_Atrasos_Carga"(tipo);`)
         await rawPrisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "pers_atrasos_reg_id_hash_idx" ON "Pers_Atrasos_Registro"("identificadorHash");`)
         await rawPrisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "pers_atrasos_reg_fecha_idx" ON "Pers_Atrasos_Registro"(fecha);`)
         await rawPrisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "pers_atrasos_reg_rbd_idx" ON "Pers_Atrasos_Registro"(rbd);`)

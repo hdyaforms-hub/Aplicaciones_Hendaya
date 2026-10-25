@@ -16,8 +16,8 @@ export default async function AdmAtrasosPage() {
     }
 
     const [regRes, cargasRes, authorizedRbds, puedeCerrar] = await Promise.all([
-        getAdmAtrasosAction({ page: 1, pageSize: 10 }),
-        getHistorialCargasAtrasosAction(),
+        getAdmAtrasosAction({ page: 1, pageSize: 10, tipo: 'ADELANTO' }),
+        getHistorialCargasAtrasosAction('ADELANTO'),
         getUserEffectiveRbds(),
         puedeUsuarioCerrarPeriodosRH(session.user.id)
     ])

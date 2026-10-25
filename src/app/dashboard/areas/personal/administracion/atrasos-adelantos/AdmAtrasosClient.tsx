@@ -37,7 +37,9 @@ import {
     Timer,
     Info,
     CheckCircle,
-    Trash2
+    Trash2,
+    LogIn,
+    LogOut
 } from 'lucide-react'
 
 interface EstablecimientoOption {
@@ -54,6 +56,7 @@ interface Props {
         sucursales: string[]
         supervisores: string[]
         establecimientos: EstablecimientoOption[]
+        tipoActual?: 'ADELANTO' | 'ATRASO'
         resumen?: {
             totalRegistros: number
             totalMinutosAtraso: number
@@ -75,6 +78,9 @@ export default function AdmAtrasosClient({
     isAdmin,
     puedeGestionarPeriodos = false
 }: Props) {
+    const [tipoActivo, setTipoActivo] = useState<'ADELANTO' | 'ATRASO'>(
+        initialRegistrosData.tipoActual || 'ADELANTO'
+    )
     const [tabActivo, setTabActivo] = useState<'cargas' | 'registros'>('cargas')
 
     const [cargas, setCargas] = useState<CargaAtrasosDTO[]>(initialCargas)
@@ -153,17 +159,21 @@ export default function AdmAtrasosClient({
         observacion: ''
     })
 
+    const [guardadoStatus, setGuardadoStatus] = useState<{ [id: string]: boolean }>({})
+    const [togglingId, setTogglingId] = useState<string | null>(null)
     const [mensajeFeedback, setMensajeFeedback] = useState<{ tipo: 'success' | 'error'; texto: string } | null>(null)
 
     // Recargar datos desde el servidor
     const recargarDatos = (
         newPage = paginaActual,
         newSortField = sortField,
-        newSortDir = sortDirection
+        newSortDir = sortDirection,
+        targetTipo = tipoActivo
     ) => {
         startTransition(async () => {
             const [resReg, resCargas] = await Promise.all([
                 getAdmAtrasosAction({
+                    tipo: targetTipo,
                     rbd: filtroRbd || undefined,
                     sucursal: filtroSucursal !== 'TODAS' ? filtroSucursal : undefined,
                     supervisor: filtroSupervisor !== 'TODOS' ? filtroSupervisor : undefined,
@@ -178,7 +188,7 @@ export default function AdmAtrasosClient({
                     sortBy: newSortField,
                     sortDir: newSortDir
                 }),
-                getHistorialCargasAtrasosAction()
+                getHistorialCargasAtrasosAction(targetTipo)
             ])
 
             if (resReg.success && resReg.data) {
@@ -193,6 +203,15 @@ export default function AdmAtrasosClient({
                 setCargas(resCargas.data)
             }
         })
+    }
+
+    const handleCambioTipo = (nuevoTipo: 'ADELANTO' | 'ATRASO') => {
+        if (nuevoTipo === tipoActivo) return
+        setTipoActivo(nuevoTipo)
+        setFiltroCargaId('TODOS')
+        setPaginaActual(1)
+        setPaginaCargas(1)
+        recargarDatos(1, sortField, sortDirection, nuevoTipo)
     }
 
     const handleSort = (field: SortField) => {
@@ -229,7 +248,7 @@ export default function AdmAtrasosClient({
         setFiltroFechaHasta('')
         setBusquedaTexto('')
         startTransition(async () => {
-            const res = await getAdmAtrasosAction({ page: 1, pageSize })
+            const res = await getAdmAtrasosAction({ page: 1, pageSize, tipo: tipoActivo })
             if (res.success && res.data) {
                 setRegistros(res.data)
                 setTotalRegistros(res.total)
@@ -299,6 +318,7 @@ export default function AdmAtrasosClient({
         startTransition(async () => {
             // Traer todos los registros que coinciden con los filtros actuales
             const res = await getAdmAtrasosAction({
+                tipo: tipoActivo,
                 rbd: filtroRbd || undefined,
                 sucursal: filtroSucursal !== 'TODAS' ? filtroSucursal : undefined,
                 supervisor: filtroSupervisor !== 'TODOS' ? filtroSupervisor : undefined,
@@ -312,32 +332,46 @@ export default function AdmAtrasosClient({
                 pageSize: 50000 // Traer todos para el reporte
             })
 
-            const exportData = (res.allMatchingData || res.data).map(r => ({
-                'Fecha': r.fecha,
-                'RUT': r.rut,
-                'Colaborador': r.nombreCompleto,
-                'Cargo': r.cargo || '',
-                'RBD': r.rbd || '',
-                'Establecimiento': r.establecimiento || '',
-                'Sede': r.sucursal,
-                'Supervisor': r.supervisor || '',
-                'Turno': r.turno || '',
-                'Marcó': r.marco || '',
-                'Entrada': r.entro || '',
-                'Salida': r.salio || '',
-                'Minutos Atraso': r.minutosAtraso,
-                'Minutos Adelanto': r.minutosAdelanto,
-                '¿Aplica Descuento?': r.aplicaDescuento ? 'SÍ' : 'NO',
-                'Justificación': r.justificado || 'SIN JUSTIFICAR',
-                'Observación': r.observacion || '',
-                'Estado Período': r.estado,
-                'Planilla Origen': r.cargaNombreArchivo || 'Sin Carga'
-            }))
+            const exportData = (res.allMatchingData || res.data).map(r => {
+                const base: Record<string, any> = {
+                    'Fecha': r.fecha,
+                    'RUT': r.rut,
+                    'Colaborador': r.nombreCompleto,
+                    'Cargo': r.cargo || '',
+                    'RBD': r.rbd || '',
+                    'Establecimiento': r.establecimiento || '',
+                    'Sede': r.sucursal,
+                    'Supervisor': r.supervisor || '',
+                }
+
+                if (tipoActivo === 'ADELANTO') {
+                    base['Turno'] = r.turno || ''
+                    base['Hora Fin Turno'] = r.horaFinTurno || ''
+                    base['Hora Salida Real'] = r.salio || r.horaSalida || ''
+                    base['Minutos Adelanto'] = r.minutosAdelanto
+                    base['Minutos Justificados'] = r.minutosJustificados
+                } else {
+                    base['Hora Inicio Turno'] = r.horaInicioTurno || r.turno || ''
+                    base['Hora Llegada Real'] = r.horaLlegada || r.entro || ''
+                    base['Holgura (min)'] = r.holguraMin ?? 0
+                    base['Minutos Atraso'] = r.minutosAtraso
+                    base['Minutos Justificados'] = r.minutosJustificados
+                    base['Grupo Marcación'] = r.grupoMarcacion || ''
+                }
+
+                base['¿Aplica Descuento?'] = r.aplicaDescuento ? 'SÍ' : 'NO'
+                base['Justificación'] = r.justificado || 'SIN JUSTIFICAR'
+                base['Observación'] = r.observacion || ''
+                base['Estado Período'] = r.estado
+                base['Planilla Origen'] = r.cargaNombreArchivo || 'Sin Carga'
+                return base
+            })
 
             const ws = xlsx.utils.json_to_sheet(exportData)
             const wb = xlsx.utils.book_new()
-            xlsx.utils.book_append_sheet(wb, ws, 'Atrasos_Adelantos')
-            const nombreArchivo = `Reporte_Atrasos_Adelantos_${new Date().toISOString().slice(0, 10)}.xlsx`
+            const sheetName = tipoActivo === 'ADELANTO' ? 'Adelantos' : 'Atrasos'
+            xlsx.utils.book_append_sheet(wb, ws, sheetName)
+            const nombreArchivo = `Reporte_${sheetName}_${new Date().toISOString().slice(0, 10)}.xlsx`
             xlsx.writeFile(wb, nombreArchivo)
         })
     }
@@ -375,9 +409,64 @@ export default function AdmAtrasosClient({
         })
     }
 
-    // Ordenamiento Tab Cargas
+    // Toggle rápido tipo botón deslizante de Aplica Descuento
+    const handleToggleAplica = async (registro: AdmAtrasosRegistroDTO) => {
+        const nuevoValor = !registro.aplicaDescuento
+        const diff = nuevoValor ? 1 : -1
+
+        // Actualización optimista inmediata en grilla y en tarjeta de resumen
+        setRegistros(prev => prev.map(r => r.id === registro.id ? { ...r, aplicaDescuento: nuevoValor } : r))
+        setResumen(prev => prev ? {
+            ...prev,
+            totalAplicaDescuento: Math.max(0, (prev.totalAplicaDescuento ?? 0) + diff)
+        } : prev)
+        setTogglingId(registro.id)
+
+        try {
+            const res = await actualizarAtrasoAdminAction(
+                registro.id,
+                nuevoValor,
+                registro.justificado || undefined,
+                registro.observacion || undefined
+            )
+
+            if (res.success) {
+                setGuardadoStatus(prev => ({ ...prev, [registro.id]: true }))
+                setTimeout(() => {
+                    setGuardadoStatus(prev => {
+                        const copy = { ...prev }
+                        delete copy[registro.id]
+                        return copy
+                    })
+                }, 2000)
+            } else {
+                // Revertir optimismo en caso de error
+                setRegistros(prev => prev.map(r => r.id === registro.id ? { ...r, aplicaDescuento: registro.aplicaDescuento } : r))
+                setResumen(prev => prev ? {
+                    ...prev,
+                    totalAplicaDescuento: Math.max(0, (prev.totalAplicaDescuento ?? 0) - diff)
+                } : prev)
+                alert(res.error || 'Error al cambiar estado de descuento')
+            }
+        } catch (err: any) {
+            setRegistros(prev => prev.map(r => r.id === registro.id ? { ...r, aplicaDescuento: registro.aplicaDescuento } : r))
+            setResumen(prev => prev ? {
+                ...prev,
+                totalAplicaDescuento: Math.max(0, (prev.totalAplicaDescuento ?? 0) - diff)
+            } : prev)
+            alert(err?.message || 'Error de conexión al servidor')
+        } finally {
+            setTogglingId(null)
+        }
+    }
+
+    // Filtrado y Ordenamiento Tab Cargas
+    const cargasFiltradas = useMemo(() => {
+        return cargas.filter(c => !c.tipo || c.tipo === tipoActivo)
+    }, [cargas, tipoActivo])
+
     const cargasOrdenadas = useMemo(() => {
-        return [...cargas].sort((a, b) => {
+        return [...cargasFiltradas].sort((a, b) => {
             let valA: any = a[sortFieldCargas] || ''
             let valB: any = b[sortFieldCargas] || ''
             if (typeof valA === 'string') valA = valA.toLowerCase()
@@ -387,7 +476,7 @@ export default function AdmAtrasosClient({
             if (valA > valB) return sortDirectionCargas === 'asc' ? 1 : -1
             return 0
         })
-    }, [cargas, sortFieldCargas, sortDirectionCargas])
+    }, [cargasFiltradas, sortFieldCargas, sortDirectionCargas])
 
     const totalPaginasCargas = Math.ceil(cargasOrdenadas.length / porPaginaCargas) || 1
     const cargasPaginadas = useMemo(() => {
@@ -461,33 +550,73 @@ export default function AdmAtrasosClient({
                 </div>
             )}
 
-            {/* Selector de Pestañas */}
-            <div className="flex border-b border-gray-200">
+            {/* Selector Principal de Tipo: Adelanto vs Atrasos */}
+            <div className="flex items-center gap-2 border-b border-gray-200">
                 <button
-                    onClick={() => setTabActivo('cargas')}
-                    className={`pb-3 px-4 text-xs font-bold transition-all relative flex items-center gap-2 ${
-                        tabActivo === 'cargas'
-                            ? 'text-cyan-600 border-b-2 border-cyan-600'
-                            : 'text-gray-500 hover:text-gray-700'
+                    onClick={() => handleCambioTipo('ADELANTO')}
+                    className={`flex items-center gap-2 pb-3 px-4 font-bold text-sm border-b-2 transition-all cursor-pointer ${
+                        tipoActivo === 'ADELANTO'
+                            ? 'border-cyan-600 text-cyan-700'
+                            : 'border-transparent text-gray-500 hover:text-gray-800 hover:border-gray-300'
                     }`}
                 >
-                    <FileSpreadsheet className="w-4 h-4" />
-                    <span>Planillas y Períodos Cargados</span>
-                    <span className="px-2 py-0.5 rounded-full text-[10px] bg-cyan-50 text-cyan-700 font-bold border border-cyan-200">
-                        {cargas.length}
+                    <LogOut className={`w-4 h-4 ${tipoActivo === 'ADELANTO' ? 'text-cyan-600' : 'text-gray-400'}`} />
+                    <span>Adelanto</span>
+                    <span className={`text-[11px] px-2 py-0.5 rounded-full font-semibold ${
+                        tipoActivo === 'ADELANTO' ? 'bg-cyan-100 text-cyan-800' : 'bg-gray-100 text-gray-600'
+                    }`}>
+                        Salidas Anticipadas
+                    </span>
+                </button>
+                <button
+                    onClick={() => handleCambioTipo('ATRASO')}
+                    className={`flex items-center gap-2 pb-3 px-4 font-bold text-sm border-b-2 transition-all cursor-pointer ${
+                        tipoActivo === 'ATRASO'
+                            ? 'border-cyan-600 text-cyan-700'
+                            : 'border-transparent text-gray-500 hover:text-gray-800 hover:border-gray-300'
+                    }`}
+                >
+                    <LogIn className={`w-4 h-4 ${tipoActivo === 'ATRASO' ? 'text-cyan-600' : 'text-gray-400'}`} />
+                    <span>Atrasos</span>
+                    <span className={`text-[11px] px-2 py-0.5 rounded-full font-semibold ${
+                        tipoActivo === 'ATRASO' ? 'bg-cyan-100 text-cyan-800' : 'bg-gray-100 text-gray-600'
+                    }`}>
+                        Entradas Tardías
+                    </span>
+                </button>
+            </div>
+
+            {/* Selector de Vistas Secundarias */}
+            <div className="flex gap-2">
+                <button
+                    onClick={() => setTabActivo('cargas')}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
+                        tabActivo === 'cargas'
+                            ? 'bg-cyan-600 text-white shadow-sm'
+                            : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
+                    }`}
+                >
+                    <FileSpreadsheet className="w-3.5 h-3.5" />
+                    <span>Planillas y Períodos ({tipoActivo === 'ADELANTO' ? 'Adelanto' : 'Atrasos'})</span>
+                    <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-bold ${
+                        tabActivo === 'cargas' ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-700'
+                    }`}>
+                        {cargasFiltradas.length}
                     </span>
                 </button>
                 <button
                     onClick={() => setTabActivo('registros')}
-                    className={`pb-3 px-4 text-xs font-bold transition-all relative flex items-center gap-2 ${
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
                         tabActivo === 'registros'
-                            ? 'text-cyan-600 border-b-2 border-cyan-600'
-                            : 'text-gray-500 hover:text-gray-700'
+                            ? 'bg-cyan-600 text-white shadow-sm'
+                            : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
                     }`}
                 >
-                    <Clock className="w-4 h-4" />
-                    <span>Historial Consolidado de Registros</span>
-                    <span className="px-2 py-0.5 rounded-full text-[10px] bg-gray-100 text-gray-700 font-bold">
+                    <Clock className="w-3.5 h-3.5" />
+                    <span>Historial Consolidado ({tipoActivo === 'ADELANTO' ? 'Adelanto' : 'Atrasos'})</span>
+                    <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-bold ${
+                        tabActivo === 'registros' ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-700'
+                    }`}>
                         {totalRegistros.toLocaleString('es-CL')}
                     </span>
                 </button>
@@ -501,7 +630,9 @@ export default function AdmAtrasosClient({
                     <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
                         <div className="p-4 border-b border-gray-100 flex items-center justify-between">
                             <div>
-                                <h3 className="font-bold text-gray-900 text-sm">Planillas Excel de Atrasos Cargadas</h3>
+                                <h3 className="font-bold text-gray-900 text-sm">
+                                    Planillas Excel de {tipoActivo === 'ADELANTO' ? 'Salidas Anticipadas (Adelanto)' : 'Atrasos (Entradas Tardías)'} Cargadas
+                                </h3>
                                 <p className="text-xs text-gray-500">
                                     Al cerrar un período, sus registros quedan congelados para supervisores en Asistencia.
                                 </p>
@@ -535,7 +666,7 @@ export default function AdmAtrasosClient({
                                     {cargasPaginadas.length === 0 ? (
                                         <tr>
                                             <td colSpan={7} className="py-12 text-center text-gray-400">
-                                                No hay planillas de atrasos y adelantos cargadas en el sistema.
+                                                No hay planillas de {tipoActivo === 'ADELANTO' ? 'adelantos' : 'atrasos'} cargadas en el sistema.
                                             </td>
                                         </tr>
                                     ) : (
@@ -639,7 +770,7 @@ export default function AdmAtrasosClient({
 
                         {/* Paginación Cargas */}
                         <div className="flex items-center justify-between px-4 py-3 bg-gray-50/50 border-t border-gray-200 text-xs text-gray-500">
-                            <span>Total planillas: <strong>{cargas.length}</strong></span>
+                            <span>Total planillas: <strong>{cargasFiltradas.length}</strong></span>
                             <div className="flex items-center gap-1.5">
                                 <button
                                     onClick={() => setPaginaCargas(prev => Math.max(1, prev - 1))}
@@ -671,30 +802,40 @@ export default function AdmAtrasosClient({
                     {resumen && (
                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                             <div className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm">
-                                <span className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider">Total Registros</span>
+                                <span className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider">
+                                    {tipoActivo === 'ADELANTO' ? 'Total Adelantos' : 'Total Atrasos'}
+                                </span>
                                 <p className="text-2xl font-bold text-gray-900 mt-1">{resumen.totalRegistros.toLocaleString('es-CL')}</p>
                                 <span className="text-[10px] text-gray-400 mt-0.5 block">Filas coincidentes</span>
                             </div>
-                            <div className="bg-white p-4 rounded-2xl border border-rose-100 shadow-sm">
-                                <span className="text-[11px] font-semibold text-rose-600 uppercase tracking-wider">Minutos de Atraso</span>
-                                <p className="text-2xl font-bold text-rose-700 mt-1">
-                                    {resumen.totalMinutosAtraso.toLocaleString('es-CL')}
-                                    <span className="text-xs font-normal text-rose-500 ml-1">min</span>
-                                </p>
-                                <span className="text-[10px] text-rose-500 mt-0.5 block">{formatMinutesToHours(resumen.totalMinutosAtraso)}</span>
-                            </div>
-                            <div className="bg-white p-4 rounded-2xl border border-amber-100 shadow-sm">
-                                <span className="text-[11px] font-semibold text-amber-600 uppercase tracking-wider">Salidas Anticipadas</span>
-                                <p className="text-2xl font-bold text-amber-700 mt-1">
-                                    {resumen.totalMinutosAdelanto.toLocaleString('es-CL')}
-                                    <span className="text-xs font-normal text-amber-500 ml-1">min</span>
-                                </p>
-                                <span className="text-[10px] text-amber-500 mt-0.5 block">{formatMinutesToHours(resumen.totalMinutosAdelanto)}</span>
-                            </div>
+                            {tipoActivo === 'ADELANTO' ? (
+                                <div className="bg-white p-4 rounded-2xl border border-amber-100 shadow-sm">
+                                    <span className="text-[11px] font-semibold text-amber-600 uppercase tracking-wider">Salidas Anticipadas</span>
+                                    <p className="text-2xl font-bold text-amber-700 mt-1">
+                                        {resumen.totalMinutosAdelanto.toLocaleString('es-CL')}
+                                        <span className="text-xs font-normal text-amber-500 ml-1">min</span>
+                                    </p>
+                                    <span className="text-[10px] text-amber-500 mt-0.5 block">{formatMinutesToHours(resumen.totalMinutosAdelanto)}</span>
+                                </div>
+                            ) : (
+                                <div className="bg-white p-4 rounded-2xl border border-rose-100 shadow-sm">
+                                    <span className="text-[11px] font-semibold text-rose-600 uppercase tracking-wider">Minutos de Atraso</span>
+                                    <p className="text-2xl font-bold text-rose-700 mt-1">
+                                        {resumen.totalMinutosAtraso.toLocaleString('es-CL')}
+                                        <span className="text-xs font-normal text-rose-500 ml-1">min</span>
+                                    </p>
+                                    <span className="text-[10px] text-rose-500 mt-0.5 block">{formatMinutesToHours(resumen.totalMinutosAtraso)}</span>
+                                </div>
+                            )}
                             <div className="bg-white p-4 rounded-2xl border border-cyan-100 shadow-sm">
                                 <span className="text-[11px] font-semibold text-cyan-600 uppercase tracking-wider">Aplica Descuento</span>
                                 <p className="text-2xl font-bold text-cyan-700 mt-1">{resumen.totalAplicaDescuento.toLocaleString('es-CL')}</p>
                                 <span className="text-[10px] text-cyan-500 mt-0.5 block">Registros con descuento</span>
+                            </div>
+                            <div className="bg-white p-4 rounded-2xl border border-emerald-100 shadow-sm">
+                                <span className="text-[11px] font-semibold text-emerald-600 uppercase tracking-wider">Justificados</span>
+                                <p className="text-2xl font-bold text-emerald-700 mt-1">{resumen.totalJustificados.toLocaleString('es-CL')}</p>
+                                <span className="text-[10px] text-emerald-500 mt-0.5 block">Registros con justificación</span>
                             </div>
                         </div>
                     )}
@@ -794,7 +935,7 @@ export default function AdmAtrasosClient({
 
                             <div className="sm:col-span-2">
                                 <label className="block text-[11px] font-semibold text-gray-600 uppercase tracking-wider mb-1">
-                                    Planilla Origen
+                                    Planilla Origen ({tipoActivo === 'ADELANTO' ? 'Adelanto' : 'Atrasos'})
                                 </label>
                                 <select
                                     value={filtroCargaId}
@@ -802,7 +943,7 @@ export default function AdmAtrasosClient({
                                     className="w-full px-3 py-1.5 border border-gray-200 rounded-xl text-xs text-gray-900 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500"
                                 >
                                     <option value="TODOS">Todas las Planillas</option>
-                                    {cargas.map(cg => (
+                                    {cargasFiltradas.map(cg => (
                                         <option key={cg.id} value={cg.id}>
                                             {cg.nombreArchivo}
                                         </option>
@@ -858,8 +999,18 @@ export default function AdmAtrasosClient({
                                                 {sortField === 'rbd' ? (sortDirection === 'asc' ? <ArrowUp className="w-3 h-3 text-cyan-600" /> : <ArrowDown className="w-3 h-3 text-cyan-600" />) : <ArrowUpDown className="w-3 h-3 text-gray-400" />}
                                             </div>
                                         </th>
-                                        <th className="py-3 px-3 text-center">Atraso</th>
-                                        <th className="py-3 px-3 text-center">Adelanto</th>
+                                        {tipoActivo === 'ADELANTO' ? (
+                                            <>
+                                                <th className="py-3 px-3">Fin Turno / Salida Real</th>
+                                                <th className="py-3 px-3 text-center">Adelanto</th>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <th className="py-3 px-3">Turno / Llegada Real</th>
+                                                <th className="py-3 px-3 text-center">Holgura</th>
+                                                <th className="py-3 px-3 text-center">Atraso</th>
+                                            </>
+                                        )}
                                         <th className="py-3 px-3 text-center">¿Aplica Descuento?</th>
                                         <th className="py-3 px-3">Justificación</th>
                                         <th className="py-3 px-3 text-center">Estado Período</th>
@@ -869,8 +1020,8 @@ export default function AdmAtrasosClient({
                                 <tbody className="divide-y divide-gray-100 text-gray-700">
                                     {registros.length === 0 ? (
                                         <tr>
-                                            <td colSpan={10} className="py-12 text-center text-gray-400">
-                                                No se encontraron registros de atrasos para los filtros seleccionados.
+                                            <td colSpan={tipoActivo === 'ADELANTO' ? 10 : 11} className="py-12 text-center text-gray-400">
+                                                No se encontraron registros de {tipoActivo === 'ADELANTO' ? 'adelantos' : 'atrasos'} para los filtros seleccionados.
                                             </td>
                                         </tr>
                                     ) : (
@@ -890,33 +1041,94 @@ export default function AdmAtrasosClient({
                                                     <div className="font-medium text-gray-900">{r.rbd ? `RBD ${r.rbd}` : '-'}</div>
                                                     <div className="text-[11px] text-gray-500 truncate max-w-xs">{r.establecimiento || 'Sin Nombre'}</div>
                                                 </td>
-                                                <td className="py-2.5 px-3 text-center whitespace-nowrap">
-                                                    {r.minutosAtraso > 0 ? (
-                                                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-rose-50 text-rose-700 border border-rose-200">
-                                                            {r.minutosAtraso} min
+                                                {tipoActivo === 'ADELANTO' ? (
+                                                    <>
+                                                        <td className="py-2.5 px-3 text-xs">
+                                                            <div className="text-gray-900 font-medium">Fin: {r.horaFinTurno || r.turno || '-'}</div>
+                                                            <div className="text-[11px] text-gray-500">Salida: {r.horaSalida || r.salio || '-'}</div>
+                                                        </td>
+                                                        <td className="py-2.5 px-3 text-center whitespace-nowrap">
+                                                            {r.minutosAdelanto > 0 ? (
+                                                                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200">
+                                                                    {r.minutosAdelanto} min
+                                                                </span>
+                                                            ) : '-'}
+                                                            {r.minutosJustificados > 0 && (
+                                                                <span className="block text-[10px] text-emerald-600 font-semibold mt-0.5" title="Minutos justificados">
+                                                                    ✓ {r.minutosJustificados}m just.
+                                                                </span>
+                                                            )}
+                                                        </td>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <td className="py-2.5 px-3 text-xs">
+                                                            <div className="text-gray-900 font-medium">Turno: {r.horaInicioTurno || r.turno || '-'}</div>
+                                                            <div className="text-[11px] text-gray-500">Llegada: {r.horaLlegada || r.entro || '-'}</div>
+                                                        </td>
+                                                        <td className="py-2.5 px-3 text-center whitespace-nowrap">
+                                                            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-gray-100 text-gray-700">
+                                                                {r.holguraMin ?? 0}m
+                                                            </span>
+                                                        </td>
+                                                        <td className="py-2.5 px-3 text-center whitespace-nowrap">
+                                                            {r.minutosAtraso > 0 ? (
+                                                                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-rose-50 text-rose-700 border border-rose-200">
+                                                                    {r.minutosAtraso} min
+                                                                </span>
+                                                            ) : '-'}
+                                                            {r.minutosJustificados > 0 && (
+                                                                <span className="block text-[10px] text-emerald-600 font-semibold mt-0.5" title="Minutos justificados">
+                                                                    ✓ {r.minutosJustificados}m just.
+                                                                </span>
+                                                            )}
+                                                        </td>
+                                                    </>
+                                                )}
+                                                <td className="py-2.5 px-3 text-center whitespace-nowrap min-w-[110px]">
+                                                    <div className="flex flex-col items-center justify-center gap-0.5 py-0.5">
+                                                        <button
+                                                            type="button"
+                                                            role="switch"
+                                                            aria-checked={r.aplicaDescuento}
+                                                            disabled={togglingId === r.id}
+                                                            onClick={() => handleToggleAplica(r)}
+                                                            className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-1 select-none ${
+                                                                r.aplicaDescuento ? 'bg-rose-600' : 'bg-slate-300 hover:bg-slate-400'
+                                                            } ${togglingId === r.id ? 'opacity-70 cursor-wait' : ''}`}
+                                                            title={
+                                                                r.aplicaDescuento
+                                                                    ? 'Descuento activo: Clic o toca para cambiar a NO APLICA'
+                                                                    : 'Sin descuento: Clic o toca para cambiar a APLICA'
+                                                            }
+                                                        >
+                                                            <span className="sr-only">Alternar descuento</span>
+                                                            <span
+                                                                aria-hidden="true"
+                                                                className={`pointer-events-none inline-flex h-5 w-5 transform items-center justify-center rounded-full bg-white shadow-md ring-0 transition duration-200 ease-in-out ${
+                                                                    r.aplicaDescuento ? 'translate-x-5' : 'translate-x-0'
+                                                                }`}
+                                                            >
+                                                                {togglingId === r.id ? (
+                                                                    <RefreshCw className="w-2.5 h-2.5 text-gray-500 animate-spin" />
+                                                                ) : r.aplicaDescuento ? (
+                                                                    <span className="w-1.5 h-1.5 rounded-full bg-rose-600" />
+                                                                ) : (
+                                                                    <span className="w-1.5 h-1.5 rounded-full bg-slate-400" />
+                                                                )}
+                                                            </span>
+                                                        </button>
+                                                        <span className={`text-[10px] font-bold tracking-tight select-none mt-0.5 ${
+                                                            r.aplicaDescuento ? 'text-rose-700' : 'text-slate-500'
+                                                        }`}>
+                                                            {r.aplicaDescuento ? 'APLICA' : 'NO APLICA'}
                                                         </span>
-                                                    ) : '-'}
-                                                </td>
-                                                <td className="py-2.5 px-3 text-center whitespace-nowrap">
-                                                    {r.minutosAdelanto > 0 ? (
-                                                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200">
-                                                            {r.minutosAdelanto} min
-                                                        </span>
-                                                    ) : '-'}
-                                                    {r.minutosJustificados > 0 && (
-                                                        <span className="block text-[10px] text-emerald-600 font-semibold mt-0.5" title="Minutos justificados">
-                                                            ✓ {r.minutosJustificados}m just.
-                                                        </span>
-                                                    )}
-                                                </td>
-                                                <td className="py-2.5 px-3 text-center whitespace-nowrap">
-                                                    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold ${
-                                                        r.aplicaDescuento
-                                                            ? 'bg-rose-100 text-rose-800 border border-rose-300'
-                                                            : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                                                    }`}>
-                                                        {r.aplicaDescuento ? 'APLICA' : 'NO APLICA'}
-                                                    </span>
+                                                        {guardadoStatus[r.id] && (
+                                                            <span className="text-[9px] font-semibold text-emerald-600 flex items-center gap-0.5 animate-pulse">
+                                                                ✓ Guardado
+                                                            </span>
+                                                        )}
+                                                    </div>
                                                 </td>
                                                 <td className="py-2.5 px-3">
                                                     <div className="font-medium text-gray-900 truncate max-w-xs" title={r.justificado || ''}>
@@ -1117,14 +1329,37 @@ export default function AdmAtrasosClient({
 
                         <form onSubmit={handleSaveAdminEdit} className="space-y-4 text-xs">
                             <div className="p-3 bg-gray-50 rounded-xl space-y-1">
-                                <div className="flex justify-between">
-                                    <span className="text-gray-500">Minutos Atraso:</span>
-                                    <strong className="text-rose-700">{modalEdit.registro.minutosAtraso} min</strong>
-                                </div>
-                                <div className="flex justify-between">
-                                    <span className="text-gray-500">Minutos Adelanto:</span>
-                                    <strong className="text-amber-700">{modalEdit.registro.minutosAdelanto} min</strong>
-                                </div>
+                                {modalEdit.registro.tipo === 'ADELANTO' ? (
+                                    <>
+                                        <div className="flex justify-between">
+                                            <span className="text-gray-500">Fin Turno / Salida:</span>
+                                            <strong className="text-gray-800">
+                                                {modalEdit.registro.horaFinTurno || modalEdit.registro.turno || '-'} / {modalEdit.registro.horaSalida || modalEdit.registro.salio || '-'}
+                                            </strong>
+                                        </div>
+                                        <div className="flex justify-between">
+                                            <span className="text-gray-500">Minutos Adelanto:</span>
+                                            <strong className="text-amber-700">{modalEdit.registro.minutosAdelanto} min</strong>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <div className="flex justify-between">
+                                            <span className="text-gray-500">Turno / Llegada:</span>
+                                            <strong className="text-gray-800">
+                                                {modalEdit.registro.horaInicioTurno || modalEdit.registro.turno || '-'} / {modalEdit.registro.horaLlegada || modalEdit.registro.entro || '-'}
+                                            </strong>
+                                        </div>
+                                        <div className="flex justify-between">
+                                            <span className="text-gray-500">Minutos Atraso:</span>
+                                            <strong className="text-rose-700">{modalEdit.registro.minutosAtraso} min</strong>
+                                        </div>
+                                        <div className="flex justify-between">
+                                            <span className="text-gray-500">Holgura:</span>
+                                            <strong className="text-gray-700">{modalEdit.registro.holguraMin ?? 0} min</strong>
+                                        </div>
+                                    </>
+                                )}
                                 <div className="flex justify-between">
                                     <span className="text-gray-500">Estado Período:</span>
                                     <strong className={modalEdit.registro.estado === 'ABIERTO' ? 'text-emerald-700' : 'text-rose-700'}>

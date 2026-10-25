@@ -24,6 +24,7 @@ function getModuleInfoFromPath(path: string): { modulo: string; detalle: string 
         if (path.includes('/kilometraje')) return { modulo: 'Tableros y Avances', detalle: 'Accedió a Tablero de Kilometraje' }
         if (path.includes('/actas')) return { modulo: 'Tableros y Avances', detalle: 'Accedió a Tablero de Actas' }
         if (path.includes('/verificador-temperaturas')) return { modulo: 'Tableros y Avances', detalle: 'Accedió a Tablero Verificador de Temperaturas' }
+        if (path.includes('/monitoreo-rrhh')) return { modulo: 'Tableros y Avances', detalle: 'Accedió a Tablero Monitoreo RRHH' }
         if (path.includes('/monitoreo-avances')) return { modulo: 'Tableros y Avances', detalle: 'Accedió a Tablero Monitoreo de Avances' }
         if (path.includes('/resolucion-sanitaria')) return { modulo: 'Tableros y Avances', detalle: 'Accedió a Tablero de Resolución Sanitaria (Evolución Histórica)' }
         return { modulo: 'Tableros y Avances', detalle: 'Accedió a Avance PMPA' }
@@ -115,6 +116,7 @@ function getModuleInfoFromPath(path: string): { modulo: string; detalle: string 
 
     // Mantenedores
     if (path.startsWith('/dashboard/mantenedor') || path.startsWith('/dashboard/productos') || path.startsWith('/dashboard/calculadora')) {
+        if (path.includes('/personal/monitoreo')) return { modulo: 'Mantenedor -> Recursos Humanos', detalle: 'Accedió a Mantenedor Monitoreo RRHH (Roles Asignados)' }
         if (path.includes('/monitoreo')) return { modulo: 'Mantenedor', detalle: 'Accedió a Configuración de Monitoreo de Evaluaciones' }
         return { modulo: 'Mantenedor', detalle: `Accedió a Mantenedor (${path.replace('/dashboard/', '')})` }
     }

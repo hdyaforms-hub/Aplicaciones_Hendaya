@@ -19,6 +19,7 @@ async function checkPermission() {
 
 export interface AsistenciaAtrasosRegistroDTO {
     id: string
+    tipo?: 'ADELANTO' | 'ATRASO'
     cargaId: string | null
     rut: string
     apellidos: string
@@ -37,6 +38,11 @@ export interface AsistenciaAtrasosRegistroDTO {
     salio: string | null
     salioTurno: string | null
     horaFinTurno?: string | null
+    horaInicioTurno?: string | null
+    horaLlegada?: string | null
+    horaSalida?: string | null
+    holguraMin?: number | null
+    grupoMarcacion?: string | null
     minutosAtraso: number
     minutosAdelanto: number
     minutosJustificados: number
@@ -55,6 +61,7 @@ export interface AsistenciaAtrasosRegistroDTO {
 export interface AsistenciaAtrasosResponse {
     success: boolean
     error?: string
+    tipoActual?: 'ADELANTO' | 'ATRASO'
     data: AsistenciaAtrasosRegistroDTO[]
     total: number
     page: number
@@ -72,6 +79,7 @@ export interface AsistenciaAtrasosResponse {
 }
 
 export async function getAsistenciaAtrasosAction(filtros?: {
+    tipo?: 'ADELANTO' | 'ATRASO'
     rbd?: number
     sucursal?: string
     supervisor?: string
@@ -98,11 +106,13 @@ export async function getAsistenciaAtrasosAction(filtros?: {
     const authorizedRbds = await getUserEffectiveRbds()
 
     try {
+        const targetTipo = filtros?.tipo || 'ADELANTO'
         const whereConditions: string[] = [
-            `("estado" IS NULL OR "estado" = 'ABIERTO')` // En Asistencia solo se visualizan períodos abiertos
+            `("estado" IS NULL OR "estado" = 'ABIERTO')`, // En Asistencia solo se visualizan períodos abiertos
+            `tipo = $1`
         ]
-        const queryParams: any[] = []
-        let paramIndex = 1
+        const queryParams: any[] = [targetTipo]
+        let paramIndex = 2
 
         // 1. Privilegios por RBD efectivo del usuario
         if (authorizedRbds !== null) {
@@ -214,6 +224,7 @@ export async function getAsistenciaAtrasosAction(filtros?: {
 
             return {
                 id: r.id,
+                tipo: (r.tipo as 'ADELANTO' | 'ATRASO') || 'ADELANTO',
                 cargaId: r.cargaId,
                 rut,
                 apellidos,
@@ -232,6 +243,11 @@ export async function getAsistenciaAtrasosAction(filtros?: {
                 salio: r.salio,
                 salioTurno: r.salioTurno,
                 horaFinTurno: r.horaFinTurno || r.salioTurno || null,
+                horaInicioTurno: r.horaInicioTurno || null,
+                horaLlegada: r.horaLlegada || null,
+                horaSalida: r.horaSalida || null,
+                holguraMin: r.holguraMin !== null && r.holguraMin !== undefined ? Number(r.holguraMin) : null,
+                grupoMarcacion: r.grupoMarcacion || null,
                 minutosAtraso: Number(r.minutosAtraso || 0),
                 minutosAdelanto: Number(r.minutosAdelanto || 0),
                 minutosJustificados: Number(r.minutosJustificados || 0),
@@ -285,6 +301,7 @@ export async function getAsistenciaAtrasosAction(filtros?: {
 
         return {
             success: true,
+            tipoActual: targetTipo,
             data: dataFinal,
             total,
             page,
@@ -349,7 +366,7 @@ export async function actualizarGestionAtrasoAction(
 
     try {
         const rows: any[] = await rawPrisma.$queryRawUnsafe(
-            `SELECT id, rbd, establecimiento, fecha, "identificadorEnc", "apellidosEnc", "nombreEnc", estado, "aplicaDescuento", justificado FROM "Pers_Atrasos_Registro" WHERE id = $1;`,
+            `SELECT id, rbd, establecimiento, fecha, "identificadorEnc", "apellidosEnc", "nombreEnc", estado, "aplicaDescuento", justificado, "aplicaModificadoPor" FROM "Pers_Atrasos_Registro" WHERE id = $1;`,
             registroId
         )
         const currentReg = rows[0]
@@ -370,6 +387,15 @@ export async function actualizarGestionAtrasoAction(
             return {
                 success: false,
                 error: 'El período correspondiente a esta planilla se encuentra CERRADO. No es posible modificar registros en un período cerrado.'
+            }
+        }
+
+        // Bloqueo de única gestión para usuarios no administradores (Asistencia):
+        // Solo pueden cambiar el estado una sola vez. Si ya fue gestionado, solo un administrador puede modificarlo.
+        if (!isAdmin && currentReg.aplicaModificadoPor !== null) {
+            return {
+                success: false,
+                error: 'Este registro ya fue modificado previamente y se encuentra bloqueado. Para corregir o rectificar el estado, debe ser gestionado desde el módulo de Administración.'
             }
         }
 

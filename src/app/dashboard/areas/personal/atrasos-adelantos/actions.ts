@@ -25,9 +25,9 @@ async function checkPermission() {
     return perms.includes('manage_personal_atrasos_carga')
 }
 
-// Parsea el RBD y el nombre de establecimiento soportando formatos como "(10522-8) SAN JUAN DE PIRQUE", "10187 MADRE ANA EUGENIA", etc.
-function extractRbdAndEstablecimiento(grupoRaw: any, ccRaw: any, rbdRaw: any): { rbd: number | null; establecimiento: string | null; rbdRaw: string } {
-    const candidates = [grupoRaw, ccRaw, rbdRaw].filter(Boolean).map(x => String(x).trim())
+// Parsea el RBD y el nombre de establecimiento soportando formatos como "(10522-8) SAN JUAN DE PIRQUE", "(10638) LICEO A131 BASICA", "10187 MADRE ANA EUGENIA", etc.
+function extractRbdAndEstablecimiento(grupoRaw: any, ccRaw: any, grupoMarcacionRaw: any, rbdRaw?: any): { rbd: number | null; establecimiento: string | null; rbdRaw: string } {
+    const candidates = [grupoRaw, ccRaw, grupoMarcacionRaw, rbdRaw].filter(Boolean).map(x => String(x).trim())
     for (const str of candidates) {
         // Formato (10522-8) SAN JUAN DE PIRQUE o (10522) SAN JUAN DE PIRQUE
         const matchParen = str.match(/^\((\d{3,7})(?:-[\w\d])?\)\s*(.*)$/)
@@ -67,7 +67,7 @@ function extractRbdAndEstablecimiento(grupoRaw: any, ccRaw: any, rbdRaw: any): {
         }
     }
 
-    const fallbackEst = ccRaw || grupoRaw || rbdRaw || null
+    const fallbackEst = ccRaw || grupoRaw || grupoMarcacionRaw || rbdRaw || null
     return {
         rbd: null,
         establecimiento: fallbackEst ? String(fallbackEst).trim() : null,
@@ -76,8 +76,8 @@ function extractRbdAndEstablecimiento(grupoRaw: any, ccRaw: any, rbdRaw: any): {
 }
 
 // Homologa la sede / sucursal a los estándares corporativos Hendaya
-function normalizeSede(sedeRaw: any, ccRaw?: any, grupoRaw?: any): string {
-    const combined = `${sedeRaw || ''} ${ccRaw || ''} ${grupoRaw || ''}`.toUpperCase().trim()
+function normalizeSede(sedeRaw: any, ccRaw?: any, grupoRaw?: any, grupoMarcacionRaw?: any): string {
+    const combined = `${sedeRaw || ''} ${ccRaw || ''} ${grupoRaw || ''} ${grupoMarcacionRaw || ''}`.toUpperCase().trim()
     if (combined.includes('METRO') || combined.includes('METROPOLITANA')) return 'CD METRO'
     if (combined.includes('COPIAPO') || combined.includes('COPIAPÓ')) return 'CD COPIAPO'
     if (combined.includes('COYHAIQUE')) return 'CD COYHAIQUE'
@@ -90,8 +90,9 @@ function normalizeSede(sedeRaw: any, ccRaw?: any, grupoRaw?: any): string {
 function formatExcelTime(val: any): string | null {
     if (val === undefined || val === null || val === '') return null
     if (typeof val === 'number') {
-        if (val >= 0 && val <= 1) {
-            const totalSeconds = Math.round(val * 86400)
+        const timeFraction = val >= 1 ? val % 1 : val
+        if (timeFraction >= 0 && timeFraction <= 1) {
+            const totalSeconds = Math.round(timeFraction * 86400)
             const hours = Math.floor(totalSeconds / 3600) % 24
             const minutes = Math.floor((totalSeconds % 3600) / 60)
             return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`
@@ -152,7 +153,7 @@ function parseMinutes(val: any): { minutes: number; text: string } {
         return { minutes: 0, text: '0 min' }
     }
     if (typeof val === 'number') {
-        // En Excel, fracciones de día como 0.208333 (5 hrs = 300 min) o 0.052777 (76 min)
+        // En Excel, fracciones de día como 0.208333 (5 hrs = 300 min) o 0.0125 (18 min)
         if (val > 0 && val <= 1) {
             const mins = Math.round(val * 1440)
             return { minutes: mins, text: `${mins} min` }
@@ -177,6 +178,7 @@ function parseMinutes(val: any): { minutes: number; text: string } {
 
 export interface AtrasosRegistroDTO {
     id: string
+    tipo: 'ADELANTO' | 'ATRASO'
     cargaId: string | null
     identificador: string // Desencriptado
     apellidos: string // Desencriptado
@@ -198,6 +200,10 @@ export interface AtrasosRegistroDTO {
     salio?: string | null
     salioTurno?: string | null
     horaFinTurno?: string | null
+    horaInicioTurno?: string | null
+    horaLlegada?: string | null
+    holguraMin?: number
+    grupoMarcacion?: string | null
     minutosAtraso: number
     minutosAdelanto: number
     minutosJustificados: number
@@ -219,6 +225,7 @@ export interface AtrasosRegistroDTO {
 export interface AtrasosResponse {
     success: boolean
     error?: string
+    tipoActual: 'ADELANTO' | 'ATRASO'
     registros: AtrasosRegistroDTO[]
     total: number
     resumen: {
@@ -235,6 +242,7 @@ export interface AtrasosResponse {
     }
     ultimaCarga: {
         id: string
+        tipo: 'ADELANTO' | 'ATRASO'
         nombreArchivo: string
         totalRegistros: number
         nuevos: number
@@ -248,6 +256,7 @@ export interface AtrasosResponse {
  * Consulta registros de Atrasos y Adelantos con filtros, ordenamiento, desencriptación y paginación
  */
 export async function getAtrasosDataAction(filtros?: {
+    tipo?: 'ADELANTO' | 'ATRASO'
     search?: string
     rbd?: number
     sucursal?: string
@@ -261,10 +270,13 @@ export async function getAtrasosDataAction(filtros?: {
     sortField?: string
     sortOrder?: 'asc' | 'desc'
 }): Promise<AtrasosResponse> {
+    const tipoActual: 'ADELANTO' | 'ATRASO' = filtros?.tipo || 'ADELANTO'
+
     if (!await checkPermission()) {
         return {
             success: false,
             error: 'No tienes permisos para visualizar atrasos y adelantos',
+            tipoActual,
             registros: [],
             total: 0,
             resumen: { totalRegistros: 0, totalPersonas: 0, totalRbds: 0, totalMinutosAtraso: 0, totalMinutosAdelanto: 0, totalMinutosJustificados: 0, totalAplicaDescuento: 0, totalJustificados: 0, sucursalesList: [], supervisoresList: [] },
@@ -279,6 +291,7 @@ export async function getAtrasosDataAction(filtros?: {
         return {
             success: false,
             error: 'No autorizado',
+            tipoActual,
             registros: [],
             total: 0,
             resumen: { totalRegistros: 0, totalPersonas: 0, totalRbds: 0, totalMinutosAtraso: 0, totalMinutosAdelanto: 0, totalMinutosJustificados: 0, totalAplicaDescuento: 0, totalJustificados: 0, sucursalesList: [], supervisoresList: [] },
@@ -294,20 +307,22 @@ export async function getAtrasosDataAction(filtros?: {
     const sortOrder = filtros?.sortOrder === 'asc' ? 'asc' : 'desc'
 
     try {
-        // Metadatos de la última carga procesada
+        // Metadatos de la última carga procesada para este tipo
         let ultimaCargaRow: any = null
         try {
             const rows: any[] = await rawPrisma.$queryRawUnsafe(`
-                SELECT id, "nombreArchivo", "totalRegistros", nuevos, actualizados, "cargadoPor", "fechaCarga"
+                SELECT id, tipo, "nombreArchivo", "totalRegistros", nuevos, actualizados, "cargadoPor", "fechaCarga"
                 FROM "Pers_Atrasos_Carga"
+                WHERE tipo = $1
                 ORDER BY "fechaCarga" DESC
                 LIMIT 1;
-            `)
+            `, tipoActual)
             if (rows && rows.length > 0) ultimaCargaRow = rows[0]
         } catch {}
 
         const ultimaCarga = ultimaCargaRow ? {
             id: ultimaCargaRow.id,
+            tipo: (ultimaCargaRow.tipo || tipoActual) as 'ADELANTO' | 'ATRASO',
             nombreArchivo: ultimaCargaRow.nombreArchivo,
             totalRegistros: Number(ultimaCargaRow.totalRegistros || 0),
             nuevos: Number(ultimaCargaRow.nuevos || 0),
@@ -320,6 +335,10 @@ export async function getAtrasosDataAction(filtros?: {
         const whereConditions: string[] = []
         const queryParams: any[] = []
         let paramIndex = 1
+
+        // Filtro estricto por tipo ('ADELANTO' o 'ATRASO')
+        whereConditions.push(`tipo = $${paramIndex++}`)
+        queryParams.push(tipoActual)
 
         // Restricción por RBD asignado
         if (authorizedRbds !== null) {
@@ -393,19 +412,19 @@ export async function getAtrasosDataAction(filtros?: {
 
         const whereSql = whereConditions.length > 0 ? `WHERE ${whereConditions.join(' AND ')}` : ''
 
-        // Consultar sucursales y supervisores disponibles
+        // Consultar sucursales y supervisores disponibles para este tipo
         const sucursalesRows: any[] = await rawPrisma.$queryRawUnsafe(`
             SELECT DISTINCT sucursal FROM "Pers_Atrasos_Registro"
-            WHERE sucursal IS NOT NULL AND sucursal <> ''
+            WHERE tipo = $1 AND sucursal IS NOT NULL AND sucursal <> ''
             ORDER BY sucursal ASC;
-        `)
+        `, tipoActual)
         const sucursalesList = sucursalesRows.map(r => r.sucursal)
 
         const supervisoresRows: any[] = await rawPrisma.$queryRawUnsafe(`
             SELECT DISTINCT supervisor FROM "Pers_Atrasos_Registro"
-            WHERE supervisor IS NOT NULL AND supervisor <> ''
+            WHERE tipo = $1 AND supervisor IS NOT NULL AND supervisor <> ''
             ORDER BY supervisor ASC;
-        `)
+        `, tipoActual)
         const supervisoresList = supervisoresRows.map(r => r.supervisor)
 
         // Traer registros coincidentes
@@ -424,6 +443,7 @@ export async function getAtrasosDataAction(filtros?: {
 
             return {
                 id: r.id,
+                tipo: (r.tipo || 'ADELANTO') as 'ADELANTO' | 'ATRASO',
                 cargaId: r.cargaId,
                 identificador,
                 apellidos,
@@ -445,6 +465,10 @@ export async function getAtrasosDataAction(filtros?: {
                 salio: r.salio,
                 salioTurno: r.salioTurno,
                 horaFinTurno: r.horaFinTurno || r.salioTurno || null,
+                horaInicioTurno: r.horaInicioTurno || null,
+                horaLlegada: r.horaLlegada || null,
+                holguraMin: Number(r.holguraMin || 0),
+                grupoMarcacion: r.grupoMarcacion || null,
                 minutosAtraso: Number(r.minutosAtraso || 0),
                 minutosAdelanto: Number(r.minutosAdelanto || 0),
                 minutosJustificados: Number(r.minutosJustificados || 0),
@@ -499,6 +523,7 @@ export async function getAtrasosDataAction(filtros?: {
 
         return {
             success: true,
+            tipoActual,
             registros: pagedRegistros,
             total,
             resumen: {
@@ -520,6 +545,7 @@ export async function getAtrasosDataAction(filtros?: {
         return {
             success: false,
             error: error.message || 'Error al consultar los atrasos y adelantos',
+            tipoActual,
             registros: [],
             total: 0,
             resumen: { totalRegistros: 0, totalPersonas: 0, totalRbds: 0, totalMinutosAtraso: 0, totalMinutosAdelanto: 0, totalMinutosJustificados: 0, totalAplicaDescuento: 0, totalJustificados: 0, sucursalesList: [], supervisoresList: [] },
@@ -529,15 +555,17 @@ export async function getAtrasosDataAction(filtros?: {
 }
 
 /**
- * Procesa e inserta/actualiza una planilla de Atrasos y Adelantos.
- * Regla: No permite registros duplicados; upserta por (identificadorHash, fecha).
+ * Procesa e inserta/actualiza una planilla de Atrasos o Adelantos.
+ * Regla: No permite registros duplicados; upserta por (identificadorHash, fecha, tipo).
+ * Auto-detecta si el archivo es de Atrasos o Adelantos en base al contenido.
  */
-async function procesarPlanillaAtrasosBuffer(
+export async function procesarPlanillaAtrasosBuffer(
     buffer: Buffer,
     nombreArchivo: string,
     usuarioNombre: string,
-    usuarioId?: string
-): Promise<{ success: boolean; total?: number; nuevos?: number; actualizados?: number; error?: string }> {
+    usuarioId?: string,
+    tipoHint?: 'ADELANTO' | 'ATRASO'
+): Promise<{ success: boolean; tipo?: 'ADELANTO' | 'ATRASO'; total?: number; nuevos?: number; actualizados?: number; error?: string }> {
     await ensurePersonalAtrasosTables()
 
     const workbook = xlsx.read(buffer, { type: 'buffer' })
@@ -556,32 +584,41 @@ async function procesarPlanillaAtrasosBuffer(
         return { success: false, error: 'No se encontraron filas con datos en la planilla seleccionada' }
     }
 
-    // 1. Verificación preventiva contra archivos duplicados por nombre
+    // Auto-detección inteligente del tipo de planilla (Atraso vs Adelanto)
+    const firstRowKeys = Object.keys(rows[0] || {})
+    const isAtraso = sheetName.toLowerCase().includes('atraso') || 
+        firstRowKeys.some(k => /minutos de atraso|hora llegada|holgura|marcaci[oó]n|reporte atraso/i.test(k))
+    const isAdelanto = firstRowKeys.some(k => /minutos adelanto|hora fin turno|hora salida|salida anticipada/i.test(k))
+
+    const tipoFinal: 'ADELANTO' | 'ATRASO' = isAtraso ? 'ATRASO' : (isAdelanto ? 'ADELANTO' : (tipoHint || 'ADELANTO'))
+
+    // 1. Verificación preventiva contra archivos duplicados por nombre y tipo
     const cargaMismoNombre: any[] = await rawPrisma.$queryRawUnsafe(`
-        SELECT id, "nombreArchivo", "totalRegistros", "cargadoPor", "fechaCarga", estado
+        SELECT id, "nombreArchivo", "totalRegistros", "cargadoPor", "fechaCarga", estado, tipo
         FROM "Pers_Atrasos_Carga"
-        WHERE LOWER(TRIM("nombreArchivo")) = LOWER(TRIM($1))
+        WHERE LOWER(TRIM("nombreArchivo")) = LOWER(TRIM($1)) AND tipo = $2
         ORDER BY "fechaCarga" DESC
         LIMIT 1;
-    `, nombreArchivo.trim())
+    `, nombreArchivo.trim(), tipoFinal)
 
     if (cargaMismoNombre && cargaMismoNombre.length > 0) {
         const previa = cargaMismoNombre[0]
         const fechaStr = previa.fechaCarga ? new Date(previa.fechaCarga).toLocaleString('es-CL') : 'anteriormente'
         return {
             success: false,
-            error: `La planilla "${nombreArchivo}" ya fue cargada en el sistema el ${fechaStr} por ${previa.cargadoPor} (${previa.totalRegistros} filas). No se permite cargar la misma planilla repetida.`
+            tipo: tipoFinal,
+            error: `La planilla "${nombreArchivo}" (${tipoFinal}) ya fue cargada en el sistema el ${fechaStr} por ${previa.cargadoPor} (${previa.totalRegistros} filas). No se permite cargar la misma planilla repetida.`
         }
     }
 
-    // 2. Pre-cargar los registros existentes en Pers_Atrasos_Registro
-    const existentesMap = new Map<string, string>() // key: `${rutHash}_${fecha}` -> id
+    // 2. Pre-cargar los registros existentes en Pers_Atrasos_Registro para este tipo
+    const existentesMap = new Map<string, string>() // key: `${rutHash}_${fecha}_${tipo}` -> id
     try {
         const existentes: any[] = await rawPrisma.$queryRawUnsafe(`
-            SELECT id, "identificadorHash", fecha FROM "Pers_Atrasos_Registro";
-        `)
+            SELECT id, "identificadorHash", fecha, tipo FROM "Pers_Atrasos_Registro" WHERE tipo = $1;
+        `, tipoFinal)
         for (const e of existentes) {
-            existentesMap.set(`${e.identificadorHash}_${e.fecha}`, e.id)
+            existentesMap.set(`${e.identificadorHash}_${e.fecha}_${e.tipo}`, e.id)
         }
     } catch (err) {
         console.error('Error consultando existentes en Pers_Atrasos_Registro:', err)
@@ -601,21 +638,22 @@ async function procesarPlanillaAtrasosBuffer(
         if (!fechaIso) continue
 
         filasValidas++
-        const uniqueKey = `${idHash}_${fechaIso}`
+        const uniqueKey = `${idHash}_${fechaIso}_${tipoFinal}`
         if (!existentesMap.has(uniqueKey)) {
             filasNuevas++
         }
     }
 
     if (filasValidas === 0) {
-        return { success: false, error: 'No se encontraron registros válidos con RUT y Fecha en el archivo seleccionado' }
+        return { success: false, tipo: tipoFinal, error: 'No se encontraron registros válidos con RUT y Fecha en el archivo seleccionado' }
     }
 
     // Si todas las filas ya existen en la base de datos (0 filas nuevas), se bloquea la carga repetida
     if (filasNuevas === 0) {
         return {
             success: false,
-            error: `Todos los registros de esta planilla (${filasValidas} filas) ya existen en el sistema para sus respectivas fechas. No se permite cargar información repetida.`
+            tipo: tipoFinal,
+            error: `Todos los registros de esta planilla de ${tipoFinal} (${filasValidas} filas) ya existen en el sistema para sus respectivas fechas. No se permite cargar información repetida.`
         }
     }
 
@@ -634,7 +672,7 @@ async function procesarPlanillaAtrasosBuffer(
             }
         }
     } catch (e) {
-        console.error('Error cargando colegios en Atrasos:', e)
+        console.error('Error cargando colegios en Atrasos/Adelantos:', e)
     }
 
     const cargaId = uuidv4()
@@ -642,9 +680,9 @@ async function procesarPlanillaAtrasosBuffer(
 
     // Registrar inicio del lote de carga
     await rawPrisma.$executeRawUnsafe(`
-        INSERT INTO "Pers_Atrasos_Carga" (id, "nombreArchivo", "totalRegistros", nuevos, actualizados, "cargadoPor", "cargadoPorId", "fechaCarga", "createdAt", "updatedAt")
-        VALUES ($1, $2, $3, 0, 0, $4, $5, $6, $6, $6);
-    `, cargaId, nombreArchivo, rows.length, usuarioNombre, usuarioId || null, ahora)
+        INSERT INTO "Pers_Atrasos_Carga" (id, tipo, "nombreArchivo", "totalRegistros", nuevos, actualizados, "cargadoPor", "cargadoPorId", "fechaCarga", "createdAt", "updatedAt")
+        VALUES ($1, $2, $3, $4, 0, 0, $5, $6, $7, $7, $7);
+    `, cargaId, tipoFinal, nombreArchivo, rows.length, usuarioNombre, usuarioId || null, ahora)
 
     let nuevosCount = 0
     let actualizadosCount = 0
@@ -674,17 +712,18 @@ async function procesarPlanillaAtrasosBuffer(
 
             const grupoUsuario = String(row['Grupo Usuario'] || row['GRUPO USUARIO'] || row['grupoUsuario'] || '').trim() || null
             const centroCostos = String(row['Centro de Costos'] || row['CENTRO DE COSTOS'] || row['centroCostos'] || row['Centro Costos'] || '').trim() || null
+            const grupoMarcacion = String(row['Grupo marcación'] || row['Grupo marcacion'] || row['GRUPO MARCACIÓN'] || row['Grupo Marcación'] || '').trim() || null
 
             // RBD y establecimiento
             const rawRbdVal = row['RBD'] || row['Rbd'] || row['rbd'] || row['Colegio'] || row['Establecimiento']
-            const parsedRbd = extractRbdAndEstablecimiento(grupoUsuario, centroCostos, rawRbdVal)
+            const parsedRbd = extractRbdAndEstablecimiento(grupoUsuario, centroCostos, grupoMarcacion, rawRbdVal)
             const rbdNum = parsedRbd.rbd
             const colLookup = rbdNum ? colegiosMap.get(rbdNum) : null
             const establecimiento = colLookup?.nombre || parsedRbd.establecimiento || (rbdNum ? `RBD ${rbdNum}` : parsedRbd.rbdRaw)
 
             // Sede y homologación
             const rawSede = String(row['SEDE'] || row['Sede'] || row['sede'] || row['Sucursal'] || '').trim()
-            const sucursal = colLookup?.sucursal || normalizeSede(rawSede, centroCostos, grupoUsuario)
+            const sucursal = colLookup?.sucursal || normalizeSede(rawSede, centroCostos, grupoUsuario, grupoMarcacion)
 
             const institucion = String(row['Institución'] || row['Institucion'] || row['INSTITUCION'] || '').trim() || null
             const supervisor = String(row['Supervisor'] || row['SUPERVISOR'] || '').trim() || null
@@ -692,20 +731,40 @@ async function procesarPlanillaAtrasosBuffer(
             const turno = String(row['Turno'] || row['TURNO'] || '').trim() || null
             const marco = String(row['Marcó '] || row['Marcó'] || row['Marco'] || row['MARCO'] || '').trim() || null
 
-            const entro = formatExcelTime(row['Hora Inicio Turno'] || row['Entró'] || row['Entro'] || row['ENTRO'] || row['Entrada'])
-            const salio = formatExcelTime(row['Hora Salida'] || row['HORA SALIDA'] || row['Salió'] || row['Salio'] || row['SALIO'] || row['Salida'])
-            const horaFinTurno = formatExcelTime(row['Hora Fin Turno'] || row['HORA FIN TURNO'] || row['Salio turno'] || row['Salió turno'] || row['salioTurno'])
-            const salioTurno = horaFinTurno
+            let horaInicioTurno: string | null = null
+            let horaLlegada: string | null = null
+            let holguraMin = 0
+            let horaFinTurno: string | null = null
+            let salio: string | null = null
+            let salioTurno: string | null = null
+            let entro: string | null = null
+            let minutosAtraso = 0
+            let minutosAdelanto = 0
+            let horasAtraso: string | null = null
+            let horasAdelanto: string | null = null
 
-            // Atraso y Adelanto
-            const rawAtraso = row['Atraso'] || row['ATRASO'] || row['Minutos Atraso'] || row['MINUTOS ATRASO'] || row['Atraso (min)'] || row['Minutos de atraso'] || row['atraso'] || 0
-            const parsedAtraso = parseMinutes(rawAtraso)
-
-            const rawAdelanto = row['Adelanto'] || row['ADELANTO'] || row['Minutos Adelanto'] || row['MINUTOS ADELANTO'] || row['Adelanto (min)'] || row['Salida Anticipada'] || row['salio antes'] || row['adelanto'] || 0
-            const parsedAdelanto = parseMinutes(rawAdelanto)
+            if (tipoFinal === 'ATRASO') {
+                horaInicioTurno = formatExcelTime(row['Hora Inicio Turno'] || row['Hora inicio turno'] || row['Turno'])
+                horaLlegada = formatExcelTime(row['Hora Llegada'] || row['Hora llegada'] || row['Llegada'])
+                holguraMin = parseInt(String(row['Holgura (min)'] || row['Holgura'] || 0), 10) || 0
+                const rawAtraso = row['Minutos de Atraso'] || row['Minutos de atraso'] || row['Minutos Atraso'] || row['MINUTOS ATRASO'] || row['Atraso'] || row['ATRASO'] || 0
+                const parsedAtraso = parseMinutes(rawAtraso)
+                minutosAtraso = parsedAtraso.minutes
+                horasAtraso = parsedAtraso.text
+                entro = horaLlegada
+            } else {
+                horaFinTurno = formatExcelTime(row['Hora Fin Turno'] || row['HORA FIN TURNO'] || row['Salio turno'] || row['Salió turno'])
+                salio = formatExcelTime(row['Hora Salida'] || row['HORA SALIDA'] || row['Salió'] || row['Salio'])
+                salioTurno = horaFinTurno
+                const rawAdelanto = row['Minutos Adelanto'] || row['MINUTOS ADELANTO'] || row['Minutos adelanto'] || row['Adelanto'] || row['ADELANTO'] || row['Salida Anticipada'] || 0
+                const parsedAdelanto = parseMinutes(rawAdelanto)
+                minutosAdelanto = parsedAdelanto.minutes
+                horasAdelanto = parsedAdelanto.text
+            }
 
             const rawJustificados = row['Minutos Justificados'] || row['MINUTOS JUSTIFICADOS'] || row['Justificados'] || row['justificados'] || 0
             const parsedMinJustificados = parseMinutes(rawJustificados)
+            const minutosJustificados = parsedMinJustificados.minutes
 
             const justificadoPor = String(row['Justificado por'] || row['JUSTIFICADO POR'] || row['Justificado Por'] || '').trim() || null
             const comentario = String(row['Comentario'] || row['COMENTARIO'] || row['Observación'] || row['Observacion'] || row['OBSERVACION'] || row['Motivo'] || '').trim() || null
@@ -713,11 +772,11 @@ async function procesarPlanillaAtrasosBuffer(
             let justificado = String(row['Justificado'] || row['JUSTIFICADO'] || row['Justificación'] || row['justificado'] || '').trim() || null
             if (!justificado) {
                 if (justificadoPor) justificado = `Justificado por ${justificadoPor}`
-                else if (parsedMinJustificados.minutes > 0) justificado = `${parsedMinJustificados.minutes} min justificados`
+                else if (minutosJustificados > 0) justificado = `${minutosJustificados} min justificados`
             }
             const observacion = comentario
 
-            const uniqueKey = `${idHash}_${fechaIso}`
+            const uniqueKey = `${idHash}_${fechaIso}_${tipoFinal}`
             const existingId = existentesMap.get(uniqueKey)
 
             if (existingId) {
@@ -743,24 +802,29 @@ async function procesarPlanillaAtrasosBuffer(
                         salio = $17,
                         "salioTurno" = $18,
                         "horaFinTurno" = $19,
-                        "minutosAtraso" = $20,
-                        "minutosAdelanto" = $21,
-                        "minutosJustificados" = $22,
-                        "horasAtraso" = $23,
-                        "horasAdelanto" = $24,
-                        justificado = COALESCE($25, justificado),
-                        "justificadoPor" = COALESCE($26, "justificadoPor"),
-                        "centroCostos" = COALESCE($27, "centroCostos"),
-                        "grupoUsuario" = COALESCE($28, "grupoUsuario"),
-                        observacion = COALESCE($29, observacion),
-                        "updatedAt" = $30
-                    WHERE id = $31;
+                        "horaInicioTurno" = $20,
+                        "horaLlegada" = $21,
+                        "holguraMin" = $22,
+                        "grupoMarcacion" = $23,
+                        "minutosAtraso" = $24,
+                        "minutosAdelanto" = $25,
+                        "minutosJustificados" = $26,
+                        "horasAtraso" = $27,
+                        "horasAdelanto" = $28,
+                        justificado = COALESCE($29, justificado),
+                        "justificadoPor" = COALESCE($30, "justificadoPor"),
+                        "centroCostos" = COALESCE($31, "centroCostos"),
+                        "grupoUsuario" = COALESCE($32, "grupoUsuario"),
+                        observacion = COALESCE($33, observacion),
+                        "updatedAt" = $34
+                    WHERE id = $35;
                 `,
                     cargaId, idEnc, apellidosEnc, nombreEnc, fechaSerial,
                     rbdNum, parsedRbd.rbdRaw, establecimiento, institucion, rawSede, sucursal,
                     supervisor, cargo, turno, marco, entro, salio, salioTurno, horaFinTurno,
-                    parsedAtraso.minutes, parsedAdelanto.minutes, parsedMinJustificados.minutes,
-                    parsedAtraso.text, parsedAdelanto.text,
+                    horaInicioTurno, horaLlegada, holguraMin, grupoMarcacion,
+                    minutosAtraso, minutosAdelanto, minutosJustificados,
+                    horasAtraso, horasAdelanto,
                     justificado, justificadoPor, centroCostos, grupoUsuario, observacion, ahora, existingId
                 )
                 actualizadosCount++
@@ -769,25 +833,28 @@ async function procesarPlanillaAtrasosBuffer(
                 const regId = uuidv4()
                 await rawPrisma.$executeRawUnsafe(`
                     INSERT INTO "Pers_Atrasos_Registro" (
-                        id, "cargaId", "identificadorEnc", "identificadorHash",
+                        id, tipo, "cargaId", "identificadorEnc", "identificadorHash",
                         "apellidosEnc", "nombreEnc", fecha, "fechaSerial",
                         rbd, "rbdRaw", establecimiento, institucion, "sedeRaw",
                         sucursal, supervisor, cargo, turno, marco, entro, salio, "salioTurno",
-                        "horaFinTurno", "minutosAtraso", "minutosAdelanto", "minutosJustificados",
+                        "horaFinTurno", "horaInicioTurno", "horaLlegada", "holguraMin", "grupoMarcacion",
+                        "minutosAtraso", "minutosAdelanto", "minutosJustificados",
                         "horasAtraso", "horasAdelanto", justificado, "justificadoPor", "centroCostos",
                         "grupoUsuario", "aplicaDescuento", observacion, estado, "createdAt", "updatedAt"
                     ) VALUES (
                         $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13,
                         $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25,
-                        $26, $27, $28, $29, $30, $31, false, $32, 'ABIERTO', $33, $33
+                        $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36,
+                        false, $37, 'ABIERTO', $38, $38
                     );
                 `,
-                    regId, cargaId, idEnc, idHash,
+                    regId, tipoFinal, cargaId, idEnc, idHash,
                     apellidosEnc, nombreEnc, fechaIso, fechaSerial,
                     rbdNum, parsedRbd.rbdRaw, establecimiento, institucion, rawSede,
                     sucursal, supervisor, cargo, turno, marco, entro, salio, salioTurno,
-                    horaFinTurno, parsedAtraso.minutes, parsedAdelanto.minutes, parsedMinJustificados.minutes,
-                    parsedAtraso.text, parsedAdelanto.text, justificado, justificadoPor, centroCostos,
+                    horaFinTurno, horaInicioTurno, horaLlegada, holguraMin, grupoMarcacion,
+                    minutosAtraso, minutosAdelanto, minutosJustificados,
+                    horasAtraso, horasAdelanto, justificado, justificadoPor, centroCostos,
                     grupoUsuario, observacion, ahora
                 )
                 existentesMap.set(uniqueKey, regId)
@@ -809,15 +876,18 @@ async function procesarPlanillaAtrasosBuffer(
         userId: usuarioId || null,
         action: 'CARGA_ATRASOS_ADELANTOS',
         modulo: 'Recursos Humanos',
-        detalle: `Carga de Atrasos y Adelantos procesada (${nombreArchivo}): ${nuevosCount} registros nuevos ingresados, ${actualizadosCount} registros existentes actualizados por identificador y fecha.`
+        detalle: `Carga de ${tipoFinal} procesada (${nombreArchivo}): ${nuevosCount} registros nuevos ingresados, ${actualizadosCount} registros existentes actualizados por identificador y fecha.`
     })
 
-    revalidatePath(PATH_ATRASOS_CARGA)
-    revalidatePath(PATH_ATRASOS_ASISTENCIA)
-    revalidatePath(PATH_ATRASOS_ADM)
+    try {
+        revalidatePath(PATH_ATRASOS_CARGA)
+        revalidatePath(PATH_ATRASOS_ASISTENCIA)
+        revalidatePath(PATH_ATRASOS_ADM)
+    } catch {}
 
     return {
         success: true,
+        tipo: tipoFinal,
         total: nuevosCount + actualizadosCount,
         nuevos: nuevosCount,
         actualizados: actualizadosCount
@@ -827,7 +897,7 @@ async function procesarPlanillaAtrasosBuffer(
 /**
  * Server Action: Carga masiva desde archivo Excel subido por el cliente
  */
-export async function cargarAtrasosAction(formData: FormData): Promise<{ success: boolean; total?: number; nuevos?: number; actualizados?: number; error?: string }> {
+export async function cargarAtrasosAction(formData: FormData): Promise<{ success: boolean; tipo?: 'ADELANTO' | 'ATRASO'; total?: number; nuevos?: number; actualizados?: number; error?: string }> {
     if (!await checkPermission()) {
         return { success: false, error: 'No tienes permisos para realizar cargas de atrasos y adelantos' }
     }
@@ -841,10 +911,12 @@ export async function cargarAtrasosAction(formData: FormData): Promise<{ success
         return { success: false, error: 'Debes seleccionar un archivo Excel (.xlsx o .xls) válido' }
     }
 
+    const tipoForm = (formData.get('tipo') as 'ADELANTO' | 'ATRASO') || undefined
+
     try {
         const arrayBuffer = await file.arrayBuffer()
         const buffer = Buffer.from(arrayBuffer)
-        return await procesarPlanillaAtrasosBuffer(buffer, file.name, usuarioNombre, usuarioId)
+        return await procesarPlanillaAtrasosBuffer(buffer, file.name, usuarioNombre, usuarioId, tipoForm)
     } catch (error: any) {
         console.error('Error en cargarAtrasosAction:', error)
         return { success: false, error: error.message || 'Error al procesar el archivo Excel' }
@@ -883,9 +955,11 @@ export async function eliminarCargaAtrasosAction(cargaId: string): Promise<{ suc
             detalle: `Eliminación de lote de atrasos (ID ${cargaId}): se borraron ${deletedCount} registros.`
         })
 
-        revalidatePath(PATH_ATRASOS_CARGA)
-        revalidatePath(PATH_ATRASOS_ASISTENCIA)
-        revalidatePath(PATH_ATRASOS_ADM)
+        try {
+            revalidatePath(PATH_ATRASOS_CARGA)
+            revalidatePath(PATH_ATRASOS_ASISTENCIA)
+            revalidatePath(PATH_ATRASOS_ADM)
+        } catch {}
 
         return { success: true }
     } catch (error: any) {

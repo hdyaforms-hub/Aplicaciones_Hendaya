@@ -23,7 +23,8 @@ import {
     MapPin,
     ArrowUpDown,
     ArrowUp,
-    ArrowDown
+    ArrowDown,
+    Lock
 } from 'lucide-react'
 import { formatHorasMinutos, formatHorasMinutosTexto, parseMinutosHhee } from '@/lib/personal-time-format'
 
@@ -133,6 +134,17 @@ export default function AsistenciaHorasExtrasClient({
 
     // Toggle Aplica / No Aplica
     const handleToggleAplica = async (registroId: string, valorActual: boolean) => {
+        const reg = registros.find(r => r.id === registroId)
+        if (reg?.estado === 'CERRADO') {
+            alert('El período correspondiente a esta planilla se encuentra CERRADO. No es posible modificar registros en un período cerrado.')
+            return
+        }
+
+        if (!isAdmin && reg?.aplicaModificadoPor) {
+            alert(`Este registro ya fue modificado previamente por ${reg.aplicaModificadoPor} y se encuentra bloqueado. Para corregir o rectificar el estado, debe ser gestionado desde el módulo de Administración.`)
+            return
+        }
+
         const nuevoValor = !valorActual
 
         // Optimistic update
@@ -142,7 +154,7 @@ export default function AsistenciaHorasExtrasClient({
                     ? {
                         ...r,
                         aplica: nuevoValor,
-                        aplicaModificadoPor: 'Tú',
+                        aplicaModificadoPor: r.aplicaModificadoPor || 'Tú',
                         aplicaModificadoAt: new Date().toISOString()
                     }
                     : r
@@ -571,34 +583,55 @@ export default function AsistenciaHorasExtrasClient({
 
                                         {/* Botón o Check "Aplica / No aplica" */}
                                         <td className="py-3 px-3 text-center whitespace-nowrap">
-                                            <div className="inline-flex items-center gap-2">
-                                                <button
-                                                    onClick={() => handleToggleAplica(r.id, r.aplica)}
-                                                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold text-xs transition-all shadow-sm ${
-                                                        r.aplica
-                                                            ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
-                                                            : 'bg-amber-100 hover:bg-amber-200 text-amber-800 border border-amber-300'
-                                                    }`}
-                                                    title="Haz clic para alternar entre Aplica y No Aplica"
-                                                >
-                                                    {r.aplica ? (
-                                                        <>
-                                                            <Check className="w-3.5 h-3.5 stroke-[3]" />
-                                                            <span>Aplica</span>
-                                                        </>
-                                                    ) : (
-                                                        <>
-                                                            <X className="w-3.5 h-3.5 stroke-[3]" />
-                                                            <span>No Aplica</span>
-                                                        </>
-                                                    )}
-                                                </button>
-                                                {guardadoStatus[r.id] && (
-                                                    <span className="text-[10px] font-bold text-emerald-600 animate-pulse">
-                                                        ✓ Guardado
-                                                    </span>
-                                                )}
-                                            </div>
+                                            {(() => {
+                                                const isBloqueado = (!isAdmin && Boolean(r.aplicaModificadoPor)) || r.estado === 'CERRADO'
+                                                return (
+                                                    <div className="inline-flex flex-col sm:flex-row items-center gap-1.5">
+                                                        <button
+                                                            disabled={isBloqueado}
+                                                            onClick={() => handleToggleAplica(r.id, r.aplica)}
+                                                            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold text-xs transition-all shadow-sm ${
+                                                                r.aplica
+                                                                    ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
+                                                                    : 'bg-amber-100 hover:bg-amber-200 text-amber-800 border border-amber-300'
+                                                            } ${isBloqueado ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                                            title={
+                                                                r.estado === 'CERRADO'
+                                                                    ? 'Período cerrado (solo lectura)'
+                                                                    : !isAdmin && r.aplicaModificadoPor
+                                                                    ? `Registro bloqueado: Modificado por ${r.aplicaModificadoPor}. Solo un administrador puede corregirlo.`
+                                                                    : 'Haz clic para alternar entre Aplica y No Aplica'
+                                                            }
+                                                        >
+                                                            {r.aplica ? (
+                                                                <>
+                                                                    <Check className="w-3.5 h-3.5 stroke-[3]" />
+                                                                    <span>Aplica</span>
+                                                                </>
+                                                            ) : (
+                                                                <>
+                                                                    <X className="w-3.5 h-3.5 stroke-[3]" />
+                                                                    <span>No Aplica</span>
+                                                                </>
+                                                            )}
+                                                        </button>
+                                                        {!isAdmin && r.aplicaModificadoPor && (
+                                                            <span
+                                                                className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded-md select-none"
+                                                                title={`Modificado por ${r.aplicaModificadoPor}. Solo Administración puede cambiarlo.`}
+                                                            >
+                                                                <Lock className="w-3 h-3 text-amber-600 flex-shrink-0" />
+                                                                <span>Bloqueado</span>
+                                                            </span>
+                                                        )}
+                                                        {guardadoStatus[r.id] && (
+                                                            <span className="text-[10px] font-bold text-emerald-600 animate-pulse">
+                                                                ✓ Guardado
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                )
+                                            })()}
                                         </td>
 
                                         {/* Trazabilidad */}

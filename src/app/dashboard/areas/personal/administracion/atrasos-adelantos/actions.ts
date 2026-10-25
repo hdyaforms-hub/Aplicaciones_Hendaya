@@ -21,6 +21,7 @@ async function checkAdminPermission() {
 
 export interface AdmAtrasosRegistroDTO {
     id: string
+    tipo: 'ADELANTO' | 'ATRASO'
     cargaId: string | null
     cargaNombreArchivo?: string | null
     rut: string
@@ -40,6 +41,11 @@ export interface AdmAtrasosRegistroDTO {
     salio: string | null
     salioTurno: string | null
     horaFinTurno?: string | null
+    horaSalida?: string | null
+    horaInicioTurno?: string | null
+    horaLlegada?: string | null
+    holguraMin?: number
+    grupoMarcacion?: string | null
     minutosAtraso: number
     minutosAdelanto: number
     minutosJustificados: number
@@ -59,6 +65,7 @@ export interface AdmAtrasosRegistroDTO {
 
 export interface CargaAtrasosDTO {
     id: string
+    tipo: 'ADELANTO' | 'ATRASO'
     nombreArchivo: string
     totalRegistros: number
     nuevos: number
@@ -72,6 +79,7 @@ export interface CargaAtrasosDTO {
 }
 
 export async function getAdmAtrasosAction(filtros?: {
+    tipo?: 'ADELANTO' | 'ATRASO'
     rbd?: number
     sucursal?: string
     supervisor?: string
@@ -97,11 +105,16 @@ export async function getAdmAtrasosAction(filtros?: {
     }
 
     const authorizedRbds = await getUserEffectiveRbds()
+    const tipoActual: 'ADELANTO' | 'ATRASO' = filtros?.tipo || 'ADELANTO'
 
     try {
         const whereConditions: string[] = []
         const queryParams: any[] = []
         let paramIndex = 1
+
+        // 0. Filtro por Tipo ('ADELANTO' o 'ATRASO')
+        whereConditions.push(`tipo = $${paramIndex++}`)
+        queryParams.push(tipoActual)
 
         // 1. Privilegios por RBD
         if (authorizedRbds !== null) {
@@ -225,6 +238,7 @@ export async function getAdmAtrasosAction(filtros?: {
 
             return {
                 id: r.id,
+                tipo: (r.tipo || 'ADELANTO') as 'ADELANTO' | 'ATRASO',
                 cargaId: r.cargaId,
                 cargaNombreArchivo: r.cargaId ? (cargasMap.get(r.cargaId) || null) : null,
                 rut,
@@ -244,6 +258,11 @@ export async function getAdmAtrasosAction(filtros?: {
                 salio: r.salio,
                 salioTurno: r.salioTurno,
                 horaFinTurno: r.horaFinTurno || r.salioTurno || null,
+                horaSalida: r.horaSalida || null,
+                horaInicioTurno: r.horaInicioTurno || null,
+                horaLlegada: r.horaLlegada || null,
+                holguraMin: Number(r.holguraMin || 0),
+                grupoMarcacion: r.grupoMarcacion || null,
                 minutosAtraso: Number(r.minutosAtraso || 0),
                 minutosAdelanto: Number(r.minutosAdelanto || 0),
                 minutosJustificados: Number(r.minutosJustificados || 0),
@@ -339,21 +358,23 @@ export async function getAdmAtrasosAction(filtros?: {
 /**
  * Server Action: Consulta el historial de planillas cargadas
  */
-export async function getHistorialCargasAtrasosAction(): Promise<{ success: boolean; data: CargaAtrasosDTO[]; error?: string }> {
+export async function getHistorialCargasAtrasosAction(tipo?: 'ADELANTO' | 'ATRASO'): Promise<{ success: boolean; data: CargaAtrasosDTO[]; error?: string }> {
     if (!await checkAdminPermission()) {
         return { success: false, error: 'No tienes permisos para consultar historial de cargas', data: [] }
     }
     await ensurePersonalAtrasosTables()
 
     try {
-        const rows: any[] = await rawPrisma.$queryRawUnsafe(`
-            SELECT id, "nombreArchivo", "totalRegistros", nuevos, actualizados, estado, "cerradoPor", "cerradoAt", "cargadoPor", "fechaCarga", observaciones
-            FROM "Pers_Atrasos_Carga"
-            ORDER BY "fechaCarga" DESC;
-        `)
+        const query = tipo
+            ? `SELECT id, tipo, "nombreArchivo", "totalRegistros", nuevos, actualizados, estado, "cerradoPor", "cerradoAt", "cargadoPor", "fechaCarga", observaciones FROM "Pers_Atrasos_Carga" WHERE tipo = $1 ORDER BY "fechaCarga" DESC;`
+            : `SELECT id, tipo, "nombreArchivo", "totalRegistros", nuevos, actualizados, estado, "cerradoPor", "cerradoAt", "cargadoPor", "fechaCarga", observaciones FROM "Pers_Atrasos_Carga" ORDER BY "fechaCarga" DESC;`
+
+        const params = tipo ? [tipo] : []
+        const rows: any[] = await rawPrisma.$queryRawUnsafe(query, ...params)
 
         const mapped: CargaAtrasosDTO[] = rows.map((c: any) => ({
             id: c.id,
+            tipo: (c.tipo || 'ADELANTO') as 'ADELANTO' | 'ATRASO',
             nombreArchivo: c.nombreArchivo,
             totalRegistros: Number(c.totalRegistros) || 0,
             nuevos: Number(c.nuevos) || 0,

@@ -64,6 +64,7 @@ export default async function RolesPage() {
         { id: 'view_tablero_resolucion_sanitaria', name: 'Tablero Resolución Sanitaria', description: 'Visualización analítica y evolución histórica de resoluciones sanitarias por RBD a lo largo de los años.', category: 'TABLEROS' },
         { id: 'view_tablero_auditoria', name: 'Tablero Auditoría', description: 'Visualización y exportación de auditoría de actividad de usuarios.', category: 'TABLEROS' },
         { id: 'view_tablero_monitoreo_avances', name: 'Tablero Monitoreo de Avances', description: 'Acceso y supervisión al tablero semafórico de avances de matrices y actas por usuario.', category: 'TABLEROS' },
+        { id: 'view_tablero_monitoreo_rrhh', name: 'Tablero Monitoreo RRHH', description: 'Acceso y supervisión al tablero semafórico de avances de RRHH (Ausentismo, Horas Extras, Atrasos, Adelantos) en períodos abiertos.', category: 'TABLEROS' },
         
         { id: 'view_ingreso_raciones', name: 'Ingreso de Raciones', description: 'Gestión y auditoría de raciones por colegio.', category: 'APLICACIONES' },
         { id: 'view_solicitud_pan', name: 'Solicitud de Pan', description: 'Acceso a la aplicación de Solicitud de Pan.', category: 'APLICACIONES' },
@@ -166,6 +167,7 @@ export default async function RolesPage() {
         { id: 'view_productos', name: 'Mantenedor de Productos', description: 'Acceso a mantenedor y carga masiva de Productos.', category: 'MANTENEDORES' },
         { id: 'manage_areas', name: 'Área', description: 'Creación y administración de áreas de la compañía.', category: 'MANTENEDORES' },
         { id: 'manage_personal_criterios', name: 'Criterios de Ausencias', description: 'Permite administrar los criterios o motivos de ausentismo del personal.', category: 'MANTENEDORES -> RECURSOS HUMANOS' },
+        { id: 'manage_mantenedor_monitoreo_rrhh', name: 'Monitoreo RRHH (Roles Asignados)', description: 'Permite configurar los roles y perfiles sujetos a monitoreo operativo de Recursos Humanos.', category: 'MANTENEDORES -> RECURSOS HUMANOS' },
  
         { id: 'manage_actas_supervision', name: 'Crear Acta de Supervisión', description: 'Crear, editar, copiar y administrar plantillas de Actas de Supervisión.', category: 'MANTENEDORES -> ACTAS DE SUPERVISIÓN' },
         { id: 'manage_user_rbds', name: 'Asociar RBD a usuario', description: 'Permite asociar y gestionar los RBDs autorizados para cada usuario.', category: 'MANTENEDORES -> ACTAS DE SUPERVISIÓN' },

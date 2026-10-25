@@ -210,7 +210,9 @@ export async function getSession() {
                 'view_anonimizador',
                 'manage_anonimizador',
                 'view_registro_capacitacion',
-                'manage_registro_capacitacion'
+                'manage_registro_capacitacion',
+                'view_tablero_monitoreo_rrhh',
+                'manage_mantenedor_monitoreo_rrhh'
             ]
 
             // Cargar permisos específicos configurados en base de datos para el rol

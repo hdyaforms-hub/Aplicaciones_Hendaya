@@ -287,7 +287,7 @@ export async function toggleAplicaHorasExtrasAction(
 
     try {
         const rows: any[] = await rawPrisma.$queryRawUnsafe(
-            `SELECT id, rbd, establecimiento, fecha, "identificadorEnc", "apellidosEnc", "nombreEnc", estado, aplica FROM "Pers_Hextra_Registro" WHERE id = $1;`,
+            `SELECT id, rbd, establecimiento, fecha, "identificadorEnc", "apellidosEnc", "nombreEnc", estado, aplica, "aplicaModificadoPor" FROM "Pers_Hextra_Registro" WHERE id = $1;`,
             registroId
         )
         const currentReg = rows[0]
@@ -308,6 +308,15 @@ export async function toggleAplicaHorasExtrasAction(
             return {
                 success: false,
                 error: 'El período correspondiente a esta planilla se encuentra CERRADO. No es posible modificar registros en un período cerrado.'
+            }
+        }
+
+        // Bloqueo de única gestión para usuarios no administradores (Asistencia):
+        // Solo pueden cambiar el estado una sola vez. Si ya fue gestionado, solo un administrador puede modificarlo.
+        if (!isAdmin && currentReg.aplicaModificadoPor !== null) {
+            return {
+                success: false,
+                error: 'Este registro ya fue modificado previamente y se encuentra bloqueado. Para corregir o rectificar el estado, debe ser gestionado desde el módulo de Administración.'
             }
         }
 

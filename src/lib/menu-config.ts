@@ -20,8 +20,9 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
     {
         name: 'Tableros y Avances',
         icon: '📈',
-        requiredPermission: ['view_tablero', 'view_tablero_pan', 'view_tablero_gas', 'view_tablero_retiro', 'view_tablero_elementos', 'view_tablero_multas_ee', 'view_tablero_organigrama', 'view_tablero_distancias', 'view_tablero_actas', 'view_tablero_auditoria', 'view_tablero_verificador_temperaturas', 'view_tablero_widgets', 'view_tablero_resolucion_sanitaria', 'view_tablero_monitoreo_avances'],
+        requiredPermission: ['view_tablero', 'view_tablero_pan', 'view_tablero_gas', 'view_tablero_retiro', 'view_tablero_elementos', 'view_tablero_multas_ee', 'view_tablero_organigrama', 'view_tablero_distancias', 'view_tablero_actas', 'view_tablero_auditoria', 'view_tablero_verificador_temperaturas', 'view_tablero_widgets', 'view_tablero_resolucion_sanitaria', 'view_tablero_monitoreo_avances', 'view_tablero_monitoreo_rrhh'],
         subItems: [
+            { name: 'Monitoreo RRHH', href: '/dashboard/tablero/monitoreo-rrhh', requiredPermission: 'view_tablero_monitoreo_rrhh' },
             { name: 'Monitoreo de Avances', href: '/dashboard/tablero/monitoreo-avances', requiredPermission: 'view_tablero_monitoreo_avances' },
             { name: 'Avance PMPA', href: '/dashboard/tablero', requiredPermission: 'view_tablero' },
             { name: 'Widgets', href: '/dashboard/tablero/widgets', requiredPermission: 'view_tablero_widgets' },
@@ -371,13 +372,18 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
     {
         name: 'Mantenedor',
         icon: '⚙️',
-        requiredPermission: ['view_colegios', 'view_productos', 'view_pmpa', 'view_consumo_gas', 'view_preparaciones', 'view_minutas', 'view_raciones', 'view_codigo_causa', 'manage_sucursales', 'manage_areas', 'manage_vehiculos', 'manage_zonales', 'manage_jefe_operacion', 'manage_supervisor', 'manage_manipuladoras_masiva', 'manage_colegios_matriz', 'manage_nueva_matriz', 'manage_actas_supervision', 'manage_doc_configuracion', 'manage_doc_carpetas', 'manage_doc_privilegios', 'manage_personal_criterios', 'manage_mantenedor_monitoreo'],
+        requiredPermission: ['view_colegios', 'view_productos', 'view_pmpa', 'view_consumo_gas', 'view_preparaciones', 'view_minutas', 'view_raciones', 'view_codigo_causa', 'manage_sucursales', 'manage_areas', 'manage_vehiculos', 'manage_zonales', 'manage_jefe_operacion', 'manage_supervisor', 'manage_manipuladoras_masiva', 'manage_colegios_matriz', 'manage_nueva_matriz', 'manage_actas_supervision', 'manage_doc_configuracion', 'manage_doc_carpetas', 'manage_doc_privilegios', 'manage_personal_criterios', 'manage_mantenedor_monitoreo', 'manage_mantenedor_monitoreo_rrhh'],
         subItems: [
             { name: 'Monitoreo', href: '/dashboard/mantenedor/monitoreo', requiredPermission: 'manage_mantenedor_monitoreo' },
             {
                 name: 'Recursos Humanos',
-                requiredPermission: 'manage_personal_criterios',
+                requiredPermission: ['manage_personal_criterios', 'manage_mantenedor_monitoreo_rrhh'],
                 subItems: [
+                    {
+                        name: 'Monitoreo',
+                        href: '/dashboard/mantenedor/personal/monitoreo',
+                        requiredPermission: 'manage_mantenedor_monitoreo_rrhh'
+                    },
                     {
                         name: 'Criterios de Ausencias',
                         href: '/dashboard/mantenedor/personal/criterios-ausencias',

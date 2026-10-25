@@ -15,7 +15,7 @@ export default async function AsistenciaAtrasosPage() {
     }
 
     const [dataRes, authorizedRbds] = await Promise.all([
-        getAsistenciaAtrasosAction({ page: 1, pageSize: 10 }),
+        getAsistenciaAtrasosAction({ page: 1, pageSize: 10, tipo: 'ADELANTO' }),
         getUserEffectiveRbds()
     ])
 
@@ -30,6 +30,7 @@ export default async function AsistenciaAtrasosPage() {
         sucursales: [],
         supervisores: [],
         establecimientos: [],
+        tipoActual: 'ADELANTO' as const,
         resumen: {
             totalRegistros: 0,
             totalMinutosAtraso: 0,
@@ -47,6 +48,7 @@ export default async function AsistenciaAtrasosPage() {
         sucursales: dataRes.sucursales ?? [],
         supervisores: dataRes.supervisores ?? [],
         establecimientos: dataRes.establecimientos ?? [],
+        tipoActual: dataRes.tipoActual || 'ADELANTO',
         resumen: dataRes.resumen
     } : fallbackData
 
