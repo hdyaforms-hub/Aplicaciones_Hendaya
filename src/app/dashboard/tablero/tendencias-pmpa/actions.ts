@@ -281,18 +281,18 @@ export async function fetchTendenciasPmpaData(filters?: TendenciasFilterParams):
     const programasRaw = await prisma.raciones.groupBy({
         by: ['programa'],
         where: rbdOptionsConstraint,
-        _count: { id: true },
-        orderBy: { _count: { id: 'desc' } }
+        _count: { id: true }
     })
+    programasRaw.sort((a, b) => (b._count.id || 0) - (a._count.id || 0))
     const availableProgramas = programasRaw.map(p => p.programa).filter(Boolean)
 
     // Servicios disponibles
     const serviciosRaw = await prisma.raciones.groupBy({
         by: ['servicio'],
         where: rbdOptionsConstraint,
-        _count: { id: true },
-        orderBy: { _count: { id: 'desc' } }
+        _count: { id: true }
     })
+    serviciosRaw.sort((a, b) => (b._count.id || 0) - (a._count.id || 0))
     const availableServicios = serviciosRaw.map(s => s.servicio).filter(Boolean)
 
     // Sucursales disponibles
@@ -350,18 +350,17 @@ export async function fetchTendenciasPmpaData(filters?: TendenciasFilterParams):
         by: ['programa'],
         where: baseWhere,
         _sum: { cantidad: true },
-        _count: { id: true },
-        orderBy: { _sum: { cantidad: 'desc' } }
+        _count: { id: true }
     })
+    datosProgramas.sort((a, b) => (b._sum.cantidad || 0) - (a._sum.cantidad || 0))
 
     // 4. Consulta de datos agrupados por RBD (ranking)
     const datosRbd = await prisma.raciones.groupBy({
         by: ['rbd', 'ut'],
         where: baseWhere,
-        _sum: { cantidad: true },
-        orderBy: { _sum: { cantidad: 'desc' } },
-        take: 50
+        _sum: { cantidad: true }
     })
+    datosRbd.sort((a, b) => (b._sum.cantidad || 0) - (a._sum.cantidad || 0))
 
     // Conteo global de registros y raciones
     let grandTotalRaciones = 0
