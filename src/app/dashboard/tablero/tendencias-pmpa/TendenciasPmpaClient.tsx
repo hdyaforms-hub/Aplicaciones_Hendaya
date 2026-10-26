@@ -4,9 +4,18 @@ import React, { useState, useTransition, useMemo } from 'react'
 import {
     TendenciasDashboardData,
     TendenciasFilterParams,
-    fetchTendenciasPmpaData,
-    SERVICIOS_COLORES
+    fetchTendenciasPmpaData
 } from './actions'
+
+const SERVICIOS_COLORES: Record<string, string> = {
+    'DESAYUNO': '#F59E0B',   // Ámbar cálido / Sol
+    'ALMUERZO': '#10B981',   // Esmeralda / Nutrición
+    'ONCE': '#0EA5E9',       // Sky / Cyan Hendaya
+    'COLACIÓN': '#8B5CF6',   // Violeta
+    'COLACION': '#8B5CF6',   // Violeta
+    'CENA': '#6366F1',       // Índigo
+    'OTROS': '#94A3B8'       // Slate neutro
+}
 
 type Props = {
     initialData: TendenciasDashboardData

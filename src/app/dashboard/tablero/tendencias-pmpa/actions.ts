@@ -24,7 +24,7 @@ const MESES_ABR = [
     'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'
 ]
 
-export const SERVICIOS_COLORES: Record<string, string> = {
+const SERVICIOS_COLORES: Record<string, string> = {
     'DESAYUNO': '#F59E0B',   // Ámbar cálido / Sol
     'ALMUERZO': '#10B981',   // Esmeralda / Nutrición
     'ONCE': '#0EA5E9',       // Sky / Cyan Hendaya
