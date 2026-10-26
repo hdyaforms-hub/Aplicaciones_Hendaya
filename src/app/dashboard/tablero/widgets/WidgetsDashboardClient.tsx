@@ -137,11 +137,18 @@ const SYSTEM_PRESETS = [
         slots: ['formularios-dinamicos', 'actas-junaeb-generadas', 'anonimizador-planillas', 'auditoria-actividad']
     },
     {
+        id: 'sys-calculadora-auditoria',
+        name: '🧮 Vista Calculadora y Auditorías',
+        description: 'Raciones por período, Minutas nutricionales, Sesiones de usuarios y Consumo Real vs Asignado.',
+        layoutType: 'grid-2x2' as LayoutSkeletonType,
+        slots: ['calculadora-raciones', 'calculadora-minutas', 'auditoria-sesiones-usuarios', 'auditoria-consumo-real']
+    },
+    {
         id: 'sys-nuevos-modulos',
         name: '🚀 Vista Lo Último Fabricado',
-        description: 'Ausentismo RRHH, Horas Extras, Dotación, Formularios Dinámicos, Actas JUNAEB y Despacho.',
+        description: 'Calculadora de Raciones, Minutas Nutricionales, Sesiones de Usuarios, Consumo Real vs Asignado, Ausentismo y Despacho.',
         layoutType: 'grid-3x2' as LayoutSkeletonType,
-        slots: ['asistencia-personal', 'horas-extras-personal', 'dotacion-personal', 'formularios-dinamicos', 'actas-junaeb-generadas', 'logistica-despacho']
+        slots: ['calculadora-raciones', 'calculadora-minutas', 'auditoria-sesiones-usuarios', 'auditoria-consumo-real', 'asistencia-personal', 'logistica-despacho']
     }
 ]
 

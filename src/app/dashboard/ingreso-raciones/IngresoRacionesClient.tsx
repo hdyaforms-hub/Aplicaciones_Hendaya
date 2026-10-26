@@ -53,6 +53,8 @@ export default function IngresoRacionesClient() {
     const [ultimaFecha, setUltimaFecha] = useState<string | null>(null)
 
     const [isSaving, setIsSaving] = useState(false)
+    const [isSavedSuccessfully, setIsSavedSuccessfully] = useState(false)
+    const isSavingRef = useRef(false)
     const [saveMessage, setSaveMessage] = useState({ type: '', text: '' })
 
     // Search States
@@ -63,7 +65,13 @@ export default function IngresoRacionesClient() {
     const searchRef = useRef<HTMLDivElement>(null)
 
     // Calculations
-    const totalIng = (Number(desayunoIng) || 0) + (Number(almuerzoIng) || 0) + (Number(onceIng) || 0) + (Number(colacionIng) || 0) + (Number(cenaIng) || 0) + (Number(tercerServicioIng) || 0)
+    const totalIng = 
+        (asignados.desayunoAsig > 0 ? (Number(desayunoIng) || 0) : 0) +
+        (asignados.almuerzoAsig > 0 ? (Number(almuerzoIng) || 0) : 0) +
+        (asignados.onceAsig > 0 ? (Number(onceIng) || 0) : 0) +
+        (asignados.colacionAsig > 0 ? (Number(colacionIng) || 0) : 0) +
+        (asignados.cenaAsig > 0 ? (Number(cenaIng) || 0) : 0) +
+        (asignados.tercerServicioAsig > 0 ? (Number(tercerServicioIng) || 0) : 0)
     const totalAsig = asignados.desayunoAsig + asignados.almuerzoAsig + asignados.onceAsig + asignados.colacionAsig + asignados.cenaAsig + asignados.tercerServicioAsig
     const tasaPreparacion = totalAsig > 0 ? (totalIng / totalAsig) : 0
 
@@ -136,6 +144,7 @@ export default function IngresoRacionesClient() {
         setSelectedEstrato('')
         setAsignacionesError('')
         setSaveMessage({ type: '', text: '' })
+        setIsSavedSuccessfully(false)
     }
 
     // Handler al cambiar fecha
@@ -143,6 +152,7 @@ export default function IngresoRacionesClient() {
         const dateStr = e.target.value
         setFechaTrabajo(dateStr)
         setSaveMessage({ type: '', text: '' })
+        setIsSavedSuccessfully(false)
 
         if (!dateStr || !selectedColegio) return
 
@@ -187,6 +197,7 @@ export default function IngresoRacionesClient() {
             setFilteredEstratos([])
             setSelectedEstrato('')
         }
+        setIsSavedSuccessfully(false)
     }, [selectedPrograma, validPairs])
 
     // Effect to fetch Asignados once Dropdowns are selected
@@ -194,6 +205,7 @@ export default function IngresoRacionesClient() {
         const fetchAsignados = async () => {
             if (selectedPrograma && selectedEstrato && selectedColegio && fechaTraba) {
                 setAsignadosLoading(true)
+                setIsSavedSuccessfully(false)
                 const [year, month] = fechaTraba.split('-').map(Number)
 
                 const res = await getPmpaAssignmentsAndLastRecord(selectedColegio.colRBD, year, month, selectedPrograma, selectedEstrato, fechaTraba)
@@ -214,12 +226,12 @@ export default function IngresoRacionesClient() {
                     setUltimaFecha(res.ultimaFecha)
                     
                     if (res.currentRecord) {
-                        setDesayunoIng(res.currentRecord.desayunoIng)
-                        setAlmuerzoIng(res.currentRecord.almuerzoIng)
-                        setOnceIng(res.currentRecord.onceIng)
-                        setColacionIng(res.currentRecord.colacionIng)
-                        setCenaIng(res.currentRecord.cenaIng)
-                        setTercerServicioIng(res.currentRecord.tercerServicioIng)
+                        setDesayunoIng(res.asignados.desayunoAsig > 0 ? res.currentRecord.desayunoIng : '')
+                        setAlmuerzoIng(res.asignados.almuerzoAsig > 0 ? res.currentRecord.almuerzoIng : '')
+                        setOnceIng(res.asignados.onceAsig > 0 ? res.currentRecord.onceIng : '')
+                        setColacionIng(res.asignados.colacionAsig > 0 ? res.currentRecord.colacionIng : '')
+                        setCenaIng(res.asignados.cenaAsig > 0 ? res.currentRecord.cenaIng : '')
+                        setTercerServicioIng(res.asignados.tercerServicioAsig > 0 ? res.currentRecord.tercerServicioIng : '')
                         setObservacion(res.currentRecord.observacion)
                     } else {
                         setDesayunoIng('')
@@ -242,61 +254,140 @@ export default function IngresoRacionesClient() {
 
     const handleSave = async () => {
         if (!selectedColegio || !fechaTraba || !selectedPrograma || !selectedEstrato) return
+        if (isSavingRef.current || isSaving || isSavedSuccessfully) return
 
+        isSavingRef.current = true
         setIsSaving(true)
         setSaveMessage({ type: '', text: '' })
 
-        const [year, month] = fechaTraba.split('-').map(Number)
+        try {
+            const [year, month] = fechaTraba.split('-').map(Number)
 
-        const payload = {
-            ubicacion: location ? `${location.lat},${location.lng}` : 'Sin ubicación',
-            fechaIngreso: fechaTraba,
-            rbd: selectedColegio.colRBD,
-            nombreEstablecimiento: selectedColegio.nombreEstablecimiento,
-            ano: year,
-            mes: month,
-            programa: selectedPrograma,
-            estrato: selectedEstrato,
-            desayunoIng: Number(desayunoIng) || 0,
-            almuerzoIng: Number(almuerzoIng) || 0,
-            onceIng: Number(onceIng) || 0,
-            colacionIng: Number(colacionIng) || 0,
-            cenaIng: Number(cenaIng) || 0,
-            tercerServicioIng: Number(tercerServicioIng) || 0,
-            totalIng,
-            desayunoAsig: asignados.desayunoAsig,
-            almuerzoAsig: asignados.almuerzoAsig,
-            onceAsig: asignados.onceAsig,
-            colacionAsig: asignados.colacionAsig,
-            cenaAsig: asignados.cenaAsig,
-            tercerServicioAsig: asignados.tercerServicioAsig,
-            totalAsig,
-            tasaPreparacion: Number(tasaPreparacion.toFixed(4)),
-            observacion: observacion || ''
-        }
-
-        let res = await saveIngRacion(payload, false)
-
-        if (res.error === 'EXISTENTE') {
-            const confirmUpdate = window.confirm("Ya existe un registro para esta fecha y configuración. ¿Deseas actualizar la información con los nuevos valores?")
-            if (confirmUpdate) {
-                res = await saveIngRacion(payload, true)
-            } else {
-                setIsSaving(false)
-                return
+            const payload = {
+                ubicacion: location ? `${location.lat},${location.lng}` : 'Sin ubicación',
+                fechaIngreso: fechaTraba,
+                rbd: selectedColegio.colRBD,
+                nombreEstablecimiento: selectedColegio.nombreEstablecimiento,
+                ano: year,
+                mes: month,
+                programa: selectedPrograma,
+                estrato: selectedEstrato,
+                desayunoIng: asignados.desayunoAsig > 0 ? (Number(desayunoIng) || 0) : 0,
+                almuerzoIng: asignados.almuerzoAsig > 0 ? (Number(almuerzoIng) || 0) : 0,
+                onceIng: asignados.onceAsig > 0 ? (Number(onceIng) || 0) : 0,
+                colacionIng: asignados.colacionAsig > 0 ? (Number(colacionIng) || 0) : 0,
+                cenaIng: asignados.cenaAsig > 0 ? (Number(cenaIng) || 0) : 0,
+                tercerServicioIng: asignados.tercerServicioAsig > 0 ? (Number(tercerServicioIng) || 0) : 0,
+                totalIng,
+                desayunoAsig: asignados.desayunoAsig,
+                almuerzoAsig: asignados.almuerzoAsig,
+                onceAsig: asignados.onceAsig,
+                colacionAsig: asignados.colacionAsig,
+                cenaAsig: asignados.cenaAsig,
+                tercerServicioAsig: asignados.tercerServicioAsig,
+                totalAsig,
+                tasaPreparacion: Number(tasaPreparacion.toFixed(4)),
+                observacion: observacion || ''
             }
-        }
 
-        if (res.error) {
-            setSaveMessage({ type: 'error', text: res.error })
-        } else {
-            setSaveMessage({ type: 'success', text: 'Registro guardado exitosamente.' })
-            // No reseteamos los campos si el usuario desea seguir viendo lo que guardó
-            setUltimaFecha(new Date().toISOString())
-        }
+            let res = await saveIngRacion(payload, false)
 
-        setIsSaving(false)
+            if (res.error === 'EXISTENTE') {
+                const confirmUpdate = window.confirm("Ya existe un registro para esta fecha y configuración. ¿Deseas actualizar la información con los nuevos valores?")
+                if (confirmUpdate) {
+                    res = await saveIngRacion(payload, true)
+                } else {
+                    setIsSaving(false)
+                    isSavingRef.current = false
+                    return
+                }
+            }
+
+            if (res.error) {
+                setSaveMessage({ type: 'error', text: res.error })
+                setIsSavedSuccessfully(false)
+            } else {
+                setSaveMessage({ type: 'success', text: 'Registro guardado exitosamente.' })
+                setIsSavedSuccessfully(true)
+                setUltimaFecha(new Date().toISOString())
+            }
+        } catch (e: any) {
+            setSaveMessage({ type: 'error', text: e?.message || 'Error inesperado al guardar el registro' })
+            setIsSavedSuccessfully(false)
+        } finally {
+            setIsSaving(false)
+            isSavingRef.current = false
+        }
     }
+
+    const services = [
+        {
+            id: 'desayuno',
+            nombre: 'Desayuno',
+            icono: '☕',
+            asig: asignados.desayunoAsig,
+            value: desayunoIng,
+            onChange: (val: number | '') => {
+                setDesayunoIng(val)
+                setIsSavedSuccessfully(false)
+            }
+        },
+        {
+            id: 'almuerzo',
+            nombre: 'Almuerzo',
+            icono: '🍲',
+            asig: asignados.almuerzoAsig,
+            value: almuerzoIng,
+            onChange: (val: number | '') => {
+                setAlmuerzoIng(val)
+                setIsSavedSuccessfully(false)
+            }
+        },
+        {
+            id: 'once',
+            nombre: 'Once',
+            icono: '🥪',
+            asig: asignados.onceAsig,
+            value: onceIng,
+            onChange: (val: number | '') => {
+                setOnceIng(val)
+                setIsSavedSuccessfully(false)
+            }
+        },
+        {
+            id: 'colacion',
+            nombre: 'Colación',
+            icono: '🍎',
+            asig: asignados.colacionAsig,
+            value: colacionIng,
+            onChange: (val: number | '') => {
+                setColacionIng(val)
+                setIsSavedSuccessfully(false)
+            }
+        },
+        {
+            id: 'cena',
+            nombre: 'Cena',
+            icono: '🌙',
+            asig: asignados.cenaAsig,
+            value: cenaIng,
+            onChange: (val: number | '') => {
+                setCenaIng(val)
+                setIsSavedSuccessfully(false)
+            }
+        },
+        {
+            id: 'tercerServicio',
+            nombre: 'Tercer Servicio',
+            icono: '🏷️',
+            asig: asignados.tercerServicioAsig,
+            value: tercerServicioIng,
+            onChange: (val: number | '') => {
+                setTercerServicioIng(val)
+                setIsSavedSuccessfully(false)
+            }
+        },
+    ]
 
     return (
         <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col gap-6 w-full max-w-4xl mx-auto">
@@ -499,71 +590,98 @@ export default function IngresoRacionesClient() {
             {/* Formulario Ingreso Raciones (Solo visible si todo fue seleccionado) */}
             {selectedPrograma && selectedEstrato && pmpaStatus === 'success' && !asignadosLoading && (
                 <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden animate-in fade-in slide-in-from-bottom-4">
-                    <div className="bg-slate-800 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-                        <h3 className="text-white font-bold tracking-wider">3. Ingreso de Raciones</h3>
-                        <span className="text-cyan-400 text-sm font-medium">Llene los valores consumidos</span>
+                    <div className="bg-slate-800 px-6 py-4 border-b border-gray-200 flex flex-col sm:flex-row justify-between sm:items-center gap-2">
+                        <div>
+                            <h3 className="text-white font-bold tracking-wider">3. Ingreso de Raciones</h3>
+                            <p className="text-xs text-slate-300 mt-0.5">Ingresa el consumo real en los servicios con asignación</p>
+                        </div>
+                        <span className="text-cyan-400 text-xs font-semibold bg-slate-900/60 px-3 py-1.5 rounded-xl border border-slate-700 shrink-0">
+                            Llene los valores consumidos
+                        </span>
+                    </div>
+
+                    {/* Banner Informativo */}
+                    <div className="px-6 pt-4 pb-1">
+                        <div className="p-3 bg-cyan-50/80 border border-cyan-200 rounded-xl text-xs text-cyan-900 flex items-center gap-2.5 shadow-xs">
+                            <span className="text-base shrink-0">💡</span>
+                            <span>
+                                <strong>Indicación:</strong> Las filas con raciones asignadas están <strong>destacadas en color</strong> para su ingreso. Las filas con asignación en <strong>0</strong> se encuentran desactivadas automáticamente.
+                            </span>
+                        </div>
                     </div>
 
                     <div className="p-6 overflow-x-auto">
                         <table className="w-full text-left text-sm mb-6 relative">
-                            <thead className="text-gray-900 border-b border-gray-200 bg-gray-50/50">
+                            <thead className="text-gray-900 border-b border-gray-200 bg-gray-50/80 text-xs font-bold uppercase tracking-wider text-gray-600">
                                 <tr>
-                                    <th className="px-4 py-3 font-semibold w-1/3">Servicio</th>
-                                    <th className="px-4 py-3 font-semibold text-center w-1/3">Ingresado (Consumo Real)</th>
-                                    <th className="px-4 py-3 font-semibold text-center border-l border-gray-200 w-1/3 text-gray-400">Asignado (PMPA)</th>
+                                    <th className="px-4 py-3 w-1/3">Servicio</th>
+                                    <th className="px-4 py-3 text-center w-1/3">Ingresado (Consumo Real)</th>
+                                    <th className="px-4 py-3 text-center border-l border-gray-200 w-1/3">Asignado (PMPA)</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-gray-100 font-medium text-gray-800">
-                                <tr>
-                                    <td className="px-4 py-4 flex items-center gap-2"><span>☕</span> Desayuno</td>
-                                    <td className="px-4 py-2">
-                                        <input type="number" value={desayunoIng} onChange={e => setDesayunoIng(e.target.value === '' ? '' : parseInt(e.target.value))} className="w-full text-center px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:outline-none" min="0" />
-                                    </td>
-                                    <td className="px-4 py-2 border-l border-gray-200 text-center text-gray-500 bg-gray-50/50">{asignados.desayunoAsig}</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-4 py-4 flex items-center gap-2"><span>🍲</span> Almuerzo</td>
-                                    <td className="px-4 py-2">
-                                        <input type="number" value={almuerzoIng} onChange={e => setAlmuerzoIng(e.target.value === '' ? '' : parseInt(e.target.value))} className="w-full text-center px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:outline-none" min="0" />
-                                    </td>
-                                    <td className="px-4 py-2 border-l border-gray-200 text-center text-gray-500 bg-gray-50/50">{asignados.almuerzoAsig}</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-4 py-4 flex items-center gap-2"><span>🥪</span> Once</td>
-                                    <td className="px-4 py-2">
-                                        <input type="number" value={onceIng} onChange={e => setOnceIng(e.target.value === '' ? '' : parseInt(e.target.value))} className="w-full text-center px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:outline-none" min="0" />
-                                    </td>
-                                    <td className="px-4 py-2 border-l border-gray-200 text-center text-gray-500 bg-gray-50/50">{asignados.onceAsig}</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-4 py-4 flex items-center gap-2"><span>🍎</span> Colación</td>
-                                    <td className="px-4 py-2">
-                                        <input type="number" value={colacionIng} onChange={e => setColacionIng(e.target.value === '' ? '' : parseInt(e.target.value))} className="w-full text-center px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:outline-none" min="0" />
-                                    </td>
-                                    <td className="px-4 py-2 border-l border-gray-200 text-center text-gray-500 bg-gray-50/50">{asignados.colacionAsig}</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-4 py-4 flex items-center gap-2"><span>🌙</span> Cena</td>
-                                    <td className="px-4 py-2">
-                                        <input type="number" value={cenaIng} onChange={e => setCenaIng(e.target.value === '' ? '' : parseInt(e.target.value))} className="w-full text-center px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:outline-none" min="0" />
-                                    </td>
-                                    <td className="px-4 py-2 border-l border-gray-200 text-center text-gray-500 bg-gray-50/50">{asignados.cenaAsig}</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-4 py-4 flex items-center gap-2"><span>🏷️</span> Tercer Servicio</td>
-                                    <td className="px-4 py-2">
-                                        <input type="number" value={tercerServicioIng} onChange={e => setTercerServicioIng(e.target.value === '' ? '' : parseInt(e.target.value))} className="w-full text-center px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:outline-none" min="0" />
-                                    </td>
-                                    <td className="px-4 py-2 border-l border-gray-200 text-center text-gray-500 bg-gray-50/50">{asignados.tercerServicioAsig}</td>
-                                </tr>
+                            <tbody className="divide-y divide-gray-100 font-medium">
+                                {services.map((s) => {
+                                    const hasAsignacion = s.asig > 0
+                                    return (
+                                        <tr
+                                            key={s.id}
+                                            className={`transition-all border-b border-gray-100 ${
+                                                hasAsignacion
+                                                    ? 'bg-cyan-50/50 hover:bg-cyan-50/80 border-l-4 border-l-cyan-600 font-semibold'
+                                                    : 'bg-gray-50/40 opacity-40 border-l-4 border-l-transparent text-gray-400'
+                                            }`}
+                                        >
+                                            <td className="px-4 py-3.5">
+                                                <div className="flex items-center justify-between gap-2">
+                                                    <div className="flex items-center gap-2.5">
+                                                        <span className="text-lg">{s.icono}</span>
+                                                        <span className={hasAsignacion ? 'font-bold text-gray-900 text-sm' : 'text-gray-400 text-sm'}>
+                                                            {s.nombre}
+                                                        </span>
+                                                    </div>
+                                                    {hasAsignacion ? (
+                                                        <span className="px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-cyan-100 text-cyan-800 border border-cyan-300 shadow-xs flex items-center gap-1">
+                                                            <span>✏️</span> Llenar
+                                                        </span>
+                                                    ) : (
+                                                        <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-gray-100 text-gray-400">
+                                                            Sin Asignación (0)
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </td>
+                                            <td className="px-4 py-2.5">
+                                                <input
+                                                    type="number"
+                                                    disabled={!hasAsignacion}
+                                                    tabIndex={hasAsignacion ? 0 : -1}
+                                                    value={hasAsignacion ? s.value : ''}
+                                                    onChange={(e) => s.onChange(e.target.value === '' ? '' : parseInt(e.target.value))}
+                                                    placeholder={hasAsignacion ? '0' : 'Desactivado (0)'}
+                                                    className={`w-full text-center px-3 py-2 rounded-xl text-base transition-all ${
+                                                        hasAsignacion
+                                                            ? 'border-2 border-cyan-400 focus:border-cyan-600 focus:ring-4 focus:ring-cyan-200/60 bg-white font-black text-gray-900 shadow-sm'
+                                                            : 'border border-gray-200 bg-gray-100/90 text-gray-400 cursor-not-allowed select-none placeholder:text-gray-400 text-xs'
+                                                    }`}
+                                                    min="0"
+                                                />
+                                            </td>
+                                            <td className={`px-4 py-2.5 border-l border-gray-200 text-center ${
+                                                hasAsignacion ? 'bg-cyan-100/60 font-black text-cyan-950 text-base' : 'bg-gray-100/30 text-gray-400 text-sm'
+                                            }`}>
+                                                {s.asig}
+                                            </td>
+                                        </tr>
+                                    )
+                                })}
 
-                                {/* Resultados y Resumenes */}
-                                <tr className="bg-slate-50 border-t-2 border-gray-200">
+                                {/* Resultados y Resúmenes */}
+                                <tr className="bg-slate-50 border-t-2 border-gray-300">
                                     <td className="px-4 py-4 font-black text-gray-900 border-r border-gray-200">TOTALES</td>
-                                    <td className="px-4 py-4 text-center font-black text-cyan-700 text-lg border-r border-gray-200">
+                                    <td className="px-4 py-4 text-center font-black text-cyan-700 text-xl border-r border-gray-200">
                                         {totalIng}
                                     </td>
-                                    <td className="px-4 py-4 text-center font-bold text-gray-600 border-r border-gray-200">
+                                    <td className="px-4 py-4 text-center font-black text-gray-700 text-xl border-r border-gray-200">
                                         {totalAsig}
                                     </td>
                                 </tr>
@@ -585,7 +703,10 @@ export default function IngresoRacionesClient() {
                                     className="w-full flex-1 px-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 text-gray-900 text-sm resize-none"
                                     placeholder="Ingrese hasta 500 caracteres detallando notas adicionales sobre la auditoría..."
                                     value={observacion}
-                                    onChange={e => setObservacion(e.target.value)}
+                                    onChange={e => {
+                                        setObservacion(e.target.value)
+                                        setIsSavedSuccessfully(false)
+                                    }}
                                     maxLength={500}
                                 />
                                 <div className="text-right text-[10px] text-gray-400 mt-1">{observacion.length}/500</div>
@@ -599,14 +720,46 @@ export default function IngresoRacionesClient() {
                             </div>
                         )}
 
-                        <div className="flex justify-end pt-4 border-t border-gray-100">
-                            <button
-                                onClick={handleSave}
-                                disabled={isSaving}
-                                className="px-8 py-3.5 bg-gradient-to-r from-cyan-600 to-sky-600 hover:from-cyan-700 hover:to-sky-700 text-white rounded-xl shadow-md font-bold uppercase tracking-wider text-sm transition-all disabled:opacity-50 flex items-center gap-2"
-                            >
-                                {isSaving ? 'Guardando...' : '💾 Confirmar y Guardar Reporte'}
-                            </button>
+                        <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 pt-4 border-t border-gray-100">
+                            <div>
+                                {isSavedSuccessfully && (
+                                    <div className="text-xs text-emerald-800 font-semibold flex items-center gap-2 bg-emerald-50 border border-emerald-200 px-3.5 py-2.5 rounded-xl shadow-xs animate-in fade-in">
+                                        <span className="text-base shrink-0">🔒</span>
+                                        <span>Reporte guardado con éxito. El botón se encuentra bloqueado para evitar ingresos duplicados. Si modificas alguna ración u observación, se habilitará automáticamente.</span>
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="flex items-center gap-3 shrink-0 self-end sm:self-center">
+                                <button
+                                    onClick={handleSave}
+                                    disabled={isSaving || isSavedSuccessfully}
+                                    className={`px-8 py-3.5 rounded-xl font-bold uppercase tracking-wider text-sm transition-all flex items-center gap-2 shadow-md ${
+                                        isSavedSuccessfully
+                                            ? 'bg-emerald-600 text-white cursor-not-allowed opacity-90 shadow-emerald-600/20'
+                                            : isSaving
+                                            ? 'bg-cyan-700 text-white opacity-75 cursor-wait'
+                                            : 'bg-gradient-to-r from-cyan-600 to-sky-600 hover:from-cyan-700 hover:to-sky-700 text-white shadow-cyan-600/30 active:scale-95'
+                                    }`}
+                                >
+                                    {isSaving ? (
+                                        <>
+                                            <span className="animate-spin text-lg">⏳</span>
+                                            <span>Guardando...</span>
+                                        </>
+                                    ) : isSavedSuccessfully ? (
+                                        <>
+                                            <span className="text-lg">✅</span>
+                                            <span>Reporte Guardado</span>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <span>💾</span>
+                                            <span>Confirmar y Guardar Reporte</span>
+                                        </>
+                                    )}
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

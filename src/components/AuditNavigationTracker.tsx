@@ -176,5 +176,28 @@ export default function AuditNavigationTracker() {
         }).catch(err => console.error('Error enviando auditoría de navegación:', err))
     }, [pathname])
 
+    // Heartbeat periódico (cada 3 minutos) mientras la pestaña permanezca activa y visible
+    useEffect(() => {
+        const heartbeatInterval = setInterval(() => {
+            if (typeof document !== 'undefined' && document.visibilityState !== 'visible') return
+            if (!pathname) return
+            const moduleInfo = getModuleInfoFromPath(pathname)
+            if (!moduleInfo) return
+
+            fetch('/api/audit/log', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'SESION_ACTIVA',
+                    modulo: moduleInfo.modulo,
+                    detalle: `Permanencia activa en ${moduleInfo.modulo}`,
+                }),
+                keepalive: true,
+            }).catch(() => {})
+        }, 3 * 60 * 1000)
+
+        return () => clearInterval(heartbeatInterval)
+    }, [pathname])
+
     return null
 }

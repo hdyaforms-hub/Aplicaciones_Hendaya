@@ -64,11 +64,12 @@ export async function logout() {
 }
 
 export async function getSession() {
-    const cookieStore = await cookies()
-    const session = cookieStore.get('session')?.value
-    if (!session) return null
-    const parsed = await decrypt(session)
-    if (!parsed || !parsed.user) return null
+    try {
+        const cookieStore = await cookies()
+        const session = cookieStore.get('session')?.value
+        if (!session) return null
+        const parsed = await decrypt(session)
+        if (!parsed || !parsed.user) return null
 
     if (parsed.user.role) {
         const isAdmin = parsed.user.role.name === 'Administrador' || parsed.user.role.name === 'admin'
@@ -267,6 +268,9 @@ export async function getSession() {
     }
 
     return parsed
+    } catch {
+        return null
+    }
 }
 
 export async function updateSession(request: NextRequest) {

@@ -1359,6 +1359,335 @@ export function WidgetAnonimizador({ data }: { data: any }) {
     )
 }
 
+// 32. Widget Calculadora de Raciones
+export function WidgetCalculadoraRaciones({ data }: { data: any }) {
+    const calc = data?.calculadoraRaciones || { totalRegistros: 0, totalCantidad: 0, periodos: [], serviciosTop: [] }
+    const totalReg = (calc.totalRegistros || 0).toLocaleString('es-CL')
+    const totalCant = (calc.totalCantidad || 0).toLocaleString('es-CL')
+
+    return (
+        <div className="h-full flex flex-col justify-between">
+            <div>
+                {/* Cabecera */}
+                <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2.5">
+                        <span className="p-2 rounded-xl bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 text-lg">🍽️</span>
+                        <div>
+                            <div className="text-xl font-bold text-white">{totalReg} <span className="text-xs text-slate-400 font-normal">raciones</span></div>
+                            <div className="text-[11px] text-slate-400">Total calculado: {totalCant} u.</div>
+                        </div>
+                    </div>
+                    <span className="px-2.5 py-1 text-xs font-semibold rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                        {calc.periodos?.length || 0} Períodos
+                    </span>
+                </div>
+
+                {/* Períodos cargados */}
+                <div className="mb-3">
+                    <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5 flex items-center justify-between">
+                        <span>Períodos Activos</span>
+                        <span className="text-cyan-400 font-normal text-[10px]">Año / Mes</span>
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                        {calc.periodos && calc.periodos.length > 0 ? (
+                            calc.periodos.map((p: any, i: number) => (
+                                <span key={i} className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-slate-800 border border-slate-700 text-xs font-medium text-slate-200">
+                                    <span className="text-cyan-400">🗓️</span>
+                                    <span>{p.mesNombre} {p.anio}</span>
+                                    <span className="text-[10px] bg-slate-900 px-1 rounded text-cyan-300 font-mono font-bold">
+                                        {(p.count || 0).toLocaleString('es-CL')}
+                                    </span>
+                                </span>
+                            ))
+                        ) : (
+                            <span className="text-xs text-slate-500 italic">Sin períodos registrados</span>
+                        )}
+                    </div>
+                </div>
+
+                {/* Desglose por servicio */}
+                <div className="space-y-1.5 my-2">
+                    <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">
+                        Distribución por Servicio
+                    </div>
+                    {calc.serviciosTop?.map((s: any, idx: number) => (
+                        <div key={idx} className="space-y-0.5">
+                            <div className="flex justify-between text-xs">
+                                <span className="text-slate-300 font-medium truncate">{s.servicio}</span>
+                                <span className="text-slate-400 font-mono text-[11px]">
+                                    {(s.cantidad || 0).toLocaleString('es-CL')} u. <span className="text-cyan-400 font-bold">({s.porcentaje}%)</span>
+                                </span>
+                            </div>
+                            <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden border border-slate-700/60">
+                                <div
+                                    className="h-full rounded-full transition-all duration-300"
+                                    style={{ width: `${Math.min(s.porcentaje, 100)}%`, backgroundColor: s.color || '#06B6D4' }}
+                                />
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Pie con enlace directo */}
+            <div className="text-[11px] text-slate-400 pt-2 border-t border-slate-800 flex justify-between items-center">
+                <span>Mantenedor de Raciones</span>
+                <a
+                    href="/dashboard/calculadora/raciones"
+                    className="text-cyan-400 hover:text-cyan-300 font-bold hover:underline inline-flex items-center gap-1 transition-colors"
+                >
+                    <span>Ir a Calculadora</span>
+                    <span>→</span>
+                </a>
+            </div>
+        </div>
+    )
+}
+
+// 33. Widget Calculadora de Minutas
+export function WidgetCalculadoraMinutas({ data }: { data: any }) {
+    const min = data?.calculadoraMinutas || { totalRegistros: 0, periodos: [], servicios: [] }
+    const totalReg = (min.totalRegistros || 0).toLocaleString('es-CL')
+
+    return (
+        <div className="h-full flex flex-col justify-between">
+            <div>
+                {/* Cabecera */}
+                <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2.5">
+                        <span className="p-2 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-lg">📋</span>
+                        <div>
+                            <div className="text-xl font-bold text-white">{totalReg} <span className="text-xs text-slate-400 font-normal">minutas</span></div>
+                            <div className="text-[11px] text-slate-400">Catálogo nutricional oficial</div>
+                        </div>
+                    </div>
+                    <span className="px-2.5 py-1 text-xs font-semibold rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                        {min.periodos?.length || 0} Períodos
+                    </span>
+                </div>
+
+                {/* Períodos cargados */}
+                <div className="mb-3">
+                    <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5 flex items-center justify-between">
+                        <span>Períodos Activos</span>
+                        <span className="text-emerald-400 font-normal text-[10px]">Año / Mes</span>
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                        {min.periodos && min.periodos.length > 0 ? (
+                            min.periodos.map((p: any, i: number) => (
+                                <span key={i} className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-slate-800 border border-slate-700 text-xs font-medium text-slate-200">
+                                    <span className="text-emerald-400">🗓️</span>
+                                    <span>{p.mesNombre} {p.anio}</span>
+                                    <span className="text-[10px] bg-slate-900 px-1 rounded text-emerald-300 font-mono font-bold">
+                                        {(p.count || 0).toLocaleString('es-CL')}
+                                    </span>
+                                </span>
+                            ))
+                        ) : (
+                            <span className="text-xs text-slate-500 italic">Sin períodos registrados</span>
+                        )}
+                    </div>
+                </div>
+
+                {/* Desglose por servicio de minuta */}
+                <div className="space-y-1.5 my-2">
+                    <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">
+                        Minutas por Tipo de Servicio
+                    </div>
+                    {min.servicios?.slice(0, 4).map((s: any, idx: number) => (
+                        <div key={idx} className="space-y-0.5">
+                            <div className="flex justify-between text-xs">
+                                <span className="text-slate-300 font-medium truncate">{s.nombre}</span>
+                                <span className="text-slate-400 font-mono text-[11px]">
+                                    {(s.count || 0).toLocaleString('es-CL')} reg. <span className="text-emerald-400 font-bold">({s.porcentaje}%)</span>
+                                </span>
+                            </div>
+                            <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden border border-slate-700/60">
+                                <div
+                                    className="h-full rounded-full transition-all duration-300"
+                                    style={{ width: `${Math.min(s.porcentaje, 100)}%`, backgroundColor: s.color || '#10B981' }}
+                                />
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Pie con enlace directo */}
+            <div className="text-[11px] text-slate-400 pt-2 border-t border-slate-800 flex justify-between items-center">
+                <span>Cálculo Masivo & Lotes</span>
+                <a
+                    href="/dashboard/calculadora/minutas"
+                    className="text-emerald-400 hover:text-emerald-300 font-bold hover:underline inline-flex items-center gap-1 transition-colors"
+                >
+                    <span>Ir a Minutas</span>
+                    <span>→</span>
+                </a>
+            </div>
+        </div>
+    )
+}
+
+// 34. Widget Sesiones y Actividad de Usuarios (Auditoría)
+export function WidgetAuditoriaSesiones({ data }: { data: any }) {
+    const aud = data?.auditoriaSesiones || {
+        totalConnectionTimeFormatted: '0 hrs',
+        totalSessions: 0,
+        avgSessionFormatted: '0 min',
+        activeUsersNow: 0,
+        topModule: { modulo: 'General', percentage: 0 },
+        mainModules: []
+    }
+
+    return (
+        <div className="h-full flex flex-col justify-between">
+            <div>
+                {/* Cabecera con indicador online en vivo */}
+                <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2">
+                        <span className="p-2 rounded-xl bg-sky-500/20 text-sky-400 border border-sky-500/30 text-lg">⏱️</span>
+                        <div>
+                            <div className="text-xl font-bold text-white">{aud.totalConnectionTimeFormatted}</div>
+                            <div className="text-[11px] text-slate-400">Tiempo total conectado</div>
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-semibold">
+                        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span>{aud.activeUsersNow} online</span>
+                    </div>
+                </div>
+
+                {/* Cerámicas métricas rápidas */}
+                <div className="grid grid-cols-2 gap-2 my-2.5">
+                    <div className="p-2 rounded-xl bg-slate-800/80 border border-slate-700/60">
+                        <div className="text-[11px] text-slate-400">Sesiones Totales</div>
+                        <div className="text-base font-black text-white mt-0.5">{(aud.totalSessions || 0).toLocaleString('es-CL')}</div>
+                    </div>
+                    <div className="p-2 rounded-xl bg-slate-800/80 border border-slate-700/60">
+                        <div className="text-[11px] text-slate-400">Promedio x Sesión</div>
+                        <div className="text-base font-black text-sky-400 mt-0.5">{aud.avgSessionFormatted}</div>
+                    </div>
+                </div>
+
+                {/* Top Módulos más visitados */}
+                <div className="space-y-1.5 my-2">
+                    <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1 flex justify-between">
+                        <span>Módulos más Visitados</span>
+                        <span className="text-sky-400 text-[10px] font-normal">% de Interacción</span>
+                    </div>
+                    {aud.mainModules?.map((m: any, idx: number) => (
+                        <div key={idx} className="space-y-0.5">
+                            <div className="flex justify-between text-xs">
+                                <span className="text-slate-300 font-medium truncate">{m.modulo}</span>
+                                <span className="text-slate-400 font-mono text-[11px]">
+                                    <span className="text-white font-bold">{m.percentage}%</span>
+                                </span>
+                            </div>
+                            <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden border border-slate-700/60">
+                                <div
+                                    className="h-full rounded-full transition-all duration-300"
+                                    style={{ width: `${Math.min(m.percentage, 100)}%`, backgroundColor: m.color || '#0EA5E9' }}
+                                />
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Pie con enlace directo a la pestaña de sesiones de auditoría */}
+            <div className="text-[11px] text-slate-400 pt-2 border-t border-slate-800 flex justify-between items-center">
+                <span>Sesiones y Navegación</span>
+                <a
+                    href="/dashboard/tablero/auditoria"
+                    className="text-sky-400 hover:text-sky-300 font-bold hover:underline inline-flex items-center gap-1 transition-colors"
+                >
+                    <span>Ver Analítica</span>
+                    <span>→</span>
+                </a>
+            </div>
+        </div>
+    )
+}
+
+// 35. Widget Auditoría de Raciones: Consumo Real
+export function WidgetAuditoriaConsumoReal({ data }: { data: any }) {
+    const cr = data?.auditoriaConsumoReal || {
+        totalAsignado: 0,
+        totalIngresado: 0,
+        pctCumplimiento: 0,
+        colegiosConIngreso: 0,
+        totalColegios: 0,
+        servicios: []
+    }
+    const asigFormatted = (cr.totalAsignado || 0).toLocaleString('es-CL')
+    const ingFormatted = (cr.totalIngresado || 0).toLocaleString('es-CL')
+
+    return (
+        <div className="h-full flex flex-col justify-between">
+            <div>
+                {/* Cabecera */}
+                <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2.5">
+                        <span className="p-2 rounded-xl bg-teal-500/20 text-teal-400 border border-teal-500/30 text-lg">🍱</span>
+                        <div>
+                            <div className="text-xl font-bold text-white">{cr.pctCumplimiento}% <span className="text-xs text-slate-400 font-normal">digitado</span></div>
+                            <div className="text-[11px] text-slate-400">Consumo real vs Asignado</div>
+                        </div>
+                    </div>
+                    <span className={`px-2.5 py-1 text-xs font-semibold rounded-full border ${
+                        cr.pctCumplimiento >= 90
+                            ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
+                            : 'bg-amber-500/20 text-amber-300 border-amber-500/30'
+                    }`}>
+                        {cr.colegiosConIngreso} / {cr.totalColegios} Colegios
+                    </span>
+                </div>
+
+                {/* Barra de progreso Asignado vs Ingresado */}
+                <div className="p-3 rounded-xl bg-slate-800/80 border border-slate-700/60 my-2 space-y-2">
+                    <div className="flex justify-between items-center text-xs font-medium">
+                        <span className="text-slate-400">Consumo Real (Ingresado):</span>
+                        <span className="font-bold text-emerald-400 font-mono">{ingFormatted} u.</span>
+                    </div>
+                    <div className="w-full bg-slate-900 h-2.5 rounded-full overflow-hidden border border-slate-700">
+                        <div
+                            className="bg-gradient-to-r from-teal-500 to-emerald-400 h-full rounded-full transition-all duration-500"
+                            style={{ width: `${Math.min(cr.pctCumplimiento, 100)}%` }}
+                        />
+                    </div>
+                    <div className="flex justify-between items-center text-[11px] text-slate-400">
+                        <span>Total Raciones Asignadas:</span>
+                        <span className="font-semibold text-slate-300 font-mono">{asigFormatted} u.</span>
+                    </div>
+                </div>
+
+                {/* Detalle por servicios clave */}
+                <div className="grid grid-cols-3 gap-2 my-2">
+                    {cr.servicios?.slice(0, 3).map((s: any, idx: number) => (
+                        <div key={idx} className="p-2 rounded-xl bg-slate-800/60 border border-slate-700/40 text-center">
+                            <div className="text-[10px] text-slate-400 truncate uppercase font-bold">{s.servicio}</div>
+                            <div className="text-xs font-black text-white mt-1">{(s.ing || 0).toLocaleString('es-CL')}</div>
+                            <div className="text-[10px] text-teal-400 font-mono font-semibold">{s.pct}%</div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Pie con enlace directo a Nueva Auditoría / Raciones */}
+            <div className="text-[11px] text-slate-400 pt-2 border-t border-slate-800 flex justify-between items-center">
+                <span>Nueva Auditoría de Raciones</span>
+                <a
+                    href="/dashboard/ingreso-raciones"
+                    className="text-teal-400 hover:text-teal-300 font-bold hover:underline inline-flex items-center gap-1 transition-colors"
+                >
+                    <span>Ingresar Raciones</span>
+                    <span>→</span>
+                </a>
+            </div>
+        </div>
+    )
+}
+
 // CATÁLOGO MAESTRO DE WIDGETS
 export const AVAILABLE_WIDGETS_CATALOG: WidgetCatalogItem[] = [
     {
@@ -1639,5 +1968,41 @@ export const AVAILABLE_WIDGETS_CATALOG: WidgetCatalogItem[] = [
         icon: '🔍',
         badge: 'Seguridad',
         component: WidgetAuditoriaActividad
+    },
+    {
+        id: 'calculadora-raciones',
+        title: 'Calculadora: Raciones por Período',
+        category: 'Abastecimiento y Logística',
+        description: 'Períodos cargados (año/mes), total de raciones registradas y distribución por tipo de servicio.',
+        icon: '🍽️',
+        badge: 'Nuevo',
+        component: WidgetCalculadoraRaciones
+    },
+    {
+        id: 'calculadora-minutas',
+        title: 'Calculadora: Minutas Nutricionales',
+        category: 'Abastecimiento y Logística',
+        description: 'Registro maestro de minutas, años y meses activos, cocinas y preparaciones alimentarias.',
+        icon: '📋',
+        badge: 'Nuevo',
+        component: WidgetCalculadoraMinutas
+    },
+    {
+        id: 'auditoria-sesiones-usuarios',
+        title: 'Sesiones y Actividad de Usuarios',
+        category: 'Gestión y Auditoría',
+        description: 'Usuarios activos en tiempo real, horas de conexión acumuladas y % de módulos más visitados.',
+        icon: '⏱️',
+        badge: 'En Vivo',
+        component: WidgetAuditoriaSesiones
+    },
+    {
+        id: 'auditoria-consumo-real',
+        title: 'Auditoría: Consumo Real vs Asignado',
+        category: 'Gestión y Auditoría',
+        description: 'Monitoreo de raciones asignadas vs consumo real ingresado en establecimientos y brecha de digitación.',
+        icon: '🍱',
+        badge: 'Nuevo',
+        component: WidgetAuditoriaConsumoReal
     }
 ]

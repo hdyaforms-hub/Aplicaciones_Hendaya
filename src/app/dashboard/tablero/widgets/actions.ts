@@ -7,6 +7,7 @@ import { revalidatePath } from 'next/cache'
 import { ensurePersonalAsistenciaTables } from '@/lib/personal-db-init'
 import { ensurePersonalHextraTables } from '@/lib/personal-hextra-db-init'
 import { ensurePersonalDotacionTables } from '@/lib/personal-dotacion-db-init'
+import { computeAuditSessionAnalytics } from '@/lib/audit-analytics'
 
 export type WidgetLayoutData = {
     id: string
@@ -470,6 +471,36 @@ export async function fetchPlatformWidgetsDataAction(filters?: WidgetsFilterPara
             registrosProtegidos: 0,
             algoritmoSeguro: 'AES-256-CBC + SHA-256',
             cumplimientoNormativo: 100
+        },
+        calculadoraRaciones: {
+            totalRegistros: 0,
+            totalCantidad: 0,
+            periodos: [] as { anio: number; mes: number; mesNombre: string; count: number; cantidad: number; licitacion: string }[],
+            serviciosTop: [] as { servicio: string; cantidad: number; count: number; porcentaje: number; color: string }[],
+            licitaciones: [] as string[]
+        },
+        calculadoraMinutas: {
+            totalRegistros: 0,
+            periodos: [] as { anio: number; mes: number; mesNombre: string; count: number; licitacion: string }[],
+            servicios: [] as { nombre: string; count: number; porcentaje: number; color: string }[],
+            totalPreparaciones: 0
+        },
+        auditoriaSesiones: {
+            totalConnectionTimeFormatted: '0 hrs',
+            totalHours: 0,
+            totalSessions: 0,
+            avgSessionFormatted: '0 min',
+            activeUsersNow: 0,
+            topModule: { modulo: 'General', percentage: 0 },
+            mainModules: [] as { modulo: string; percentage: number; count: number; color: string }[]
+        },
+        auditoriaConsumoReal: {
+            totalAsignado: 0,
+            totalIngresado: 0,
+            pctCumplimiento: 0,
+            colegiosConIngreso: 0,
+            totalColegios: 0,
+            servicios: [] as { servicio: string; asig: number; ing: number; pct: number }[]
         }
     }
 
@@ -1630,6 +1661,205 @@ export async function fetchPlatformWidgetsDataAction(filters?: WidgetsFilterPara
                 algoritmoSeguro: 'AES-256-CBC + SHA-256',
                 cumplimientoNormativo: 100
             }
+        }
+
+        // 32. Calculadora de Raciones
+        try {
+            const racionesWhere: any = {}
+            if (filters?.licitacion) racionesWhere.licitacion = String(filters.licitacion)
+            if (selectedYear) racionesWhere.anio = selectedYear
+            if (selectedMonth) racionesWhere.mes = selectedMonth
+            if (targetRbds !== null && targetRbds.length > 0) racionesWhere.rbd = { in: targetRbds }
+
+            const totalRacionesCount = await prisma.raciones.count({ where: racionesWhere })
+            const sumCantidad = await prisma.raciones.aggregate({
+                where: racionesWhere,
+                _sum: { cantidad: true }
+            })
+
+            const periodGroups = await prisma.raciones.groupBy({
+                by: ['anio', 'mes', 'licitacion'],
+                where: racionesWhere,
+                _count: { id: true },
+                _sum: { cantidad: true },
+                orderBy: [{ anio: 'desc' }, { mes: 'desc' }],
+                take: 6
+            })
+
+            const MESES_ABR = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+            const periodosParsed = periodGroups.map(p => ({
+                anio: p.anio,
+                mes: p.mes,
+                mesNombre: MESES_ABR[p.mes - 1] || `M${p.mes}`,
+                count: p._count.id,
+                cantidad: p._sum.cantidad || 0,
+                licitacion: p.licitacion
+            }))
+
+            const serviciosGroup = await prisma.raciones.groupBy({
+                by: ['servicio'],
+                where: racionesWhere,
+                _sum: { cantidad: true },
+                _count: { id: true },
+                orderBy: { _sum: { cantidad: 'desc' } },
+                take: 5
+            })
+
+            const totalCant = sumCantidad._sum.cantidad || 1
+            const palR = ['#06B6D4', '#0EA5E9', '#10B981', '#F59E0B', '#8B5CF6']
+            const serviciosTop = serviciosGroup.map((s, idx) => ({
+                servicio: s.servicio,
+                cantidad: s._sum.cantidad || 0,
+                count: s._count.id,
+                porcentaje: Math.round(((s._sum.cantidad || 0) / totalCant) * 100),
+                color: palR[idx % palR.length]
+            }))
+
+            const lics = Array.from(new Set(periodGroups.map(p => p.licitacion)))
+
+            data.calculadoraRaciones = {
+                totalRegistros: totalRacionesCount,
+                totalCantidad: sumCantidad._sum.cantidad || 0,
+                periodos: periodosParsed,
+                serviciosTop,
+                licitaciones: lics
+            }
+        } catch (e) {
+            console.error('Error widgets: calculadora raciones', e)
+        }
+
+        // 33. Calculadora de Minutas
+        try {
+            const minutasWhere: any = {}
+            if (filters?.licitacion) minutasWhere.licitacion = String(filters.licitacion)
+            if (selectedYear) minutasWhere.anio = selectedYear
+            if (selectedMonth) minutasWhere.mes = selectedMonth
+
+            const totalMinutasCount = await prisma.minutas.count({ where: minutasWhere })
+
+            const minutasPeriods = await prisma.minutas.groupBy({
+                by: ['anio', 'mes', 'licitacion'],
+                where: minutasWhere,
+                _count: { id: true },
+                orderBy: [{ anio: 'desc' }, { mes: 'desc' }],
+                take: 6
+            })
+
+            const MESES_ABR_M = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+            const periodosMinutasParsed = minutasPeriods.map(p => ({
+                anio: p.anio,
+                mes: p.mes,
+                mesNombre: MESES_ABR_M[p.mes - 1] || `M${p.mes}`,
+                count: p._count.id,
+                licitacion: p.licitacion
+            }))
+
+            const servMinutasGroup = await prisma.minutas.groupBy({
+                by: ['nombreServicio'],
+                where: minutasWhere,
+                _count: { id: true },
+                orderBy: { _count: { id: 'desc' } },
+                take: 5
+            })
+
+            const totalMin = totalMinutasCount || 1
+            const palM = ['#10B981', '#06B6D4', '#F59E0B', '#6366F1', '#EC4899']
+            const serviciosMinutas = servMinutasGroup.map((s, idx) => ({
+                nombre: s.nombreServicio,
+                count: s._count.id,
+                porcentaje: Math.round((s._count.id / totalMin) * 100),
+                color: palM[idx % palM.length]
+            }))
+
+            data.calculadoraMinutas = {
+                totalRegistros: totalMinutasCount,
+                periodos: periodosMinutasParsed,
+                servicios: serviciosMinutas,
+                totalPreparaciones: servMinutasGroup.length
+            }
+        } catch (e) {
+            console.error('Error widgets: calculadora minutas', e)
+        }
+
+        // 34. Sesiones y Actividad de Usuarios (Auditoría)
+        try {
+            const sessionAnalytics = await computeAuditSessionAnalytics()
+            const palAud = ['#0EA5E9', '#8B5CF6', '#10B981', '#F59E0B', '#06B6D4']
+            data.auditoriaSesiones = {
+                totalConnectionTimeFormatted: sessionAnalytics.summaryCards.totalConnectionTimeFormatted,
+                totalHours: sessionAnalytics.summaryCards.totalHours,
+                totalSessions: sessionAnalytics.summaryCards.totalSessions,
+                avgSessionFormatted: sessionAnalytics.summaryCards.avgSessionFormatted,
+                activeUsersNow: sessionAnalytics.summaryCards.activeUsersNow,
+                topModule: sessionAnalytics.summaryCards.topModule,
+                mainModules: sessionAnalytics.mainModuleDistribution.slice(0, 4).map((m, idx) => ({
+                    modulo: m.modulo,
+                    percentage: Math.round(m.percentage),
+                    count: m.count,
+                    color: palAud[idx % palAud.length]
+                }))
+            }
+        } catch (e) {
+            console.error('Error widgets: auditoria sesiones', e)
+        }
+
+        // 35. Auditoría de Raciones: Consumo Real vs Asignado
+        try {
+            const whereRacionAudit: any = {}
+            if (selectedYear) whereRacionAudit.ano = selectedYear
+            if (selectedMonth) whereRacionAudit.mes = selectedMonth
+            if (targetRbds !== null) whereRacionAudit.rbd = targetRbds.length > 0 ? { in: targetRbds } : -999999
+
+            const ingData = await prisma.ingRacion.findMany({
+                where: whereRacionAudit,
+                select: {
+                    desayunoIng: true, desayunoAsig: true,
+                    almuerzoIng: true, almuerzoAsig: true,
+                    onceIng: true, onceAsig: true,
+                    colacionIng: true, colacionAsig: true,
+                    cenaIng: true, cenaAsig: true,
+                    rbd: true
+                },
+                take: 1000
+            })
+
+            let sumAsig = 0, sumIng = 0
+            let desAsig = 0, desIng = 0
+            let almAsig = 0, almIng = 0
+            let onAsig = 0, onIng = 0
+            const rbdsWithIngreso = new Set<number>()
+
+            for (const r of ingData) {
+                const rowAsig = (r.desayunoAsig || 0) + (r.almuerzoAsig || 0) + (r.onceAsig || 0) + (r.colacionAsig || 0) + (r.cenaAsig || 0)
+                const rowIng = (r.desayunoIng || 0) + (r.almuerzoIng || 0) + (r.onceIng || 0) + (r.colacionIng || 0) + (r.cenaIng || 0)
+                sumAsig += rowAsig
+                sumIng += rowIng
+                if (rowIng > 0) rbdsWithIngreso.add(r.rbd)
+
+                desAsig += (r.desayunoAsig || 0)
+                desIng += (r.desayunoIng || 0)
+                almAsig += (r.almuerzoAsig || 0)
+                almIng += (r.almuerzoIng || 0)
+                onAsig += (r.onceAsig || 0)
+                onIng += (r.onceIng || 0)
+            }
+
+            const pctCumpl = sumAsig > 0 ? Math.round((sumIng / sumAsig) * 100) : (sumIng > 0 ? 100 : 0)
+
+            data.auditoriaConsumoReal = {
+                totalAsignado: sumAsig,
+                totalIngresado: sumIng,
+                pctCumplimiento: pctCumpl,
+                colegiosConIngreso: rbdsWithIngreso.size,
+                totalColegios: data.kpis.totalColegios || ingData.length,
+                servicios: [
+                    { servicio: 'Desayuno', asig: desAsig, ing: desIng, pct: desAsig > 0 ? Math.round((desIng / desAsig) * 100) : 0 },
+                    { servicio: 'Almuerzo', asig: almAsig, ing: almIng, pct: almAsig > 0 ? Math.round((almIng / almAsig) * 100) : 0 },
+                    { servicio: 'Once', asig: onAsig, ing: onIng, pct: onAsig > 0 ? Math.round((onIng / onAsig) * 100) : 0 },
+                ]
+            }
+        } catch (e) {
+            console.error('Error widgets: consumo real', e)
         }
 
         return data

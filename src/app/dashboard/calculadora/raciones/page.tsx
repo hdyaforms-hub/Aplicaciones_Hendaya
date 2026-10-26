@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation'
 import UploadModalRaciones from './UploadModalRaciones'
 import RacionesSearch from './RacionesSearch'
 import EditCantidadModal from './EditCantidadModal'
+import PeriodosCargadosCard, { MESES_NOMBRES } from '../components/PeriodosCargadosCard'
 
 export default async function RacionesPage({
     searchParams
@@ -105,6 +106,23 @@ export default async function RacionesPage({
         return acc
     }, {} as Record<number, string>)
 
+    // Consultar todos los años y meses cargados en la base de datos
+    const loadedPeriodGroups = await prisma.raciones.groupBy({
+        by: ['anio', 'mes'],
+        _count: { id: true },
+        orderBy: [
+            { anio: 'desc' },
+            { mes: 'desc' }
+        ]
+    })
+
+    const loadedPeriods = loadedPeriodGroups.map((g: any) => ({
+        anio: g.anio || 0,
+        mes: g.mes || 0,
+        mesNombre: MESES_NOMBRES[(g.mes || 1) - 1] || `Mes ${g.mes}`,
+        count: g._count.id
+    }))
+
     return (
         <div className="space-y-6">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
@@ -117,6 +135,15 @@ export default async function RacionesPage({
 
                 <UploadModalRaciones />
             </div>
+
+            {/* Cuadro de Resumen: Años y Meses Cargados */}
+            <PeriodosCargadosCard
+                tituloModulo="Raciones"
+                tipoDato="raciones"
+                periodos={loadedPeriods}
+                filtroActual={{ anio: filters.anio, mes: filters.mes }}
+                baseUrl="/dashboard/calculadora/raciones"
+            />
 
             <RacionesSearch 
                 initialLicitacion={filters.licitacion} 

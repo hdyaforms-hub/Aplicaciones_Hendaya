@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation'
 import UploadModalMinutas from './UploadModalMinutas'
 import MinutasSearch from './MinutasSearch'
 import DeleteMassiveMinutasModal from './DeleteMassiveMinutasModal'
+import PeriodosCargadosCard, { MESES_NOMBRES } from '../components/PeriodosCargadosCard'
 
 export default async function MinutasPage({
     searchParams
@@ -84,6 +85,23 @@ export default async function MinutasPage({
         take: limit,
     })
 
+    // Consultar todos los años y meses cargados en la base de datos
+    const loadedPeriodGroups = await prisma.minutas.groupBy({
+        by: ['anio', 'mes'],
+        _count: { id: true },
+        orderBy: [
+            { anio: 'desc' },
+            { mes: 'desc' }
+        ]
+    })
+
+    const loadedPeriods = loadedPeriodGroups.map((g: any) => ({
+        anio: g.anio || 0,
+        mes: g.mes || 0,
+        mesNombre: MESES_NOMBRES[(g.mes || 1) - 1] || `Mes ${g.mes}`,
+        count: g._count.id
+    }))
+
     return (
         <div className="space-y-6">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
@@ -99,6 +117,15 @@ export default async function MinutasPage({
                     <UploadModalMinutas />
                 </div>
             </div>
+
+            {/* Cuadro de Resumen: Años y Meses Cargados */}
+            <PeriodosCargadosCard
+                tituloModulo="Minutas"
+                tipoDato="minutas"
+                periodos={loadedPeriods}
+                filtroActual={{ anio: filters.anio, mes: filters.mes }}
+                baseUrl="/dashboard/calculadora/minutas"
+            />
 
             <MinutasSearch 
                 initialNumero={filters.numero} 

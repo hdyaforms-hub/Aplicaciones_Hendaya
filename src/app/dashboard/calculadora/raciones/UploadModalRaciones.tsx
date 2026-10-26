@@ -58,8 +58,48 @@ export default function UploadModalRaciones() {
         }
     }
 
-    const excelDateToJSDate = (excelDate: number) => {
-        return new Date((excelDate - (25567 + 2)) * 86400 * 1000).toISOString()
+    const parseMonth = (val: any): number => {
+        if (!val) return 0
+        const num = Number(val)
+        if (!isNaN(num) && num >= 1 && num <= 12) return Math.floor(num)
+        if (typeof val === 'string') {
+            const str = val.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+            const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre']
+            const idx = months.findIndex(m => str.startsWith(m) || m.startsWith(str))
+            if (idx !== -1) return idx + 1
+        }
+        return 0
+    }
+
+    const parseSafeDate = (val: any, defaultYear?: number, defaultMonth?: number): string => {
+        if (!val) {
+            const y = defaultYear || new Date().getFullYear()
+            const m = defaultMonth ? defaultMonth - 1 : new Date().getMonth()
+            return new Date(Date.UTC(y, m, 1)).toISOString()
+        }
+        if (typeof val === 'number') {
+            const dateObj = new Date(Math.round((val - 25569) * 86400 * 1000))
+            if (!isNaN(dateObj.getTime())) return dateObj.toISOString()
+        }
+        if (val instanceof Date && !isNaN(val.getTime())) {
+            return val.toISOString()
+        }
+        if (typeof val === 'string') {
+            const trimmed = val.trim()
+            const ddmmyyyy = trimmed.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/)
+            if (ddmmyyyy) {
+                const day = parseInt(ddmmyyyy[1], 10)
+                const month = parseInt(ddmmyyyy[2], 10) - 1
+                const year = parseInt(ddmmyyyy[3], 10)
+                const d = new Date(Date.UTC(year, month, day))
+                if (!isNaN(d.getTime())) return d.toISOString()
+            }
+            const parsed = new Date(trimmed)
+            if (!isNaN(parsed.getTime())) return parsed.toISOString()
+        }
+        const fallbackYear = defaultYear || new Date().getFullYear()
+        const fallbackMonth = defaultMonth ? defaultMonth - 1 : 0
+        return new Date(Date.UTC(fallbackYear, fallbackMonth, 1)).toISOString()
     }
 
     const validateAndParseExcel = async () => {
@@ -89,14 +129,9 @@ export default function UploadModalRaciones() {
                         .toLowerCase()
                         .trim()
                         .normalize("NFD")
-                        .replace(/[\u0300-\u036f]/g, "") // remove accents except ñ? wait, AÑO became ano if normalized?
+                        .replace(/[\u0300-\u036f]/g, "")
                         
-                    // Manually map año to año if normalized removed it, actually normalize("NFD") makes ñ -> n + ~ and then replace removes ~. So 'año' becomes 'ano'.
-                    // Wait, expectedColumns has 'año' (año). If normalize converts 'año' to 'ano', we should check for 'ano' or 'año'.
-                    // Let's use expectedColumns with 'ano'.
-                    
-                    const safeKey = normalizedKey === 'ano' ? 'año' : normalizedKey;
-                    
+                    const safeKey = (normalizedKey === 'ano' || normalizedKey === 'anio') ? 'año' : normalizedKey
                     newRow[safeKey] = row[key]
                 }
                 return newRow
@@ -112,42 +147,37 @@ export default function UploadModalRaciones() {
             }
 
             const formattedData: RacionData[] = normalizedData.map(row => {
-                let fechaIso = new Date().toISOString();
-                if (row['fecha']) {
-                    if (typeof row['fecha'] === 'number') {
-                        fechaIso = excelDateToJSDate(row['fecha'])
-                    } else {
-                        fechaIso = new Date(row['fecha']).toISOString()
-                    }
-                }
+                const anioParsed = Number(row['año'] ?? row['anio'] ?? row['ano']) || 0
+                const mesParsed = parseMonth(row['mes'])
+                const fechaIso = parseSafeDate(row['fecha'], anioParsed, mesParsed)
 
                 return {
-                    licitacion: String(row['licitacion'] || '').substring(0, 10),
-                    numeroServicio: String(row['numeroservicio'] || '').substring(0, 10),
-                    servicio: String(row['servicio'] || '').substring(0, 100),
+                    licitacion: String(row['licitacion'] || '').trim().substring(0, 10),
+                    numeroServicio: String(row['numeroservicio'] || '').trim().substring(0, 10),
+                    servicio: String(row['servicio'] || '').trim().substring(0, 100),
                     numeroCocina: Number(row['numerococina']) || 0,
-                    numeroArea: String(row['numeroarea'] || '').substring(0, 5),
+                    numeroArea: String(row['numeroarea'] || '').trim().substring(0, 5),
                     numeroEnlace: Number(row['numeroenlace']) || 0,
-                    numeroLocacion: String(row['numerolocacion'] || '').substring(0, 5),
-                    locacion: String(row['locacion'] || '').substring(0, 150),
-                    numeroPrograma: String(row['numeroprograma'] || '').substring(0, 7),
-                    programa: String(row['programa'] || '').substring(0, 150),
-                    mes: Number(row['mes']) || 0,
-                    anio: Number(row['año']) || 0,
+                    numeroLocacion: String(row['numerolocacion'] || '').trim().substring(0, 5),
+                    locacion: String(row['locacion'] || '').trim().substring(0, 150),
+                    numeroPrograma: String(row['numeroprograma'] || '').trim().substring(0, 7),
+                    programa: String(row['programa'] || '').trim().substring(0, 150),
+                    mes: mesParsed,
+                    anio: anioParsed,
                     fecha: fechaIso,
                     estadoRacion: Number(row['estadoracion']) || 0,
                     numeroBeneficiario: Number(row['numerobeneficiario']) || 0,
-                    beneficiario: String(row['beneficiario'] || '').substring(0, 50),
+                    beneficiario: String(row['beneficiario'] || '').trim().substring(0, 50),
                     cantidad: Number(row['cantidad']) || 0,
                     rbd: Number(row['rbd']) || 0,
                     ut: Number(row['ut']) || 0,
                 }
             })
 
-            const cleanData = formattedData.filter(d => d.licitacion && d.numeroServicio)
+            const cleanData = formattedData.filter(d => d.licitacion && d.numeroServicio && d.anio > 0 && d.mes > 0)
 
             if (cleanData.length === 0) {
-                setError('El archivo no contiene raciones válidas.')
+                setError('El archivo no contiene raciones válidas con licitación, servicio, mes y año válidos.')
                 setLoading(false)
                 return
             }
@@ -283,9 +313,9 @@ export default function UploadModalRaciones() {
                             <h4 className="text-lg font-bold text-yellow-800 flex items-center gap-2 mb-2">
                                 ⚠️ Raciones Existentes
                             </h4>
-                            <p className="text-sm text-yellow-700 mb-6 leading-relaxed">
+                            <p className="text-sm text-yellow-700 mb-6 leading-relaxed whitespace-pre-line">
                                 {existenceMessage || 'Hemos detectado que ya existen raciones registradas para esta licitación en el sistema.'}
-                                <br /><br />
+                                {'\n\n'}
                                 <strong>¿Desea actualizar y sobrescribir dichos registros con la información del Excel?</strong>
                             </p>
 

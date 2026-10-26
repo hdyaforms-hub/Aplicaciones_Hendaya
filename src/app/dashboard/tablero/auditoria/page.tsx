@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { fetchAuditLogsAction, fetchAuditUsersAction, fetchAuditRolesAction, fetchAuditModulesAction, fetchAllAuditLogsForExport } from './actions'
+import SesionesActividadTab from './SesionesActividadTab'
 
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
@@ -62,6 +63,7 @@ type RoleOption = {
 }
 
 export default function AuditoriaPage() {
+    const [activeTab, setActiveTab] = useState<'registro' | 'sesiones'>('registro')
     const [logs, setLogs] = useState<AuditLogItem[]>([])
     const [users, setUsers] = useState<UserOption[]>([])
     const [roles, setRoles] = useState<RoleOption[]>([])
@@ -344,29 +346,77 @@ export default function AuditoriaPage() {
                     </div>
 
                     {/* Botones de Descarga */}
-                    <div className="flex flex-wrap items-center gap-3 shrink-0">
-                        <button
-                            onClick={handleExportPDF}
-                            disabled={exporting || totalRecords === 0}
-                            className="px-4 py-2.5 bg-rose-600 hover:bg-rose-700 disabled:opacity-50 text-white rounded-xl font-bold shadow-lg shadow-rose-600/30 transition-all flex items-center gap-2 text-sm"
-                        >
-                            <span>{exporting && exportingType === 'pdf' ? '⌛' : '📄'}</span>
-                            {exporting && exportingType === 'pdf' ? 'Generando PDF...' : 'Descargar PDF'}
-                        </button>
+                    {activeTab === 'registro' ? (
+                        <div className="flex flex-wrap items-center gap-3 shrink-0">
+                            <button
+                                onClick={handleExportPDF}
+                                disabled={exporting || totalRecords === 0}
+                                className="px-4 py-2.5 bg-rose-600 hover:bg-rose-700 disabled:opacity-50 text-white rounded-xl font-bold shadow-lg shadow-rose-600/30 transition-all flex items-center gap-2 text-sm"
+                            >
+                                <span>{exporting && exportingType === 'pdf' ? '⌛' : '📄'}</span>
+                                {exporting && exportingType === 'pdf' ? 'Generando PDF...' : 'Descargar PDF'}
+                            </button>
 
-                        <button
-                            onClick={handleExportExcel}
-                            disabled={exporting || totalRecords === 0}
-                            className="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white rounded-xl font-bold shadow-lg shadow-emerald-600/30 transition-all flex items-center gap-2 text-sm"
-                        >
-                            <span>{exporting && exportingType === 'excel' ? '⌛' : '📊'}</span>
-                            {exporting && exportingType === 'excel' ? 'Generando Excel...' : 'Descargar Excel'}
-                        </button>
-                    </div>
+                            <button
+                                onClick={handleExportExcel}
+                                disabled={exporting || totalRecords === 0}
+                                className="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white rounded-xl font-bold shadow-lg shadow-emerald-600/30 transition-all flex items-center gap-2 text-sm"
+                            >
+                                <span>{exporting && exportingType === 'excel' ? '⌛' : '📊'}</span>
+                                {exporting && exportingType === 'excel' ? 'Generando Excel...' : 'Descargar Excel'}
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="flex items-center gap-2 shrink-0">
+                            <span className="px-3.5 py-2 bg-cyan-500/20 text-cyan-200 text-xs font-bold rounded-xl border border-cyan-400/30 flex items-center gap-2">
+                                <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+                                Analítica de Conexiones y Uso
+                            </span>
+                        </div>
+                    )}
                 </div>
             </div>
 
-            {/* Panel de Filtros */}
+            {/* Selector de Tabs */}
+            <div className="flex flex-wrap items-center gap-2 p-1.5 bg-gray-200/70 rounded-2xl w-fit">
+                <button
+                    type="button"
+                    onClick={() => setActiveTab('registro')}
+                    className={`px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center gap-2 ${
+                        activeTab === 'registro'
+                            ? 'bg-white text-slate-900 shadow-sm shadow-slate-900/10'
+                            : 'text-gray-600 hover:text-gray-900'
+                    }`}
+                >
+                    <span>🛡️</span>
+                    <span>Registro de Actividad</span>
+                    <span className="px-2 py-0.5 rounded-full text-[11px] bg-gray-100 text-gray-700 font-mono font-semibold">
+                        {totalRecords.toLocaleString('es-CL')}
+                    </span>
+                </button>
+                <button
+                    type="button"
+                    onClick={() => setActiveTab('sesiones')}
+                    className={`px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center gap-2 ${
+                        activeTab === 'sesiones'
+                            ? 'bg-gradient-to-r from-cyan-600 to-sky-600 text-white shadow-md shadow-cyan-600/30'
+                            : 'text-gray-600 hover:text-gray-900'
+                    }`}
+                >
+                    <span>⏱️</span>
+                    <span>Sesiones y Actividad de Usuarios</span>
+                    <span className="px-2 py-0.5 rounded-full text-[11px] bg-cyan-100 text-cyan-800 font-black">
+                        Nuevo
+                    </span>
+                </button>
+            </div>
+
+            {/* Contenido según Tab Seleccionado */}
+            {activeTab === 'sesiones' ? (
+                <SesionesActividadTab roles={roles} users={users} />
+            ) : (
+                <>
+                    {/* Panel de Filtros */}
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                 <form onSubmit={handleFilterSubmit} className="space-y-4">
                     <div className="flex items-center justify-between">
@@ -625,6 +675,8 @@ export default function AuditoriaPage() {
                     </div>
                 )}
             </div>
+            </>
+            )}
         </div>
     )
 }
