@@ -20,8 +20,9 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
     {
         name: 'Tableros y Avances',
         icon: '📈',
-        requiredPermission: ['view_tablero', 'view_tablero_pan', 'view_tablero_gas', 'view_tablero_retiro', 'view_tablero_elementos', 'view_tablero_multas_ee', 'view_tablero_organigrama', 'view_tablero_distancias', 'view_tablero_actas', 'view_tablero_auditoria', 'view_tablero_verificador_temperaturas', 'view_tablero_widgets', 'view_tablero_resolucion_sanitaria', 'view_tablero_monitoreo_avances', 'view_tablero_monitoreo_rrhh'],
+        requiredPermission: ['view_tablero', 'view_tablero_tendencias_pmpa', 'view_tablero_pan', 'view_tablero_gas', 'view_tablero_retiro', 'view_tablero_elementos', 'view_tablero_multas_ee', 'view_tablero_organigrama', 'view_tablero_distancias', 'view_tablero_actas', 'view_tablero_auditoria', 'view_tablero_verificador_temperaturas', 'view_tablero_widgets', 'view_tablero_resolucion_sanitaria', 'view_tablero_monitoreo_avances', 'view_tablero_monitoreo_rrhh'],
         subItems: [
+            { name: 'Tendencias y Oscilación PMPA', href: '/dashboard/tablero/tendencias-pmpa', requiredPermission: 'view_tablero_tendencias_pmpa' },
             { name: 'Monitoreo RRHH', href: '/dashboard/tablero/monitoreo-rrhh', requiredPermission: 'view_tablero_monitoreo_rrhh' },
             { name: 'Monitoreo de Avances', href: '/dashboard/tablero/monitoreo-avances', requiredPermission: 'view_tablero_monitoreo_avances' },
             { name: 'Avance PMPA', href: '/dashboard/tablero', requiredPermission: 'view_tablero' },

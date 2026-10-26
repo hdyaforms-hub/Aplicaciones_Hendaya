@@ -96,6 +96,7 @@ export async function getSession() {
                 'view_tablero_actas',
                 'view_tablero_verificador_temperaturas',
                 'view_tablero_widgets',
+                'view_tablero_tendencias_pmpa',
                 'view_tablero_auditoria',
                 'view_ingreso_raciones',
                 'view_solicitud_pan',

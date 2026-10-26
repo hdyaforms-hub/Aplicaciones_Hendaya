@@ -26,6 +26,7 @@ function getModuleInfoFromPath(path: string): { modulo: string; detalle: string 
         if (path.includes('/verificador-temperaturas')) return { modulo: 'Tableros y Avances', detalle: 'Accedió a Tablero Verificador de Temperaturas' }
         if (path.includes('/monitoreo-rrhh')) return { modulo: 'Tableros y Avances', detalle: 'Accedió a Tablero Monitoreo RRHH' }
         if (path.includes('/monitoreo-avances')) return { modulo: 'Tableros y Avances', detalle: 'Accedió a Tablero Monitoreo de Avances' }
+        if (path.includes('/tendencias-pmpa')) return { modulo: 'Tableros y Avances', detalle: 'Accedió a Tablero Tendencias y Oscilación PMPA' }
         if (path.includes('/resolucion-sanitaria')) return { modulo: 'Tableros y Avances', detalle: 'Accedió a Tablero de Resolución Sanitaria (Evolución Histórica)' }
         return { modulo: 'Tableros y Avances', detalle: 'Accedió a Avance PMPA' }
     }

@@ -65,6 +65,7 @@ export default async function RolesPage() {
         { id: 'view_tablero_auditoria', name: 'Tablero Auditoría', description: 'Visualización y exportación de auditoría de actividad de usuarios.', category: 'TABLEROS' },
         { id: 'view_tablero_monitoreo_avances', name: 'Tablero Monitoreo de Avances', description: 'Acceso y supervisión al tablero semafórico de avances de matrices y actas por usuario.', category: 'TABLEROS' },
         { id: 'view_tablero_monitoreo_rrhh', name: 'Tablero Monitoreo RRHH', description: 'Acceso y supervisión al tablero semafórico de avances de RRHH (Ausentismo, Horas Extras, Atrasos, Adelantos) en períodos abiertos.', category: 'TABLEROS' },
+        { id: 'view_tablero_tendencias_pmpa', name: 'Tablero Tendencias y Oscilación PMPA', description: 'Visualización temporal y análisis de oscilación de cargas de raciones PMPA por programa, RBD, servicio y sucursal.', category: 'TABLEROS' },
         
         { id: 'view_ingreso_raciones', name: 'Ingreso de Raciones', description: 'Gestión y auditoría de raciones por colegio.', category: 'APLICACIONES' },
         { id: 'view_solicitud_pan', name: 'Solicitud de Pan', description: 'Acceso a la aplicación de Solicitud de Pan.', category: 'APLICACIONES' },
