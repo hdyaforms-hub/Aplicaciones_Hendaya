@@ -63,6 +63,7 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
         requiredPermission: [
             'view_areas',
             'view_prev_gravedad_preparacion',
+            'view_prev_riesgo_minuta',
             'logistica:tablero:ver',
             'logistica:rutas:ver',
             'logistica:metricas:ver',
@@ -303,12 +304,17 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
             },
             {
                 name: 'Prev. de riesgos',
-                requiredPermission: ['view_prev_gravedad_preparacion', 'manage_prev_gravedad_preparacion'],
+                requiredPermission: ['view_prev_gravedad_preparacion', 'manage_prev_gravedad_preparacion', 'view_prev_riesgo_minuta'],
                 subItems: [
                     {
                         name: 'Gravedad en Preparación',
                         href: '/dashboard/areas/prevencion-riesgos/gravedad-preparacion',
                         requiredPermission: 'view_prev_gravedad_preparacion'
+                    },
+                    {
+                        name: 'Riesgo en Minuta',
+                        href: '/dashboard/areas/prevencion-riesgos/riesgo-minuta',
+                        requiredPermission: 'view_prev_riesgo_minuta'
                     }
                 ]
             }

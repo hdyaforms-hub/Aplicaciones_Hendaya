@@ -87,6 +87,7 @@ function getModuleInfoFromPath(path: string): { modulo: string; detalle: string 
         return { modulo: 'Áreas -> Multas', detalle: 'Accedió a Cálculos de Elementos Esenciales' }
     }
     if (path.startsWith('/dashboard/areas/prevencion-riesgos') || path.startsWith('/dashboard/areas/prev-riesgos')) {
+        if (path.includes('/riesgo-minuta')) return { modulo: 'Áreas -> Prev. de riesgos', detalle: 'Accedió a Riesgo en Minuta' }
         return { modulo: 'Áreas -> Prev. de riesgos', detalle: 'Accedió a Gravedad en Preparación' }
     }
 

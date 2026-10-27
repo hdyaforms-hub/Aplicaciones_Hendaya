@@ -126,6 +126,7 @@ export async function getSession() {
                 'manage_descargos',
                 'view_prev_gravedad_preparacion',
                 'manage_prev_gravedad_preparacion',
+                'view_prev_riesgo_minuta',
                 'view_matriz_riesgo',
                 'close_matriz_riesgo',
                 'view_historico_matriz',

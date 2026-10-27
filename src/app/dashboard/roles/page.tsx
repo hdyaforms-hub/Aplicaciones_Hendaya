@@ -111,6 +111,7 @@ export default async function RolesPage() {
         // ÁREAS -> PREV. DE RIESGOS
         { id: 'view_prev_gravedad_preparacion', name: 'Gravedad en Preparación (Ver)', description: 'Acceso visual al módulo de gravedad de preparaciones.', category: 'ÁREAS -> PREV. DE RIESGOS' },
         { id: 'manage_prev_gravedad_preparacion', name: 'Gravedad en Preparación (Gestionar)', description: 'Permite asignar y actualizar la gravedad (Leve, Medio, Alto) y sincronizar preparaciones.', category: 'ÁREAS -> PREV. DE RIESGOS' },
+        { id: 'view_prev_riesgo_minuta', name: 'Riesgo en Minuta (Ver)', description: 'Monitoreo preventivo del nivel de riesgo en minutas diarias cruzadas con gravedad de preparación y colegios.', category: 'ÁREAS -> PREV. DE RIESGOS' },
 
         // ÁREAS -> LOGÍSTICA
         { id: 'logistica:tablero:ver', name: 'Tablero de Despacho (Ver)', description: 'Visualizar el tablero en vivo de andenes y flujo de camiones.', category: 'ÁREAS -> LOGÍSTICA' },
