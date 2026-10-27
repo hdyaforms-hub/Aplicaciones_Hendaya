@@ -13,7 +13,9 @@ export default async function TendenciasPmpaPage({
 }: {
     searchParams: Promise<{
         ano?: string
-        mes?: string
+        mesDesde?: string
+        mesHasta?: string
+        institucion?: string
         sucursal?: string
         programa?: string
         servicio?: string
@@ -36,7 +38,9 @@ export default async function TendenciasPmpaPage({
     const resolved = await searchParams
     const initialFilters: TendenciasFilterParams = {
         ano: resolved.ano ? parseInt(resolved.ano, 10) : undefined,
-        mes: resolved.mes ? parseInt(resolved.mes, 10) : undefined,
+        mesDesde: resolved.mesDesde ? parseInt(resolved.mesDesde, 10) : undefined,
+        mesHasta: resolved.mesHasta ? parseInt(resolved.mesHasta, 10) : undefined,
+        institucion: resolved.institucion || undefined,
         sucursal: resolved.sucursal || undefined,
         programa: resolved.programa || undefined,
         servicio: resolved.servicio || undefined,

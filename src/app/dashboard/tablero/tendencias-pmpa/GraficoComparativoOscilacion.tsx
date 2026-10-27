@@ -18,13 +18,14 @@ import {
 import { ComparativaOscilacionData, TendenciasFilterParams } from './actions'
 
 const SERVICIOS_COLORES: Record<string, string> = {
-    'DESAYUNO': '#D97706',   // Ámbar 600
-    'ALMUERZO': '#059669',   // Esmeralda 600
-    'ONCE': '#0284C7',       // Sky 600
-    'COLACIÓN': '#7C3AED',   // Violeta 600
-    'COLACION': '#7C3AED',   // Violeta 600
-    'CENA': '#4F46E5',       // Índigo 600
-    'OTROS': '#64748B'       // Slate 500
+    'DESAYUNO': '#D97706',        // Ámbar 600
+    'ALMUERZO': '#059669',        // Esmeralda 600
+    'TERCER SERVICIO': '#0EA5E9', // Cyan Hendaya
+    'ONCE': '#0284C7',            // Sky 600
+    'COLACIÓN': '#7C3AED',        // Violeta 600
+    'COLACION': '#7C3AED',        // Violeta 600
+    'CENA': '#4F46E5',            // Índigo 600
+    'OTROS': '#64748B'            // Slate 500
 }
 
 const ANOS_COLORES: Record<number, string> = {
@@ -163,6 +164,7 @@ export default function GraficoComparativoOscilacion({
         const serviciosKeys = [
             { key: 'desayuno', name: 'Desayuno', sKey: 'DESAYUNO' },
             { key: 'almuerzo', name: 'Almuerzo', sKey: 'ALMUERZO' },
+            { key: 'tercerServicio', name: 'Tercer Serv.', sKey: 'TERCER SERVICIO' },
             { key: 'once', name: 'Once', sKey: 'ONCE' },
             { key: 'colacion', name: 'Colación', sKey: 'COLACIÓN' },
             { key: 'cena', name: 'Cena', sKey: 'CENA' }

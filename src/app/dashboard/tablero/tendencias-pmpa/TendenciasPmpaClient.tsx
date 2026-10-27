@@ -9,13 +9,14 @@ import {
 } from './actions'
 
 const SERVICIOS_COLORES: Record<string, string> = {
-    'DESAYUNO': '#D97706',   // Ámbar 600
-    'ALMUERZO': '#059669',   // Esmeralda 600
-    'ONCE': '#0284C7',       // Sky 600
-    'COLACIÓN': '#7C3AED',   // Violeta 600
-    'COLACION': '#7C3AED',   // Violeta 600
-    'CENA': '#4F46E5',       // Índigo 600
-    'OTROS': '#64748B'       // Slate 500
+    'DESAYUNO': '#D97706',        // Ámbar 600
+    'ALMUERZO': '#059669',        // Esmeralda 600
+    'TERCER SERVICIO': '#0EA5E9', // Cyan Hendaya
+    'ONCE': '#0284C7',            // Sky 600
+    'COLACIÓN': '#7C3AED',        // Violeta 600
+    'COLACION': '#7C3AED',        // Violeta 600
+    'CENA': '#4F46E5',            // Índigo 600
+    'OTROS': '#64748B'            // Slate 500
 }
 
 type Props = {
@@ -101,7 +102,9 @@ export default function TendenciasPmpaClient({ initialData, initialFilters, curr
     const handleFilterChange = (key: keyof TendenciasFilterParams, value: any) => {
         const updated = {
             ...filters,
-            [key]: value === '' || value === 'ALL' ? undefined : (key === 'ano' || key === 'mes' || key === 'rbd' ? Number(value) : value)
+            [key]: value === '' || value === 'ALL'
+                ? undefined
+                : (key === 'ano' || key === 'mesDesde' || key === 'mesHasta' || key === 'rbd' ? Number(value) : value)
         }
         setFilters(updated)
 
@@ -133,14 +136,16 @@ export default function TendenciasPmpaClient({ initialData, initialFilters, curr
     const handleExportCSV = () => {
         if (!data.rankingRbds || data.rankingRbds.length === 0) return
 
-        const headers = ['RBD', 'Establecimiento', 'Sucursal', 'Total Raciones', 'Desayunos', 'Almuerzos', 'Onces', 'Colaciones', 'Cenas']
+        const headers = ['RBD', 'Establecimiento', 'Sucursal', 'Institución', 'Total Raciones', 'Desayunos', 'Almuerzos', 'Tercer Serv.', 'Onces', 'Colaciones', 'Cenas']
         const rows = data.rankingRbds.map(r => [
             r.rbd,
             `"${r.nombre.replace(/"/g, '""')}"`,
             `"${r.sucursal}"`,
+            `"${r.institucion || ''}"`,
             r.totalRaciones,
             r.desayuno,
             r.almuerzo,
+            r.tercerServicio,
             r.once,
             r.colacion,
             r.cena
@@ -237,7 +242,7 @@ export default function TendenciasPmpaClient({ initialData, initialFilters, curr
                     <span className="flex items-center gap-2">
                         <span>🔍</span> Filtros Analíticos en Cascada
                     </span>
-                    {(filters.ano || filters.mes || filters.sucursal || filters.programa || filters.servicio || filters.rbd) && (
+                    {(filters.ano || filters.mesDesde || filters.mesHasta || filters.institucion || filters.sucursal || filters.programa || filters.servicio || filters.rbd) && (
                         <button
                             onClick={handleClearFilters}
                             className="text-xs text-sky-600 hover:text-sky-700 font-semibold underline"
@@ -247,7 +252,7 @@ export default function TendenciasPmpaClient({ initialData, initialFilters, curr
                     )}
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3 pt-1">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-8 gap-3 pt-1">
                     {/* AÑO */}
                     <div>
                         <label className="block text-[11px] font-bold text-slate-600 mb-1 uppercase tracking-wider">Año</label>
@@ -263,17 +268,47 @@ export default function TendenciasPmpaClient({ initialData, initialFilters, curr
                         </select>
                     </div>
 
-                    {/* MES */}
+                    {/* MES DESDE */}
                     <div>
-                        <label className="block text-[11px] font-bold text-slate-600 mb-1 uppercase tracking-wider">Mes</label>
+                        <label className="block text-[11px] font-bold text-slate-600 mb-1 uppercase tracking-wider">Mes Desde</label>
                         <select
-                            value={filters.mes ?? ''}
-                            onChange={(e) => handleFilterChange('mes', e.target.value)}
+                            value={filters.mesDesde ?? ''}
+                            onChange={(e) => handleFilterChange('mesDesde', e.target.value)}
                             className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all"
                         >
-                            <option value="">(Todos los meses)</option>
+                            <option value="">(Desde inicio)</option>
                             {data.filtrosDisponibles.meses.map(m => (
                                 <option key={m.numero} value={m.numero}>{m.nombre}</option>
+                            ))}
+                        </select>
+                    </div>
+
+                    {/* MES HASTA */}
+                    <div>
+                        <label className="block text-[11px] font-bold text-slate-600 mb-1 uppercase tracking-wider">Mes Hasta</label>
+                        <select
+                            value={filters.mesHasta ?? ''}
+                            onChange={(e) => handleFilterChange('mesHasta', e.target.value)}
+                            className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all"
+                        >
+                            <option value="">(Hasta fin año)</option>
+                            {data.filtrosDisponibles.meses.map(m => (
+                                <option key={m.numero} value={m.numero}>{m.nombre}</option>
+                            ))}
+                        </select>
+                    </div>
+
+                    {/* INSTITUCIÓN */}
+                    <div>
+                        <label className="block text-[11px] font-bold text-slate-600 mb-1 uppercase tracking-wider">Institución</label>
+                        <select
+                            value={filters.institucion ?? ''}
+                            onChange={(e) => handleFilterChange('institucion', e.target.value)}
+                            className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all"
+                        >
+                            <option value="">(Todas)</option>
+                            {data.filtrosDisponibles.instituciones.map(inst => (
+                                <option key={inst} value={inst}>{inst}</option>
                             ))}
                         </select>
                     </div>
@@ -579,7 +614,7 @@ export default function TendenciasPmpaClient({ initialData, initialFilters, curr
 
                     {/* Filtro rápido por servicio para resaltar en el gráfico */}
                     <div className="flex items-center gap-1.5 flex-wrap">
-                        {['TODOS', 'DESAYUNO', 'ALMUERZO', 'ONCE', 'COLACIÓN'].map(s => (
+                        {['TODOS', 'DESAYUNO', 'ALMUERZO', 'TERCER SERVICIO', 'ONCE', 'COLACIÓN', 'CENA'].map(s => (
                             <button
                                 key={s}
                                 onClick={() => setActiveServiceTab(s)}
@@ -617,6 +652,7 @@ export default function TendenciasPmpaClient({ initialData, initialFilters, curr
 
                                 const pctDes = point.total > 0 ? (point.desayuno / point.total) * 100 : 0
                                 const pctAlm = point.total > 0 ? (point.almuerzo / point.total) * 100 : 0
+                                const pctTer = point.total > 0 ? (point.tercerServicio / point.total) * 100 : 0
                                 const pctOnc = point.total > 0 ? (point.once / point.total) * 100 : 0
                                 const pctCol = point.total > 0 ? (point.colacion / point.total) * 100 : 0
                                 const pctCen = point.total > 0 ? (point.cena / point.total) * 100 : 0
@@ -630,7 +666,7 @@ export default function TendenciasPmpaClient({ initialData, initialFilters, curr
                                     >
                                         {/* Tooltip flotante */}
                                         {isHovered && (
-                                            <div className="absolute -top-32 z-30 bg-slate-900 text-white border border-slate-700 rounded-xl p-3 shadow-2xl text-xs w-56 animate-in fade-in zoom-in-95 duration-150">
+                                            <div className="absolute -top-36 z-30 bg-slate-900 text-white border border-slate-700 rounded-xl p-3 shadow-2xl text-xs w-56 animate-in fade-in zoom-in-95 duration-150">
                                                 <div className="font-bold text-white flex items-center justify-between border-b border-slate-700 pb-1.5 mb-1.5">
                                                     <span>{point.label}</span>
                                                     <span className="text-cyan-400 font-extrabold">{point.total.toLocaleString('es-CL')} rac</span>
@@ -644,6 +680,12 @@ export default function TendenciasPmpaClient({ initialData, initialFilters, curr
                                                         <span>☀️ Almuerzos:</span>
                                                         <span className="font-bold">{point.almuerzo.toLocaleString('es-CL')}</span>
                                                     </div>
+                                                    {point.tercerServicio > 0 && (
+                                                        <div className="flex items-center justify-between text-cyan-300">
+                                                            <span>🥣 3er Serv:</span>
+                                                            <span className="font-bold">{point.tercerServicio.toLocaleString('es-CL')}</span>
+                                                        </div>
+                                                    )}
                                                     <div className="flex items-center justify-between text-sky-300">
                                                         <span>☕ Onces:</span>
                                                         <span className="font-bold">{point.once.toLocaleString('es-CL')}</span>
@@ -685,6 +727,7 @@ export default function TendenciasPmpaClient({ initialData, initialFilters, curr
                                                     <div style={{ height: `${pctCen}%`, backgroundColor: SERVICIOS_COLORES['CENA'] }} title="Cena" />
                                                     <div style={{ height: `${pctCol}%`, backgroundColor: SERVICIOS_COLORES['COLACIÓN'] }} title="Colación" />
                                                     <div style={{ height: `${pctOnc}%`, backgroundColor: SERVICIOS_COLORES['ONCE'] }} title="Once" />
+                                                    <div style={{ height: `${pctTer}%`, backgroundColor: SERVICIOS_COLORES['TERCER SERVICIO'] }} title="Tercer Servicio" />
                                                     <div style={{ height: `${pctAlm}%`, backgroundColor: SERVICIOS_COLORES['ALMUERZO'] }} title="Almuerzo" />
                                                     <div style={{ height: `${pctDes}%`, backgroundColor: SERVICIOS_COLORES['DESAYUNO'] }} title="Desayuno" />
                                                 </>
@@ -715,6 +758,10 @@ export default function TendenciasPmpaClient({ initialData, initialFilters, curr
                             <div className="flex items-center gap-2">
                                 <span className="w-3 h-3 rounded-full" style={{ backgroundColor: SERVICIOS_COLORES['ALMUERZO'] }} />
                                 <span className="text-slate-700">Almuerzo</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <span className="w-3 h-3 rounded-full" style={{ backgroundColor: SERVICIOS_COLORES['TERCER SERVICIO'] }} />
+                                <span className="text-slate-700">Tercer Serv.</span>
                             </div>
                             <div className="flex items-center gap-2">
                                 <span className="w-3 h-3 rounded-full" style={{ backgroundColor: SERVICIOS_COLORES['ONCE'] }} />
@@ -947,9 +994,11 @@ export default function TendenciasPmpaClient({ initialData, initialFilters, curr
                                 <th className="py-3 px-3.5">RBD</th>
                                 <th className="py-3 px-3.5">Establecimiento</th>
                                 <th className="py-3 px-3.5">Sucursal</th>
+                                <th className="py-3 px-3.5">Institución</th>
                                 <th className="py-3 px-3.5 text-right">Total Raciones</th>
                                 <th className="py-3 px-3.5 text-right text-amber-700">Desayuno</th>
                                 <th className="py-3 px-3.5 text-right text-emerald-700">Almuerzo</th>
+                                <th className="py-3 px-3.5 text-right text-cyan-700">3er Serv.</th>
                                 <th className="py-3 px-3.5 text-right text-sky-700">Once</th>
                                 <th className="py-3 px-3.5 text-right text-violet-700">Colación</th>
                             </tr>
@@ -957,7 +1006,7 @@ export default function TendenciasPmpaClient({ initialData, initialFilters, curr
                         <tbody className="divide-y divide-slate-100 bg-white">
                             {filteredRanking.length === 0 ? (
                                 <tr>
-                                    <td colSpan={8} className="py-8 text-center text-slate-400">
+                                    <td colSpan={10} className="py-8 text-center text-slate-400">
                                         No se encontraron establecimientos con los criterios seleccionados.
                                     </td>
                                 </tr>
@@ -973,6 +1022,11 @@ export default function TendenciasPmpaClient({ initialData, initialFilters, curr
                                         <td className="py-2.5 px-3.5 text-slate-600">
                                             {r.sucursal}
                                         </td>
+                                        <td className="py-2.5 px-3.5">
+                                            <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-700">
+                                                {r.institucion || 'JUNAEB'}
+                                            </span>
+                                        </td>
                                         <td className="py-2.5 px-3.5 text-right font-black text-slate-900">
                                             {r.totalRaciones.toLocaleString('es-CL')}
                                         </td>
@@ -981,6 +1035,9 @@ export default function TendenciasPmpaClient({ initialData, initialFilters, curr
                                         </td>
                                         <td className="py-2.5 px-3.5 text-right font-bold text-emerald-700">
                                             {r.almuerzo.toLocaleString('es-CL')}
+                                        </td>
+                                        <td className="py-2.5 px-3.5 text-right font-bold text-cyan-700">
+                                            {r.tercerServicio.toLocaleString('es-CL')}
                                         </td>
                                         <td className="py-2.5 px-3.5 text-right font-bold text-sky-700">
                                             {r.once.toLocaleString('es-CL')}

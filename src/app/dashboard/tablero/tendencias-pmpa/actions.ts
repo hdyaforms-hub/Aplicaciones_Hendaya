@@ -1,13 +1,15 @@
 'use server'
 
-import { prisma } from '@/lib/prisma'
+import { rawPrisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { getUserEffectiveRbds } from '@/lib/authFilters'
 import { logAuditAction } from '@/lib/audit'
 
 export type TendenciasFilterParams = {
     ano?: number
-    mes?: number
+    mesDesde?: number
+    mesHasta?: number
+    institucion?: string
     sucursal?: string
     programa?: string
     servicio?: string
@@ -25,13 +27,28 @@ const MESES_ABR = [
 ]
 
 const SERVICIOS_COLORES: Record<string, string> = {
-    'DESAYUNO': '#F59E0B',   // Ámbar cálido / Sol
-    'ALMUERZO': '#10B981',   // Esmeralda / Nutrición
-    'ONCE': '#0EA5E9',       // Sky / Cyan Hendaya
-    'COLACIÓN': '#8B5CF6',   // Violeta
-    'COLACION': '#8B5CF6',   // Violeta
-    'CENA': '#6366F1',       // Índigo
-    'OTROS': '#94A3B8'       // Slate neutro
+    'DESAYUNO': '#D97706',        // Ámbar cálido / Sol
+    'ALMUERZO': '#059669',        // Esmeralda / Nutrición
+    'TERCER SERVICIO': '#0EA5E9', // Cyan Hendaya
+    'ONCE': '#0284C7',            // Sky
+    'COLACIÓN': '#7C3AED',        // Violeta
+    'COLACION': '#7C3AED',        // Violeta
+    'CENA': '#4F46E5',            // Índigo
+    'OTROS': '#64748B'            // Slate neutro
+}
+
+export function normalizeService(s: string): string {
+    const norm = (s || '').trim().toUpperCase()
+    if (norm === 'D' || norm === 'DP' || norm === 'DPE' || (norm.startsWith('D') && norm.length <= 3 && !norm.includes('CO') && !norm.includes('C'))) return 'DESAYUNO'
+    if (norm === 'A' || norm === 'AP' || (norm.startsWith('A') && norm.length <= 3 && !norm.includes('CO') && !norm.includes('C'))) return 'ALMUERZO'
+    if (norm === 'O' || norm === 'OP' || norm === 'OPE') return 'ONCE'
+    if (norm === 'CO' || norm === 'CP' || norm.includes('COLACI')) return 'COLACIÓN'
+    if (norm === 'C' || norm === 'CEC' || norm.includes('CENA')) return 'CENA'
+    if (norm === 'T' || norm === 'TP' || norm.includes('TERCER')) return 'TERCER SERVICIO'
+    if (norm.includes('DESAYUNO')) return 'DESAYUNO'
+    if (norm.includes('ALMUERZO')) return 'ALMUERZO'
+    if (norm.includes('ONCE')) return 'ONCE'
+    return 'OTROS'
 }
 
 export type TimelinePoint = {
@@ -46,6 +63,7 @@ export type TimelinePoint = {
     once: number
     colacion: number
     cena: number
+    tercerServicio: number
     otros: number
     deltaPrevio: number      // Diferencia respecto al mes anterior cronológico
     deltaPct: number         // Variación %
@@ -79,12 +97,14 @@ export type RbdRankingItem = {
     rbd: number
     nombre: string
     sucursal: string
+    institucion?: string
     totalRaciones: number
     desayuno: number
     almuerzo: number
     once: number
     colacion: number
     cena: number
+    tercerServicio: number
 }
 
 export type SucursalMatrizItem = {
@@ -166,6 +186,7 @@ export type TendenciasDashboardData = {
     filtrosDisponibles: {
         anos: number[]
         meses: { numero: number; nombre: string }[]
+        instituciones: string[]
         sucursales: string[]
         programas: string[]
         servicios: string[]
@@ -179,6 +200,7 @@ export type TendenciasDashboardData = {
 
 /**
  * Obtiene métricas analíticas avanzadas para el tablero de Tendencias y Oscilación PMPA
+ * Conectado directamente al modelo real PMPA (129k+ registros con todo el año, 2024, 2025, 2026 e instituciones)
  */
 export async function fetchTendenciasPmpaData(filters?: TendenciasFilterParams): Promise<TendenciasDashboardData> {
     const session = await getSession()
@@ -206,7 +228,7 @@ export async function fetchTendenciasPmpaData(filters?: TendenciasFilterParams):
             userId: session.user.id,
             action: 'VISUALIZAR_TABLERO_TENDENCIAS_PMPA',
             modulo: 'Tableros y Avances',
-            detalle: `Consulta tablero Tendencias y Oscilación PMPA (Filtros: Año=${filters?.ano || 'Todos'}, Mes=${filters?.mes || 'Todos'}, Sucursal=${filters?.sucursal || 'Todas'}, Programa=${filters?.programa || 'Todos'}, RBD=${filters?.rbd || 'Todos'})`
+            detalle: `Consulta tablero Tendencias y Oscilación PMPA (Filtros: Año=${filters?.ano || 'Todos'}, MesDesde=${filters?.mesDesde || 'Inicio'}, MesHasta=${filters?.mesHasta || 'Fin'}, Institucion=${filters?.institucion || 'Todas'}, Sucursal=${filters?.sucursal || 'Todas'}, Programa=${filters?.programa || 'Todos'}, RBD=${filters?.rbd || 'Todos'})`
         })
     } catch (e) {
         console.error('Error registrando auditoría en tendencias PMPA:', e)
@@ -251,6 +273,7 @@ export async function fetchTendenciasPmpaData(filters?: TendenciasFilterParams):
             filtrosDisponibles: {
                 anos: [],
                 meses: [],
+                instituciones: [],
                 sucursales: [],
                 programas: [],
                 servicios: [],
@@ -263,8 +286,8 @@ export async function fetchTendenciasPmpaData(filters?: TendenciasFilterParams):
         }
     }
 
-    // Mapa de UT a Sucursal
-    const uts = await prisma.uT.findMany({
+    // Mapa de UT (codUT) a Sucursal
+    const uts = await rawPrisma.uT.findMany({
         include: { sucursal: true }
     })
     const utToSucursal = new Map<number, string>()
@@ -285,13 +308,12 @@ export async function fetchTendenciasPmpaData(filters?: TendenciasFilterParams):
         allowedUtsBySucursal = sucursalToUts.get(filters.sucursal) || []
     }
 
-    // Cláusula base WHERE para Raciones
+    // Cláusula base WHERE para PMPA
     const baseWhere: any = {}
 
     // Restricción por perfil de usuario
     if (isRestrictedByRbd && assignedRbds && assignedRbds.length > 0) {
         if (filters?.rbd) {
-            // El usuario seleccionó un RBD, validar que esté en sus asignados
             baseWhere.rbd = assignedRbds.includes(Number(filters.rbd)) ? Number(filters.rbd) : { in: assignedRbds }
         } else {
             baseWhere.rbd = { in: assignedRbds }
@@ -301,11 +323,22 @@ export async function fetchTendenciasPmpaData(filters?: TendenciasFilterParams):
     }
 
     if (filters?.ano) {
-        baseWhere.anio = Number(filters.ano)
+        baseWhere.ano = Number(filters.ano)
     }
 
-    if (filters?.mes) {
-        baseWhere.mes = Number(filters.mes)
+    // Rango de Meses (Mes Desde / Mes Hasta)
+    if (filters?.mesDesde && filters?.mesHasta) {
+        const minM = Math.min(Number(filters.mesDesde), Number(filters.mesHasta))
+        const maxM = Math.max(Number(filters.mesDesde), Number(filters.mesHasta))
+        baseWhere.mes = { gte: minM, lte: maxM }
+    } else if (filters?.mesDesde) {
+        baseWhere.mes = { gte: Number(filters.mesDesde) }
+    } else if (filters?.mesHasta) {
+        baseWhere.mes = { lte: Number(filters.mesHasta) }
+    }
+
+    if (filters?.institucion) {
+        baseWhere.institucion = String(filters.institucion).trim()
     }
 
     if (filters?.programa) {
@@ -313,31 +346,55 @@ export async function fetchTendenciasPmpaData(filters?: TendenciasFilterParams):
     }
 
     if (filters?.servicio) {
-        baseWhere.servicio = String(filters.servicio).trim()
+        const servUpper = String(filters.servicio).trim().toUpperCase()
+        if (servUpper === 'DESAYUNO') {
+            baseWhere.servicio = { in: ['D', 'DP', 'DPE', 'DESAYUNO'] }
+        } else if (servUpper === 'ALMUERZO') {
+            baseWhere.servicio = { in: ['A', 'AP', 'ALMUERZO'] }
+        } else if (servUpper === 'ONCE') {
+            baseWhere.servicio = { in: ['O', 'OP', 'OPE', 'ONCE'] }
+        } else if (servUpper === 'COLACIÓN' || servUpper === 'COLACION') {
+            baseWhere.servicio = { in: ['CO', 'CP', 'COLACION', 'COLACIÓN'] }
+        } else if (servUpper === 'CENA') {
+            baseWhere.servicio = { in: ['C', 'CEC', 'CENA'] }
+        } else if (servUpper === 'TERCER SERVICIO') {
+            baseWhere.servicio = { in: ['T', 'TP', 'TERCER SERVICIO'] }
+        } else {
+            baseWhere.servicio = String(filters.servicio).trim()
+        }
     }
 
     if (allowedUtsBySucursal !== null) {
-        baseWhere.ut = { in: allowedUtsBySucursal }
+        baseWhere.ute = { in: allowedUtsBySucursal }
     }
 
-    // 1. Obtener opciones disponibles para filtros
+    // 1. Obtener opciones disponibles para filtros desde PMPA
     const rbdOptionsConstraint = isRestrictedByRbd && assignedRbds ? { rbd: { in: assignedRbds } } : {}
-    
-    // Períodos disponibles
-    const periodosRaw = await prisma.raciones.groupBy({
-        by: ['anio', 'mes'],
+
+    // Años disponibles en PMPA
+    const periodosRaw = await rawPrisma.pMPA.groupBy({
+        by: ['ano'],
         where: rbdOptionsConstraint,
-        orderBy: [{ anio: 'desc' }, { mes: 'desc' }]
+        orderBy: { ano: 'desc' }
     })
-    const availableAnos = Array.from(new Set(periodosRaw.map(p => p.anio))).sort((a, b) => b - a)
-    const availableMesesNums = Array.from(new Set(periodosRaw.map(p => p.mes))).sort((a, b) => a - b)
-    const availableMeses = availableMesesNums.map(m => ({
+    const availableAnos = Array.from(new Set(periodosRaw.map(p => p.ano))).sort((a, b) => b - a)
+
+    // Meses (1 a 12 completos para selección de rango)
+    const availableMeses = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(m => ({
         numero: m,
-        nombre: MESES_NOMBRES[m - 1] || `Mes ${m}`
+        nombre: MESES_NOMBRES[m - 1]
     }))
 
+    // Instituciones disponibles en PMPA
+    const instRaw = await rawPrisma.pMPA.groupBy({
+        by: ['institucion'],
+        where: rbdOptionsConstraint,
+        _count: { id: true }
+    })
+    const availableInstituciones = instRaw.map(i => i.institucion).filter(Boolean) as string[]
+
     // Programas disponibles
-    const programasRaw = await prisma.raciones.groupBy({
+    const programasRaw = await rawPrisma.pMPA.groupBy({
         by: ['programa'],
         where: rbdOptionsConstraint,
         _count: { id: true }
@@ -345,53 +402,34 @@ export async function fetchTendenciasPmpaData(filters?: TendenciasFilterParams):
     programasRaw.sort((a, b) => (b._count.id || 0) - (a._count.id || 0))
     const availableProgramas = programasRaw.map(p => p.programa).filter(Boolean)
 
-    // Servicios disponibles
-    const serviciosRaw = await prisma.raciones.groupBy({
-        by: ['servicio'],
-        where: rbdOptionsConstraint,
-        _count: { id: true }
-    })
-    serviciosRaw.sort((a, b) => (b._count.id || 0) - (a._count.id || 0))
-    const availableServicios = serviciosRaw.map(s => s.servicio).filter(Boolean)
+    // Servicios normalizados disponibles
+    const availableServicios = ['DESAYUNO', 'ALMUERZO', 'TERCER SERVICIO', 'ONCE', 'COLACIÓN', 'CENA', 'OTROS']
 
     // Sucursales disponibles
     const availableSucursales = Array.from(sucursalToUts.keys()).sort()
 
-    // Colegios disponibles para el selector
-    const rbdsConMovimiento = await prisma.raciones.groupBy({
+    // Colegios disponibles para el selector inteligente
+    const rbdsConMovimiento = await rawPrisma.pMPA.groupBy({
         by: ['rbd'],
         where: rbdOptionsConstraint
     })
     const distinctRbdNums = rbdsConMovimiento.map(r => r.rbd)
 
-    const colegiosDb = await prisma.colegios.findMany({
+    const colegiosDb = await rawPrisma.colegios.findMany({
         where: { colRBD: { in: distinctRbdNums } },
-        select: { colRBD: true, nombreEstablecimiento: true, comuna: true, sucursal: true }
+        select: { colRBD: true, nombreEstablecimiento: true, comuna: true, sucursal: true, institucion: true }
     })
     const colegioNombreMap = new Map<number, string>()
     const colegioComunaMap = new Map<number, string>()
     const colegioSucursalMap = new Map<number, string>()
+    const colegioInstitucionMap = new Map<number, string>()
+
     colegiosDb.forEach(c => {
         colegioNombreMap.set(c.colRBD, c.nombreEstablecimiento)
         if (c.comuna) colegioComunaMap.set(c.colRBD, c.comuna)
         if (c.sucursal) colegioSucursalMap.set(c.colRBD, c.sucursal)
+        if (c.institucion) colegioInstitucionMap.set(c.colRBD, c.institucion)
     })
-
-    // También rescatar locaciones de raciones si falta el nombre en Colegios
-    if (colegioNombreMap.size < distinctRbdNums.length) {
-        const racionesLocaciones = await prisma.raciones.findMany({
-            where: { rbd: { in: distinctRbdNums } },
-            select: { rbd: true, locacion: true },
-            distinct: ['rbd']
-        })
-        racionesLocaciones.forEach(r => {
-            if (!colegioNombreMap.has(r.rbd) && r.locacion) {
-                // Limpiar posibles prefijos como "1 ESCUELA ..."
-                const cleaned = r.locacion.replace(/^\d+\s+/, '').trim()
-                colegioNombreMap.set(r.rbd, cleaned || `Colegio RBD ${r.rbd}`)
-            }
-        })
-    }
 
     const availableColegios: ColegioOption[] = distinctRbdNums.map(num => {
         const nom = colegioNombreMap.get(num) || 'Establecimiento ' + num
@@ -404,38 +442,38 @@ export async function fetchTendenciasPmpaData(filters?: TendenciasFilterParams):
         }
     }).sort((a, b) => a.rbd - b.rbd)
 
-    // 2. Consulta de datos principales agrupados por período y servicio
-    const datosPeriodoServicio = await prisma.raciones.groupBy({
-        by: ['anio', 'mes', 'servicio'],
+    // 2. Consulta de datos principales agrupados por período y servicio en PMPA
+    const datosPeriodoServicio = await rawPrisma.pMPA.groupBy({
+        by: ['ano', 'mes', 'servicio'],
         where: baseWhere,
-        _sum: { cantidad: true },
+        _sum: { raceqJunaeb: true },
         _count: { id: true },
-        orderBy: [{ anio: 'asc' }, { mes: 'asc' }]
+        orderBy: [{ ano: 'asc' }, { mes: 'asc' }]
     })
 
-    // 3. Consulta de datos agrupados por programa
-    const datosProgramas = await prisma.raciones.groupBy({
+    // 3. Consulta de datos agrupados por programa en PMPA
+    const datosProgramas = await rawPrisma.pMPA.groupBy({
         by: ['programa'],
         where: baseWhere,
-        _sum: { cantidad: true },
+        _sum: { raceqJunaeb: true },
         _count: { id: true }
     })
-    datosProgramas.sort((a, b) => (b._sum.cantidad || 0) - (a._sum.cantidad || 0))
+    datosProgramas.sort((a, b) => (b._sum.raceqJunaeb || 0) - (a._sum.raceqJunaeb || 0))
 
-    // 4. Consulta de datos agrupados por RBD (ranking)
-    const datosRbd = await prisma.raciones.groupBy({
-        by: ['rbd', 'ut'],
+    // 4. Consulta de datos agrupados por RBD (ranking) en PMPA
+    const datosRbd = await rawPrisma.pMPA.groupBy({
+        by: ['rbd', 'ute'],
         where: baseWhere,
-        _sum: { cantidad: true }
+        _sum: { raceqJunaeb: true }
     })
-    datosRbd.sort((a, b) => (b._sum.cantidad || 0) - (a._sum.cantidad || 0))
+    datosRbd.sort((a, b) => (b._sum.raceqJunaeb || 0) - (a._sum.raceqJunaeb || 0))
 
     // Conteo global de registros y raciones
     let grandTotalRaciones = 0
     let grandTotalRegistros = 0
     const distinctPeriodosSet = new Set<string>()
     const periodosTotalsMap = new Map<string, {
-        anio: number
+        ano: number
         mes: number
         total: number
         desayuno: number
@@ -443,21 +481,22 @@ export async function fetchTendenciasPmpaData(filters?: TendenciasFilterParams):
         once: number
         colacion: number
         cena: number
+        tercerServicio: number
         otros: number
     }>()
 
     for (const row of datosPeriodoServicio) {
-        const cant = row._sum.cantidad || 0
+        const cant = row._sum.raceqJunaeb || 0
         const count = row._count.id || 0
         grandTotalRaciones += cant
         grandTotalRegistros += count
 
-        const key = `${row.anio}-${String(row.mes).padStart(2, '0')}`
+        const key = `${row.ano}-${String(row.mes).padStart(2, '0')}`
         distinctPeriodosSet.add(key)
 
         if (!periodosTotalsMap.has(key)) {
             periodosTotalsMap.set(key, {
-                anio: row.anio,
+                ano: row.ano,
                 mes: row.mes,
                 total: 0,
                 desayuno: 0,
@@ -465,6 +504,7 @@ export async function fetchTendenciasPmpaData(filters?: TendenciasFilterParams):
                 once: 0,
                 colacion: 0,
                 cena: 0,
+                tercerServicio: 0,
                 otros: 0
             })
         }
@@ -472,17 +512,19 @@ export async function fetchTendenciasPmpaData(filters?: TendenciasFilterParams):
         const pData = periodosTotalsMap.get(key)!
         pData.total += cant
 
-        const sNorm = (row.servicio || '').toUpperCase().trim()
-        if (sNorm.includes('DESAYUNO')) {
+        const sNorm = normalizeService(row.servicio)
+        if (sNorm === 'DESAYUNO') {
             pData.desayuno += cant
-        } else if (sNorm.includes('ALMUERZO')) {
+        } else if (sNorm === 'ALMUERZO') {
             pData.almuerzo += cant
-        } else if (sNorm.includes('ONCE')) {
+        } else if (sNorm === 'ONCE') {
             pData.once += cant
-        } else if (sNorm.includes('COLACI')) {
+        } else if (sNorm === 'COLACIÓN') {
             pData.colacion += cant
-        } else if (sNorm.includes('CENA')) {
+        } else if (sNorm === 'CENA') {
             pData.cena += cant
+        } else if (sNorm === 'TERCER SERVICIO') {
+            pData.tercerServicio += cant
         } else {
             pData.otros += cant
         }
@@ -501,9 +543,9 @@ export async function fetchTendenciasPmpaData(filters?: TendenciasFilterParams):
 
         timeline.push({
             periodoKey: key,
-            label: `${MESES_ABR[p.mes - 1] || 'M' + p.mes} ${p.anio}`,
+            label: `${MESES_ABR[p.mes - 1] || 'M' + p.mes} ${p.ano}`,
             mesNombre: MESES_NOMBRES[p.mes - 1] || `Mes ${p.mes}`,
-            anio: p.anio,
+            anio: p.ano,
             mes: p.mes,
             total: p.total,
             desayuno: p.desayuno,
@@ -511,6 +553,7 @@ export async function fetchTendenciasPmpaData(filters?: TendenciasFilterParams):
             once: p.once,
             colacion: p.colacion,
             cena: p.cena,
+            tercerServicio: p.tercerServicio,
             otros: p.otros,
             deltaPrevio: delta,
             deltaPct
@@ -552,16 +595,16 @@ export async function fetchTendenciasPmpaData(filters?: TendenciasFilterParams):
         }
     }
 
-    // 5. Análisis detallado de servicios (¿Qué meses se dieron más desayunos, almuerzo, once?)
+    // 5. Análisis detallado de servicios en PMPA
     const serviciosMap = new Map<string, {
         total: number
         meses: Map<string, { mesNombre: string; anio: number; label: string; cantidad: number }>
     }>()
 
     for (const row of datosPeriodoServicio) {
-        const s = (row.servicio || 'OTROS').toUpperCase().trim()
-        const cant = row._sum.cantidad || 0
-        const key = `${row.anio}-${String(row.mes).padStart(2, '0')}`
+        const s = normalizeService(row.servicio)
+        const cant = row._sum.raceqJunaeb || 0
+        const key = `${row.ano}-${String(row.mes).padStart(2, '0')}`
 
         if (!serviciosMap.has(s)) {
             serviciosMap.set(s, { total: 0, meses: new Map() })
@@ -572,8 +615,8 @@ export async function fetchTendenciasPmpaData(filters?: TendenciasFilterParams):
         if (!sEntry.meses.has(key)) {
             sEntry.meses.set(key, {
                 mesNombre: MESES_NOMBRES[row.mes - 1] || `M${row.mes}`,
-                anio: row.anio,
-                label: `${MESES_ABR[row.mes - 1] || 'M' + row.mes} ${row.anio}`,
+                anio: row.ano,
+                label: `${MESES_ABR[row.mes - 1] || 'M' + row.mes} ${row.ano}`,
                 cantidad: 0
             })
         }
@@ -583,22 +626,22 @@ export async function fetchTendenciasPmpaData(filters?: TendenciasFilterParams):
     const serviciosAnalisis: ServicioAnalysis[] = []
     let servicioPredominante: TendenciasDashboardData['kpis']['servicioPredominante'] = null
 
-    for (const [servicio, data] of serviciosMap.entries()) {
-        const mesesArray = Array.from(data.meses.values()).sort((a, b) => b.cantidad - a.cantidad)
+    for (const [servicio, sData] of serviciosMap.entries()) {
+        const mesesArray = Array.from(sData.meses.values()).sort((a, b) => b.cantidad - a.cantidad)
         const peakMes = mesesArray[0] || { mesNombre: 'S/D', anio: 2026, cantidad: 0 }
-        const pct = grandTotalRaciones > 0 ? Math.round((data.total / grandTotalRaciones) * 1000) / 10 : 0
+        const pct = grandTotalRaciones > 0 ? Math.round((sData.total / grandTotalRaciones) * 1000) / 10 : 0
 
         serviciosAnalisis.push({
             servicio,
             color: SERVICIOS_COLORES[servicio] || SERVICIOS_COLORES['OTROS'],
-            total: data.total,
+            total: sData.total,
             porcentaje: pct,
             mesPico: {
                 mesNombre: peakMes.mesNombre,
                 anio: peakMes.anio,
                 cantidad: peakMes.cantidad
             },
-            porMes: Array.from(data.meses.values()).map(m => ({
+            porMes: Array.from(sData.meses.values()).map(m => ({
                 label: m.label,
                 mesNombre: m.mesNombre,
                 cantidad: m.cantidad
@@ -622,7 +665,7 @@ export async function fetchTendenciasPmpaData(filters?: TendenciasFilterParams):
 
     // 6. Análisis de programas
     const programasAnalisis: ProgramaAnalysis[] = datosProgramas.map(p => {
-        const cant = p._sum.cantidad || 0
+        const cant = p._sum.raceqJunaeb || 0
         return {
             programa: p.programa || 'S/D',
             total: cant,
@@ -631,17 +674,16 @@ export async function fetchTendenciasPmpaData(filters?: TendenciasFilterParams):
         }
     })
 
-    // 7. Ranking de colegios / RBDs
-    // Para enriquecer el desglose por servicio de cada RBD destacado:
-    const topRbdNums = Array.from(new Set(datosRbd.map(r => r.rbd))).slice(0, 25)
+    // 7. Ranking de colegios / RBDs en PMPA
+    const topRbdNums = Array.from(new Set(datosRbd.map(r => r.rbd))).slice(0, 30)
 
-    const rbdDetallesRaw = await prisma.raciones.groupBy({
+    const rbdDetallesRaw = await rawPrisma.pMPA.groupBy({
         by: ['rbd', 'servicio'],
         where: {
             ...baseWhere,
             rbd: { in: topRbdNums }
         },
-        _sum: { cantidad: true }
+        _sum: { raceqJunaeb: true }
     })
 
     const rbdServicioBreakdown = new Map<number, {
@@ -651,60 +693,64 @@ export async function fetchTendenciasPmpaData(filters?: TendenciasFilterParams):
         once: number
         colacion: number
         cena: number
+        tercerServicio: number
     }>()
 
     for (const r of rbdDetallesRaw) {
         if (!rbdServicioBreakdown.has(r.rbd)) {
-            rbdServicioBreakdown.set(r.rbd, { total: 0, desayuno: 0, almuerzo: 0, once: 0, colacion: 0, cena: 0 })
+            rbdServicioBreakdown.set(r.rbd, { total: 0, desayuno: 0, almuerzo: 0, once: 0, colacion: 0, cena: 0, tercerServicio: 0 })
         }
         const b = rbdServicioBreakdown.get(r.rbd)!
-        const cant = r._sum.cantidad || 0
+        const cant = r._sum.raceqJunaeb || 0
         b.total += cant
 
-        const s = (r.servicio || '').toUpperCase()
-        if (s.includes('DESAYUNO')) b.desayuno += cant
-        else if (s.includes('ALMUERZO')) b.almuerzo += cant
-        else if (s.includes('ONCE')) b.once += cant
-        else if (s.includes('COLACI')) b.colacion += cant
-        else if (s.includes('CENA')) b.cena += cant
+        const s = normalizeService(r.servicio)
+        if (s === 'DESAYUNO') b.desayuno += cant
+        else if (s === 'ALMUERZO') b.almuerzo += cant
+        else if (s === 'ONCE') b.once += cant
+        else if (s === 'COLACIÓN') b.colacion += cant
+        else if (s === 'CENA') b.cena += cant
+        else if (s === 'TERCER SERVICIO') b.tercerServicio += cant
     }
 
     // Mapear ranking final
     const rbdSucursalMap = new Map<number, string>()
     datosRbd.forEach(d => {
-        if (d.ut && utToSucursal.has(d.ut)) {
-            rbdSucursalMap.set(d.rbd, utToSucursal.get(d.ut)!)
+        if (d.ute && utToSucursal.has(d.ute)) {
+            rbdSucursalMap.set(d.rbd, utToSucursal.get(d.ute)!)
         }
     })
 
     const rankingRbds: RbdRankingItem[] = topRbdNums.map(num => {
-        const b = rbdServicioBreakdown.get(num) || { total: 0, desayuno: 0, almuerzo: 0, once: 0, colacion: 0, cena: 0 }
+        const b = rbdServicioBreakdown.get(num) || { total: 0, desayuno: 0, almuerzo: 0, once: 0, colacion: 0, cena: 0, tercerServicio: 0 }
         return {
             rbd: num,
             nombre: colegioNombreMap.get(num) || `Establecimiento ${num}`,
             sucursal: rbdSucursalMap.get(num) || 'S/D',
+            institucion: colegioInstitucionMap.get(num) || 'JUNAEB',
             totalRaciones: b.total,
             desayuno: b.desayuno,
             almuerzo: b.almuerzo,
             once: b.once,
             colacion: b.colacion,
-            cena: b.cena
+            cena: b.cena,
+            tercerServicio: b.tercerServicio
         }
     }).sort((a, b) => b.totalRaciones - a.totalRaciones)
 
     // 8. Matriz Sucursales vs Mes
-    const datosPorSucursalMes = await prisma.raciones.groupBy({
-        by: ['ut', 'anio', 'mes'],
+    const datosPorSucursalMes = await rawPrisma.pMPA.groupBy({
+        by: ['ute', 'ano', 'mes'],
         where: baseWhere,
-        _sum: { cantidad: true }
+        _sum: { raceqJunaeb: true }
     })
 
     const sucursalMesMap = new Map<string, { total: number; meses: Record<string, number> }>()
 
     for (const row of datosPorSucursalMes) {
-        const suc = (row.ut && utToSucursal.get(row.ut)) || 'S/D'
-        const cant = row._sum.cantidad || 0
-        const mKey = `${MESES_ABR[row.mes - 1] || 'M' + row.mes} ${row.anio}`
+        const suc = (row.ute && utToSucursal.get(row.ute)) || 'S/D'
+        const cant = row._sum.raceqJunaeb || 0
+        const mKey = `${MESES_ABR[row.mes - 1] || 'M' + row.mes} ${row.ano}`
 
         if (!sucursalMesMap.has(suc)) {
             sucursalMesMap.set(suc, { total: 0, meses: {} })
@@ -736,36 +782,56 @@ export async function fetchTendenciasPmpaData(filters?: TendenciasFilterParams):
     } else if (filters?.rbd) {
         whereWithoutAno.rbd = Number(filters.rbd)
     }
+
+    // Respetar rango de meses en interanual si fue seleccionado
+    if (filters?.mesDesde && filters?.mesHasta) {
+        const minM = Math.min(Number(filters.mesDesde), Number(filters.mesHasta))
+        const maxM = Math.max(Number(filters.mesDesde), Number(filters.mesHasta))
+        whereWithoutAno.mes = { gte: minM, lte: maxM }
+    } else if (filters?.mesDesde) {
+        whereWithoutAno.mes = { gte: Number(filters.mesDesde) }
+    } else if (filters?.mesHasta) {
+        whereWithoutAno.mes = { lte: Number(filters.mesHasta) }
+    }
+
+    if (filters?.institucion) {
+        whereWithoutAno.institucion = String(filters.institucion).trim()
+    }
     if (filters?.programa) {
         whereWithoutAno.programa = String(filters.programa).trim()
     }
     if (filters?.servicio) {
-        whereWithoutAno.servicio = String(filters.servicio).trim()
+        whereWithoutAno.servicio = baseWhere.servicio
     }
     if (allowedUtsBySucursal !== null) {
-        whereWithoutAno.ut = { in: allowedUtsBySucursal }
+        whereWithoutAno.ute = { in: allowedUtsBySucursal }
     }
 
     // 9.1 Comparativa Interanual (Años vs Meses 1 a 12)
-    const interanualRaw = await prisma.raciones.groupBy({
-        by: ['anio', 'mes'],
+    const interanualRaw = await rawPrisma.pMPA.groupBy({
+        by: ['ano', 'mes'],
         where: whereWithoutAno,
-        _sum: { cantidad: true },
-        orderBy: [{ anio: 'asc' }, { mes: 'asc' }]
+        _sum: { raceqJunaeb: true },
+        orderBy: [{ ano: 'asc' }, { mes: 'asc' }]
     })
 
-    const distinctAnos = Array.from(new Set(interanualRaw.map(r => r.anio))).sort((a, b) => a - b)
+    const distinctAnos = Array.from(new Set(interanualRaw.map(r => r.ano))).sort((a, b) => a - b)
     const anosDisponibles = distinctAnos.length > 0 ? distinctAnos : (availableAnos.length > 0 ? availableAnos : [2026])
 
-    const interanual = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(m => {
+    // Determinar qué meses incluir en interanual (si hay filtro de rango, filtrar)
+    const minMesRange = filters?.mesDesde ? Number(filters.mesDesde) : 1
+    const maxMesRange = filters?.mesHasta ? Number(filters.mesHasta) : 12
+    const monthsToIterate = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].filter(m => m >= minMesRange && m <= maxMesRange)
+
+    const interanual = monthsToIterate.map(m => {
         const row: Record<string, any> = {
             mes: m,
             mesNombre: MESES_NOMBRES[m - 1] || `Mes ${m}`,
             mesAbr: MESES_ABR[m - 1] || `M${m}`
         }
         anosDisponibles.forEach(yr => {
-            const found = interanualRaw.find(r => r.anio === yr && r.mes === m)
-            row[`ano_${yr}`] = found?._sum.cantidad || 0
+            const found = interanualRaw.find(r => r.ano === yr && r.mes === m)
+            row[`ano_${yr}`] = found?._sum.raceqJunaeb || 0
         })
         return row
     })
@@ -783,27 +849,28 @@ export async function fetchTendenciasPmpaData(filters?: TendenciasFilterParams):
         once: t.once,
         colacion: t.colacion,
         cena: t.cena,
+        tercerServicio: t.tercerServicio,
         otros: t.otros
     }))
-    const serviciosDisponibles = ['DESAYUNO', 'ALMUERZO', 'ONCE', 'COLACIÓN', 'CENA']
+    const serviciosDisponibles = ['DESAYUNO', 'ALMUERZO', 'TERCER SERVICIO', 'ONCE', 'COLACIÓN', 'CENA']
 
     // 9.3 Comparativa por Programa Alimentario
-    const datosPeriodoPrograma = await prisma.raciones.groupBy({
-        by: ['anio', 'mes', 'programa'],
+    const datosPeriodoPrograma = await rawPrisma.pMPA.groupBy({
+        by: ['ano', 'mes', 'programa'],
         where: baseWhere,
-        _sum: { cantidad: true },
-        orderBy: [{ anio: 'asc' }, { mes: 'asc' }]
+        _sum: { raceqJunaeb: true },
+        orderBy: [{ ano: 'asc' }, { mes: 'asc' }]
     })
 
     const topProgramas = programasAnalisis.slice(0, 6).map(p => p.programa)
     const periodoProgramaMap = new Map<string, Record<string, number>>()
     for (const row of datosPeriodoPrograma) {
-        const key = `${row.anio}-${String(row.mes).padStart(2, '0')}`
+        const key = `${row.ano}-${String(row.mes).padStart(2, '0')}`
         if (!periodoProgramaMap.has(key)) {
             periodoProgramaMap.set(key, {})
         }
         const prog = row.programa || 'OTROS'
-        const cant = row._sum.cantidad || 0
+        const cant = row._sum.raceqJunaeb || 0
         const pObj = periodoProgramaMap.get(key)!
         if (topProgramas.includes(prog)) {
             pObj[prog] = (pObj[prog] || 0) + cant
@@ -837,7 +904,7 @@ export async function fetchTendenciasPmpaData(filters?: TendenciasFilterParams):
 
     // 9.4 Comparativa por Colegio (RBD)
     let rbdsComparados: { key: string; rbd: number; nombre: string; label: string }[] = []
-    let porRbd: any[] = []
+    let porRbd: Record<string, any>[] = []
 
     if (filters?.rbd) {
         const selectedRbdNum = Number(filters.rbd)
@@ -857,29 +924,29 @@ export async function fetchTendenciasPmpaData(filters?: TendenciasFilterParams):
             }
         ]
 
-        const rbdRaw = await prisma.raciones.groupBy({
-            by: ['anio', 'mes'],
+        const rbdRaw = await rawPrisma.pMPA.groupBy({
+            by: ['ano', 'mes'],
             where: { ...baseWhere, rbd: selectedRbdNum },
-            _sum: { cantidad: true }
+            _sum: { raceqJunaeb: true }
         })
         const schoolPeriodMap = new Map<string, number>()
         rbdRaw.forEach(r => {
-            const key = `${r.anio}-${String(r.mes).padStart(2, '0')}`
-            schoolPeriodMap.set(key, r._sum.cantidad || 0)
+            const key = `${r.ano}-${String(r.mes).padStart(2, '0')}`
+            schoolPeriodMap.set(key, r._sum.raceqJunaeb || 0)
         })
 
         const avgWhere = { ...baseWhere }
         delete avgWhere.rbd
-        const allSchoolsRaw = await prisma.raciones.groupBy({
-            by: ['anio', 'mes'],
+        const allSchoolsRaw = await rawPrisma.pMPA.groupBy({
+            by: ['ano', 'mes'],
             where: avgWhere,
-            _sum: { cantidad: true }
+            _sum: { raceqJunaeb: true }
         })
         const avgPeriodMap = new Map<string, number>()
         allSchoolsRaw.forEach(r => {
-            const key = `${r.anio}-${String(r.mes).padStart(2, '0')}`
+            const key = `${r.ano}-${String(r.mes).padStart(2, '0')}`
             const distinctCount = colegiosConCargaCount || 1
-            avgPeriodMap.set(key, Math.round((r._sum.cantidad || 0) / distinctCount))
+            avgPeriodMap.set(key, Math.round((r._sum.raceqJunaeb || 0) / distinctCount))
         })
 
         porRbd = timeline.map(t => ({
@@ -902,17 +969,17 @@ export async function fetchTendenciasPmpaData(filters?: TendenciasFilterParams):
             label: `${r.rbd} - ${r.nombre.length > 20 ? r.nombre.slice(0, 20) + '...' : r.nombre}`
         }))
 
-        const rbdMonthlyRaw = await prisma.raciones.groupBy({
-            by: ['anio', 'mes', 'rbd'],
+        const rbdMonthlyRaw = await rawPrisma.pMPA.groupBy({
+            by: ['ano', 'mes', 'rbd'],
             where: { ...baseWhere, rbd: { in: top5RbdNums } },
-            _sum: { cantidad: true }
+            _sum: { raceqJunaeb: true }
         })
 
         const rbdPeriodMap = new Map<string, Record<string, number>>()
         rbdMonthlyRaw.forEach(r => {
-            const key = `${r.anio}-${String(r.mes).padStart(2, '0')}`
+            const key = `${r.ano}-${String(r.mes).padStart(2, '0')}`
             if (!rbdPeriodMap.has(key)) rbdPeriodMap.set(key, {})
-            rbdPeriodMap.get(key)![`rbd_${r.rbd}`] = r._sum.cantidad || 0
+            rbdPeriodMap.get(key)![`rbd_${r.rbd}`] = r._sum.raceqJunaeb || 0
         })
 
         porRbd = timeline.map(t => {
@@ -998,6 +1065,7 @@ export async function fetchTendenciasPmpaData(filters?: TendenciasFilterParams):
         filtrosDisponibles: {
             anos: availableAnos,
             meses: availableMeses,
+            instituciones: availableInstituciones,
             sucursales: availableSucursales,
             programas: availableProgramas,
             servicios: availableServicios,
