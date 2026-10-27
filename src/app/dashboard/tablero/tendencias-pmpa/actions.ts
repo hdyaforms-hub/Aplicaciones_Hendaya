@@ -93,6 +93,45 @@ export type SucursalMatrizItem = {
     total: number
 }
 
+export type ColegioOption = {
+    rbd: number
+    label: string
+    nombre: string
+    comuna?: string
+    sucursal?: string
+}
+
+export type ComparativaOscilacionData = {
+    interanual: Record<string, any>[]
+    anosDisponibles: number[]
+    porServicio: Record<string, any>[]
+    serviciosDisponibles: string[]
+    porPrograma: Record<string, any>[]
+    topProgramas: string[]
+    porRbd: Record<string, any>[]
+    rbdsComparados: {
+        key: string
+        rbd: number
+        nombre: string
+        label: string
+    }[]
+    metricasOscilacion: {
+        amplitudTotal: number
+        amplitudPct: number
+        periodoPico: {
+            label: string
+            cantidad: number
+        } | null
+        periodoValle: {
+            label: string
+            cantidad: number
+        } | null
+        promedioPeriodo: number
+        desviacionEstimada: number
+        volatilidadNivel: 'Baja' | 'Moderada' | 'Alta'
+    }
+}
+
 export type TendenciasDashboardData = {
     kpis: {
         totalRaciones: number
@@ -123,13 +162,14 @@ export type TendenciasDashboardData = {
     programasAnalisis: ProgramaAnalysis[]
     rankingRbds: RbdRankingItem[]
     matrizSucursales: SucursalMatrizItem[]
+    comparativaOscilacion: ComparativaOscilacionData
     filtrosDisponibles: {
         anos: number[]
         meses: { numero: number; nombre: string }[]
         sucursales: string[]
         programas: string[]
         servicios: string[]
-        colegios: { rbd: number; label: string }[]
+        colegios: ColegioOption[]
     }
     permisos: {
         isRestrictedByRbd: boolean
@@ -189,6 +229,25 @@ export async function fetchTendenciasPmpaData(filters?: TendenciasFilterParams):
             programasAnalisis: [],
             rankingRbds: [],
             matrizSucursales: [],
+            comparativaOscilacion: {
+                interanual: [],
+                anosDisponibles: [],
+                porServicio: [],
+                serviciosDisponibles: [],
+                porPrograma: [],
+                topProgramas: [],
+                porRbd: [],
+                rbdsComparados: [],
+                metricasOscilacion: {
+                    amplitudTotal: 0,
+                    amplitudPct: 0,
+                    periodoPico: null,
+                    periodoValle: null,
+                    promedioPeriodo: 0,
+                    desviacionEstimada: 0,
+                    volatilidadNivel: 'Baja'
+                }
+            },
             filtrosDisponibles: {
                 anos: [],
                 meses: [],
@@ -301,18 +360,21 @@ export async function fetchTendenciasPmpaData(filters?: TendenciasFilterParams):
     // Colegios disponibles para el selector
     const rbdsConMovimiento = await prisma.raciones.groupBy({
         by: ['rbd'],
-        where: rbdOptionsConstraint,
-        take: 300
+        where: rbdOptionsConstraint
     })
     const distinctRbdNums = rbdsConMovimiento.map(r => r.rbd)
 
     const colegiosDb = await prisma.colegios.findMany({
         where: { colRBD: { in: distinctRbdNums } },
-        select: { colRBD: true, nombreEstablecimiento: true }
+        select: { colRBD: true, nombreEstablecimiento: true, comuna: true, sucursal: true }
     })
     const colegioNombreMap = new Map<number, string>()
+    const colegioComunaMap = new Map<number, string>()
+    const colegioSucursalMap = new Map<number, string>()
     colegiosDb.forEach(c => {
         colegioNombreMap.set(c.colRBD, c.nombreEstablecimiento)
+        if (c.comuna) colegioComunaMap.set(c.colRBD, c.comuna)
+        if (c.sucursal) colegioSucursalMap.set(c.colRBD, c.sucursal)
     })
 
     // También rescatar locaciones de raciones si falta el nombre en Colegios
@@ -331,10 +393,16 @@ export async function fetchTendenciasPmpaData(filters?: TendenciasFilterParams):
         })
     }
 
-    const availableColegios = distinctRbdNums.map(num => ({
-        rbd: num,
-        label: `${num} - ${colegioNombreMap.get(num) || 'Establecimiento ' + num}`
-    })).sort((a, b) => a.rbd - b.rbd)
+    const availableColegios: ColegioOption[] = distinctRbdNums.map(num => {
+        const nom = colegioNombreMap.get(num) || 'Establecimiento ' + num
+        return {
+            rbd: num,
+            label: `${num} - ${nom}`,
+            nombre: nom,
+            comuna: colegioComunaMap.get(num) || undefined,
+            sucursal: colegioSucursalMap.get(num) || undefined
+        }
+    }).sort((a, b) => a.rbd - b.rbd)
 
     // 2. Consulta de datos principales agrupados por período y servicio
     const datosPeriodoServicio = await prisma.raciones.groupBy({
@@ -656,6 +724,261 @@ export async function fetchTendenciasPmpaData(filters?: TendenciasFilterParams):
     const colegiosConCargaCount = distinctRbdNums.length
     const promedioMensual = timeline.length > 0 ? Math.round(grandTotalRaciones / timeline.length) : 0
 
+    // 9. Construcción de Dataset para Gráfico Comparativo de Oscilación
+    // Filtro base sin año para comparar interanual
+    const whereWithoutAno: any = {}
+    if (isRestrictedByRbd && assignedRbds && assignedRbds.length > 0) {
+        if (filters?.rbd) {
+            whereWithoutAno.rbd = assignedRbds.includes(Number(filters.rbd)) ? Number(filters.rbd) : { in: assignedRbds }
+        } else {
+            whereWithoutAno.rbd = { in: assignedRbds }
+        }
+    } else if (filters?.rbd) {
+        whereWithoutAno.rbd = Number(filters.rbd)
+    }
+    if (filters?.programa) {
+        whereWithoutAno.programa = String(filters.programa).trim()
+    }
+    if (filters?.servicio) {
+        whereWithoutAno.servicio = String(filters.servicio).trim()
+    }
+    if (allowedUtsBySucursal !== null) {
+        whereWithoutAno.ut = { in: allowedUtsBySucursal }
+    }
+
+    // 9.1 Comparativa Interanual (Años vs Meses 1 a 12)
+    const interanualRaw = await prisma.raciones.groupBy({
+        by: ['anio', 'mes'],
+        where: whereWithoutAno,
+        _sum: { cantidad: true },
+        orderBy: [{ anio: 'asc' }, { mes: 'asc' }]
+    })
+
+    const distinctAnos = Array.from(new Set(interanualRaw.map(r => r.anio))).sort((a, b) => a - b)
+    const anosDisponibles = distinctAnos.length > 0 ? distinctAnos : (availableAnos.length > 0 ? availableAnos : [2026])
+
+    const interanual = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(m => {
+        const row: Record<string, any> = {
+            mes: m,
+            mesNombre: MESES_NOMBRES[m - 1] || `Mes ${m}`,
+            mesAbr: MESES_ABR[m - 1] || `M${m}`
+        }
+        anosDisponibles.forEach(yr => {
+            const found = interanualRaw.find(r => r.anio === yr && r.mes === m)
+            row[`ano_${yr}`] = found?._sum.cantidad || 0
+        })
+        return row
+    })
+
+    // 9.2 Comparativa por Servicio Alimentario
+    const porServicio = timeline.map(t => ({
+        periodoKey: t.periodoKey,
+        label: t.label,
+        mesNombre: t.mesNombre,
+        anio: t.anio,
+        mes: t.mes,
+        total: t.total,
+        desayuno: t.desayuno,
+        almuerzo: t.almuerzo,
+        once: t.once,
+        colacion: t.colacion,
+        cena: t.cena,
+        otros: t.otros
+    }))
+    const serviciosDisponibles = ['DESAYUNO', 'ALMUERZO', 'ONCE', 'COLACIÓN', 'CENA']
+
+    // 9.3 Comparativa por Programa Alimentario
+    const datosPeriodoPrograma = await prisma.raciones.groupBy({
+        by: ['anio', 'mes', 'programa'],
+        where: baseWhere,
+        _sum: { cantidad: true },
+        orderBy: [{ anio: 'asc' }, { mes: 'asc' }]
+    })
+
+    const topProgramas = programasAnalisis.slice(0, 6).map(p => p.programa)
+    const periodoProgramaMap = new Map<string, Record<string, number>>()
+    for (const row of datosPeriodoPrograma) {
+        const key = `${row.anio}-${String(row.mes).padStart(2, '0')}`
+        if (!periodoProgramaMap.has(key)) {
+            periodoProgramaMap.set(key, {})
+        }
+        const prog = row.programa || 'OTROS'
+        const cant = row._sum.cantidad || 0
+        const pObj = periodoProgramaMap.get(key)!
+        if (topProgramas.includes(prog)) {
+            pObj[prog] = (pObj[prog] || 0) + cant
+        } else {
+            pObj['OTROS'] = (pObj['OTROS'] || 0) + cant
+        }
+    }
+
+    const porPrograma = timeline.map(t => {
+        const progsForPeriod = periodoProgramaMap.get(t.periodoKey) || {}
+        const row: Record<string, any> = {
+            periodoKey: t.periodoKey,
+            label: t.label,
+            mesNombre: t.mesNombre,
+            anio: t.anio,
+            mes: t.mes,
+            total: t.total
+        }
+        topProgramas.forEach(p => {
+            row[p] = progsForPeriod[p] || 0
+        })
+        if (programasAnalisis.length > topProgramas.length) {
+            row['OTROS'] = progsForPeriod['OTROS'] || 0
+        }
+        return row
+    })
+    const topProgramasList = [...topProgramas]
+    if (programasAnalisis.length > topProgramas.length) {
+        topProgramasList.push('OTROS')
+    }
+
+    // 9.4 Comparativa por Colegio (RBD)
+    let rbdsComparados: { key: string; rbd: number; nombre: string; label: string }[] = []
+    let porRbd: any[] = []
+
+    if (filters?.rbd) {
+        const selectedRbdNum = Number(filters.rbd)
+        const schoolName = colegioNombreMap.get(selectedRbdNum) || `RBD ${selectedRbdNum}`
+        rbdsComparados = [
+            {
+                key: `rbd_${selectedRbdNum}`,
+                rbd: selectedRbdNum,
+                nombre: schoolName,
+                label: `${selectedRbdNum} - ${schoolName.length > 25 ? schoolName.slice(0, 25) + '...' : schoolName}`
+            },
+            {
+                key: 'promedio_colegios',
+                rbd: 0,
+                nombre: 'Promedio General',
+                label: 'Promedio de Colegios'
+            }
+        ]
+
+        const rbdRaw = await prisma.raciones.groupBy({
+            by: ['anio', 'mes'],
+            where: { ...baseWhere, rbd: selectedRbdNum },
+            _sum: { cantidad: true }
+        })
+        const schoolPeriodMap = new Map<string, number>()
+        rbdRaw.forEach(r => {
+            const key = `${r.anio}-${String(r.mes).padStart(2, '0')}`
+            schoolPeriodMap.set(key, r._sum.cantidad || 0)
+        })
+
+        const avgWhere = { ...baseWhere }
+        delete avgWhere.rbd
+        const allSchoolsRaw = await prisma.raciones.groupBy({
+            by: ['anio', 'mes'],
+            where: avgWhere,
+            _sum: { cantidad: true }
+        })
+        const avgPeriodMap = new Map<string, number>()
+        allSchoolsRaw.forEach(r => {
+            const key = `${r.anio}-${String(r.mes).padStart(2, '0')}`
+            const distinctCount = colegiosConCargaCount || 1
+            avgPeriodMap.set(key, Math.round((r._sum.cantidad || 0) / distinctCount))
+        })
+
+        porRbd = timeline.map(t => ({
+            periodoKey: t.periodoKey,
+            label: t.label,
+            mesNombre: t.mesNombre,
+            anio: t.anio,
+            mes: t.mes,
+            total: t.total,
+            [`rbd_${selectedRbdNum}`]: schoolPeriodMap.get(t.periodoKey) || 0,
+            promedio_colegios: avgPeriodMap.get(t.periodoKey) || 0
+        }))
+    } else {
+        const top5Rbds = rankingRbds.slice(0, 5)
+        const top5RbdNums = top5Rbds.map(r => r.rbd)
+        rbdsComparados = top5Rbds.map(r => ({
+            key: `rbd_${r.rbd}`,
+            rbd: r.rbd,
+            nombre: r.nombre,
+            label: `${r.rbd} - ${r.nombre.length > 20 ? r.nombre.slice(0, 20) + '...' : r.nombre}`
+        }))
+
+        const rbdMonthlyRaw = await prisma.raciones.groupBy({
+            by: ['anio', 'mes', 'rbd'],
+            where: { ...baseWhere, rbd: { in: top5RbdNums } },
+            _sum: { cantidad: true }
+        })
+
+        const rbdPeriodMap = new Map<string, Record<string, number>>()
+        rbdMonthlyRaw.forEach(r => {
+            const key = `${r.anio}-${String(r.mes).padStart(2, '0')}`
+            if (!rbdPeriodMap.has(key)) rbdPeriodMap.set(key, {})
+            rbdPeriodMap.get(key)![`rbd_${r.rbd}`] = r._sum.cantidad || 0
+        })
+
+        porRbd = timeline.map(t => {
+            const row: Record<string, any> = {
+                periodoKey: t.periodoKey,
+                label: t.label,
+                mesNombre: t.mesNombre,
+                anio: t.anio,
+                mes: t.mes,
+                total: t.total
+            }
+            rbdsComparados.forEach(c => {
+                row[c.key] = rbdPeriodMap.get(t.periodoKey)?.[c.key] || 0
+            })
+            return row
+        })
+    }
+
+    // 9.5 Métricas de Oscilación
+    let minTimeline = timeline.length > 0 ? timeline[0].total : 0
+    let maxTimeline = timeline.length > 0 ? timeline[0].total : 0
+    let periodoPico: { label: string; cantidad: number } | null = null
+    let periodoValle: { label: string; cantidad: number } | null = null
+
+    if (timeline.length > 0) {
+        const sorted = [...timeline].sort((a, b) => b.total - a.total)
+        maxTimeline = sorted[0].total
+        periodoPico = { label: sorted[0].label, cantidad: maxTimeline }
+
+        const sortedAsc = [...timeline].filter(t => t.total > 0).sort((a, b) => a.total - b.total)
+        if (sortedAsc.length > 0) {
+            minTimeline = sortedAsc[0].total
+            periodoValle = { label: sortedAsc[0].label, cantidad: minTimeline }
+        } else {
+            minTimeline = sorted[sorted.length - 1].total
+            periodoValle = { label: sorted[sorted.length - 1].label, cantidad: minTimeline }
+        }
+    }
+
+    const amplitud = maxTimeline - minTimeline
+    const amplitudPct = maxTimeline > 0 ? Math.round((amplitud / maxTimeline) * 1000) / 10 : 0
+    const volatilidadNivel: 'Baja' | 'Moderada' | 'Alta' = 
+        amplitudPct < 15 ? 'Baja' : (amplitudPct <= 35 ? 'Moderada' : 'Alta')
+
+    const metricasOscilacion = {
+        amplitudTotal: amplitud,
+        amplitudPct,
+        periodoPico,
+        periodoValle,
+        promedioPeriodo: promedioMensual,
+        desviacionEstimada: Math.round(amplitud / 2),
+        volatilidadNivel
+    }
+
+    const comparativaOscilacion: ComparativaOscilacionData = {
+        interanual,
+        anosDisponibles,
+        porServicio,
+        serviciosDisponibles,
+        porPrograma,
+        topProgramas: topProgramasList,
+        porRbd,
+        rbdsComparados,
+        metricasOscilacion
+    }
+
     return {
         kpis: {
             totalRaciones: grandTotalRaciones,
@@ -671,6 +994,7 @@ export async function fetchTendenciasPmpaData(filters?: TendenciasFilterParams):
         programasAnalisis,
         rankingRbds,
         matrizSucursales,
+        comparativaOscilacion,
         filtrosDisponibles: {
             anos: availableAnos,
             meses: availableMeses,
