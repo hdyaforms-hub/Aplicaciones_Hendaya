@@ -37,7 +37,7 @@ const SERVICIOS_COLORES: Record<string, string> = {
     'OTROS': '#64748B'            // Slate neutro
 }
 
-export function normalizeService(s: string): string {
+function normalizeService(s: string): string {
     const norm = (s || '').trim().toUpperCase()
     if (norm === 'D' || norm === 'DP' || norm === 'DPE' || (norm.startsWith('D') && norm.length <= 3 && !norm.includes('CO') && !norm.includes('C'))) return 'DESAYUNO'
     if (norm === 'A' || norm === 'AP' || (norm.startsWith('A') && norm.length <= 3 && !norm.includes('CO') && !norm.includes('C'))) return 'ALMUERZO'
