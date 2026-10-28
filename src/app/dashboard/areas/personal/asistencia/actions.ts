@@ -10,6 +10,7 @@ import path from 'path'
 import { v4 as uuidv4 } from 'uuid'
 import { uploadPath } from '@/lib/storage'
 import { getUserEffectiveRbds } from '@/lib/authFilters'
+import { getUserAssignedPersonalVisualizacion } from '@/lib/authPersonalVisualizacion'
 
 const PATH_ASISTENCIA = '/dashboard/areas/personal/asistencia'
 
@@ -67,27 +68,42 @@ export async function getAsistenciaRegistrosAction(filtros?: {
         return { success: false, error: 'No autorizado', data: [] }
     }
 
+    const assignedPersonal = await getUserAssignedPersonalVisualizacion()
     const authorizedRbds = await getUserEffectiveRbds()
     const where: any = {}
 
     // 0. Solo registros de períodos ABIERTOS (los cerrados se gestionan en Adm. Ausentismo)
     where.NOT = { estado: 'CERRADO' }
 
-    // 1. Restricción por RBD del usuario
-    if (authorizedRbds !== null) {
-        if (authorizedRbds.length === 0) {
-            // Usuario no administrador sin RBDs asignados -> no puede ver registros
-            where.rbd = -999999
-        } else if (filtros?.rbd) {
-            // Si filtra por un RBD específico, solo puede verlo si está en sus asignados
-            where.rbd = authorizedRbds.includes(filtros.rbd) ? filtros.rbd : -999999
+    // 1. Restricción por Visualización o RBD:
+    // Si el usuario tiene trabajadores asignados en el módulo de visualización, SOLO ve a sus trabajadores asignados.
+    // Para el resto de usuarios (supervisores, etc.), se preserva intacta la lógica original de RBD.
+    if (assignedPersonal && assignedPersonal.hasConfiguredVisualizacion) {
+        if (assignedPersonal.rutHashes.length === 0) {
+            where.rutHash = { in: ['__NO_PERSONAL__'] }
         } else {
-            // Si no especifica RBD, ve todos los colegios asignados
-            where.rbd = { in: authorizedRbds }
+            where.rutHash = { in: assignedPersonal.rutHashes }
         }
-    } else if (filtros?.rbd) {
-        // Administrador / Gerencia con filtro específico
-        where.rbd = filtros.rbd
+        if (filtros?.rbd) {
+            where.rbd = filtros.rbd
+        }
+    } else {
+        // Lógica original existente (sin tocar para supervisores y administradores)
+        if (authorizedRbds !== null) {
+            if (authorizedRbds.length === 0) {
+                // Usuario no administrador sin RBDs asignados -> no puede ver registros
+                where.rbd = -999999
+            } else if (filtros?.rbd) {
+                // Si filtra por un RBD específico, solo puede verlo si está en sus asignados
+                where.rbd = authorizedRbds.includes(filtros.rbd) ? filtros.rbd : -999999
+            } else {
+                // Si no especifica RBD, ve todos los colegios asignados
+                where.rbd = { in: authorizedRbds }
+            }
+        } else if (filtros?.rbd) {
+            // Administrador / Gerencia con filtro específico
+            where.rbd = filtros.rbd
+        }
     }
 
     // 2. Filtro de fecha
@@ -194,15 +210,24 @@ export async function asignarCriterioAction(registroId: string, criterioId: stri
     const session = await getSession()
     const usuarioNombre = session?.user?.nombre || session?.user?.email || 'Usuario'
     const authorizedRbds = await getUserEffectiveRbds()
+    const assignedPersonal = await getUserAssignedPersonalVisualizacion()
     const isAdmin = authorizedRbds === null
 
     try {
         const currentReg = await (rawPrisma as any).pers_Asis_Registro.findUnique({
             where: { id: registroId },
-            select: { rbd: true, criterioId: true, criterioNombre: true, estado: true }
+            select: { rbd: true, criterioId: true, criterioNombre: true, estado: true, rutHash: true }
         })
         if (!currentReg) {
             return { success: false, error: 'Registro no encontrado' }
+        }
+        if (assignedPersonal && assignedPersonal.hasConfiguredVisualizacion) {
+            if (!currentReg.rutHash || !assignedPersonal.rutHashes.includes(currentReg.rutHash)) {
+                return {
+                    success: false,
+                    error: 'No tienes autorización para modificar registros de este colaborador'
+                }
+            }
         }
         if (currentReg.estado === 'CERRADO') {
             return {
@@ -273,11 +298,17 @@ export async function getEstablecimientosAutocompletadoAction() {
         return { success: false, error: 'No autorizado', data: [] }
     }
 
+    const assignedPersonal = await getUserAssignedPersonalVisualizacion()
     const authorizedRbds = await getUserEffectiveRbds()
 
     try {
         const where: any = {}
-        if (authorizedRbds !== null) {
+        if (assignedPersonal && assignedPersonal.hasConfiguredVisualizacion) {
+            if (assignedPersonal.rutHashes.length === 0) {
+                return { success: true, data: [] }
+            }
+            where.rutHash = { in: assignedPersonal.rutHashes }
+        } else if (authorizedRbds !== null) {
             if (authorizedRbds.length === 0) {
                 return { success: true, data: [] }
             }
@@ -300,8 +331,17 @@ export async function getEstablecimientosAutocompletadoAction() {
             }
         }
 
+        // Si el usuario tiene asignación de visualización, agregar colegios de sus trabajadores asignados
+        if (assignedPersonal && assignedPersonal.hasConfiguredVisualizacion && assignedPersonal.colegios.length > 0) {
+            for (const c of assignedPersonal.colegios) {
+                if (c.rbd && !mapEstablecimientos.has(c.rbd)) {
+                    mapEstablecimientos.set(c.rbd, c.establecimiento)
+                }
+            }
+        }
+
         // Si el usuario tiene RBDs autorizados específicos, asegurar que todos figuren con su nombre oficial
-        if (authorizedRbds !== null && authorizedRbds.length > 0) {
+        if (!assignedPersonal?.hasConfiguredVisualizacion && authorizedRbds !== null && authorizedRbds.length > 0) {
             try {
                 const cols: any[] = await (rawPrisma as any).colegios.findMany({
                     where: { colRBD: { in: authorizedRbds } },
@@ -353,6 +393,7 @@ export async function adjuntarDocumentoAsistenciaAction(formData: FormData): Pro
     const session = await getSession()
     const usuarioNombre = session?.user?.nombre || session?.user?.email || 'Usuario'
     const authorizedRbds = await getUserEffectiveRbds()
+    const assignedPersonal = await getUserAssignedPersonalVisualizacion()
     const isAdmin = authorizedRbds === null
 
     const registroId = formData.get('registroId') as string
@@ -366,8 +407,22 @@ export async function adjuntarDocumentoAsistenciaAction(formData: FormData): Pro
         return { success: false, error: 'Debes seleccionar un archivo válido para adjuntar' }
     }
 
-    // Si el usuario no es admin, verificar pertenencia a RBD autorizado y bloqueo de criterio
-    if (!isAdmin) {
+    // Validación por Asignación de Visualización o RBD
+    if (assignedPersonal && assignedPersonal.hasConfiguredVisualizacion) {
+        const currentReg = await (rawPrisma as any).pers_Asis_Registro.findUnique({
+            where: { id: registroId },
+            select: { rbd: true, criterioId: true, rutHash: true }
+        })
+        if (!currentReg) {
+            return { success: false, error: 'Registro no encontrado' }
+        }
+        if (!currentReg.rutHash || !assignedPersonal.rutHashes.includes(currentReg.rutHash)) {
+            return {
+                success: false,
+                error: 'No tienes autorización para adjuntar documentos a este colaborador'
+            }
+        }
+    } else if (!isAdmin) {
         const currentReg = await (rawPrisma as any).pers_Asis_Registro.findUnique({
             where: { id: registroId },
             select: { rbd: true, criterioId: true }

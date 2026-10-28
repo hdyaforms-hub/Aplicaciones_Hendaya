@@ -215,7 +215,8 @@ export async function getSession() {
                 'view_registro_capacitacion',
                 'manage_registro_capacitacion',
                 'view_tablero_monitoreo_rrhh',
-                'manage_mantenedor_monitoreo_rrhh'
+                'manage_mantenedor_monitoreo_rrhh',
+                'manage_personal_visualizacion'
             ]
 
             // Cargar permisos específicos configurados en base de datos para el rol

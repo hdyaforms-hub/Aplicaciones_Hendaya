@@ -403,25 +403,32 @@ export default function RiesgoMinutaClient({ initialData, initialFilters, curren
                     </div>
                 </div>
 
-                {/* ACCESO RÁPIDO A FECHAS RECIENTES CON DATOS */}
+                {/* ACCESO RÁPIDO A FECHAS RECIENTES CON DATOS Y ALERTAS */}
                 {data.filtrosDisponibles.fechasConDatos.length > 0 && (
                     <div className="flex items-center gap-2 pt-2 border-t border-slate-100 flex-wrap text-xs">
                         <span className="text-[11px] font-bold text-slate-500 flex items-center gap-1">
-                            <span>📅</span> Fechas sugeridas con minutas cargadas:
+                            <span>📅</span> Fechas sugeridas (⚠️ con alertas de riesgo):
                         </span>
-                        {data.filtrosDisponibles.fechasConDatos.slice(0, 5).map(f => (
-                            <button
-                                key={f}
-                                onClick={() => handleFilterChange('fecha', f)}
-                                className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all ${
-                                    (filters.fecha || data.fechaConsultada) === f
-                                        ? 'bg-sky-600 text-white shadow-sm'
-                                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                                }`}
-                            >
-                                {f}
-                            </button>
-                        ))}
+                        {data.filtrosDisponibles.fechasConDatos.slice(0, 8).map(f => {
+                            const hasRisk = data.filtrosDisponibles.fechasConRiesgo?.includes(f)
+                            const isSelectedDate = (filters.fecha || data.fechaConsultada) === f
+                            return (
+                                <button
+                                    key={f}
+                                    onClick={() => handleFilterChange('fecha', f)}
+                                    className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all flex items-center gap-1 ${
+                                        isSelectedDate
+                                            ? 'bg-sky-600 text-white shadow-sm'
+                                            : hasRisk
+                                            ? 'bg-amber-50 text-amber-800 border border-amber-200 hover:bg-amber-100'
+                                            : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                    }`}
+                                >
+                                    {hasRisk && <span>⚠️</span>}
+                                    <span>{f}</span>
+                                </button>
+                            )
+                        })}
                     </div>
                 )}
             </div>
@@ -574,7 +581,9 @@ export default function RiesgoMinutaClient({ initialData, initialFilters, curren
                                     className={`rounded-2xl border p-4.5 transition-all ${
                                         col.nivelRiesgo === 'ALTO'
                                             ? 'bg-rose-50/40 border-rose-200 hover:border-rose-400'
-                                            : 'bg-amber-50/30 border-amber-200 hover:border-amber-400'
+                                            : col.nivelRiesgo === 'MEDIO'
+                                            ? 'bg-amber-50/30 border-amber-200 hover:border-amber-400'
+                                            : 'bg-emerald-50/30 border-emerald-200 hover:border-emerald-400'
                                     }`}
                                 >
                                     <div className="flex items-start justify-between gap-3">
@@ -804,14 +813,19 @@ export default function RiesgoMinutaClient({ initialData, initialFilters, curren
                             ) : (
                                 selectedColegioModal.servicios.map((serv, sIdx) => (
                                     <div key={sIdx} className="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-3">
-                                        <div className="flex items-center justify-between border-b border-slate-200/80 pb-2">
-                                            <div className="flex items-center gap-2">
+                                        <div className="flex items-center justify-between border-b border-slate-200/80 pb-2 flex-wrap gap-2">
+                                            <div className="flex items-center gap-2 flex-wrap">
                                                 <span className="font-extrabold text-slate-900 text-sm uppercase">
                                                     {serv.servicio}
                                                 </span>
                                                 <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-sky-100 text-sky-800">
-                                                    Programa {serv.programa}
+                                                    Programa {serv.programa} (#{serv.numeroPrograma})
                                                 </span>
+                                                {serv.area && (
+                                                    <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-slate-200/80 text-slate-700">
+                                                        Área: {serv.area}
+                                                    </span>
+                                                )}
                                                 {serv.numeroMinuta && (
                                                     <span className="text-[10px] text-slate-500 font-mono">
                                                         Minuta #{serv.numeroMinuta}

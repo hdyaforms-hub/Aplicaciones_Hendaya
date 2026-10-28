@@ -379,12 +379,12 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
     {
         name: 'Mantenedor',
         icon: '⚙️',
-        requiredPermission: ['view_colegios', 'view_productos', 'view_pmpa', 'view_consumo_gas', 'view_preparaciones', 'view_minutas', 'view_raciones', 'view_codigo_causa', 'manage_sucursales', 'manage_areas', 'manage_vehiculos', 'manage_zonales', 'manage_jefe_operacion', 'manage_supervisor', 'manage_manipuladoras_masiva', 'manage_colegios_matriz', 'manage_nueva_matriz', 'manage_actas_supervision', 'manage_doc_configuracion', 'manage_doc_carpetas', 'manage_doc_privilegios', 'manage_personal_criterios', 'manage_mantenedor_monitoreo', 'manage_mantenedor_monitoreo_rrhh'],
+        requiredPermission: ['view_colegios', 'view_productos', 'view_pmpa', 'view_consumo_gas', 'view_preparaciones', 'view_minutas', 'view_raciones', 'view_codigo_causa', 'manage_sucursales', 'manage_areas', 'manage_vehiculos', 'manage_zonales', 'manage_jefe_operacion', 'manage_supervisor', 'manage_manipuladoras_masiva', 'manage_colegios_matriz', 'manage_nueva_matriz', 'manage_actas_supervision', 'manage_doc_configuracion', 'manage_doc_carpetas', 'manage_doc_privilegios', 'manage_personal_criterios', 'manage_mantenedor_monitoreo', 'manage_mantenedor_monitoreo_rrhh', 'manage_personal_visualizacion'],
         subItems: [
             { name: 'Monitoreo', href: '/dashboard/mantenedor/monitoreo', requiredPermission: 'manage_mantenedor_monitoreo' },
             {
                 name: 'Recursos Humanos',
-                requiredPermission: ['manage_personal_criterios', 'manage_mantenedor_monitoreo_rrhh'],
+                requiredPermission: ['manage_personal_criterios', 'manage_mantenedor_monitoreo_rrhh', 'manage_personal_visualizacion'],
                 subItems: [
                     {
                         name: 'Monitoreo',
@@ -395,6 +395,11 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
                         name: 'Criterios de Ausencias',
                         href: '/dashboard/mantenedor/personal/criterios-ausencias',
                         requiredPermission: 'manage_personal_criterios'
+                    },
+                    {
+                        name: 'Configuración de visualización',
+                        href: '/dashboard/mantenedor/personal/configuracion-visualizacion',
+                        requiredPermission: 'manage_personal_visualizacion'
                     }
                 ]
             },

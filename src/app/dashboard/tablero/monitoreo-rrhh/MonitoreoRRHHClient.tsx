@@ -5,9 +5,12 @@ import Link from 'next/link'
 import {
     MonitoreoRRHHTableroResponse,
     ColaboradorRRHHCardData,
+    SucursalRRHHCardData,
     SemaforoStatus,
     getMonitoreoRRHHTableroData
 } from './actions'
+
+type TipoModuloFilter = 'TODOS' | 'AUSENTISMO' | 'HORAS_EXTRAS' | 'ATRASOS' | 'ADELANTOS'
 
 interface Props {
     initialData: MonitoreoRRHHTableroResponse
@@ -17,13 +20,18 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
     const [currentData, setCurrentData] = useState<MonitoreoRRHHTableroResponse>(initialData)
     const [isPending, startTransition] = useTransition()
 
+    // Pestaña principal: Avance por Colaborador vs Avance por Sucursal
+    const [activeTab, setActiveTab] = useState<'COLABORADORES' | 'SUCURSALES'>('COLABORADORES')
+
     // Filtros de estado
     const [filterSemaforo, setFilterSemaforo] = useState<'TODOS' | SemaforoStatus>('TODOS')
     const [filterRole, setFilterRole] = useState<string>('TODOS')
     const [filterSucursal, setFilterSucursal] = useState<string>('TODOS')
+    const [filterTipoModulo, setFilterTipoModulo] = useState<TipoModuloFilter>('TODOS')
     const [searchUserQuery, setSearchUserQuery] = useState<string>('')
     const [viewMode, setViewMode] = useState<'CERAMICAS' | 'TABLA'>('CERAMICAS')
     const [selectedColaborador, setSelectedColaborador] = useState<ColaboradorRRHHCardData | null>(null)
+    const [selectedSucursalModal, setSelectedSucursalModal] = useState<SucursalRRHHCardData | null>(null)
     const [modalSearchQuery, setModalSearchQuery] = useState<string>('')
 
     // Dropdowns personalizados
@@ -81,8 +89,80 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
         })
     }, [currentData.colaboradores, filterSemaforo, filterRole, filterSucursal, searchUserQuery])
 
+    // Filtrado de sucursales
+    const filteredSucursales = useMemo(() => {
+        return (currentData.sucursalesAvance || []).filter((s) => {
+            if (filterSucursal !== 'TODOS' && s.sucursal !== filterSucursal) {
+                return false
+            }
+            if (filterSemaforo !== 'TODOS') {
+                if (filterTipoModulo === 'TODOS') {
+                    if (s.semaforoGlobal !== filterSemaforo) return false
+                } else {
+                    const mod = s.modulos.find(m => m.tipo === filterTipoModulo)
+                    if (!mod || mod.semaforo !== filterSemaforo) return false
+                }
+            }
+            return true
+        })
+    }, [currentData.sucursalesAvance, filterSucursal, filterSemaforo, filterTipoModulo])
+
     // Exportar datos a CSV para Excel
     const handleExportCsv = () => {
+        if (activeTab === 'SUCURSALES') {
+            if (!filteredSucursales.length) return
+
+            const headers = [
+                'Sucursal',
+                'Establecimientos',
+                'Semáforo Global',
+                '% Cumplimiento Global',
+                'Total Registros Abiertos',
+                'Gestionados',
+                'Pendientes',
+                'Ausentismo (Gest/Total - %)',
+                'Horas Extras (Gest/Total - % - Aplica/NoAplica)',
+                'Atrasos (Gest/Total - % - AplicaDesc/NoAplica)',
+                'Adelantos (Gest/Total - % - AplicaDesc/NoAplica)'
+            ]
+
+            const rows = filteredSucursales.map(s => {
+                const modAus = s.modulos.find(m => m.tipo === 'AUSENTISMO')
+                const modHhee = s.modulos.find(m => m.tipo === 'HORAS_EXTRAS')
+                const modAtr = s.modulos.find(m => m.tipo === 'ATRASOS')
+                const modAde = s.modulos.find(m => m.tipo === 'ADELANTOS')
+
+                const ausText = `${modAus?.gestionados || 0}/${modAus?.totalAbiertos || 0} (${modAus?.porcentaje || 100}%)`
+                const hheeText = `${modHhee?.gestionados || 0}/${modHhee?.totalAbiertos || 0} (${modHhee?.porcentaje || 100}% | Aplica: ${modHhee?.aplicaCount || 0}, No: ${modHhee?.noAplicaCount || 0})`
+                const atrText = `${modAtr?.gestionados || 0}/${modAtr?.totalAbiertos || 0} (${modAtr?.porcentaje || 100}% | Desc: ${modAtr?.aplicaCount || 0}, No: ${modAtr?.noAplicaCount || 0})`
+                const adeText = `${modAde?.gestionados || 0}/${modAde?.totalAbiertos || 0} (${modAde?.porcentaje || 100}% | Desc: ${modAde?.aplicaCount || 0}, No: ${modAde?.noAplicaCount || 0})`
+
+                return [
+                    `"${s.sucursal}"`,
+                    s.colegiosCount,
+                    s.semaforoGlobal,
+                    `${s.porcentajeGlobal}%`,
+                    s.totalRegistrosAbiertos,
+                    s.totalGestionados,
+                    s.totalPendientes,
+                    `"${ausText}"`,
+                    `"${hheeText}"`,
+                    `"${atrText}"`,
+                    `"${adeText}"`
+                ]
+            })
+
+            const csvContent = 'data:text/csv;charset=utf-8,\uFEFF' + [headers.join(';'), ...rows.map(e => e.join(';'))].join('\n')
+            const encodedUri = encodeURI(csvContent)
+            const link = document.createElement('a')
+            link.setAttribute('href', encodedUri)
+            link.setAttribute('download', `monitoreo_rrhh_sucursales_${new Date().toISOString().slice(0, 10)}.csv`)
+            document.body.appendChild(link)
+            link.click()
+            document.body.removeChild(link)
+            return
+        }
+
         if (!filteredColaboradores.length) return
 
         const headers = [
@@ -141,7 +221,7 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
         document.body.removeChild(link)
     }
 
-    // Modal Colegios filtrados
+    // Modal Colegios filtrados (Colaborador)
     const modalFilteredColegios = useMemo(() => {
         if (!selectedColaborador) return []
         if (!modalSearchQuery.trim()) return selectedColaborador.colegiosDetalle
@@ -154,6 +234,19 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
             return matchRbd || matchName || matchComuna || matchSucursal
         })
     }, [selectedColaborador, modalSearchQuery])
+
+    // Modal Colegios filtrados (Sucursal)
+    const modalFilteredSucursalColegios = useMemo(() => {
+        if (!selectedSucursalModal) return []
+        if (!modalSearchQuery.trim()) return selectedSucursalModal.colegiosDetalle
+        const q = modalSearchQuery.toLowerCase().trim()
+        return selectedSucursalModal.colegiosDetalle.filter(col => {
+            const matchRbd = col.rbd.toString().includes(q)
+            const matchName = col.nombreEstablecimiento.toLowerCase().includes(q)
+            const matchComuna = col.comuna ? col.comuna.toLowerCase().includes(q) : false
+            return matchRbd || matchName || matchComuna
+        })
+    }, [selectedSucursalModal, modalSearchQuery])
 
     // Pantalla de error si la consulta falló
     if (!currentData.success) {
@@ -299,7 +392,7 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                 </div>
             </div>
 
-            {/* BANNER INFORMATIVO: FILTRO EXCLUSIVO DE REGISTROS ABIERTOS */}
+            {/* BANNER INFORMATIVO: FILTRO EXCLUSIVO DE REGISTOS ABIERTOS */}
             <div className="bg-sky-50/80 border border-sky-200/90 rounded-2xl p-3.5 px-4 flex items-center justify-between gap-3 text-xs text-sky-900 shadow-sm">
                 <div className="flex items-center gap-2.5">
                     <span className="text-base">📌</span>
@@ -313,6 +406,67 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                 </div>
             </div>
 
+            {/* PESTAÑAS PRINCIPALES: AVANCE POR COLABORADOR vs AVANCE POR SUCURSAL */}
+            <div className="bg-white p-1.5 rounded-2xl border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-1.5 flex-wrap w-full sm:w-auto">
+                    <button
+                        type="button"
+                        onClick={() => {
+                            setActiveTab('COLABORADORES')
+                            setFilterSemaforo('TODOS')
+                        }}
+                        className={`flex-1 sm:flex-initial px-5 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold flex items-center justify-center gap-2 transition-all ${
+                            activeTab === 'COLABORADORES'
+                                ? 'bg-gradient-to-r from-slate-900 via-sky-950 to-slate-900 text-white shadow-md shadow-sky-950/20'
+                                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                        }`}
+                    >
+                        <span>👥</span>
+                        <span>Avance por Colaborador</span>
+                        <span className={`px-2 py-0.5 rounded-full text-[11px] font-mono ${
+                            activeTab === 'COLABORADORES'
+                                ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/30'
+                                : 'bg-slate-200 text-slate-700'
+                        }`}>
+                            {currentData.colaboradores?.length || 0}
+                        </span>
+                    </button>
+
+                    <button
+                        type="button"
+                        onClick={() => {
+                            setActiveTab('SUCURSALES')
+                            setFilterSemaforo('TODOS')
+                        }}
+                        className={`flex-1 sm:flex-initial px-5 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold flex items-center justify-center gap-2 transition-all ${
+                            activeTab === 'SUCURSALES'
+                                ? 'bg-gradient-to-r from-slate-900 via-sky-950 to-slate-900 text-white shadow-md shadow-sky-950/20'
+                                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                        }`}
+                    >
+                        <span>🏢</span>
+                        <span>Avance por Sucursal</span>
+                        <span className={`px-2 py-0.5 rounded-full text-[11px] font-mono ${
+                            activeTab === 'SUCURSALES'
+                                ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/30'
+                                : 'bg-slate-200 text-slate-700'
+                        }`}>
+                            {currentData.sucursalesAvance?.length || 0}
+                        </span>
+                    </button>
+                </div>
+
+                <div className="hidden md:flex items-center gap-2 pr-3 text-xs text-slate-500">
+                    {activeTab === 'COLABORADORES' ? (
+                        <span>Vista por supervisor / encargado asignado y sus colegios</span>
+                    ) : (
+                        <span>Vista consolidada por sucursal separada en <strong>Ausentismo</strong>, <strong>Hrs Extras</strong>, <strong>Atrasos</strong> y <strong>Adelantos</strong></span>
+                    )}
+                </div>
+            </div>
+
+            {activeTab === 'COLABORADORES' ? (
+                <>
             {/* TARJETAS EJECUTIVAS KPIS (Tema Claro Hendaya) */}
             <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
                 {/* Total Colaboradores */}
@@ -1037,6 +1191,603 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                     </div>
                 </div>
             )}
+                </>
+            ) : (
+                /* =====================================================================
+                   PESTAÑA 2: AVANCE POR SUCURSAL SEPARADO POR TIPO (AUSENTISMO, HRS EXTRAS, ATRASOS Y ADELANTO)
+                   ===================================================================== */
+                <>
+                    {/* 4 TARJETAS DE RESUMEN CONSOLIDADO POR TIPO DE MÓDULO (Interactivas para filtrar foco) */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+                        {(currentData.resumenPorTipo || []).map((modGlobal) => {
+                            const isSelectedTipo = filterTipoModulo === modGlobal.tipo
+                            const isVerde = modGlobal.semaforo === 'VERDE'
+                            const isAmarillo = modGlobal.semaforo === 'AMARILLO'
+
+                            let icon = '📋'
+                            if (modGlobal.tipo === 'AUSENTISMO') icon = '🏥'
+                            if (modGlobal.tipo === 'HORAS_EXTRAS') icon = '⏱️'
+                            if (modGlobal.tipo === 'ATRASOS') icon = '⏳'
+                            if (modGlobal.tipo === 'ADELANTOS') icon = '🏃'
+
+                            const barColor = isVerde
+                                ? 'bg-emerald-500'
+                                : isAmarillo
+                                ? 'bg-amber-400'
+                                : 'bg-rose-500'
+
+                            const badgeClass = isVerde
+                                ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                                : isAmarillo
+                                ? 'bg-amber-50 text-amber-700 border-amber-200'
+                                : 'bg-rose-50 text-rose-700 border-rose-200'
+
+                            return (
+                                <div
+                                    key={modGlobal.tipo}
+                                    onClick={() =>
+                                        setFilterTipoModulo(isSelectedTipo ? 'TODOS' : modGlobal.tipo)
+                                    }
+                                    className={`cursor-pointer bg-white border rounded-2xl p-4 shadow-sm transition-all hover:shadow-md hover:scale-[1.01] ${
+                                        isSelectedTipo
+                                            ? 'border-sky-600 ring-2 ring-sky-500/20 bg-sky-50/40'
+                                            : 'border-slate-200 hover:border-sky-300'
+                                    }`}
+                                >
+                                    <div className="flex items-center justify-between gap-2">
+                                        <span className="text-xs font-extrabold text-slate-800 flex items-center gap-1.5">
+                                            <span className="p-1.5 bg-slate-100 rounded-xl text-sm">{icon}</span>
+                                            <span>{modGlobal.nombre}</span>
+                                        </span>
+                                        <span className={`px-2 py-0.5 rounded-full text-[11px] font-bold border ${badgeClass}`}>
+                                            {modGlobal.porcentaje}% Avance
+                                        </span>
+                                    </div>
+
+                                    <div className="mt-3 flex items-baseline justify-between">
+                                        <div>
+                                            <span className="text-2xl font-extrabold text-slate-900">
+                                                {modGlobal.gestionados}
+                                            </span>
+                                            <span className="text-xs text-slate-500 font-mono ml-1">
+                                                / {modGlobal.totalAbiertos} abiertos
+                                            </span>
+                                        </div>
+                                        <span className={`text-xs font-bold font-mono ${
+                                            modGlobal.pendientes > 0 ? 'text-rose-600' : 'text-emerald-600'
+                                        }`}>
+                                            {modGlobal.pendientes > 0 ? `${modGlobal.pendientes} pend.` : 'Al día'}
+                                        </span>
+                                    </div>
+
+                                    <div className="w-full bg-slate-100 h-2 rounded-full mt-2 overflow-hidden">
+                                        <div
+                                            className={`h-full rounded-full transition-all duration-500 ${barColor}`}
+                                            style={{ width: `${modGlobal.porcentaje}%` }}
+                                        />
+                                    </div>
+
+                                    <div className="mt-2 pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] text-slate-500">
+                                        {modGlobal.tipo === 'AUSENTISMO' ? (
+                                            <span>Control de licencias y permisos</span>
+                                        ) : modGlobal.tipo === 'HORAS_EXTRAS' ? (
+                                            <span>
+                                                Aplica: <strong className="text-emerald-700">{modGlobal.aplicaCount || 0}</strong> • No Aplica: <strong>{modGlobal.noAplicaCount || 0}</strong>
+                                            </span>
+                                        ) : (
+                                            <span>
+                                                Aplica Desc: <strong className="text-rose-700">{modGlobal.aplicaCount || 0}</strong> • No Aplica: <strong>{modGlobal.noAplicaCount || 0}</strong>
+                                            </span>
+                                        )}
+                                        <span className="text-sky-600 font-bold">
+                                            {isSelectedTipo ? '✓ Filtrando' : 'Filtrar →'}
+                                        </span>
+                                    </div>
+                                </div>
+                            )
+                        })}
+                    </div>
+
+                    {/* BARRA DE FILTROS DE LA VISTA POR SUCURSAL */}
+                    <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                            {/* Selector rápido de Sucursal */}
+                            <div className="flex items-center gap-2 flex-wrap">
+                                <span className="text-xs font-bold text-slate-700 flex items-center gap-1.5 mr-1">
+                                    <span>🏢</span>
+                                    <span>Sucursal:</span>
+                                </span>
+                                <button
+                                    type="button"
+                                    onClick={() => setFilterSucursal('TODOS')}
+                                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
+                                        filterSucursal === 'TODOS'
+                                            ? 'bg-slate-900 text-white shadow-sm'
+                                            : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                    }`}
+                                >
+                                    Todas ({currentData.sucursalesAvance?.length || 0})
+                                </button>
+                                {(currentData.sucursalesAvance || []).map((s) => (
+                                    <button
+                                        key={s.sucursal}
+                                        type="button"
+                                        onClick={() =>
+                                            setFilterSucursal(filterSucursal === s.sucursal ? 'TODOS' : s.sucursal)
+                                        }
+                                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${
+                                            filterSucursal === s.sucursal
+                                                ? 'bg-sky-600 text-white shadow-sm'
+                                                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                        }`}
+                                    >
+                                        <span>{s.sucursal}</span>
+                                        <span className={`text-[10px] font-mono px-1.5 py-0.2 rounded-md ${
+                                            filterSucursal === s.sucursal
+                                                ? 'bg-white/20 text-white'
+                                                : 'bg-white text-slate-600'
+                                        }`}>
+                                            {s.porcentajeGlobal}%
+                                        </span>
+                                    </button>
+                                ))}
+                            </div>
+
+                            {/* Selector rápido de Tipo de Registro */}
+                            <div className="flex items-center gap-1.5 flex-wrap">
+                                <span className="text-xs font-bold text-slate-700 mr-1">Tipo:</span>
+                                {([
+                                    { id: 'TODOS', label: 'Todos los Tipos', icon: '📊' },
+                                    { id: 'AUSENTISMO', label: 'Ausentismo', icon: '🏥' },
+                                    { id: 'HORAS_EXTRAS', label: 'Hrs Extras', icon: '⏱️' },
+                                    { id: 'ATRASOS', label: 'Atrasos', icon: '⏳' },
+                                    { id: 'ADELANTOS', label: 'Adelantos', icon: '🏃' }
+                                ] as { id: TipoModuloFilter; label: string; icon: string }[]).map((t) => (
+                                    <button
+                                        key={t.id}
+                                        type="button"
+                                        onClick={() => setFilterTipoModulo(t.id)}
+                                        className={`px-2.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1 transition ${
+                                            filterTipoModulo === t.id
+                                                ? 'bg-cyan-700 text-white shadow-sm'
+                                                : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                                        }`}
+                                    >
+                                        <span>{t.icon}</span>
+                                        <span>{t.label}</span>
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Filtro por Semáforo y Contador */}
+                        <div className="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+                            <div className="flex items-center gap-2 flex-wrap">
+                                <span className="text-xs font-bold text-slate-600 mr-1">Semáforo:</span>
+                                <button
+                                    type="button"
+                                    onClick={() => setFilterSemaforo('TODOS')}
+                                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
+                                        filterSemaforo === 'TODOS'
+                                            ? 'bg-slate-800 text-white shadow-sm'
+                                            : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                                    }`}
+                                >
+                                    Todos
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setFilterSemaforo('VERDE')}
+                                    className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition ${
+                                        filterSemaforo === 'VERDE'
+                                            ? 'bg-emerald-600 text-white shadow-sm'
+                                            : 'bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100/70'
+                                    }`}
+                                >
+                                    <span>🟢</span>
+                                    <span>Al Día (&gt;=95%)</span>
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setFilterSemaforo('AMARILLO')}
+                                    className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition ${
+                                        filterSemaforo === 'AMARILLO'
+                                            ? 'bg-amber-500 text-white shadow-sm'
+                                            : 'bg-amber-50 text-amber-700 border border-amber-200 hover:bg-amber-100/70'
+                                    }`}
+                                >
+                                    <span>🟡</span>
+                                    <span>Atraso Leve (70-94%)</span>
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setFilterSemaforo('ROJO')}
+                                    className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition ${
+                                        filterSemaforo === 'ROJO'
+                                            ? 'bg-rose-600 text-white shadow-sm'
+                                            : 'bg-rose-50 text-rose-700 border border-rose-200 hover:bg-rose-100/70'
+                                    }`}
+                                >
+                                    <span>🔴</span>
+                                    <span>Atraso Grave (&lt;70%)</span>
+                                </button>
+                            </div>
+
+                            <div className="text-xs text-slate-500 font-medium">
+                                Mostrando <strong className="text-sky-700 font-bold">{filteredSucursales.length}</strong> de {currentData.sucursalesAvance?.length || 0} sucursales
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* RENDERIZADO DE SUCURSALES: CERÁMICAS O TABLA */}
+                    {filteredSucursales.length === 0 ? (
+                        <div className="p-12 text-center bg-white border border-dashed border-slate-200 rounded-3xl space-y-2 shadow-sm">
+                            <span className="text-3xl">🏢</span>
+                            <h3 className="text-base font-bold text-slate-800">No se encontraron sucursales con los filtros seleccionados</h3>
+                            <p className="text-xs text-slate-500">Prueba seleccionando todas las sucursales o cambiando el filtro de semáforo.</p>
+                        </div>
+                    ) : viewMode === 'CERAMICAS' ? (
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 relative z-0">
+                            {filteredSucursales.map((sucItem) => {
+                                // Si hay un filtro de tipo activo, podemos destacar ese módulo o usar el global
+                                const focusedMod = filterTipoModulo !== 'TODOS'
+                                    ? sucItem.modulos.find(m => m.tipo === filterTipoModulo)
+                                    : null
+
+                                const activeSemaforo = focusedMod ? focusedMod.semaforo : sucItem.semaforoGlobal
+                                const activePorcentaje = focusedMod ? focusedMod.porcentaje : sucItem.porcentajeGlobal
+
+                                const isVerde = activeSemaforo === 'VERDE'
+                                const isAmarillo = activeSemaforo === 'AMARILLO'
+
+                                const borderClass = isVerde
+                                    ? 'border-emerald-200 hover:border-emerald-400'
+                                    : isAmarillo
+                                    ? 'border-amber-200 hover:border-amber-400'
+                                    : 'border-rose-200 hover:border-rose-400'
+
+                                const badgeStatusClass = isVerde
+                                    ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                                    : isAmarillo
+                                    ? 'bg-amber-50 text-amber-700 border-amber-200'
+                                    : 'bg-rose-50 text-rose-700 border-rose-200'
+
+                                const badgeText = isVerde ? '🟢 Al Día' : isAmarillo ? '🟡 Atraso Leve' : '🔴 Atraso Grave'
+
+                                const modulosToRender = filterTipoModulo === 'TODOS'
+                                    ? sucItem.modulos
+                                    : sucItem.modulos.filter(m => m.tipo === filterTipoModulo)
+
+                                return (
+                                    <div
+                                        key={sucItem.sucursal}
+                                        onClick={() => {
+                                            setSelectedSucursalModal(sucItem)
+                                            setModalSearchQuery('')
+                                        }}
+                                        className={`cursor-pointer group relative bg-white border rounded-3xl p-6 shadow-sm transition-all duration-200 hover:shadow-md ${borderClass} flex flex-col justify-between`}
+                                    >
+                                        {/* Barra luminosa superior */}
+                                        <div
+                                            className={`absolute top-0 left-6 right-6 h-1.5 rounded-b-full transition-all ${
+                                                isVerde ? 'bg-emerald-500' : isAmarillo ? 'bg-amber-400' : 'bg-rose-500'
+                                            }`}
+                                        />
+
+                                        <div>
+                                            {/* Cabecera de la Sucursal */}
+                                            <div className="flex items-start justify-between gap-3 pt-1">
+                                                <div className="flex items-center gap-3.5">
+                                                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-slate-900 via-sky-950 to-slate-900 text-cyan-300 border border-sky-800/60 font-extrabold flex items-center justify-center text-lg shadow-sm shrink-0">
+                                                        🏢
+                                                    </div>
+                                                    <div>
+                                                        <div className="flex items-center gap-2 flex-wrap">
+                                                            <h3 className="font-extrabold text-slate-900 text-lg leading-snug group-hover:text-sky-700 transition-colors">
+                                                                {sucItem.sucursal}
+                                                            </h3>
+                                                            <span className="text-[11px] px-2.5 py-0.5 rounded-md bg-slate-100 border border-slate-200 text-slate-700 font-semibold">
+                                                                🏫 {sucItem.colegiosCount} establecimientos / sedes
+                                                            </span>
+                                                        </div>
+                                                        <p className="text-xs text-slate-500 mt-0.5">
+                                                            {focusedMod
+                                                                ? `Mostrando avance específico en ${focusedMod.nombre}`
+                                                                : 'Avance consolidado en los 4 módulos de asistencia'}
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                <span className={`px-3 py-1 rounded-full text-xs font-bold border shrink-0 ${badgeStatusClass}`}>
+                                                    {badgeText}
+                                                </span>
+                                            </div>
+
+                                            {/* Barra de progreso global de la Sucursal */}
+                                            <div className="mt-4 pt-3 border-t border-slate-100">
+                                                <div className="flex items-center justify-between text-xs mb-1.5">
+                                                    <span className="font-bold text-slate-700">
+                                                        {focusedMod ? `Cumplimiento ${focusedMod.nombre}` : 'Cumplimiento Global Sucursal'}
+                                                    </span>
+                                                    <span className="font-extrabold text-cyan-700 text-sm">
+                                                        {activePorcentaje}% avance
+                                                    </span>
+                                                </div>
+                                                <div className="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+                                                    <div
+                                                        className={`h-full rounded-full transition-all duration-500 ${
+                                                            isVerde ? 'bg-emerald-500' : isAmarillo ? 'bg-amber-400' : 'bg-rose-500'
+                                                        }`}
+                                                        style={{ width: `${activePorcentaje}%` }}
+                                                    />
+                                                </div>
+                                                <div className="mt-1.5 flex justify-between text-[11px] text-slate-500 font-mono">
+                                                    <span>
+                                                        Total Abiertos: <strong className="text-slate-800">{focusedMod ? focusedMod.totalAbiertos : sucItem.totalRegistrosAbiertos}</strong>
+                                                    </span>
+                                                    <span>
+                                                        Gestionados: <strong className="text-emerald-700">{focusedMod ? focusedMod.gestionados : sucItem.totalGestionados}</strong>
+                                                    </span>
+                                                    <span>
+                                                        Pendientes: <strong className={(focusedMod ? focusedMod.pendientes : sucItem.totalPendientes) > 0 ? 'text-rose-600' : 'text-slate-600'}>
+                                                            {focusedMod ? focusedMod.pendientes : sucItem.totalPendientes}
+                                                        </strong>
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            {/* GRILLA SEPARADA POR TIPO: AUSENTISMO, HRS EXTRAS, ATRASOS Y ADELANTOS */}
+                                            <div className={`mt-4 grid grid-cols-1 ${modulosToRender.length > 1 ? 'sm:grid-cols-2' : ''} gap-3`}>
+                                                {modulosToRender.map((mod) => {
+                                                    const modVerde = mod.semaforo === 'VERDE'
+                                                    const modAmarillo = mod.semaforo === 'AMARILLO'
+                                                    const barColor = modVerde ? 'bg-emerald-500' : modAmarillo ? 'bg-amber-400' : 'bg-rose-500'
+                                                    const modBadge = modVerde
+                                                        ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                                                        : modAmarillo
+                                                        ? 'bg-amber-50 text-amber-700 border-amber-200'
+                                                        : 'bg-rose-50 text-rose-700 border-rose-200'
+
+                                                    let icon = '📋'
+                                                    if (mod.tipo === 'AUSENTISMO') icon = '🏥'
+                                                    if (mod.tipo === 'HORAS_EXTRAS') icon = '⏱️'
+                                                    if (mod.tipo === 'ATRASOS') icon = '⏳'
+                                                    if (mod.tipo === 'ADELANTOS') icon = '🏃'
+
+                                                    return (
+                                                        <div
+                                                            key={mod.tipo}
+                                                            className="bg-slate-50/90 p-3.5 rounded-2xl border border-slate-200/90 space-y-2 hover:border-slate-300 transition"
+                                                        >
+                                                            <div className="flex items-center justify-between gap-2">
+                                                                <span className="font-extrabold text-slate-800 text-xs flex items-center gap-1.5">
+                                                                    <span className="text-sm">{icon}</span>
+                                                                    <span>{mod.nombre}</span>
+                                                                </span>
+                                                                <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${modBadge}`}>
+                                                                    {mod.porcentaje}%
+                                                                </span>
+                                                            </div>
+
+                                                            <div className="flex items-baseline justify-between text-xs font-mono">
+                                                                <span className="text-slate-700 font-bold">
+                                                                    {mod.gestionados} / {mod.totalAbiertos} <span className="font-normal text-[10px] text-slate-500">gest.</span>
+                                                                </span>
+                                                                <span className={`text-[11px] font-bold ${
+                                                                    mod.pendientes > 0 ? 'text-rose-600' : 'text-emerald-600'
+                                                                }`}>
+                                                                    {mod.pendientes > 0 ? `${mod.pendientes} pend.` : '✓ Al día'}
+                                                                </span>
+                                                            </div>
+
+                                                            <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+                                                                <div
+                                                                    className={`h-full rounded-full transition-all duration-500 ${barColor}`}
+                                                                    style={{ width: `${mod.porcentaje}%` }}
+                                                                />
+                                                            </div>
+
+                                                            <div className="flex items-center justify-between text-[10px] text-slate-500 pt-0.5">
+                                                                {mod.tipo === 'AUSENTISMO' ? (
+                                                                    <div className="flex items-center gap-2">
+                                                                        <span className="text-emerald-700 font-semibold">Gest: {mod.gestionados}</span>
+                                                                        <span>•</span>
+                                                                        <span className="text-slate-600">Pend: {mod.pendientes}</span>
+                                                                    </div>
+                                                                ) : mod.tipo === 'HORAS_EXTRAS' ? (
+                                                                    <div className="flex items-center gap-1.5 flex-wrap">
+                                                                        <span className="px-1.5 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded font-semibold">
+                                                                            Aplica: {mod.aplicaCount || 0}
+                                                                        </span>
+                                                                        <span className="px-1.5 py-0.5 bg-white text-slate-600 border border-slate-200 rounded font-semibold">
+                                                                            No Aplica: {mod.noAplicaCount || 0}
+                                                                        </span>
+                                                                    </div>
+                                                                ) : (
+                                                                    <div className="flex items-center gap-1.5 flex-wrap">
+                                                                        <span className="px-1.5 py-0.5 bg-rose-50 text-rose-700 border border-rose-200 rounded font-semibold">
+                                                                            Aplica Desc: {mod.aplicaCount || 0}
+                                                                        </span>
+                                                                        <span className="px-1.5 py-0.5 bg-white text-slate-600 border border-slate-200 rounded font-semibold">
+                                                                            No Aplica: {mod.noAplicaCount || 0}
+                                                                        </span>
+                                                                    </div>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                })}
+                                            </div>
+                                        </div>
+
+                                        {/* Pie de la tarjeta de Sucursal */}
+                                        <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                            <span className="text-[11px] text-slate-400">
+                                                Clic para ver el avance por establecimiento en {sucItem.sucursal}
+                                            </span>
+                                            <button
+                                                type="button"
+                                                onClick={(e) => {
+                                                    e.stopPropagation()
+                                                    setSelectedSucursalModal(sucItem)
+                                                    setModalSearchQuery('')
+                                                }}
+                                                className="px-3.5 py-1.5 bg-sky-50 hover:bg-sky-100 border border-sky-200 text-sky-800 text-xs font-bold rounded-xl transition flex items-center gap-1"
+                                            >
+                                                <span>Ver Establecimientos ({sucItem.colegiosCount})</span>
+                                                <span>→</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    ) : (
+                        /* MODO TABLA COMPARATIVA POR SUCURSAL SEPARADA POR TIPO */
+                        <div className="bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden">
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-left border-collapse text-xs">
+                                    <thead>
+                                        <tr className="bg-slate-50 border-b border-slate-200 text-slate-600 font-bold uppercase tracking-wider text-[11px]">
+                                            <th className="py-3.5 px-4">Sucursal</th>
+                                            <th className="py-3.5 px-3 text-center">Establecimientos</th>
+                                            <th className="py-3.5 px-3">🏥 Ausentismo</th>
+                                            <th className="py-3.5 px-3">⏱️ Horas Extras</th>
+                                            <th className="py-3.5 px-3">⏳ Atrasos</th>
+                                            <th className="py-3.5 px-3">🏃 Adelantos</th>
+                                            <th className="py-3.5 px-3 text-center">Total Abiertos</th>
+                                            <th className="py-3.5 px-3 text-center">Pendientes</th>
+                                            <th className="py-3.5 px-3 text-center">% Avance</th>
+                                            <th className="py-3.5 px-3 text-center">Semáforo</th>
+                                            <th className="py-3.5 px-4 text-right">Acción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-slate-100">
+                                        {filteredSucursales.map((sucItem) => {
+                                            const modAus = sucItem.modulos.find(m => m.tipo === 'AUSENTISMO')
+                                            const modHhee = sucItem.modulos.find(m => m.tipo === 'HORAS_EXTRAS')
+                                            const modAtr = sucItem.modulos.find(m => m.tipo === 'ATRASOS')
+                                            const modAde = sucItem.modulos.find(m => m.tipo === 'ADELANTOS')
+
+                                            const isVerde = sucItem.semaforoGlobal === 'VERDE'
+                                            const isAmarillo = sucItem.semaforoGlobal === 'AMARILLO'
+                                            const semaforoBadge = isVerde
+                                                ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                                                : isAmarillo
+                                                ? 'bg-amber-50 text-amber-700 border-amber-200'
+                                                : 'bg-rose-50 text-rose-700 border-rose-200'
+
+                                            return (
+                                                <tr
+                                                    key={sucItem.sucursal}
+                                                    className="hover:bg-slate-50/80 transition-colors cursor-pointer"
+                                                    onClick={() => {
+                                                        setSelectedSucursalModal(sucItem)
+                                                        setModalSearchQuery('')
+                                                    }}
+                                                >
+                                                    <td className="py-3.5 px-4 font-extrabold text-slate-900">
+                                                        <div className="flex items-center gap-2">
+                                                            <span>🏢</span>
+                                                            <span>{sucItem.sucursal}</span>
+                                                        </div>
+                                                    </td>
+                                                    <td className="py-3.5 px-3 text-center font-mono text-slate-600">
+                                                        {sucItem.colegiosCount}
+                                                    </td>
+                                                    <td className="py-3.5 px-3">
+                                                        <div className="flex items-center gap-1.5">
+                                                            <span className="font-mono font-bold text-slate-800">
+                                                                {modAus?.gestionados || 0}/{modAus?.totalAbiertos || 0}
+                                                            </span>
+                                                            <span className="text-[11px] font-bold text-cyan-700">
+                                                                ({modAus?.porcentaje ?? 100}%)
+                                                            </span>
+                                                        </div>
+                                                        <div className="text-[10px] text-slate-500">
+                                                            Pend: {modAus?.pendientes || 0}
+                                                        </div>
+                                                    </td>
+                                                    <td className="py-3.5 px-3">
+                                                        <div className="flex items-center gap-1.5">
+                                                            <span className="font-mono font-bold text-slate-800">
+                                                                {modHhee?.gestionados || 0}/{modHhee?.totalAbiertos || 0}
+                                                            </span>
+                                                            <span className="text-[11px] font-bold text-cyan-700">
+                                                                ({modHhee?.porcentaje ?? 100}%)
+                                                            </span>
+                                                        </div>
+                                                        <div className="text-[10px] text-slate-500">
+                                                            Aplica: {modHhee?.aplicaCount || 0} | No: {modHhee?.noAplicaCount || 0}
+                                                        </div>
+                                                    </td>
+                                                    <td className="py-3.5 px-3">
+                                                        <div className="flex items-center gap-1.5">
+                                                            <span className="font-mono font-bold text-slate-800">
+                                                                {modAtr?.gestionados || 0}/{modAtr?.totalAbiertos || 0}
+                                                            </span>
+                                                            <span className="text-[11px] font-bold text-cyan-700">
+                                                                ({modAtr?.porcentaje ?? 100}%)
+                                                            </span>
+                                                        </div>
+                                                        <div className="text-[10px] text-slate-500">
+                                                            Desc: {modAtr?.aplicaCount || 0} | No: {modAtr?.noAplicaCount || 0}
+                                                        </div>
+                                                    </td>
+                                                    <td className="py-3.5 px-3">
+                                                        <div className="flex items-center gap-1.5">
+                                                            <span className="font-mono font-bold text-slate-800">
+                                                                {modAde?.gestionados || 0}/{modAde?.totalAbiertos || 0}
+                                                            </span>
+                                                            <span className="text-[11px] font-bold text-cyan-700">
+                                                                ({modAde?.porcentaje ?? 100}%)
+                                                            </span>
+                                                        </div>
+                                                        <div className="text-[10px] text-slate-500">
+                                                            Desc: {modAde?.aplicaCount || 0} | No: {modAde?.noAplicaCount || 0}
+                                                        </div>
+                                                    </td>
+                                                    <td className="py-3.5 px-3 text-center font-mono font-bold text-slate-800">
+                                                        {sucItem.totalRegistrosAbiertos}
+                                                    </td>
+                                                    <td className="py-3.5 px-3 text-center font-mono font-bold">
+                                                        <span className={sucItem.totalPendientes > 0 ? 'text-rose-600' : 'text-emerald-600'}>
+                                                            {sucItem.totalPendientes}
+                                                        </span>
+                                                    </td>
+                                                    <td className="py-3.5 px-3 text-center">
+                                                        <span className="text-xs font-extrabold text-cyan-800">
+                                                            {sucItem.porcentajeGlobal}%
+                                                        </span>
+                                                    </td>
+                                                    <td className="py-3.5 px-3 text-center">
+                                                        <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-bold border ${semaforoBadge}`}>
+                                                            {isVerde ? '🟢 Al Día' : isAmarillo ? '🟡 Leve' : '🔴 Grave'}
+                                                        </span>
+                                                    </td>
+                                                    <td className="py-3.5 px-4 text-right">
+                                                        <button
+                                                            type="button"
+                                                            onClick={(e) => {
+                                                                e.stopPropagation()
+                                                                setSelectedSucursalModal(sucItem)
+                                                                setModalSearchQuery('')
+                                                            }}
+                                                            className="px-3 py-1 bg-sky-50 hover:bg-sky-100 border border-sky-200 text-sky-800 text-xs font-bold rounded-lg transition"
+                                                        >
+                                                            Ver Colegios
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    )}
+                </>
+            )}
 
             {/* MODAL / DRAWER DE DESGLOSE POR COLEGIO (RBD) */}
             {selectedColaborador && (
@@ -1208,6 +1959,214 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                             <button
                                 type="button"
                                 onClick={() => setSelectedColaborador(null)}
+                                className="px-5 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold rounded-xl transition"
+                            >
+                                Cerrar Ventana
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* MODAL / DRAWER DE DESGLOSE POR SUCURSAL (ESTABLECIMIENTOS Y TIPO DE DOCUMENTO) */}
+            {selectedSucursalModal && (
+                <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-5">
+                    <div className="bg-white border border-slate-200 rounded-3xl w-full max-w-5xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+                        {/* Cabecera del Modal de Sucursal */}
+                        <div className="p-6 border-b border-slate-200 flex items-start justify-between gap-4 bg-slate-50">
+                            <div>
+                                <span className="text-xs font-bold text-cyan-700 uppercase tracking-widest flex items-center gap-1.5">
+                                    <span>🏢</span>
+                                    <span>Desglose de Avance por Sucursal y Tipo de Registro</span>
+                                </span>
+                                <h2 className="text-2xl font-extrabold text-slate-900 mt-1">
+                                    Sucursal {selectedSucursalModal.sucursal}
+                                </h2>
+                                <p className="text-xs text-slate-500 mt-0.5">
+                                    <strong className="text-slate-800">{selectedSucursalModal.colegiosCount}</strong> establecimientos / sedes con registros abiertos •{' '}
+                                    <strong className="text-cyan-700">{selectedSucursalModal.porcentajeGlobal}%</strong> de cumplimiento global ({selectedSucursalModal.totalGestionados}/{selectedSucursalModal.totalRegistrosAbiertos})
+                                </p>
+                            </div>
+                            <button
+                                type="button"
+                                onClick={() => setSelectedSucursalModal(null)}
+                                className="w-8 h-8 rounded-full bg-slate-200 hover:bg-slate-300 text-slate-700 flex items-center justify-center text-sm font-bold transition"
+                            >
+                                ✕
+                            </button>
+                        </div>
+
+                        {/* Resumen de los 4 Tipos dentro del Modal de la Sucursal */}
+                        <div className="px-6 py-3.5 bg-slate-100/70 border-b border-slate-200 grid grid-cols-2 lg:grid-cols-4 gap-2.5">
+                            {selectedSucursalModal.modulos.map((mod) => {
+                                let icon = '📋'
+                                if (mod.tipo === 'AUSENTISMO') icon = '🏥'
+                                if (mod.tipo === 'HORAS_EXTRAS') icon = '⏱️'
+                                if (mod.tipo === 'ATRASOS') icon = '⏳'
+                                if (mod.tipo === 'ADELANTOS') icon = '🏃'
+
+                                return (
+                                    <div key={mod.tipo} className="bg-white p-2.5 rounded-xl border border-slate-200 flex items-center justify-between gap-2">
+                                        <div className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                                            <span>{icon}</span>
+                                            <span>{mod.nombre}</span>
+                                        </div>
+                                        <div className="text-right">
+                                            <div className="text-xs font-mono font-extrabold text-cyan-700">
+                                                {mod.gestionados}/{mod.totalAbiertos} ({mod.porcentaje}%)
+                                            </div>
+                                            <div className="text-[10px] text-slate-500">
+                                                {mod.pendientes > 0 ? `${mod.pendientes} pend.` : '✓ Al día'}
+                                            </div>
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </div>
+
+                        {/* Barra de búsqueda de establecimiento dentro del modal */}
+                        <div className="px-6 py-3 bg-white border-b border-slate-100 flex items-center justify-between gap-4">
+                            <div className="relative flex-1">
+                                <input
+                                    type="text"
+                                    value={modalSearchQuery}
+                                    onChange={(e) => setModalSearchQuery(e.target.value)}
+                                    placeholder="Buscar por RBD, nombre de establecimiento o comuna..."
+                                    className="w-full bg-slate-50 border border-slate-200 focus:border-cyan-500 focus:bg-white rounded-xl pl-9 pr-4 py-2 text-xs text-slate-800 placeholder:text-slate-400 outline-none transition"
+                                />
+                                <span className="absolute left-3 top-2.5 text-slate-400 text-xs">🔍</span>
+                            </div>
+                            <span className="text-xs font-medium text-slate-500 shrink-0">
+                                Mostrando {modalFilteredSucursalColegios.length} de {selectedSucursalModal.colegiosDetalle.length} establecimientos
+                            </span>
+                        </div>
+
+                        {/* Contenido scrolleable con los establecimientos de la sucursal */}
+                        <div className="p-6 overflow-y-auto space-y-4 flex-1">
+                            {modalFilteredSucursalColegios.length === 0 ? (
+                                <div className="text-center py-10 text-slate-400 text-xs">
+                                    No se encontraron establecimientos con registros abiertos para el criterio ingresado.
+                                </div>
+                            ) : (
+                                <div className="space-y-4">
+                                    {modalFilteredSucursalColegios.map((col) => {
+                                        const isVerde = col.semaforo === 'VERDE'
+                                        const isAmarillo = col.semaforo === 'AMARILLO'
+                                        const badgeClass = isVerde
+                                            ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                                            : isAmarillo
+                                            ? 'bg-amber-50 text-amber-700 border-amber-200'
+                                            : 'bg-rose-50 text-rose-700 border-rose-200'
+
+                                        return (
+                                            <div
+                                                key={`${col.rbd}-${col.nombreEstablecimiento}`}
+                                                className="p-4 rounded-2xl border border-slate-200 bg-white hover:border-slate-300 transition shadow-sm space-y-3"
+                                            >
+                                                {/* Encabezado del Establecimiento */}
+                                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-2.5">
+                                                    <div>
+                                                        <div className="flex items-center gap-2">
+                                                            <span className="font-mono text-xs px-2.5 py-0.5 bg-cyan-100 text-cyan-900 rounded-md font-bold border border-cyan-200">
+                                                                {col.rbd > 0 ? `RBD ${col.rbd}` : 'SEDE CENTRAL'}
+                                                            </span>
+                                                            <h4 className="font-extrabold text-slate-900 text-sm">
+                                                                {col.nombreEstablecimiento}
+                                                            </h4>
+                                                        </div>
+                                                        <div className="text-xs text-slate-500 mt-0.5">
+                                                            {col.comuna ? `Comuna: ${col.comuna} • ` : ''}Sucursal: {col.sucursal}
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="text-xs font-mono font-bold text-slate-700">
+                                                            {col.totalGeneralGestionados}/{col.totalGeneralAbiertos} abiertos ({col.porcentajeGeneral}%)
+                                                        </span>
+                                                        <span className={`text-xs px-2.5 py-0.5 rounded-full font-bold border ${badgeClass}`}>
+                                                            {isVerde ? '🟢 Al Día' : isAmarillo ? '🟡 Leve' : '🔴 Grave'}
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                {/* Grid de 4 Tipos de Documentos para este Establecimiento */}
+                                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+                                                    {/* 1. Ausentismo */}
+                                                    <div className="p-2.5 rounded-xl border border-slate-200 bg-slate-50/70 space-y-1">
+                                                        <div className="flex items-center justify-between text-xs font-bold text-slate-800">
+                                                            <span>🏥 Ausentismo</span>
+                                                            <span className="font-mono text-cyan-700">
+                                                                {col.ausentismo.gestionados}/{col.ausentismo.total}
+                                                            </span>
+                                                        </div>
+                                                        <div className="text-[10px] text-slate-500 flex justify-between">
+                                                            <span>Pendientes: {col.ausentismo.pendientes}</span>
+                                                            <span className={col.ausentismo.pendientes === 0 ? 'text-emerald-700 font-bold' : 'text-amber-700 font-bold'}>
+                                                                {col.ausentismo.pendientes === 0 ? '✓ Al día' : 'Pendiente'}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+
+                                                    {/* 2. Horas Extras */}
+                                                    <div className="p-2.5 rounded-xl border border-slate-200 bg-slate-50/70 space-y-1">
+                                                        <div className="flex items-center justify-between text-xs font-bold text-slate-800">
+                                                            <span>⏱️ Horas Extras</span>
+                                                            <span className="font-mono text-cyan-700">
+                                                                {col.horasExtras.gestionados}/{col.horasExtras.total}
+                                                            </span>
+                                                        </div>
+                                                        <div className="text-[10px] text-slate-500 flex justify-between">
+                                                            <span>Aplica: <strong>{col.horasExtras.aplica}</strong> | No: <strong>{col.horasExtras.noAplica}</strong></span>
+                                                            <span className={col.horasExtras.pendientes === 0 ? 'text-emerald-700 font-bold' : 'text-amber-700 font-bold'}>
+                                                                {col.horasExtras.pendientes === 0 ? '✓ Al día' : 'Pendiente'}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+
+                                                    {/* 3. Atrasos */}
+                                                    <div className="p-2.5 rounded-xl border border-slate-200 bg-slate-50/70 space-y-1">
+                                                        <div className="flex items-center justify-between text-xs font-bold text-slate-800">
+                                                            <span>⏳ Atrasos</span>
+                                                            <span className="font-mono text-cyan-700">
+                                                                {col.atrasos.gestionados}/{col.atrasos.total}
+                                                            </span>
+                                                        </div>
+                                                        <div className="text-[10px] text-slate-500 flex justify-between">
+                                                            <span>Desc: <strong>{col.atrasos.aplicaDescuento}</strong> | No: <strong>{col.atrasos.noAplica}</strong></span>
+                                                            <span className={col.atrasos.pendientes === 0 ? 'text-emerald-700 font-bold' : 'text-amber-700 font-bold'}>
+                                                                {col.atrasos.pendientes === 0 ? '✓ Al día' : 'Pendiente'}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+
+                                                    {/* 4. Adelantos */}
+                                                    <div className="p-2.5 rounded-xl border border-slate-200 bg-slate-50/70 space-y-1">
+                                                        <div className="flex items-center justify-between text-xs font-bold text-slate-800">
+                                                            <span>🏃 Adelantos</span>
+                                                            <span className="font-mono text-cyan-700">
+                                                                {col.adelantos.gestionados}/{col.adelantos.total}
+                                                            </span>
+                                                        </div>
+                                                        <div className="text-[10px] text-slate-500 flex justify-between">
+                                                            <span>Desc: <strong>{col.adelantos.aplicaDescuento}</strong> | No: <strong>{col.adelantos.noAplica}</strong></span>
+                                                            <span className={col.adelantos.pendientes === 0 ? 'text-emerald-700 font-bold' : 'text-amber-700 font-bold'}>
+                                                                {col.adelantos.pendientes === 0 ? '✓ Al día' : 'Pendiente'}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Footer Modal Sucursal */}
+                        <div className="p-4 bg-slate-50 border-t border-slate-200 flex justify-end">
+                            <button
+                                type="button"
+                                onClick={() => setSelectedSucursalModal(null)}
                                 className="px-5 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold rounded-xl transition"
                             >
                                 Cerrar Ventana

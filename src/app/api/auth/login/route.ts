@@ -164,14 +164,32 @@ export async function POST(request: Request) {
         const expires = new Date(Date.now() + 24 * 60 * 60 * 1000)
         const sessionToken = await encrypt({ user: sessionData, expires })
 
-        console.log(`Login exitoso para: ${cleanUsername} (${user.username})`)
+        // Leer trabajadores asignados en el módulo de Configuración de Visualización
+        let trabajadoresAsignadosCount = 0
+        try {
+            const visRows: any[] = await rawPrisma.$queryRawUnsafe(`
+                SELECT COUNT(DISTINCT "personalRutHash")::int as count
+                FROM "Pers_Visualizacion_Jefatura"
+                WHERE ("tipo" = 'USUARIO' AND "jefaturaUserId" = $1)
+                   OR ("tipo" = 'ROL' AND "jefaturaRoleId" = $2);
+            `, user.id, user.roleId || user.role?.id || null)
+            trabajadoresAsignadosCount = visRows[0]?.count || 0
+        } catch (e) {
+            console.error('Error al verificar trabajadores asignados en visualización al login:', e)
+        }
+
+        console.log(`Login exitoso para: ${cleanUsername} (${user.username}). Personal asignado en visualización: ${trabajadoresAsignadosCount}`)
+
+        const detalleLogin = trabajadoresAsignadosCount > 0
+            ? `Inicio de sesión exitoso (${user.name || user.username}) [${trabajadoresAsignadosCount} trabajadores asignados en visualización]`
+            : `Inicio de sesión exitoso (${user.name || user.username})`
 
         await logAuditAction({
             username: user.username,
             userId: user.id,
             action: 'INICIO_SESION',
             modulo: 'Autenticación',
-            detalle: `Inicio de sesión exitoso (${user.name || user.username})`
+            detalle: detalleLogin
         })
 
         const response = NextResponse.json(

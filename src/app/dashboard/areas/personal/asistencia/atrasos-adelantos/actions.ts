@@ -6,6 +6,7 @@ import { revalidatePath } from 'next/cache'
 import { decryptPersonalText, cleanRut, hashRut } from '@/lib/personal-crypto'
 import { ensurePersonalAtrasosTables } from '@/lib/personal-atrasos-db-init'
 import { getUserEffectiveRbds } from '@/lib/authFilters'
+import { getUserAssignedPersonalVisualizacion } from '@/lib/authPersonalVisualizacion'
 import { logAuditAction } from '@/lib/audit'
 
 const PATH_ASISTENCIA_ATRASOS = '/dashboard/areas/personal/asistencia/atrasos-adelantos'
@@ -103,6 +104,7 @@ export async function getAsistenciaAtrasosAction(filtros?: {
         return { success: false, error: 'No autorizado', data: [], total: 0, page: 1, pageSize: 10, sucursales: [], supervisores: [], establecimientos: [] }
     }
 
+    const assignedPersonal = await getUserAssignedPersonalVisualizacion()
     const authorizedRbds = await getUserEffectiveRbds()
 
     try {
@@ -114,24 +116,40 @@ export async function getAsistenciaAtrasosAction(filtros?: {
         const queryParams: any[] = [targetTipo]
         let paramIndex = 2
 
-        // 1. Privilegios por RBD efectivo del usuario
-        if (authorizedRbds !== null) {
-            if (authorizedRbds.length === 0) {
-                whereConditions.push(`rbd = -999999`)
-            } else if (filtros?.rbd) {
-                if (authorizedRbds.includes(filtros.rbd)) {
-                    whereConditions.push(`rbd = $${paramIndex++}`)
-                    queryParams.push(filtros.rbd)
-                } else {
-                    whereConditions.push(`rbd = -999999`)
-                }
+        // 1. Privilegios por Visualización o RBD:
+        // Si el usuario tiene trabajadores asignados en el módulo de visualización, SOLO ve a sus trabajadores asignados.
+        // Para el resto de usuarios (supervisores, etc.), se preserva intacta la lógica original de RBD.
+        if (assignedPersonal && assignedPersonal.hasConfiguredVisualizacion) {
+            if (assignedPersonal.rutHashes.length === 0) {
+                whereConditions.push(`"identificadorHash" = '__NO_PERSONAL__'`)
             } else {
-                whereConditions.push(`rbd = ANY($${paramIndex++}::int[])`)
-                queryParams.push(authorizedRbds)
+                whereConditions.push(`"identificadorHash" = ANY($${paramIndex++}::text[])`)
+                queryParams.push(assignedPersonal.rutHashes)
             }
-        } else if (filtros?.rbd) {
-            whereConditions.push(`rbd = $${paramIndex++}`)
-            queryParams.push(filtros.rbd)
+            if (filtros?.rbd) {
+                whereConditions.push(`rbd = $${paramIndex++}`)
+                queryParams.push(filtros.rbd)
+            }
+        } else {
+            // Lógica original existente (sin tocar para supervisores y administradores)
+            if (authorizedRbds !== null) {
+                if (authorizedRbds.length === 0) {
+                    whereConditions.push(`rbd = -999999`)
+                } else if (filtros?.rbd) {
+                    if (authorizedRbds.includes(filtros.rbd)) {
+                        whereConditions.push(`rbd = $${paramIndex++}`)
+                        queryParams.push(filtros.rbd)
+                    } else {
+                        whereConditions.push(`rbd = -999999`)
+                    }
+                } else {
+                    whereConditions.push(`rbd = ANY($${paramIndex++}::int[])`)
+                    queryParams.push(authorizedRbds)
+                }
+            } else if (filtros?.rbd) {
+                whereConditions.push(`rbd = $${paramIndex++}`)
+                queryParams.push(filtros.rbd)
+            }
         }
 
         // 2. Filtro por Sucursal
@@ -361,12 +379,13 @@ export async function actualizarGestionAtrasoAction(
     const usuarioNombre = session?.user?.name || session?.user?.username || 'Usuario'
     const usuarioId = session?.user?.id || null
     const authorizedRbds = await getUserEffectiveRbds()
+    const assignedPersonal = await getUserAssignedPersonalVisualizacion()
     const isAdmin = authorizedRbds === null
     const ahora = new Date()
 
     try {
         const rows: any[] = await rawPrisma.$queryRawUnsafe(
-            `SELECT id, rbd, establecimiento, fecha, "identificadorEnc", "apellidosEnc", "nombreEnc", estado, "aplicaDescuento", justificado, "aplicaModificadoPor" FROM "Pers_Atrasos_Registro" WHERE id = $1;`,
+            `SELECT id, rbd, establecimiento, fecha, "identificadorEnc", "identificadorHash", "apellidosEnc", "nombreEnc", estado, "aplicaDescuento", justificado, "aplicaModificadoPor" FROM "Pers_Atrasos_Registro" WHERE id = $1;`,
             registroId
         )
         const currentReg = rows[0]
@@ -375,8 +394,12 @@ export async function actualizarGestionAtrasoAction(
             return { success: false, error: 'Registro no encontrado' }
         }
 
-        // Restricción por RBD
-        if (!isAdmin && currentReg.rbd) {
+        // Restricción por Visualización o RBD
+        if (assignedPersonal && assignedPersonal.hasConfiguredVisualizacion) {
+            if (!currentReg.identificadorHash || !assignedPersonal.rutHashes.includes(currentReg.identificadorHash)) {
+                return { success: false, error: 'No tienes autorización para modificar registros de este colaborador' }
+            }
+        } else if (!isAdmin && currentReg.rbd) {
             if (!authorizedRbds || !authorizedRbds.includes(currentReg.rbd)) {
                 return { success: false, error: 'No tienes autorización para modificar registros de este establecimiento' }
             }

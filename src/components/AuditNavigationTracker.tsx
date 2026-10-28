@@ -118,7 +118,9 @@ function getModuleInfoFromPath(path: string): { modulo: string; detalle: string 
 
     // Mantenedores
     if (path.startsWith('/dashboard/mantenedor') || path.startsWith('/dashboard/productos') || path.startsWith('/dashboard/calculadora')) {
+        if (path.includes('/personal/configuracion-visualizacion')) return { modulo: 'Mantenedor -> Recursos Humanos', detalle: 'Accedió a Configuración de Visualización (Asignación Jefatura-Personal)' }
         if (path.includes('/personal/monitoreo')) return { modulo: 'Mantenedor -> Recursos Humanos', detalle: 'Accedió a Mantenedor Monitoreo RRHH (Roles Asignados)' }
+        if (path.includes('/personal/criterios-ausencias')) return { modulo: 'Mantenedor -> Recursos Humanos', detalle: 'Accedió a Criterios de Ausencias' }
         if (path.includes('/monitoreo')) return { modulo: 'Mantenedor', detalle: 'Accedió a Configuración de Monitoreo de Evaluaciones' }
         return { modulo: 'Mantenedor', detalle: `Accedió a Mantenedor (${path.replace('/dashboard/', '')})` }
     }
