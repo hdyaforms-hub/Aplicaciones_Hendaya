@@ -172,6 +172,7 @@ export default async function RolesPage() {
         { id: 'manage_personal_criterios', name: 'Criterios de Ausencias', description: 'Permite administrar los criterios o motivos de ausentismo del personal.', category: 'MANTENEDORES -> RECURSOS HUMANOS' },
         { id: 'manage_mantenedor_monitoreo_rrhh', name: 'Monitoreo RRHH (Roles Asignados)', description: 'Permite configurar los roles y perfiles sujetos a monitoreo operativo de Recursos Humanos.', category: 'MANTENEDORES -> RECURSOS HUMANOS' },
         { id: 'manage_personal_visualizacion', name: 'Configuración de visualización', description: 'Permite seleccionar usuarios o roles para asociar al personal de dotación a una jefatura con control de RBD.', category: 'MANTENEDORES -> RECURSOS HUMANOS' },
+        { id: 'manage_prev_riesgos_config', name: 'Configuración Prev. de Riesgos', description: 'Permite configurar los roles a visualizar y filtros de supervisión en Prevención de Riesgos.', category: 'MANTENEDORES -> PREV. DE RIESGOS' },
  
         { id: 'manage_actas_supervision', name: 'Crear Acta de Supervisión', description: 'Crear, editar, copiar y administrar plantillas de Actas de Supervisión.', category: 'MANTENEDORES -> ACTAS DE SUPERVISIÓN' },
         { id: 'manage_user_rbds', name: 'Asociar RBD a usuario', description: 'Permite asociar y gestionar los RBDs autorizados para cada usuario.', category: 'MANTENEDORES -> ACTAS DE SUPERVISIÓN' },

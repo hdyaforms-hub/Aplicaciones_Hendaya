@@ -126,12 +126,13 @@ export default function RiesgoMinutaClient({ initialData, initialFilters, curren
     const handleExportCSV = () => {
         if (!data.colegiosDetalle || data.colegiosDetalle.length === 0) return
 
-        const headers = ['RBD', 'Establecimiento', 'Sucursal', 'Institución', 'Nivel Riesgo', 'Score Peligro', 'Total Raciones', 'Platos Alto Riesgo', 'Platos Medio Riesgo', 'Platos Leve', 'Platos Sin Asignar', 'Detalle Platos Críticos']
+        const headers = ['RBD', 'Establecimiento', 'Sucursal', 'Institución', 'Supervisor', 'Nivel Riesgo', 'Score Peligro', 'Total Raciones', 'Platos Alto Riesgo', 'Platos Medio Riesgo', 'Platos Leve', 'Platos Sin Asignar', 'Detalle Platos Críticos']
         const rows = data.colegiosDetalle.map(c => [
             c.rbd,
             `"${c.nombre.replace(/"/g, '""')}"`,
             `"${c.sucursal}"`,
             `"${c.institucion}"`,
+            `"${(c.supervisor || 'Sin asignar').replace(/"/g, '""')}"`,
             c.nivelRiesgo,
             c.score,
             c.totalRaciones,
@@ -160,6 +161,7 @@ export default function RiesgoMinutaClient({ initialData, initialFilters, curren
             String(c.rbd).includes(q) ||
             c.nombre.toLowerCase().includes(q) ||
             c.sucursal.toLowerCase().includes(q) ||
+            (c.supervisor && c.supervisor.toLowerCase().includes(q)) ||
             c.platosCriticos.some(p => p.nombre.toLowerCase().includes(q))
         )
     }, [data.colegiosDetalle, searchTableQuery])
@@ -243,7 +245,7 @@ export default function RiesgoMinutaClient({ initialData, initialFilters, curren
                     <span className="flex items-center gap-2">
                         <span>🔍</span> Filtros de Evaluación Preventiva
                     </span>
-                    {(filters.licitacion || filters.sucursal || filters.rbd || (filters.nivelRiesgo && filters.nivelRiesgo !== 'TODOS')) && (
+                    {(filters.licitacion || filters.sucursal || filters.rbd || filters.usuarioId || (filters.nivelRiesgo && filters.nivelRiesgo !== 'TODOS')) && (
                         <button
                             onClick={handleClearFilters}
                             className="text-xs text-sky-600 hover:text-sky-700 font-semibold underline"
@@ -253,7 +255,7 @@ export default function RiesgoMinutaClient({ initialData, initialFilters, curren
                     )}
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 pt-1">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3.5 pt-1">
                     {/* FECHA */}
                     <div>
                         <div className="flex items-center justify-between mb-1">
@@ -400,6 +402,36 @@ export default function RiesgoMinutaClient({ initialData, initialFilters, curren
                                 )}
                             </div>
                         )}
+                    </div>
+
+                    {/* FILTRO: USUARIO / SUPERVISOR (ROLES AUTORIZADOS) */}
+                    <div>
+                        <div className="flex items-center justify-between mb-1">
+                            <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider">
+                                Usuario / Supervisor
+                            </label>
+                            {filters.usuarioId && (
+                                <span className="text-[9px] font-extrabold text-sky-700 bg-sky-50 px-1.5 py-0.2 rounded border border-sky-200">
+                                    Filtrado
+                                </span>
+                            )}
+                        </div>
+                        <select
+                            value={filters.usuarioId ?? ''}
+                            onChange={(e) => handleFilterChange('usuarioId', e.target.value)}
+                            className={`w-full border rounded-xl px-3 py-2 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all ${
+                                filters.usuarioId
+                                    ? 'border-sky-400 bg-sky-50/50 text-sky-950 font-bold'
+                                    : 'bg-slate-50 border-slate-200 text-slate-800'
+                            }`}
+                        >
+                            <option value="">(Todos los usuarios / supervisores)</option>
+                            {(data.filtrosDisponibles.usuarios || []).map(u => (
+                                <option key={u.id} value={u.id}>
+                                    {u.name} ({u.roleName}) {u.rbdsCount > 0 ? `[${u.rbdsCount} RBDs]` : ''}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                 </div>
 
@@ -603,12 +635,16 @@ export default function RiesgoMinutaClient({ initialData, initialFilters, curren
                                                 <h3 className="font-extrabold text-slate-900 text-sm leading-snug line-clamp-1" title={col.nombre}>
                                                     {col.nombre}
                                                 </h3>
-                                                <p className="text-[11px] text-slate-500 flex items-center gap-2 mt-0.5">
+                                                <p className="text-[11px] text-slate-500 flex items-center gap-2 mt-0.5 flex-wrap">
                                                     <span className="font-bold text-sky-700">RBD {col.rbd}</span>
                                                     <span>•</span>
                                                     <span>{col.sucursal}</span>
                                                     <span>•</span>
                                                     <span className="font-semibold text-slate-600">{col.institucion}</span>
+                                                    <span>•</span>
+                                                    <span className="font-medium text-slate-700">
+                                                        Supervisor: <strong className="text-slate-900 font-bold">{col.supervisor || 'Sin asignar'}</strong>
+                                                    </span>
                                                 </p>
                                             </div>
                                         </div>
@@ -710,6 +746,7 @@ export default function RiesgoMinutaClient({ initialData, initialFilters, curren
                                 <th className="py-3 px-3.5">RBD</th>
                                 <th className="py-3 px-3.5">Establecimiento</th>
                                 <th className="py-3 px-3.5">Sucursal</th>
+                                <th className="py-3 px-3.5">Supervisor</th>
                                 <th className="py-3 px-3.5">Nivel Riesgo</th>
                                 <th className="py-3 px-3.5 text-right">Score</th>
                                 <th className="py-3 px-3.5 text-right">Raciones</th>
@@ -721,7 +758,7 @@ export default function RiesgoMinutaClient({ initialData, initialFilters, curren
                         <tbody className="divide-y divide-slate-100 bg-white">
                             {filteredColegios.length === 0 ? (
                                 <tr>
-                                    <td colSpan={9} className="py-8 text-center text-slate-400">
+                                    <td colSpan={10} className="py-8 text-center text-slate-400">
                                         No se encontraron colegios con los filtros seleccionados.
                                     </td>
                                 </tr>
@@ -737,6 +774,13 @@ export default function RiesgoMinutaClient({ initialData, initialFilters, curren
                                             </td>
                                             <td className="py-2.5 px-3.5 text-slate-600">
                                                 {c.sucursal}
+                                            </td>
+                                            <td className="py-2.5 px-3.5 text-slate-700 max-w-[150px] truncate" title={c.supervisor || 'Sin asignar'}>
+                                                {c.supervisor ? (
+                                                    <span className="font-semibold text-slate-800">{c.supervisor}</span>
+                                                ) : (
+                                                    <span className="text-slate-400 italic">Sin asignar</span>
+                                                )}
                                             </td>
                                             <td className="py-2.5 px-3.5">
                                                 {getGravedadBadge(c.nivelRiesgo)}
@@ -790,7 +834,7 @@ export default function RiesgoMinutaClient({ initialData, initialFilters, curren
                                     {getGravedadBadge(selectedColegioModal.nivelRiesgo)}
                                 </div>
                                 <p className="text-xs text-slate-500 mt-1">
-                                    RBD: <strong>{selectedColegioModal.rbd}</strong> • Sucursal: <strong>{selectedColegioModal.sucursal}</strong> • Institución: <strong>{selectedColegioModal.institucion}</strong>
+                                    RBD: <strong>{selectedColegioModal.rbd}</strong> • Sucursal: <strong>{selectedColegioModal.sucursal}</strong> • Institución: <strong>{selectedColegioModal.institucion}</strong> • Supervisor: <strong>{selectedColegioModal.supervisor || 'Sin asignar'}</strong>
                                 </p>
                                 <p className="text-[11px] text-slate-600 mt-0.5">
                                     Fecha evaluada: <strong>{data.fechaConsultada}</strong> • Raciones totales: <strong>{selectedColegioModal.totalRaciones.toLocaleString('es-CL')}</strong>

@@ -4,6 +4,7 @@ import { rawPrisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { getUserEffectiveRbds } from '@/lib/authFilters'
 import { logAuditAction } from '@/lib/audit'
+import { ensurePrevRiesgosConfigTables } from '@/lib/prev-riesgos-db-init'
 
 export type RiesgoMinutaFilterParams = {
     fecha?: string        // YYYY-MM-DD
@@ -11,6 +12,7 @@ export type RiesgoMinutaFilterParams = {
     sucursal?: string
     rbd?: number
     nivelRiesgo?: string  // 'TODOS' | 'ALTO' | 'MEDIO' | 'LEVE' | 'SIN_ASIGNAR'
+    usuarioId?: string
 }
 
 export type PlatoCritico = {
@@ -46,6 +48,7 @@ export type ColegioRiesgoItem = {
     comuna?: string
     sucursal: string
     institucion: string
+    supervisor?: string
     totalRaciones: number
     score: number
     nivelRiesgo: 'ALTO' | 'MEDIO' | 'LEVE' | 'SIN_ASIGNAR'
@@ -77,7 +80,8 @@ export type RiesgoMinutaDashboardData = {
         fechasConRiesgo?: string[]
         licitaciones: string[]
         sucursales: string[]
-        colegios: { rbd: number; nombre: string; comuna?: string; sucursal?: string }[]
+        colegios: { rbd: number; nombre: string; comuna?: string; sucursal?: string; supervisor?: string }[]
+        usuarios: { id: string; name: string; username: string; roleName: string; rbdsCount: number }[]
     }
     permisos: {
         isRestrictedByRbd: boolean
@@ -174,7 +178,8 @@ export async function fetchRiesgoMinutaData(filters?: RiesgoMinutaFilterParams):
                 fechasConRiesgo: [],
                 licitaciones: [],
                 sucursales: [],
-                colegios: []
+                colegios: [],
+                usuarios: []
             },
             permisos: {
                 isRestrictedByRbd: true,
@@ -183,20 +188,123 @@ export async function fetchRiesgoMinutaData(filters?: RiesgoMinutaFilterParams):
         }
     }
 
+    // 2b. Inicializar y obtener configuración de roles a visualizar y datos de supervisores
+    await ensurePrevRiesgosConfigTables()
+    const [configRows, supervisorsDb] = await Promise.all([
+        rawPrisma.$queryRawUnsafe<{ id: string; rolesVisualizar: string }[]>(`
+            SELECT "id", "rolesVisualizar"
+            FROM "prev_riesgos_configuracion"
+            WHERE "id" = 'global'
+            LIMIT 1;
+        `).catch(() => []),
+        rawPrisma.supervisor.findMany({
+            where: { vigente: true },
+            select: {
+                id: true,
+                nombre: true,
+                apellido: true,
+                correo: true,
+                rbdsAuditar: { select: { rbd: true } }
+            }
+        }).catch(() => [])
+    ])
+
+    let rolesVisualizarIds: string[] = []
+    if (configRows && configRows.length > 0) {
+        try {
+            const parsed = JSON.parse(configRows[0].rolesVisualizar || '[]')
+            if (Array.isArray(parsed)) rolesVisualizarIds = parsed
+        } catch (e) {
+            console.error('Error parseando rolesVisualizar en fetchRiesgoMinutaData:', e)
+        }
+    }
+
+    // Consultar usuarios activos pertenecientes a los roles con el check 'visualizar'
+    const usersForFilter = rolesVisualizarIds.length > 0 ? await rawPrisma.user.findMany({
+        where: {
+            isDeleted: false,
+            isActive: true,
+            roleId: { in: rolesVisualizarIds }
+        },
+        select: {
+            id: true,
+            name: true,
+            username: true,
+            email: true,
+            rbds: true,
+            role: { select: { id: true, name: true } }
+        },
+        orderBy: { name: 'asc' }
+    }).catch(() => []) : []
+
+    // Mapear cada RBD con su Supervisor
+    const rbdToSupervisorMap = new Map<number, string>()
+    for (const sup of supervisorsDb) {
+        const supFullName = `${sup.nombre} ${sup.apellido}`.trim()
+        for (const r of sup.rbdsAuditar) {
+            const rbdNum = Number(r.rbd)
+            if (!isNaN(rbdNum) && rbdNum > 0) {
+                rbdToSupervisorMap.set(rbdNum, supFullName)
+            }
+        }
+    }
+
+    // Resolver RBDs para cada usuario del filtro
+    const usersWithResolvedRbds = usersForFilter.map(u => {
+        let userRbds = (u.rbds || []).map(Number).filter(n => !isNaN(n) && n > 0)
+        if (userRbds.length === 0) {
+            const matchedSup = supervisorsDb.find(s =>
+                (s.correo && u.email && s.correo.trim().toLowerCase() === u.email.trim().toLowerCase()) ||
+                (u.name && `${s.nombre} ${s.apellido}`.trim().toLowerCase() === u.name.trim().toLowerCase())
+            )
+            if (matchedSup) {
+                userRbds = matchedSup.rbdsAuditar.map(r => r.rbd)
+            }
+        }
+
+        // Si el usuario tiene rol de supervisor y tiene RBDs, asegurar que se mapeen en rbdToSupervisorMap
+        if (u.role?.name?.toLowerCase().includes('supervisor')) {
+            const userName = u.name || u.username
+            for (const r of userRbds) {
+                if (!rbdToSupervisorMap.has(r)) {
+                    rbdToSupervisorMap.set(r, userName)
+                }
+            }
+        }
+
+        return {
+            ...u,
+            resolvedRbds: userRbds
+        }
+    })
+
     // 3. Cargar en paralelo:
     //    a) Matriz de gravedad preventiva (Prev_GravedadPreparacion)
     //    b) Minutas correspondientes al día seleccionado
-    //    c) Raciones del mes correspondiente (respetando RBDs asignados al perfil)
+    //    c) Raciones del mes correspondiente (respetando RBDs asignados al perfil y filtro de usuario)
     //    d) Catálogo de colegios para enriquecer institución, comuna y sucursal
     //    e) Fechas con minutas cargadas y fechas con alertas de riesgo activas
+    let targetAllowedRbds: number[] | null = assignedRbds
+
+    // Si se especificó un usuario en el filtro, acotar a sus RBDs asignados (intersección estricta)
+    if (filters?.usuarioId) {
+        const selectedUser = usersWithResolvedRbds.find(u => u.id === filters.usuarioId)
+        const userRbds = selectedUser ? selectedUser.resolvedRbds : []
+        if (isRestrictedByRbd && assignedRbds) {
+            targetAllowedRbds = assignedRbds.filter(r => userRbds.includes(r))
+        } else {
+            targetAllowedRbds = userRbds
+        }
+    }
+
     const racionesBaseWhere: any = {
         anio,
         mes,
         rbd: { gt: 0 }
     }
 
-    if (isRestrictedByRbd && assignedRbds) {
-        racionesBaseWhere.rbd = { in: assignedRbds }
+    if (targetAllowedRbds !== null) {
+        racionesBaseWhere.rbd = { in: targetAllowedRbds.length > 0 ? targetAllowedRbds : [-999999] }
     }
     if (filters?.licitacion && filters.licitacion !== 'ALL') {
         racionesBaseWhere.licitacion = filters.licitacion.trim()
@@ -461,7 +569,7 @@ export async function fetchRiesgoMinutaData(filters?: RiesgoMinutaFilterParams):
 
     // 4. Procesar el cruce por colegio (primero sobre el universo disponible para alimentar los filtros y luego aplicando filtros de sucursal/RBD)
     const sucursalesDisponiblesSet = new Set<string>()
-    const colegiosDisponiblesMap = new Map<number, { rbd: number; nombre: string; comuna?: string; sucursal?: string }>()
+    const colegiosDisponiblesMap = new Map<number, { rbd: number; nombre: string; comuna?: string; sucursal?: string; supervisor?: string }>()
     const colegiosRiesgoMap = new Map<number, ColegioRiesgoItem>()
     const platosCriticosGlobalMap = new Set<string>()
     let totalServiciosMinutasEvaluadas = 0
@@ -519,13 +627,16 @@ export async function fetchRiesgoMinutaData(filters?: RiesgoMinutaFilterParams):
             }
         }
 
+        const supervisorNombre = rbdToSupervisorMap.get(r.rbd) || 'Sin asignar'
+
         // Registrar colegio en las opciones del autocompletado (respetando filtro de sucursal si está activo)
         if (!colegiosDisponiblesMap.has(r.rbd)) {
             colegiosDisponiblesMap.set(r.rbd, {
                 rbd: r.rbd,
                 nombre: nombreCol,
                 comuna: colInfo?.comuna,
-                sucursal: sucursalCol
+                sucursal: sucursalCol,
+                supervisor: supervisorNombre
             })
         }
 
@@ -543,6 +654,7 @@ export async function fetchRiesgoMinutaData(filters?: RiesgoMinutaFilterParams):
                 comuna: colInfo?.comuna,
                 sucursal: sucursalCol,
                 institucion: institucionCol,
+                supervisor: supervisorNombre,
                 totalRaciones: 0,
                 score: 0,
                 nivelRiesgo: 'SIN_ASIGNAR',
@@ -736,7 +848,14 @@ export async function fetchRiesgoMinutaData(filters?: RiesgoMinutaFilterParams):
             fechasConRiesgo,
             licitaciones: licitacionesUnicas,
             sucursales: sucursalesUnicas,
-            colegios: colegiosFiltroOptions
+            colegios: colegiosFiltroOptions,
+            usuarios: usersWithResolvedRbds.map(u => ({
+                id: u.id,
+                name: u.name || u.username,
+                username: u.username,
+                roleName: u.role?.name || 'Usuario',
+                rbdsCount: u.resolvedRbds.length
+            }))
         },
         permisos: {
             isRestrictedByRbd,

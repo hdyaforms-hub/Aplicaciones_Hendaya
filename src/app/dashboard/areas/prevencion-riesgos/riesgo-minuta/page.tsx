@@ -17,6 +17,7 @@ export default async function RiesgoMinutaPage({
         sucursal?: string
         rbd?: string
         nivelRiesgo?: string
+        usuarioId?: string
     }>
 }) {
     const session = await getSession()
@@ -38,7 +39,8 @@ export default async function RiesgoMinutaPage({
         licitacion: resolved.licitacion || undefined,
         sucursal: resolved.sucursal || undefined,
         rbd: resolved.rbd ? parseInt(resolved.rbd, 10) : undefined,
-        nivelRiesgo: resolved.nivelRiesgo || undefined
+        nivelRiesgo: resolved.nivelRiesgo || undefined,
+        usuarioId: resolved.usuarioId || undefined
     }
 
     const initialData = await fetchRiesgoMinutaData(initialFilters)
