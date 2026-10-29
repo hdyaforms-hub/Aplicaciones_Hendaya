@@ -104,8 +104,11 @@ export async function getAsistenciaAtrasosAction(filtros?: {
         return { success: false, error: 'No autorizado', data: [], total: 0, page: 1, pageSize: 10, sucursales: [], supervisores: [], establecimientos: [] }
     }
 
+    const perms = session?.user?.role?.permissions || []
+    const hasGlobalPersonalPermission = perms.includes('view_all_personal_asistencia')
     const assignedPersonal = await getUserAssignedPersonalVisualizacion()
     const authorizedRbds = await getUserEffectiveRbds()
+    const isGlobalAdmin = authorizedRbds === null || hasGlobalPersonalPermission
 
     try {
         const targetTipo = filtros?.tipo || 'ADELANTO'
@@ -130,26 +133,25 @@ export async function getAsistenciaAtrasosAction(filtros?: {
                 whereConditions.push(`rbd = $${paramIndex++}`)
                 queryParams.push(filtros.rbd)
             }
-        } else {
-            // Lógica original existente (sin tocar para supervisores y administradores)
-            if (authorizedRbds !== null) {
-                if (authorizedRbds.length === 0) {
-                    whereConditions.push(`rbd = -999999`)
-                } else if (filtros?.rbd) {
-                    if (authorizedRbds.includes(filtros.rbd)) {
-                        whereConditions.push(`rbd = $${paramIndex++}`)
-                        queryParams.push(filtros.rbd)
-                    } else {
-                        whereConditions.push(`rbd = -999999`)
-                    }
-                } else {
-                    whereConditions.push(`rbd = ANY($${paramIndex++}::int[])`)
-                    queryParams.push(authorizedRbds)
-                }
+        } else if (!isGlobalAdmin) {
+            // Lógica original existente (sin tocar para supervisores y usuarios con RBDs)
+            if (authorizedRbds.length === 0) {
+                whereConditions.push(`rbd = -999999`)
             } else if (filtros?.rbd) {
-                whereConditions.push(`rbd = $${paramIndex++}`)
-                queryParams.push(filtros.rbd)
+                if (authorizedRbds.includes(filtros.rbd)) {
+                    whereConditions.push(`rbd = $${paramIndex++}`)
+                    queryParams.push(filtros.rbd)
+                } else {
+                    whereConditions.push(`rbd = -999999`)
+                }
+            } else {
+                whereConditions.push(`rbd = ANY($${paramIndex++}::int[])`)
+                queryParams.push(authorizedRbds)
             }
+        } else if (filtros?.rbd) {
+            // Administrador / Gerencia / Acceso Global con filtro específico
+            whereConditions.push(`rbd = $${paramIndex++}`)
+            queryParams.push(filtros.rbd)
         }
 
         // 2. Filtro por Sucursal
@@ -378,9 +380,11 @@ export async function actualizarGestionAtrasoAction(
     const session = await getSession()
     const usuarioNombre = session?.user?.name || session?.user?.username || 'Usuario'
     const usuarioId = session?.user?.id || null
+    const perms = session?.user?.role?.permissions || []
+    const hasGlobalPersonalPermission = perms.includes('view_all_personal_asistencia')
     const authorizedRbds = await getUserEffectiveRbds()
     const assignedPersonal = await getUserAssignedPersonalVisualizacion()
-    const isAdmin = authorizedRbds === null
+    const isGlobalAdmin = authorizedRbds === null || hasGlobalPersonalPermission
     const ahora = new Date()
 
     try {
@@ -399,7 +403,7 @@ export async function actualizarGestionAtrasoAction(
             if (!currentReg.identificadorHash || !assignedPersonal.rutHashes.includes(currentReg.identificadorHash)) {
                 return { success: false, error: 'No tienes autorización para modificar registros de este colaborador' }
             }
-        } else if (!isAdmin && currentReg.rbd) {
+        } else if (!isGlobalAdmin && currentReg.rbd) {
             if (!authorizedRbds || !authorizedRbds.includes(currentReg.rbd)) {
                 return { success: false, error: 'No tienes autorización para modificar registros de este establecimiento' }
             }
@@ -415,7 +419,7 @@ export async function actualizarGestionAtrasoAction(
 
         // Bloqueo de única gestión para usuarios no administradores (Asistencia):
         // Solo pueden cambiar el estado una sola vez. Si ya fue gestionado, solo un administrador puede modificarlo.
-        if (!isAdmin && currentReg.aplicaModificadoPor !== null) {
+        if (!isGlobalAdmin && currentReg.aplicaModificadoPor !== null) {
             return {
                 success: false,
                 error: 'Este registro ya fue modificado previamente y se encuentra bloqueado. Para corregir o rectificar el estado, debe ser gestionado desde el módulo de Administración.'

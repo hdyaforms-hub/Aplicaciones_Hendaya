@@ -53,6 +53,8 @@ interface AsistenciaClientProps {
     establecimientos: EstablecimientoItem[]
     userRbds: number[]
     isAdmin: boolean
+    hasConfiguredPersonal?: boolean
+    totalPersonalAsignado?: number
 }
 
 export default function AsistenciaClient({
@@ -60,7 +62,9 @@ export default function AsistenciaClient({
     criterios,
     establecimientos,
     userRbds,
-    isAdmin
+    isAdmin,
+    hasConfiguredPersonal = false,
+    totalPersonalAsignado = 0
 }: AsistenciaClientProps) {
     const [registros, setRegistros] = useState<AsistenciaRegistroDTO[]>(initialRegistros)
     const [isPending, startTransition] = useTransition()
@@ -464,23 +468,29 @@ export default function AsistenciaClient({
                 </div>
             </div>
 
-            {/* Aviso de RBDs restringidos para el usuario */}
-            {!isAdmin && userRbds.length > 0 && (
+            {/* Aviso de RBDs restringidos para el usuario o Personal Asignado */}
+            {hasConfiguredPersonal ? (
+                <div className="flex items-center gap-2 p-3.5 bg-cyan-50 border border-cyan-200 rounded-xl text-cyan-900 text-xs shadow-sm">
+                    <Info className="w-4 h-4 flex-shrink-0 text-cyan-600" />
+                    <span>
+                        Visualización por Personal Asignado: Tienes <strong>{totalPersonalAsignado}</strong> colaboradores asignados a tu jefatura según el mantenedor <strong>Configuración de Visualización</strong>.
+                    </span>
+                </div>
+            ) : !isAdmin && userRbds.length > 0 ? (
                 <div className="flex items-center gap-2 p-3.5 bg-amber-50 border border-amber-200 rounded-xl text-amber-800 text-xs shadow-sm">
                     <Info className="w-4 h-4 flex-shrink-0 text-amber-600" />
                     <span>
                         Acceso restringido: Solo puedes visualizar los <strong>{userRbds.length}</strong> establecimientos (RBDs) autorizados para tu cuenta de usuario según el mantenedor <strong>Asociar RBD a usuarios</strong>.
                     </span>
                 </div>
-            )}
-            {!isAdmin && userRbds.length === 0 && (
+            ) : !isAdmin && userRbds.length === 0 ? (
                 <div className="flex items-center gap-2 p-3.5 bg-rose-50 border border-rose-200 rounded-xl text-rose-800 text-xs shadow-sm">
                     <AlertCircle className="w-4 h-4 flex-shrink-0 text-rose-600" />
                     <span>
                         Sin colegios autorizados: Tu cuenta de usuario aún no tiene establecimientos asignados. Solicita a un Administrador que te asocie los RBDs correspondientes en el módulo <strong>Asociar RBD a usuarios</strong>.
                     </span>
                 </div>
-            )}
+            ) : null}
 
             {/* Tarjetas de KPIs */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">

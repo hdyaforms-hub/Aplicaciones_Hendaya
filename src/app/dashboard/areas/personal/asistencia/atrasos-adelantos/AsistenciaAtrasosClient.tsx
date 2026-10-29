@@ -53,9 +53,17 @@ interface Props {
     initialData: InitialData
     userRbds: number[]
     isAdmin: boolean
+    hasConfiguredPersonal?: boolean
+    totalPersonalAsignado?: number
 }
 
-export default function AsistenciaAtrasosClient({ initialData, userRbds, isAdmin }: Props) {
+export default function AsistenciaAtrasosClient({
+    initialData,
+    userRbds,
+    isAdmin,
+    hasConfiguredPersonal = false,
+    totalPersonalAsignado = 0
+}: Props) {
     const [tipoActivo, setTipoActivo] = useState<'ADELANTO' | 'ATRASO'>(initialData.tipoActual || 'ADELANTO')
     const [data, setData] = useState<InitialData>(initialData)
     const [isPending, startTransition] = useTransition()
@@ -377,23 +385,29 @@ export default function AsistenciaAtrasosClient({ initialData, userRbds, isAdmin
                 </div>
             </div>
 
-            {/* Aviso de RBDs restringidos para el perfil */}
-            {!isAdmin && userRbds.length > 0 && (
+            {/* Aviso de RBDs restringidos para el perfil o Personal Asignado */}
+            {hasConfiguredPersonal ? (
+                <div className="flex items-center gap-2.5 p-3.5 bg-cyan-50 border border-cyan-200 rounded-xl text-cyan-900 text-xs shadow-sm">
+                    <Info className="w-4 h-4 flex-shrink-0 text-cyan-600" />
+                    <span>
+                        Visualización por Personal Asignado: Tienes <strong>{totalPersonalAsignado}</strong> colaboradores asignados a tu jefatura según el mantenedor <strong>Configuración de Visualización</strong>.
+                    </span>
+                </div>
+            ) : !isAdmin && userRbds.length > 0 ? (
                 <div className="flex items-center gap-2.5 p-3.5 bg-amber-50/80 border border-amber-200 rounded-xl text-amber-800 text-xs shadow-sm">
                     <Info className="w-4 h-4 flex-shrink-0 text-amber-600" />
                     <span>
                         Acceso restringido por perfil: Solo puedes visualizar los <strong>{userRbds.length}</strong> establecimientos autorizados en tu cuenta de usuario.
                     </span>
                 </div>
-            )}
-            {!isAdmin && userRbds.length === 0 && (
+            ) : !isAdmin && userRbds.length === 0 ? (
                 <div className="flex items-center gap-2.5 p-3.5 bg-rose-50 border border-rose-200 rounded-xl text-rose-800 text-xs shadow-sm">
                     <AlertCircle className="w-4 h-4 flex-shrink-0 text-rose-600" />
                     <span>
                         Sin colegios autorizados: Tu cuenta de usuario aún no tiene RBDs asignados en el mantenedor correspondiente. Contacta al Administrador.
                     </span>
                 </div>
-            )}
+            ) : null}
 
             {/* Alerta de Feedback */}
             {mensajeFeedback && (

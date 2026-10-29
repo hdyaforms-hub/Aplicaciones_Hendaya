@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import { getAsistenciaRegistrosAction, getEstablecimientosAutocompletadoAction } from './actions'
 import { getCriteriosAction } from '@/app/dashboard/mantenedor/personal/criterios-ausencias/actions'
 import { getUserEffectiveRbds } from '@/lib/authFilters'
+import { getUserAssignedPersonalVisualizacion } from '@/lib/authPersonalVisualizacion'
 import AsistenciaClient from './AsistenciaClient'
 
 export const dynamic = 'force-dynamic'
@@ -15,19 +16,23 @@ export default async function AsistenciaPage() {
         redirect('/dashboard')
     }
 
-    const [regRes, critRes, estabRes, authorizedRbds] = await Promise.all([
+    const [regRes, critRes, estabRes, authorizedRbds, assignedPersonal] = await Promise.all([
         getAsistenciaRegistrosAction(),
         getCriteriosAction(),
         getEstablecimientosAutocompletadoAction(),
-        getUserEffectiveRbds()
+        getUserEffectiveRbds(),
+        getUserAssignedPersonalVisualizacion()
     ])
 
     const registros = regRes.success && regRes.data ? regRes.data : []
     const criterios = critRes.success && critRes.data ? critRes.data : []
     const establecimientos = estabRes.success && estabRes.data ? estabRes.data : []
 
-    const isAdmin = authorizedRbds === null
+    const hasGlobalPersonalPermission = perms.includes('view_all_personal_asistencia')
+    const isAdmin = authorizedRbds === null || hasGlobalPersonalPermission
     const userRbds = authorizedRbds ?? []
+    const hasConfiguredPersonal = assignedPersonal.hasConfiguredVisualizacion
+    const totalPersonalAsignado = assignedPersonal.totalAsignados
 
     return (
         <AsistenciaClient
@@ -36,6 +41,8 @@ export default async function AsistenciaPage() {
             establecimientos={establecimientos}
             userRbds={userRbds}
             isAdmin={isAdmin}
+            hasConfiguredPersonal={hasConfiguredPersonal}
+            totalPersonalAsignado={totalPersonalAsignado}
         />
     )
 }

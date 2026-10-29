@@ -45,12 +45,16 @@ interface AsistenciaHorasExtrasClientProps {
     }
     userRbds: number[]
     isAdmin: boolean
+    hasConfiguredPersonal?: boolean
+    totalPersonalAsignado?: number
 }
 
 export default function AsistenciaHorasExtrasClient({
     initialData,
     userRbds,
-    isAdmin
+    isAdmin,
+    hasConfiguredPersonal = false,
+    totalPersonalAsignado = 0
 }: AsistenciaHorasExtrasClientProps) {
     const [registros, setRegistros] = useState<AsistenciaHextraRegistroDTO[]>(initialData.data)
     const [totalRegistros, setTotalRegistros] = useState(initialData.total)
@@ -211,15 +215,22 @@ export default function AsistenciaHorasExtrasClient({
                 </div>
             </div>
 
-            {/* Aviso de RBDs restringidos para el usuario */}
-            {!isAdmin && userRbds.length > 0 && (
+            {/* Aviso de RBDs restringidos para el usuario o Personal Asignado */}
+            {hasConfiguredPersonal ? (
+                <div className="flex items-center gap-2 p-3.5 bg-cyan-50 border border-cyan-200 rounded-xl text-cyan-900 text-xs shadow-sm">
+                    <Info className="w-4 h-4 flex-shrink-0 text-cyan-600" />
+                    <span>
+                        Visualización por Personal Asignado: Tienes <strong>{totalPersonalAsignado}</strong> colaboradores asignados a tu jefatura según el mantenedor <strong>Configuración de Visualización</strong>.
+                    </span>
+                </div>
+            ) : !isAdmin && userRbds.length > 0 ? (
                 <div className="flex items-center gap-2 p-3.5 bg-amber-50 border border-amber-200 rounded-xl text-amber-800 text-xs shadow-sm">
                     <Info className="w-4 h-4 flex-shrink-0 text-amber-600" />
                     <span>
                         Acceso restringido por perfil: Solo puedes visualizar los <strong>{userRbds.length}</strong> establecimientos (RBDs) asociados a tu cuenta.
                     </span>
                 </div>
-            )}
+            ) : null}
 
             {/* Feedback alert */}
             {mensajeFeedback && (

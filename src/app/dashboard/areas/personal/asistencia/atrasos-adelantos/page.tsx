@@ -2,6 +2,7 @@ import { getSession } from '@/lib/session'
 import { redirect } from 'next/navigation'
 import { getAsistenciaAtrasosAction } from './actions'
 import { getUserEffectiveRbds } from '@/lib/authFilters'
+import { getUserAssignedPersonalVisualizacion } from '@/lib/authPersonalVisualizacion'
 import AsistenciaAtrasosClient from './AsistenciaAtrasosClient'
 
 export const dynamic = 'force-dynamic'
@@ -14,13 +15,17 @@ export default async function AsistenciaAtrasosPage() {
         redirect('/dashboard')
     }
 
-    const [dataRes, authorizedRbds] = await Promise.all([
+    const [dataRes, authorizedRbds, assignedPersonal] = await Promise.all([
         getAsistenciaAtrasosAction({ page: 1, pageSize: 10, tipo: 'ADELANTO' }),
-        getUserEffectiveRbds()
+        getUserEffectiveRbds(),
+        getUserAssignedPersonalVisualizacion()
     ])
 
-    const isAdmin = authorizedRbds === null
+    const hasGlobalPersonalPermission = perms.includes('view_all_personal_asistencia')
+    const isAdmin = authorizedRbds === null || hasGlobalPersonalPermission
     const userRbds = authorizedRbds ?? []
+    const hasConfiguredPersonal = assignedPersonal.hasConfiguredVisualizacion
+    const totalPersonalAsignado = assignedPersonal.totalAsignados
 
     const fallbackData = {
         data: [],
@@ -57,6 +62,8 @@ export default async function AsistenciaAtrasosPage() {
             initialData={initialData}
             userRbds={userRbds}
             isAdmin={isAdmin}
+            hasConfiguredPersonal={hasConfiguredPersonal}
+            totalPersonalAsignado={totalPersonalAsignado}
         />
     )
 }

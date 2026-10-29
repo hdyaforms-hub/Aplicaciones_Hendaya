@@ -68,8 +68,11 @@ export async function getAsistenciaRegistrosAction(filtros?: {
         return { success: false, error: 'No autorizado', data: [] }
     }
 
+    const perms = session?.user?.role?.permissions || []
+    const hasGlobalPersonalPermission = perms.includes('view_all_personal_asistencia')
     const assignedPersonal = await getUserAssignedPersonalVisualizacion()
     const authorizedRbds = await getUserEffectiveRbds()
+    const isGlobalAdmin = authorizedRbds === null || hasGlobalPersonalPermission
     const where: any = {}
 
     // 0. Solo registros de períodos ABIERTOS (los cerrados se gestionan en Adm. Ausentismo)
@@ -87,23 +90,21 @@ export async function getAsistenciaRegistrosAction(filtros?: {
         if (filtros?.rbd) {
             where.rbd = filtros.rbd
         }
-    } else {
-        // Lógica original existente (sin tocar para supervisores y administradores)
-        if (authorizedRbds !== null) {
-            if (authorizedRbds.length === 0) {
-                // Usuario no administrador sin RBDs asignados -> no puede ver registros
-                where.rbd = -999999
-            } else if (filtros?.rbd) {
-                // Si filtra por un RBD específico, solo puede verlo si está en sus asignados
-                where.rbd = authorizedRbds.includes(filtros.rbd) ? filtros.rbd : -999999
-            } else {
-                // Si no especifica RBD, ve todos los colegios asignados
-                where.rbd = { in: authorizedRbds }
-            }
+    } else if (!isGlobalAdmin) {
+        // Lógica original existente (sin tocar para supervisores y usuarios con RBDs)
+        if (authorizedRbds.length === 0) {
+            // Usuario no administrador sin RBDs asignados -> no puede ver registros
+            where.rbd = -999999
         } else if (filtros?.rbd) {
-            // Administrador / Gerencia con filtro específico
-            where.rbd = filtros.rbd
+            // Si filtra por un RBD específico, solo puede verlo si está en sus asignados
+            where.rbd = authorizedRbds.includes(filtros.rbd) ? filtros.rbd : -999999
+        } else {
+            // Si no especifica RBD, ve todos los colegios asignados
+            where.rbd = { in: authorizedRbds }
         }
+    } else if (filtros?.rbd) {
+        // Administrador / Gerencia / Acceso Global con filtro específico
+        where.rbd = filtros.rbd
     }
 
     // 2. Filtro de fecha
@@ -209,9 +210,11 @@ export async function asignarCriterioAction(registroId: string, criterioId: stri
 
     const session = await getSession()
     const usuarioNombre = session?.user?.nombre || session?.user?.email || 'Usuario'
+    const perms = session?.user?.role?.permissions || []
+    const hasGlobalPersonalPermission = perms.includes('view_all_personal_asistencia')
     const authorizedRbds = await getUserEffectiveRbds()
     const assignedPersonal = await getUserAssignedPersonalVisualizacion()
-    const isAdmin = authorizedRbds === null
+    const isGlobalAdmin = authorizedRbds === null || hasGlobalPersonalPermission
 
     try {
         const currentReg = await (rawPrisma as any).pers_Asis_Registro.findUnique({
@@ -228,6 +231,13 @@ export async function asignarCriterioAction(registroId: string, criterioId: stri
                     error: 'No tienes autorización para modificar registros de este colaborador'
                 }
             }
+        } else if (!isGlobalAdmin) {
+            if (currentReg.rbd && (!authorizedRbds || !authorizedRbds.includes(currentReg.rbd))) {
+                return {
+                    success: false,
+                    error: 'No tienes autorización para modificar registros de este establecimiento'
+                }
+            }
         }
         if (currentReg.estado === 'CERRADO') {
             return {
@@ -236,13 +246,7 @@ export async function asignarCriterioAction(registroId: string, criterioId: stri
             }
         }
         // Si el usuario no es administrador y el registro ya tiene un criterio asignado, bloquear modificaciones
-        if (!isAdmin) {
-            if (!authorizedRbds || !authorizedRbds.includes(currentReg.rbd)) {
-                return {
-                    success: false,
-                    error: 'No tienes autorización para modificar registros de este establecimiento'
-                }
-            }
+        if (!isGlobalAdmin) {
             if (currentReg.criterioId !== null && currentReg.criterioId !== criterioId) {
                 return {
                     success: false,
@@ -298,8 +302,11 @@ export async function getEstablecimientosAutocompletadoAction() {
         return { success: false, error: 'No autorizado', data: [] }
     }
 
+    const perms = session?.user?.role?.permissions || []
+    const hasGlobalPersonalPermission = perms.includes('view_all_personal_asistencia')
     const assignedPersonal = await getUserAssignedPersonalVisualizacion()
     const authorizedRbds = await getUserEffectiveRbds()
+    const isGlobalAdmin = authorizedRbds === null || hasGlobalPersonalPermission
 
     try {
         const where: any = {}
@@ -308,7 +315,7 @@ export async function getEstablecimientosAutocompletadoAction() {
                 return { success: true, data: [] }
             }
             where.rutHash = { in: assignedPersonal.rutHashes }
-        } else if (authorizedRbds !== null) {
+        } else if (!isGlobalAdmin) {
             if (authorizedRbds.length === 0) {
                 return { success: true, data: [] }
             }
@@ -392,9 +399,11 @@ export async function adjuntarDocumentoAsistenciaAction(formData: FormData): Pro
 
     const session = await getSession()
     const usuarioNombre = session?.user?.nombre || session?.user?.email || 'Usuario'
+    const perms = session?.user?.role?.permissions || []
+    const hasGlobalPersonalPermission = perms.includes('view_all_personal_asistencia')
     const authorizedRbds = await getUserEffectiveRbds()
     const assignedPersonal = await getUserAssignedPersonalVisualizacion()
-    const isAdmin = authorizedRbds === null
+    const isGlobalAdmin = authorizedRbds === null || hasGlobalPersonalPermission
 
     const registroId = formData.get('registroId') as string
     const criterioId = (formData.get('criterioId') as string) || null
@@ -422,7 +431,7 @@ export async function adjuntarDocumentoAsistenciaAction(formData: FormData): Pro
                 error: 'No tienes autorización para adjuntar documentos a este colaborador'
             }
         }
-    } else if (!isAdmin) {
+    } else if (!isGlobalAdmin) {
         const currentReg = await (rawPrisma as any).pers_Asis_Registro.findUnique({
             where: { id: registroId },
             select: { rbd: true, criterioId: true }
@@ -430,7 +439,7 @@ export async function adjuntarDocumentoAsistenciaAction(formData: FormData): Pro
         if (!currentReg) {
             return { success: false, error: 'Registro no encontrado' }
         }
-        if (!authorizedRbds || !authorizedRbds.includes(currentReg.rbd)) {
+        if (currentReg.rbd && (!authorizedRbds || !authorizedRbds.includes(currentReg.rbd))) {
             return {
                 success: false,
                 error: 'No tienes autorización para adjuntar documentos en este establecimiento'
