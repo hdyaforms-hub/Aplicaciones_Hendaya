@@ -863,3 +863,602 @@ export async function fetchRiesgoMinutaData(filters?: RiesgoMinutaFilterParams):
         }
     }
 }
+
+export type DiaCalendarioItem = {
+    dia: number
+    fecha: string // YYYY-MM-DD
+    diaSemana: number // 0 = Domingo, 1 = Lunes, ..., 6 = Sábado
+    diaNombre: string
+    hasData: boolean
+    totalColegios: number
+    colegiosRiesgoAlto: number
+    colegiosRiesgoMedio: number
+    colegiosRiesgoLeve: number
+    topColegios: ColegioRiesgoItem[]
+}
+
+export type CalendarioRiesgoMesData = {
+    anio: number
+    mes: number
+    nombreMes: string
+    usuarioId: string
+    usuarioNombre: string
+    usuarioRol: string
+    totalRbdsAsignados: number
+    dias: DiaCalendarioItem[]
+}
+
+const NOMBRES_MESES = [
+    'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+    'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+]
+
+const DIAS_SEMANA_NOMBRES = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
+
+/**
+ * Obtiene la evaluación preventiva de todo el mes agrupada por día para los colegios de un Usuario / Supervisor específico.
+ * Retorna los Top 10 colegios con mayor gravedad para cada día del mes.
+ */
+export async function fetchCalendarioRiesgoMes(params: {
+    anio: number
+    mes: number
+    usuarioId: string
+    licitacion?: string
+}): Promise<CalendarioRiesgoMesData> {
+    const session = await getSession()
+    if (!session || !session.user) {
+        throw new Error('No autorizado. Sesión no válida.')
+    }
+
+    const isAdmin = session.user.role?.name?.toLowerCase().includes('admin') ||
+                    session.user.role?.name?.toLowerCase().includes('gerencia')
+    const permissions = session.user.role?.permissions || []
+
+    if (!isAdmin && !permissions.includes('view_prev_riesgo_minuta')) {
+        throw new Error('No posees permisos para acceder al módulo Riesgo en Minuta.')
+    }
+
+    const { anio, mes, usuarioId, licitacion } = params
+
+    // Evaluación estricta de RBDs por perfil de usuario conectado
+    const userEffectiveRbds = await getUserEffectiveRbds()
+    const isRestrictedByRbd = userEffectiveRbds !== null
+    const assignedRbds = isRestrictedByRbd ? userEffectiveRbds : null
+
+    // 1. Consultar datos del usuario/supervisor seleccionado
+    const [targetUser, allSupervisors] = await Promise.all([
+        rawPrisma.user.findUnique({
+            where: { id: usuarioId },
+            select: {
+                id: true,
+                name: true,
+                username: true,
+                email: true,
+                rbds: true,
+                role: { select: { name: true } }
+            }
+        }),
+        rawPrisma.supervisor.findMany({
+            where: { vigente: true },
+            select: {
+                id: true,
+                nombre: true,
+                apellido: true,
+                correo: true,
+                rbdsAuditar: { select: { rbd: true } }
+            }
+        }).catch(() => [])
+    ])
+
+    if (!targetUser) {
+        throw new Error('Usuario seleccionado no encontrado.')
+    }
+
+    // Resolver RBDs del usuario / supervisor
+    let userRbds = (targetUser.rbds || []).map(Number).filter(n => !isNaN(n) && n > 0)
+    if (userRbds.length === 0) {
+        const matchedSup = allSupervisors.find(s =>
+            (s.correo && targetUser.email && s.correo.trim().toLowerCase() === targetUser.email.trim().toLowerCase()) ||
+            (targetUser.name && `${s.nombre} ${s.apellido}`.trim().toLowerCase() === targetUser.name.trim().toLowerCase())
+        )
+        if (matchedSup) {
+            userRbds = matchedSup.rbdsAuditar.map(r => r.rbd)
+        }
+    }
+
+    // Intersección de seguridad con los RBDs permitidos para el usuario logueado
+    let finalAllowedRbds: number[] = userRbds
+    if (isRestrictedByRbd && assignedRbds) {
+        finalAllowedRbds = userRbds.filter(r => assignedRbds.includes(r))
+    }
+
+    const usuarioNombre = targetUser.name || targetUser.username
+    const usuarioRol = targetUser.role?.name || 'Usuario'
+
+    // Registrar en auditoría
+    try {
+        await logAuditAction({
+            username: session.user.username,
+            userId: session.user.id,
+            action: 'VISUALIZAR_CALENDARIO_RIESGO_MINUTA',
+            modulo: 'Áreas -> Prev. de riesgos',
+            detalle: `Consulta Calendario Mensual Riesgo en Minuta (${mes}/${anio}) para ${usuarioNombre} (${usuarioRol}) con ${finalAllowedRbds.length} RBDs`
+        })
+    } catch (e) {
+        console.error('Error registrando auditoría en fetchCalendarioRiesgoMes:', e)
+    }
+
+    const nombreMes = NOMBRES_MESES[mes - 1] || `Mes ${mes}`
+    const daysInMonth = new Date(anio, mes, 0).getDate()
+
+    // Si no tiene RBDs autorizados, retornar mes con días vacíos
+    if (finalAllowedRbds.length === 0) {
+        const diasVacios: DiaCalendarioItem[] = []
+        for (let d = 1; d <= daysInMonth; d++) {
+            const dateObj = new Date(anio, mes - 1, d)
+            diasVacios.push({
+                dia: d,
+                fecha: `${anio}-${String(mes).padStart(2, '0')}-${String(d).padStart(2, '0')}`,
+                diaSemana: dateObj.getDay(),
+                diaNombre: DIAS_SEMANA_NOMBRES[dateObj.getDay()],
+                hasData: false,
+                totalColegios: 0,
+                colegiosRiesgoAlto: 0,
+                colegiosRiesgoMedio: 0,
+                colegiosRiesgoLeve: 0,
+                topColegios: []
+            })
+        }
+        return {
+            anio,
+            mes,
+            nombreMes,
+            usuarioId,
+            usuarioNombre,
+            usuarioRol,
+            totalRbdsAsignados: 0,
+            dias: diasVacios
+        }
+    }
+
+    // 2. Consultar Raciones del mes para estos RBDs
+    const racionesWhere: any = {
+        anio,
+        mes,
+        rbd: { in: finalAllowedRbds }
+    }
+    if (licitacion && licitacion !== 'ALL') {
+        racionesWhere.licitacion = licitacion.trim()
+    }
+
+    const [gravedadRows, racionesMes, colegiosDb, minutasMes] = await Promise.all([
+        rawPrisma.prevGravedadPreparacion.findMany({
+            select: {
+                licitacion: true,
+                numeroPreparacion: true,
+                nombrePreparacion: true,
+                codigoSubServicio: true,
+                nombreSubServicio: true,
+                gravedad: true
+            }
+        }),
+        rawPrisma.raciones.findMany({
+            where: racionesWhere,
+            select: {
+                rbd: true,
+                licitacion: true,
+                numeroPrograma: true,
+                programa: true,
+                numeroServicio: true,
+                servicio: true,
+                numeroEnlace: true,
+                numeroCocina: true,
+                numeroArea: true,
+                cantidad: true,
+                locacion: true
+            }
+        }),
+        rawPrisma.colegios.findMany({
+            where: { colRBD: { in: finalAllowedRbds } },
+            select: {
+                colRBD: true,
+                nombreEstablecimiento: true,
+                institucion: true,
+                sucursal: true,
+                comuna: true
+            }
+        }),
+        rawPrisma.minutas.findMany({
+            where: {
+                anio,
+                mes,
+                ...(licitacion && licitacion !== 'ALL' ? { licitacion: licitacion.trim() } : {})
+            },
+            select: {
+                dia: true,
+                licitacion: true,
+                numeroMinuta: true,
+                numeroPrograma: true,
+                programa: true,
+                codigoServicio: true,
+                nombreServicio: true,
+                codigoEnlace: true,
+                nombreEnlace: true,
+                numeroCocina: true,
+                numeroPreparacion: true,
+                sucid: true
+            }
+        })
+    ])
+
+    // Mapa de gravedad
+    const gravedadByNumMap = new Map<string, { gravedad: 'ALTO' | 'MEDIO' | 'LEVE' | 'SIN_ASIGNAR'; nombrePreparacion: string; codigoSubServicio: string; nombreSubServicio: string }>()
+    const gravedadByNameMap = new Map<string, { gravedad: 'ALTO' | 'MEDIO' | 'LEVE' | 'SIN_ASIGNAR'; nombrePreparacion: string; codigoSubServicio: string; nombreSubServicio: string }>()
+
+    for (const g of gravedadRows) {
+        const lic = g.licitacion.trim()
+        const pNum = Number(g.numeroPreparacion)
+        const grav = (g.gravedad as 'ALTO' | 'MEDIO' | 'LEVE') || 'SIN_ASIGNAR'
+        const cleanNombre = (g.nombrePreparacion || '').trim()
+        const cleanCodSubServ = (g.codigoSubServicio || '').trim()
+        const cleanSubServ = (g.nombreSubServicio || '').trim()
+
+        const numKey = `${lic}___${pNum}`
+        const currentNum = gravedadByNumMap.get(numKey)
+        if (!currentNum || GRAVEDAD_RANK[grav] > GRAVEDAD_RANK[currentNum.gravedad]) {
+            gravedadByNumMap.set(numKey, {
+                gravedad: grav,
+                nombrePreparacion: cleanNombre,
+                codigoSubServicio: cleanCodSubServ,
+                nombreSubServicio: cleanSubServ
+            })
+        }
+
+        if (cleanNombre) {
+            const nameKey = `${lic}___${normalizeDishName(cleanNombre)}`
+            const currentName = gravedadByNameMap.get(nameKey)
+            if (!currentName || GRAVEDAD_RANK[grav] > GRAVEDAD_RANK[currentName.gravedad]) {
+                gravedadByNameMap.set(nameKey, {
+                    gravedad: grav,
+                    nombrePreparacion: cleanNombre,
+                    codigoSubServicio: cleanCodSubServ,
+                    nombreSubServicio: cleanSubServ
+                })
+            }
+        }
+    }
+
+    // Mapa de Colegios
+    const colegiosMap = new Map<number, { nombre: string; institucion: string; sucursal: string; comuna?: string }>()
+    for (const c of colegiosDb) {
+        colegiosMap.set(c.colRBD, {
+            nombre: (c.nombreEstablecimiento || '').trim(),
+            institucion: (c.institucion || 'JUNAEB').trim(),
+            sucursal: (c.sucursal || '').trim(),
+            comuna: c.comuna ? c.comuna.trim() : undefined
+        })
+    }
+
+    // Catálogo de preparaciones por áreas
+    const uniquePrepIds = Array.from(new Set(minutasMes.map(m => Number(m.numeroPreparacion)).filter(n => !isNaN(n) && n > 0)))
+    const preparacionesRows = uniquePrepIds.length > 0
+        ? await rawPrisma.preparaciones.findMany({
+            where: { numeroPreparacion: { in: uniquePrepIds } },
+            select: {
+                licitacion: true,
+                numeroPreparacion: true,
+                numeroArea: true,
+                area: true,
+                nombrePreparacion: true,
+                codigoSubServicio: true,
+                nombreSubServicio: true
+            },
+            distinct: ['licitacion', 'numeroPreparacion', 'numeroArea']
+        })
+        : []
+
+    const prepCatalogMap = new Map<string, {
+        areas: Set<string>
+        areaLabels: Map<string, string>
+        nombrePreparacion: string
+        codigoSubServicio: string
+        nombreSubServicio: string
+    }>()
+
+    for (const pr of preparacionesRows) {
+        const key = `${pr.licitacion.trim()}___${Number(pr.numeroPreparacion)}`
+        const areaCode = (pr.numeroArea || '').trim()
+        const areaLabel = (pr.area || '').trim()
+        if (!prepCatalogMap.has(key)) {
+            prepCatalogMap.set(key, {
+                areas: new Set(),
+                areaLabels: new Map(),
+                nombrePreparacion: (pr.nombrePreparacion || '').trim(),
+                codigoSubServicio: (pr.codigoSubServicio || '').trim(),
+                nombreSubServicio: (pr.nombreSubServicio || '').trim()
+            })
+        }
+        const item = prepCatalogMap.get(key)!
+        if (areaCode) {
+            item.areas.add(areaCode)
+            if (areaLabel) item.areaLabels.set(areaCode, areaLabel)
+        }
+    }
+
+    // Agrupar raciones de los RBDs del supervisor por clave única
+    type RacionAgrupada = {
+        rbd: number
+        licitacion: string
+        numeroPrograma: string
+        programa: string
+        numeroServicio: string
+        servicio: string
+        numeroEnlace: number
+        numeroCocina: number
+        numeroArea: string
+        cantidad: number
+        locacion: string
+    }
+
+    const racionesAgrupadasMap = new Map<string, RacionAgrupada>()
+    for (const r of racionesMes) {
+        const rKey = `${r.rbd}___${r.licitacion.trim()}___${r.numeroPrograma}___${r.numeroServicio}___${r.numeroEnlace}___${r.numeroCocina}___${r.numeroArea}`
+        if (!racionesAgrupadasMap.has(rKey)) {
+            racionesAgrupadasMap.set(rKey, {
+                rbd: r.rbd,
+                licitacion: r.licitacion.trim(),
+                numeroPrograma: String(r.numeroPrograma).trim(),
+                programa: (r.programa || '').trim(),
+                numeroServicio: String(r.numeroServicio).trim(),
+                servicio: (r.servicio || '').trim(),
+                numeroEnlace: Number(r.numeroEnlace),
+                numeroCocina: Number(r.numeroCocina),
+                numeroArea: (r.numeroArea || '').trim(),
+                cantidad: 0,
+                locacion: (r.locacion || '').trim()
+            })
+        }
+        racionesAgrupadasMap.get(rKey)!.cantidad += Number(r.cantidad || 0)
+    }
+
+    // Agrupar minutas del mes por día
+    type MinutaItem = (typeof minutasMes)[0]
+    const minutasPorDia = new Map<number, MinutaItem[]>()
+    for (const m of minutasMes) {
+        const d = Number(m.dia)
+        if (!minutasPorDia.has(d)) {
+            minutasPorDia.set(d, [])
+        }
+        minutasPorDia.get(d)!.push(m)
+    }
+
+    // 3. Evaluar cada día del mes
+    const diasResultado: DiaCalendarioItem[] = []
+
+    for (let dia = 1; dia <= daysInMonth; dia++) {
+        const dateObj = new Date(anio, mes - 1, dia)
+        const fechaDiaStr = `${anio}-${String(mes).padStart(2, '0')}-${String(dia).padStart(2, '0')}`
+        const minutasDelDia = minutasPorDia.get(dia) || []
+
+        if (minutasDelDia.length === 0 || racionesMes.length === 0) {
+            diasResultado.push({
+                dia,
+                fecha: fechaDiaStr,
+                diaSemana: dateObj.getDay(),
+                diaNombre: DIAS_SEMANA_NOMBRES[dateObj.getDay()],
+                hasData: false,
+                totalColegios: 0,
+                colegiosRiesgoAlto: 0,
+                colegiosRiesgoMedio: 0,
+                colegiosRiesgoLeve: 0,
+                topColegios: []
+            })
+            continue
+        }
+
+        // Agrupar minutas de este día por clave de cruce
+        const minutasDiaMap = new Map<string, MinutaItem[]>()
+        for (const m of minutasDelDia) {
+            const mKey = `${m.licitacion.trim()}___${m.numeroPrograma.trim()}___${m.codigoServicio.trim()}___${Number(m.codigoEnlace)}___${Number(m.numeroCocina)}`
+            if (!minutasDiaMap.has(mKey)) {
+                minutasDiaMap.set(mKey, [])
+            }
+            minutasDiaMap.get(mKey)!.push(m)
+        }
+
+        // Cruce para este día
+        const colegiosDiaMap = new Map<number, ColegioRiesgoItem>()
+
+        for (const r of racionesAgrupadasMap.values()) {
+            if (r.cantidad <= 0) continue
+
+            const crossKey = `${r.licitacion}___${r.numeroPrograma}___${r.numeroServicio}___${r.numeroEnlace}___${r.numeroCocina}`
+            const minutasMatch = minutasDiaMap.get(crossKey)
+            if (!minutasMatch || minutasMatch.length === 0) continue
+
+            const minutasDeArea = minutasMatch.map(m => {
+                const prepNum = Number(m.numeroPreparacion)
+                const pKey = `${m.licitacion.trim()}___${prepNum}`
+                const prepCat = prepCatalogMap.get(pKey)
+                const hasArea = prepCat && prepCat.areas.size > 0 && r.numeroArea
+                    ? prepCat.areas.has(r.numeroArea)
+                    : true
+                return { m, prepCat, hasArea }
+            }).filter(item => item.hasArea)
+
+            if (minutasDeArea.length === 0) continue
+
+            const firstMinuta = minutasDeArea[0].m
+            const colInfo = colegiosMap.get(r.rbd)
+            const nombreCol = colInfo?.nombre || r.locacion || `Colegio RBD ${r.rbd}`
+            const institucionCol = colInfo?.institucion || 'JUNAEB'
+            const sucursalCol = (colInfo?.sucursal && colInfo.sucursal !== '' && colInfo.sucursal !== 'N/A')
+                ? colInfo.sucursal
+                : (firstMinuta?.sucid?.trim() || firstMinuta?.nombreEnlace?.trim() || 'CENTRO')
+
+            if (!colegiosDiaMap.has(r.rbd)) {
+                colegiosDiaMap.set(r.rbd, {
+                    rbd: r.rbd,
+                    nombre: nombreCol,
+                    comuna: colInfo?.comuna,
+                    sucursal: sucursalCol,
+                    institucion: institucionCol,
+                    supervisor: usuarioNombre,
+                    totalRaciones: 0,
+                    score: 0,
+                    nivelRiesgo: 'SIN_ASIGNAR',
+                    countAlto: 0,
+                    countMedio: 0,
+                    countLeve: 0,
+                    countSinAsignar: 0,
+                    platosCriticos: [],
+                    servicios: []
+                })
+            }
+
+            const colegioItem = colegiosDiaMap.get(r.rbd)!
+            colegioItem.totalRaciones += r.cantidad
+
+            const preparacionesDelServicio: (PreparacionDetalle & { _codSub: string })[] = []
+            let riesgoMaxServicio: 'ALTO' | 'MEDIO' | 'LEVE' | 'SIN_ASIGNAR' = 'SIN_ASIGNAR'
+
+            for (const { m, prepCat } of minutasDeArea) {
+                const prepNum = Number(m.numeroPreparacion)
+                const pKey = `${m.licitacion.trim()}___${prepNum}`
+                const gExact = gravedadByNumMap.get(pKey)
+
+                const nomPrep = prepCat?.nombrePreparacion || gExact?.nombrePreparacion || `Preparación N° ${prepNum}`
+                const normNameKey = `${m.licitacion.trim()}___${normalizeDishName(nomPrep)}`
+                const gByName = gravedadByNameMap.get(normNameKey)
+
+                const grav: 'ALTO' | 'MEDIO' | 'LEVE' | 'SIN_ASIGNAR' =
+                    (gExact && gExact.gravedad !== 'SIN_ASIGNAR')
+                        ? gExact.gravedad
+                        : (gByName ? gByName.gravedad : 'SIN_ASIGNAR')
+
+                const subServ = prepCat?.nombreSubServicio || gExact?.nombreSubServicio || gByName?.nombreSubServicio || 'S/D'
+                const codSubServ = prepCat?.codigoSubServicio || gExact?.codigoSubServicio || gByName?.codigoSubServicio || '99'
+
+                preparacionesDelServicio.push({
+                    numeroPreparacion: prepNum,
+                    nombre: nomPrep,
+                    subServicio: subServ,
+                    gravedad: grav,
+                    _codSub: codSubServ
+                })
+
+                if (grav === 'ALTO') {
+                    riesgoMaxServicio = 'ALTO'
+                    colegioItem.countAlto++
+                    if (!colegioItem.platosCriticos.some(p => p.numeroPreparacion === prepNum && p.servicio === r.servicio)) {
+                        colegioItem.platosCriticos.push({
+                            numeroPreparacion: prepNum,
+                            nombre: nomPrep,
+                            gravedad: 'ALTO',
+                            subServicio: subServ,
+                            servicio: r.servicio
+                        })
+                    }
+                } else if (grav === 'MEDIO') {
+                    if (riesgoMaxServicio !== 'ALTO') riesgoMaxServicio = 'MEDIO'
+                    colegioItem.countMedio++
+                    if (!colegioItem.platosCriticos.some(p => p.numeroPreparacion === prepNum && p.servicio === r.servicio)) {
+                        colegioItem.platosCriticos.push({
+                            numeroPreparacion: prepNum,
+                            nombre: nomPrep,
+                            gravedad: 'MEDIO',
+                            subServicio: subServ,
+                            servicio: r.servicio
+                        })
+                    }
+                } else if (grav === 'LEVE') {
+                    if (riesgoMaxServicio !== 'ALTO' && riesgoMaxServicio !== 'MEDIO') riesgoMaxServicio = 'LEVE'
+                    colegioItem.countLeve++
+                } else {
+                    colegioItem.countSinAsignar++
+                }
+            }
+
+            preparacionesDelServicio.sort((a, b) => {
+                const ordA = SUB_SERVICIO_ORDER[a._codSub] ?? 50
+                const ordB = SUB_SERVICIO_ORDER[b._codSub] ?? 50
+                return ordA - ordB || a.numeroPreparacion - b.numeroPreparacion
+            })
+
+            const areaLabel = minutasDeArea[0]?.prepCat?.areaLabels.get(r.numeroArea) || (r.numeroArea === '1' ? 'Urbano Rural' : r.numeroArea === '2' ? 'Rural' : undefined)
+
+            colegioItem.servicios.push({
+                servicio: r.servicio,
+                numeroServicio: r.numeroServicio,
+                programa: r.programa,
+                numeroPrograma: r.numeroPrograma,
+                area: areaLabel,
+                cantidad: r.cantidad,
+                numeroMinuta: firstMinuta?.numeroMinuta,
+                nivelRiesgoServicio: riesgoMaxServicio,
+                preparaciones: preparacionesDelServicio.map(({ _codSub, ...rest }) => rest)
+            })
+        }
+
+        // Finalizar métricas del día
+        let diaAltoCount = 0
+        let diaMedioCount = 0
+        let diaLeveCount = 0
+
+        const colegiosDiaList = Array.from(colegiosDiaMap.values()).map(c => {
+            c.servicios.sort((a, b) =>
+                (parseInt(a.numeroServicio || '99', 10) - parseInt(b.numeroServicio || '99', 10)) ||
+                a.programa.localeCompare(b.programa)
+            )
+            c.score = (c.countAlto * 10) + (c.countMedio * 4) + (c.countLeve * 1)
+
+            if (c.countAlto > 0) {
+                c.nivelRiesgo = 'ALTO'
+                diaAltoCount++
+            } else if (c.countMedio > 0) {
+                c.nivelRiesgo = 'MEDIO'
+                diaMedioCount++
+            } else if (c.countLeve > 0) {
+                c.nivelRiesgo = 'LEVE'
+                diaLeveCount++
+            } else {
+                c.nivelRiesgo = 'SIN_ASIGNAR'
+            }
+            return c
+        })
+
+        // Ordenar por score y gravedad
+        colegiosDiaList.sort((a, b) =>
+            b.score - a.score ||
+            b.countAlto - a.countAlto ||
+            b.countMedio - a.countMedio ||
+            b.totalRaciones - a.totalRaciones
+        )
+
+        const top10DelDia = colegiosDiaList.slice(0, 10)
+
+        diasResultado.push({
+            dia,
+            fecha: fechaDiaStr,
+            diaSemana: dateObj.getDay(),
+            diaNombre: DIAS_SEMANA_NOMBRES[dateObj.getDay()],
+            hasData: colegiosDiaList.length > 0,
+            totalColegios: colegiosDiaList.length,
+            colegiosRiesgoAlto: diaAltoCount,
+            colegiosRiesgoMedio: diaMedioCount,
+            colegiosRiesgoLeve: diaLeveCount,
+            topColegios: top10DelDia
+        })
+    }
+
+    return {
+        anio,
+        mes,
+        nombreMes,
+        usuarioId,
+        usuarioNombre,
+        usuarioRol,
+        totalRbdsAsignados: finalAllowedRbds.length,
+        dias: diasResultado
+    }
+}

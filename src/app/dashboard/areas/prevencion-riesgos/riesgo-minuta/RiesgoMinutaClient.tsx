@@ -5,7 +5,9 @@ import {
     RiesgoMinutaDashboardData,
     RiesgoMinutaFilterParams,
     ColegioRiesgoItem,
-    fetchRiesgoMinutaData
+    CalendarioRiesgoMesData,
+    fetchRiesgoMinutaData,
+    fetchCalendarioRiesgoMes
 } from './actions'
 
 type Props = {
@@ -24,7 +26,61 @@ export default function RiesgoMinutaClient({ initialData, initialFilters, curren
     const [isPending, startTransition] = useTransition()
     const [searchTableQuery, setSearchTableQuery] = useState('')
     const [selectedColegioModal, setSelectedColegioModal] = useState<ColegioRiesgoItem | null>(null)
+    const [selectedModalFecha, setSelectedModalFecha] = useState<string>(data.fechaConsultada)
     const [expandedColegioRbd, setExpandedColegioRbd] = useState<number | null>(null)
+
+    // Tabs: 'general' (evaluación diaria) y 'calendario' (mensual por supervisor)
+    const [activeTab, setActiveTab] = useState<'general' | 'calendario'>('general')
+    const [calendarioData, setCalendarioData] = useState<CalendarioRiesgoMesData | null>(null)
+    const [isLoadingCalendario, setIsLoadingCalendario] = useState(false)
+
+    // Usuario/Supervisor actualmente seleccionado
+    const selectedUser = useMemo(() => {
+        if (!filters.usuarioId) return null
+        return (data.filtrosDisponibles.usuarios || []).find(u => u.id === filters.usuarioId) || null
+    }, [filters.usuarioId, data.filtrosDisponibles.usuarios])
+
+    // Cargar datos del calendario mensual
+    const loadCalendarioMes = async (targetUserId?: string, targetFecha?: string) => {
+        const uid = targetUserId !== undefined ? targetUserId : filters.usuarioId
+        if (!uid) return
+
+        const fBase = targetFecha || filters.fecha || data.fechaConsultada
+        const [aStr, mStr] = fBase.split('-')
+        const anio = parseInt(aStr, 10) || new Date().getFullYear()
+        const mes = parseInt(mStr, 10) || (new Date().getMonth() + 1)
+
+        setIsLoadingCalendario(true)
+        try {
+            const result = await fetchCalendarioRiesgoMes({
+                anio,
+                mes,
+                usuarioId: uid,
+                licitacion: filters.licitacion
+            })
+            setCalendarioData(result)
+        } catch (err) {
+            console.error('Error al cargar calendario mensual de riesgo:', err)
+        } finally {
+            setIsLoadingCalendario(false)
+        }
+    }
+
+    // Cambiar de mes en el calendario mensual
+    const handleChangeCalendarioMes = (offset: number) => {
+        if (!calendarioData || !filters.usuarioId) return
+        let nextMes = calendarioData.mes + offset
+        let nextAnio = calendarioData.anio
+        if (nextMes < 1) {
+            nextMes = 12
+            nextAnio -= 1
+        } else if (nextMes > 12) {
+            nextMes = 1
+            nextAnio += 1
+        }
+        const nextFecha = `${nextAnio}-${String(nextMes).padStart(2, '0')}-01`
+        loadCalendarioMes(filters.usuarioId, nextFecha)
+    }
 
     // Autocompletado inteligente RBD / Colegio
     const [colegioSearchInput, setColegioSearchInput] = useState<string>(() => {
@@ -97,6 +153,19 @@ export default function RiesgoMinutaClient({ initialData, initialFilters, curren
         }
         setFilters(updated)
 
+        // Si se limpia el usuario/supervisor, volver a pestaña general y limpiar calendario
+        if (key === 'usuarioId' && !value) {
+            setActiveTab('general')
+            setCalendarioData(null)
+        }
+
+        // Si ya está en calendario y cambia el usuario o fecha, actualizar calendario
+        if (activeTab === 'calendario' && (key === 'usuarioId' || key === 'fecha' || key === 'licitacion')) {
+            if (updated.usuarioId) {
+                loadCalendarioMes(updated.usuarioId, updated.fecha)
+            }
+        }
+
         startTransition(async () => {
             try {
                 const fresh = await fetchRiesgoMinutaData(updated)
@@ -112,6 +181,8 @@ export default function RiesgoMinutaClient({ initialData, initialFilters, curren
         setFilters(resetFilters)
         setColegioSearchInput('')
         setIsAutocompleteOpen(false)
+        setActiveTab('general')
+        setCalendarioData(null)
         startTransition(async () => {
             try {
                 const fresh = await fetchRiesgoMinutaData(resetFilters)
@@ -465,8 +536,281 @@ export default function RiesgoMinutaClient({ initialData, initialFilters, curren
                 )}
             </div>
 
-            {/* BANNER INFORMATIVO SI NO HAY DATOS PARA LA FECHA EXACTA */}
-            {!data.hasDataForDate && (
+            {/* BARRA DE PESTAÑAS: VISTA DIARIA vs CALENDARIO (CUANDO HAY UN USUARIO/SUPERVISOR SELECCIONADO) */}
+            {filters.usuarioId && (
+                <div className="bg-white border border-slate-200 rounded-2xl p-2.5 shadow-sm flex items-center justify-between gap-3 flex-wrap">
+                    <div className="flex items-center gap-2">
+                        <button
+                            type="button"
+                            onClick={() => setActiveTab('general')}
+                            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
+                                activeTab === 'general'
+                                    ? 'bg-sky-600 text-white shadow-sm'
+                                    : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200'
+                            }`}
+                        >
+                            <span>📊</span>
+                            <span>Evaluación Diaria ({filters.fecha || data.fechaConsultada})</span>
+                        </button>
+
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setActiveTab('calendario')
+                                if (!calendarioData || calendarioData.usuarioId !== filters.usuarioId) {
+                                    loadCalendarioMes(filters.usuarioId, filters.fecha)
+                                }
+                            }}
+                            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
+                                activeTab === 'calendario'
+                                    ? 'bg-sky-600 text-white shadow-sm'
+                                    : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200'
+                            }`}
+                        >
+                            <span>📅</span>
+                            <span>Calendario</span>
+                            <span className={`px-2 py-0.5 rounded-full text-[10px] font-extrabold ${
+                                activeTab === 'calendario' ? 'bg-white/20 text-white' : 'bg-sky-100 text-sky-800'
+                            }`}>
+                                {selectedUser?.name || 'Supervisor'}
+                            </span>
+                        </button>
+                    </div>
+
+                    <div className="text-xs text-slate-500 font-medium px-2 flex items-center gap-2">
+                        <span>Supervisor:</span>
+                        <strong className="text-slate-900 font-bold">{selectedUser?.name || selectedUser?.username}</strong>
+                        <span className="text-slate-300">•</span>
+                        <span className="text-sky-700 font-semibold">{selectedUser?.roleName}</span>
+                    </div>
+                </div>
+            )}
+
+            {/* CONTENIDO CONDICIONAL: CALENDARIO MENSUAL vs VISTA GENERAL */}
+            {activeTab === 'calendario' && filters.usuarioId ? (
+                <div className="space-y-6">
+                    {/* Cabecera del Calendario */}
+                    <div className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                        <div>
+                            <div className="flex items-center gap-2.5 flex-wrap">
+                                <span className="text-2xl">📅</span>
+                                <h2 className="text-xl md:text-2xl font-extrabold text-slate-900 tracking-tight">
+                                    Calendario Mensual: {calendarioData ? `${calendarioData.nombreMes} ${calendarioData.anio}` : 'Cargando...'}
+                                </h2>
+                                <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-sky-50 text-sky-700 border border-sky-300">
+                                    {selectedUser?.name || 'Supervisor'}
+                                </span>
+                                <span className="text-xs px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 font-semibold border border-slate-200">
+                                    {calendarioData?.totalRbdsAsignados ?? 0} RBDs asignados
+                                </span>
+                            </div>
+                            <p className="text-xs text-slate-500 mt-1">
+                                Top 10 colegios asignados con mayor nivel de gravedad evaluados para cada día del mes. Haz clic en el RBD para inspeccionar su minuta.
+                            </p>
+                        </div>
+
+                        {/* Controles de mes */}
+                        <div className="flex items-center gap-2 flex-wrap">
+                            <button
+                                type="button"
+                                onClick={() => handleChangeCalendarioMes(-1)}
+                                disabled={isLoadingCalendario}
+                                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-bold transition-all disabled:opacity-50"
+                            >
+                                <span>◀</span>
+                                <span>Mes anterior</span>
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    const hoy = new Date()
+                                    loadCalendarioMes(filters.usuarioId, `${hoy.getFullYear()}-${String(hoy.getMonth() + 1).padStart(2, '0')}-01`)
+                                }}
+                                disabled={isLoadingCalendario}
+                                className="px-3 py-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold transition-all disabled:opacity-50"
+                            >
+                                Mes actual
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => handleChangeCalendarioMes(1)}
+                                disabled={isLoadingCalendario}
+                                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-bold transition-all disabled:opacity-50"
+                            >
+                                <span>Mes siguiente</span>
+                                <span>▶</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Leyenda y Guía de Semáforo */}
+                    <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs gap-3">
+                        <div className="flex items-center gap-3 flex-wrap">
+                            <span className="font-bold text-slate-700">Semáforo de Gravedad:</span>
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-rose-100 text-rose-800 font-extrabold text-[11px] border border-rose-300">
+                                🔴 ALTO
+                            </span>
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-100 text-amber-800 font-extrabold text-[11px] border border-amber-300">
+                                🟡 MEDIO
+                            </span>
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 font-extrabold text-[11px] border border-emerald-300">
+                                🟢 LEVE
+                            </span>
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-200 text-slate-700 font-medium text-[11px] border border-slate-300">
+                                ⚪ Sin evaluar
+                            </span>
+                        </div>
+                        <div className="text-[11px] text-slate-500 italic">
+                            * Máximo 10 colegios por día ordenados por mayor gravedad y score de riesgo.
+                        </div>
+                    </div>
+
+                    {/* Grilla del Calendario */}
+                    {isLoadingCalendario ? (
+                        <div className="bg-white border border-slate-200 rounded-3xl p-16 text-center shadow-sm">
+                            <div className="w-12 h-12 border-4 border-sky-500 border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
+                            <h3 className="font-bold text-slate-800 text-sm">Evaluando minutas de todo el mes...</h3>
+                            <p className="text-xs text-slate-400 mt-1">Cruzando raciones, preparaciones y matriz de riesgo preventivo para los colegios del supervisor.</p>
+                        </div>
+                    ) : !calendarioData || calendarioData.dias.length === 0 ? (
+                        <div className="bg-white border border-slate-200 rounded-3xl p-12 text-center text-slate-400 text-xs shadow-sm">
+                            No se encontraron datos para este mes.
+                        </div>
+                    ) : (
+                        <div className="bg-white border border-slate-200/90 rounded-2xl shadow-sm overflow-hidden p-4 md:p-6 space-y-4">
+                            {/* Cabecera de días de la semana */}
+                            <div className="grid grid-cols-7 gap-2 text-center">
+                                {['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'].map((diaNom, idx) => (
+                                    <div
+                                        key={diaNom}
+                                        className={`py-2 text-[11px] font-extrabold uppercase tracking-wider rounded-lg ${
+                                            idx >= 5 ? 'bg-slate-100 text-slate-500' : 'bg-sky-50 text-sky-800 border border-sky-100'
+                                        }`}
+                                    >
+                                        {diaNom}
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Celdas del mes */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2.5">
+                                {/* Espacios en blanco para alinear el primer día */}
+                                {Array.from({ length: ((new Date(calendarioData.anio, calendarioData.mes - 1, 1).getDay() + 6) % 7) }).map((_, i) => (
+                                    <div
+                                        key={`empty-${i}`}
+                                        className="hidden lg:block min-h-[140px] rounded-xl border border-dashed border-slate-200/80 bg-slate-50/40 p-2"
+                                    />
+                                ))}
+
+                                {/* Días del mes */}
+                                {calendarioData.dias.map((d) => {
+                                    const isWeekend = d.diaSemana === 0 || d.diaSemana === 6
+                                    const isSelectedDate = (filters.fecha || data.fechaConsultada) === d.fecha
+                                    return (
+                                        <div
+                                            key={d.dia}
+                                            className={`min-h-[140px] rounded-xl border p-2.5 flex flex-col justify-between transition-all ${
+                                                isSelectedDate
+                                                    ? 'border-sky-500 bg-sky-50/50 ring-2 ring-sky-400/40 shadow-sm'
+                                                    : isWeekend
+                                                    ? 'bg-slate-50/70 border-slate-200/80'
+                                                    : 'bg-white border-slate-200 hover:border-sky-300 hover:shadow-sm'
+                                            }`}
+                                        >
+                                            <div>
+                                                {/* Cabecera del día */}
+                                                <div className="flex items-center justify-between pb-1 border-b border-slate-100">
+                                                    <div className="flex items-center gap-1.5">
+                                                        <span className={`text-sm font-black ${
+                                                            isSelectedDate ? 'text-sky-800' : isWeekend ? 'text-slate-500' : 'text-slate-800'
+                                                        }`}>
+                                                            {d.dia}
+                                                        </span>
+                                                        <span className="text-[10px] text-slate-400 font-semibold lg:hidden">
+                                                            {d.diaNombre}
+                                                        </span>
+                                                    </div>
+
+                                                    <div className="flex items-center gap-1">
+                                                        {d.colegiosRiesgoAlto > 0 && (
+                                                            <span className="text-[10px] font-extrabold text-rose-700 bg-rose-50 px-1 py-0.2 rounded border border-rose-200" title={`${d.colegiosRiesgoAlto} colegios con riesgo ALTO`}>
+                                                                🔴 {d.colegiosRiesgoAlto}
+                                                            </span>
+                                                        )}
+                                                        {isSelectedDate && (
+                                                            <span className="text-[9px] font-black text-sky-700 bg-sky-100 px-1 py-0.2 rounded">
+                                                                Hoy
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                </div>
+
+                                                {/* Listado de colegios / RBDs con semáforo */}
+                                                {!d.hasData || d.topColegios.length === 0 ? (
+                                                    <div className="py-6 text-center text-[10px] text-slate-400 italic">
+                                                        Sin minutas
+                                                    </div>
+                                                ) : (
+                                                    <div className="pt-1.5 space-y-1">
+                                                        <div className="flex flex-wrap gap-1">
+                                                            {d.topColegios.map((col) => (
+                                                                <button
+                                                                    key={col.rbd}
+                                                                    type="button"
+                                                                    onClick={() => {
+                                                                        setSelectedColegioModal(col)
+                                                                        setSelectedModalFecha(d.fecha)
+                                                                    }}
+                                                                    className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-extrabold border transition-transform hover:scale-105 shadow-2xs ${
+                                                                        col.nivelRiesgo === 'ALTO'
+                                                                            ? 'bg-rose-50 text-rose-800 border-rose-300 hover:bg-rose-100'
+                                                                            : col.nivelRiesgo === 'MEDIO'
+                                                                            ? 'bg-amber-50 text-amber-800 border-amber-300 hover:bg-amber-100'
+                                                                            : col.nivelRiesgo === 'LEVE'
+                                                                            ? 'bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100'
+                                                                            : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'
+                                                                    }`}
+                                                                    title={`${col.nombre} (RBD ${col.rbd}) • ${col.sucursal} • Nivel: ${col.nivelRiesgo} (Score: ${col.score} pts). Haz clic para abrir la minuta.`}
+                                                                >
+                                                                    <span className="text-[9px]">
+                                                                        {col.nivelRiesgo === 'ALTO' ? '🔴' : col.nivelRiesgo === 'MEDIO' ? '🟡' : col.nivelRiesgo === 'LEVE' ? '🟢' : '⚪'}
+                                                                    </span>
+                                                                    <span>{col.rbd}</span>
+                                                                </button>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            {/* Pie del día */}
+                                            {d.hasData && d.totalColegios > 0 && (
+                                                <div className="pt-1 border-t border-slate-100 mt-2 flex items-center justify-between text-[9px] text-slate-400">
+                                                    <span>{d.totalColegios} evaluados</span>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => {
+                                                            handleFilterChange('fecha', d.fecha)
+                                                            setActiveTab('general')
+                                                        }}
+                                                        className="text-sky-600 hover:text-sky-800 font-bold hover:underline"
+                                                        title="Cambiar filtro diario a este día"
+                                                    >
+                                                        Ver día →
+                                                    </button>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        </div>
+                    )}
+                </div>
+            ) : (
+                <>
+                    {/* BANNER INFORMATIVO SI NO HAY DATOS PARA LA FECHA EXACTA */}
+                    {!data.hasDataForDate && (
                 <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 text-amber-900 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <div className="flex items-center gap-3">
                         <span className="text-2xl">⚠️</span>
@@ -698,7 +1042,10 @@ export default function RiesgoMinutaClient({ initialData, initialFilters, curren
 
                                         <div className="pt-1 flex items-center justify-end">
                                             <button
-                                                onClick={() => setSelectedColegioModal(col)}
+                                                onClick={() => {
+                                                    setSelectedColegioModal(col)
+                                                    setSelectedModalFecha(filters.fecha || data.fechaConsultada)
+                                                }}
                                                 className="text-xs font-bold text-sky-600 hover:text-sky-800 hover:underline flex items-center gap-1"
                                             >
                                                 <span>Ver Minuta Completa</span>
@@ -799,7 +1146,10 @@ export default function RiesgoMinutaClient({ initialData, initialFilters, curren
                                             </td>
                                             <td className="py-2.5 px-3.5 text-center">
                                                 <button
-                                                    onClick={() => setSelectedColegioModal(c)}
+                                                    onClick={() => {
+                                                        setSelectedColegioModal(c)
+                                                        setSelectedModalFecha(filters.fecha || data.fechaConsultada)
+                                                    }}
                                                     className="px-2.5 py-1 rounded-lg bg-sky-50 hover:bg-sky-100 text-sky-700 font-bold text-[11px] transition-all"
                                                 >
                                                     Ver Minuta
@@ -819,6 +1169,8 @@ export default function RiesgoMinutaClient({ initialData, initialFilters, curren
                     </p>
                 )}
             </div>
+            </>
+            )}
 
             {/* MODAL DETALLE DE MINUTA DEL COLEGIO SELECCIONADO */}
             {selectedColegioModal && (
@@ -837,7 +1189,7 @@ export default function RiesgoMinutaClient({ initialData, initialFilters, curren
                                     RBD: <strong>{selectedColegioModal.rbd}</strong> • Sucursal: <strong>{selectedColegioModal.sucursal}</strong> • Institución: <strong>{selectedColegioModal.institucion}</strong> • Supervisor: <strong>{selectedColegioModal.supervisor || 'Sin asignar'}</strong>
                                 </p>
                                 <p className="text-[11px] text-slate-600 mt-0.5">
-                                    Fecha evaluada: <strong>{data.fechaConsultada}</strong> • Raciones totales: <strong>{selectedColegioModal.totalRaciones.toLocaleString('es-CL')}</strong>
+                                    Fecha evaluada: <strong>{selectedModalFecha || data.fechaConsultada}</strong> • Raciones totales: <strong>{selectedColegioModal.totalRaciones.toLocaleString('es-CL')}</strong>
                                 </p>
                             </div>
                             <button
