@@ -66,6 +66,7 @@ export default async function RolesPage() {
         { id: 'view_tablero_monitoreo_avances', name: 'Tablero Monitoreo de Avances', description: 'Acceso y supervisión al tablero semafórico de avances de matrices y actas por usuario.', category: 'TABLEROS' },
         { id: 'view_tablero_monitoreo_rrhh', name: 'Tablero Monitoreo RRHH', description: 'Acceso y supervisión al tablero semafórico de avances de RRHH (Ausentismo, Horas Extras, Atrasos, Adelantos) en períodos abiertos.', category: 'TABLEROS' },
         { id: 'view_tablero_tendencias_pmpa', name: 'Tablero Tendencias y Oscilación PMPA', description: 'Visualización temporal y análisis de oscilación de cargas de raciones PMPA por programa, RBD, servicio y sucursal.', category: 'TABLEROS' },
+        { id: 'view_tablero_indicador_prev_riesgos', name: 'Tablero Indicador Prev. Riesgos', description: 'Acceso visual al tablero de indicadores de prevención de riesgos (frecuencia, accidentabilidad, gravedad, zonas, Top 10 y DS67).', category: 'TABLEROS' },
         
         { id: 'view_ingreso_raciones', name: 'Ingreso de Raciones', description: 'Gestión y auditoría de raciones por colegio.', category: 'APLICACIONES' },
         { id: 'view_solicitud_pan', name: 'Solicitud de Pan', description: 'Acceso a la aplicación de Solicitud de Pan.', category: 'APLICACIONES' },
@@ -112,6 +113,7 @@ export default async function RolesPage() {
         { id: 'view_prev_gravedad_preparacion', name: 'Gravedad en Preparación (Ver)', description: 'Acceso visual al módulo de gravedad de preparaciones.', category: 'ÁREAS -> PREV. DE RIESGOS' },
         { id: 'manage_prev_gravedad_preparacion', name: 'Gravedad en Preparación (Gestionar)', description: 'Permite asignar y actualizar la gravedad (Leve, Medio, Alto) y sincronizar preparaciones.', category: 'ÁREAS -> PREV. DE RIESGOS' },
         { id: 'view_prev_riesgo_minuta', name: 'Riesgo en Minuta (Ver)', description: 'Monitoreo preventivo del nivel de riesgo en minutas diarias cruzadas con gravedad de preparación y colegios.', category: 'ÁREAS -> PREV. DE RIESGOS' },
+        { id: 'manage_prev_riesgos_carga', name: 'Carga Masiva Prev. Riesgos', description: 'Permite cargar planillas Excel con los datos e indicadores del panel de prevención de riesgos.', category: 'ÁREAS -> PREV. DE RIESGOS' },
 
         // ÁREAS -> LOGÍSTICA
         { id: 'logistica:tablero:ver', name: 'Tablero de Despacho (Ver)', description: 'Visualizar el tablero en vivo de andenes y flujo de camiones.', category: 'ÁREAS -> LOGÍSTICA' },
