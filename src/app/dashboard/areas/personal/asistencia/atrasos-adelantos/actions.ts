@@ -8,6 +8,10 @@ import { ensurePersonalAtrasosTables } from '@/lib/personal-atrasos-db-init'
 import { getUserEffectiveRbds } from '@/lib/authFilters'
 import { getUserAssignedPersonalVisualizacion } from '@/lib/authPersonalVisualizacion'
 import { logAuditAction } from '@/lib/audit'
+import fs from 'fs'
+import path from 'path'
+import { v4 as uuidv4 } from 'uuid'
+import { uploadPath } from '@/lib/storage'
 
 const PATH_ASISTENCIA_ATRASOS = '/dashboard/areas/personal/asistencia/atrasos-adelantos'
 const PATH_ADM_ATRASOS = '/dashboard/areas/personal/administracion/atrasos-adelantos'
@@ -55,6 +59,11 @@ export interface AsistenciaAtrasosRegistroDTO {
     aplicaDescuento: boolean
     aplicaModificadoPor: string | null
     aplicaModificadoAt: string | null
+    documentoUrl?: string | null
+    documentoNombre?: string | null
+    documentoSubidoAt?: string | null
+    documentoSubidoPor?: string | null
+    modificacionesCount?: number
     observacion: string | null
     estado: string
 }
@@ -279,6 +288,11 @@ export async function getAsistenciaAtrasosAction(filtros?: {
                 aplicaDescuento: Boolean(r.aplicaDescuento),
                 aplicaModificadoPor: r.aplicaModificadoPor,
                 aplicaModificadoAt: r.aplicaModificadoAt ? new Date(r.aplicaModificadoAt).toISOString() : null,
+                documentoUrl: r.documentoUrl || null,
+                documentoNombre: r.documentoNombre || null,
+                documentoSubidoAt: r.documentoSubidoAt ? new Date(r.documentoSubidoAt).toISOString() : null,
+                documentoSubidoPor: r.documentoSubidoPor || null,
+                modificacionesCount: Number(r.modificacionesCount || (r.aplicaModificadoPor ? 1 : 0)),
                 observacion: r.observacion,
                 estado: r.estado || 'ABIERTO'
             }
@@ -389,7 +403,7 @@ export async function actualizarGestionAtrasoAction(
 
     try {
         const rows: any[] = await rawPrisma.$queryRawUnsafe(
-            `SELECT id, rbd, establecimiento, fecha, "identificadorEnc", "identificadorHash", "apellidosEnc", "nombreEnc", estado, "aplicaDescuento", justificado, "aplicaModificadoPor" FROM "Pers_Atrasos_Registro" WHERE id = $1;`,
+            `SELECT id, rbd, establecimiento, fecha, "identificadorEnc", "identificadorHash", "apellidosEnc", "nombreEnc", estado, "aplicaDescuento", justificado, "aplicaModificadoPor", "modificacionesCount" FROM "Pers_Atrasos_Registro" WHERE id = $1;`,
             registroId
         )
         const currentReg = rows[0]
@@ -417,14 +431,15 @@ export async function actualizarGestionAtrasoAction(
             }
         }
 
-        // Bloqueo de única gestión para usuarios no administradores (Asistencia):
-        // Solo pueden cambiar el estado una sola vez. Si ya fue gestionado, solo un administrador puede modificarlo.
-        if (!isGlobalAdmin && currentReg.aplicaModificadoPor !== null) {
+        // Control de justificaciones (hasta 3 veces para usuarios no administradores)
+        const currentCount = Number(currentReg.modificacionesCount || (currentReg.aplicaModificadoPor ? 1 : 0))
+        if (!isGlobalAdmin && currentCount >= 3) {
             return {
                 success: false,
-                error: 'Este registro ya fue modificado previamente y se encuentra bloqueado. Para corregir o rectificar el estado, debe ser gestionado desde el módulo de Administración.'
+                error: 'Este registro ya alcanzó el límite máximo de 3 justificaciones y se encuentra bloqueado. Para corregir o rectificar el estado, debe ser gestionado desde el módulo de Administración.'
             }
         }
+        const nuevoCount = currentCount + 1
 
         await rawPrisma.$executeRawUnsafe(
             `UPDATE "Pers_Atrasos_Registro" 
@@ -433,13 +448,15 @@ export async function actualizarGestionAtrasoAction(
                  observacion = $3,
                  "aplicaModificadoPor" = $4, 
                  "aplicaModificadoAt" = $5, 
+                 "modificacionesCount" = $6,
                  "updatedAt" = $5
-             WHERE id = $6;`,
+             WHERE id = $7;`,
             aplicaDescuento,
             justificado || null,
             observacion || null,
             usuarioNombre,
             ahora,
+            nuevoCount,
             registroId
         )
 
@@ -450,7 +467,7 @@ export async function actualizarGestionAtrasoAction(
             userId: usuarioId,
             action: 'GESTIONAR_DESCUENTO_ATRASO',
             modulo: 'Recursos Humanos',
-            detalle: `Modificación de gestión para ${colaborador} (RBD ${currentReg.rbd}) fecha ${currentReg.fecha}: Descuento=${aplicaDescuento ? 'APLICA' : 'NO APLICA'}, Justificado="${justificado || 'Sin justificación'}".`
+            detalle: `Modificación de gestión para ${colaborador} (RBD ${currentReg.rbd}) fecha ${currentReg.fecha}: Descuento=${aplicaDescuento ? 'APLICA' : 'NO APLICA'}, Justificado="${justificado || 'Sin justificación'}" (Intento ${nuevoCount}/3).`
         })
 
         revalidatePath(PATH_ASISTENCIA_ATRASOS)
@@ -462,10 +479,165 @@ export async function actualizarGestionAtrasoAction(
             justificado,
             observacion,
             aplicaModificadoPor: usuarioNombre,
-            aplicaModificadoAt: ahora.toISOString()
+            aplicaModificadoAt: ahora.toISOString(),
+            modificacionesCount: nuevoCount
         }
     } catch (error: any) {
         console.error('Error al actualizar gestión de atraso:', error)
+        return { success: false, error: error.message || 'Error al actualizar el registro' }
+    }
+}
+
+/**
+ * Server Action: Guarda la gestión de atraso o adelanto con soporte para adjuntar documento (opcional)
+ */
+export async function guardarGestionAtrasoConArchivoAction(formData: FormData) {
+    if (!await checkPermission()) {
+        return { success: false, error: 'No tienes permisos para modificar este registro' }
+    }
+    await ensurePersonalAtrasosTables()
+
+    const session = await getSession()
+    const usuarioNombre = session?.user?.name || session?.user?.username || 'Usuario'
+    const usuarioId = session?.user?.id || null
+    const perms = session?.user?.role?.permissions || []
+    const hasGlobalPersonalPermission = perms.includes('view_all_personal_asistencia')
+    const authorizedRbds = await getUserEffectiveRbds()
+    const assignedPersonal = await getUserAssignedPersonalVisualizacion()
+    const isGlobalAdmin = authorizedRbds === null || hasGlobalPersonalPermission
+    const ahora = new Date()
+
+    const registroId = formData.get('registroId') as string
+    const aplicaDescuento = formData.get('aplicaDescuento') === 'true'
+    const justificado = (formData.get('justificado') as string) || ''
+    const observacion = (formData.get('observacion') as string) || ''
+    const file = formData.get('file') as File | null
+    const eliminarArchivo = formData.get('eliminarArchivo') === 'true'
+
+    if (!registroId) {
+        return { success: false, error: 'ID de registro no especificado' }
+    }
+
+    try {
+        const rows: any[] = await rawPrisma.$queryRawUnsafe(
+            `SELECT id, rbd, establecimiento, fecha, "identificadorEnc", "identificadorHash", "apellidosEnc", "nombreEnc", estado, "aplicaDescuento", justificado, "aplicaModificadoPor", "modificacionesCount", "documentoUrl", "documentoNombre", "documentoSubidoAt", "documentoSubidoPor" FROM "Pers_Atrasos_Registro" WHERE id = $1;`,
+            registroId
+        )
+        const currentReg = rows[0]
+
+        if (!currentReg) {
+            return { success: false, error: 'Registro no encontrado' }
+        }
+
+        if (assignedPersonal && assignedPersonal.hasConfiguredVisualizacion) {
+            if (!currentReg.identificadorHash || !assignedPersonal.rutHashes.includes(currentReg.identificadorHash)) {
+                return { success: false, error: 'No tienes autorización para modificar registros de este colaborador' }
+            }
+        } else if (!isGlobalAdmin && currentReg.rbd) {
+            if (!authorizedRbds || !authorizedRbds.includes(currentReg.rbd)) {
+                return { success: false, error: 'No tienes autorización para modificar registros de este establecimiento' }
+            }
+        }
+
+        if (currentReg.estado === 'CERRADO') {
+            return {
+                success: false,
+                error: 'El período correspondiente a esta planilla se encuentra CERRADO. No es posible modificar registros en un período cerrado.'
+            }
+        }
+
+        const currentCount = Number(currentReg.modificacionesCount || (currentReg.aplicaModificadoPor ? 1 : 0))
+        if (!isGlobalAdmin && currentCount >= 3) {
+            return {
+                success: false,
+                error: 'Este registro ya alcanzó el límite máximo de 3 justificaciones y se encuentra bloqueado. Para corregir o rectificar, debe ser gestionado desde el módulo de Administración.'
+            }
+        }
+        const nuevoCount = currentCount + 1
+
+        let documentoUrl: string | null = currentReg.documentoUrl || null
+        let documentoNombre: string | null = currentReg.documentoNombre || null
+        let documentoSubidoAt: Date | null = currentReg.documentoSubidoAt || null
+        let documentoSubidoPor: string | null = currentReg.documentoSubidoPor || null
+
+        if (eliminarArchivo) {
+            documentoUrl = null
+            documentoNombre = null
+            documentoSubidoAt = null
+            documentoSubidoPor = null
+        } else if (file && file.size > 0 && typeof file.arrayBuffer === 'function') {
+            const uploadDir = uploadPath('adelantos')
+            if (!fs.existsSync(uploadDir)) {
+                fs.mkdirSync(uploadDir, { recursive: true })
+            }
+            const safeOriginalName = path.basename(file.name).replace(/[^a-zA-Z0-9._-]/g, '_')
+            const uniqueFileName = `${Date.now()}_${uuidv4().slice(0, 8)}_${safeOriginalName}`
+            const filePath = path.join(uploadDir, uniqueFileName)
+
+            const bytes = await file.arrayBuffer()
+            const buffer = Buffer.from(bytes)
+            fs.writeFileSync(filePath, buffer)
+
+            documentoUrl = `/uploads/adelantos/${uniqueFileName}`
+            documentoNombre = file.name
+            documentoSubidoAt = ahora
+            documentoSubidoPor = usuarioNombre
+        }
+
+        await rawPrisma.$executeRawUnsafe(
+            `UPDATE "Pers_Atrasos_Registro" 
+             SET "aplicaDescuento" = $1, 
+                 justificado = $2,
+                 observacion = $3,
+                 "aplicaModificadoPor" = $4, 
+                 "aplicaModificadoAt" = $5, 
+                 "modificacionesCount" = $6,
+                 "documentoUrl" = $7,
+                 "documentoNombre" = $8,
+                 "documentoSubidoAt" = $9,
+                 "documentoSubidoPor" = $10,
+                 "updatedAt" = $5
+             WHERE id = $11;`,
+            aplicaDescuento,
+            justificado.trim() || null,
+            observacion.trim() || null,
+            usuarioNombre,
+            ahora,
+            nuevoCount,
+            documentoUrl,
+            documentoNombre,
+            documentoSubidoAt,
+            documentoSubidoPor,
+            registroId
+        )
+
+        const colaborador = `${decryptPersonalText(currentReg.nombreEnc)} ${decryptPersonalText(currentReg.apellidosEnc)}`.trim()
+        await logAuditAction({
+            username: usuarioNombre,
+            userId: usuarioId,
+            action: 'GESTIONAR_DESCUENTO_ATRASO',
+            modulo: 'Recursos Humanos',
+            detalle: `Gestión para ${colaborador} (RBD ${currentReg.rbd}) fecha ${currentReg.fecha}: Descuento=${aplicaDescuento ? 'APLICA' : 'NO APLICA'}, Justificado="${justificado || 'Sin justificación'}"${documentoNombre ? `, Archivo="${documentoNombre}"` : ''} (Intento ${nuevoCount}/3).`
+        })
+
+        revalidatePath(PATH_ASISTENCIA_ATRASOS)
+        revalidatePath(PATH_ADM_ATRASOS)
+
+        return {
+            success: true,
+            aplicaDescuento,
+            justificado: justificado.trim() || null,
+            observacion: observacion.trim() || null,
+            aplicaModificadoPor: usuarioNombre,
+            aplicaModificadoAt: ahora.toISOString(),
+            modificacionesCount: nuevoCount,
+            documentoUrl,
+            documentoNombre,
+            documentoSubidoAt: documentoSubidoAt ? (documentoSubidoAt instanceof Date ? documentoSubidoAt.toISOString() : String(documentoSubidoAt)) : null,
+            documentoSubidoPor
+        }
+    } catch (error: any) {
+        console.error('Error al guardar gestión de atraso con archivo:', error)
         return { success: false, error: error.message || 'Error al actualizar el registro' }
     }
 }

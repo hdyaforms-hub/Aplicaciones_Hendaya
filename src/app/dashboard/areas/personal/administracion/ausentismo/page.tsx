@@ -1,6 +1,10 @@
 import { getSession } from '@/lib/session'
 import { redirect } from 'next/navigation'
-import { getAdmAusentismoRegistrosAction, getHistorialCargasAction } from './actions'
+import {
+    getAdmAusentismoRegistrosAction,
+    getHistorialCargasAction,
+    getFiltrosMetadatosAusentismoAction
+} from './actions'
 import { getCriteriosAction } from '@/app/dashboard/mantenedor/personal/criterios-ausencias/actions'
 import { getEstablecimientosAutocompletadoAction } from '@/app/dashboard/areas/personal/asistencia/actions'
 import { getUserEffectiveRbds } from '@/lib/authFilters'
@@ -17,19 +21,21 @@ export default async function AdmAusentismoPage() {
         redirect('/dashboard')
     }
 
-    const [regRes, cargasRes, critRes, estabRes, authorizedRbds, puedeCerrar] = await Promise.all([
+    const [regRes, cargasRes, critRes, estabRes, authorizedRbds, puedeCerrar, metaRes] = await Promise.all([
         getAdmAusentismoRegistrosAction(),
         getHistorialCargasAction(),
         getCriteriosAction(),
         getEstablecimientosAutocompletadoAction(),
         getUserEffectiveRbds(),
-        puedeUsuarioCerrarPeriodosRH(session.user.id)
+        puedeUsuarioCerrarPeriodosRH(session.user.id),
+        getFiltrosMetadatosAusentismoAction()
     ])
 
     const registros = regRes.success && regRes.data ? regRes.data : []
     const cargas = cargasRes.success && cargasRes.data ? cargasRes.data : []
     const criterios = critRes.success && critRes.data ? critRes.data : []
     const establecimientos = estabRes.success && estabRes.data ? estabRes.data : []
+    const metadatosFiltros = metaRes || undefined
 
     const isAdmin = authorizedRbds === null
     const userRbds = authorizedRbds ?? []
@@ -43,6 +49,7 @@ export default async function AdmAusentismoPage() {
             userRbds={userRbds}
             isAdmin={isAdmin}
             puedeGestionarPeriodos={puedeCerrar}
+            metadatosFiltros={metadatosFiltros}
         />
     )
 }

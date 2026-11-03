@@ -3,6 +3,17 @@
 import React, { useState, useMemo, useTransition, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import {
+    ResponsiveContainer,
+    BarChart,
+    Bar,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip as RechartsTooltip,
+    Cell,
+    LabelList
+} from 'recharts'
+import {
     MonitoreoRRHHTableroResponse,
     ColaboradorRRHHCardData,
     SucursalRRHHCardData,
@@ -11,9 +22,176 @@ import {
 } from './actions'
 
 type TipoModuloFilter = 'TODOS' | 'AUSENTISMO' | 'HORAS_EXTRAS' | 'ATRASOS' | 'ADELANTOS'
+type ChartModuloFilter = 'TODOS' | 'TOTALIZADOR' | 'AUSENTISMO' | 'HORAS_EXTRAS' | 'ATRASOS' | 'ADELANTOS'
 
 interface Props {
     initialData: MonitoreoRRHHTableroResponse
+}
+
+interface ChartItemData {
+    sucursal: string
+    porcentaje: number
+    gestionados: number
+    pendientes: number
+    total: number
+    semaforo: SemaforoStatus
+    extraInfo?: string
+}
+
+function CustomChartTooltip({ active, payload }: any) {
+    if (active && payload && payload.length) {
+        const item = payload[0].payload as ChartItemData
+        return (
+            <div className="bg-slate-900/95 backdrop-blur-md text-white p-3.5 rounded-xl shadow-2xl border border-slate-700 text-xs min-w-[210px] pointer-events-none z-50">
+                <div className="flex items-center justify-between gap-2 pb-1.5 mb-1.5 border-b border-slate-800">
+                    <span className="font-black text-cyan-400 text-sm tracking-tight">{item.sucursal}</span>
+                    <span
+                        className={`px-2 py-0.5 rounded text-[10px] font-extrabold ${
+                            item.semaforo === 'VERDE'
+                                ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                                : item.semaforo === 'AMARILLO'
+                                ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                                : 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
+                        }`}
+                    >
+                        {item.semaforo === 'VERDE' ? 'Al Día' : item.semaforo === 'AMARILLO' ? 'Atraso Leve' : 'Atraso Grave'}
+                    </span>
+                </div>
+                <div className="space-y-1.5">
+                    <div className="flex justify-between items-center text-slate-300">
+                        <span className="text-[11px]">Avance Operacional:</span>
+                        <strong className="text-white font-mono text-sm">{item.porcentaje}%</strong>
+                    </div>
+                    <div className="flex justify-between items-center text-slate-300">
+                        <span className="text-[11px]">Gestionados:</span>
+                        <strong className="text-emerald-400 font-mono">{item.gestionados.toLocaleString()}</strong>
+                    </div>
+                    <div className="flex justify-between items-center text-slate-300">
+                        <span className="text-[11px]">Pendientes:</span>
+                        <strong className="text-rose-400 font-mono">{item.pendientes.toLocaleString()}</strong>
+                    </div>
+                    <div className="flex justify-between items-center text-slate-400 pt-1 border-t border-slate-800">
+                        <span className="text-[11px]">Total Registros:</span>
+                        <strong className="text-white font-mono">{item.total.toLocaleString()}</strong>
+                    </div>
+                    {item.extraInfo && (
+                        <div className="text-[10px] text-cyan-300 pt-1 mt-1 border-t border-slate-800 font-mono">
+                            {item.extraInfo}
+                        </div>
+                    )}
+                </div>
+            </div>
+        )
+    }
+    return null
+}
+
+function ColumnChartCard({
+    title,
+    icon,
+    subtitle,
+    data,
+    height = 135,
+    kpis,
+    isEnlarged = false,
+}: {
+    title: string
+    icon: string
+    subtitle?: string
+    data: ChartItemData[]
+    height?: number
+    kpis?: { gestionados: number; pendientes: number; total: number; porcentaje: number; extra?: string }
+    isEnlarged?: boolean
+}) {
+    return (
+        <div className={`bg-white rounded-xl border border-slate-200/90 shadow-sm p-2.5 sm:p-3 transition-all hover:shadow-md ${
+            isEnlarged ? 'ring-1 ring-cyan-500/30' : ''
+        }`}>
+            {/* Header compacto de la tarjeta del gráfico */}
+            <div className="flex items-center justify-between gap-1.5 pb-1.5 mb-1 border-b border-slate-100">
+                <div className="flex items-center gap-1.5 min-w-0">
+                    <span className="text-xs p-1 bg-slate-100 rounded-lg shrink-0">{icon}</span>
+                    <div className="min-w-0">
+                        <h4 className="text-[11px] font-black text-slate-800 tracking-tight truncate" title={title}>
+                            {title}
+                        </h4>
+                        {subtitle && isEnlarged && (
+                            <p className="text-[9.5px] text-slate-400 font-medium truncate">{subtitle}</p>
+                        )}
+                    </div>
+                </div>
+
+                {kpis && (
+                    <span className="px-1.5 py-0.5 rounded-md bg-cyan-50 border border-cyan-200 text-cyan-900 text-[10px] font-black font-mono shrink-0">
+                        {kpis.porcentaje}%
+                    </span>
+                )}
+            </div>
+
+            {/* Sub-KPIs compactos */}
+            {kpis && (
+                <div className="flex items-center justify-between text-[10px] text-slate-500 font-mono mb-1 px-0.5">
+                    <span>
+                        <strong className="text-emerald-700">{kpis.gestionados.toLocaleString()}</strong>/{kpis.total.toLocaleString()}
+                    </span>
+                    <span className={kpis.pendientes > 0 ? 'text-rose-600 font-bold' : 'text-emerald-600 font-bold'}>
+                        {kpis.pendientes > 0 ? `${kpis.pendientes.toLocaleString()} pend.` : 'Al día'}
+                    </span>
+                </div>
+            )}
+
+            {/* Gráfico Recharts compacto */}
+            <div className="w-full" style={{ height: `${height}px` }}>
+                <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={data} margin={{ top: 14, right: 4, left: -24, bottom: 4 }}>
+                        <CartesianGrid strokeDasharray="2 2" vertical={false} stroke="#f1f5f9" />
+                        <XAxis
+                            dataKey="sucursal"
+                            tick={{ fontSize: 8.5, fontWeight: 700, fill: '#64748b' }}
+                            tickFormatter={(val: string) => val.replace('CD ', '').replace('CASA MATRIZ', 'MATRIZ')}
+                            axisLine={{ stroke: '#e2e8f0' }}
+                            tickLine={false}
+                            interval={0}
+                        />
+                        <YAxis
+                            domain={[0, 100]}
+                            ticks={[0, 50, 100]}
+                            tickFormatter={(v) => `${v}%`}
+                            tick={{ fontSize: 8.5, fill: '#94a3b8' }}
+                            axisLine={false}
+                            tickLine={false}
+                        />
+                        <RechartsTooltip content={<CustomChartTooltip />} />
+                        <Bar dataKey="porcentaje" radius={[4, 4, 0, 0]} maxBarSize={isEnlarged ? 34 : 22}>
+                            {data.map((entry, index) => (
+                                <Cell
+                                    key={`cell-${index}`}
+                                    fill={
+                                        entry.semaforo === 'VERDE'
+                                            ? '#10b981'
+                                            : entry.semaforo === 'AMARILLO'
+                                            ? '#f59e0b'
+                                            : '#f43f5e'
+                                    }
+                                />
+                            ))}
+                            <LabelList
+                                dataKey="porcentaje"
+                                position="top"
+                                formatter={(val: any) => `${val}%`}
+                                style={{ fontSize: 8.5, fontWeight: 800, fill: '#334155' }}
+                            />
+                        </Bar>
+                    </BarChart>
+                </ResponsiveContainer>
+            </div>
+            {kpis?.extra && (
+                <div className="mt-0.5 pt-1 border-t border-slate-100 text-[9px] text-slate-500 font-mono text-center truncate" title={kpis.extra}>
+                    {kpis.extra}
+                </div>
+            )}
+        </div>
+    )
 }
 
 export default function MonitoreoRRHHClient({ initialData }: Props) {
@@ -28,6 +206,13 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
     const [filterRole, setFilterRole] = useState<string>('TODOS')
     const [filterSucursal, setFilterSucursal] = useState<string>('TODOS')
     const [filterTipoModulo, setFilterTipoModulo] = useState<TipoModuloFilter>('TODOS')
+    const [chartModuloFilter, setChartModuloFilter] = useState<ChartModuloFilter>('TODOS')
+    const [isMounted, setIsMounted] = useState(false)
+
+    useEffect(() => {
+        setIsMounted(true)
+    }, [])
+
     const [searchUserQuery, setSearchUserQuery] = useState<string>('')
     const [viewMode, setViewMode] = useState<'CERAMICAS' | 'TABLA'>('CERAMICAS')
     const [selectedColaborador, setSelectedColaborador] = useState<ColaboradorRRHHCardData | null>(null)
@@ -106,6 +291,81 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
             return true
         })
     }, [currentData.sucursalesAvance, filterSucursal, filterSemaforo, filterTipoModulo])
+
+    // Datasets para gráficas de avance por sucursal
+    const sucursalesAvanceList = useMemo(() => {
+        return currentData.sucursalesAvance || []
+    }, [currentData.sucursalesAvance])
+
+    const chartDataTotalizador = useMemo(() => {
+        return sucursalesAvanceList.map((s) => ({
+            sucursal: s.sucursal,
+            porcentaje: s.porcentajeGlobal,
+            gestionados: s.totalGestionados,
+            pendientes: s.totalPendientes,
+            total: s.totalRegistrosAbiertos,
+            semaforo: s.semaforoGlobal,
+        }))
+    }, [sucursalesAvanceList])
+
+    const chartDataAusentismo = useMemo(() => {
+        return sucursalesAvanceList.map((s) => {
+            const mod = s.modulos.find((m) => m.tipo === 'AUSENTISMO')
+            return {
+                sucursal: s.sucursal,
+                porcentaje: mod?.porcentaje ?? 100,
+                gestionados: mod?.gestionados ?? 0,
+                pendientes: mod?.pendientes ?? 0,
+                total: mod?.totalAbiertos ?? 0,
+                semaforo: mod?.semaforo ?? 'VERDE',
+            }
+        })
+    }, [sucursalesAvanceList])
+
+    const chartDataHorasExtras = useMemo(() => {
+        return sucursalesAvanceList.map((s) => {
+            const mod = s.modulos.find((m) => m.tipo === 'HORAS_EXTRAS')
+            return {
+                sucursal: s.sucursal,
+                porcentaje: mod?.porcentaje ?? 100,
+                gestionados: mod?.gestionados ?? 0,
+                pendientes: mod?.pendientes ?? 0,
+                total: mod?.totalAbiertos ?? 0,
+                semaforo: mod?.semaforo ?? 'VERDE',
+                extraInfo: `Aplica: ${mod?.aplicaCount ?? 0} • No Aplica: ${mod?.noAplicaCount ?? 0}`
+            }
+        })
+    }, [sucursalesAvanceList])
+
+    const chartDataAtrasos = useMemo(() => {
+        return sucursalesAvanceList.map((s) => {
+            const mod = s.modulos.find((m) => m.tipo === 'ATRASOS')
+            return {
+                sucursal: s.sucursal,
+                porcentaje: mod?.porcentaje ?? 100,
+                gestionados: mod?.gestionados ?? 0,
+                pendientes: mod?.pendientes ?? 0,
+                total: mod?.totalAbiertos ?? 0,
+                semaforo: mod?.semaforo ?? 'VERDE',
+                extraInfo: `Aplica Desc: ${mod?.aplicaCount ?? 0} • No Aplica: ${mod?.noAplicaCount ?? 0}`
+            }
+        })
+    }, [sucursalesAvanceList])
+
+    const chartDataAdelantos = useMemo(() => {
+        return sucursalesAvanceList.map((s) => {
+            const mod = s.modulos.find((m) => m.tipo === 'ADELANTOS')
+            return {
+                sucursal: s.sucursal,
+                porcentaje: mod?.porcentaje ?? 100,
+                gestionados: mod?.gestionados ?? 0,
+                pendientes: mod?.pendientes ?? 0,
+                total: mod?.totalAbiertos ?? 0,
+                semaforo: mod?.semaforo ?? 'VERDE',
+                extraInfo: `Aplica Desc: ${mod?.aplicaCount ?? 0} • No Aplica: ${mod?.noAplicaCount ?? 0}`
+            }
+        })
+    }, [sucursalesAvanceList])
 
     // Exportar datos a CSV para Excel
     const handleExportCsv = () => {
@@ -1286,6 +1546,274 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                                 </div>
                             )
                         })}
+                    </div>
+
+                    {/* =====================================================================
+                        SECCIÓN DE GRÁFICAS DE COLUMNAS: AVANCE POR SUCURSAL Y FILTRO POR MÓDULO (COMPACTO)
+                        ===================================================================== */}
+                    <div className="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm space-y-2.5">
+                        {/* Header compacto con semáforo y nuevo filtro por módulo */}
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100">
+                            <div className="flex items-center gap-2">
+                                <span className="text-base">📊</span>
+                                <div>
+                                    <h3 className="text-xs font-black text-slate-900 tracking-tight">
+                                        Avance Operacional por Sucursal (Gráficas de Columnas)
+                                    </h3>
+                                    <p className="text-[10px] text-slate-400">
+                                        Comparativa de % de cumplimiento por sucursal en módulos y consolidado.
+                                    </p>
+                                </div>
+                            </div>
+
+                            {/* Semáforo de referencia compacto */}
+                            <div className="flex items-center gap-2.5 text-[10px] font-bold text-slate-500 bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-200 flex-wrap">
+                                <span className="flex items-center gap-1">
+                                    <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block shadow-sm"></span>
+                                    <span>Al Día (≥95%)</span>
+                                </span>
+                                <span className="flex items-center gap-1">
+                                    <span className="w-2 h-2 rounded-full bg-amber-400 inline-block shadow-sm"></span>
+                                    <span>Atraso Leve (70-94%)</span>
+                                </span>
+                                <span className="flex items-center gap-1">
+                                    <span className="w-2 h-2 rounded-full bg-rose-500 inline-block shadow-sm"></span>
+                                    <span>Atraso Grave (&lt;70%)</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        {/* Barra compacta de Filtro por Módulo */}
+                        <div className="flex items-center gap-1.5 flex-wrap bg-slate-50/80 p-1.5 rounded-lg border border-slate-200 text-xs">
+                            <span className="text-[11px] font-black text-slate-600 flex items-center gap-1 mr-1">
+                                <span>🎯</span>
+                                <span>Filtro Módulo:</span>
+                            </span>
+                            {([
+                                { id: 'TODOS', label: 'Todos (5 Gráficos)', icon: '📊' },
+                                { id: 'TOTALIZADOR', label: 'Totalizador', icon: '🌐' },
+                                { id: 'AUSENTISMO', label: 'Ausentismo', icon: '🏥' },
+                                { id: 'HORAS_EXTRAS', label: 'Hrs Extras', icon: '⏱️' },
+                                { id: 'ATRASOS', label: 'Atrasos', icon: '⏳' },
+                                { id: 'ADELANTOS', label: 'Adelantos', icon: '🏃' },
+                            ] as const).map((opt) => {
+                                const isSelected = chartModuloFilter === opt.id
+                                return (
+                                    <button
+                                        key={opt.id}
+                                        type="button"
+                                        onClick={() => {
+                                            setChartModuloFilter(opt.id)
+                                            if (opt.id === 'TODOS' || opt.id === 'TOTALIZADOR') {
+                                                setFilterTipoModulo('TODOS')
+                                            } else {
+                                                setFilterTipoModulo(opt.id as TipoModuloFilter)
+                                            }
+                                        }}
+                                        className={`px-2.5 py-1 rounded-lg text-[11px] font-bold flex items-center gap-1 transition-all shadow-sm ${
+                                            isSelected
+                                                ? 'bg-cyan-700 text-white shadow-cyan-900/20'
+                                                : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'
+                                        }`}
+                                    >
+                                        <span>{opt.icon}</span>
+                                        <span>{opt.label}</span>
+                                    </button>
+                                )
+                            })}
+                        </div>
+
+                        {/* Contenedor de Gráficos de Columnas Compacto */}
+                        {!isMounted ? (
+                            <div className="h-36 flex items-center justify-center bg-slate-50 rounded-xl border border-dashed border-slate-200">
+                                <span className="text-[11px] font-bold text-slate-400 animate-pulse flex items-center gap-2">
+                                    <span>⏳</span> Cargando gráficas compactas...
+                                </span>
+                            </div>
+                        ) : (
+                            <div className="pt-0.5">
+                                {/* Vista 1: TODOS LOS MÓDULOS (5 Gráficos compactos en una sola fila en pantallas grandes) */}
+                                {chartModuloFilter === 'TODOS' && (
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2.5">
+                                        {/* 1. Totalizador General */}
+                                        <ColumnChartCard
+                                            title="Totalizador"
+                                            icon="🌐"
+                                            data={chartDataTotalizador}
+                                            height={135}
+                                            kpis={{
+                                                gestionados: currentData.kpis.totalRegistrosGestionados,
+                                                pendientes: currentData.kpis.totalRegistrosPendientes,
+                                                total: currentData.kpis.totalRegistrosAbiertos,
+                                                porcentaje: currentData.kpis.cumplimientoGlobalPorcentaje,
+                                            }}
+                                        />
+
+                                        {/* 2. Ausentismo */}
+                                        <ColumnChartCard
+                                            title="Ausentismo"
+                                            icon="🏥"
+                                            data={chartDataAusentismo}
+                                            height={135}
+                                            kpis={{
+                                                gestionados: currentData.resumenPorTipo?.find((r) => r.tipo === 'AUSENTISMO')?.gestionados || 0,
+                                                pendientes: currentData.resumenPorTipo?.find((r) => r.tipo === 'AUSENTISMO')?.pendientes || 0,
+                                                total: currentData.resumenPorTipo?.find((r) => r.tipo === 'AUSENTISMO')?.totalAbiertos || 0,
+                                                porcentaje: currentData.resumenPorTipo?.find((r) => r.tipo === 'AUSENTISMO')?.porcentaje || 0,
+                                            }}
+                                        />
+
+                                        {/* 3. Horas Extras */}
+                                        <ColumnChartCard
+                                            title="Horas Extras"
+                                            icon="⏱️"
+                                            data={chartDataHorasExtras}
+                                            height={135}
+                                            kpis={{
+                                                gestionados: currentData.resumenPorTipo?.find((r) => r.tipo === 'HORAS_EXTRAS')?.gestionados || 0,
+                                                pendientes: currentData.resumenPorTipo?.find((r) => r.tipo === 'HORAS_EXTRAS')?.pendientes || 0,
+                                                total: currentData.resumenPorTipo?.find((r) => r.tipo === 'HORAS_EXTRAS')?.totalAbiertos || 0,
+                                                porcentaje: currentData.resumenPorTipo?.find((r) => r.tipo === 'HORAS_EXTRAS')?.porcentaje || 0,
+                                                extra: `Aplica: ${currentData.resumenPorTipo?.find((r) => r.tipo === 'HORAS_EXTRAS')?.aplicaCount || 0} • No: ${currentData.resumenPorTipo?.find((r) => r.tipo === 'HORAS_EXTRAS')?.noAplicaCount || 0}`,
+                                            }}
+                                        />
+
+                                        {/* 4. Atrasos */}
+                                        <ColumnChartCard
+                                            title="Atrasos"
+                                            icon="⏳"
+                                            data={chartDataAtrasos}
+                                            height={135}
+                                            kpis={{
+                                                gestionados: currentData.resumenPorTipo?.find((r) => r.tipo === 'ATRASOS')?.gestionados || 0,
+                                                pendientes: currentData.resumenPorTipo?.find((r) => r.tipo === 'ATRASOS')?.pendientes || 0,
+                                                total: currentData.resumenPorTipo?.find((r) => r.tipo === 'ATRASOS')?.totalAbiertos || 0,
+                                                porcentaje: currentData.resumenPorTipo?.find((r) => r.tipo === 'ATRASOS')?.porcentaje || 0,
+                                                extra: `Desc: ${currentData.resumenPorTipo?.find((r) => r.tipo === 'ATRASOS')?.aplicaCount || 0} • No: ${currentData.resumenPorTipo?.find((r) => r.tipo === 'ATRASOS')?.noAplicaCount || 0}`,
+                                            }}
+                                        />
+
+                                        {/* 5. Adelantos */}
+                                        <ColumnChartCard
+                                            title="Adelantos"
+                                            icon="🏃"
+                                            data={chartDataAdelantos}
+                                            height={135}
+                                            kpis={{
+                                                gestionados: currentData.resumenPorTipo?.find((r) => r.tipo === 'ADELANTOS')?.gestionados || 0,
+                                                pendientes: currentData.resumenPorTipo?.find((r) => r.tipo === 'ADELANTOS')?.pendientes || 0,
+                                                total: currentData.resumenPorTipo?.find((r) => r.tipo === 'ADELANTOS')?.totalAbiertos || 0,
+                                                porcentaje: currentData.resumenPorTipo?.find((r) => r.tipo === 'ADELANTOS')?.porcentaje || 0,
+                                                extra: `Desc: ${currentData.resumenPorTipo?.find((r) => r.tipo === 'ADELANTOS')?.aplicaCount || 0} • No: ${currentData.resumenPorTipo?.find((r) => r.tipo === 'ADELANTOS')?.noAplicaCount || 0}`,
+                                            }}
+                                        />
+                                    </div>
+                                )}
+
+                                {/* Vista 2: TOTALIZADOR INDIVIDUAL */}
+                                {chartModuloFilter === 'TOTALIZADOR' && (
+                                    <div className="max-w-3xl mx-auto">
+                                        <ColumnChartCard
+                                            title="Avance General Totalizador por Sucursal"
+                                            icon="🌐"
+                                            subtitle="Cumplimiento consolidado ponderando todos los módulos y registros abiertos por sucursal"
+                                            data={chartDataTotalizador}
+                                            height={175}
+                                            isEnlarged
+                                            kpis={{
+                                                gestionados: currentData.kpis.totalRegistrosGestionados,
+                                                pendientes: currentData.kpis.totalRegistrosPendientes,
+                                                total: currentData.kpis.totalRegistrosAbiertos,
+                                                porcentaje: currentData.kpis.cumplimientoGlobalPorcentaje,
+                                            }}
+                                        />
+                                    </div>
+                                )}
+
+                                {/* Vista 3: AUSENTISMO */}
+                                {chartModuloFilter === 'AUSENTISMO' && (
+                                    <div className="max-w-3xl mx-auto">
+                                        <ColumnChartCard
+                                            title="Avance de Ausentismo por Sucursal"
+                                            icon="🏥"
+                                            subtitle="Control y justificación de licencias médicas, permisos y días no trabajados"
+                                            data={chartDataAusentismo}
+                                            height={175}
+                                            isEnlarged
+                                            kpis={{
+                                                gestionados: currentData.resumenPorTipo?.find((r) => r.tipo === 'AUSENTISMO')?.gestionados || 0,
+                                                pendientes: currentData.resumenPorTipo?.find((r) => r.tipo === 'AUSENTISMO')?.pendientes || 0,
+                                                total: currentData.resumenPorTipo?.find((r) => r.tipo === 'AUSENTISMO')?.totalAbiertos || 0,
+                                                porcentaje: currentData.resumenPorTipo?.find((r) => r.tipo === 'AUSENTISMO')?.porcentaje || 0,
+                                            }}
+                                        />
+                                    </div>
+                                )}
+
+                                {/* Vista 4: HORAS EXTRAS */}
+                                {chartModuloFilter === 'HORAS_EXTRAS' && (
+                                    <div className="max-w-3xl mx-auto">
+                                        <ColumnChartCard
+                                            title="Avance de Horas Extras por Sucursal"
+                                            icon="⏱️"
+                                            subtitle="Revisión, validación y cómputo de horas extraordinarias reportadas"
+                                            data={chartDataHorasExtras}
+                                            height={175}
+                                            isEnlarged
+                                            kpis={{
+                                                gestionados: currentData.resumenPorTipo?.find((r) => r.tipo === 'HORAS_EXTRAS')?.gestionados || 0,
+                                                pendientes: currentData.resumenPorTipo?.find((r) => r.tipo === 'HORAS_EXTRAS')?.pendientes || 0,
+                                                total: currentData.resumenPorTipo?.find((r) => r.tipo === 'HORAS_EXTRAS')?.totalAbiertos || 0,
+                                                porcentaje: currentData.resumenPorTipo?.find((r) => r.tipo === 'HORAS_EXTRAS')?.porcentaje || 0,
+                                                extra: `Aplica: ${currentData.resumenPorTipo?.find((r) => r.tipo === 'HORAS_EXTRAS')?.aplicaCount || 0} • No Aplica: ${currentData.resumenPorTipo?.find((r) => r.tipo === 'HORAS_EXTRAS')?.noAplicaCount || 0}`,
+                                            }}
+                                        />
+                                    </div>
+                                )}
+
+                                {/* Vista 5: ATRASOS */}
+                                {chartModuloFilter === 'ATRASOS' && (
+                                    <div className="max-w-3xl mx-auto">
+                                        <ColumnChartCard
+                                            title="Avance de Atrasos por Sucursal"
+                                            icon="⏳"
+                                            subtitle="Monitoreo y resolución de atrasos con o sin descuento aplicado"
+                                            data={chartDataAtrasos}
+                                            height={175}
+                                            isEnlarged
+                                            kpis={{
+                                                gestionados: currentData.resumenPorTipo?.find((r) => r.tipo === 'ATRASOS')?.gestionados || 0,
+                                                pendientes: currentData.resumenPorTipo?.find((r) => r.tipo === 'ATRASOS')?.pendientes || 0,
+                                                total: currentData.resumenPorTipo?.find((r) => r.tipo === 'ATRASOS')?.totalAbiertos || 0,
+                                                porcentaje: currentData.resumenPorTipo?.find((r) => r.tipo === 'ATRASOS')?.porcentaje || 0,
+                                                extra: `Aplica Desc: ${currentData.resumenPorTipo?.find((r) => r.tipo === 'ATRASOS')?.aplicaCount || 0} • No Aplica: ${currentData.resumenPorTipo?.find((r) => r.tipo === 'ATRASOS')?.noAplicaCount || 0}`,
+                                            }}
+                                        />
+                                    </div>
+                                )}
+
+                                {/* Vista 6: ADELANTOS */}
+                                {chartModuloFilter === 'ADELANTOS' && (
+                                    <div className="max-w-3xl mx-auto">
+                                        <ColumnChartCard
+                                            title="Avance de Adelantos por Sucursal"
+                                            icon="🏃"
+                                            subtitle="Monitoreo y resolución de salidas anticipadas / adelantos registrados"
+                                            data={chartDataAdelantos}
+                                            height={175}
+                                            isEnlarged
+                                            kpis={{
+                                                gestionados: currentData.resumenPorTipo?.find((r) => r.tipo === 'ADELANTOS')?.gestionados || 0,
+                                                pendientes: currentData.resumenPorTipo?.find((r) => r.tipo === 'ADELANTOS')?.pendientes || 0,
+                                                total: currentData.resumenPorTipo?.find((r) => r.tipo === 'ADELANTOS')?.totalAbiertos || 0,
+                                                porcentaje: currentData.resumenPorTipo?.find((r) => r.tipo === 'ADELANTOS')?.porcentaje || 0,
+                                                extra: `Aplica Desc: ${currentData.resumenPorTipo?.find((r) => r.tipo === 'ADELANTOS')?.aplicaCount || 0} • No Aplica: ${currentData.resumenPorTipo?.find((r) => r.tipo === 'ADELANTOS')?.noAplicaCount || 0}`,
+                                            }}
+                                        />
+                                    </div>
+                                )}
+                            </div>
+                        )}
                     </div>
 
                     {/* BARRA DE FILTROS DE LA VISTA POR SUCURSAL */}

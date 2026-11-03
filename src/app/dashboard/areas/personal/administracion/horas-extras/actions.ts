@@ -5,6 +5,7 @@ import { getSession } from '@/lib/session'
 import { revalidatePath } from 'next/cache'
 import { decryptPersonalText, cleanRut, hashRut } from '@/lib/personal-crypto'
 import { ensurePersonalHextraTables } from '@/lib/personal-hextra-db-init'
+import { ensurePersonalVisualizacionTables } from '@/lib/personal-visualizacion-db-init'
 import { puedeUsuarioCerrarPeriodosRH } from '@/lib/personal-cuentas-db-init'
 import { getUserEffectiveRbds } from '@/lib/authFilters'
 import { logAuditAction } from '@/lib/audit'
@@ -30,6 +31,8 @@ export interface AdmHextraRegistroDTO {
     fechaSerial: string | null
     rbd: number | null
     establecimiento: string | null
+    institucion?: string | null
+    comuna?: string | null
     sucursal: string
     supervisor: string | null
     turno: string | null
@@ -53,6 +56,26 @@ export interface AdmHextraRegistroDTO {
     cerradoAt?: string | null
 }
 
+export interface UsuarioFiltroHextraDTO {
+    id: string
+    name: string
+    username: string
+    roleId: string
+    roleName: string
+    rbds: number[]
+    hasVisualizacion?: boolean
+    totalTrabajadores?: number
+    ruts?: string[]
+    rutHashes?: string[]
+}
+
+export interface FiltrosMetadatosHextraDTO {
+    roles: { id: string; name: string }[]
+    usuarios: UsuarioFiltroHextraDTO[]
+    instituciones: string[]
+    comunas: string[]
+}
+
 export interface CargaHextraDTO {
     id: string
     nombreArchivo: string
@@ -69,6 +92,10 @@ export interface CargaHextraDTO {
 
 export async function getAdmHorasExtrasAction(filtros?: {
     rbd?: number
+    rbds?: number[]
+    institucion?: string
+    comuna?: string
+    rutHashes?: string[]
     sucursal?: string
     supervisor?: string
     fechaDesde?: string
@@ -102,63 +129,100 @@ export async function getAdmHorasExtrasAction(filtros?: {
         // 1. Privilegios por RBD efectivo del usuario
         if (authorizedRbds !== null) {
             if (authorizedRbds.length === 0) {
-                whereConditions.push(`rbd = -999999`)
+                whereConditions.push(`r.rbd = -999999`)
             } else if (filtros?.rbd) {
                 if (authorizedRbds.includes(filtros.rbd)) {
-                    whereConditions.push(`rbd = $${paramIndex++}`)
+                    whereConditions.push(`r.rbd = $${paramIndex++}`)
                     queryParams.push(filtros.rbd)
                 } else {
-                    whereConditions.push(`rbd = -999999`)
+                    whereConditions.push(`r.rbd = -999999`)
                 }
             } else {
-                whereConditions.push(`rbd = ANY($${paramIndex++})`)
+                whereConditions.push(`r.rbd = ANY($${paramIndex++})`)
                 queryParams.push(authorizedRbds)
             }
         } else if (filtros?.rbd) {
-            whereConditions.push(`rbd = $${paramIndex++}`)
+            whereConditions.push(`r.rbd = $${paramIndex++}`)
             queryParams.push(filtros.rbd)
+        }
+
+        // Filtro por Rol o Usuario (Trabajadores de Visualización y/o RBDs permitidos según perfil)
+        const hasRutHashes = Boolean(filtros?.rutHashes && filtros.rutHashes.length > 0)
+        const hasRbds = Boolean(filtros?.rbds && filtros.rbds.length > 0 && !filtros.rbds.includes(-999999))
+        const rbdsExplicitEmpty = Boolean(filtros?.rbds && (filtros.rbds.length === 0 || filtros.rbds.includes(-999999)))
+
+        if (hasRutHashes && hasRbds) {
+            whereConditions.push(`(r."identificadorHash" = ANY($${paramIndex++}) OR r.rbd = ANY($${paramIndex++}))`)
+            queryParams.push(filtros!.rutHashes)
+            queryParams.push(filtros!.rbds)
+        } else if (hasRutHashes) {
+            whereConditions.push(`r."identificadorHash" = ANY($${paramIndex++})`)
+            queryParams.push(filtros!.rutHashes)
+        } else if (hasRbds) {
+            whereConditions.push(`r.rbd = ANY($${paramIndex++})`)
+            queryParams.push(filtros!.rbds)
+        } else if (rbdsExplicitEmpty) {
+            whereConditions.push(`r.rbd = -999999`)
+        }
+
+        // Filtro por Institución (Colegio)
+        if (filtros?.institucion && filtros.institucion !== 'TODAS') {
+            whereConditions.push(`EXISTS (
+                SELECT 1 FROM "Colegios" col 
+                WHERE col."colRBD" = r.rbd AND TRIM(UPPER(col.institucion)) = TRIM(UPPER($${paramIndex++}))
+            )`)
+            queryParams.push(filtros.institucion)
+        }
+
+        // Filtro por Comuna
+        if (filtros?.comuna && filtros.comuna !== 'TODAS') {
+            whereConditions.push(`EXISTS (
+                SELECT 1 FROM "Colegios" col 
+                WHERE col."colRBD" = r.rbd AND TRIM(UPPER(col.comuna)) = TRIM(UPPER($${paramIndex++}))
+            )`)
+            queryParams.push(filtros.comuna)
         }
 
         // 2. Filtro por Estado (ABIERTO / CERRADO)
         if (filtros?.estado && filtros.estado !== 'TODOS') {
-            whereConditions.push(`"estado" = $${paramIndex++}`)
+            whereConditions.push(`r."estado" = $${paramIndex++}`)
             queryParams.push(filtros.estado)
         }
 
         // 3. Filtro por CargaId
         if (filtros?.cargaId && filtros.cargaId !== 'TODOS') {
-            whereConditions.push(`"cargaId" = $${paramIndex++}`)
+            whereConditions.push(`r."cargaId" = $${paramIndex++}`)
             queryParams.push(filtros.cargaId)
         }
 
         // 4. Filtro por Sucursal
         if (filtros?.sucursal && filtros.sucursal !== 'TODAS') {
-            whereConditions.push(`sucursal = $${paramIndex++}`)
+            whereConditions.push(`r.sucursal = $${paramIndex++}`)
             queryParams.push(filtros.sucursal)
         }
 
         // 5. Filtro por Supervisor
         if (filtros?.supervisor && filtros.supervisor !== 'TODOS') {
-            whereConditions.push(`supervisor = $${paramIndex++}`)
+            whereConditions.push(`r.supervisor = $${paramIndex++}`)
             queryParams.push(filtros.supervisor)
         }
 
         // 6. Rango de Fechas
         if (filtros?.fechaDesde) {
-            whereConditions.push(`fecha >= $${paramIndex++}`)
+            whereConditions.push(`r.fecha >= $${paramIndex++}`)
             queryParams.push(filtros.fechaDesde)
         }
         if (filtros?.fechaHasta) {
-            whereConditions.push(`fecha <= $${paramIndex++}`)
+            whereConditions.push(`r.fecha <= $${paramIndex++}`)
             queryParams.push(filtros.fechaHasta)
         }
 
         // 7. Filtro Aplica / No Aplica
         if (filtros?.aplica && filtros.aplica !== 'TODOS') {
             if (filtros.aplica === 'APLICA') {
-                whereConditions.push(`aplica IS TRUE`)
+                whereConditions.push(`r.aplica IS TRUE`)
             } else if (filtros.aplica === 'NO_APLICA') {
-                whereConditions.push(`(aplica IS FALSE OR aplica IS NULL)`)
+                whereConditions.push(`(r.aplica IS FALSE OR r.aplica IS NULL)`)
             }
         }
 
@@ -169,7 +233,7 @@ export async function getAdmHorasExtrasAction(filtros?: {
             const rutCleaned = cleanRut(cleanSearch)
             if (rutCleaned && rutCleaned.length >= 7) {
                 const rHash = hashRut(rutCleaned)
-                whereConditions.push(`"identificadorHash" = $${paramIndex++}`)
+                whereConditions.push(`r."identificadorHash" = $${paramIndex++}`)
                 queryParams.push(rHash)
                 searchIsRutHash = true
             }
@@ -178,7 +242,7 @@ export async function getAdmHorasExtrasAction(filtros?: {
         const whereSql = whereConditions.join(' AND ')
 
         // Conteo total
-        const countQuery = `SELECT COUNT(*)::int as count FROM "Pers_Hextra_Registro" WHERE ${whereSql};`
+        const countQuery = `SELECT COUNT(*)::int as count FROM "Pers_Hextra_Registro" r WHERE ${whereSql};`
         const countRes: any[] = await rawPrisma.$queryRawUnsafe(countQuery, ...queryParams)
         const total = countRes[0]?.count || 0
 
@@ -214,9 +278,10 @@ export async function getAdmHorasExtrasAction(filtros?: {
 
         // Registros
         const selectQuery = `
-            SELECT r.*, c."nombreArchivo" as "cargaNombreArchivo"
+            SELECT r.*, c."nombreArchivo" as "cargaNombreArchivo", col.institucion as "institucion", col.comuna as "comuna"
             FROM "Pers_Hextra_Registro" r
             LEFT JOIN "Pers_Hextra_Carga" c ON r."cargaId" = c.id
+            LEFT JOIN "Colegios" col ON col."colRBD" = r.rbd
             WHERE ${whereSql}
             ORDER BY ${orderClause}
             LIMIT $${paramIndex++} OFFSET $${paramIndex++};
@@ -252,6 +317,8 @@ export async function getAdmHorasExtrasAction(filtros?: {
                 fechaSerial: r.fechaSerial,
                 rbd: r.rbd,
                 establecimiento: r.establecimiento || (r.rbd ? `RBD ${r.rbd}` : 'Sin Establecimiento'),
+                institucion: r.institucion || null,
+                comuna: r.comuna || null,
                 sucursal: r.sucursal,
                 supervisor: r.supervisor,
                 turno: r.turno,
@@ -540,4 +607,222 @@ export async function registrarAuditoriaExportacionHextraAction(totalRegistros: 
         modulo: 'Adm. de Hrs Extras',
         detalle: `Exportación a Excel de reporte de horas extras con ${totalRegistros} registros. ${detalleFiltros}`
     })
+}
+
+export async function getFiltrosMetadatosHextraAction(): Promise<FiltrosMetadatosHextraDTO> {
+    try {
+        await ensurePersonalVisualizacionTables()
+
+        const [rolesDb, usersDb, supervisoresDb, colegiosDb, visRows] = await Promise.all([
+            rawPrisma.role.findMany({
+                select: { id: true, name: true },
+                orderBy: { name: 'asc' }
+            }).catch(() => []),
+            rawPrisma.user.findMany({
+                where: { isDeleted: false, isActive: true },
+                select: {
+                    id: true,
+                    name: true,
+                    username: true,
+                    email: true,
+                    roleId: true,
+                    rbds: true,
+                    role: { select: { name: true } }
+                },
+                orderBy: { name: 'asc' }
+            }).catch(() => []),
+            rawPrisma.supervisor.findMany({
+                where: { vigente: true },
+                select: {
+                    id: true,
+                    nombre: true,
+                    apellido: true,
+                    correo: true,
+                    rbdsAuditar: { select: { rbd: true } }
+                }
+            }).catch(() => []),
+            rawPrisma.colegios.findMany({
+                select: { institucion: true, comuna: true }
+            }).catch(() => []),
+            rawPrisma.$queryRawUnsafe(`
+                SELECT "tipo", "jefaturaUserId", "jefaturaRoleId", "personalRutHash", "personalRutEnc", "personalRbd"
+                FROM "Pers_Visualizacion_Jefatura";
+            `).catch(() => []) as Promise<any[]>
+        ])
+
+        // Agrupar asignaciones de visualización por usuario y por rol
+        const userVisMap = new Map<string, { ruts: Set<string>; rutHashes: Set<string>; rbds: Set<number> }>()
+        const roleVisMap = new Map<string, { ruts: Set<string>; rutHashes: Set<string>; rbds: Set<number> }>()
+
+        for (const v of visRows) {
+            let cleanR = ''
+            if (v.personalRutEnc) {
+                cleanR = cleanRut(decryptPersonalText(v.personalRutEnc))
+            }
+            const rHash = v.personalRutHash || ''
+            const rbd = v.personalRbd ? Number(v.personalRbd) : null
+
+            if (v.tipo === 'USUARIO' && v.jefaturaUserId) {
+                if (!userVisMap.has(v.jefaturaUserId)) {
+                    userVisMap.set(v.jefaturaUserId, { ruts: new Set(), rutHashes: new Set(), rbds: new Set() })
+                }
+                const item = userVisMap.get(v.jefaturaUserId)!
+                if (cleanR) item.ruts.add(cleanR)
+                if (rHash) item.rutHashes.add(rHash)
+                if (rbd) item.rbds.add(rbd)
+            } else if (v.tipo === 'ROL' && v.jefaturaRoleId) {
+                if (!roleVisMap.has(v.jefaturaRoleId)) {
+                    roleVisMap.set(v.jefaturaRoleId, { ruts: new Set(), rutHashes: new Set(), rbds: new Set() })
+                }
+                const item = roleVisMap.get(v.jefaturaRoleId)!
+                if (cleanR) item.ruts.add(cleanR)
+                if (rHash) item.rutHashes.add(rHash)
+                if (rbd) item.rbds.add(rbd)
+            }
+        }
+
+        // Mapeo de supervisores a usuarios si coincide correo o nombre
+        const supervisorRbdsByUser = new Map<string, number[]>()
+        for (const sup of supervisoresDb) {
+            const supRbds = sup.rbdsAuditar?.map((r: any) => r.rbd) || []
+            if (supRbds.length === 0) continue
+
+            const matchedUser = usersDb.find(u => 
+                (u.email && sup.correo && u.email.trim().toLowerCase() === sup.correo.trim().toLowerCase()) ||
+                (u.name && `${sup.nombre} ${sup.apellido}`.toLowerCase().trim() === u.name.toLowerCase().trim())
+            )
+            if (matchedUser) {
+                const existing = supervisorRbdsByUser.get(matchedUser.id) || []
+                supervisorRbdsByUser.set(matchedUser.id, Array.from(new Set([...existing, ...supRbds])))
+            }
+        }
+
+        const usuarios: UsuarioFiltroHextraDTO[] = usersDb.map(u => {
+            const userVis = userVisMap.get(u.id)
+            const roleVis = u.roleId ? roleVisMap.get(u.roleId) : null
+
+            let hasVisualizacion = false
+            let workerRuts: string[] = []
+            let workerHashes: string[] = []
+            let userRbds: number[] = []
+            let totalTrabajadores = 0
+
+            // Precedencia absoluta de la Configuración de Visualización de Personal
+            if (userVis && (userVis.ruts.size > 0 || userVis.rutHashes.size > 0)) {
+                hasVisualizacion = true
+                workerRuts = Array.from(userVis.ruts)
+                workerHashes = Array.from(userVis.rutHashes)
+                userRbds = Array.from(userVis.rbds)
+                totalTrabajadores = workerRuts.length || workerHashes.length
+            } else if (roleVis && (roleVis.ruts.size > 0 || roleVis.rutHashes.size > 0)) {
+                hasVisualizacion = true
+                workerRuts = Array.from(roleVis.ruts)
+                workerHashes = Array.from(roleVis.rutHashes)
+                userRbds = Array.from(roleVis.rbds)
+                totalTrabajadores = workerRuts.length || workerHashes.length
+            } else {
+                const supRbds = supervisorRbdsByUser.get(u.id) || []
+                userRbds = Array.from(new Set([...(u.rbds || []), ...supRbds]))
+            }
+
+            return {
+                id: u.id,
+                name: u.name || u.username,
+                username: u.username,
+                roleId: u.roleId || '',
+                roleName: u.role?.name || 'Sin Rol',
+                rbds: userRbds,
+                hasVisualizacion,
+                totalTrabajadores,
+                ruts: workerRuts,
+                rutHashes: workerHashes
+            }
+        })
+
+        const instSet = new Set<string>()
+        const comunaSet = new Set<string>()
+        for (const c of colegiosDb) {
+            if (c.institucion && c.institucion.trim()) {
+                instSet.add(c.institucion.trim().toUpperCase())
+            }
+            if (c.comuna && c.comuna.trim()) {
+                comunaSet.add(c.comuna.trim().toUpperCase())
+            }
+        }
+        const instituciones = Array.from(instSet).sort()
+        const comunas = Array.from(comunaSet).sort()
+
+        return {
+            roles: rolesDb.map(r => ({ id: r.id, name: r.name })),
+            usuarios,
+            instituciones,
+            comunas
+        }
+    } catch (error) {
+        console.error('Error fetching metadatos filtros hextra:', error)
+        return { roles: [], usuarios: [], instituciones: [], comunas: [] }
+    }
+}
+
+export async function justificarMasivoHorasExtrasAction(
+    registroIds: string[],
+    nuevoAplica: boolean,
+    observacion?: string
+): Promise<{ success: boolean; actualizados?: number; error?: string }> {
+    if (!await checkAdminPermission()) {
+        return { success: false, error: 'No tienes permisos para modificar horas extras' }
+    }
+    if (!registroIds || registroIds.length === 0) {
+        return { success: false, error: 'No se seleccionaron registros' }
+    }
+    await ensurePersonalHextraTables()
+
+    const session = await getSession()
+    const usuarioNombre = session?.user?.nombre || session?.user?.email || 'Usuario'
+    const usuarioId = session?.user?.id || null
+    const authorizedRbds = await getUserEffectiveRbds()
+    const ahora = new Date()
+
+    try {
+        let whereExtra = `id = ANY($1) AND estado != 'CERRADO'`
+        const params: any[] = [registroIds, nuevoAplica, usuarioNombre, ahora, observacion || null]
+
+        if (authorizedRbds !== null) {
+            whereExtra += ` AND (rbd IS NULL OR rbd = ANY($6))`
+            params.push(authorizedRbds)
+        }
+
+        const query = `
+            WITH updated AS (
+                UPDATE "Pers_Hextra_Registro"
+                SET aplica = $2,
+                    "aplicaModificadoPor" = $3,
+                    "aplicaModificadoAt" = $4,
+                    "aplicaObservacion" = $5,
+                    "updatedAt" = $4
+                WHERE ${whereExtra}
+                RETURNING id
+            )
+            SELECT COUNT(*)::int as count FROM updated;
+        `
+        const res: any[] = await rawPrisma.$queryRawUnsafe(query, ...params)
+        const actualizados = res[0]?.count || 0
+
+        // Auditoría
+        await logAuditAction({
+            username: usuarioNombre,
+            userId: usuarioId,
+            action: 'JUSTIFICACION_MASIVA_HEXTRA_ADM',
+            modulo: 'Adm. de Hrs Extras',
+            detalle: `Justificación masiva de horas extras (${nuevoAplica ? 'APLICA' : 'NO APLICA'}) a ${actualizados} registros seleccionados.${observacion ? ` Observación: ${observacion}` : ''}`
+        })
+
+        revalidatePath(PATH_ADM_HEXTRA)
+        revalidatePath(PATH_ASISTENCIA_HEXTRA)
+
+        return { success: true, actualizados }
+    } catch (error: any) {
+        console.error('Error justificar masivo hextra:', error)
+        return { success: false, error: error.message || 'Error al ejecutar justificación masiva de horas extras' }
+    }
 }

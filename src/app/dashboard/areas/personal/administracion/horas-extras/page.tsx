@@ -1,6 +1,6 @@
 import { getSession } from '@/lib/session'
 import { redirect } from 'next/navigation'
-import { getAdmHorasExtrasAction, getHistorialCargasHextraAction } from './actions'
+import { getAdmHorasExtrasAction, getHistorialCargasHextraAction, getFiltrosMetadatosHextraAction } from './actions'
 import { getUserEffectiveRbds } from '@/lib/authFilters'
 import { puedeUsuarioCerrarPeriodosRH } from '@/lib/personal-cuentas-db-init'
 import AdmHorasExtrasClient from './AdmHorasExtrasClient'
@@ -15,11 +15,12 @@ export default async function AdmHorasExtrasPage() {
         redirect('/dashboard')
     }
 
-    const [regRes, cargasRes, authorizedRbds, puedeCerrar] = await Promise.all([
+    const [regRes, cargasRes, authorizedRbds, puedeCerrar, metadatosFiltros] = await Promise.all([
         getAdmHorasExtrasAction({ page: 1, pageSize: 10 }),
         getHistorialCargasHextraAction(),
         getUserEffectiveRbds(),
-        puedeUsuarioCerrarPeriodosRH(session.user.id)
+        puedeUsuarioCerrarPeriodosRH(session.user.id),
+        getFiltrosMetadatosHextraAction()
     ])
 
     const isAdmin = authorizedRbds === null
@@ -52,6 +53,7 @@ export default async function AdmHorasExtrasPage() {
             userRbds={userRbds}
             isAdmin={isAdmin}
             puedeGestionarPeriodos={puedeCerrar}
+            metadatosFiltros={metadatosFiltros}
         />
     )
 }

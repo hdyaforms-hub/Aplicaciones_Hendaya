@@ -251,8 +251,9 @@ export default function AsistenciaClient({
     // Interceptar selección si el criterio solicita documento
     const handleCriterioSelect = (registroId: string, nuevoCriterioIdStr: string) => {
         const reg = registros.find(r => r.id === registroId)
-        if (!isAdmin && reg?.criterioId) {
-            alert('Este registro ya tiene un criterio asignado y se encuentra bloqueado. Solo un administrador puede modificarlo.')
+        const numAct = reg?.numActualizaciones ?? (reg?.criterioId ? 1 : 0)
+        if (!isAdmin && numAct >= 3) {
+            alert('Este registro ya alcanzó el límite máximo de 3 justificaciones y se encuentra bloqueado. Para corregir o rectificar, debe ser gestionado desde el módulo de Administración.')
             return
         }
 
@@ -286,8 +287,9 @@ export default function AsistenciaClient({
     }
 
     const openModalAdjuntoDirecto = (r: AsistenciaRegistroDTO) => {
-        if (!isAdmin && r.criterioId) {
-            alert('El registro ya fue finalizado y se encuentra bloqueado. Si requieres adjuntar un documento de respaldo, debes solicitárselo al Administrador.')
+        const numAct = r.numActualizaciones ?? (r.criterioId ? 1 : 0)
+        if (!isAdmin && numAct >= 3) {
+            alert('El registro ya alcanzó el límite máximo de 3 justificaciones y se encuentra bloqueado. Si requieres adjuntar un documento de respaldo, debes solicitárselo al Administrador.')
             return
         }
         const crit = criterios.find(c => c.id === r.criterioId)
@@ -701,26 +703,26 @@ export default function AsistenciaClient({
                 </div>
 
                 <div className="overflow-x-auto">
-                    <table className="w-full text-left text-xs text-gray-700">
-                        <thead className="bg-gray-50 font-semibold uppercase text-gray-500 border-b border-gray-200 tracking-wider">
+                    <table className="w-full text-left text-[11px] text-gray-700">
+                        <thead className="bg-gray-50/90 font-semibold uppercase text-gray-500 border-b border-gray-200 tracking-wider text-[10.5px]">
                             <tr>
                                 {/* Fecha */}
                                 <th
                                     onClick={() => handleSort('fecha')}
-                                    className="px-4 py-3.5 whitespace-nowrap cursor-pointer select-none transition-colors group hover:bg-gray-100"
+                                    className="px-2.5 py-2.5 whitespace-nowrap cursor-pointer select-none transition-colors group hover:bg-gray-100"
                                     title={`Ordenar por Fecha (${sortField === 'fecha' ? (sortDirection === 'asc' ? 'Descendente' : 'Ascendente') : 'Ascendente'})`}
                                 >
-                                    <div className="flex items-center gap-1.5">
+                                    <div className="flex items-center gap-1">
                                         <span className={sortField === 'fecha' ? 'text-cyan-800 font-bold' : ''}>Fecha</span>
                                         <span className="inline-flex">
                                             {sortField === 'fecha' ? (
                                                 sortDirection === 'asc' ? (
-                                                    <ArrowUp className="w-3.5 h-3.5 text-cyan-600 stroke-[2.5]" />
+                                                    <ArrowUp className="w-3 h-3 text-cyan-600 stroke-[2.5]" />
                                                 ) : (
-                                                    <ArrowDown className="w-3.5 h-3.5 text-cyan-600 stroke-[2.5]" />
+                                                    <ArrowDown className="w-3 h-3 text-cyan-600 stroke-[2.5]" />
                                                 )
                                             ) : (
-                                                <ArrowUpDown className="w-3.5 h-3.5 text-gray-400 opacity-40 group-hover:opacity-100 transition-opacity" />
+                                                <ArrowUpDown className="w-3 h-3 text-gray-400 opacity-40 group-hover:opacity-100 transition-opacity" />
                                             )}
                                         </span>
                                     </div>
@@ -729,20 +731,20 @@ export default function AsistenciaClient({
                                 {/* RBD */}
                                 <th
                                     onClick={() => handleSort('rbd')}
-                                    className="px-4 py-3.5 whitespace-nowrap cursor-pointer select-none transition-colors group hover:bg-gray-100"
+                                    className="px-2.5 py-2.5 whitespace-nowrap cursor-pointer select-none transition-colors group hover:bg-gray-100"
                                     title={`Ordenar por RBD (${sortField === 'rbd' ? (sortDirection === 'asc' ? 'Descendente' : 'Ascendente') : 'Ascendente'})`}
                                 >
-                                    <div className="flex items-center gap-1.5">
+                                    <div className="flex items-center gap-1">
                                         <span className={sortField === 'rbd' ? 'text-cyan-800 font-bold' : ''}>RBD</span>
                                         <span className="inline-flex">
                                             {sortField === 'rbd' ? (
                                                 sortDirection === 'asc' ? (
-                                                    <ArrowUp className="w-3.5 h-3.5 text-cyan-600 stroke-[2.5]" />
+                                                    <ArrowUp className="w-3 h-3 text-cyan-600 stroke-[2.5]" />
                                                 ) : (
-                                                    <ArrowDown className="w-3.5 h-3.5 text-cyan-600 stroke-[2.5]" />
+                                                    <ArrowDown className="w-3 h-3 text-cyan-600 stroke-[2.5]" />
                                                 )
                                             ) : (
-                                                <ArrowUpDown className="w-3.5 h-3.5 text-gray-400 opacity-40 group-hover:opacity-100 transition-opacity" />
+                                                <ArrowUpDown className="w-3 h-3 text-gray-400 opacity-40 group-hover:opacity-100 transition-opacity" />
                                             )}
                                         </span>
                                     </div>
@@ -751,20 +753,20 @@ export default function AsistenciaClient({
                                 {/* Establecimiento */}
                                 <th
                                     onClick={() => handleSort('establecimiento')}
-                                    className="px-4 py-3.5 whitespace-nowrap cursor-pointer select-none transition-colors group hover:bg-gray-100"
+                                    className="px-2.5 py-2.5 whitespace-nowrap cursor-pointer select-none transition-colors group hover:bg-gray-100"
                                     title={`Ordenar por Establecimiento (${sortField === 'establecimiento' ? (sortDirection === 'asc' ? 'Descendente' : 'Ascendente') : 'Ascendente'})`}
                                 >
-                                    <div className="flex items-center gap-1.5">
+                                    <div className="flex items-center gap-1">
                                         <span className={sortField === 'establecimiento' ? 'text-cyan-800 font-bold' : ''}>Establecimiento</span>
                                         <span className="inline-flex">
                                             {sortField === 'establecimiento' ? (
                                                 sortDirection === 'asc' ? (
-                                                    <ArrowUp className="w-3.5 h-3.5 text-cyan-600 stroke-[2.5]" />
+                                                    <ArrowUp className="w-3 h-3 text-cyan-600 stroke-[2.5]" />
                                                 ) : (
-                                                    <ArrowDown className="w-3.5 h-3.5 text-cyan-600 stroke-[2.5]" />
+                                                    <ArrowDown className="w-3 h-3 text-cyan-600 stroke-[2.5]" />
                                                 )
                                             ) : (
-                                                <ArrowUpDown className="w-3.5 h-3.5 text-gray-400 opacity-40 group-hover:opacity-100 transition-opacity" />
+                                                <ArrowUpDown className="w-3 h-3 text-gray-400 opacity-40 group-hover:opacity-100 transition-opacity" />
                                             )}
                                         </span>
                                     </div>
@@ -773,20 +775,20 @@ export default function AsistenciaClient({
                                 {/* Supervisor */}
                                 <th
                                     onClick={() => handleSort('supervisorNombre')}
-                                    className="px-4 py-3.5 whitespace-nowrap cursor-pointer select-none transition-colors group hover:bg-gray-100"
+                                    className="px-2.5 py-2.5 whitespace-nowrap cursor-pointer select-none transition-colors group hover:bg-gray-100"
                                     title={`Ordenar por Supervisor (${sortField === 'supervisorNombre' ? (sortDirection === 'asc' ? 'Descendente' : 'Ascendente') : 'Ascendente'})`}
                                 >
-                                    <div className="flex items-center gap-1.5">
+                                    <div className="flex items-center gap-1">
                                         <span className={sortField === 'supervisorNombre' ? 'text-cyan-800 font-bold' : ''}>Supervisor</span>
                                         <span className="inline-flex">
                                             {sortField === 'supervisorNombre' ? (
                                                 sortDirection === 'asc' ? (
-                                                    <ArrowUp className="w-3.5 h-3.5 text-cyan-600 stroke-[2.5]" />
+                                                    <ArrowUp className="w-3 h-3 text-cyan-600 stroke-[2.5]" />
                                                 ) : (
-                                                    <ArrowDown className="w-3.5 h-3.5 text-cyan-600 stroke-[2.5]" />
+                                                    <ArrowDown className="w-3 h-3 text-cyan-600 stroke-[2.5]" />
                                                 )
                                             ) : (
-                                                <ArrowUpDown className="w-3.5 h-3.5 text-gray-400 opacity-40 group-hover:opacity-100 transition-opacity" />
+                                                <ArrowUpDown className="w-3 h-3 text-gray-400 opacity-40 group-hover:opacity-100 transition-opacity" />
                                             )}
                                         </span>
                                     </div>
@@ -795,20 +797,20 @@ export default function AsistenciaClient({
                                 {/* RUT */}
                                 <th
                                     onClick={() => handleSort('rut')}
-                                    className="px-4 py-3.5 whitespace-nowrap cursor-pointer select-none transition-colors group hover:bg-gray-100"
+                                    className="px-2.5 py-2.5 whitespace-nowrap cursor-pointer select-none transition-colors group hover:bg-gray-100"
                                     title={`Ordenar por RUT (${sortField === 'rut' ? (sortDirection === 'asc' ? 'Descendente' : 'Ascendente') : 'Ascendente'})`}
                                 >
-                                    <div className="flex items-center gap-1.5">
+                                    <div className="flex items-center gap-1">
                                         <span className={sortField === 'rut' ? 'text-cyan-800 font-bold' : ''}>RUT</span>
                                         <span className="inline-flex">
                                             {sortField === 'rut' ? (
                                                 sortDirection === 'asc' ? (
-                                                    <ArrowUp className="w-3.5 h-3.5 text-cyan-600 stroke-[2.5]" />
+                                                    <ArrowUp className="w-3 h-3 text-cyan-600 stroke-[2.5]" />
                                                 ) : (
-                                                    <ArrowDown className="w-3.5 h-3.5 text-cyan-600 stroke-[2.5]" />
+                                                    <ArrowDown className="w-3 h-3 text-cyan-600 stroke-[2.5]" />
                                                 )
                                             ) : (
-                                                <ArrowUpDown className="w-3.5 h-3.5 text-gray-400 opacity-40 group-hover:opacity-100 transition-opacity" />
+                                                <ArrowUpDown className="w-3 h-3 text-gray-400 opacity-40 group-hover:opacity-100 transition-opacity" />
                                             )}
                                         </span>
                                     </div>
@@ -817,20 +819,20 @@ export default function AsistenciaClient({
                                 {/* Colaborador */}
                                 <th
                                     onClick={() => handleSort('nombreCompleto')}
-                                    className="px-4 py-3.5 whitespace-nowrap cursor-pointer select-none transition-colors group hover:bg-gray-100"
+                                    className="px-2.5 py-2.5 whitespace-nowrap cursor-pointer select-none transition-colors group hover:bg-gray-100"
                                     title={`Ordenar por Colaborador (${sortField === 'nombreCompleto' ? (sortDirection === 'asc' ? 'Descendente' : 'Ascendente') : 'Ascendente'})`}
                                 >
-                                    <div className="flex items-center gap-1.5">
+                                    <div className="flex items-center gap-1">
                                         <span className={sortField === 'nombreCompleto' ? 'text-cyan-800 font-bold' : ''}>Colaborador</span>
                                         <span className="inline-flex">
                                             {sortField === 'nombreCompleto' ? (
                                                 sortDirection === 'asc' ? (
-                                                    <ArrowUp className="w-3.5 h-3.5 text-cyan-600 stroke-[2.5]" />
+                                                    <ArrowUp className="w-3 h-3 text-cyan-600 stroke-[2.5]" />
                                                 ) : (
-                                                    <ArrowDown className="w-3.5 h-3.5 text-cyan-600 stroke-[2.5]" />
+                                                    <ArrowDown className="w-3 h-3 text-cyan-600 stroke-[2.5]" />
                                                 )
                                             ) : (
-                                                <ArrowUpDown className="w-3.5 h-3.5 text-gray-400 opacity-40 group-hover:opacity-100 transition-opacity" />
+                                                <ArrowUpDown className="w-3 h-3 text-gray-400 opacity-40 group-hover:opacity-100 transition-opacity" />
                                             )}
                                         </span>
                                     </div>
@@ -839,123 +841,110 @@ export default function AsistenciaClient({
                                 {/* Cargo */}
                                 <th
                                     onClick={() => handleSort('cargo')}
-                                    className="px-4 py-3.5 whitespace-nowrap cursor-pointer select-none transition-colors group hover:bg-gray-100"
+                                    className="px-2.5 py-2.5 whitespace-nowrap cursor-pointer select-none transition-colors group hover:bg-gray-100"
                                     title={`Ordenar por Cargo (${sortField === 'cargo' ? (sortDirection === 'asc' ? 'Descendente' : 'Ascendente') : 'Ascendente'})`}
                                 >
-                                    <div className="flex items-center gap-1.5">
+                                    <div className="flex items-center gap-1">
                                         <span className={sortField === 'cargo' ? 'text-cyan-800 font-bold' : ''}>Cargo</span>
                                         <span className="inline-flex">
                                             {sortField === 'cargo' ? (
                                                 sortDirection === 'asc' ? (
-                                                    <ArrowUp className="w-3.5 h-3.5 text-cyan-600 stroke-[2.5]" />
+                                                    <ArrowUp className="w-3 h-3 text-cyan-600 stroke-[2.5]" />
                                                 ) : (
-                                                    <ArrowDown className="w-3.5 h-3.5 text-cyan-600 stroke-[2.5]" />
+                                                    <ArrowDown className="w-3 h-3 text-cyan-600 stroke-[2.5]" />
                                                 )
                                             ) : (
-                                                <ArrowUpDown className="w-3.5 h-3.5 text-gray-400 opacity-40 group-hover:opacity-100 transition-opacity" />
+                                                <ArrowUpDown className="w-3 h-3 text-gray-400 opacity-40 group-hover:opacity-100 transition-opacity" />
                                             )}
                                         </span>
                                     </div>
                                 </th>
 
-                                {/* Trazabilidad Carga */}
-                                <th className="px-4 py-3.5 whitespace-nowrap">Trazabilidad Carga</th>
-
                                 {/* Criterio de Ausencia */}
                                 <th
                                     onClick={() => handleSort('criterioNombre')}
-                                    className="px-4 py-3.5 whitespace-nowrap min-w-[240px] cursor-pointer select-none transition-colors group hover:bg-gray-100 text-cyan-700 font-bold"
+                                    className="px-2.5 py-2.5 whitespace-nowrap min-w-[210px] cursor-pointer select-none transition-colors group hover:bg-gray-100 text-cyan-700 font-bold"
                                     title={`Ordenar por Criterio (${sortField === 'criterioNombre' ? (sortDirection === 'asc' ? 'Descendente' : 'Ascendente') : 'Ascendente'})`}
                                 >
-                                    <div className="flex items-center gap-1.5">
+                                    <div className="flex items-center gap-1">
                                         <span className={sortField === 'criterioNombre' ? 'text-cyan-800 font-bold' : ''}>Criterio de Ausencia</span>
                                         <span className="inline-flex">
                                             {sortField === 'criterioNombre' ? (
                                                 sortDirection === 'asc' ? (
-                                                    <ArrowUp className="w-3.5 h-3.5 text-cyan-600 stroke-[2.5]" />
+                                                    <ArrowUp className="w-3 h-3 text-cyan-600 stroke-[2.5]" />
                                                 ) : (
-                                                    <ArrowDown className="w-3.5 h-3.5 text-cyan-600 stroke-[2.5]" />
+                                                    <ArrowDown className="w-3 h-3 text-cyan-600 stroke-[2.5]" />
                                                 )
                                             ) : (
-                                                <ArrowUpDown className="w-3.5 h-3.5 text-gray-400 opacity-40 group-hover:opacity-100 transition-opacity" />
+                                                <ArrowUpDown className="w-3 h-3 text-gray-400 opacity-40 group-hover:opacity-100 transition-opacity" />
                                             )}
                                         </span>
                                     </div>
                                 </th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-100">
+                        <tbody className="divide-y divide-gray-100 text-[11px]">
                             {registrosPaginados.length === 0 ? (
                                 <tr>
-                                    <td colSpan={9} className="text-center py-14 text-gray-400">
+                                    <td colSpan={8} className="text-center py-14 text-gray-400">
                                         No se encontraron registros de ausentismo que coincidan con los filtros aplicados.
                                     </td>
                                 </tr>
                             ) : (
                                 registrosPaginados.map(r => {
                                     const isSaved = guardadoStatus[r.id]
+                                    const numAct = r.numActualizaciones ?? (r.criterioId ? 1 : 0)
+                                    const isBloqueado = (!isAdmin && numAct >= 3) || r.estado === 'CERRADO'
+
                                     return (
                                         <tr key={r.id} className="hover:bg-gray-50/80 transition-colors">
                                             {/* Fecha */}
-                                            <td className="px-4 py-3 whitespace-nowrap font-mono font-medium text-gray-800">
+                                            <td className="px-2.5 py-2 whitespace-nowrap font-mono font-medium text-gray-800">
                                                 {r.fechaTexto || r.fecha}
                                             </td>
 
                                             {/* RBD */}
-                                            <td className="px-4 py-3 whitespace-nowrap font-mono font-bold text-cyan-700">
+                                            <td className="px-2.5 py-2 whitespace-nowrap font-mono font-bold text-cyan-700">
                                                 {r.rbd}
                                             </td>
 
                                             {/* Establecimiento */}
-                                            <td className="px-4 py-3 max-w-[180px] truncate" title={r.establecimiento}>
+                                            <td className="px-2.5 py-2 max-w-[140px] truncate" title={r.establecimiento}>
                                                 <span className="font-semibold text-gray-900">{r.establecimiento}</span>
                                             </td>
 
                                             {/* Supervisor */}
-                                            <td className="px-4 py-3 whitespace-nowrap">
-                                                <span className="text-xs font-medium text-cyan-800 bg-cyan-50 px-2 py-0.5 rounded-md border border-cyan-100">
+                                            <td className="px-2.5 py-2 whitespace-nowrap">
+                                                <span className="text-[10px] font-medium text-cyan-800 bg-cyan-50 px-1.5 py-0.5 rounded border border-cyan-100">
                                                     {r.supervisorNombre}
                                                 </span>
                                             </td>
 
                                             {/* RUT (Desencriptado) */}
-                                            <td className="px-4 py-3 whitespace-nowrap font-mono text-gray-800 font-medium">
+                                            <td className="px-2.5 py-2 whitespace-nowrap font-mono text-gray-800 font-medium">
                                                 {r.rut}
                                             </td>
 
                                             {/* Nombre y Apellidos (Desencriptados) */}
-                                            <td className="px-4 py-3 whitespace-nowrap font-semibold text-gray-900">
+                                            <td className="px-2.5 py-2 whitespace-nowrap font-semibold text-gray-900 max-w-[140px] truncate" title={r.nombreCompleto}>
                                                 {r.nombreCompleto}
                                             </td>
 
                                             {/* Cargo */}
-                                            <td className="px-4 py-3 whitespace-nowrap text-gray-600">
+                                            <td className="px-2.5 py-2 whitespace-nowrap text-gray-600 max-w-[120px] truncate" title={r.cargo || ''}>
                                                 {r.cargo || <span className="italic text-gray-400">-</span>}
                                             </td>
 
-                                            {/* Trazabilidad Carga */}
-                                            <td className="px-4 py-3 whitespace-nowrap text-[11px] text-gray-500">
-                                                <div>
-                                                    <span className="text-gray-400">Cargado: </span>
-                                                    <span>{r.creadoPor}</span>
-                                                </div>
-                                                {r.numActualizaciones > 0 && r.actualizadoPor && (
-                                                    <div className="text-cyan-700 text-[10px] mt-0.5 font-medium">
-                                                        <span>Act: {r.actualizadoPor} ({r.numActualizaciones})</span>
-                                                    </div>
-                                                )}
-                                            </td>
-
-                                            {/* Columna final: Lista desplegable Criterios de Ausencias */}
-                                            <td className="px-4 py-3 whitespace-nowrap">
-                                                <div className="flex flex-col gap-1.5 min-w-[260px]">
-                                                    <div className="flex items-center gap-2">
+                                            {/* Columna final: Lista desplegable Criterios de Ausencias con Contador */}
+                                            <td className="px-2.5 py-2 whitespace-nowrap">
+                                                <div className="flex flex-col gap-1 min-w-[200px]">
+                                                    <div className="flex items-center gap-1.5">
                                                         <select
                                                             value={r.criterioId ?? ''}
                                                             onChange={e => handleCriterioSelect(r.id, e.target.value)}
-                                                            disabled={!isAdmin && Boolean(r.criterioId)}
-                                                            className={`w-full px-2.5 py-1.5 rounded-xl text-xs font-semibold border transition-all focus:outline-none focus:ring-2 focus:ring-cyan-500 ${
-                                                                !isAdmin && r.criterioId
+                                                            disabled={isBloqueado}
+                                                            className={`w-full px-2 py-1 rounded-lg text-[11px] font-semibold border transition-all focus:outline-none focus:ring-1 focus:ring-cyan-500 ${
+                                                                isBloqueado
                                                                     ? 'bg-gray-100 text-gray-700 border-gray-300 cursor-not-allowed opacity-90 shadow-none'
                                                                     : r.criterioId
                                                                         ? 'bg-white text-gray-900 border-gray-300 shadow-2xs cursor-pointer'
@@ -963,12 +952,12 @@ export default function AsistenciaClient({
                                                             }`}
                                                             style={{
                                                                 borderLeftColor: r.criterioColor || (r.criterioId ? '#0891b2' : '#f59e0b'),
-                                                                borderLeftWidth: '4px'
+                                                                borderLeftWidth: '3.5px'
                                                             }}
                                                             title={
-                                                                !isAdmin && r.criterioId
-                                                                    ? 'Criterio bloqueado tras ser asignado. Solo un administrador puede modificarlo.'
-                                                                    : ''
+                                                                isBloqueado
+                                                                    ? 'Criterio bloqueado tras alcanzar el límite de 3 justificaciones (solo un admin puede modificar)'
+                                                                    : `Justificación ${numAct}/3. Haz clic para cambiar el criterio.`
                                                             }
                                                         >
                                                             <option value="" className="text-amber-700">
@@ -986,12 +975,12 @@ export default function AsistenciaClient({
                                                         </select>
 
                                                         {/* Indicador de bloqueo o guardado */}
-                                                        {!isAdmin && r.criterioId ? (
+                                                        {isBloqueado ? (
                                                             <span
-                                                                className="text-amber-700 bg-amber-50 border border-amber-200 p-1.5 rounded-lg flex items-center justify-center flex-shrink-0"
-                                                                title="Criterio bloqueado (solo admin puede modificar)"
+                                                                className="text-amber-700 bg-amber-50 border border-amber-200 p-1 rounded-md flex items-center justify-center flex-shrink-0"
+                                                                title="Criterio bloqueado tras 3 justificaciones (solo admin puede modificar)"
                                                             >
-                                                                <Lock className="w-3.5 h-3.5" />
+                                                                <Lock className="w-3 h-3" />
                                                             </span>
                                                         ) : (
                                                             isSaved && (
@@ -1003,6 +992,22 @@ export default function AsistenciaClient({
                                                                 </span>
                                                             )
                                                         )}
+                                                    </div>
+
+                                                    {/* Contador de justificaciones */}
+                                                    <div className="flex items-center justify-between text-[9.5px] px-0.5">
+                                                        <span
+                                                            className={`font-mono font-bold px-1.5 py-0.2 rounded ${
+                                                                numAct >= 3
+                                                                    ? 'bg-rose-50 text-rose-700 border border-rose-200'
+                                                                    : numAct > 0
+                                                                    ? 'bg-amber-50 text-amber-700 border border-amber-200'
+                                                                    : 'text-gray-400'
+                                                            }`}
+                                                            title={`Has justificado ${numAct} de 3 veces permitidas.`}
+                                                        >
+                                                            {numAct >= 3 ? '🔒 Bloqueado (3/3 justif.)' : `${numAct}/3 justif.`}
+                                                        </span>
                                                     </div>
 
                                                     {/* Indicador y botón de vista previa de documento adjunto */}

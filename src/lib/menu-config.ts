@@ -20,8 +20,9 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
     {
         name: 'Tableros y Avances',
         icon: '📈',
-        requiredPermission: ['view_tablero', 'view_tablero_tendencias_pmpa', 'view_tablero_pan', 'view_tablero_gas', 'view_tablero_retiro', 'view_tablero_elementos', 'view_tablero_multas_ee', 'view_tablero_organigrama', 'view_tablero_distancias', 'view_tablero_actas', 'view_tablero_auditoria', 'view_tablero_verificador_temperaturas', 'view_tablero_widgets', 'view_tablero_resolucion_sanitaria', 'view_tablero_monitoreo_avances', 'view_tablero_monitoreo_rrhh', 'view_tablero_indicador_prev_riesgos'],
+        requiredPermission: ['view_tablero', 'view_tablero_tendencias_pmpa', 'view_tablero_pan', 'view_tablero_gas', 'view_tablero_retiro', 'view_tablero_elementos', 'view_tablero_multas_ee', 'view_tablero_organigrama', 'view_tablero_distancias', 'view_tablero_actas', 'view_tablero_auditoria', 'view_tablero_verificador_temperaturas', 'view_tablero_widgets', 'view_tablero_resolucion_sanitaria', 'view_tablero_monitoreo_avances', 'view_tablero_monitoreo_rrhh', 'view_tablero_indicador_prev_riesgos', 'view_tablero_control_cargas'],
         subItems: [
+            { name: 'Control de Cargas Masivas', href: '/dashboard/tablero/control-cargas-masivas', requiredPermission: 'view_tablero_control_cargas' },
             { name: 'Indicador Prev. riesgos', href: '/dashboard/tablero/indicador-prev-riesgos', requiredPermission: 'view_tablero_indicador_prev_riesgos' },
             { name: 'Tendencias y Oscilación PMPA', href: '/dashboard/tablero/tendencias-pmpa', requiredPermission: 'view_tablero_tendencias_pmpa' },
             { name: 'Monitoreo RRHH', href: '/dashboard/tablero/monitoreo-rrhh', requiredPermission: 'view_tablero_monitoreo_rrhh' },
@@ -386,7 +387,7 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
     {
         name: 'Mantenedor',
         icon: '⚙️',
-        requiredPermission: ['view_colegios', 'view_productos', 'view_pmpa', 'view_consumo_gas', 'view_preparaciones', 'view_minutas', 'view_raciones', 'view_codigo_causa', 'manage_sucursales', 'manage_areas', 'manage_vehiculos', 'manage_zonales', 'manage_jefe_operacion', 'manage_supervisor', 'manage_manipuladoras_masiva', 'manage_colegios_matriz', 'manage_nueva_matriz', 'manage_actas_supervision', 'manage_doc_configuracion', 'manage_doc_carpetas', 'manage_doc_privilegios', 'manage_personal_criterios', 'manage_mantenedor_monitoreo', 'manage_mantenedor_monitoreo_rrhh', 'manage_personal_visualizacion', 'manage_prev_riesgos_config'],
+        requiredPermission: ['view_colegios', 'view_productos', 'view_pmpa', 'manage_homologacion_programas', 'view_consumo_gas', 'view_preparaciones', 'view_minutas', 'view_raciones', 'view_codigo_causa', 'manage_sucursales', 'manage_areas', 'manage_vehiculos', 'manage_zonales', 'manage_jefe_operacion', 'manage_supervisor', 'manage_manipuladoras_masiva', 'manage_colegios_matriz', 'manage_nueva_matriz', 'manage_actas_supervision', 'manage_doc_configuracion', 'manage_doc_carpetas', 'manage_doc_privilegios', 'manage_personal_criterios', 'manage_mantenedor_monitoreo', 'manage_mantenedor_monitoreo_rrhh', 'manage_personal_visualizacion', 'manage_prev_riesgos_config'],
         subItems: [
             { name: 'Monitoreo', href: '/dashboard/mantenedor/monitoreo', requiredPermission: 'manage_mantenedor_monitoreo' },
             {
@@ -440,10 +441,11 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
             },
             {
                 name: 'Operaciones',
-                requiredPermission: ['view_pmpa', 'view_colegios', 'view_consumo_gas', 'manage_sucursales', 'manage_vehiculos', 'manage_zonales', 'manage_jefe_operacion', 'manage_supervisor'],
+                requiredPermission: ['view_pmpa', 'manage_homologacion_programas', 'view_colegios', 'view_consumo_gas', 'manage_sucursales', 'manage_vehiculos', 'manage_zonales', 'manage_jefe_operacion', 'manage_supervisor'],
                 subItems: [
                     { name: 'Sucursal', href: '/dashboard/mantenedor/operaciones/sucursales', requiredPermission: 'manage_sucursales' },
                     { name: 'PMPA', href: '/dashboard/mantenedor/operaciones/pmpa', requiredPermission: 'view_pmpa' },
+                    { name: 'Homologación de Programas', href: '/dashboard/mantenedor/operaciones/homologacion-programas', requiredPermission: 'manage_homologacion_programas' },
                     { name: 'Colegio', href: '/dashboard/mantenedor/operaciones/colegios', requiredPermission: 'view_colegios' },
                     { name: 'Consumo de Gas x RBD', href: '/dashboard/mantenedor/operaciones/consumo-gas', requiredPermission: 'view_consumo_gas' },
                     { name: 'Vehículos', href: '/dashboard/mantenedor/operaciones/vehiculos', requiredPermission: 'manage_vehiculos' },

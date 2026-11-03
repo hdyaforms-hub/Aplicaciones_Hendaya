@@ -101,6 +101,7 @@ export async function ensurePersonalAsistenciaTables() {
         await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Asis_Registro" ADD COLUMN IF NOT EXISTS "documentoNombre" TEXT;`)
         await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Asis_Registro" ADD COLUMN IF NOT EXISTS "documentoSubidoAt" TIMESTAMP(3);`)
         await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Asis_Registro" ADD COLUMN IF NOT EXISTS "documentoSubidoPor" TEXT;`)
+        await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Asis_Registro" ADD COLUMN IF NOT EXISTS "numActualizaciones" INTEGER NOT NULL DEFAULT 0;`)
 
         // Control y cierre de períodos
         await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Asis_Carga" ADD COLUMN IF NOT EXISTS "estado" TEXT NOT NULL DEFAULT 'ABIERTO';`)

@@ -1,7 +1,14 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { searchColegios, checkPmpaDisponibilidad, getPmpaAssignmentsAndLastRecord, saveIngRacion } from './actions'
+import {
+    searchColegios,
+    checkPmpaDisponibilidad,
+    getPmpaAssignmentsAndLastRecord,
+    saveIngRacion,
+    getUltimasFechasAuditoria,
+    HistorialAuditoriaFechaDTO
+} from './actions'
 
 type ColegioResult = {
     id: string
@@ -51,6 +58,7 @@ export default function IngresoRacionesClient() {
     })
     const [asignadosLoading, setAsignadosLoading] = useState(false)
     const [ultimaFecha, setUltimaFecha] = useState<string | null>(null)
+    const [ultimasFechas, setUltimasFechas] = useState<HistorialAuditoriaFechaDTO[]>([])
 
     const [isSaving, setIsSaving] = useState(false)
     const [isSavedSuccessfully, setIsSavedSuccessfully] = useState(false)
@@ -131,6 +139,11 @@ export default function IngresoRacionesClient() {
         setSearchTerm(`${col.colRBD} - ${col.nombreEstablecimiento}`)
         setShowDropdown(false)
         resetPmpaState()
+        getUltimasFechasAuditoria(col.colRBD).then(res => {
+            if (res && res.length > 0) {
+                setUltimasFechas(res)
+            }
+        }).catch(err => console.error('Error al cargar historial de fechas:', err))
     }
 
     const resetPmpaState = () => {
@@ -145,6 +158,7 @@ export default function IngresoRacionesClient() {
         setAsignacionesError('')
         setSaveMessage({ type: '', text: '' })
         setIsSavedSuccessfully(false)
+        setUltimasFechas([])
     }
 
     // Handler al cambiar fecha
@@ -177,6 +191,9 @@ export default function IngresoRacionesClient() {
             setProgramas(result.programas)
             setValidPairs(result.validPairs)
             setFilteredEstratos([])
+            if (result.ultimasFechas && result.ultimasFechas.length > 0) {
+                setUltimasFechas(result.ultimasFechas)
+            }
         }
     }
 
@@ -224,6 +241,9 @@ export default function IngresoRacionesClient() {
                     setAsignacionesError('')
                     setAsignados(res.asignados)
                     setUltimaFecha(res.ultimaFecha)
+                    if (res.ultimasFechas && res.ultimasFechas.length > 0) {
+                        setUltimasFechas(res.ultimasFechas)
+                    }
                     
                     if (res.currentRecord) {
                         setDesayunoIng(res.asignados.desayunoAsig > 0 ? res.currentRecord.desayunoIng : '')
@@ -310,6 +330,11 @@ export default function IngresoRacionesClient() {
                 setSaveMessage({ type: 'success', text: 'Registro guardado exitosamente.' })
                 setIsSavedSuccessfully(true)
                 setUltimaFecha(new Date().toISOString())
+                if (selectedColegio) {
+                    getUltimasFechasAuditoria(selectedColegio.colRBD).then(hist => {
+                        if (hist && hist.length > 0) setUltimasFechas(hist)
+                    }).catch(console.error)
+                }
             }
         } catch (e: any) {
             setSaveMessage({ type: 'error', text: e?.message || 'Error inesperado al guardar el registro' })
@@ -492,7 +517,95 @@ export default function IngresoRacionesClient() {
                 <div className="bg-gray-50 border border-gray-200 rounded-2xl p-6 relative animate-in fade-in slide-in-from-top-4">
                     <h3 className="text-sm font-black text-black mb-5 uppercase tracking-widest relative z-10">2. Datos de la Auditoría</h3>
 
-                    {ultimaFecha && (
+                    {/* Visualización de las 4 Fechas Previas con Globo Emergente (Tooltip) */}
+                    {ultimasFechas && ultimasFechas.length > 0 ? (
+                        <div className="mb-6 p-4 bg-gradient-to-r from-cyan-50/80 to-sky-50/60 border border-cyan-200 text-cyan-900 rounded-2xl text-xs shadow-xs animate-in fade-in">
+                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 mb-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="text-lg">📅</span>
+                                    <span className="font-bold text-slate-900 text-xs sm:text-sm">
+                                        Últimas 4 Fechas de Auditoría Ingresadas:
+                                    </span>
+                                </div>
+                                <span className="text-[10.5px] text-slate-500 font-medium">
+                                    Pasa el cursor sobre una fecha para ver programas y estratos completados
+                                </span>
+                            </div>
+
+                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                                {ultimasFechas.map((uf) => (
+                                    <div key={uf.fechaIngreso} className="relative group">
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                const fakeEvent = { target: { value: uf.fechaIngreso } } as React.ChangeEvent<HTMLInputElement>
+                                                handleFechaChange(fakeEvent)
+                                            }}
+                                            className={`w-full p-2.5 rounded-xl border text-center transition-all cursor-pointer ${
+                                                fechaTraba === uf.fechaIngreso
+                                                    ? 'bg-cyan-600 text-white border-cyan-700 shadow-sm shadow-cyan-600/30 ring-2 ring-cyan-500/30'
+                                                    : 'bg-white hover:bg-cyan-50/80 text-slate-800 border-slate-200 hover:border-cyan-300 shadow-xs'
+                                            }`}
+                                        >
+                                            <div className="flex items-center justify-center gap-1.5 font-black text-xs">
+                                                <span>{uf.fechaIngresoLabel}</span>
+                                            </div>
+                                            <div className={`text-[10px] mt-0.5 font-semibold ${
+                                                fechaTraba === uf.fechaIngreso ? 'text-cyan-100' : 'text-cyan-700'
+                                            }`}>
+                                                {uf.detalles.length} {uf.detalles.length === 1 ? 'registro' : 'registros'}
+                                            </div>
+                                        </button>
+
+                                        {/* GLOBO FLOTANTE (TOOLTIP) */}
+                                        <div className="absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-2.5 hidden group-hover:block w-72 sm:w-80 p-3.5 bg-slate-900 text-white rounded-2xl shadow-2xl border border-slate-700 text-xs pointer-events-none animate-in fade-in zoom-in-95">
+                                            {/* Triangulito inferior */}
+                                            <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-slate-900 border-r border-b border-slate-700 rotate-45" />
+
+                                            <div className="flex items-center justify-between border-b border-slate-800 pb-2 mb-2">
+                                                <span className="font-black text-cyan-300 text-xs">📅 {uf.fechaIngresoLabel}</span>
+                                                <span className="text-[10px] text-slate-400">
+                                                    {new Date(uf.fechaSistema).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} hrs
+                                                </span>
+                                            </div>
+
+                                            <div className="text-[10.5px] text-slate-300 mb-2">
+                                                Auditor / Usuario: <strong className="text-white font-semibold">{uf.usuario || 'Anónimo'}</strong>
+                                            </div>
+
+                                            <div className="space-y-1.5 max-h-44 overflow-y-auto">
+                                                <div className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">
+                                                    Programas y Estratos de esta fecha:
+                                                </div>
+                                                {uf.detalles.map((det, dIdx) => (
+                                                    <div
+                                                        key={dIdx}
+                                                        className="p-2 rounded-xl bg-slate-800/90 border border-slate-700 text-[11px] flex flex-col gap-0.5"
+                                                    >
+                                                        <div className="flex justify-between items-center">
+                                                            <strong className="text-cyan-300">{det.programa}</strong>
+                                                            <span className="px-1.5 py-0.5 rounded text-[9.5px] bg-slate-700 text-slate-200 font-black">
+                                                                Estrato: {det.estrato}
+                                                            </span>
+                                                        </div>
+                                                        <div className="flex justify-between text-[10px] text-slate-400 mt-0.5">
+                                                            <span>Ingresadas: <strong className="text-white">{det.totalIng.toLocaleString('es-CL')}</strong></span>
+                                                            <span>Asignadas: <strong className="text-slate-300">{det.totalAsig.toLocaleString('es-CL')}</strong></span>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+
+                                            <div className="mt-2.5 pt-2 border-t border-slate-800 flex justify-between text-[10.5px] text-slate-400">
+                                                <span>Total raciones preparadas:</span>
+                                                <strong className="text-emerald-400 font-black">{uf.totalIngDia.toLocaleString('es-CL')}</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ) : ultimaFecha ? (
                         <div className="mb-6 p-4 bg-cyan-50 border border-cyan-200 text-cyan-800 rounded-xl text-sm font-medium flex gap-3 animate-in fade-in">
                             <span className="text-xl">📅</span>
                             <div>
@@ -500,7 +613,7 @@ export default function IngresoRacionesClient() {
                                 Última fecha registrada para esta configuración es: {new Date(ultimaFecha).toLocaleDateString()} a las {new Date(ultimaFecha).toLocaleTimeString()}
                             </div>
                         </div>
-                    )}
+                    ) : null}
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div>

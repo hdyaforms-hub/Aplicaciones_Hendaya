@@ -1,6 +1,6 @@
 import { getSession } from '@/lib/session'
 import { redirect } from 'next/navigation'
-import { getAdmAtrasosAction, getHistorialCargasAtrasosAction } from './actions'
+import { getAdmAtrasosAction, getHistorialCargasAtrasosAction, getFiltrosMetadatosAtrasosAction } from './actions'
 import { getUserEffectiveRbds } from '@/lib/authFilters'
 import { puedeUsuarioCerrarPeriodosRH } from '@/lib/personal-cuentas-db-init'
 import AdmAtrasosClient from './AdmAtrasosClient'
@@ -15,11 +15,12 @@ export default async function AdmAtrasosPage() {
         redirect('/dashboard')
     }
 
-    const [regRes, cargasRes, authorizedRbds, puedeCerrar] = await Promise.all([
+    const [regRes, cargasRes, authorizedRbds, puedeCerrar, metadatosFiltros] = await Promise.all([
         getAdmAtrasosAction({ page: 1, pageSize: 10, tipo: 'ADELANTO' }),
         getHistorialCargasAtrasosAction('ADELANTO'),
         getUserEffectiveRbds(),
-        puedeUsuarioCerrarPeriodosRH(session.user.id)
+        puedeUsuarioCerrarPeriodosRH(session.user.id),
+        getFiltrosMetadatosAtrasosAction()
     ])
 
     const isAdmin = authorizedRbds === null
@@ -60,6 +61,7 @@ export default async function AdmAtrasosPage() {
             userRbds={userRbds}
             isAdmin={isAdmin}
             puedeGestionarPeriodos={puedeCerrar}
+            metadatosFiltros={metadatosFiltros}
         />
     )
 }

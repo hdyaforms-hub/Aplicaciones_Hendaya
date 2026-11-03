@@ -5,10 +5,12 @@ import {
     AdmAsistenciaRegistroDTO,
     CargaHistorialDTO,
     asignarCriterioAdminAction,
+    asignarCriterioMasivoAction,
     cambiarEstadoPeriodoCargaAction,
     getAdmAusentismoRegistrosAction,
     getHistorialCargasAction,
-    registrarAuditoriaExportacionAction
+    registrarAuditoriaExportacionAction,
+    FiltrosMetadatosDTO
 } from './actions'
 import {
     Users,
@@ -35,7 +37,12 @@ import {
     ChevronRight,
     Filter,
     Eye,
-    Paperclip
+    Paperclip,
+    CheckSquare,
+    Square,
+    UserCheck,
+    School,
+    MapPin
 } from 'lucide-react'
 import * as xlsx from 'xlsx'
 import DocumentoPreviewModal, { DocumentoPreviewData } from '@/components/DocumentoPreviewModal'
@@ -60,6 +67,7 @@ interface AdmAusentismoClientProps {
     userRbds: number[]
     isAdmin: boolean
     puedeGestionarPeriodos?: boolean
+    metadatosFiltros?: FiltrosMetadatosDTO
 }
 
 export default function AdmAusentismoClient({
@@ -69,7 +77,8 @@ export default function AdmAusentismoClient({
     establecimientos,
     userRbds,
     isAdmin,
-    puedeGestionarPeriodos = false
+    puedeGestionarPeriodos = false,
+    metadatosFiltros
 }: AdmAusentismoClientProps) {
     // Pestañas activas: 'cargas' (Historial Documentos) | 'registros' (Historial de Registros)
     const [tabActivo, setTabActivo] = useState<'cargas' | 'registros'>('cargas')
@@ -90,6 +99,19 @@ export default function AdmAusentismoClient({
     const [filtroCriterio, setFiltroCriterio] = useState<string>('TODOS')
     const [filtroEstado, setFiltroEstado] = useState<string>('TODOS')
     const [filtroCargaId, setFiltroCargaId] = useState<string>('TODOS')
+
+    // Nuevos filtros: Rol, Usuario (según rol), Institución y Comuna
+    const [filtroRol, setFiltroRol] = useState<string>('TODOS')
+    const [filtroUsuarioId, setFiltroUsuarioId] = useState<string>('TODOS')
+    const [filtroInstitucion, setFiltroInstitucion] = useState<string>('TODAS')
+    const [filtroComuna, setFiltroComuna] = useState<string>('TODAS')
+
+    // Selección múltiple y Justificación Masiva
+    const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
+    const [modalMasivoOpen, setModalMasivoOpen] = useState(false)
+    const [criterioMasivoSeleccionado, setCriterioMasivoSeleccionado] = useState<string>('')
+    const [observacionMasiva, setObservacionMasiva] = useState<string>('')
+    const [procesandoMasivo, setProcesandoMasivo] = useState(false)
 
     // Control autocompletado RBD
     const [isRbdDropdownOpen, setIsRbdDropdownOpen] = useState(false)
@@ -175,6 +197,17 @@ export default function AdmAusentismoClient({
         return sortDirection === 'asc' ? <ArrowUp className="w-3.5 h-3.5 text-cyan-600 stroke-[2.5]" /> : <ArrowDown className="w-3.5 h-3.5 text-cyan-600 stroke-[2.5]" />
     }
 
+    // Metadatos de roles, usuarios, instituciones y comunas
+    const rolesDisponibles = useMemo(() => metadatosFiltros?.roles || [], [metadatosFiltros])
+    const usuariosDisponibles = useMemo(() => metadatosFiltros?.usuarios || [], [metadatosFiltros])
+    const institucionesDisponibles = useMemo(() => metadatosFiltros?.instituciones || [], [metadatosFiltros])
+    const comunasDisponibles = useMemo(() => metadatosFiltros?.comunas || [], [metadatosFiltros])
+
+    const usuariosFiltradosPorRol = useMemo(() => {
+        if (filtroRol === 'TODOS') return usuariosDisponibles
+        return usuariosDisponibles.filter(u => u.roleId === filtroRol)
+    }, [usuariosDisponibles, filtroRol])
+
     // Criterios
     const criteriosActivos = useMemo(() => criterios.filter(c => c.activo), [criterios])
     const criteriosMap = useMemo(() => new Map<string, CriterioItem>(criterios.map(c => [c.id, c])), [criterios])
@@ -189,6 +222,43 @@ export default function AdmAusentismoClient({
         ).slice(0, 15)
     }, [establecimientos, busquedaRbdNombre])
 
+    // Helper para normalizar RUTs para comparación estricta (sin puntos, sin guion, sin espacios)
+    const normalizeRut = (val: string) => (val || '').replace(/\./g, '').replace(/-/g, '').replace(/\s+/g, '').toUpperCase().trim()
+
+    // Pre-cálculo de Trabajadores autorizados (por Configuración de Visualización) y RBDs permitidos
+    const usuarioSeleccionado = useMemo(() => {
+        if (filtroUsuarioId === 'TODOS') return null
+        return usuariosDisponibles.find(x => x.id === filtroUsuarioId) || null
+    }, [filtroUsuarioId, usuariosDisponibles])
+
+    const userRutsSet = useMemo(() => {
+        if (!usuarioSeleccionado) return null
+        if (usuarioSeleccionado.hasVisualizacion && usuarioSeleccionado.ruts?.length) {
+            return new Set(usuarioSeleccionado.ruts.map(r => normalizeRut(r)))
+        }
+        return null
+    }, [usuarioSeleccionado])
+
+    const userRbdsSet = useMemo(() => {
+        if (!usuarioSeleccionado) return null
+        const rbds = usuarioSeleccionado.rbds || []
+        return rbds.length > 0 ? new Set(rbds) : null
+    }, [usuarioSeleccionado])
+
+    const roleRutsSet = useMemo(() => {
+        if (filtroRol === 'TODOS' || filtroUsuarioId !== 'TODOS') return null
+        const uList = usuariosDisponibles.filter(x => x.roleId === filtroRol)
+        const allRuts = uList.flatMap(u => (u.ruts || []).map(r => normalizeRut(r)))
+        return allRuts.length > 0 ? new Set(allRuts) : null
+    }, [filtroRol, filtroUsuarioId, usuariosDisponibles])
+
+    const roleRbdsSet = useMemo(() => {
+        if (filtroRol === 'TODOS' || filtroUsuarioId !== 'TODOS') return null
+        const uList = usuariosDisponibles.filter(x => x.roleId === filtroRol)
+        const allRbds = uList.flatMap(u => u.rbds || [])
+        return allRbds.length > 0 ? new Set(allRbds) : null
+    }, [filtroRol, filtroUsuarioId, usuariosDisponibles])
+
     // Filtrado de Registros en memoria
     const registrosFiltrados = useMemo(() => {
         return registros.filter(r => {
@@ -200,6 +270,44 @@ export default function AdmAusentismoClient({
                 const matchRbd = r.rbd.toString().includes(term)
                 const matchEst = r.establecimiento.toLowerCase().includes(term)
                 if (!matchRbd && !matchEst) return false
+            }
+
+            // Filtro Rol / Usuario:
+            const rutLimpio = normalizeRut(r.rut)
+            if (filtroUsuarioId !== 'TODOS') {
+                if (userRutsSet !== null && userRbdsSet !== null) {
+                    if (!userRutsSet.has(rutLimpio) && !userRbdsSet.has(r.rbd)) return false
+                } else if (userRutsSet !== null) {
+                    if (!userRutsSet.has(rutLimpio)) return false
+                } else if (userRbdsSet !== null) {
+                    if (!userRbdsSet.has(r.rbd)) return false
+                } else {
+                    return false
+                }
+            } else if (filtroRol !== 'TODOS') {
+                if (roleRutsSet !== null && roleRbdsSet !== null) {
+                    if (!roleRutsSet.has(rutLimpio) && !roleRbdsSet.has(r.rbd)) return false
+                } else if (roleRutsSet !== null) {
+                    if (!roleRutsSet.has(rutLimpio)) return false
+                } else if (roleRbdsSet !== null) {
+                    if (!roleRbdsSet.has(r.rbd)) return false
+                } else {
+                    return false
+                }
+            }
+
+            // Filtro Institución (Colegio)
+            if (filtroInstitucion !== 'TODAS') {
+                if ((r.institucion || '').trim().toUpperCase() !== filtroInstitucion.trim().toUpperCase()) {
+                    return false
+                }
+            }
+
+            // Filtro Comuna
+            if (filtroComuna !== 'TODAS') {
+                if ((r.comuna || '').trim().toUpperCase() !== filtroComuna.trim().toUpperCase()) {
+                    return false
+                }
             }
 
             // Filtro Fecha
@@ -238,7 +346,11 @@ export default function AdmAusentismoClient({
 
             return true
         })
-    }, [registros, filtroRbdSeleccionado, busquedaRbdNombre, filtroFecha, filtroRut, filtroNombre, filtroCriterio, filtroEstado, filtroCargaId])
+    }, [
+        registros, filtroRbdSeleccionado, busquedaRbdNombre, filtroFecha, filtroRut, filtroNombre,
+        filtroCriterio, filtroEstado, filtroCargaId, filtroRol, filtroUsuarioId, filtroInstitucion,
+        filtroComuna, userRutsSet, userRbdsSet, roleRutsSet, roleRbdsSet
+    ])
 
     // Ordenamiento de registros
     const registrosOrdenados = useMemo(() => {
@@ -260,6 +372,92 @@ export default function AdmAusentismoClient({
         const start = (paginaActual - 1) * porPagina
         return registrosOrdenados.slice(start, start + porPagina)
     }, [registrosOrdenados, paginaActual, porPagina])
+
+    // Lógica de Selección y Justificación Masiva
+    const registrosAbiertosPagina = useMemo(() => {
+        return registrosPaginados.filter(r => r.estado === 'ABIERTO')
+    }, [registrosPaginados])
+
+    const registrosAbiertosFiltrados = useMemo(() => {
+        return registrosFiltrados.filter(r => r.estado === 'ABIERTO')
+    }, [registrosFiltrados])
+
+    const isAllVisibleSelected = registrosAbiertosPagina.length > 0 && registrosAbiertosPagina.every(r => selectedIds.has(r.id))
+
+    const handleSelectAllVisible = () => {
+        setSelectedIds(prev => {
+            const next = new Set(prev)
+            if (isAllVisibleSelected) {
+                registrosAbiertosPagina.forEach(r => next.delete(r.id))
+            } else {
+                registrosAbiertosPagina.forEach(r => next.add(r.id))
+            }
+            return next
+        })
+    }
+
+    const handleSelectAllFiltered = () => {
+        setSelectedIds(new Set(registrosAbiertosFiltrados.map(r => r.id)))
+    }
+
+    const handleToggleSelectOne = (id: string) => {
+        setSelectedIds(prev => {
+            const next = new Set(prev)
+            if (next.has(id)) next.delete(id)
+            else next.add(id)
+            return next
+        })
+    }
+
+    const handleClearSelection = () => {
+        setSelectedIds(new Set())
+    }
+
+    const handleEjecutarJustificacionMasiva = async () => {
+        if (selectedIds.size === 0) return
+        if (!criterioMasivoSeleccionado) {
+            setMensajeFeedback({ tipo: 'error', texto: 'Debes seleccionar un criterio de ausencia para justificar.' })
+            return
+        }
+
+        setProcesandoMasivo(true)
+        try {
+            const idsArray = Array.from(selectedIds)
+            const res = await asignarCriterioMasivoAction(idsArray, criterioMasivoSeleccionado, observacionMasiva)
+            if (res.success) {
+                const critObj = criteriosMap.get(criterioMasivoSeleccionado)
+                setRegistros(prev =>
+                    prev.map(r => {
+                        if (selectedIds.has(r.id)) {
+                            return {
+                                ...r,
+                                criterioId: criterioMasivoSeleccionado,
+                                criterioNombre: critObj ? critObj.nombre : r.criterioNombre,
+                                criterioColor: critObj?.color || r.criterioColor,
+                                numActualizaciones: (r.numActualizaciones || 0) + 1
+                            }
+                        }
+                        return r
+                    })
+                )
+                setMensajeFeedback({
+                    tipo: 'success',
+                    texto: `Se justificaron exitosamente ${res.actualizados} registros seleccionados.`
+                })
+                setSelectedIds(new Set())
+                setModalMasivoOpen(false)
+                setCriterioMasivoSeleccionado('')
+                setObservacionMasiva('')
+                setTimeout(() => setMensajeFeedback(null), 4000)
+            } else {
+                setMensajeFeedback({ tipo: 'error', texto: res.error || 'Error al aplicar justificación masiva.' })
+            }
+        } catch (error: any) {
+            setMensajeFeedback({ tipo: 'error', texto: error?.message || 'Error inesperado al justificar masivamente.' })
+        } finally {
+            setProcesandoMasivo(false)
+        }
+    }
 
     // Recargar Datos
     const recargarDatos = async () => {
@@ -361,6 +559,8 @@ export default function AdmAusentismoClient({
             'Fecha': r.fecha,
             'RBD': r.rbd,
             'Establecimiento': r.establecimiento,
+            'Institución': r.institucion || '',
+            'Comuna': r.comuna || '',
             'Supervisor': r.supervisorNombre,
             'RUT': r.rut,
             'Colaborador': r.nombreCompleto,
@@ -785,7 +985,7 @@ export default function AdmAusentismoClient({
                                 <Filter className="w-3.5 h-3.5 text-cyan-600" />
                                 <span>Filtros de Búsqueda Avanzada</span>
                             </div>
-                            {(busquedaRbdNombre || filtroRbdSeleccionado || filtroFecha || filtroRut || filtroNombre || filtroCriterio !== 'TODOS' || filtroEstado !== 'TODOS' || filtroCargaId !== 'TODOS') && (
+                            {(busquedaRbdNombre || filtroRbdSeleccionado || filtroFecha || filtroRut || filtroNombre || filtroCriterio !== 'TODOS' || filtroEstado !== 'TODOS' || filtroCargaId !== 'TODOS' || filtroRol !== 'TODOS' || filtroUsuarioId !== 'TODOS' || filtroInstitucion !== 'TODAS' || filtroComuna !== 'TODAS') && (
                                 <button
                                     onClick={() => {
                                         setBusquedaRbdNombre('')
@@ -796,6 +996,10 @@ export default function AdmAusentismoClient({
                                         setFiltroCriterio('TODOS')
                                         setFiltroEstado('TODOS')
                                         setFiltroCargaId('TODOS')
+                                        setFiltroRol('TODOS')
+                                        setFiltroUsuarioId('TODOS')
+                                        setFiltroInstitucion('TODAS')
+                                        setFiltroComuna('TODAS')
                                         setPaginaActual(1)
                                     }}
                                     className="text-[11px] font-semibold text-rose-600 hover:text-rose-800 flex items-center gap-1 transition-colors"
@@ -806,7 +1010,99 @@ export default function AdmAusentismoClient({
                             )}
                         </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3 text-xs">
+                            {/* Filtro por Rol */}
+                            <div>
+                                <label className="block text-[11px] font-semibold text-gray-600 mb-1 flex items-center gap-1">
+                                    <ShieldCheck className="w-3 h-3 text-cyan-600" />
+                                    <span>Rol de Usuario</span>
+                                </label>
+                                <select
+                                    value={filtroRol}
+                                    onChange={e => {
+                                        setFiltroRol(e.target.value)
+                                        setFiltroUsuarioId('TODOS')
+                                        setPaginaActual(1)
+                                    }}
+                                    className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 text-xs bg-white"
+                                >
+                                    <option value="TODOS">Todos los Roles</option>
+                                    {rolesDisponibles.map(r => (
+                                        <option key={r.id} value={r.id}>
+                                            {r.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            {/* Filtro por Usuario según Rol */}
+                            <div>
+                                <label className="block text-[11px] font-semibold text-gray-600 mb-1 flex items-center gap-1">
+                                    <UserCheck className="w-3 h-3 text-cyan-600" />
+                                    <span>Usuario {filtroRol !== 'TODOS' ? '(del rol)' : ''}</span>
+                                </label>
+                                <select
+                                    value={filtroUsuarioId}
+                                    onChange={e => {
+                                        setFiltroUsuarioId(e.target.value)
+                                        setPaginaActual(1)
+                                    }}
+                                    className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 text-xs bg-white truncate"
+                                >
+                                    <option value="TODOS">Todos los Usuarios</option>
+                                    {usuariosFiltradosPorRol.map(u => (
+                                        <option key={u.id} value={u.id}>
+                                            {u.name || u.username} ({u.hasVisualizacion && u.totalTrabajadores ? `${u.totalTrabajadores} trab. / ` : ''}{u.rbds.length} RBDs)
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            {/* Filtro por Institución (Colegio) */}
+                            <div>
+                                <label className="block text-[11px] font-semibold text-gray-600 mb-1 flex items-center gap-1">
+                                    <School className="w-3 h-3 text-cyan-600" />
+                                    <span>Institución</span>
+                                </label>
+                                <select
+                                    value={filtroInstitucion}
+                                    onChange={e => {
+                                        setFiltroInstitucion(e.target.value)
+                                        setPaginaActual(1)
+                                    }}
+                                    className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 text-xs bg-white"
+                                >
+                                    <option value="TODAS">Todas las Instituciones</option>
+                                    {institucionesDisponibles.map(inst => (
+                                        <option key={inst} value={inst}>
+                                            {inst}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            {/* Filtro por Comuna */}
+                            <div>
+                                <label className="block text-[11px] font-semibold text-gray-600 mb-1 flex items-center gap-1">
+                                    <MapPin className="w-3 h-3 text-cyan-600" />
+                                    <span>Comuna</span>
+                                </label>
+                                <select
+                                    value={filtroComuna}
+                                    onChange={e => {
+                                        setFiltroComuna(e.target.value)
+                                        setPaginaActual(1)
+                                    }}
+                                    className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 text-xs bg-white"
+                                >
+                                    <option value="TODAS">Todas las Comunas</option>
+                                    {comunasDisponibles.map(com => (
+                                        <option key={com} value={com}>
+                                            {com}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
                             {/* Autocompletado RBD / Establecimiento */}
                             <div className="relative">
                                 <label className="block text-[11px] font-semibold text-gray-600 mb-1">RBD / Establecimiento</label>
@@ -966,6 +1262,44 @@ export default function AdmAusentismoClient({
                         </div>
                     </div>
 
+                    {/* Barra de Selección Masiva Flotante/Destacada */}
+                    {selectedIds.size > 0 && (
+                        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-3.5 bg-cyan-50 border border-cyan-200 rounded-2xl text-xs shadow-sm animate-in fade-in slide-in-from-top-2">
+                            <div className="flex items-center gap-2 text-cyan-900 font-semibold">
+                                <CheckSquare className="w-4 h-4 text-cyan-600 flex-shrink-0" />
+                                <span>
+                                    {selectedIds.size} {selectedIds.size === 1 ? 'caso abierto seleccionado' : 'casos abiertos seleccionados'}
+                                </span>
+                                {registrosAbiertosFiltrados.length > selectedIds.size && (
+                                    <button
+                                        type="button"
+                                        onClick={handleSelectAllFiltered}
+                                        className="ml-2 text-cyan-700 underline hover:text-cyan-900 font-bold"
+                                    >
+                                        Seleccionar todos ({registrosAbiertosFiltrados.length} abiertos con estos filtros)
+                                    </button>
+                                )}
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <button
+                                    type="button"
+                                    onClick={handleClearSelection}
+                                    className="px-3 py-1.5 bg-white hover:bg-gray-100 text-gray-700 border border-gray-200 rounded-xl font-medium transition-colors"
+                                >
+                                    Deseleccionar
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setModalMasivoOpen(true)}
+                                    className="px-4 py-1.5 bg-cyan-600 hover:bg-cyan-700 text-white rounded-xl font-bold shadow-sm flex items-center gap-1.5 transition-colors"
+                                >
+                                    <Check className="w-3.5 h-3.5" />
+                                    <span>Justificar en Forma Masiva ({selectedIds.size})</span>
+                                </button>
+                            </div>
+                        </div>
+                    )}
+
                     {/* Tabla de Registros */}
                     <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
                         {registrosPaginados.length === 0 ? (
@@ -977,6 +1311,15 @@ export default function AdmAusentismoClient({
                                 <table className="w-full text-left text-xs border-collapse">
                                     <thead className="bg-gray-100 text-gray-600 uppercase text-[10px] tracking-wider font-semibold">
                                         <tr>
+                                            <th className="py-3 px-3 text-center w-10">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={isAllVisibleSelected}
+                                                    onChange={handleSelectAllVisible}
+                                                    title="Seleccionar todos los casos abiertos de esta página"
+                                                    className="w-4 h-4 rounded border-gray-300 text-cyan-600 focus:ring-cyan-500 cursor-pointer"
+                                                />
+                                            </th>
                                             <th 
                                                 className="py-3 px-3 cursor-pointer select-none group hover:bg-gray-200 transition-colors" 
                                                 onClick={() => handleSort('fecha')}
@@ -1045,7 +1388,23 @@ export default function AdmAusentismoClient({
                                         {registrosPaginados.map(r => {
                                             const esCerrado = r.estado === 'CERRADO'
                                             return (
-                                                <tr key={r.id} className="hover:bg-gray-50/80 transition-colors">
+                                                <tr key={r.id} className={`transition-colors ${selectedIds.has(r.id) ? 'bg-cyan-50/60' : 'hover:bg-gray-50/80'}`}>
+                                                    {/* Checkbox Selección */}
+                                                    <td className="py-3 px-3 text-center">
+                                                        {esCerrado ? (
+                                                            <span title="Período CERRADO (Bloqueado)">
+                                                                <Lock className="w-3.5 h-3.5 text-gray-300 mx-auto" />
+                                                            </span>
+                                                        ) : (
+                                                            <input
+                                                                type="checkbox"
+                                                                checked={selectedIds.has(r.id)}
+                                                                onChange={() => handleToggleSelectOne(r.id)}
+                                                                className="w-4 h-4 rounded border-gray-300 text-cyan-600 focus:ring-cyan-500 cursor-pointer"
+                                                            />
+                                                        )}
+                                                    </td>
+
                                                     {/* Fecha */}
                                                     <td className="py-3 px-3 font-semibold text-gray-900 whitespace-nowrap">
                                                         {r.fecha}
@@ -1054,8 +1413,19 @@ export default function AdmAusentismoClient({
                                                     {/* RBD / Establecimiento */}
                                                     <td className="py-3 px-3">
                                                         <div className="flex flex-col">
-                                                            <div className="flex items-center gap-1.5">
+                                                            <div className="flex items-center gap-1.5 flex-wrap">
                                                                 <span className="font-bold text-gray-900">{r.establecimiento}</span>
+                                                                {r.institucion && (
+                                                                    <span className="text-[9px] font-bold text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200">
+                                                                        {r.institucion}
+                                                                    </span>
+                                                                )}
+                                                                {r.comuna && (
+                                                                    <span className="text-[9px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200 flex items-center gap-0.5">
+                                                                        <MapPin className="w-2.5 h-2.5" />
+                                                                        {r.comuna}
+                                                                    </span>
+                                                                )}
                                                             </div>
                                                             <span className="text-[10px] font-semibold text-cyan-600">RBD: {r.rbd}</span>
                                                         </div>
@@ -1272,6 +1642,83 @@ export default function AdmAusentismoClient({
                                 <span>
                                     {modalPeriodo.accion === 'CERRAR' ? 'Sí, Cerrar Período' : 'Sí, Reabrir Período'}
                                 </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Modal de Justificación Masiva */}
+            {modalMasivoOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+                    <div className="bg-white rounded-2xl shadow-xl border border-gray-200 max-w-md w-full p-6 space-y-4 animate-in fade-in zoom-in-95">
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-xl bg-cyan-100 text-cyan-700 flex items-center justify-center flex-shrink-0">
+                                <CheckSquare className="w-5 h-5" />
+                            </div>
+                            <div>
+                                <h3 className="font-bold text-gray-900 text-base">Justificación Masiva de Ausentismo</h3>
+                                <p className="text-xs text-gray-500">
+                                    Se aplicará el criterio a <strong>{selectedIds.size}</strong> casos seleccionados.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="space-y-3">
+                            <div>
+                                <label className="block text-xs font-bold text-gray-700 mb-1">Criterio de Ausencia *</label>
+                                <select
+                                    value={criterioMasivoSeleccionado}
+                                    onChange={e => setCriterioMasivoSeleccionado(e.target.value)}
+                                    className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 text-xs bg-white font-semibold"
+                                >
+                                    <option value="">-- Selecciona el criterio a aplicar --</option>
+                                    {criteriosActivos.map(c => (
+                                        <option key={c.id} value={c.id}>
+                                            {c.nombre}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            <div>
+                                <label className="block text-xs font-bold text-gray-700 mb-1">Observación Masiva (Opcional)</label>
+                                <textarea
+                                    rows={2}
+                                    value={observacionMasiva}
+                                    onChange={e => setObservacionMasiva(e.target.value)}
+                                    placeholder="Motivo o detalle de la justificación masiva..."
+                                    className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 text-xs"
+                                />
+                            </div>
+
+                            <div className="bg-amber-50 p-3 rounded-xl border border-amber-200 text-xs text-amber-800 flex items-start gap-2">
+                                <AlertCircle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                                <span>Solo se actualizarán los casos pertenecientes a períodos ABIERTOS. Esta acción quedará registrada en el módulo de auditoría.</span>
+                            </div>
+                        </div>
+
+                        <div className="flex items-center justify-end gap-2 pt-2">
+                            <button
+                                type="button"
+                                disabled={procesandoMasivo}
+                                onClick={() => {
+                                    setModalMasivoOpen(false)
+                                    setCriterioMasivoSeleccionado('')
+                                    setObservacionMasiva('')
+                                }}
+                                className="px-4 py-2 border border-gray-200 rounded-xl text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
+                            >
+                                Cancelar
+                            </button>
+                            <button
+                                type="button"
+                                disabled={procesandoMasivo || !criterioMasivoSeleccionado}
+                                onClick={handleEjecutarJustificacionMasiva}
+                                className="px-4 py-2 rounded-xl text-xs font-semibold text-white shadow-sm transition-colors flex items-center gap-1.5 bg-cyan-600 hover:bg-cyan-700 disabled:opacity-50"
+                            >
+                                {procesandoMasivo && <RefreshCw className="w-3.5 h-3.5 animate-spin" />}
+                                <span>Aplicar a {selectedIds.size} casos</span>
                             </button>
                         </div>
                     </div>

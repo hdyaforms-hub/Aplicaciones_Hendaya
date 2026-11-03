@@ -245,12 +245,12 @@ export async function asignarCriterioAction(registroId: string, criterioId: stri
                 error: 'El período correspondiente a este registro se encuentra cerrado. No se permiten modificaciones.'
             }
         }
-        // Si el usuario no es administrador y el registro ya tiene un criterio asignado, bloquear modificaciones
+        // Si el usuario no es administrador y el registro ya alcanzó el límite de 3 justificaciones, bloquear modificaciones
         if (!isGlobalAdmin) {
-            if (currentReg.criterioId !== null && currentReg.criterioId !== criterioId) {
+            if ((currentReg.numActualizaciones ?? 0) >= 3) {
                 return {
                     success: false,
-                    error: 'Este registro ya tiene un criterio asignado y ha sido bloqueado. Solo un administrador puede modificarlo.'
+                    error: 'Este registro ya alcanzó el límite de 3 justificaciones y se encuentra bloqueado. Solo un administrador puede modificarlo.'
                 }
             }
         }
@@ -445,10 +445,10 @@ export async function adjuntarDocumentoAsistenciaAction(formData: FormData): Pro
                 error: 'No tienes autorización para adjuntar documentos en este establecimiento'
             }
         }
-        if (currentReg.criterioId !== null) {
+        if ((currentReg.numActualizaciones ?? 0) >= 3) {
             return {
                 success: false,
-                error: 'Este registro ya tiene un criterio asignado y está bloqueado. Solo un administrador puede adjuntar documentos posteriormente.'
+                error: 'Este registro ya alcanzó el límite máximo de 3 justificaciones y está bloqueado. Solo un administrador puede adjuntar documentos posteriormente.'
             }
         }
     }

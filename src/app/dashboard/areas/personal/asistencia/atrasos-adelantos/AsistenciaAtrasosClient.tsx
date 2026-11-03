@@ -4,7 +4,8 @@ import React, { useState, useTransition } from 'react'
 import {
     AsistenciaAtrasosRegistroDTO,
     getAsistenciaAtrasosAction,
-    actualizarGestionAtrasoAction
+    actualizarGestionAtrasoAction,
+    guardarGestionAtrasoConArchivoAction
 } from './actions'
 import {
     Clock,
@@ -28,7 +29,11 @@ import {
     ArrowDown,
     Lock,
     LogIn,
-    LogOut
+    LogOut,
+    Paperclip,
+    FileText,
+    Trash2,
+    Upload
 } from 'lucide-react'
 
 interface InitialData {
@@ -85,19 +90,23 @@ export default function AsistenciaAtrasosClient({
     const [sortBy, setSortBy] = useState('fecha')
     const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc')
 
-    // Modal de edición de justificación y observación
+    // Modal de edición de justificación, archivo y observación
     const [modalEdit, setModalEdit] = useState<{
         isOpen: boolean
         registro: AsistenciaAtrasosRegistroDTO | null
         aplicaDescuento: boolean
         justificado: string
         observacion: string
+        archivoNuevo: File | null
+        eliminarArchivo: boolean
     }>({
         isOpen: false,
         registro: null,
         aplicaDescuento: false,
         justificado: '',
-        observacion: ''
+        observacion: '',
+        archivoNuevo: null,
+        eliminarArchivo: false
     })
 
     // Feedback visual de guardado por registro
@@ -214,13 +223,15 @@ export default function AsistenciaAtrasosClient({
             return
         }
 
-        if (!isAdmin && registro.aplicaModificadoPor) {
-            alert(`Este registro ya fue modificado previamente por ${registro.aplicaModificadoPor} y se encuentra bloqueado. Para corregir o rectificar el estado, debe solicitarlo a través del módulo de Administración.`)
+        const currentCount = Number(registro.modificacionesCount || (registro.aplicaModificadoPor ? 1 : 0))
+        if (!isAdmin && currentCount >= 3) {
+            alert(`Este registro ya fue modificado 3 veces (${currentCount}/3) y se encuentra bloqueado. Para corregir o rectificar el estado, debe solicitarlo a través del módulo de Administración.`)
             return
         }
 
         const nuevoValor = !registro.aplicaDescuento
         const diff = nuevoValor ? 1 : -1
+        const nuevoCount = currentCount + 1
 
         // Optimistic update en la grilla y en el contador de la tarjeta KPI
         setData(prev => ({
@@ -229,7 +240,8 @@ export default function AsistenciaAtrasosClient({
                 ...r,
                 aplicaDescuento: nuevoValor,
                 aplicaModificadoPor: r.aplicaModificadoPor || 'Tú',
-                aplicaModificadoAt: new Date().toISOString()
+                aplicaModificadoAt: new Date().toISOString(),
+                modificacionesCount: nuevoCount
             } : r),
             resumen: prev.resumen ? {
                 ...prev.resumen,
@@ -247,15 +259,14 @@ export default function AsistenciaAtrasosClient({
             )
 
             if (res.success) {
-                if (res.aplicaModificadoPor) {
-                    setData(prev => ({
-                        ...prev,
-                        data: prev.data.map(r => r.id === registro.id ? {
-                            ...r,
-                            aplicaModificadoPor: res.aplicaModificadoPor || r.aplicaModificadoPor
-                        } : r)
-                    }))
-                }
+                setData(prev => ({
+                    ...prev,
+                    data: prev.data.map(r => r.id === registro.id ? {
+                        ...r,
+                        aplicaModificadoPor: res.aplicaModificadoPor || r.aplicaModificadoPor,
+                        modificacionesCount: res.modificacionesCount ?? nuevoCount
+                    } : r)
+                }))
                 setGuardadoStatus(prev => ({ ...prev, [registro.id]: true }))
                 setTimeout(() => {
                     setGuardadoStatus(prev => {
@@ -268,7 +279,11 @@ export default function AsistenciaAtrasosClient({
                 // Revertir optimismo en caso de error
                 setData(prev => ({
                     ...prev,
-                    data: prev.data.map(r => r.id === registro.id ? { ...r, aplicaDescuento: registro.aplicaDescuento } : r),
+                    data: prev.data.map(r => r.id === registro.id ? {
+                        ...r,
+                        aplicaDescuento: registro.aplicaDescuento,
+                        modificacionesCount: currentCount
+                    } : r),
                     resumen: prev.resumen ? {
                         ...prev.resumen,
                         totalAplicaDescuento: Math.max(0, (prev.resumen.totalAplicaDescuento ?? 0) - diff)
@@ -279,7 +294,11 @@ export default function AsistenciaAtrasosClient({
         } catch (err: any) {
             setData(prev => ({
                 ...prev,
-                data: prev.data.map(r => r.id === registro.id ? { ...r, aplicaDescuento: registro.aplicaDescuento } : r),
+                data: prev.data.map(r => r.id === registro.id ? {
+                    ...r,
+                    aplicaDescuento: registro.aplicaDescuento,
+                    modificacionesCount: currentCount
+                } : r),
                 resumen: prev.resumen ? {
                     ...prev.resumen,
                     totalAplicaDescuento: Math.max(0, (prev.resumen.totalAplicaDescuento ?? 0) - diff)
@@ -296,18 +315,26 @@ export default function AsistenciaAtrasosClient({
         e.preventDefault()
         if (!modalEdit.registro) return
 
-        if (!isAdmin && modalEdit.registro.aplicaModificadoPor) {
-            alert(`Este registro ya fue modificado previamente por ${modalEdit.registro.aplicaModificadoPor} y se encuentra bloqueado. Para corregir o rectificar, debe ser gestionado desde el módulo de Administración.`)
+        const currentCount = Number(modalEdit.registro.modificacionesCount || (modalEdit.registro.aplicaModificadoPor ? 1 : 0))
+        if (!isAdmin && currentCount >= 3) {
+            alert(`Este registro ya fue modificado 3 veces (${currentCount}/3) y se encuentra bloqueado. Para corregir o rectificar, debe ser gestionado desde el módulo de Administración.`)
             return
         }
 
         startTransition(async () => {
-            const res = await actualizarGestionAtrasoAction(
-                modalEdit.registro!.id,
-                modalEdit.aplicaDescuento,
-                modalEdit.justificado.trim(),
-                modalEdit.observacion.trim()
-            )
+            const formData = new FormData()
+            formData.append('registroId', modalEdit.registro!.id)
+            formData.append('aplicaDescuento', String(modalEdit.aplicaDescuento))
+            formData.append('justificado', modalEdit.justificado.trim())
+            formData.append('observacion', modalEdit.observacion.trim())
+            if (modalEdit.archivoNuevo) {
+                formData.append('file', modalEdit.archivoNuevo)
+            }
+            if (modalEdit.eliminarArchivo) {
+                formData.append('eliminarArchivo', 'true')
+            }
+
+            const res = await guardarGestionAtrasoConArchivoAction(formData)
 
             if (res.success) {
                 setData(prev => ({
@@ -317,14 +344,29 @@ export default function AsistenciaAtrasosClient({
                             ? {
                                 ...r,
                                 aplicaDescuento: modalEdit.aplicaDescuento,
-                                justificado: modalEdit.justificado.trim() || null,
-                                observacion: modalEdit.observacion.trim() || null
+                                justificado: res.justificado !== undefined ? res.justificado : (modalEdit.justificado.trim() || null),
+                                observacion: res.observacion !== undefined ? res.observacion : (modalEdit.observacion.trim() || null),
+                                aplicaModificadoPor: res.aplicaModificadoPor || r.aplicaModificadoPor,
+                                aplicaModificadoAt: res.aplicaModificadoAt || r.aplicaModificadoAt,
+                                modificacionesCount: res.modificacionesCount ?? (currentCount + 1),
+                                documentoUrl: res.documentoUrl !== undefined ? res.documentoUrl : r.documentoUrl,
+                                documentoNombre: res.documentoNombre !== undefined ? res.documentoNombre : r.documentoNombre,
+                                documentoSubidoAt: res.documentoSubidoAt !== undefined ? res.documentoSubidoAt : r.documentoSubidoAt,
+                                documentoSubidoPor: res.documentoSubidoPor !== undefined ? res.documentoSubidoPor : r.documentoSubidoPor
                             }
                             : r
                     )
                 }))
                 setGuardadoStatus(prev => ({ ...prev, [modalEdit.registro!.id]: true }))
-                setModalEdit({ isOpen: false, registro: null, aplicaDescuento: false, justificado: '', observacion: '' })
+                setModalEdit({
+                    isOpen: false,
+                    registro: null,
+                    aplicaDescuento: false,
+                    justificado: '',
+                    observacion: '',
+                    archivoNuevo: null,
+                    eliminarArchivo: false
+                })
                 setMensajeFeedback({ tipo: 'success', texto: 'Gestión guardada correctamente.' })
                 setTimeout(() => setMensajeFeedback(null), 3000)
             } else {
@@ -638,23 +680,23 @@ export default function AsistenciaAtrasosClient({
             {/* Tabla de Registros */}
             <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
                 <div className="overflow-x-auto">
-                    <table className="w-full text-left text-xs">
+                    <table className="w-full text-left text-[11px]">
                         <thead>
-                            <tr className="bg-gray-50/80 border-b border-gray-200 text-gray-600 font-semibold uppercase tracking-wider text-[11px]">
-                                <th className="py-3 px-3 cursor-pointer hover:bg-gray-100 transition-colors" onClick={() => handleSort('fecha')}>
+                            <tr className="bg-gray-50/80 border-b border-gray-200 text-gray-600 font-semibold uppercase tracking-wider text-[10.5px]">
+                                <th className="py-2 px-2.5 cursor-pointer hover:bg-gray-100 transition-colors" onClick={() => handleSort('fecha')}>
                                     <div className="flex items-center gap-1">
                                         <span>Fecha</span>
                                         {sortBy === 'fecha' ? (sortDir === 'asc' ? <ArrowUp className="w-3 h-3 text-cyan-600" /> : <ArrowDown className="w-3 h-3 text-cyan-600" />) : <ArrowUpDown className="w-3 h-3 text-gray-400" />}
                                     </div>
                                 </th>
-                                <th className="py-3 px-3">RUT Colaborador</th>
-                                <th className="py-3 px-3 cursor-pointer hover:bg-gray-100 transition-colors" onClick={() => handleSort('nombreCompleto')}>
+                                <th className="py-2 px-2.5">RUT Colaborador</th>
+                                <th className="py-2 px-2.5 cursor-pointer hover:bg-gray-100 transition-colors" onClick={() => handleSort('nombreCompleto')}>
                                     <div className="flex items-center gap-1">
                                         <span>Colaborador</span>
                                         {sortBy === 'nombreCompleto' ? (sortDir === 'asc' ? <ArrowUp className="w-3 h-3 text-cyan-600" /> : <ArrowDown className="w-3 h-3 text-cyan-600" />) : <ArrowUpDown className="w-3 h-3 text-gray-400" />}
                                     </div>
                                 </th>
-                                <th className="py-3 px-3 cursor-pointer hover:bg-gray-100 transition-colors" onClick={() => handleSort('rbd')}>
+                                <th className="py-2 px-2.5 cursor-pointer hover:bg-gray-100 transition-colors" onClick={() => handleSort('rbd')}>
                                     <div className="flex items-center gap-1">
                                         <span>RBD / Establecimiento</span>
                                         {sortBy === 'rbd' ? (sortDir === 'asc' ? <ArrowUp className="w-3 h-3 text-cyan-600" /> : <ArrowDown className="w-3 h-3 text-cyan-600" />) : <ArrowUpDown className="w-3 h-3 text-gray-400" />}
@@ -662,8 +704,8 @@ export default function AsistenciaAtrasosClient({
                                 </th>
                                 {tipoActivo === 'ADELANTO' ? (
                                     <>
-                                        <th className="py-3 px-3">Fin Turno / Salida Real</th>
-                                        <th className="py-3 px-3 text-center cursor-pointer hover:bg-gray-100 transition-colors" onClick={() => handleSort('minutosAdelanto')}>
+                                        <th className="py-2 px-2.5">Fin Turno / Salida</th>
+                                        <th className="py-2 px-2.5 text-center cursor-pointer hover:bg-gray-100 transition-colors" onClick={() => handleSort('minutosAdelanto')}>
                                             <div className="flex items-center justify-center gap-1">
                                                 <span>Adelanto</span>
                                                 {sortBy === 'minutosAdelanto' ? (sortDir === 'asc' ? <ArrowUp className="w-3 h-3 text-cyan-600" /> : <ArrowDown className="w-3 h-3 text-cyan-600" />) : <ArrowUpDown className="w-3 h-3 text-gray-400" />}
@@ -672,9 +714,9 @@ export default function AsistenciaAtrasosClient({
                                     </>
                                 ) : (
                                     <>
-                                        <th className="py-3 px-3">Turno / Llegada Real</th>
-                                        <th className="py-3 px-3 text-center">Holgura</th>
-                                        <th className="py-3 px-3 text-center cursor-pointer hover:bg-gray-100 transition-colors" onClick={() => handleSort('minutosAtraso')}>
+                                        <th className="py-2 px-2.5">Turno / Llegada</th>
+                                        <th className="py-2 px-2.5 text-center">Holgura</th>
+                                        <th className="py-2 px-2.5 text-center cursor-pointer hover:bg-gray-100 transition-colors" onClick={() => handleSort('minutosAtraso')}>
                                             <div className="flex items-center justify-center gap-1">
                                                 <span>Atraso</span>
                                                 {sortBy === 'minutosAtraso' ? (sortDir === 'asc' ? <ArrowUp className="w-3 h-3 text-cyan-600" /> : <ArrowDown className="w-3 h-3 text-cyan-600" />) : <ArrowUpDown className="w-3 h-3 text-gray-400" />}
@@ -682,9 +724,9 @@ export default function AsistenciaAtrasosClient({
                                         </th>
                                     </>
                                 )}
-                                <th className="py-3 px-3 text-center">¿Aplica Descuento?</th>
-                                <th className="py-3 px-3">Justificación y Obs.</th>
-                                <th className="py-3 px-3 text-center">Gestión</th>
+                                <th className="py-2 px-2.5 text-center">¿Aplica Descuento?</th>
+                                <th className="py-2 px-2.5">Justificación y Obs.</th>
+                                <th className="py-2 px-2.5 text-center">Gestión</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100 text-gray-700">
@@ -693,183 +735,204 @@ export default function AsistenciaAtrasosClient({
                                     <td colSpan={tipoActivo === 'ADELANTO' ? 9 : 10} className="py-12 text-center text-gray-400">
                                         <Timer className="w-10 h-10 mx-auto mb-2 text-gray-300" />
                                         <p className="font-medium text-gray-600">
-                                            No se encontraron {tipoActivo === 'ADELANTO' ? 'adelantos ni salidas anticipadas' : 'atrasos ni entradas tardías'}
+                                             No se encontraron {tipoActivo === 'ADELANTO' ? 'adelantos ni salidas anticipadas' : 'atrasos ni entradas tardías'}
                                         </p>
                                         <p className="text-xs text-gray-400 mt-0.5">No hay registros abiertos para los filtros o colegios seleccionados.</p>
                                     </td>
                                 </tr>
                             ) : (
-                                data.data.map(r => (
-                                    <tr key={r.id} className="hover:bg-gray-50/70 transition-colors">
-                                        <td className="py-2.5 px-3 font-medium text-gray-900 whitespace-nowrap">
-                                            {r.fecha}
-                                        </td>
-                                        <td className="py-2.5 px-3 whitespace-nowrap">
-                                            <span className="font-mono text-gray-600">{r.rut}</span>
-                                        </td>
-                                        <td className="py-2.5 px-3">
-                                            <div className="font-semibold text-gray-900">{r.nombreCompleto}</div>
-                                            {r.cargo && <div className="text-[11px] text-gray-400 truncate max-w-xs">{r.cargo}</div>}
-                                        </td>
-                                        <td className="py-2.5 px-3">
-                                            <div className="font-medium text-gray-900">
-                                                {r.rbd ? `RBD ${r.rbd}` : '-'}
-                                            </div>
-                                            <div className="text-[11px] text-gray-500 truncate max-w-xs" title={r.establecimiento || ''}>
-                                                {r.establecimiento || 'Sin Nombre'}
-                                            </div>
-                                        </td>
-                                        {tipoActivo === 'ADELANTO' ? (
-                                            <>
-                                                <td className="py-2.5 px-3 text-xs">
-                                                    <div className="text-gray-900 font-medium">Fin: {r.horaFinTurno || r.salioTurno || r.turno || '-'}</div>
-                                                    <div className="text-[11px] text-gray-500">Salida: {r.horaSalida || r.salio || '-'}</div>
-                                                </td>
-                                                <td className="py-2.5 px-3 text-center whitespace-nowrap">
-                                                    {r.minutosAdelanto > 0 ? (
-                                                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200">
-                                                            {r.minutosAdelanto} min
-                                                        </span>
-                                                    ) : (
-                                                        <span className="text-gray-400">-</span>
-                                                    )}
-                                                    {r.minutosJustificados > 0 && (
-                                                        <span className="block text-[10px] text-emerald-600 font-semibold mt-0.5" title="Minutos justificados">
-                                                            ✓ {r.minutosJustificados}m just.
-                                                        </span>
-                                                    )}
-                                                </td>
-                                            </>
-                                        ) : (
-                                            <>
-                                                <td className="py-2.5 px-3 text-xs">
-                                                    <div className="text-gray-900 font-medium">Turno: {r.horaInicioTurno || r.turno || '-'}</div>
-                                                    <div className="text-[11px] text-gray-500">Llegada: {r.horaLlegada || r.entro || '-'}</div>
-                                                </td>
-                                                <td className="py-2.5 px-3 text-center whitespace-nowrap">
-                                                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-gray-100 text-gray-700">
-                                                        {r.holguraMin ?? 0}m
-                                                    </span>
-                                                </td>
-                                                <td className="py-2.5 px-3 text-center whitespace-nowrap">
-                                                    {r.minutosAtraso > 0 ? (
-                                                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-rose-50 text-rose-700 border border-rose-200">
-                                                            {r.minutosAtraso} min
-                                                        </span>
-                                                    ) : (
-                                                        <span className="text-gray-400">-</span>
-                                                    )}
-                                                    {r.minutosJustificados > 0 && (
-                                                        <span className="block text-[10px] text-emerald-600 font-semibold mt-0.5" title="Minutos justificados">
-                                                            ✓ {r.minutosJustificados}m just.
-                                                        </span>
-                                                    )}
-                                                </td>
-                                            </>
-                                        )}
-                                        <td className="py-2.5 px-3 text-center whitespace-nowrap min-w-[110px]">
-                                            {(() => {
-                                                const isBloqueado = (!isAdmin && Boolean(r.aplicaModificadoPor)) || r.estado === 'CERRADO'
-                                                return (
-                                                    <div className="flex flex-col items-center justify-center gap-0.5 py-0.5">
-                                                        <button
-                                                            type="button"
-                                                            role="switch"
-                                                            aria-checked={r.aplicaDescuento}
-                                                            disabled={isBloqueado || togglingId === r.id}
-                                                            onClick={() => handleToggleAplica(r)}
-                                                            className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-1 select-none ${
-                                                                r.aplicaDescuento ? 'bg-rose-600' : 'bg-slate-300 hover:bg-slate-400'
-                                                            } ${isBloqueado ? 'opacity-40 cursor-not-allowed' : ''} ${togglingId === r.id ? 'opacity-70 cursor-wait' : ''}`}
-                                                            title={
-                                                                r.estado === 'CERRADO'
-                                                                    ? 'Período cerrado (solo lectura)'
-                                                                    : !isAdmin && r.aplicaModificadoPor
-                                                                    ? `Registro bloqueado: Modificado por ${r.aplicaModificadoPor}. Solo un administrador puede corregirlo.`
-                                                                    : r.aplicaDescuento
-                                                                    ? 'Descuento activo: Clic o toca para cambiar a NO APLICA'
-                                                                    : 'Sin descuento: Clic o toca para cambiar a APLICA'
-                                                            }
-                                                        >
-                                                            <span className="sr-only">Alternar descuento</span>
-                                                            <span
-                                                                aria-hidden="true"
-                                                                className={`pointer-events-none inline-flex h-5 w-5 transform items-center justify-center rounded-full bg-white shadow-md ring-0 transition duration-200 ease-in-out ${
-                                                                    r.aplicaDescuento ? 'translate-x-5' : 'translate-x-0'
-                                                                }`}
-                                                            >
-                                                                {togglingId === r.id ? (
-                                                                    <RefreshCw className="w-2.5 h-2.5 text-gray-500 animate-spin" />
-                                                                ) : r.aplicaDescuento ? (
-                                                                    <span className="w-1.5 h-1.5 rounded-full bg-rose-600" />
-                                                                ) : (
-                                                                    <span className="w-1.5 h-1.5 rounded-full bg-slate-400" />
-                                                                )}
-                                                            </span>
-                                                        </button>
-                                                        <span className={`text-[10px] font-bold tracking-tight select-none mt-0.5 ${
-                                                            r.aplicaDescuento ? 'text-rose-700' : 'text-slate-500'
-                                                        }`}>
-                                                            {r.aplicaDescuento ? 'APLICA' : 'NO APLICA'}
-                                                        </span>
-                                                        {!isAdmin && r.aplicaModificadoPor && (
-                                                            <span
-                                                                className="inline-flex items-center gap-1 text-[9px] font-bold text-amber-700 bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded-md mt-0.5 select-none"
-                                                                title={`Modificado por ${r.aplicaModificadoPor}. Solo Administración puede cambiarlo.`}
-                                                            >
-                                                                <Lock className="w-2.5 h-2.5 text-amber-600 flex-shrink-0" />
-                                                                <span>Bloqueado</span>
-                                                            </span>
-                                                        )}
-                                                        {guardadoStatus[r.id] && (
-                                                            <span className="text-[9px] font-semibold text-emerald-600 flex items-center gap-0.5 animate-pulse">
-                                                                ✓ Guardado
-                                                            </span>
-                                                        )}
-                                                    </div>
-                                                )
-                                            })()}
-                                        </td>
-                                        <td className="py-2.5 px-3">
-                                            <div className="font-medium text-gray-900 truncate max-w-xs" title={r.justificado || ''}>
-                                                {r.justificado || <span className="text-gray-400 italic">Sin justificación</span>}
-                                            </div>
-                                            {r.observacion && (
-                                                <div className="text-[10px] text-gray-500 truncate max-w-xs" title={r.observacion}>
-                                                    Obs: {r.observacion}
+                                data.data.map(r => {
+                                    const modCount = Number(r.modificacionesCount ?? (r.aplicaModificadoPor ? 1 : 0))
+                                    const isBloqueado = (!isAdmin && modCount >= 3) || r.estado === 'CERRADO'
+
+                                    return (
+                                        <tr key={r.id} className="hover:bg-gray-50/70 transition-colors">
+                                            <td className="py-2 px-2.5 font-medium text-gray-900 whitespace-nowrap">
+                                                {r.fecha}
+                                            </td>
+                                            <td className="py-2 px-2.5 whitespace-nowrap">
+                                                <span className="font-mono text-gray-600">{r.rut}</span>
+                                            </td>
+                                            <td className="py-2 px-2.5">
+                                                <div className="font-semibold text-gray-900 truncate max-w-[140px]">{r.nombreCompleto}</div>
+                                                {r.cargo && <div className="text-[10px] text-gray-400 truncate max-w-[140px]">{r.cargo}</div>}
+                                            </td>
+                                            <td className="py-2 px-2.5">
+                                                <div className="font-medium text-gray-900">
+                                                    {r.rbd ? `RBD ${r.rbd}` : '-'}
                                                 </div>
-                                            )}
-                                        </td>
-                                        <td className="py-2.5 px-3 text-center whitespace-nowrap">
-                                            {(!isAdmin && Boolean(r.aplicaModificadoPor)) || r.estado === 'CERRADO' ? (
-                                                <span
-                                                    className="inline-flex p-1.5 rounded-lg text-amber-700 bg-amber-50 border border-amber-200 cursor-not-allowed"
-                                                    title={
-                                                        r.estado === 'CERRADO'
-                                                            ? 'Período cerrado (solo lectura)'
-                                                            : `Registro bloqueado tras ser gestionado por ${r.aplicaModificadoPor}. Solo un administrador puede modificarlo.`
-                                                    }
-                                                >
-                                                    <Lock className="w-4 h-4 text-amber-600" />
-                                                </span>
+                                                <div className="text-[10px] text-gray-500 truncate max-w-[140px]" title={r.establecimiento || ''}>
+                                                    {r.establecimiento || 'Sin Nombre'}
+                                                </div>
+                                            </td>
+                                            {tipoActivo === 'ADELANTO' ? (
+                                                <>
+                                                    <td className="py-2 px-2.5 text-[10.5px]">
+                                                        <div className="text-gray-900 font-medium">Fin: {r.horaFinTurno || r.salioTurno || r.turno || '-'}</div>
+                                                        <div className="text-[10px] text-gray-500">Salida: {r.horaSalida || r.salio || '-'}</div>
+                                                    </td>
+                                                    <td className="py-2 px-2.5 text-center whitespace-nowrap">
+                                                        {r.minutosAdelanto > 0 ? (
+                                                            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10.5px] font-bold bg-amber-50 text-amber-700 border border-amber-200">
+                                                                {r.minutosAdelanto} min
+                                                            </span>
+                                                        ) : (
+                                                            <span className="text-gray-400">-</span>
+                                                        )}
+                                                        {r.minutosJustificados > 0 && (
+                                                            <span className="block text-[9.5px] text-emerald-600 font-semibold mt-0.5" title="Minutos justificados">
+                                                                ✓ {r.minutosJustificados}m just.
+                                                            </span>
+                                                        )}
+                                                    </td>
+                                                </>
                                             ) : (
-                                                <button
-                                                    onClick={() => setModalEdit({
-                                                        isOpen: true,
-                                                        registro: r,
-                                                        aplicaDescuento: r.aplicaDescuento,
-                                                        justificado: r.justificado || '',
-                                                        observacion: r.observacion || ''
-                                                    })}
-                                                    className="p-1.5 hover:bg-gray-100 rounded-lg text-gray-500 hover:text-cyan-700 transition-colors"
-                                                    title="Editar justificación y descuento"
-                                                >
-                                                    <Edit3 className="w-4 h-4" />
-                                                </button>
+                                                <>
+                                                    <td className="py-2 px-2.5 text-[10.5px]">
+                                                        <div className="text-gray-900 font-medium">Turno: {r.horaInicioTurno || r.turno || '-'}</div>
+                                                        <div className="text-[10px] text-gray-500">Llegada: {r.horaLlegada || r.entro || '-'}</div>
+                                                    </td>
+                                                    <td className="py-2 px-2.5 text-center whitespace-nowrap">
+                                                        <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[10.5px] font-medium bg-gray-100 text-gray-700">
+                                                            {r.holguraMin ?? 0}m
+                                                        </span>
+                                                    </td>
+                                                    <td className="py-2 px-2.5 text-center whitespace-nowrap">
+                                                        {r.minutosAtraso > 0 ? (
+                                                            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10.5px] font-bold bg-rose-50 text-rose-700 border border-rose-200">
+                                                                {r.minutosAtraso} min
+                                                            </span>
+                                                        ) : (
+                                                            <span className="text-gray-400">-</span>
+                                                        )}
+                                                        {r.minutosJustificados > 0 && (
+                                                            <span className="block text-[9.5px] text-emerald-600 font-semibold mt-0.5" title="Minutos justificados">
+                                                                ✓ {r.minutosJustificados}m just.
+                                                            </span>
+                                                        )}
+                                                    </td>
+                                                </>
                                             )}
-                                        </td>
-                                    </tr>
-                                ))
+                                            <td className="py-2 px-2.5 text-center whitespace-nowrap min-w-[100px]">
+                                                <div className="flex flex-col items-center justify-center gap-0.5 py-0.5">
+                                                    <button
+                                                        type="button"
+                                                        role="switch"
+                                                        aria-checked={r.aplicaDescuento}
+                                                        disabled={isBloqueado || togglingId === r.id}
+                                                        onClick={() => handleToggleAplica(r)}
+                                                        className={`relative inline-flex h-5 w-10 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-1 select-none ${
+                                                            r.aplicaDescuento ? 'bg-rose-600' : 'bg-slate-300 hover:bg-slate-400'
+                                                        } ${isBloqueado ? 'opacity-40 cursor-not-allowed' : ''} ${togglingId === r.id ? 'opacity-70 cursor-wait' : ''}`}
+                                                        title={
+                                                            r.estado === 'CERRADO'
+                                                                ? 'Período cerrado (solo lectura)'
+                                                                : !isAdmin && modCount >= 3
+                                                                ? `Registro bloqueado tras alcanzar el límite de 3 justificaciones (${modCount}/3). Solo un administrador puede corregirlo.`
+                                                                : r.aplicaDescuento
+                                                                ? 'Descuento activo: Clic o toca para cambiar a NO APLICA'
+                                                                : 'Sin descuento: Clic o toca para cambiar a APLICA'
+                                                        }
+                                                    >
+                                                        <span className="sr-only">Alternar descuento</span>
+                                                        <span
+                                                            aria-hidden="true"
+                                                            className={`pointer-events-none inline-flex h-4 w-4 transform items-center justify-center rounded-full bg-white shadow-md ring-0 transition duration-200 ease-in-out ${
+                                                                r.aplicaDescuento ? 'translate-x-5' : 'translate-x-0'
+                                                            }`}
+                                                        >
+                                                            {togglingId === r.id ? (
+                                                                <RefreshCw className="w-2.5 h-2.5 text-gray-500 animate-spin" />
+                                                            ) : r.aplicaDescuento ? (
+                                                                <span className="w-1.5 h-1.5 rounded-full bg-rose-600" />
+                                                            ) : (
+                                                                <span className="w-1.5 h-1.5 rounded-full bg-slate-400" />
+                                                            )}
+                                                        </span>
+                                                    </button>
+                                                    <span className={`text-[9.5px] font-bold tracking-tight select-none mt-0.5 ${
+                                                        r.aplicaDescuento ? 'text-rose-700' : 'text-slate-500'
+                                                    }`}>
+                                                        {r.aplicaDescuento ? 'APLICA' : 'NO APLICA'}
+                                                    </span>
+                                                    {!isAdmin && modCount >= 3 ? (
+                                                        <span
+                                                            className="inline-flex items-center gap-1 text-[9px] font-bold text-amber-700 bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded-md mt-0.5 select-none"
+                                                            title={`Bloqueado tras 3 justificaciones (${modCount}/3). Solo un administrador puede corregirlo.`}
+                                                        >
+                                                            <Lock className="w-2.5 h-2.5 text-amber-600 flex-shrink-0" />
+                                                            <span>Bloqueado (3/3)</span>
+                                                        </span>
+                                                    ) : !isAdmin && modCount > 0 ? (
+                                                        <span
+                                                            className="inline-flex items-center gap-1 text-[9px] font-medium text-slate-600 bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded-md mt-0.5 select-none"
+                                                            title={`Justificado ${modCount} de 3 veces permitidas`}
+                                                        >
+                                                            <span>{modCount}/3 justif.</span>
+                                                        </span>
+                                                    ) : null}
+                                                    {guardadoStatus[r.id] && (
+                                                        <span className="text-[9px] font-semibold text-emerald-600 flex items-center gap-0.5 animate-pulse">
+                                                            ✓ Guardado
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </td>
+                                            <td className="py-2 px-2.5">
+                                                <div className="font-medium text-gray-900 truncate max-w-[160px]" title={r.justificado || ''}>
+                                                    {r.justificado || <span className="text-gray-400 italic">Sin justificación</span>}
+                                                </div>
+                                                {r.observacion && (
+                                                    <div className="text-[10px] text-gray-500 truncate max-w-[160px]" title={r.observacion}>
+                                                        Obs: {r.observacion}
+                                                    </div>
+                                                )}
+                                                {r.documentoUrl && (
+                                                    <a
+                                                        href={r.documentoUrl}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="inline-flex items-center gap-1 text-[9.5px] font-bold text-cyan-800 bg-cyan-50 border border-cyan-200 px-1.5 py-0.5 rounded hover:bg-cyan-100 transition-colors mt-0.5"
+                                                        title={r.documentoNombre || 'Ver documento adjunto'}
+                                                    >
+                                                        <Paperclip className="w-3 h-3 text-cyan-600 flex-shrink-0" />
+                                                        <span className="truncate max-w-[120px]">{r.documentoNombre || 'Respaldo'}</span>
+                                                    </a>
+                                                )}
+                                            </td>
+                                            <td className="py-2 px-2.5 text-center whitespace-nowrap">
+                                                {isBloqueado ? (
+                                                    <span
+                                                        className="inline-flex p-1.5 rounded-lg text-amber-700 bg-amber-50 border border-amber-200 cursor-not-allowed"
+                                                        title={
+                                                            r.estado === 'CERRADO'
+                                                                ? 'Período cerrado (solo lectura)'
+                                                                : `Registro bloqueado tras alcanzar el límite de 3 justificaciones (${modCount}/3). Solo un administrador puede modificarlo.`
+                                                        }
+                                                    >
+                                                        <Lock className="w-3.5 h-3.5 text-amber-600" />
+                                                    </span>
+                                                ) : (
+                                                    <button
+                                                        onClick={() => setModalEdit({
+                                                            isOpen: true,
+                                                            registro: r,
+                                                            aplicaDescuento: r.aplicaDescuento,
+                                                            justificado: r.justificado || '',
+                                                            observacion: r.observacion || '',
+                                                            archivoNuevo: null,
+                                                            eliminarArchivo: false
+                                                        })}
+                                                        className="p-1.5 hover:bg-gray-100 rounded-lg text-gray-500 hover:text-cyan-700 transition-colors"
+                                                        title="Editar justificación y descuento"
+                                                    >
+                                                        <Edit3 className="w-3.5 h-3.5" />
+                                                    </button>
+                                                )}
+                                            </td>
+                                        </tr>
+                                    )
+                                })
                             )}
                         </tbody>
                     </table>
@@ -905,10 +968,10 @@ export default function AsistenciaAtrasosClient({
                 </div>
             </div>
 
-            {/* Modal de Edición de Justificación */}
+            {/* Modal de Edición de Justificación y Adjunto */}
             {modalEdit.isOpen && modalEdit.registro && (
                 <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-fadeIn">
-                    <div className="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-gray-100 space-y-4">
+                    <div className="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-gray-100 space-y-4 max-h-[90vh] overflow-y-auto">
                         <div className="flex items-center justify-between border-b border-gray-100 pb-3">
                             <div className="flex items-center gap-2.5">
                                 <div className="p-2 bg-cyan-50 rounded-xl text-cyan-600">
@@ -920,7 +983,15 @@ export default function AsistenciaAtrasosClient({
                                 </div>
                             </div>
                             <button
-                                onClick={() => setModalEdit({ isOpen: false, registro: null, aplicaDescuento: false, justificado: '', observacion: '' })}
+                                onClick={() => setModalEdit({
+                                    isOpen: false,
+                                    registro: null,
+                                    aplicaDescuento: false,
+                                    justificado: '',
+                                    observacion: '',
+                                    archivoNuevo: null,
+                                    eliminarArchivo: false
+                                })}
                                 className="p-1.5 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100"
                             >
                                 <X className="w-5 h-5" />
@@ -1009,6 +1080,104 @@ export default function AsistenciaAtrasosClient({
                                 />
                             </div>
 
+                            {/* Adjuntar Documento de Respaldo (Opcional, especial para Adelanto) */}
+                            <div>
+                                <label className="block font-semibold text-gray-700 mb-1 flex items-center justify-between">
+                                    <span className="flex items-center gap-1.5">
+                                        <Paperclip className="w-3.5 h-3.5 text-cyan-600" />
+                                        <span>Documento de Respaldo <span className="text-gray-400 font-normal">(Opcional)</span></span>
+                                    </span>
+                                    {modalEdit.registro.documentoUrl && !modalEdit.eliminarArchivo && (
+                                        <span className="text-[10.5px] text-emerald-600 font-semibold">1 archivo adjunto</span>
+                                    )}
+                                </label>
+
+                                {/* Archivo previo adjunto */}
+                                {modalEdit.registro.documentoUrl && !modalEdit.eliminarArchivo && !modalEdit.archivoNuevo && (
+                                    <div className="flex items-center justify-between p-2.5 bg-cyan-50/70 border border-cyan-200 rounded-xl mb-2">
+                                        <a
+                                            href={modalEdit.registro.documentoUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-center gap-2 text-cyan-800 hover:text-cyan-900 font-medium truncate max-w-[260px]"
+                                            title="Ver archivo actual"
+                                        >
+                                            <FileText className="w-4 h-4 text-cyan-600 flex-shrink-0" />
+                                            <span className="truncate">{modalEdit.registro.documentoNombre || 'Documento adjunto'}</span>
+                                        </a>
+                                        <button
+                                            type="button"
+                                            onClick={() => setModalEdit(prev => ({ ...prev, eliminarArchivo: true }))}
+                                            className="p-1 text-rose-500 hover:text-rose-700 hover:bg-rose-50 rounded-lg transition-colors"
+                                            title="Quitar este documento"
+                                        >
+                                            <Trash2 className="w-3.5 h-3.5" />
+                                        </button>
+                                    </div>
+                                )}
+
+                                {/* Aviso de eliminación de archivo */}
+                                {modalEdit.eliminarArchivo && !modalEdit.archivoNuevo && (
+                                    <div className="flex items-center justify-between p-2 bg-amber-50 border border-amber-200 rounded-xl mb-2 text-amber-800 text-[11px]">
+                                        <span>Se eliminará el documento actual al guardar.</span>
+                                        <button
+                                            type="button"
+                                            onClick={() => setModalEdit(prev => ({ ...prev, eliminarArchivo: false }))}
+                                            className="text-cyan-700 underline font-semibold hover:text-cyan-900 ml-2"
+                                        >
+                                            Deshacer
+                                        </button>
+                                    </div>
+                                )}
+
+                                {/* Input para nuevo archivo */}
+                                <div>
+                                    <input
+                                        type="file"
+                                        id="adelanto-file-input"
+                                        accept=".pdf,.png,.jpg,.jpeg,.doc,.docx"
+                                        onChange={e => {
+                                            const f = e.target.files?.[0] || null
+                                            setModalEdit(prev => ({
+                                                ...prev,
+                                                archivoNuevo: f,
+                                                eliminarArchivo: f ? false : prev.eliminarArchivo
+                                            }))
+                                        }}
+                                        className="hidden"
+                                    />
+                                    {modalEdit.archivoNuevo ? (
+                                        <div className="flex items-center justify-between p-2.5 bg-emerald-50/80 border border-emerald-200 rounded-xl">
+                                            <div className="flex items-center gap-2 truncate max-w-[260px]">
+                                                <FileText className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                                                <span className="text-emerald-900 font-medium truncate">{modalEdit.archivoNuevo.name}</span>
+                                                <span className="text-emerald-600 text-[10px]">({(modalEdit.archivoNuevo.size / 1024).toFixed(0)} KB)</span>
+                                            </div>
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    setModalEdit(prev => ({ ...prev, archivoNuevo: null }))
+                                                    const inputEl = document.getElementById('adelanto-file-input') as HTMLInputElement
+                                                    if (inputEl) inputEl.value = ''
+                                                }}
+                                                className="p-1 text-gray-400 hover:text-rose-600 rounded-lg hover:bg-rose-50"
+                                                title="Remover selección"
+                                            >
+                                                <X className="w-4 h-4" />
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <label
+                                            htmlFor="adelanto-file-input"
+                                            className="flex items-center justify-center gap-2 p-2.5 border-2 border-dashed border-gray-200 hover:border-cyan-400 hover:bg-cyan-50/40 rounded-xl text-gray-500 hover:text-cyan-700 cursor-pointer transition-colors text-center font-medium"
+                                        >
+                                            <Upload className="w-4 h-4 text-gray-400" />
+                                            <span>Adjuntar archivo (PDF, JPG, PNG, DOC...)</span>
+                                        </label>
+                                    )}
+                                </div>
+                            </div>
+
                             <div>
                                 <label className="block font-semibold text-gray-700 mb-1">
                                     Observaciones Adicionales
@@ -1025,7 +1194,15 @@ export default function AsistenciaAtrasosClient({
                             <div className="flex justify-end gap-2 pt-2 border-t border-gray-100">
                                 <button
                                     type="button"
-                                    onClick={() => setModalEdit({ isOpen: false, registro: null, aplicaDescuento: false, justificado: '', observacion: '' })}
+                                    onClick={() => setModalEdit({
+                                        isOpen: false,
+                                        registro: null,
+                                        aplicaDescuento: false,
+                                        justificado: '',
+                                        observacion: '',
+                                        archivoNuevo: null,
+                                        eliminarArchivo: false
+                                    })}
                                     className="px-4 py-2 border border-gray-200 text-gray-700 hover:bg-gray-50 rounded-xl font-semibold"
                                 >
                                     Cancelar

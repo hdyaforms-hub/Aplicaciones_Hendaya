@@ -454,6 +454,7 @@ export default function WidgetsDashboardClient({ initialLayouts, initialData, cu
     // Categorías del catálogo
     const categories: { key: string; label: string }[] = [
         { key: 'ALL', label: 'Todos los Widgets' },
+        { key: 'Prevención de Riesgos', label: 'Prevención de Riesgos' },
         { key: 'Recursos Humanos y Personal', label: 'Recursos Humanos y Personal' },
         { key: 'KPIs Rápidos', label: 'KPIs Rápidos' },
         { key: 'Abastecimiento y Logística', label: 'Abastecimiento y Logística' },

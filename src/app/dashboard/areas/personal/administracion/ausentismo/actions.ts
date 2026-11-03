@@ -3,8 +3,9 @@
 import { rawPrisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { revalidatePath } from 'next/cache'
-import { decryptPersonalText } from '@/lib/personal-crypto'
+import { decryptPersonalText, cleanRut } from '@/lib/personal-crypto'
 import { ensurePersonalAsistenciaTables } from '@/lib/personal-db-init'
+import { ensurePersonalVisualizacionTables } from '@/lib/personal-visualizacion-db-init'
 import { puedeUsuarioCerrarPeriodosRH } from '@/lib/personal-cuentas-db-init'
 import { getUserEffectiveRbds } from '@/lib/authFilters'
 import { logAuditAction } from '@/lib/audit'
@@ -30,6 +31,8 @@ export interface AdmAsistenciaRegistroDTO {
     fechaTexto: string
     rbd: number
     establecimiento: string
+    institucion?: string | null
+    comuna?: string | null
     supervisorNombre: string
     grupoOriginal: string
     cargo: string | null
@@ -165,6 +168,17 @@ export async function getAdmAusentismoRegistrosAction(filtros?: {
             }
         }
 
+        // Obtener mapa de instituciones y comunas de colegios
+        const colegiosInstDb = await rawPrisma.colegios.findMany({
+            select: { colRBD: true, institucion: true, comuna: true }
+        }).catch(() => [])
+        const institucionMap = new Map<number, string>()
+        const comunaMap = new Map<number, string>()
+        for (const c of colegiosInstDb) {
+            if (c.colRBD && c.institucion) institucionMap.set(c.colRBD, c.institucion.trim())
+            if (c.colRBD && c.comuna) comunaMap.set(c.colRBD, c.comuna.trim())
+        }
+
         // Desencriptar datos en memoria
         const result: AdmAsistenciaRegistroDTO[] = registros.map((r: any) => {
             const rut = decryptPersonalText(r.rutEnc)
@@ -183,6 +197,8 @@ export async function getAdmAusentismoRegistrosAction(filtros?: {
                 fechaTexto: r.fecha,
                 rbd: r.rbd,
                 establecimiento: r.establecimiento,
+                institucion: institucionMap.get(r.rbd) || null,
+                comuna: comunaMap.get(r.rbd) || null,
                 supervisorNombre: supervisorMap.get(r.rbd) || 'Sin Asignar',
                 grupoOriginal: r.grupoOriginal || '',
                 cargo: r.cargo,
@@ -442,4 +458,283 @@ export async function registrarAuditoriaExportacionAction(totalRegistros: number
         modulo: 'Adm. Ausentismo',
         detalle: `Exportación a Excel de reporte de ausentismo con ${totalRegistros} registros. ${detalleFiltros}`
     })
+}
+
+export interface UsuarioFiltroDTO {
+    id: string
+    name: string
+    username: string
+    roleId: string | null
+    roleName: string
+    rbds: number[]
+    hasVisualizacion?: boolean
+    totalTrabajadores?: number
+    ruts?: string[]
+    rutHashes?: string[]
+}
+
+export interface FiltrosMetadatosDTO {
+    roles: { id: string; name: string }[]
+    usuarios: UsuarioFiltroDTO[]
+    instituciones: string[]
+    comunas: string[]
+}
+
+/**
+ * Obtiene los metadatos necesarios para los filtros avanzados de la pestaña Ver Registros:
+ * - Roles y Usuarios (con precedencia estricta de la Configuración de Visualización de Personal)
+ * - Instituciones y Comunas presentes en el padrón de Colegios
+ */
+export async function getFiltrosMetadatosAusentismoAction(): Promise<FiltrosMetadatosDTO> {
+    try {
+        await ensurePersonalVisualizacionTables()
+
+        const [rolesDb, usersDb, supervisoresDb, colegiosDb, visRows] = await Promise.all([
+            rawPrisma.role.findMany({
+                select: { id: true, name: true },
+                orderBy: { name: 'asc' }
+            }).catch(() => []),
+            rawPrisma.user.findMany({
+                where: { isDeleted: false, isActive: true },
+                select: {
+                    id: true,
+                    name: true,
+                    username: true,
+                    email: true,
+                    roleId: true,
+                    rbds: true,
+                    role: { select: { name: true } }
+                },
+                orderBy: { name: 'asc' }
+            }).catch(() => []),
+            rawPrisma.supervisor.findMany({
+                where: { vigente: true },
+                select: {
+                    id: true,
+                    nombre: true,
+                    apellido: true,
+                    correo: true,
+                    rbdsAuditar: { select: { rbd: true } }
+                }
+            }).catch(() => []),
+            rawPrisma.colegios.findMany({
+                select: { institucion: true, comuna: true }
+            }).catch(() => []),
+            rawPrisma.$queryRawUnsafe(`
+                SELECT "tipo", "jefaturaUserId", "jefaturaRoleId", "personalRutHash", "personalRutEnc", "personalRbd"
+                FROM "Pers_Visualizacion_Jefatura";
+            `).catch(() => []) as Promise<any[]>
+        ])
+
+        // Agrupar asignaciones de visualización por usuario y por rol
+        const userVisMap = new Map<string, { ruts: Set<string>; rutHashes: Set<string>; rbds: Set<number> }>()
+        const roleVisMap = new Map<string, { ruts: Set<string>; rutHashes: Set<string>; rbds: Set<number> }>()
+
+        for (const v of visRows) {
+            let cleanR = ''
+            if (v.personalRutEnc) {
+                cleanR = cleanRut(decryptPersonalText(v.personalRutEnc))
+            }
+            const rHash = v.personalRutHash || ''
+            const rbd = v.personalRbd ? Number(v.personalRbd) : null
+
+            if (v.tipo === 'USUARIO' && v.jefaturaUserId) {
+                if (!userVisMap.has(v.jefaturaUserId)) {
+                    userVisMap.set(v.jefaturaUserId, { ruts: new Set(), rutHashes: new Set(), rbds: new Set() })
+                }
+                const item = userVisMap.get(v.jefaturaUserId)!
+                if (cleanR) item.ruts.add(cleanR)
+                if (rHash) item.rutHashes.add(rHash)
+                if (rbd) item.rbds.add(rbd)
+            } else if (v.tipo === 'ROL' && v.jefaturaRoleId) {
+                if (!roleVisMap.has(v.jefaturaRoleId)) {
+                    roleVisMap.set(v.jefaturaRoleId, { ruts: new Set(), rutHashes: new Set(), rbds: new Set() })
+                }
+                const item = roleVisMap.get(v.jefaturaRoleId)!
+                if (cleanR) item.ruts.add(cleanR)
+                if (rHash) item.rutHashes.add(rHash)
+                if (rbd) item.rbds.add(rbd)
+            }
+        }
+
+        // Mapeo de supervisores a usuarios si coincide correo o nombre
+        const supervisorRbdsByUser = new Map<string, number[]>()
+        for (const sup of supervisoresDb) {
+            const supRbds = sup.rbdsAuditar.map(r => r.rbd)
+            if (supRbds.length === 0) continue
+
+            const matchedUser = usersDb.find(u => 
+                (u.email && sup.correo && u.email.trim().toLowerCase() === sup.correo.trim().toLowerCase()) ||
+                (u.name && `${sup.nombre} ${sup.apellido}`.toLowerCase().trim() === u.name.toLowerCase().trim())
+            )
+            if (matchedUser) {
+                const existing = supervisorRbdsByUser.get(matchedUser.id) || []
+                supervisorRbdsByUser.set(matchedUser.id, Array.from(new Set([...existing, ...supRbds])))
+            }
+        }
+
+        const usuarios: UsuarioFiltroDTO[] = usersDb.map(u => {
+            const userVis = userVisMap.get(u.id)
+            const roleVis = u.roleId ? roleVisMap.get(u.roleId) : null
+
+            let hasVisualizacion = false
+            let workerRuts: string[] = []
+            let workerHashes: string[] = []
+            let userRbds: number[] = []
+            let totalTrabajadores = 0
+
+            // Precedencia absoluta de la Configuración de Visualización de Personal
+            if (userVis && (userVis.ruts.size > 0 || userVis.rutHashes.size > 0)) {
+                hasVisualizacion = true
+                workerRuts = Array.from(userVis.ruts)
+                workerHashes = Array.from(userVis.rutHashes)
+                userRbds = Array.from(userVis.rbds)
+                totalTrabajadores = workerRuts.length || workerHashes.length
+            } else if (roleVis && (roleVis.ruts.size > 0 || roleVis.rutHashes.size > 0)) {
+                hasVisualizacion = true
+                workerRuts = Array.from(roleVis.ruts)
+                workerHashes = Array.from(roleVis.rutHashes)
+                userRbds = Array.from(roleVis.rbds)
+                totalTrabajadores = workerRuts.length || workerHashes.length
+            } else {
+                const supRbds = supervisorRbdsByUser.get(u.id) || []
+                userRbds = Array.from(new Set([...(u.rbds || []), ...supRbds]))
+            }
+
+            return {
+                id: u.id,
+                name: u.name || u.username,
+                username: u.username,
+                roleId: u.roleId,
+                roleName: u.role?.name || 'Sin Rol',
+                rbds: userRbds,
+                hasVisualizacion,
+                totalTrabajadores,
+                ruts: workerRuts,
+                rutHashes: workerHashes
+            }
+        })
+
+        const instSet = new Set<string>()
+        const comunaSet = new Set<string>()
+        for (const c of colegiosDb) {
+            if (c.institucion && c.institucion.trim()) {
+                instSet.add(c.institucion.trim().toUpperCase())
+            }
+            if (c.comuna && c.comuna.trim()) {
+                comunaSet.add(c.comuna.trim().toUpperCase())
+            }
+        }
+        const instituciones = Array.from(instSet).sort()
+        const comunas = Array.from(comunaSet).sort()
+
+        return {
+            roles: rolesDb.map(r => ({ id: r.id, name: r.name })),
+            usuarios,
+            instituciones,
+            comunas
+        }
+    } catch (e: any) {
+        console.error('Error fetching metadatos filtros ausentismo:', e)
+        return {
+            roles: [],
+            usuarios: [],
+            instituciones: [],
+            comunas: []
+        }
+    }
+}
+
+/**
+ * Asigna un criterio de justificación en lote (masivo) a múltiples registros seleccionados.
+ * Respeta la restricción de que solo registros en estado 'ABIERTO' y con RBD autorizado sean modificados.
+ */
+export async function asignarCriterioMasivoAction(
+    registroIds: string[],
+    criterioId: string | null,
+    observacion?: string
+): Promise<{ success: boolean; actualizados?: number; omitidos?: number; criterioNombre?: string | null; error?: string }> {
+    if (!await checkAdminPermission()) {
+        return { success: false, error: 'No tienes permisos administrativos para justificar registros' }
+    }
+    await ensurePersonalAsistenciaTables()
+
+    const session = await getSession()
+    const usuarioNombre = session?.user?.nombre || session?.user?.name || session?.user?.email || 'Usuario'
+    const usuarioId = session?.user?.id || null
+    const authorizedRbds = await getUserEffectiveRbds()
+    const isAdmin = authorizedRbds === null
+
+    if (!registroIds || registroIds.length === 0) {
+        return { success: false, error: 'No se seleccionó ningún registro para justificar' }
+    }
+
+    try {
+        const registros: any[] = await (rawPrisma as any).pers_Asis_Registro.findMany({
+            where: { id: { in: registroIds } },
+            select: { id: true, rbd: true, estado: true, establecimiento: true }
+        })
+
+        // Validar que el período esté ABIERTO y el usuario tenga acceso al RBD
+        const validos = registros.filter((r: any) => {
+            if (r.estado === 'CERRADO') return false
+            if (!isAdmin && authorizedRbds && !authorizedRbds.includes(r.rbd)) return false
+            return true
+        })
+
+        if (validos.length === 0) {
+            return {
+                success: false,
+                error: 'Los registros seleccionados se encuentran en períodos CERRADOS o fuera de tu jurisdicción autorizada.'
+            }
+        }
+
+        let criterioNombre: string | null = null
+        if (criterioId) {
+            const crit = await (rawPrisma as any).pers_Asis_Criterio.findUnique({
+                where: { id: criterioId }
+            })
+            if (!crit) {
+                return { success: false, error: 'Criterio seleccionado no válido' }
+            }
+            criterioNombre = crit.nombre
+        }
+
+        const idsValidos = validos.map((v: any) => v.id)
+        const ahora = new Date()
+
+        await (rawPrisma as any).pers_Asis_Registro.updateMany({
+            where: { id: { in: idsValidos } },
+            data: {
+                criterioId,
+                criterioNombre,
+                criterioAsignadoPor: usuarioNombre,
+                criterioAsignadoAt: ahora,
+                actualizadoPor: usuarioNombre,
+                fechaActualizacion: ahora,
+                numActualizaciones: { increment: 1 }
+            }
+        })
+
+        await logAuditAction({
+            username: usuarioNombre,
+            userId: usuarioId,
+            action: 'JUSTIFICACION_MASIVA_CRITERIO',
+            modulo: 'Adm. Ausentismo',
+            detalle: `Justificación masiva con criterio "${criterioNombre || 'SIN CRITERIO'}" aplicada a ${idsValidos.length} registros. (Omitidos cerrados: ${registroIds.length - idsValidos.length}).${observacion ? ` Observación: ${observacion}` : ''}`
+        })
+
+        revalidatePath(PATH_ADM_AUSENTISMO)
+        revalidatePath(PATH_ASISTENCIA)
+
+        return {
+            success: true,
+            actualizados: idsValidos.length,
+            omitidos: registroIds.length - idsValidos.length,
+            criterioNombre
+        }
+    } catch (error: any) {
+        console.error('Error in asignarCriterioMasivoAction:', error)
+        return { success: false, error: error.message || 'Error al ejecutar justificación masiva' }
+    }
 }

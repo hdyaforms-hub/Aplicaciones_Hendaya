@@ -14,6 +14,7 @@ export type WidgetCategory =
     | 'Gestión y Auditoría'
     | 'KPIs Rápidos'
     | 'Recursos Humanos y Personal'
+    | 'Prevención de Riesgos'
 
 export interface WidgetCatalogItem {
     id: string
@@ -883,6 +884,121 @@ export function WidgetPrevencionRiesgos({ data }: { data: any }) {
             <div className="text-[11px] text-slate-400 pt-2 border-t border-slate-800 flex justify-between">
                 <span>Incidentes operacionales en cocina</span>
                 <span className="text-rose-400 font-medium">Prev. de Riesgos</span>
+            </div>
+        </div>
+    )
+}
+
+// 21.b Widget Prevención de Riesgos: Riesgo en Minuta
+export function WidgetRiesgoMinuta({ data }: { data: any }) {
+    const rm = data?.riesgoMinuta || {
+        totalMenusEvaluados: 0,
+        altoRiesgo: 0,
+        medioRiesgo: 0,
+        bajoRiesgo: 0,
+        pctSeguridad: 0,
+        colegiosCriticos: 0
+    }
+
+    return (
+        <div className="h-full flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-2">
+                <div>
+                    <span className="text-2xl font-bold text-white">{rm.pctSeguridad}%</span>
+                    <span className="text-xs text-slate-400 ml-1.5">Minutas Seguras</span>
+                </div>
+                <span className={`px-2.5 py-1 text-xs rounded-full font-semibold border ${
+                    rm.altoRiesgo > 0
+                        ? 'bg-rose-500/20 text-rose-300 border-rose-500/30'
+                        : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
+                }`}>
+                    🍽️ {rm.totalMenusEvaluados} Menús
+                </span>
+            </div>
+
+            <div className="grid grid-cols-3 gap-2 my-2 text-center">
+                <div className="p-2 rounded-xl bg-emerald-950/40 border border-emerald-500/30">
+                    <div className="text-[11px] text-emerald-400 font-semibold">Bajo</div>
+                    <div className="text-lg font-black text-white mt-0.5">{rm.bajoRiesgo}</div>
+                </div>
+                <div className="p-2 rounded-xl bg-amber-950/40 border border-amber-500/30">
+                    <div className="text-[11px] text-amber-400 font-semibold">Medio</div>
+                    <div className="text-lg font-black text-white mt-0.5">{rm.medioRiesgo}</div>
+                </div>
+                <div className="p-2 rounded-xl bg-rose-950/40 border border-rose-500/30">
+                    <div className="text-[11px] text-rose-400 font-semibold">Alto</div>
+                    <div className="text-lg font-black text-rose-400 mt-0.5">{rm.altoRiesgo}</div>
+                </div>
+            </div>
+
+            <div className="text-[11px] text-slate-400 pt-2 border-t border-slate-800 flex justify-between items-center">
+                <span>Colegios con alerta: <strong className="text-rose-400">{rm.colegiosCriticos}</strong></span>
+                <a
+                    href="/dashboard/areas/prevencion-riesgos/riesgo-minuta"
+                    className="text-sky-400 hover:text-sky-300 font-medium transition-colors"
+                >
+                    Ver Minutas &rarr;
+                </a>
+            </div>
+        </div>
+    )
+}
+
+// 21.c Widget Prevención de Riesgos: Indicadores Oficiales (Siniestralidad y DS67)
+export function WidgetIndicadoresPrevencion({ data }: { data: any }) {
+    const ind = data?.indicadoresPrevencion || {
+        periodo: 'Ene - Sept 2026',
+        tasaFrecuencia: 15.79,
+        metaFrecuencia: 25.0,
+        tasaAccidentabilidad: 0.27,
+        metaAccidentabilidad: 1.0,
+        totalAccidentes: 160,
+        totalDiasPerdidos: 1239,
+        tsit: '42,97',
+        estadoFrecuencia: 'Bajo Meta'
+    }
+
+    const isBajoMeta = (ind.tasaFrecuencia || 0) <= (ind.metaFrecuencia || 25)
+
+    return (
+        <div className="h-full flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-2">
+                <div>
+                    <span className="text-2xl font-bold text-white">{ind.tasaFrecuencia}</span>
+                    <span className="text-xs text-slate-400 ml-1.5">T. Frecuencia</span>
+                </div>
+                <span className={`px-2.5 py-1 text-xs rounded-full font-semibold border ${
+                    isBajoMeta
+                        ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
+                        : 'bg-rose-500/20 text-rose-300 border-rose-500/30'
+                }`}>
+                    {isBajoMeta ? '✓ Bajo Meta' : '⚠ Sobre Meta'}
+                </span>
+            </div>
+
+            <div className="grid grid-cols-3 gap-2 my-2 text-center">
+                <div className="p-2 rounded-xl bg-slate-900/60 border border-slate-700/50">
+                    <div className="text-[10px] text-slate-400 font-semibold">T. Accident.</div>
+                    <div className="text-base font-black text-sky-400 mt-0.5">{ind.tasaAccidentabilidad}</div>
+                </div>
+                <div className="p-2 rounded-xl bg-slate-900/60 border border-slate-700/50">
+                    <div className="text-[10px] text-slate-400 font-semibold">Accidentes</div>
+                    <div className="text-base font-black text-rose-400 mt-0.5">{ind.totalAccidentes}</div>
+                </div>
+                <div className="p-2 rounded-xl bg-slate-900/60 border border-slate-700/50">
+                    <div className="text-[10px] text-slate-400 font-semibold">Días Perd.</div>
+                    <div className="text-base font-black text-amber-400 mt-0.5">{ind.totalDiasPerdidos}</div>
+                </div>
+            </div>
+
+            <div className="text-[11px] text-slate-400 pt-2 border-t border-slate-800 flex justify-between items-center">
+                <span>Corte: <strong className="text-slate-300">{ind.periodo}</strong></span>
+                <a
+                    href="/dashboard/tablero/indicador-prev-riesgos"
+                    className="text-sky-400 hover:text-sky-300 font-medium transition-colors"
+                >
+                    Ver Tablero &rarr;
+                </a>
             </div>
         </div>
     )
@@ -1801,11 +1917,29 @@ export const AVAILABLE_WIDGETS_CATALOG: WidgetCatalogItem[] = [
     {
         id: 'prevencion-gravedad-preparacion',
         title: 'Gravedad en Preparación',
-        category: 'Supervisión y Terreno',
+        category: 'Prevención de Riesgos',
         description: 'Incidentes operacionales clasificados por gravedad (Leves, Graves y Críticos).',
         icon: '⚠️',
-        badge: 'Nuevo',
+        badge: 'Prevención',
         component: WidgetPrevencionRiesgos
+    },
+    {
+        id: 'prevencion-riesgo-minuta',
+        title: 'Riesgo en Minuta',
+        category: 'Prevención de Riesgos',
+        description: 'Evaluación y alertas de riesgo operativo en preparaciones de menús y colegios críticos.',
+        icon: '🍽️',
+        badge: 'Prevención',
+        component: WidgetRiesgoMinuta
+    },
+    {
+        id: 'prevencion-indicadores-siniestralidad',
+        title: 'Indicadores Prev. Riesgos (DS 67)',
+        category: 'Prevención de Riesgos',
+        description: 'Tasas de frecuencia y accidentabilidad vs meta, siniestralidad acumulada y días perdidos.',
+        icon: '🛡️',
+        badge: 'Prevención',
+        component: WidgetIndicadoresPrevencion
     },
     {
         id: 'capacitaciones-personal',

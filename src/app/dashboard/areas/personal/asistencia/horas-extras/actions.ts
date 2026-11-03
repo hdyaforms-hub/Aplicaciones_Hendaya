@@ -46,6 +46,7 @@ export interface AsistenciaHextraRegistroDTO {
     aplicaModificadoPor: string | null
     aplicaModificadoAt: string | null
     aplicaObservacion: string | null
+    modificacionesCount?: number
     estado: string
 }
 
@@ -273,6 +274,7 @@ export async function getAsistenciaHorasExtrasAction(filtros?: {
                 aplicaModificadoPor: r.aplicaModificadoPor || null,
                 aplicaModificadoAt: r.aplicaModificadoAt ? new Date(r.aplicaModificadoAt).toISOString() : null,
                 aplicaObservacion: r.aplicaObservacion || null,
+                modificacionesCount: Number(r.modificacionesCount || (r.aplicaModificadoPor ? 1 : 0)),
                 estado: r.estado || 'ABIERTO'
             }
         })
@@ -329,7 +331,7 @@ export async function toggleAplicaHorasExtrasAction(
 
     try {
         const rows: any[] = await rawPrisma.$queryRawUnsafe(
-            `SELECT id, rbd, establecimiento, fecha, "identificadorEnc", "identificadorHash", "apellidosEnc", "nombreEnc", estado, aplica, "aplicaModificadoPor" FROM "Pers_Hextra_Registro" WHERE id = $1;`,
+            `SELECT id, rbd, establecimiento, fecha, "identificadorEnc", "identificadorHash", "apellidosEnc", "nombreEnc", estado, aplica, "aplicaModificadoPor", "modificacionesCount" FROM "Pers_Hextra_Registro" WHERE id = $1;`,
             registroId
         )
         const currentReg = rows[0]
@@ -357,14 +359,15 @@ export async function toggleAplicaHorasExtrasAction(
             }
         }
 
-        // Bloqueo de única gestión para usuarios no administradores (Asistencia):
-        // Solo pueden cambiar el estado una sola vez. Si ya fue gestionado, solo un administrador puede modificarlo.
-        if (!isGlobalAdmin && currentReg.aplicaModificadoPor !== null) {
+        // Control de justificaciones (hasta 3 veces para usuarios no administradores)
+        const currentCount = Number(currentReg.modificacionesCount || (currentReg.aplicaModificadoPor ? 1 : 0))
+        if (!isGlobalAdmin && currentCount >= 3) {
             return {
                 success: false,
-                error: 'Este registro ya fue modificado previamente y se encuentra bloqueado. Para corregir o rectificar el estado, debe ser gestionado desde el módulo de Administración.'
+                error: 'Este registro ya alcanzó el límite máximo de 3 justificaciones y se encuentra bloqueado. Para corregir o rectificar el estado, debe ser gestionado desde el módulo de Administración.'
             }
         }
+        const nuevoCount = currentCount + 1
 
         await rawPrisma.$executeRawUnsafe(
             `UPDATE "Pers_Hextra_Registro" 
@@ -372,12 +375,14 @@ export async function toggleAplicaHorasExtrasAction(
                  "aplicaModificadoPor" = $2, 
                  "aplicaModificadoAt" = $3, 
                  "aplicaObservacion" = $4,
+                 "modificacionesCount" = $5,
                  "updatedAt" = $3
-             WHERE id = $5;`,
+             WHERE id = $6;`,
             nuevoAplica,
             usuarioNombre,
             ahora,
             observacion || null,
+            nuevoCount,
             registroId
         )
 

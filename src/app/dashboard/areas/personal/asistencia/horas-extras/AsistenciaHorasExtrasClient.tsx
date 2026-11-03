@@ -144,8 +144,9 @@ export default function AsistenciaHorasExtrasClient({
             return
         }
 
-        if (!isAdmin && reg?.aplicaModificadoPor) {
-            alert(`Este registro ya fue modificado previamente por ${reg.aplicaModificadoPor} y se encuentra bloqueado. Para corregir o rectificar el estado, debe ser gestionado desde el módulo de Administración.`)
+        const currentCount = reg?.modificacionesCount ?? (reg?.aplicaModificadoPor ? 1 : 0)
+        if (!isAdmin && currentCount >= 3) {
+            alert('Este registro ya alcanzó el límite máximo de 3 justificaciones y se encuentra bloqueado. Para corregir o rectificar el estado, debe ser gestionado desde el módulo de Administración.')
             return
         }
 
@@ -158,6 +159,7 @@ export default function AsistenciaHorasExtrasClient({
                     ? {
                         ...r,
                         aplica: nuevoValor,
+                        modificacionesCount: currentCount + 1,
                         aplicaModificadoPor: r.aplicaModificadoPor || 'Tú',
                         aplicaModificadoAt: new Date().toISOString()
                     }
@@ -515,7 +517,7 @@ export default function AsistenciaHorasExtrasClient({
                                     </th>
                                     <th 
                                         onClick={() => handleSort('aplica')}
-                                        className="py-3 px-3 text-center cursor-pointer select-none group hover:bg-gray-200 transition-colors"
+                                        className="py-2.5 px-2.5 text-center cursor-pointer select-none group hover:bg-gray-200 transition-colors"
                                         title="Ordenar por ¿Aplica Hr Extra?"
                                     >
                                         <div className="flex items-center justify-center gap-1.5">
@@ -523,85 +525,86 @@ export default function AsistenciaHorasExtrasClient({
                                             {renderSortIcon('aplica')}
                                         </div>
                                     </th>
-                                    <th className="py-3 px-3">Trazabilidad</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-gray-100 text-gray-700">
-                                {registros.map(r => (
-                                    <tr key={r.id} className="hover:bg-gray-50/80 transition-colors">
-                                        {/* Fecha */}
-                                        <td className="py-3 px-3 font-semibold text-gray-900 whitespace-nowrap">
-                                            {r.fecha}
-                                        </td>
+                            <tbody className="divide-y divide-gray-100 text-gray-700 text-[11px]">
+                                {registros.map(r => {
+                                    const modCount = r.modificacionesCount ?? (r.aplicaModificadoPor ? 1 : 0)
+                                    const isBloqueado = (!isAdmin && modCount >= 3) || r.estado === 'CERRADO'
 
-                                        {/* RBD / Establecimiento */}
-                                        <td className="py-3 px-3">
-                                            <div className="flex flex-col">
-                                                <span className="font-bold text-gray-900">{r.establecimiento}</span>
-                                                {r.rbd && (
-                                                    <span className="text-[10px] font-semibold text-cyan-600">RBD: {r.rbd}</span>
-                                                )}
-                                            </div>
-                                        </td>
+                                    return (
+                                        <tr key={r.id} className="hover:bg-gray-50/80 transition-colors">
+                                            {/* Fecha */}
+                                            <td className="py-2 px-2.5 font-semibold text-gray-900 whitespace-nowrap">
+                                                {r.fecha}
+                                            </td>
 
-                                        {/* Colaborador */}
-                                        <td className="py-3 px-3">
-                                            <div className="flex flex-col">
-                                                <span className="font-bold text-gray-900">{r.nombreCompleto}</span>
-                                                <span className="text-[11px] text-gray-500 font-mono">{r.rut}</span>
-                                                {r.cargo && (
-                                                    <span className="text-[10px] text-gray-400 truncate max-w-xs">{r.cargo}</span>
-                                                )}
-                                            </div>
-                                        </td>
+                                            {/* RBD / Establecimiento */}
+                                            <td className="py-2 px-2.5 max-w-[150px] truncate">
+                                                <div className="flex flex-col">
+                                                    <span className="font-bold text-gray-900 truncate" title={r.establecimiento || ''}>{r.establecimiento}</span>
+                                                    {r.rbd && (
+                                                        <span className="text-[10px] font-semibold text-cyan-600">RBD: {r.rbd}</span>
+                                                    )}
+                                                </div>
+                                            </td>
 
-                                        {/* Supervisor y Sucursal */}
-                                        <td className="py-3 px-3">
-                                            <div className="flex flex-col">
-                                                <span className="font-medium text-gray-700">{r.supervisor || 'Sin Supervisor'}</span>
-                                                <span className="text-[10px] text-gray-400">{r.sucursal}</span>
-                                            </div>
-                                        </td>
+                                            {/* Colaborador */}
+                                            <td className="py-2 px-2.5 max-w-[150px] truncate">
+                                                <div className="flex flex-col">
+                                                    <span className="font-bold text-gray-900 truncate" title={r.nombreCompleto}>{r.nombreCompleto}</span>
+                                                    <span className="text-[10px] text-gray-500 font-mono">{r.rut}</span>
+                                                    {r.cargo && (
+                                                        <span className="text-[9.5px] text-gray-400 truncate max-w-xs">{r.cargo}</span>
+                                                    )}
+                                                </div>
+                                            </td>
 
-                                        {/* Horario */}
-                                        <td className="py-3 px-3 text-center">
-                                            <div className="flex flex-col text-[11px]">
-                                                <span className="font-semibold text-gray-800">{r.entro || '--'} - {r.salio || '--'}</span>
-                                                {r.turno && (
-                                                    <span className="text-[10px] text-gray-400">{r.turno}</span>
-                                                )}
-                                            </div>
-                                        </td>
+                                            {/* Supervisor y Sucursal */}
+                                            <td className="py-2 px-2.5">
+                                                <div className="flex flex-col">
+                                                    <span className="font-medium text-gray-700 truncate">{r.supervisor || 'Sin Supervisor'}</span>
+                                                    <span className="text-[9.5px] text-gray-400">{r.sucursal}</span>
+                                                </div>
+                                            </td>
 
-                                        {/* Horas Extras */}
-                                        <td className="py-3 px-3 text-center whitespace-nowrap">
-                                            <div className="flex flex-col items-center justify-center">
-                                                <span className="font-bold text-cyan-800 text-xs font-mono">
-                                                    {formatHorasMinutos(r.hhee)}
-                                                </span>
-                                                {r.hhee > 0 && (
-                                                    <span className="text-[10px] text-cyan-600 font-medium">
-                                                        {formatHorasMinutosTexto(r.hhee)}
+                                            {/* Horario */}
+                                            <td className="py-2 px-2.5 text-center">
+                                                <div className="flex flex-col text-[10.5px]">
+                                                    <span className="font-semibold text-gray-800">{r.entro || '--'} - {r.salio || '--'}</span>
+                                                    {r.turno && (
+                                                        <span className="text-[9.5px] text-gray-400">{r.turno}</span>
+                                                    )}
+                                                </div>
+                                            </td>
+
+                                            {/* Horas Extras */}
+                                            <td className="py-2 px-2.5 text-center whitespace-nowrap">
+                                                <div className="flex flex-col items-center justify-center">
+                                                    <span className="font-bold text-cyan-800 text-[11px] font-mono">
+                                                        {formatHorasMinutos(r.hhee)}
                                                     </span>
-                                                )}
-                                                {r.atraso > 0 && (
-                                                    <span className="text-[10px] text-rose-500 font-medium mt-0.5">
-                                                        Atraso: {formatHorasMinutos(r.atraso)}
-                                                    </span>
-                                                )}
-                                            </div>
-                                        </td>
+                                                    {r.hhee > 0 && (
+                                                        <span className="text-[9.5px] text-cyan-600 font-medium">
+                                                            {formatHorasMinutosTexto(r.hhee)}
+                                                        </span>
+                                                    )}
+                                                    {r.atraso > 0 && (
+                                                        <span className="text-[9.5px] text-rose-500 font-medium mt-0.5">
+                                                            Atraso: {formatHorasMinutos(r.atraso)}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </td>
 
-                                        {/* Botón o Check "Aplica / No aplica" */}
-                                        <td className="py-3 px-3 text-center whitespace-nowrap">
-                                            {(() => {
-                                                const isBloqueado = (!isAdmin && Boolean(r.aplicaModificadoPor)) || r.estado === 'CERRADO'
-                                                return (
-                                                    <div className="inline-flex flex-col sm:flex-row items-center gap-1.5">
+                                            {/* Botón o Check "Aplica / No aplica" con Contador */}
+                                            <td className="py-2 px-2.5 text-center whitespace-nowrap">
+                                                <div className="inline-flex flex-col items-center gap-1">
+                                                    <div className="inline-flex items-center gap-1.5">
                                                         <button
                                                             disabled={isBloqueado}
                                                             onClick={() => handleToggleAplica(r.id, r.aplica)}
-                                                            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold text-xs transition-all shadow-sm ${
+                                                            className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all shadow-sm ${
                                                                 r.aplica
                                                                     ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
                                                                     : 'bg-amber-100 hover:bg-amber-200 text-amber-800 border border-amber-300'
@@ -609,59 +612,55 @@ export default function AsistenciaHorasExtrasClient({
                                                             title={
                                                                 r.estado === 'CERRADO'
                                                                     ? 'Período cerrado (solo lectura)'
-                                                                    : !isAdmin && r.aplicaModificadoPor
-                                                                    ? `Registro bloqueado: Modificado por ${r.aplicaModificadoPor}. Solo un administrador puede corregirlo.`
-                                                                    : 'Haz clic para alternar entre Aplica y No Aplica'
+                                                                    : isBloqueado
+                                                                    ? `Registro bloqueado tras 3 justificaciones (Modificado por ${r.aplicaModificadoPor}). Solo un administrador puede corregirlo.`
+                                                                    : `Justificación ${modCount}/3. Haz clic para alternar Aplica / No Aplica.`
                                                             }
                                                         >
                                                             {r.aplica ? (
                                                                 <>
-                                                                    <Check className="w-3.5 h-3.5 stroke-[3]" />
+                                                                    <Check className="w-3 h-3 stroke-[3]" />
                                                                     <span>Aplica</span>
                                                                 </>
                                                             ) : (
                                                                 <>
-                                                                    <X className="w-3.5 h-3.5 stroke-[3]" />
+                                                                    <X className="w-3 h-3 stroke-[3]" />
                                                                     <span>No Aplica</span>
                                                                 </>
                                                             )}
                                                         </button>
-                                                        {!isAdmin && r.aplicaModificadoPor && (
+                                                        {isBloqueado ? (
                                                             <span
-                                                                className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded-md select-none"
-                                                                title={`Modificado por ${r.aplicaModificadoPor}. Solo Administración puede cambiarlo.`}
+                                                                className="inline-flex items-center gap-0.5 text-[9.5px] font-bold text-amber-700 bg-amber-50 border border-amber-200 px-1 py-0.5 rounded select-none"
+                                                                title="Bloqueado tras 3 justificaciones"
                                                             >
-                                                                <Lock className="w-3 h-3 text-amber-600 flex-shrink-0" />
-                                                                <span>Bloqueado</span>
+                                                                <Lock className="w-2.5 h-2.5 text-amber-600 flex-shrink-0" />
                                                             </span>
-                                                        )}
-                                                        {guardadoStatus[r.id] && (
-                                                            <span className="text-[10px] font-bold text-emerald-600 animate-pulse">
-                                                                ✓ Guardado
+                                                        ) : guardadoStatus[r.id] && (
+                                                            <span className="text-[9.5px] font-bold text-emerald-600 animate-pulse">
+                                                                ✓
                                                             </span>
                                                         )}
                                                     </div>
-                                                )
-                                            })()}
-                                        </td>
 
-                                        {/* Trazabilidad */}
-                                        <td className="py-3 px-3 text-[11px] text-gray-500">
-                                            <div className="flex flex-col">
-                                                {r.aplicaModificadoPor ? (
-                                                    <>
-                                                        <span className="font-semibold text-gray-700">Por: {r.aplicaModificadoPor}</span>
-                                                        <span className="text-[10px] text-gray-400">
-                                                            {r.aplicaModificadoAt ? new Date(r.aplicaModificadoAt).toLocaleString('es-CL') : ''}
-                                                        </span>
-                                                    </>
-                                                ) : (
-                                                    <span className="text-gray-400 italic">Por defecto (No Aplica)</span>
-                                                )}
-                                            </div>
-                                        </td>
-                                    </tr>
-                                ))}
+                                                    {/* Contador de justificaciones */}
+                                                    <span
+                                                        className={`font-mono text-[9px] font-bold px-1.5 py-0.2 rounded ${
+                                                            modCount >= 3
+                                                                ? 'bg-rose-50 text-rose-700 border border-rose-200'
+                                                                : modCount > 0
+                                                                ? 'bg-amber-50 text-amber-700 border border-amber-200'
+                                                                : 'text-gray-400'
+                                                        }`}
+                                                        title={`Has modificado ${modCount} de 3 veces permitidas.`}
+                                                    >
+                                                        {modCount >= 3 ? '🔒 Bloqueado (3/3)' : `${modCount}/3 justif.`}
+                                                    </span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    )
+                                })}
                             </tbody>
                         </table>
                     </div>

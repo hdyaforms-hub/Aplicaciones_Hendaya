@@ -5,6 +5,7 @@ import { getSession } from '@/lib/session'
 import { revalidatePath } from 'next/cache'
 import { decryptPersonalText, cleanRut, hashRut } from '@/lib/personal-crypto'
 import { ensurePersonalAtrasosTables } from '@/lib/personal-atrasos-db-init'
+import { ensurePersonalVisualizacionTables } from '@/lib/personal-visualizacion-db-init'
 import { puedeUsuarioCerrarPeriodosRH } from '@/lib/personal-cuentas-db-init'
 import { getUserEffectiveRbds } from '@/lib/authFilters'
 import { logAuditAction } from '@/lib/audit'
@@ -32,6 +33,8 @@ export interface AdmAtrasosRegistroDTO {
     fechaSerial: string | null
     rbd: number | null
     establecimiento: string | null
+    institucion?: string | null
+    comuna?: string | null
     sucursal: string
     supervisor: string | null
     cargo: string | null
@@ -63,6 +66,26 @@ export interface AdmAtrasosRegistroDTO {
     cerradoAt?: string | null
 }
 
+export interface UsuarioFiltroAtrasosDTO {
+    id: string
+    name: string
+    username: string
+    roleId: string
+    roleName: string
+    rbds: number[]
+    hasVisualizacion?: boolean
+    totalTrabajadores?: number
+    ruts?: string[]
+    rutHashes?: string[]
+}
+
+export interface FiltrosMetadatosAtrasosDTO {
+    roles: { id: string; name: string }[]
+    usuarios: UsuarioFiltroAtrasosDTO[]
+    instituciones: string[]
+    comunas: string[]
+}
+
 export interface CargaAtrasosDTO {
     id: string
     tipo: 'ADELANTO' | 'ATRASO'
@@ -81,6 +104,10 @@ export interface CargaAtrasosDTO {
 export async function getAdmAtrasosAction(filtros?: {
     tipo?: 'ADELANTO' | 'ATRASO'
     rbd?: number
+    rbds?: number[]
+    institucion?: string
+    comuna?: string
+    rutHashes?: string[]
     sucursal?: string
     supervisor?: string
     fechaDesde?: string
@@ -113,69 +140,106 @@ export async function getAdmAtrasosAction(filtros?: {
         let paramIndex = 1
 
         // 0. Filtro por Tipo ('ADELANTO' o 'ATRASO')
-        whereConditions.push(`tipo = $${paramIndex++}`)
+        whereConditions.push(`r.tipo = $${paramIndex++}`)
         queryParams.push(tipoActual)
 
         // 1. Privilegios por RBD
         if (authorizedRbds !== null) {
             if (authorizedRbds.length === 0) {
-                whereConditions.push(`rbd = -999999`)
+                whereConditions.push(`r.rbd = -999999`)
             } else if (filtros?.rbd) {
                 if (authorizedRbds.includes(filtros.rbd)) {
-                    whereConditions.push(`rbd = $${paramIndex++}`)
+                    whereConditions.push(`r.rbd = $${paramIndex++}`)
                     queryParams.push(filtros.rbd)
                 } else {
-                    whereConditions.push(`rbd = -999999`)
+                    whereConditions.push(`r.rbd = -999999`)
                 }
             } else {
-                whereConditions.push(`rbd = ANY($${paramIndex++}::int[])`)
+                whereConditions.push(`r.rbd = ANY($${paramIndex++}::int[])`)
                 queryParams.push(authorizedRbds)
             }
         } else if (filtros?.rbd) {
-            whereConditions.push(`rbd = $${paramIndex++}`)
+            whereConditions.push(`r.rbd = $${paramIndex++}`)
             queryParams.push(filtros.rbd)
+        }
+
+        // Filtro por Rol o Usuario (Trabajadores de Visualización y/o RBDs permitidos según perfil)
+        const hasRutHashes = Boolean(filtros?.rutHashes && filtros.rutHashes.length > 0)
+        const hasRbds = Boolean(filtros?.rbds && filtros.rbds.length > 0 && !filtros.rbds.includes(-999999))
+        const rbdsExplicitEmpty = Boolean(filtros?.rbds && (filtros.rbds.length === 0 || filtros.rbds.includes(-999999)))
+
+        if (hasRutHashes && hasRbds) {
+            whereConditions.push(`(r."identificadorHash" = ANY($${paramIndex++}) OR r.rbd = ANY($${paramIndex++}::int[]))`)
+            queryParams.push(filtros!.rutHashes)
+            queryParams.push(filtros!.rbds)
+        } else if (hasRutHashes) {
+            whereConditions.push(`r."identificadorHash" = ANY($${paramIndex++})`)
+            queryParams.push(filtros!.rutHashes)
+        } else if (hasRbds) {
+            whereConditions.push(`r.rbd = ANY($${paramIndex++}::int[])`)
+            queryParams.push(filtros!.rbds)
+        } else if (rbdsExplicitEmpty) {
+            whereConditions.push(`r.rbd = -999999`)
+        }
+
+        // Filtro por Institución (Colegio)
+        if (filtros?.institucion && filtros.institucion !== 'TODAS') {
+            whereConditions.push(`EXISTS (
+                SELECT 1 FROM "Colegios" col 
+                WHERE col."colRBD" = r.rbd AND TRIM(UPPER(col.institucion)) = TRIM(UPPER($${paramIndex++}))
+            )`)
+            queryParams.push(filtros.institucion)
+        }
+
+        // Filtro por Comuna
+        if (filtros?.comuna && filtros.comuna !== 'TODAS') {
+            whereConditions.push(`EXISTS (
+                SELECT 1 FROM "Colegios" col 
+                WHERE col."colRBD" = r.rbd AND TRIM(UPPER(col.comuna)) = TRIM(UPPER($${paramIndex++}))
+            )`)
+            queryParams.push(filtros.comuna)
         }
 
         // 2. Filtro por Sucursal
         if (filtros?.sucursal && filtros.sucursal !== 'TODAS') {
-            whereConditions.push(`sucursal = $${paramIndex++}`)
+            whereConditions.push(`r.sucursal = $${paramIndex++}`)
             queryParams.push(filtros.sucursal)
         }
 
         // 3. Filtro por Supervisor
         if (filtros?.supervisor && filtros.supervisor !== 'TODOS') {
-            whereConditions.push(`supervisor = $${paramIndex++}`)
+            whereConditions.push(`r.supervisor = $${paramIndex++}`)
             queryParams.push(filtros.supervisor)
         }
 
         // 4. Rango de Fechas
         if (filtros?.fechaDesde) {
-            whereConditions.push(`fecha >= $${paramIndex++}`)
+            whereConditions.push(`r.fecha >= $${paramIndex++}`)
             queryParams.push(filtros.fechaDesde)
         }
         if (filtros?.fechaHasta) {
-            whereConditions.push(`fecha <= $${paramIndex++}`)
+            whereConditions.push(`r.fecha <= $${paramIndex++}`)
             queryParams.push(filtros.fechaHasta)
         }
 
         // 5. Filtro Aplica Descuento
         if (filtros?.aplicaDescuento && filtros.aplicaDescuento !== 'TODOS') {
             if (filtros.aplicaDescuento === 'APLICA') {
-                whereConditions.push(`"aplicaDescuento" IS TRUE`)
+                whereConditions.push(`r."aplicaDescuento" IS TRUE`)
             } else if (filtros.aplicaDescuento === 'NO_APLICA') {
-                whereConditions.push(`("aplicaDescuento" IS FALSE OR "aplicaDescuento" IS NULL)`)
+                whereConditions.push(`(r."aplicaDescuento" IS FALSE OR r."aplicaDescuento" IS NULL)`)
             }
         }
 
         // 6. Filtro Estado (ABIERTO / CERRADO)
         if (filtros?.estado && filtros.estado !== 'TODOS') {
-            whereConditions.push(`estado = $${paramIndex++}`)
+            whereConditions.push(`r.estado = $${paramIndex++}`)
             queryParams.push(filtros.estado)
         }
 
         // 7. Filtro CargaId
         if (filtros?.cargaId && filtros.cargaId !== 'TODOS') {
-            whereConditions.push(`"cargaId" = $${paramIndex++}`)
+            whereConditions.push(`r."cargaId" = $${paramIndex++}`)
             queryParams.push(filtros.cargaId)
         }
 
@@ -186,7 +250,7 @@ export async function getAdmAtrasosAction(filtros?: {
             const rutCleaned = cleanRut(cleanSearch)
             if (rutCleaned && rutCleaned.length >= 7) {
                 const rHash = hashRut(rutCleaned)
-                whereConditions.push(`"identificadorHash" = $${paramIndex++}`)
+                whereConditions.push(`r."identificadorHash" = $${paramIndex++}`)
                 queryParams.push(rHash)
                 searchIsRutHash = true
             }
@@ -205,28 +269,30 @@ export async function getAdmAtrasosAction(filtros?: {
 
         // Listas para selects
         const sucursalesResult: any[] = await rawPrisma.$queryRawUnsafe(`
-            SELECT DISTINCT sucursal FROM "Pers_Atrasos_Registro"
-            ${whereSql ? whereSql + ' AND' : 'WHERE'} sucursal IS NOT NULL AND sucursal <> ''
-            ORDER BY sucursal ASC;
+            SELECT DISTINCT r.sucursal FROM "Pers_Atrasos_Registro" r
+            ${whereSql ? whereSql + ' AND' : 'WHERE'} r.sucursal IS NOT NULL AND r.sucursal <> ''
+            ORDER BY r.sucursal ASC;
         `, ...queryParams)
 
         const supervisoresResult: any[] = await rawPrisma.$queryRawUnsafe(`
-            SELECT DISTINCT supervisor FROM "Pers_Atrasos_Registro"
-            ${whereSql ? whereSql + ' AND' : 'WHERE'} supervisor IS NOT NULL AND supervisor <> ''
-            ORDER BY supervisor ASC;
+            SELECT DISTINCT r.supervisor FROM "Pers_Atrasos_Registro" r
+            ${whereSql ? whereSql + ' AND' : 'WHERE'} r.supervisor IS NOT NULL AND r.supervisor <> ''
+            ORDER BY r.supervisor ASC;
         `, ...queryParams)
 
         const establecimientosResult: any[] = await rawPrisma.$queryRawUnsafe(`
-            SELECT DISTINCT rbd, establecimiento FROM "Pers_Atrasos_Registro"
-            ${whereSql ? whereSql + ' AND' : 'WHERE'} rbd IS NOT NULL
-            ORDER BY rbd ASC;
+            SELECT DISTINCT r.rbd, r.establecimiento FROM "Pers_Atrasos_Registro" r
+            ${whereSql ? whereSql + ' AND' : 'WHERE'} r.rbd IS NOT NULL
+            ORDER BY r.rbd ASC;
         `, ...queryParams)
 
-        // Traer todos los registros coincidentes sin límite artificial
+        // Traer todos los registros coincidentes con institución y comuna de colegios
         const rawRegistros: any[] = await rawPrisma.$queryRawUnsafe(`
-            SELECT * FROM "Pers_Atrasos_Registro"
+            SELECT r.*, col.institucion as "institucion", col.comuna as "comuna"
+            FROM "Pers_Atrasos_Registro" r
+            LEFT JOIN "Colegios" col ON col."colRBD" = r.rbd
             ${whereSql}
-            ORDER BY fecha DESC, rbd ASC, id ASC;
+            ORDER BY r.fecha DESC, r.rbd ASC, r.id ASC;
         `, ...queryParams)
 
         // Desencriptar datos en memoria
@@ -249,6 +315,8 @@ export async function getAdmAtrasosAction(filtros?: {
                 fechaSerial: r.fechaSerial,
                 rbd: r.rbd,
                 establecimiento: r.establecimiento,
+                institucion: r.institucion || null,
+                comuna: r.comuna || null,
                 sucursal: r.sucursal || 'CASA MATRIZ',
                 supervisor: r.supervisor,
                 cargo: r.cargo,
@@ -608,6 +676,226 @@ export async function eliminarCargaAtrasosAdminAction(cargaId: string): Promise<
     } catch (error: any) {
         console.error('Error in eliminarCargaAtrasosAdminAction:', error)
         return { success: false, error: error.message || 'Error al eliminar la planilla' }
+    }
+}
+
+export async function getFiltrosMetadatosAtrasosAction(): Promise<FiltrosMetadatosAtrasosDTO> {
+    try {
+        await ensurePersonalVisualizacionTables()
+
+        const [rolesDb, usersDb, supervisoresDb, colegiosDb, visRows] = await Promise.all([
+            rawPrisma.role.findMany({
+                select: { id: true, name: true },
+                orderBy: { name: 'asc' }
+            }).catch(() => []),
+            rawPrisma.user.findMany({
+                where: { isDeleted: false, isActive: true },
+                select: {
+                    id: true,
+                    name: true,
+                    username: true,
+                    email: true,
+                    roleId: true,
+                    rbds: true,
+                    role: { select: { name: true } }
+                },
+                orderBy: { name: 'asc' }
+            }).catch(() => []),
+            rawPrisma.supervisor.findMany({
+                where: { vigente: true },
+                select: {
+                    id: true,
+                    nombre: true,
+                    apellido: true,
+                    correo: true,
+                    rbdsAuditar: { select: { rbd: true } }
+                }
+            }).catch(() => []),
+            rawPrisma.colegios.findMany({
+                select: { institucion: true, comuna: true }
+            }).catch(() => []),
+            rawPrisma.$queryRawUnsafe(`
+                SELECT "tipo", "jefaturaUserId", "jefaturaRoleId", "personalRutHash", "personalRutEnc", "personalRbd"
+                FROM "Pers_Visualizacion_Jefatura";
+            `).catch(() => []) as Promise<any[]>
+        ])
+
+        // Agrupar asignaciones de visualización por usuario y por rol
+        const userVisMap = new Map<string, { ruts: Set<string>; rutHashes: Set<string>; rbds: Set<number> }>()
+        const roleVisMap = new Map<string, { ruts: Set<string>; rutHashes: Set<string>; rbds: Set<number> }>()
+
+        for (const v of visRows) {
+            let cleanR = ''
+            if (v.personalRutEnc) {
+                cleanR = cleanRut(decryptPersonalText(v.personalRutEnc))
+            }
+            const rHash = v.personalRutHash || ''
+            const rbd = v.personalRbd ? Number(v.personalRbd) : null
+
+            if (v.tipo === 'USUARIO' && v.jefaturaUserId) {
+                if (!userVisMap.has(v.jefaturaUserId)) {
+                    userVisMap.set(v.jefaturaUserId, { ruts: new Set(), rutHashes: new Set(), rbds: new Set() })
+                }
+                const item = userVisMap.get(v.jefaturaUserId)!
+                if (cleanR) item.ruts.add(cleanR)
+                if (rHash) item.rutHashes.add(rHash)
+                if (rbd) item.rbds.add(rbd)
+            } else if (v.tipo === 'ROL' && v.jefaturaRoleId) {
+                if (!roleVisMap.has(v.jefaturaRoleId)) {
+                    roleVisMap.set(v.jefaturaRoleId, { ruts: new Set(), rutHashes: new Set(), rbds: new Set() })
+                }
+                const item = roleVisMap.get(v.jefaturaRoleId)!
+                if (cleanR) item.ruts.add(cleanR)
+                if (rHash) item.rutHashes.add(rHash)
+                if (rbd) item.rbds.add(rbd)
+            }
+        }
+
+        // Mapeo de supervisores a usuarios si coincide correo o nombre
+        const supervisorRbdsByUser = new Map<string, number[]>()
+        for (const sup of supervisoresDb) {
+            const supRbds = sup.rbdsAuditar?.map((r: any) => r.rbd) || []
+            if (supRbds.length === 0) continue
+
+            const matchedUser = usersDb.find(u => 
+                (u.email && sup.correo && u.email.trim().toLowerCase() === sup.correo.trim().toLowerCase()) ||
+                (u.name && `${sup.nombre} ${sup.apellido}`.toLowerCase().trim() === u.name.toLowerCase().trim())
+            )
+            if (matchedUser) {
+                const existing = supervisorRbdsByUser.get(matchedUser.id) || []
+                supervisorRbdsByUser.set(matchedUser.id, Array.from(new Set([...existing, ...supRbds])))
+            }
+        }
+
+        const usuarios: UsuarioFiltroAtrasosDTO[] = usersDb.map(u => {
+            const userVis = userVisMap.get(u.id)
+            const roleVis = u.roleId ? roleVisMap.get(u.roleId) : null
+
+            let hasVisualizacion = false
+            let workerRuts: string[] = []
+            let workerHashes: string[] = []
+            let userRbds: number[] = []
+            let totalTrabajadores = 0
+
+            // Precedencia absoluta de la Configuración de Visualización de Personal
+            if (userVis && (userVis.ruts.size > 0 || userVis.rutHashes.size > 0)) {
+                hasVisualizacion = true
+                workerRuts = Array.from(userVis.ruts)
+                workerHashes = Array.from(userVis.rutHashes)
+                userRbds = Array.from(userVis.rbds)
+                totalTrabajadores = workerRuts.length || workerHashes.length
+            } else if (roleVis && (roleVis.ruts.size > 0 || roleVis.rutHashes.size > 0)) {
+                hasVisualizacion = true
+                workerRuts = Array.from(roleVis.ruts)
+                workerHashes = Array.from(roleVis.rutHashes)
+                userRbds = Array.from(roleVis.rbds)
+                totalTrabajadores = workerRuts.length || workerHashes.length
+            } else {
+                const supRbds = supervisorRbdsByUser.get(u.id) || []
+                userRbds = Array.from(new Set([...(u.rbds || []), ...supRbds]))
+            }
+
+            return {
+                id: u.id,
+                name: u.name || u.username,
+                username: u.username,
+                roleId: u.roleId || '',
+                roleName: u.role?.name || 'Sin Rol',
+                rbds: userRbds,
+                hasVisualizacion,
+                totalTrabajadores,
+                ruts: workerRuts,
+                rutHashes: workerHashes
+            }
+        })
+
+        const instSet = new Set<string>()
+        const comunaSet = new Set<string>()
+        for (const c of colegiosDb) {
+            if (c.institucion && c.institucion.trim()) {
+                instSet.add(c.institucion.trim().toUpperCase())
+            }
+            if (c.comuna && c.comuna.trim()) {
+                comunaSet.add(c.comuna.trim().toUpperCase())
+            }
+        }
+        const instituciones = Array.from(instSet).sort()
+        const comunas = Array.from(comunaSet).sort()
+
+        return {
+            roles: rolesDb.map(r => ({ id: r.id, name: r.name })),
+            usuarios,
+            instituciones,
+            comunas
+        }
+    } catch (error) {
+        console.error('Error fetching metadatos filtros atrasos:', error)
+        return { roles: [], usuarios: [], instituciones: [], comunas: [] }
+    }
+}
+
+export async function actualizarAtrasosMasivoAdminAction(
+    registroIds: string[],
+    aplicaDescuento: boolean,
+    justificado?: string,
+    observacion?: string
+): Promise<{ success: boolean; actualizados?: number; error?: string }> {
+    if (!await checkAdminPermission()) {
+        return { success: false, error: 'No tienes permisos administrativos para modificar registros' }
+    }
+    if (!registroIds || registroIds.length === 0) {
+        return { success: false, error: 'No se seleccionaron registros' }
+    }
+    await ensurePersonalAtrasosTables()
+
+    const session = await getSession()
+    const usuarioNombre = session?.user?.name || session?.user?.username || 'Admin'
+    const usuarioId = session?.user?.id || null
+    const authorizedRbds = await getUserEffectiveRbds()
+    const ahora = new Date()
+
+    try {
+        let whereExtra = `id = ANY($1) AND estado != 'CERRADO'`
+        const params: any[] = [registroIds, aplicaDescuento, justificado || null, observacion || null, usuarioNombre, ahora]
+
+        if (authorizedRbds !== null) {
+            whereExtra += ` AND (rbd IS NULL OR rbd = ANY($7::int[]))`
+            params.push(authorizedRbds)
+        }
+
+        const query = `
+            WITH updated AS (
+                UPDATE "Pers_Atrasos_Registro"
+                SET "aplicaDescuento" = $2,
+                    justificado = $3,
+                    observacion = $4,
+                    "aplicaModificadoPor" = $5,
+                    "aplicaModificadoAt" = $6,
+                    "updatedAt" = $6
+                WHERE ${whereExtra}
+                RETURNING id
+            )
+            SELECT COUNT(*)::int as count FROM updated;
+        `
+        const res: any[] = await rawPrisma.$queryRawUnsafe(query, ...params)
+        const actualizados = res[0]?.count || 0
+
+        await logAuditAction({
+            username: usuarioNombre,
+            userId: usuarioId,
+            action: 'JUSTIFICACION_MASIVA_ATRASOS_ADM',
+            modulo: 'Adm. Atrasos y Adelantos',
+            detalle: `Justificación masiva para ${actualizados} registros: Descuento=${aplicaDescuento ? 'SÍ' : 'NO'}, Justificado="${justificado || ''}". ${observacion ? `Obs: ${observacion}` : ''}`
+        })
+
+        revalidatePath(PATH_ADM_ATRASOS)
+        revalidatePath(PATH_ASISTENCIA_ATRASOS)
+        revalidatePath(PATH_CARGA_ATRASOS)
+
+        return { success: true, actualizados }
+    } catch (error: any) {
+        console.error('Error in actualizarAtrasosMasivoAdminAction:', error)
+        return { success: false, error: error.message || 'Error al ejecutar justificación masiva' }
     }
 }
 

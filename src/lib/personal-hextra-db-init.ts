@@ -91,6 +91,7 @@ export async function ensurePersonalHextraTables() {
         await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Hextra_Registro" ADD COLUMN IF NOT EXISTS "estado" TEXT NOT NULL DEFAULT 'ABIERTO';`)
         await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Hextra_Registro" ADD COLUMN IF NOT EXISTS "cerradoPor" TEXT;`)
         await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Hextra_Registro" ADD COLUMN IF NOT EXISTS "cerradoAt" TIMESTAMP(3);`)
+        await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Hextra_Registro" ADD COLUMN IF NOT EXISTS "modificacionesCount" INTEGER NOT NULL DEFAULT 0;`)
 
         // Actualizar registros previos no modificados para que su valor sea No Aplica (false) por defecto
         try {

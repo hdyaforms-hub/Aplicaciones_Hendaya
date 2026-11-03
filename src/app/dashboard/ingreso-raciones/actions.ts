@@ -5,6 +5,7 @@ import { getSession } from '@/lib/session'
 import nodemailer from 'nodemailer'
 import { resolveListaDestinatarios } from '@/lib/distribution-lists'
 import crypto from 'crypto'
+import { ensureHomologacionPmpaTable } from '@/lib/homologacion-pmpa-db-init'
 
 const ENCRYPTION_KEY = crypto.createHash('sha256').update(String(process.env.SESSION_SECRET || 'super-secret-key-change-me')).digest('base64').substring(0, 32)
 
@@ -95,6 +96,88 @@ function parseIntegraPrograma(prog: string) {
     }
 }
 
+export interface HistorialAuditoriaFechaDTO {
+    fechaIngreso: string // Formato YYYY-MM-DD
+    fechaIngresoLabel: string // Formato DD/MM/YYYY
+    fechaSistema: string
+    usuario: string
+    totalIngDia: number
+    totalAsigDia: number
+    detalles: Array<{
+        programa: string
+        estrato: string
+        totalIng: number
+        totalAsig: number
+        tasaPreparacion: number
+        usuario: string
+    }>
+}
+
+export async function getUltimasFechasAuditoria(rbd: number): Promise<HistorialAuditoriaFechaDTO[]> {
+    try {
+        const registros = await rawPrisma.ingRacion.findMany({
+            where: { rbd },
+            orderBy: [
+                { fechaIngreso: 'desc' },
+                { fechaSistema: 'desc' }
+            ],
+            take: 80
+        })
+
+        if (!registros || registros.length === 0) return []
+
+        const grupos = new Map<string, typeof registros>()
+        for (const reg of registros) {
+            const fechaKey = new Date(reg.fechaIngreso).toISOString().split('T')[0]
+            if (!grupos.has(fechaKey)) {
+                grupos.set(fechaKey, [])
+            }
+            grupos.get(fechaKey)!.push(reg)
+        }
+
+        const ultimas4Fechas = Array.from(grupos.keys()).slice(0, 4)
+        const resultado: HistorialAuditoriaFechaDTO[] = []
+
+        for (const fKey of ultimas4Fechas) {
+            const regsDia = grupos.get(fKey)!
+            const primerReg = regsDia[0]
+            const [y, m, d] = fKey.split('-')
+
+            let totalIngDia = 0
+            let totalAsigDia = 0
+            const detalles: HistorialAuditoriaFechaDTO['detalles'] = []
+
+            for (const r of regsDia) {
+                totalIngDia += r.totalIng
+                totalAsigDia += r.totalAsig
+                detalles.push({
+                    programa: r.programa,
+                    estrato: r.estrato,
+                    totalIng: r.totalIng,
+                    totalAsig: r.totalAsig,
+                    tasaPreparacion: r.tasaPreparacion,
+                    usuario: r.usuario
+                })
+            }
+
+            resultado.push({
+                fechaIngreso: fKey,
+                fechaIngresoLabel: `${d}/${m}/${y}`,
+                fechaSistema: primerReg.fechaSistema.toISOString(),
+                usuario: primerReg.usuario,
+                totalIngDia,
+                totalAsigDia,
+                detalles
+            })
+        }
+
+        return resultado
+    } catch (e) {
+        console.error('Error obteniendo ultimas fechas auditoria:', e)
+        return []
+    }
+}
+
 export async function checkPmpaDisponibilidad(rbd: number, year: number, month: number) {
     const session = await getSession()
     if (!session?.user?.role?.permissions.includes('view_ingreso_raciones') && !session?.user?.role?.permissions.includes('view_pmpa')) {
@@ -148,17 +231,43 @@ export async function checkPmpaDisponibilidad(rbd: number, year: number, month: 
         const isIntegra = colegio.institucion?.trim().toUpperCase() === 'INTEGRA' || 
                           pmpaRecords.some((r: any) => r.institucion?.trim().toUpperCase() === 'INTEGRA')
 
-        // Obtener pares únicos de programa y estrato
+        // Cargar homologaciones existentes
+        await ensureHomologacionPmpaTable()
+        const homologaciones = (await rawPrisma.$queryRawUnsafe(`
+            SELECT "programaPmpa", "servicioPmpa", "codigoHomologado"
+            FROM "PMPA_Homologacion_Programas"
+            WHERE "codigoHomologado" IS NOT NULL AND TRIM("codigoHomologado") <> '';
+        `).catch(() => [])) as any[]
+
+        const homologMap = new Map<string, string>()
+        for (const h of homologaciones) {
+            const p = (h.programaPmpa || '').trim().toUpperCase()
+            const s = (h.servicioPmpa || '').trim().toUpperCase()
+            homologMap.set(`${p}:::${s}`, h.codigoHomologado.trim())
+            if (!homologMap.has(`${p}:::`)) {
+                homologMap.set(`${p}:::`, h.codigoHomologado.trim())
+            }
+        }
+
+        // Obtener pares únicos de programa homologado y estrato
         const validPairs = validRecords.map((r: any) => {
+            let progLabel = ''
             if (isIntegra) {
-                const { basePrograma } = parseIntegraPrograma(r.programa as string)
-                return {
-                    programa: basePrograma,
-                    estrato: r.estrato as string
-                }
+                const { basePrograma, servicioCode } = parseIntegraPrograma(r.programa as string)
+                progLabel = homologMap.get(`${basePrograma.toUpperCase()}:::${servicioCode.toUpperCase()}`) ||
+                            homologMap.get(`${(r.programa as string).trim().toUpperCase()}:::${((r.servicio as string) || '').trim().toUpperCase()}`) ||
+                            homologMap.get(`${basePrograma.toUpperCase()}:::`) ||
+                            homologMap.get(`${(r.programa as string).trim().toUpperCase()}:::`) ||
+                            basePrograma
+            } else {
+                const p = (r.programa as string).trim()
+                const s = ((r.servicio as string) || '').trim()
+                progLabel = homologMap.get(`${p.toUpperCase()}:::${s.toUpperCase()}`) ||
+                            homologMap.get(`${p.toUpperCase()}:::`) ||
+                            p
             }
             return {
-                programa: r.programa as string,
+                programa: progLabel,
                 estrato: r.estrato as string
             }
         })
@@ -167,13 +276,14 @@ export async function checkPmpaDisponibilidad(rbd: number, year: number, month: 
         const uniquePairs = Array.from(new Set(validPairs.map((p: any) => JSON.stringify(p)))).map((p: any) => JSON.parse(p))
 
         const programas = Array.from(new Set(uniquePairs.map((p: any) => p.programa as string)))
-        if (isIntegra) {
-            programas.sort((a, b) => a.localeCompare(b))
-        }
+        programas.sort((a, b) => a.localeCompare(b))
+
+        const ultimasFechas = await getUltimasFechasAuditoria(rbd)
 
         return {
             programas,
-            validPairs: uniquePairs
+            validPairs: uniquePairs,
+            ultimasFechas
         }
     } catch (e) {
         console.error("Error checking PMPA:", e)
@@ -255,17 +365,45 @@ export async function getPmpaAssignmentsAndLastRecord(rbd: number, ano: number, 
         }
 
         let pmpaRecords: any[] = []
+        await ensureHomologacionPmpaTable()
+        const homologaciones = (await rawPrisma.$queryRawUnsafe(`
+            SELECT "programaPmpa", "servicioPmpa", "codigoHomologado"
+            FROM "PMPA_Homologacion_Programas"
+            WHERE "codigoHomologado" IS NOT NULL AND TRIM("codigoHomologado") <> '';
+        `).catch(() => [])) as any[]
+
+        const homologMap = new Map<string, string>()
+        for (const h of homologaciones) {
+            const p = (h.programaPmpa || '').trim().toUpperCase()
+            const s = (h.servicioPmpa || '').trim().toUpperCase()
+            homologMap.set(`${p}:::${s}`, h.codigoHomologado.trim())
+            if (!homologMap.has(`${p}:::`)) {
+                homologMap.set(`${p}:::`, h.codigoHomologado.trim())
+            }
+        }
+
+        const rawRecords = await rawPrisma.pMPA.findMany({
+            where: { rbd, ano: ano, mes: mes, estrato }
+        })
+
         if (isIntegra) {
-            const rawRecords = await rawPrisma.pMPA.findMany({
-                where: { rbd, ano: ano, mes: mes, estrato }
-            })
             pmpaRecords = rawRecords.filter(r => {
-                const { basePrograma } = parseIntegraPrograma(r.programa)
-                return basePrograma.toUpperCase() === programa.toUpperCase()
+                const { basePrograma, servicioCode } = parseIntegraPrograma(r.programa)
+                const effectiveProg = homologMap.get(`${basePrograma.toUpperCase()}:::${servicioCode.toUpperCase()}`) ||
+                                      homologMap.get(`${(r.programa || '').trim().toUpperCase()}:::${((r.servicio || '')).trim().toUpperCase()}`) ||
+                                      homologMap.get(`${basePrograma.toUpperCase()}:::`) ||
+                                      homologMap.get(`${(r.programa || '').trim().toUpperCase()}:::`) ||
+                                      basePrograma
+                return effectiveProg.toUpperCase() === programa.toUpperCase() || basePrograma.toUpperCase() === programa.toUpperCase()
             })
         } else {
-            pmpaRecords = await rawPrisma.pMPA.findMany({
-                where: { rbd, ano: ano, mes: mes, programa, estrato }
+            pmpaRecords = rawRecords.filter(r => {
+                const p = (r.programa || '').trim()
+                const s = ((r.servicio || '')).trim()
+                const effectiveProg = homologMap.get(`${p.toUpperCase()}:::${s.toUpperCase()}`) ||
+                                      homologMap.get(`${p.toUpperCase()}:::`) ||
+                                      p
+                return effectiveProg.toUpperCase() === programa.toUpperCase() || p.toUpperCase() === programa.toUpperCase()
             })
         }
 
@@ -324,6 +462,8 @@ export async function getPmpaAssignmentsAndLastRecord(rbd: number, ano: number, 
             orderBy: { fechaIngreso: 'desc' }
         })
 
+        const ultimasFechas = await getUltimasFechasAuditoria(rbd)
+
         return {
             asignados,
             currentRecord: currentRecord ? {
@@ -335,7 +475,8 @@ export async function getPmpaAssignmentsAndLastRecord(rbd: number, ano: number, 
                 tercerServicioIng: currentRecord.tercerServicioIng,
                 observacion: currentRecord.observacion || ''
             } : null,
-            ultimaFecha: lastRecord ? lastRecord.fechaIngreso.toISOString() : null
+            ultimaFecha: lastRecord ? lastRecord.fechaIngreso.toISOString() : null,
+            ultimasFechas
         }
     } catch (e) {
         console.error("Error obteniendo asignaciones PMPA:", e)

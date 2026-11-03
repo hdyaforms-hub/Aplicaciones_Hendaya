@@ -4,11 +4,13 @@ import React, { useState, useTransition, useMemo } from 'react'
 import {
     AdmHextraRegistroDTO,
     CargaHextraDTO,
+    FiltrosMetadatosHextraDTO,
     cambiarEstadoPeriodoCargaHextraAction,
     getAdmHorasExtrasAction,
     getHistorialCargasHextraAction,
     registrarAuditoriaExportacionHextraAction,
-    toggleAplicaAdmHorasExtrasAction
+    toggleAplicaAdmHorasExtrasAction,
+    justificarMasivoHorasExtrasAction
 } from './actions'
 import {
     Clock,
@@ -31,7 +33,12 @@ import {
     FileSpreadsheet,
     ShieldCheck,
     FolderArchive,
-    History
+    History,
+    CheckSquare,
+    Square,
+    UserCheck,
+    School,
+    MapPin
 } from 'lucide-react'
 import * as xlsx from 'xlsx'
 import { formatHorasMinutos, formatHorasMinutosTexto, parseMinutosHhee } from '@/lib/personal-time-format'
@@ -55,6 +62,7 @@ interface AdmHorasExtrasClientProps {
     userRbds: number[]
     isAdmin: boolean
     puedeGestionarPeriodos?: boolean
+    metadatosFiltros?: FiltrosMetadatosHextraDTO
 }
 
 export default function AdmHorasExtrasClient({
@@ -62,7 +70,8 @@ export default function AdmHorasExtrasClient({
     initialCargas,
     userRbds,
     isAdmin,
-    puedeGestionarPeriodos = false
+    puedeGestionarPeriodos = false,
+    metadatosFiltros
 }: AdmHorasExtrasClientProps) {
     const [tabActivo, setTabActivo] = useState<'cargas' | 'registros'>('cargas')
 
@@ -83,6 +92,104 @@ export default function AdmHorasExtrasClient({
     const [filtroFechaDesde, setFiltroFechaDesde] = useState('')
     const [filtroFechaHasta, setFiltroFechaHasta] = useState('')
     const [busquedaTexto, setBusquedaTexto] = useState('')
+
+    // Nuevos Filtros: Rol, Usuario (según rol), Institución y Comuna
+    const [filtroRol, setFiltroRol] = useState<string>('TODOS')
+    const [filtroUsuarioId, setFiltroUsuarioId] = useState<string>('TODOS')
+    const [filtroInstitucion, setFiltroInstitucion] = useState<string>('TODAS')
+    const [filtroComuna, setFiltroComuna] = useState<string>('TODAS')
+
+    // Selección múltiple y Justificación Masiva
+    const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
+    const [modalMasivoOpen, setModalMasivoOpen] = useState(false)
+    const [aplicaMasivo, setAplicaMasivo] = useState(true)
+    const [observacionMasiva, setObservacionMasiva] = useState('')
+    const [procesandoMasivo, setProcesandoMasivo] = useState(false)
+
+    // Metadatos
+    const rolesDisponibles = useMemo(() => metadatosFiltros?.roles || [], [metadatosFiltros])
+    const usuariosDisponibles = useMemo(() => metadatosFiltros?.usuarios || [], [metadatosFiltros])
+    const institucionesDisponibles = useMemo(() => metadatosFiltros?.instituciones || [], [metadatosFiltros])
+    const comunasDisponibles = useMemo(() => metadatosFiltros?.comunas || [], [metadatosFiltros])
+
+    const usuariosFiltradosPorRol = useMemo(() => {
+        if (filtroRol === 'TODOS') return usuariosDisponibles
+        return usuariosDisponibles.filter(u => u.roleId === filtroRol)
+    }, [usuariosDisponibles, filtroRol])
+
+    // Selección de casos abiertos
+    const registrosAbiertosPagina = useMemo(() => {
+        return registros.filter(r => r.estado === 'ABIERTO')
+    }, [registros])
+
+    const isAllVisibleSelected = registrosAbiertosPagina.length > 0 && registrosAbiertosPagina.every(r => selectedIds.has(r.id))
+
+    const handleSelectAllVisible = () => {
+        setSelectedIds(prev => {
+            const next = new Set(prev)
+            if (isAllVisibleSelected) {
+                registrosAbiertosPagina.forEach(r => next.delete(r.id))
+            } else {
+                registrosAbiertosPagina.forEach(r => next.add(r.id))
+            }
+            return next
+        })
+    }
+
+    const handleToggleSelectOne = (id: string) => {
+        setSelectedIds(prev => {
+            const next = new Set(prev)
+            if (next.has(id)) next.delete(id)
+            else next.add(id)
+            return next
+        })
+    }
+
+    const handleClearSelection = () => {
+        setSelectedIds(new Set())
+    }
+
+    const handleEjecutarJustificacionMasiva = async () => {
+        if (selectedIds.size === 0) return
+        setProcesandoMasivo(true)
+        try {
+            const res = await justificarMasivoHorasExtrasAction(
+                Array.from(selectedIds),
+                aplicaMasivo,
+                observacionMasiva
+            )
+            if (res.success) {
+                setRegistros(prev =>
+                    prev.map(r => {
+                        if (selectedIds.has(r.id)) {
+                            return {
+                                ...r,
+                                aplica: aplicaMasivo,
+                                aplicaModificadoPor: 'Tú (Masivo)',
+                                aplicaModificadoAt: new Date().toISOString(),
+                                aplicaObservacion: observacionMasiva || r.aplicaObservacion
+                            }
+                        }
+                        return r
+                    })
+                )
+                setMensajeFeedback({
+                    tipo: 'success',
+                    texto: `Se tipificaron exitosamente ${res.actualizados} casos seleccionados (${aplicaMasivo ? 'APLICA' : 'NO APLICA'}).`
+                })
+                setSelectedIds(new Set())
+                setModalMasivoOpen(false)
+                setObservacionMasiva('')
+                setTimeout(() => setMensajeFeedback(null), 4000)
+            } else {
+                setMensajeFeedback({ tipo: 'error', texto: res.error || 'Error al procesar justificación masiva' })
+            }
+        } catch (err: any) {
+            setMensajeFeedback({ tipo: 'error', texto: err?.message || 'Error inesperado' })
+        } finally {
+            setProcesandoMasivo(false)
+        }
+    }
 
     // Paginación y Ordenamiento Tab Registros (10 por página)
     const [paginaActual, setPaginaActual] = useState(1)
@@ -174,20 +281,84 @@ export default function AdmHorasExtrasClient({
     const recargarDatos = (
         pagina: number = paginaActual,
         sortBy: SortField = sortField,
-        sortDir: 'asc' | 'desc' = sortDirection
+        sortDir: 'asc' | 'desc' = sortDirection,
+        customFilters?: {
+            rol?: string
+            usuarioId?: string
+            institucion?: string
+            comuna?: string
+            rbd?: number | null
+            cargaId?: string
+            estado?: 'TODOS' | 'ABIERTO' | 'CERRADO'
+            aplica?: 'TODOS' | 'APLICA' | 'NO_APLICA'
+            sucursal?: string
+            supervisor?: string
+            fechaDesde?: string
+            fechaHasta?: string
+            search?: string
+        }
     ) => {
+        const rolActual = customFilters?.rol !== undefined ? customFilters.rol : filtroRol
+        const usuarioIdActual = customFilters?.usuarioId !== undefined ? customFilters.usuarioId : filtroUsuarioId
+        const institucionActual = customFilters?.institucion !== undefined ? customFilters.institucion : filtroInstitucion
+        const comunaActual = customFilters?.comuna !== undefined ? customFilters.comuna : filtroComuna
+        const rbdActual = customFilters?.rbd !== undefined ? customFilters.rbd : filtroRbd
+        const cargaIdActual = customFilters?.cargaId !== undefined ? customFilters.cargaId : filtroCargaId
+        const estadoActual = customFilters?.estado !== undefined ? customFilters.estado : filtroEstado
+        const aplicaActual = customFilters?.aplica !== undefined ? customFilters.aplica : filtroAplica
+        const sucursalActual = customFilters?.sucursal !== undefined ? customFilters.sucursal : filtroSucursal
+        const supervisorActual = customFilters?.supervisor !== undefined ? customFilters.supervisor : filtroSupervisor
+        const fechaDesdeActual = customFilters?.fechaDesde !== undefined ? customFilters.fechaDesde : filtroFechaDesde
+        const fechaHastaActual = customFilters?.fechaHasta !== undefined ? customFilters.fechaHasta : filtroFechaHasta
+        const searchActual = customFilters?.search !== undefined ? customFilters.search : busquedaTexto
+
+        let rbdsFilter: number[] | undefined = undefined
+        let rutHashesFilter: string[] | undefined = undefined
+
+        if (usuarioIdActual !== 'TODOS') {
+            const u = usuariosDisponibles.find(x => x.id === usuarioIdActual)
+            if (u) {
+                if (u.hasVisualizacion && u.rutHashes && u.rutHashes.length > 0) {
+                    rutHashesFilter = u.rutHashes
+                }
+                if (u.rbds && u.rbds.length > 0) {
+                    rbdsFilter = u.rbds
+                }
+                if ((!u.rutHashes || u.rutHashes.length === 0) && (!u.rbds || u.rbds.length === 0)) {
+                    rbdsFilter = [-999999]
+                }
+            } else {
+                rbdsFilter = [-999999]
+            }
+        } else if (rolActual !== 'TODOS') {
+            const uList = usuariosDisponibles.filter(x => x.roleId === rolActual)
+            const roleHashes = Array.from(new Set(uList.flatMap(x => x.rutHashes || [])))
+            const roleRbds = Array.from(new Set(uList.flatMap(x => x.rbds || [])))
+
+            if (roleHashes.length > 0) rutHashesFilter = roleHashes
+            if (roleRbds.length > 0) rbdsFilter = roleRbds
+
+            if (roleHashes.length === 0 && roleRbds.length === 0) {
+                rbdsFilter = [-999999]
+            }
+        }
+
         startTransition(async () => {
             const [resReg, resCargas] = await Promise.all([
                 getAdmHorasExtrasAction({
-                    rbd: filtroRbd || undefined,
-                    sucursal: filtroSucursal,
-                    supervisor: filtroSupervisor,
-                    fechaDesde: filtroFechaDesde || undefined,
-                    fechaHasta: filtroFechaHasta || undefined,
-                    aplica: filtroAplica,
-                    estado: filtroEstado,
-                    cargaId: filtroCargaId !== 'TODOS' ? filtroCargaId : undefined,
-                    search: busquedaTexto || undefined,
+                    rbd: rbdActual || undefined,
+                    rbds: rbdsFilter,
+                    rutHashes: rutHashesFilter,
+                    institucion: institucionActual !== 'TODAS' ? institucionActual : undefined,
+                    comuna: comunaActual !== 'TODAS' ? comunaActual : undefined,
+                    sucursal: sucursalActual,
+                    supervisor: supervisorActual,
+                    fechaDesde: fechaDesdeActual || undefined,
+                    fechaHasta: fechaHastaActual || undefined,
+                    aplica: aplicaActual,
+                    estado: estadoActual,
+                    cargaId: cargaIdActual !== 'TODOS' ? cargaIdActual : undefined,
+                    search: searchActual || undefined,
                     page: pagina,
                     pageSize,
                     sortBy,
@@ -302,6 +473,8 @@ export default function AdmHorasExtrasClient({
             'Fecha': r.fecha,
             'RBD': r.rbd || '',
             'Establecimiento': r.establecimiento || '',
+            'Institución': r.institucion || '',
+            'Comuna': r.comuna || '',
             'Sucursal': r.sucursal,
             'Supervisor': r.supervisor || '',
             'RUT': r.rut,
@@ -723,7 +896,7 @@ export default function AdmHorasExtrasClient({
                                 <Filter className="w-3.5 h-3.5 text-cyan-600" />
                                 <span>Filtros de Búsqueda Avanzada</span>
                             </div>
-                            {(busquedaRbdNombre || filtroRbd || filtroEstado !== 'TODOS' || filtroCargaId !== 'TODOS' || filtroAplica !== 'TODOS' || filtroSucursal !== 'TODAS' || filtroSupervisor !== 'TODOS' || filtroFechaDesde || filtroFechaHasta || busquedaTexto) && (
+                            {(busquedaRbdNombre || filtroRbd || filtroEstado !== 'TODOS' || filtroCargaId !== 'TODOS' || filtroAplica !== 'TODOS' || filtroSucursal !== 'TODAS' || filtroSupervisor !== 'TODOS' || filtroFechaDesde || filtroFechaHasta || busquedaTexto || filtroRol !== 'TODOS' || filtroUsuarioId !== 'TODOS' || filtroInstitucion !== 'TODAS' || filtroComuna !== 'TODAS') && (
                                 <button
                                     onClick={() => {
                                         setBusquedaRbdNombre('')
@@ -736,7 +909,25 @@ export default function AdmHorasExtrasClient({
                                         setFiltroFechaDesde('')
                                         setFiltroFechaHasta('')
                                         setBusquedaTexto('')
-                                        setTimeout(() => recargarDatos(1), 50)
+                                        setFiltroRol('TODOS')
+                                        setFiltroUsuarioId('TODOS')
+                                        setFiltroInstitucion('TODAS')
+                                        setFiltroComuna('TODAS')
+                                        setTimeout(() => recargarDatos(1, sortField, sortDirection, {
+                                            rol: 'TODOS',
+                                            usuarioId: 'TODOS',
+                                            institucion: 'TODAS',
+                                            comuna: 'TODAS',
+                                            rbd: null,
+                                            cargaId: 'TODOS',
+                                            estado: 'TODOS',
+                                            aplica: 'TODOS',
+                                            sucursal: 'TODAS',
+                                            supervisor: 'TODOS',
+                                            fechaDesde: '',
+                                            fechaHasta: '',
+                                            search: ''
+                                        }), 50)
                                     }}
                                     className="text-[11px] font-semibold text-rose-600 hover:text-rose-800 flex items-center gap-1 transition-colors"
                                 >
@@ -746,7 +937,103 @@ export default function AdmHorasExtrasClient({
                             )}
                         </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3 text-xs">
+                            {/* Filtro por Rol */}
+                            <div>
+                                <label className="block text-[11px] font-semibold text-gray-600 mb-1 flex items-center gap-1">
+                                    <ShieldCheck className="w-3 h-3 text-cyan-600" />
+                                    <span>Rol de Usuario</span>
+                                </label>
+                                <select
+                                    value={filtroRol}
+                                    onChange={e => {
+                                        const val = e.target.value
+                                        setFiltroRol(val)
+                                        setFiltroUsuarioId('TODOS')
+                                        setTimeout(() => recargarDatos(1, sortField, sortDirection, { rol: val, usuarioId: 'TODOS' }), 50)
+                                    }}
+                                    className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 text-xs bg-white"
+                                >
+                                    <option value="TODOS">Todos los Roles</option>
+                                    {rolesDisponibles.map(r => (
+                                        <option key={r.id} value={r.id}>
+                                            {r.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            {/* Filtro por Usuario según Rol */}
+                            <div>
+                                <label className="block text-[11px] font-semibold text-gray-600 mb-1 flex items-center gap-1">
+                                    <UserCheck className="w-3 h-3 text-cyan-600" />
+                                    <span>Usuario {filtroRol !== 'TODOS' ? '(del rol)' : ''}</span>
+                                </label>
+                                <select
+                                    value={filtroUsuarioId}
+                                    onChange={e => {
+                                        const val = e.target.value
+                                        setFiltroUsuarioId(val)
+                                        setTimeout(() => recargarDatos(1, sortField, sortDirection, { usuarioId: val }), 50)
+                                    }}
+                                    className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 text-xs bg-white truncate"
+                                >
+                                    <option value="TODOS">Todos los Usuarios</option>
+                                    {usuariosFiltradosPorRol.map(u => (
+                                        <option key={u.id} value={u.id}>
+                                            {u.name || u.username} ({u.hasVisualizacion && u.totalTrabajadores ? `${u.totalTrabajadores} trab. / ` : ''}{u.rbds.length} RBDs)
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            {/* Filtro por Institución */}
+                            <div>
+                                <label className="block text-[11px] font-semibold text-gray-600 mb-1 flex items-center gap-1">
+                                    <School className="w-3 h-3 text-cyan-600" />
+                                    <span>Institución</span>
+                                </label>
+                                <select
+                                    value={filtroInstitucion}
+                                    onChange={e => {
+                                        const val = e.target.value
+                                        setFiltroInstitucion(val)
+                                        setTimeout(() => recargarDatos(1, sortField, sortDirection, { institucion: val }), 50)
+                                    }}
+                                    className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 text-xs bg-white"
+                                >
+                                    <option value="TODAS">Todas las Instituciones</option>
+                                    {institucionesDisponibles.map(inst => (
+                                        <option key={inst} value={inst}>
+                                            {inst}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            {/* Filtro por Comuna */}
+                            <div>
+                                <label className="block text-[11px] font-semibold text-gray-600 mb-1 flex items-center gap-1">
+                                    <MapPin className="w-3 h-3 text-cyan-600" />
+                                    <span>Comuna</span>
+                                </label>
+                                <select
+                                    value={filtroComuna}
+                                    onChange={e => {
+                                        const val = e.target.value
+                                        setFiltroComuna(val)
+                                        setTimeout(() => recargarDatos(1, sortField, sortDirection, { comuna: val }), 50)
+                                    }}
+                                    className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 text-xs bg-white"
+                                >
+                                    <option value="TODAS">Todas las Comunas</option>
+                                    {comunasDisponibles.map(com => (
+                                        <option key={com} value={com}>
+                                            {com}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
                             {/* Autocompletado RBD / Establecimiento */}
                             <div className="relative">
                                 <label className="block text-[11px] font-semibold text-gray-600 mb-1">RBD / Establecimiento</label>
@@ -919,6 +1206,35 @@ export default function AdmHorasExtrasClient({
                         </div>
                     </div>
 
+                    {/* Barra de Selección Masiva */}
+                    {selectedIds.size > 0 && (
+                        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-3.5 bg-cyan-50 border border-cyan-200 rounded-2xl text-xs shadow-sm animate-in fade-in slide-in-from-top-2">
+                            <div className="flex items-center gap-2 text-cyan-900 font-semibold">
+                                <CheckSquare className="w-4 h-4 text-cyan-600 flex-shrink-0" />
+                                <span>
+                                    {selectedIds.size} {selectedIds.size === 1 ? 'caso abierto seleccionado' : 'casos abiertos seleccionados'}
+                                </span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <button
+                                    type="button"
+                                    onClick={handleClearSelection}
+                                    className="px-3 py-1.5 bg-white hover:bg-gray-100 text-gray-700 border border-gray-200 rounded-xl font-medium transition-colors"
+                                >
+                                    Deseleccionar
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setModalMasivoOpen(true)}
+                                    className="px-4 py-1.5 bg-cyan-600 hover:bg-cyan-700 text-white rounded-xl font-bold shadow-sm flex items-center gap-1.5 transition-colors"
+                                >
+                                    <Check className="w-3.5 h-3.5" />
+                                    <span>Justificar en Forma Masiva ({selectedIds.size})</span>
+                                </button>
+                            </div>
+                        </div>
+                    )}
+
                     {/* Tabla de Registros */}
                     <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
                         {registros.length === 0 ? (
@@ -930,6 +1246,15 @@ export default function AdmHorasExtrasClient({
                                 <table className="w-full text-left text-xs border-collapse">
                                     <thead className="bg-gray-100 text-gray-600 uppercase text-[10px] tracking-wider font-semibold">
                                         <tr>
+                                            <th className="py-3 px-3 text-center w-10">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={isAllVisibleSelected}
+                                                    onChange={handleSelectAllVisible}
+                                                    className="w-4 h-4 rounded border-gray-300 text-cyan-600 focus:ring-cyan-500 cursor-pointer"
+                                                    title="Seleccionar todos los casos abiertos de esta página"
+                                                />
+                                            </th>
                                             <th 
                                                 onClick={() => handleSort('fecha')}
                                                 className="py-3 px-3 cursor-pointer select-none group hover:bg-gray-200 transition-colors"
@@ -1008,7 +1333,23 @@ export default function AdmHorasExtrasClient({
                                         {registros.map(r => {
                                             const esCerrado = r.estado === 'CERRADO'
                                             return (
-                                                <tr key={r.id} className="hover:bg-gray-50/80 transition-colors">
+                                                <tr key={r.id} className={`transition-colors ${selectedIds.has(r.id) ? 'bg-cyan-50/60' : 'hover:bg-gray-50/80'}`}>
+                                                    {/* Checkbox Selección */}
+                                                    <td className="py-3 px-3 text-center">
+                                                        {esCerrado ? (
+                                                            <span title="Período CERRADO (Bloqueado)">
+                                                                <Lock className="w-3.5 h-3.5 text-gray-300 mx-auto" />
+                                                            </span>
+                                                        ) : (
+                                                            <input
+                                                                type="checkbox"
+                                                                checked={selectedIds.has(r.id)}
+                                                                onChange={() => handleToggleSelectOne(r.id)}
+                                                                className="w-4 h-4 rounded border-gray-300 text-cyan-600 focus:ring-cyan-500 cursor-pointer"
+                                                            />
+                                                        )}
+                                                    </td>
+
                                                     {/* Fecha */}
                                                     <td className="py-3 px-3 font-semibold text-gray-900 whitespace-nowrap">
                                                         {r.fecha}
@@ -1017,7 +1358,20 @@ export default function AdmHorasExtrasClient({
                                                     {/* RBD / Establecimiento */}
                                                     <td className="py-3 px-3">
                                                         <div className="flex flex-col">
-                                                            <span className="font-bold text-gray-900">{r.establecimiento}</span>
+                                                            <div className="flex items-center gap-1.5 flex-wrap">
+                                                                <span className="font-bold text-gray-900">{r.establecimiento}</span>
+                                                                {r.institucion && (
+                                                                    <span className="text-[9px] font-bold text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200">
+                                                                        {r.institucion}
+                                                                    </span>
+                                                                )}
+                                                                {r.comuna && (
+                                                                    <span className="text-[9px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200 flex items-center gap-0.5">
+                                                                        <MapPin className="w-2.5 h-2.5" />
+                                                                        {r.comuna}
+                                                                    </span>
+                                                                )}
+                                                            </div>
                                                             {r.rbd && (
                                                                 <span className="text-[10px] font-semibold text-cyan-600">RBD: {r.rbd}</span>
                                                             )}
@@ -1240,6 +1594,96 @@ export default function AdmHorasExtrasClient({
                                 <span>
                                     {modalPeriodo.accion === 'CERRAR' ? 'Sí, Cerrar Período' : 'Sí, Reabrir Período'}
                                 </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Modal de Justificación Masiva */}
+            {modalMasivoOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+                    <div className="bg-white rounded-2xl shadow-xl border border-gray-200 max-w-md w-full p-6 space-y-4 animate-in fade-in zoom-in-95">
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-xl bg-cyan-100 text-cyan-700 flex items-center justify-center flex-shrink-0">
+                                <CheckSquare className="w-5 h-5" />
+                            </div>
+                            <div>
+                                <h3 className="font-bold text-gray-900 text-base">Justificación Masiva de Horas Extras</h3>
+                                <p className="text-xs text-gray-500">
+                                    Se aplicará la resolución a <strong>{selectedIds.size}</strong> casos seleccionados.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="space-y-3">
+                            <div>
+                                <label className="block text-xs font-bold text-gray-700 mb-1">¿Aplica Horas Extras? *</label>
+                                <div className="grid grid-cols-2 gap-2">
+                                    <button
+                                        type="button"
+                                        onClick={() => setAplicaMasivo(true)}
+                                        className={`py-2 px-3 rounded-xl border text-xs font-bold flex items-center justify-center gap-1.5 transition-colors ${
+                                            aplicaMasivo
+                                                ? 'bg-emerald-50 border-emerald-500 text-emerald-800'
+                                                : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
+                                        }`}
+                                    >
+                                        <Check className="w-3.5 h-3.5 text-emerald-600 stroke-[3]" />
+                                        <span>SÍ (Aplica)</span>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => setAplicaMasivo(false)}
+                                        className={`py-2 px-3 rounded-xl border text-xs font-bold flex items-center justify-center gap-1.5 transition-colors ${
+                                            !aplicaMasivo
+                                                ? 'bg-rose-50 border-rose-500 text-rose-800'
+                                                : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
+                                        }`}
+                                    >
+                                        <X className="w-3.5 h-3.5 text-rose-600 stroke-[3]" />
+                                        <span>NO (No Aplica)</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label className="block text-xs font-bold text-gray-700 mb-1">Observación Masiva (Opcional)</label>
+                                <textarea
+                                    rows={2}
+                                    value={observacionMasiva}
+                                    onChange={e => setObservacionMasiva(e.target.value)}
+                                    placeholder="Detalle o motivo de la justificación masiva..."
+                                    className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 text-xs"
+                                />
+                            </div>
+
+                            <div className="bg-amber-50 p-3 rounded-xl border border-amber-200 text-xs text-amber-800 flex items-start gap-2">
+                                <AlertCircle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                                <span>Solo se actualizarán los casos pertenecientes a períodos ABIERTOS. Esta acción quedará registrada en el módulo de auditoría.</span>
+                            </div>
+                        </div>
+
+                        <div className="flex items-center justify-end gap-2 pt-2">
+                            <button
+                                type="button"
+                                disabled={procesandoMasivo}
+                                onClick={() => {
+                                    setModalMasivoOpen(false)
+                                    setObservacionMasiva('')
+                                }}
+                                className="px-4 py-2 border border-gray-200 rounded-xl text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
+                            >
+                                Cancelar
+                            </button>
+                            <button
+                                type="button"
+                                disabled={procesandoMasivo}
+                                onClick={handleEjecutarJustificacionMasiva}
+                                className="px-4 py-2 rounded-xl text-xs font-semibold text-white shadow-sm transition-colors flex items-center gap-1.5 bg-cyan-600 hover:bg-cyan-700 disabled:opacity-50"
+                            >
+                                {procesandoMasivo && <RefreshCw className="w-3.5 h-3.5 animate-spin" />}
+                                <span>Aplicar a {selectedIds.size} casos</span>
                             </button>
                         </div>
                     </div>
