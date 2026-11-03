@@ -128,7 +128,7 @@ export default function AdmAtrasosClient({
     // Selección múltiple y Justificación Masiva
     const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
     const [modalMasivoOpen, setModalMasivoOpen] = useState(false)
-    const [aplicaDescuentoMasivo, setAplicaDescuentoMasivo] = useState(false)
+    const [aplicaDescuentoMasivo, setAplicaDescuentoMasivo] = useState(true)
     const [justificadoMasivo, setJustificadoMasivo] = useState('SÍ')
     const [observacionMasiva, setObservacionMasiva] = useState('')
     const [procesandoMasivo, setProcesandoMasivo] = useState(false)
@@ -266,7 +266,7 @@ export default function AdmAtrasosClient({
     }>({
         isOpen: false,
         registro: null,
-        aplicaDescuento: false,
+        aplicaDescuento: true,
         justificado: '',
         observacion: ''
     })
@@ -588,7 +588,7 @@ export default function AdmAtrasosClient({
                         }
                         : r
                 ))
-                setModalEdit({ isOpen: false, registro: null, aplicaDescuento: false, justificado: '', observacion: '' })
+                setModalEdit({ isOpen: false, registro: null, aplicaDescuento: true, justificado: '', observacion: '' })
                 setMensajeFeedback({ tipo: 'success', texto: 'Registro actualizado correctamente por Administración.' })
                 setTimeout(() => setMensajeFeedback(null), 3000)
             } else {
@@ -1661,7 +1661,7 @@ export default function AdmAtrasosClient({
                                 </div>
                             </div>
                             <button
-                                onClick={() => setModalEdit({ isOpen: false, registro: null, aplicaDescuento: false, justificado: '', observacion: '' })}
+                                onClick={() => setModalEdit({ isOpen: false, registro: null, aplicaDescuento: true, justificado: '', observacion: '' })}
                                 className="p-1.5 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100"
                             >
                                 <X className="w-5 h-5" />
@@ -1766,7 +1766,7 @@ export default function AdmAtrasosClient({
                             <div className="flex justify-end gap-2 pt-2 border-t border-gray-100">
                                 <button
                                     type="button"
-                                    onClick={() => setModalEdit({ isOpen: false, registro: null, aplicaDescuento: false, justificado: '', observacion: '' })}
+                                    onClick={() => setModalEdit({ isOpen: false, registro: null, aplicaDescuento: true, justificado: '', observacion: '' })}
                                     className="px-4 py-2 border border-gray-200 text-gray-700 hover:bg-gray-50 rounded-xl font-semibold"
                                 >
                                     Cancelar

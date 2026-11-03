@@ -285,7 +285,7 @@ export async function getAsistenciaAtrasosAction(filtros?: {
                 justificado: r.justificado,
                 justificadoPor: r.justificadoPor || null,
                 centroCostos: r.centroCostos || null,
-                aplicaDescuento: Boolean(r.aplicaDescuento),
+                aplicaDescuento: r.aplicaDescuento !== null && r.aplicaDescuento !== undefined ? Boolean(r.aplicaDescuento) : true,
                 aplicaModificadoPor: r.aplicaModificadoPor,
                 aplicaModificadoAt: r.aplicaModificadoAt ? new Date(r.aplicaModificadoAt).toISOString() : null,
                 documentoUrl: r.documentoUrl || null,

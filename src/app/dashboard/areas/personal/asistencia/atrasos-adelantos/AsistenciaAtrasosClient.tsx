@@ -102,7 +102,7 @@ export default function AsistenciaAtrasosClient({
     }>({
         isOpen: false,
         registro: null,
-        aplicaDescuento: false,
+        aplicaDescuento: true,
         justificado: '',
         observacion: '',
         archivoNuevo: null,
@@ -361,7 +361,7 @@ export default function AsistenciaAtrasosClient({
                 setModalEdit({
                     isOpen: false,
                     registro: null,
-                    aplicaDescuento: false,
+                    aplicaDescuento: true,
                     justificado: '',
                     observacion: '',
                     archivoNuevo: null,
@@ -986,7 +986,7 @@ export default function AsistenciaAtrasosClient({
                                 onClick={() => setModalEdit({
                                     isOpen: false,
                                     registro: null,
-                                    aplicaDescuento: false,
+                                    aplicaDescuento: true,
                                     justificado: '',
                                     observacion: '',
                                     archivoNuevo: null,
@@ -1197,7 +1197,7 @@ export default function AsistenciaAtrasosClient({
                                     onClick={() => setModalEdit({
                                         isOpen: false,
                                         registro: null,
-                                        aplicaDescuento: false,
+                                        aplicaDescuento: true,
                                         justificado: '',
                                         observacion: '',
                                         archivoNuevo: null,

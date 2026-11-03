@@ -478,7 +478,7 @@ export async function getAtrasosDataAction(filtros?: {
                 justificadoPor: r.justificadoPor || null,
                 centroCostos: r.centroCostos || null,
                 grupoUsuario: r.grupoUsuario || null,
-                aplicaDescuento: Boolean(r.aplicaDescuento),
+                aplicaDescuento: r.aplicaDescuento !== null && r.aplicaDescuento !== undefined ? Boolean(r.aplicaDescuento) : true,
                 aplicaModificadoPor: r.aplicaModificadoPor,
                 aplicaModificadoAt: r.aplicaModificadoAt ? new Date(r.aplicaModificadoAt).toISOString() : null,
                 observacion: r.observacion,
@@ -845,7 +845,7 @@ export async function procesarPlanillaAtrasosBuffer(
                         $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13,
                         $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25,
                         $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36,
-                        false, $37, 'ABIERTO', $38, $38
+                        true, $37, 'ABIERTO', $38, $38
                     );
                 `,
                     regId, tipoFinal, cargaId, idEnc, idHash,

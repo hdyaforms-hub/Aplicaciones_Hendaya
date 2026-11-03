@@ -65,7 +65,7 @@ export async function ensurePersonalAtrasosTables() {
                 "justificadoPor" TEXT,
                 "centroCostos" TEXT,
                 "grupoUsuario" TEXT,
-                "aplicaDescuento" BOOLEAN NOT NULL DEFAULT false,
+                "aplicaDescuento" BOOLEAN NOT NULL DEFAULT true,
                 "aplicaModificadoPor" TEXT,
                 "aplicaModificadoAt" TIMESTAMP(3),
                 observacion TEXT,
@@ -94,6 +94,9 @@ export async function ensurePersonalAtrasosTables() {
         await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Atrasos_Registro" ADD COLUMN IF NOT EXISTS "documentoSubidoAt" TIMESTAMP(3);`)
         await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Atrasos_Registro" ADD COLUMN IF NOT EXISTS "documentoSubidoPor" TEXT;`)
         await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Atrasos_Registro" ADD COLUMN IF NOT EXISTS "modificacionesCount" INTEGER NOT NULL DEFAULT 0;`)
+        await rawPrisma.$executeRawUnsafe(`ALTER TABLE "Pers_Atrasos_Registro" ALTER COLUMN "aplicaDescuento" SET DEFAULT true;`)
+        // Auto-recuperación: actualizar a 'true' los registros que nunca fueron modificados manualmente para que tomen el valor por defecto APLICA
+        await rawPrisma.$executeRawUnsafe(`UPDATE "Pers_Atrasos_Registro" SET "aplicaDescuento" = true WHERE "aplicaModificadoPor" IS NULL;`)
 
         // 3. Índice Único para upsert estricto: evita cargas duplicadas y actualiza registros por (identificadorHash, fecha, tipo)
         // Permite que un colaborador pueda tener tanto un Adelanto como un Atraso en la misma fecha sin colisión
