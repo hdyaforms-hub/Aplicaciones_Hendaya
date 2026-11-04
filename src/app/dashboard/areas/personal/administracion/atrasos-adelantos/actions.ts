@@ -638,13 +638,17 @@ export async function actualizarAtrasoAdminAction(
  * Server Action: Elimina una carga completa y todos sus registros vinculados
  */
 export async function eliminarCargaAtrasosAdminAction(cargaId: string): Promise<{ success: boolean; error?: string; eliminados?: number }> {
-    if (!await checkAdminPermission()) {
-        return { success: false, error: 'No tienes permisos administrativos para eliminar esta planilla' }
+    const session = await getSession()
+    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
+    const hasPerm = await checkAdminPermission()
+    const puedeGestionar = session?.user?.id ? await puedeUsuarioCerrarPeriodosRH(session.user.id) : false
+
+    if (!isAdmin && !hasPerm && !puedeGestionar) {
+        return { success: false, error: 'No tienes permisos para eliminar esta planilla' }
     }
     await ensurePersonalAtrasosTables()
 
-    const session = await getSession()
-    const usuarioNombre = session?.user?.name || session?.user?.username || 'Admin'
+    const usuarioNombre = session?.user?.name || session?.user?.username || session?.user?.email || 'Administrador'
     const usuarioId = session?.user?.id || null
 
     try {

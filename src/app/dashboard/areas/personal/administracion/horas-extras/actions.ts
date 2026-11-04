@@ -514,6 +514,60 @@ export async function cambiarEstadoPeriodoCargaHextraAction(cargaId: string, nue
     }
 }
 
+/**
+ * Server Action: Elimina una carga completa de horas extras y todos sus registros vinculados
+ */
+export async function eliminarCargaHextraAdminAction(cargaId: string): Promise<{ success: boolean; error?: string; eliminados?: number }> {
+    const session = await getSession()
+    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
+    const hasPerm = await checkAdminPermission()
+    const puedeGestionar = session?.user?.id ? await puedeUsuarioCerrarPeriodosRH(session.user.id) : false
+
+    if (!isAdmin && !hasPerm && !puedeGestionar) {
+        return { success: false, error: 'No tienes permisos para eliminar esta planilla' }
+    }
+    await ensurePersonalHextraTables()
+
+    const usuarioNombre = session?.user?.name || session?.user?.username || session?.user?.email || 'Administrador'
+    const usuarioId = session?.user?.id || null
+
+    try {
+        const rows: any[] = await rawPrisma.$queryRawUnsafe(
+            `SELECT id, "nombreArchivo", "totalRegistros" FROM "Pers_Hextra_Carga" WHERE id = $1;`,
+            cargaId
+        )
+        const carga = rows[0]
+        if (!carga) {
+            return { success: false, error: 'La planilla no existe o ya fue eliminada' }
+        }
+
+        const countRes: any[] = await rawPrisma.$queryRawUnsafe(
+            `SELECT COUNT(*)::int AS count FROM "Pers_Hextra_Registro" WHERE "cargaId" = $1;`,
+            cargaId
+        )
+        const deletedCount = countRes[0]?.count || 0
+
+        await rawPrisma.$executeRawUnsafe(`DELETE FROM "Pers_Hextra_Registro" WHERE "cargaId" = $1;`, cargaId)
+        await rawPrisma.$executeRawUnsafe(`DELETE FROM "Pers_Hextra_Carga" WHERE id = $1;`, cargaId)
+
+        await logAuditAction({
+            username: usuarioNombre,
+            userId: usuarioId,
+            action: 'ELIMINAR_PLANILLA_HEXTRA',
+            modulo: 'Adm. de Hrs Extras',
+            detalle: `Eliminación de planilla "${carga.nombreArchivo}" (ID ${cargaId}): se borraron ${deletedCount} registros.`
+        })
+
+        revalidatePath(PATH_ADM_HEXTRA)
+        revalidatePath(PATH_ASISTENCIA_HEXTRA)
+
+        return { success: true, eliminados: deletedCount }
+    } catch (error: any) {
+        console.error('Error in eliminarCargaHextraAdminAction:', error)
+        return { success: false, error: error.message || 'Error al eliminar la planilla' }
+    }
+}
+
 export async function toggleAplicaAdmHorasExtrasAction(
     registroId: string,
     nuevoAplica: boolean,

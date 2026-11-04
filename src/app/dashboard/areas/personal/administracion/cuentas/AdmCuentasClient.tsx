@@ -211,8 +211,8 @@ export default function AdmCuentasClient({
             if (res.success) {
                 showToast(
                     nuevoEstado
-                        ? `Permiso HABILITADO para ${usuarioTarget.name || usuarioTarget.username}. Ahora puede cerrar/abrir períodos en RRHH.`
-                        : `Permiso REVOCADO para ${usuarioTarget.name || usuarioTarget.username}. Ya no podrá cerrar ni abrir períodos en RRHH.`
+                        ? `Permiso HABILITADO para ${usuarioTarget.name || usuarioTarget.username}. Ahora puede gestionar períodos y eliminar archivos en los módulos de RRHH.`
+                        : `Permiso REVOCADO para ${usuarioTarget.name || usuarioTarget.username}. Ya no podrá gestionar períodos ni eliminar archivos en RRHH.`
                 )
             } else {
                 // Revertir en caso de error
@@ -266,16 +266,16 @@ export default function AdmCuentasClient({
                                 Áreas / Recursos Humanos / Administración
                             </span>
                             <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                                <ShieldCheck className="w-3.5 h-3.5" /> Control de Períodos
+                                <ShieldCheck className="w-3.5 h-3.5" /> Control de Períodos y Archivos
                             </span>
                         </div>
                         <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white flex items-center gap-3">
                             <Shield className="w-8 h-8 text-cyan-400" />
-                            Adm. de Cuenta &mdash; Permisos de Períodos
+                            Adm. de Cuenta &mdash; Permisos de Períodos y Eliminación de Archivos
                         </h1>
                         <p className="mt-2 text-sm text-slate-300 max-w-2xl leading-relaxed">
                             Gestión centralizada de cuentas de usuario del área de Personal y Recursos Humanos.
-                            Controla qué colaboradores tienen la facultad de <span className="text-cyan-300 font-semibold">cerrar o abrir períodos</span> en cualquier módulo de Recursos Humanos (Adm. Ausentismo, Adm. de Hrs Extras y módulos anexos).
+                            Controla qué colaboradores tienen la facultad de <span className="text-cyan-300 font-semibold">cerrar o abrir períodos</span> y <span className="text-cyan-300 font-semibold">eliminar archivos cargados</span> en todos los módulos de Administración (Adm. Ausentismo, Adm. de Hrs Extras y Adm. Atrasos y Adelantos).
                         </p>
                     </div>
 
@@ -310,9 +310,9 @@ export default function AdmCuentasClient({
                 <div className="bg-white rounded-xl border border-emerald-200/80 p-5 shadow-sm hover:shadow-md transition-shadow">
                     <div className="flex items-center justify-between">
                         <div>
-                            <p className="text-xs font-semibold uppercase tracking-wider text-emerald-700">Habilitados para Períodos</p>
+                            <p className="text-xs font-semibold uppercase tracking-wider text-emerald-700">Habilitados (Períodos y Eliminación)</p>
                             <p className="text-2xl font-bold text-emerald-600 mt-1">{totalHabilitados}</p>
-                            <p className="text-xs text-emerald-700/80 mt-1">Pueden abrir y cerrar períodos en RRHH</p>
+                            <p className="text-xs text-emerald-700/80 mt-1">Pueden abrir/cerrar períodos y eliminar planillas</p>
                         </div>
                         <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 border border-emerald-200">
                             <Unlock className="w-6 h-6" />
@@ -325,7 +325,7 @@ export default function AdmCuentasClient({
                         <div>
                             <p className="text-xs font-semibold uppercase tracking-wider text-amber-700">Acceso Restringido</p>
                             <p className="text-2xl font-bold text-amber-600 mt-1">{totalRestringidos}</p>
-                            <p className="text-xs text-amber-700/80 mt-1">Sin facultad de abrir ni cerrar períodos</p>
+                            <p className="text-xs text-amber-700/80 mt-1">Sin facultad de gestionar períodos ni eliminar archivos</p>
                         </div>
                         <div className="w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 border border-amber-200">
                             <Lock className="w-6 h-6" />
@@ -339,10 +339,10 @@ export default function AdmCuentasClient({
                 <Info className="w-5 h-5 text-cyan-600 shrink-0 mt-0.5" />
                 <div className="space-y-1">
                     <p className="font-semibold text-cyan-950">
-                        Políticas de Seguridad y Control de Cierre en Recursos Humanos
+                        Políticas de Seguridad, Control de Cierre y Eliminación en Recursos Humanos
                     </p>
                     <p className="text-cyan-800 leading-relaxed">
-                        Solo los usuarios con el check <strong className="text-cyan-950">&quot;Habilitado para Cerrar/Abrir Períodos&quot;</strong> marcado tendrán la capacidad de realizar cierres o reaperturas de planillas y períodos en los módulos de <strong className="text-cyan-950">Adm. Ausentismo</strong>, <strong className="text-cyan-950">Adm. de Hrs Extras</strong> y otros módulos de RRHH. Si un usuario no tiene este permiso, los botones de acción permanecerán bloqueados y cualquier intento en el servidor será denegado. Cada cambio de permiso queda registrado con fecha y responsable en el módulo de <strong className="text-cyan-950">Auditoría</strong>.
+                        Solo los usuarios con el check <strong className="text-cyan-950">&quot;Habilitado para Cerrar/Abrir y Eliminar Archivos&quot;</strong> marcado tendrán la capacidad de realizar cierres o reaperturas de períodos y eliminar archivos/planillas cargadas en los módulos de <strong className="text-cyan-950">Adm. Ausentismo</strong>, <strong className="text-cyan-950">Adm. de Hrs Extras</strong> y <strong className="text-cyan-950">Adm. Atrasos y Adelantos</strong>. Si un usuario no tiene este permiso, los botones de acción permanecerán bloqueados y cualquier intento en el servidor será denegado. Cada cambio de permiso o eliminación queda registrado con fecha y responsable en el módulo de <strong className="text-cyan-950">Auditoría</strong>.
                     </p>
                 </div>
             </div>
@@ -479,7 +479,7 @@ export default function AdmCuentasClient({
                                     className="py-3.5 px-4 text-center cursor-pointer hover:bg-slate-200/70 transition-colors group"
                                 >
                                     <div className="flex items-center justify-center gap-1.5">
-                                        <span>¿Puede Cerrar / Abrir Períodos?</span>
+                                        <span>¿Puede Cerrar/Abrir y Eliminar Archivos?</span>
                                         {renderSortIcon('puedeCerrarPeriodos')}
                                     </div>
                                 </th>
@@ -686,8 +686,8 @@ export default function AdmCuentasClient({
                             <div>
                                 <h3 className="text-lg font-bold text-slate-900">
                                     {confirmModal.nuevoEstado
-                                        ? 'Habilitar Permiso de Períodos'
-                                        : 'Revocar Permiso de Períodos'}
+                                        ? 'Habilitar Períodos y Eliminación de Archivos'
+                                        : 'Revocar Períodos y Eliminación de Archivos'}
                                 </h3>
                                 <p className="text-xs text-slate-500">
                                     Confirmación de política de Recursos Humanos
@@ -713,11 +713,11 @@ export default function AdmCuentasClient({
                         <p className="text-xs text-slate-600 leading-relaxed">
                             {confirmModal.nuevoEstado ? (
                                 <span>
-                                    Al habilitar este permiso, el usuario <strong className="text-slate-900">{confirmModal.usuario.name || confirmModal.usuario.username}</strong> tendrá la facultad de <strong className="text-cyan-700">cerrar y abrir períodos</strong> en los módulos de Administración de Recursos Humanos (Adm. Ausentismo, Adm. de Hrs Extras y módulos anexos).
+                                    Al habilitar este permiso, el usuario <strong className="text-slate-900">{confirmModal.usuario.name || confirmModal.usuario.username}</strong> tendrá la facultad de <strong className="text-cyan-700">cerrar y abrir períodos</strong>, así como <strong className="text-cyan-700">eliminar planillas/archivos cargados</strong> en los módulos de Administración de Recursos Humanos (Adm. Ausentismo, Adm. de Hrs Extras y Adm. Atrasos y Adelantos).
                                 </span>
                             ) : (
                                 <span>
-                                    Al revocar este permiso, el usuario <strong className="text-slate-900">{confirmModal.usuario.name || confirmModal.usuario.username}</strong> <strong className="text-rose-700">no podrá cerrar ni abrir períodos</strong> en ningún módulo de Recursos Humanos.
+                                    Al revocar este permiso, el usuario <strong className="text-slate-900">{confirmModal.usuario.name || confirmModal.usuario.username}</strong> <strong className="text-rose-700">no podrá cerrar ni abrir períodos, ni eliminar archivos cargados</strong> en los módulos de Recursos Humanos.
                                 </span>
                             )}
                         </p>

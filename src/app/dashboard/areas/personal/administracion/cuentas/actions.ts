@@ -221,7 +221,7 @@ export async function togglePermisoCerrarPeriodosAction(
             userId: session.user.id || null,
             action: 'GESTION_PERMISO_PERIODOS_RH',
             modulo: 'Recursos Humanos',
-            detalle: `Se ${nuevoEstado ? 'HABILITÓ' : 'REVOCÓ'} el permiso para cerrar/abrir períodos de Recursos Humanos al usuario "${targetUser.username}" (${targetUser.name || 'Sin Nombre'}). Realizado por ${autorizadoPor}.`
+            detalle: `Se ${nuevoEstado ? 'HABILITÓ' : 'REVOCÓ'} el permiso para cerrar/abrir períodos y eliminar archivos cargados de Recursos Humanos al usuario "${targetUser.username}" (${targetUser.name || 'Sin Nombre'}). Realizado por ${autorizadoPor}.`
         })
 
         revalidatePath(PATH_CUENTAS)

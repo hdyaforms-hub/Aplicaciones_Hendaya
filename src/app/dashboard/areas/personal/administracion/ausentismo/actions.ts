@@ -355,6 +355,56 @@ export async function cambiarEstadoPeriodoCargaAction(cargaId: string, nuevoEsta
     }
 }
 
+/**
+ * Server Action: Elimina una carga completa de ausentismo y todos sus registros vinculados
+ */
+export async function eliminarCargaAusentismoAdminAction(cargaId: string): Promise<{ success: boolean; error?: string; eliminados?: number }> {
+    const session = await getSession()
+    const isAdmin = session?.user?.role?.name === 'Administrador' || session?.user?.role?.name === 'admin'
+    const hasPerm = await checkAdminPermission()
+    const puedeGestionar = session?.user?.id ? await puedeUsuarioCerrarPeriodosRH(session.user.id) : false
+
+    if (!isAdmin && !hasPerm && !puedeGestionar) {
+        return { success: false, error: 'No tienes permisos para eliminar esta planilla' }
+    }
+    await ensurePersonalAsistenciaTables()
+
+    const usuarioNombre = session?.user?.name || session?.user?.username || session?.user?.email || 'Administrador'
+    const usuarioId = session?.user?.id || null
+
+    try {
+        const carga = await (rawPrisma as any).pers_Asis_Carga.findUnique({
+            where: { id: cargaId }
+        })
+        if (!carga) {
+            return { success: false, error: 'La planilla no existe o ya fue eliminada' }
+        }
+
+        const countRes = await (rawPrisma as any).pers_Asis_Registro.deleteMany({
+            where: { cargaId }
+        })
+        await (rawPrisma as any).pers_Asis_Carga.delete({
+            where: { id: cargaId }
+        })
+
+        await logAuditAction({
+            username: usuarioNombre,
+            userId: usuarioId,
+            action: 'ELIMINAR_PLANILLA_AUSENTISMO',
+            modulo: 'Adm. Ausentismo',
+            detalle: `Eliminación de planilla "${carga.nombreArchivo}" (ID ${cargaId}): se borraron ${countRes.count} registros.`
+        })
+
+        revalidatePath(PATH_ADM_AUSENTISMO)
+        revalidatePath(PATH_ASISTENCIA)
+
+        return { success: true, eliminados: countRes.count }
+    } catch (error: any) {
+        console.error('Error in eliminarCargaAusentismoAdminAction:', error)
+        return { success: false, error: error.message || 'Error al eliminar la planilla' }
+    }
+}
+
 export async function asignarCriterioAdminAction(registroId: string, criterioId: string | null) {
     if (!await checkAdminPermission()) {
         return { success: false, error: 'No tienes permisos para modificar registros' }

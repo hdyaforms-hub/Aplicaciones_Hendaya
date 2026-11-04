@@ -7,6 +7,7 @@ import {
     asignarCriterioAdminAction,
     asignarCriterioMasivoAction,
     cambiarEstadoPeriodoCargaAction,
+    eliminarCargaAusentismoAdminAction,
     getAdmAusentismoRegistrosAction,
     getHistorialCargasAction,
     registrarAuditoriaExportacionAction,
@@ -43,7 +44,8 @@ import {
     Square,
     UserCheck,
     School,
-    MapPin
+    MapPin,
+    Trash2
 } from 'lucide-react'
 import * as xlsx from 'xlsx'
 import DocumentoPreviewModal, { DocumentoPreviewData } from '@/components/DocumentoPreviewModal'
@@ -144,6 +146,16 @@ export default function AdmAusentismoClient({
         accion: 'CERRAR'
     })
     const [procesandoPeriodo, setProcesandoPeriodo] = useState(false)
+
+    // Modal de confirmación para Eliminar Carga / Planilla
+    const [modalDeleteCarga, setModalDeleteCarga] = useState<{
+        isOpen: boolean
+        carga: CargaHistorialDTO | null
+    }>({
+        isOpen: false,
+        carga: null
+    })
+    const [procesandoDeleteCarga, setProcesandoDeleteCarga] = useState(false)
 
     // Paginación Tab Registros
     const [paginaActual, setPaginaActual] = useState(1)
@@ -558,6 +570,35 @@ export default function AdmAusentismoClient({
                 texto: res.error || 'Ocurrió un error al cambiar el estado del período.'
             })
             setTimeout(() => setMensajeFeedback(null), 4000)
+        }
+    }
+
+    // Ejecutar Eliminación de Carga / Planilla completa
+    const handleConfirmarEliminarCarga = async () => {
+        if (!modalDeleteCarga.carga) return
+        setProcesandoDeleteCarga(true)
+
+        const cargaId = modalDeleteCarga.carga.id
+        const nombreArchivo = modalDeleteCarga.carga.nombreArchivo
+        const res = await eliminarCargaAusentismoAdminAction(cargaId)
+
+        setProcesandoDeleteCarga(false)
+        setModalDeleteCarga({ isOpen: false, carga: null })
+
+        if (res.success) {
+            setMensajeFeedback({
+                tipo: 'success',
+                texto: `Planilla "${nombreArchivo}" eliminada correctamente (${res.eliminados || 0} registros removidos).`
+            })
+            setCargas(prev => prev.filter(c => c.id !== cargaId))
+            setRegistros(prev => prev.filter(r => r.cargaId !== cargaId))
+            setTimeout(() => setMensajeFeedback(null), 5000)
+        } else {
+            setMensajeFeedback({
+                tipo: 'error',
+                texto: res.error || 'Error al eliminar la planilla'
+            })
+            setTimeout(() => setMensajeFeedback(null), 5000)
         }
     }
 
@@ -992,6 +1033,16 @@ export default function AdmAusentismoClient({
                                                                 >
                                                                     <Lock className="w-3 h-3" />
                                                                     <span>Cerrar período</span>
+                                                                </button>
+                                                            )}
+
+                                                            {(isAdmin || puedeGestionarPeriodos) && (
+                                                                <button
+                                                                    onClick={() => setModalDeleteCarga({ isOpen: true, carga: c })}
+                                                                    className="p-1.5 text-gray-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
+                                                                    title="Eliminar planilla y sus registros"
+                                                                >
+                                                                    <Trash2 className="w-3.5 h-3.5" />
                                                                 </button>
                                                             )}
                                                         </div>
@@ -1672,6 +1723,51 @@ export default function AdmAusentismoClient({
                                 </div>
                             </div>
                         )}
+                    </div>
+                </div>
+            )}
+
+            {/* Modal de confirmación para Eliminar Carga / Planilla */}
+            {modalDeleteCarga.isOpen && modalDeleteCarga.carga && (
+                <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-fadeIn">
+                    <div className="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-gray-100 space-y-4">
+                        <div className="flex items-center gap-3">
+                            <div className="p-3 rounded-2xl bg-rose-50 text-rose-600">
+                                <Trash2 className="w-6 h-6" />
+                            </div>
+                            <div>
+                                <h3 className="font-bold text-gray-900 text-base">¿Eliminar Planilla Completa?</h3>
+                                <p className="text-xs text-gray-500 truncate max-w-xs">{modalDeleteCarga.carga.nombreArchivo}</p>
+                            </div>
+                        </div>
+
+                        <div className="text-xs text-gray-600 bg-rose-50/60 border border-rose-100 p-3.5 rounded-2xl space-y-1.5">
+                            <p className="font-semibold text-rose-900">
+                                Esta acción es irreversible
+                            </p>
+                            <p>
+                                Se eliminarán <strong>{modalDeleteCarga.carga.totalRegistros} registros</strong> asociados a esta planilla en el historial de ausentismo.
+                            </p>
+                        </div>
+
+                        <div className="flex justify-end gap-2 pt-2">
+                            <button
+                                type="button"
+                                onClick={() => setModalDeleteCarga({ isOpen: false, carga: null })}
+                                disabled={procesandoDeleteCarga}
+                                className="px-4 py-2 border border-gray-200 text-gray-700 hover:bg-gray-50 rounded-xl text-xs font-semibold"
+                            >
+                                Cancelar
+                            </button>
+                            <button
+                                type="button"
+                                onClick={handleConfirmarEliminarCarga}
+                                disabled={procesandoDeleteCarga}
+                                className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-semibold shadow-sm transition-all"
+                            >
+                                {procesandoDeleteCarga ? 'Eliminando...' : 'Sí, Eliminar Planilla'}
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}

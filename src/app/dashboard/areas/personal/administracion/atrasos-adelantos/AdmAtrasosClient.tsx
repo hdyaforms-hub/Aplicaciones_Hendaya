@@ -1048,7 +1048,7 @@ export default function AdmAtrasosClient({
                                                                 )}
                                                                 <span>Exportar</span>
                                                             </button>
-                                                            {isAdmin && (
+                                                            {(isAdmin || puedeGestionarPeriodos) && (
                                                                 <button
                                                                     onClick={() => setModalDeleteCarga({ isOpen: true, carga: c })}
                                                                     className="p-1.5 text-gray-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
