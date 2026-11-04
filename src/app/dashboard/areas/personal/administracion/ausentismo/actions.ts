@@ -274,7 +274,7 @@ export async function cambiarEstadoPeriodoCargaAction(cargaId: string, nuevoEsta
     await ensurePersonalAsistenciaTables()
 
     const session = await getSession()
-    const usuarioNombre = session?.user?.nombre || session?.user?.email || 'Usuario'
+    const usuarioNombre = session?.user?.name || session?.user?.username || session?.user?.email || 'Administrador'
     const usuarioId = session?.user?.id || null
     const ahora = new Date()
 
@@ -362,7 +362,7 @@ export async function asignarCriterioAdminAction(registroId: string, criterioId:
     await ensurePersonalAsistenciaTables()
 
     const session = await getSession()
-    const usuarioNombre = session?.user?.nombre || session?.user?.email || 'Usuario'
+    const usuarioNombre = session?.user?.name || session?.user?.username || session?.user?.email || 'Administrador'
     const usuarioId = session?.user?.id || null
     const authorizedRbds = await getUserEffectiveRbds()
     const isAdmin = authorizedRbds === null
@@ -448,7 +448,7 @@ export async function asignarCriterioAdminAction(registroId: string, criterioId:
 export async function registrarAuditoriaExportacionAction(totalRegistros: number, detalleFiltros: string) {
     if (!await checkAdminPermission()) return
     const session = await getSession()
-    const usuarioNombre = session?.user?.nombre || session?.user?.email || 'Usuario'
+    const usuarioNombre = session?.user?.name || session?.user?.username || session?.user?.email || 'Administrador'
     const usuarioId = session?.user?.id || null
 
     await logAuditAction({
@@ -660,7 +660,7 @@ export async function asignarCriterioMasivoAction(
     await ensurePersonalAsistenciaTables()
 
     const session = await getSession()
-    const usuarioNombre = session?.user?.nombre || session?.user?.name || session?.user?.email || 'Usuario'
+    const usuarioNombre = session?.user?.name || session?.user?.username || session?.user?.email || 'Administrador'
     const usuarioId = session?.user?.id || null
     const authorizedRbds = await getUserEffectiveRbds()
     const isAdmin = authorizedRbds === null

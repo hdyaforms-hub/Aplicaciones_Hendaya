@@ -17,6 +17,7 @@ import {
     Search,
     Calendar,
     Download,
+    Loader2,
     Building2,
     RefreshCw,
     X,
@@ -63,6 +64,18 @@ interface AdmHorasExtrasClientProps {
     isAdmin: boolean
     puedeGestionarPeriodos?: boolean
     metadatosFiltros?: FiltrosMetadatosHextraDTO
+}
+
+function resolverUsuarioGestion(modificadoPor?: string | null, cargadoPor?: string | null): string {
+    const mod = (modificadoPor || '').trim()
+    if (mod && mod !== 'Usuario' && mod !== 'Usuario Sistema' && !mod.toLowerCase().includes('por defecto')) {
+        return mod
+    }
+    const carg = (cargadoPor || '').trim()
+    if (carg && carg !== 'Usuario' && carg !== 'Usuario Sistema') {
+        return carg
+    }
+    return mod || carg || 'Administrador'
 }
 
 export default function AdmHorasExtrasClient({
@@ -489,7 +502,8 @@ export default function AdmHorasExtrasClient({
             'Modificado Por': r.aplicaModificadoPor || 'Por Defecto (No Aplica)',
             'Fecha Modificación': r.aplicaModificadoAt ? new Date(r.aplicaModificadoAt).toLocaleString('es-CL') : '',
             'Estado Período': r.estado,
-            'Planilla Origen': r.cargaNombreArchivo || ''
+            'Planilla Origen': r.cargaNombreArchivo || '',
+            'Usuario que Ingresó o Modificó': resolverUsuarioGestion(r.aplicaModificadoPor, r.cargadoPor)
         }))
 
         const ws = xlsx.utils.json_to_sheet(datosExport)
@@ -503,6 +517,79 @@ export default function AdmHorasExtrasClient({
             registros.length,
             `Filtros: [Estado: ${filtroEstado}, Aplica: ${filtroAplica}, Sucursal: ${filtroSucursal}, Carga: ${filtroCargaId}]`
         )
+    }
+
+    // Exportar una carga específica a Excel directamente desde la tabla de períodos (sin entrar a los registros)
+    const [cargasExportando, setCargasExportando] = useState<Set<string>>(new Set())
+
+    const exportarExcelCarga = async (carga: CargaHextraDTO) => {
+        try {
+            setCargasExportando(prev => new Set(prev).add(carga.id))
+
+            let regsParaExport = registros.filter(r => r.cargaId === carga.id)
+            if (regsParaExport.length === 0 || regsParaExport.length < carga.totalRegistros) {
+                const res = await getAdmHorasExtrasAction({
+                    cargaId: carga.id,
+                    estado: 'TODOS',
+                    page: 1,
+                    pageSize: 50000
+                })
+                if (res.success && res.data) {
+                    regsParaExport = res.allMatchingData || res.data
+                }
+            }
+
+            if (regsParaExport.length === 0) {
+                alert('No se encontraron registros para exportar en esta planilla.')
+                return
+            }
+
+            const datosExport = regsParaExport.map(r => ({
+                'Fecha': r.fecha,
+                'RBD': r.rbd || '',
+                'Establecimiento': r.establecimiento || '',
+                'Institución': r.institucion || '',
+                'Comuna': r.comuna || '',
+                'Sucursal': r.sucursal,
+                'Supervisor': r.supervisor || '',
+                'RUT': r.rut,
+                'Colaborador': r.nombreCompleto,
+                'Cargo': r.cargo || '',
+                'Entró': r.entro || '',
+                'Salió': r.salio || '',
+                'Turno': r.turno || '',
+                'HHEE': formatHorasMinutos(r.hhee),
+                'Atraso': r.atraso > 0 ? formatHorasMinutos(r.atraso) : '00:00 hrs',
+                '¿Aplica HHEE?': r.aplica ? 'SÍ (Aplica)' : 'NO (No Aplica)',
+                'Modificado Por': r.aplicaModificadoPor || 'Por Defecto (No Aplica)',
+                'Fecha Modificación': r.aplicaModificadoAt ? new Date(r.aplicaModificadoAt).toLocaleString('es-CL') : '',
+                'Estado Período': r.estado,
+                'Planilla Origen': r.cargaNombreArchivo || carga.nombreArchivo || '',
+                'Usuario que Ingresó o Modificó': resolverUsuarioGestion(r.aplicaModificadoPor, r.cargadoPor || carga.cargadoPor)
+            }))
+
+            const ws = xlsx.utils.json_to_sheet(datosExport)
+            const wb = xlsx.utils.book_new()
+            xlsx.utils.book_append_sheet(wb, ws, 'Hrs_Extras')
+            const baseNombre = carga.nombreArchivo.replace(/\.[^/.]+$/, '').replace(/[^a-zA-Z0-9_-]/g, '_')
+            const nombreArchivo = `HrsExtras_${baseNombre}_${carga.estado}_${new Date().toISOString().slice(0, 10)}.xlsx`
+            xlsx.writeFile(wb, nombreArchivo)
+
+            // Registrar auditoría
+            await registrarAuditoriaExportacionHextraAction(
+                regsParaExport.length,
+                `Exportación directa desde planilla: ${carga.nombreArchivo} (ID: ${carga.id}, Estado: ${carga.estado})`
+            )
+        } catch (err: any) {
+            console.error('Error al exportar carga de horas extras a Excel:', err)
+            alert('Ocurrió un error al exportar la planilla a Excel.')
+        } finally {
+            setCargasExportando(prev => {
+                const next = new Set(prev)
+                next.delete(carga.id)
+                return next
+            })
+        }
     }
 
     // Salto rápido a registros de una carga
@@ -786,6 +873,20 @@ export default function AdmHorasExtrasClient({
                                                                 title="Ver registros vinculados a esta planilla"
                                                             >
                                                                 Ver registros
+                                                            </button>
+
+                                                            <button
+                                                                onClick={() => exportarExcelCarga(c)}
+                                                                disabled={cargasExportando.has(c.id)}
+                                                                className="flex items-center gap-1 px-2.5 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 font-semibold rounded-lg text-[11px] transition-colors disabled:opacity-50"
+                                                                title="Exportar esta planilla directamente a Excel (abierta o cerrada)"
+                                                            >
+                                                                {cargasExportando.has(c.id) ? (
+                                                                    <Loader2 className="w-3.5 h-3.5 animate-spin text-emerald-600" />
+                                                                ) : (
+                                                                    <Download className="w-3.5 h-3.5 text-emerald-600" />
+                                                                )}
+                                                                <span>Exportar Excel</span>
                                                             </button>
 
                                                             {esCerrado ? (

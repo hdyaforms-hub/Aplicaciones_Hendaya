@@ -320,7 +320,7 @@ export async function toggleAplicaHorasExtrasAction(
     await ensurePersonalHextraTables()
 
     const session = await getSession()
-    const usuarioNombre = session?.user?.nombre || session?.user?.email || 'Usuario'
+    const usuarioNombre = session?.user?.name || session?.user?.username || session?.user?.email || 'Administrador'
     const usuarioId = session?.user?.id || null
     const perms = session?.user?.role?.permissions || []
     const hasGlobalPersonalPermission = perms.includes('view_all_personal_asistencia')

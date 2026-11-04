@@ -383,7 +383,7 @@ export async function procesarArchivoExcelSubidoAction(formData: {
     }
 
     const session = await getSession()
-    const usuarioNombre = session?.user?.nombre || session?.user?.email || 'Usuario Sistema'
+    const usuarioNombre = session?.user?.name || session?.user?.username || session?.user?.email || 'Administrador'
     const usuarioId = session?.user?.id ? String(session.user.id) : undefined
 
     try {
@@ -402,7 +402,7 @@ export async function procesarDesdeRutaServidorAction(rutaServidor: string): Pro
     }
 
     const session = await getSession()
-    const usuarioNombre = session?.user?.nombre || session?.user?.email || 'Usuario Sistema'
+    const usuarioNombre = session?.user?.name || session?.user?.username || session?.user?.email || 'Administrador'
     const usuarioId = session?.user?.id ? String(session.user.id) : undefined
 
     const rutaNormalizada = rutaServidor.trim()

@@ -64,6 +64,7 @@ export interface AdmAtrasosRegistroDTO {
     estado: string
     cerradoPor?: string | null
     cerradoAt?: string | null
+    cargadoPor?: string | null
 }
 
 export interface UsuarioFiltroAtrasosDTO {
@@ -258,12 +259,12 @@ export async function getAdmAtrasosAction(filtros?: {
 
         const whereSql = whereConditions.length > 0 ? `WHERE ${whereConditions.join(' AND ')}` : ''
 
-        // Consultar mapa de cargas para asociar nombre de archivo
-        const cargasMap = new Map<string, string>()
+        // Consultar mapa de cargas para asociar nombre de archivo y cargadoPor
+        const cargasMap = new Map<string, { nombreArchivo: string; cargadoPor: string | null }>()
         try {
-            const cargasRows: any[] = await rawPrisma.$queryRawUnsafe(`SELECT id, "nombreArchivo" FROM "Pers_Atrasos_Carga";`)
+            const cargasRows: any[] = await rawPrisma.$queryRawUnsafe(`SELECT id, "nombreArchivo", "cargadoPor" FROM "Pers_Atrasos_Carga";`)
             for (const c of cargasRows) {
-                cargasMap.set(c.id, c.nombreArchivo)
+                cargasMap.set(c.id, { nombreArchivo: c.nombreArchivo, cargadoPor: c.cargadoPor || null })
             }
         } catch {}
 
@@ -302,11 +303,14 @@ export async function getAdmAtrasosAction(filtros?: {
             const nombre = decryptPersonalText(r.nombreEnc)
             const nombreCompleto = `${nombre} ${apellidos}`.trim()
 
+            const cargaInfo = r.cargaId ? cargasMap.get(r.cargaId) : null
+
             return {
                 id: r.id,
                 tipo: (r.tipo || 'ADELANTO') as 'ADELANTO' | 'ATRASO',
                 cargaId: r.cargaId,
-                cargaNombreArchivo: r.cargaId ? (cargasMap.get(r.cargaId) || null) : null,
+                cargaNombreArchivo: cargaInfo?.nombreArchivo || null,
+                cargadoPor: cargaInfo?.cargadoPor || null,
                 rut,
                 apellidos,
                 nombre,

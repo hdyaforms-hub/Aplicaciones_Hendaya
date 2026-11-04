@@ -209,7 +209,7 @@ export async function asignarCriterioAction(registroId: string, criterioId: stri
     await ensurePersonalAsistenciaTables()
 
     const session = await getSession()
-    const usuarioNombre = session?.user?.nombre || session?.user?.email || 'Usuario'
+    const usuarioNombre = session?.user?.name || session?.user?.username || session?.user?.email || 'Administrador'
     const perms = session?.user?.role?.permissions || []
     const hasGlobalPersonalPermission = perms.includes('view_all_personal_asistencia')
     const authorizedRbds = await getUserEffectiveRbds()
@@ -398,7 +398,7 @@ export async function adjuntarDocumentoAsistenciaAction(formData: FormData): Pro
     await ensurePersonalAsistenciaTables()
 
     const session = await getSession()
-    const usuarioNombre = session?.user?.nombre || session?.user?.email || 'Usuario'
+    const usuarioNombre = session?.user?.name || session?.user?.username || session?.user?.email || 'Administrador'
     const perms = session?.user?.role?.permissions || []
     const hasGlobalPersonalPermission = perms.includes('view_all_personal_asistencia')
     const authorizedRbds = await getUserEffectiveRbds()
@@ -545,7 +545,7 @@ export async function eliminarDocumentoAsistenciaAction(registroId: string) {
     await ensurePersonalAsistenciaTables()
 
     const session = await getSession()
-    const usuarioNombre = session?.user?.nombre || session?.user?.email || 'Usuario'
+    const usuarioNombre = session?.user?.name || session?.user?.username || session?.user?.email || 'Administrador'
     const roleName = session?.user?.role?.name?.toLowerCase() || ''
     const isAdmin = roleName.includes('admin') || roleName.includes('gerencia')
 

@@ -20,6 +20,7 @@ import {
     Unlock,
     RefreshCw,
     Download,
+    Loader2,
     Search,
     Building2,
     Calendar,
@@ -79,6 +80,22 @@ interface Props {
     isAdmin: boolean
     puedeGestionarPeriodos?: boolean
     metadatosFiltros?: FiltrosMetadatosAtrasosDTO
+}
+
+function resolverUsuarioGestion(modificadoPor?: string | null, justificadoPor?: string | null, cargadoPor?: string | null): string {
+    const mod = (modificadoPor || '').trim()
+    if (mod && mod !== 'Usuario' && mod !== 'Usuario Sistema' && !mod.toLowerCase().includes('por defecto')) {
+        return mod
+    }
+    const just = (justificadoPor || '').trim()
+    if (just && just !== 'Usuario' && just !== 'Usuario Sistema') {
+        return just
+    }
+    const carg = (cargadoPor || '').trim()
+    if (carg && carg !== 'Usuario' && carg !== 'Usuario Sistema') {
+        return carg
+    }
+    return mod || just || carg || 'Administrador'
 }
 
 export default function AdmAtrasosClient({
@@ -552,6 +569,7 @@ export default function AdmAtrasosClient({
                 base['Observación'] = r.observacion || ''
                 base['Estado Período'] = r.estado
                 base['Planilla Origen'] = r.cargaNombreArchivo || 'Sin Carga'
+                base['Usuario que Ingresó o Modificó'] = resolverUsuarioGestion(r.aplicaModificadoPor, r.justificadoPor, r.cargadoPor)
                 return base
             })
 
@@ -562,6 +580,85 @@ export default function AdmAtrasosClient({
             const nombreArchivo = `Reporte_${sheetName}_${new Date().toISOString().slice(0, 10)}.xlsx`
             xlsx.writeFile(wb, nombreArchivo)
         })
+    }
+
+    // Exportar una carga específica a Excel directamente desde la tabla de períodos (sin entrar a los registros)
+    const [cargasExportando, setCargasExportando] = useState<Set<string>>(new Set())
+
+    const exportarExcelCarga = async (carga: CargaAtrasosDTO) => {
+        try {
+            setCargasExportando(prev => new Set(prev).add(carga.id))
+
+            const res = await getAdmAtrasosAction({
+                tipo: carga.tipo,
+                cargaId: carga.id,
+                estado: 'TODOS',
+                page: 1,
+                pageSize: 50000
+            })
+
+            const regsParaExport = res.allMatchingData || res.data || []
+
+            if (regsParaExport.length === 0) {
+                alert('No se encontraron registros para exportar en esta planilla.')
+                return
+            }
+
+            const exportData = regsParaExport.map(r => {
+                const base: Record<string, any> = {
+                    'Fecha': r.fecha,
+                    'RUT': r.rut,
+                    'Colaborador': r.nombreCompleto,
+                    'Cargo': r.cargo || '',
+                    'RBD': r.rbd || '',
+                    'Establecimiento': r.establecimiento || '',
+                    'Institución': r.institucion || '',
+                    'Comuna': r.comuna || '',
+                    'Sede': r.sucursal,
+                    'Supervisor': r.supervisor || '',
+                }
+
+                if (carga.tipo === 'ADELANTO') {
+                    base['Turno'] = r.turno || ''
+                    base['Hora Fin Turno'] = r.horaFinTurno || ''
+                    base['Hora Salida Real'] = r.salio || r.horaSalida || ''
+                    base['Minutos Adelanto'] = r.minutosAdelanto
+                    base['Minutos Justificados'] = r.minutosJustificados
+                } else {
+                    base['Hora Inicio Turno'] = r.horaInicioTurno || r.turno || ''
+                    base['Hora Llegada Real'] = r.horaLlegada || r.entro || ''
+                    base['Holgura (min)'] = r.holguraMin ?? 0
+                    base['Minutos Atraso'] = r.minutosAtraso
+                    base['Minutos Justificados'] = r.minutosJustificados
+                    base['Grupo Marcación'] = r.grupoMarcacion || ''
+                }
+
+                base['¿Aplica Descuento?'] = r.aplicaDescuento ? 'SÍ' : 'NO'
+                base['Justificación'] = r.justificado || 'SIN JUSTIFICAR'
+                base['Observación'] = r.observacion || ''
+                base['Estado Período'] = r.estado
+                base['Planilla Origen'] = r.cargaNombreArchivo || carga.nombreArchivo || 'Sin Carga'
+                base['Usuario que Ingresó o Modificó'] = resolverUsuarioGestion(r.aplicaModificadoPor, r.justificadoPor, r.cargadoPor || carga.cargadoPor)
+                return base
+            })
+
+            const ws = xlsx.utils.json_to_sheet(exportData)
+            const wb = xlsx.utils.book_new()
+            const sheetName = carga.tipo === 'ADELANTO' ? 'Adelantos' : 'Atrasos'
+            xlsx.utils.book_append_sheet(wb, ws, sheetName)
+            const baseNombre = carga.nombreArchivo.replace(/\.[^/.]+$/, '').replace(/[^a-zA-Z0-9_-]/g, '_')
+            const nombreArchivo = `${sheetName}_${baseNombre}_${carga.estado}_${new Date().toISOString().slice(0, 10)}.xlsx`
+            xlsx.writeFile(wb, nombreArchivo)
+        } catch (err: any) {
+            console.error('Error al exportar carga de atrasos/adelantos a Excel:', err)
+            alert('Ocurrió un error al exportar la planilla a Excel.')
+        } finally {
+            setCargasExportando(prev => {
+                const next = new Set(prev)
+                next.delete(carga.id)
+                return next
+            })
+        }
     }
 
     // Guardar edición admin
@@ -936,6 +1033,20 @@ export default function AdmAtrasosClient({
                                                                 title="Ver registros de esta planilla"
                                                             >
                                                                 Ver Filas
+                                                            </button>
+
+                                                            <button
+                                                                onClick={() => exportarExcelCarga(c)}
+                                                                disabled={cargasExportando.has(c.id)}
+                                                                className="px-2.5 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 rounded-lg text-xs font-semibold flex items-center gap-1 transition-colors disabled:opacity-50"
+                                                                title="Exportar esta planilla directamente a Excel (abierta o cerrada)"
+                                                            >
+                                                                {cargasExportando.has(c.id) ? (
+                                                                    <Loader2 className="w-3.5 h-3.5 animate-spin text-emerald-600" />
+                                                                ) : (
+                                                                    <Download className="w-3.5 h-3.5 text-emerald-600" />
+                                                                )}
+                                                                <span>Exportar</span>
                                                             </button>
                                                             {isAdmin && (
                                                                 <button

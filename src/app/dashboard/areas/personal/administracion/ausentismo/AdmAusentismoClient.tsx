@@ -17,6 +17,7 @@ import {
     Search,
     Calendar,
     Download,
+    Loader2,
     Building2,
     RefreshCw,
     X,
@@ -68,6 +69,18 @@ interface AdmAusentismoClientProps {
     isAdmin: boolean
     puedeGestionarPeriodos?: boolean
     metadatosFiltros?: FiltrosMetadatosDTO
+}
+
+function resolverUsuarioGestion(actualizadoPor?: string | null, creadoPor?: string | null): string {
+    const act = (actualizadoPor || '').trim()
+    if (act && act !== 'Usuario' && act !== 'Usuario Sistema' && act !== 'Por Defecto') {
+        return act
+    }
+    const cre = (creadoPor || '').trim()
+    if (cre && cre !== 'Usuario' && cre !== 'Usuario Sistema') {
+        return cre
+    }
+    return act || cre || 'Administrador'
 }
 
 export default function AdmAusentismoClient({
@@ -573,7 +586,8 @@ export default function AdmAusentismoClient({
             'Fecha Carga': r.fechaCreacion ? new Date(r.fechaCreacion).toLocaleString('es-CL') : '',
             'Actualizado Por': r.actualizadoPor || '',
             'Fecha Actualización': r.fechaActualizacion ? new Date(r.fechaActualizacion).toLocaleString('es-CL') : '',
-            'Num Actualizaciones': r.numActualizaciones
+            'Num Actualizaciones': r.numActualizaciones,
+            'Usuario que Ingresó o Modificó': resolverUsuarioGestion(r.actualizadoPor, r.creadoPor)
         }))
 
         const ws = xlsx.utils.json_to_sheet(datosExport)
@@ -587,6 +601,72 @@ export default function AdmAusentismoClient({
             registrosFiltrados.length,
             `Filtros aplicados: [Estado: ${filtroEstado}, Criterio: ${filtroCriterio}, Carga: ${filtroCargaId}]`
         )
+    }
+
+    // Exportar una carga específica a Excel directamente desde la tabla de períodos (sin entrar a los registros)
+    const [cargasExportando, setCargasExportando] = useState<Set<string>>(new Set())
+
+    const exportarExcelCarga = async (carga: CargaHistorialDTO) => {
+        try {
+            setCargasExportando(prev => new Set(prev).add(carga.id))
+
+            let regsParaExport = registros.filter(r => r.cargaId === carga.id)
+            if (regsParaExport.length === 0 || regsParaExport.length < carga.totalRegistros) {
+                const res = await getAdmAusentismoRegistrosAction({ cargaId: carga.id, estado: 'TODOS' })
+                if (res.success && res.data) {
+                    regsParaExport = res.data
+                }
+            }
+
+            if (regsParaExport.length === 0) {
+                alert('No se encontraron registros para exportar en esta planilla.')
+                return
+            }
+
+            const datosExport = regsParaExport.map(r => ({
+                'Fecha': r.fecha,
+                'RBD': r.rbd,
+                'Establecimiento': r.establecimiento,
+                'Institución': r.institucion || '',
+                'Comuna': r.comuna || '',
+                'Supervisor': r.supervisorNombre,
+                'RUT': r.rut,
+                'Colaborador': r.nombreCompleto,
+                'Cargo': r.cargo || '',
+                'Estado Período': r.estado,
+                'Planilla Origen': r.cargaNombreArchivo || carga.nombreArchivo || 'Sin Carga',
+                'Criterio Ausencia': r.criterioNombre || 'SIN CRITERIO',
+                'Documento Respaldo': r.documentoNombre || (r.documentoUrl ? 'Sí' : 'No'),
+                'Cargado Por': r.creadoPor || carga.cargadoPor,
+                'Fecha Carga': r.fechaCreacion ? new Date(r.fechaCreacion).toLocaleString('es-CL') : (carga.fechaCarga ? new Date(carga.fechaCarga).toLocaleString('es-CL') : ''),
+                'Actualizado Por': r.actualizadoPor || '',
+                'Fecha Actualización': r.fechaActualizacion ? new Date(r.fechaActualizacion).toLocaleString('es-CL') : '',
+                'Num Actualizaciones': r.numActualizaciones,
+                'Usuario que Ingresó o Modificó': resolverUsuarioGestion(r.actualizadoPor, r.creadoPor || carga.cargadoPor)
+            }))
+
+            const ws = xlsx.utils.json_to_sheet(datosExport)
+            const wb = xlsx.utils.book_new()
+            xlsx.utils.book_append_sheet(wb, ws, 'Ausentismo')
+            const baseNombre = carga.nombreArchivo.replace(/\.[^/.]+$/, '').replace(/[^a-zA-Z0-9_-]/g, '_')
+            const nombreArchivo = `Ausentismo_${baseNombre}_${carga.estado}_${new Date().toISOString().slice(0, 10)}.xlsx`
+            xlsx.writeFile(wb, nombreArchivo)
+
+            // Registrar acción en auditoría
+            await registrarAuditoriaExportacionAction(
+                regsParaExport.length,
+                `Exportación directa desde planilla: ${carga.nombreArchivo} (ID: ${carga.id}, Estado: ${carga.estado})`
+            )
+        } catch (err: any) {
+            console.error('Error al exportar carga a Excel:', err)
+            alert('Ocurrió un error al exportar la planilla a Excel.')
+        } finally {
+            setCargasExportando(prev => {
+                const next = new Set(prev)
+                next.delete(carga.id)
+                return next
+            })
+        }
     }
 
     // Filtro rápido hacia registros de una carga específica
@@ -871,6 +951,20 @@ export default function AdmAusentismoClient({
                                                                 title="Ver registros vinculados a esta planilla"
                                                             >
                                                                 Ver registros
+                                                            </button>
+
+                                                            <button
+                                                                onClick={() => exportarExcelCarga(c)}
+                                                                disabled={cargasExportando.has(c.id)}
+                                                                className="flex items-center gap-1 px-2.5 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 font-semibold rounded-lg text-[11px] transition-colors disabled:opacity-50"
+                                                                title="Exportar esta planilla directamente a Excel (abierta o cerrada)"
+                                                            >
+                                                                {cargasExportando.has(c.id) ? (
+                                                                    <Loader2 className="w-3.5 h-3.5 animate-spin text-emerald-600" />
+                                                                ) : (
+                                                                    <Download className="w-3.5 h-3.5 text-emerald-600" />
+                                                                )}
+                                                                <span>Exportar Excel</span>
                                                             </button>
 
                                                             {esCerrado ? (

@@ -458,7 +458,7 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                 `"${c.username}"`,
                 `"${c.roleName}"`,
                 `"${(c.sucursales || []).join(', ')}"`,
-                c.rbdsCount,
+                c.hasConfiguredVisualizacion ? `"${c.trabajadoresCount || 0} trabajadores"` : c.rbdsCount,
                 c.semaforoGlobal,
                 `${c.porcentajeGlobal}%`,
                 c.totalRegistrosAbiertos,
@@ -1201,13 +1201,20 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                                         </span>
                                     </div>
 
-                                    {/* Información de Colegios y Sucursales */}
+                                    {/* Información de Colegios / Trabajadores y Sucursales */}
                                     <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-600 flex-wrap gap-1.5">
                                         <div className="flex items-center gap-2 flex-wrap">
-                                            <span className="flex items-center gap-1 font-medium">
-                                                <span>🏫</span>
-                                                <span><strong>{colab.rbdsCount}</strong> colegios asignados</span>
-                                            </span>
+                                            {colab.hasConfiguredVisualizacion ? (
+                                                <span className="flex items-center gap-1 font-semibold text-slate-800">
+                                                    <span>👥</span>
+                                                    <span><strong>{colab.trabajadoresCount || 0}</strong> trabajadores asignados</span>
+                                                </span>
+                                            ) : (
+                                                <span className="flex items-center gap-1 font-medium">
+                                                    <span>🏫</span>
+                                                    <span><strong>{colab.rbdsCount}</strong> colegios asignados</span>
+                                                </span>
+                                            )}
                                             {colab.sucursales && colab.sucursales.length > 0 && (
                                                 <span className="text-[11px] bg-slate-100 text-slate-600 border border-slate-200 px-2 py-0.5 rounded-md font-medium">
                                                     📍 {colab.sucursales.join(', ')}
@@ -1313,7 +1320,9 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
 
                                 {/* Botón inferior de acción para ver desglose */}
                                 <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
-                                    <span className="text-[11px] text-slate-400">Clic para desglose por colegio</span>
+                                    <span className="text-[11px] text-slate-400">
+                                        Clic para desglose por {colab.hasConfiguredVisualizacion ? 'personal / sede' : 'colegio'}
+                                    </span>
                                     <button
                                         type="button"
                                         onClick={(e) => {
@@ -1323,7 +1332,7 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                                         }}
                                         className="px-3 py-1.5 bg-sky-50 hover:bg-sky-100 border border-sky-200 text-sky-800 text-xs font-bold rounded-xl transition flex items-center gap-1"
                                     >
-                                        <span>Ver Detalle RBD</span>
+                                        <span>{colab.hasConfiguredVisualizacion ? 'Ver Detalle Personal / Sede' : 'Ver Detalle RBD'}</span>
                                         <span>→</span>
                                     </button>
                                 </div>
@@ -1385,7 +1394,11 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                                                 </span>
                                             </td>
                                             <td className="py-3.5 px-3 text-slate-600 font-mono">
-                                                {colab.rbdsCount} colegios
+                                                {colab.hasConfiguredVisualizacion ? (
+                                                    <span className="text-slate-800 font-semibold">{colab.trabajadoresCount || 0} trabajadores</span>
+                                                ) : (
+                                                    <span>{colab.rbdsCount} colegios</span>
+                                                )}
                                             </td>
                                             <td className="py-3.5 px-3">
                                                 <span className="font-mono font-semibold text-slate-800">
@@ -2015,7 +2028,7 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                                                                 {sucItem.sucursal}
                                                             </h3>
                                                             <span className="text-[11px] px-2.5 py-0.5 rounded-md bg-slate-100 border border-slate-200 text-slate-700 font-semibold">
-                                                                🏫 {sucItem.colegiosCount} establecimientos / sedes
+                                                                {sucItem.sucursal === 'CASA MATRIZ' ? '🏢 Sede Central' : `🏫 ${sucItem.colegiosCount} establecimientos`}
                                                             </span>
                                                         </div>
                                                         <p className="text-xs text-slate-500 mt-0.5">
@@ -2162,7 +2175,7 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                                                 }}
                                                 className="px-3.5 py-1.5 bg-sky-50 hover:bg-sky-100 border border-sky-200 text-sky-800 text-xs font-bold rounded-xl transition flex items-center gap-1"
                                             >
-                                                <span>Ver Establecimientos ({sucItem.colegiosCount})</span>
+                                                <span>{sucItem.sucursal === 'CASA MATRIZ' ? 'Ver Sede Central' : `Ver Establecimientos (${sucItem.colegiosCount})`}</span>
                                                 <span>→</span>
                                             </button>
                                         </div>
@@ -2325,14 +2338,14 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                         <div className="p-6 border-b border-slate-200 flex items-start justify-between gap-4 bg-slate-50">
                             <div>
                                 <span className="text-xs font-bold text-cyan-700 uppercase tracking-widest flex items-center gap-1.5">
-                                    <span>🏫</span>
-                                    <span>Desglose por Colegio y Tipo de Documento</span>
+                                    <span>{selectedColaborador.hasConfiguredVisualizacion ? '👥' : '🏫'}</span>
+                                    <span>{selectedColaborador.hasConfiguredVisualizacion ? 'Desglose por Personal y Sede' : 'Desglose por Colegio y Tipo de Documento'}</span>
                                 </span>
                                 <h2 className="text-2xl font-extrabold text-slate-900 mt-1">
                                     {selectedColaborador.name}
                                 </h2>
                                 <p className="text-xs text-slate-500 mt-0.5">
-                                    <span className="text-cyan-700 font-mono font-bold">@{selectedColaborador.username}</span> • {selectedColaborador.roleName} • {selectedColaborador.rbdsCount} colegios asignados
+                                    <span className="text-cyan-700 font-mono font-bold">@{selectedColaborador.username}</span> • {selectedColaborador.roleName} • {selectedColaborador.hasConfiguredVisualizacion ? `${selectedColaborador.trabajadoresCount || 0} trabajadores asignados` : `${selectedColaborador.rbdsCount} colegios asignados`}
                                 </p>
                             </div>
                             <button
@@ -2380,15 +2393,15 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
 
                                         return (
                                             <div
-                                                key={col.rbd}
+                                                key={col.rbd > 0 ? col.rbd : col.nombreEstablecimiento}
                                                 className="p-4 rounded-2xl border border-slate-200 bg-white hover:border-slate-300 transition shadow-sm space-y-3"
                                             >
-                                                {/* Encabezado del Colegio */}
+                                                {/* Encabezado del Colegio / Sede */}
                                                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-2.5">
                                                     <div>
                                                         <div className="flex items-center gap-2">
                                                             <span className="font-mono text-xs px-2.5 py-0.5 bg-cyan-100 text-cyan-900 rounded-md font-bold border border-cyan-200">
-                                                                RBD {col.rbd}
+                                                                {col.rbd > 0 ? `RBD ${col.rbd}` : 'SEDE'}
                                                             </span>
                                                             <h4 className="font-extrabold text-slate-900 text-sm">
                                                                 {col.nombreEstablecimiento}
@@ -2508,10 +2521,14 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                                     <span>Desglose de Avance por Sucursal y Tipo de Registro</span>
                                 </span>
                                 <h2 className="text-2xl font-extrabold text-slate-900 mt-1">
-                                    Sucursal {selectedSucursalModal.sucursal}
+                                    {selectedSucursalModal.sucursal === 'CASA MATRIZ' ? 'Casa Matriz (Sede Central)' : `Sucursal ${selectedSucursalModal.sucursal}`}
                                 </h2>
                                 <p className="text-xs text-slate-500 mt-0.5">
-                                    <strong className="text-slate-800">{selectedSucursalModal.colegiosCount}</strong> establecimientos / sedes con registros abiertos •{' '}
+                                    <strong className="text-slate-800">
+                                        {selectedSucursalModal.sucursal === 'CASA MATRIZ'
+                                            ? `${selectedSucursalModal.colegiosCount} sede central`
+                                            : `${selectedSucursalModal.colegiosCount} establecimientos`}
+                                    </strong> con registros abiertos •{' '}
                                     <strong className="text-cyan-700">{selectedSucursalModal.porcentajeGlobal}%</strong> de cumplimiento global ({selectedSucursalModal.totalGestionados}/{selectedSucursalModal.totalRegistrosAbiertos})
                                 </p>
                             </div>
@@ -2559,13 +2576,13 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                                     type="text"
                                     value={modalSearchQuery}
                                     onChange={(e) => setModalSearchQuery(e.target.value)}
-                                    placeholder="Buscar por RBD, nombre de establecimiento o comuna..."
+                                    placeholder={selectedSucursalModal.sucursal === 'CASA MATRIZ' ? 'Buscar sede central...' : 'Buscar por RBD, nombre de establecimiento o comuna...'}
                                     className="w-full bg-slate-50 border border-slate-200 focus:border-cyan-500 focus:bg-white rounded-xl pl-9 pr-4 py-2 text-xs text-slate-800 placeholder:text-slate-400 outline-none transition"
                                 />
                                 <span className="absolute left-3 top-2.5 text-slate-400 text-xs">🔍</span>
                             </div>
                             <span className="text-xs font-medium text-slate-500 shrink-0">
-                                Mostrando {modalFilteredSucursalColegios.length} de {selectedSucursalModal.colegiosDetalle.length} establecimientos
+                                Mostrando {modalFilteredSucursalColegios.length} de {selectedSucursalModal.colegiosDetalle.length} {selectedSucursalModal.sucursal === 'CASA MATRIZ' ? 'sedes' : 'establecimientos'}
                             </span>
                         </div>
 

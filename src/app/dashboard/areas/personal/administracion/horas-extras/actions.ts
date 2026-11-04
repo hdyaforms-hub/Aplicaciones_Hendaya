@@ -54,6 +54,7 @@ export interface AdmHextraRegistroDTO {
     estado: string
     cerradoPor?: string | null
     cerradoAt?: string | null
+    cargadoPor?: string | null
 }
 
 export interface UsuarioFiltroHextraDTO {
@@ -278,7 +279,7 @@ export async function getAdmHorasExtrasAction(filtros?: {
 
         // Registros
         const selectQuery = `
-            SELECT r.*, c."nombreArchivo" as "cargaNombreArchivo", col.institucion as "institucion", col.comuna as "comuna"
+            SELECT r.*, c."nombreArchivo" as "cargaNombreArchivo", c."cargadoPor" as "cargadoPor", col.institucion as "institucion", col.comuna as "comuna"
             FROM "Pers_Hextra_Registro" r
             LEFT JOIN "Pers_Hextra_Carga" c ON r."cargaId" = c.id
             LEFT JOIN "Colegios" col ON col."colRBD" = r.rbd
@@ -309,6 +310,7 @@ export async function getAdmHorasExtrasAction(filtros?: {
                 id: r.id,
                 cargaId: r.cargaId,
                 cargaNombreArchivo: r.cargaNombreArchivo || null,
+                cargadoPor: r.cargadoPor || null,
                 rut,
                 apellidos,
                 nombre,
@@ -357,6 +359,7 @@ export async function getAdmHorasExtrasAction(filtros?: {
         return {
             success: true,
             data: dataFinal,
+            allMatchingData: dataFinal,
             total,
             page,
             pageSize,
@@ -420,7 +423,7 @@ export async function cambiarEstadoPeriodoCargaHextraAction(cargaId: string, nue
     await ensurePersonalHextraTables()
 
     const session = await getSession()
-    const usuarioNombre = session?.user?.nombre || session?.user?.email || 'Usuario'
+    const usuarioNombre = session?.user?.name || session?.user?.username || session?.user?.email || 'Administrador'
     const usuarioId = session?.user?.id || null
     const ahora = new Date()
 
@@ -522,7 +525,7 @@ export async function toggleAplicaAdmHorasExtrasAction(
     await ensurePersonalHextraTables()
 
     const session = await getSession()
-    const usuarioNombre = session?.user?.nombre || session?.user?.email || 'Usuario'
+    const usuarioNombre = session?.user?.name || session?.user?.username || session?.user?.email || 'Administrador'
     const usuarioId = session?.user?.id || null
     const authorizedRbds = await getUserEffectiveRbds()
     const isAdmin = authorizedRbds === null
@@ -597,7 +600,7 @@ export async function toggleAplicaAdmHorasExtrasAction(
 export async function registrarAuditoriaExportacionHextraAction(totalRegistros: number, detalleFiltros: string) {
     if (!await checkAdminPermission()) return
     const session = await getSession()
-    const usuarioNombre = session?.user?.nombre || session?.user?.email || 'Usuario'
+    const usuarioNombre = session?.user?.name || session?.user?.username || session?.user?.email || 'Administrador'
     const usuarioId = session?.user?.id || null
 
     await logAuditAction({
@@ -778,7 +781,7 @@ export async function justificarMasivoHorasExtrasAction(
     await ensurePersonalHextraTables()
 
     const session = await getSession()
-    const usuarioNombre = session?.user?.nombre || session?.user?.email || 'Usuario'
+    const usuarioNombre = session?.user?.name || session?.user?.username || session?.user?.email || 'Administrador'
     const usuarioId = session?.user?.id || null
     const authorizedRbds = await getUserEffectiveRbds()
     const ahora = new Date()

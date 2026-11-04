@@ -40,6 +40,9 @@ export interface ColaboradorRRHHCardData {
     username: string
     email?: string | null
     roleName: string
+    hasConfiguredVisualizacion?: boolean
+    trabajadoresCount?: number
+    tipoAsignacion?: 'TRABAJADORES' | 'COLEGIOS'
     rbdsCount: number
     rbds: number[]
     sucursales: string[]
@@ -115,20 +118,38 @@ function resolverSucursalRegistro(
     rbdSucursalFallbackMap: Map<number, string>
 ): string {
     const rbdNum = Number(rbd || 0)
+
+    // 1. Si tiene RBD (> 0), es un COLEGIO / ESTABLECIMIENTO EDUCACIONAL.
+    // Regla de Negocio Hendaya: Casa Matriz NO tiene colegios asociados.
+    // Todo RBD > 0 debe pertenecer a su sucursal operativa oficial (CD METRO, CD COPIAPO, CD VALLENAR, CD COYHAIQUE).
     if (rbdNum > 0) {
         const colSuc = normalizarNombreSucursal(colegiosMap.get(rbdNum)?.sucursal)
-        if (colSuc) return colSuc
+        if (colSuc && colSuc !== 'CASA MATRIZ') return colSuc
 
         const fallbackSuc = normalizarNombreSucursal(rbdSucursalFallbackMap.get(rbdNum))
-        if (fallbackSuc) return fallbackSuc
+        if (fallbackSuc && fallbackSuc !== 'CASA MATRIZ') return fallbackSuc
+
+        const directSuc = normalizarNombreSucursal(rowSucursal)
+        if (directSuc && directSuc !== 'CASA MATRIZ') return directSuc
+
+        const estSuc = normalizarNombreSucursal(establecimientoTexto)
+        if (estSuc && estSuc.startsWith('CD ') && estSuc !== 'CASA MATRIZ') return estSuc
+
+        return 'SIN SUCURSAL'
     }
 
+    // 2. Si no tiene RBD de colegio (rbdNum === 0 o null) o es personal de sede central:
     const directSuc = normalizarNombreSucursal(rowSucursal)
     if (directSuc) return directSuc
 
     const estSuc = normalizarNombreSucursal(establecimientoTexto)
     if (estSuc && (estSuc.startsWith('CD ') || estSuc === 'CASA MATRIZ')) {
         return estSuc
+    }
+
+    const estLower = (establecimientoTexto || '').toLowerCase()
+    if (estLower.includes('matriz') || estLower.includes('central') || estLower.includes('pudahuel')) {
+        return 'CASA MATRIZ'
     }
 
     return 'SIN SUCURSAL'
@@ -264,24 +285,28 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
             if (s.correo) supervisorRbdsMap.set(s.correo.toLowerCase().trim(), list)
         })
 
-        // 7. Cargar TODOS los registros ABIERTOS de los 4 módulos de RRHH
+        // 7. Cargar TODOS los registros ABIERTOS de los 4 módulos de RRHH y la Configuración de Visualización de Personal
         // REGLA CLAVE: Solo se consideran registros en estado 'ABIERTO' (las cerradas ya no se consideran)
-        const [rawAusentismo, rawHorasExtras, rawAtrasosAdelantos] = await Promise.all([
+        const [rawAusentismo, rawHorasExtras, rawAtrasosAdelantos, allVisualizaciones] = await Promise.all([
             rawPrisma.$queryRawUnsafe<any[]>(`
-                SELECT rbd, establecimiento, "grupoOriginal", "criterioId"
+                SELECT rbd, establecimiento, "grupoOriginal", "criterioId", "rutHash"
                 FROM "Pers_Asis_Registro"
                 WHERE UPPER(estado) = 'ABIERTO';
             `),
             rawPrisma.$queryRawUnsafe<any[]>(`
-                SELECT rbd, establecimiento, sucursal, aplica, "aplicaModificadoPor", supervisor
+                SELECT rbd, establecimiento, sucursal, aplica, "aplicaModificadoPor", supervisor, "identificadorHash"
                 FROM "Pers_Hextra_Registro"
                 WHERE UPPER(estado) = 'ABIERTO';
             `),
             rawPrisma.$queryRawUnsafe<any[]>(`
-                SELECT tipo, rbd, establecimiento, sucursal, "aplicaDescuento", "aplicaModificadoPor", justificado, supervisor
+                SELECT tipo, rbd, establecimiento, sucursal, "aplicaDescuento", "aplicaModificadoPor", justificado, supervisor, "identificadorHash"
                 FROM "Pers_Atrasos_Registro"
                 WHERE UPPER(estado) = 'ABIERTO';
-            `)
+            `),
+            rawPrisma.$queryRawUnsafe<any[]>(`
+                SELECT "tipo", "jefaturaUserId", "jefaturaRoleId", "personalRutHash", "personalRbd", "personalEstablecimiento", "personalSucursal"
+                FROM "Pers_Visualizacion_Jefatura";
+            `).catch(() => [] as any[])
         ])
 
         // Mapa auxiliar RBD -> Sucursal desde Horas Extras / Atrasos para RBDs que no tienen sucursal en Colegios
@@ -379,15 +404,18 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
             rbdNum: number,
             estRaw?: string | null
         ): DetalleColegioRRHH => {
-            const key = rbdNum > 0 ? `RBD_${rbdNum}` : `SEDE_${(estRaw || agg.sucursal).trim().toUpperCase()}`
+            const isMatriz = agg.sucursal === 'CASA MATRIZ' || (!rbdNum && (estRaw || '').toLowerCase().includes('matriz'))
+            const key = rbdNum > 0 ? `RBD_${rbdNum}` : (isMatriz ? 'SEDE_CASA_MATRIZ' : `SEDE_${(estRaw || agg.sucursal).trim().toUpperCase()}`)
             let item = agg.establecimientosMap.get(key)
             if (!item) {
                 const infoCol = rbdNum > 0 ? colegiosMap.get(rbdNum) : undefined
-                const nombreEst = infoCol?.nombre || (estRaw && estRaw.trim() !== '' ? estRaw.trim() : agg.sucursal)
+                const nombreEst = rbdNum > 0
+                    ? (infoCol?.nombre || (estRaw && estRaw.trim() !== '' ? estRaw.trim() : `RBD ${rbdNum}`))
+                    : (isMatriz ? 'Casa Matriz' : (estRaw && estRaw.trim() !== '' ? estRaw.trim() : agg.sucursal))
                 item = {
                     rbd: rbdNum > 0 ? rbdNum : 0,
                     nombreEstablecimiento: nombreEst,
-                    comuna: infoCol?.comuna || agg.comuna || undefined,
+                    comuna: infoCol?.comuna || (isMatriz ? 'Pudahuel' : (agg.comuna || undefined)),
                     sucursal: agg.sucursal,
                     ausentismo: { total: 0, gestionados: 0, pendientes: 0 },
                     horasExtras: { total: 0, gestionados: 0, pendientes: 0, aplica: 0, noAplica: 0 },
@@ -406,11 +434,6 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
         // Procesar Ausentismo Abierto
         for (const row of rawAusentismo) {
             const rbd = Number(row.rbd || 0)
-            if (authorizedViewerRbds !== null) {
-                if (!rbd || !authorizedViewerRbds.includes(rbd)) continue
-            }
-
-            const isGestionado = row.criterioId !== null && row.criterioId !== undefined
             const sucResuelta = resolverSucursalRegistro(
                 rbd,
                 null,
@@ -418,6 +441,13 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
                 colegiosMap,
                 rbdSucursalFallbackMap
             )
+
+            if (authorizedViewerRbds !== null) {
+                if (rbd > 0 && !authorizedViewerRbds.includes(rbd)) continue
+                if (rbd === 0 && sucResuelta !== 'CASA MATRIZ') continue
+            }
+
+            const isGestionado = row.criterioId !== null && row.criterioId !== undefined
 
             if (rbd > 0) {
                 const m = getOrCreateRbd(rbd, row.establecimiento, sucResuelta)
@@ -428,7 +458,7 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
             }
 
             // Acumular en Sucursal
-            if (sucResuelta !== 'SIN SUCURSAL' || rbd > 0) {
+            if (sucResuelta !== 'SIN SUCURSAL') {
                 const sucAgg = getOrCreateSucursalAgg(sucResuelta)
                 sucAgg.ausentismo.total++
                 if (isGestionado) sucAgg.ausentismo.gestionados++
@@ -444,12 +474,6 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
         // Procesar Horas Extras Abiertas
         for (const row of rawHorasExtras) {
             const rbd = Number(row.rbd || 0)
-            if (authorizedViewerRbds !== null) {
-                if (!rbd || !authorizedViewerRbds.includes(rbd)) continue
-            }
-
-            const isGestionado = Boolean(row.aplicaModificadoPor)
-            const isAplica = row.aplica === true
             const sucResuelta = resolverSucursalRegistro(
                 rbd,
                 row.sucursal,
@@ -457,6 +481,14 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
                 colegiosMap,
                 rbdSucursalFallbackMap
             )
+
+            if (authorizedViewerRbds !== null) {
+                if (rbd > 0 && !authorizedViewerRbds.includes(rbd)) continue
+                if (rbd === 0 && sucResuelta !== 'CASA MATRIZ') continue
+            }
+
+            const isGestionado = Boolean(row.aplicaModificadoPor)
+            const isAplica = row.aplica === true
 
             if (rbd > 0) {
                 const m = getOrCreateRbd(rbd, row.establecimiento, sucResuelta)
@@ -469,31 +501,26 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
             }
 
             // Acumular en Sucursal
-            const sucAgg = getOrCreateSucursalAgg(sucResuelta)
-            sucAgg.horasExtras.total++
-            if (isGestionado) sucAgg.horasExtras.gestionados++
-            else sucAgg.horasExtras.pendientes++
-            if (isAplica) sucAgg.horasExtras.aplica++
-            else sucAgg.horasExtras.noAplica++
+            if (sucResuelta !== 'SIN SUCURSAL') {
+                const sucAgg = getOrCreateSucursalAgg(sucResuelta)
+                sucAgg.horasExtras.total++
+                if (isGestionado) sucAgg.horasExtras.gestionados++
+                else sucAgg.horasExtras.pendientes++
+                if (isAplica) sucAgg.horasExtras.aplica++
+                else sucAgg.horasExtras.noAplica++
 
-            const estItem = getOrCreateSucursalEstablecimiento(sucAgg, rbd, row.establecimiento)
-            estItem.horasExtras.total++
-            if (isGestionado) estItem.horasExtras.gestionados++
-            else estItem.horasExtras.pendientes++
-            if (isAplica) estItem.horasExtras.aplica++
-            else estItem.horasExtras.noAplica++
+                const estItem = getOrCreateSucursalEstablecimiento(sucAgg, rbd, row.establecimiento)
+                estItem.horasExtras.total++
+                if (isGestionado) estItem.horasExtras.gestionados++
+                else estItem.horasExtras.pendientes++
+                if (isAplica) estItem.horasExtras.aplica++
+                else estItem.horasExtras.noAplica++
+            }
         }
 
         // Procesar Atrasos y Adelantos Abiertos
         for (const row of rawAtrasosAdelantos) {
             const rbd = Number(row.rbd || 0)
-            if (authorizedViewerRbds !== null) {
-                if (!rbd || !authorizedViewerRbds.includes(rbd)) continue
-            }
-
-            const tipo = row.tipo || 'ADELANTO'
-            const isGestionado = Boolean(row.aplicaModificadoPor)
-            const isAplicaDesc = Boolean(row.aplicaDescuento)
             const sucResuelta = resolverSucursalRegistro(
                 rbd,
                 row.sucursal,
@@ -501,6 +528,15 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
                 colegiosMap,
                 rbdSucursalFallbackMap
             )
+
+            if (authorizedViewerRbds !== null) {
+                if (rbd > 0 && !authorizedViewerRbds.includes(rbd)) continue
+                if (rbd === 0 && sucResuelta !== 'CASA MATRIZ') continue
+            }
+
+            const tipo = row.tipo || 'ADELANTO'
+            const isGestionado = Boolean(row.aplicaModificadoPor)
+            const isAplicaDesc = Boolean(row.aplicaDescuento)
 
             if (rbd > 0) {
                 const m = getOrCreateRbd(rbd, row.establecimiento, sucResuelta)
@@ -521,33 +557,35 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
             }
 
             // Acumular en Sucursal
-            const sucAgg = getOrCreateSucursalAgg(sucResuelta)
-            const estItem = getOrCreateSucursalEstablecimiento(sucAgg, rbd, row.establecimiento)
+            if (sucResuelta !== 'SIN SUCURSAL') {
+                const sucAgg = getOrCreateSucursalAgg(sucResuelta)
+                const estItem = getOrCreateSucursalEstablecimiento(sucAgg, rbd, row.establecimiento)
 
-            if (tipo === 'ATRASO') {
-                sucAgg.atrasos.total++
-                if (isGestionado) sucAgg.atrasos.gestionados++
-                else sucAgg.atrasos.pendientes++
-                if (isAplicaDesc) sucAgg.atrasos.aplicaDescuento++
-                else sucAgg.atrasos.noAplica++
+                if (tipo === 'ATRASO') {
+                    sucAgg.atrasos.total++
+                    if (isGestionado) sucAgg.atrasos.gestionados++
+                    else sucAgg.atrasos.pendientes++
+                    if (isAplicaDesc) sucAgg.atrasos.aplicaDescuento++
+                    else sucAgg.atrasos.noAplica++
 
-                estItem.atrasos.total++
-                if (isGestionado) estItem.atrasos.gestionados++
-                else estItem.atrasos.pendientes++
-                if (isAplicaDesc) estItem.atrasos.aplicaDescuento++
-                else estItem.atrasos.noAplica++
-            } else {
-                sucAgg.adelantos.total++
-                if (isGestionado) sucAgg.adelantos.gestionados++
-                else sucAgg.adelantos.pendientes++
-                if (isAplicaDesc) sucAgg.adelantos.aplicaDescuento++
-                else sucAgg.adelantos.noAplica++
+                    estItem.atrasos.total++
+                    if (isGestionado) estItem.atrasos.gestionados++
+                    else estItem.atrasos.pendientes++
+                    if (isAplicaDesc) estItem.atrasos.aplicaDescuento++
+                    else estItem.atrasos.noAplica++
+                } else {
+                    sucAgg.adelantos.total++
+                    if (isGestionado) sucAgg.adelantos.gestionados++
+                    else sucAgg.adelantos.pendientes++
+                    if (isAplicaDesc) sucAgg.adelantos.aplicaDescuento++
+                    else sucAgg.adelantos.noAplica++
 
-                estItem.adelantos.total++
-                if (isGestionado) estItem.adelantos.gestionados++
-                else estItem.adelantos.pendientes++
-                if (isAplicaDesc) estItem.adelantos.aplicaDescuento++
-                else estItem.adelantos.noAplica++
+                    estItem.adelantos.total++
+                    if (isGestionado) estItem.adelantos.gestionados++
+                    else estItem.adelantos.pendientes++
+                    if (isAplicaDesc) estItem.adelantos.aplicaDescuento++
+                    else estItem.adelantos.noAplica++
+                }
             }
         }
 
@@ -556,191 +594,412 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
         const sucursalesSet = new Set<string>()
 
         for (const u of usersMonitoreados) {
-            // Reunir los RBDs del usuario
-            const userRbdsSet = new Set<number>()
+            // Verificar si el usuario tiene asignación específica en Pers_Visualizacion_Jefatura
+            const directVisRows = allVisualizaciones.filter(v => v.tipo === 'USUARIO' && v.jefaturaUserId === u.id)
+            const roleVisRows = directVisRows.length === 0 && u.roleId
+                ? allVisualizaciones.filter(v => v.tipo === 'ROL' && v.jefaturaRoleId === u.roleId)
+                : []
+            const userVisRows = directVisRows.length > 0 ? directVisRows : roleVisRows
+            const hasConfiguredVisualizacion = userVisRows.length > 0
 
-            // A) Directamente en usuario
-            if (Array.isArray(u.rbds)) {
-                u.rbds.forEach(r => userRbdsSet.add(Number(r)))
-            }
-
-            // B) Por tabla Supervisor vinculada por nombre o correo
-            const supByName = u.name ? supervisorRbdsMap.get(u.name.toLowerCase().trim()) : null
-            if (supByName) supByName.forEach(r => userRbdsSet.add(r))
-
-            const supByEmail = u.email ? supervisorRbdsMap.get(u.email.toLowerCase().trim()) : null
-            if (supByEmail) supByEmail.forEach(r => userRbdsSet.add(r))
-
-            // C) Por coincidencia en campo supervisor de registros
-            const uNameLower = u.name ? u.name.toLowerCase().trim() : ''
-            const uUserLower = u.username ? u.username.toLowerCase().trim() : ''
-            if (uNameLower || uUserLower) {
-                metricsByRbd.forEach((data, rbd) => {
-                    if (data.supervisoresEncontrados.has(uNameLower) || data.supervisoresEncontrados.has(uUserLower)) {
-                        userRbdsSet.add(rbd)
+            if (hasConfiguredVisualizacion) {
+                // MODO TRABAJADORES ASIGNADOS (ej. nutricionista)
+                const assignedHashesSet = new Set<string>(userVisRows.map(r => r.personalRutHash).filter(Boolean))
+                const userSucursalesSet = new Set<string>()
+                userVisRows.forEach(r => {
+                    const norm = normalizarNombreSucursal(r.personalSucursal)
+                    if (norm) {
+                        userSucursalesSet.add(norm)
+                        sucursalesSet.add(norm)
                     }
                 })
-            }
-
-            // Filtrar por los RBDs autorizados para el usuario conectado (Aislamiento por perfil)
-            let finalRbds = Array.from(userRbdsSet)
-            if (authorizedViewerRbds !== null) {
-                finalRbds = finalRbds.filter(r => authorizedViewerRbds.includes(r))
-            }
-
-            // Sucursales del colaborador (tanto directas como derivadas de sus RBDs)
-            const userSucursalesSet = new Set<string>()
-            ;(u.sucursales || []).forEach(s => {
-                const norm = normalizarNombreSucursal(s.nombre) || s.nombre
-                if (norm) {
-                    userSucursalesSet.add(norm)
-                    sucursalesSet.add(norm)
-                }
-            })
-
-            // Calcular métricas acumuladas por módulo para este usuario
-            let ausTotal = 0, ausGest = 0, ausPend = 0
-            let hheeTotal = 0, hheeGest = 0, hheePend = 0, hheeAplica = 0, hheeNoAplica = 0
-            let atrasoTotal = 0, atrasoGest = 0, atrasoPend = 0, atrasoAplica = 0, atrasoNoAplica = 0
-            let adelantoTotal = 0, adelantoGest = 0, adelantoPend = 0, adelantoAplica = 0, adelantoNoAplica = 0
-
-            const colegiosDetalle: DetalleColegioRRHH[] = []
-
-            for (const rbd of finalRbds) {
-                const infoCol = colegiosMap.get(rbd)
-                const rbdMetrics = metricsByRbd.get(rbd)
-                const nombreEst = infoCol?.nombre || rbdMetrics?.establecimiento || `RBD ${rbd}`
-                const comuna = infoCol?.comuna
-                const sucursal = normalizarNombreSucursal(infoCol?.sucursal) || rbdMetrics?.sucursalResuelta || infoCol?.sucursal
-                if (sucursal && sucursal !== 'SIN SUCURSAL') {
-                    sucursalesSet.add(sucursal)
-                    userSucursalesSet.add(sucursal)
+                if (userSucursalesSet.size === 0 && u.sucursales) {
+                    u.sucursales.forEach(s => {
+                        const norm = normalizarNombreSucursal(s.nombre)
+                        if (norm) {
+                            userSucursalesSet.add(norm)
+                            sucursalesSet.add(norm)
+                        }
+                    })
                 }
 
-                const aus = rbdMetrics?.ausentismo || { total: 0, gestionados: 0, pendientes: 0 }
-                const hhee = rbdMetrics?.horasExtras || { total: 0, gestionados: 0, pendientes: 0, aplica: 0, noAplica: 0 }
-                const atr = rbdMetrics?.atrasos || { total: 0, gestionados: 0, pendientes: 0, aplicaDescuento: 0, noAplica: 0 }
-                const ade = rbdMetrics?.adelantos || { total: 0, gestionados: 0, pendientes: 0, aplicaDescuento: 0, noAplica: 0 }
+                // Filtrar los registros abiertos que pertenecen a los trabajadores asignados
+                const userAus = rawAusentismo.filter(r => r.rutHash && assignedHashesSet.has(r.rutHash))
+                const userHhee = rawHorasExtras.filter(r => r.identificadorHash && assignedHashesSet.has(r.identificadorHash))
+                const userAtrAde = rawAtrasosAdelantos.filter(r => r.identificadorHash && assignedHashesSet.has(r.identificadorHash))
 
-                ausTotal += aus.total
-                ausGest += aus.gestionados
-                ausPend += aus.pendientes
+                const ausTotal = userAus.length
+                const ausGest = userAus.filter(r => r.criterioId !== null && r.criterioId !== undefined).length
+                const ausPend = ausTotal - ausGest
 
-                hheeTotal += hhee.total
-                hheeGest += hhee.gestionados
-                hheePend += hhee.pendientes
-                hheeAplica += hhee.aplica
-                hheeNoAplica += hhee.noAplica
+                const hheeTotal = userHhee.length
+                const hheeGest = userHhee.filter(r => Boolean(r.aplicaModificadoPor)).length
+                const hheePend = hheeTotal - hheeGest
+                const hheeAplica = userHhee.filter(r => r.aplica === true).length
+                const hheeNoAplica = hheeTotal - hheeAplica
 
-                atrasoTotal += atr.total
-                atrasoGest += atr.gestionados
-                atrasoPend += atr.pendientes
-                atrasoAplica += atr.aplicaDescuento
-                atrasoNoAplica += atr.noAplica
+                const userAtrasos = userAtrAde.filter(r => r.tipo === 'ATRASO')
+                const atrasoTotal = userAtrasos.length
+                const atrasoGest = userAtrasos.filter(r => Boolean(r.aplicaModificadoPor)).length
+                const atrasoPend = atrasoTotal - atrasoGest
+                const atrasoAplica = userAtrasos.filter(r => Boolean(r.aplicaDescuento)).length
+                const atrasoNoAplica = atrasoTotal - atrasoAplica
 
-                adelantoTotal += ade.total
-                adelantoGest += ade.gestionados
-                adelantoPend += ade.pendientes
-                adelantoAplica += ade.aplicaDescuento
-                adelantoNoAplica += ade.noAplica
+                const userAdelantos = userAtrAde.filter(r => r.tipo !== 'ATRASO')
+                const adelantoTotal = userAdelantos.length
+                const adelantoGest = userAdelantos.filter(r => Boolean(r.aplicaModificadoPor)).length
+                const adelantoPend = adelantoTotal - adelantoGest
+                const adelantoAplica = userAdelantos.filter(r => Boolean(r.aplicaDescuento)).length
+                const adelantoNoAplica = adelantoTotal - adelantoAplica
 
-                const colTotal = aus.total + hhee.total + atr.total + ade.total
-                const colGest = aus.gestionados + hhee.gestionados + atr.gestionados + ade.gestionados
-                const colPct = colTotal > 0 ? Math.round((colGest / colTotal) * 100) : 100
+                // Agrupar en colegiosDetalle / sedesDetalle por los establecimientos de los trabajadores
+                const estTrabajadoresMap = new Map<string, {
+                    rbd: number
+                    nombreEstablecimiento: string
+                    sucursal: string
+                    hashes: Set<string>
+                }>()
 
-                colegiosDetalle.push({
-                    rbd,
-                    nombreEstablecimiento: nombreEst,
-                    comuna,
-                    sucursal,
-                    ausentismo: aus,
-                    horasExtras: hhee,
-                    atrasos: atr,
-                    adelantos: ade,
-                    totalGeneralAbiertos: colTotal,
-                    totalGeneralGestionados: colGest,
-                    porcentajeGeneral: colPct,
-                    semaforo: calcularSemaforo(colPct, colTotal)
+                userVisRows.forEach(vr => {
+                    const rbdNum = Number(vr.personalRbd || 0)
+                    const key = rbdNum > 0 ? `RBD_${rbdNum}` : `SEDE_${(vr.personalEstablecimiento || 'CASA MATRIZ').trim().toUpperCase()}`
+                    let est = estTrabajadoresMap.get(key)
+                    if (!est) {
+                        est = {
+                            rbd: rbdNum,
+                            nombreEstablecimiento: vr.personalEstablecimiento || (rbdNum > 0 ? `RBD ${rbdNum}` : 'Casa Matriz'),
+                            sucursal: normalizarNombreSucursal(vr.personalSucursal) || 'CASA MATRIZ',
+                            hashes: new Set<string>()
+                        }
+                        estTrabajadoresMap.set(key, est)
+                    }
+                    if (vr.personalRutHash) est.hashes.add(vr.personalRutHash)
+                })
+
+                if (estTrabajadoresMap.size === 0) {
+                    const fallbackSuc = Array.from(userSucursalesSet)[0] || 'CASA MATRIZ'
+                    estTrabajadoresMap.set('SEDE_MATRIZ', {
+                        rbd: 0,
+                        nombreEstablecimiento: 'Casa Matriz',
+                        sucursal: fallbackSuc,
+                        hashes: assignedHashesSet
+                    })
+                }
+
+                const colegiosDetalle: DetalleColegioRRHH[] = []
+                for (const est of estTrabajadoresMap.values()) {
+                    const estAus = userAus.filter(r => r.rutHash && est.hashes.has(r.rutHash))
+                    const estHhee = userHhee.filter(r => r.identificadorHash && est.hashes.has(r.identificadorHash))
+                    const estAtrAde = userAtrAde.filter(r => r.identificadorHash && est.hashes.has(r.identificadorHash))
+
+                    const eAusTot = estAus.length
+                    const eAusGest = estAus.filter(r => r.criterioId !== null && r.criterioId !== undefined).length
+
+                    const eHheeTot = estHhee.length
+                    const eHheeGest = estHhee.filter(r => Boolean(r.aplicaModificadoPor)).length
+                    const eHheeAplica = estHhee.filter(r => r.aplica === true).length
+                    const eHheeNoAplica = eHheeTot - eHheeAplica
+
+                    const estAtr = estAtrAde.filter(r => r.tipo === 'ATRASO')
+                    const eAtrTot = estAtr.length
+                    const eAtrGest = estAtr.filter(r => Boolean(r.aplicaModificadoPor)).length
+                    const eAtrAplica = estAtr.filter(r => Boolean(r.aplicaDescuento)).length
+                    const eAtrNoAplica = eAtrTot - eAtrAplica
+
+                    const estAde = estAtrAde.filter(r => r.tipo !== 'ATRASO')
+                    const eAdeTot = estAde.length
+                    const eAdeGest = estAde.filter(r => Boolean(r.aplicaModificadoPor)).length
+                    const eAdeAplica = estAde.filter(r => Boolean(r.aplicaDescuento)).length
+                    const eAdeNoAplica = eAdeTot - eAdeAplica
+
+                    const cTotal = eAusTot + eHheeTot + eAtrTot + eAdeTot
+                    const cGest = eAusGest + eHheeGest + eAtrGest + eAdeGest
+                    const cPct = cTotal > 0 ? Math.round((cGest / cTotal) * 100) : 100
+
+                    colegiosDetalle.push({
+                        rbd: est.rbd,
+                        nombreEstablecimiento: est.nombreEstablecimiento,
+                        sucursal: est.sucursal,
+                        ausentismo: { total: eAusTot, gestionados: eAusGest, pendientes: eAusTot - eAusGest },
+                        horasExtras: { total: eHheeTot, gestionados: eHheeGest, pendientes: eHheeTot - eHheeGest, aplica: eHheeAplica, noAplica: eHheeNoAplica },
+                        atrasos: { total: eAtrTot, gestionados: eAtrGest, pendientes: eAtrTot - eAtrGest, aplicaDescuento: eAtrAplica, noAplica: eAtrNoAplica },
+                        adelantos: { total: eAdeTot, gestionados: eAdeGest, pendientes: eAdeTot - eAdeGest, aplicaDescuento: eAdeAplica, noAplica: eAdeNoAplica },
+                        totalGeneralAbiertos: cTotal,
+                        totalGeneralGestionados: cGest,
+                        porcentajeGeneral: cPct,
+                        semaforo: calcularSemaforo(cPct, cTotal)
+                    })
+                }
+
+                colegiosDetalle.sort((a, b) => b.totalGeneralAbiertos - a.totalGeneralAbiertos || a.rbd - b.rbd)
+
+                const pctAus = ausTotal > 0 ? Math.round((ausGest / ausTotal) * 100) : 100
+                const pctHhee = hheeTotal > 0 ? Math.round((hheeGest / hheeTotal) * 100) : 100
+                const pctAtr = atrasoTotal > 0 ? Math.round((atrasoGest / atrasoTotal) * 100) : 100
+                const pctAde = adelantoTotal > 0 ? Math.round((adelantoGest / adelantoTotal) * 100) : 100
+
+                const modulos: ModuloAvanceDetalle[] = [
+                    {
+                        nombre: 'Ausentismo',
+                        tipo: 'AUSENTISMO',
+                        totalAbiertos: ausTotal,
+                        gestionados: ausGest,
+                        pendientes: ausPend,
+                        porcentaje: pctAus,
+                        semaforo: calcularSemaforo(pctAus, ausTotal)
+                    },
+                    {
+                        nombre: 'Horas Extras',
+                        tipo: 'HORAS_EXTRAS',
+                        totalAbiertos: hheeTotal,
+                        gestionados: hheeGest,
+                        pendientes: hheePend,
+                        porcentaje: pctHhee,
+                        aplicaCount: hheeAplica,
+                        noAplicaCount: hheeNoAplica,
+                        semaforo: calcularSemaforo(pctHhee, hheeTotal)
+                    },
+                    {
+                        nombre: 'Atrasos',
+                        tipo: 'ATRASOS',
+                        totalAbiertos: atrasoTotal,
+                        gestionados: atrasoGest,
+                        pendientes: atrasoPend,
+                        porcentaje: pctAtr,
+                        aplicaCount: atrasoAplica,
+                        noAplicaCount: atrasoNoAplica,
+                        semaforo: calcularSemaforo(pctAtr, atrasoTotal)
+                    },
+                    {
+                        nombre: 'Adelantos',
+                        tipo: 'ADELANTOS',
+                        totalAbiertos: adelantoTotal,
+                        gestionados: adelantoGest,
+                        pendientes: adelantoPend,
+                        porcentaje: pctAde,
+                        aplicaCount: adelantoAplica,
+                        noAplicaCount: adelantoNoAplica,
+                        semaforo: calcularSemaforo(pctAde, adelantoTotal)
+                    }
+                ]
+
+                const totalAbiertos = ausTotal + hheeTotal + atrasoTotal + adelantoTotal
+                const totalGestionados = ausGest + hheeGest + atrasoGest + adelantoGest
+                const totalPendientes = ausPend + hheePend + atrasoPend + adelantoPend
+                const porcentajeGlobal = totalAbiertos > 0 ? Math.round((totalGestionados / totalAbiertos) * 100) : 100
+                const semaforoGlobal = calcularSemaforo(porcentajeGlobal, totalAbiertos)
+
+                colaboradores.push({
+                    userId: u.id,
+                    name: u.name || u.username,
+                    username: u.username,
+                    email: u.email,
+                    roleName: u.role?.name || 'Sin Rol',
+                    hasConfiguredVisualizacion: true,
+                    tipoAsignacion: 'TRABAJADORES',
+                    trabajadoresCount: assignedHashesSet.size,
+                    rbdsCount: userVisRows.filter(r => r.personalRbd).length,
+                    rbds: Array.from(new Set(userVisRows.map(r => Number(r.personalRbd)).filter(r => r > 0))),
+                    sucursales: Array.from(userSucursalesSet),
+                    semaforoGlobal,
+                    porcentajeGlobal,
+                    totalRegistrosAbiertos: totalAbiertos,
+                    totalGestionados,
+                    totalPendientes,
+                    modulos,
+                    colegiosDetalle
+                })
+            } else {
+                // MODO TRADICIONAL POR COLEGIOS / RBDS (SUPERVISORES)
+                // Reunir los RBDs del usuario
+                const userRbdsSet = new Set<number>()
+
+                // A) Directamente en usuario
+                if (Array.isArray(u.rbds)) {
+                    u.rbds.forEach(r => userRbdsSet.add(Number(r)))
+                }
+
+                // B) Por tabla Supervisor vinculada por nombre o correo
+                const supByName = u.name ? supervisorRbdsMap.get(u.name.toLowerCase().trim()) : null
+                if (supByName) supByName.forEach(r => userRbdsSet.add(r))
+
+                const supByEmail = u.email ? supervisorRbdsMap.get(u.email.toLowerCase().trim()) : null
+                if (supByEmail) supByEmail.forEach(r => userRbdsSet.add(r))
+
+                // C) Por coincidencia en campo supervisor de registros
+                const uNameLower = u.name ? u.name.toLowerCase().trim() : ''
+                const uUserLower = u.username ? u.username.toLowerCase().trim() : ''
+                if (uNameLower || uUserLower) {
+                    metricsByRbd.forEach((data, rbd) => {
+                        if (data.supervisoresEncontrados.has(uNameLower) || data.supervisoresEncontrados.has(uUserLower)) {
+                            userRbdsSet.add(rbd)
+                        }
+                    })
+                }
+
+                // Filtrar por los RBDs autorizados para el usuario conectado (Aislamiento por perfil)
+                let finalRbds = Array.from(userRbdsSet)
+                if (authorizedViewerRbds !== null) {
+                    finalRbds = finalRbds.filter(r => authorizedViewerRbds.includes(r))
+                }
+
+                // Sucursales del colaborador (tanto directas como derivadas de sus RBDs)
+                const userSucursalesSet = new Set<string>()
+                ;(u.sucursales || []).forEach(s => {
+                    const norm = normalizarNombreSucursal(s.nombre) || s.nombre
+                    if (norm) {
+                        userSucursalesSet.add(norm)
+                        sucursalesSet.add(norm)
+                    }
+                })
+
+                // Calcular métricas acumuladas por módulo para este usuario
+                let ausTotal = 0, ausGest = 0, ausPend = 0
+                let hheeTotal = 0, hheeGest = 0, hheePend = 0, hheeAplica = 0, hheeNoAplica = 0
+                let atrasoTotal = 0, atrasoGest = 0, atrasoPend = 0, atrasoAplica = 0, atrasoNoAplica = 0
+                let adelantoTotal = 0, adelantoGest = 0, adelantoPend = 0, adelantoAplica = 0, adelantoNoAplica = 0
+
+                const colegiosDetalle: DetalleColegioRRHH[] = []
+
+                for (const rbd of finalRbds) {
+                    const infoCol = colegiosMap.get(rbd)
+                    const rbdMetrics = metricsByRbd.get(rbd)
+                    const nombreEst = infoCol?.nombre || rbdMetrics?.establecimiento || `RBD ${rbd}`
+                    const comuna = infoCol?.comuna
+                    const sucursal = normalizarNombreSucursal(infoCol?.sucursal) || rbdMetrics?.sucursalResuelta || infoCol?.sucursal
+                    if (sucursal && sucursal !== 'SIN SUCURSAL') {
+                        sucursalesSet.add(sucursal)
+                        userSucursalesSet.add(sucursal)
+                    }
+
+                    const aus = rbdMetrics?.ausentismo || { total: 0, gestionados: 0, pendientes: 0 }
+                    const hhee = rbdMetrics?.horasExtras || { total: 0, gestionados: 0, pendientes: 0, aplica: 0, noAplica: 0 }
+                    const atr = rbdMetrics?.atrasos || { total: 0, gestionados: 0, pendientes: 0, aplicaDescuento: 0, noAplica: 0 }
+                    const ade = rbdMetrics?.adelantos || { total: 0, gestionados: 0, pendientes: 0, aplicaDescuento: 0, noAplica: 0 }
+
+                    ausTotal += aus.total
+                    ausGest += aus.gestionados
+                    ausPend += aus.pendientes
+
+                    hheeTotal += hhee.total
+                    hheeGest += hhee.gestionados
+                    hheePend += hhee.pendientes
+                    hheeAplica += hhee.aplica
+                    hheeNoAplica += hhee.noAplica
+
+                    atrasoTotal += atr.total
+                    atrasoGest += atr.gestionados
+                    atrasoPend += atr.pendientes
+                    atrasoAplica += atr.aplicaDescuento
+                    atrasoNoAplica += atr.noAplica
+
+                    adelantoTotal += ade.total
+                    adelantoGest += ade.gestionados
+                    adelantoPend += ade.pendientes
+                    adelantoAplica += ade.aplicaDescuento
+                    adelantoNoAplica += ade.noAplica
+
+                    const colTotal = aus.total + hhee.total + atr.total + ade.total
+                    const colGest = aus.gestionados + hhee.gestionados + atr.gestionados + ade.gestionados
+                    const colPct = colTotal > 0 ? Math.round((colGest / colTotal) * 100) : 100
+
+                    colegiosDetalle.push({
+                        rbd,
+                        nombreEstablecimiento: nombreEst,
+                        comuna,
+                        sucursal,
+                        ausentismo: aus,
+                        horasExtras: hhee,
+                        atrasos: atr,
+                        adelantos: ade,
+                        totalGeneralAbiertos: colTotal,
+                        totalGeneralGestionados: colGest,
+                        porcentajeGeneral: colPct,
+                        semaforo: calcularSemaforo(colPct, colTotal)
+                    })
+                }
+
+                // Ordenar colegios por RBD
+                colegiosDetalle.sort((a, b) => a.rbd - b.rbd)
+
+                // Consolidar módulos del colaborador
+                const pctAus = ausTotal > 0 ? Math.round((ausGest / ausTotal) * 100) : 100
+                const pctHhee = hheeTotal > 0 ? Math.round((hheeGest / hheeTotal) * 100) : 100
+                const pctAtr = atrasoTotal > 0 ? Math.round((atrasoGest / atrasoTotal) * 100) : 100
+                const pctAde = adelantoTotal > 0 ? Math.round((adelantoGest / adelantoTotal) * 100) : 100
+
+                const modulos: ModuloAvanceDetalle[] = [
+                    {
+                        nombre: 'Ausentismo',
+                        tipo: 'AUSENTISMO',
+                        totalAbiertos: ausTotal,
+                        gestionados: ausGest,
+                        pendientes: ausPend,
+                        porcentaje: pctAus,
+                        semaforo: calcularSemaforo(pctAus, ausTotal)
+                    },
+                    {
+                        nombre: 'Horas Extras',
+                        tipo: 'HORAS_EXTRAS',
+                        totalAbiertos: hheeTotal,
+                        gestionados: hheeGest,
+                        pendientes: hheePend,
+                        porcentaje: pctHhee,
+                        aplicaCount: hheeAplica,
+                        noAplicaCount: hheeNoAplica,
+                        semaforo: calcularSemaforo(pctHhee, hheeTotal)
+                    },
+                    {
+                        nombre: 'Atrasos',
+                        tipo: 'ATRASOS',
+                        totalAbiertos: atrasoTotal,
+                        gestionados: atrasoGest,
+                        pendientes: atrasoPend,
+                        porcentaje: pctAtr,
+                        aplicaCount: atrasoAplica,
+                        noAplicaCount: atrasoNoAplica,
+                        semaforo: calcularSemaforo(pctAtr, atrasoTotal)
+                    },
+                    {
+                        nombre: 'Adelantos',
+                        tipo: 'ADELANTOS',
+                        totalAbiertos: adelantoTotal,
+                        gestionados: adelantoGest,
+                        pendientes: adelantoPend,
+                        porcentaje: pctAde,
+                        aplicaCount: adelantoAplica,
+                        noAplicaCount: adelantoNoAplica,
+                        semaforo: calcularSemaforo(pctAde, adelantoTotal)
+                    }
+                ]
+
+                const totalAbiertos = ausTotal + hheeTotal + atrasoTotal + adelantoTotal
+                const totalGestionados = ausGest + hheeGest + atrasoGest + adelantoGest
+                const totalPendientes = ausPend + hheePend + atrasoPend + adelantoPend
+                const porcentajeGlobal = totalAbiertos > 0 ? Math.round((totalGestionados / totalAbiertos) * 100) : 100
+                const semaforoGlobal = calcularSemaforo(porcentajeGlobal, totalAbiertos)
+
+                colaboradores.push({
+                    userId: u.id,
+                    name: u.name || u.username,
+                    username: u.username,
+                    email: u.email,
+                    roleName: u.role?.name || 'Sin Rol',
+                    hasConfiguredVisualizacion: false,
+                    tipoAsignacion: 'COLEGIOS',
+                    trabajadoresCount: 0,
+                    rbdsCount: finalRbds.length,
+                    rbds: finalRbds,
+                    sucursales: Array.from(userSucursalesSet),
+                    semaforoGlobal,
+                    porcentajeGlobal,
+                    totalRegistrosAbiertos: totalAbiertos,
+                    totalGestionados,
+                    totalPendientes,
+                    modulos,
+                    colegiosDetalle
                 })
             }
-
-            // Ordenar colegios por RBD
-            colegiosDetalle.sort((a, b) => a.rbd - b.rbd)
-
-            // Consolidar módulos del colaborador
-            const pctAus = ausTotal > 0 ? Math.round((ausGest / ausTotal) * 100) : 100
-            const pctHhee = hheeTotal > 0 ? Math.round((hheeGest / hheeTotal) * 100) : 100
-            const pctAtr = atrasoTotal > 0 ? Math.round((atrasoGest / atrasoTotal) * 100) : 100
-            const pctAde = adelantoTotal > 0 ? Math.round((adelantoGest / adelantoTotal) * 100) : 100
-
-            const modulos: ModuloAvanceDetalle[] = [
-                {
-                    nombre: 'Ausentismo',
-                    tipo: 'AUSENTISMO',
-                    totalAbiertos: ausTotal,
-                    gestionados: ausGest,
-                    pendientes: ausPend,
-                    porcentaje: pctAus,
-                    semaforo: calcularSemaforo(pctAus, ausTotal)
-                },
-                {
-                    nombre: 'Horas Extras',
-                    tipo: 'HORAS_EXTRAS',
-                    totalAbiertos: hheeTotal,
-                    gestionados: hheeGest,
-                    pendientes: hheePend,
-                    porcentaje: pctHhee,
-                    aplicaCount: hheeAplica,
-                    noAplicaCount: hheeNoAplica,
-                    semaforo: calcularSemaforo(pctHhee, hheeTotal)
-                },
-                {
-                    nombre: 'Atrasos',
-                    tipo: 'ATRASOS',
-                    totalAbiertos: atrasoTotal,
-                    gestionados: atrasoGest,
-                    pendientes: atrasoPend,
-                    porcentaje: pctAtr,
-                    aplicaCount: atrasoAplica,
-                    noAplicaCount: atrasoNoAplica,
-                    semaforo: calcularSemaforo(pctAtr, atrasoTotal)
-                },
-                {
-                    nombre: 'Adelantos',
-                    tipo: 'ADELANTOS',
-                    totalAbiertos: adelantoTotal,
-                    gestionados: adelantoGest,
-                    pendientes: adelantoPend,
-                    porcentaje: pctAde,
-                    aplicaCount: adelantoAplica,
-                    noAplicaCount: adelantoNoAplica,
-                    semaforo: calcularSemaforo(pctAde, adelantoTotal)
-                }
-            ]
-
-            const totalAbiertos = ausTotal + hheeTotal + atrasoTotal + adelantoTotal
-            const totalGestionados = ausGest + hheeGest + atrasoGest + adelantoGest
-            const totalPendientes = ausPend + hheePend + atrasoPend + adelantoPend
-            const porcentajeGlobal = totalAbiertos > 0 ? Math.round((totalGestionados / totalAbiertos) * 100) : 100
-            const semaforoGlobal = calcularSemaforo(porcentajeGlobal, totalAbiertos)
-
-            colaboradores.push({
-                userId: u.id,
-                name: u.name || u.username,
-                username: u.username,
-                email: u.email,
-                roleName: u.role?.name || 'Sin Rol',
-                rbdsCount: finalRbds.length,
-                rbds: finalRbds,
-                sucursales: Array.from(userSucursalesSet),
-                semaforoGlobal,
-                porcentajeGlobal,
-                totalRegistrosAbiertos: totalAbiertos,
-                totalGestionados,
-                totalPendientes,
-                modulos,
-                colegiosDetalle
-            })
         }
 
         // 8b. Construir las Tarjetas de Avance por Sucursal (separadas por los 4 tipos: Ausentismo, Horas Extras, Atrasos y Adelantos)

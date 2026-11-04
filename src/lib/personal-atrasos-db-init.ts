@@ -98,6 +98,18 @@ export async function ensurePersonalAtrasosTables() {
         // Auto-recuperación: actualizar a 'true' los registros que nunca fueron modificados manualmente para que tomen el valor por defecto APLICA
         await rawPrisma.$executeRawUnsafe(`UPDATE "Pers_Atrasos_Registro" SET "aplicaDescuento" = true WHERE "aplicaModificadoPor" IS NULL;`)
 
+        // Auto-recuperación: Corregir registros que tengan RBD de colegio (> 0) pero cuya sucursal quedó erróneamente como 'CASA MATRIZ'
+        await rawPrisma.$executeRawUnsafe(`
+            UPDATE "Pers_Atrasos_Registro" r
+            SET sucursal = c.sucursal
+            FROM "Colegios" c
+            WHERE r.rbd = c."colRBD"
+              AND r.rbd > 0
+              AND UPPER(r.sucursal) LIKE '%MATRIZ%'
+              AND c.sucursal IS NOT NULL
+              AND c.sucursal != '';
+        `)
+
         // 3. Índice Único para upsert estricto: evita cargas duplicadas y actualiza registros por (identificadorHash, fecha, tipo)
         // Permite que un colaborador pueda tener tanto un Adelanto como un Atraso en la misma fecha sin colisión
         await rawPrisma.$executeRawUnsafe(`DROP INDEX IF EXISTS "pers_atrasos_reg_id_fecha_unique";`)
