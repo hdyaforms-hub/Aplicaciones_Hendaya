@@ -348,9 +348,12 @@ export async function getAdmHorasExtrasAction(filtros?: {
         // Filtro fallback en memoria por texto si search no fue RUT
         let dataFinal = result
         if (filtros?.search && !searchIsRutHash) {
-            const term = filtros.search.toLowerCase()
+            const term = filtros.search.toLowerCase().trim()
+            const termClean = term.replace(/[^0-9kK]/g, '')
             dataFinal = result.filter(r =>
                 r.nombreCompleto.toLowerCase().includes(term) ||
+                r.rut.toLowerCase().includes(term) ||
+                (termClean.length >= 2 && r.rut.replace(/[^0-9kK]/g, '').toLowerCase().includes(termClean)) ||
                 (r.cargo && r.cargo.toLowerCase().includes(term)) ||
                 (r.establecimiento && r.establecimiento.toLowerCase().includes(term))
             )

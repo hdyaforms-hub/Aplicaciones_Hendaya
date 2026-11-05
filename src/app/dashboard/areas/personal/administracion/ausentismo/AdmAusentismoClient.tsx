@@ -109,8 +109,8 @@ export default function AdmAusentismoClient({
     const [busquedaRbdNombre, setBusquedaRbdNombre] = useState('')
     const [filtroRbdSeleccionado, setFiltroRbdSeleccionado] = useState<number | null>(null)
     const [filtroFecha, setFiltroFecha] = useState('')
-    const [filtroRut, setFiltroRut] = useState('')
-    const [filtroNombre, setFiltroNombre] = useState('')
+    const [busquedaTexto, setBusquedaTexto] = useState('')
+    const [filtroSucursal, setFiltroSucursal] = useState<string>('TODAS')
     const [filtroCriterio, setFiltroCriterio] = useState<string>('TODOS')
     const [filtroEstado, setFiltroEstado] = useState<string>('TODOS')
     const [filtroCargaId, setFiltroCargaId] = useState<string>('TODOS')
@@ -227,6 +227,11 @@ export default function AdmAusentismoClient({
     const usuariosDisponibles = useMemo(() => metadatosFiltros?.usuarios || [], [metadatosFiltros])
     const institucionesDisponibles = useMemo(() => metadatosFiltros?.instituciones || [], [metadatosFiltros])
     const comunasDisponibles = useMemo(() => metadatosFiltros?.comunas || [], [metadatosFiltros])
+    const sucursalesDisponibles = useMemo(() => {
+        const fromMeta = metadatosFiltros?.sucursales || []
+        const fromRegs = registros.map(r => r.sucursal).filter(Boolean) as string[]
+        return Array.from(new Set([...fromMeta, ...fromRegs])).sort()
+    }, [metadatosFiltros, registros])
 
     const usuariosFiltradosPorRol = useMemo(() => {
         if (filtroRol === 'TODOS') return usuariosDisponibles
@@ -335,19 +340,27 @@ export default function AdmAusentismoClient({
                 }
             }
 
+            // Filtro Sucursal
+            if (filtroSucursal !== 'TODAS') {
+                if ((r.sucursal || '').trim().toUpperCase() !== filtroSucursal.trim().toUpperCase()) {
+                    return false
+                }
+            }
+
             // Filtro Fecha
             if (filtroFecha && r.fecha !== filtroFecha) {
                 return false
             }
 
-            // Filtro RUT
-            if (filtroRut.trim() && !r.rut.toLowerCase().includes(filtroRut.toLowerCase())) {
-                return false
-            }
-
-            // Filtro Nombre
-            if (filtroNombre.trim() && !r.nombreCompleto.toLowerCase().includes(filtroNombre.toLowerCase())) {
-                return false
+            // Filtro por RUT o Colaborador
+            if (busquedaTexto.trim()) {
+                const term = busquedaTexto.toLowerCase().trim()
+                const termClean = term.replace(/[^0-9kK]/g, '')
+                const matchRut = r.rut.toLowerCase().includes(term) || (termClean.length >= 2 && r.rut.replace(/[^0-9kK]/g, '').toLowerCase().includes(termClean))
+                const matchNombre = r.nombreCompleto.toLowerCase().includes(term)
+                if (!matchRut && !matchNombre) {
+                    return false
+                }
             }
 
             // Filtro Criterio
@@ -372,7 +385,7 @@ export default function AdmAusentismoClient({
             return true
         })
     }, [
-        registros, filtroRbdSeleccionado, busquedaRbdNombre, filtroFecha, filtroRut, filtroNombre,
+        registros, filtroRbdSeleccionado, busquedaRbdNombre, filtroFecha, busquedaTexto, filtroSucursal,
         filtroCriterio, filtroEstado, filtroCargaId, filtroRol, filtroUsuarioId, filtroInstitucion,
         filtroComuna, userRutsSet, userRbdsSet, roleRutsSet, roleRbdsSet
     ])
@@ -615,6 +628,7 @@ export default function AdmAusentismoClient({
             'Establecimiento': r.establecimiento,
             'Institución': r.institucion || '',
             'Comuna': r.comuna || '',
+            'Sucursal': r.sucursal || '',
             'Supervisor': r.supervisorNombre,
             'RUT': r.rut,
             'Colaborador': r.nombreCompleto,
@@ -1130,14 +1144,14 @@ export default function AdmAusentismoClient({
                                 <Filter className="w-3.5 h-3.5 text-cyan-600" />
                                 <span>Filtros de Búsqueda Avanzada</span>
                             </div>
-                            {(busquedaRbdNombre || filtroRbdSeleccionado || filtroFecha || filtroRut || filtroNombre || filtroCriterio !== 'TODOS' || filtroEstado !== 'TODOS' || filtroCargaId !== 'TODOS' || filtroRol !== 'TODOS' || filtroUsuarioId !== 'TODOS' || filtroInstitucion !== 'TODAS' || filtroComuna !== 'TODAS') && (
+                            {(busquedaRbdNombre || filtroRbdSeleccionado || filtroFecha || busquedaTexto || filtroSucursal !== 'TODAS' || filtroCriterio !== 'TODOS' || filtroEstado !== 'TODOS' || filtroCargaId !== 'TODOS' || filtroRol !== 'TODOS' || filtroUsuarioId !== 'TODOS' || filtroInstitucion !== 'TODAS' || filtroComuna !== 'TODAS') && (
                                 <button
                                     onClick={() => {
                                         setBusquedaRbdNombre('')
                                         setFiltroRbdSeleccionado(null)
                                         setFiltroFecha('')
-                                        setFiltroRut('')
-                                        setFiltroNombre('')
+                                        setBusquedaTexto('')
+                                        setFiltroSucursal('TODAS')
                                         setFiltroCriterio('TODOS')
                                         setFiltroEstado('TODOS')
                                         setFiltroCargaId('TODOS')
@@ -1244,6 +1258,29 @@ export default function AdmAusentismoClient({
                                     {comunasDisponibles.map(com => (
                                         <option key={com} value={com}>
                                             {com}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            {/* Filtro por Sucursal */}
+                            <div>
+                                <label className="block text-[11px] font-semibold text-gray-600 mb-1 flex items-center gap-1">
+                                    <Building2 className="w-3 h-3 text-cyan-600" />
+                                    <span>Sucursal</span>
+                                </label>
+                                <select
+                                    value={filtroSucursal}
+                                    onChange={e => {
+                                        setFiltroSucursal(e.target.value)
+                                        setPaginaActual(1)
+                                    }}
+                                    className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 text-xs bg-white"
+                                >
+                                    <option value="TODAS">Todas las Sucursales</option>
+                                    {sucursalesDisponibles.map(suc => (
+                                        <option key={suc} value={suc}>
+                                            {suc}
                                         </option>
                                     ))}
                                 </select>
@@ -1375,34 +1412,37 @@ export default function AdmAusentismoClient({
                                 />
                             </div>
 
-                            {/* Filtro RUT */}
-                            <div>
-                                <label className="block text-[11px] font-semibold text-gray-600 mb-1">Buscar RUT</label>
-                                <input
-                                    type="text"
-                                    placeholder="Ej: 12.345.678-9"
-                                    value={filtroRut}
-                                    onChange={e => {
-                                        setFiltroRut(e.target.value)
-                                        setPaginaActual(1)
-                                    }}
-                                    className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 text-xs"
-                                />
-                            </div>
-
-                            {/* Filtro Nombre */}
-                            <div className="md:col-span-2">
-                                <label className="block text-[11px] font-semibold text-gray-600 mb-1">Nombre Colaborador</label>
-                                <input
-                                    type="text"
-                                    placeholder="Buscar por nombre o apellidos..."
-                                    value={filtroNombre}
-                                    onChange={e => {
-                                        setFiltroNombre(e.target.value)
-                                        setPaginaActual(1)
-                                    }}
-                                    className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 text-xs"
-                                />
+                            {/* Buscar por RUT o Colaborador */}
+                            <div className="md:col-span-3">
+                                <label className="block text-[11px] font-semibold text-gray-600 mb-1 flex items-center gap-1">
+                                    <Search className="w-3 h-3 text-cyan-600" />
+                                    <span>Buscar por RUT o Colaborador</span>
+                                </label>
+                                <div className="relative">
+                                    <input
+                                        type="text"
+                                        placeholder="Buscar por RUT o colaborador..."
+                                        value={busquedaTexto}
+                                        onChange={e => {
+                                            setBusquedaTexto(e.target.value)
+                                            setPaginaActual(1)
+                                        }}
+                                        className="w-full pl-8 pr-7 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 text-xs"
+                                    />
+                                    <Search className="w-3.5 h-3.5 text-gray-400 absolute left-2.5 top-2.5" />
+                                    {busquedaTexto && (
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setBusquedaTexto('')
+                                                setPaginaActual(1)
+                                            }}
+                                            className="absolute right-2 top-2 text-gray-400 hover:text-gray-600"
+                                        >
+                                            <X className="w-3.5 h-3.5" />
+                                        </button>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1569,6 +1609,12 @@ export default function AdmAusentismoClient({
                                                                     <span className="text-[9px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200 flex items-center gap-0.5">
                                                                         <MapPin className="w-2.5 h-2.5" />
                                                                         {r.comuna}
+                                                                    </span>
+                                                                )}
+                                                                {r.sucursal && (
+                                                                    <span className="text-[9px] font-semibold text-cyan-700 bg-cyan-50 px-1.5 py-0.5 rounded border border-cyan-200 flex items-center gap-0.5">
+                                                                        <Building2 className="w-2.5 h-2.5" />
+                                                                        {r.sucursal}
                                                                     </span>
                                                                 )}
                                                             </div>

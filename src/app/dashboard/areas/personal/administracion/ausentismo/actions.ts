@@ -33,6 +33,7 @@ export interface AdmAsistenciaRegistroDTO {
     establecimiento: string
     institucion?: string | null
     comuna?: string | null
+    sucursal?: string | null
     supervisorNombre: string
     grupoOriginal: string
     cargo: string | null
@@ -67,6 +68,70 @@ export interface CargaHistorialDTO {
     cargadoPor: string
     fechaCarga: string
     observaciones?: string | null
+}
+
+function resolverSucursalYComunaAusentismo(
+    rbd: number,
+    establecimientoRaw?: string | null,
+    grupoOriginalRaw?: string | null,
+    rutHash?: string | null,
+    sucursalColegioMap?: Map<number, string>,
+    comunaColegioMap?: Map<number, string>,
+    dotaMap?: Map<string, { sucursal?: string; establecimiento?: string; cargo?: string }>
+): { sucursal: string | null; comuna: string | null; establecimiento: string } {
+    // 1. Si es establecimiento educacional (colegio con RBD > 0)
+    if (rbd > 0) {
+        return {
+            sucursal: sucursalColegioMap?.get(rbd) || null,
+            comuna: comunaColegioMap?.get(rbd) || null,
+            establecimiento: (establecimientoRaw || '').trim() || `RBD ${rbd}`
+        }
+    }
+
+    // 2. Personal sin RBD o de centros operativos / sede central (rbd === 0)
+    const est = (establecimientoRaw || '').trim()
+    const grp = (grupoOriginalRaw || '').trim()
+    const dotaInfo = rutHash ? dotaMap?.get(rutHash) : null
+    const dotaSuc = (dotaInfo?.sucursal || '').trim().toUpperCase()
+
+    // Búsqueda en los campos descriptivos (establecimiento, grupo original, sucursal de dotación)
+    const combined = `${est} ${grp} ${dotaSuc}`.toUpperCase()
+
+    let sucursal = 'CASA MATRIZ'
+    let comuna = 'PUDAHUEL'
+    let resolvedEst = est || grp || dotaInfo?.establecimiento || 'Casa Matriz'
+
+    if (combined.includes('COYHAIQUE')) {
+        sucursal = 'CD COYHAIQUE'
+        comuna = 'COYHAIQUE'
+        resolvedEst = est || grp || 'CD Coyhaique'
+    } else if (combined.includes('COPIAP')) {
+        sucursal = 'CD COPIAPO'
+        comuna = 'COPIAPÓ'
+        resolvedEst = est || grp || 'CD Copiapó'
+    } else if (combined.includes('VALLENAR')) {
+        sucursal = 'CD VALLENAR'
+        comuna = 'VALLENAR'
+        resolvedEst = est || grp || 'CD Vallenar'
+    } else if (combined.includes('METRO') || combined.includes('SANTIAGO')) {
+        sucursal = 'CD METRO'
+        comuna = 'SANTIAGO'
+        resolvedEst = est || grp || 'CD Metro'
+    } else if (combined.includes('MATRIZ') || combined.includes('PUDAHUEL') || combined.includes('CENTRAL')) {
+        sucursal = 'CASA MATRIZ'
+        comuna = 'PUDAHUEL'
+        resolvedEst = est || grp || 'Casa Matriz'
+    } else if (dotaSuc) {
+        sucursal = dotaSuc
+        comuna = dotaSuc.includes('COYHAIQUE') ? 'COYHAIQUE'
+            : dotaSuc.includes('COPIAP') ? 'COPIAPÓ'
+            : dotaSuc.includes('VALLENAR') ? 'VALLENAR'
+            : dotaSuc.includes('METRO') ? 'SANTIAGO'
+            : 'PUDAHUEL'
+        resolvedEst = est || grp || dotaInfo?.establecimiento || dotaSuc
+    }
+
+    return { sucursal, comuna, establecimiento: resolvedEst }
 }
 
 export async function getAdmAusentismoRegistrosAction(filtros?: {
@@ -168,15 +233,37 @@ export async function getAdmAusentismoRegistrosAction(filtros?: {
             }
         }
 
-        // Obtener mapa de instituciones y comunas de colegios
+        // Obtener mapa de instituciones, comunas y sucursales de colegios
         const colegiosInstDb = await rawPrisma.colegios.findMany({
-            select: { colRBD: true, institucion: true, comuna: true }
+            select: { colRBD: true, institucion: true, comuna: true, sucursal: true }
         }).catch(() => [])
         const institucionMap = new Map<number, string>()
         const comunaMap = new Map<number, string>()
+        const sucursalMap = new Map<number, string>()
         for (const c of colegiosInstDb) {
             if (c.colRBD && c.institucion) institucionMap.set(c.colRBD, c.institucion.trim())
             if (c.colRBD && c.comuna) comunaMap.set(c.colRBD, c.comuna.trim())
+            if (c.colRBD && c.sucursal) sucursalMap.set(c.colRBD, c.sucursal.trim().toUpperCase())
+        }
+
+        // Obtener mapa de dotación para enriquecer sucursal/comuna/cargo de personal no docente o sin RBD (rbd === 0)
+        let dotaRows: any[] = []
+        try {
+            dotaRows = await rawPrisma.$queryRawUnsafe(
+                `SELECT "rutHash", sucursal, establecimiento, cargo FROM "Pers_Dota_Registro" WHERE "rutHash" IS NOT NULL;`
+            )
+        } catch {
+            dotaRows = []
+        }
+        const dotaMap = new Map<string, { sucursal?: string; establecimiento?: string; cargo?: string }>()
+        for (const d of dotaRows) {
+            if (d.rutHash) {
+                dotaMap.set(d.rutHash, {
+                    sucursal: d.sucursal ? d.sucursal.trim().toUpperCase() : undefined,
+                    establecimiento: d.establecimiento ? d.establecimiento.trim() : undefined,
+                    cargo: d.cargo ? d.cargo.trim() : undefined
+                })
+            }
         }
 
         // Desencriptar datos en memoria
@@ -184,6 +271,17 @@ export async function getAdmAusentismoRegistrosAction(filtros?: {
             const rut = decryptPersonalText(r.rutEnc)
             const apellidos = decryptPersonalText(r.apellidosEnc)
             const nombre = decryptPersonalText(r.nombreEnc)
+
+            const { sucursal: resolvedSucursal, comuna: resolvedComuna, establecimiento: resolvedEstablecimiento } =
+                resolverSucursalYComunaAusentismo(
+                    r.rbd,
+                    r.establecimiento,
+                    r.grupoOriginal,
+                    r.rutHash,
+                    sucursalMap,
+                    comunaMap,
+                    dotaMap
+                )
 
             return {
                 id: r.id,
@@ -196,12 +294,13 @@ export async function getAdmAusentismoRegistrosAction(filtros?: {
                 fecha: r.fecha,
                 fechaTexto: r.fecha,
                 rbd: r.rbd,
-                establecimiento: r.establecimiento,
-                institucion: institucionMap.get(r.rbd) || null,
-                comuna: comunaMap.get(r.rbd) || null,
+                establecimiento: resolvedEstablecimiento,
+                institucion: institucionMap.get(r.rbd) || (r.rbd === 0 ? 'HENDAYA' : null),
+                comuna: resolvedComuna,
+                sucursal: resolvedSucursal,
                 supervisorNombre: supervisorMap.get(r.rbd) || 'Sin Asignar',
                 grupoOriginal: r.grupoOriginal || '',
-                cargo: r.cargo,
+                cargo: r.cargo || dotaMap.get(r.rutHash)?.cargo || null,
                 permisoParcial: r.permisoParcial,
                 criterioId: r.criterioId,
                 criterioNombre: r.criterioNombre,
@@ -528,6 +627,7 @@ export interface FiltrosMetadatosDTO {
     usuarios: UsuarioFiltroDTO[]
     instituciones: string[]
     comunas: string[]
+    sucursales: string[]
 }
 
 /**
@@ -568,7 +668,7 @@ export async function getFiltrosMetadatosAusentismoAction(): Promise<FiltrosMeta
                 }
             }).catch(() => []),
             rawPrisma.colegios.findMany({
-                select: { institucion: true, comuna: true }
+                select: { institucion: true, comuna: true, sucursal: true }
             }).catch(() => []),
             rawPrisma.$queryRawUnsafe(`
                 SELECT "tipo", "jefaturaUserId", "jefaturaRoleId", "personalRutHash", "personalRutEnc", "personalRbd"
@@ -667,6 +767,7 @@ export async function getFiltrosMetadatosAusentismoAction(): Promise<FiltrosMeta
 
         const instSet = new Set<string>()
         const comunaSet = new Set<string>()
+        const sucursalSet = new Set<string>()
         for (const c of colegiosDb) {
             if (c.institucion && c.institucion.trim()) {
                 instSet.add(c.institucion.trim().toUpperCase())
@@ -674,15 +775,33 @@ export async function getFiltrosMetadatosAusentismoAction(): Promise<FiltrosMeta
             if (c.comuna && c.comuna.trim()) {
                 comunaSet.add(c.comuna.trim().toUpperCase())
             }
+            if (c.sucursal && c.sucursal.trim()) {
+                sucursalSet.add(c.sucursal.trim().toUpperCase())
+            }
         }
+        // Asegurar que las sucursales oficiales de Hendaya y sus comunas estén disponibles
+        sucursalSet.add('CASA MATRIZ')
+        sucursalSet.add('CD COPIAPO')
+        sucursalSet.add('CD COYHAIQUE')
+        sucursalSet.add('CD METRO')
+        sucursalSet.add('CD VALLENAR')
+
+        comunaSet.add('PUDAHUEL')
+        comunaSet.add('COYHAIQUE')
+        comunaSet.add('COPIAPÓ')
+        comunaSet.add('VALLENAR')
+        comunaSet.add('SANTIAGO')
+
         const instituciones = Array.from(instSet).sort()
         const comunas = Array.from(comunaSet).sort()
+        const sucursales = Array.from(sucursalSet).sort()
 
         return {
             roles: rolesDb.map(r => ({ id: r.id, name: r.name })),
             usuarios,
             instituciones,
-            comunas
+            comunas,
+            sucursales
         }
     } catch (e: any) {
         console.error('Error fetching metadatos filtros ausentismo:', e)
@@ -690,7 +809,8 @@ export async function getFiltrosMetadatosAusentismoAction(): Promise<FiltrosMeta
             roles: [],
             usuarios: [],
             instituciones: [],
-            comunas: []
+            comunas: [],
+            sucursales: []
         }
     }
 }

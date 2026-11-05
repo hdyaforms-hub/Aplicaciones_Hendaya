@@ -8,8 +8,11 @@ import {
     getPersonalDotacionCambioRbdAction,
     getColegiosParaCambioRbdAction,
     guardarCambioRbdAction,
-    getHistorialCambiosColaboradorAction
+    getHistorialCambiosColaboradorAction,
+    getReporteCompletoCambiosRbdAction
 } from './actions'
+import { Download, RefreshCw, FileSpreadsheet } from 'lucide-react'
+import * as xlsx from 'xlsx'
 
 type Props = {
     initialData: ColaboradorDotacionItemDTO[]
@@ -273,6 +276,83 @@ export default function CambioRbdClient({
         }
     }
 
+    // Descargar reporte Excel consolidado de solo personas con cambio de RBD
+    const [isDownloading, setIsDownloading] = useState<boolean>(false)
+
+    const handleDescargarCambiosRbd = async () => {
+        try {
+            setIsDownloading(true)
+            const res = await getReporteCompletoCambiosRbdAction()
+
+            if (!res.success || !res.data) {
+                showToast(res.error || 'Error al obtener la información de personas con cambio de RBD', 'error')
+                return
+            }
+
+            if (res.data.length === 0) {
+                showToast('No se encontraron registros de personas que se hayan cambiado de RBD', 'error')
+                return
+            }
+
+            const exportData = res.data.map(item => ({
+                'RUT': item.rut,
+                'Colaborador': item.nombre,
+                'Cargo': item.cargo || '',
+                'Empresa': item.empresa || '',
+                'RBD Origen': item.rbdOrigen,
+                'Establecimiento Origen': item.establecimientoOrigen,
+                'Sucursal Origen': item.sucursalOrigen,
+                'Supervisor': item.supervisor,
+                'RBD Destino': item.rbdDestino,
+                'Establecimiento Destino': item.establecimientoDestino,
+                'Sucursal Destino': item.sucursalDestino,
+                'Tipo de Traslado': item.tipoCambio,
+                'Fecha Desde': item.fechaDesde,
+                'Fecha Hasta': item.fechaHasta,
+                'Observación / Motivo': item.observacion || '',
+                'Estado': item.estado,
+                'Registrado Por': item.creadoPor,
+                'Fecha Registro': item.createdAt
+            }))
+
+            const ws = xlsx.utils.json_to_sheet(exportData)
+            const wb = xlsx.utils.book_new()
+            xlsx.utils.book_append_sheet(wb, ws, 'Cambios_RBD')
+
+            // Configuración de anchos de columna recomendados
+            ws['!cols'] = [
+                { wch: 14 },
+                { wch: 32 },
+                { wch: 20 },
+                { wch: 14 },
+                { wch: 12 },
+                { wch: 34 },
+                { wch: 18 },
+                { wch: 25 },
+                { wch: 12 },
+                { wch: 34 },
+                { wch: 18 },
+                { wch: 24 },
+                { wch: 14 },
+                { wch: 14 },
+                { wch: 35 },
+                { wch: 14 },
+                { wch: 22 },
+                { wch: 22 }
+            ]
+
+            const fechaStr = new Date().toISOString().slice(0, 10)
+            xlsx.writeFile(wb, `Reporte_Personas_Cambio_RBD_${fechaStr}.xlsx`)
+
+            showToast(`Descarga completada: ${res.data.length} registro(s) de personas con cambio de RBD`)
+        } catch (error: any) {
+            console.error('Error al exportar cambios de RBD:', error)
+            showToast('Ocurrió un error al generar la descarga del archivo Excel', 'error')
+        } finally {
+            setIsDownloading(false)
+        }
+    }
+
     return (
         <div className="space-y-6 max-w-7xl mx-auto">
             {/* TOAST FLOTANTE */}
@@ -313,14 +393,34 @@ export default function CambioRbdClient({
                         </p>
                     </div>
 
-                    <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-3.5 px-5 flex items-center gap-4 shrink-0 shadow-inner">
-                        <div className="text-right">
-                            <span className="text-xs text-slate-400 block font-medium">Manipuladoras en Dotación</span>
-                            <span className="text-xl font-bold text-cyan-400">{total} registros</span>
+                    <div className="flex flex-wrap items-center gap-3">
+                        <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-3.5 px-5 flex items-center gap-4 shrink-0 shadow-inner">
+                            <div className="text-right">
+                                <span className="text-xs text-slate-400 block font-medium">Manipuladoras en Dotación</span>
+                                <span className="text-xl font-bold text-cyan-400">{total} registros</span>
+                            </div>
+                            <div className="w-10 h-10 rounded-xl bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center text-cyan-300 font-bold text-lg">
+                                👥
+                            </div>
                         </div>
-                        <div className="w-10 h-10 rounded-xl bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center text-cyan-300 font-bold text-lg">
-                            👥
-                        </div>
+
+                        <button
+                            type="button"
+                            onClick={handleDescargarCambiosRbd}
+                            disabled={isDownloading}
+                            className="bg-emerald-600 hover:bg-emerald-500 text-white border border-emerald-400/40 rounded-2xl p-3 px-4.5 flex items-center gap-3 shadow-lg hover:shadow-emerald-900/30 transition-all font-bold text-xs disabled:opacity-50 shrink-0"
+                            title="Descargar toda la información de solo las personas que se cambiaron de RBD"
+                        >
+                            {isDownloading ? (
+                                <RefreshCw className="w-4 h-4 animate-spin text-white" />
+                            ) : (
+                                <Download className="w-4 h-4 text-emerald-100" />
+                            )}
+                            <div className="text-left">
+                                <span className="text-[10px] uppercase tracking-wider block text-emerald-200">Exportar a Excel</span>
+                                <span className="text-sm font-extrabold">Descargar Cambios de RBD</span>
+                            </div>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -358,11 +458,28 @@ export default function CambioRbdClient({
                     )}
                 </form>
 
-                <div className="flex items-center gap-2 shrink-0 text-xs text-gray-500">
-                    <span>Orden actual:</span>
-                    <span className="font-bold text-cyan-700 bg-cyan-50 px-2 py-1 rounded-lg border border-cyan-100">
-                        {sortBy.toUpperCase()} ({sortDir === 'asc' ? '▲ Ascendente' : '▼ Descendente'})
-                    </span>
+                <div className="flex items-center gap-3 shrink-0">
+                    <button
+                        type="button"
+                        onClick={handleDescargarCambiosRbd}
+                        disabled={isDownloading}
+                        className="flex items-center gap-1.5 px-3.5 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 rounded-xl text-xs font-bold transition-all disabled:opacity-50 shadow-2xs"
+                        title="Descargar toda la información de solo las personas que se cambiaron de RBD"
+                    >
+                        {isDownloading ? (
+                            <RefreshCw className="w-3.5 h-3.5 animate-spin text-emerald-600" />
+                        ) : (
+                            <Download className="w-3.5 h-3.5 text-emerald-600" />
+                        )}
+                        <span>Descargar Cambios de RBD</span>
+                    </button>
+
+                    <div className="flex items-center gap-2 text-xs text-gray-500">
+                        <span>Orden:</span>
+                        <span className="font-bold text-cyan-700 bg-cyan-50 px-2 py-1 rounded-lg border border-cyan-100">
+                            {sortBy.toUpperCase()} ({sortDir === 'asc' ? '▲' : '▼'})
+                        </span>
+                    </div>
                 </div>
             </div>
 

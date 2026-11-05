@@ -585,3 +585,128 @@ export async function getHistorialCambiosColaboradorAction(colaboradorId: string
     }
 }
 
+export interface ReporteCambioRbdItemDTO {
+    id: string
+    rut: string
+    nombre: string
+    cargo: string
+    empresa: string
+    rbdOrigen: number
+    establecimientoOrigen: string
+    sucursalOrigen: string
+    supervisor: string
+    rbdDestino: number
+    establecimientoDestino: string
+    sucursalDestino: string
+    tipoCambio: string
+    fechaDesde: string
+    fechaHasta: string
+    observacion: string
+    estado: string
+    creadoPor: string
+    createdAt: string
+}
+
+/**
+ * Server Action: Descarga toda la información consolidada de solo las personas que se cambiaron de RBD.
+ */
+export async function getReporteCompletoCambiosRbdAction(): Promise<{
+    success: boolean
+    data?: ReporteCambioRbdItemDTO[]
+    error?: string
+}> {
+    if (!await checkPermission()) {
+        return { success: false, error: 'No tienes permisos para descargar los cambios de RBD', data: [] }
+    }
+    await ensurePersonalDotacionTables()
+    await ensurePersonalCambioRbdTables()
+
+    const session = await getSession()
+    const authorizedRbds = await getUserEffectiveRbds()
+
+    try {
+        let whereClause = ''
+        const queryParams: any[] = []
+
+        if (authorizedRbds !== null) {
+            if (authorizedRbds.length === 0) {
+                return { success: true, data: [] }
+            }
+            whereClause = `WHERE "rbdOrigen" = ANY($1::int[]) OR "rbdDestino" = ANY($1::int[])`
+            queryParams.push(authorizedRbds)
+        }
+
+        const rows: any[] = await prisma.$queryRawUnsafe(`
+            SELECT id, "colaboradorId", "rutEnc", "rutHash", "nombreEnc",
+                   "rbdOrigen", "establecimientoOrigen", "sucursalOrigen", supervisor,
+                   "rbdDestino", "establecimientoDestino", "sucursalDestino",
+                   "tipoCambio", "fechaDesde", "fechaHasta", observacion, estado,
+                   "creadoPor", "createdAt"
+            FROM "Pers_Cambio_Rbd"
+            ${whereClause}
+            ORDER BY "createdAt" DESC;
+        `, ...queryParams)
+
+        // Consultar cargo y empresa de dotación para complementar
+        const colabIds = rows.map(r => r.colaboradorId).filter(Boolean)
+        const rutHashes = rows.map(r => r.rutHash).filter(Boolean)
+        const dotaMap = new Map<string, { cargo: string; empresa: string }>()
+
+        if (colabIds.length > 0 || rutHashes.length > 0) {
+            try {
+                const dotaRows: any[] = await prisma.$queryRawUnsafe(`
+                    SELECT id, "rutHash", cargo, empresa
+                    FROM "Pers_Dota_Registro"
+                    WHERE id = ANY($1::text[]) OR "rutHash" = ANY($2::text[]);
+                `, colabIds, rutHashes)
+                for (const d of dotaRows) {
+                    const info = { cargo: d.cargo || '', empresa: d.empresa || '' }
+                    if (d.id) dotaMap.set(d.id, info)
+                    if (d.rutHash) dotaMap.set(d.rutHash, info)
+                }
+            } catch (e) {
+                console.error('Error obteniendo dotación complementaria:', e)
+            }
+        }
+
+        const data: ReporteCambioRbdItemDTO[] = rows.map(r => {
+            const dota = (r.colaboradorId && dotaMap.get(r.colaboradorId)) || (r.rutHash && dotaMap.get(r.rutHash)) || null
+            return {
+                id: r.id,
+                rut: decryptPersonalText(r.rutEnc) || '***',
+                nombre: decryptPersonalText(r.nombreEnc) || 'Colaborador',
+                cargo: dota?.cargo || 'Manipuladora',
+                empresa: dota?.empresa || 'HENDAYA',
+                rbdOrigen: Number(r.rbdOrigen),
+                establecimientoOrigen: r.establecimientoOrigen || 'Sin Establecimiento',
+                sucursalOrigen: r.sucursalOrigen || 'Sin Sucursal',
+                supervisor: r.supervisor || 'Sin Asignar',
+                rbdDestino: Number(r.rbdDestino),
+                establecimientoDestino: r.establecimientoDestino || 'Sin Establecimiento',
+                sucursalDestino: r.sucursalDestino || 'Sin Sucursal',
+                tipoCambio: r.tipoCambio === 'ANEXO_TRASLADO' ? 'Anexo de Traslado' : r.tipoCambio === 'COMISION_SERVICIO' ? 'Comisión de Servicio' : (r.tipoCambio || 'Traslado'),
+                fechaDesde: r.fechaDesde || '',
+                fechaHasta: r.fechaHasta || 'Indefinido',
+                observacion: r.observacion || '',
+                estado: r.estado || 'REGISTRADO',
+                creadoPor: r.creadoPor || 'Usuario',
+                createdAt: r.createdAt ? new Date(r.createdAt).toLocaleString('es-CL') : ''
+            }
+        })
+
+        // Auditoría
+        await logAuditAction({
+            username: session?.user?.name || session?.user?.username || 'Usuario',
+            userId: session?.user?.id || null,
+            action: 'EXPORTAR_EXCEL_CAMBIO_RBD',
+            modulo: 'Cambio de RBD',
+            detalle: `Descarga de reporte Excel de solo personas con cambio de RBD (${data.length} registros).`
+        })
+
+        return { success: true, data }
+    } catch (err: any) {
+        console.error('Error al generar reporte de cambios de RBD:', err)
+        return { success: false, error: err?.message || 'Error al generar reporte' }
+    }
+}
+

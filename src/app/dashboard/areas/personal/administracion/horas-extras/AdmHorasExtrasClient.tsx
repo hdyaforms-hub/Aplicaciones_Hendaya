@@ -1285,7 +1285,10 @@ export default function AdmHorasExtrasClient({
 
                             {/* Sucursal */}
                             <div>
-                                <label className="block text-[11px] font-semibold text-gray-600 mb-1">Sucursal / Sede</label>
+                                <label className="block text-[11px] font-semibold text-gray-600 mb-1 flex items-center gap-1">
+                                    <Building2 className="w-3 h-3 text-cyan-600" />
+                                    <span>Sucursal</span>
+                                </label>
                                 <select
                                     value={filtroSucursal}
                                     onChange={e => setFiltroSucursal(e.target.value)}
@@ -1337,11 +1340,14 @@ export default function AdmHorasExtrasClient({
 
                             {/* Búsqueda general */}
                             <div className="md:col-span-4">
-                                <label className="block text-[11px] font-semibold text-gray-600 mb-1">Buscar por RUT, Nombre o Cargo</label>
+                                <label className="block text-[11px] font-semibold text-gray-600 mb-1 flex items-center gap-1">
+                                    <Search className="w-3 h-3 text-cyan-600" />
+                                    <span>Buscar por RUT o Colaborador</span>
+                                </label>
                                 <div className="flex gap-2">
                                     <input
                                         type="text"
-                                        placeholder="Escribe para buscar..."
+                                        placeholder="Buscar por RUT o colaborador..."
                                         value={busquedaTexto}
                                         onChange={e => setBusquedaTexto(e.target.value)}
                                         onKeyDown={e => { if (e.key === 'Enter') recargarDatos(1) }}
@@ -1521,6 +1527,12 @@ export default function AdmHorasExtrasClient({
                                                                     <span className="text-[9px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200 flex items-center gap-0.5">
                                                                         <MapPin className="w-2.5 h-2.5" />
                                                                         {r.comuna}
+                                                                    </span>
+                                                                )}
+                                                                {r.sucursal && (
+                                                                    <span className="text-[9px] font-semibold text-cyan-700 bg-cyan-50 px-1.5 py-0.5 rounded border border-cyan-200 flex items-center gap-0.5">
+                                                                        <Building2 className="w-2.5 h-2.5" />
+                                                                        {r.sucursal}
                                                                     </span>
                                                                 )}
                                                             </div>

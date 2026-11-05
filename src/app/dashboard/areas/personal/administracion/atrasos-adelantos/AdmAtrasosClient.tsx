@@ -1142,8 +1142,9 @@ export default function AdmAtrasosClient({
                     <div className="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm space-y-3">
                         <form onSubmit={handleSearchSubmit} className="grid grid-cols-1 sm:grid-cols-12 gap-3 items-end">
                             <div className="sm:col-span-3">
-                                <label className="block text-[11px] font-semibold text-gray-600 uppercase tracking-wider mb-1">
-                                    Búsqueda General (RUT, Colaborador)
+                                <label className="block text-[11px] font-semibold text-gray-600 uppercase tracking-wider mb-1 flex items-center gap-1">
+                                    <Search className="w-3 h-3 text-cyan-600" />
+                                    <span>Buscar por RUT o Colaborador</span>
                                 </label>
                                 <div className="relative">
                                     <Search className="w-4 h-4 text-gray-400 absolute left-3 top-2.5" />
@@ -1151,7 +1152,7 @@ export default function AdmAtrasosClient({
                                         type="text"
                                         value={busquedaTexto}
                                         onChange={e => setBusquedaTexto(e.target.value)}
-                                        placeholder="Buscar..."
+                                        placeholder="Buscar por RUT o colaborador..."
                                         className="w-full pl-9 pr-3 py-1.5 border border-gray-200 rounded-xl text-xs text-gray-900 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500"
                                     />
                                 </div>
@@ -1315,6 +1316,27 @@ export default function AdmAtrasosClient({
                                     <option value="TODAS">Todas las Comunas</option>
                                     {comunasDisponibles.map(com => (
                                         <option key={com} value={com}>{com}</option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            <div className="sm:col-span-2">
+                                <label className="block text-[11px] font-semibold text-gray-600 uppercase tracking-wider mb-1 flex items-center gap-1">
+                                    <Building2 className="w-3 h-3 text-cyan-600" />
+                                    <span>Sucursal</span>
+                                </label>
+                                <select
+                                    value={filtroSucursal}
+                                    onChange={e => {
+                                        const val = e.target.value
+                                        setFiltroSucursal(val)
+                                        recargarDatos(1, sortField, sortDirection, tipoActivo, { sucursal: val })
+                                    }}
+                                    className="w-full px-3 py-1.5 border border-gray-200 rounded-xl text-xs text-gray-900 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500"
+                                >
+                                    <option value="TODAS">Todas las Sucursales</option>
+                                    {(initialRegistrosData.sucursales || []).map((s: string) => (
+                                        <option key={s} value={s}>{s}</option>
                                     ))}
                                 </select>
                             </div>
@@ -1488,6 +1510,12 @@ export default function AdmAtrasosClient({
                                                             <span className="text-[9px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200 flex items-center gap-0.5">
                                                                 <MapPin className="w-2.5 h-2.5" />
                                                                 {r.comuna}
+                                                            </span>
+                                                        )}
+                                                        {r.sucursal && (
+                                                            <span className="text-[9px] font-semibold text-cyan-700 bg-cyan-50 px-1.5 py-0.5 rounded border border-cyan-200 flex items-center gap-0.5">
+                                                                <Building2 className="w-2.5 h-2.5" />
+                                                                {r.sucursal}
                                                             </span>
                                                         )}
                                                     </div>
