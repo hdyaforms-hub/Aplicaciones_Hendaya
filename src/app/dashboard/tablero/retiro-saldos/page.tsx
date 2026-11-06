@@ -7,17 +7,18 @@ import { redirect } from 'next/navigation'
 export default async function RetiroDashboardPage({
     searchParams
 }: {
-    searchParams: { year?: string, month?: string, sucursal?: string, rbd?: string }
+    searchParams: Promise<{ year?: string, month?: string, sucursal?: string, rbd?: string }>
 }) {
     const session = await getSession()
     if (!session?.user?.role?.permissions.includes('view_tablero_retiro')) {
         redirect('/dashboard')
     }
 
-    const year = searchParams.year ? parseInt(searchParams.year) : new Date().getFullYear()
-    const month = searchParams.month ? parseInt(searchParams.month) : undefined
-    const sucursal = searchParams.sucursal
-    const rbd = searchParams.rbd ? parseInt(searchParams.rbd) : undefined
+    const resolvedParams = await searchParams
+    const year = resolvedParams.year ? parseInt(resolvedParams.year) : new Date().getFullYear()
+    const month = resolvedParams.month ? parseInt(resolvedParams.month) : undefined
+    const sucursal = resolvedParams.sucursal
+    const rbd = resolvedParams.rbd ? parseInt(resolvedParams.rbd) : undefined
 
     const data = await getRetiroDashboardData({ year, month, sucursal, rbd })
 

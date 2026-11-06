@@ -10,14 +10,14 @@ export const metadata = {
 export default async function RespuestasPage({
     searchParams
 }: {
-    searchParams: { formId?: string, username?: string, page?: string }
+    searchParams: Promise<{ formId?: string, username?: string, page?: string }>
 }) {
     const session = await getSession()
     if (!session?.user?.role?.permissions.includes('view_respuestas')) {
         redirect('/dashboard')
     }
 
-    const { formId, username, page } = searchParams
+    const { formId, username, page } = await searchParams
     const forms = await getForms()
     const { submissions, total, totalPages, currentPage } = await getFormSubmissions({
         formId,

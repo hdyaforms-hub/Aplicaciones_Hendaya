@@ -5,19 +5,19 @@ import { getSession } from '@/lib/session'
 import { logAuditAction } from '@/lib/audit'
 import { ensureResolucionSanitariaTable } from '@/lib/calidad/resolucion-sanitaria'
 
-export function isEstadoSi(estado?: string | null): boolean {
+function isEstadoSi(estado?: string | null): boolean {
     if (!estado) return false
     const clean = estado.trim().toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
     return clean === 'SI' || clean === 'S'
 }
 
-export function isEstadoNo(estado?: string | null): boolean {
+function isEstadoNo(estado?: string | null): boolean {
     if (!estado) return false
     const clean = estado.trim().toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
     return clean === 'NO' || clean === 'N'
 }
 
-export function isEstadoNoAplica(estado?: string | null): boolean {
+function isEstadoNoAplica(estado?: string | null): boolean {
     if (!estado) return false
     const clean = estado.trim().toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
     return clean === 'NO APLICA' || clean === 'NO_APLICA' || clean === 'NOAPLICA' || clean === 'N/A'

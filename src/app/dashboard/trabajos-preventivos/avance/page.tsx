@@ -7,16 +7,17 @@ import React from 'react'
 export default async function AvancePreventivoPage({
     searchParams
 }: {
-    searchParams: { year?: string, institucion?: string }
+    searchParams: Promise<{ year?: string, institucion?: string }>
 }) {
     const session = await getSession()
     if (!session?.user?.role?.permissions.includes('view_estado_avance_tp')) {
         redirect('/dashboard')
     }
 
+    const resolvedParams = await searchParams
     const currentYear = new Date().getFullYear()
-    const selectedYear = searchParams.year ? parseInt(searchParams.year) : currentYear
-    const selectedInst = searchParams.institucion || 'TODAS'
+    const selectedYear = resolvedParams.year ? parseInt(resolvedParams.year) : currentYear
+    const selectedInst = resolvedParams.institucion || 'TODAS'
 
     // Fetch all needed data
     const colegiosRaw = await prisma.colegios.findMany()
