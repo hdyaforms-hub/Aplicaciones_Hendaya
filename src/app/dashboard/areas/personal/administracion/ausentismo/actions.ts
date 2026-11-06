@@ -152,19 +152,25 @@ export async function getAdmAusentismoRegistrosAction(filtros?: {
         return { success: false, error: 'No autorizado', data: [] }
     }
 
-    const authorizedRbds = await getUserEffectiveRbds()
+    const perms = session.user.role?.permissions || []
+    const isGlobal = perms.includes('view_all_personal_asistencia') ||
+                     perms.includes('manage_personal_asistencia_admin') ||
+                     session.user.role?.name?.toLowerCase().includes('admin') ||
+                     session.user.role?.name?.toLowerCase().includes('gerencia')
+
+    const authorizedRbds = isGlobal ? null : await getUserEffectiveRbds()
     const where: any = {}
 
     // 1. Restricción por RBD del usuario (según su perfil)
     if (authorizedRbds !== null) {
         if (authorizedRbds.length === 0) {
             where.rbd = -999999
-        } else if (filtros?.rbd) {
+        } else if (filtros?.rbd !== undefined && filtros?.rbd !== null) {
             where.rbd = authorizedRbds.includes(filtros.rbd) ? filtros.rbd : -999999
         } else {
             where.rbd = { in: authorizedRbds }
         }
-    } else if (filtros?.rbd) {
+    } else if (filtros?.rbd !== undefined && filtros?.rbd !== null) {
         where.rbd = filtros.rbd
     }
 

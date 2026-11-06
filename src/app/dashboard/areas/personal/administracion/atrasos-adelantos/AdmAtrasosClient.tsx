@@ -1335,7 +1335,10 @@ export default function AdmAtrasosClient({
                                     className="w-full px-3 py-1.5 border border-gray-200 rounded-xl text-xs text-gray-900 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500"
                                 >
                                     <option value="TODAS">Todas las Sucursales</option>
-                                    {(initialRegistrosData.sucursales || []).map((s: string) => (
+                                    {Array.from(new Set([
+                                        'CASA MATRIZ', 'CD COPIAPO', 'CD COYHAIQUE', 'CD METRO', 'CD VALLENAR',
+                                        ...(initialRegistrosData.sucursales || [])
+                                    ])).sort().map((s: string) => (
                                         <option key={s} value={s}>{s}</option>
                                     ))}
                                 </select>

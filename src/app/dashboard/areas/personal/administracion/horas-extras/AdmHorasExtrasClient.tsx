@@ -126,6 +126,15 @@ export default function AdmHorasExtrasClient({
     const usuariosDisponibles = useMemo(() => metadatosFiltros?.usuarios || [], [metadatosFiltros])
     const institucionesDisponibles = useMemo(() => metadatosFiltros?.instituciones || [], [metadatosFiltros])
     const comunasDisponibles = useMemo(() => metadatosFiltros?.comunas || [], [metadatosFiltros])
+    const sucursalesDisponibles = useMemo(() => {
+        const fromServer = initialRegistrosData.sucursales || []
+        const fromRegs = registros.map(r => r.sucursal).filter(Boolean) as string[]
+        return Array.from(new Set([
+            'CASA MATRIZ', 'CD COPIAPO', 'CD COYHAIQUE', 'CD METRO', 'CD VALLENAR',
+            ...fromServer,
+            ...fromRegs
+        ])).sort()
+    }, [initialRegistrosData.sucursales, registros])
 
     const usuariosFiltradosPorRol = useMemo(() => {
         if (filtroRol === 'TODOS') return usuariosDisponibles
@@ -1295,7 +1304,7 @@ export default function AdmHorasExtrasClient({
                                     className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 text-xs bg-white"
                                 >
                                     <option value="TODAS">Todas las Sucursales</option>
-                                    {initialRegistrosData.sucursales.map(s => (
+                                    {sucursalesDisponibles.map(s => (
                                         <option key={s} value={s}>{s}</option>
                                     ))}
                                 </select>

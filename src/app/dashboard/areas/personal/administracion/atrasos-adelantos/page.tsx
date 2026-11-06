@@ -23,8 +23,14 @@ export default async function AdmAtrasosPage() {
         getFiltrosMetadatosAtrasosAction()
     ])
 
-    const isAdmin = authorizedRbds === null
-    const userRbds = authorizedRbds ?? []
+    const isGlobal = authorizedRbds === null || 
+                     perms.includes('view_all_personal_asistencia') || 
+                     perms.includes('manage_personal_atrasos_admin') ||
+                     session?.user?.role?.name?.toLowerCase().includes('admin') ||
+                     session?.user?.role?.name?.toLowerCase().includes('gerencia')
+
+    const isAdmin = isGlobal
+    const userRbds = isGlobal ? [] : (authorizedRbds ?? [])
 
     const fallbackData = {
         data: [],

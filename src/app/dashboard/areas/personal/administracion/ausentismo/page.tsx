@@ -37,8 +37,14 @@ export default async function AdmAusentismoPage() {
     const establecimientos = estabRes.success && estabRes.data ? estabRes.data : []
     const metadatosFiltros = metaRes || undefined
 
-    const isAdmin = authorizedRbds === null
-    const userRbds = authorizedRbds ?? []
+    const isGlobal = authorizedRbds === null || 
+                     perms.includes('view_all_personal_asistencia') || 
+                     perms.includes('manage_personal_asistencia_admin') ||
+                     session?.user?.role?.name?.toLowerCase().includes('admin') ||
+                     session?.user?.role?.name?.toLowerCase().includes('gerencia')
+
+    const isAdmin = isGlobal
+    const userRbds = isGlobal ? [] : (authorizedRbds ?? [])
 
     return (
         <AdmAusentismoClient

@@ -132,7 +132,13 @@ export async function getAdmAtrasosAction(filtros?: {
         return { success: false, error: 'No autorizado', data: [], total: 0 }
     }
 
-    const authorizedRbds = await getUserEffectiveRbds()
+    const perms = session?.user?.role?.permissions || []
+    const isGlobal = perms.includes('view_all_personal_asistencia') ||
+                     perms.includes('manage_personal_atrasos_admin') ||
+                     session?.user?.role?.name?.toLowerCase().includes('admin') ||
+                     session?.user?.role?.name?.toLowerCase().includes('gerencia')
+
+    const authorizedRbds = isGlobal ? null : await getUserEffectiveRbds()
     const tipoActual: 'ADELANTO' | 'ATRASO' = filtros?.tipo || 'ADELANTO'
 
     try {
@@ -271,9 +277,9 @@ export async function getAdmAtrasosAction(filtros?: {
         // Listas para selects
         const sucursalesResult: any[] = await rawPrisma.$queryRawUnsafe(`
             SELECT DISTINCT r.sucursal FROM "Pers_Atrasos_Registro" r
-            ${whereSql ? whereSql + ' AND' : 'WHERE'} r.sucursal IS NOT NULL AND r.sucursal <> ''
+            WHERE r.sucursal IS NOT NULL AND r.sucursal <> ''
             ORDER BY r.sucursal ASC;
-        `, ...queryParams)
+        `)
 
         const supervisoresResult: any[] = await rawPrisma.$queryRawUnsafe(`
             SELECT DISTINCT r.supervisor FROM "Pers_Atrasos_Registro" r
@@ -395,7 +401,10 @@ export async function getAdmAtrasosAction(filtros?: {
             total,
             page,
             pageSize,
-            sucursales: sucursalesResult.map((s: any) => s.sucursal).filter(Boolean),
+            sucursales: Array.from(new Set([
+                'CASA MATRIZ', 'CD COPIAPO', 'CD COYHAIQUE', 'CD METRO', 'CD VALLENAR',
+                ...sucursalesResult.map((s: any) => s.sucursal).filter(Boolean)
+            ])).sort(),
             supervisores: supervisoresResult.map((s: any) => s.supervisor).filter(Boolean),
             establecimientos: establecimientosResult.map((e: any) => ({
                 rbd: e.rbd,
@@ -859,7 +868,13 @@ export async function actualizarAtrasosMasivoAdminAction(
     const session = await getSession()
     const usuarioNombre = session?.user?.name || session?.user?.username || 'Admin'
     const usuarioId = session?.user?.id || null
-    const authorizedRbds = await getUserEffectiveRbds()
+    const perms = session?.user?.role?.permissions || []
+    const isGlobal = perms.includes('view_all_personal_asistencia') ||
+                     perms.includes('manage_personal_atrasos_admin') ||
+                     session?.user?.role?.name?.toLowerCase().includes('admin') ||
+                     session?.user?.role?.name?.toLowerCase().includes('gerencia')
+
+    const authorizedRbds = isGlobal ? null : await getUserEffectiveRbds()
     const ahora = new Date()
 
     try {

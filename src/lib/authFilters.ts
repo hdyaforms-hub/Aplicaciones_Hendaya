@@ -15,13 +15,15 @@ export async function getUserEffectiveRbds(): Promise<number[] | null> {
     }
 
     const roleName = session.user.role?.name?.toLowerCase().trim() || ''
+    const perms = session.user.role?.permissions || []
     
-    // Roles con acceso global irrestricto (solo administradores explícitos o gerencia)
+    // Roles o permisos con acceso global irrestricto (administradores explícitos, gerencia, o permiso de ver todo el personal)
     const isAdmin = roleName === 'admin' || 
                     roleName === 'administrador' || 
                     roleName === 'super admin' || 
                     roleName === 'superadministrador' || 
-                    roleName.includes('gerencia')
+                    roleName.includes('gerencia') ||
+                    perms.includes('view_all_personal_asistencia')
 
     if (isAdmin) {
         return null
@@ -42,9 +44,10 @@ export async function getUserEffectiveRbds(): Promise<number[] | null> {
 
     // 1. RBDs directos asignados en User.rbds (Módulo "Asociar RBD a usuarios")
     // Si el usuario tiene RBDs asignados explícitamente, este es su conjunto exclusivo y estricto.
+    // Permite número >= 0 para incluir Casa Matriz (RBD 0).
     const directRbds = (dbUser?.rbds || session.user.rbds || [])
         .map(Number)
-        .filter((n: number) => !isNaN(n) && n > 0)
+        .filter((n: number) => !isNaN(n) && n >= 0)
 
     if (directRbds.length > 0) {
         return Array.from(new Set(directRbds))
@@ -72,7 +75,7 @@ export async function getUserEffectiveRbds(): Promise<number[] | null> {
                 if (s.rbdsAuditar && Array.isArray(s.rbdsAuditar)) {
                     for (const r of s.rbdsAuditar) {
                         const num = Number(r.rbd)
-                        if (!isNaN(num) && num > 0) supervisorRbds.push(num)
+                        if (!isNaN(num) && num >= 0) supervisorRbds.push(num)
                     }
                 }
             }
@@ -84,31 +87,32 @@ export async function getUserEffectiveRbds(): Promise<number[] | null> {
         }
     }
 
-    // 3. Solo para jefaturas territoriales (Jefe Zonal, Jefe de Operaciones) que no tengan asignación directa de RBDs:
-    const isZonalOrOperaciones = roleName.includes('jefe zonal') || 
-                                 roleName.includes('jefe de operacion') || 
-                                 roleName.includes('operaciones')
+    // 3. Sucursales asignadas al usuario (en User.sucursales):
+    // Incluye jefaturas territoriales y personal de Casa Matriz / RRHH
+    const sucursalesFromDb = (dbUser?.sucursales || []).map((s: any) => s.nombre)
+    const sucursalesFromSession = session.user.sucursales || []
+    const allSucursales = Array.from(new Set([...sucursalesFromDb, ...sucursalesFromSession])).filter(Boolean)
 
-    if (isZonalOrOperaciones) {
-        const sucursalesFromDb = (dbUser?.sucursales || []).map((s: any) => s.nombre)
-        const sucursalesFromSession = session.user.sucursales || []
-        const allSucursales = Array.from(new Set([...sucursalesFromDb, ...sucursalesFromSession])).filter(Boolean)
-
-        if (allSucursales.length > 0) {
-            try {
-                const colegios = await rawPrisma.colegios.findMany({
-                    where: { sucursal: { in: allSucursales } },
-                    select: { colRBD: true }
-                })
-                const zonalRbds: number[] = []
-                for (const c of colegios) {
-                    const num = Number(c.colRBD)
-                    if (!isNaN(num) && num > 0) zonalRbds.push(num)
-                }
-                return Array.from(new Set(zonalRbds))
-            } catch (e) {
-                console.error('Error al consultar colegios por sucursales en getUserEffectiveRbds:', e)
+    if (allSucursales.length > 0) {
+        const allowedRbds: number[] = []
+        // Si tiene asignada Casa Matriz, autorizar RBD 0
+        if (allSucursales.some((s: string) => s.toUpperCase().includes('MATRIZ'))) {
+            allowedRbds.push(0)
+        }
+        try {
+            const colegios = await rawPrisma.colegios.findMany({
+                where: { sucursal: { in: allSucursales } },
+                select: { colRBD: true }
+            })
+            for (const c of colegios) {
+                const num = Number(c.colRBD)
+                if (!isNaN(num) && num > 0) allowedRbds.push(num)
             }
+        } catch (e) {
+            console.error('Error al consultar colegios por sucursales en getUserEffectiveRbds:', e)
+        }
+        if (allowedRbds.length > 0) {
+            return Array.from(new Set(allowedRbds))
         }
     }
 

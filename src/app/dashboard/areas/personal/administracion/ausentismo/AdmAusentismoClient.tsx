@@ -230,7 +230,11 @@ export default function AdmAusentismoClient({
     const sucursalesDisponibles = useMemo(() => {
         const fromMeta = metadatosFiltros?.sucursales || []
         const fromRegs = registros.map(r => r.sucursal).filter(Boolean) as string[]
-        return Array.from(new Set([...fromMeta, ...fromRegs])).sort()
+        return Array.from(new Set([
+            'CASA MATRIZ', 'CD COPIAPO', 'CD COYHAIQUE', 'CD METRO', 'CD VALLENAR',
+            ...fromMeta,
+            ...fromRegs
+        ])).sort()
     }, [metadatosFiltros, registros])
 
     const usuariosFiltradosPorRol = useMemo(() => {
