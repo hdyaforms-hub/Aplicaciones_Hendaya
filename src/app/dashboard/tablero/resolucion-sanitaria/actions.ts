@@ -5,6 +5,24 @@ import { getSession } from '@/lib/session'
 import { logAuditAction } from '@/lib/audit'
 import { ensureResolucionSanitariaTable } from '@/lib/calidad/resolucion-sanitaria'
 
+export function isEstadoSi(estado?: string | null): boolean {
+    if (!estado) return false
+    const clean = estado.trim().toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    return clean === 'SI' || clean === 'S'
+}
+
+export function isEstadoNo(estado?: string | null): boolean {
+    if (!estado) return false
+    const clean = estado.trim().toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    return clean === 'NO' || clean === 'N'
+}
+
+export function isEstadoNoAplica(estado?: string | null): boolean {
+    if (!estado) return false
+    const clean = estado.trim().toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    return clean === 'NO APLICA' || clean === 'NO_APLICA' || clean === 'NOAPLICA' || clean === 'N/A'
+}
+
 export type TableroFiltros = {
     sucursal?: string
     institucion?: string
@@ -110,6 +128,18 @@ export async function getTableroResolucionSanitariaData(filtros?: TableroFiltros
 
     await ensureResolucionSanitariaTable()
 
+    // Traer todos los colegios maestros para enriquecimiento y robustez de sucursal
+    const colegiosMaster = await prisma.colegios.findMany({
+        where: { colRBD: { notIn: [31, 32, 1101] } },
+        select: { colRBD: true, sucursal: true }
+    })
+    const sucursalByRbd = new Map<number, string>()
+    for (const c of colegiosMaster) {
+        if (c.sucursal?.trim()) {
+            sucursalByRbd.set(c.colRBD, c.sucursal.trim())
+        }
+    }
+
     // Manejo de seguridad por sucursales asignadas
     let userSucursales: string[] = []
     let isFilteredBySucursal = false
@@ -157,7 +187,15 @@ export async function getTableroResolucionSanitariaData(filtros?: TableroFiltros
     }
 
     if (filtros?.sucursal && filtros.sucursal !== 'ALL') {
-        andConditions.push({ sucursal: { equals: filtros.sucursal, mode: 'insensitive' } })
+        const sucursalRbds = colegiosMaster
+            .filter(c => c.sucursal?.trim().toLowerCase() === filtros.sucursal?.trim().toLowerCase())
+            .map(c => c.colRBD)
+        andConditions.push({
+            OR: [
+                { sucursal: { equals: filtros.sucursal, mode: 'insensitive' } },
+                ...(sucursalRbds.length > 0 ? [{ rbd: { in: sucursalRbds } }] : [])
+            ]
+        })
     }
 
     if (filtros?.institucion && filtros.institucion !== 'ALL') {
@@ -196,6 +234,13 @@ export async function getTableroResolucionSanitariaData(filtros?: TableroFiltros
         ]
     })
 
+    // Enriquecer registros con sucursal desde Colegios en caso de campos no poblados
+    for (const r of records) {
+        if (!r.sucursal || r.sucursal.trim() === '') {
+            r.sucursal = sucursalByRbd.get(r.rbd) || null
+        }
+    }
+
     // Lista de años disponibles en la base de datos
     const allYearsInDb = Array.from(new Set(records.map(r => r.anio))).sort((a, b) => a - b)
     if (allYearsInDb.length === 0) {
@@ -214,11 +259,11 @@ export async function getTableroResolucionSanitariaData(filtros?: TableroFiltros
     const evolution: YearEvolution[] = allYearsInDb.map(anio => {
         const yearRecords = yearsMap.get(anio) || []
         const total = yearRecords.length
-        const conResolucion = yearRecords.filter(r => r.estadoResolucion === 'Si').length
-        const sinResolucion = yearRecords.filter(r => r.estadoResolucion === 'No').length
-        const noAplica = yearRecords.filter(r => r.estadoResolucion === 'No Aplica').length
-        const conDocumento = yearRecords.filter(r => r.estadoResolucion === 'Si' && !!r.documentoUrl).length
-        const sinDocumento = conResolucion - conDocumento
+        const conResolucion = yearRecords.filter(r => isEstadoSi(r.estadoResolucion)).length
+        const sinResolucion = yearRecords.filter(r => isEstadoNo(r.estadoResolucion)).length
+        const noAplica = yearRecords.filter(r => isEstadoNoAplica(r.estadoResolucion)).length
+        const conDocumento = yearRecords.filter(r => isEstadoSi(r.estadoResolucion) && !!r.documentoUrl).length
+        const sinDocumento = Math.max(0, conResolucion - conDocumento)
         const porcentajeCumplimiento = total > 0 ? Number(((conResolucion / total) * 100).toFixed(1)) : 0
         const porcentajeDocumental = conResolucion > 0 ? Number(((conDocumento / conResolucion) * 100).toFixed(1)) : 0
 
@@ -254,10 +299,10 @@ export async function getTableroResolucionSanitariaData(filtros?: TableroFiltros
 
     const sucursalBreakdown: SucursalBreakdown[] = Array.from(sucursalMap.entries()).map(([sucursal, recs]) => {
         const total = recs.length
-        const conResolucion = recs.filter(r => r.estadoResolucion === 'Si').length
-        const sinResolucion = recs.filter(r => r.estadoResolucion === 'No').length
-        const noAplica = recs.filter(r => r.estadoResolucion === 'No Aplica').length
-        const conDocumento = recs.filter(r => r.estadoResolucion === 'Si' && !!r.documentoUrl).length
+        const conResolucion = recs.filter(r => isEstadoSi(r.estadoResolucion)).length
+        const sinResolucion = recs.filter(r => isEstadoNo(r.estadoResolucion)).length
+        const noAplica = recs.filter(r => isEstadoNoAplica(r.estadoResolucion)).length
+        const conDocumento = recs.filter(r => isEstadoSi(r.estadoResolucion) && !!r.documentoUrl).length
         const porcentajeCumplimiento = total > 0 ? Number(((conResolucion / total) * 100).toFixed(1)) : 0
 
         return {
@@ -283,8 +328,8 @@ export async function getTableroResolucionSanitariaData(filtros?: TableroFiltros
 
     const institucionBreakdown: InstitucionBreakdown[] = Array.from(institucionMap.entries()).map(([institucion, recs]) => {
         const total = recs.length
-        const conResolucion = recs.filter(r => r.estadoResolucion === 'Si').length
-        const sinResolucion = recs.filter(r => r.estadoResolucion === 'No').length
+        const conResolucion = recs.filter(r => isEstadoSi(r.estadoResolucion)).length
+        const sinResolucion = recs.filter(r => isEstadoNo(r.estadoResolucion)).length
         const porcentajeCumplimiento = total > 0 ? Number(((conResolucion / total) * 100).toFixed(1)) : 0
 
         return {
@@ -333,15 +378,15 @@ export async function getTableroResolucionSanitariaData(filtros?: TableroFiltros
 
         let comportamiento: RbdMatrizItem['comportamiento'] = 'VARIABLE'
 
-        if (states.every(s => s === 'Si')) {
+        if (states.every(s => isEstadoSi(s))) {
             comportamiento = 'SOSTENIDO'
-        } else if (states.every(s => s === 'No')) {
+        } else if (states.every(s => isEstadoNo(s))) {
             comportamiento = 'SIN_RESOLUCION'
-        } else if (states.every(s => s === 'No Aplica')) {
+        } else if (states.every(s => isEstadoNoAplica(s))) {
             comportamiento = 'NO_APLICA'
-        } else if (lastState === 'Si' && states.slice(0, -1).some(s => s === 'No' || s === 'No Aplica')) {
+        } else if (isEstadoSi(lastState) && states.slice(0, -1).some(s => isEstadoNo(s) || isEstadoNoAplica(s))) {
             comportamiento = 'MEJORA'
-        } else if ((lastState === 'No' || lastState === 'No Aplica') && states.slice(0, -1).some(s => s === 'Si')) {
+        } else if ((isEstadoNo(lastState) || isEstadoNoAplica(lastState)) && states.slice(0, -1).some(s => isEstadoSi(s))) {
             comportamiento = 'ALERTA'
         }
 
@@ -381,11 +426,22 @@ export async function getTableroResolucionSanitariaData(filtros?: TableroFiltros
         noAplica: rbdMatrix.filter(i => i.comportamiento === 'NO_APLICA').length
     }
 
-    // Listas para desplegables de filtros
-    const distinctSucursales = Array.from(new Set(records.map(r => r.sucursal).filter(Boolean) as string[])).sort()
+    // Listas para desplegables de filtros: consolidar sucursales de colegios y de registros
+    const allSucursalesSet = new Set<string>([
+        ...records.map(r => r.sucursal).filter(Boolean) as string[],
+        ...colegiosMaster.map(c => c.sucursal?.trim()).filter(Boolean) as string[]
+    ])
+    let distinctSucursales = Array.from(allSucursalesSet).sort()
+    if (isFilteredBySucursal && userSucursales.length > 0) {
+        distinctSucursales = distinctSucursales.filter(s =>
+            userSucursales.some(us => us.toLowerCase() === s.toLowerCase())
+        )
+    }
+
     const distinctInstituciones = Array.from(new Set(records.map(r => r.institucion).filter(Boolean) as string[])).sort()
     const distinctLicitaciones = Array.from(new Set(records.map(r => r.licitacion).filter(Boolean) as string[])).sort()
     const distinctUts = Array.from(new Set(records.map(r => r.ut).filter(Boolean) as number[])).sort((a, b) => a - b)
+
     // Establecimientos para autocompletado inteligente (consultando universo permitido según seguridad)
     const baseWhereEstablecimientos: any = {
         rbd: isFilteredBySucursal
@@ -394,7 +450,7 @@ export async function getTableroResolucionSanitariaData(filtros?: TableroFiltros
         NOT: { nombreEstablecimiento: { contains: 'sucursal', mode: 'insensitive' } }
     }
 
-    const establecimientosList = await prisma.cal_ResSan_Registro.findMany({
+    const rawEstablecimientosList = await prisma.cal_ResSan_Registro.findMany({
         where: baseWhereEstablecimientos,
         select: {
             rbd: true,
@@ -406,6 +462,11 @@ export async function getTableroResolucionSanitariaData(filtros?: TableroFiltros
         distinct: ['rbd'],
         orderBy: { rbd: 'asc' }
     })
+
+    const establecimientosList = rawEstablecimientosList.map(e => ({
+        ...e,
+        sucursal: e.sucursal?.trim() || sucursalByRbd.get(e.rbd) || null
+    }))
 
     return {
         years: allYearsInDb,

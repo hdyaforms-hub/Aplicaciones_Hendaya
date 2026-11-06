@@ -64,6 +64,19 @@ export async function ensureResolucionSanitariaTable(): Promise<void> {
             WHERE "rbd" IN (31, 32, 1101)
                OR LOWER("nombreEstablecimiento") LIKE '%sucursal%';
         `).catch(() => {})
+
+        // Auto-recuperación idempotente: poblar o actualizar sucursal desde Colegios
+        await prisma.$executeRawUnsafe(`
+            UPDATE "Cal_ResSan_Registro" r
+            SET "sucursal" = c.sucursal
+            FROM "Colegios" c
+            WHERE r.rbd = c."colRBD"
+              AND (r.sucursal IS NULL OR r.sucursal = '' OR r.sucursal != c.sucursal)
+              AND c.sucursal IS NOT NULL
+              AND c.sucursal != '';
+        `).catch((err) => {
+            console.error('Error auto-recuperando sucursales en Cal_ResSan_Registro:', err)
+        })
     } catch (error) {
         console.error('Error verificando o creando tabla Cal_ResSan_Registro:', error)
     }
@@ -138,6 +151,7 @@ export async function syncColegiosToResolucionSanitaria(targetAnio?: number): Pr
                     nombreEstablecimiento: col.nombreEstablecimiento.trim(),
                     institucion: col.institucion.trim(),
                     comuna: col.comuna.trim(),
+                    sucursal: col.sucursal?.trim() || null,
                     ut: col.colut,
                     licitacion: licitacionNombre,
                     licId,
@@ -155,6 +169,7 @@ export async function syncColegiosToResolucionSanitaria(targetAnio?: number): Pr
                     nombreEstablecimiento: col.nombreEstablecimiento.trim(),
                     institucion: col.institucion.trim(),
                     comuna: col.comuna.trim(),
+                    sucursal: col.sucursal?.trim() || null,
                     ut: col.colut,
                     licitacion: licitacionNombre,
                     licId,
@@ -179,6 +194,7 @@ export async function syncSingleColegioToResolucionSanitaria(colegioData: {
     nombreEstablecimiento: string
     institucion: string
     comuna: string
+    sucursal?: string | null
 }): Promise<void> {
     await ensureResolucionSanitariaTable()
 
@@ -218,6 +234,7 @@ export async function syncSingleColegioToResolucionSanitaria(colegioData: {
                 nombreEstablecimiento: colegioData.nombreEstablecimiento.trim(),
                 institucion: colegioData.institucion.trim(),
                 comuna: colegioData.comuna.trim(),
+                sucursal: colegioData.sucursal?.trim() || null,
                 ut: colegioData.colut,
                 licitacion: licitacionNombre,
                 licId,
@@ -232,6 +249,7 @@ export async function syncSingleColegioToResolucionSanitaria(colegioData: {
                 nombreEstablecimiento: colegioData.nombreEstablecimiento.trim(),
                 institucion: colegioData.institucion.trim(),
                 comuna: colegioData.comuna.trim(),
+                sucursal: colegioData.sucursal?.trim() || null,
                 ut: colegioData.colut,
                 licitacion: licitacionNombre,
                 licId,

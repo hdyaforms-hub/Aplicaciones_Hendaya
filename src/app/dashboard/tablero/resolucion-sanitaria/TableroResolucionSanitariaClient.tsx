@@ -33,6 +33,15 @@ const COLORS = {
     piePalette: ['#0284c7', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#14b8a6']
 }
 
+function getEstadoType(estado?: string | null): 'SI' | 'NO' | 'NO_APLICA' | 'OTRO' {
+    if (!estado) return 'OTRO'
+    const clean = estado.trim().toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    if (clean === 'SI' || clean === 'S') return 'SI'
+    if (clean === 'NO' || clean === 'N') return 'NO'
+    if (clean === 'NO APLICA' || clean === 'NO_APLICA' || clean === 'NOAPLICA' || clean === 'N/A') return 'NO_APLICA'
+    return 'OTRO'
+}
+
 export default function TableroResolucionSanitariaClient({ initialData }: Props) {
     const [data, setData] = useState<InitialData>(initialData)
     const [isPending, startTransition] = useTransition()
@@ -854,10 +863,11 @@ export default function TableroResolucionSanitariaClient({ initialData }: Props)
                                         {data.years.map(yr => {
                                             const yRec = item.aniosData[yr]
                                             const estado = yRec?.estadoResolucion
+                                            const estadoType = getEstadoType(estado)
 
                                             return (
                                                 <td key={yr} className="px-3 py-3 text-center whitespace-nowrap">
-                                                    {estado === 'SI' ? (
+                                                    {estadoType === 'SI' ? (
                                                         <div className="inline-flex items-center gap-1">
                                                             <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs font-bold" title={`Resolución N° ${yRec?.numeroResolucion || 'S/N'}`}>
                                                                 ✓
@@ -868,11 +878,11 @@ export default function TableroResolucionSanitariaClient({ initialData }: Props)
                                                                 <span className="text-xs text-amber-500 font-bold" title="Sin archivo PDF adjunto">⚠️</span>
                                                             )}
                                                         </div>
-                                                    ) : estado === 'NO' ? (
+                                                    ) : estadoType === 'NO' ? (
                                                         <span className="w-5 h-5 rounded-full bg-rose-100 text-rose-700 inline-flex items-center justify-center text-xs font-bold" title="No cuenta con resolución">
                                                             ✕
                                                         </span>
-                                                    ) : estado === 'NO_APLICA' ? (
+                                                    ) : estadoType === 'NO_APLICA' ? (
                                                         <span className="w-5 h-5 rounded-full bg-gray-100 text-gray-600 inline-flex items-center justify-center text-xs font-bold" title="No Aplica">
                                                             –
                                                         </span>
@@ -970,12 +980,19 @@ export default function TableroResolucionSanitariaClient({ initialData }: Props)
                             ) : (
                                 <div className="space-y-4">
                                     {historicalRecords.map((rec) => {
-                                        const isSi = rec.estadoResolucion === 'SI'
+                                        const estadoType = getEstadoType(rec.estadoResolucion)
+                                        const isSi = estadoType === 'SI'
+                                        const isNo = estadoType === 'NO'
+
                                         return (
                                             <div
                                                 key={rec.id}
                                                 className={`p-4 rounded-2xl border transition ${
-                                                    isSi ? 'bg-emerald-50/50 border-emerald-200' : 'bg-gray-50 border-gray-200'
+                                                    isSi
+                                                        ? 'bg-emerald-50/50 border-emerald-200'
+                                                        : isNo
+                                                        ? 'bg-rose-50/40 border-rose-200'
+                                                        : 'bg-gray-50 border-gray-200'
                                                 }`}
                                             >
                                                 <div className="flex items-start justify-between">
@@ -985,7 +1002,11 @@ export default function TableroResolucionSanitariaClient({ initialData }: Props)
                                                         </span>
                                                         <span
                                                             className={`px-2 py-0.5 rounded-full text-xs font-bold ${
-                                                                isSi ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'
+                                                                isSi
+                                                                    ? 'bg-emerald-100 text-emerald-800'
+                                                                    : isNo
+                                                                    ? 'bg-rose-100 text-rose-800'
+                                                                    : 'bg-gray-100 text-gray-700'
                                                             }`}
                                                         >
                                                             {rec.estadoResolucion}
