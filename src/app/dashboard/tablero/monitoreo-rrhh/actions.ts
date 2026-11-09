@@ -4,6 +4,7 @@ import { rawPrisma } from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import { getUserEffectiveRbds } from '@/lib/authFilters'
 import { ensureMonitoreoRRHHTables } from '@/lib/monitoreo-rrhh-db-init'
+import { decryptPersonalText } from '@/lib/personal-crypto'
 
 export type SemaforoStatus = 'VERDE' | 'AMARILLO' | 'ROJO'
 
@@ -90,6 +91,114 @@ export interface MonitoreoRRHHTableroResponse {
     resumenPorTipo: ModuloAvanceDetalle[]
     rolesDisponibles: string[]
     sucursalesDisponibles: string[]
+    comparativaResumen?: ComparativaAbiertosCerradosData
+}
+
+export interface MetricaModuloComparativa {
+    tipo: 'AUSENTISMO' | 'HORAS_EXTRAS' | 'ATRASOS' | 'ADELANTOS'
+    nombre: string
+    icono: string
+    totalAbiertos: number
+    totalCerrados: number
+    totalRegistros: number
+    porcentajeCerrados: number
+    porcentajeAbiertos: number
+    modificadosCount: number
+}
+
+export interface SucursalComparativaItem {
+    sucursal: string
+    totalAbiertos: number
+    totalCerrados: number
+    totalRegistros: number
+    porcentajeCerrados: number
+    porcentajeAbiertos: number
+    ausentismo: { abiertos: number; cerrados: number }
+    horasExtras: { abiertos: number; cerrados: number }
+    atrasos: { abiertos: number; cerrados: number }
+    adelantos: { abiertos: number; cerrados: number }
+}
+
+export interface UsuarioModificadorItem {
+    usuario: string
+    rol?: string
+    totalModificaciones: number
+    totalCerrados: number
+    modulosIntervenidos: string[]
+    ultimaModificacion?: string | null
+}
+
+export interface RegistroComparativaItem {
+    id: string
+    modulo: 'AUSENTISMO' | 'HORAS_EXTRAS' | 'ATRASOS' | 'ADELANTOS'
+    moduloLabel: string
+    estado: 'ABIERTO' | 'CERRADO'
+    fecha: string
+    rbd: number
+    establecimiento: string
+    comuna?: string
+    sucursal: string
+    rut: string
+    colaborador: string
+    cargo?: string
+    gestionDetalle: string
+    aplicaOpciones?: string
+    usuarioModificador?: string
+    usuarioModificadorRol?: string
+    cerradoPor?: string
+    cerradoAt?: string | null
+    updatedAt: string
+}
+
+export interface ComparativaFiltros {
+    modulo?: 'TODOS' | 'AUSENTISMO' | 'HORAS_EXTRAS' | 'ATRASOS' | 'ADELANTOS'
+    estado?: 'TODOS' | 'ABIERTO' | 'CERRADO'
+    sucursal?: string
+    usuarioModificador?: string
+    search?: string
+    page?: number
+    pageSize?: number
+    sortBy?: 'default' | 'estado' | 'modulo' | 'fecha' | 'sucursal' | 'rbd' | 'establecimiento' | 'colaborador' | 'gestionDetalle' | 'usuarioModificador' | 'trazabilidad'
+    sortOrder?: 'asc' | 'desc'
+}
+
+export interface ArchivoCargaComparativaItem {
+    id: string
+    modulo: 'AUSENTISMO' | 'HORAS_EXTRAS' | 'ATRASOS' | 'ADELANTOS'
+    moduloLabel: string
+    nombreArchivo: string
+    fechaCarga: string
+    cargadoPor: string
+    totalRegistros: number
+    abiertos: number
+    cerrados: number
+    porcentajeCerrado: number
+    porcentajeAbierto: number
+    estadoArchivo: 'ABIERTO' | 'EN_GESTION' | 'CERRADO'
+}
+
+export interface ComparativaAbiertosCerradosData {
+    kpis: {
+        totalGeneral: number
+        totalAbiertos: number
+        totalCerrados: number
+        porcentajeCerradoGlobal: number
+        porcentajeAbiertoGlobal: number
+        totalArchivosCargados: number
+    }
+    archivosCargados: ArchivoCargaComparativaItem[]
+    modulos: MetricaModuloComparativa[]
+    sucursales: SucursalComparativaItem[]
+    usuariosModificadores: UsuarioModificadorItem[]
+    registros: RegistroComparativaItem[]
+    totalRegistros: number
+    page: number
+    pageSize: number
+    totalPages: number
+    sucursalesDisponibles: string[]
+    usuariosDisponibles: string[]
+    sortBy?: string
+    sortOrder?: 'asc' | 'desc'
 }
 
 function calcularSemaforo(porcentaje: number, total: number): SemaforoStatus {
@@ -1192,6 +1301,14 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
         const sumPendientes = colaboradores.reduce((acc, c) => acc + c.totalPendientes, 0)
         const cumplimientoGlobalPorcentaje = sumAbiertos > 0 ? Math.round((sumGestionados / sumAbiertos) * 100) : 100
 
+        // 10. Resumen inicial de Comparativa Abiertos vs Cerrados para carga instantánea del Tab (10 registros por defecto)
+        let comparativaResumen: ComparativaAbiertosCerradosData | undefined
+        try {
+            comparativaResumen = await getComparativaAbiertosCerradosData({ page: 1, pageSize: 10 })
+        } catch (e) {
+            console.error('Error calculando comparativaResumen inicial:', e)
+        }
+
         return {
             success: true,
             isConfigured: true,
@@ -1210,7 +1327,8 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
             sucursalesAvance,
             resumenPorTipo,
             rolesDisponibles,
-            sucursalesDisponibles: Array.from(sucursalesSet).sort()
+            sucursalesDisponibles: Array.from(sucursalesSet).sort(),
+            comparativaResumen
         }
     } catch (error: any) {
         console.error('Error al obtener datos del Tablero Monitoreo RRHH:', error)
@@ -1226,5 +1344,743 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
             rolesDisponibles: [],
             sucursalesDisponibles: []
         }
+    }
+}
+
+/**
+ * Obtiene métricas comparativas de registros Abiertos vs Cerrados de los 4 módulos de RRHH,
+ * desglose por Zona / Sucursal, comportamiento de Usuarios Modificadores, y lista detallada
+ * ordenada estrictamente: registros ABIERTOS primero, seguidos de CERRADOS del más reciente al más antiguo.
+ */
+export async function getComparativaAbiertosCerradosData(filtros?: ComparativaFiltros): Promise<ComparativaAbiertosCerradosData> {
+    const session = await getSession()
+    if (!session || !session.user) {
+        throw new Error('No autorizado')
+    }
+
+    await ensureMonitoreoRRHHTables()
+
+    const page = Math.max(1, filtros?.page || 1)
+    const pageSize = Math.max(1, Math.min(200, filtros?.pageSize || 10))
+    const sortBy = filtros?.sortBy || 'default'
+    const sortOrder = filtros?.sortOrder || 'asc'
+    const filterModulo = filtros?.modulo || 'TODOS'
+    const filterEstado = filtros?.estado || 'TODOS'
+    const filterSucursal = filtros?.sucursal && filtros.sucursal !== 'TODAS' ? filtros.sucursal.trim() : null
+    const filterUsuario = filtros?.usuarioModificador && filtros.usuarioModificador !== 'TODOS' ? filtros.usuarioModificador.trim() : null
+    const search = filtros?.search?.trim().toLowerCase() || ''
+
+    // 1. Obtener colegios, sucursales y usuarios para mapas
+    const [colegiosDb, sucursalesDb, usersDb] = await Promise.all([
+        rawPrisma.colegios.findMany({
+            select: { colRBD: true, nombreEstablecimiento: true, comuna: true, sucursal: true }
+        }),
+        rawPrisma.sucursal.findMany({
+            select: { nombre: true, region: true, comuna: true },
+            orderBy: { nombre: 'asc' }
+        }),
+        rawPrisma.user.findMany({
+            select: { id: true, username: true, name: true, role: { select: { name: true } } }
+        })
+    ])
+
+    const colegiosMap = new Map<number, { nombre: string; comuna?: string; sucursal?: string }>()
+    colegiosDb.forEach(c => {
+        colegiosMap.set(c.colRBD, {
+            nombre: c.nombreEstablecimiento.trim(),
+            comuna: c.comuna?.trim(),
+            sucursal: normalizarNombreSucursal(c.sucursal) || undefined
+        })
+    })
+
+    const userRolesMap = new Map<string, string>()
+    usersDb.forEach(u => {
+        const role = u.role?.name || 'Usuario'
+        if (u.username) userRolesMap.set(u.username.toLowerCase().trim(), role)
+        if (u.name) userRolesMap.set(u.name.toLowerCase().trim(), role)
+    })
+
+    const rbdSucursalFallbackMap = new Map<number, string>()
+    colegiosDb.forEach(c => {
+        const norm = normalizarNombreSucursal(c.sucursal)
+        if (norm && norm !== 'CASA MATRIZ') rbdSucursalFallbackMap.set(c.colRBD, norm)
+    })
+
+    // 2. Ejecutar conteos agregados por módulo y estado
+    const [asisCounts, hextraCounts, atrasosCounts] = await Promise.all([
+        rawPrisma.$queryRawUnsafe<any[]>(`
+            SELECT UPPER(COALESCE(estado, 'ABIERTO')) as estado, COUNT(*)::int as count
+            FROM "Pers_Asis_Registro"
+            GROUP BY UPPER(COALESCE(estado, 'ABIERTO'));
+        `),
+        rawPrisma.$queryRawUnsafe<any[]>(`
+            SELECT UPPER(COALESCE(estado, 'ABIERTO')) as estado, COUNT(*)::int as count
+            FROM "Pers_Hextra_Registro"
+            GROUP BY UPPER(COALESCE(estado, 'ABIERTO'));
+        `),
+        rawPrisma.$queryRawUnsafe<any[]>(`
+            SELECT tipo, UPPER(COALESCE(estado, 'ABIERTO')) as estado, COUNT(*)::int as count
+            FROM "Pers_Atrasos_Registro"
+            GROUP BY tipo, UPPER(COALESCE(estado, 'ABIERTO'));
+        `)
+    ])
+
+    // Modificaciones count
+    const [asisModCount, hextraModCount, atrModCount, adeModCount] = await Promise.all([
+        rawPrisma.$queryRawUnsafe<any[]>(`
+            SELECT COUNT(*)::int as count FROM "Pers_Asis_Registro" 
+            WHERE "criterioAsignadoPor" IS NOT NULL OR "actualizadoPor" IS NOT NULL OR "cerradoPor" IS NOT NULL;
+        `),
+        rawPrisma.$queryRawUnsafe<any[]>(`
+            SELECT COUNT(*)::int as count FROM "Pers_Hextra_Registro" 
+            WHERE "aplicaModificadoPor" IS NOT NULL OR "cerradoPor" IS NOT NULL;
+        `),
+        rawPrisma.$queryRawUnsafe<any[]>(`
+            SELECT COUNT(*)::int as count FROM "Pers_Atrasos_Registro" 
+            WHERE tipo = 'ATRASO' AND ("aplicaModificadoPor" IS NOT NULL OR "justificadoPor" IS NOT NULL OR "cerradoPor" IS NOT NULL);
+        `),
+        rawPrisma.$queryRawUnsafe<any[]>(`
+            SELECT COUNT(*)::int as count FROM "Pers_Atrasos_Registro" 
+            WHERE tipo = 'ADELANTO' AND ("aplicaModificadoPor" IS NOT NULL OR "justificadoPor" IS NOT NULL OR "cerradoPor" IS NOT NULL);
+        `)
+    ])
+
+    // Ausentismo
+    const asisAbiertos = asisCounts.find(r => r.estado === 'ABIERTO')?.count || 0
+    const asisCerrados = asisCounts.find(r => r.estado === 'CERRADO')?.count || 0
+    const asisTotal = asisAbiertos + asisCerrados
+    const asisMod = asisModCount[0]?.count || 0
+
+    // Horas Extras
+    const hextraAbiertos = hextraCounts.find(r => r.estado === 'ABIERTO')?.count || 0
+    const hextraCerrados = hextraCounts.find(r => r.estado === 'CERRADO')?.count || 0
+    const hextraTotal = hextraAbiertos + hextraCerrados
+    const hextraMod = hextraModCount[0]?.count || 0
+
+    // Atrasos
+    const atrAbiertos = atrasosCounts.find(r => r.tipo === 'ATRASO' && r.estado === 'ABIERTO')?.count || 0
+    const atrCerrados = atrasosCounts.find(r => r.tipo === 'ATRASO' && r.estado === 'CERRADO')?.count || 0
+    const atrTotal = atrAbiertos + atrCerrados
+    const atrMod = atrModCount[0]?.count || 0
+
+    // Adelantos
+    const adeAbiertos = atrasosCounts.find(r => r.tipo === 'ADELANTO' && r.estado === 'ABIERTO')?.count || 0
+    const adeCerrados = atrasosCounts.find(r => r.tipo === 'ADELANTO' && r.estado === 'CERRADO')?.count || 0
+    const adeTotal = adeAbiertos + adeCerrados
+    const adeMod = adeModCount[0]?.count || 0
+
+    // Total General
+    const totalAbiertos = asisAbiertos + hextraAbiertos + atrAbiertos + adeAbiertos
+    const totalCerrados = asisCerrados + hextraCerrados + atrCerrados + adeCerrados
+    const totalGeneral = totalAbiertos + totalCerrados
+    const porcentajeCerradoGlobal = totalGeneral > 0 ? Math.round((totalCerrados / totalGeneral) * 100) : 0
+    const porcentajeAbiertoGlobal = totalGeneral > 0 ? 100 - porcentajeCerradoGlobal : 0
+
+    // Módulos en orden solicitado: 1. Ausentismo, 2. Horas Extras, 3. Atrasos, 4. Adelantos
+    const modulos: MetricaModuloComparativa[] = [
+        {
+            tipo: 'AUSENTISMO',
+            nombre: 'Ausentismo',
+            icono: '🏥',
+            totalAbiertos: asisAbiertos,
+            totalCerrados: asisCerrados,
+            totalRegistros: asisTotal,
+            porcentajeCerrados: asisTotal > 0 ? Math.round((asisCerrados / asisTotal) * 100) : 0,
+            porcentajeAbiertos: asisTotal > 0 ? Math.round((asisAbiertos / asisTotal) * 100) : 0,
+            modificadosCount: asisMod
+        },
+        {
+            tipo: 'HORAS_EXTRAS',
+            nombre: 'Horas Extras',
+            icono: '⏱️',
+            totalAbiertos: hextraAbiertos,
+            totalCerrados: hextraCerrados,
+            totalRegistros: hextraTotal,
+            porcentajeCerrados: hextraTotal > 0 ? Math.round((hextraCerrados / hextraTotal) * 100) : 0,
+            porcentajeAbiertos: hextraTotal > 0 ? Math.round((hextraAbiertos / hextraTotal) * 100) : 0,
+            modificadosCount: hextraMod
+        },
+        {
+            tipo: 'ATRASOS',
+            nombre: 'Atrasos',
+            icono: '⏳',
+            totalAbiertos: atrAbiertos,
+            totalCerrados: atrCerrados,
+            totalRegistros: atrTotal,
+            porcentajeCerrados: atrTotal > 0 ? Math.round((atrCerrados / atrTotal) * 100) : 0,
+            porcentajeAbiertos: atrTotal > 0 ? Math.round((atrAbiertos / atrTotal) * 100) : 0,
+            modificadosCount: atrMod
+        },
+        {
+            tipo: 'ADELANTOS',
+            nombre: 'Adelantos',
+            icono: '🚪',
+            totalAbiertos: adeAbiertos,
+            totalCerrados: adeCerrados,
+            totalRegistros: adeTotal,
+            porcentajeCerrados: adeTotal > 0 ? Math.round((adeCerrados / adeTotal) * 100) : 0,
+            porcentajeAbiertos: adeTotal > 0 ? Math.round((adeAbiertos / adeTotal) * 100) : 0,
+            modificadosCount: adeMod
+        }
+    ]
+
+    // 2.1 Cargas masivas (archivos físicos y su comportamiento temporal)
+    const [rawCargasAsis, rawCargasHextra, rawCargasAtrasos, regCountsAsis, regCountsHextra, regCountsAtrasos] = await Promise.all([
+        rawPrisma.$queryRawUnsafe<any[]>(`
+            SELECT id, "nombreArchivo", "totalRegistros", "cargadoPor", "fechaCarga", estado, "cerradoPor", "cerradoAt"
+            FROM "Pers_Asis_Carga"
+            ORDER BY "fechaCarga" DESC;
+        `).catch(() => []),
+        rawPrisma.$queryRawUnsafe<any[]>(`
+            SELECT id, "nombreArchivo", "totalRegistros", "cargadoPor", "fechaCarga"
+            FROM "Pers_Hextra_Carga"
+            ORDER BY "fechaCarga" DESC;
+        `).catch(() => []),
+        rawPrisma.$queryRawUnsafe<any[]>(`
+            SELECT id, tipo, "nombreArchivo", "totalRegistros", "cargadoPor", "fechaCarga"
+            FROM "Pers_Atrasos_Carga"
+            ORDER BY "fechaCarga" DESC;
+        `).catch(() => []),
+        rawPrisma.$queryRawUnsafe<any[]>(`
+            SELECT "cargaId", UPPER(COALESCE(estado, 'ABIERTO')) as estado, count(*)::int as count
+            FROM "Pers_Asis_Registro"
+            WHERE "cargaId" IS NOT NULL
+            GROUP BY "cargaId", UPPER(COALESCE(estado, 'ABIERTO'));
+        `).catch(() => []),
+        rawPrisma.$queryRawUnsafe<any[]>(`
+            SELECT "cargaId", UPPER(COALESCE(estado, 'ABIERTO')) as estado, count(*)::int as count
+            FROM "Pers_Hextra_Registro"
+            WHERE "cargaId" IS NOT NULL
+            GROUP BY "cargaId", UPPER(COALESCE(estado, 'ABIERTO'));
+        `).catch(() => []),
+        rawPrisma.$queryRawUnsafe<any[]>(`
+            SELECT "cargaId", UPPER(COALESCE(estado, 'ABIERTO')) as estado, count(*)::int as count
+            FROM "Pers_Atrasos_Registro"
+            WHERE "cargaId" IS NOT NULL
+            GROUP BY "cargaId", UPPER(COALESCE(estado, 'ABIERTO'));
+        `).catch(() => [])
+    ])
+
+    const cargaStatsMap = new Map<string, { abiertos: number; cerrados: number }>()
+    const accumulateCounts = (rows: any[]) => {
+        for (const r of rows) {
+            if (!r.cargaId) continue
+            const cur = cargaStatsMap.get(r.cargaId) || { abiertos: 0, cerrados: 0 }
+            if (r.estado === 'CERRADO') {
+                cur.cerrados += Number(r.count || 0)
+            } else {
+                cur.abiertos += Number(r.count || 0)
+            }
+            cargaStatsMap.set(r.cargaId, cur)
+        }
+    }
+    accumulateCounts(regCountsAsis)
+    accumulateCounts(regCountsHextra)
+    accumulateCounts(regCountsAtrasos)
+
+    const archivosCargados: ArchivoCargaComparativaItem[] = []
+
+    // 1° Ausentismo
+    for (const c of rawCargasAsis) {
+        const stats = cargaStatsMap.get(c.id) || { abiertos: 0, cerrados: 0 }
+        const total = (stats.abiertos + stats.cerrados) || Number(c.totalRegistros || 0)
+        const cerrados = stats.cerrados
+        const abiertos = Math.max(0, total - cerrados)
+        const pctCerrado = total > 0 ? Math.round((cerrados / total) * 100) : (c.estado === 'CERRADO' ? 100 : 0)
+        archivosCargados.push({
+            id: c.id,
+            modulo: 'AUSENTISMO',
+            moduloLabel: 'Ausentismo',
+            nombreArchivo: c.nombreArchivo || 'Archivo Asistencia',
+            fechaCarga: c.fechaCarga ? new Date(c.fechaCarga).toISOString() : new Date().toISOString(),
+            cargadoPor: c.cargadoPor || 'Admin',
+            totalRegistros: total,
+            abiertos,
+            cerrados,
+            porcentajeCerrado: pctCerrado,
+            porcentajeAbierto: 100 - pctCerrado,
+            estadoArchivo: pctCerrado === 100 ? 'CERRADO' : cerrados > 0 ? 'EN_GESTION' : 'ABIERTO'
+        })
+    }
+
+    // 2° Horas Extras
+    for (const c of rawCargasHextra) {
+        const stats = cargaStatsMap.get(c.id) || { abiertos: 0, cerrados: 0 }
+        const total = (stats.abiertos + stats.cerrados) || Number(c.totalRegistros || 0)
+        const cerrados = stats.cerrados
+        const abiertos = Math.max(0, total - cerrados)
+        const pctCerrado = total > 0 ? Math.round((cerrados / total) * 100) : 0
+        archivosCargados.push({
+            id: c.id,
+            modulo: 'HORAS_EXTRAS',
+            moduloLabel: 'Horas Extras',
+            nombreArchivo: c.nombreArchivo || 'Planilla Horas Extras',
+            fechaCarga: c.fechaCarga ? new Date(c.fechaCarga).toISOString() : new Date().toISOString(),
+            cargadoPor: c.cargadoPor || 'Admin',
+            totalRegistros: total,
+            abiertos,
+            cerrados,
+            porcentajeCerrado: pctCerrado,
+            porcentajeAbierto: 100 - pctCerrado,
+            estadoArchivo: pctCerrado === 100 ? 'CERRADO' : cerrados > 0 ? 'EN_GESTION' : 'ABIERTO'
+        })
+    }
+
+    // 3° Atrasos y Adelantos
+    for (const c of rawCargasAtrasos) {
+        const stats = cargaStatsMap.get(c.id) || { abiertos: 0, cerrados: 0 }
+        const total = (stats.abiertos + stats.cerrados) || Number(c.totalRegistros || 0)
+        const cerrados = stats.cerrados
+        const abiertos = Math.max(0, total - cerrados)
+        const pctCerrado = total > 0 ? Math.round((cerrados / total) * 100) : 0
+        const isAdelanto = c.tipo === 'ADELANTO'
+        archivosCargados.push({
+            id: c.id,
+            modulo: isAdelanto ? 'ADELANTOS' : 'ATRASOS',
+            moduloLabel: isAdelanto ? 'Adelantos' : 'Atrasos',
+            nombreArchivo: c.nombreArchivo || (isAdelanto ? 'Planilla Adelantos' : 'Planilla Atrasos'),
+            fechaCarga: c.fechaCarga ? new Date(c.fechaCarga).toISOString() : new Date().toISOString(),
+            cargadoPor: c.cargadoPor || 'Admin',
+            totalRegistros: total,
+            abiertos,
+            cerrados,
+            porcentajeCerrado: pctCerrado,
+            porcentajeAbierto: 100 - pctCerrado,
+            estadoArchivo: pctCerrado === 100 ? 'CERRADO' : cerrados > 0 ? 'EN_GESTION' : 'ABIERTO'
+        })
+    }
+
+    // Línea de tiempo cronológica: archivos más recientes primero
+    archivosCargados.sort((a, b) => new Date(b.fechaCarga).getTime() - new Date(a.fechaCarga).getTime())
+
+    // 3. Consultar registros para análisis de Zona, Usuarios y Lista detallada
+    const [rawAsisRows, rawHextraRows, rawAtrasosRows] = await Promise.all([
+        rawPrisma.$queryRawUnsafe<any[]>(`
+            SELECT id, fecha, rbd, establecimiento, "rutEnc", "nombreEnc", "apellidosEnc", cargo,
+                   "criterioNombre", "criterioAsignadoPor", "criterioAsignadoAt",
+                   "actualizadoPor", "fechaActualizacion", "cerradoPor", "cerradoAt",
+                   UPPER(COALESCE(estado, 'ABIERTO')) as estado, "updatedAt"
+            FROM "Pers_Asis_Registro";
+        `),
+        rawPrisma.$queryRawUnsafe<any[]>(`
+            SELECT id, fecha, rbd, establecimiento, sucursal, "identificadorEnc", "nombreEnc", "apellidosEnc", cargo,
+                   aplica, "aplicaModificadoPor", "aplicaModificadoAt", "aplicaObservacion",
+                   hhee, "montoPagar", supervisor, "cerradoPor", "cerradoAt",
+                   UPPER(COALESCE(estado, 'ABIERTO')) as estado, "updatedAt"
+            FROM "Pers_Hextra_Registro";
+        `),
+        rawPrisma.$queryRawUnsafe<any[]>(`
+            SELECT id, tipo, fecha, rbd, establecimiento, sucursal, "identificadorEnc", "nombreEnc", "apellidosEnc", cargo,
+                   "aplicaDescuento", "aplicaModificadoPor", "aplicaModificadoAt",
+                   "minutosAtraso", "minutosAdelanto", justificado, "justificadoPor", supervisor,
+                   "cerradoPor", "cerradoAt",
+                   UPPER(COALESCE(estado, 'ABIERTO')) as estado, "updatedAt"
+            FROM "Pers_Atrasos_Registro";
+        `)
+    ])
+
+    // Mapa de sucursales
+    const sucursalesMap = new Map<string, SucursalComparativaItem>()
+    const sucursalesOficiales = ['CD METRO', 'CD COPIAPO', 'CD VALLENAR', 'CD COYHAIQUE', 'CASA MATRIZ']
+    sucursalesOficiales.forEach(s => {
+        sucursalesMap.set(s, {
+            sucursal: s,
+            totalAbiertos: 0,
+            totalCerrados: 0,
+            totalRegistros: 0,
+            porcentajeCerrados: 0,
+            porcentajeAbiertos: 0,
+            ausentismo: { abiertos: 0, cerrados: 0 },
+            horasExtras: { abiertos: 0, cerrados: 0 },
+            atrasos: { abiertos: 0, cerrados: 0 },
+            adelantos: { abiertos: 0, cerrados: 0 }
+        })
+    })
+
+    const getOrCreateSucursalItem = (name: string): SucursalComparativaItem => {
+        let it = sucursalesMap.get(name)
+        if (!it) {
+            it = {
+                sucursal: name,
+                totalAbiertos: 0,
+                totalCerrados: 0,
+                totalRegistros: 0,
+                porcentajeCerrados: 0,
+                porcentajeAbiertos: 0,
+                ausentismo: { abiertos: 0, cerrados: 0 },
+                horasExtras: { abiertos: 0, cerrados: 0 },
+                atrasos: { abiertos: 0, cerrados: 0 },
+                adelantos: { abiertos: 0, cerrados: 0 }
+            }
+            sucursalesMap.set(name, it)
+        }
+        return it
+    }
+
+    // Mapa de usuarios modificadores
+    const usuariosMap = new Map<string, {
+        usuario: string
+        totalModificaciones: number
+        totalCerrados: number
+        modulosSet: Set<string>
+        ultimaModificacion: Date | null
+    }>()
+
+    const registerUserAction = (userName: string | null | undefined, isCierre: boolean, modulo: string, actionDate?: any) => {
+        if (!userName || !userName.trim()) return
+        const u = userName.trim()
+        if (u === 'Sistema' || u === 'N/A' || u === 'NULL') return
+        let entry = usuariosMap.get(u)
+        if (!entry) {
+            entry = {
+                usuario: u,
+                totalModificaciones: 0,
+                totalCerrados: 0,
+                modulosSet: new Set<string>(),
+                ultimaModificacion: null
+            }
+            usuariosMap.set(u, entry)
+        }
+        entry.totalModificaciones++
+        if (isCierre) entry.totalCerrados++
+        entry.modulosSet.add(modulo)
+        if (actionDate) {
+            const dt = new Date(actionDate)
+            if (!isNaN(dt.getTime())) {
+                if (!entry.ultimaModificacion || dt > entry.ultimaModificacion) {
+                    entry.ultimaModificacion = dt
+                }
+            }
+        }
+    }
+
+    // Array unificado de todos los registros normalizados
+    const allItems: RegistroComparativaItem[] = []
+
+    // 3.1 Procesar Ausentismo
+    for (const row of rawAsisRows) {
+        const suc = resolverSucursalRegistro(row.rbd, null, row.establecimiento, colegiosMap, rbdSucursalFallbackMap)
+        const sucItem = getOrCreateSucursalItem(suc)
+        const isCerrado = row.estado === 'CERRADO'
+        if (isCerrado) {
+            sucItem.ausentismo.cerrados++
+            sucItem.totalCerrados++
+        } else {
+            sucItem.ausentismo.abiertos++
+            sucItem.totalAbiertos++
+        }
+        sucItem.totalRegistros++
+
+        // Modificadores
+        if (row.cerradoPor) registerUserAction(row.cerradoPor, true, 'Ausentismo', row.cerradoAt)
+        if (row.criterioAsignadoPor) registerUserAction(row.criterioAsignadoPor, false, 'Ausentismo', row.criterioAsignadoAt)
+        if (row.actualizadoPor && row.actualizadoPor !== row.criterioAsignadoPor) {
+            registerUserAction(row.actualizadoPor, false, 'Ausentismo', row.fechaActualizacion)
+        }
+
+        const usuarioMod = row.cerradoPor || row.actualizadoPor || row.criterioAsignadoPor || null
+
+        // Desencriptar colaborador
+        const nom = decryptPersonalText(row.nombreEnc || '')
+        const ape = decryptPersonalText(row.apellidosEnc || '')
+        const rut = decryptPersonalText(row.rutEnc || '')
+        const colabName = `${nom} ${ape}`.trim() || 'Sin Nombre'
+
+        allItems.push({
+            id: String(row.id),
+            modulo: 'AUSENTISMO',
+            moduloLabel: 'Ausentismo',
+            estado: isCerrado ? 'CERRADO' : 'ABIERTO',
+            fecha: row.fecha || '',
+            rbd: Number(row.rbd || 0),
+            establecimiento: row.establecimiento?.trim() || colegiosMap.get(Number(row.rbd))?.nombre || 'Sin Establecimiento',
+            comuna: colegiosMap.get(Number(row.rbd))?.comuna,
+            sucursal: suc,
+            rut,
+            colaborador: colabName,
+            cargo: row.cargo?.trim() || undefined,
+            gestionDetalle: row.criterioNombre ? `Criterio: ${row.criterioNombre}` : 'Sin Criterio Asignado',
+            usuarioModificador: usuarioMod || undefined,
+            usuarioModificadorRol: usuarioMod ? userRolesMap.get(usuarioMod.toLowerCase().trim()) : undefined,
+            cerradoPor: row.cerradoPor || undefined,
+            cerradoAt: row.cerradoAt ? new Date(row.cerradoAt).toISOString() : null,
+            updatedAt: row.updatedAt ? new Date(row.updatedAt).toISOString() : new Date().toISOString()
+        })
+    }
+
+    // 3.2 Procesar Horas Extras
+    for (const row of rawHextraRows) {
+        const suc = resolverSucursalRegistro(row.rbd, row.sucursal, row.establecimiento, colegiosMap, rbdSucursalFallbackMap)
+        const sucItem = getOrCreateSucursalItem(suc)
+        const isCerrado = row.estado === 'CERRADO'
+        if (isCerrado) {
+            sucItem.horasExtras.cerrados++
+            sucItem.totalCerrados++
+        } else {
+            sucItem.horasExtras.abiertos++
+            sucItem.totalAbiertos++
+        }
+        sucItem.totalRegistros++
+
+        if (row.cerradoPor) registerUserAction(row.cerradoPor, true, 'Horas Extras', row.cerradoAt)
+        if (row.aplicaModificadoPor) registerUserAction(row.aplicaModificadoPor, false, 'Horas Extras', row.aplicaModificadoAt)
+        if (row.supervisor && !row.aplicaModificadoPor && !row.cerradoPor) {
+            registerUserAction(row.supervisor, false, 'Horas Extras', row.updatedAt)
+        }
+
+        const usuarioMod = row.cerradoPor || row.aplicaModificadoPor || row.supervisor || null
+
+        const nom = decryptPersonalText(row.nombreEnc || '')
+        const ape = decryptPersonalText(row.apellidosEnc || '')
+        const rut = decryptPersonalText(row.identificadorEnc || '')
+        const colabName = `${nom} ${ape}`.trim() || 'Sin Nombre'
+
+        const horas = Number(row.hhee || 0)
+        const monto = Number(row.montoPagar || 0)
+        const detalle = `HHEE: ${horas}h | Aplica: ${row.aplica ? 'SÍ' : 'NO'}${monto > 0 ? ` | $${monto.toLocaleString('es-CL')}` : ''}`
+
+        allItems.push({
+            id: String(row.id),
+            modulo: 'HORAS_EXTRAS',
+            moduloLabel: 'Horas Extras',
+            estado: isCerrado ? 'CERRADO' : 'ABIERTO',
+            fecha: row.fecha || '',
+            rbd: Number(row.rbd || 0),
+            establecimiento: row.establecimiento?.trim() || colegiosMap.get(Number(row.rbd))?.nombre || 'Sin Establecimiento',
+            comuna: colegiosMap.get(Number(row.rbd))?.comuna,
+            sucursal: suc,
+            rut,
+            colaborador: colabName,
+            cargo: row.cargo?.trim() || undefined,
+            gestionDetalle: detalle,
+            aplicaOpciones: row.aplica ? 'APLICA' : 'NO_APLICA',
+            usuarioModificador: usuarioMod || undefined,
+            usuarioModificadorRol: usuarioMod ? userRolesMap.get(usuarioMod.toLowerCase().trim()) : undefined,
+            cerradoPor: row.cerradoPor || undefined,
+            cerradoAt: row.cerradoAt ? new Date(row.cerradoAt).toISOString() : null,
+            updatedAt: row.updatedAt ? new Date(row.updatedAt).toISOString() : new Date().toISOString()
+        })
+    }
+
+    // 3.3 Procesar Atrasos y Adelantos
+    for (const row of rawAtrasosRows) {
+        const suc = resolverSucursalRegistro(row.rbd, row.sucursal, row.establecimiento, colegiosMap, rbdSucursalFallbackMap)
+        const sucItem = getOrCreateSucursalItem(suc)
+        const isCerrado = row.estado === 'CERRADO'
+        const isAtraso = row.tipo === 'ATRASO'
+        const moduloType = isAtraso ? 'ATRASOS' : 'ADELANTOS'
+        const moduloLabel = isAtraso ? 'Atrasos' : 'Adelantos'
+
+        if (isAtraso) {
+            if (isCerrado) {
+                sucItem.atrasos.cerrados++
+                sucItem.totalCerrados++
+            } else {
+                sucItem.atrasos.abiertos++
+                sucItem.totalAbiertos++
+            }
+        } else {
+            if (isCerrado) {
+                sucItem.adelantos.cerrados++
+                sucItem.totalCerrados++
+            } else {
+                sucItem.adelantos.abiertos++
+                sucItem.totalAbiertos++
+            }
+        }
+        sucItem.totalRegistros++
+
+        if (row.cerradoPor) registerUserAction(row.cerradoPor, true, moduloLabel, row.cerradoAt)
+        if (row.aplicaModificadoPor) registerUserAction(row.aplicaModificadoPor, false, moduloLabel, row.aplicaModificadoAt)
+        if (row.justificadoPor) registerUserAction(row.justificadoPor, false, moduloLabel, row.updatedAt)
+        if (row.supervisor && !row.aplicaModificadoPor && !row.justificadoPor && !row.cerradoPor) {
+            registerUserAction(row.supervisor, false, moduloLabel, row.updatedAt)
+        }
+
+        const usuarioMod = row.cerradoPor || row.aplicaModificadoPor || row.justificadoPor || row.supervisor || null
+
+        const nom = decryptPersonalText(row.nombreEnc || '')
+        const ape = decryptPersonalText(row.apellidosEnc || '')
+        const rut = decryptPersonalText(row.identificadorEnc || '')
+        const colabName = `${nom} ${ape}`.trim() || 'Sin Nombre'
+
+        const min = isAtraso ? Number(row.minutosAtraso || 0) : Number(row.minutosAdelanto || 0)
+        const detalle = `${min} min | Descuento: ${row.aplicaDescuento ? 'SÍ' : 'NO'}${row.justificado ? ` | Justif: ${row.justificado}` : ''}`
+
+        allItems.push({
+            id: String(row.id),
+            modulo: moduloType,
+            moduloLabel,
+            estado: isCerrado ? 'CERRADO' : 'ABIERTO',
+            fecha: row.fecha || '',
+            rbd: Number(row.rbd || 0),
+            establecimiento: row.establecimiento?.trim() || colegiosMap.get(Number(row.rbd))?.nombre || 'Sin Establecimiento',
+            comuna: colegiosMap.get(Number(row.rbd))?.comuna,
+            sucursal: suc,
+            rut,
+            colaborador: colabName,
+            cargo: row.cargo?.trim() || undefined,
+            gestionDetalle: detalle,
+            aplicaOpciones: row.aplicaDescuento ? 'DESCUENTO_SI' : 'DESCUENTO_NO',
+            usuarioModificador: usuarioMod || undefined,
+            usuarioModificadorRol: usuarioMod ? userRolesMap.get(usuarioMod.toLowerCase().trim()) : undefined,
+            cerradoPor: row.cerradoPor || undefined,
+            cerradoAt: row.cerradoAt ? new Date(row.cerradoAt).toISOString() : null,
+            updatedAt: row.updatedAt ? new Date(row.updatedAt).toISOString() : new Date().toISOString()
+        })
+    }
+
+    // Calcular porcentajes de sucursales
+    const sucursales: SucursalComparativaItem[] = Array.from(sucursalesMap.values()).map(s => {
+        const pctCerrados = s.totalRegistros > 0 ? Math.round((s.totalCerrados / s.totalRegistros) * 100) : 0
+        const pctAbiertos = s.totalRegistros > 0 ? 100 - pctCerrados : 0
+        return {
+            ...s,
+            porcentajeCerrados: pctCerrados,
+            porcentajeAbiertos: pctAbiertos
+        }
+    }).sort((a, b) => b.totalRegistros - a.totalRegistros)
+
+    // Formatear usuarios modificadores
+    const usuariosModificadores: UsuarioModificadorItem[] = Array.from(usuariosMap.values()).map(u => ({
+        usuario: u.usuario,
+        rol: userRolesMap.get(u.usuario.toLowerCase().trim()) || 'Usuario',
+        totalModificaciones: u.totalModificaciones,
+        totalCerrados: u.totalCerrados,
+        modulosIntervenidos: Array.from(u.modulosSet),
+        ultimaModificacion: u.ultimaModificacion ? u.ultimaModificacion.toISOString() : null
+    })).sort((a, b) => b.totalModificaciones - a.totalModificaciones)
+
+    const usuariosDisponibles = usuariosModificadores.map(u => u.usuario).sort()
+    const sucursalesDisponibles = Array.from(new Set(allItems.map(i => i.sucursal))).filter(Boolean).sort()
+
+    // 4. Filtrar registros detallados
+    let filtered = allItems
+
+    if (filterModulo !== 'TODOS') {
+        filtered = filtered.filter(i => i.modulo === filterModulo)
+    }
+
+    if (filterEstado !== 'TODOS') {
+        filtered = filtered.filter(i => i.estado === filterEstado)
+    }
+
+    if (filterSucursal) {
+        filtered = filtered.filter(i => i.sucursal.toLowerCase() === filterSucursal.toLowerCase())
+    }
+
+    if (filterUsuario) {
+        filtered = filtered.filter(i => i.usuarioModificador?.toLowerCase() === filterUsuario.toLowerCase())
+    }
+
+    if (search) {
+        filtered = filtered.filter(i =>
+            i.colaborador.toLowerCase().includes(search) ||
+            i.rut.toLowerCase().includes(search) ||
+            String(i.rbd).includes(search) ||
+            i.establecimiento.toLowerCase().includes(search) ||
+            (i.usuarioModificador && i.usuarioModificador.toLowerCase().includes(search)) ||
+            (i.comuna && i.comuna.toLowerCase().includes(search))
+        )
+    }
+
+    // 5. ORDENAMIENTO (Regla inicial o por columna seleccionada)
+    if (sortBy === 'default') {
+        // REGLA CLAVE POR DEFECTO: Los registros ABIERTOS primero, seguidos de CERRADOS del más reciente al más antiguo
+        filtered.sort((a, b) => {
+            // 1. ABIERTO siempre primero
+            if (a.estado === 'ABIERTO' && b.estado === 'CERRADO') return -1
+            if (a.estado === 'CERRADO' && b.estado === 'ABIERTO') return 1
+
+            // 2. Si ambos son CERRADO: del más reciente cerrado al más antiguo
+            if (a.estado === 'CERRADO' && b.estado === 'CERRADO') {
+                const timeA = new Date(a.cerradoAt || a.updatedAt).getTime()
+                const timeB = new Date(b.cerradoAt || b.updatedAt).getTime()
+                return timeB - timeA
+            }
+
+            // 3. Si ambos son ABIERTO: del más reciente al más antiguo
+            const timeA = new Date(a.updatedAt || a.fecha).getTime()
+            const timeB = new Date(b.updatedAt || b.fecha).getTime()
+            return timeB - timeA
+        })
+    } else {
+        // Ordenamiento explícito por cabecera de columna (ascendente / descendente)
+        filtered.sort((a, b) => {
+            let comparison = 0
+            switch (sortBy) {
+                case 'estado':
+                    comparison = (a.estado || '').localeCompare(b.estado || '')
+                    break
+                case 'modulo':
+                    comparison = (a.moduloLabel || a.modulo || '').localeCompare(b.moduloLabel || b.modulo || '')
+                    break
+                case 'fecha': {
+                    const timeA = a.fecha ? new Date(a.fecha).getTime() : 0
+                    const timeB = b.fecha ? new Date(b.fecha).getTime() : 0
+                    comparison = timeA - timeB
+                    break
+                }
+                case 'sucursal':
+                    comparison = (a.sucursal || '').localeCompare(b.sucursal || '')
+                    break
+                case 'rbd':
+                    comparison = (a.rbd || 0) - (b.rbd || 0)
+                    break
+                case 'establecimiento':
+                    comparison = (a.establecimiento || '').localeCompare(b.establecimiento || '')
+                    break
+                case 'colaborador':
+                    comparison = (a.colaborador || '').localeCompare(b.colaborador || '')
+                    break
+                case 'gestionDetalle':
+                    comparison = (a.gestionDetalle || '').localeCompare(b.gestionDetalle || '')
+                    break
+                case 'usuarioModificador': {
+                    const usrA = a.usuarioModificador || a.cerradoPor || ''
+                    const usrB = b.usuarioModificador || b.cerradoPor || ''
+                    comparison = usrA.localeCompare(usrB)
+                    break
+                }
+                case 'trazabilidad': {
+                    const timeA = new Date(a.cerradoAt || a.updatedAt).getTime()
+                    const timeB = new Date(b.cerradoAt || b.updatedAt).getTime()
+                    comparison = timeA - timeB
+                    break
+                }
+                default:
+                    comparison = 0
+            }
+            return sortOrder === 'desc' ? -comparison : comparison
+        })
+    }
+
+    const totalRegistros = filtered.length
+    const totalPages = Math.ceil(totalRegistros / pageSize) || 1
+    const startIndex = (page - 1) * pageSize
+    const paginatedRegistros = filtered.slice(startIndex, startIndex + pageSize)
+
+    return {
+        kpis: {
+            totalGeneral,
+            totalAbiertos,
+            totalCerrados,
+            porcentajeCerradoGlobal,
+            porcentajeAbiertoGlobal,
+            totalArchivosCargados: archivosCargados.length
+        },
+        archivosCargados,
+        modulos,
+        sucursales,
+        usuariosModificadores,
+        registros: paginatedRegistros,
+        totalRegistros,
+        page,
+        pageSize,
+        totalPages,
+        sucursalesDisponibles,
+        usuariosDisponibles,
+        sortBy,
+        sortOrder
     }
 }
