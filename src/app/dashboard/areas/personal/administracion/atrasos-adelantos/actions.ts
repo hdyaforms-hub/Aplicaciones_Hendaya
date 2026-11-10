@@ -116,6 +116,7 @@ export async function getAdmAtrasosAction(filtros?: {
     aplicaDescuento?: 'TODOS' | 'APLICA' | 'NO_APLICA'
     estado?: 'TODOS' | 'ABIERTO' | 'CERRADO'
     cargaId?: string
+    soloNoJustificados?: boolean
     search?: string
     page?: number
     pageSize?: number
@@ -250,6 +251,16 @@ export async function getAdmAtrasosAction(filtros?: {
             queryParams.push(filtros.cargaId)
         }
 
+        // 7.1 Filtro Solo No Justificados (Sin Justificar)
+        if (filtros?.soloNoJustificados) {
+            whereConditions.push(`(
+                r.justificado IS NULL 
+                OR TRIM(r.justificado) = '' 
+                OR TRIM(UPPER(r.justificado)) = 'NO' 
+                OR TRIM(UPPER(r.justificado)) = 'SIN JUSTIFICAR'
+            )`)
+        }
+
         // 8. Búsqueda por RUT directo con hash
         let searchIsRutHash = false
         if (filtros?.search && filtros.search.trim()) {
@@ -370,11 +381,34 @@ export async function getAdmAtrasosAction(filtros?: {
             )
         }
 
+        // Filtro adicional en memoria para Solo No Justificados (garantía de consistencia)
+        if (filtros?.soloNoJustificados) {
+            dataDesencriptada = dataDesencriptada.filter(r => {
+                const j = (r.justificado || '').trim().toUpperCase()
+                return !j || j === 'NO' || j === 'SIN JUSTIFICAR'
+            })
+        }
+
         // Ordenamiento
         const sortBy = filtros?.sortBy || 'fecha'
         const sortDir = filtros?.sortDir === 'asc' ? 'asc' : 'desc'
 
         dataDesencriptada.sort((a, b) => {
+            if (sortBy === 'justificado') {
+                const getJustDisplay = (val: string | null | undefined) => {
+                    const clean = (val || '').trim()
+                    if (!clean || clean.toUpperCase() === 'NO' || clean.toUpperCase() === 'SIN JUSTIFICAR') return ''
+                    return clean.toLowerCase()
+                }
+                const cleanA = getJustDisplay(a.justificado)
+                const cleanB = getJustDisplay(b.justificado)
+                if (cleanA === cleanB) {
+                    return (b.fecha || '').localeCompare(a.fecha || '')
+                }
+                const comp = cleanA.localeCompare(cleanB, 'es-CL')
+                return sortDir === 'desc' ? -comp : comp
+            }
+
             let valA: any = a[sortBy as keyof AdmAtrasosRegistroDTO] ?? ''
             let valB: any = b[sortBy as keyof AdmAtrasosRegistroDTO] ?? ''
             if (typeof valA === 'string') valA = valA.toLowerCase()

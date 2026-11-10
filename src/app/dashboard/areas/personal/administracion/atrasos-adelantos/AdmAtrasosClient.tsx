@@ -141,6 +141,7 @@ export default function AdmAtrasosClient({
     const [filtroUsuarioId, setFiltroUsuarioId] = useState<string>('TODOS')
     const [filtroInstitucion, setFiltroInstitucion] = useState<string>('TODAS')
     const [filtroComuna, setFiltroComuna] = useState<string>('TODAS')
+    const [filtroSoloNoJustificados, setFiltroSoloNoJustificados] = useState(false)
 
     // Selección múltiple y Justificación Masiva
     const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
@@ -240,7 +241,7 @@ export default function AdmAtrasosClient({
     // Paginación Tab Registros
     const [paginaActual, setPaginaActual] = useState(1)
     const pageSize = 10
-    type SortField = 'fecha' | 'rbd' | 'establecimiento' | 'nombreCompleto' | 'supervisor' | 'sucursal' | 'minutosAtraso' | 'minutosAdelanto' | 'aplicaDescuento' | 'estado'
+    type SortField = 'fecha' | 'rbd' | 'establecimiento' | 'nombreCompleto' | 'supervisor' | 'sucursal' | 'minutosAtraso' | 'minutosAdelanto' | 'aplicaDescuento' | 'estado' | 'justificado'
     const [sortField, setSortField] = useState<SortField>('fecha')
     const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc')
 
@@ -307,6 +308,7 @@ export default function AdmAtrasosClient({
             cargaId?: string
             estado?: 'TODOS' | 'ABIERTO' | 'CERRADO'
             aplica?: 'TODOS' | 'APLICA' | 'NO_APLICA'
+            soloNoJustificados?: boolean
             sucursal?: string
             supervisor?: string
             fechaDesde?: string
@@ -322,6 +324,7 @@ export default function AdmAtrasosClient({
         const cargaIdActual = customFilters?.cargaId !== undefined ? customFilters.cargaId : filtroCargaId
         const estadoActual = customFilters?.estado !== undefined ? customFilters.estado : filtroEstado
         const aplicaActual = customFilters?.aplica !== undefined ? customFilters.aplica : filtroAplica
+        const soloNoJustificadosActual = customFilters?.soloNoJustificados !== undefined ? customFilters.soloNoJustificados : filtroSoloNoJustificados
         const sucursalActual = customFilters?.sucursal !== undefined ? customFilters.sucursal : filtroSucursal
         const supervisorActual = customFilters?.supervisor !== undefined ? customFilters.supervisor : filtroSupervisor
         const fechaDesdeActual = customFilters?.fechaDesde !== undefined ? customFilters.fechaDesde : filtroFechaDesde
@@ -375,6 +378,7 @@ export default function AdmAtrasosClient({
                     aplicaDescuento: aplicaActual !== 'TODOS' ? aplicaActual : undefined,
                     estado: estadoActual !== 'TODOS' ? estadoActual : undefined,
                     cargaId: cargaIdActual !== 'TODOS' ? cargaIdActual : undefined,
+                    soloNoJustificados: soloNoJustificadosActual,
                     search: searchActual.trim() || undefined,
                     page: newPage,
                     pageSize,
@@ -435,6 +439,7 @@ export default function AdmAtrasosClient({
         setFiltroEstado('TODOS')
         setFiltroCargaId('TODOS')
         setFiltroAplica('TODOS')
+        setFiltroSoloNoJustificados(false)
         setFiltroSucursal('TODAS')
         setFiltroSupervisor('TODOS')
         setFiltroFechaDesde('')
@@ -453,6 +458,7 @@ export default function AdmAtrasosClient({
             cargaId: 'TODOS',
             estado: 'TODOS',
             aplica: 'TODOS',
+            soloNoJustificados: false,
             sucursal: 'TODAS',
             supervisor: 'TODOS',
             fechaDesde: '',
@@ -523,6 +529,8 @@ export default function AdmAtrasosClient({
             const res = await getAdmAtrasosAction({
                 tipo: tipoActivo,
                 rbd: filtroRbd || undefined,
+                institucion: filtroInstitucion !== 'TODAS' ? filtroInstitucion : undefined,
+                comuna: filtroComuna !== 'TODAS' ? filtroComuna : undefined,
                 sucursal: filtroSucursal !== 'TODAS' ? filtroSucursal : undefined,
                 supervisor: filtroSupervisor !== 'TODOS' ? filtroSupervisor : undefined,
                 fechaDesde: filtroFechaDesde || undefined,
@@ -530,6 +538,7 @@ export default function AdmAtrasosClient({
                 aplicaDescuento: filtroAplica !== 'TODOS' ? filtroAplica : undefined,
                 estado: filtroEstado !== 'TODOS' ? filtroEstado : undefined,
                 cargaId: filtroCargaId !== 'TODOS' ? filtroCargaId : undefined,
+                soloNoJustificados: filtroSoloNoJustificados,
                 search: busquedaTexto.trim() || undefined,
                 page: 1,
                 pageSize: 50000 // Traer todos para el reporte
@@ -1234,6 +1243,29 @@ export default function AdmAtrasosClient({
                             </div>
 
                             <div className="sm:col-span-2">
+                                <label className="block text-[11px] font-semibold text-gray-600 uppercase tracking-wider mb-1">
+                                    Justificación
+                                </label>
+                                <label className={`flex items-center gap-2 px-3 py-1.5 border rounded-xl cursor-pointer select-none transition-all ${
+                                    filtroSoloNoJustificados 
+                                        ? 'bg-amber-50 border-amber-300 text-amber-900 font-bold shadow-xs' 
+                                        : 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50'
+                                }`}>
+                                    <input
+                                        type="checkbox"
+                                        checked={filtroSoloNoJustificados}
+                                        onChange={e => {
+                                            const val = e.target.checked
+                                            setFiltroSoloNoJustificados(val)
+                                            recargarDatos(1, sortField, sortDirection, tipoActivo, { soloNoJustificados: val })
+                                        }}
+                                        className="w-4 h-4 rounded border-gray-300 text-amber-600 focus:ring-amber-500 cursor-pointer"
+                                    />
+                                    <span className="text-xs truncate">No justificados</span>
+                                </label>
+                            </div>
+
+                            <div className="sm:col-span-2">
                                 <label className="block text-[11px] font-semibold text-gray-600 uppercase tracking-wider mb-1 flex items-center gap-1">
                                     <ShieldCheck className="w-3 h-3 text-cyan-600" />
                                     <span>Rol de Usuario</span>
@@ -1372,7 +1404,7 @@ export default function AdmAtrasosClient({
                                 >
                                     Aplicar Filtros
                                 </button>
-                                {(busquedaTexto || filtroRbd !== null || filtroEstado !== 'TODOS' || filtroCargaId !== 'TODOS' || filtroAplica !== 'TODOS' || filtroSucursal !== 'TODAS' || filtroSupervisor !== 'TODOS' || filtroFechaDesde || filtroFechaHasta || filtroRol !== 'TODOS' || filtroUsuarioId !== 'TODOS' || filtroInstitucion !== 'TODAS' || filtroComuna !== 'TODAS') && (
+                                {(busquedaTexto || filtroRbd !== null || filtroEstado !== 'TODOS' || filtroCargaId !== 'TODOS' || filtroAplica !== 'TODOS' || filtroSoloNoJustificados || filtroSucursal !== 'TODAS' || filtroSupervisor !== 'TODOS' || filtroFechaDesde || filtroFechaHasta || filtroRol !== 'TODOS' || filtroUsuarioId !== 'TODOS' || filtroInstitucion !== 'TODAS' || filtroComuna !== 'TODAS') && (
                                     <button
                                         onClick={handleClearFilters}
                                         disabled={isPending}
@@ -1380,6 +1412,12 @@ export default function AdmAtrasosClient({
                                     >
                                         Limpiar Filtros
                                     </button>
+                                )}
+                                {filtroSoloNoJustificados && (
+                                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-amber-100 text-amber-800 border border-amber-200 animate-in fade-in">
+                                        <span>⚠️</span>
+                                        <span>Filtrando solo &quot;Sin justificar&quot;</span>
+                                    </span>
                                 )}
                             </div>
                         </div>
@@ -1461,7 +1499,16 @@ export default function AdmAtrasosClient({
                                             </>
                                         )}
                                         <th className="py-3 px-3 text-center">¿Aplica Descuento?</th>
-                                        <th className="py-3 px-3">Justificación</th>
+                                        <th className="py-3 px-3 cursor-pointer hover:bg-gray-100 transition-colors" onClick={() => handleSort('justificado')} title="Ordenar por Justificación (Ascendente / Descendente)">
+                                            <div className="flex items-center gap-1">
+                                                <span>Justificación</span>
+                                                {sortField === 'justificado' ? (
+                                                    sortDirection === 'asc' ? <ArrowUp className="w-3 h-3 text-cyan-600" /> : <ArrowDown className="w-3 h-3 text-cyan-600" />
+                                                ) : (
+                                                    <ArrowUpDown className="w-3 h-3 text-gray-400" />
+                                                )}
+                                            </div>
+                                        </th>
                                         <th className="py-3 px-3 text-center">Estado Período</th>
                                         <th className="py-3 px-3 text-center">Acciones</th>
                                     </tr>
