@@ -24,6 +24,7 @@ import {
     getComparativaAbiertosCerradosData
 } from './actions'
 import ComparativaAbiertosCerradosTab from './ComparativaAbiertosCerradosTab'
+import { exportarCeramicasAPdf } from '@/lib/pdf/exportadorCeramicasRRHH'
 
 type TipoModuloFilter = 'TODOS' | 'AUSENTISMO' | 'HORAS_EXTRAS' | 'ATRASOS' | 'ADELANTOS'
 type ChartModuloFilter = 'TODOS' | 'TOTALIZADOR' | 'AUSENTISMO' | 'HORAS_EXTRAS' | 'ATRASOS' | 'ADELANTOS'
@@ -276,6 +277,19 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
     const roleDropdownRef = useRef<HTMLDivElement>(null)
     const sucursalDropdownRef = useRef<HTMLDivElement>(null)
 
+    // Estados y Refs para Exportación de Cerámicas a PDF
+    const [isExportingPdf, setIsExportingPdf] = useState(false)
+    const [isPdfMenuOpen, setIsPdfMenuOpen] = useState(false)
+    const [pdfFeedback, setPdfFeedback] = useState<string | null>(null)
+    const pdfDropdownRef = useRef<HTMLDivElement>(null)
+
+    const colabKpiRef = useRef<HTMLDivElement>(null)
+    const colabFullRef = useRef<HTMLDivElement>(null)
+    const sucursalesKpiRef = useRef<HTMLDivElement>(null)
+    const sucursalesFullRef = useRef<HTMLDivElement>(null)
+    const compKpiRef = useRef<HTMLDivElement>(null)
+    const compFullRef = useRef<HTMLDivElement>(null)
+
     // Cierre al hacer clic fuera
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
@@ -285,10 +299,60 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
             if (sucursalDropdownRef.current && !sucursalDropdownRef.current.contains(event.target as Node)) {
                 setIsSucursalDropdownOpen(false)
             }
+            if (pdfDropdownRef.current && !pdfDropdownRef.current.contains(event.target as Node)) {
+                setIsPdfMenuOpen(false)
+            }
         }
         document.addEventListener('mousedown', handleClickOutside)
         return () => document.removeEventListener('mousedown', handleClickOutside)
     }, [])
+
+    const handleExportarCeramicasPdf = async (modo: 'KPIS' | 'COMPLETO' = 'KPIS') => {
+        let targetElement: HTMLElement | null = null
+        let tabName = 'Avance por Colaborador'
+        let filtroActivo = filterSucursal !== 'TODOS' ? `Sucursal: ${filterSucursal}` : 'Todas las Sucursales'
+
+        if (activeTab === 'COLABORADORES') {
+            targetElement = modo === 'KPIS' ? colabKpiRef.current : colabFullRef.current
+            tabName = 'Avance por Colaborador'
+            if (filterRole !== 'TODOS') filtroActivo += ` • Rol: ${filterRole}`
+            if (filterSemaforo !== 'TODOS') filtroActivo += ` • Semáforo: ${filterSemaforo}`
+        } else if (activeTab === 'SUCURSALES') {
+            targetElement = modo === 'KPIS' ? sucursalesKpiRef.current : sucursalesFullRef.current
+            tabName = 'Avance por Sucursal'
+            if (filterTipoModulo !== 'TODOS') filtroActivo += ` • Módulo: ${filterTipoModulo}`
+        } else if (activeTab === 'COMPARATIVA') {
+            targetElement = modo === 'KPIS' ? compKpiRef.current : compFullRef.current
+            tabName = 'Comparativa Abiertos vs Cerrados'
+            filtroActivo = `Módulo: ${compModuloFilter} • Estado: ${compEstadoFilter}`
+            if (compSucursalFilter !== 'TODAS') filtroActivo += ` • Sucursal: ${compSucursalFilter}`
+        }
+
+        if (!targetElement) {
+            alert('No se encontró el contenedor visual de cerámicas para exportar.')
+            return
+        }
+
+        setIsExportingPdf(true)
+        setPdfFeedback('Generando PDF en alta resolución con diseño oficial Hendaya...')
+
+        try {
+            await exportarCeramicasAPdf(targetElement, {
+                tabName: `${tabName} (${modo === 'KPIS' ? 'Resumen Ejecutivo' : 'Vista Completa'})`,
+                titulo: 'TABLERO DE MONITOREO RRHH',
+                subtitulo: 'Reporte Ejecutivo de Cerámicas y Métricas de Gestión',
+                filtroActivo,
+            })
+            setPdfFeedback('¡PDF descargado con éxito!')
+            setTimeout(() => setPdfFeedback(null), 3500)
+        } catch (error: any) {
+            console.error('Error al generar PDF de cerámicas:', error)
+            alert('Hubo un error al generar el PDF: ' + (error?.message || error))
+            setPdfFeedback(null)
+        } finally {
+            setIsExportingPdf(false)
+        }
+    }
 
     // Recargar datos en vivo
     const handleRefresh = () => {
@@ -747,6 +811,66 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                         <span>Exportar Excel</span>
                     </button>
 
+                    {/* Exportar Cerámicas a PDF Oficial Hendaya */}
+                    <div className="relative" ref={pdfDropdownRef}>
+                        <button
+                            type="button"
+                            onClick={() => setIsPdfMenuOpen(prev => !prev)}
+                            disabled={isExportingPdf || isPending}
+                            className="px-3.5 py-2 bg-gradient-to-r from-cyan-500 to-sky-600 hover:from-cyan-400 hover:to-sky-500 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 transition shadow-sm disabled:opacity-60"
+                            title="Exportar las cerámicas y métricas visuales a PDF oficial Hendaya"
+                        >
+                            <span>{isExportingPdf ? '⏳' : '📄'}</span>
+                            <span>{isExportingPdf ? 'Generando PDF...' : 'Exportar Cerámicas (PDF)'}</span>
+                            <span className="text-[10px] ml-0.5 opacity-80">▼</span>
+                        </button>
+
+                        {isPdfMenuOpen && (
+                            <div className="absolute right-0 top-full mt-2 w-72 bg-white border border-slate-200 rounded-2xl shadow-xl p-2 z-50 text-slate-800 animate-in fade-in slide-in-from-top-1">
+                                <div className="px-3 py-1.5 text-[10px] font-extrabold uppercase text-slate-400 tracking-wider border-b border-slate-100 flex items-center justify-between">
+                                    <span>Formato Oficial Hendaya</span>
+                                    <span className="text-cyan-600 font-mono font-bold">PDF A4</span>
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setIsPdfMenuOpen(false)
+                                        handleExportarCeramicasPdf('KPIS')
+                                    }}
+                                    className="w-full text-left p-2.5 hover:bg-sky-50 rounded-xl transition flex items-start gap-2.5 group"
+                                >
+                                    <span className="text-base p-1.5 bg-sky-100 rounded-lg text-sky-700">📊</span>
+                                    <div>
+                                        <div className="text-xs font-bold text-slate-900 group-hover:text-cyan-700">
+                                            Cerámicas Ejecutivas (KPIs)
+                                        </div>
+                                        <div className="text-[10px] text-slate-500 leading-tight mt-0.5">
+                                            1 página horizontal limpia con las tarjetas de métricas principales.
+                                        </div>
+                                    </div>
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setIsPdfMenuOpen(false)
+                                        handleExportarCeramicasPdf('COMPLETO')
+                                    }}
+                                    className="w-full text-left p-2.5 hover:bg-sky-50 rounded-xl transition flex items-start gap-2.5 group"
+                                >
+                                    <span className="text-base p-1.5 bg-emerald-100 rounded-lg text-emerald-700">🔲</span>
+                                    <div>
+                                        <div className="text-xs font-bold text-slate-900 group-hover:text-emerald-700">
+                                            Vista Completa de Cerámicas
+                                        </div>
+                                        <div className="text-[10px] text-slate-500 leading-tight mt-0.5">
+                                            Tarjetas KPIs y detalle completo de colaboradores o sucursales.
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                        )}
+                    </div>
+
                     {/* Mantenedor Config */}
                     {currentData.canConfig && (
                         <Link
@@ -861,10 +985,19 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                 </div>
             </div>
 
+            {/* Toast de estado de descarga PDF */}
+            {pdfFeedback && (
+                <div className="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-2xl border border-cyan-500/30 flex items-center gap-3 text-xs animate-in fade-in slide-in-from-bottom-3">
+                    <span className="text-cyan-400 text-base">{isExportingPdf ? '⏳' : '✅'}</span>
+                    <span className="font-medium">{pdfFeedback}</span>
+                </div>
+            )}
+
             {activeTab === 'COLABORADORES' && (
-                <>
-            {/* TARJETAS EJECUTIVAS KPIS (Tema Claro Hendaya) */}
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
+                <div ref={colabFullRef} className="space-y-6">
+                    {/* TARJETAS EJECUTIVAS KPIS (Tema Claro Hendaya) */}
+                    <div ref={colabKpiRef} className="space-y-4">
+                        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
                 {/* Total Colaboradores */}
                 <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm hover:border-slate-300 transition">
                     <div className="flex items-center justify-between text-slate-500 text-xs font-bold">
@@ -971,6 +1104,7 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                         <span>Pend: {currentData.kpis.totalRegistrosPendientes}</span>
                     </div>
                 </div>
+            </div>
             </div>
 
             {/* BARRA DE FILTROS (Rol, Sucursal, Búsqueda, Semáforos) */}
@@ -1600,16 +1734,17 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                     </div>
                 </div>
             )}
-                </>
+                </div>
             )}
 
             {activeTab === 'SUCURSALES' && (
                 /* =====================================================================
                    PESTAÑA 2: AVANCE POR SUCURSAL SEPARADO POR TIPO (AUSENTISMO, HRS EXTRAS, ATRASOS Y ADELANTO)
                    ===================================================================== */
-                <>
+                <div ref={sucursalesFullRef} className="space-y-6">
                     {/* 4 TARJETAS DE RESUMEN CONSOLIDADO POR TIPO DE MÓDULO (Interactivas para filtrar foco) */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+                    <div ref={sucursalesKpiRef} className="space-y-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
                         {(currentData.resumenPorTipo || []).map((modGlobal) => {
                             const isSelectedTipo = filterTipoModulo === modGlobal.tipo
                             const isVerde = modGlobal.semaforo === 'VERDE'
@@ -1697,6 +1832,7 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                                 </div>
                             )
                         })}
+                    </div>
                     </div>
 
                     {/* =====================================================================
@@ -2465,7 +2601,7 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                             </div>
                         </div>
                     )}
-                </>
+                </div>
             )}
 
             {/* =====================================================================
@@ -2496,6 +2632,10 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                     fetchComparativaData={fetchComparativaData}
                     handleCompSort={handleCompSort}
                     handleExportCsv={handleExportCsv}
+                    onExportPdf={handleExportarCeramicasPdf}
+                    isExportingPdf={isExportingPdf}
+                    kpiContainerRef={compKpiRef}
+                    fullContainerRef={compFullRef}
                 />
             )}
 

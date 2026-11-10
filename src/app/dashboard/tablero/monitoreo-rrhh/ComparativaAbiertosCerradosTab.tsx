@@ -30,6 +30,10 @@ interface Props {
     fetchComparativaData: (overrides?: Partial<ComparativaFiltros>) => void
     handleCompSort: (column: string) => void
     handleExportCsv: () => void
+    onExportPdf?: (modo: 'KPIS' | 'COMPLETO') => void
+    isExportingPdf?: boolean
+    kpiContainerRef?: React.RefObject<HTMLDivElement | null>
+    fullContainerRef?: React.RefObject<HTMLDivElement | null>
 }
 
 export default function ComparativaAbiertosCerradosTab({
@@ -55,12 +59,20 @@ export default function ComparativaAbiertosCerradosTab({
     setCompSortOrder,
     fetchComparativaData,
     handleCompSort,
-    handleExportCsv
+    handleExportCsv,
+    onExportPdf,
+    isExportingPdf,
+    kpiContainerRef,
+    fullContainerRef
 }: Props) {
     return (
         <div className="space-y-6">
-            {/* 1. TARJETAS EJECUTIVAS KPIS GLOBALES (5 TARJETAS) */}
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-3.5">
+            {/* Contenedor Completo de Cerámicas y Paneles para Exportación PDF */}
+            <div ref={fullContainerRef as any} className="space-y-6">
+                {/* Contenedor Exclusivo de KPIs y Módulos para Exportación PDF en 1 Página */}
+                <div ref={kpiContainerRef as any} className="space-y-6 bg-slate-50/60 p-4 rounded-3xl border border-slate-200/60">
+                    {/* 1. TARJETAS EJECUTIVAS KPIS GLOBALES (5 TARJETAS) */}
+                    <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-3.5">
                 {/* Total Universo */}
                 <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm hover:border-slate-300 transition">
                     <div className="flex items-center justify-between text-slate-500 text-xs font-bold">
@@ -218,6 +230,8 @@ export default function ComparativaAbiertosCerradosTab({
                         )
                     })}
                 </div>
+            </div>
+            {/* Fin Contenedor Exclusivo de KPIs y Módulos */}
             </div>
 
             {/* SECCIÓN 3: HISTORIAL DE ARCHIVOS CARGADOS Y SU COMPORTAMIENTO EN EL TIEMPO */}
@@ -547,6 +561,8 @@ export default function ComparativaAbiertosCerradosTab({
                     </div>
                 </div>
             </div>
+            {/* Fin Contenedor Completo de Cerámicas y Paneles */}
+            </div>
 
             {/* 5. FILTROS DINÁMICOS DE LA MATRIZ */}
             <div className="bg-white border border-slate-200 rounded-3xl p-4 sm:p-5 shadow-sm space-y-3">
@@ -593,6 +609,18 @@ export default function ComparativaAbiertosCerradosTab({
                             <span>📥</span>
                             <span>Exportar Vista CSV</span>
                         </button>
+                        {onExportPdf && (
+                            <button
+                                type="button"
+                                onClick={() => onExportPdf('KPIS')}
+                                disabled={isExportingPdf}
+                                className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-cyan-600 to-sky-600 hover:from-cyan-500 hover:to-sky-500 text-white text-xs font-bold transition shadow-sm flex items-center gap-1.5 disabled:opacity-60"
+                                title="Exportar las cerámicas y métricas a PDF oficial Hendaya"
+                            >
+                                <span>{isExportingPdf ? '⏳' : '📄'}</span>
+                                <span>{isExportingPdf ? 'Generando PDF...' : 'Exportar Cerámicas (PDF)'}</span>
+                            </button>
+                        )}
                     </div>
                 </div>
 
