@@ -7,32 +7,29 @@ export interface ExportarCeramicasPdfOptions {
     subtitulo?: string
     filtroActivo?: string
     usuarioNombre?: string
+    onProgress?: (mensaje: string) => void
 }
 
 /**
- * Exporta un contenedor visual de métricas / cerámicas a un documento PDF ejecutivo
- * con formato A4 apaisado (Landscape), cabecera y pie oficiales de Hendaya.
- * Cumple estrictamente con las reglas de identidad corporativa de Hendaya (marca tipográfica Cyan/Sky, sin logos PNG de terceros).
+ * Motor de exportación PDF oficial Hendaya para cerámicas de RRHH.
+ * Cumple con el requerimiento de:
+ * 1. NUNCA cortar ningún cuadro o tarjeta (0 cerámicas cortadas).
+ * 2. Mostrar exactamente 2 cerámicas por hoja (lado a lado, ajustadas y proporcionadas).
+ * 3. En modo KPIs/Resumen, ajustar y achicar para que quepa 100% en 1 sola hoja sin desbordar.
+ * 4. Identidad oficial Hendaya: Marca tipográfica Cyan/Sky, sin logos PNG de terceros.
  */
 export async function exportarCeramicasAPdf(
     element: HTMLElement,
     options: ExportarCeramicasPdfOptions
 ): Promise<void> {
-    // 1. Capturar el elemento visual en alta resolución (scale: 2)
-    const canvas = await html2canvas(element, {
-        scale: 2,
-        useCORS: true,
-        logging: false,
-        backgroundColor: '#f8fafc', // slate-50 para conservar el contraste de las tarjetas blancas
-        windowWidth: element.scrollWidth,
-    })
-
-    if (!canvas.width || !canvas.height) {
-        throw new Error('No se pudo capturar el contenido visual de las cerámicas.')
+    const notify = (msg: string) => {
+        if (options.onProgress) options.onProgress(msg)
     }
 
-    // 2. Configurar documento PDF A4 en orientación Horizontal (Landscape)
-    // Dimensiones A4 Landscape: 297 mm ancho x 210 mm alto
+    notify('Iniciando preparación del reporte PDF oficial...')
+
+    // Configurar documento PDF A4 en orientación Horizontal (Landscape)
+    // Dimensiones: 297 mm ancho x 210 mm alto
     const pdf = new jsPDF({
         orientation: 'landscape',
         unit: 'mm',
@@ -42,7 +39,7 @@ export async function exportarCeramicasAPdf(
     const pageWidth = 297
     const pageHeight = 210
 
-    // Márgenes y áreas útiles
+    // Márgenes y áreas de dibujo
     const marginX = 14
     const headerHeight = 18
     const footerMargin = 12
@@ -51,17 +48,14 @@ export async function exportarCeramicasAPdf(
     const usableHeightPerPage = contentBottomY - contentTopY // ~176 mm
     const usableWidth = pageWidth - marginX * 2 // 269 mm
 
-    // Relación de escala de la imagen respecto al ancho imprimible
-    const totalImageHeightMm = (canvas.height * usableWidth) / canvas.width
+    // Buscar sección de KPIs principales y tarjetas individuales de cerámicas
+    const kpiSection = element.querySelector('[data-pdf-kpi="true"]') as HTMLElement | null
+    const individualCards = Array.from(element.querySelectorAll('[data-pdf-card="true"]')) as HTMLElement[]
 
-    // Calcular cantidad de páginas necesarias
-    const totalPages = Math.max(1, Math.ceil(totalImageHeightMm / usableHeightPerPage))
-
-    // Función interna para dibujar cabecera y pie de página corporativos de Hendaya
-    const dibujarHeaderYFooter = (pageNum: number) => {
+    // Función para dibujar encabezado y pie de página oficiales de Hendaya
+    const dibujarHeaderYFooter = (pageNum: number, totalPages: number) => {
         // --- CABECERA CORPORATIVA ---
-        // Barra de fondo slate-900
-        pdf.setFillColor(15, 23, 42)
+        pdf.setFillColor(15, 23, 42) // slate-900
         pdf.rect(0, 0, pageWidth, headerHeight, 'F')
 
         // Marca tipográfica oficial HENDAYA en tono Cyan/Sky
@@ -70,7 +64,7 @@ export async function exportarCeramicasAPdf(
         pdf.setTextColor(56, 189, 248) // Sky-400
         pdf.text('H E N D A Y A', marginX, 11)
 
-        // Separador vertical sutil
+        // Separador vertical
         pdf.setDrawColor(71, 85, 105) // slate-600
         pdf.setLineWidth(0.3)
         pdf.line(marginX + 42, 3.5, marginX + 42, 14.5)
@@ -80,7 +74,7 @@ export async function exportarCeramicasAPdf(
         pdf.setTextColor(255, 255, 255)
         pdf.text('TABLERO DE MONITOREO RRHH', marginX + 48, 8.5)
 
-        // Subtítulo y fecha de emisión
+        // Subtítulo con fecha y hora
         pdf.setFont('helvetica', 'normal')
         pdf.setFontSize(7.5)
         pdf.setTextColor(148, 163, 184) // slate-400
@@ -104,7 +98,7 @@ export async function exportarCeramicasAPdf(
             pdf.text(options.filtroActivo, pageWidth - marginX, 11, { align: 'right' })
         }
 
-        // Línea decorativa Cyan (#0ea5e9) inferior del header
+        // Línea decorativa Cyan (#0ea5e9) inferior
         pdf.setDrawColor(14, 165, 233)
         pdf.setLineWidth(0.8)
         pdf.line(0, headerHeight, pageWidth, headerHeight)
@@ -127,59 +121,159 @@ export async function exportarCeramicasAPdf(
         })
     }
 
-    // Si todo cabe en una página, lo centramos verticalmente
-    if (totalPages === 1) {
-        dibujarHeaderYFooter(1)
-        const posY = contentTopY + Math.max(0, (usableHeightPerPage - totalImageHeightMm) / 2)
-        const imgData = canvas.toDataURL('image/png')
-        pdf.addImage(imgData, 'PNG', marginX, posY, usableWidth, totalImageHeightMm, undefined, 'FAST')
-    } else {
-        // Si ocupa múltiples páginas, rebanamos el canvas con precisión para evitar solapamientos con el header y footer
-        const sliceHeightPx = Math.floor(canvas.height / totalPages)
+    // =========================================================================
+    // CASO 1: Si hay tarjetas individuales identificadas ([data-pdf-card="true"])
+    // Distribución: Página 1 con KPIs (si existen) y siguientes páginas con 2 cerámicas por hoja
+    // =========================================================================
+    if (individualCards.length > 0) {
+        const hasKpiPage = Boolean(kpiSection)
+        const cardPagesCount = Math.ceil(individualCards.length / 2)
+        const totalPages = (hasKpiPage ? 1 : 0) + cardPagesCount
+        let currentPage = 1
 
-        for (let i = 0; i < totalPages; i++) {
-            if (i > 0) {
+        // 1.1 Página 1: KPIs Ejecutivos (si existen)
+        if (kpiSection) {
+            notify(`Generando página 1 de ${totalPages} (Cerámicas Ejecutivas)...`)
+            dibujarHeaderYFooter(currentPage, totalPages)
+
+            const kpiCanvas = await html2canvas(kpiSection, {
+                scale: 2,
+                useCORS: true,
+                logging: false,
+                backgroundColor: '#f8fafc',
+            })
+
+            let drawWidth = usableWidth
+            let drawHeight = (kpiCanvas.height * drawWidth) / kpiCanvas.width
+
+            // Si es más alto que el área disponible, achicar proporcionalmente para que no se corte
+            if (drawHeight > usableHeightPerPage) {
+                const scale = usableHeightPerPage / drawHeight
+                drawHeight = usableHeightPerPage
+                drawWidth = drawWidth * scale
+            }
+
+            const posX = marginX + (usableWidth - drawWidth) / 2
+            const posY = contentTopY + (usableHeightPerPage - drawHeight) / 2
+            pdf.addImage(kpiCanvas.toDataURL('image/png'), 'PNG', posX, posY, drawWidth, drawHeight, undefined, 'FAST')
+            currentPage++
+        }
+
+        // 1.2 Páginas de Cerámicas: Exactamente 2 cerámicas por hoja (lado a lado)
+        for (let i = 0; i < individualCards.length; i += 2) {
+            notify(`Generando página ${currentPage} de ${totalPages} (Cerámicas ${i + 1} y ${Math.min(i + 2, individualCards.length)})...`)
+
+            if (currentPage > 1) {
                 pdf.addPage()
             }
-            dibujarHeaderYFooter(i + 1)
+            dibujarHeaderYFooter(currentPage, totalPages)
 
-            const sourceY = i * sliceHeightPx
-            const currentSliceHeightPx = Math.min(sliceHeightPx, canvas.height - sourceY)
+            const cardA = individualCards[i]
+            const cardB = individualCards[i + 1] as HTMLElement | undefined
 
-            const sliceCanvas = document.createElement('canvas')
-            sliceCanvas.width = canvas.width
-            sliceCanvas.height = currentSliceHeightPx
+            // Ancho para 2 columnas con separación
+            const cardColWidth = 129 // mm
+            const cardGap = 11 // mm
+            const slotX_A = marginX // 14 mm
+            const slotX_B = marginX + cardColWidth + cardGap // 154 mm
 
-            const ctx = sliceCanvas.getContext('2d')
-            if (ctx) {
-                ctx.drawImage(
-                    canvas,
-                    0,
-                    sourceY,
-                    canvas.width,
-                    currentSliceHeightPx,
-                    0,
-                    0,
-                    canvas.width,
-                    currentSliceHeightPx
-                )
-                const sliceImgData = sliceCanvas.toDataURL('image/png')
-                const sliceHeightMm = (currentSliceHeightPx * usableWidth) / canvas.width
-                pdf.addImage(
-                    sliceImgData,
-                    'PNG',
-                    marginX,
-                    contentTopY,
-                    usableWidth,
-                    sliceHeightMm,
-                    undefined,
-                    'FAST'
-                )
+            // Capturar Tarjeta A
+            const canvasA = await html2canvas(cardA, {
+                scale: 2,
+                useCORS: true,
+                logging: false,
+                backgroundColor: '#ffffff',
+            })
+
+            if (cardB) {
+                // Capturar Tarjeta B
+                const canvasB = await html2canvas(cardB, {
+                    scale: 2,
+                    useCORS: true,
+                    logging: false,
+                    backgroundColor: '#ffffff',
+                })
+
+                // Calcular dimensiones proporcionales para Tarjeta A
+                let wA = cardColWidth
+                let hA = (canvasA.height * wA) / canvasA.width
+                if (hA > usableHeightPerPage) {
+                    const s = usableHeightPerPage / hA
+                    hA = usableHeightPerPage
+                    wA = wA * s
+                }
+
+                // Calcular dimensiones proporcionales para Tarjeta B
+                let wB = cardColWidth
+                let hB = (canvasB.height * wB) / canvasB.width
+                if (hB > usableHeightPerPage) {
+                    const s = usableHeightPerPage / hB
+                    hB = usableHeightPerPage
+                    wB = wB * s
+                }
+
+                // Centrar verticalmente cada tarjeta en su ranura
+                const posXA = slotX_A + (cardColWidth - wA) / 2
+                const posYA = contentTopY + (usableHeightPerPage - hA) / 2
+                const posXB = slotX_B + (cardColWidth - wB) / 2
+                const posYB = contentTopY + (usableHeightPerPage - hB) / 2
+
+                pdf.addImage(canvasA.toDataURL('image/png'), 'PNG', posXA, posYA, wA, hA, undefined, 'FAST')
+                pdf.addImage(canvasB.toDataURL('image/png'), 'PNG', posXB, posYB, wB, hB, undefined, 'FAST')
+            } else {
+                // Caso última tarjeta impar: centrarla elegantemente en la hoja
+                const singleCardWidth = 145 // mm
+                let wA = singleCardWidth
+                let hA = (canvasA.height * wA) / canvasA.width
+                if (hA > usableHeightPerPage) {
+                    const s = usableHeightPerPage / hA
+                    hA = usableHeightPerPage
+                    wA = wA * s
+                }
+
+                const posXA = marginX + (usableWidth - wA) / 2
+                const posYA = contentTopY + (usableHeightPerPage - hA) / 2
+
+                pdf.addImage(canvasA.toDataURL('image/png'), 'PNG', posXA, posYA, wA, hA, undefined, 'FAST')
             }
+
+            currentPage++
         }
+    } else {
+        // =========================================================================
+        // CASO 2: Modo Resumen / Solo Cerámicas Ejecutivas (1 sola hoja garantizada)
+        // Se achica proporcionalmente si es necesario para que NUNCA se corte ningún cuadro
+        // =========================================================================
+        notify('Generando hoja ejecutiva (ajuste automático sin cortes)...')
+
+        const target = kpiSection || element
+        const canvas = await html2canvas(target, {
+            scale: 2,
+            useCORS: true,
+            logging: false,
+            backgroundColor: '#f8fafc',
+            windowWidth: target.scrollWidth,
+        })
+
+        dibujarHeaderYFooter(1, 1)
+
+        let drawWidth = usableWidth
+        let drawHeight = (canvas.height * drawWidth) / canvas.width
+
+        // Achicar proporcionalmente si excede la altura de la página para que quepa completa
+        if (drawHeight > usableHeightPerPage) {
+            const scaleFactor = usableHeightPerPage / drawHeight
+            drawHeight = usableHeightPerPage
+            drawWidth = drawWidth * scaleFactor
+        }
+
+        const posX = marginX + (usableWidth - drawWidth) / 2
+        const posY = contentTopY + (usableHeightPerPage - drawHeight) / 2
+
+        pdf.addImage(canvas.toDataURL('image/png'), 'PNG', posX, posY, drawWidth, drawHeight, undefined, 'FAST')
     }
 
-    // 3. Descargar el archivo con nombre descriptivo
+    // Descargar el documento PDF con nombre representativo
     const cleanTab = options.tabName
         .toLowerCase()
         .normalize('NFD')
@@ -190,4 +284,3 @@ export async function exportarCeramicasAPdf(
 
     pdf.save(fileName)
 }
-

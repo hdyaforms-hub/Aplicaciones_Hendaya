@@ -342,6 +342,7 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                 titulo: 'TABLERO DE MONITOREO RRHH',
                 subtitulo: 'Reporte Ejecutivo de Cerámicas y Métricas de Gestión',
                 filtroActivo,
+                onProgress: (msg) => setPdfFeedback(msg),
             })
             setPdfFeedback('¡PDF descargado con éxito!')
             setTimeout(() => setPdfFeedback(null), 3500)
@@ -739,8 +740,11 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
     return (
         <div className="min-h-screen bg-slate-50/60 text-slate-800 p-4 sm:p-6 lg:p-8 space-y-6">
             {/* CABECERA PRINCIPAL TIPO HENDAYA */}
-            <div className="bg-gradient-to-r from-slate-900 via-sky-950 to-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl border border-sky-900/30 flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
+            <div className="bg-gradient-to-r from-slate-900 via-sky-950 to-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl border border-sky-900/30 flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-30">
+                {/* Contenedor con overflow-hidden exclusivo para el blur decorativo, evitando recortar dropdowns */}
+                <div className="absolute inset-0 overflow-hidden rounded-3xl pointer-events-none">
+                    <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl -mr-20 -mt-20" />
+                </div>
                 <div className="relative z-10 space-y-2">
                     <div className="flex items-center gap-2.5">
                         <span className="px-3 py-1 bg-cyan-500/20 text-cyan-300 border border-cyan-400/30 rounded-full text-xs font-bold tracking-wide uppercase">
@@ -812,12 +816,12 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                     </button>
 
                     {/* Exportar Cerámicas a PDF Oficial Hendaya */}
-                    <div className="relative" ref={pdfDropdownRef}>
+                    <div className="relative z-30" ref={pdfDropdownRef}>
                         <button
                             type="button"
                             onClick={() => setIsPdfMenuOpen(prev => !prev)}
                             disabled={isExportingPdf || isPending}
-                            className="px-3.5 py-2 bg-gradient-to-r from-cyan-500 to-sky-600 hover:from-cyan-400 hover:to-sky-500 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 transition shadow-sm disabled:opacity-60"
+                            className="px-3.5 py-2 bg-gradient-to-r from-cyan-500 to-sky-600 hover:from-cyan-400 hover:to-sky-500 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 transition shadow-sm disabled:opacity-60 cursor-pointer"
                             title="Exportar las cerámicas y métricas visuales a PDF oficial Hendaya"
                         >
                             <span>{isExportingPdf ? '⏳' : '📄'}</span>
@@ -826,7 +830,7 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                         </button>
 
                         {isPdfMenuOpen && (
-                            <div className="absolute right-0 top-full mt-2 w-72 bg-white border border-slate-200 rounded-2xl shadow-xl p-2 z-50 text-slate-800 animate-in fade-in slide-in-from-top-1">
+                            <div className="absolute right-0 top-full mt-2 w-72 sm:w-80 bg-white border border-slate-200 rounded-2xl shadow-2xl p-2 z-50 text-slate-800 animate-in fade-in slide-in-from-top-1">
                                 <div className="px-3 py-1.5 text-[10px] font-extrabold uppercase text-slate-400 tracking-wider border-b border-slate-100 flex items-center justify-between">
                                     <span>Formato Oficial Hendaya</span>
                                     <span className="text-cyan-600 font-mono font-bold">PDF A4</span>
@@ -996,7 +1000,7 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
             {activeTab === 'COLABORADORES' && (
                 <div ref={colabFullRef} className="space-y-6">
                     {/* TARJETAS EJECUTIVAS KPIS (Tema Claro Hendaya) */}
-                    <div ref={colabKpiRef} className="space-y-4">
+                    <div ref={colabKpiRef} data-pdf-kpi="true" className="space-y-4">
                         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
                 {/* Total Colaboradores */}
                 <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm hover:border-slate-300 transition">
@@ -1430,6 +1434,7 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                         return (
                             <div
                                 key={colab.userId}
+                                data-pdf-card="true"
                                 onClick={() => {
                                     setSelectedColaborador(colab)
                                     setModalSearchQuery('')
@@ -1743,7 +1748,7 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                    ===================================================================== */
                 <div ref={sucursalesFullRef} className="space-y-6">
                     {/* 4 TARJETAS DE RESUMEN CONSOLIDADO POR TIPO DE MÓDULO (Interactivas para filtrar foco) */}
-                    <div ref={sucursalesKpiRef} className="space-y-4">
+                    <div ref={sucursalesKpiRef} data-pdf-kpi="true" className="space-y-4">
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
                         {(currentData.resumenPorTipo || []).map((modGlobal) => {
                             const isSelectedTipo = filterTipoModulo === modGlobal.tipo
@@ -2276,6 +2281,7 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                                 return (
                                     <div
                                         key={sucItem.sucursal}
+                                        data-pdf-card="true"
                                         onClick={() => {
                                             setSelectedSucursalModal(sucItem)
                                             setModalSearchQuery('')

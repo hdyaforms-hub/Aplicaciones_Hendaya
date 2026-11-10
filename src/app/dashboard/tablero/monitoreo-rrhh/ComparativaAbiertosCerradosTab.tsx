@@ -70,7 +70,7 @@ export default function ComparativaAbiertosCerradosTab({
             {/* Contenedor Completo de Cerámicas y Paneles para Exportación PDF */}
             <div ref={fullContainerRef as any} className="space-y-6">
                 {/* Contenedor Exclusivo de KPIs y Módulos para Exportación PDF en 1 Página */}
-                <div ref={kpiContainerRef as any} className="space-y-6 bg-slate-50/60 p-4 rounded-3xl border border-slate-200/60">
+                <div ref={kpiContainerRef as any} data-pdf-kpi="true" className="space-y-6 bg-slate-50/60 p-4 rounded-3xl border border-slate-200/60">
                     {/* 1. TARJETAS EJECUTIVAS KPIS GLOBALES (5 TARJETAS) */}
                     <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-3.5">
                 {/* Total Universo */}
@@ -172,6 +172,7 @@ export default function ComparativaAbiertosCerradosTab({
                         return (
                             <div
                                 key={mod.tipo}
+                                data-pdf-card="true"
                                 onClick={() => {
                                     const nextModulo = isSelected ? 'TODOS' : mod.tipo
                                     setCompModuloFilter(nextModulo)
