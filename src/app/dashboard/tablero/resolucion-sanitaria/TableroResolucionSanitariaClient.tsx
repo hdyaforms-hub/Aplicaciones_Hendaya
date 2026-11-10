@@ -224,8 +224,10 @@ export default function TableroResolucionSanitariaClient({ initialData }: Props)
                 'Con Resolución': s.conResolucion,
                 'Sin Resolución': s.sinResolucion,
                 'No Aplica': s.noAplica,
-                '% Cumplimiento': `${s.porcentajeCumplimiento.toFixed(1)}%`,
-                'Con Documento Digital': s.conDocumento
+                '% Con Resolución': `${s.porcentajeCumplimiento.toFixed(1)}%`,
+                'Con Documento Digital': s.conDocumento,
+                'Sin Documento': s.sinDocumento ?? Math.max(0, s.conResolucion - s.conDocumento),
+                '% Avance de Carga': `${(s.porcentajeCarga ?? (s.conResolucion > 0 ? (s.conDocumento / s.conResolucion * 100) : 0)).toFixed(1)}%`
             }))
             const wsSucursales = XLSX.utils.json_to_sheet(sucursalSheetData)
             XLSX.utils.book_append_sheet(workbook, wsSucursales, 'Por_Sucursal')
@@ -263,6 +265,13 @@ export default function TableroResolucionSanitariaClient({ initialData }: Props)
             porcentajeDocumental: 0
         }
     }, [data.evolution, data.yearToInspect])
+
+    // Avance de carga por sucursal ordenado por % de carga
+    const dataAvanceCarga = useMemo(() => {
+        return [...(data.sucursalBreakdown || [])].sort(
+            (a, b) => (b.porcentajeCarga || 0) - (a.porcentajeCarga || 0)
+        )
+    }, [data.sucursalBreakdown])
 
     // Helper de estilo para el badge de comportamiento
     const getComportamientoBadge = (comportamiento: RbdMatrizItem['comportamiento']) => {
@@ -703,12 +712,12 @@ export default function TableroResolucionSanitariaClient({ initialData }: Props)
             </div>
 
             {/* GRÁFICOS INTERACTIVOS (SECCIÓN 2: POR SUCURSAL E INSTITUCIÓN) */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                {/* Gráfico 3: Cumplimiento por Sucursal (2 columnas) */}
-                <div className="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col">
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                {/* Gráfico 3: Porcentaje de establecimientos con Resolución sanitaria */}
+                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col">
                     <div className="mb-4">
                         <h3 className="text-base font-bold text-gray-900">
-                            Tasa de Cumplimiento por Sucursal ({data.yearToInspect})
+                            Porcentaje de establecimientos con Resolución sanitaria ({data.yearToInspect})
                         </h3>
                         <p className="text-xs text-gray-500">
                             Porcentaje de establecimientos con resolución sanitaria vigente por sede
@@ -726,8 +735,14 @@ export default function TableroResolucionSanitariaClient({ initialData }: Props)
                                 <XAxis type="number" unit="%" domain={[0, 100]} stroke="#64748b" fontSize={12} />
                                 <YAxis dataKey="sucursal" type="category" stroke="#64748b" fontSize={12} tickLine={false} width={100} />
                                 <Tooltip
-                                    formatter={(value: any) => [`${Number(value).toFixed(1)}%`, '% Cumplimiento']}
-                                    contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0' }}
+                                    formatter={(value: any, _name: any, item: any) => {
+                                        const p = item?.payload
+                                        return [
+                                            `${Number(value).toFixed(1)}% (${p?.conResolucion || 0} de ${p?.total || 0} colegios)`,
+                                            '% Con Resolución'
+                                        ]
+                                    }}
+                                    contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
                                 />
                                 <Bar dataKey="porcentajeCumplimiento" fill="#0284c7" radius={[0, 4, 4, 0]} maxBarSize={25} />
                             </BarChart>
@@ -735,8 +750,45 @@ export default function TableroResolucionSanitariaClient({ initialData }: Props)
                     </div>
                 </div>
 
-                {/* Gráfico 4: Distribución por Institución (1 columna) */}
+                {/* Gráfico 4: Avance de carga */}
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col">
+                    <div className="mb-4">
+                        <h3 className="text-base font-bold text-gray-900">
+                            Avance de carga ({data.yearToInspect})
+                        </h3>
+                        <p className="text-xs text-gray-500">
+                            Porcentaje de resoluciones sanitarias con respaldo documental cargado por sede
+                        </p>
+                    </div>
+
+                    <div className="h-72 w-full">
+                        <ResponsiveContainer width="100%" height="100%">
+                            <BarChart
+                                data={dataAvanceCarga}
+                                layout="vertical"
+                                margin={{ top: 10, right: 30, left: 40, bottom: 5 }}
+                            >
+                                <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#f1f5f9" />
+                                <XAxis type="number" unit="%" domain={[0, 100]} stroke="#64748b" fontSize={12} />
+                                <YAxis dataKey="sucursal" type="category" stroke="#64748b" fontSize={12} tickLine={false} width={100} />
+                                <Tooltip
+                                    formatter={(value: any, _name: any, item: any) => {
+                                        const p = item?.payload
+                                        return [
+                                            `${Number(value).toFixed(1)}% (${p?.conDocumento || 0} de ${p?.conResolucion || 0} resoluciones cargadas)`,
+                                            '% Avance de Carga'
+                                        ]
+                                    }}
+                                    contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                                />
+                                <Bar dataKey="porcentajeCarga" fill="#0284c7" radius={[0, 4, 4, 0]} maxBarSize={25} />
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </div>
+                </div>
+
+                {/* Gráfico 5: Distribución por Institución (1 columna) */}
+                <div className="lg:col-span-2 xl:col-span-1 bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col">
                     <div className="mb-4">
                         <h3 className="text-base font-bold text-gray-900">
                             Distribución por Institución

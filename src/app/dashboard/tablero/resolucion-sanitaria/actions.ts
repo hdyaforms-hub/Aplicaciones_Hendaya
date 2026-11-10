@@ -84,6 +84,8 @@ export type SucursalBreakdown = {
     noAplica: number
     porcentajeCumplimiento: number
     conDocumento: number
+    sinDocumento: number
+    porcentajeCarga: number
 }
 
 export type EstablecimientoAutocompleteItem = {
@@ -303,7 +305,9 @@ export async function getTableroResolucionSanitariaData(filtros?: TableroFiltros
         const sinResolucion = recs.filter(r => isEstadoNo(r.estadoResolucion)).length
         const noAplica = recs.filter(r => isEstadoNoAplica(r.estadoResolucion)).length
         const conDocumento = recs.filter(r => isEstadoSi(r.estadoResolucion) && !!r.documentoUrl).length
+        const sinDocumento = Math.max(0, conResolucion - conDocumento)
         const porcentajeCumplimiento = total > 0 ? Number(((conResolucion / total) * 100).toFixed(1)) : 0
+        const porcentajeCarga = conResolucion > 0 ? Number(((conDocumento / conResolucion) * 100).toFixed(1)) : 0
 
         return {
             sucursal,
@@ -312,7 +316,9 @@ export async function getTableroResolucionSanitariaData(filtros?: TableroFiltros
             sinResolucion,
             noAplica,
             porcentajeCumplimiento,
-            conDocumento
+            conDocumento,
+            sinDocumento,
+            porcentajeCarga
         }
     }).sort((a, b) => b.porcentajeCumplimiento - a.porcentajeCumplimiento)
 
