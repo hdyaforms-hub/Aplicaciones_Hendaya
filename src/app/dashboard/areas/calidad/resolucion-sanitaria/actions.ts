@@ -149,6 +149,7 @@ export async function getResolucionSanitariaRecords(params: ResolucionSanitariaF
                 { nombreEstablecimiento: { contains: query, mode: 'insensitive' } },
                 { comuna: { contains: query, mode: 'insensitive' } },
                 { institucion: { contains: query, mode: 'insensitive' } },
+                { observaciones: { contains: query, mode: 'insensitive' } },
                 ...(isNum ? [{ rbd: Number(query) }, { ut: Number(query) }] : [])
             ]
         })
@@ -214,6 +215,7 @@ export async function getResolucionSanitariaRecords(params: ResolucionSanitariaF
                 { nombreEstablecimiento: { contains: query, mode: 'insensitive' } },
                 { comuna: { contains: query, mode: 'insensitive' } },
                 { institucion: { contains: query, mode: 'insensitive' } },
+                { observaciones: { contains: query, mode: 'insensitive' } },
                 ...(isNum ? [{ rbd: Number(query) }, { ut: Number(query) }] : [])
             ]
         })

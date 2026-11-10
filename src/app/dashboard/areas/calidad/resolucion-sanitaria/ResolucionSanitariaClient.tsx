@@ -909,6 +909,9 @@ export default function ResolucionSanitariaClient({ canManage }: Props) {
                                 <th className="py-3.5 px-4">
                                     Subido Por
                                 </th>
+                                <th onClick={() => handleSort('observaciones')} className="py-3.5 px-4 cursor-pointer hover:bg-gray-100 transition-colors">
+                                    Observación {renderSortIcon('observaciones')}
+                                </th>
                                 {canManage && (
                                     <th className="py-3.5 px-4 text-center">
                                         Acciones
@@ -919,7 +922,7 @@ export default function ResolucionSanitariaClient({ canManage }: Props) {
                         <tbody className="divide-y divide-gray-100 font-medium">
                             {loading ? (
                                 <tr>
-                                    <td colSpan={canManage ? 13 : 12} className="py-12 text-center text-gray-400">
+                                    <td colSpan={canManage ? 14 : 13} className="py-12 text-center text-gray-400">
                                         <div className="flex flex-col items-center gap-2">
                                             <span className="text-2xl animate-spin">🌀</span>
                                             <span>Cargando datos de resoluciones sanitarias...</span>
@@ -928,7 +931,7 @@ export default function ResolucionSanitariaClient({ canManage }: Props) {
                                 </tr>
                             ) : records.length === 0 ? (
                                 <tr>
-                                    <td colSpan={canManage ? 13 : 12} className="py-12 text-center text-gray-400">
+                                    <td colSpan={canManage ? 14 : 13} className="py-12 text-center text-gray-400">
                                         <div className="flex flex-col items-center gap-2">
                                             <span className="text-3xl">📁</span>
                                             <span className="font-semibold text-gray-700">No se encontraron registros</span>
@@ -1044,6 +1047,21 @@ export default function ResolucionSanitariaClient({ canManage }: Props) {
                                                     <span className="text-slate-400">👤</span>
                                                     <span className="font-semibold text-slate-700">
                                                         {item.documentoSubidoPor || item.updatedBy || 'Usuario no registrado'}
+                                                    </span>
+                                                </div>
+                                            ) : (
+                                                <span className="text-gray-300">-</span>
+                                            )}
+                                        </td>
+                                        <td className="py-3.5 px-4 text-xs max-w-[240px]">
+                                            {item.observaciones ? (
+                                                <div
+                                                    className="flex items-start gap-1.5 cursor-help group"
+                                                    title={item.observaciones}
+                                                >
+                                                    <span className="text-slate-400 group-hover:text-cyan-600 transition-colors shrink-0 mt-0.5">💬</span>
+                                                    <span className="line-clamp-2 font-medium text-slate-700 group-hover:text-slate-900 transition-colors break-words">
+                                                        {item.observaciones}
                                                     </span>
                                                 </div>
                                             ) : (
