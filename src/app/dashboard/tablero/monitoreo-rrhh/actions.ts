@@ -408,7 +408,7 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
                 WHERE UPPER(estado) = 'ABIERTO';
             `),
             rawPrisma.$queryRawUnsafe<any[]>(`
-                SELECT tipo, rbd, establecimiento, sucursal, "aplicaDescuento", "aplicaModificadoPor", justificado, supervisor, "identificadorHash"
+                SELECT tipo, rbd, establecimiento, sucursal, "aplicaDescuento", "aplicaModificadoPor", "justificadoPor", justificado, supervisor, "identificadorHash"
                 FROM "Pers_Atrasos_Registro"
                 WHERE UPPER(estado) = 'ABIERTO';
             `),
@@ -644,20 +644,20 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
             }
 
             const tipo = row.tipo || 'ADELANTO'
-            const isGestionado = Boolean(row.aplicaModificadoPor)
+            const isManualGest = Boolean(row.aplicaModificadoPor || row.justificadoPor || row.justificado)
             const isAplicaDesc = Boolean(row.aplicaDescuento)
 
             if (rbd > 0) {
                 const m = getOrCreateRbd(rbd, row.establecimiento, sucResuelta)
                 if (tipo === 'ATRASO') {
                     m.atrasos.total++
-                    if (isGestionado) m.atrasos.gestionados++
+                    if (isManualGest) m.atrasos.gestionados++
                     else m.atrasos.pendientes++
                     if (isAplicaDesc) m.atrasos.aplicaDescuento++
                     else m.atrasos.noAplica++
                 } else {
                     m.adelantos.total++
-                    if (isGestionado) m.adelantos.gestionados++
+                    if (isManualGest) m.adelantos.gestionados++
                     else m.adelantos.pendientes++
                     if (isAplicaDesc) m.adelantos.aplicaDescuento++
                     else m.adelantos.noAplica++
@@ -672,29 +672,79 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
 
                 if (tipo === 'ATRASO') {
                     sucAgg.atrasos.total++
-                    if (isGestionado) sucAgg.atrasos.gestionados++
+                    if (isManualGest) sucAgg.atrasos.gestionados++
                     else sucAgg.atrasos.pendientes++
                     if (isAplicaDesc) sucAgg.atrasos.aplicaDescuento++
                     else sucAgg.atrasos.noAplica++
 
                     estItem.atrasos.total++
-                    if (isGestionado) estItem.atrasos.gestionados++
+                    if (isManualGest) estItem.atrasos.gestionados++
                     else estItem.atrasos.pendientes++
                     if (isAplicaDesc) estItem.atrasos.aplicaDescuento++
                     else estItem.atrasos.noAplica++
                 } else {
                     sucAgg.adelantos.total++
-                    if (isGestionado) sucAgg.adelantos.gestionados++
+                    if (isManualGest) sucAgg.adelantos.gestionados++
                     else sucAgg.adelantos.pendientes++
                     if (isAplicaDesc) sucAgg.adelantos.aplicaDescuento++
                     else sucAgg.adelantos.noAplica++
 
                     estItem.adelantos.total++
-                    if (isGestionado) estItem.adelantos.gestionados++
+                    if (isManualGest) estItem.adelantos.gestionados++
                     else estItem.adelantos.pendientes++
                     if (isAplicaDesc) estItem.adelantos.aplicaDescuento++
                     else estItem.adelantos.noAplica++
                 }
+            }
+        }
+
+        // REGLA ALTERNATIVA 1: Normalización automática de Atrasos y Adelantos por Establecimiento y Sucursal
+        for (const m of metricsByRbd.values()) {
+            const otrosTot = m.ausentismo.total + m.horasExtras.total
+            const otrosPend = m.ausentismo.pendientes + m.horasExtras.pendientes
+            const otrosCompletados = otrosTot > 0 && otrosPend === 0
+
+            if (m.atrasos.total > 0 && (m.atrasos.gestionados > 0 || otrosCompletados)) {
+                m.atrasos.gestionados = m.atrasos.total
+                m.atrasos.pendientes = 0
+            }
+            if (m.adelantos.total > 0 && (m.adelantos.gestionados > 0 || otrosCompletados)) {
+                m.adelantos.gestionados = m.adelantos.total
+                m.adelantos.pendientes = 0
+            }
+        }
+
+        for (const agg of sucursalAggMap.values()) {
+            let recomputedAtrGest = 0
+            let recomputedAtrPend = 0
+            let recomputedAdeGest = 0
+            let recomputedAdePend = 0
+
+            for (const estItem of agg.establecimientosMap.values()) {
+                const estOtrosTot = estItem.ausentismo.total + estItem.horasExtras.total
+                const estOtrosPend = estItem.ausentismo.pendientes + estItem.horasExtras.pendientes
+                const estOtrosCompletados = estOtrosTot > 0 && estOtrosPend === 0
+
+                if (estItem.atrasos.total > 0 && (estItem.atrasos.gestionados > 0 || estOtrosCompletados)) {
+                    estItem.atrasos.gestionados = estItem.atrasos.total
+                    estItem.atrasos.pendientes = 0
+                }
+                if (estItem.adelantos.total > 0 && (estItem.adelantos.gestionados > 0 || estOtrosCompletados)) {
+                    estItem.adelantos.gestionados = estItem.adelantos.total
+                    estItem.adelantos.pendientes = 0
+                }
+
+                recomputedAtrGest += estItem.atrasos.gestionados
+                recomputedAtrPend += estItem.atrasos.pendientes
+                recomputedAdeGest += estItem.adelantos.gestionados
+                recomputedAdePend += estItem.adelantos.pendientes
+            }
+
+            if (agg.establecimientosMap.size > 0) {
+                agg.atrasos.gestionados = recomputedAtrGest
+                agg.atrasos.pendientes = recomputedAtrPend
+                agg.adelantos.gestionados = recomputedAdeGest
+                agg.adelantos.pendientes = recomputedAdePend
             }
         }
 
@@ -749,17 +799,30 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
 
                 const userAtrasos = userAtrAde.filter(r => r.tipo === 'ATRASO')
                 const atrasoTotal = userAtrasos.length
-                const atrasoGest = userAtrasos.filter(r => Boolean(r.aplicaModificadoPor)).length
-                const atrasoPend = atrasoTotal - atrasoGest
+                const atrasoManualGest = userAtrasos.filter(r => Boolean(r.aplicaModificadoPor || r.justificadoPor || r.justificado)).length
                 const atrasoAplica = userAtrasos.filter(r => Boolean(r.aplicaDescuento)).length
                 const atrasoNoAplica = atrasoTotal - atrasoAplica
 
                 const userAdelantos = userAtrAde.filter(r => r.tipo !== 'ATRASO')
                 const adelantoTotal = userAdelantos.length
-                const adelantoGest = userAdelantos.filter(r => Boolean(r.aplicaModificadoPor)).length
-                const adelantoPend = adelantoTotal - adelantoGest
+                const adelantoManualGest = userAdelantos.filter(r => Boolean(r.aplicaModificadoPor || r.justificadoPor || r.justificado)).length
                 const adelantoAplica = userAdelantos.filter(r => Boolean(r.aplicaDescuento)).length
                 const adelantoNoAplica = adelantoTotal - adelantoAplica
+
+                // REGLA ALTERNATIVA 1: Deducción automática por gestión integral de nómina
+                const userOtrosTotal = ausTotal + hheeTotal
+                const userOtrosPend = ausPend + hheePend
+                const userOtrosCompletados = userOtrosTotal > 0 && userOtrosPend === 0
+
+                // Atrasos: Si justificó excepciones o completó Ausentismo/Horas Extras -> 100%
+                const atrResuelto = atrasoManualGest > 0 || (atrasoTotal > 0 && userOtrosCompletados)
+                const atrasoGest = atrResuelto ? atrasoTotal : atrasoManualGest
+                const atrasoPend = atrasoTotal - atrasoGest
+
+                // Adelantos: Si justificó excepciones o completó Ausentismo/Horas Extras -> 100%
+                const adeResuelto = adelantoManualGest > 0 || (adelantoTotal > 0 && userOtrosCompletados)
+                const adelantoGest = adeResuelto ? adelantoTotal : adelantoManualGest
+                const adelantoPend = adelantoTotal - adelantoGest
 
                 // Agrupar en colegiosDetalle / sedesDetalle por los establecimientos de los trabajadores
                 const estTrabajadoresMap = new Map<string, {
@@ -809,17 +872,27 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
                     const eHheeAplica = estHhee.filter(r => r.aplica === true).length
                     const eHheeNoAplica = eHheeTot - eHheeAplica
 
+                    const estOtrosTot = eAusTot + eHheeTot
+                    const estOtrosPend = (eAusTot - eAusGest) + (eHheeTot - eHheeGest)
+                    const estOtrosCompletados = estOtrosTot > 0 && estOtrosPend === 0
+
                     const estAtr = estAtrAde.filter(r => r.tipo === 'ATRASO')
                     const eAtrTot = estAtr.length
-                    const eAtrGest = estAtr.filter(r => Boolean(r.aplicaModificadoPor)).length
+                    const eAtrManualGest = estAtr.filter(r => Boolean(r.aplicaModificadoPor || r.justificadoPor || r.justificado)).length
                     const eAtrAplica = estAtr.filter(r => Boolean(r.aplicaDescuento)).length
                     const eAtrNoAplica = eAtrTot - eAtrAplica
 
+                    const eAtrResuelto = eAtrManualGest > 0 || (eAtrTot > 0 && (estOtrosCompletados || userOtrosCompletados))
+                    const eAtrGest = eAtrResuelto ? eAtrTot : eAtrManualGest
+
                     const estAde = estAtrAde.filter(r => r.tipo !== 'ATRASO')
                     const eAdeTot = estAde.length
-                    const eAdeGest = estAde.filter(r => Boolean(r.aplicaModificadoPor)).length
+                    const eAdeManualGest = estAde.filter(r => Boolean(r.aplicaModificadoPor || r.justificadoPor || r.justificado)).length
                     const eAdeAplica = estAde.filter(r => Boolean(r.aplicaDescuento)).length
                     const eAdeNoAplica = eAdeTot - eAdeAplica
+
+                    const eAdeResuelto = eAdeManualGest > 0 || (eAdeTot > 0 && (estOtrosCompletados || userOtrosCompletados))
+                    const eAdeGest = eAdeResuelto ? eAdeTot : eAdeManualGest
 
                     const cTotal = eAusTot + eHheeTot + eAtrTot + eAdeTot
                     const cGest = eAusGest + eHheeGest + eAtrGest + eAdeGest
@@ -1030,6 +1103,20 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
 
                 // Ordenar colegios por RBD
                 colegiosDetalle.sort((a, b) => a.rbd - b.rbd)
+
+                // REGLA ALTERNATIVA 1: Consolidación y deducción automática por gestión integral de nómina
+                const userOtrosTotal = ausTotal + hheeTotal
+                const userOtrosPend = ausPend + hheePend
+                const userOtrosCompletados = userOtrosTotal > 0 && userOtrosPend === 0
+
+                if (atrasoTotal > 0 && (atrasoGest > 0 || userOtrosCompletados)) {
+                    atrasoGest = atrasoTotal
+                    atrasoPend = 0
+                }
+                if (adelantoTotal > 0 && (adelantoGest > 0 || userOtrosCompletados)) {
+                    adelantoGest = adelantoTotal
+                    adelantoPend = 0
+                }
 
                 // Consolidar módulos del colaborador
                 const pctAus = ausTotal > 0 ? Math.round((ausGest / ausTotal) * 100) : 100
