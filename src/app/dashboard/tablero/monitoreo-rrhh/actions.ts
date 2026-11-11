@@ -207,7 +207,7 @@ function calcularSemaforo(porcentaje: number, total: number): SemaforoStatus {
     return 'ROJO'
 }
 
-export function calcularPorcentajeAvance(gestionados: number, total: number, pendientes?: number): number {
+function calcularPorcentajeAvance(gestionados: number, total: number, pendientes?: number): number {
     if (total <= 0) return 100
     const pend = pendientes !== undefined ? pendientes : Math.max(0, total - gestionados)
     if (pend <= 0 || gestionados >= total) return 100
