@@ -207,6 +207,16 @@ function calcularSemaforo(porcentaje: number, total: number): SemaforoStatus {
     return 'ROJO'
 }
 
+export function calcularPorcentajeAvance(gestionados: number, total: number, pendientes?: number): number {
+    if (total <= 0) return 100
+    const pend = pendientes !== undefined ? pendientes : Math.max(0, total - gestionados)
+    if (pend <= 0 || gestionados >= total) return 100
+    if (gestionados <= 0) return 0
+    const rawPct = Math.round((gestionados / total) * 100)
+    // Regla de integridad: Si aún existen registros pendientes (> 0), nunca puede mostrar 100%
+    return Math.min(99, rawPct)
+}
+
 function normalizarNombreSucursal(raw?: string | null): string | null {
     if (!raw) return null
     const val = raw.toString().trim().toUpperCase()
@@ -896,7 +906,8 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
 
                     const cTotal = eAusTot + eHheeTot + eAtrTot + eAdeTot
                     const cGest = eAusGest + eHheeGest + eAtrGest + eAdeGest
-                    const cPct = cTotal > 0 ? Math.round((cGest / cTotal) * 100) : 100
+                    const cPend = Math.max(0, cTotal - cGest)
+                    const cPct = calcularPorcentajeAvance(cGest, cTotal, cPend)
 
                     colegiosDetalle.push({
                         rbd: est.rbd,
@@ -915,10 +926,10 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
 
                 colegiosDetalle.sort((a, b) => b.totalGeneralAbiertos - a.totalGeneralAbiertos || a.rbd - b.rbd)
 
-                const pctAus = ausTotal > 0 ? Math.round((ausGest / ausTotal) * 100) : 100
-                const pctHhee = hheeTotal > 0 ? Math.round((hheeGest / hheeTotal) * 100) : 100
-                const pctAtr = atrasoTotal > 0 ? Math.round((atrasoGest / atrasoTotal) * 100) : 100
-                const pctAde = adelantoTotal > 0 ? Math.round((adelantoGest / adelantoTotal) * 100) : 100
+                const pctAus = calcularPorcentajeAvance(ausGest, ausTotal, ausPend)
+                const pctHhee = calcularPorcentajeAvance(hheeGest, hheeTotal, hheePend)
+                const pctAtr = calcularPorcentajeAvance(atrasoGest, atrasoTotal, atrasoPend)
+                const pctAde = calcularPorcentajeAvance(adelantoGest, adelantoTotal, adelantoPend)
 
                 const modulos: ModuloAvanceDetalle[] = [
                     {
@@ -968,7 +979,7 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
                 const totalAbiertos = ausTotal + hheeTotal + atrasoTotal + adelantoTotal
                 const totalGestionados = ausGest + hheeGest + atrasoGest + adelantoGest
                 const totalPendientes = ausPend + hheePend + atrasoPend + adelantoPend
-                const porcentajeGlobal = totalAbiertos > 0 ? Math.round((totalGestionados / totalAbiertos) * 100) : 100
+                const porcentajeGlobal = calcularPorcentajeAvance(totalGestionados, totalAbiertos, totalPendientes)
                 const semaforoGlobal = calcularSemaforo(porcentajeGlobal, totalAbiertos)
 
                 colaboradores.push({
@@ -1083,7 +1094,8 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
 
                     const colTotal = aus.total + hhee.total + atr.total + ade.total
                     const colGest = aus.gestionados + hhee.gestionados + atr.gestionados + ade.gestionados
-                    const colPct = colTotal > 0 ? Math.round((colGest / colTotal) * 100) : 100
+                    const colPend = Math.max(0, colTotal - colGest)
+                    const colPct = calcularPorcentajeAvance(colGest, colTotal, colPend)
 
                     colegiosDetalle.push({
                         rbd,
@@ -1119,10 +1131,10 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
                 }
 
                 // Consolidar módulos del colaborador
-                const pctAus = ausTotal > 0 ? Math.round((ausGest / ausTotal) * 100) : 100
-                const pctHhee = hheeTotal > 0 ? Math.round((hheeGest / hheeTotal) * 100) : 100
-                const pctAtr = atrasoTotal > 0 ? Math.round((atrasoGest / atrasoTotal) * 100) : 100
-                const pctAde = adelantoTotal > 0 ? Math.round((adelantoGest / adelantoTotal) * 100) : 100
+                const pctAus = calcularPorcentajeAvance(ausGest, ausTotal, ausPend)
+                const pctHhee = calcularPorcentajeAvance(hheeGest, hheeTotal, hheePend)
+                const pctAtr = calcularPorcentajeAvance(atrasoGest, atrasoTotal, atrasoPend)
+                const pctAde = calcularPorcentajeAvance(adelantoGest, adelantoTotal, adelantoPend)
 
                 const modulos: ModuloAvanceDetalle[] = [
                     {
@@ -1172,7 +1184,7 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
                 const totalAbiertos = ausTotal + hheeTotal + atrasoTotal + adelantoTotal
                 const totalGestionados = ausGest + hheeGest + atrasoGest + adelantoGest
                 const totalPendientes = ausPend + hheePend + atrasoPend + adelantoPend
-                const porcentajeGlobal = totalAbiertos > 0 ? Math.round((totalGestionados / totalAbiertos) * 100) : 100
+                const porcentajeGlobal = calcularPorcentajeAvance(totalGestionados, totalAbiertos, totalPendientes)
                 const semaforoGlobal = calcularSemaforo(porcentajeGlobal, totalAbiertos)
 
                 colaboradores.push({
@@ -1236,10 +1248,10 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
             globalAdeAplica += agg.adelantos.aplicaDescuento
             globalAdeNoAplica += agg.adelantos.noAplica
 
-            const pctAus = agg.ausentismo.total > 0 ? Math.round((agg.ausentismo.gestionados / agg.ausentismo.total) * 100) : 100
-            const pctHhee = agg.horasExtras.total > 0 ? Math.round((agg.horasExtras.gestionados / agg.horasExtras.total) * 100) : 100
-            const pctAtr = agg.atrasos.total > 0 ? Math.round((agg.atrasos.gestionados / agg.atrasos.total) * 100) : 100
-            const pctAde = agg.adelantos.total > 0 ? Math.round((agg.adelantos.gestionados / agg.adelantos.total) * 100) : 100
+            const pctAus = calcularPorcentajeAvance(agg.ausentismo.gestionados, agg.ausentismo.total, agg.ausentismo.pendientes)
+            const pctHhee = calcularPorcentajeAvance(agg.horasExtras.gestionados, agg.horasExtras.total, agg.horasExtras.pendientes)
+            const pctAtr = calcularPorcentajeAvance(agg.atrasos.gestionados, agg.atrasos.total, agg.atrasos.pendientes)
+            const pctAde = calcularPorcentajeAvance(agg.adelantos.gestionados, agg.adelantos.total, agg.adelantos.pendientes)
 
             const modulosSucursal: ModuloAvanceDetalle[] = [
                 {
@@ -1290,7 +1302,8 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
             const colegiosDetalleSucursal = Array.from(agg.establecimientosMap.values()).map(est => {
                 const cTotal = est.ausentismo.total + est.horasExtras.total + est.atrasos.total + est.adelantos.total
                 const cGest = est.ausentismo.gestionados + est.horasExtras.gestionados + est.atrasos.gestionados + est.adelantos.gestionados
-                const cPct = cTotal > 0 ? Math.round((cGest / cTotal) * 100) : 100
+                const cPend = Math.max(0, cTotal - cGest)
+                const cPct = calcularPorcentajeAvance(cGest, cTotal, cPend)
                 return {
                     ...est,
                     totalGeneralAbiertos: cTotal,
@@ -1300,7 +1313,7 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
                 }
             }).sort((a, b) => b.totalGeneralAbiertos - a.totalGeneralAbiertos || a.rbd - b.rbd)
 
-            const porcentajeGlobal = totalAbiertos > 0 ? Math.round((totalGestionados / totalAbiertos) * 100) : 100
+            const porcentajeGlobal = calcularPorcentajeAvance(totalGestionados, totalAbiertos, totalPendientes)
             const semaforoGlobal = calcularSemaforo(porcentajeGlobal, totalAbiertos)
 
             const colaboradoresEnSucursal = colaboradores.filter(c =>
@@ -1327,10 +1340,10 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
         sucursalesAvance.sort((a, b) => b.totalRegistrosAbiertos - a.totalRegistrosAbiertos || a.sucursal.localeCompare(b.sucursal))
 
         // Resumen global separado por los 4 tipos de documento
-        const pctGlobalAus = globalAusTotal > 0 ? Math.round((globalAusGest / globalAusTotal) * 100) : 100
-        const pctGlobalHhee = globalHheeTotal > 0 ? Math.round((globalHheeGest / globalHheeTotal) * 100) : 100
-        const pctGlobalAtr = globalAtrTotal > 0 ? Math.round((globalAtrGest / globalAtrTotal) * 100) : 100
-        const pctGlobalAde = globalAdeTotal > 0 ? Math.round((globalAdeGest / globalAdeTotal) * 100) : 100
+        const pctGlobalAus = calcularPorcentajeAvance(globalAusGest, globalAusTotal, globalAusPend)
+        const pctGlobalHhee = calcularPorcentajeAvance(globalHheeGest, globalHheeTotal, globalHheePend)
+        const pctGlobalAtr = calcularPorcentajeAvance(globalAtrGest, globalAtrTotal, globalAtrPend)
+        const pctGlobalAde = calcularPorcentajeAvance(globalAdeGest, globalAdeTotal, globalAdePend)
 
         const resumenPorTipo: ModuloAvanceDetalle[] = [
             {
@@ -1386,7 +1399,7 @@ export async function getMonitoreoRRHHTableroData(): Promise<MonitoreoRRHHTabler
         const sumAbiertos = colaboradores.reduce((acc, c) => acc + c.totalRegistrosAbiertos, 0)
         const sumGestionados = colaboradores.reduce((acc, c) => acc + c.totalGestionados, 0)
         const sumPendientes = colaboradores.reduce((acc, c) => acc + c.totalPendientes, 0)
-        const cumplimientoGlobalPorcentaje = sumAbiertos > 0 ? Math.round((sumGestionados / sumAbiertos) * 100) : 100
+        const cumplimientoGlobalPorcentaje = calcularPorcentajeAvance(sumGestionados, sumAbiertos, sumPendientes)
 
         // 10. Resumen inicial de Comparativa Abiertos vs Cerrados para carga instantánea del Tab (10 registros por defecto)
         let comparativaResumen: ComparativaAbiertosCerradosData | undefined
@@ -1560,8 +1573,21 @@ export async function getComparativaAbiertosCerradosData(filtros?: ComparativaFi
     const totalAbiertos = asisAbiertos + hextraAbiertos + atrAbiertos + adeAbiertos
     const totalCerrados = asisCerrados + hextraCerrados + atrCerrados + adeCerrados
     const totalGeneral = totalAbiertos + totalCerrados
-    const porcentajeCerradoGlobal = totalGeneral > 0 ? Math.round((totalCerrados / totalGeneral) * 100) : 0
+    const rawPctCerradoGlobal = totalGeneral > 0 ? Math.round((totalCerrados / totalGeneral) * 100) : 0
+    const porcentajeCerradoGlobal = totalAbiertos > 0 ? Math.min(99, rawPctCerradoGlobal) : (totalGeneral > 0 ? 100 : 0)
     const porcentajeAbiertoGlobal = totalGeneral > 0 ? 100 - porcentajeCerradoGlobal : 0
+
+    const calcModuloPctCerrado = (cerrados: number, abiertos: number, total: number) => {
+        if (total <= 0) return 0
+        if (abiertos <= 0) return 100
+        const raw = Math.round((cerrados / total) * 100)
+        return Math.min(99, raw)
+    }
+
+    const asisPctCerrados = calcModuloPctCerrado(asisCerrados, asisAbiertos, asisTotal)
+    const hextraPctCerrados = calcModuloPctCerrado(hextraCerrados, hextraAbiertos, hextraTotal)
+    const atrPctCerrados = calcModuloPctCerrado(atrCerrados, atrAbiertos, atrTotal)
+    const adePctCerrados = calcModuloPctCerrado(adeCerrados, adeAbiertos, adeTotal)
 
     // Módulos en orden solicitado: 1. Ausentismo, 2. Horas Extras, 3. Atrasos, 4. Adelantos
     const modulos: MetricaModuloComparativa[] = [
@@ -1572,8 +1598,8 @@ export async function getComparativaAbiertosCerradosData(filtros?: ComparativaFi
             totalAbiertos: asisAbiertos,
             totalCerrados: asisCerrados,
             totalRegistros: asisTotal,
-            porcentajeCerrados: asisTotal > 0 ? Math.round((asisCerrados / asisTotal) * 100) : 0,
-            porcentajeAbiertos: asisTotal > 0 ? Math.round((asisAbiertos / asisTotal) * 100) : 0,
+            porcentajeCerrados: asisPctCerrados,
+            porcentajeAbiertos: asisTotal > 0 ? 100 - asisPctCerrados : 0,
             modificadosCount: asisMod
         },
         {
@@ -1583,8 +1609,8 @@ export async function getComparativaAbiertosCerradosData(filtros?: ComparativaFi
             totalAbiertos: hextraAbiertos,
             totalCerrados: hextraCerrados,
             totalRegistros: hextraTotal,
-            porcentajeCerrados: hextraTotal > 0 ? Math.round((hextraCerrados / hextraTotal) * 100) : 0,
-            porcentajeAbiertos: hextraTotal > 0 ? Math.round((hextraAbiertos / hextraTotal) * 100) : 0,
+            porcentajeCerrados: hextraPctCerrados,
+            porcentajeAbiertos: hextraTotal > 0 ? 100 - hextraPctCerrados : 0,
             modificadosCount: hextraMod
         },
         {
@@ -1594,8 +1620,8 @@ export async function getComparativaAbiertosCerradosData(filtros?: ComparativaFi
             totalAbiertos: atrAbiertos,
             totalCerrados: atrCerrados,
             totalRegistros: atrTotal,
-            porcentajeCerrados: atrTotal > 0 ? Math.round((atrCerrados / atrTotal) * 100) : 0,
-            porcentajeAbiertos: atrTotal > 0 ? Math.round((atrAbiertos / atrTotal) * 100) : 0,
+            porcentajeCerrados: atrPctCerrados,
+            porcentajeAbiertos: atrTotal > 0 ? 100 - atrPctCerrados : 0,
             modificadosCount: atrMod
         },
         {
@@ -1605,8 +1631,8 @@ export async function getComparativaAbiertosCerradosData(filtros?: ComparativaFi
             totalAbiertos: adeAbiertos,
             totalCerrados: adeCerrados,
             totalRegistros: adeTotal,
-            porcentajeCerrados: adeTotal > 0 ? Math.round((adeCerrados / adeTotal) * 100) : 0,
-            porcentajeAbiertos: adeTotal > 0 ? Math.round((adeAbiertos / adeTotal) * 100) : 0,
+            porcentajeCerrados: adePctCerrados,
+            porcentajeAbiertos: adeTotal > 0 ? 100 - adePctCerrados : 0,
             modificadosCount: adeMod
         }
     ]
@@ -1673,7 +1699,8 @@ export async function getComparativaAbiertosCerradosData(filtros?: ComparativaFi
         const total = (stats.abiertos + stats.cerrados) || Number(c.totalRegistros || 0)
         const cerrados = stats.cerrados
         const abiertos = Math.max(0, total - cerrados)
-        const pctCerrado = total > 0 ? Math.round((cerrados / total) * 100) : (c.estado === 'CERRADO' ? 100 : 0)
+        const rawPctCerrado = total > 0 ? Math.round((cerrados / total) * 100) : (c.estado === 'CERRADO' ? 100 : 0)
+        const pctCerrado = abiertos > 0 ? Math.min(99, rawPctCerrado) : rawPctCerrado
         archivosCargados.push({
             id: c.id,
             modulo: 'AUSENTISMO',
@@ -1696,7 +1723,8 @@ export async function getComparativaAbiertosCerradosData(filtros?: ComparativaFi
         const total = (stats.abiertos + stats.cerrados) || Number(c.totalRegistros || 0)
         const cerrados = stats.cerrados
         const abiertos = Math.max(0, total - cerrados)
-        const pctCerrado = total > 0 ? Math.round((cerrados / total) * 100) : 0
+        const rawPctCerrado = total > 0 ? Math.round((cerrados / total) * 100) : 0
+        const pctCerrado = abiertos > 0 ? Math.min(99, rawPctCerrado) : rawPctCerrado
         archivosCargados.push({
             id: c.id,
             modulo: 'HORAS_EXTRAS',
@@ -1719,7 +1747,8 @@ export async function getComparativaAbiertosCerradosData(filtros?: ComparativaFi
         const total = (stats.abiertos + stats.cerrados) || Number(c.totalRegistros || 0)
         const cerrados = stats.cerrados
         const abiertos = Math.max(0, total - cerrados)
-        const pctCerrado = total > 0 ? Math.round((cerrados / total) * 100) : 0
+        const rawPctCerrado = total > 0 ? Math.round((cerrados / total) * 100) : 0
+        const pctCerrado = abiertos > 0 ? Math.min(99, rawPctCerrado) : rawPctCerrado
         const isAdelanto = c.tipo === 'ADELANTO'
         archivosCargados.push({
             id: c.id,
@@ -2019,7 +2048,8 @@ export async function getComparativaAbiertosCerradosData(filtros?: ComparativaFi
 
     // Calcular porcentajes de sucursales
     const sucursales: SucursalComparativaItem[] = Array.from(sucursalesMap.values()).map(s => {
-        const pctCerrados = s.totalRegistros > 0 ? Math.round((s.totalCerrados / s.totalRegistros) * 100) : 0
+        const rawPctCerrados = s.totalRegistros > 0 ? Math.round((s.totalCerrados / s.totalRegistros) * 100) : 0
+        const pctCerrados = s.totalAbiertos > 0 ? Math.min(99, rawPctCerrados) : (s.totalRegistros > 0 ? 100 : 0)
         const pctAbiertos = s.totalRegistros > 0 ? 100 - pctCerrados : 0
         return {
             ...s,

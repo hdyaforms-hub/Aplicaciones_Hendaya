@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useMemo, useTransition, useRef, useEffect } from 'react'
+import React, { useState, useMemo, useTransition, useRef, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import {
     ResponsiveContainer,
@@ -17,6 +17,7 @@ import {
     MonitoreoRRHHTableroResponse,
     ColaboradorRRHHCardData,
     SucursalRRHHCardData,
+    DetalleColegioRRHH,
     SemaforoStatus,
     getMonitoreoRRHHTableroData,
     ComparativaFiltros,
@@ -270,6 +271,7 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
     const [selectedColaborador, setSelectedColaborador] = useState<ColaboradorRRHHCardData | null>(null)
     const [selectedSucursalModal, setSelectedSucursalModal] = useState<SucursalRRHHCardData | null>(null)
     const [modalSearchQuery, setModalSearchQuery] = useState<string>('')
+    const [modalFilterEstado, setModalFilterEstado] = useState<'PENDIENTES' | 'TODOS'>('PENDIENTES')
 
     // Dropdowns personalizados
     const [isRoleDropdownOpen, setIsRoleDropdownOpen] = useState(false)
@@ -417,24 +419,31 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
     }, [currentData.sucursalesAvance])
 
     const chartDataTotalizador = useMemo(() => {
-        return sucursalesAvanceList.map((s) => ({
-            sucursal: s.sucursal,
-            porcentaje: s.porcentajeGlobal,
-            gestionados: s.totalGestionados,
-            pendientes: s.totalPendientes,
-            total: s.totalRegistrosAbiertos,
-            semaforo: s.semaforoGlobal,
-        }))
+        return sucursalesAvanceList.map((s) => {
+            const rawPct = s.porcentajeGlobal
+            const pct = s.totalPendientes > 0 ? Math.min(99, rawPct) : rawPct
+            return {
+                sucursal: s.sucursal,
+                porcentaje: pct,
+                gestionados: s.totalGestionados,
+                pendientes: s.totalPendientes,
+                total: s.totalRegistrosAbiertos,
+                semaforo: s.semaforoGlobal,
+            }
+        })
     }, [sucursalesAvanceList])
 
     const chartDataAusentismo = useMemo(() => {
         return sucursalesAvanceList.map((s) => {
             const mod = s.modulos.find((m) => m.tipo === 'AUSENTISMO')
+            const pend = mod?.pendientes ?? 0
+            const rawPct = mod?.porcentaje ?? 100
+            const pct = pend > 0 ? Math.min(99, rawPct) : rawPct
             return {
                 sucursal: s.sucursal,
-                porcentaje: mod?.porcentaje ?? 100,
+                porcentaje: pct,
                 gestionados: mod?.gestionados ?? 0,
-                pendientes: mod?.pendientes ?? 0,
+                pendientes: pend,
                 total: mod?.totalAbiertos ?? 0,
                 semaforo: mod?.semaforo ?? 'VERDE',
             }
@@ -444,11 +453,14 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
     const chartDataHorasExtras = useMemo(() => {
         return sucursalesAvanceList.map((s) => {
             const mod = s.modulos.find((m) => m.tipo === 'HORAS_EXTRAS')
+            const pend = mod?.pendientes ?? 0
+            const rawPct = mod?.porcentaje ?? 100
+            const pct = pend > 0 ? Math.min(99, rawPct) : rawPct
             return {
                 sucursal: s.sucursal,
-                porcentaje: mod?.porcentaje ?? 100,
+                porcentaje: pct,
                 gestionados: mod?.gestionados ?? 0,
-                pendientes: mod?.pendientes ?? 0,
+                pendientes: pend,
                 total: mod?.totalAbiertos ?? 0,
                 semaforo: mod?.semaforo ?? 'VERDE',
                 extraInfo: `Aplica: ${mod?.aplicaCount ?? 0} • No Aplica: ${mod?.noAplicaCount ?? 0}`
@@ -459,11 +471,14 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
     const chartDataAtrasos = useMemo(() => {
         return sucursalesAvanceList.map((s) => {
             const mod = s.modulos.find((m) => m.tipo === 'ATRASOS')
+            const pend = mod?.pendientes ?? 0
+            const rawPct = mod?.porcentaje ?? 100
+            const pct = pend > 0 ? Math.min(99, rawPct) : rawPct
             return {
                 sucursal: s.sucursal,
-                porcentaje: mod?.porcentaje ?? 100,
+                porcentaje: pct,
                 gestionados: mod?.gestionados ?? 0,
-                pendientes: mod?.pendientes ?? 0,
+                pendientes: pend,
                 total: mod?.totalAbiertos ?? 0,
                 semaforo: mod?.semaforo ?? 'VERDE',
                 extraInfo: `Aplica Desc: ${mod?.aplicaCount ?? 0} • No Aplica: ${mod?.noAplicaCount ?? 0}`
@@ -474,11 +489,14 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
     const chartDataAdelantos = useMemo(() => {
         return sucursalesAvanceList.map((s) => {
             const mod = s.modulos.find((m) => m.tipo === 'ADELANTOS')
+            const pend = mod?.pendientes ?? 0
+            const rawPct = mod?.porcentaje ?? 100
+            const pct = pend > 0 ? Math.min(99, rawPct) : rawPct
             return {
                 sucursal: s.sucursal,
-                porcentaje: mod?.porcentaje ?? 100,
+                porcentaje: pct,
                 gestionados: mod?.gestionados ?? 0,
-                pendientes: mod?.pendientes ?? 0,
+                pendientes: pend,
                 total: mod?.totalAbiertos ?? 0,
                 semaforo: mod?.semaforo ?? 'VERDE',
                 extraInfo: `Aplica Desc: ${mod?.aplicaCount ?? 0} • No Aplica: ${mod?.noAplicaCount ?? 0}`
@@ -669,18 +687,51 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
         })
     }, [selectedColaborador, modalSearchQuery])
 
+    // Comprobar si un colegio tiene pendientes según el módulo activo o general
+    const colegioTienePendientes = useCallback((col: DetalleColegioRRHH, modulo: TipoModuloFilter) => {
+        if (modulo === 'AUSENTISMO') return (col.ausentismo?.pendientes || 0) > 0
+        if (modulo === 'HORAS_EXTRAS') return (col.horasExtras?.pendientes || 0) > 0
+        if (modulo === 'ATRASOS') return (col.atrasos?.pendientes || 0) > 0
+        if (modulo === 'ADELANTOS') return (col.adelantos?.pendientes || 0) > 0
+        // Para 'TODOS', consideramos pendientes si en cualquiera de los módulos hay pendientes o en el total
+        const totalPend = (col.ausentismo?.pendientes || 0) +
+                          (col.horasExtras?.pendientes || 0) +
+                          (col.atrasos?.pendientes || 0) +
+                          (col.adelantos?.pendientes || 0)
+        return totalPend > 0 || (col.totalGeneralAbiertos > col.totalGeneralGestionados)
+    }, [])
+
+    const sucursalColegiosPendientesCount = useMemo(() => {
+        if (!selectedSucursalModal) return 0
+        return selectedSucursalModal.colegiosDetalle.filter(col => colegioTienePendientes(col, filterTipoModulo)).length
+    }, [selectedSucursalModal, filterTipoModulo, colegioTienePendientes])
+
+    // Apertura del modal de sucursal con estado inicial en PENDIENTES
+    const handleOpenSucursalModal = useCallback((sucItem: SucursalRRHHCardData) => {
+        setSelectedSucursalModal(sucItem)
+        setModalSearchQuery('')
+        setModalFilterEstado('PENDIENTES')
+    }, [])
+
     // Modal Colegios filtrados (Sucursal)
     const modalFilteredSucursalColegios = useMemo(() => {
         if (!selectedSucursalModal) return []
-        if (!modalSearchQuery.trim()) return selectedSucursalModal.colegiosDetalle
+        let list = selectedSucursalModal.colegiosDetalle
+
+        // Regla: Por defecto y al activar 'PENDIENTES', mostrar solo establecimientos con registros pendientes
+        if (modalFilterEstado === 'PENDIENTES') {
+            list = list.filter(col => colegioTienePendientes(col, filterTipoModulo))
+        }
+
+        if (!modalSearchQuery.trim()) return list
         const q = modalSearchQuery.toLowerCase().trim()
-        return selectedSucursalModal.colegiosDetalle.filter(col => {
+        return list.filter(col => {
             const matchRbd = col.rbd.toString().includes(q)
             const matchName = col.nombreEstablecimiento.toLowerCase().includes(q)
             const matchComuna = col.comuna ? col.comuna.toLowerCase().includes(q) : false
             return matchRbd || matchName || matchComuna
         })
-    }, [selectedSucursalModal, modalSearchQuery])
+    }, [selectedSucursalModal, modalFilterEstado, filterTipoModulo, modalSearchQuery, colegioTienePendientes])
 
     // Pantalla de error si la consulta falló
     if (!currentData.success) {
@@ -2282,10 +2333,7 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                                     <div
                                         key={sucItem.sucursal}
                                         data-pdf-card="true"
-                                        onClick={() => {
-                                            setSelectedSucursalModal(sucItem)
-                                            setModalSearchQuery('')
-                                        }}
+                                        onClick={() => handleOpenSucursalModal(sucItem)}
                                         className={`cursor-pointer group relative bg-white border rounded-3xl p-6 shadow-sm transition-all duration-200 hover:shadow-md ${borderClass} flex flex-col justify-between`}
                                     >
                                         {/* Barra luminosa superior */}
@@ -2450,8 +2498,7 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                                                 type="button"
                                                 onClick={(e) => {
                                                     e.stopPropagation()
-                                                    setSelectedSucursalModal(sucItem)
-                                                    setModalSearchQuery('')
+                                                    handleOpenSucursalModal(sucItem)
                                                 }}
                                                 className="px-3.5 py-1.5 bg-sky-50 hover:bg-sky-100 border border-sky-200 text-sky-800 text-xs font-bold rounded-xl transition flex items-center gap-1"
                                             >
@@ -2502,10 +2549,7 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                                                 <tr
                                                     key={sucItem.sucursal}
                                                     className="hover:bg-slate-50/80 transition-colors cursor-pointer"
-                                                    onClick={() => {
-                                                        setSelectedSucursalModal(sucItem)
-                                                        setModalSearchQuery('')
-                                                    }}
+                                                    onClick={() => handleOpenSucursalModal(sucItem)}
                                                 >
                                                     <td className="py-3.5 px-4 font-extrabold text-slate-900">
                                                         <div className="flex items-center gap-2">
@@ -2591,8 +2635,7 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                                                             type="button"
                                                             onClick={(e) => {
                                                                 e.stopPropagation()
-                                                                setSelectedSucursalModal(sucItem)
-                                                                setModalSearchQuery('')
+                                                                handleOpenSucursalModal(sucItem)
                                                             }}
                                                             className="px-3 py-1 bg-sky-50 hover:bg-sky-100 border border-sky-200 text-sky-800 text-xs font-bold rounded-lg transition"
                                                         >
@@ -2884,8 +2927,34 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                             })}
                         </div>
 
-                        {/* Barra de búsqueda de establecimiento dentro del modal */}
-                        <div className="px-6 py-3 bg-white border-b border-slate-100 flex items-center justify-between gap-4">
+                        {/* Filtro de estado (Pendientes vs Todos) y barra de búsqueda */}
+                        <div className="px-6 py-3 bg-white border-b border-slate-100 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+                            <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl shrink-0">
+                                <button
+                                    type="button"
+                                    onClick={() => setModalFilterEstado('PENDIENTES')}
+                                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 ${
+                                        modalFilterEstado === 'PENDIENTES'
+                                            ? 'bg-rose-500 text-white shadow-sm'
+                                            : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
+                                    }`}
+                                >
+                                    <span className={`w-2 h-2 rounded-full ${modalFilterEstado === 'PENDIENTES' ? 'bg-white animate-pulse' : 'bg-rose-400'}`} />
+                                    <span>Solo con Pendientes ({sucursalColegiosPendientesCount})</span>
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setModalFilterEstado('TODOS')}
+                                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 ${
+                                        modalFilterEstado === 'TODOS'
+                                            ? 'bg-cyan-600 text-white shadow-sm'
+                                            : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
+                                    }`}
+                                >
+                                    <span>Todos ({selectedSucursalModal.colegiosDetalle.length})</span>
+                                </button>
+                            </div>
+
                             <div className="relative flex-1">
                                 <input
                                     type="text"
@@ -2896,16 +2965,35 @@ export default function MonitoreoRRHHClient({ initialData }: Props) {
                                 />
                                 <span className="absolute left-3 top-2.5 text-slate-400 text-xs">🔍</span>
                             </div>
-                            <span className="text-xs font-medium text-slate-500 shrink-0">
-                                Mostrando {modalFilteredSucursalColegios.length} de {selectedSucursalModal.colegiosDetalle.length} {selectedSucursalModal.sucursal === 'CASA MATRIZ' ? 'sedes' : 'establecimientos'}
+                            <span className="text-xs font-medium text-slate-500 shrink-0 text-right md:text-left">
+                                Mostrando {modalFilteredSucursalColegios.length} de {modalFilterEstado === 'PENDIENTES' ? sucursalColegiosPendientesCount : selectedSucursalModal.colegiosDetalle.length} {selectedSucursalModal.sucursal === 'CASA MATRIZ' ? 'sedes' : 'establecimientos'}
                             </span>
                         </div>
 
                         {/* Contenido scrolleable con los establecimientos de la sucursal */}
                         <div className="p-6 overflow-y-auto space-y-4 flex-1">
                             {modalFilteredSucursalColegios.length === 0 ? (
-                                <div className="text-center py-10 text-slate-400 text-xs">
-                                    No se encontraron establecimientos con registros abiertos para el criterio ingresado.
+                                <div className="text-center py-12 px-4 space-y-3">
+                                    {modalFilterEstado === 'PENDIENTES' && sucursalColegiosPendientesCount === 0 ? (
+                                        <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-6 max-w-md mx-auto space-y-2">
+                                            <div className="text-3xl">🎉</div>
+                                            <h4 className="text-sm font-extrabold text-emerald-900">¡Excelente noticia!</h4>
+                                            <p className="text-xs text-emerald-700">
+                                                No hay establecimientos con registros pendientes en esta sucursal. Todos los registros están 100% gestionados y al día.
+                                            </p>
+                                            <button
+                                                type="button"
+                                                onClick={() => setModalFilterEstado('TODOS')}
+                                                className="mt-2 px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition shadow-sm"
+                                            >
+                                                Ver todos los establecimientos ({selectedSucursalModal.colegiosDetalle.length})
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <div className="text-slate-400 text-xs">
+                                            No se encontraron establecimientos con registros para el criterio o búsqueda ingresada.
+                                        </div>
+                                    )}
                                 </div>
                             ) : (
                                 <div className="space-y-4">
