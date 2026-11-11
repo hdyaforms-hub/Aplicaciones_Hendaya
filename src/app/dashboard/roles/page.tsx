@@ -68,6 +68,8 @@ export default async function RolesPage() {
         { id: 'view_tablero_tendencias_pmpa', name: 'Tablero Tendencias y Oscilación PMPA', description: 'Visualización temporal y análisis de oscilación de cargas de raciones PMPA por programa, RBD, servicio y sucursal.', category: 'TABLEROS' },
         { id: 'view_tablero_indicador_prev_riesgos', name: 'Tablero Indicador Prev. Riesgos', description: 'Acceso visual al tablero de indicadores de prevención de riesgos (frecuencia, accidentabilidad, gravedad, zonas, Top 10 y DS67).', category: 'TABLEROS' },
         { id: 'view_tablero_control_cargas', name: 'Tablero Control de Cargas Masivas', description: 'Monitoreo y alerta ejecutiva de planillas masivas pendientes y ejecutadas (RRHH, Prevención, Operaciones) para mes actual y próximo mes.', category: 'TABLEROS' },
+        { id: 'view_tablero_firmas_pendientes', name: 'Tablero Firmas Pendientes (RRHH)', description: 'Visualización y analítica ejecutiva de documentos con firma pendiente de personal por sucursal, supervisor, RBD y tipo de documento.', category: 'TABLEROS' },
+        { id: 'manage_tablero_firmas_pendientes', name: 'Carga Masiva Firmas Pendientes (RRHH)', description: 'Permite cargar el archivo Excel oficial de documentos con firma pendiente reemplazando la nómina anterior.', category: 'TABLEROS' },
 
         { id: 'view_ingreso_raciones', name: 'Ingreso de Raciones', description: 'Gestión y auditoría de raciones por colegio.', category: 'APLICACIONES' },
         { id: 'view_solicitud_pan', name: 'Solicitud de Pan', description: 'Acceso a la aplicación de Solicitud de Pan.', category: 'APLICACIONES' },

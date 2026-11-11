@@ -20,9 +20,10 @@ export const RAW_MENU_ITEMS: MenuItemConfig[] = [
     {
         name: 'Tableros y Avances',
         icon: '📈',
-        requiredPermission: ['view_tablero', 'view_tablero_tendencias_pmpa', 'view_tablero_pan', 'view_tablero_gas', 'view_tablero_retiro', 'view_tablero_elementos', 'view_tablero_multas_ee', 'view_tablero_organigrama', 'view_tablero_distancias', 'view_tablero_actas', 'view_tablero_auditoria', 'view_tablero_verificador_temperaturas', 'view_tablero_widgets', 'view_tablero_resolucion_sanitaria', 'view_tablero_monitoreo_avances', 'view_tablero_monitoreo_rrhh', 'view_tablero_indicador_prev_riesgos', 'view_tablero_control_cargas'],
+        requiredPermission: ['view_tablero', 'view_tablero_tendencias_pmpa', 'view_tablero_pan', 'view_tablero_gas', 'view_tablero_retiro', 'view_tablero_elementos', 'view_tablero_multas_ee', 'view_tablero_organigrama', 'view_tablero_distancias', 'view_tablero_actas', 'view_tablero_auditoria', 'view_tablero_verificador_temperaturas', 'view_tablero_widgets', 'view_tablero_resolucion_sanitaria', 'view_tablero_monitoreo_avances', 'view_tablero_monitoreo_rrhh', 'view_tablero_firmas_pendientes', 'view_tablero_indicador_prev_riesgos', 'view_tablero_control_cargas'],
         subItems: [
             { name: 'Control de Cargas Masivas', href: '/dashboard/tablero/control-cargas-masivas', requiredPermission: 'view_tablero_control_cargas' },
+            { name: 'Firmas Pendientes', href: '/dashboard/tablero/firmas-pendientes', requiredPermission: 'view_tablero_firmas_pendientes' },
             { name: 'Indicador Prev. riesgos', href: '/dashboard/tablero/indicador-prev-riesgos', requiredPermission: 'view_tablero_indicador_prev_riesgos' },
             { name: 'Tendencias y Oscilación PMPA', href: '/dashboard/tablero/tendencias-pmpa', requiredPermission: 'view_tablero_tendencias_pmpa' },
             { name: 'Monitoreo RRHH', href: '/dashboard/tablero/monitoreo-rrhh', requiredPermission: 'view_tablero_monitoreo_rrhh' },

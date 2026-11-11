@@ -7,6 +7,7 @@ export interface ExportarCeramicasPdfOptions {
     subtitulo?: string
     filtroActivo?: string
     usuarioNombre?: string
+    cardsPerPage?: number // 2, 4 o 6 tarjetas por hoja (por defecto 2)
     onProgress?: (mensaje: string) => void
 }
 
@@ -72,7 +73,7 @@ export async function exportarCeramicasAPdf(
         // Título del reporte
         pdf.setFontSize(10)
         pdf.setTextColor(255, 255, 255)
-        pdf.text('TABLERO DE MONITOREO RRHH', marginX + 48, 8.5)
+        pdf.text(options.titulo || 'TABLERO DE MONITOREO RRHH', marginX + 48, 8.5)
 
         // Subtítulo con fecha y hora
         pdf.setFont('helvetica', 'normal')
@@ -123,11 +124,35 @@ export async function exportarCeramicasAPdf(
 
     // =========================================================================
     // CASO 1: Si hay tarjetas individuales identificadas ([data-pdf-card="true"])
-    // Distribución: Página 1 con KPIs (si existen) y siguientes páginas con 2 cerámicas por hoja
+    // Distribución: Página 1 con KPIs (si existen) y siguientes páginas con N tarjetas por hoja (por defecto 2, o 4/6 según opción)
     // =========================================================================
     if (individualCards.length > 0) {
+        const cardsPerPage = options.cardsPerPage === 6 || options.cardsPerPage === 4 ? options.cardsPerPage : 2
+        let cols = 2
+        let rows = 1
+        let colWidth = 129
+        let gapX = 11
+        let rowHeight = usableHeightPerPage
+        let gapY = 0
+
+        if (cardsPerPage === 6) {
+            cols = 2
+            rows = 3
+            colWidth = 130
+            gapX = 9
+            rowHeight = 54
+            gapY = 5
+        } else if (cardsPerPage === 4) {
+            cols = 2
+            rows = 2
+            colWidth = 130
+            gapX = 9
+            rowHeight = 82
+            gapY = 8
+        }
+
         const hasKpiPage = Boolean(kpiSection)
-        const cardPagesCount = Math.ceil(individualCards.length / 2)
+        const cardPagesCount = Math.ceil(individualCards.length / cardsPerPage)
         const totalPages = (hasKpiPage ? 1 : 0) + cardPagesCount
         let currentPage = 1
 
@@ -159,70 +184,25 @@ export async function exportarCeramicasAPdf(
             currentPage++
         }
 
-        // 1.2 Páginas de Cerámicas: Exactamente 2 cerámicas por hoja (lado a lado)
-        for (let i = 0; i < individualCards.length; i += 2) {
-            notify(`Generando página ${currentPage} de ${totalPages} (Cerámicas ${i + 1} y ${Math.min(i + 2, individualCards.length)})...`)
+        // 1.2 Páginas de Cerámicas: Distribución en grilla sin cortes
+        for (let i = 0; i < individualCards.length; i += cardsPerPage) {
+            const pageCards = individualCards.slice(i, i + cardsPerPage)
+            notify(`Generando página ${currentPage} de ${totalPages} (Registros ${i + 1} a ${Math.min(i + cardsPerPage, individualCards.length)})...`)
 
             if (currentPage > 1) {
                 pdf.addPage()
             }
             dibujarHeaderYFooter(currentPage, totalPages)
 
-            const cardA = individualCards[i]
-            const cardB = individualCards[i + 1] as HTMLElement | undefined
-
-            // Ancho para 2 columnas con separación
-            const cardColWidth = 129 // mm
-            const cardGap = 11 // mm
-            const slotX_A = marginX // 14 mm
-            const slotX_B = marginX + cardColWidth + cardGap // 154 mm
-
-            // Capturar Tarjeta A
-            const canvasA = await html2canvas(cardA, {
-                scale: 2,
-                useCORS: true,
-                logging: false,
-                backgroundColor: '#ffffff',
-            })
-
-            if (cardB) {
-                // Capturar Tarjeta B
-                const canvasB = await html2canvas(cardB, {
+            if (cardsPerPage === 2 && pageCards.length === 1) {
+                // Caso última tarjeta impar en modo 2 por hoja: centrarla elegantemente
+                const singleCardWidth = 145
+                const canvasA = await html2canvas(pageCards[0], {
                     scale: 2,
                     useCORS: true,
                     logging: false,
                     backgroundColor: '#ffffff',
                 })
-
-                // Calcular dimensiones proporcionales para Tarjeta A
-                let wA = cardColWidth
-                let hA = (canvasA.height * wA) / canvasA.width
-                if (hA > usableHeightPerPage) {
-                    const s = usableHeightPerPage / hA
-                    hA = usableHeightPerPage
-                    wA = wA * s
-                }
-
-                // Calcular dimensiones proporcionales para Tarjeta B
-                let wB = cardColWidth
-                let hB = (canvasB.height * wB) / canvasB.width
-                if (hB > usableHeightPerPage) {
-                    const s = usableHeightPerPage / hB
-                    hB = usableHeightPerPage
-                    wB = wB * s
-                }
-
-                // Centrar verticalmente cada tarjeta en su ranura
-                const posXA = slotX_A + (cardColWidth - wA) / 2
-                const posYA = contentTopY + (usableHeightPerPage - hA) / 2
-                const posXB = slotX_B + (cardColWidth - wB) / 2
-                const posYB = contentTopY + (usableHeightPerPage - hB) / 2
-
-                pdf.addImage(canvasA.toDataURL('image/png'), 'PNG', posXA, posYA, wA, hA, undefined, 'FAST')
-                pdf.addImage(canvasB.toDataURL('image/png'), 'PNG', posXB, posYB, wB, hB, undefined, 'FAST')
-            } else {
-                // Caso última tarjeta impar: centrarla elegantemente en la hoja
-                const singleCardWidth = 145 // mm
                 let wA = singleCardWidth
                 let hA = (canvasA.height * wA) / canvasA.width
                 if (hA > usableHeightPerPage) {
@@ -230,11 +210,39 @@ export async function exportarCeramicasAPdf(
                     hA = usableHeightPerPage
                     wA = wA * s
                 }
-
                 const posXA = marginX + (usableWidth - wA) / 2
                 const posYA = contentTopY + (usableHeightPerPage - hA) / 2
-
                 pdf.addImage(canvasA.toDataURL('image/png'), 'PNG', posXA, posYA, wA, hA, undefined, 'FAST')
+            } else {
+                for (let c = 0; c < pageCards.length; c++) {
+                    const cardElem = pageCards[c]
+                    const col = c % cols
+                    const row = Math.floor(c / cols)
+
+                    const slotX = marginX + col * (colWidth + gapX)
+                    const slotY = contentTopY + row * (rowHeight + gapY)
+
+                    const canvas = await html2canvas(cardElem, {
+                        scale: 2,
+                        useCORS: true,
+                        logging: false,
+                        backgroundColor: '#ffffff',
+                    })
+
+                    let w = colWidth
+                    let h = (canvas.height * w) / canvas.width
+
+                    if (h > rowHeight) {
+                        const scaleFactor = rowHeight / h
+                        h = rowHeight
+                        w = w * scaleFactor
+                    }
+
+                    const posX = slotX + (colWidth - w) / 2
+                    const posY = slotY + (rowHeight - h) / 2
+
+                    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', posX, posY, w, h, undefined, 'FAST')
+                }
             }
 
             currentPage++
@@ -280,7 +288,8 @@ export async function exportarCeramicasAPdf(
         .replace(/[\u0300-\u036f]/g, '')
         .replace(/[^a-z0-9]+/g, '_')
     const fechaFile = new Date().toISOString().slice(0, 10)
-    const fileName = `Reporte_Ceramicas_RRHH_${cleanTab}_${fechaFile}.pdf`
+    const prefix = options.titulo ? options.titulo.replace(/[^a-zA-Z0-9]+/g, '_') : 'Reporte_Ceramicas_RRHH'
+    const fileName = `${prefix}_${cleanTab}_${fechaFile}.pdf`
 
     pdf.save(fileName)
 }
