@@ -771,8 +771,8 @@ export async function procesarPlanillaAtrasosBuffer(
 
             let justificado = String(row['Justificado'] || row['JUSTIFICADO'] || row['Justificación'] || row['justificado'] || '').trim() || null
             if (!justificado) {
-                if (justificadoPor) justificado = `Justificado por ${justificadoPor}`
-                else if (minutosJustificados > 0) justificado = `${minutosJustificados} min justificados`
+                if (minutosJustificados > 0) justificado = `${minutosJustificados} min justificados`
+                else if (comentario) justificado = comentario
             }
             const observacion = comentario
 

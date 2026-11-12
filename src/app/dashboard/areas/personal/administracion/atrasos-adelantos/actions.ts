@@ -648,13 +648,15 @@ export async function actualizarAtrasoAdminAction(
                  observacion = $3,
                  "aplicaModificadoPor" = $4, 
                  "aplicaModificadoAt" = $5, 
+                 "justificadoPor" = $6,
                  "updatedAt" = $5
-             WHERE id = $6;`,
+             WHERE id = $7;`,
             aplicaDescuento,
             justificado || null,
             observacion || null,
             usuarioNombre,
             ahora,
+            usuarioNombre,
             registroId
         )
 
@@ -670,7 +672,12 @@ export async function actualizarAtrasoAdminAction(
         revalidatePath(PATH_ADM_ATRASOS)
         revalidatePath(PATH_ASISTENCIA_ATRASOS)
 
-        return { success: true }
+        return { 
+            success: true,
+            aplicaModificadoPor: usuarioNombre,
+            aplicaModificadoAt: ahora.toISOString(),
+            justificadoPor: usuarioNombre
+        }
     } catch (error: any) {
         console.error('Error in actualizarAtrasoAdminAction:', error)
         return { success: false, error: error.message || 'Error al actualizar el registro' }
@@ -890,7 +897,7 @@ export async function actualizarAtrasosMasivoAdminAction(
     aplicaDescuento: boolean,
     justificado?: string,
     observacion?: string
-): Promise<{ success: boolean; actualizados?: number; error?: string }> {
+): Promise<{ success: boolean; actualizados?: number; error?: string; aplicaModificadoPor?: string; aplicaModificadoAt?: string }> {
     if (!await checkAdminPermission()) {
         return { success: false, error: 'No tienes permisos administrativos para modificar registros' }
     }
@@ -928,6 +935,7 @@ export async function actualizarAtrasosMasivoAdminAction(
                     observacion = $4,
                     "aplicaModificadoPor" = $5,
                     "aplicaModificadoAt" = $6,
+                    "justificadoPor" = $5,
                     "updatedAt" = $6
                 WHERE ${whereExtra}
                 RETURNING id
@@ -949,7 +957,12 @@ export async function actualizarAtrasosMasivoAdminAction(
         revalidatePath(PATH_ASISTENCIA_ATRASOS)
         revalidatePath(PATH_CARGA_ATRASOS)
 
-        return { success: true, actualizados }
+        return { 
+            success: true, 
+            actualizados,
+            aplicaModificadoPor: usuarioNombre,
+            aplicaModificadoAt: ahora.toISOString()
+        }
     } catch (error: any) {
         console.error('Error in actualizarAtrasosMasivoAdminAction:', error)
         return { success: false, error: error.message || 'Error al ejecutar justificación masiva' }

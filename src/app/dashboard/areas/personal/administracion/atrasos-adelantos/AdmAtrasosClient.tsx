@@ -205,6 +205,8 @@ export default function AdmAtrasosClient({
                 observacionMasiva
             )
             if (res.success) {
+                const usuarioModificador = res.aplicaModificadoPor || 'Administración'
+                const fechaModificacion = res.aplicaModificadoAt || new Date().toISOString()
                 setRegistros(prev =>
                     prev.map(r => {
                         if (selectedIds.has(r.id)) {
@@ -213,8 +215,9 @@ export default function AdmAtrasosClient({
                                 aplicaDescuento: aplicaDescuentoMasivo,
                                 justificado: justificadoMasivo,
                                 observacion: observacionMasiva || r.observacion,
-                                aplicaModificadoPor: 'Tú (Masivo)',
-                                aplicaModificadoAt: new Date().toISOString()
+                                aplicaModificadoPor: usuarioModificador,
+                                aplicaModificadoAt: fechaModificacion,
+                                justificadoPor: usuarioModificador
                             }
                         }
                         return r
@@ -690,7 +693,10 @@ export default function AdmAtrasosClient({
                             ...r,
                             aplicaDescuento: modalEdit.aplicaDescuento,
                             justificado: modalEdit.justificado.trim() || null,
-                            observacion: modalEdit.observacion.trim() || null
+                            observacion: modalEdit.observacion.trim() || null,
+                            aplicaModificadoPor: res.aplicaModificadoPor || r.aplicaModificadoPor,
+                            aplicaModificadoAt: res.aplicaModificadoAt || new Date().toISOString(),
+                            justificadoPor: res.justificadoPor || r.justificadoPor
                         }
                         : r
                 ))
@@ -725,6 +731,17 @@ export default function AdmAtrasosClient({
             )
 
             if (res.success) {
+                if (res.aplicaModificadoPor) {
+                    setRegistros(prev => prev.map(r =>
+                        r.id === registro.id
+                            ? {
+                                ...r,
+                                aplicaModificadoPor: res.aplicaModificadoPor || r.aplicaModificadoPor,
+                                aplicaModificadoAt: res.aplicaModificadoAt || new Date().toISOString()
+                            }
+                            : r
+                    ))
+                }
                 setGuardadoStatus(prev => ({ ...prev, [registro.id]: true }))
                 setTimeout(() => {
                     setGuardadoStatus(prev => {
@@ -1661,14 +1678,47 @@ export default function AdmAtrasosClient({
                                                     </div>
                                                 </td>
                                                 <td className="py-2.5 px-3">
-                                                    <div className="font-medium text-gray-900 truncate max-w-xs" title={r.justificado || ''}>
-                                                        {r.justificado || <span className="text-gray-400 italic">Sin justificar</span>}
-                                                    </div>
-                                                    {r.justificadoPor && (
-                                                        <div className="text-[10px] text-gray-500 truncate max-w-xs" title={r.justificadoPor}>
-                                                            Por: {r.justificadoPor}
+                                                    <div className="space-y-1 max-w-xs">
+                                                        {/* Motivo / Razón principal */}
+                                                        <div className="font-medium text-gray-900 text-xs leading-snug">
+                                                            {(() => {
+                                                                const isClockString = r.justificado && /^justificado por\s+[\w\-]+/i.test(r.justificado.trim())
+                                                                if (r.justificado && !isClockString) {
+                                                                    return <span title={r.justificado}>{r.justificado}</span>
+                                                                }
+                                                                if (r.observacion) {
+                                                                    return <span title={r.observacion}>{r.observacion}</span>
+                                                                }
+                                                                if (isClockString && !r.aplicaModificadoPor) {
+                                                                    return <span className="text-slate-600 font-normal italic" title={r.justificado!}>{r.justificado}</span>
+                                                                }
+                                                                return <span className="text-gray-400 italic font-normal">Sin justificar</span>
+                                                            })()}
                                                         </div>
-                                                    )}
+
+                                                        {/* Observación complementaria si existe */}
+                                                        {r.observacion && r.justificado && r.observacion.trim() !== r.justificado.trim() && !/^justificado por\s+[\w\-]+/i.test(r.justificado.trim()) && (
+                                                            <div className="text-[11px] text-gray-500 italic truncate" title={`Obs: ${r.observacion}`}>
+                                                                Obs: {r.observacion}
+                                                            </div>
+                                                        )}
+
+                                                        {/* Trazabilidad: Quién autorizó / modificó */}
+                                                        {r.aplicaModificadoPor ? (
+                                                            <div
+                                                                className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-cyan-50 border border-cyan-200/70 text-[10px] font-semibold text-cyan-800"
+                                                                title={`Modificado por ${r.aplicaModificadoPor}${r.aplicaModificadoAt ? ` el ${new Date(r.aplicaModificadoAt).toLocaleDateString('es-CL')} a las ${new Date(r.aplicaModificadoAt).toLocaleTimeString('es-CL', { hour: '2-digit', minute: '2-digit' })}` : ''}`}
+                                                            >
+                                                                <UserCheck className="w-3 h-3 text-cyan-600 flex-shrink-0" />
+                                                                <span className="truncate max-w-[160px]">Por: {r.aplicaModificadoPor}</span>
+                                                            </div>
+                                                        ) : r.justificadoPor ? (
+                                                            <div className="text-[10px] text-slate-500 flex items-center gap-1 truncate" title={`Reloj biométrico: ${r.justificadoPor}`}>
+                                                                <Clock className="w-2.5 h-2.5 text-slate-400 flex-shrink-0" />
+                                                                <span className="truncate">Reloj: {r.justificadoPor}</span>
+                                                            </div>
+                                                        ) : null}
+                                                    </div>
                                                 </td>
                                                 <td className="py-2.5 px-3 text-center whitespace-nowrap">
                                                     <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold ${
@@ -1682,13 +1732,20 @@ export default function AdmAtrasosClient({
                                                 </td>
                                                 <td className="py-2.5 px-3 text-center whitespace-nowrap">
                                                     <button
-                                                        onClick={() => setModalEdit({
-                                                            isOpen: true,
-                                                            registro: r,
-                                                            aplicaDescuento: r.aplicaDescuento,
-                                                            justificado: r.justificado || '',
-                                                            observacion: r.observacion || ''
-                                                        })}
+                                                        onClick={() => {
+                                                            let initialJustificado = r.justificado || ''
+                                                            // Si viene con el código del reloj "Justificado por 20063...", limpiarlo para escribir la razón humana
+                                                            if (/^justificado por\s+[\w\-]+/i.test(initialJustificado.trim())) {
+                                                                initialJustificado = ''
+                                                            }
+                                                            setModalEdit({
+                                                                isOpen: true,
+                                                                registro: r,
+                                                                aplicaDescuento: r.aplicaDescuento,
+                                                                justificado: initialJustificado,
+                                                                observacion: r.observacion || ''
+                                                            })
+                                                        }}
                                                         className="p-1.5 hover:bg-gray-100 rounded-lg text-gray-500 hover:text-cyan-700 transition-colors"
                                                         title="Editar datos administrativos"
                                                     >
@@ -1858,6 +1915,29 @@ export default function AdmAtrasosClient({
                         </div>
 
                         <form onSubmit={handleSaveAdminEdit} className="space-y-4 text-xs">
+                            {/* Banner de Trazabilidad / Última Gestión */}
+                            {modalEdit.registro.aplicaModificadoPor ? (
+                                <div className="p-3 bg-cyan-50/80 border border-cyan-200/80 rounded-2xl flex items-start gap-2.5 text-xs text-cyan-950">
+                                    <div className="p-1.5 bg-cyan-100 rounded-lg text-cyan-700 shrink-0">
+                                        <UserCheck className="w-4 h-4" />
+                                    </div>
+                                    <div>
+                                        <span className="font-bold text-cyan-900">Última gestión administrativa:</span>
+                                        <div className="text-cyan-800 mt-0.5">
+                                            Realizada por <strong className="font-bold text-cyan-950">{modalEdit.registro.aplicaModificadoPor}</strong>
+                                            {modalEdit.registro.aplicaModificadoAt && (
+                                                <span> el {new Date(modalEdit.registro.aplicaModificadoAt).toLocaleDateString('es-CL')} a las {new Date(modalEdit.registro.aplicaModificadoAt).toLocaleTimeString('es-CL', { hour: '2-digit', minute: '2-digit' })}</span>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            ) : modalEdit.registro.justificadoPor ? (
+                                <div className="p-2.5 bg-slate-50 border border-slate-200 rounded-2xl flex items-center gap-2 text-xs text-slate-700">
+                                    <Clock className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                                    <span>Origen reloj biométrico: <strong className="text-slate-800 font-mono text-[11px]">{modalEdit.registro.justificadoPor}</strong></span>
+                                </div>
+                            ) : null}
+
                             <div className="p-3 bg-gray-50 rounded-xl space-y-1">
                                 {modalEdit.registro.tipo === 'ADELANTO' ? (
                                     <>
@@ -1929,15 +2009,54 @@ export default function AdmAtrasosClient({
                             </div>
 
                             <div>
-                                <label className="block font-semibold text-gray-700 mb-1">
-                                    Motivo / Justificación
-                                </label>
+                                <div className="flex items-center justify-between mb-1">
+                                    <label className="block font-semibold text-gray-700">
+                                        Motivo / Justificación
+                                    </label>
+                                    {modalEdit.justificado && (
+                                        <button
+                                            type="button"
+                                            onClick={() => setModalEdit(prev => ({ ...prev, justificado: '' }))}
+                                            className="text-[10px] text-gray-400 hover:text-rose-600 font-medium transition-colors"
+                                        >
+                                            Limpiar
+                                        </button>
+                                    )}
+                                </div>
                                 <input
                                     type="text"
+                                    placeholder="Ej: Autorizado por jefatura, Permiso médico..."
                                     value={modalEdit.justificado}
                                     onChange={e => setModalEdit(prev => ({ ...prev, justificado: e.target.value }))}
                                     className="w-full px-3 py-2 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500"
                                 />
+                                {/* Chips de selección rápida */}
+                                <div className="mt-2 flex flex-wrap gap-1.5">
+                                    {[
+                                        'Autorizado por Jefatura',
+                                        'Permiso Médico',
+                                        'Falla de Marcación / Reloj',
+                                        'Problemas de Locomoción',
+                                        'Trámite Personal'
+                                    ].map(motivo => (
+                                        <button
+                                            key={motivo}
+                                            type="button"
+                                            onClick={() => setModalEdit(prev => ({
+                                                ...prev,
+                                                justificado: motivo,
+                                                aplicaDescuento: false
+                                            }))}
+                                            className={`text-[10px] px-2 py-1 rounded-lg border transition-all ${
+                                                modalEdit.justificado === motivo
+                                                    ? 'bg-cyan-50 border-cyan-400 text-cyan-800 font-bold shadow-xs'
+                                                    : 'bg-gray-50 border-gray-200 text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                                            }`}
+                                        >
+                                            + {motivo}
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
 
                             <div>
@@ -2029,9 +2148,11 @@ export default function AdmAtrasosClient({
                                 >
                                     <option value="SÍ">SÍ (Justificado)</option>
                                     <option value="NO">NO (Injustificado)</option>
+                                    <option value="AUTORIZADO POR JEFATURA">AUTORIZADO POR JEFATURA</option>
                                     <option value="LICENCIA MÉDICA">LICENCIA MÉDICA</option>
                                     <option value="PERMISO ESPECIAL">PERMISO ESPECIAL</option>
                                     <option value="PROBLEMA DE TRANSPORTE">PROBLEMA DE TRANSPORTE</option>
+                                    <option value="FALLA DE MARCACIÓN / RELOJ">FALLA DE MARCACIÓN / RELOJ</option>
                                     <option value="OTRO">OTRO</option>
                                 </select>
                             </div>
